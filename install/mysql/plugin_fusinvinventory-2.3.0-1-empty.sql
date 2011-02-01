@@ -55,7 +55,11 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_antivirus` (
   `version` varchar(255) DEFAULT NULL,
   `is_active` tinyint(1) NOT NULL default '0',
   `uptodate` tinyint(1) NOT NULL default '0',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `name` (`name`),
+  KEY `version` (`version`),
+  KEY `is_active` (`is_active`),
+  KEY `uptodate` (`uptodate`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
