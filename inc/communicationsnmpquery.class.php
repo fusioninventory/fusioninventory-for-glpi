@@ -974,43 +974,24 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    function importCartridges($p_cartridges) {
       global $LANG;
 
+      $PluginFusioninventoryMapping = new PluginFusioninventoryMapping();
       $errors='';
-      foreach ($p_cartridges->children() as $name=>$child)
-      {
-         switch ($name) {
-            case 'TONERBLACK' :
-            case 'TONERBLACK2' :
-            case 'TONERCYAN' :
-            case 'TONERMAGENTA' :
-            case 'TONERYELLOW' :
-            case 'WASTETONER' :
-            case 'CARTRIDGEBLACK' :
-            case 'CARTRIDGEBLACKPHOTO' :
-            case 'CARTRIDGECYAN' :
-            case 'CARTRIDGECYANLIGHT' :
-            case 'CARTRIDGEMAGENTA' :
-            case 'CARTRIDGEMAGENTALIGHT' :
-            case 'CARTRIDGEYELLOW' :
-            case 'MAINTENANCEKIT' :
-            case 'DRUMBLACK' :
-            case 'DRUMCYAN' :
-            case 'DRUMMAGENTA' :
-            case 'DRUMYELLOW' :
-               $ptc = new PluginFusinvsnmpPrinterCartridge('glpi_plugin_fusinvsnmp_printercartridges');
-               $cartridgeIndex = $this->ptd->getCartridgeIndex($name);
-               if (is_int($cartridgeIndex)) {
-                  $oldCartridge = $this->ptd->getCartridge($cartridgeIndex); //TODO ???
-                  $ptc->load($oldCartridge->getValue('id'));
-               } else {
-                  $ptc->addCommon(TRUE); //TODO ???
-                  $ptc->setValue('printers_id', $this->deviceId);
-               }
-               $ptc->setValue('object_name', $name);
-               $ptc->setValue('state', $child, $ptc, 0);
-               $this->ptd->addCartridge($ptc, $cartridgeIndex);
-               break;
-            default :
-               $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CARTRIDGES : '.$name."\n";
+      foreach ($p_cartridges->children() as $name=>$child) {
+         if ($plugin_fusioninventory_mappings = $PluginFusioninventoryMapping->get("Printer", strtolower($name)) ) {
+            $ptc = new PluginFusinvsnmpPrinterCartridge('glpi_plugin_fusinvsnmp_printercartridges');
+            $cartridgeIndex = $this->ptd->getCartridgeIndex($name);
+            if (is_int($cartridgeIndex)) {
+               $oldCartridge = $this->ptd->getCartridge($cartridgeIndex); //TODO ???
+               $ptc->load($oldCartridge->getValue('id'));
+            } else {
+               $ptc->addCommon(TRUE); //TODO ???
+               $ptc->setValue('printers_id', $this->deviceId);
+            }
+            $ptc->setValue('plugin_fusioninventory_mappings_id', $plugin_fusioninventory_mappings['id']);
+            $ptc->setValue('state', $child, $ptc, 0);
+            $this->ptd->addCartridge($ptc, $cartridgeIndex);
+         } else {
+            $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CARTRIDGES : '.$name."\n";
          }
       }
       return $errors;
