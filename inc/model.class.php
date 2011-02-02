@@ -234,7 +234,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
 
    function getrightmodel($device_id, $type, $comment="") {
       global $DB;
-
+  
       // Get description (sysdescr) of device
       // And search in device_serials base
       $sysdescr = '';
@@ -244,29 +244,35 @@ class PluginFusinvsnmpModel extends CommonDBTM {
          switch($type) {
 
             case 'NetworkEquipment':
-               $Netdevice = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
-               //$Netdevice = new Netdevice;
-               $Netdevice->check($device_id,'r');
-               $sysdescr = $Netdevice->fields["sysdescr"];
+               $PluginFusinvsnmpNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
+               $NetworkEquipment = new NetworkEquipment();
+               $NetworkEquipment->check($device_id,'r');
+               $a_data = $PluginFusinvsnmpNetworkEquipment->find("`networkequipments_id`='".$device_id."'", "", "1");
+               $data = current($a_data);
+               $sysdescr = $data["sysdescr"];
                break;
 
             case 'Printer':
-               $printer = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
-               //$Printer = new Printer;
+               $PluginFusinvsnmpPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
+               $Printer = new Printer();
                $Printer->check($device_id,'r');
-               $sysdescr = $Printer->fields["sysdescr"];
+               $a_data = $PluginFusinvsnmpPrinter->find("`printers_id`='".$device_id."'", "", "1");
+               $data = current($a_data);
+               $sysdescr = $data["sysdescr"];
                break;
 
          }
       }
       $sysdescr = str_replace("\r", "", $sysdescr);
+      $sysdescr = str_replace("\n", "", $sysdescr);
       if (!empty($sysdescr)) {
-         $xml = @simplexml_load_file(GLPI_ROOT.'/plugins/fusioninventory/tool/discovery.xml','SimpleXMLElement', LIBXML_NOCDATA);
+         $xml = @simplexml_load_file(GLPI_ROOT.'/plugins/fusinvsnmp/tool/discovery.xml','SimpleXMLElement', LIBXML_NOCDATA);
          foreach ($xml->DEVICE as $device) {
-            $device['SYSDESCR'] = str_replace("\r", "", $device['SYSDESCR']);
-            if ($sysdescr == $device['SYSDESCR']) {
-               if (isset($device['MODELSNMP'])) {
-                  $modelgetted = $device['MODELSNMP'];
+            $device->SYSDESCR = str_replace("\r", "", $device->SYSDESCR);
+            $device->SYSDESCR = str_replace("\n", "", $device->SYSDESCR);
+            if ($sysdescr == $device->SYSDESCR) {
+               if (isset($device->MODELSNMP)) {
+                  $modelgetted = $device->MODELSNMP;
                }
                break;
             }
