@@ -562,8 +562,12 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                SET `status`='0', `execution_id`='".$data['execution_id']."'
                WHERE `plugin_fusioninventory_tasks_id`='".$data['id']."'";
             $DB->query($queryUpdate);
-            
-            $data['date_scheduled'] = date("Y-m-d H:i:s", $data['date_scheduled_timestamp'] + $period);
+
+            if (($data['date_scheduled_timestamp'] + $period) <= date('U')) {
+               $data['date_scheduled'] = date("Y-m-d H:i:s", date('U'));
+            } else {
+               $data['date_scheduled'] = date("Y-m-d H:i:s", $data['date_scheduled_timestamp'] + $period);
+            }
             $PluginFusioninventoryTask->update($data);
          }
       }
