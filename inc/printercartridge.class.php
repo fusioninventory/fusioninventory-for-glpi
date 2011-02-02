@@ -168,16 +168,16 @@ class PluginFusinvsnmpPrinterCartridge extends PluginFusinvsnmpCommonDBTM {
    }
 
 
-   function cartridges_state($FK_printers, $object_name) {
+   function cartridges_state($items_id, $object_name) {
 
 		$datas = array();
-      $a_cartridge = $this->find("`FK_printers`='".$FK_printers."' AND `object_name`='".$object_name."'");
+      $a_cartridge = $this->find("`printers_id`='".$items_id."' AND `object_name`='".$object_name."'");
       if (count($a_cartridge) == '0') {
          $datas['FK_cartridges'] = "";
          $datas['state'] = "";
       } else {
          foreach($a_cartridge as $cartridge_id=>$data) {
-            $datas['FK_cartridges'] = $data['FK_cartridges'];
+            $datas['cartridges_id'] = $data['cartridges_id'];
             $datas['state'] = $data['state'];
             if (($datas['state']) < 0) {
                $datas['state'] = "0";
