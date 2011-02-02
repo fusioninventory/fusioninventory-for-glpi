@@ -135,8 +135,8 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
             echo "<form name='form' method='post' action='".GLPI_ROOT."/plugins/fusioninventory/front/taskjob.form.php'>";
             echo "<input type='hidden' name='taskjobstatus_id' value='".$data['id']."' />";
             echo "<input type='hidden' name='taskjobs_id' value='".$taskjobs_id."' />";
-            echo "<input name='forceend' value='".$LANG['plugin_fusioninventory']['task'][32]."'
-                class='submit' type='submit'>";
+            echo '<input name="forceend" value="'.$LANG['plugin_fusioninventory']['task'][32].'"
+                class="submit" type="submit">';
             echo "</form>";
          }
          echo "</td>";
