@@ -391,6 +391,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_agentconfigs` (
    `version_snmpquery` TEXT COMMENT 'array(xmltag=>value)',
    `threads_netdiscovery` int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)',
    `threads_snmpquery` int(4) DEFAULT '1' COMMENT 'array(xmltag=>value)',
+   `senddico` int(1) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
    KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

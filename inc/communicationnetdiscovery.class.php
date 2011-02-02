@@ -60,6 +60,8 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $pta  = new PluginFusioninventoryAgent();
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+      $PluginFusinvsnmpAgentconfig = new PluginFusinvsnmpAgentconfig();
 
 
       PluginFusioninventoryCommunication::addLog(
@@ -92,9 +94,23 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
          $pti = new PluginFusinvsnmpImportExport;
          $errors.=$pti->import_netdiscovery($p_CONTENT, $p_DEVICEID);
          if (isset($p_CONTENT->AGENT->END)) {
+            if ((isset($p_CONTENT->DICO)) AND ($p_CONTENT->DICO == "REQUEST")) {
+               $PluginFusioninventoryAgent->getFromDB($PluginFusioninventoryTaskjobstatus->fields["plugin_fusioninventory_agents_id"]);
+               $PluginFusinvsnmpAgentconfig->loadAgentconfig($PluginFusioninventoryAgent->fields['id']);
+               $PluginFusinvsnmpAgentconfig->fields["senddico"] = "1";
+               $PluginFusinvsnmpAgentconfig->update($PluginFusinvsnmpAgentconfig->fields);
+               $PluginFusioninventoryTaskjoblog->addTaskjoblog($p_CONTENT->PROCESSNUMBER,
+                                                      $a_agent['id'],
+                                                      'PluginFusioninventoryAgent',
+                                                      '6',
+                                                      'Dico too old on agent, request posted by agent');
+
+            }
+
             $PluginFusioninventoryTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
                                                                     $a_agent['id'],
                                                                     'PluginFusioninventoryAgent');
+         
          }
       }
       return $errors;
