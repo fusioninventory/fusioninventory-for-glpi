@@ -54,6 +54,8 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
       $PluginFusinvsnmpIPRange = new PluginFusinvsnmpIPRange();
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
 
+      $uniqid = uniqid();
+
       $PluginFusioninventoryTaskjob->getFromDB($taskjobs_id);
       $PluginFusioninventoryTask->getFromDB($PluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']);
       //list all iprange
@@ -122,6 +124,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
          $a_input['plugin_fusioninventory_agents_id'] = 0;
          $a_input['itemtype'] = 'PluginFusinvsnmpIPRange';
          $a_input['items_id'] = 0;
+         $a_input['uniqid'] = $uniqid;
          $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
             //Add log of taskjob
             $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
@@ -149,6 +152,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
             $a_input['state'] = 0;
             $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
             $a_input['itemtype'] = 'PluginFusinvsnmpIPRange';
+            $a_input['uniqid'] = $uniqid;
 
             $nbIpAgent = $numberIpByAgent;
             foreach($a_iprangelist as $iprange_id) {

@@ -492,8 +492,8 @@ function appear_array(id){
 
 		</script>";
 
-		echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusinvsnmp/prototype.js'></script>";
-      echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusinvsnmp/effects.js'></script>";
+		echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusioninventory/prototype.js'></script>";
+      echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusioninventory/effects.js'></script>";
 
 
 		echo "<table class='tab_cadre' cellpadding='5' width='1100'>";
