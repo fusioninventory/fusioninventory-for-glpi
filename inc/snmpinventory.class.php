@@ -333,7 +333,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                   break;
 
                case 'Printer':
-                  $a_Printerport = $NetworkPort->find("`itemtype`='".Printer."' AND `items_id`='".$taskjobstatusdatas['items_id']."'");
+                  $a_Printerport = $NetworkPort->find("`itemtype`='Printer' AND `items_id`='".$taskjobstatusdatas['items_id']."'");
                   foreach($a_Printerport as $portdata) {
                      if (!empty($portdata['ip']) AND ($portdata['ip'] != '127.0.0.1')) {
                         $port_ip = $portdata['ip'];
