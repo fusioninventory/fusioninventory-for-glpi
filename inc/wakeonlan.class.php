@@ -49,8 +49,10 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
-      $OperatingSystem = new OperatingSystem;
+      $OperatingSystem = new OperatingSystem();
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+
+      $uniqid = uniqid();
 
       $PluginFusioninventoryTaskjob->getFromDB($taskjobs_id);
       $PluginFusioninventoryTask->getFromDB($PluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']);

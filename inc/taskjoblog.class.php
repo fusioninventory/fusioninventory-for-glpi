@@ -49,88 +49,81 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
     */
 
 
-
    function showHistory($taskjobs_id, $width="950") {
       global $DB,$CFG_GLPI,$LANG;
 
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
 
+      $displayforceend = "0";
+		echo "<script  type='text/javascript'>
+function close_array(id){
+	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/pics/collapse.gif\''+
+      'onClick=\'Effect.Fade(\"viewfollowup'+id+'\");appear_array('+id+');\' />';
+}
+function appear_array(id){
+	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/pics/expand.gif\''+
+      'onClick=\'Effect.Appear(\"viewfollowup'+id+'\");close_array('+id+');\' />';
+}
+
+		</script>";
+
+		echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusioninventory/prototype.js'></script>";
+      echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusioninventory/effects.js'></script>";
+
+
+
+
       echo "<center><table class='tab_cadrehov' style='width: ".$width."px'>";
       echo "<tr>";
-      echo "<th colspan='5'>".$LANG['title'][38]."</th>";
+      echo "<th colspan='8'>".$LANG['title'][38]."</th>";
       echo "</tr>";
 
-      echo "<tr class='tab_bg_4'>";
-      echo "<td colspan='5' height='4'>";
-      echo "</td>";
-      echo "</tr>";
+      $a_jobstatus = $PluginFusioninventoryTaskjobstatus->find('`plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'" GROUP BY uniqid,plugin_fusioninventory_agents_id',
+                           '`id` DESC');
 
-      $a_jobstatus = $PluginFusioninventoryTaskjobstatus->find('`plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"', '`id` DESC');
+      echo "<tr>";
+      echo "<th></th>";
+      echo "<th>Uniqid</th>";
+      echo "<th>".$LANG['plugin_fusioninventory']['processes'][38]."</th>";
+      echo "<th>".$LANG['plugin_fusioninventory']['agents'][28]."</th>";
+      echo "<th>";
+      echo $LANG['common'][27];
+      echo "</th>";
+      echo "<th>";
+      echo $LANG['joblist'][0];
+      echo "</th>";
+      echo "<th>";
+      echo $LANG['common'][25];
+      echo "</th>";
+      echo "<th></th>";
+      echo "</tr>";
 
       foreach ($a_jobstatus as $data) {
 
-         $displayforceend = 0;
          $a_history = $this->find('`plugin_fusioninventory_taskjobstatus_id` = "'.$data['id'].'"', 'id');
 
-         echo "<tr>";
-         echo "<th colspan='2'><img src='".GLPI_ROOT."/pics/puce.gif' />".$LANG['plugin_fusioninventory']['processes'][38]."&nbsp;: ".$data['id']."</th>";
-         echo "<th>";
-         echo $LANG['common'][27];
-         echo "</th>";
-         echo "<th>";
-         echo $LANG['joblist'][0];
-         echo "</th>";
-         echo "<th>";
-         echo $LANG['common'][25];
-         echo "</th>";
-         echo "</tr>";
-
          echo "<tr class='tab_bg_1'>";
-         echo "<th>";
-         echo $LANG['plugin_fusioninventory']['agents'][28]."&nbsp;:";
-         echo "</th>";
-         echo "<th>";
+         echo "<td id='plusmoins".$data["id"]."'><img src='".GLPI_ROOT.
+                  "/pics/expand.gif' onClick='Effect.Appear(\"viewfollowup".$data["id"].
+                  "\");close_array(".$data["id"].");' /></td>";
+
+         echo "<td>";
+         echo $data['uniqid'];
+         echo "</td>";
+         echo "<td>";
+         echo $data['id'];
+         echo "</td>";
+         echo "<td>";
          $PluginFusioninventoryAgent->getFromDB($data['plugin_fusioninventory_agents_id']);
          echo $PluginFusioninventoryAgent->getLink(1);
-         echo "</th>";
-         $count = $this->displayHistoryDetail(array_shift($a_history));
+         echo "</td>";
+         $a_return = $this->displayHistoryDetail(array_pop($a_history));
+         $count = $a_return[0];
          $displayforceend += $count;
-         echo "</tr>";
+         echo $a_return[1];
 
-         echo "<tr class='tab_bg_1'>";
-         echo "<th>";
-         echo $LANG['plugin_fusioninventory']['task'][27]."&nbsp;:";
-         echo "</th>";
-         echo "<th>";
-         $device = new $data["itemtype"]();
-         $device->getFromDB($data["items_id"]);
-         echo $device->getLink(1);
-         echo "&nbsp;";
-         echo "(".$device->getTypeName().")";
-         echo "</th>";
-         $count = $this->displayHistoryDetail(array_shift($a_history));
-         $displayforceend += $count;
-         echo "</tr>";
-
-         if (count($a_history) > 0) {
-            echo "<tr class='tab_bg_1'>";
-            echo "<td colspan='2' rowspan='".count($a_history)."'>";
-            echo "</td>";
-            $count = $this->displayHistoryDetail(array_shift($a_history));
-            $displayforceend += $count;
-            echo "</tr>";
-
-            foreach ($a_history as $datas) {
-               echo "<tr class='tab_bg_1'>";
-               $count = $this->displayHistoryDetail(array_shift($a_history));
-               $displayforceend += $count;
-               echo "</tr>";
-            }
-
-         }
-         echo "<tr class='tab_bg_1'>";
-         echo "<td colspan='5' align='center'>";
+         echo "<td align='center'>";
          if ($displayforceend == "0") {
             echo "<form name='form' method='post' action='".GLPI_ROOT."/plugins/fusioninventory/front/taskjob.form.php'>";
             echo "<input type='hidden' name='taskjobstatus_id' value='".$data['id']."' />";
@@ -142,78 +135,170 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          echo "</td>";
          echo "</tr>";
 
-         echo "<tr class='tab_bg_4'>";
-         echo "<td colspan='5' height='4'>";
-         echo "</td>";
-         echo "</tr>";
+         echo "<tr style='display: none;' id='viewfollowup".$data["id"]."'>
+            <td colspan='8'>".$this->showHistoryInDetail($data['plugin_fusioninventory_agents_id'], $data['uniqid'], "850")."</td>
+         </tr>";
 
       }
       echo "</table></center>";
 
       return true;
-  
+
+   }
+
+
+
+
+   function showHistoryInDetail($agents_id, $uniqid, $width="950") {
+      global $DB,$CFG_GLPI,$LANG;
+
+      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+
+      $text = "<center><table class='tab_cadrehov' style='width: ".$width."px'>";
+
+      $a_jobstatus = $PluginFusioninventoryTaskjobstatus->find('`plugin_fusioninventory_agents_id`="'.$agents_id.'" AND `uniqid`="'.$uniqid.'"', '`id` DESC');
+
+      foreach ($a_jobstatus as $data) {
+
+         $displayforceend = 0;
+         $a_history = $this->find('`plugin_fusioninventory_taskjobstatus_id` = "'.$data['id'].'"', 'id');
+
+         $text .= "<tr>";
+         $text .= "<th colspan='2'><img src='".GLPI_ROOT."/pics/puce.gif' />".$LANG['plugin_fusioninventory']['processes'][38]."&nbsp;: ".$data['id']."</th>";
+         $text .= "<th>";
+         $text .= $LANG['common'][27];
+         $text .= "</th>";
+         $text .= "<th>";
+         $text .= $LANG['joblist'][0];
+         $text .= "</th>";
+         $text .= "<th>";
+         $text .= $LANG['common'][25];
+         $text .= "</th>";
+         $text .= "</tr>";
+
+         $text .= "<tr class='tab_bg_1'>";
+         $text .= "<th>";
+         $text .= $LANG['plugin_fusioninventory']['agents'][28]."&nbsp;:";
+         $text .= "</th>";
+         $text .= "<th>";
+         $PluginFusioninventoryAgent->getFromDB($data['plugin_fusioninventory_agents_id']);
+         $text .= $PluginFusioninventoryAgent->getLink(1);
+         $text .= "</th>";
+         $a_return = $this->displayHistoryDetail(array_shift($a_history));
+         $count = $a_return[0];
+         $text .= $a_return[1];
+         $displayforceend += $count;
+         $text .= "</tr>";
+
+         $text .= "<tr class='tab_bg_1'>";
+         $text .= "<th>";
+         $text .= $LANG['plugin_fusioninventory']['task'][27]."&nbsp;:";
+         $text .= "</th>";
+         $text .= "<th>";
+         $device = new $data["itemtype"]();
+         $device->getFromDB($data["items_id"]);
+         $text .= $device->getLink(1);
+         $text .= "&nbsp;";
+         $text .= "(".$device->getTypeName().")";
+         $text .= "</th>";
+         $a_return = $this->displayHistoryDetail(array_shift($a_history));
+         $count = $a_return[0];
+         $text .= $a_return[1];
+         $displayforceend += $count;
+         $text .= "</tr>";
+
+         if (count($a_history) > 0) {
+            $text .= "<tr class='tab_bg_1'>";
+            $text .= "<td colspan='2' rowspan='".count($a_history)."'>";
+            $text .= "</td>";
+            $a_return = $this->displayHistoryDetail(array_shift($a_history));
+            $count = $a_return[0];
+            $text .= $a_return[1];
+            $displayforceend += $count;
+            $text .= "</tr>";
+
+            foreach ($a_history as $datas) {
+               $text .= "<tr class='tab_bg_1'>";
+               $a_return = $this->displayHistoryDetail(array_shift($a_history));
+               $count = $a_return[0];
+               $text .= $a_return[1];
+               $displayforceend += $count;
+               $text .= "</tr>";
+            }
+
+         }
+
+         $text .= "<tr class='tab_bg_4'>";
+         $text .= "<td colspan='5' height='4'>";
+         $text .= "</td>";
+         $text .= "</tr>";
+
+      }
+      $text .= "</table></center>";
+      return $text;
    }
 
 
    function displayHistoryDetail($datas) {
       global $LANG;
 
-      echo "<td align='center'>";
-      echo convDateTime($datas['date']);
-      echo "</td>";
+      $text = "<td align='center'>";
+      $text .= convDateTime($datas['date']);
+      $text .= "</td>";
       $finish = 0;
 
       switch ($datas['state']) {
 
          case 7 :
-            echo "<td align='center'>";
-            echo $LANG['plugin_fusioninventory']['taskjoblog'][7];
+            $text .= "<td align='center'>";
+            $text .= $LANG['plugin_fusioninventory']['taskjoblog'][7];
             break;
 
          case 1 :
-            echo "<td align='center'>";
-            echo $LANG['plugin_fusioninventory']['taskjoblog'][1];
+            $text .= "<td align='center'>";
+            $text .= $LANG['plugin_fusioninventory']['taskjoblog'][1];
             break;
 
          case 2 :
-            echo "<td style='background-color: rgb(0, 255, 0);' align='center'>";
-            echo $LANG['plugin_fusioninventory']['taskjoblog'][2];
+            $text .= "<td style='background-color: rgb(0, 255, 0);' align='center'>";
+            $text .= $LANG['plugin_fusioninventory']['taskjoblog'][2];
             $finish++;
             break;
 
          case 3 :
-            echo "<td style='background-color: rgb(255, 120, 0);' align='center'>";
-            echo "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][3]."</strong>";
+            $text .= "<td style='background-color: rgb(255, 120, 0);' align='center'>";
+            $text .= "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][3]."</strong>";
             $finish++;
             break;
 
          case 4 :
-            echo "<td style='background-color: rgb(255, 0, 0);' align='center'>";
-            echo "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][4]."</strong>";
+            $text .= "<td style='background-color: rgb(255, 0, 0);' align='center'>";
+            $text .= "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][4]."</strong>";
             $finish++;
             break;
 
          case 5 :
-            echo "<td style='background-color: rgb(255, 200, 0);' align='center'>";
-            echo "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][5]."</strong>";
+            $text .= "<td style='background-color: rgb(255, 200, 0);' align='center'>";
+            $text .= "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][5]."</strong>";
             $finish++;
             break;
 
          case 6 :
-            echo "<td style='background-color: rgb(255, 200, 0);' align='center'>";
-            echo "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][6]."</strong>";
+            $text .= "<td style='background-color: rgb(255, 200, 0);' align='center'>";
+            $text .= "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][6]."</strong>";
             break;
 
          default:
-            echo "<td>";
+            $text .= "<td>";
             break;
       }
 
-      echo "</td>";
-      echo "<td align='center'>";
-      echo $datas['comment'];
-      echo "</td>";
-      return $finish;
+      $text .= "</td>";
+      $text .= "<td align='center'>";
+      $text .= $datas['comment'];
+      $text .= "</td>";
+      return array($finish, $text);
    }
 
 
