@@ -1300,7 +1300,7 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($options=array()) {
 		case 'PluginFusioninventoryUnknownDevice';
 			switch ($options['action']) {
 				case "plugin_fusinvsnmp_discovery_import" :
-               if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "unknowndevices","w")) {
+               if(PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","w")) {
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
 					break;
@@ -1365,12 +1365,13 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
 			break;
 
 		case "plugin_fusinvsnmp_discovery_import" :
-         if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "unknowndevices","w")) {
+         if(PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","w")) {
+            $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
             $Import = 0;
             $NoImport = 0;
             foreach ($data['item'] as $key => $val) {
                if ($val == 1) {
-                  list($Import, $NoImport) = PluginFusinvsnmpDiscovery::import($key,$Import,$NoImport);
+                  list($Import, $NoImport) = $PluginFusioninventoryUnknownDevice->import($key,$Import,$NoImport);
                }
             }
             addMessageAfterRedirect($LANG['plugin_fusinvsnmp']['discovery'][5]." : ".$Import);
