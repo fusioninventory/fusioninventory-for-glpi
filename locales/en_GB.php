@@ -520,6 +520,7 @@ $LANG['plugin_fusioninventory']['agents'][30]="Impossible to communicate with ag
 $LANG['plugin_fusioninventory']['agents'][31]="Force inventory";
 $LANG['plugin_fusioninventory']['agents'][32]="Auto managenement dynamic of agents";
 $LANG['plugin_fusioninventory']['agents'][33]="Auto managenement dynamic of agents (same subnet)";
+$LANG['plugin_fusioninventory']['agents'][34]="Activation (by default)";
 
 $LANG['plugin_fusioninventory']['unknown'][0]="DNS Name";
 $LANG['plugin_fusioninventory']['unknown'][1]="Network port name";
@@ -560,6 +561,12 @@ $LANG['plugin_fusioninventory']['task'][29]="Type";
 $LANG['plugin_fusioninventory']['task'][30]="Selection";
 $LANG['plugin_fusioninventory']['task'][31]="Time between task start and start this action";
 $LANG['plugin_fusioninventory']['task'][32]="Force the end";
+$LANG['plugin_fusioninventory']['task'][33]="Communication type";
+$LANG['plugin_fusioninventory']['task'][34]="Permanent";
+$LANG['plugin_fusioninventory']['task'][35]="minutes";
+$LANG['plugin_fusioninventory']['task'][36]="hours";
+$LANG['plugin_fusioninventory']['task'][37]="days";
+$LANG['plugin_fusioninventory']['task'][38]="months";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Started";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";
