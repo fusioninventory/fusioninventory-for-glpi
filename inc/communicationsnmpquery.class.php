@@ -354,9 +354,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $this->sxml = simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA);
       $errors = '';
 
-      if (isset($p_CONTENT->PROCESSNUMBER)) {
-         $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $p_CONTENT->PROCESSNUMBER;
-         $PluginFusioninventoryTaskjobstatus->getFromDB($p_CONTENT->PROCESSNUMBER);
+      $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $p_CONTENT->PROCESSNUMBER;
+      $PluginFusioninventoryTaskjobstatus->getFromDB($p_CONTENT->PROCESSNUMBER);
+      if ($PluginFusioninventoryTaskjobstatus->fields['state'] != "3") {
          $PluginFusioninventoryTaskjobstatus->changeStatus($p_CONTENT->PROCESSNUMBER, 2);
          if ((!isset($p_CONTENT->AGENT->START)) AND (!isset($p_CONTENT->AGENT->END))) {
             $nb_devices = 0;
@@ -369,27 +369,26 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                                                    '6',
                                                    $nb_devices.' devices found');
          }
-      }
-      $errors.=$this->importContent($p_CONTENT);
-      $result=true;
-      if ($errors != '') {
-         if (isset($_SESSION['glpi_plugin_fusioninventory_processnumber'])) {
-            $result=true;
-//            $ptap = new PluginFusioninventoryAgentProcess();
-//            $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
-//                                 array('comment' => $errors));
+         $errors.=$this->importContent($p_CONTENT);
+         $result=true;
+         if ($errors != '') {
+            if (isset($_SESSION['glpi_plugin_fusioninventory_processnumber'])) {
+               $result=true;
+   //            $ptap = new PluginFusioninventoryAgentProcess();
+   //            $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
+   //                                 array('comment' => $errors));
 
-         } else {
-            // It's PROLOG
-            $result=false;
+            } else {
+               // It's PROLOG
+               $result=false;
+            }
+         }
+         if (isset($p_CONTENT->AGENT->END)) {
+            $PluginFusioninventoryTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
+                                                      $this->agent['id'],
+                                                      'PluginFusioninventoryAgent');
          }
       }
-      if (isset($p_CONTENT->AGENT->END)) {
-         $PluginFusioninventoryTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
-                                                   $this->agent['id'],
-                                                   'PluginFusioninventoryAgent');
-      }
-
       return $result;
    }
 
