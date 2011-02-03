@@ -68,6 +68,7 @@ class PluginFusinvsnmpAgentconfig extends CommonDBTM {
          $this->fields['plugin_fusioninventory_agents_id'] = $id;
          $this->fields['threads_netdiscovery'] = 1;
          $this->fields['threads_snmpquery'] = 1;
+         $this->fields['senddico'] = 0;
          $this->add($this->fields);
       }
 
