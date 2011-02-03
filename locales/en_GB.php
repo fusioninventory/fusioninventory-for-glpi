@@ -51,6 +51,8 @@ $LANG['plugin_fusinvsnmp']['config'][4] = "Devices discovery";
 $LANG['plugin_fusinvsnmp']['config'][5] = "Manage agent directly from GLPI";
 $LANG['plugin_fusinvsnmp']['config'][6] = "Wake On Lan";
 $LANG['plugin_fusinvsnmp']['config'][7] = "SNMP query";
+$LANG['plugin_fusinvsnmp']['config'][8] = "Never";
+$LANG['plugin_fusinvsnmp']['config'][9] = "Always";
 
 $LANG['plugin_fusinvsnmp']['profile'][1]="$title";
 $LANG['plugin_fusinvsnmp']['profile'][2]="Configuration";

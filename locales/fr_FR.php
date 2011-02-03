@@ -51,6 +51,8 @@ $LANG['plugin_fusinvsnmp']['config'][4] = "Découverte d'équipements";
 $LANG['plugin_fusinvsnmp']['config'][5] = "Controle de l'agent à partir de GLPI";
 $LANG['plugin_fusinvsnmp']['config'][6] = "Wake On Lan";
 $LANG['plugin_fusinvsnmp']['config'][7] = "Interrogation SNMP";
+$LANG['plugin_fusinvsnmp']['config'][8] = "Jamais";
+$LANG['plugin_fusinvsnmp']['config'][9] = "Toujours";
 
 $LANG['plugin_fusinvsnmp']['profile'][1]="$title";
 $LANG['plugin_fusinvsnmp']['profile'][2]="Configuration";
