@@ -51,6 +51,16 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
          return $PluginFusioninventoryTaskjobstatus->stateTaskjob($data['id'], '200', 'htmlvar', 'simple');
          break;
 
+      case "glpi_plugin_fusioninventory_agents.version":
+         $array = importArrayFromDB($data['ITEM_'.$num]);
+         $input = "";
+         foreach ($array as $name=>$version){
+            $input .= "<strong>".$name."</strong> : ".$version."<br/>";
+         }
+         $input .= "*";
+         $input = str_replace("<br/>*", "", $input);
+         return $input;
+         break;
    }
    return "";
 }
