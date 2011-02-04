@@ -55,7 +55,6 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
 
-      $displayforceend = "0";
 		echo "<script  type='text/javascript'>
 function close_array(id){
 	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/pics/collapse.gif\''+
@@ -100,7 +99,7 @@ function appear_array(id){
       echo "</tr>";
 
       foreach ($a_jobstatus as $data) {
-
+         $displayforceend = 0;
          $a_history = $this->find('`plugin_fusioninventory_taskjobstatus_id` = "'.$data['id'].'"', 'id');
 
          echo "<tr class='tab_bg_1'>";
