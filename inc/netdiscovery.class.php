@@ -256,10 +256,12 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
       $PluginFusinvsnmpAgentconfig->loadAgentconfig($PluginFusioninventoryAgent->fields['id']);
       $sxml_option = $this->sxml->addChild('OPTION');
       $sxml_option->addChild('NAME', 'NETDISCOVERY');
-      $sxml_option->addChild('DICOHASH', md5_file(GLPI_ROOT."/plugins/fusinvsnmp/tool/discovery.xml"));
 
+      $a_versions = importArrayFromDB($PluginFusioninventoryAgent->fields["version"]);
+      if ((isset($a_versions["NETDISCOVERY"])) AND ($a_versions["NETDISCOVERY"] >= 1.3)) {
+         $sxml_option->addChild('DICOHASH', md5_file(GLPI_ROOT."/plugins/fusinvsnmp/tool/discovery.xml"));
+      }
       if ($PluginFusinvsnmpAgentconfig->fields["senddico"] == "1") {
-         $a_versions = importArrayFromDB($PluginFusioninventoryAgent->fields["version"]);
          if ((isset($a_versions["NETDISCOVERY"])) AND ($a_versions["NETDISCOVERY"] >= 1.3)) {
             $sxml_option->addChild('DICO', file_get_contents(GLPI_ROOT."/plugins/fusinvsnmp/tool/discovery.xml"));
          }
