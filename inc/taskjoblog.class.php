@@ -328,7 +328,9 @@ function appear_array(id){
       $finishState[4] = 0;
       $finishState[5] = 0;
 
-      $a_jobstatus = $PluginFusioninventoryTaskjobstatus->find('`plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"');
+//      $a_jobstatus = $PluginFusioninventoryTaskjobstatus->find('`plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"');
+      $a_jobstatus = $PluginFusioninventoryTaskjobstatus->find('`plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'" GROUP BY uniqid,plugin_fusioninventory_agents_id');
+
       $search = '(';
       foreach ($a_jobstatus as $data) {
          $search .= $data['id'].",";
@@ -345,7 +347,6 @@ function appear_array(id){
       $input[$LANG['plugin_fusioninventory']['taskjoblog'][3]] = $finishState[3];
       $input[$LANG['plugin_fusioninventory']['taskjoblog'][4]] = $finishState[4];
       $input[$LANG['plugin_fusioninventory']['taskjoblog'][5]] = $finishState[5];
-
       Stat::showGraph(array('status'=>$input),
                array('title'  => '',
                   'unit'      => '',
