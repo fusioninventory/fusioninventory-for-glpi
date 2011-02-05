@@ -195,7 +195,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>Communication&nbsp;:</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][33]."&nbsp;:</td>";
       echo "<td align='center'>";
       $com = array();
       $com['push'] = "push";
@@ -210,7 +210,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>Permanent&nbsp;:</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][34]."&nbsp;:</td>";
       echo "<td align='center'>";
       if ($this->fields['permanent'] != NULL) {
          echo $LANG['choice'][1];

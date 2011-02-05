@@ -1,51 +1,54 @@
 <?php
 
 /*
- * @version $Id$
- ----------------------------------------------------------------------
- FusionInventory
- Coded by the FusionInventory Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org//
- ----------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: DURIEUX David
-// Purpose of file:
-// ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
 class PluginFusioninventoryAgentmodule extends CommonDBTM {
-
    
-   // Configuration of agentmodule
+
+   /**
+   * Display form forconfiguration of agent modules
+   *
+   *@return bool true if form is ok
+   *
+   **/
    function showForm() {
       global $DB,$CFG_GLPI,$LANG;
 
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
 
       $a_modules = $this->find();
       foreach ($a_modules as $data) {
@@ -53,8 +56,8 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
                "/plugins/fusioninventory/front/agentmodule.form.php'>";
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr>";
-         echo "<th width='130'>Module</th>";
-         echo "<th width='180'>Activation (by default)</th>";
+         echo "<th width='130'>".$LANG['plugin_fusioninventory']['task'][26]."</th>";
+         echo "<th width='180'>".$LANG['plugin_fusioninventory']['agents'][34]."</th>";
          echo "<th>Exceptions</th>";
          echo "</tr>";
          
@@ -112,8 +115,16 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
 
 
-   // add exception of activation of modules in each agent
-   function showFormAgentException($id, $options=array()) {
+   /**
+   * Display form to add exception of modules activation for each agent
+   *
+   * @param $items_id integer ID of the agent
+   * @param $options array
+   *
+   *@return bool true if form is ok
+   *
+   **/
+   function showFormAgentException($items_id, $options=array()) {
       global $LANG;
 
       $canedit = 1;
@@ -140,7 +151,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
          $checked = $data['is_active'];
          $a_agentList = importArrayFromDB($data['exceptions']);
-         if (in_array($id, $a_agentList)) {
+         if (in_array($items_id, $a_agentList)) {
             if ($checked == 1)
                $checked = 0;
             else
@@ -165,7 +176,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       if ($canedit) {
          echo "<tr>";
          echo "<td class='tab_bg_2 center' colspan='4'>";
-         echo "<input type='hidden' name='id' value=\"".$id."\">";
+         echo "<input type='hidden' name='id' value=\"".$items_id."\">";
          echo "<input type='submit' name='updateexceptions' value=\"".$LANG['buttons'][7]."\" class='submit'>";
          echo "</td>";
          echo "</tr>";
@@ -177,18 +188,33 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
    
 
+   /**
+   * Get datas (activation, exceptions...) for a module
+   *
+   * @param $module_name value Name of the module 
+   *
+   *@return array all DB fields for this module
+   *
+   **/
    function getActivationExceptions($module_name) {
       $a_modules = $this->find("`modulename`='".$module_name."' ");
-      foreach ($a_modules as $data) {
-         return $data;
-      }
+      return current($a_modules);
    }
 
 
-   
+
+   /**
+   * Get agents can do a "module name"
+   *
+   * @param $module_name value Name of the module
+   * @param $items_id integer id of the agent or if 0, search in all agents
+   *
+   *@return bool or array if have many agents
+   *
+   **/
    function getAgentsCanDo($module_name, $items_id=0) {
 
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
 
       $agentModule = $this->getActivationExceptions($module_name);
       $where = "";
@@ -244,6 +270,14 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
 
 
+   /**
+   * Delete module line
+   *
+   * @param $plugins_id integer id of the plugin (with modules it manage)
+   *
+   *@return nothing
+   *
+   **/
    function deleteModule($plugins_id) {
 
       $a_agentmodule = $this->find("`plugins_id`='".$plugins_id."'");
@@ -252,7 +286,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          $this->deleteFromDB();
       }
    }
-
 
 }
 

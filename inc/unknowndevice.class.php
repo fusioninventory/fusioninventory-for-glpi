@@ -74,19 +74,19 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 		$tab[3]['table']     = $this->getTable();
 		$tab[3]['field']     = 'location';
 		$tab[3]['linkfield'] = 'location';
-		$tab[3]['name']      = 'location';
+		$tab[3]['name']      = $LANG['common'][15];
 		$tab[3]['datatype']  = 'text';
 
 		$tab[4]['table']     = $this->getTable();
 		$tab[4]['field']     = 'serial';
 		$tab[4]['linkfield'] = 'serial';
-		$tab[4]['name']      = 'serial';
+		$tab[4]['name']      = $LANG['common'][19];
 		$tab[4]['datatype']  = 'text';
 
 		$tab[5]['table']     = $this->getTable();
 		$tab[5]['field']     = 'otherserial';
 		$tab[5]['linkfield'] = 'otherserial';
-		$tab[5]['name']      = 'otherserial';
+		$tab[5]['name']      = $LANG['common'][20];
 		$tab[5]['datatype']  = 'text';
 
 		$tab[6]['table']     = $this->getTable();

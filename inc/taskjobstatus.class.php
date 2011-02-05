@@ -227,7 +227,8 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
 
    function changeStatusFinish($taskjobstatus, $items_id, $itemtype, $error=0, $message='', $unknown=0) {
 
-      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog;
+      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
 
       $this->getFromDB($taskjobstatus);
       $this->fields['state'] = 3;
@@ -237,7 +238,6 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       if ($unknown ==  "1") {
          $a_input['state'] = 5;
       } else if ($error == "1") {
-         $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
          // Check if we have retry
          $PluginFusioninventoryTaskjob->getFromDB($this->fields['plugin_fusioninventory_taskjobs_id']);
          if($PluginFusioninventoryTaskjob->fields['retry_nb'] > 0) {
@@ -264,6 +264,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       $a_input['date'] = date("Y-m-d H:i:s");
       $a_input['comment'] = $message;
       $PluginFusioninventoryTaskjoblog->add($a_input);
+
    }
 
 }

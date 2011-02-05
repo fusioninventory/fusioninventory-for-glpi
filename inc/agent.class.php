@@ -1,38 +1,36 @@
 <?php
 
 /*
- * @version $Id$
- ----------------------------------------------------------------------
- FusionInventory
- Coded by the FusionInventory Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org//
- ----------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: DURIEUX David
-// Purpose of file:
-// ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
@@ -40,33 +38,50 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryAgent extends CommonDBTM {
    
-   
+
+   /**
+   * Get name of this type
+   *
+   *@return text name of this type by language of the user connected
+   *
+   **/
    static function getTypeName() {
       global $LANG;
 
       return $LANG['plugin_fusioninventory']['agents'][28];
    }
 
+
+
    function canCreate() {
       return true;
    }
 
+
+   
    function canView() {
       return true;
    }
 
+
+   
    function canCancel() {
       return true;
    }
 
+
+   
    function canUndo() {
       return true;
    }
 
+
+   
    function canValidate() {
       return true;
    }
 
+   
 
    function getSearchOptions() {
       global $LANG;
@@ -130,16 +145,25 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $ong[1]=$LANG['title'][26];
       }
        $ong[2] = $LANG['plugin_fusioninventory']['agents'][27];
-      // $ong[3] = actions (tâches)
       return $ong;
    }
 
 
-   function showForm($id, $options=array()) {
+
+   /**
+   * Display form for agent configuration
+   *
+   * @param $items_id integer ID of the agent
+   * @param $options array
+   *
+   *@return bool true if form is ok
+   *
+   **/
+   function showForm($items_id, $options=array()) {
       global $DB,$CFG_GLPI,$LANG;
 
-      if ($id!='') {
-         $this->getFromDB($id);
+      if ($items_id!='') {
+         $this->getFromDB($items_id);
       } else {
          $this->getEmpty();
       }
@@ -183,7 +207,10 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "</td>";
       echo "<td>".$LANG['plugin_fusioninventory']['agents'][25]." :</td>";
       echo "<td align='center'>";
-      echo $this->fields["version"];
+      $a_versions = importArrayFromDB($this->fields["version"]);
+      foreach ($a_versions as $module => $version) {
+         echo "<strong>".$module. "</strong>: ".$version."<br/>";
+      }
       echo "</td>";
       echo "</tr>";
 
@@ -205,6 +232,14 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
 
 
+   /**
+   * Get agent informations by device_id
+   *
+   * @param $device_id value device_id unique of agent (key)
+   *
+   *@return array all DB fields of this agent
+   *
+   **/
    function InfosByKey($device_id) {
       global $DB;
 
@@ -222,11 +257,17 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
 
 
+   /**
+   * Import agent : create if not exist and update if yet exist
+   *
+   * @param $p_xml simpleXMLobject
+   *
+   **/
    function importToken($p_xml) {
       $sxml = @simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA);
 
       if ((isset($sxml->DEVICEID)) AND (isset($sxml->TOKEN))) {
-         $pta = new PluginFusioninventoryAgent;
+         $pta = new PluginFusioninventoryAgent();
          $a_agent = $pta->find("`device_id`='".$sxml->DEVICEID."'", "", "1");
          if (empty($a_agent)) {
             $a_input = array();
@@ -235,7 +276,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             $a_input['device_id'] = $sxml->DEVICEID;
             $a_input['last_contact'] = date("Y-m-d H:i:s");
             $pta->add($a_input);
-            return 2;
+            return;
          } else {
             foreach ($a_agent as $data) {
                $input = array();
@@ -246,7 +287,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             }
          }
       }
-      return 1;
+      return;
    }
    
 
@@ -269,7 +310,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $Computers_id = $items_id;
       }
       if ($Computers_id != "0") {
-         $NetworkPort = new NetworkPort;
+         $NetworkPort = new NetworkPort();
          $a_ports = $NetworkPort->find("`itemtype`='Computer'
                              AND `items_id`='".$Computers_id."'
                              AND `ip` IS NOT NULL");
@@ -297,9 +338,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $agent = $this->find("`items_id`='".$items_id."'");
 
       if ($agent) {
-         foreach($agent as $data) {
-            return $data['id'];
-         }
+         $data = current($agent);
+         return $data['id'];
       }
       return false;
    }
@@ -325,6 +365,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             AND `device_id`!='".$device_id."' ";
       $DB->query($query);
 
+      // Link agent with computer
       $agent = $this->InfosByKey($device_id);
       if (isset($agent['id'])) {
          $agent['items_id'] = $items_id;
@@ -394,6 +435,30 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<br/>";
    }
 
+
+
+   /**
+   * Set agent version of each module
+   *
+   * @param $agent_id integer ID of the agent
+   * @param $module value Module name (WAKEONLAN, NETDISCOVERY, INVENTORY, SNMPQUERY...)
+   * @param $version value version of the module
+   *
+   *@return nothing
+   *
+   **/
+   function setAgentVersions($agent_id, $module, $version) {
+      $this->getFromDB($agent_id);
+      $a_version = importArrayFromDB($this->fields['version']);
+      if (!is_array($a_version)) {
+         $versionTmp = $a_version;
+         $a_version = array();
+         $a_version["INVENTORY"] = $versionTmp;
+      }
+      $a_version[$module] = $version;
+      $this->fields['version'] = exportArrayToDB($a_version);
+      $this->update($this->fields);
+   }
 
 }
 

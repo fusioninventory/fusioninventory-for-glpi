@@ -520,6 +520,7 @@ $LANG['plugin_fusioninventory']['agents'][30]="Impossible de joindre l'agent!";
 $LANG['plugin_fusioninventory']['agents'][31]="Forcer l'inventaire";
 $LANG['plugin_fusioninventory']['agents'][32]="Auto gestion dynamique des agents";
 $LANG['plugin_fusioninventory']['agents'][33]="Auto gestion dynamique des agents (même Sous-réseau)";
+$LANG['plugin_fusioninventory']['agents'][34]="Activation (par défaut)";
 
 $LANG['plugin_fusioninventory']['unknown'][0]="Nom DNS";
 $LANG['plugin_fusioninventory']['unknown'][1]="Nom port réseau";
@@ -560,6 +561,12 @@ $LANG['plugin_fusioninventory']['task'][29]="Type";
 $LANG['plugin_fusioninventory']['task'][30]="Selection";
 $LANG['plugin_fusioninventory']['task'][31]="Temps entre le démarrage de la tâche et le démarrage de cette action";
 $LANG['plugin_fusioninventory']['task'][32]="Forcer l'arrêt";
+$LANG['plugin_fusioninventory']['task'][33]="Communication";
+$LANG['plugin_fusioninventory']['task'][34]="Permanente";
+$LANG['plugin_fusioninventory']['task'][35]="minutes";
+$LANG['plugin_fusioninventory']['task'][36]="heures";
+$LANG['plugin_fusioninventory']['task'][37]="jours";
+$LANG['plugin_fusioninventory']['task'][38]="mois";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Démarré";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";

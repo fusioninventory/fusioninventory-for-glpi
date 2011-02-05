@@ -125,8 +125,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $this->getEmpty();
       }
 
-//$this->cronTaskscheduler();
-
       $this->showFormHeader($options);
       
       echo "<tr class='tab_bg_1'>";
@@ -152,10 +150,10 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       Dropdown::showInteger("periodicity_count", $this->fields['periodicity_count'], 0, 300);
       $a_time = array();
       $a_time[] = "------";
-      $a_time['minutes'] = "minutes";
-      $a_time['hours'] = "heures";
-      $a_time['days'] = "jours";
-      $a_time['months'] = "mois";
+      $a_time['minutes'] = $LANG['plugin_fusioninventory']['task'][35];
+      $a_time['hours'] = $LANG['plugin_fusioninventory']['task'][36];
+      $a_time['days'] = $LANG['plugin_fusioninventory']['task'][37];
+      $a_time['months'] = $LANG['plugin_fusioninventory']['task'][38];
       Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$this->fields['periodicity_type']));
       echo "</td>";
       echo "</tr>";
@@ -248,6 +246,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $class->getFromDB(current($data));
          if (current($data) == '.1') {
             $name = $LANG['plugin_fusioninventory']['agents'][32];
+         } else if (current($data) == '.2') {
+            $name = $LANG['plugin_fusioninventory']['agents'][33];
          } else {
             $class->getFromDB(current($data));
             $name = $class->fields['name'];
@@ -488,6 +488,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       $array = array();
       $array[".1"] = $LANG['plugin_fusioninventory']['agents'][32];
+      $array[".2"] = $LANG['plugin_fusioninventory']['agents'][33];
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
       $array1 = $PluginFusioninventoryAgentmodule->getAgentsCanDo(strtoupper($module));
       foreach ($array1 as $id => $data) {
@@ -559,8 +560,12 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                SET `status`='0', `execution_id`='".$data['execution_id']."'
                WHERE `plugin_fusioninventory_tasks_id`='".$data['id']."'";
             $DB->query($queryUpdate);
-            
-            $data['date_scheduled'] = date("Y-m-d H:i:s", $data['date_scheduled_timestamp'] + $period);
+
+            if (($data['date_scheduled_timestamp'] + $period) <= date('U')) {
+               $data['date_scheduled'] = date("Y-m-d H:i:s", date('U'));
+            } else {
+               $data['date_scheduled'] = date("Y-m-d H:i:s", $data['date_scheduled_timestamp'] + $period);
+            }
             $PluginFusioninventoryTask->update($data);
          }
       }
