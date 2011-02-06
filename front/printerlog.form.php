@@ -41,7 +41,8 @@ checkRight("printer","r");
 PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printer","r");
 
 $printer_history = new PluginFusinvsnmpPrinterLog;
-
+print_r($_POST);
+exit;
 if ((isset($_POST['delete']))) {
 	
 	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printer","w");

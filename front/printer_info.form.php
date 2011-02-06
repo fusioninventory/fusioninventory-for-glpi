@@ -43,7 +43,7 @@ PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printer","r");
 if ((isset($_POST['update'])) && (isset($_POST['id']))) {
 		PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printer","w");
 	
-	$plugin_fusioninventory_printer = new PluginFusinvsnmpPrinter;
+	$plugin_fusioninventory_printer = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
 	
 	$_POST['printers_id'] = $_POST['id'];
 	unset($_POST['id']);
@@ -51,9 +51,21 @@ if ((isset($_POST['update'])) && (isset($_POST['id']))) {
 	$query = "SELECT * 
              FROM `glpi_plugin_fusinvsnmp_printers`
              WHERE `printers_id`='".$_POST['printers_id']."' ";
-	$result = $DB->query($query);		
+	$result = $DB->query($query);
+
+   if ($DB->numrows($result) == "0") {
+      $queryInsert = "INSERT INTO `glpi_plugin_fusinvsnmp_printers`(`printers_id`)
+                      VALUES('".$_POST['printers_id']."');";
+      $DB->query($queryInsert);
+      $query = "SELECT *
+                FROM `glpi_plugin_fusinvsnmp_printers`
+                WHERE `printers_id`='".$_POST['printers_id']."' ";
+      $result = $DB->query($query);
+   }
+
 	$data = $DB->fetch_assoc($result);	
 	$_POST['id'] = $data['id'];
+
 	$plugin_fusioninventory_printer->update($_POST);
 	
 } else if ((isset($_POST["GetRightModel"])) && (isset($_POST['id']))) {

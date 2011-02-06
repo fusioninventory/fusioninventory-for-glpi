@@ -419,7 +419,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
 			$exclude_models[] = $data_models['id'];
 		}
       Dropdown::show("PluginFusinvsnmpModel",
-                     array('name'=>"model_infos",
+                     array('name'=>"plugin_fusinvsnmp_models_id",
                            'value'=>$this->oFusionInventory_printer->fields['plugin_fusinvsnmp_models_id'],
                            'comment'=>false,
                            'used'=>$exclude_models));
