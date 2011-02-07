@@ -121,6 +121,7 @@ $LANG['plugin_fusioninventory']['agents'][31]="Force inventory";
 $LANG['plugin_fusioninventory']['agents'][32]="Auto managenement dynamic of agents";
 $LANG['plugin_fusioninventory']['agents'][33]="Auto managenement dynamic of agents (same subnet)";
 $LANG['plugin_fusioninventory']['agents'][34]="Activation (by default)";
+$LANG['plugin_fusioninventory']['agents'][35]="Device_id";
 
 $LANG['plugin_fusioninventory']['unknown'][2]="Dispositivos aprovados";
 $LANG['plugin_fusioninventory']['unknown'][4]="Hub de rede";

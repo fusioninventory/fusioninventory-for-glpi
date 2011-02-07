@@ -86,7 +86,7 @@ $LANG['plugin_fusioninventory']['rules'][12] = "est vide";
 $LANG['plugin_fusioninventory']['rules'][13] = "Numéro de série du disque dur";
 $LANG['plugin_fusioninventory']['rules'][14] = "Numéro de série de partition disque";
 $LANG['plugin_fusioninventory']['rules'][15] = "uuid";
-$LANG['plugin_fusioninventory']['rules'][16] = "Tag FusionInventory";
+$LANG['plugin_fusioninventory']['rules'][16] = "Etiquette FusionInventory";
 
 $LANG['plugin_fusioninventory']['rulesengine'][152] = "Matériel à importer";
 
@@ -112,7 +112,7 @@ $LANG['plugin_fusioninventory']['agents'][15]="Statut de l'agent";
 $LANG['plugin_fusioninventory']['agents'][17]="L'agent s'exécute";
 $LANG['plugin_fusioninventory']['agents'][22]="En attente";
 $LANG['plugin_fusioninventory']['agents'][23]="Lié à l'ordinateur";
-$LANG['plugin_fusioninventory']['agents'][24]="Token";
+$LANG['plugin_fusioninventory']['agents'][24]="Jeton";
 $LANG['plugin_fusioninventory']['agents'][25]="Version";
 $LANG['plugin_fusioninventory']['agents'][27]="Modules des agents";
 $LANG['plugin_fusioninventory']['agents'][28]="Agent";
@@ -121,6 +121,7 @@ $LANG['plugin_fusioninventory']['agents'][31]="Forcer l'inventaire";
 $LANG['plugin_fusioninventory']['agents'][32]="Auto gestion dynamique des agents";
 $LANG['plugin_fusioninventory']['agents'][33]="Auto gestion dynamique des agents (même Sous-réseau)";
 $LANG['plugin_fusioninventory']['agents'][34]="Activation (par défaut)";
+$LANG['plugin_fusioninventory']['agents'][35]="Identifiant";
 
 $LANG['plugin_fusioninventory']['unknown'][2]="Matériel approuvé";
 $LANG['plugin_fusioninventory']['unknown'][4]="Hub réseau";
