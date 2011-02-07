@@ -64,7 +64,7 @@ $LANG['plugin_fusinvdeploy']['packagefiles'][0]="Fichiers liés aux paquets";
 
 $LANG['plugin_fusinvdeploy']['deploystatus'][0]="Etat des déploiements";
 
-$LANG['plugin_fusinvdeploy']['config'][0]="Addresse du serveur GLPI (sans le http://)";
+$LANG['plugin_fusinvdeploy']['config'][0]="Adresse du serveur GLPI (sans le http://)";
 
 $LANG['plugin_fusinvdeploy']['setup'][17]="Le plugin ".$title." a besoin que le plugin FusionInventory soit activé pour être lui-même activé.";
 $LANG['plugin_fusinvdeploy']['setup'][18]="Le plugin ".$title." a besoin que le plugin FusionInventory soit activé pour être lui-même désinstallé.";
