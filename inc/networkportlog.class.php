@@ -97,7 +97,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       $maps = $map->find();
       foreach ($maps as $mapfields) {
          $listName[$mapfields['itemtype']."-".$mapfields['name']]=
-            $LANG['plugin_fusioninventory']['mapping'][$mapfields["locale"]];
+            $LANG['plugin_fusinvsnmp']['mapping'][$mapfields["locale"]];
       }
 
       if (!empty($listName)) {
@@ -222,7 +222,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       $map = new PluginFusioninventoryMapping;
       $maps = $map->find("`itemtype`='NetworkEquipment'");
       foreach ($maps as $mapfields) {
-         $constantsfield[$LANG['plugin_fusioninventory']['mapping'][$mapfields["locale"]]] =
+         $constantsfield[$LANG['plugin_fusinvsnmp']['mapping'][$mapfields["locale"]]] =
             $mapfields['name'];
       }
 
@@ -657,7 +657,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
                $mapfields = $map->get('NetworkEquipment', $data["field"]);
                if ($mapfields != false) {
                   $text .= "<td align='center'>".
-                     $LANG['plugin_fusioninventory']['mapping'][$mapfields["locale"]]."</td>";
+                     $LANG['plugin_fusinvsnmp']['mapping'][$mapfields["locale"]]."</td>";
                }
                $text .= "<td align='center'>".$data["value_old"]."</td>";
                $text .= "<td align='center'>-></td>";

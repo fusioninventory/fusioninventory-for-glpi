@@ -631,3 +631,5 @@ INSERT INTO `glpi_plugin_fusioninventory_mappings`
 ## Computer
           ('Computer','serial','','serial',13,NULL),
           ('Computer','ifPhysAddress','','mac',15,NULL);
+
+

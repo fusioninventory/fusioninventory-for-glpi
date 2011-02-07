@@ -892,7 +892,7 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
                $map = new PluginFusioninventoryMapping;
                $mapfields = $map->get('NetworkEquipment', $data["ITEM_$num"]);
                if ($mapfields != false) {
-                  $out = $LANG['plugin_fusioninventory']['mapping'][$mapfields["locale"]];
+                  $out = $LANG['plugin_fusinvsnmp']['mapping'][$mapfields["locale"]];
                }
                return $out;
 					break;

@@ -184,7 +184,7 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
 			while ($data=$DB->fetch_array($result)) {
             echo "<tr class='tab_bg_1'>";
             echo "<td align='left'>";
-            echo $LANG['plugin_fusioninventory']['mapping'][$data['locale']];
+            echo $LANG['plugin_fusinvsnmp']['mapping'][$data['locale']];
             echo "</td>";
 
             echo "<td align='center'>";

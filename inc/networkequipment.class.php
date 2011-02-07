@@ -573,7 +573,7 @@ function appear_array(id){
 					break;
 
 				case 11 :
-					echo $LANG['plugin_fusioninventory']['mapping'][115];
+					echo $LANG['plugin_fusinvsnmp']['mapping'][115];
 					break;
 
 				case 12 :

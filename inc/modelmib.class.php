@@ -148,7 +148,7 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
                $mapping = new PluginFusioninventoryMapping;
                $mapping->getFromDB($data['plugin_fusioninventory_mappings_id']);
                if (isset($mapping->fields['locale'])) {
-                  echo $LANG['plugin_fusioninventory']['mapping'][$mapping->fields['locale']]." (".$mapping->fields['name'].")";
+                  echo $LANG['plugin_fusinvsnmp']['mapping'][$mapping->fields['locale']]." (".$mapping->fields['name'].")";
                }
                if (isset($mapping->fields['id'])) {
                   $mappings_used[$mapping->fields['id']] = 1;
@@ -270,7 +270,7 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
       $oMapping = new PluginFusioninventoryMapping;
       $mappings = $oMapping->find();
       foreach ($mappings as $name=>$mapping) {
-         $types[$mapping['id']]=$LANG['plugin_fusioninventory']['mapping'][$mapping['locale']];
+         $types[$mapping['id']]=$LANG['plugin_fusinvsnmp']['mapping'][$mapping['locale']];
       }
 
       Dropdown::showFromArray("plugin_fusioninventory_mappings_id",$types,

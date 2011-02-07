@@ -330,7 +330,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                               if ($a_mibs["oid_port_counter"] == "0") {
                                  $mapping = new PluginFusioninventoryMapping;
                                  $mappings = $mapping->get($a_mibs['itemtype'], $a_mibs['mapping_name']);
-                                 echo $LANG['plugin_fusioninventory']['mapping'][$mappings->fields['locale']]." ( ".$a_mibs["mapping_name"]." )";
+                                 echo $LANG['plugin_fusinvsnmp']['mapping'][$mappings->fields['locale']]." ( ".$a_mibs["mapping_name"]." )";
                               }
                            } else {
                               $types = array();
@@ -349,7 +349,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                               foreach ($maps as $mapfields) {
                                  if (($type_model == $type) OR ($type_model == "0")) {
                                     $types[$type."||".$mapfields['name']]=
-                                       $LANG['plugin_fusioninventory']['mapping']
+                                       $LANG['plugin_fusinvsnmp']['mapping']
                                           [$mapfields["locale"]].
                                        " (".$mapfields['name'].")";
                                  }
@@ -437,7 +437,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                      $mapping = new PluginFusioninventoryMapping;
                      $mappings = $mapping->get($a_mibs['itemtype'], $a_mibs['mapping_name']);
                      if ($mappings) {
-                        echo $LANG['plugin_fusioninventory']['mapping'][$mappings->fields['locale']];
+                        echo $LANG['plugin_fusinvsnmp']['mapping'][$mappings->fields['locale']];
                      }
                   }
                } else {
@@ -457,7 +457,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                   foreach ($maps as $mapfields) {
                      if (($type_model == $type) OR ($type_model == "0")) {
                         $types[$type."||".$mapfields['name']]=
-                           $LANG['plugin_fusioninventory']['mapping']
+                           $LANG['plugin_fusinvsnmp']['mapping']
                               [$mapfields["locale"]].
                            " (".$mapfields['name'].")";
                      }
