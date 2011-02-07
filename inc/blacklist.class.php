@@ -44,7 +44,7 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
    static function getTypeName() {
       global $LANG;
 
-      return "blacklist";
+      return $LANG['plugin_fusinvinventory']['menu'][2];
    }
 
    function canCreate() {

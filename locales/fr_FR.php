@@ -50,7 +50,7 @@ $LANG['plugin_fusinvinventory']['setup'][27]="Import unique sur numéro de séri
 
 $LANG['plugin_fusinvinventory']['menu'][0]="Importer un fichier XML de l'agent";
 $LANG['plugin_fusinvinventory']['menu'][1]="Règles de critères";
-$LANG['plugin_fusinvinventory']['menu'][2]="BlackList";
+$LANG['plugin_fusinvinventory']['menu'][2]="Liste noire";
 $LANG['plugin_fusinvinventory']['menu'][3]="Règles d'entités";
 
 $LANG['plugin_fusinvinventory']['importxml'][0]="Import de fichier XML provenant de l'agent";
@@ -65,18 +65,18 @@ $LANG['plugin_fusinvinventory']['rule'][4]="Clé produit Microsoft";
 $LANG['plugin_fusinvinventory']['rule'][5]="Modèle d'ordinateur";
 $LANG['plugin_fusinvinventory']['rule'][6]="Numéro de série des disques durs";
 $LANG['plugin_fusinvinventory']['rule'][7]="Numéro de série des partitions";
-$LANG['plugin_fusinvinventory']['rule'][8]="Tag";
+$LANG['plugin_fusinvinventory']['rule'][8]="Etiquette";
 $LANG['plugin_fusinvinventory']['rule'][30]="Import dans l'inventaire";
 $LANG['plugin_fusinvinventory']['rule'][31]="Import dans le matériel inconnu";
 $LANG['plugin_fusinvinventory']['rule'][100]="Règles d'entité";
-$LANG['plugin_fusinvinventory']['rule'][101]="Tag";
+$LANG['plugin_fusinvinventory']['rule'][101]="Etiquette";
 
-$LANG['plugin_fusinvinventory']['blacklist'][0]="Valeurs blacklistées";
-$LANG['plugin_fusinvinventory']['blacklist'][1]="Nouvelle valeur à blacklister";
+$LANG['plugin_fusinvinventory']['blacklist'][0]="Valeurs en liste noire";
+$LANG['plugin_fusinvinventory']['blacklist'][1]="Nouvelle valeur à ajouter en liste noire";
 
 $LANG['plugin_fusinvinventory']['profile'][2]="Règles d'existence";
 $LANG['plugin_fusinvinventory']['profile'][3]="Import manuel de fichier XML";
-$LANG['plugin_fusinvinventory']['profile'][4]="Blacklist de champs";
+$LANG['plugin_fusinvinventory']['profile'][4]="Liste noire de champs";
 
 $LANG['plugin_fusinvinventory']['antivirus'][0]="Antivirus";
 $LANG['plugin_fusinvinventory']['antivirus'][1]="Pas d'antivirus sur cet ordinateur";
