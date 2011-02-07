@@ -1,37 +1,36 @@
 <?php
+
 /*
- * @version $Id$
- ----------------------------------------------------------------------
- FusionInventory
- Coded by the FusionInventory Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org//
- ----------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: David DURIEUX
-// Purpose of file:
-// ----------------------------------------------------------------------
 
 $title="FusionInventory SNMP";
 $version="2.3.0-1";
@@ -39,22 +38,13 @@ $version="2.3.0-1";
 $LANG['plugin_fusinvsnmp']['title'][0]="$title";
 $LANG['plugin_fusinvsnmp']['title'][1]="SNMP information";
 $LANG['plugin_fusinvsnmp']['title'][2]="connections history";
-$LANG['plugin_fusinvsnmp']['title'][3]="[Trk] Errors";
-$LANG['plugin_fusinvsnmp']['title'][4]="[Trk] Cron";
 $LANG['plugin_fusinvsnmp']['title'][5]="FusionInventory's locks";
 
-$LANG['plugin_fusinvsnmp']['config'][0] = "Inventory frequency (in hours)";
-$LANG['plugin_fusinvsnmp']['config'][1] = "Modules";
-$LANG['plugin_fusinvsnmp']['config'][2] = "Snmp";
 $LANG['plugin_fusinvsnmp']['config'][3] = "Inventory";
 $LANG['plugin_fusinvsnmp']['config'][4] = "Devices discovery";
-$LANG['plugin_fusinvsnmp']['config'][5] = "Manage agent directly from GLPI";
-$LANG['plugin_fusinvsnmp']['config'][6] = "Wake On Lan";
-$LANG['plugin_fusinvsnmp']['config'][7] = "SNMP query";
 $LANG['plugin_fusinvsnmp']['config'][8] = "Never";
 $LANG['plugin_fusinvsnmp']['config'][9] = "Always";
 
-$LANG['plugin_fusinvsnmp']['profile'][1]="$title";
 $LANG['plugin_fusinvsnmp']['profile'][2]="Configuration";
 $LANG['plugin_fusinvsnmp']['profile'][3]="SNMP authentication";
 $LANG['plugin_fusinvsnmp']['profile'][4]="IP Range";
@@ -62,122 +52,19 @@ $LANG['plugin_fusinvsnmp']['profile'][5]="Network equipment SNMP";
 $LANG['plugin_fusinvsnmp']['profile'][6]="Printer SNMP";
 $LANG['plugin_fusinvsnmp']['profile'][7]="SNMP model";
 
-$LANG['plugin_fusinvsnmp']['profile'][10]="Profiles configured";
-$LANG['plugin_fusinvsnmp']['profile'][11]="Computer history";
-$LANG['plugin_fusinvsnmp']['profile'][12]="Printer history";
-$LANG['plugin_fusinvsnmp']['profile'][13]="Printer information";
-$LANG['plugin_fusinvsnmp']['profile'][14]="Network information";
-$LANG['plugin_fusinvsnmp']['profile'][15]="Errors";
-
-$LANG['plugin_fusinvsnmp']['profile'][16]="SNMP networking";
-$LANG['plugin_fusinvsnmp']['profile'][17]="SNMP peripheral";
-$LANG['plugin_fusinvsnmp']['profile'][18]="SNMP printers";
-$LANG['plugin_fusinvsnmp']['profile'][19]="SNMP models";
-$LANG['plugin_fusinvsnmp']['profile'][20]="SNMP authentication";
-$LANG['plugin_fusinvsnmp']['profile'][21]="Script information";
-$LANG['plugin_fusinvsnmp']['profile'][22]="Network discovery";
-$LANG['plugin_fusinvsnmp']['profile'][23]="General configuration";
-$LANG['plugin_fusinvsnmp']['profile'][24]="SNMP model";
-$LANG['plugin_fusinvsnmp']['profile'][25]="IP range";
-$LANG['plugin_fusinvsnmp']['profile'][26]="Agent";
-$LANG['plugin_fusinvsnmp']['profile'][27]="Agents processes";
-$LANG['plugin_fusinvsnmp']['profile'][28]="Report";
-$LANG['plugin_fusinvsnmp']['profile'][29]="Remote control of agents";
-$LANG['plugin_fusinvsnmp']['profile'][30]="Unknown devices";
-$LANG['plugin_fusinvsnmp']['profile'][31]="device inventory FusionInventory";
-$LANG['plugin_fusinvsnmp']['profile'][32]="SNMP query";
-$LANG['plugin_fusinvsnmp']['profile'][33]="WakeOnLan";
-$LANG['plugin_fusinvsnmp']['profile'][34]="Actions";
-
-$LANG['plugin_fusinvsnmp']['setup'][2]="Thanks to put all in root entity (see all)";
-$LANG['plugin_fusinvsnmp']['setup'][3]="Plugin configuration".$title;
-$LANG['plugin_fusinvsnmp']['setup'][4]="Install plugin $title $version";
-$LANG['plugin_fusinvsnmp']['setup'][5]="Update plugin $title to version $version";
-$LANG['plugin_fusinvsnmp']['setup'][6]="Uninstall plugin $title $version";
-$LANG['plugin_fusinvsnmp']['setup'][8]="Attention, uninstalling this plugin is an irreversible step.<br> You will loose all datas.";
-$LANG['plugin_fusinvsnmp']['setup'][11]="Instructions";
-$LANG['plugin_fusinvsnmp']['setup'][12]="FAQ";
-$LANG['plugin_fusinvsnmp']['setup'][13]="Verification of PHP modules";
-$LANG['plugin_fusinvsnmp']['setup'][14]="SNMP extension of PHP isn't load";
-$LANG['plugin_fusinvsnmp']['setup'][15]="PHP/PECL runkit extension isn't load";
-$LANG['plugin_fusinvsnmp']['setup'][16]="Documentation";
 $LANG['plugin_fusinvsnmp']['setup'][17]="Plugin ".$title." need plugin FusionInventory activated before activation.";
 $LANG['plugin_fusinvsnmp']['setup'][18]="Plugin ".$title." need plugin FusionInventory activated before uninstall.";
 $LANG['plugin_fusinvsnmp']['setup'][19]="Converting history port";
 $LANG['plugin_fusinvsnmp']['setup'][20]="Moving creation connections history";
 $LANG['plugin_fusinvsnmp']['setup'][21]="Moving deleted connections history";
 
-$LANG['plugin_fusinvsnmp']['functionalities'][0]="Features";
-$LANG['plugin_fusinvsnmp']['functionalities'][1]="Add / Delete features";
-$LANG['plugin_fusinvsnmp']['functionalities'][2]="General configuration";
 $LANG['plugin_fusinvsnmp']['functionalities'][3]="SNMP";
-$LANG['plugin_fusinvsnmp']['functionalities'][4]="Connection";
-$LANG['plugin_fusinvsnmp']['functionalities'][5]="Server script";
-$LANG['plugin_fusinvsnmp']['functionalities'][6]="Legend";
-$LANG['plugin_fusinvsnmp']['functionalities'][7]="Lockable fields";
-
-$LANG['plugin_fusinvsnmp']['functionalities'][9]="Retention in days";
-$LANG['plugin_fusinvsnmp']['functionalities'][10]="History is_active";
-$LANG['plugin_fusinvsnmp']['functionalities'][11]="Connection module is_active";
-$LANG['plugin_fusinvsnmp']['functionalities'][12]="SNMP networking module is_active";
-$LANG['plugin_fusinvsnmp']['functionalities'][13]="SNMP peripheral module is_active";
-$LANG['plugin_fusinvsnmp']['functionalities'][14]="SNMP phones module is_active";
-$LANG['plugin_fusinvsnmp']['functionalities'][15]="SNMP printers module is_active";
-$LANG['plugin_fusinvsnmp']['functionalities'][16]="SNMP authentication";
-$LANG['plugin_fusinvsnmp']['functionalities'][17]="Database";
-$LANG['plugin_fusinvsnmp']['functionalities'][18]="Files";
-$LANG['plugin_fusinvsnmp']['functionalities'][19]="Please configure the SNMP authentication in the setup of the plugin";
-$LANG['plugin_fusinvsnmp']['functionalities'][20]="Status of active devices";
-$LANG['plugin_fusinvsnmp']['functionalities'][21]="Retention of the historical interconnections between material in days (0 = infinity)";
-$LANG['plugin_fusinvsnmp']['functionalities'][22]="Retention of the historic changes to the state of ports (0 = infinity)";
-$LANG['plugin_fusinvsnmp']['functionalities'][23]="Retention of history unknown MAC addresses (0 = infinity)";
-$LANG['plugin_fusinvsnmp']['functionalities'][24]="Retention of historical errors SNMP (0 = infinity))";
-$LANG['plugin_fusinvsnmp']['functionalities'][25]="Retention of historical processes scripts (0 = infinity)";
-$LANG['plugin_fusinvsnmp']['functionalities'][26]="GLPI URL for agent";
-$LANG['plugin_fusinvsnmp']['functionalities'][27]="SSL only for agent";
-$LANG['plugin_fusinvsnmp']['functionalities'][28]="History configuration";
-$LANG['plugin_fusinvsnmp']['functionalities'][29]="List of fields to history";
-
-$LANG['plugin_fusinvsnmp']['functionalities'][30]="Status of active material";
-$LANG['plugin_fusinvsnmp']['functionalities'][31]="Management of cartridges and stock";
-$LANG['plugin_fusinvsnmp']['functionalities'][32]="Delete agents informations processes after";
-$LANG['plugin_fusinvsnmp']['functionalities'][36]="Frequency of meter reading";
-
-$LANG['plugin_fusinvsnmp']['functionalities'][40]="Configuration";
-$LANG['plugin_fusinvsnmp']['functionalities'][41]="Status of active material";
-$LANG['plugin_fusinvsnmp']['functionalities'][42]="Switch";
 $LANG['plugin_fusinvsnmp']['functionalities'][43]="SNMP authentication";
 
-$LANG['plugin_fusinvsnmp']['functionalities'][50]="Number of simultaneous processes for the network discovery";
-$LANG['plugin_fusinvsnmp']['functionalities'][51]="Number of simultaneous processes for SNMP queries";
-$LANG['plugin_fusinvsnmp']['functionalities'][52]="Log files is_active";
-$LANG['plugin_fusinvsnmp']['functionalities'][53]="Number of simultanous processes to be used by server script";
-
-$LANG['plugin_fusinvsnmp']['functionalities'][60]="Clean history";
-
-$LANG['plugin_fusinvsnmp']['functionalities'][70]="Lockable fields configuration";
-$LANG['plugin_fusinvsnmp']['functionalities'][71]="Unlockable fields";
-$LANG['plugin_fusinvsnmp']['functionalities'][72]="Table";
-$LANG['plugin_fusinvsnmp']['functionalities'][73]="Fields";
-$LANG['plugin_fusinvsnmp']['functionalities'][74]="Values";
-$LANG['plugin_fusinvsnmp']['functionalities'][75]="Locks";
-
-$LANG['plugin_fusinvsnmp']['snmp'][0]="SNMP information of equipment";
-$LANG['plugin_fusinvsnmp']['snmp'][1]="General";
-$LANG['plugin_fusinvsnmp']['snmp'][2]="Cabling";
-$LANG['plugin_fusinvsnmp']['snmp'][3]="SNMP data";
 $LANG['plugin_fusinvsnmp']['snmp'][4]="Sysdescr";
-
-$LANG['plugin_fusinvsnmp']['snmp'][11]="Additional information";
 $LANG['plugin_fusinvsnmp']['snmp'][12]="Uptime";
 $LANG['plugin_fusinvsnmp']['snmp'][13]="CPU usage (in %)";
 $LANG['plugin_fusinvsnmp']['snmp'][14]="Memory usage (in %)";
-
-$LANG['plugin_fusinvsnmp']['snmp'][31]="Unable to retrieve SNMP info: This is not a switch !";
-$LANG['plugin_fusinvsnmp']['snmp'][32]="Unable to retrieve SNMP information: Hardware inactive !";
-$LANG['plugin_fusinvsnmp']['snmp'][33]="Unable to retrieve SNMP information: IP not specified in the basic !";
-$LANG['plugin_fusinvsnmp']['snmp'][34]="The switch is connected to a machine that is not filled !";
-
 $LANG['plugin_fusinvsnmp']['snmp'][40]="Ports array";
 $LANG['plugin_fusinvsnmp']['snmp'][41]="Port description";
 $LANG['plugin_fusinvsnmp']['snmp'][42]="MTU";
@@ -202,53 +89,14 @@ $LANG['plugin_fusinvsnmp']['snmpauth'][5]="Password";
 $LANG['plugin_fusinvsnmp']['snmpauth'][6]="Encryption protocol for data (write)";
 $LANG['plugin_fusinvsnmp']['snmpauth'][7]="Password (write)";
 
-$LANG['plugin_fusinvsnmp']['cron'][0]="Automatic reading meter";
-$LANG['plugin_fusinvsnmp']['cron'][1]="Activate the record";
-$LANG['plugin_fusinvsnmp']['cron'][2]="";
-$LANG['plugin_fusinvsnmp']['cron'][3]="Default";
-
-$LANG['plugin_fusinvsnmp']['errors'][0]="Errors";
-$LANG['plugin_fusinvsnmp']['errors'][1]="IP";
-$LANG['plugin_fusinvsnmp']['errors'][2]="Description";
-$LANG['plugin_fusinvsnmp']['errors'][3]="Date first problem";
-$LANG['plugin_fusinvsnmp']['errors'][4]="Date last problem";
-
-$LANG['plugin_fusinvsnmp']['errors'][10]="Inconsistent with the basic GLPI";
-$LANG['plugin_fusinvsnmp']['errors'][11]="Position unknown";
-$LANG['plugin_fusinvsnmp']['errors'][12]="Unknown IP";
-
-$LANG['plugin_fusinvsnmp']['errors'][20]="SNMP errors";
-$LANG['plugin_fusinvsnmp']['errors'][21]="Unable to retrieve information";
-$LANG['plugin_fusinvsnmp']['errors'][22]="Unattended element in";
-$LANG['plugin_fusinvsnmp']['errors'][23]="Unable to identify device";
-
-$LANG['plugin_fusinvsnmp']['errors'][30]="Wiring error";
-$LANG['plugin_fusinvsnmp']['errors'][31]="Wiring problem";
-
 $LANG['plugin_fusinvsnmp']['errors'][50]="GLPI version not compatible need 0.78";
 
-$LANG['plugin_fusinvsnmp']['errors'][101]="Timeout";
-$LANG['plugin_fusinvsnmp']['errors'][102]="No SNMP model assigned";
-$LANG['plugin_fusinvsnmp']['errors'][103]="No SNMP authentication assigned";
-$LANG['plugin_fusinvsnmp']['errors'][104]="Error message";
-
-$LANG['plugin_fusinvsnmp']['history'][0] = "Old";
-$LANG['plugin_fusinvsnmp']['history'][1] = "New";
-$LANG['plugin_fusinvsnmp']['history'][2] = "Disconnect";
-$LANG['plugin_fusinvsnmp']['history'][3] = "Connection";
-
 $LANG['plugin_fusinvsnmp']['prt_history'][0]="History and Statistics of printer counters";
-
-$LANG['plugin_fusinvsnmp']['prt_history'][10]="Printer counter statistics";
-$LANG['plugin_fusinvsnmp']['prt_history'][11]="day(s)";
 $LANG['plugin_fusinvsnmp']['prt_history'][12]="Total printed pages";
 $LANG['plugin_fusinvsnmp']['prt_history'][13]="Pages / day";
-
 $LANG['plugin_fusinvsnmp']['prt_history'][20]="History meter printer";
 $LANG['plugin_fusinvsnmp']['prt_history'][21]="Date";
 $LANG['plugin_fusinvsnmp']['prt_history'][22]="Meter";
-
-$LANG['plugin_fusinvsnmp']['prt_history'][30]="Display";
 $LANG['plugin_fusinvsnmp']['prt_history'][31]="Time unit";
 $LANG['plugin_fusinvsnmp']['prt_history'][32]="Add a printer";
 $LANG['plugin_fusinvsnmp']['prt_history'][33]="Remove a printer";
@@ -257,40 +105,14 @@ $LANG['plugin_fusinvsnmp']['prt_history'][35]="week";
 $LANG['plugin_fusinvsnmp']['prt_history'][36]="month";
 $LANG['plugin_fusinvsnmp']['prt_history'][37]="year";
 
-$LANG['plugin_fusinvsnmp']['cpt_history'][0]="History sessions";
-$LANG['plugin_fusinvsnmp']['cpt_history'][1]="Contact";
-$LANG['plugin_fusinvsnmp']['cpt_history'][2]="Computer";
-$LANG['plugin_fusinvsnmp']['cpt_history'][3]="User";
-$LANG['plugin_fusinvsnmp']['cpt_history'][4]="State";
-$LANG['plugin_fusinvsnmp']['cpt_history'][5]="Date";
-
-$LANG['plugin_fusinvsnmp']['type'][1]="Computer";
-$LANG['plugin_fusinvsnmp']['type'][2]="Switch";
-$LANG['plugin_fusinvsnmp']['type'][3]="Printer";
-
-$LANG['plugin_fusinvsnmp']['rules'][1]="Rules";
-
-$LANG['plugin_fusinvsnmp']['rule'][0]="Networking equipment existent criteria rules";
-$LANG['plugin_fusinvsnmp']['rule'][1]="Existant criterium";
-$LANG['plugin_fusinvsnmp']['rule'][2]="Serial Number";
-$LANG['plugin_fusinvsnmp']['rule'][3]="MAC address";
-$LANG['plugin_fusinvsnmp']['rule'][5]="Networking equipment model";
-$LANG['plugin_fusinvsnmp']['rule'][6]="Networking equipment name";
-
-$LANG['plugin_fusinvsnmp']['rule'][30]="Import in asset";
-$LANG['plugin_fusinvsnmp']['rule'][31]="Import in unknown devices";
-
 $LANG['plugin_fusinvsnmp']['massiveaction'][1]="Assign SNMP model";
 $LANG['plugin_fusinvsnmp']['massiveaction'][2]="Assign SNMP authentication";
 
-$LANG['plugin_fusinvsnmp']['model_info'][1]="SNMP information";
 $LANG['plugin_fusinvsnmp']['model_info'][2]="SNMP version";
 $LANG['plugin_fusinvsnmp']['model_info'][3]="SNMP authentication";
 $LANG['plugin_fusinvsnmp']['model_info'][4]="SNMP models";
-$LANG['plugin_fusinvsnmp']['model_info'][5]="MIB management";
 $LANG['plugin_fusinvsnmp']['model_info'][6]="Edit SNMP model";
 $LANG['plugin_fusinvsnmp']['model_info'][7]="Create SNMP model";
-$LANG['plugin_fusinvsnmp']['model_info'][8]="Model already exists: import was not done";
 $LANG['plugin_fusinvsnmp']['model_info'][9]="Import completed successfully";
 $LANG['plugin_fusinvsnmp']['model_info'][10]="SNMP model import";
 $LANG['plugin_fusinvsnmp']['model_info'][11]="is_active";
@@ -310,49 +132,8 @@ $LANG['plugin_fusinvsnmp']['mib'][7]="Dynamic port (.x)";
 $LANG['plugin_fusinvsnmp']['mib'][8]="Linked fields";
 $LANG['plugin_fusinvsnmp']['mib'][9]="Vlan";
 
-$LANG['plugin_fusinvsnmp']['processes'][0]="History of script executions";
-$LANG['plugin_fusinvsnmp']['processes'][1]="PID";
-$LANG['plugin_fusinvsnmp']['processes'][2]="Status";
-$LANG['plugin_fusinvsnmp']['processes'][3]="Number of processes";
-$LANG['plugin_fusinvsnmp']['processes'][4]="Start date of execution";
-$LANG['plugin_fusinvsnmp']['processes'][5]="End date of execution";
-$LANG['plugin_fusinvsnmp']['processes'][6]="Network equipment queried";
-$LANG['plugin_fusinvsnmp']['processes'][7]="Printers queried";
-$LANG['plugin_fusinvsnmp']['processes'][8]="Ports queried";
-$LANG['plugin_fusinvsnmp']['processes'][9]="Errors";
-$LANG['plugin_fusinvsnmp']['processes'][10]="Time Script";
-$LANG['plugin_fusinvsnmp']['processes'][11]="added fields";
-$LANG['plugin_fusinvsnmp']['processes'][12]="SNMP errors";
-$LANG['plugin_fusinvsnmp']['processes'][13]="Unknown MAC";
-$LANG['plugin_fusinvsnmp']['processes'][14]="List of unknown MAC addresses";
-$LANG['plugin_fusinvsnmp']['processes'][15]="First PID";
-$LANG['plugin_fusinvsnmp']['processes'][16]="Last PID";
-$LANG['plugin_fusinvsnmp']['processes'][17]="Date of first detection";
-$LANG['plugin_fusinvsnmp']['processes'][18]="Date of last detection";
-$LANG['plugin_fusinvsnmp']['processes'][19]="History of agent executions";
-$LANG['plugin_fusinvsnmp']['processes'][20]="Reports and Statistics";
-$LANG['plugin_fusinvsnmp']['processes'][21]="Queried devices";
-$LANG['plugin_fusinvsnmp']['processes'][22]="Errors";
-$LANG['plugin_fusinvsnmp']['processes'][23]="Total duration of discovery";
-$LANG['plugin_fusinvsnmp']['processes'][24]="Total duration of query";
-$LANG['plugin_fusinvsnmp']['processes'][25]="Agent";
-$LANG['plugin_fusinvsnmp']['processes'][26]="Discover";
-$LANG['plugin_fusinvsnmp']['processes'][27]="Query";
-$LANG['plugin_fusinvsnmp']['processes'][28]="Core";
-$LANG['plugin_fusinvsnmp']['processes'][29]="Threads";
-$LANG['plugin_fusinvsnmp']['processes'][30]="Discovered";
-$LANG['plugin_fusinvsnmp']['processes'][31]="Existent";
-$LANG['plugin_fusinvsnmp']['processes'][32]="Imported";
-$LANG['plugin_fusinvsnmp']['processes'][33]="Queried";
-$LANG['plugin_fusinvsnmp']['processes'][34]="In error";
-$LANG['plugin_fusinvsnmp']['processes'][35]="Created connections";
-$LANG['plugin_fusinvsnmp']['processes'][36]="Deleted connections";
 $LANG['plugin_fusinvsnmp']['processes'][37]="IP total";
 
-$LANG['plugin_fusinvsnmp']['state'][0]="Computer start";
-$LANG['plugin_fusinvsnmp']['state'][1]="Computer stop";
-$LANG['plugin_fusinvsnmp']['state'][2]="User connection";
-$LANG['plugin_fusinvsnmp']['state'][3]="User disconnection";
 $LANG['plugin_fusinvsnmp']['state'][4]="Starting date";
 $LANG['plugin_fusinvsnmp']['state'][5]="Ending date";
 $LANG['plugin_fusinvsnmp']['state'][6]="Total discovery devices";
@@ -555,81 +336,26 @@ $LANG['plugin_fusinvsnmp']['mapping'][1427]="Number of printed black and white p
 $LANG['plugin_fusinvsnmp']['mapping'][1428]="Number of printed color pages (copy)";
 $LANG['plugin_fusinvsnmp']['mapping'][1429]="Total number of printed pages (fax)";
 
-
-$LANG['plugin_fusinvsnmp']['printer'][0]="pages";
-
-$LANG['plugin_fusinvsnmp']['menu'][0]="Information about discovered devices";
-$LANG['plugin_fusinvsnmp']['menu'][1]="Agent configuration";
 $LANG['plugin_fusinvsnmp']['menu'][2]="IP range configuration";
-$LANG['plugin_fusinvsnmp']['menu'][3]="Menu";
-$LANG['plugin_fusinvsnmp']['menu'][4]="Unknown device";
 $LANG['plugin_fusinvsnmp']['menu'][5]="Switchs ports history";
 $LANG['plugin_fusinvsnmp']['menu'][6]="Unused switchs ports";
-$LANG['plugin_fusinvsnmp']['menu'][7]="Discovery criteria rules";
-$LANG['plugin_fusinvsnmp']['menu'][8]="Inventory criteria rules";
 $LANG['plugin_fusinvsnmp']['menu'][9]="Discovery status";
 $LANG['plugin_fusinvsnmp']['menu'][10]="Network inventory status";
 
-$LANG['plugin_fusinvsnmp']['buttons'][0]="Discover";
-
-$LANG['plugin_fusinvsnmp']['discovery'][0]="IP range to scan";
-$LANG['plugin_fusinvsnmp']['discovery'][1]="Discovered devices";
-$LANG['plugin_fusinvsnmp']['discovery'][2]="is_active in the script automatically";
-$LANG['plugin_fusinvsnmp']['discovery'][3]="Discover";
-$LANG['plugin_fusinvsnmp']['discovery'][4]="Serial number";
 $LANG['plugin_fusinvsnmp']['discovery'][5]="Number of imported devices";
-$LANG['plugin_fusinvsnmp']['discovery'][8]="If a device returns empty fields on first ciriteria, second one will be used.";
 $LANG['plugin_fusinvsnmp']['discovery'][9]="Number of devices not imported because type non defined";
 
 $LANG['plugin_fusinvsnmp']['iprange'][0]="Start of IP range";
 $LANG['plugin_fusinvsnmp']['iprange'][1]="End of IP range";
 $LANG['plugin_fusinvsnmp']['iprange'][2]="IP Ranges";
 $LANG['plugin_fusinvsnmp']['iprange'][3]="Query";
-$LANG['plugin_fusinvsnmp']['iprange'][4]="Incorrect IP address";
-$LANG['plugin_fusinvsnmp']['iprange'][5]="Edit IP range";
-$LANG['plugin_fusinvsnmp']['iprange'][6]="Create range IP";
 $LANG['plugin_fusinvsnmp']['iprange'][7]="Bad IP";
 
-$LANG['plugin_fusinvsnmp']['agents'][0]="SNMP Agent";
-$LANG['plugin_fusinvsnmp']['agents'][2]="Number of threads used by core for querying devices";
-$LANG['plugin_fusinvsnmp']['agents'][3]="Number of threads used by core for network discovery";
-$LANG['plugin_fusinvsnmp']['agents'][4]="Last scan";
-$LANG['plugin_fusinvsnmp']['agents'][5]="Agent version";
-$LANG['plugin_fusinvsnmp']['agents'][6]="Lock";
-$LANG['plugin_fusinvsnmp']['agents'][7]="Export agent configuration";
-$LANG['plugin_fusinvsnmp']['agents'][9]="Advanced options";
-$LANG['plugin_fusinvsnmp']['agents'][12]="Discovery Agent";
-$LANG['plugin_fusinvsnmp']['agents'][13]="Query Agent";
-$LANG['plugin_fusinvsnmp']['agents'][14]="Agent actions";
-$LANG['plugin_fusinvsnmp']['agents'][15]="Agent state";
-$LANG['plugin_fusinvsnmp']['agents'][16]="Initialized";
-$LANG['plugin_fusinvsnmp']['agents'][17]="Agent is running";
-$LANG['plugin_fusinvsnmp']['agents'][18]="Inventory has been received";
-$LANG['plugin_fusinvsnmp']['agents'][19]="Inventory has been sended to OCS server";
-$LANG['plugin_fusinvsnmp']['agents'][20]="Synchronisation between OCS and GLPI is running";
-$LANG['plugin_fusinvsnmp']['agents'][21]="Inventory terminated";
-$LANG['plugin_fusinvsnmp']['agents'][22]="Wait";
-$LANG['plugin_fusinvsnmp']['agents'][23]="Computer link";
 $LANG['plugin_fusinvsnmp']['agents'][24]="Threads number";
 $LANG['plugin_fusinvsnmp']['agents'][25]="Agent(s)";
 $LANG['plugin_fusinvsnmp']['agents'][26]="Netdiscovery module version";
 $LANG['plugin_fusinvsnmp']['agents'][27]="Snmpquery module version";
 
-$LANG['plugin_fusinvsnmp']['task'][0]="Task";
-$LANG['plugin_fusinvsnmp']['task'][1]="Task management";
-$LANG['plugin_fusinvsnmp']['task'][2]="Action";
-$LANG['plugin_fusinvsnmp']['task'][3]="Unit";
-$LANG['plugin_fusinvsnmp']['task'][4]="Get now informations";
-$LANG['plugin_fusinvsnmp']['task'][5]="Select OCS Agent";
-$LANG['plugin_fusinvsnmp']['task'][6]="Get state";
-$LANG['plugin_fusinvsnmp']['task'][7]="State";
-$LANG['plugin_fusinvsnmp']['task'][8]="Ready";
-$LANG['plugin_fusinvsnmp']['task'][9]="Not respond";
-$LANG['plugin_fusinvsnmp']['task'][10]="Running... not available";
-$LANG['plugin_fusinvsnmp']['task'][11]="Agent has been notified and begin running";
-$LANG['plugin_fusinvsnmp']['task'][12]="Wake agent";
-$LANG['plugin_fusinvsnmp']['task'][13]="Agent(s) unvailable";
-$LANG['plugin_fusinvsnmp']['task'][14]="Planified on";
 $LANG['plugin_fusinvsnmp']['task'][15]="Permanent task - Discovery";
 $LANG['plugin_fusinvsnmp']['task'][16]="Permanent task - Inventory";
 $LANG['plugin_fusinvsnmp']['task'][17]="Communication type";
@@ -641,12 +367,8 @@ $LANG['plugin_fusinvsnmp']['constructdevice'][3]="Delete models non used";
 $LANG['plugin_fusinvsnmp']['constructdevice'][4]="Export all models";
 $LANG['plugin_fusinvsnmp']['constructdevice'][5]="Re-create models comments";
 
-$LANG['plugin_fusinvsnmp']['update'][0]="your history table have more than 300 000 entries, you must run this command to finish update : ";
-
 $LANG['plugin_fusinvsnmp']['stats'][0]="Total counter";
 $LANG['plugin_fusinvsnmp']['stats'][1]="pages per day";
 $LANG['plugin_fusinvsnmp']['stats'][2]="Display";
 
-
-$LANG['plugin_fusinvsnmp']['xml'][0]="XML FusionInventory";
 ?>
