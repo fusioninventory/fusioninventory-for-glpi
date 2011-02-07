@@ -314,7 +314,10 @@ if (!unserialize($serializedSectionToRemove)) {
                            break;
                            
                         case "PROCESSES":
-                           if ((isset($arrSectionToAdd["STARTED"]) AND ($arrSectionToAdd["STARTED"] == $arrSectionToRemove["STARTED"])) AND ($arrSectionToAdd["PID"] == $arrSectionToRemove["PID"])) {
+                           if ((isset($arrSectionToAdd["STARTED"])
+                                 AND (isset($arrSectionToRemove["STARTED"]))
+                                 AND ($arrSectionToAdd["STARTED"] == $arrSectionToRemove["STARTED"]))
+                                 AND ($arrSectionToAdd["PID"] == $arrSectionToRemove["PID"])) {
                   				$boolUpdate = true;
                            }
                            break;
