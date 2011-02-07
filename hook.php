@@ -1030,7 +1030,7 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
 					$array[1] = $LANG['plugin_fusinvsnmp']['title'][0];
 				}
             if ($_GET['id'] > 0) {
-               $array[2] = $LANG['plugin_fusinvsnmp']['xml'][0];
+               $array[2] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['xml'][0];
             }
             return $array;
 			}
@@ -1047,7 +1047,7 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
 					$array[1] = $LANG['plugin_fusinvsnmp']['title'][0];
 				}
             if ($_GET['id'] > 0) {
-               $array[2] = $LANG['plugin_fusinvsnmp']['xml'][0];
+               $array[2] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['xml'][0];
             }
             return $array;
 			}
