@@ -121,9 +121,9 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          } else { // Non template case / editing an existing object
             $array = array ();
             if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
-               $array[2] = $LANG['plugin_fusioninventory']['title'][5];
+               $array[2] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['title'][5];
             }
-            $array[3] = $LANG['plugin_fusioninventory']['title'][0]." - ".$LANG['plugin_fusioninventory']['task'][18];
+            $array[3] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['task'][18];
             return $array;
          }
          break;
@@ -134,7 +134,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          } else { // Non template case / editing an existing object
             $array = array ();
             if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
-               $array[1] = $LANG['plugin_fusioninventory']['title'][5];
+               $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['title'][5];
             }
             return $array;
          }
@@ -146,9 +146,9 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          } else { // Non template case / editing an existing object
             $array = array ();
             if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
-               $array[1] = $LANG['plugin_fusioninventory']['title'][5];
+               $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['title'][5];
             }
-            $array[2] = $LANG['plugin_fusioninventory']['title'][0]." - ".$LANG['plugin_fusioninventory']['task'][18];
+            $array[2] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['task'][18];
             return $array;
          }
          break;
@@ -159,9 +159,9 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          } else { // Non template case / editing an existing object
             $array = array ();
             if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
-               $array[1] = $LANG['plugin_fusioninventory']['title'][5];
+               $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['title'][5];
             }
-            $array[2] = $LANG['plugin_fusioninventory']['title'][0]." - ".$LANG['plugin_fusioninventory']['task'][18];
+            $array[2] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['task'][18];
             return $array;
          }
          break;
@@ -181,7 +181,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
       case 'PluginFusioninventoryUnknownDevice' :
          $array = array ();
          if ($_GET['id'] > 0) {
-            $array[1] = $LANG['plugin_fusioninventory']['xml'][0];
+            $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['xml'][0];
          }
          return $array;
          break;

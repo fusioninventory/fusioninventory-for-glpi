@@ -36,7 +36,8 @@ $title="FusionInventory";
 $version="2.3.0";
 
 $LANG['plugin_fusioninventory']['title'][0]="$title";
-$LANG['plugin_fusioninventory']['title'][5]="FusionInventory's locks";
+$LANG['plugin_fusioninventory']['title'][1]="FusInv";
+$LANG['plugin_fusioninventory']['title'][5]="Locks";
 
 $LANG['plugin_fusioninventory']['config'][0] = "Inventory frequency (in hours)";
 
@@ -161,6 +162,6 @@ $LANG['plugin_fusioninventory']['taskjoblog'][7]="Prepared";
 
 $LANG['plugin_fusioninventory']['update'][0]="your history table have more than 300 000 entries, you must run this command to finish update : ";
 
-$LANG['plugin_fusioninventory']['xml'][0]="XML FusionInventory";
+$LANG['plugin_fusioninventory']['xml'][0]="XML";
 
 ?>

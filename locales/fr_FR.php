@@ -36,7 +36,8 @@ $title="FusionInventory";
 $version="2.3.0";
 
 $LANG['plugin_fusioninventory']['title'][0]="$title";
-$LANG['plugin_fusioninventory']['title'][5]="FusionInventory - Verrous";
+$LANG['plugin_fusioninventory']['title'][1]="FusInv";
+$LANG['plugin_fusioninventory']['title'][5]="Verrous";
 
 $LANG['plugin_fusioninventory']['config'][0] = "Fréquence des inventaires (en heures)";
 
@@ -161,6 +162,6 @@ $LANG['plugin_fusioninventory']['taskjoblog'][7]="Préparé";
 
 $LANG['plugin_fusioninventory']['update'][0]="Votre historique fait plus de 300 000 lignes, il faut lancer la commande suivante en ligne de commande pour finir la mise à jour : ";
 
-$LANG['plugin_fusioninventory']['xml'][0]="XML FusionInventory";
+$LANG['plugin_fusioninventory']['xml'][0]="XML";
 
 ?>

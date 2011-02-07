@@ -36,7 +36,8 @@ $title="FusionInventory";
 $version="2.3.0";
 
 $LANG['plugin_fusioninventory']['title'][0]="$title";
-$LANG['plugin_fusioninventory']['title'][5]="Bloqueios do FusionInventory";
+$LANG['plugin_fusioninventory']['title'][1]="FusInv";
+$LANG['plugin_fusioninventory']['title'][5]="Bloqueios";
 
 $LANG['plugin_fusioninventory']['config'][0] = "Frequência do inventário (em horas)";
 
@@ -161,6 +162,6 @@ $LANG['plugin_fusioninventory']['taskjoblog'][7]="Prepared";
 
 $LANG['plugin_fusioninventory']['update'][0]="sua tabela de histórico tem mais de 300.000 entradas, você deve executar este comando para finalizar a atualização : ";
 
-$LANG['plugin_fusioninventory']['xml'][0]="XML FusionInventory";
+$LANG['plugin_fusioninventory']['xml'][0]="XML";
 
 ?>
