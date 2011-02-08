@@ -578,6 +578,7 @@ INSERT INTO `glpi_plugin_fusioninventory_mappings`
           ('Printer','memory','glpi_printers','memory_size',26,NULL),
           ('Printer','location','glpi_printers','locations_id',56,NULL),
           ('Printer','informations','','',165,165),
+          ('Printer','serial','glpi_printers','serial',27,NULL),
 ## Cartridges
           ('Printer','tonerblack','','',157,157),
           ('Printer','tonerblack2','','',166,166),

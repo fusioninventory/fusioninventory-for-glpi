@@ -117,7 +117,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
       }
 
       // *** Add jobstatus
-      if (count($a_agentlist) == '0') {
+      if (count($a_agentlist) == 0) {
          $a_input = array();
          $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
          $a_input['state'] = 1;
