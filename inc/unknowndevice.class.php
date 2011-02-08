@@ -129,6 +129,12 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $tab[12]['name']      = $LANG['networking'][15];
       $tab[12]['datatype']  = 'text';
 
+      $tab[13]['table']     = $this->getTable();
+      $tab[13]['field']     = 'itemtype';
+      $tab[13]['linkfield'] = 'itemtype';
+      $tab[13]['name']      = $LANG['common'][17];
+
+
       return $tab;
    }
 
