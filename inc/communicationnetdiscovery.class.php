@@ -118,7 +118,10 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
 
    function sendCriteria($p_xml) {
-      
+      if ((isset($p_xml->MAC)) AND ($p_xml->MAC == "00:00:00:00:00:00")) {
+         unset($p_xml->MAC);
+      }
+
       $_SESSION['SOURCE_XMLDEVICE'] = $p_xml->asXML();
 
       $input = array();
@@ -141,6 +144,8 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
          $input['name'] = (string)$p_xml->NETBIOSNAME;
       } else if ((isset($p_xml->SNMPHOSTNAME)) AND (!empty($p_xml->SNMPHOSTNAME))) {
          $input['name'] = (string)$p_xml->SNMPHOSTNAME;
+      } else if ((isset($p_xml->DNSHOSTNAME)) AND (!empty($p_xml->DNSHOSTNAME))) {
+         $input['name'] = (string)$p_xml->DNSHOSTNAME;
       }
 
       switch ($p_xml->TYPE) {
