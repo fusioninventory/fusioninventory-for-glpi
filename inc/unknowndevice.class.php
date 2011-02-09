@@ -40,6 +40,13 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
 
+   static function getTypeName() {
+      global $LANG;
+
+      return "SNMP";
+   }
+
+
    function canCreate() {
       return true;
    }
@@ -51,6 +58,30 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
    function canDelete() {
       return false;
    }
+
+
+//   function getSearchOptions() {
+//      global $LANG;
+//
+//      $tab = array();
+//
+//      $tab['common'] = "SNMP";
+//
+//      $tab[100]['table']         = $this->getTable();
+//      $tab[100]['field']         = 'sysdescr';
+//      $tab[100]['linkfield']     = '';
+//      $tab[100]['name']          = $LANG['plugin_fusinvsnmp']['snmp'][4];
+//      $tab[100]['datatype']      = 'text';
+//
+////      $tab[101]['table']         = $this->getTable();
+////      $tab[101]['field']         = 'plugin_fusioninventory_unknowndevices_id';
+////      $tab[101]['linkfield']     = '';
+////      $tab[101]['name']          = "Model";
+////      $tab[101]['datatype']      = 'itemlink';
+////      $tab[101]['itemlink_type'] = 'PluginFusinvsnmpModel';
+//
+//      return $tab;
+//   }
 
 
    function showForm($id, $options=array()) {
@@ -83,7 +114,7 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
 		echo "<td align='center'>".$LANG['plugin_fusinvsnmp']['model_info'][4]."&nbsp;:</td>";
 		echo "<td align='center'>";
       Dropdown::show("PluginFusinvsnmpModel",
-                     array('name'=>"model_infos",
+                     array('name'=>"plugin_fusinvsnmp_models_id",
                            'value'=>$this->fields['plugin_fusinvsnmp_models_id'],
                            'comment'=>1,
                            'condition'=>"`itemtype`='".$PluginFusioninventoryUnknownDevice->fields['itemtype']."'"));
