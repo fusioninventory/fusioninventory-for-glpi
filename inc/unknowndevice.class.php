@@ -57,7 +57,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
       $tab = array();
 
-      $tab['common'] = $LANG['plugin_fusioninventory']['agents'][28];
+      $tab['common'] = $LANG['plugin_fusioninventory']['menu'][4];
 
       $tab[1]['table']         = $this->getTable();
       $tab[1]['field']         =  'name';
@@ -156,6 +156,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       }
 		return $ong;
 	}
+
+   
 
 	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
