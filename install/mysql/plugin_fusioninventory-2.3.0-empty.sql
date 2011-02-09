@@ -201,7 +201,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unknowndevices` (
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `date_mod` datetime DEFAULT NULL,
    `entities_id` int(11) NOT NULL DEFAULT '0',
-   `location` int(11) NOT NULL DEFAULT '0',
+   `locations_id` int(11) NOT NULL DEFAULT '0',
    `is_deleted` smallint(6) NOT NULL DEFAULT '0',
    `serial` VARCHAR( 255 ) NULL DEFAULT NULL,
    `otherserial` VARCHAR( 255 ) NULL DEFAULT NULL,
