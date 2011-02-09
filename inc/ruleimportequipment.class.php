@@ -369,11 +369,9 @@ logInFile("xxx", print_r($input, true));
             
             case 'ip' :
                $sql_where .= " AND `glpi_networkports`.`ip` IN ";
-               $sql_where_networkequipment .= " AND `[typetable]`.`ip` IN ";
-               for ($i=0 ; $i<count($input["ip"]) ; $i++) {
-                  $sql_where .= ($i>0 ? ',"' : '("').$input["ip"][$i].'"';
-                  $sql_where_networkequipment .= ($i>0 ? ',"' : '("').$input["ip"][$i].'"';
-               }
+               $sql_where_networkequipment .= " AND `[typetable]`.`ip` IN ('";
+               $sql_where .= implode("', '",$input['ip']);
+               $sql_where_networkequipment .= implode("', '",$input['ip']);
                $sql_where .= ")";
                $sql_where_networkequipment .= ")";
                break;
