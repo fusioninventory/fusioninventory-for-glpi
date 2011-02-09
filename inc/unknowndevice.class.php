@@ -60,29 +60,6 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
    }
 
 
-//   function getSearchOptions() {
-//      global $LANG;
-//
-//      $tab = array();
-//
-//      $tab['common'] = "SNMP";
-//
-//      $tab[100]['table']         = $this->getTable();
-//      $tab[100]['field']         = 'sysdescr';
-//      $tab[100]['linkfield']     = '';
-//      $tab[100]['name']          = $LANG['plugin_fusinvsnmp']['snmp'][4];
-//      $tab[100]['datatype']      = 'text';
-//
-////      $tab[101]['table']         = $this->getTable();
-////      $tab[101]['field']         = 'plugin_fusioninventory_unknowndevices_id';
-////      $tab[101]['linkfield']     = '';
-////      $tab[101]['name']          = "Model";
-////      $tab[101]['datatype']      = 'itemlink';
-////      $tab[101]['itemlink_type'] = 'PluginFusinvsnmpModel';
-//
-//      return $tab;
-//   }
-
 
    function showForm($id, $options=array()) {
       global $DB,$CFG_GLPI,$LANG;

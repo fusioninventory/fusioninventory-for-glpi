@@ -1221,7 +1221,6 @@ function plugin_headings_fusinvsnmp_xml($item) {
 
 
 
-
 function plugin_fusinvsnmp_MassiveActions($type) {
 	global $LANG;
 	switch ($type) {
