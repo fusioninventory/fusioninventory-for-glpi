@@ -211,17 +211,6 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       }
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'></td>";
-		echo "<td align='center'>";
-		echo "</td>";
-      echo "<td align='center'>" . $LANG['common'][18] . "&nbsp;:</td>";
-      echo "</td>";
-      echo "<td align='center'>";
-		echo "<input type='text' name='contact' value='" . $this->fields["contact"] . "' size='35'/>";
-      echo "</td>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['common'][17] . "&nbsp;:</td>";
 		echo "<td align='center'>";
          $type_list = array();
@@ -230,29 +219,12 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 			$type_list[] = 'Printer';
 			$type_list[] = 'Peripheral';
 			$type_list[] = 'Phone';
-//         // GENERIC OBJECT : Search types in generic object
-//         $plugin = new Plugin;
-//         if ($plugin->isActivated('genericobject')) {
-//            if (TableExists("glpi_plugin_genericobject_types")) {
-//               $query = "SELECT * FROM `glpi_plugin_genericobject_types`
-//                  WHERE `status`='1' ";
-//               if ($result=$DB->query($query)) {
-//                  while ($data=$DB->fetch_array($result)) {
-//                     $type_list[] = $data['itemtype'];
-//                  }
-//               }
-//            }
-//         }
-//         // END GENERIC OBJECT
       Dropdown::dropdownTypes('itemtype',$this->fields["itemtype"],$type_list);
 		echo "</td>";
-
-      echo "<td align='center'>" . $LANG['setup'][89] . "&nbsp;:</td>";
+      echo "<td align='center'>" . $LANG['common'][18] . "&nbsp;:</td>";
       echo "</td>";
       echo "<td align='center'>";
-      Dropdown::show("Domain",
-                     array('name'=>"domain",
-                           'value'=>$this->fields["domain"]));
+		echo "<input type='text' name='contact' value='" . $this->fields["contact"] . "' size='35'/>";
       echo "</td>";
 		echo "</tr>";
 
@@ -263,11 +235,12 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                      array('name'=>"locations_id",
                            'value'=>$this->fields["locations_id"]));
 		echo "</td>";
-
-      echo "<td align='center'>" . $LANG['common'][19] . "&nbsp;:</td>";
+      echo "<td align='center'>" . $LANG['setup'][89] . "&nbsp;:</td>";
       echo "</td>";
       echo "<td align='center'>";
-		echo "<input type='text' name='serial' value='" . $this->fields["serial"] . "' size='35'/>";
+      Dropdown::show("Domain",
+                     array('name'=>"domain",
+                           'value'=>$this->fields["domain"]));
       echo "</td>";
 		echo "</tr>";
 
@@ -276,7 +249,18 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 		echo "<td align='center'>";
       Dropdown::showYesNo("accepted", $this->fields["accepted"]);
 		echo "</td>";
+      echo "<td align='center'>" . $LANG['common'][19] . "&nbsp;:</td>";
+      echo "</td>";
+      echo "<td align='center'>";
+		echo "<input type='text' name='serial' value='" . $this->fields["serial"] . "' size='35'/>";
+      echo "</td>";
+		echo "</tr>";
 
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>" . $LANG['plugin_fusioninventory']['unknown'][4] . " :</td>";
+		echo "<td align='center'>";
+      echo Dropdown::getYesNo($this->fields["hub"]);
+		echo "</td>";
       echo "<td align='center'>" . $LANG['common'][20] . "&nbsp;:</td>";
       echo "</td>";
       echo "<td align='center'>";
@@ -300,26 +284,14 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       }
       
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'></td>";
-		echo "<td align='center'>";
-		echo "</td>";
-
       echo "<td align='center'>" . $LANG['common'][25] . " : </td>";
       echo "</td>";
-      echo "<td align='middle'>";
-      echo "<textarea  cols='50' rows='5' name='comment' >".$this->fields["comment"]."</textarea>";
+      echo "<td align='middle' colspan='3'>";
+      echo "<textarea  cols='80' rows='2' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "</td>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_fusioninventory']['unknown'][4] . " :</td>";
-		echo "<td align='center'>";
-      echo Dropdown::getYesNo($this->fields["hub"]);
-		echo "</td>";
-
-      echo "<td align='center' colspan='2'></td>";
-		echo "</tr>";
-      
+     
       $this->showFormButtons($options);
 
       echo "<div id='tabcontent'></div>";
