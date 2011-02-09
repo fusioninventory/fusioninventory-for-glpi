@@ -93,7 +93,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 		$tab[6]['field']     = 'contact';
 		$tab[6]['linkfield'] = 'contact';
 		$tab[6]['name']      = 'contact';
-		$tab[6]['datatype']  = 'itemlink';
+		$tab[6]['datatype']  = 'text';
 
 		$tab[7]['table']     = $this->getTable();
 		$tab[7]['field']     = 'hub';
