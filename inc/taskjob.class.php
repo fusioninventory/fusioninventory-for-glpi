@@ -265,7 +265,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</div>";
       echo "</td>";
       echo "</tr>";
-      
+
       
       echo "<script type='text/javascript'>
          function deldef(data) {
@@ -287,18 +287,17 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
 
       if ($id) {
-         if (count($PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$id."'")) > 0) {
-            echo "</table><br/>";
-            if ($id) {
-               $PluginFusioninventoryTaskjobstatus->stateTaskjob($id);
-
-               // Display graph finish
-               $PluginFusioninventoryTaskjoblog->graphFinish($id);
-               echo "<br/>";
-            }
-         } else {
+         if (count($PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$id."' AND `state` < 3")) == 0) {
             $this->showFormButtons($options);
          }
+         if (count($PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$id."'")) > 0) {
+ 
+            $PluginFusioninventoryTaskjobstatus->stateTaskjob($id);
+
+            // Display graph finish
+            $PluginFusioninventoryTaskjoblog->graphFinish($id);
+            echo "<br/>";
+         } 
       } else  {
          $this->showFormButtons($options);
       }
