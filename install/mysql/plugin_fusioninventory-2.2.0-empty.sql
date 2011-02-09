@@ -621,7 +621,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unknown_device` (
   `dnsname` VARCHAR( 255 ) NULL DEFAULT NULL,
   `date_mod` datetime DEFAULT NULL,
   `FK_entities` int(11) NOT NULL DEFAULT '0',
-  `location` int(11) NOT NULL DEFAULT '0',
+  `locations_id` int(11) NOT NULL DEFAULT '0',
   `deleted` smallint(6) NOT NULL DEFAULT '0',
   `serial` VARCHAR( 255 ) NULL DEFAULT NULL,
   `otherserial` VARCHAR( 255 ) NULL DEFAULT NULL,

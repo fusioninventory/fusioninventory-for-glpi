@@ -71,9 +71,9 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $tab[2]['linkfield'] = '';
       $tab[2]['name']      = $LANG['common'][2];
 
-		$tab[3]['table']     = $this->getTable();
-		$tab[3]['field']     = 'location';
-		$tab[3]['linkfield'] = 'location';
+		$tab[3]['table']     = 'glpi_locations';
+		$tab[3]['field']     = 'name';
+		$tab[3]['linkfield'] = 'locations_id';
 		$tab[3]['name']      = $LANG['common'][15];
 		$tab[3]['datatype']  = 'text';
 
@@ -260,8 +260,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 		echo "<td align='center'>" . $LANG['common'][15] . "&nbsp;:</td>";
 		echo "<td align='center'>";
       Dropdown::show("Location",
-                     array('name'=>"location",
-                           'value'=>$this->fields["location"]));
+                     array('name'=>"locations_id",
+                           'value'=>$this->fields["locations_id"]));
 		echo "</td>";
 
       echo "<td align='center'>" . $LANG['common'][19] . "&nbsp;:</td>";
@@ -786,7 +786,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             if (!empty($this->fields["name"])) {
                $data["name"] = $this->fields["name"];
             }
-            $data["location"] = $this->fields["location"];
+            $data["locations_id"] = $this->fields["locations_id"];
             $data["serial"] = $this->fields["serial"];
             $data["otherserial"] = $this->fields["otherserial"];
             $data["contact"] = $this->fields["contact"];
@@ -817,7 +817,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             if (!empty($this->fields["name"])) {
                $data["name"] = $this->fields["name"];
             }
-            $data["location"] = $this->fields["location"];
+            $data["locations_id"] = $this->fields["locations_id"];
             $data["serial"] = $this->fields["serial"];
             $data["otherserial"] = $this->fields["otherserial"];
             $data["contact"] = $this->fields["contact"];
@@ -849,7 +849,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             if (!empty($this->fields["name"])) {
                $data["name"] = $this->fields["name"];
             }
-            $data["location"] = $this->fields["location"];
+            $data["locations_id"] = $this->fields["locations_id"];
             $data["serial"] = $this->fields["serial"];
             $data["otherserial"] = $this->fields["otherserial"];
             $data["contact"] = $this->fields["contact"];
@@ -873,7 +873,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             if (!empty($this->fields["name"])) {
                $data["name"] = $this->fields["name"];
             }
-            $data["location"] = $this->fields["location"];
+            $data["locations_id"] = $this->fields["locations_id"];
             $data["serial"] = $this->fields["serial"];
             $data["otherserial"] = $this->fields["otherserial"];
             $data["contact"] = $this->fields["contact"];
@@ -896,7 +896,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
             $data["entities_id"] = $this->fields["entities_id"];
             $data["name"] = $this->fields["name"];
-            $data["location"] = $this->fields["location"];
+            $data["locations_id"] = $this->fields["locations_id"];
             $data["serial"] = $this->fields["serial"];
             $data["otherserial"] = $this->fields["otherserial"];
             $data["contact"] = $this->fields["contact"];
