@@ -181,9 +181,26 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
          }
 			return false;
 		} else {
+         $type = (string)$xml->type;
+         switch ($type) {
+
+            case '1':
+               $type = "Computer";
+               break;
+
+            case '2':
+               $type = "NetworkEquipment";
+               break;
+
+            case '3':
+               $type = "Printer";
+               break;
+            
+         }
+
 			$query = "INSERT INTO `glpi_plugin_fusinvsnmp_models`
                                (`name`,`itemtype`,`discovery_key`,`comment`)
-                   VALUES('".(string)$xml->name."','".(string)$xml->type."','".(string)$xml->key."','".(string)$xml->comments."');";
+                   VALUES('".(string)$xml->name."','".$type."','".(string)$xml->key."','".(string)$xml->comments."');";
 			$DB->query($query);
 			$plugin_fusinvsnmp_models_id = $DB->insert_id();
 			
