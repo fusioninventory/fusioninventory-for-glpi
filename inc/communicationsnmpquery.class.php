@@ -1036,6 +1036,13 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $rule = new PluginFusioninventoryRuleImportEquipmentCollection();
       $data = array();
       $data = $rule->processAllRules($input, array());
+      if (isset($data) AND ($data['_no_rule_matches'] == '1')) {
+         if (isset($input['itemtype'])) {
+            $this->rulepassed(0, $input['itemtype']);
+         } else {
+            $this->rulepassed(0, "PluginFusioninventoryUnknownDevice");
+         }
+      }
    }
 
 
