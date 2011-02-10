@@ -54,12 +54,6 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 		$this->showTabs($options);
       $options['colspan']=1;
       $this->showFormHeader($options);
-//		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
-
-//		echo "<table class='tab_cadre' cellpadding='5' width='950'><tr><th colspan='2'>";
-//		echo ($id =='' ? $LANG['plugin_fusioninventory']['model_info'][7] :
-//            $LANG['plugin_fusioninventory']['model_info'][3]);
-//		echo " :</th></tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG["common"][16] . "</td>";

@@ -38,8 +38,8 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","r");
 
-$plugin_fusioninventory_snmp_auth = new PluginFusinvsnmpConfigSecurity;
-$config = new PluginFusioninventoryConfig;
+$plugin_fusioninventory_snmp_auth = new PluginFusinvsnmpConfigSecurity();
+$config = new PluginFusioninventoryConfig();
 
 commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","configsecurity");
 
@@ -59,6 +59,10 @@ if (isset ($_POST["add"])) {
 	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","w");
 	$plugin_fusioninventory_snmp_auth->update($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
+} else if (isset ($_POST["delete"])) {
+   PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","w");
+   $plugin_fusioninventory_snmp_auth->delete($_POST);
+   glpi_header("configsecurity.php");
 }
 
 $id = "";
