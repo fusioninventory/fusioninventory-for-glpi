@@ -1,37 +1,36 @@
 <?php
+
 /*
- * @version $Id$
- ----------------------------------------------------------------------
- FusionInventory
- Copynetwork (C) 2003-2010 by the INDEPNET Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org//
- ----------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: Vincent MAZZONI
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: MAZZONI Vincent
-// Purpose of file:
-// ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
@@ -39,7 +38,16 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryDisplay extends CommonDBTM {
 
-   static function bar($pourcentage, $message="",$order='') {
+   /**
+   * Display static progress bar (used for SNMP cartridge state)
+   *
+   *@param $pourcentage integer pourcentage to display
+   *@param $message value message to display on this bar
+   *@param $order if empty <20% display in red, if not empty, >80% display in red
+   *
+   *@return nothing
+   **/
+   static function bar($pourcentage,$message='',$order='') {
       if ((!empty($pourcentage)) AND ($pourcentage < 0)) {
          $pourcentage = "";
       } else if ((!empty($pourcentage)) AND ($pourcentage > 100)) {
@@ -108,11 +116,23 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
             </div>";
    }
 
+
+
+   /**
+   * Disable debug mode to not see php errors
+   *
+   **/
    static function disableDebug() {
       error_reporting(0);
       set_error_handler("plugin_fusioninventory_empty");
    }
 
+
+
+   /**
+   * Enable debug mode if user is in debug mode
+   *
+   **/
    static function reenableusemode() {
       if ($_SESSION['glpi_use_mode']==DEBUG_MODE){
          ini_set('display_errors','On');
@@ -122,8 +142,21 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
    }
 
 
+
+   /**
+   * Display progress bar
+   *
+   *@param $width integer width of the html array/bar
+   *@param $percent interger pourcentage of the bar
+   *@param $options array
+   *     - title value title of the progressbar to display
+   *     - simple bool simple display or not
+   *     - forcepadding bool
+   *
+   *@return value code of this bar
+   **/
    static function getProgressBar($width,$percent,$options=array()) {
-      global  $CFG_GLPI,$LANG;
+      global $CFG_GLPI,$LANG;
 
       $param = array();
       $param['title']=$LANG['common'][47];

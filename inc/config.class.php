@@ -39,14 +39,14 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryConfig extends CommonDBTM {
 
    
-    /**
-    * Get value of a config field for a fusioninventory plugin
-    *
-    *@param $p_plugins_id integer id of the plugin
-    *@param $p_type value name of the config field to retrieve
-    * 
-    *@return value or this field or false
-    **/
+   /**
+   * Get value of a config field for a fusioninventory plugin
+   *
+   *@param $p_plugins_id integer id of the plugin
+   *@param $p_type value name of the config field to retrieve
+   * 
+   *@return value or this field or false
+   **/
    function getValue($p_plugins_id, $p_type) {
       global $DB;
 
@@ -61,14 +61,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
    
-    /**
-    * give state of a config field for a fusioninventory plugin
-    *
-    *@param $p_plugins_id integer id of the plugin
-    *@param $p_type value name of the config field to retrieve
-    *
-    *@return bool true if field is active or false
-    **/
+   /**
+   * give state of a config field for a fusioninventory plugin
+   *
+   *@param $p_plugins_id integer id of the plugin
+   *@param $p_type value name of the config field to retrieve
+   *
+   *@return bool true if field is active or false
+   **/
    function is_active($p_plugins_id, $p_type) {
       if (!($this->getValue($p_plugins_id, $p_type))) {
          return false;
