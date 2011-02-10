@@ -93,6 +93,9 @@ class PluginFusinvinventoryInventory {
          if ((isset($xml->CONTENT->HARDWARE->WINPRODKEY)) AND (!empty($xml->CONTENT->HARDWARE->WINPRODKEY))) {
             $input['mskey'] = (string)$xml->CONTENT->HARDWARE->WINPRODKEY;
          }
+         if ((isset($xml->CONTENT->HARDWARE->OSNAME)) AND (!empty($xml->CONTENT->HARDWARE->OSNAME))) {
+            $input['osname'] = (string)$xml->CONTENT->HARDWARE->OSNAME;
+         }
          if ((isset($xml->CONTENT->BIOS->SMODEL)) AND (!empty($xml->CONTENT->BIOS->SMODEL))) {
             $input['model'] = (string)$xml->CONTENT->BIOS->SMODEL;
          }
@@ -122,11 +125,16 @@ class PluginFusinvinventoryInventory {
       $rule = new PluginFusioninventoryRuleImportEquipmentCollection();
       $data = array();
       $data = $rule->processAllRules($input, array());
+      if (isset($data) AND ($data['_no_rule_matches'] == '1')) {
+         $this->rulepassed(0, "Computer");
+      }
+      logInFile("xxx",print_r($data, true));
    }
    
 
 
    function rulepassed($items_id, $itemtype) {
+      logInFile("xxx", "Rule passed : ".$items_id.", ".$itemtype."\n");
       $xml = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
 
       if ($itemtype == 'Computer') {
