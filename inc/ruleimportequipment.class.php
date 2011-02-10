@@ -471,7 +471,8 @@ logInFile("xxx", print_r($input, true));
       if (count($this->actions)) {
          foreach ($this->actions as $action) {
             if ($action->fields['field'] == '_fusion') {
-               if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_IMPORT) {
+               if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_NO_IMPORT) {
+                  logInFile("xxx", "Return true because link or Import\n");
                   return true;
                }
             }
