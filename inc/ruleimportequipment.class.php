@@ -115,6 +115,8 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
 
       $criterias['tag']['name']             = $LANG['plugin_fusioninventory']['rulesengine'][152].' : '.$LANG['plugin_fusioninventory']['rules'][16];
 
+      $criterias['osname']['name']          = $LANG['plugin_fusioninventory']['rulesengine'][152].' : '.$LANG['computers'][9];
+
       $criterias['itemtype']['name']        = $LANG['plugin_fusioninventory']['rulesengine'][152].' : '.$LANG['state'][6];
       $criterias['itemtype']['type']        = 'dropdown_itemtype';
       $criterias['itemtype']['is_global']       = false;
@@ -263,7 +265,7 @@ logInFile("xxx", print_r($input, true));
                                  'mskey',
                                  'name',
                                  'itemtype');
-
+      $nb_crit_find = 0;
       foreach ($global_criteria as $criterion) {
          $criteria = $this->getCriteriaByID($criterion);
          if (!empty($criteria)) {
@@ -272,6 +274,7 @@ logInFile("xxx", print_r($input, true));
                   $continue = false;
                } else if ($crit->fields["condition"] == PluginFusioninventoryRule::PATTERN_FIND) {
                   $complex_criterias[] = $crit;
+                  $nb_crit_find++;
                } else if($crit->fields["criteria"] == 'itemtype') {
                   $complex_criterias[] = $crit;
                }
@@ -287,9 +290,9 @@ logInFile("xxx", print_r($input, true));
       if (!$continue) {
          return false;
       }
-
+      
       //No complex criteria
-      if (empty($complex_criterias)) {
+      if ((empty($complex_criterias)) OR ($nb_crit_find == 0)) {
          return true;
       }
 
@@ -493,10 +496,11 @@ logInFile("xxx", print_r($input, true));
    function executeActions($output, $params) {
       $classname = $_SESSION['plugin_fusioninventory_classrulepassed'];
       $class = new $classname();
-
+      logInFile("xxx", "execute action\n");
       if (count($this->actions)) {
          foreach ($this->actions as $action) {
             if ($action->fields['field'] == '_fusion') {
+                     logInFile("xxx", "value".$action->fields["value"]."\n");
                if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_IMPORT) {
                   if (isset($this->criterias_results['found_equipment'])) {
                      foreach ($this->criterias_results['found_equipment'] as $itemtype=>$datas) {

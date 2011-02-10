@@ -310,6 +310,13 @@ class PluginFusioninventorySetup {
          $input['pattern']= 'Computer';
          $input['condition']=0;
          $rulecriteria->add($input);
+         
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "osname";
+         $input['pattern']= 1;
+         $input['condition']=8;
+         $rulecriteria->add($input);
 
          // Add action
          $ruleaction = new RuleAction(get_class($rule));
@@ -606,7 +613,7 @@ class PluginFusioninventorySetup {
          $input['rules_id'] = $rule_id;
          $input['action_type'] = 'assign';
          $input['field'] = '_fusion';
-         $input['value'] = '1';
+         $input['value'] = '0';
          $ruleaction->add($input);
 
 
