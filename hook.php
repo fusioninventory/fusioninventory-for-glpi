@@ -121,9 +121,9 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          } else { // Non template case / editing an existing object
             $array = array ();
             if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
-               $array[2] = $LANG['plugin_fusioninventory']['title'][5];
+               $array[2] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['title'][5];
             }
-            $array[3] = $LANG['plugin_fusioninventory']['title'][0]." - ".$LANG['plugin_fusioninventory']['task'][18];
+            $array[3] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['task'][18];
             return $array;
          }
          break;
@@ -134,7 +134,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          } else { // Non template case / editing an existing object
             $array = array ();
             if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
-               $array[1] = $LANG['plugin_fusioninventory']['title'][5];
+               $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['title'][5];
             }
             return $array;
          }
@@ -146,9 +146,9 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          } else { // Non template case / editing an existing object
             $array = array ();
             if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
-               $array[1] = $LANG['plugin_fusioninventory']['title'][5];
+               $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['title'][5];
             }
-            $array[2] = $LANG['plugin_fusioninventory']['title'][0]." - ".$LANG['plugin_fusioninventory']['task'][18];
+            $array[2] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['task'][18];
             return $array;
          }
          break;
@@ -159,9 +159,9 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          } else { // Non template case / editing an existing object
             $array = array ();
             if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
-               $array[1] = $LANG['plugin_fusioninventory']['title'][5];
+               $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['title'][5];
             }
-            $array[2] = $LANG['plugin_fusioninventory']['title'][0]." - ".$LANG['plugin_fusioninventory']['task'][18];
+            $array[2] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['task'][18];
             return $array;
          }
          break;
@@ -181,7 +181,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
       case 'PluginFusioninventoryUnknownDevice' :
          $array = array ();
          if ($_GET['id'] > 0) {
-            $array[1] = $LANG['plugin_fusioninventory']['xml'][0];
+            $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['xml'][0];
          }
          return $array;
          break;
@@ -379,69 +379,69 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
 
 // How to display specific update fields ?
 // Massive Action functions
-function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,$linkfield) {
-   global $LANG;
-   // Table fields
-   //echo $table.".".$field."<br/>";
-   switch ($table.".".$field) {
-      case 'glpi_plugin_fusioninventory_agents.id' :
-         Dropdown::show("PluginFusioninventoryAgent",
-                        array('name' => $linkfield,
-                              'comment' => false));
-         return true;
-         break;
-
-      case 'glpi_plugin_fusioninventory_agents.nb_process_query' :
-         Dropdown::showInteger("nb_process_query", $linkfield,1,200);
-         return true;
-         break;
-
-      case 'glpi_plugin_fusioninventory_agents.nb_process_discovery' :
-         Dropdown::showInteger("nb_process_discovery", $linkfield,1,400);
-         return true;
-         break;
-
-      case 'glpi_plugin_fusioninventory_agents.logs' :
-         $ArrayValues = array();
-         $ArrayValues[]= $LANG['choice'][0];
-         $ArrayValues[]= $LANG['choice'][1];
-         $ArrayValues[]= $LANG['setup'][137];
-         Dropdown::showFromArray('logs', $ArrayValues,
-                                 array('value'=>$linkfield));
-         return true;
-         break;
-
-      case 'glpi_plugin_fusioninventory_agents.core_discovery' :
-         Dropdown::showInteger("core_discovery", $linkfield,1,32);
-         return true;
-         break;
-
-      case 'glpi_plugin_fusioninventory_agents.core_query' :
-         Dropdown::showInteger("core_query", $linkfield,1,32);
-         return true;
-         break;
-
-      case 'glpi_plugin_fusioninventory_agents.threads_discovery' :
-         Dropdown::showInteger("threads_discovery", $linkfield,1,400);
-         return true;
-         break;
-
-      case 'glpi_plugin_fusioninventory_agents.threads_query' :
-         Dropdown::showInteger("threads_query", $linkfield,1,400);
-         return true;
-         break;
-
-      case 'glpi_entities.name' :
-         if (isMultiEntitiesMode()) {
-            Dropdown::show("Entities",
-                           array('name' => "entities_id",
-                           'value' => $_SESSION["glpiactive_entity"]));
-         }
-         return true;
-         break;
-   }
-   return false;
-}
+//function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,$linkfield) {
+//   global $LANG;
+//   // Table fields
+//   //echo $table.".".$field."<br/>";
+//   switch ($table.".".$field) {
+//      case 'glpi_plugin_fusioninventory_agents.id' :
+//         Dropdown::show("PluginFusioninventoryAgent",
+//                        array('name' => $linkfield,
+//                              'comment' => false));
+//         return true;
+//         break;
+//
+//      case 'glpi_plugin_fusioninventory_agents.nb_process_query' :
+//         Dropdown::showInteger("nb_process_query", $linkfield,1,200);
+//         return true;
+//         break;
+//
+//      case 'glpi_plugin_fusioninventory_agents.nb_process_discovery' :
+//         Dropdown::showInteger("nb_process_discovery", $linkfield,1,400);
+//         return true;
+//         break;
+//
+//      case 'glpi_plugin_fusioninventory_agents.logs' :
+//         $ArrayValues = array();
+//         $ArrayValues[]= $LANG['choice'][0];
+//         $ArrayValues[]= $LANG['choice'][1];
+//         $ArrayValues[]= $LANG['setup'][137];
+//         Dropdown::showFromArray('logs', $ArrayValues,
+//                                 array('value'=>$linkfield));
+//         return true;
+//         break;
+//
+//      case 'glpi_plugin_fusioninventory_agents.core_discovery' :
+//         Dropdown::showInteger("core_discovery", $linkfield,1,32);
+//         return true;
+//         break;
+//
+//      case 'glpi_plugin_fusioninventory_agents.core_query' :
+//         Dropdown::showInteger("core_query", $linkfield,1,32);
+//         return true;
+//         break;
+//
+//      case 'glpi_plugin_fusioninventory_agents.threads_discovery' :
+//         Dropdown::showInteger("threads_discovery", $linkfield,1,400);
+//         return true;
+//         break;
+//
+//      case 'glpi_plugin_fusioninventory_agents.threads_query' :
+//         Dropdown::showInteger("threads_query", $linkfield,1,400);
+//         return true;
+//         break;
+//
+//      case 'glpi_entities.name' :
+//         if (isMultiEntitiesMode()) {
+//            Dropdown::show("Entities",
+//                           array('name' => "entities_id",
+//                           'value' => $_SESSION["glpiactive_entity"]));
+//         }
+//         return true;
+//         break;
+//   }
+//   return false;
+//}
 
 
 

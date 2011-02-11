@@ -47,7 +47,7 @@ function update212to213() {
    ini_set("max_execution_time", "0");
    $pthc = new PluginFusioninventoryNetworkPortConnectionLog;
    $pthc->migration();
-   PluginFusioninventoryDb::clean_db();
+   //PluginFusioninventoryDb::clean_db();
 
 
 

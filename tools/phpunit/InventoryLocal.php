@@ -646,14 +646,15 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
       $this->assertEquals($DB->numrows($result), count($a_networkXML) , 'Difference of Networks, created '.$DB->numrows($result).' times instead '.count($a_networkXML).' ['.$xmlFile.']');
 
       foreach ($xml->CONTENT->NETWORKS as $child) {
-         if ((isset($child->MAC)) AND (!empty($child->MAC))) {
+         if ((isset($child->MACADDR)) AND (!empty($child->MACADDR))
+                 AND ((string)$child->MACADDR != "50:50:54:50:30:30")) {
             $query = "SELECT * FROM `glpi_networkports`
             WHERE `items_id`='".$items_id."'
                AND `itemtype`='".$itemtype."'
-               AND `mac`='".$child->MAC."'";
+               AND `mac`='".(string)$child->MACADDR."'";
             $result=$DB->query($query);
             $data = $DB->fetch_array($result);
-            $this->assertEquals($data['ip'], (string)$child->IPADDRESS , 'Network port IP not right inserted, have '.$data['ip'].' instead '.(string)$child->IPADDRESS.' ['.$xmlFile.']');
+            $this->assertEquals($data['mac'], (string)$child->MACADDR , 'Network port macaddress not right inserted, have '.$data['mac'].' instead '.(string)$child->MACADDR.' ['.$xmlFile.']');
          }
       }
 

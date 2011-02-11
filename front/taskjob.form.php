@@ -129,9 +129,10 @@ if (isset ($_POST["add"])) {
    $a_selectionDB = array();
    $a_selectionDB[][$_POST['itemtype']] = $_POST['items_id'];
    $input['definition'] = exportArrayToDB($a_selectionDB);
-   $input['selection_type'] =
-      call_user_func("plugin_".$module."_task_selection_type_".$method, $_POST['itemtype']);
-
+   if (is_callable("plugin_".$module."_task_selection_type_".$method)) {
+      $input['selection_type'] =
+         call_user_func("plugin_".$module."_task_selection_type_".$method, $_POST['itemtype']);
+   }
    $PluginFusioninventoryTaskjob->add($input);
    // Upsate task to activate it
    $PluginFusioninventoryTask->getFromDB($task_id);

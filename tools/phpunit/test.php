@@ -26,14 +26,14 @@ $emulatorAgent->server_ip="127.0.0.1";
 
    $input_xml = '<?xml version="1.0" encoding="UTF-8"?>
 <REQUEST>
-  <DEVICEID>port003-2010-06-08-08-13-45</DEVICEID>
+  <DEVICEID>port004.bureau.siprossii.com-2010-12-30-12-24-14</DEVICEID>
   <QUERY>PROLOG</QUERY>
   <TOKEN>CBXTMXLU</TOKEN>
 </REQUEST>';
    $emulatorAgent->sendProlog($input_xml);
 
 
-   $input_xml = file_get_contents("xml/inventory_local/2.1.7/debian-3.1_i386.xml");
+   $input_xml = file_get_contents("xml/netdiscovery/1.2/computers.xml");
 //$time_start = microtime(true);
    $return = $emulatorAgent->sendProlog($input_xml);
 //$time_end = microtime(true);

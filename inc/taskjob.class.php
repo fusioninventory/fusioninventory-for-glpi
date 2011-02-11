@@ -223,7 +223,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $itemname = $class->getTypeName();
          $class->getFromDB(current($data));
          $name = $class->fields['name'];
-         $deflist .= '<br>'.$itemname.' -> '.$name.' <img src="'.GLPI_ROOT.'/pics/delete2.png" onclick=\'deldef("'.$itemname.'->'.$name.'->'.$itemname.'->'.$name.'")\'>';
+         $deflist .= '<br>'.$itemname.' -> '.$name.' <img src="'.GLPI_ROOT.'/pics/delete2.png" onclick=\'deldef("'.$itemname.'->'.$name.'->'.$class->getType().'->'.$class->fields['id'].'")\'>';
          $deflisthidden .= ','.key($data).'->'.current($data);
       }
       echo "<span id='definitionselection'>";
@@ -246,13 +246,16 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $class->getFromDB(current($data));
          if (current($data) == '.1') {
             $name = $LANG['plugin_fusioninventory']['agents'][32];
+            $idTmp = '.1';
          } else if (current($data) == '.2') {
             $name = $LANG['plugin_fusioninventory']['agents'][33];
+            $idTmp = '.2';
          } else {
             $class->getFromDB(current($data));
             $name = $class->fields['name'];
+            $idTmp = $class->fields['id'];
          }         
-         $actionlist .= '<br>'.$itemname.' -> '.$name.' <img src="'.GLPI_ROOT.'/pics/delete2.png" onclick=\'delaction("'.$itemname.'->'.$name.'->'.$itemname.'->'.$name.'")\'>';
+         $actionlist .= '<br>'.$itemname.' -> '.$name.' <img src="'.GLPI_ROOT.'/pics/delete2.png" onclick=\'delaction("'.$itemname.'->'.$name.'->'.$class->getType().'->'.$idTmp.'")\'>';
          $actionlisthidden .= ','.key($data).'->'.current($data);
       }
       echo "<span id='actionselection'>";
@@ -265,12 +268,12 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</div>";
       echo "</td>";
       echo "</tr>";
-      
+
       
       echo "<script type='text/javascript'>
          function deldef(data) {
             var elem = data.split('->');
-            document.getElementById('definitionlist').value = document.getElementById('definitionlist').value.replace(',' + elem[2] + '-' + elem[3], '');
+            document.getElementById('definitionlist').value = document.getElementById('definitionlist').value.replace(',' + elem[2] + '->' + elem[3], '');
             document.getElementById('definitionselection').innerHTML = document.getElementById('definitionselection').innerHTML.replace('<br>' + elem[0] + ' -&gt; ' + elem[1] +
             ' <img src=\"".GLPI_ROOT."/pics/delete2.png\" onclick=\'deldef(\"' + elem[0] + '->' + elem[1] + '->' + elem[2] + '->' + elem[3] + '\")\'>', '');
          }
@@ -287,18 +290,17 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
 
       if ($id) {
-         if (count($PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$id."'")) > 0) {
-            echo "</table><br/>";
-            if ($id) {
-               $PluginFusioninventoryTaskjobstatus->stateTaskjob($id);
-
-               // Display graph finish
-               $PluginFusioninventoryTaskjoblog->graphFinish($id);
-               echo "<br/>";
-            }
-         } else {
+         if (count($PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$id."' AND `state` < 3")) == 0) {
             $this->showFormButtons($options);
          }
+         if (count($PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$id."'")) > 0) {
+ 
+            $PluginFusioninventoryTaskjobstatus->stateTaskjob($id);
+
+            // Display graph finish
+            $PluginFusioninventoryTaskjoblog->graphFinish($id);
+            echo "<br/>";
+         } 
       } else  {
          $this->showFormButtons($options);
       }
@@ -837,7 +839,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $this->getFromDB($taskjobs_id);
 
       $a_taskjob = $this->find("`plugin_fusioninventory_tasks_id`='".$this->fields['plugin_fusioninventory_tasks_id']."'
-            AND `rescheduled_taskjob_id`='0' ", "date_scheduled,id");
+            AND `rescheduled_taskjob_id`='0' ", "id");
       $i = 1;
       foreach($a_taskjob as $id=>$datas) {
          $i++;

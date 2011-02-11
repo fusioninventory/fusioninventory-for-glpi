@@ -111,7 +111,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 		$tab[4]['table'] = $this->getTable();
 		$tab[4]['field'] = 'device_id';
 		$tab[4]['linkfield'] = 'device_id';
-		$tab[4]['name'] = 'Device_id';
+		$tab[4]['name'] = $LANG['plugin_fusioninventory']['agents'][35];
 		$tab[4]['datatype'] = 'text';
 
 		$tab[5]['table'] = 'glpi_computers';
@@ -176,7 +176,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<td align='center'>";
       echo "<input type='text' name='name' value='".$this->fields["name"]."' size='30'/>";
       echo "</td>";
-      echo "<td>Device_id :</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['agents'][35]."&nbsp;:</td>";
       echo "<td align='center'>";
       echo $this->fields["device_id"];
       echo "</td>";

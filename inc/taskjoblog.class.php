@@ -78,9 +78,22 @@ function appear_array(id){
       echo "<th colspan='8'>".$LANG['title'][38]."</th>";
       echo "</tr>";
 
-      $a_jobstatus = $PluginFusioninventoryTaskjobstatus->find('`plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'" GROUP BY uniqid,plugin_fusioninventory_agents_id',
-                           '`id` DESC');
 
+      $query = 'SELECT * FROM `glpi_plugin_fusioninventory_taskjobstatus`
+         WHERE `plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"
+            AND `state`!="3"
+         GROUP BY uniqid,plugin_fusioninventory_agents_id
+         ORDER BY `id` DESC';
+      // ***** Display for all status running / prepared
+      echo "<tr>";
+      echo "<th colspan='2'>";
+      echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_running.png'/>";
+      echo "</th>";
+      echo "<th colspan='6'>";
+      echo $LANG['plugin_fusioninventory']['task'][19]."&nbsp;:";
+      echo "</th>";
+      echo "</tr>";
+      $result = $DB->query($query);
       echo "<tr>";
       echo "<th></th>";
       echo "<th>Uniqid</th>";
@@ -97,54 +110,106 @@ function appear_array(id){
       echo "</th>";
       echo "<th></th>";
       echo "</tr>";
-
-      foreach ($a_jobstatus as $data) {
-         $displayforceend = 0;
-         $a_history = $this->find('`plugin_fusioninventory_taskjobstatus_id` = "'.$data['id'].'"', 'id');
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<td id='plusmoins".$data["id"]."'><img src='".GLPI_ROOT.
-                  "/pics/expand.gif' onClick='Effect.Appear(\"viewfollowup".$data["id"].
-                  "\");close_array(".$data["id"].");' /></td>";
-
-         echo "<td>";
-         echo $data['uniqid'];
-         echo "</td>";
-         echo "<td>";
-         echo $data['id'];
-         echo "</td>";
-         echo "<td>";
-         $PluginFusioninventoryAgent->getFromDB($data['plugin_fusioninventory_agents_id']);
-         echo $PluginFusioninventoryAgent->getLink(1);
-         echo "</td>";
-         $a_return = $this->displayHistoryDetail(array_pop($a_history));
-         $count = $a_return[0];
-         $displayforceend += $count;
-         echo $a_return[1];
-
-         echo "<td align='center'>";
-         if ($displayforceend == "0") {
-            echo "<form name='form' method='post' action='".GLPI_ROOT."/plugins/fusioninventory/front/taskjob.form.php'>";
-            echo "<input type='hidden' name='taskjobstatus_id' value='".$data['id']."' />";
-            echo "<input type='hidden' name='taskjobs_id' value='".$taskjobs_id."' />";
-            echo '<input name="forceend" value="'.$LANG['plugin_fusioninventory']['task'][32].'"
-                class="submit" type="submit">';
-            echo "</form>";
-         }
-         echo "</td>";
-         echo "</tr>";
-
-         echo "<tr style='display: none;' id='viewfollowup".$data["id"]."'>
-            <td colspan='8'>".$this->showHistoryInDetail($data['plugin_fusioninventory_agents_id'], $data['uniqid'], "850")."</td>
-         </tr>";
-
+      while ($data=$DB->fetch_array($result)) {
+         $this->showHistoryLines($data['id']);
       }
+
+
+
+
+      // ***** Display for statusjob OK
+      echo "<tr>";
+      echo "<th colspan='2'>";
+      echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_finished.png'/>";
+      echo "</th>";
+      echo "<th colspan='6'>";
+      echo $LANG['plugin_fusioninventory']['task'][20]."&nbsp;:";
+      echo "</th>";
+      echo "</tr>";
+      $query = str_replace('`state`!="3"', '`state`="3"', $query);
+      $result = $DB->query($query);
+      echo "<tr>";
+      echo "<th></th>";
+      echo "<th>Uniqid</th>";
+      echo "<th>".$LANG['plugin_fusioninventory']['processes'][38]."</th>";
+      echo "<th>".$LANG['plugin_fusioninventory']['agents'][28]."</th>";
+      echo "<th>";
+      echo $LANG['common'][27];
+      echo "</th>";
+      echo "<th>";
+      echo $LANG['joblist'][0];
+      echo "</th>";
+      echo "<th>";
+      echo $LANG['common'][25];
+      echo "</th>";
+      echo "<th></th>";
+      echo "</tr>";
+      while ($data=$DB->fetch_array($result)) {
+         $this->showHistoryLines($data['id']);
+      }
+
+
+
+// ====================================== //
+
       echo "</table></center>";
 
       return true;
 
    }
 
+
+
+   function showHistoryLines($taskjobstatus_id) {
+      global $LANG;
+      
+      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $PluginFusioninventoryTaskjobstatus->getFromDB($taskjobstatus_id);
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+
+      $displayforceend = 0;
+      $a_history = $this->find('`plugin_fusioninventory_taskjobstatus_id` = "'.$PluginFusioninventoryTaskjobstatus->fields['id'].'"', 'id');
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td id='plusmoins".$PluginFusioninventoryTaskjobstatus->fields["id"]."'><img src='".GLPI_ROOT.
+               "/pics/expand.gif' onClick='Effect.Appear(\"viewfollowup".$PluginFusioninventoryTaskjobstatus->fields["id"].
+               "\");close_array(".$PluginFusioninventoryTaskjobstatus->fields["id"].");' /></td>";
+
+      echo "<td>";
+      echo $PluginFusioninventoryTaskjobstatus->fields['uniqid'];
+      echo "</td>";
+      echo "<td>";
+      echo $PluginFusioninventoryTaskjobstatus->fields['id'];
+      echo "</td>";
+      echo "<td>";
+
+      $PluginFusioninventoryAgent->getFromDB($PluginFusioninventoryTaskjobstatus->fields['plugin_fusioninventory_agents_id']);
+      echo $PluginFusioninventoryAgent->getLink(1);
+      echo "</td>";
+      $a_return = $this->displayHistoryDetail(array_pop($a_history));
+      $count = $a_return[0];
+      $displayforceend += $count;
+      echo $a_return[1];
+
+      echo "<td align='center'>";
+      if ($displayforceend == "0") {
+         echo "<form name='form' method='post' action='".GLPI_ROOT."/plugins/fusioninventory/front/taskjob.form.php'>";
+         echo "<input type='hidden' name='taskjobstatus_id' value='".$PluginFusioninventoryTaskjobstatus->fields['id']."' />";
+         echo "<input type='hidden' name='taskjobs_id' value='".$PluginFusioninventoryTaskjobstatus->fields['plugin_fusioninventory_taskjobs_id']."' />";
+         echo '<input name="forceend" value="'.$LANG['plugin_fusioninventory']['task'][32].'"
+             class="submit" type="submit">';
+         echo "</form>";
+      }
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr style='display: none;' id='viewfollowup".$PluginFusioninventoryTaskjobstatus->fields["id"]."'>
+         <td colspan='8'>".$this->showHistoryInDetail($PluginFusioninventoryTaskjobstatus->fields['plugin_fusioninventory_agents_id'], $PluginFusioninventoryTaskjobstatus->fields['uniqid'], "850")."</td>
+      </tr>";
+
+
+      
+   }
 
 
 
