@@ -43,6 +43,12 @@ class PluginFusioninventoryMenu {
    static function displayMenu($type = "big") {
       global $LANG;
 
+      // FOR THE BETA
+      echo "<a href='http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/wiki/Beta_test'>
+         <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/beta.png'/></a><br/>";
+
+      // END FOR THE BETA
+
       $width_status = 0;
 
       $a_menu = array();
