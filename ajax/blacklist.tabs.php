@@ -51,24 +51,14 @@ $PluginFusinvinventoryCriteria = new PluginFusinvinventoryCriteria();
 $fields = $PluginFusinvinventoryCriteria->find("");
 
 foreach ($fields as $id=>$data) {
-   if ($id == $_POST['glpi_tab']) {
+   if (($id == $_POST['glpi_tab']) OR ($_POST['glpi_tab'] == "-1")) {
       $PluginFusinvinventoryBlacklist->showArray($id);
       echo "<br/>";
       $PluginFusinvinventoryBlacklist->addForm($id);
    }
 }
 
-switch($_POST['glpi_tab']) {
-   case -1 :
-//      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
-//      $PluginFusioninventoryAgentmodule->showFormAgentException($_POST["id"]);
-//      Plugin::displayAction($PluginFusioninventoryAgent, $_REQUEST['glpi_tab']);
-      break;
 
-   default :
-      //Plugin::displayAction($PluginFusioninventoryAgent, $_REQUEST['glpi_tab']);
-      break;
-}
 
 ajaxFooter();
 

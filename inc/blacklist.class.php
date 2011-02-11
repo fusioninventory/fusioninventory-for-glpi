@@ -89,10 +89,14 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
    function showArray($id) {
       global $DB,$CFG_GLPI,$LANG;
 
+      $PluginFusinvinventoryCriteria = new PluginFusinvinventoryCriteria();
+
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr>";
       echo "<th colspan='4'>";
-      echo $LANG['plugin_fusinvinventory']['blacklist'][0];
+
+      $PluginFusinvinventoryCriteria->getFromDB($id);
+      echo $LANG['plugin_fusinvinventory']['blacklist'][0]." - ".$PluginFusinvinventoryCriteria->fields['name'];
       echo "</th>";
       echo "<tr>";
 
