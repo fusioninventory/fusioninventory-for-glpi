@@ -235,6 +235,8 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
                $i++;
             }
             $where .= ") ";
+         } else {
+            return array();
          }
       } else {
          $a_agentList = importArrayFromDB($agentModule['exceptions']);
