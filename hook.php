@@ -1063,7 +1063,7 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
          } else {
             $array = array ();
 				if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "networkequipment", "r")) {
-					$array[1] = $LANG['plugin_fusinvsnmp']['title'][0];
+					$array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusinvsnmp']['title'][6];
 				}
             if ($_GET['id'] > 0) {
                $array[2] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['xml'][0];
@@ -1080,7 +1080,7 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
          } else {
             $array = array ();
 				if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "printer", "r")) {
-					$array[1] = $LANG['plugin_fusinvsnmp']['title'][0];
+					$array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusinvsnmp']['title'][6];
 				}
             if ($_GET['id'] > 0) {
                $array[2] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['xml'][0];
@@ -1097,7 +1097,7 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
 
        case 'PluginFusioninventoryUnknownDevice':
           $array = array ();
-          $array[1] = $LANG['plugin_fusinvsnmp']['title'][1];
+          $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusinvsnmp']['title'][6];
           return $array;
           break;
 

@@ -39,6 +39,7 @@ $LANG['plugin_fusinvsnmp']['title'][0]="$title";
 $LANG['plugin_fusinvsnmp']['title'][1]="Informations SNMP";
 $LANG['plugin_fusinvsnmp']['title'][2]="Historique de connexion";
 $LANG['plugin_fusinvsnmp']['title'][5]="Historique SNMP";
+$LANG['plugin_fusinvsnmp']['title'][6]="SNMP";
 
 $LANG['plugin_fusinvsnmp']['config'][3] = "Inventaire";
 $LANG['plugin_fusinvsnmp']['config'][4] = "Découverte d'équipements";

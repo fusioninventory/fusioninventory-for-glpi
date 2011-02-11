@@ -39,6 +39,7 @@ $LANG['plugin_fusinvsnmp']['title'][0]="$title";
 $LANG['plugin_fusinvsnmp']['title'][1]="SNMP information";
 $LANG['plugin_fusinvsnmp']['title'][2]="Verbindungs Historie";
 $LANG['plugin_fusinvsnmp']['title'][5]="FusionInventory's locks";
+$LANG['plugin_fusinvsnmp']['title'][6]="SNMP";
 
 $LANG['plugin_fusinvsnmp']['config'][3] = "Inventory";
 $LANG['plugin_fusinvsnmp']['config'][4] = "Devices discovery";
