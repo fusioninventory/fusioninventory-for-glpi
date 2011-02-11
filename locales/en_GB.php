@@ -27,7 +27,7 @@
 
    ------------------------------------------------------------------------
    Original Author of file: David DURIEUX
-   Co-authors of file:
+   Co-authors of file: Mathieu SIMON
    Purpose of file:
    ----------------------------------------------------------------------
  */
@@ -53,8 +53,8 @@ $LANG['plugin_fusinvsnmp']['profile'][5]="Network equipment SNMP";
 $LANG['plugin_fusinvsnmp']['profile'][6]="Printer SNMP";
 $LANG['plugin_fusinvsnmp']['profile'][7]="SNMP model";
 
-$LANG['plugin_fusinvsnmp']['setup'][17]="Plugin ".$title." need plugin FusionInventory activated before activation.";
-$LANG['plugin_fusinvsnmp']['setup'][18]="Plugin ".$title." need plugin FusionInventory activated before uninstall.";
+$LANG['plugin_fusinvsnmp']['setup'][17]="Plugin ".$title." needs FusionInventory plugin activated before activation.";
+$LANG['plugin_fusinvsnmp']['setup'][18]="Plugin ".$title." needs FusionInventory plugin activated before uninstall.";
 $LANG['plugin_fusinvsnmp']['setup'][19]="Converting history port";
 $LANG['plugin_fusinvsnmp']['setup'][20]="Moving creation connections history";
 $LANG['plugin_fusinvsnmp']['setup'][21]="Moving deleted connections history";
@@ -90,9 +90,9 @@ $LANG['plugin_fusinvsnmp']['snmpauth'][5]="Password";
 $LANG['plugin_fusinvsnmp']['snmpauth'][6]="Encryption protocol for data (write)";
 $LANG['plugin_fusinvsnmp']['snmpauth'][7]="Password (write)";
 
-$LANG['plugin_fusinvsnmp']['errors'][50]="GLPI version not compatible need 0.78";
+$LANG['plugin_fusinvsnmp']['errors'][50]="GLPI version not compatible, require 0.78";
 
-$LANG['plugin_fusinvsnmp']['prt_history'][0]="History and Statistics of printer counters";
+$LANG['plugin_fusinvsnmp']['prt_history'][0]="History and statistics of printer counters";
 $LANG['plugin_fusinvsnmp']['prt_history'][12]="Total printed pages";
 $LANG['plugin_fusinvsnmp']['prt_history'][13]="Pages / day";
 $LANG['plugin_fusinvsnmp']['prt_history'][20]="History meter printer";
@@ -125,15 +125,15 @@ $LANG['plugin_fusinvsnmp']['model_info'][16]="Mass import of models in folder pl
 
 $LANG['plugin_fusinvsnmp']['mib'][1]="MIB Label";
 $LANG['plugin_fusinvsnmp']['mib'][2]="Object";
-$LANG['plugin_fusinvsnmp']['mib'][3]="oid";
-$LANG['plugin_fusinvsnmp']['mib'][4]="add an oid...";
-$LANG['plugin_fusinvsnmp']['mib'][5]="oid list";
+$LANG['plugin_fusinvsnmp']['mib'][3]="OID";
+$LANG['plugin_fusinvsnmp']['mib'][4]="add an OID...";
+$LANG['plugin_fusinvsnmp']['mib'][5]="OID list";
 $LANG['plugin_fusinvsnmp']['mib'][6]="Port Counters";
 $LANG['plugin_fusinvsnmp']['mib'][7]="Dynamic port (.x)";
 $LANG['plugin_fusinvsnmp']['mib'][8]="Linked fields";
-$LANG['plugin_fusinvsnmp']['mib'][9]="Vlan";
+$LANG['plugin_fusinvsnmp']['mib'][9]="VLAN";
 
-$LANG['plugin_fusinvsnmp']['processes'][37]="IP total";
+$LANG['plugin_fusinvsnmp']['processes'][37]="Total IPs";
 
 $LANG['plugin_fusinvsnmp']['state'][4]="Starting date";
 $LANG['plugin_fusinvsnmp']['state'][5]="Ending date";

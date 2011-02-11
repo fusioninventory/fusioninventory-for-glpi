@@ -27,7 +27,7 @@
 
    ------------------------------------------------------------------------
    Original Author of file: David DURIEUX
-   Co-authors of file:
+   Co-authors of file: Mathieu SIMON
    Purpose of file:
    ----------------------------------------------------------------------
  */
