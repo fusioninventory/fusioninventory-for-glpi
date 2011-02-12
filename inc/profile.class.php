@@ -1,46 +1,43 @@
 <?php
+
 /*
- * @version $Id$
- ----------------------------------------------------------------------
- FusionInventory
- Coded by the FusionInventory Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org//
- ----------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David Durieux
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: DURIEUX David
-// Purpose of file:
-// ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-
 class PluginFusioninventoryProfile extends CommonDBTM {
 
-   
    /**
     * Add profile
     *
@@ -48,17 +45,18 @@ class PluginFusioninventoryProfile extends CommonDBTM {
     *@param $p_type Right type ('wol', 'agents'...)
     *@param $p_right Right (NULL, r, w)
     *@param $p_profiles_id Profile id
+    * 
     *@return integer the new id of the added item (or false if fail)
     **/
     static function addProfile($p_plugins_id, $p_type, $p_right, $p_profiles_id=NULL) {
       if (is_null($p_profiles_id)) {
          $p_profiles_id = $_SESSION['glpiactiveprofile']['id'];
       }
-      $pfp = new PluginFusioninventoryProfile;
+      $pfp = new PluginFusioninventoryProfile();
       return $pfp->add(array('type'=>$p_type,
-                              'right'=>$p_right,
-                              'plugins_id'=>$p_plugins_id,
-                              'profiles_id'=>$p_profiles_id));
+                             'right'=>$p_right,
+                             'plugins_id'=>$p_plugins_id,
+                             'profiles_id'=>$p_profiles_id));
    }
 
 
@@ -71,6 +69,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
     *@param $p_type Right type ('wol', 'agents'...)
     *@param $p_right Right (NULL, r, w)
     *@param $p_profiles_id Profile id
+    * 
     *@return boolean : true on success
     **/
    function updateProfile($p_id, $p_plugins_id, $p_type, $p_right, $p_profiles_id=NULL) {
@@ -99,9 +98,8 @@ class PluginFusioninventoryProfile extends CommonDBTM {
          if (is_callable(array("Plugin".ucfirst($pluginname)."Staticmisc", "profiles"))) {
             $a_profile = call_user_func(array("Plugin".ucfirst($pluginname)."Staticmisc", "profiles"));
 
-            $pfp = new PluginFusioninventoryProfile;
             foreach ($a_profile as $data) {
-               $pfp->addProfile($plugins_id, $data['profil'], 'w');
+               PluginFusioninventoryProfile::addProfile($plugins_id, $data['profil'], 'w');
             }
          }
       }
@@ -118,7 +116,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       $moduleName = PluginFusioninventoryModule::getModuleName($p_plugins_id);
       if ($moduleName != false) {
          if (isset($_SESSION['glpiactiveprofile']['id'])) {
-            $pfp = new PluginFusioninventoryProfile;
+            $pfp = new PluginFusioninventoryProfile();
             $a_rights = $pfp->find("`profiles_id` = '".$_SESSION['glpiactiveprofile']['id'].
                                    "' AND `plugins_id`='".$p_plugins_id."'");
             $i = 0;
@@ -141,6 +139,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
     *@param $p_moduleName Module name (directory)
     *@param $p_type Right type ('wol', 'agents'...)
     *@param $p_right Right (NULL, r, w)
+    * 
     *@return boolean : true if right is ok
     **/
    static function haveRight($p_moduleName, $p_type, $p_right) {
@@ -169,7 +168,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
    static function checkRight($p_moduleName, $p_type, $p_right) {
       global $CFG_GLPI;
 
-      $pfp = new PluginFusioninventoryProfile;
+      $pfp = new PluginFusioninventoryProfile();
       if (!$pfp->haveRight($p_moduleName, $p_type, $p_right)) {
          // Gestion timeout session
          if (!isset ($_SESSION["glpiID"])) {
@@ -182,13 +181,22 @@ class PluginFusioninventoryProfile extends CommonDBTM {
 
 
 
+   /**
+    * Get right
+    *
+    *@param $p_moduleName Module name (directory)
+    *@param $p_type Right type ('wol', 'agents'...)
+    *@param $p_profiles_id Profile id
+    *
+    *@return value right "NULL", "r" or "w"
+    **/
    static function getRightDB($p_moduleName, $p_type, $profiles_id='') {
 
       if ($profiles_id == '') {
          $profiles_id = $_SESSION['glpiactiveprofile']['id'];
       }
       $p_plugins_id = PluginFusioninventoryModule::getModuleId($p_moduleName);
-      $pfp = new PluginFusioninventoryProfile;
+      $pfp = new PluginFusioninventoryProfile();
       $a_rights = $pfp->find("`profiles_id` = '".$profiles_id."'
                                    AND `plugins_id`='".$p_plugins_id."'
                                    AND `type`='".$p_type."' ");
@@ -205,12 +213,13 @@ class PluginFusioninventoryProfile extends CommonDBTM {
     * Clean profile
     *
     *@param $p_moduleName Module name
+    * 
     *@return boolean : true on success
     **/
    static function cleanProfile($p_moduleName) {
       global $DB;
 
-      $pfp = new PluginFusioninventoryProfile;
+      $pfp = new PluginFusioninventoryProfile();
 
       $plugins_id = PluginFusioninventoryModule::getModuleId($p_moduleName);
 
@@ -221,18 +230,14 @@ class PluginFusioninventoryProfile extends CommonDBTM {
 
 
 
-   /**
-    * Delete profile
+    /**
+    * Show profile form
     *
-    *@param $p_id Profile id
-    *@return boolean : true on success
+    *@param $items_id integer id of the profile
+    *@param $target value url of target
+    *
+    *@return nothing
     **/
-   function deleteProfile($p_id) {
-      return $this->delete(array('id'=>$p_id));
-   }
-
-
-   
    function showProfileForm($items_id, $target) {
       global $LANG,$CFG_GLPI;
 
@@ -296,6 +301,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
    }
 
 
+   
    // Udpate profiles from Profil management
    function updateProfiles($profiles) {
       foreach($profiles as $key => $value) {
@@ -322,8 +328,6 @@ class PluginFusioninventoryProfile extends CommonDBTM {
 
       }
    }
-
-
 }
 
 ?>
