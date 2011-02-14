@@ -125,8 +125,8 @@ function pluginFusioninventoryUpdate($current_version) {
 //                AND `ip` IS NOT NULL ";
 //   $DB->query($query);
 
-   $a_plugin = plugin_version_fusinvinventory();
-   $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
+   $plugins_id = PluginFusioninventoryModule::getModuleId("fusinvinventory");
+   include(GLPI_ROOT."/plugins/fusioninventory/inc/profile.class.php");
    PluginFusioninventoryProfile::changeProfile($plugins_id);
    
 }
