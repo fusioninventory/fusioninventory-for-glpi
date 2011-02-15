@@ -45,7 +45,7 @@ class PluginFusioninventoryRuleAction extends CommonDBChild {
 
    function __construct($rule_type='Rule') {
       $this->itemtype = $rule_type;
-      $this->table = 'glpi_ruleactions';
+      $this->forceTable('glpi_ruleactions');
    }
 
 
