@@ -86,7 +86,7 @@ if (isset ($_POST["add"])) {
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["delete"])) {
 	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "iprange","w");
-	$agents->iprange($_POST);
+	$iprange->delete($_POST);
 	glpi_header("iprange.php");
 }
 
