@@ -85,9 +85,16 @@ if (isset ($_POST["add"])) {
    }
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["delete"])) {
-	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "iprange","w");
-	$iprange->delete($_POST);
-	glpi_header("iprange.php");
+   if (isset($_POST['communication'])) {
+      $PluginFusioninventoryTask = new PluginFusioninventoryTask();
+      $PluginFusioninventoryTask->delete(array('id' => $_POST['task_id']));
+      glpi_header($_SERVER['HTTP_REFERER']);
+   } else {
+      PluginFusioninventoryProfile::checkRight("fusinvsnmp", "iprange","w");
+
+      $iprange->delete($_POST);
+      glpi_header("iprange.php");
+   }
 }
 
 
