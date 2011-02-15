@@ -1239,8 +1239,9 @@ function plugin_headings_fusinvsnmp_xml($item) {
 
 function plugin_fusinvsnmp_MassiveActions($type) {
 	global $LANG;
+
 	switch ($type) {
-		case NETWORKING_TYPE :
+		case 'NetworkEquipment':
 			return array (
             "plugin_fusinvsnmp_get_model" => $LANG['plugin_fusinvsnmp']['model_info'][14],
 				"plugin_fusinvsnmp_assign_model" => $LANG['plugin_fusinvsnmp']['massiveaction'][1],
@@ -1248,7 +1249,7 @@ function plugin_fusinvsnmp_MassiveActions($type) {
 			);
 			break;
 
-		case PRINTER_TYPE :
+		case 'Printer':
 			return array (
             "plugin_fusinvsnmp_get_model" => $LANG['plugin_fusinvsnmp']['model_info'][14],
 				"plugin_fusinvsnmp_assign_model" => $LANG['plugin_fusinvsnmp']['massiveaction'][1],
@@ -1263,7 +1264,8 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($options=array()) {
 
 	global $LANG, $CFG_GLPI, $DB;
 	switch ($options['itemtype']) {
-		case NETWORKING_TYPE :
+		case 'NetworkEquipment':
+		case 'Printer':
 			switch ($options['action']) {
 
             case "plugin_fusinvsnmp_get_model" :
@@ -1276,8 +1278,7 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($options=array()) {
                if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
                   $query_models = "SELECT *
                                    FROM `glpi_plugin_fusinvsnmp_models`
-                                   WHERE `itemtype`!='2'
-                                         AND `itemtype`!='0';";
+                                   WHERE `itemtype`!='".$options['itemtype']."'";
                   $result_models=$DB->query($query_models);
                   $exclude_models = array();
                   while ($data_models=$DB->fetch_array($result_models)) {
@@ -1293,47 +1294,6 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($options=array()) {
                break;
 
 				case "plugin_fusinvsnmp_assign_auth" :
-//               if(PluginFusinvsnmpAuth::haveRight("configsecurity","w")) {
-               if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity","w")) {
-                  PluginFusinvsnmpSNMP::auth_dropdown();
-                  echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
-               }
-               break;
-
-			}
-			break;
-
-		case PRINTER_TYPE :
-			switch ($options['action']) {
-
-            case "plugin_fusinvsnmp_get_model" :
-               if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
-                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
-               }
-               break;
-
-				case "plugin_fusinvsnmp_assign_model" :
-               if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
-                  $query_models = "SELECT *
-                                   FROM `glpi_plugin_fusinvsnmp_models`
-                                   WHERE `itemtype`!='3'
-                                         AND `itemtype`!='0';";
-                  $result_models=$DB->query($query_models);
-                  $exclude_models = array();
-                  while ($data_models=$DB->fetch_array($result_models)) {
-                     $exclude_models[] = $data_models['id'];
-                  }
-                  Dropdown::show("PluginFusinvsnmpModel",
-                                 array('name' => "snmp_model",
-                                       'value' => "name",
-                                       'comment' => false,
-                                       'used' => $exclude_models));
-                  echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
-               }
-               break;
-
-				case "plugin_fusinvsnmp_assign_auth" :
-//               if(PluginFusinvsnmpAuth::haveRight("configsecurity","w")) {
                if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity","w")) {
                   PluginFusinvsnmpSNMP::auth_dropdown();
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
@@ -1349,6 +1309,7 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($options=array()) {
 
 function plugin_fusinvsnmp_MassiveActionsProcess($data) {
 	global $LANG;
+
 	switch ($data['action']) {
 
       case "plugin_fusinvsnmp_get_model" :
@@ -1370,33 +1331,49 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
          break;
 
 		case "plugin_fusinvsnmp_assign_model" :
-			if ($data['itemtype'] == NETWORKING_TYPE) {
-				foreach ($data['item'] as $key => $val) {
+			if ($data['itemtype'] == 'NetworkEquipment') {
+				foreach ($data['item'] as $items_id => $val) {
 					if ($val == 1) {
-						PluginFusinvsnmpMassiveaction::assign($key, NETWORKING_TYPE, "model", $data["snmp_model"]);
+                  $PluginFusinvsnmpNetworkEquipment = new PluginFusinvsnmpNetworkEquipment();
+
+                  $PluginFusinvsnmpNetworkEquipment->load($items_id);
+                  $PluginFusinvsnmpNetworkEquipment->setValue('plugin_fusinvsnmp_models_id', $data['snmp_model']);
+                  $PluginFusinvsnmpNetworkEquipment->updateDB();
 					}
 				}
-			} else if($data['itemtype'] == PRINTER_TYPE) {
-				foreach ($data['item'] as $key => $val) {
+			} else if($data['itemtype'] == 'Printer') {
+				foreach ($data['item'] as $items_id => $val) {
 					if ($val == 1) {
-						PluginFusinvsnmpMassiveaction::assign($key, PRINTER_TYPE, "model", $data["snmp_model"]);
+                  $PluginFusinvsnmpPrinter = new PluginFusinvsnmpPrinter();
+
+                  $PluginFusinvsnmpPrinter->load($items_id);
+                  $PluginFusinvsnmpPrinter->setValue('plugin_fusinvsnmp_models_id', $data['snmp_model']);
+                  $PluginFusinvsnmpPrinter->updateDB();
 					}
 				}
 			}
 			break;
       
 		case "plugin_fusinvsnmp_assign_auth" :
-			if ($data['itemtype'] == NETWORKING_TYPE) {
-				foreach ($data['item'] as $key => $val) {
+			if ($data['itemtype'] == 'NetworkEquipment') {
+				foreach ($data['item'] as $items_id => $val) {
 					if ($val == 1) {
-						PluginFusinvsnmpMassiveaction::assign($key, NETWORKING_TYPE, "auth", $data["plugin_fusinvsnmp_snmpauths_id"]);
-					}
+                  $PluginFusinvsnmpNetworkEquipment = new PluginFusinvsnmpNetworkEquipment();
+
+                  $PluginFusinvsnmpNetworkEquipment->load($items_id);
+                  $PluginFusinvsnmpNetworkEquipment->setValue('plugin_fusinvsnmp_configsecurities_id', $data['plugin_fusinvsnmp_configsecurities_id']);
+                  $PluginFusinvsnmpNetworkEquipment->updateDB();
+               }
 				}
-			} else if($data['itemtype'] == PRINTER_TYPE) {
-				foreach ($data['item'] as $key => $val) {
+			} else if($data['itemtype'] == 'Printer') {
+				foreach ($data['item'] as $items_id => $val) {
 					if ($val == 1) {
-						PluginFusinvsnmpMassiveaction::assign($key, PRINTER_TYPE, "auth", $data["plugin_fusinvsnmp_snmpauths_id"]);
-					}
+                  $PluginFusinvsnmpPrinter = new PluginFusinvsnmpPrinter();
+
+                  $PluginFusinvsnmpPrinter->load($items_id);
+                  $PluginFusinvsnmpPrinter->setValue('plugin_fusinvsnmp_configsecurities_id', $data['plugin_fusinvsnmp_configsecurities_id']);
+                  $PluginFusinvsnmpPrinter->updateDB();
+                }
 				}
 			}
 			break;

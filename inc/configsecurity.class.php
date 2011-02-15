@@ -676,13 +676,13 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 		global $DB;
 
 		switch ($type) {
-			case NETWORKING_TYPE :
+			case 'NetworkEquipment':
 				$query = "SELECT plugin_fusinvsnmp_configsecurities_id
 				FROM glpi_plugin_fusinvsnmp_networkequipments 
 				WHERE networkequipments_id='".$ID_Device."' ";
 				break;
 
-			case PRINTER_TYPE :
+			case 'Printer':
 				$query = "SELECT `plugin_fusinvsnmp_configsecurities_id`
                       FROM `glpi_plugin_fusinvsnmp_printers`
                       WHERE `printers_id`='".$ID_Device."';";
