@@ -119,6 +119,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 		$tab[5]['linkfield'] = 'items_id';
 		$tab[5]['name'] = $LANG['plugin_fusioninventory']['agents'][23];
 		$tab[5]['datatype'] = 'itemlink';
+      $tab[5]['itemlink_type']  = 'Computer';
 
 		$tab[6]['table'] = $this->getTable();
 		$tab[6]['field'] = 'version';
