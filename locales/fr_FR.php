@@ -112,6 +112,7 @@ $LANG['plugin_fusinvsnmp']['model_info'][3]="Authentification SNMP";
 $LANG['plugin_fusinvsnmp']['model_info'][4]="Modèles SNMP";
 $LANG['plugin_fusinvsnmp']['model_info'][6]="Edition de modèle SNMP";
 $LANG['plugin_fusinvsnmp']['model_info'][7]="Création de modèle SNMP";
+$LANG['plugin_fusinvsnmp']["model_info"][8]="Ce modèle existe déjà";
 $LANG['plugin_fusinvsnmp']['model_info'][9]="Import effectué avec succès";
 $LANG['plugin_fusinvsnmp']['model_info'][10]="Importation de modèle";
 $LANG['plugin_fusinvsnmp']['model_info'][11]="is_active";

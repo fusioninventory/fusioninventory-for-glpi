@@ -283,6 +283,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
 
    function importMass() {
+      ini_set("max_execution_time", "0");
       foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) $this->import($file,0,1);
    }
 
