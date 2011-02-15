@@ -494,8 +494,10 @@ logInFile("xxx", print_r($input, true));
     * @return the $output array modified
    **/
    function executeActions($output, $params) {
-      $classname = $_SESSION['plugin_fusioninventory_classrulepassed'];
-      $class = new $classname();
+      if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
+         $classname = $_SESSION['plugin_fusioninventory_classrulepassed'];
+         $class = new $classname();
+      }
       logInFile("xxx", "execute action\n");
       if (count($this->actions)) {
          foreach ($this->actions as $action) {
@@ -505,7 +507,9 @@ logInFile("xxx", print_r($input, true));
                   if (isset($this->criterias_results['found_equipment'])) {
                      foreach ($this->criterias_results['found_equipment'] as $itemtype=>$datas) {
                         $items_id = current($datas);
-                        $class->rulepassed($items_id, $itemtype);
+                        if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
+                           $class->rulepassed($items_id, $itemtype);
+                        }
                      }
                   } else {
                      // Import into new equipment
@@ -514,13 +518,17 @@ logInFile("xxx", print_r($input, true));
                         foreach ($this->criterias as $criteria){
                            if ($criteria->fields['criteria'] == 'itemtype') {
                               $itemtype = $criteria->fields['pattern'];
-                              $class->rulepassed("0", $itemtype);
+                              if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
+                                 $class->rulepassed("0", $itemtype);
+                              }
                               $itemtype_found = 1;
                            }
                         }
                      }                     
                      if ($itemtype_found == "0") {
-                        $class->rulepassed("0", "PluginFusioninventoryUnknownDevice");
+                        if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
+                           $class->rulepassed("0", "PluginFusioninventoryUnknownDevice");
+                        }
                      }
                      $output['action'] = 0;
                   }
@@ -529,7 +537,9 @@ logInFile("xxx", print_r($input, true));
                   if (isset($this->criterias_results['found_equipment'])) {
                      foreach ($this->criterias_results['found_equipment'] as $itemtype=>$datas) {
                         $items_id = current($datas);
-                        $class->rulepassed($items_id, $itemtype);
+                        if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
+                           $class->rulepassed($items_id, $itemtype);
+                        }
                      }
                   } else {
                      // no import
