@@ -359,6 +359,7 @@ $LANG['plugin_fusinvsnmp']['agents'][27]="Version du module snmpquery";
 $LANG['plugin_fusinvsnmp']['task'][15]="Tâche permanente - Découverte";
 $LANG['plugin_fusinvsnmp']['task'][16]="Tâche permanente - Inventaire";
 $LANG['plugin_fusinvsnmp']['task'][17]="Mode de communication";
+$LANG['plugin_fusinvsnmp']['task'][18]="Créer la tâche automatiquement";
 
 $LANG['plugin_fusinvsnmp']['constructdevice'][0]="Gestion des mib de matériel";
 $LANG['plugin_fusinvsnmp']['constructdevice'][1]="Creation automatique des modèles";

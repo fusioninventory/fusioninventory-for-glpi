@@ -292,7 +292,7 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
    }
 
 
-   function permanentTask($items_id, $module_name) {
+   function permanentTask($items_id, $module_name, $allowcreate=0) {
       global $LANG;
 
       if ($module_name == "NETDISCOVERY") {
@@ -321,6 +321,19 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
          $data = current($a_taskjob);
          $taskjob_id = $data['id'];
       } else {
+         if ($allowcreate != "1") {
+            echo "<table class='tab_cadre_fixe'>";
+            echo "<tr class='tab_bg_1'>";
+            echo "<th>".$LANG['plugin_fusioninventory']['task'][0]."</th>";
+            echo "</tr>";
+            echo "<tr class='tab_bg_1'>";
+            echo "<td align='center'>";
+            echo "<a href='".GLPI_ROOT."/plugins/fusinvsnmp/front/iprange.form.php?id=".$_POST['id']."&allowcreate=1'>".$LANG['plugin_fusinvsnmp']['task'][18]."</a>";
+            echo "</td>";
+            echo "</tr>";
+            echo "</table>";
+            return;
+         }
          // Create task
          $input = array();
          $input['name'] = $module_name." of IP Range (permanent)";

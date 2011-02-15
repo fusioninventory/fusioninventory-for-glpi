@@ -95,8 +95,11 @@ $id = "";
 if (isset($_GET["id"])) {
 	$id = $_GET["id"];
 }
+$allowcreate = 0;
+if (isset($_GET['allowcreate']))
+   $allowcreate = $_GET['allowcreate'];
 
-$iprange->showForm($id);
+$iprange->showForm($id, array("allowcreate"=>$allowcreate));
 
 commonFooter();
 
