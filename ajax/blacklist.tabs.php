@@ -52,7 +52,7 @@ $fields = $PluginFusinvinventoryCriteria->find("");
 
 foreach ($fields as $id=>$data) {
    if (($id == $_POST['glpi_tab']) OR ($_POST['glpi_tab'] == "-1")) {
-      $PluginFusinvinventoryBlacklist->showArray($id);
+      //$PluginFusinvinventoryBlacklist->showArray($id);
       echo "<br/>";
       $PluginFusinvinventoryBlacklist->addForm($id);
    }

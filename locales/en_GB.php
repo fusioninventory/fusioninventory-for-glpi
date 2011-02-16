@@ -71,7 +71,7 @@ $LANG['plugin_fusinvinventory']['rule'][31]="Import in unknown devices";
 $LANG['plugin_fusinvinventory']['rule'][100]="Entity rules";
 $LANG['plugin_fusinvinventory']['rule'][101]="Tag";
 
-$LANG['plugin_fusinvinventory']['blacklist'][0]="blacklisted values";
+$LANG['plugin_fusinvinventory']['blacklist'][0]="blacklisted value";
 $LANG['plugin_fusinvinventory']['blacklist'][1]="New value to blacklist";
 
 $LANG['plugin_fusinvinventory']['profile'][2]="Existent rules";

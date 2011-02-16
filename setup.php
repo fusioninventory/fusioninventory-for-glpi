@@ -105,15 +105,15 @@ function plugin_init_fusinvinventory() {
       $PLUGIN_HOOKS['pre_item_update']['fusinvinventory'] = array('PluginFusioninventoryLock' => array('PluginFusinvinventoryLock', 'deleteLock'));
    }
 
-   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['fusinvinventory-ruleinventory']
-                  = '../fusinvinventory/front/ruleinventory.form.php';
-   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['fusinvinventory-ruleinventory']
-                  = '../fusinvinventory/front/ruleinventory.php';
-
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['fusinvinventory-ruleentity']
                   = '../fusinvinventory/front/ruleentity.form.php';
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['fusinvinventory-ruleentity']
                   = '../fusinvinventory/front/ruleentity.php';
+
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['fusinvinventory-blacklist']
+                  = '../fusinvinventory/front/blacklist.form.php';
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['fusinvinventory-blacklist']
+                  = '../fusinvinventory/front/blacklist.php';
 
    // Tabs for each type
    $PLUGIN_HOOKS['headings']['fusinvinventory'] = 'plugin_get_headings_fusinvinventory';
@@ -125,7 +125,7 @@ function plugin_init_fusinvinventory() {
 
    // Fil ariane
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-blacklist']['title'] = $LANG['plugin_fusinvinventory']['menu'][2];
-   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-blacklist']['page']  = '/plugins/fusinvinventory/front/blacklist.form.php';
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-blacklist']['page']  = '/plugins/fusinvinventory/front/blacklist.php';
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleinventory']['title'] = $LANG['plugin_fusinvinventory']['menu'][1];
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleinventory']['page']  = '/plugins/fusinvinventory/front/ruleinventory.php';

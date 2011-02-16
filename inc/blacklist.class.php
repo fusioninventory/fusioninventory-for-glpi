@@ -67,8 +67,32 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
       return true;
    }
 
+   
+
+   function getSearchOptions() {
+      global $LANG;
+
+      $tab = array();
+
+      $tab['common'] = $LANG['plugin_fusinvinventory']['menu'][2];
+
+		$tab[1]['table'] = $this->getTable();
+		$tab[1]['field'] = 'value';
+		$tab[1]['linkfield'] = 'value';
+		$tab[1]['name'] = $LANG['plugin_fusinvinventory']['blacklist'][0];
+      $tab[1]['datatype'] = 'itemlink';
+
+      $tab[2]['table'] = 'glpi_plugin_fusinvinventory_criterias';
+		$tab[2]['field'] = 'name';
+		$tab[2]['linkfield'] = 'plugin_fusioninventory_criterium_id';
+		$tab[2]['name'] = $LANG['common'][16];
+      $tab[2]['datetype'] = "itemlink";
+
+      return $tab;
+   }
 
 
+   
    function defineTabs($options=array()){
       global $LANG,$CFG_GLPI;
 
@@ -86,56 +110,27 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
    }
 
 
-   function showArray($id) {
-      global $DB,$CFG_GLPI,$LANG;
-
-      $PluginFusinvinventoryCriteria = new PluginFusinvinventoryCriteria();
-
-      echo "<table class='tab_cadre_fixe'>";
-      echo "<tr>";
-      echo "<th colspan='4'>";
-
-      $PluginFusinvinventoryCriteria->getFromDB($id);
-      echo $LANG['plugin_fusinvinventory']['blacklist'][0]." - ".$PluginFusinvinventoryCriteria->fields['name'];
-      echo "</th>";
-      echo "<tr>";
-
-
-      $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
-      $i = 0;
-      foreach ($a_blacklist as $datablacklist) {
-         if ($i == 0) {
-            echo "<tr class='tab_bg_1'>";
-         }
-         echo "<td colspan='2' align='center' width='50%'>".$datablacklist['value']."</td>";
-         if ($i == "1") {
-            echo "</tr>";
-            $i = -1;
-         }
-         $i++;
-      }
-      if ($i == "1") {
-         echo "<td colspan='2' align='center' width='50%'></td>";
-         echo "</tr>";
-      }
-
-      echo "</table>";
-
-      return true;
-   }
-
-
-   function addForm($id) {
+   
+   function showForm($items_id, $options=array()) {
       global $LANG;
 
+      if ($items_id!='') {
+         $this->getFromDB($items_id);
+      } else {
+         $this->getEmpty();
+      }
 
-      $this->getEmpty();
       $this->showFormHeader();
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td colspan='2'>".$LANG['plugin_fusinvinventory']['blacklist'][1]."</td>";
-      echo "<td colspan='2'><input type='text' name='value'/>";
-      echo "<input type='hidden' name='plugin_fusioninventory_criterium_id' value='".$id."'/>";
+      echo "<td>".$LANG['plugin_fusinvinventory']['blacklist'][0]."</td>";
+      echo "<td>";
+      echo "<input type='text' name='value' value='".$this->fields['value']."' />";
+      echo "</td>";
+      echo "<td>".$LANG['common'][16]."</td>";
+      echo "<td>";
+      Dropdown::show('PluginFusinvinventoryCriteria', array('name' => 'plugin_fusioninventory_criterium_id',
+                                                            'value' => $this->fields['plugin_fusioninventory_criterium_id']));
       echo "</td>";
       echo "</tr>";
 

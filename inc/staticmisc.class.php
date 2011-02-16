@@ -74,7 +74,7 @@ class PluginFusinvinventoryStaticmisc {
       if (PluginFusioninventoryProfile::haveRight("fusinvinventory", "blacklist", "r")) {
          $a_menu[3]['name'] = $LANG['plugin_fusinvinventory']['menu'][2];
          $a_menu[3]['pic']  = GLPI_ROOT."/plugins/fusinvinventory/pics/menu_blacklist.png";
-         $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusinvinventory/front/blacklist.form.php";
+         $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusinvinventory/front/blacklist.php";
       }
 
       return $a_menu;

@@ -118,3 +118,6 @@ INSERT INTO `glpi_plugin_fusinvinventory_blacklists` (`id`, `plugin_fusioninvent
 (40, 5, 'System Product Name'),
 (41, 5, 'Product Name'),
 (42, 5, 'System Name');
+
+INSERT INTO `glpi_displaypreferences` (`itemtype`, `num`, `rank`, `users_id`) VALUES
+('PluginFusinvinventoryBlacklist', 2, 1, 0);
