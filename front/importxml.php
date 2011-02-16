@@ -48,10 +48,12 @@ if (isset($_FILES['importfile']['tmp_name'])) {
    if ($_FILES['importfile']['tmp_name'] != '') {
       $PluginFusinvinventoryImportXML = new PluginFusinvinventoryImportXML();
       $_SESSION["plugin_fusioninventory_disablelocks"] = 1;
-      $PluginFusinvinventoryImportXML->importXMLFile($_FILES['importfile']['tmp_name']);
+      if ($PluginFusinvinventoryImportXML->importXMLFile($_FILES['importfile']['tmp_name'])) {
+         $_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusinvinventory']['importxml'][1];
+      } else {
+         $_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusinvinventory']['importxml'][3];
+      }
       unset($_SESSION["plugin_fusioninventory_disablelocks"]);
-
-      $_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusinvinventory']['importxml'][1];
    } else {
       $_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusinvinventory']['importxml'][2];
    }
