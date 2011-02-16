@@ -43,6 +43,7 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 
    static function getTypeName() {
       global $LANG;
+
       if (isset($_SERVER['HTTP_REFERER']) AND strstr($_SERVER['HTTP_REFERER'], 'iprange')) {
 
          if ((isset($_POST['glpi_tab'])) AND ($_POST['glpi_tab'] == 1)) {
@@ -80,6 +81,38 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
    }
 
 
+   function getSearchOptions() {
+      global $LANG;
+
+      $tab = array();
+
+      $tab['common'] = $LANG['plugin_fusinvsnmp']['menu'][2];
+
+		$tab[1]['table'] = $this->getTable();
+		$tab[1]['field'] = 'name';
+		$tab[1]['linkfield'] = 'name';
+		$tab[1]['name'] = $LANG['common'][16];
+		$tab[1]['datatype'] = 'itemlink';
+
+		$tab[2]['table'] = 'glpi_entities';
+		$tab[2]['field'] = 'completename';
+		$tab[2]['linkfield'] = 'entities_id';
+		$tab[2]['name'] = $LANG['entity'][0];
+
+		$tab[3]['table'] = $this->getTable();
+		$tab[3]['field'] = 'ip_start';
+		$tab[3]['linkfield'] = 'ip_start';
+		$tab[3]['name'] = $LANG['plugin_fusinvsnmp']['iprange'][0];
+
+ 		$tab[4]['table'] = $this->getTable();
+		$tab[4]['field'] = 'ip_end';
+		$tab[4]['linkfield'] = 'ip_end';
+		$tab[4]['name'] = $LANG['plugin_fusinvsnmp']['iprange'][1];
+
+      return $tab;
+   }
+
+
    function defineTabs($options=array()){
       global $LANG,$CFG_GLPI,$DB;
 
@@ -106,19 +139,15 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG["common"][16] . "</td>";
-		echo "<td align='center'>";
+		echo "<td align='center' colspan='2'>" . $LANG["common"][16] . "</td>";
+		echo "<td align='center' colspan='2'>";
 		echo "<input type='text' name='name' value='".$this->fields["name"]."'/>";
 		echo "</td>";
-
-      echo "<th colspan='2'>";
-      echo $LANG['plugin_fusinvsnmp']['config'][4];
-      echo "</th>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']['iprange'][0] . "</td>";
-		echo "<td align='center'>";
+		echo "<td align='center' colspan='2'>" . $LANG['plugin_fusinvsnmp']['iprange'][0] . "</td>";
+		echo "<td align='center' colspan='2'>";
       if (empty($this->fields["ip_start"]))
          $this->fields["ip_start"] = "...";
       $ipexploded = explode(".", $this->fields["ip_start"]);
@@ -134,16 +163,11 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 		echo "<input type='text' value='".$ipexploded[2]."' name='ip_start2' id='ip_start2' size='3' maxlength='3' >.";
 		echo "<input type='text' value='".$ipexploded[3]."' name='ip_start3' id='ip_start3' size='3' maxlength='3' >";
 		echo "</td>";
-
-		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']['iprange'][3] . "</td>";
-		echo "<td align='center'>";
-		Dropdown::showYesNo("discover",$this->fields["discover"]);
-		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']['iprange'][1] . "</td>";
-		echo "<td align='center'>";
+		echo "<td align='center' colspan='2'>" . $LANG['plugin_fusinvsnmp']['iprange'][1] . "</td>";
+		echo "<td align='center' colspan='2'>";
       unset($ipexploded);
       if (empty($this->fields["ip_end"]))
          $this->fields["ip_end"] = "...";
@@ -173,16 +197,12 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 		echo "<input type='text' value='".$ipexploded[2]."' name='ip_end2' id='ip_end2' size='3' maxlength='3' onSelect='test(2)'>.";
 		echo "<input type='text' value='".$ipexploded[3]."' name='ip_end3' id='ip_end3' size='3' maxlength='3' onSelect='test(3)'>";
 		echo "</td>";
-
-      echo "<th colspan='2'>";
-      echo $LANG['plugin_fusinvsnmp']['config'][3];
-      echo "</th>";
 		echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       if (isMultiEntitiesMode()) {
-         echo "<td align='center'>".$LANG['entity'][0]."</td>";
-         echo "<td align='center'>";
+         echo "<td align='center' colspan='2'>".$LANG['entity'][0]."</td>";
+         echo "<td align='center' colspan='2'>";
          Dropdown::show('Entity',
                         array('name'=>'entities_id',
                               'value'=>$this->fields["entities_id"]));
@@ -190,77 +210,12 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
       } else {
          echo "<td colspan='2'></td>";
       }
-
-      echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']['iprange'][3] . "</td>";
-		echo "<td align='center'>";
-		Dropdown::showYesNo("query",$this->fields["query"]);
-		echo "</td>";
-
       echo "</tr>";
 
       $this->showFormButtons($options);
       $this->addDivForTabs();
 
       }
-
-
-
-   function Counter($agent_id, $type) {
-      global $DB;
-      
-      $count = 0;
-      switch ($type) {
-
-         case "discover":
-            $query = "SELECT COUNT(*) as count FROM `glpi_plugin_fusinvsnmp_ipranges`
-               WHERE `plugin_fusioninventory_agents_id_discover`='".$agent_id."'
-                  AND `discover`='1' ";
-            break;
-
-         case "query":
-            $query = "SELECT COUNT(*) as count FROM `glpi_plugin_fusinvsnmp_ipranges`
-               WHERE `plugin_fusioninventory_agents_id_query`='".$agent_id."'
-                  AND `query`='1' ";
-            break;
-
-      }
-
-      if ($result = $DB->query($query)) {
-         $res = $DB->fetch_assoc($result);
-         $count = $res["count"];
-      }
-      return $count;
-   }
-
-
-   function ListRange($agent_id, $type) {
-      global $DB;
-
-      $ranges = array();
-      switch ($type) {
-
-         case "discover":
-            $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_ipranges`
-               WHERE `plugin_fusioninventory_agents_id_discover`='".$agent_id."'
-                  AND `discover`='1' ";
-            break;
-
-         case "query":
-            $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_ipranges`
-               WHERE `plugin_fusioninventory_agents_id_query`='".$agent_id."'
-                  AND `query`='1' ";
-            break;
-
-      }
-      if ($result = $DB->query($query)) {
-         if ($DB->numrows($result) != 0) {
-            while ($data=$DB->fetch_array($result)) {
-               $ranges[$data["id"]] = $data;
-            }
-         }
-      }
-      return $ranges;
-   }
 
 
    function checkip($a_input) {

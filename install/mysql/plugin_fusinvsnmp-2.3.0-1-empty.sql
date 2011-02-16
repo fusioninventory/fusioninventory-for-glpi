@@ -315,16 +315,10 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_ipranges`;
 CREATE TABLE `glpi_plugin_fusinvsnmp_ipranges` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(255) DEFAULT NULL,
-   `plugin_fusioninventory_agents_id_discover` int(11) NOT NULL DEFAULT '0',
-   `plugin_fusioninventory_agents_id_query` INT( 11 ) NOT NULL DEFAULT '0',
+   `entities_id` int(11) NOT NULL DEFAULT '0',
    `ip_start` varchar(255) DEFAULT NULL,
    `ip_end` varchar(255) DEFAULT NULL,
-   `discover` int(1) NOT NULL DEFAULT '0',
-   `query` int(1) NOT NULL DEFAULT '0',
-   `entities_id` int(11) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
-   KEY `plugin_fusioninventory_agents_id_discover` (`plugin_fusioninventory_agents_id_discover`),
-   KEY `plugin_fusioninventory_agents_id_query` (`plugin_fusioninventory_agents_id_query`),
    KEY `entities_id` (`entities_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -464,11 +458,7 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
 
           (NULL,'PluginFusinvsnmpIPRange', '2', '1', '0'),
           (NULL,'PluginFusinvsnmpIPRange', '3', '2', '0'),
-          (NULL,'PluginFusinvsnmpIPRange', '5', '3', '0'),
-          (NULL,'PluginFusinvsnmpIPRange', '6', '4', '0'),
-          (NULL,'PluginFusinvsnmpIPRange', '9', '5', '0'),
-          (NULL,'PluginFusinvsnmpIPRange', '7', '6', '0'),
-          (NULL,'PluginFusinvsnmpIPRange', '8', '7', '0'),
+          (NULL,'PluginFusinvsnmpIPRange', '4', '3', '0'),
 
           (NULL,'PluginFusinvsnmpAgentProcess', '2', '1', '0'),
           (NULL,'PluginFusinvsnmpAgentProcess', '3', '2', '0'),
