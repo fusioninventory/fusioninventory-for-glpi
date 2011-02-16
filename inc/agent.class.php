@@ -105,7 +105,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 		$tab[3]['table'] = $this->getTable();
 		$tab[3]['field'] = 'lock';
 		$tab[3]['linkfield'] = 'lock';
-		$tab[3]['name'] = $LANG['plugin_fusioninventory']['agents'][6];
+		$tab[3]['name'] = $LANG['plugin_fusioninventory']['agents'][37];
 		$tab[3]['datatype'] = 'bool';
 
 		$tab[4]['table'] = $this->getTable();
@@ -202,7 +202,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['agents'][6]." :</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['agents'][37]." :</td>";
       echo "<td align='center'>";
       Dropdown::showYesNo('lock', $this->fields["lock"]);
       echo "</td>";

@@ -123,6 +123,7 @@ $LANG['plugin_fusioninventory']['agents'][33]="Auto managenement dynamic of agen
 $LANG['plugin_fusioninventory']['agents'][34]="Activation (by default)";
 $LANG['plugin_fusioninventory']['agents'][35]="Device_id";
 $LANG['plugin_fusioninventory']['agents'][36]="Agent modules";
+$LANG['plugin_fusioninventory']['agents'][37]="locked";
 
 $LANG['plugin_fusioninventory']['unknown'][2]="Подтверждённые устройства";
 $LANG['plugin_fusioninventory']['unknown'][4]="Сетевой хаб";
