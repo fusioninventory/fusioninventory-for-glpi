@@ -177,7 +177,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 		
 		if ($DB->numrows($result) > 0) {
 			if ($message == '1') {
-				$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusioninventory']['model_info'][8];
+				$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusinvsnmp']['model_info'][8];
          }
 			return false;
 		} else {
