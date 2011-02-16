@@ -87,8 +87,7 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
                      $a_Peripheral = $data;
                   }
                }
-            }
-            if (count($a_Peripheral) == 0) {
+            } else {
                return;
             }
          } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],

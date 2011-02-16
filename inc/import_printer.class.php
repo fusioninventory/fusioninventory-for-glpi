@@ -87,8 +87,7 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
                      $a_printer = $data;
                   }
                }
-            }
-            if (count($a_printer) == 0) {
+            } else {
                return;
             }
          } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],

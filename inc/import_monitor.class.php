@@ -79,6 +79,7 @@ class PluginFusinvinventoryImport_Monitor extends CommonDBTM {
             }
          } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                  "import_monitor") == '3') {
+            // Import only with serial number
 
             if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
                $a_monitors = $monitor->find("`serial`='".$dataSection['SERIAL']."'","", 1);
@@ -87,8 +88,7 @@ class PluginFusinvinventoryImport_Monitor extends CommonDBTM {
                      $a_monitor = $data;
                   }
                }
-            }
-            if (count($a_monitor) == 0) {
+            } else {
                return;
             }
          } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
