@@ -71,11 +71,6 @@ class PluginFusinvsnmpModel extends CommonDBTM {
 		$tab[2]['linkfield'] = 'itemtype';
 		$tab[2]['name'] = 'itemtype';
 
-		$tab[3]['table'] = 'glpi_entities';
-		$tab[3]['field'] = 'completename';
-		$tab[3]['linkfield'] = 'entities_id';
-		$tab[3]['name'] = $LANG['entity'][0];
-
 		$tab[4]['table'] = $this->getTable();
 		$tab[4]['field'] = 'is_active';
 		$tab[4]['linkfield'] = 'is_active';
