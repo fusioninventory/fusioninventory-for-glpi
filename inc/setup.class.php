@@ -53,7 +53,8 @@ class PluginFusioninventorySetup {
       $query = "SHOW TABLES;";
       $result=$DB->query($query);
       while ($data=$DB->fetch_array($result)) {
-         if (strstr($data[0],"glpi_plugin_fusioninventory_")){
+         if ((strstr($data[0],"glpi_plugin_fusioninventory_"))
+                OR (strstr($data[0], "glpi_dropdown_plugin_fusioninventory"))) {
             $query_delete = "DROP TABLE `".$data[0]."`;";
             $DB->query($query_delete) or die($DB->error());
          }
