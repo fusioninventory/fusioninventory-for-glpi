@@ -127,6 +127,7 @@ $LANG['plugin_fusioninventory']['agents'][37]="locked";
 
 $LANG['plugin_fusioninventory']['unknown'][2]="Подтверждённые устройства";
 $LANG['plugin_fusioninventory']['unknown'][4]="Сетевой хаб";
+$LANG['plugin_fusioninventory']['unknown'][5]="Import unknown device into asset";
 
 $LANG['plugin_fusioninventory']['task'][0]="Задача";
 $LANG['plugin_fusioninventory']['task'][1]="Менеджмент Задач";

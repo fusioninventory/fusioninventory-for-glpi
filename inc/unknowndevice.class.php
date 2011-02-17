@@ -313,6 +313,11 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 		echo "<table  class='tab_cadre_fixe'>";
 		echo "<tr class='tab_bg_1'>";
+		echo "<th align='center'>";
+      echo $LANG['plugin_fusioninventory']['unknown'][5];
+      echo "</th>";
+      echo "</tr>";
+		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>";
       $this->getFromDB($id);
       if ($this->fields["itemtype"] != '0') {
