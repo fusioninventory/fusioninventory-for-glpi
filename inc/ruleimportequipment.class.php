@@ -1,37 +1,37 @@
 <?php
+
 /*
- * @version $Id: ruleimportcomputer.class.php 13602 2011-01-12 08:20:12Z walid $
- -------------------------------------------------------------------------
- GLPI - Gestionnaire Libre de Parc Informatique
- Copyright (C) 2003-2010 by the INDEPNET Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://indepnet.net/   http://glpi-project.org
- -------------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of GLPI.
+   This file is part of FusionInventory.
 
- GLPI is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- GLPI is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with GLPI; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- --------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David Durieux
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
 
-// ----------------------------------------------------------------------
-// Original Author of file: Walid Nouh
-// Purpose of file:
-// ----------------------------------------------------------------------
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -494,8 +494,10 @@ logInFile("xxx", print_r($input, true));
     * @return the $output array modified
    **/
    function executeActions($output, $params) {
-      $classname = $_SESSION['plugin_fusioninventory_classrulepassed'];
-      $class = new $classname();
+      if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
+         $classname = $_SESSION['plugin_fusioninventory_classrulepassed'];
+         $class = new $classname();
+      }
       logInFile("xxx", "execute action\n");
       if (count($this->actions)) {
          foreach ($this->actions as $action) {
@@ -505,7 +507,9 @@ logInFile("xxx", print_r($input, true));
                   if (isset($this->criterias_results['found_equipment'])) {
                      foreach ($this->criterias_results['found_equipment'] as $itemtype=>$datas) {
                         $items_id = current($datas);
-                        $class->rulepassed($items_id, $itemtype);
+                        if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
+                           $class->rulepassed($items_id, $itemtype);
+                        }
                      }
                   } else {
                      // Import into new equipment
@@ -514,13 +518,17 @@ logInFile("xxx", print_r($input, true));
                         foreach ($this->criterias as $criteria){
                            if ($criteria->fields['criteria'] == 'itemtype') {
                               $itemtype = $criteria->fields['pattern'];
-                              $class->rulepassed("0", $itemtype);
+                              if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
+                                 $class->rulepassed("0", $itemtype);
+                              }
                               $itemtype_found = 1;
                            }
                         }
                      }                     
                      if ($itemtype_found == "0") {
-                        $class->rulepassed("0", "PluginFusioninventoryUnknownDevice");
+                        if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
+                           $class->rulepassed("0", "PluginFusioninventoryUnknownDevice");
+                        }
                      }
                      $output['action'] = 0;
                   }
@@ -529,7 +537,9 @@ logInFile("xxx", print_r($input, true));
                   if (isset($this->criterias_results['found_equipment'])) {
                      foreach ($this->criterias_results['found_equipment'] as $itemtype=>$datas) {
                         $items_id = current($datas);
-                        $class->rulepassed($items_id, $itemtype);
+                        if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
+                           $class->rulepassed($items_id, $itemtype);
+                        }
                      }
                   } else {
                      // no import

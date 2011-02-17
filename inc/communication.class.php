@@ -254,7 +254,7 @@ class PluginFusioninventoryCommunication {
          $array_tmp = current($array);
          $className = $array_tmp['className'];
          $class = new $className();
-         $this->sxml = $class->Run($array_tmp['itemtype'], $array);
+         $this->sxml = $class->Run($itemtype, $array);
       }
    }
 

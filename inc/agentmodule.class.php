@@ -216,7 +216,11 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
 
+      if ($module_name == 'SNMPINVENTORY') {
+         $module_name = 'SNMPQUERY';
+      }
       $agentModule = $this->getActivationExceptions($module_name);
+
       $where = "";
       if ($agentModule['is_active'] == 0) {
          $a_agentList = importArrayFromDB($agentModule['exceptions']);
@@ -235,6 +239,8 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
                $i++;
             }
             $where .= ") ";
+         } else {
+            return array();
          }
       } else {
          $a_agentList = importArrayFromDB($agentModule['exceptions']);
