@@ -83,12 +83,12 @@ function pluginFusinvsnmpInstall() {
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th align='center'>";
-      echo "Import SNMP models";
+      echo "Importing SNMP models, please wait...";
       echo "</th>";
       echo "</tr>";
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
-      createProgressBar("Import SNMP models");
+      createProgressBar("Importing SNMP models, please wait...");
       foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) {
          $importexport->import($file,0,1);
          $i++;
