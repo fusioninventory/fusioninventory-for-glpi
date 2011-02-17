@@ -449,12 +449,11 @@ logInFile("xxx", print_r($input, true));
                       GROUP BY `[typetable]`.`id`
                       ORDER BY `[typetable]`.`is_deleted` ASC
                       ";
-         if ($itemtype == "PluginFusioninventoryUnknownDevice") {
-            $sql_glpi = str_replace("`[typetable]`.`is_template` = '0'  AND", "", $sql_glpi);
-         }
-            
          if (strstr($sql_glpi, "`[typetable]`.`is_template` = '0'  AND")) {
 
+            if ($itemtype == "PluginFusioninventoryUnknownDevice") {
+               $sql_glpi = str_replace("`[typetable]`.`is_template` = '0'  AND", "", $sql_glpi);
+            }
             $sql_glpi = str_replace("[typetable]", $item->getTable(), $sql_glpi);
             $sql_glpi = str_replace("[typename]", $itemtype, $sql_glpi);
             logInFile("xxx", $sql_glpi."\n");
