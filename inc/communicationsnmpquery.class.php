@@ -362,8 +362,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $this->ptd->setValue('memory', $p_info->MEMORY[0]);
                break;
             case 'MODEL' :
-               $NetworkEquipmentModel = new NetworkEquipmentModel();
-               $this->ptd->setValue('networkequipmentmodels_id', $NetworkEquipmentModel->import(array('name' => (string)$p_info->MODEL)));
+               $networkequipmentmodels_id = Dropdown::importExternal('NetworkEquipmentModel',
+                                                        (string)$p_info->MODEL);
+               $this->ptd->setValue('networkequipmentmodels_id', $networkequipmentmodels_id);
                break;
             case 'LOCATION' :
               $Location = new Location();
@@ -421,8 +422,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $this->ptd->setValue('memory_size', (string)$p_info->MEMORY);
                break;
             case 'MODEL' :
-               $PrinterModel = new PrinterModel();
-               $this->ptd->setValue('printermodels_id', $PrinterModel->import(array('name' => (string)$p_info->MODEL)));
+               $printermodels_id = Dropdown::importExternal('PrinterModel',
+                                                        (string)$p_info->MODEL);
+               $this->ptd->setValue('printermodels_id', $printermodels_id);
                break;
             case 'NAME' :
                $this->ptd->setValue('name', (string)$p_info->NAME);
