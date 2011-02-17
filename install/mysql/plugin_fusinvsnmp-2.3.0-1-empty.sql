@@ -415,8 +415,8 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_statediscoveries` (
 INSERT INTO `glpi_plugin_fusinvsnmp_configsecurities`
       (`id`, `name`, `snmpversion`, `community`, `username`, `authentication`, `auth_passphrase`,
        `encryption`, `priv_passphrase`, `is_deleted`)
-   VALUES (1, 'Communauté Public v1', '1', 'public', '', '0', '', '0', '', '0'),
-          (2, 'Communauté Public v2c', '2', 'public', '', '0', '', '0', '', '0');
+   VALUES (1, 'Public community v1', '1', 'public', '', '0', '', '0', '', '0'),
+          (2, 'Public community v2c', '2', 'public', '', '0', '', '0', '', '0');
 
 
 ## glpi_displaypreferences
