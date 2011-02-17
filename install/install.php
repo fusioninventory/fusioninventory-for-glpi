@@ -73,14 +73,14 @@ function pluginFusinvsnmpInstall() {
       $configLogField->initConfig();
 
       // Import models
-      $importexport = new PluginFusinvsnmpImportExport;
+      $importexport = new PluginFusinvsnmpImportExport();
       
       $nb = 0;
       foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) {
          $nb++;
       }
       $i = 0;
-      echo "<table class='tab_cadre'>";
+      echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th align='center'>";
       echo "Import SNMP models";
