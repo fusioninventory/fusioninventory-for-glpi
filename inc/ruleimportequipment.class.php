@@ -338,10 +338,10 @@ logInFile("xxx", print_r($input, true));
       $sql_where = " `[typetable]`.`is_template` = '0' ";
       $sql_where_networkequipment = $sql_where;
       $sql_from = "`[typetable]`";
+      $sql_from_networkequipment = $sql_from;
       $sql_from .= " LEFT JOIN `glpi_networkports`
                   ON (`[typetable]`.`id` = `glpi_networkports`.`items_id`
                       AND `glpi_networkports`.`itemtype` = '[typename]') ";
-      $sql_from_networkequipment = $sql_from;
 
       foreach ($complex_criterias as $criteria) {
          switch ($criteria->fields['criteria']) {
