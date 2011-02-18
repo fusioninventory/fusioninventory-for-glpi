@@ -45,7 +45,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
    // Get all devices and put in taskjobstatus each task for each device for each agent
    function prepareRun($taskjobs_id) {
       global $DB;
-
+      
       $PluginFusioninventoryTask = new PluginFusioninventoryTask();
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
@@ -200,6 +200,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
 
       // *** Add jobstatus
       if (count($a_agentlist) == '0') {
+logInFile("inventory", "unable");
          $a_input = array();
          $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
          $a_input['state'] = 1;
@@ -207,20 +208,44 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
          $a_input['itemtype'] = '';
          $a_input['items_id'] = 0;
          $a_input['uniqid'] = $uniqid;
-         $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
+         //$Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
             //Add log of taskjob
             $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
             $a_input['state'] = 7;
             $a_input['date'] = date("Y-m-d H:i:s");
             $PluginFusioninventoryTaskjoblog->add($a_input);
-         $PluginFusioninventoryTaskjobstatus->changeStatusFinish($taskjobs_id,
+         $PluginFusioninventoryTaskjobstatus->changeStatusFinish($Taskjobstatus_id,
                                                                  0,
                                                                  '',
                                                                  1,
                                                                  "Unable to find agent to run this job");
          $PluginFusioninventoryTaskjob->fields['status'] = 1;
          $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
+      } elseif ($count_device == '0') {
+logInFile("inventory", "unable2");
+         $a_input = array();
+         $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
+         $a_input['state'] = 1;
+         $a_input['plugin_fusioninventory_agents_id'] = 0;
+         $a_input['itemtype'] = '';
+         $a_input['items_id'] = 0;
+         $a_input['uniqid'] = $uniqid;
+         //$Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
+            //Add log of taskjob
+            $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
+            $a_input['state'] = 7;
+            $a_input['date'] = date("Y-m-d H:i:s");
+            $PluginFusioninventoryTaskjoblog->add($a_input);
+         $PluginFusioninventoryTaskjobstatus->changeStatusFinish($Taskjobstatus_id,
+                                                                 0,
+                                                                 '',
+                                                                 1,
+                                                                 "No devices to inventory");
+         $PluginFusioninventoryTaskjob->fields['status'] = 1;
+         $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
       } else {
+logInFile("inventory", "else");
+logInFile("inventory", print_r($a_agentlist, true));
          foreach ($a_agentlist as $agent_id => $ip) {
             //Add jobstatus and put status (waiting on server = 0)
             $a_input = array();
@@ -228,7 +253,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
             $a_input['state'] = 0;
             $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
             $a_input['uniqid'] = $uniqid;
-            
+logInFile("inventory", $count_device);
             $alternate = 0;
             for ($d=0; $d < ceil($count_device / count($a_agentlist)); $d++) {
                $getdevice = "NetworkEquipment";
@@ -265,7 +290,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                   $PluginFusioninventoryTaskjoblog->add($a_input);
                   unset($a_input['state']);
             }
-
+logInFile("inventory", print_r($a_input, true));
             $PluginFusioninventoryTaskjob->fields['status'] = 1;
             $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
 
