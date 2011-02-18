@@ -133,6 +133,18 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 		$tab[7]['name'] = $LANG['plugin_fusioninventory']['agents'][24];
 		$tab[7]['datatype'] = 'text';
 
+      $i = 8;
+      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+      $a_modules = $PluginFusioninventoryAgentmodule->find();
+      foreach ($a_modules as $data) {
+         $tab[$i]['table'] = $PluginFusioninventoryAgentmodule->getTable();
+         $tab[$i]['field'] = $data["modulename"];
+         $tab[$i]['linkfield'] = $data["modulename"];
+         $tab[$i]['name'] = $LANG['plugin_fusioninventory']['task'][26]." - ".$data["modulename"];
+         $tab[$i]['datatype'] = 'bool';
+         $i++;
+      }
+
       return $tab;
    }
 

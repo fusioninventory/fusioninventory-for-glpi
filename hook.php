@@ -61,7 +61,27 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
          $input = str_replace("<br/>*", "", $input);
          return $input;
          break;
+        
    }
+   
+   if ($table == "glpi_plugin_fusioninventory_agentmodules") {
+      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+      $a_modules = $PluginFusioninventoryAgentmodule->find();
+      foreach ($a_modules as $data2) {
+         if ($table.".".$field == "glpi_plugin_fusioninventory_agentmodules.".$data2['modulename']) {
+            if (strstr($data["ITEM_".$num."_0"], '"'.$data['id'].'"')) {
+               if ($data['ITEM_'.$num] == '0') {
+                  return Dropdown::getYesNo('1');
+               } else {
+                  return Dropdown::getYesNo('0');
+               }
+
+            }
+            return Dropdown::getYesNo($data['ITEM_'.$num]);
+         }
+      }
+   }
+
    return "";
 }
 
@@ -446,6 +466,28 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
 
 
 function plugin_fusioninventory_addSelect($type,$id,$num) {
+	global $SEARCH_OPTION;
+
+   $searchopt = &Search::getOptions($type);
+   $table = $searchopt[$id]["table"];
+   $field = $searchopt[$id]["field"];
+
+   switch ($type) {
+
+      case 'PluginFusioninventoryAgent':
+
+         $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+         $a_modules = $PluginFusioninventoryAgentmodule->find();
+         foreach ($a_modules as $data) {
+            if ($table.".".$field == "glpi_plugin_fusioninventory_agentmodules.".$data['modulename']) {
+               return " `FUSION_".$data['modulename']."`.`is_active` AS ITEM_$num, `FUSION_".$data['modulename']."`.`exceptions`  AS ITEM_".$num."_0,";
+            }
+         }
+         break;
+
+   }
+
+
    return "";
 }
 
@@ -455,7 +497,24 @@ function plugin_fusioninventory_forceGroupBy($type) {
 }
 
 
-function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$already_link_tables) {
+function plugin_fusioninventory_addLeftJoin($itemtype,$ref_table,$new_table,$linkfield,&$already_link_tables) {
+
+   switch ($itemtype) {
+
+      case 'PluginFusioninventoryAgent':
+         $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+         $a_modules = $PluginFusioninventoryAgentmodule->find();
+         foreach ($a_modules as $data) {
+            if ($new_table.".".$linkfield == "glpi_plugin_fusioninventory_agentmodules.".$data['modulename']) {
+               return " LEFT JOIN `glpi_plugin_fusioninventory_agentmodules` AS FUSION_".$data['modulename']."
+                  ON FUSION_".$data['modulename'].".`modulename`='".$data['modulename']."' ";
+            }
+         }
+         break;
+      
+   }
+
+
    return "";
 }
 
@@ -466,6 +525,40 @@ function plugin_fusioninventory_addOrderBy($type,$id,$order,$key=0) {
 
 
 function plugin_fusioninventory_addWhere($link,$nott,$type,$id,$val) {
+	global $SEARCH_OPTION;
+
+   $searchopt = &Search::getOptions($type);
+   $table = $searchopt[$id]["table"];
+   $field = $searchopt[$id]["field"];
+
+   switch ($type) {
+
+      case 'PluginFusioninventoryAgent':
+         $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+         $a_modules = $PluginFusioninventoryAgentmodule->find();
+         foreach ($a_modules as $data) {
+            if ($table.".".$field == "glpi_plugin_fusioninventory_agentmodules.".$data['modulename']) {
+               $a_exceptions = importArrayFromDB($data['exceptions']);
+               $current_id = current($a_exceptions);
+               $in = "(";
+               foreach($a_exceptions as $agent_id) {
+                  $in .= $agent_id.", ";
+               }
+               $in .= ")";
+               $in = str_replace(", )", ")", $in);
+
+               if ($val != $data['is_active']) {
+                  return $link." (FUSION_".$data['modulename'].".`exceptions` LIKE '%\"".$current_id."\"%' ) AND `glpi_plugin_fusioninventory_agents`.`id` IN ".$in." ";
+               } else {
+                  return $link." `glpi_plugin_fusioninventory_agents`.`id` NOT IN ".$in." ";
+               }
+            }
+         }
+         break;
+
+   }
+
+   
    return "";
 }
 
