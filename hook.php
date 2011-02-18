@@ -538,19 +538,27 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$id,$val) {
          $a_modules = $PluginFusioninventoryAgentmodule->find();
          foreach ($a_modules as $data) {
             if ($table.".".$field == "glpi_plugin_fusioninventory_agentmodules.".$data['modulename']) {
-               $a_exceptions = importArrayFromDB($data['exceptions']);
-               $current_id = current($a_exceptions);
-               $in = "(";
-               foreach($a_exceptions as $agent_id) {
-                  $in .= $agent_id.", ";
-               }
-               $in .= ")";
-               $in = str_replace(", )", ")", $in);
+               if (($data['exceptions'] != "[]") AND ($data['exceptions'] != "")) {
+                  $a_exceptions = importArrayFromDB($data['exceptions']);
+                  $current_id = current($a_exceptions);
+                  $in = "(";
+                  foreach($a_exceptions as $agent_id) {
+                     $in .= $agent_id.", ";
+                  }
+                  $in .= ")";
+                  $in = str_replace(", )", ")", $in);
 
-               if ($val != $data['is_active']) {
-                  return $link." (FUSION_".$data['modulename'].".`exceptions` LIKE '%\"".$current_id."\"%' ) AND `glpi_plugin_fusioninventory_agents`.`id` IN ".$in." ";
+                  if ($val != $data['is_active']) {
+                     return $link." (FUSION_".$data['modulename'].".`exceptions` LIKE '%\"".$current_id."\"%' ) AND `glpi_plugin_fusioninventory_agents`.`id` IN ".$in." ";
+                  } else {
+                     return $link." `glpi_plugin_fusioninventory_agents`.`id` NOT IN ".$in." ";
+                  }
                } else {
-                  return $link." `glpi_plugin_fusioninventory_agents`.`id` NOT IN ".$in." ";
+                  if ($val != $data['is_active']) {
+                     return $link." (FUSION_".$data['modulename'].".`is_active`!='".$data['is_active']."') ";
+                  } else {
+                     return $link." (FUSION_".$data['modulename'].".`is_active`='".$data['is_active']."') ";
+                  }
                }
             }
          }
