@@ -142,6 +142,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $tab[$i]['linkfield'] = $data["modulename"];
          $tab[$i]['name'] = $LANG['plugin_fusioninventory']['task'][26]." - ".$data["modulename"];
          $tab[$i]['datatype'] = 'bool';
+         $tab[$i]['massiveaction'] = false;
          $i++;
       }
 

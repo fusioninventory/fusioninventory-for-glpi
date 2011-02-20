@@ -337,6 +337,7 @@ function plugin_headings_fusioninventory_xml($item) {
 
 function plugin_fusioninventory_MassiveActions($type) {
    global $LANG;
+   
    switch ($type) {
       case NETWORKING_TYPE :
          return array (
@@ -349,13 +350,51 @@ function plugin_fusioninventory_MassiveActions($type) {
             "plugin_fusioninventory_manage_locks" => $LANG['plugin_fusioninventory']['functionalities'][75]
          );
          break;
+
+      case 'PluginFusioninventoryAgent';
+         $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+         $a_modules = $PluginFusioninventoryAgentmodule->find();
+         $array = array();
+         foreach ($a_modules as $data) {
+            $array["plugin_fusioninventory_agentmodule".$data["modulename"]] = $LANG['plugin_fusioninventory']['task'][26]." - ".$data['modulename'];
+         }
+         return $array;
+         break;
+
    }
    return array ();
 }
 
-function plugin_fusioninventory_MassiveActionsDisplay($type, $action='') {
+//function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
+//   global $LANG;
+//
+//   $table = $options['options']['table'];
+//   $field = $options['options']['field'];
+//   $linkfield = $options['options']['linkfield'];
+//
+//   switch ($table) {
+//
+//		case 'glpi_plugin_fusioninventory_agentmodules':
+//         $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+//         $a_modules = $PluginFusioninventoryAgentmodule->find();
+//         foreach ($a_modules as $data) {
+//            if ($table.".".$field == "glpi_plugin_fusioninventory_agentmodules.".$data['modulename']) {
+//               Dropdown::showYesNo($field);
+//               return true;
+//            }
+//         }
+//			break;
+//
+//    }
+//   return false;
+//}
+
+
+
+function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
    global $LANG, $CFG_GLPI, $DB;
-   switch ($type) {
+
+   switch ($options['itemtype']) {
       case NETWORKING_TYPE :
          switch ($action) {
             case "plugin_fusioninventory_manage_locks" :
@@ -372,6 +411,18 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action='') {
                $pfil->showForm($_SERVER["PHP_SELF"], NETWORKING_TYPE, '');
                break;
          }
+         break;
+
+      case 'PluginFusioninventoryAgent':
+         $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+         $a_modules = $PluginFusioninventoryAgentmodule->find();
+         foreach ($a_modules as $data) {
+            if ($options['action'] == "plugin_fusioninventory_agentmodule".$data['modulename']) {
+               Dropdown::showYesNo($options['action']);
+               echo "&nbsp;<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
+            }
+         }
+
          break;
    }
    return "";
@@ -379,6 +430,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action='') {
 
 function plugin_fusioninventory_MassiveActionsProcess($data) {
    global $LANG;
+
    switch ($data['action']) {
       case "plugin_fusioninventory_manage_locks" :
          if (($data['itemtype'] == NETWORKING_TYPE) OR ($data['itemtype'] == PRINTER_TYPE)) {
@@ -395,6 +447,38 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
          }
          break;
    }
+
+   if (strstr($data['action'], 'plugin_fusioninventory_agentmodule')) {
+      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+      $a_modules = $PluginFusioninventoryAgentmodule->find();
+      foreach ($a_modules as $data2) {
+         if ($data['action'] == "plugin_fusioninventory_agentmodule".$data2['modulename']) {
+            foreach ($data['item'] as $items_id => $val) {
+               if ($data["plugin_fusioninventory_agentmodule".$data2['modulename']] == $data2['is_active']) {
+                  // Remove from exceptions
+                  $a_exceptions = importArrayFromDB($data2['exceptions']);
+                  if (in_array($items_id, $a_exceptions)) {
+                     foreach ($a_exceptions as $key=>$value) {
+                        if ($value == $items_id) {
+                           unset($a_exceptions[$key]);
+                        }
+                     }
+                  }
+                  $data2['exceptions'] = exportArrayToDB($a_exceptions);
+               } else {
+                  // Add to exceptions
+                  $a_exceptions = importArrayFromDB($data2['exceptions']);
+                  if (!in_array($items_id, $a_exceptions)) {
+                     $a_exceptions[] = (string)$items_id;
+                  }
+                  $data2['exceptions'] = exportArrayToDB($a_exceptions);
+               }
+            }
+            $PluginFusioninventoryAgentmodule->update($data2);
+         }
+      }
+   }
+
 }
 
 // How to display specific update fields ?
