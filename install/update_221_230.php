@@ -39,54 +39,77 @@
 function update221to230() {
    global $DB, $CFG_GLPI;
 
+   ini_set("max_execution_time", "0");
+
+   $plugin = new Plugin();
+   $data = $plugin->find("`name` = 'FusionInventory'");
+   $fields = current($data);
+   $plugins_id = $fields['id'];
+
    $typetoname=array(
-      GENERAL_TYPE => "",// For tickets
-      COMPUTER_TYPE => "Computer",
-      NETWORKING_TYPE => "NetworkEquipment",
-      PRINTER_TYPE => "Printer",
-      MONITOR_TYPE => "Monitor",
-      PERIPHERAL_TYPE => "Peripheral",
-      SOFTWARE_TYPE => "Software",
-      CONTACT_TYPE => "Contact",
-      ENTERPRISE_TYPE => "Supplier",
-      INFOCOM_TYPE => "Infocom",
-      CONTRACT_TYPE => "Contract",
-      CARTRIDGEITEM_TYPE => "CartridgeItem",
-      TYPEDOC_TYPE => "DocumentType",
-      DOCUMENT_TYPE => "Document",
-      KNOWBASE_TYPE => "KnowbaseItem",
-      USER_TYPE => "User",
-      TRACKING_TYPE => "Ticket",
-      CONSUMABLEITEM_TYPE => "ConsumableItem",
-      CONSUMABLE_TYPE => "Consumable",
-      CARTRIDGE_TYPE => "Cartridge",
-      SOFTWARELICENSE_TYPE => "SoftwareLicense",
-      LINK_TYPE => "Link",
-      STATE_TYPE => "States",
-      PHONE_TYPE => "Phone",
-      DEVICE_TYPE => "Device",
-      REMINDER_TYPE => "Reminder",
-      STAT_TYPE => "Stat",
-      GROUP_TYPE => "Group",
-      ENTITY_TYPE => "Entity",
-      RESERVATION_TYPE => "ReservationItem",
-      AUTHMAIL_TYPE => "AuthMail",
-      AUTHLDAP_TYPE => "AuthLDAP",
-      OCSNG_TYPE => "OcsServer",
-      REGISTRY_TYPE => "RegistryKey",
-      PROFILE_TYPE => "Profile",
-      MAILGATE_TYPE => "MailCollector",
-      RULE_TYPE => "Rule",
-      TRANSFER_TYPE => "Transfer",
-      BOOKMARK_TYPE => "Bookmark",
-      SOFTWAREVERSION_TYPE => "SoftwareVersion",
-      PLUGIN_TYPE => "Plugin",
-      COMPUTERDISK_TYPE => "ComputerDisk",
-      NETWORKING_PORT_TYPE => "NetworkPort",
-      FOLLOWUP_TYPE => "TicketFollowup",
-      BUDGET_TYPE => "Budget",
+      "0" => "",// For tickets
+      "1" => "Computer",
+      "2" => "NetworkEquipment",
+      "3" => "Printer",
+      "4" => "Monitor",
+      "5" => "Peripheral",
+      "6" => "Software",
+      "7" => "Contact",
+      "8" => "Supplier",
+      "9" => "Infocom",
+      "10" => "Contract",
+      "11" => "CartridgeItem",
+      "12" => "DocumentType",
+      "13" => "Document",
+      "14" => "KnowbaseItem",
+      "15" => "User",
+      "16" => "Ticket",
+      "17" => "ConsumableItem",
+      "18" => "Consumable",
+      "19" => "Cartridge",
+      "20" => "SoftwareLicense",
+      "21" => "Link",
+      "22" => "States",
+      "23" => "Phone",
+      "24" => "Device",
+      "25" => "Reminder",
+      "26" => "Stat",
+      "27" => "Group",
+      "28" => "Entity",
+      "29" => "ReservationItem",
+      "30" => "AuthMail",
+      "31" => "AuthLDAP",
+      "32" => "OcsServer",
+      "33" => "RegistryKey",
+      "34" => "Profile",
+      "35" => "MailCollector",
+      "36" => "Rule",
+      "37" => "Transfer",
+      "38" => "Bookmark",
+      "39" => "SoftwareVersion",
+      "40" => "Plugin",
+      "41" => "ComputerDisk",
+      "42" => "NetworkPort",
+      "43" => "TicketFollowup"
       // End is not used in 0.72.x
    );
+
+   $sql = "CREATE TABLE `glpi_plugin_fusioninventory_mappings` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `itemtype` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `table` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `tablefield` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `locale` INT( 4 ) NOT NULL,
+   `shortlocale` INT( 4 ) DEFAULT NULL,
+   PRIMARY KEY (`id`),
+   KEY `name` (`name`),
+   KEY `itemtype` (`itemtype`),
+   KEY `table` (`table`),
+   KEY `tablefield` (`tablefield`)
+--   UNIQUE KEY `unicity` (`name`, `itemtype`) -- Specified key was too long; max key length is 1000 bytes
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+   $DB->query($sql);
 
    $sql = "INSERT INTO `glpi_plugin_fusioninventory_mappings`
       (`itemtype`, `name`, `table`, `tablefield`, `locale`, `shortlocale`)
@@ -119,11 +142,15 @@ function update221to230() {
 ## Network CDP (Walk)
           ('NetworkEquipment','cdpCacheAddress','','',409,NULL),
           ('NetworkEquipment','cdpCacheDevicePort','','',410,NULL),
+          ('NetworkEquipment','lldpRemChassisId','','',431,NULL),
+          ('NetworkEquipment','lldpRemPortId','','',432,NULL),
+          ('NetworkEquipment','lldpLocChassisId','','',432,NULL),
           ('NetworkEquipment','vlanTrunkPortDynamicStatus','','',411,NULL),
           ('NetworkEquipment','dot1dTpFdbAddress','','',412,NULL),
           ('NetworkEquipment','ipNetToMediaPhysAddress','','',413,NULL),
           ('NetworkEquipment','dot1dTpFdbPort','','',414,NULL),
           ('NetworkEquipment','dot1dBasePortIfIndex','','',415,NULL),
+          ('NetworkEquipment','ipAdEntAddr','','',421,NULL),
           ('NetworkEquipment','PortVlanIndex','','',422,NULL),
 ## NetworkPorts
           ('NetworkEquipment','ifIndex','','',408,NULL),
@@ -147,7 +174,6 @@ function update221to230() {
              'ifstatus',14,NULL),
           ('NetworkEquipment','ifPhysAddress','glpi_networkports','mac',15,NULL),
           ('NetworkEquipment','ifName','glpi_networkports','name',16,NULL),
-          ('NetworkEquipment','ifName','glpi_networkports','name',16,NULL),
           ('NetworkEquipment','ifType','','',18,NULL),
           ('NetworkEquipment','ifdescr','glpi_plugin_fusinvsnmp_networkports',
              'ifdescr',23,NULL),
@@ -156,20 +182,39 @@ function update221to230() {
 ## Printers
           ('Printer','model','glpi_printers','printermodels_id',25,NULL),
           ('Printer','enterprise','glpi_printers','manufacturers_id',420,NULL),
+          ('Printer','serial','glpi_printers','serial',27,NULL),
           ('Printer','contact','glpi_printers','contact',405,NULL),
           ('Printer','comments','glpi_printers','comment',406,NULL),
+          ('Printer','name','glpi_printers','comment',24,NULL),
           ('Printer','otherserial','glpi_printers','otherserial',418,NULL),
           ('Printer','memory','glpi_printers','memory_size',26,NULL),
           ('Printer','location','glpi_printers','locations_id',56,NULL),
           ('Printer','informations','','',165,165),
-          ('Printer','serial','glpi_printers','serial',27,NULL),
 ## Cartridges
           ('Printer','tonerblack','','',157,157),
-          ('Printer','tonerblack2','','',166,166),
+          ('Printer','tonerblackmax','','',166,166),
+          ('Printer','tonerblackused','','',167,167),
+          ('Printer','tonerblackremaining','','',168,168),
+          ('Printer','tonerblack2','','',157,157),
+          ('Printer','tonerblack2max','','',166,166),
+          ('Printer','tonerblack2used','','',167,167),
+          ('Printer','tonerblack2remaining','','',168,168),
           ('Printer','tonercyan','','',158,158),
+          ('Printer','tonercyanmax','','',169,169),
+          ('Printer','tonercyanused','','',170,170),
+          ('Printer','tonercyanremaining','','',171,171),
           ('Printer','tonermagenta','','',159,159),
+          ('Printer','tonermagentamax','','',172,172),
+          ('Printer','tonermagentaused','','',173,173),
+          ('Printer','tonermagentaremaining','','',174,174),
           ('Printer','toneryellow','','',160,160),
+          ('Printer','toneryellowmax','','',175,175),
+          ('Printer','toneryellowused','','',176,176),
+          ('Printer','toneryellowremaining','','',177,177),
           ('Printer','wastetoner','','',151,151),
+          ('Printer','wastetonermax','','',190,190),
+          ('Printer','wastetonerused','','',191,191),
+          ('Printer','wastetonerremaining','','',192,192),
           ('Printer','cartridgeblack','','',134,134),
           ('Printer','cartridgeblackphoto','','',135,135),
           ('Printer','cartridgecyan','','',136,136),
@@ -177,11 +222,27 @@ function update221to230() {
           ('Printer','cartridgemagenta','','',138,138),
           ('Printer','cartridgemagentalight','','',140,140),
           ('Printer','cartridgeyellow','','',137,137),
+          ('Printer','cartridgegrey','','',196,196),
           ('Printer','maintenancekit','','',156,156),
+          ('Printer','maintenancekitmax','','',193,193),
+          ('Printer','maintenancekitused','','',194,194),
+          ('Printer','maintenancekitremaining','','',195,195),
           ('Printer','drumblack','','',161,161),
+          ('Printer','drumblackmax','','',178,178),
+          ('Printer','drumblackused','','',179,179),
+          ('Printer','drumblackremaining','','',180,180),
           ('Printer','drumcyan','','',162,162),
+          ('Printer','drumcyanmax','','',181,181),
+          ('Printer','drumcyanused','','',182,182),
+          ('Printer','drumcyanremaining','','',183,183),
           ('Printer','drummagenta','','',163,163),
+          ('Printer','drummagentamax','','',184,184),
+          ('Printer','drummagentaused','','',185,185),
+          ('Printer','drummagentaremaining','','',186,186),
           ('Printer','drumyellow','','',164,164),
+          ('Printer','drumyellowmax','','',187,187),
+          ('Printer','drumyellowused','','',188,188),
+          ('Printer','drumyellowremaining','','',189,189),
 ## Printers : Counter pages
           ('Printer','pagecountertotalpages','glpi_plugin_fusinvsnmp_printerlogs',
              'pages_total',28,128),
@@ -207,6 +268,8 @@ function update221to230() {
              'pages_color_copy',428,1428),
           ('Printer','pagecountertotalpages_fax','glpi_plugin_fusinvsnmp_printerlogs',
              'pages_total_fax',429,1429),
+          ('Printer','pagecounterlargepages','glpi_plugin_fusinvsnmp_printerlogs',
+             'pages_total_large',434,1434),
 ## Printers : NetworkPort
           ('Printer','ifPhysAddress','glpi_networkports','mac',58,NULL),
           ('Printer','ifName','glpi_networkports','name',57,NULL),
@@ -215,7 +278,8 @@ function update221to230() {
           ('Printer','ifIndex','','',416,NULL),
 ## Computer
           ('Computer','serial','','serial',13,NULL),
-          ('Computer','ifPhysAddress','','mac',15,NULL);";
+          ('Computer','ifPhysAddress','','mac',15,NULL),
+          ('Computer','ifaddr','','ip',407,NULL)";
    $DB->query($sql);
 
 
@@ -291,14 +355,14 @@ function update221to230() {
    `threads_query` int(11) NOT NULL DEFAULT '1',
    `netdiscovery` int(1) NOT NULL DEFAULT '0',
    `threads_discovery` int(11) NOT NULL DEFAULT '1',
-   PRIMARY KEY (`id`),
+   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
    $DB->query($sql);
 
     $sql = "CREATE TABLE `glpi_plugin_fusinvinventory_tmp_agents` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `inventory` int(1) NOT NULL DEFAULT '0',
-   PRIMARY KEY (`id`),
+   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
    $DB->query($sql);
 
@@ -315,6 +379,9 @@ function update221to230() {
    KEY `entities_id` (`entities_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
    $DB->query($sql);
+   if (!class_exists('PluginFusioninventoryAgentmodule')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
+   }
    $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
    $input = array();
    $input['plugins_id'] = $plugins_id;
@@ -335,7 +402,7 @@ function update221to230() {
       $sql_ins = "INSERT INTO `glpi_plugin_fusinvsnmp_tmp_agents`
          VALUE('".$data['ID']."',
             '".$data['module_snmpquery']."',
-            '".$data['threads_query']."'
+            '".$data['threads_query']."',
             '".$data['module_netdiscovery']."',
             '".$data['threads_discovery']."')";
       $DB->query($sql_ins);
@@ -402,7 +469,7 @@ function update221to230() {
     $sql = "CREATE TABLE `glpi_plugin_fusinvsnmp_tmp_configs` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `authsnmp` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   PRIMARY KEY (`id`),
+   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
    $DB->query($sql);
 
@@ -421,11 +488,11 @@ function update221to230() {
    while ($data=$DB->fetch_array($result)) {
       $sql_ins = "INSERT INTO `glpi_plugin_fusioninventory_configs`
             (`type`, `value`, `plugins_id`)
-         VALUES('version', '2.3.0', '".$plugins_id."',
-                'ssl_only', '".$data['ssl_only ']."', '".$plugins_id."',
-                'inventory_frequence', '".$data['inventory_frequence  ']."', '".$plugins_id."',
-                'delete_task', '".$data['delete_agent_process']."', '".$plugins_id."',
-                'agent_port', '62354', '".$plugins_id."')";
+         VALUES('version', '2.3.0', '".$plugins_id."'),
+               ( 'ssl_only', '".$data['ssl_only']."', '".$plugins_id."'),
+               ( 'inventory_frequence', '".$data['inventory_frequence']."', '".$plugins_id."'),
+               ( 'delete_task', '".$data['delete_agent_process']."', '".$plugins_id."'),
+               ( 'agent_port', '62354', '".$plugins_id."')";
       $DB->query($sql_ins);
 
       $sql_ins = "INSERT INTO `glpi_plugin_fusinvsnmp_tmp_configs`
@@ -503,11 +570,25 @@ function update221to230() {
       while ($data=$DB->fetch_array($result)) {
          $sql_update = "UPDATE `glpi_plugin_fusinvsnmp_constructdevice_miboids`
          SET `mapping_name` = '".$data['id']."'
-         WHERE `mapping_type `='".$key."'
+         WHERE `mapping_type`='".$key."'
             AND `mapping_name`='".$data['name']."' ";
          $DB->query($sql_update);
+         if (($data['name'] == 'cdpCacheDevicePort')
+              OR ($data['name'] == 'cdpCacheAddress')) {
+
+            $sql_update = "UPDATE `glpi_plugin_fusinvsnmp_constructdevice_miboids`
+            SET `mapping_name` = '".$data['id']."',
+               `mapping_type`='".$key."'
+            WHERE `mapping_name`='".$data['name']."'
+               AND `mapping_type` IS NULL";
+            $DB->query($sql_update);
+         }
       }
    }
+   $sql_update = "UPDATE `glpi_plugin_fusinvsnmp_constructdevice_miboids`
+      SET `mapping_name` = '0'
+      WHERE `mapping_name`='' ";
+   $DB->query($sql_update);
    // End convert mapping
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevice_miboids`
       CHANGE `mapping_name` `plugin_fusioninventory_mappings_id` INT( 11 ) NOT NULL DEFAULT '0'";
@@ -546,6 +627,11 @@ function update221to230() {
    $DB->query($sql);
 
    // ***** TODO : process_number to taskjob_id
+
+        // TEMP :
+         $sql_update = "UPDATE `glpi_plugin_fusinvsnmp_networkportconnectionlogs`
+            SET `process_number` = '0'";
+         $DB->query($sql_update);
 
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_networkportconnectionlogs`
       CHANGE `process_number` `plugin_fusioninventory_agentprocesses_id` INT( 11 ) NOT NULL DEFAULT '0'";
@@ -636,11 +722,16 @@ function update221to230() {
       while ($data=$DB->fetch_array($result)) {
          $sql_update = "UPDATE `glpi_plugin_fusinvsnmp_modelmibs`
          SET `mapping_type` = '".$data['id']."'
-         WHERE `mapping_type `='".$key."'
+         WHERE `mapping_type`='".$key."'
             AND `mapping_name`='".$data['name']."' ";
          $DB->query($sql_update);
       }
    }
+   $sql_update = "UPDATE `glpi_plugin_fusinvsnmp_modelmibs`
+      SET `mapping_type` = '0'
+      WHERE `mapping_type`='' ";
+   $DB->query($sql_update);
+   // End convert mapping
    // End convert mapping
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_modelmibs`
       CHANGE `mapping_type` `plugin_fusioninventory_mappings_id` INT( 11 ) NOT NULL DEFAULT '0'";
@@ -762,15 +853,15 @@ function update221to230() {
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_printerlogs`
       CHANGE `FK_printers` `printers_id` INT( 11 ) NOT NULL DEFAULT '0'";
    $DB->query($sql);
-   $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_printerlogs`
-      ADD `pages_total_print` INT( 11 ) NOT NULL DEFAULT '0',
-      ADD `pages_n_b_print` INT( 11 ) NOT NULL DEFAULT '0',
-      ADD `pages_color_print` INT( 11 ) NOT NULL DEFAULT '0',
-      ADD `pages_total_copy` INT( 11 ) NOT NULL DEFAULT '0',
-      ADD `pages_n_b_copy` INT( 11 ) NOT NULL DEFAULT '0',
-      ADD `pages_color_copy` INT( 11 ) NOT NULL DEFAULT '0',
-      ADD `pages_total_fax` INT( 11 ) NOT NULL DEFAULT '0'";
-   $DB->query($sql);
+//   $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_printerlogs`
+//      ADD `pages_total_print` INT( 11 ) NOT NULL DEFAULT '0',
+//      ADD `pages_n_b_print` INT( 11 ) NOT NULL DEFAULT '0',
+//      ADD `pages_color_print` INT( 11 ) NOT NULL DEFAULT '0',
+//      ADD `pages_total_copy` INT( 11 ) NOT NULL DEFAULT '0',
+//      ADD `pages_n_b_copy` INT( 11 ) NOT NULL DEFAULT '0',
+//      ADD `pages_color_copy` INT( 11 ) NOT NULL DEFAULT '0',
+//      ADD `pages_total_fax` INT( 11 ) NOT NULL DEFAULT '0'";
+//   $DB->query($sql);
    
    /*
     * Update `glpi_plugin_fusioninventory_printers`
@@ -850,7 +941,15 @@ function update221to230() {
    $DB->query($sql);
 
    // Convert datas
-   PluginFusioninventoryProfile::initProfile('fusioninventory', $plugins_id);
+   if (is_callable(array("PluginFusionInventoryStaticmisc", "profiles"))) {
+      $a_profile = call_user_func(array("PluginFusionInventoryStaticmisc", "profiles"));
+      foreach ($a_profile as $data) {
+         $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
+            (`type`, `right`, `plugins_id`, `profiles_id`)
+            VALUES('".$data['profil']."', 'w', '".$plugins_id."', '".$_SESSION['glpiactiveprofile']['id']."')";
+         $DB->query($sql_ins);
+      }
+   }
    $sql = "SELECT * FROM `glpi_plugin_fusioninventory_temp_profiles`";
    $result=$DB->query($sql);
    $Profile = new Profile();
@@ -991,6 +1090,9 @@ function update221to230() {
       WHERE `Field`='".$data['name']."' ";
       $DB->query($sql_update);
    }
+   $sql = "DELETE FROM `glpi_plugin_fusinvsnmp_networkportlogs`
+      WHERE `Field`='ip'";
+   $DB->query($sql);
    // End convert mapping
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_networkportlogs`
       CHANGE `Field` `plugin_fusioninventory_mappings_id` INT( 11 ) NOT NULL DEFAULT '0'";
@@ -1009,6 +1111,14 @@ function update221to230() {
       CHANGE `new_value` `value_new` VARCHAR( 255 ) CHARACTER
       SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL ";
    $DB->query($sql);
+
+      // ***** TODO : process_number to taskjob_id
+
+        // TEMP :
+         $sql_update = "UPDATE `glpi_plugin_fusinvsnmp_networkportlogs`
+            SET `FK_process` = '0'";
+         $DB->query($sql_update);
+         
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_networkportlogs`
       CHANGE `FK_process` `plugin_fusioninventory_agentprocesses_id` INT( 11 ) NOT NULL ";
    $DB->query($sql);
