@@ -53,10 +53,10 @@ $LANG['plugin_fusinvinventory']['menu'][1]="Criteria rules";
 $LANG['plugin_fusinvinventory']['menu'][2]="BlackList";
 $LANG['plugin_fusinvinventory']['menu'][3]="Entity rules";
 
-$LANG['plugin_fusinvinventory']['importxml'][0]="Import Agent XML file";
+$LANG['plugin_fusinvinventory']['importxml'][0]="Import XML file from an Agent";
 $LANG['plugin_fusinvinventory']['importxml'][1]="Computer injected into GLPI";
-$LANG['plugin_fusinvinventory']['importxml'][2]="No file to import !";
-$LANG['plugin_fusinvinventory']['importxml'][3]="XML file not valid !";
+$LANG['plugin_fusinvinventory']['importxml'][2]="No file to import!";
+$LANG['plugin_fusinvinventory']['importxml'][3]="XML file not valid!";
 
 $LANG['plugin_fusinvinventory']['rule'][0]="Computer existent criteria rules";
 $LANG['plugin_fusinvinventory']['rule'][1]="Existant criterium";
@@ -75,7 +75,7 @@ $LANG['plugin_fusinvinventory']['rule'][101]="Tag";
 $LANG['plugin_fusinvinventory']['blacklist'][0]="blacklisted value";
 $LANG['plugin_fusinvinventory']['blacklist'][1]="New value to blacklist";
 
-$LANG['plugin_fusinvinventory']['profile'][2]="Existent rules";
+$LANG['plugin_fusinvinventory']['profile'][2]="Existance criteria";
 $LANG['plugin_fusinvinventory']['profile'][3]="XML file manual import";
 $LANG['plugin_fusinvinventory']['profile'][4]="Fields blacklist";
 
