@@ -235,7 +235,7 @@ if (!unserialize($serializedSectionToRemove)) {
                            if (((isset($arrSectionToAdd["SERIAL"]))
                                  AND (isset($arrSectionToRemove["SERIAL"]))
                                  AND ($arrSectionToAdd["SERIAL"] == $arrSectionToRemove["SERIAL"]))
-                              OR (((isset($arrSectionToAdd['name']))
+                              OR (((isset($arrSectionToAdd["NAME"]))
                                  AND (isset($arrSectionToRemove["NAME"]))
                                  AND ($arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"])))
                               OR ((isset($arrSectionToAdd['VOLUMN'])
