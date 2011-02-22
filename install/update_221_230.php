@@ -88,6 +88,135 @@ function update221to230() {
       // End is not used in 0.72.x
    );
 
+   $sql = "INSERT INTO `glpi_plugin_fusioninventory_mappings`
+      (`itemtype`, `name`, `table`, `tablefield`, `locale`, `shortlocale`)
+   VALUES ('NetworkEquipment','location','glpi_networkequipments','locations_id',1,NULL),
+          ('NetworkEquipment','firmware','glpi_networkequipments',
+             'networkequipmentfirmwares_id',2,NULL),
+          ('NetworkEquipment','firmware1','','',2,NULL),
+          ('NetworkEquipment','firmware2','','',2,NULL),
+          ('NetworkEquipment','contact','glpi_networkequipments','contact',403,NULL),
+          ('NetworkEquipment','comments','glpi_networkequipments','comment',404,NULL),
+          ('NetworkEquipment','uptime','glpi_plugin_fusinvsnmp_networkequipments',
+             'uptime',3,NULL),
+          ('NetworkEquipment','cpu','glpi_plugin_fusinvsnmp_networkequipments',
+             'cpu',12,NULL),
+          ('NetworkEquipment','cpuuser','glpi_plugin_fusinvsnmp_networkequipments',
+             'cpu',401,NULL),
+          ('NetworkEquipment','cpusystem','glpi_plugin_fusinvsnmp_networkequipments',
+             'cpu',402,NULL),
+          ('NetworkEquipment','serial','glpi_networkequipments','serial',13,NULL),
+          ('NetworkEquipment','otherserial','glpi_networkequipments','otherserial',419,NULL),
+          ('NetworkEquipment','name','glpi_networkequipments','name',20,NULL),
+          ('NetworkEquipment','ram','glpi_networkequipments','ram',21,NULL),
+          ('NetworkEquipment','memory','glpi_plugin_fusinvsnmp_networkequipments',
+             'memory',22,NULL),
+          ('NetworkEquipment','vtpVlanName','','',19,NULL),
+          ('NetworkEquipment','vmvlan','','',430,NULL),
+          ('NetworkEquipment','entPhysicalModelName','glpi_networkequipments',
+             'networkequipmentmodels_id',17,NULL),
+          ('NetworkEquipment','macaddr','glpi_networkequipments','ip',417,NULL),
+## Network CDP (Walk)
+          ('NetworkEquipment','cdpCacheAddress','','',409,NULL),
+          ('NetworkEquipment','cdpCacheDevicePort','','',410,NULL),
+          ('NetworkEquipment','vlanTrunkPortDynamicStatus','','',411,NULL),
+          ('NetworkEquipment','dot1dTpFdbAddress','','',412,NULL),
+          ('NetworkEquipment','ipNetToMediaPhysAddress','','',413,NULL),
+          ('NetworkEquipment','dot1dTpFdbPort','','',414,NULL),
+          ('NetworkEquipment','dot1dBasePortIfIndex','','',415,NULL),
+          ('NetworkEquipment','PortVlanIndex','','',422,NULL),
+## NetworkPorts
+          ('NetworkEquipment','ifIndex','','',408,NULL),
+          ('NetworkEquipment','ifmtu','glpi_plugin_fusinvsnmp_networkports',
+             'ifmtu',4,NULL),
+          ('NetworkEquipment','ifspeed','glpi_plugin_fusinvsnmp_networkports',
+             'ifspeed',5,NULL),
+          ('NetworkEquipment','ifinternalstatus','glpi_plugin_fusinvsnmp_networkports',
+             'ifinternalstatus',6,NULL),
+          ('NetworkEquipment','iflastchange','glpi_plugin_fusinvsnmp_networkports',
+             'iflastchange',7,NULL),
+          ('NetworkEquipment','ifinoctets','glpi_plugin_fusinvsnmp_networkports',
+             'ifinoctets',8,NULL),
+          ('NetworkEquipment','ifoutoctets','glpi_plugin_fusinvsnmp_networkports',
+             'ifoutoctets',9,NULL),
+          ('NetworkEquipment','ifinerrors','glpi_plugin_fusinvsnmp_networkports',
+             'ifinerrors',10,NULL),
+          ('NetworkEquipment','ifouterrors','glpi_plugin_fusinvsnmp_networkports',
+             'ifouterrors',11,NULL),
+          ('NetworkEquipment','ifstatus','glpi_plugin_fusinvsnmp_networkports',
+             'ifstatus',14,NULL),
+          ('NetworkEquipment','ifPhysAddress','glpi_networkports','mac',15,NULL),
+          ('NetworkEquipment','ifName','glpi_networkports','name',16,NULL),
+          ('NetworkEquipment','ifName','glpi_networkports','name',16,NULL),
+          ('NetworkEquipment','ifType','','',18,NULL),
+          ('NetworkEquipment','ifdescr','glpi_plugin_fusinvsnmp_networkports',
+             'ifdescr',23,NULL),
+          ('NetworkEquipment','portDuplex','glpi_plugin_fusinvsnmp_networkports',
+             'portduplex',33,NULL),
+## Printers
+          ('Printer','model','glpi_printers','printermodels_id',25,NULL),
+          ('Printer','enterprise','glpi_printers','manufacturers_id',420,NULL),
+          ('Printer','contact','glpi_printers','contact',405,NULL),
+          ('Printer','comments','glpi_printers','comment',406,NULL),
+          ('Printer','otherserial','glpi_printers','otherserial',418,NULL),
+          ('Printer','memory','glpi_printers','memory_size',26,NULL),
+          ('Printer','location','glpi_printers','locations_id',56,NULL),
+          ('Printer','informations','','',165,165),
+          ('Printer','serial','glpi_printers','serial',27,NULL),
+## Cartridges
+          ('Printer','tonerblack','','',157,157),
+          ('Printer','tonerblack2','','',166,166),
+          ('Printer','tonercyan','','',158,158),
+          ('Printer','tonermagenta','','',159,159),
+          ('Printer','toneryellow','','',160,160),
+          ('Printer','wastetoner','','',151,151),
+          ('Printer','cartridgeblack','','',134,134),
+          ('Printer','cartridgeblackphoto','','',135,135),
+          ('Printer','cartridgecyan','','',136,136),
+          ('Printer','cartridgecyanlight','','',139,139),
+          ('Printer','cartridgemagenta','','',138,138),
+          ('Printer','cartridgemagentalight','','',140,140),
+          ('Printer','cartridgeyellow','','',137,137),
+          ('Printer','maintenancekit','','',156,156),
+          ('Printer','drumblack','','',161,161),
+          ('Printer','drumcyan','','',162,162),
+          ('Printer','drummagenta','','',163,163),
+          ('Printer','drumyellow','','',164,164),
+## Printers : Counter pages
+          ('Printer','pagecountertotalpages','glpi_plugin_fusinvsnmp_printerlogs',
+             'pages_total',28,128),
+          ('Printer','pagecounterblackpages','glpi_plugin_fusinvsnmp_printerlogs',
+             'pages_n_b',29,129),
+          ('Printer','pagecountercolorpages','glpi_plugin_fusinvsnmp_printerlogs',
+             'pages_color',30,130),
+          ('Printer','pagecounterrectoversopages','glpi_plugin_fusinvsnmp_printerlogs',
+             'pages_recto_verso',54,154),
+          ('Printer','pagecounterscannedpages','glpi_plugin_fusinvsnmp_printerlogs',
+             'scanned',55,155),
+          ('Printer','pagecountertotalpages_print','glpi_plugin_fusinvsnmp_printerlogs',
+             'pages_total_print',423,1423),
+          ('Printer','pagecounterblackpages_print','glpi_plugin_fusinvsnmp_printerlogs',
+             'pages_n_b_print',424,1424),
+          ('Printer','pagecountercolorpages_print','glpi_plugin_fusinvsnmp_printerlogs',
+             'pages_color_print',425,1425),
+          ('Printer','pagecountertotalpages_copy','glpi_plugin_fusinvsnmp_printerlogs',
+             'pages_total_copy',426,1426),
+          ('Printer','pagecounterblackpages_copy','glpi_plugin_fusinvsnmp_printerlogs',
+             'pages_n_b_copy',427,1427),
+          ('Printer','pagecountercolorpages_copy','glpi_plugin_fusinvsnmp_printerlogs',
+             'pages_color_copy',428,1428),
+          ('Printer','pagecountertotalpages_fax','glpi_plugin_fusinvsnmp_printerlogs',
+             'pages_total_fax',429,1429),
+## Printers : NetworkPort
+          ('Printer','ifPhysAddress','glpi_networkports','mac',58,NULL),
+          ('Printer','ifName','glpi_networkports','name',57,NULL),
+          ('Printer','ifaddr','glpi_networkports','ip',407,NULL),
+          ('Printer','ifType','','',97,NULL),
+          ('Printer','ifIndex','','',416,NULL),
+## Computer
+          ('Computer','serial','','serial',13,NULL),
+          ('Computer','ifPhysAddress','','mac',15,NULL);";
+   $DB->query($sql);
 
 
    /*
@@ -366,9 +495,20 @@ function update221to230() {
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevice_miboids`
       CHANGE `construct_device_id` `plugin_fusinvsnmp_constructdevices_id` INT( 11 ) NOT NULL DEFAULT '0'";
    $DB->query($sql);
-
-   // ***** TODO : modify mapping_name to plugin_fusioninventory_mappings_id
-
+   // Convert Mapping
+   foreach ($typetoname as $key => $itemtype) {
+      $sql = "SELECT * FROM `glpi_plugin_fusioninventory_mappings`
+         WHERE `itemtype`='".$itemtype."' ";
+      $result=$DB->query($sql);
+      while ($data=$DB->fetch_array($result)) {
+         $sql_update = "UPDATE `glpi_plugin_fusinvsnmp_constructdevice_miboids`
+         SET `mapping_name` = '".$data['id']."'
+         WHERE `mapping_type `='".$key."'
+            AND `mapping_name`='".$data['name']."' ";
+         $DB->query($sql_update);
+      }
+   }
+   // End convert mapping
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevice_miboids`
       CHANGE `mapping_name` `plugin_fusioninventory_mappings_id` INT( 11 ) NOT NULL DEFAULT '0'";
    $DB->query($sql);
@@ -376,6 +516,14 @@ function update221to230() {
       CHANGE `mapping_type` `itemtype` VARCHAR( 100 ) CHARACTER
       SET utf8 COLLATE utf8_unicode_ci NOT NULL ";
    $DB->query($sql);
+   // Convert datas
+   foreach ($typetoname as $key => $itemtype) {
+      $table = getTableForItemType($itemtype);
+      $sql = "UPDATE `glpi_plugin_fusinvsnmp_constructdevice_miboids`
+         SET `itemtype` = '".$table."'
+         WHERE `itemtype` = '".$key."'";
+      $DB->query($sql);
+   }
 
    /*
     * Update `glpi_plugin_fusioninventory_snmp_history_connections`
@@ -480,9 +628,20 @@ function update221to230() {
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_modelmibs`
       CHANGE `FK_mib_object` `plugin_fusinvsnmp_mibobjects_id` INT( 11 ) NULL DEFAULT NULL ";
    $DB->query($sql);
-   
-   // ***** TODO : modify mapping_name to plugin_fusioninventory_mappings_id
-
+   // Convert Mapping
+   foreach ($typetoname as $key => $itemtype) {
+      $sql = "SELECT * FROM `glpi_plugin_fusioninventory_mappings`
+         WHERE `itemtype`='".$itemtype."' ";
+      $result=$DB->query($sql);
+      while ($data=$DB->fetch_array($result)) {
+         $sql_update = "UPDATE `glpi_plugin_fusinvsnmp_modelmibs`
+         SET `mapping_type` = '".$data['id']."'
+         WHERE `mapping_type `='".$key."'
+            AND `mapping_name`='".$data['name']."' ";
+         $DB->query($sql_update);
+      }
+   }
+   // End convert mapping
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_modelmibs`
       CHANGE `mapping_type` `plugin_fusioninventory_mappings_id` INT( 11 ) NOT NULL DEFAULT '0'";
    $DB->query($sql);
@@ -649,9 +808,17 @@ function update221to230() {
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_printercartridges`
       CHANGE `FK_printers` `printers_id` INT( 11 ) NOT NULL ";
    $DB->query($sql);
-
-   // ***** TODO : modify mapping_name to plugin_fusioninventory_mappings_id
-
+   // Convert Mapping
+   $sql = "SELECT * FROM `glpi_plugin_fusioninventory_mappings`
+      WHERE `itemtype`='Printer' ";
+   $result=$DB->query($sql);
+   while ($data=$DB->fetch_array($result)) {
+      $sql_update = "UPDATE `glpi_plugin_fusinvsnmp_printercartridges`
+      SET `object_name` = '".$data['id']."'
+      WHERE `object_name`='".$data['name']."' ";
+      $DB->query($sql_update);
+   }
+    // End convert mapping
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_printercartridges`
       CHANGE `object_name` `plugin_fusioninventory_mappings_id` INT( 11 ) NOT NULL DEFAULT '0' ";
    $DB->query($sql);
@@ -814,9 +981,17 @@ function update221to230() {
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_networkportlogs`
       CHANGE `FK_ports` `networkports_id` INT( 11 ) NOT NULL ";
    $DB->query($sql);
-
-   // ***** TODO : modify mapping_name to plugin_fusioninventory_mappings_id
-
+   // Convert Mapping
+   $sql = "SELECT * FROM `glpi_plugin_fusioninventory_mappings`
+      WHERE `itemtype`='NetworkEquipment' ";
+   $result=$DB->query($sql);
+   while ($data=$DB->fetch_array($result)) {
+      $sql_update = "UPDATE `glpi_plugin_fusinvsnmp_networkportlogs`
+      SET `Field` = '".$data['id']."'
+      WHERE `Field`='".$data['name']."' ";
+      $DB->query($sql_update);
+   }
+   // End convert mapping
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_networkportlogs`
       CHANGE `Field` `plugin_fusioninventory_mappings_id` INT( 11 ) NOT NULL DEFAULT '0'";
    $DB->query($sql);
@@ -920,9 +1095,17 @@ function update221to230() {
       $DB->query($sql);
    }
 
+   /*
+    * Drop `glpi_plugin_fusioninventory_connection_stats`
+    */
+   $sql = "DROP TABLE `glpi_plugin_fusioninventory_connection_stats`";
+   $DB->query($sql);
 
-
-
+   /*
+    * Drop `glpi_plugin_fusioninventory_walks`
+    */
+   $sql = "DROP TABLE `glpi_plugin_fusioninventory_walks`";
+   $DB->query($sql);
 
 
 
