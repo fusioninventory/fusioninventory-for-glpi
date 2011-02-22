@@ -939,7 +939,10 @@ function update221to230() {
    UNIQUE KEY `unicity` (`type`, `plugins_id`, `profiles_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
    $DB->query($sql);
-
+   if (!class_exists('PluginFusioninventoryStaticmisc')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/staticmisc.class.php");
+   }
+   
    // Convert datas
    if (is_callable(array("PluginFusionInventoryStaticmisc", "profiles"))) {
       $a_profile = call_user_func(array("PluginFusionInventoryStaticmisc", "profiles"));
@@ -958,48 +961,41 @@ function update221to230() {
       $a_profile = current($a_profiles);
       $profile_id = $a_profile['id'];
       if ($profile_id != $_SESSION['glpiactiveprofile']['id']) {
-
          if (!is_null($data['agents'])) {
-            $input = array();
-            PluginFusioninventoryProfile::addProfile($plugins_id,
-                                                     "agent",
-                                                     $data['agents'],
-                                                     $profile_id);
+            $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
+               (`type`, `right`, `plugins_id`, `profiles_id`)
+               VALUES('agent', '".$data['agents']."', '".$plugins_id."', '".$profile_id."')";
+            $DB->query($sql_ins);
          }
          if (!is_null($data['configuration'])) {
-            $input = array();
-            PluginFusioninventoryProfile::addProfile($plugins_id,
-                                                     "configuration",
-                                                     $data['configuration'],
-                                                     $profile_id);
+            $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
+               (`type`, `right`, `plugins_id`, `profiles_id`)
+               VALUES('configuration', '".$data['configuration']."', '".$plugins_id."', '".$profile_id."')";
+            $DB->query($sql_ins);
          }
          if (!is_null($data['wol'])) {
-            $input = array();
-            PluginFusioninventoryProfile::addProfile($plugins_id,
-                                                     "wol",
-                                                     $data['wol'],
-                                                     $profile_id);
+            $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
+               (`type`, `right`, `plugins_id`, `profiles_id`)
+               VALUES('wol', '".$data['wol']."', '".$plugins_id."', '".$profile_id."')";
+            $DB->query($sql_ins);
          }
          if (!is_null($data['remotecontrol'])) {
-            $input = array();
-            PluginFusioninventoryProfile::addProfile($plugins_id,
-                                                     "remotecontrol",
-                                                     $data['remotecontrol'],
-                                                     $profile_id);
+            $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
+               (`type`, `right`, `plugins_id`, `profiles_id`)
+               VALUES('remotecontrol', '".$data['remotecontrol']."', '".$plugins_id."', '".$profile_id."')";
+            $DB->query($sql_ins);
          }
          if (!is_null($data['unknowndevices'])) {
-            $input = array();
-            PluginFusioninventoryProfile::addProfile($plugins_id,
-                                                     "unknowndevice",
-                                                     $data['unknowndevices'],
-                                                     $profile_id);
+            $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
+               (`type`, `right`, `plugins_id`, `profiles_id`)
+               VALUES('unknowndevice', '".$data['unknowndevice']."', '".$plugins_id."', '".$profile_id."')";
+            $DB->query($sql_ins);
          }
          if (!is_null($data['agentsprocesses'])) {
-            $input = array();
-            PluginFusioninventoryProfile::addProfile($plugins_id,
-                                                     "task",
-                                                     $data['agentsprocesses'],
-                                                     $profile_id);
+            $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
+               (`type`, `right`, `plugins_id`, `profiles_id`)
+               VALUES('task', '".$data['agentsprocesses']."', '".$plugins_id."', '".$profile_id."')";
+            $DB->query($sql_ins);
          }
       }
    }
@@ -1220,10 +1216,53 @@ function update221to230() {
 
 
 
-   
-   //TODO
-// Plugin::migrateItemType();
+   $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-2.3.0-update.sql";
+   $DBf_handle = fopen($DB_file, "rt");
+   $sql_query = fread($DBf_handle, filesize($DB_file));
+   fclose($DBf_handle);
+   foreach ( explode(";\n", "$sql_query") as $sql_line) {
+      if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
+      if (!empty($sql_line)) $DB->query($sql_line)/* or die($DB->error())*/;
+   }
 
+
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
+   }
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp');
+   }
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml');
+   }
+
+
+   CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '60', array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
+
+   if (!class_exists('PluginFusioninventorySetup')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
+   }
+   if (!class_exists('PluginFusioninventoryRuleImportEquipmentCollection')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/ruleimportequipmentcollection.class.php");
+   }
+   if (!class_exists('PluginFusioninventoryRuleImportEquipment')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/ruleimportequipment.class.php");
+   }
+   if (!class_exists('PluginFusioninventoryRuleCollection')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/rulecollection.class.php");
+   }
+   if (!class_exists('PluginFusioninventoryRule')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/rule.class.php");
+   }
+   if (!class_exists('PluginFusioninventoryRuleCriteria')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/rulecriteria.class.php");
+   }
+   if (!class_exists('PluginFusioninventoryRuleAction')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/ruleaction.class.php");
+   }
+
+   $PluginFusioninventorySetup = new PluginFusioninventorySetup();
+   $PluginFusioninventorySetup->initRules();
 
 }
 
