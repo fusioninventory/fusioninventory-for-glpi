@@ -30,7 +30,7 @@
 
 // ----------------------------------------------------------------------
 // Original Author of file: David DURIEUX
-// Purpose of file:
+// Purpose of file: Mathieu SIMON
 // ----------------------------------------------------------------------
 
 $title="FusionInventory DEPLOY";
@@ -40,21 +40,21 @@ $LANG['plugin_fusinvdeploy']['title'][0]="$title";
 
 $LANG['plugin_fusinvdeploy']['package'][0]="Action";
 $LANG['plugin_fusinvdeploy']['package'][1]="Command";
-$LANG['plugin_fusinvdeploy']['package'][2]="Lancer (running file in package)";
-$LANG['plugin_fusinvdeploy']['package'][3]="Exécuter (running file of system)";
+$LANG['plugin_fusinvdeploy']['package'][2]="Launch (running file in package)";
+$LANG['plugin_fusinvdeploy']['package'][3]="Exécuter (system executable)";
 $LANG['plugin_fusinvdeploy']['package'][4]="Store";
 $LANG['plugin_fusinvdeploy']['package'][5]="Packages";
 $LANG['plugin_fusinvdeploy']['package'][6]="Package management";
 $LANG['plugin_fusinvdeploy']['package'][7]="Package";
 $LANG['plugin_fusinvdeploy']['package'][8]="Package management";
-$LANG['plugin_fusinvdeploy']['package'][9]="Fragments number";
+$LANG['plugin_fusinvdeploy']['package'][9]="Number of fragments";
 $LANG['plugin_fusinvdeploy']['package'][10]="Module";
-$LANG['plugin_fusinvdeploy']['package'][11]="This package has not been yet created";
+$LANG['plugin_fusinvdeploy']['package'][11]="This package has not been created yet";
 $LANG['plugin_fusinvdeploy']['package'][12]="Create package";
 $LANG['plugin_fusinvdeploy']['package'][13]="re-create package";
 
 $LANG['plugin_fusinvdeploy']['files'][0]="Files management";
-$LANG['plugin_fusinvdeploy']['files'][1]="Filename";
+$LANG['plugin_fusinvdeploy']['files'][1]="File name";
 $LANG['plugin_fusinvdeploy']['files'][2]="Version";
 $LANG['plugin_fusinvdeploy']['files'][3]="Operating system";
 $LANG['plugin_fusinvdeploy']['files'][4]="File to upload";
@@ -64,10 +64,10 @@ $LANG['plugin_fusinvdeploy']['packagefiles'][0]="Files linked with package";
 
 $LANG['plugin_fusinvdeploy']['deploystatus'][0]="Deployement state";
 
-$LANG['plugin_fusinvdeploy']['config'][0]="Addresse du serveur GLPI (sans le http://)";
+$LANG['plugin_fusinvdeploy']['config'][0]="Address of the GLPI server (without http://)";
 
-$LANG['plugin_fusinvdeploy']['setup'][17]="Plugin ".$title." need plugin FusionInventory activated before activation.";
-$LANG['plugin_fusinvdeploy']['setup'][18]="Plugin ".$title." need plugin FusionInventory activated before uninstall.";
+$LANG['plugin_fusinvdeploy']['setup'][17]="Plugin ".$title." needs FusionInventory plugin activated before activation.";
+$LANG['plugin_fusinvdeploy']['setup'][18]="Plugin ".$title." needs FusionInventory plugin activated before uninstall.";
 
 $LANG['plugin_fusinvdeploy']['profile'][1]="$title";
 $LANG['plugin_fusinvdeploy']['profile'][2]="Manage packages";
