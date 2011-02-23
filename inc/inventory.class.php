@@ -483,7 +483,7 @@ class PluginFusinvinventoryInventory {
          $a_sectionsinfos[] = "VIDEOS/".$deviceGraphicCard_id;
          $xml_video = $xml_content->addChild("VIDEOS");
          $DeviceGraphicCard->getFromDB($deviceGraphicCard_data['devicegraphiccards_id']);
-         $xml_video->addChild("NAME", $DeviceSoundCard->fields['designation']);
+         $xml_video->addChild("NAME", $DeviceGraphicCard->fields['designation']);
          $xml_video->addChild("MEMORY", $deviceGraphicCard_data['specificity']);
       }
 
