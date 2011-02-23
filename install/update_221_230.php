@@ -853,15 +853,15 @@ function update221to230() {
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_printerlogs`
       CHANGE `FK_printers` `printers_id` INT( 11 ) NOT NULL DEFAULT '0'";
    $DB->query($sql);
-//   $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_printerlogs`
-//      ADD `pages_total_print` INT( 11 ) NOT NULL DEFAULT '0',
-//      ADD `pages_n_b_print` INT( 11 ) NOT NULL DEFAULT '0',
-//      ADD `pages_color_print` INT( 11 ) NOT NULL DEFAULT '0',
-//      ADD `pages_total_copy` INT( 11 ) NOT NULL DEFAULT '0',
-//      ADD `pages_n_b_copy` INT( 11 ) NOT NULL DEFAULT '0',
-//      ADD `pages_color_copy` INT( 11 ) NOT NULL DEFAULT '0',
-//      ADD `pages_total_fax` INT( 11 ) NOT NULL DEFAULT '0'";
-//   $DB->query($sql);
+   $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_printerlogs`
+      ADD `pages_total_print` INT( 11 ) NOT NULL DEFAULT '0',
+      ADD `pages_n_b_print` INT( 11 ) NOT NULL DEFAULT '0',
+      ADD `pages_color_print` INT( 11 ) NOT NULL DEFAULT '0',
+      ADD `pages_total_copy` INT( 11 ) NOT NULL DEFAULT '0',
+      ADD `pages_n_b_copy` INT( 11 ) NOT NULL DEFAULT '0',
+      ADD `pages_color_copy` INT( 11 ) NOT NULL DEFAULT '0',
+      ADD `pages_total_fax` INT( 11 ) NOT NULL DEFAULT '0'";
+   $DB->query($sql);
    
    /*
     * Update `glpi_plugin_fusioninventory_printers`
@@ -904,6 +904,9 @@ function update221to230() {
       WHERE `itemtype`='Printer' ";
    $result=$DB->query($sql);
    while ($data=$DB->fetch_array($result)) {
+      if (strstr($data['name'], 'cartridges')) {
+         $data['name'] = str_replace("cartridges", "cartridge", $data['name']);
+      }
       $sql_update = "UPDATE `glpi_plugin_fusinvsnmp_printercartridges`
       SET `object_name` = '".$data['id']."'
       WHERE `object_name`='".$data['name']."' ";
