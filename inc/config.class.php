@@ -45,7 +45,8 @@ class PluginFusinvSNMPConfig extends CommonDBTM {
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
-      $insert = array('storagesnmpauth'=>'DB');
+      $insert = array('storagesnmpauth'=>'DB',
+                      'version'=>'2.3.0-1');
       $PluginFusioninventoryConfig->initConfig($plugins_id, $insert);
    }
 

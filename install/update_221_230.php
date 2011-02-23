@@ -39,7 +39,14 @@
 function update221to230() {
    global $DB;
 
-   $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-2.3.0-update";
+   // Get informations of plugin
+   $a_plugin = plugin_version_fusinvsnmp();
+   $plugin = new Plugin();
+   $data = $plugin->find("`directory` = 'fusinvsnmp'");
+   $fields = current($data);
+   $plugins_id = $fields['id'];
+
+   $DB_file = GLPI_ROOT ."/plugins/fusinvsnmp/install/mysql/plugin_fusinvsnmp-2.3.0-1-update.sql";
    $DBf_handle = fopen($DB_file, "rt");
    $sql_query = fread($DBf_handle, filesize($DB_file));
    fclose($DBf_handle);
@@ -50,8 +57,144 @@ function update221to230() {
       }
    }
 
-   //TODO
-// Plugin::migrateItemType();
+   // Create folder in GLPI_PLUGIN_DOC_DIR
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'])) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
+   }
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'].'/tmp')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'].'/tmp');
+   }
+
+   // ***** Todo : get from update
+   $configLogField = new PluginFusinvsnmpConfigLogField();
+   $configLogField->initConfig();
+
+   /*
+    * Manage profiles
+    */
+   // Convert datas
+   if (is_callable(array("PluginFusinvsnmpStaticmisc", "profiles"))) {
+      $a_profile = call_user_func(array("PluginFusinvsnmpStaticmisc", "profiles"));
+      foreach ($a_profile as $data) {
+         $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
+            (`type`, `right`, `plugins_id`, `profiles_id`)
+            VALUES('".$data['profil']."', 'w', '".$plugins_id."', '".$_SESSION['glpiactiveprofile']['id']."')";
+         $DB->query($sql_ins);
+      }
+   }
+   $sql = "SELECT * FROM `glpi_plugin_fusinvsnmp_temp_profiles`";
+   $result=$DB->query($sql);
+   $Profile = new Profile();
+   while ($data=$DB->fetch_array($result)) {
+      $a_profiles = $Profile->find("`name`='".$data['name']."'");
+      $a_profile = current($a_profiles);
+      $profile_id = $a_profile['id'];
+      if ($profile_id != $_SESSION['glpiactiveprofile']['id']) {
+         if (!is_null($data['configuration'])) {
+            $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
+               (`type`, `right`, `plugins_id`, `profiles_id`)
+               VALUES('configuration', '".$data['configuration']."', '".$plugins_id."', '".$profile_id."')";
+            $DB->query($sql_ins);
+         }
+         if (!is_null($data['rangeip'])) {
+            $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
+               (`type`, `right`, `plugins_id`, `profiles_id`)
+               VALUES('iprange', '".$data['rangeip']."', '".$plugins_id."', '".$profile_id."')";
+            $DB->query($sql_ins);
+         }
+         if (!is_null($data['snmp_authentification'])) {
+            $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
+               (`type`, `right`, `plugins_id`, `profiles_id`)
+               VALUES('configsecurity', '".$data['snmp_authentification']."', '".$plugins_id."', '".$profile_id."')";
+            $DB->query($sql_ins);
+         }
+         if (!is_null($data['snmp_models'])) {
+            $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
+               (`type`, `right`, `plugins_id`, `profiles_id`)
+               VALUES('model', '".$data['snmp_models']."', '".$plugins_id."', '".$profile_id."')";
+            $DB->query($sql_ins);
+         }
+         if (!is_null($data['snmp_printers'])) {
+            $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
+               (`type`, `right`, `plugins_id`, `profiles_id`)
+               VALUES('printer', '".$data['snmp_printers']."', '".$plugins_id."', '".$profile_id."')";
+            $DB->query($sql_ins);
+         }
+         if (!is_null($data['snmp_networking'])) {
+            $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
+               (`type`, `right`, `plugins_id`, `profiles_id`)
+               VALUES('networkequipment', '".$data['snmp_networking']."', '".$plugins_id."', '".$profile_id."')";
+            $DB->query($sql_ins);
+         }
+      }
+   }
+   $sql = "DROP TABLE `glpi_plugin_fusinvsnmp_temp_profiles`";
+   $DB->query($sql);
+   PluginFusioninventoryProfile::changeProfile($plugins_id);
+
+   /*
+    * Manage agents
+    */
+   $a_exceptions_query = array();
+   $a_exceptions_discovery = array();
+   $sql = "SELECT * FROM `glpi_plugin_fusinvsnmp_tmp_agents`";
+   $result=$DB->query($sql);
+	while ($data=$DB->fetch_array($result)) {
+      $sql_ins = "INSERT INTO `glpi_plugin_fusinvsnmp_agentconfigs`
+         (`plugin_fusioninventory_agents_id`, `threads_netdiscovery`,
+         `threads_snmpquery`)
+         VALUES('".$data['id']."',
+                '".$data['threads_discovery']."',
+                '".$data['threads_query']."')";
+      $DB->query($sql_ins);
+      if ($data['snmpquery'] == '1') {
+         $a_exceptions_query[] = $data['id'];
+      }
+      if ($data['netdiscovery'] == '1') {
+         $a_exceptions_discovery = $data['id'];
+      }
+   }
+   $sql = "DROP TABLE `glpi_plugin_fusinvsnmp_tmp_agents`";
+   $DB->query($sql);
+   
+   /*
+    * Manage configs
+    */
+   $sql = "SELECT * FROM `glpi_plugin_fusinvsnmp_tmp_configs`";
+   $result=$DB->query($sql);
+   $auth = 'DB';
+	while ($data=$DB->fetch_array($result)) {
+      $auth = $data['authsnmp'];
+   }
+   $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+   $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
+   $insert = array('storagesnmpauth'=>$auth);
+   $PluginFusioninventoryConfig->initConfig($plugins_id, $insert);
+
+   $sql = "DROP TABLE `glpi_plugin_fusinvsnmp_tmp_configs`";
+   $DB->query($sql);
+
+
+
+
+   $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+   $input = array();
+   $input['plugins_id'] = $plugins_id;
+   $input['modulename'] = "SNMPQUERY";
+   $input['is_active']  = 0;
+   $input['exceptions'] = exportArrayToDB($a_exceptions_query);
+   $PluginFusioninventoryAgentmodule->add($input);
+
+   $input = array();
+   $input['plugins_id'] = $plugins_id;
+   $input['modulename'] = "NETDISCOVERY";
+   $input['is_active']  = 0;
+   $input['exceptions'] = exportArrayToDB($a_exceptions_discovery);
+   $PluginFusioninventoryAgentmodule->add($input);
+
+/*
+ * Manage models migration
+ */
 
 
 }

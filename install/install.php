@@ -43,7 +43,7 @@ function pluginFusinvsnmpInstall() {
    // Get informations of plugin
    $a_plugin = plugin_version_fusinvsnmp();
 
-   include (GLPI_ROOT . "/plugins/fusinvsnmp/install/update.php");
+   include_once (GLPI_ROOT . "/plugins/fusinvsnmp/install/update.php");
    $version_detected = pluginfusinvsnmpGetCurrentVersion($a_plugin['version']);
    if ((isset($version_detected)) AND ($version_detected != $a_plugin['version'])) {
       // Update

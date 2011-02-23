@@ -37,7 +37,9 @@
 
 function pluginFusinvsnmpGetCurrentVersion($version) {
    if ((!TableExists("glpi_plugin_tracker_config")) &&
-      (!TableExists("glpi_plugin_fusioninventory_config"))) {
+      (!TableExists("glpi_plugin_fusioninventory_config")) &&
+      (!TableExists("glpi_plugin_fusinvsnmp_agentconfigs")) &&
+      (!TableExists("glpi_plugin_fusinvsnmp_tmp_configs"))) {
       return $version;
    } else if ((TableExists("glpi_plugin_tracker_config")) ||
          (TableExists("glpi_plugin_fusioninventory_config"))) {
@@ -76,6 +78,13 @@ function pluginFusinvsnmpGetCurrentVersion($version) {
             return $data['version'];
          }
       }      
+   } else {
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+      $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
+      $versionconfig = $PluginFusioninventoryConfig->getValue($plugins_id, "version");
+      if ((isset($versionconfig)) AND (!empty($versionconfig))) {
+         return $versionconfig;
+      }
    }
 }
 
@@ -118,14 +127,6 @@ function pluginFusinvsnmpUpdate($current_version) {
 			update221to230();
 
    }
-//   // Remote IP of switch ports
-//   $query = "UPDATE `glpi_networkports`
-//             SET `ip` = NULL
-//             WHERE `itemtype` ='NetworkEquipment'
-//                AND `ip` IS NOT NULL ";
-//   $DB->query($query);
-
-   PluginFusinvsnmpAuth::initSession();
-   
+  
 }
 ?>
