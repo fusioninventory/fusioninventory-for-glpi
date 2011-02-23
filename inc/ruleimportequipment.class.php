@@ -361,8 +361,13 @@ logInFile("xxx", print_r($input, true));
             case 'mac' :
                $sql_where_temp = " AND `glpi_networkports`.`mac` IN ('";
                $sql_where_networkequipment_temp = " AND `[typetable]`.`mac` IN ('";
-               $sql_where_temp .= implode("', '",$input['mac']);
-               $sql_where_networkequipment_temp .= implode("', '",$input['mac']);
+               if (is_array($input['mac'])) {
+                  $sql_where_temp .= implode("', '",$input['mac']);
+                  $sql_where_networkequipment_temp .= implode("', '",$input['mac']);
+               } else {
+                  $sql_where_temp .= $input['mac'];
+                  $sql_where_networkequipment_temp .= $input['mac'];
+               }
                $sql_where_temp .= "')";
                $sql_where_networkequipment_temp .= "')";
 
@@ -373,8 +378,13 @@ logInFile("xxx", print_r($input, true));
             case 'ip' :
                $sql_where .= " AND `glpi_networkports`.`ip` IN ";
                $sql_where_networkequipment .= " AND `[typetable]`.`ip` IN ('";
-               $sql_where .= implode("', '",$input['ip']);
-               $sql_where_networkequipment .= implode("', '",$input['ip']);
+               if (is_array($input['ip'])) {
+                  $sql_where .= implode("', '",$input['ip']);
+                  $sql_where_networkequipment .= implode("', '",$input['ip']);
+               } else {
+                  $sql_where .= $input['ip'];
+                  $sql_where_networkequipment .= $input['ip'];
+               }
                $sql_where .= ")";
                $sql_where_networkequipment .= ")";
                break;
