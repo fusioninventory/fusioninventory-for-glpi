@@ -82,16 +82,19 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
          } else if ($agent_id == '.2') {
             $dynagent = 2;
          } else {
-            $a_ip = $PluginFusioninventoryAgent->getIPs($agent_id);
-            $PluginFusioninventoryAgent->getFromDB($agent_id);
-            foreach($a_ip as $ip) {
-               if ($PluginFusioninventoryTask->fields['communication'] == 'push') {
-                  $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($ip,0);
-                  if ($agentStatus) {
-                     $a_agentlist[$agent_id] = $ip;
+            // Detect if agent exists
+            if ($PluginFusioninventoryAgent->getFromDB($agent_id)) {
+               $a_ip = $PluginFusioninventoryAgent->getIPs($agent_id);
+               $PluginFusioninventoryAgent->getFromDB($agent_id);
+               foreach($a_ip as $ip) {
+                  if ($PluginFusioninventoryTask->fields['communication'] == 'push') {
+                     $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($ip,0);
+                     if ($agentStatus) {
+                        $a_agentlist[$agent_id] = $ip;
+                     }
+                  } else if ($PluginFusioninventoryTask->fields['communication'] == 'pull') {
+                     $a_agentlist[$agent_id] = 1;
                   }
-               } else if ($PluginFusioninventoryTask->fields['communication'] == 'pull') {
-                  $a_agentlist[$agent_id] = 1;
                }
             }
          }
