@@ -984,6 +984,7 @@ function update213to220_ConvertField() {
              FROM `glpi_plugin_fusioninventory_snmp_history`
              WHERE `Field` != '0';";
    if ($result=$DB->query($query)) {
+      $nb = $DB->numrows($result);
       $i = 0;
       while ($data=$DB->fetch_array($result)) {
          $i++;
