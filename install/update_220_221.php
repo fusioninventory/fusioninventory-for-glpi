@@ -41,15 +41,15 @@ function update220to221() {
 
    // Clean fusion IP when networkequipments_id has been deleted
    // (bug from Tracker 2.1.3 and before)
-   $query = "SELECT `glpi_plugin_fusioninventory_networkequipmentips`.*
-             FROM `glpi_plugin_fusioninventory_networkequipmentips`
+   $query = "SELECT `glpi_plugin_fusioninventory_networking_ifaddr`.*
+             FROM `glpi_plugin_fusioninventory_networking_ifaddr`
                   LEFT JOIN `glpi_networkequipments`
-                     ON `networkequipments_id`=`glpi_networkequipments`.`id`
+                     ON `FK_networking`=`glpi_networkequipments`.`id`
              WHERE `glpi_networkequipments`.`id` is null";
    if ($result=$DB->query($query)) {
       while ($data=$DB->fetch_array($result)) {
-         $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networkequipmentips`
-                          WHERE `id`='".$data['id']."' ";
+         $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networking_ifaddr`
+                          WHERE `ID`='".$data['ID']."' ";
          $DB->query($query_delete);
       }
    }
@@ -58,8 +58,8 @@ function update220to221() {
    if ($result=$DB->query($query)) {
       while ($data=$DB->fetch_array($result)) {
          if (!preg_match("/^((25[0-5]|2[0-4]\d|1?\d?\d).){3}(25[0-5]|2[0-4]\d|1?\d?\d)$/",$data['ip'])) {
-            $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networkequipmentips`
-                             WHERE id='".$data['id']."' ";
+            $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networking_ifaddr`
+                             WHERE ID='".$data['ID']."' ";
             $DB->query($query_delete);
          }
       }

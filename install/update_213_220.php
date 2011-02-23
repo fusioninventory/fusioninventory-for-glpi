@@ -129,7 +129,7 @@ function update213to220() {
                     FROM `glpi_plugin_fusioninventory_networking_ports`
                           LEFT JOIN `glpi_networkports`
                                     ON `glpi_networkports`.`id` = `FK_networking_ports`
-                          LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `on_device`
+                          LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `glpi_networkports`.`items_id`
                     WHERE `glpi_networkequipments`.`id` IS NULL";
 	$result=$DB->query($query_select);
 	while ($data=$DB->fetch_array($result)) {
@@ -1043,21 +1043,21 @@ function update213to220_ConvertField() {
          $i++;
 
          // Search port from mac address
-         $query_port = "SELECT * FROM `glpi_networking_ports`
-            WHERE `ifmac`='".$data['new_value']."' ";
+         $query_port = "SELECT * FROM `glpi_networkports`
+            WHERE `mac`='".$data['new_value']."' ";
          if ($result_port=$DB->query($query_port)) {
             if ($DB->numrows($result_port) == '1') {
                $input = array();
                $data_port = $DB->fetch_assoc($result_port);
-               $input['FK_port_source'] = $data_port['ID'];
+               $input['FK_port_source'] = $data_port['id'];
 
-               $query_port2 = "SELECT * FROM `glpi_networking_ports`
-                  WHERE `on_device` = '".$data['new_device_ID']."'
-                     AND `device_type` = '".$data['new_device_type']."' ";
+               $query_port2 = "SELECT * FROM `glpi_networkports`
+                  WHERE `items_id` = '".$data['new_device_ID']."'
+                     AND `itemtype` = '".$data['new_device_type']."' ";
                if ($result_port2=$DB->query($query_port2)) {
                   if ($DB->numrows($result_port2) == '1') {
                      $data_port2 = $DB->fetch_assoc($result_port2);
-                     $input['FK_port_destination'] = $data_port2['ID'];
+                     $input['FK_port_destination'] = $data_port2['id'];
 
                      $input['date'] = $data['date_mod'];
                      $input['creation'] = 1;

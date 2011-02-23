@@ -905,7 +905,11 @@ function update221to230() {
    $result=$DB->query($sql);
    while ($data=$DB->fetch_array($result)) {
       if (strstr($data['name'], 'cartridges')) {
-         $data['name'] = str_replace("cartridges", "cartridge", $data['name']);
+         $sql_update = "UPDATE `glpi_plugin_fusinvsnmp_printercartridges`
+         SET `object_name` = '".$data['id']."'
+         WHERE `object_name`='".$data['name']."' ";
+         $DB->query($sql_update);
+         $data['name'] = str_replace("cartridge", "cartridges", $data['name']);
       }
       $sql_update = "UPDATE `glpi_plugin_fusinvsnmp_printercartridges`
       SET `object_name` = '".$data['id']."'
