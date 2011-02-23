@@ -207,7 +207,7 @@ function update221to230() {
       if ($NetworkPort_NetworkPort->getFromDBForNetworkPort($data['id'])) {
          $NetworkPort_NetworkPort->delete($NetworkPort_NetworkPort->fields);
       }
-      $NetworkPort->delete($data);
+      $NetworkPort->delete($data, 1);
    }
 
    /*
