@@ -30,7 +30,7 @@
 
 // ----------------------------------------------------------------------
 // Original Author of file: Mathieu SIMON
-// Co-authors of file:
+// Co-authors of file: Alexander Lüthy
 // Purpose of file:
 // ----------------------------------------------------------------------
 
@@ -42,7 +42,7 @@ $LANG['plugin_fusinvdeploy']['title'][0]="$title";
 $LANG['plugin_fusinvdeploy']['package'][0]="Aktion";
 $LANG['plugin_fusinvdeploy']['package'][1]="Befehl";
 $LANG['plugin_fusinvdeploy']['package'][2]="Ausführen (ausführbare Datei im Paket)";
-$LANG['plugin_fusinvdeploy']['package'][3]="Exécuter (ausführbare Systemdatei)";
+$LANG['plugin_fusinvdeploy']['package'][3]="Ausführen (ausführbare Systemdatei)";
 $LANG['plugin_fusinvdeploy']['package'][4]="Speichern";
 $LANG['plugin_fusinvdeploy']['package'][5]="Pakete";
 $LANG['plugin_fusinvdeploy']['package'][6]="Paketverwaltung";
