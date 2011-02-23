@@ -944,8 +944,8 @@ function update221to230() {
    }
    
    // Convert datas
-   if (is_callable(array("PluginFusionInventoryStaticmisc", "profiles"))) {
-      $a_profile = call_user_func(array("PluginFusionInventoryStaticmisc", "profiles"));
+   if (is_callable(array("PluginFusioninventoryStaticmisc", "profiles"))) {
+      $a_profile = call_user_func(array("PluginFusioninventoryStaticmisc", "profiles"));
       foreach ($a_profile as $data) {
          $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
             (`type`, `right`, `plugins_id`, `profiles_id`)
@@ -1263,6 +1263,28 @@ function update221to230() {
 
    $PluginFusioninventorySetup = new PluginFusioninventorySetup();
    $PluginFusioninventorySetup->initRules();
+
+   // Put fusinvsnmp into state "to update"
+   $Plugin = new Plugin();
+   $a_plugins = $Plugin->find("`directory`='fusinvsnmp'");
+   $input = array();
+   if (count($a_plugins)) {
+      $input = current($a_plugins);
+      $input['state '] = 6;
+      $input['version'] = "2.2.1";
+      $plugin->update($input);
+      $snmp_id = $input['id'];
+   } else {
+      $input['directory'] = "fusinvsnmp";
+      $input['name'] = "FusionInventory SNMP";
+      $input['state '] = 6;
+      $input['version'] = "2.2.1";
+      $snmp_id = $plugin->add($input);
+   }
+   $sql_ins = "INSERT INTO `glpi_plugin_fusioninventory_configs`
+         (`type`, `value`, `plugins_id`)
+      VALUES('version', '2.2.1', '".$snmp_id."')";
+   $DB->query($sql_ins);
 
 }
 
