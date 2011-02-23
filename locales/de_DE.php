@@ -127,7 +127,7 @@ $LANG['plugin_fusinvsnmp']['model_info'][12]="Modellschlüssel für die Entdecku
 $LANG['plugin_fusinvsnmp']['model_info'][13]="Lade richtiges Modell";
 $LANG['plugin_fusinvsnmp']['model_info'][14]="Lade richtiges SNMP Modell";
 $LANG['plugin_fusinvsnmp']['model_info'][15]="Massenimport von Modellen";
-$LANG['plugin_fusinvsnmp']['model_info'][16]="Mass import of models in folder plugins/fusioninventory/models/";
+$LANG['plugin_fusinvsnmp']['model_info'][16]="Mass import of models in folder plugins/fusinvsnmp/models/";
 
 $LANG['plugin_fusinvsnmp']['mib'][1]="MIB Bezeichnung";
 $LANG['plugin_fusinvsnmp']['mib'][2]="Objekt";

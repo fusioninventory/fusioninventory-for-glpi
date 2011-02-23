@@ -122,7 +122,7 @@ $LANG['plugin_fusinvsnmp']['model_info'][12]="Key of model discovery";
 $LANG['plugin_fusinvsnmp']['model_info'][13]="Load the correct model";
 $LANG['plugin_fusinvsnmp']['model_info'][14]="Load the correct SNMP model";
 $LANG['plugin_fusinvsnmp']['model_info'][15]="Mass import of models";
-$LANG['plugin_fusinvsnmp']['model_info'][16]="Mass import of models in folder plugins/fusioninventory/models/";
+$LANG['plugin_fusinvsnmp']['model_info'][16]="Mass import of models in folder plugins/fusinvsnmp/models/";
 
 $LANG['plugin_fusinvsnmp']['mib'][1]="MIB Label";
 $LANG['plugin_fusinvsnmp']['mib'][2]="Object";
