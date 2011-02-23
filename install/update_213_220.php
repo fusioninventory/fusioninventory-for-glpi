@@ -90,20 +90,25 @@ function update213to220() {
             $dataPort = array();
             if ($thread_connection["old_device_ID"] != "0") {
                $queryPort = "SELECT *
-                             FROM `glpi_networking_ports`
-                             WHERE `ifmac`='".$thread_connection['old_value']."'
+                             FROM `glpi_networkports`
+                             WHERE `mac`='".$thread_connection['old_value']."'
                              LIMIT 0,1;";
                $resultPort = $DB->query($queryPort);
                $dataPort = $DB->fetch_assoc($resultPort);
             } else if ($thread_connection["new_device_ID"] != "0") {
                $queryPort = "SELECT *
-                             FROM `glpi_networking_ports`
-                             WHERE `ifmac`='".$thread_connection['new_value']."'
+                             FROM `glpi_networkports`
+                             WHERE `mac`='".$thread_connection['new_value']."'
                              LIMIT 0,1;";
                $resultPort = $DB->query($queryPort);
                $dataPort = $DB->fetch_assoc($resultPort);
             }
-            $input['FK_port_destination'] = $dataPort['ID'];
+            if (isset($dataPort['id'])) {
+               $input['FK_port_destination'] = $dataPort['id'];
+            } else {
+               $input['FK_port_destination'] = 0;
+            }
+
             $query_ins = "INSERT INTO `glpi_plugin_fusioninventory_snmp_history_connections`
                (`process_number`, `date`, `creation`, `FK_port_source`, `FK_port_destination`)
                VALUES ('".$input['process_number']."',
@@ -122,10 +127,10 @@ function update213to220() {
    // * Clean glpi_plugin_fusioninventory_networking_ports
 	$query_select = "SELECT `glpi_plugin_fusioninventory_networking_ports`.`ID`
                     FROM `glpi_plugin_fusioninventory_networking_ports`
-                          LEFT JOIN `glpi_networking_ports`
-                                    ON `glpi_networking_ports`.`ID` = `FK_networking_ports`
-                          LEFT JOIN `glpi_networking` ON `glpi_networking`.`ID` = `on_device`
-                    WHERE `glpi_networking`.`ID` IS NULL";
+                          LEFT JOIN `glpi_networkports`
+                                    ON `glpi_networkports`.`id` = `FK_networking_ports`
+                          LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `on_device`
+                    WHERE `glpi_networkequipments`.`id` IS NULL";
 	$result=$DB->query($query_select);
 	while ($data=$DB->fetch_array($result)) {
       $query_del = "DELETE FROM `glpi_plugin_fusioninventory_networking_ports`
@@ -135,8 +140,8 @@ function update213to220() {
 	// * Clean glpi_plugin_fusioninventory_networking_ifaddr
 	$query_select = "SELECT `glpi_plugin_fusioninventory_networking_ifaddr`.`ID`
                     FROM `glpi_plugin_fusioninventory_networking_ifaddr`
-                          LEFT JOIN `glpi_networking` ON `glpi_networking`.`ID` = `FK_networking`
-                    WHERE `glpi_networking`.`ID` IS NULL";
+                          LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `FK_networking`
+                    WHERE `glpi_networkequipments`.`id` IS NULL";
 	$result=$DB->query($query_select);
 	while ($data=$DB->fetch_array($result)) {
       $query_del = "DELETE FROM `glpi_plugin_fusioninventory_networking_ifaddr`
@@ -146,8 +151,8 @@ function update213to220() {
 	// * Clean glpi_plugin_fusioninventory_networking
 	$query_select = "SELECT `glpi_plugin_fusioninventory_networking`.`ID`
                     FROM `glpi_plugin_fusioninventory_networking`
-                          LEFT JOIN `glpi_networking` ON `glpi_networking`.`ID` = `FK_networking`
-                    WHERE `glpi_networking`.`ID` IS NULL";
+                          LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `FK_networking`
+                    WHERE `glpi_networkequipments`.`id` IS NULL";
 	$result=$DB->query($query_select);
 	while ($data=$DB->fetch_array($result)) {
        $query_del = "DELETE FROM `glpi_plugin_fusioninventory_networking`
@@ -157,8 +162,8 @@ function update213to220() {
 	// * Clean glpi_plugin_fusioninventory_printers
 	$query_select = "SELECT `glpi_plugin_fusioninventory_printers`.`ID`
                     FROM `glpi_plugin_fusioninventory_printers`
-                          LEFT JOIN `glpi_printers` ON `glpi_printers`.`ID` = `FK_printers`
-                    WHERE `glpi_printers`.`ID` IS NULL";
+                          LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `FK_printers`
+                    WHERE `glpi_printers`.`id` IS NULL";
 	$result=$DB->query($query_select);
 	while ($data=$DB->fetch_array($result)) {
       $query_del = "DELETE FROM `glpi_plugin_fusioninventory_printers`
@@ -168,8 +173,8 @@ function update213to220() {
 	// * Clean glpi_plugin_fusioninventory_printers_cartridges
 	$query_select = "SELECT `glpi_plugin_fusioninventory_printers_cartridges`.`ID`
                     FROM `glpi_plugin_fusioninventory_printers_cartridges`
-                          LEFT JOIN `glpi_printers` ON `glpi_printers`.`ID` = `FK_printers`
-                    WHERE `glpi_printers`.`ID` IS NULL";
+                          LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `FK_printers`
+                    WHERE `glpi_printers`.`id` IS NULL";
 	$result=$DB->query($query_select);
 	while ($data=$DB->fetch_array($result)) {
       $query_del = "DELETE FROM `glpi_plugin_fusioninventory_printers_cartridges`
@@ -179,8 +184,8 @@ function update213to220() {
 	// * Clean glpi_plugin_fusioninventory_printers_history
 	$query_select = "SELECT `glpi_plugin_fusioninventory_printers_history`.`ID`
                     FROM `glpi_plugin_fusioninventory_printers_history`
-                          LEFT JOIN `glpi_printers` ON `glpi_printers`.`ID` = `FK_printers`
-                    WHERE `glpi_printers`.`ID` IS NULL";
+                          LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `FK_printers`
+                    WHERE `glpi_printers`.`id` IS NULL";
 	$result=$DB->query($query_select);
 	while ($data=$DB->fetch_array($result)) {
       $query_del = "DELETE FROM `glpi_plugin_fusioninventory_printers_history`
@@ -310,8 +315,8 @@ function update213to220() {
 
    // **** Delete all ports present in fusion but deleted in glpi_networking
    $query = "SELECT glpi_plugin_fusioninventory_networking_ports.ID AS fusinvID FROM `glpi_plugin_fusioninventory_networking_ports`
-      LEFT JOIN `glpi_networking_ports` ON FK_networking_ports=glpi_networking_ports.ID
-      WHERE glpi_networking_ports.ID IS NULL";
+      LEFT JOIN `glpi_networkports` ON FK_networking_ports=glpi_networkports.id
+      WHERE glpi_networkports.id IS NULL";
    if ($result=$DB->query($query)) {
       while ($data=$DB->fetch_array($result)) {
          $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networking_ports`
@@ -321,15 +326,15 @@ function update213to220() {
    }
 
    // **** Add IP of switch in table glpi_plugin_fusioninventory_networking_ifaddr if not present
-   $query = "SELECT * FROM glpi_networking";
+   $query = "SELECT * FROM glpi_networkequipments";
    if ($result=$DB->query($query)) {
       while ($data=$DB->fetch_array($result)) {
          $query_ifaddr = "SELECT * FROM `glpi_plugin_fusioninventory_networking_ifaddr`
-            WHERE `ifaddr`='".$data['ifaddr']."' ";
+            WHERE `ifaddr`='".$data['ip']."' ";
          $result_ifaddr = $DB->query($query_ifaddr);
          if ($DB->numrows($result_ifaddr) == "0") {
             $query_add = "INSERT INTO `glpi_plugin_fusioninventory_networking_ifaddr`
-               (`FK_networking`, `ifaddr`) VALUES ('".$data['ID']."', '".$data['ifaddr']."')";
+               (`FK_networking`, `ifaddr`) VALUES ('".$data['id']."', '".$data['ip']."')";
             $DB->query($query_add);
          }
       }
