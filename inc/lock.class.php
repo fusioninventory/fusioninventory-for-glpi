@@ -50,7 +50,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
     *
     *@return nothing (print the form)
     **/
-   function showForm($p_target, $p_itemtype, $p_items_id) {
+   function showForm($p_target, $p_itemtype, $p_items_id=0) {
       global $DB, $LANG, $SEARCH_OPTION;
 
       $tableName = getTableForItemType($p_itemtype);
@@ -62,7 +62,11 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
 
       $item = new $p_itemtype;
-      $item->getFromDB($p_items_id);
+      if ($p_items_id == "0") {
+         $item->getEmpty();
+      } else {
+         $item->getFromDB($p_items_id);
+      }
 
       echo "<form method='post' action=\"$p_target\">";
       echo "<input type='hidden' name='id' value='$p_items_id'>";
