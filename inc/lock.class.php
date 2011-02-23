@@ -99,7 +99,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
             if ($table != "") {
                $class = new $linkItemtype();
                $key = $class->getTypeName();
-               if ($val == "0") {
+               if (($val == "0") OR ($val == "")) {
                   $val = "";
                } else {
                   $class->getFromDB($val);
