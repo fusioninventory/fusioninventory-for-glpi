@@ -210,5 +210,13 @@ function update221to230() {
       $NetworkPort->delete($data);
    }
 
+   /*
+    * Update networports to convert itemtype 5153 to PluginFusioninventoryUnknownDevice
+    */
+   $sql = "UPDATE `glpi_networkports`
+      SET `itemtype`='PluginFusioninventoryUnknownDevice'
+      WHERE `itemtype`='5153'";
+   $DB->query($sql);
+
 }
 ?>
