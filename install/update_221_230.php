@@ -193,9 +193,22 @@ function update221to230() {
    $PluginFusioninventoryAgentmodule->add($input);
 
 /*
- * Manage models migration
+ * Todo : Manage models migration
  */
 
+   /*
+    * Clean for port orphelin
+    */
+   //networkports with item_type = 0
+   $NetworkPort = new NetworkPort();
+   $NetworkPort_NetworkPort = new NetworkPort_NetworkPort();
+   $a_networkports = $NetworkPort->find("`itemtype`=''");
+   foreach ($a_networkports as $data) {
+      if ($NetworkPort_NetworkPort->getFromDBForNetworkPort($data['id'])) {
+         $NetworkPort_NetworkPort->delete($NetworkPort_NetworkPort->fields);
+      }
+      $NetworkPort->delete($data);
+   }
 
 }
 ?>
