@@ -225,7 +225,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 			$type_list[] = 'Printer';
 			$type_list[] = 'Peripheral';
 			$type_list[] = 'Phone';
-      Dropdown::dropdownTypes('itemtype',$this->fields["itemtype"],$type_list);
+      Dropdown::dropdownTypes('item_type',$this->fields["item_type"],$type_list);
 		echo "</td>";
       echo "<td align='center'>" . $LANG['common'][18] . "&nbsp;:</td>";
       echo "</td>";
@@ -321,7 +321,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>";
       $this->getFromDB($id);
-      if ($this->fields["itemtype"] != '0') {
+      if ($this->fields["item_type"] != '0') {
          echo "<input type='hidden' name='id' value=$id>";
          echo "<input type='submit' name='import' value=\"".$LANG['buttons'][37]."\" class='submit'>";
       }
@@ -762,7 +762,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
       $this->getFromDB($items_id);
       $data = array();
-      switch ($this->fields['itemtype']) {
+      switch ($this->fields['item_type']) {
          case 'Printer':
             $Printer = new Printer();
 

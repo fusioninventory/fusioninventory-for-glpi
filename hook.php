@@ -361,6 +361,11 @@ function plugin_fusioninventory_MassiveActions($type) {
          return $array;
          break;
 
+		case "PluginFusioninventoryUnknownDevice";
+			return array (
+				"plugin_fusioninventory_unknown_import" => $LANG["buttons"][37]
+			);
+
    }
    return array ();
 }
@@ -440,6 +445,15 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
          }
 
          break;
+
+		case "PluginFusioninventoryUnknownDevice";
+			if ($options['action'] == "plugin_fusioninventory_unknown_import") {
+            if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","w")) {
+               echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
+            }
+         }
+			break;
+
    }
    return "";
 }
@@ -462,6 +476,22 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
             }
          }
          break;
+
+		case "plugin_fusioninventory_unknown_import" :
+         if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","w")) {
+            $Import = 0;
+            $NoImport = 0;
+            $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+            foreach ($data['item'] as $key => $val) {
+               if ($val == 1) {
+                  list($Import, $NoImport) = $PluginFusioninventoryUnknownDevice->import($key,$Import,$NoImport);
+               }
+            }
+            addMessageAfterRedirect($LANG['plugin_fusioninventory']["discovery"][5]." : ".$Import);
+            addMessageAfterRedirect($LANG['plugin_fusioninventory']["discovery"][9]." : ".$NoImport);
+         }
+			break;
+         
    }
 
    if (strstr($data['action'], 'plugin_fusioninventory_agentmodule')) {
@@ -494,7 +524,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
          }
       }
    }
-
+   
 }
 
 // How to display specific update fields ?
