@@ -365,13 +365,29 @@ function plugin_fusioninventory_MassiveActions($type) {
    return array ();
 }
 
-//function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
-//   global $LANG;
-//
-//   $table = $options['options']['table'];
-//   $field = $options['options']['field'];
-//   $linkfield = $options['options']['linkfield'];
-//
+function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
+   global $LANG;
+
+   $table = $options['options']['table'];
+   $field = $options['options']['field'];
+   $linkfield = $options['options']['linkfield'];
+
+
+   switch ($table.".".$field) {
+
+      case "glpi_plugin_fusioninventory_unknowndevices.item_type":
+         $type_list = array();
+			$type_list[] = 'Computer';
+			$type_list[] = 'NetworkEquipment';
+			$type_list[] = 'Printer';
+			$type_list[] = 'Peripheral';
+			$type_list[] = 'Phone';
+         Dropdown::dropdownTypes($linkfield,0,$type_list);
+         return true;
+         break;
+
+   }
+
 //   switch ($table) {
 //
 //		case 'glpi_plugin_fusioninventory_agentmodules':
@@ -386,8 +402,8 @@ function plugin_fusioninventory_MassiveActions($type) {
 //			break;
 //
 //    }
-//   return false;
-//}
+   return false;
+}
 
 
 

@@ -119,7 +119,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
       $tab[11]['table']     = $this->getTable();
       $tab[11]['field']     = 'ip';
-      $tab[11]['linkfield'] = 'mac';
+      $tab[11]['linkfield'] = 'ip';
       $tab[11]['name']      = $LANG['networking'][14];
       $tab[11]['datatype']  = 'text';
 
@@ -130,9 +130,10 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $tab[12]['datatype']  = 'text';
 
       $tab[13]['table']     = $this->getTable();
-      $tab[13]['field']     = 'itemtype';
-      $tab[13]['linkfield'] = 'itemtype';
+      $tab[13]['field']     = 'item_type';
+      $tab[13]['linkfield'] = 'item_type';
       $tab[13]['name']      = $LANG['common'][17];
+      $tab[13]['datatype']  = 'text';
 
       $tab[14]['table']     = $this->getTable();
       $tab[14]['field']     = 'date_mod';
@@ -760,6 +761,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                       AND `itemtype` = 'PluginFusioninventoryUnknownDevice'");
 
       $this->getFromDB($items_id);
+      $data = array();
       switch ($this->fields['itemtype']) {
          case 'Printer':
             $Printer = new Printer();
@@ -817,7 +819,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             // Import SNMP if enable
             if (PluginFusioninventoryModule::getModuleId("fusinvsnmp")) {
                $PluginFusinvsnmpUnknownDevice = new PluginFusinvsnmpUnknownDevice();
-               $PluginFusinvsnmpUnknownDevice->import($items_id, $printer_id, 'Printer');
+               $PluginFusinvsnmpUnknownDevice->import($items_id, $NetworkEquipment_id, 'NetworkEquipment');
             }
 
             $this->deleteFromDB($items_id,1);

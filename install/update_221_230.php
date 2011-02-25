@@ -1178,7 +1178,7 @@ function update221to230() {
       SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL ";
    $DB->query($sql);
    $sql = "ALTER TABLE `glpi_plugin_fusioninventory_unknowndevices`
-      CHANGE `type` `itemtype` VARCHAR( 255 ) NULL DEFAULT NULL ";
+      CHANGE `type` `item_type` VARCHAR( 255 ) NULL DEFAULT NULL ";
    $DB->query($sql);
    $sql = "ALTER TABLE `glpi_plugin_fusioninventory_unknowndevices`
       DROP `snmp`,
