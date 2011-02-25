@@ -61,18 +61,22 @@ function pluginFusinvsnmpGetCurrentVersion($version) {
            (FieldExists("glpi_plugin_tracker_config", "version"))) ||
          (TableExists("glpi_plugin_fusioninventory_config"))) {
 
+         $query = "";
          if (TableExists("glpi_plugin_tracker_agents")) {
             $query = "SELECT version FROM glpi_plugin_tracker_config LIMIT 1";
          } else if (TableExists("glpi_plugin_fusioninventory_config")) {
             $query = "SELECT version FROM glpi_plugin_fusioninventory_config LIMIT 1";
          }
-         if ($result=$DB->query($query)) {
-            if ($DB->numrows($result) == "1") {
-               $data = $DB->fetch_assoc($result);
+         if ($query != "") {
+            if ($result=$DB->query($query)) {
+               if ($DB->numrows($result) == "1") {
+                  $data = $DB->fetch_assoc($result);
+               }
             }
          }
-
-         if  ($data['version'] == "0") {
+         if (!isset($data['version'])) {
+            return "2.0.2";
+         } else if ($data['version'] == "0") {
             return "2.0.2";
          } else {
             return $data['version'];
