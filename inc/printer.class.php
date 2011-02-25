@@ -411,8 +411,8 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
 		echo "<td align='center'>";
 		$query_models = "SELECT *
                        FROM `glpi_plugin_fusinvsnmp_models`
-                       WHERE `itemtype`!=3
-                             AND `itemtype`!=0";
+                       WHERE `itemtype`!='Printer'
+                             AND `itemtype`!=''";
 		$result_models=$DB->query($query_models);
 		$exclude_models = array();
 		while ($data_models=$DB->fetch_array($result_models)) {
