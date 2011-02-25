@@ -1158,7 +1158,7 @@ function plugin_fusinvsnmp_forceGroupBy($type) {
 
 function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfield,&$already_link_tables) {
 
-	echo "Left Join : ".$new_table.".".$linkfield."<br/>";
+//	echo "Left Join : ".$new_table.".".$linkfield."<br/>";
 	switch ($itemtype) {
 		// * Computer List (front/computer.php)
 		case 'Computer':
