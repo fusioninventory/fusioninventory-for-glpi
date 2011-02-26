@@ -71,7 +71,7 @@ class PluginFusinvsnmpPrinterCartridge extends PluginFusinvsnmpCommonDBTM {
       foreach ($a_cartridges as $a_cartridge) {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>";
-         $mapping->getFromDB($a_cartridge['plugin_fusioninventory_mappings_id']);
+         $mapping->getFromDB($a_cartridge['cartridges_id']);
          echo $LANG['plugin_fusinvsnmp']['mapping'][$mapping->fields['locale']];
          echo " : ";
          echo "</td>";
