@@ -57,12 +57,15 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       $tab[24]['field'] = 'name';
       $tab[24]['linkfield'] = 'locations_id';
       $tab[24]['name'] = $LANG['common'][15];
+		$tab[24]['datatype'] = 'itemlink';
+      $tab[24]['itemlink_type'] = 'Location';
 
       $tab[19]['table'] = 'glpi_printertypes';
       $tab[19]['field'] = 'name';
       $tab[19]['linkfield'] = 'printertypes_id';
       $tab[19]['name'] = $LANG['common'][17];
-      $tab[19]['datatype']='itemptype';
+		$tab[19]['datatype'] = 'itemlink';
+      $tab[19]['itemlink_type'] = 'PrinterType';
 
       $tab[2]['table'] = 'glpi_printermodels';
       $tab[2]['field'] = 'name';
@@ -78,29 +81,27 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 
       $tab[20]['table'] = 'glpi_printers';
       $tab[20]['field'] = 'serial';
-      $tab[20]['linkfield'] = 'serial';
+      $tab[20]['linkfield'] = 'printers_id';
       $tab[20]['name'] = $LANG['common'][19];
 
       $tab[23]['table'] = 'glpi_printers';
       $tab[23]['field'] = 'otherserial';
-      $tab[23]['linkfield'] = 'otherserial';
+      $tab[23]['linkfield'] = 'printers_id';
       $tab[23]['name'] = $LANG['common'][20];
 
       $tab[21]['table'] = 'glpi_users';
       $tab[21]['field'] = 'name';
       $tab[21]['linkfield'] = 'users_id';
       $tab[21]['name'] = $LANG['common'][34];
-      $tab[21]['datatype']='itemptype';
 
       $tab[3]['table'] = 'glpi_manufacturers';
       $tab[3]['field'] = 'name';
       $tab[3]['linkfield'] = 'manufacturers_id';
       $tab[3]['name'] = $LANG['common'][5];
-      $tab[3]['datatype']='itemptype';
 
       $tab[5]['table'] = 'glpi_networkports';
       $tab[5]['field'] = 'ip';
-      $tab[5]['linkfield'] = 'ID';
+      $tab[5]['linkfield'] = 'id';
       $tab[5]['name'] = $LANG['networking'][14];
 
 //      $tab[4]['table'] = 'glpi_infocoms';

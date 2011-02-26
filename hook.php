@@ -1198,6 +1198,14 @@ function plugin_fusinvsnmp_addSelect($type,$id,$num) {
                break;
 
          }
+         break;
+
+      case "PluginFusinvsnmpPrinterLog":
+         if ($table.".".$field == "glpi_users.name") {
+            return " `glpi_users`.`name` AS ITEM_$num, `glpi_users`.`realname` AS ITEM_".$num."_2, `glpi_users`.`id` AS ITEM_".$num."_3, `glpi_users`.`firstname` AS ITEM_".$num."_4,";
+         }
+         break;
+
 	}
 	return "";
 }
@@ -1488,51 +1496,6 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
 					return $return;
 					break;
 
-//				// ** FusionInventory - switch
-//				case "glpi_plugin_fusinvsnmp_networkequipments.id" :
-//               $table_networking_ports = 0;
-//               foreach ($already_link_tables AS $num=>$tmp_table) {
-//                  if ($tmp_table == "glpi_networkports.") {
-//                     $table_networking_ports = 1;
-//                  }
-//               }
-//               if ($table_networking_ports == "1") {
-//                  return " LEFT JOIN glpi_networkports_networkports AS FUSIONINVENTORY_11 ON glpi_networkports.id = FUSIONINVENTORY_11.end1 OR glpi_networkports.id = FUSIONINVENTORY_11.end2 ".
-//                     " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_12 ON FUSIONINVENTORY_12.id = CASE WHEN FUSIONINVENTORY_11.end1 = glpi_networkports.id THEN FUSIONINVENTORY_11.end2 ELSE FUSIONINVENTORY_11.end1 END
-//                     LEFT JOIN glpi_networkequipments AS FUSIONINVENTORY_13 ON FUSIONINVENTORY_12.items_id=FUSIONINVENTORY_13.id";
-//
-//               } else {
-//                  return " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_10 ON (glpi_printers.id = FUSIONINVENTORY_10.items_id AND FUSIONINVENTORY_10.itemtype='".PRINTER_TYPE."') ".
-//                     " LEFT JOIN glpi_networkports_networkports AS FUSIONINVENTORY_11 ON FUSIONINVENTORY_10.id = FUSIONINVENTORY_11.end1 OR FUSIONINVENTORY_10.id = FUSIONINVENTORY_11.end2 ".
-//                     " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_12 ON FUSIONINVENTORY_12.id = CASE WHEN FUSIONINVENTORY_11.end1 = FUSIONINVENTORY_10.id THEN FUSIONINVENTORY_11.end2 ELSE FUSIONINVENTORY_11.end1 END
-//                     LEFT JOIN glpi_networkequipments AS FUSIONINVENTORY_13 ON FUSIONINVENTORY_12.items_id=FUSIONINVENTORY_13.id";
-//               }
-//               break;
-//
-//            // ** FusionInventory - switch port
-//            case "glpi_plugin_fusinvsnmp_networkports.id" :
-//               $table_networking_ports = 0;
-//               $table_fusinvsnmp_networking = 0;
-//               foreach ($already_link_tables AS $num=>$tmp_table) {
-//                  if ($tmp_table == "glpi_networkports.") {
-//                     $table_networking_ports = 1;
-//                  }
-//                  if ($tmp_table == "glpi_plugin_fusinvsnmp_networkequipments.id") {
-//                     $table_fusinvsnmp_networking = 1;
-//                  }
-//               }
-//               if ($table_fusinvsnmp_networking == "1") {
-//                  return " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_22 ON FUSIONINVENTORY_22.id=FUSIONINVENTORY_12.id ";
-//               } else if ($table_networking_ports == "1") {
-//                  return " LEFT JOIN glpi_networkports_networkports AS FUSIONINVENTORY_21 ON glpi_networkports.id = FUSIONINVENTORY_21.end1 OR glpi_networkports.id = FUSIONINVENTORY_21.end2 ".
-//                     " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_22 ON FUSIONINVENTORY_22.id = CASE WHEN FUSIONINVENTORY_21.end1 = glpi_networkports.id THEN FUSIONINVENTORY_21.end2 ELSE FUSIONINVENTORY_21.end1 END ";
-//               } else {
-//                  return " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_20 ON (FUSIONINVENTORY_20.items_id = glpi_computers.id AND FUSIONINVENTORY_20.itemtype='".PRINTER_TYPE."') ".
-//                   " LEFT JOIN glpi_networkports_networkports AS FUSIONINVENTORY_21 ON FUSIONINVENTORY_20.id = FUSIONINVENTORY_21.end1 OR FUSIONINVENTORY_20.id = FUSIONINVENTORY_21.end2 ".
-//                     " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_22 ON FUSIONINVENTORY_22.id = CASE WHEN FUSIONINVENTORY_21.end1 = FUSIONINVENTORY_20.id THEN FUSIONINVENTORY_21.end2 ELSE FUSIONINVENTORY_21.end1 END ";
-//               }
-//               break;
-//
 			}
          return $leftjoin;
 			break;
@@ -1573,6 +1536,31 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
 //		case 'PluginFusinvsnmpNetworkPortLog' :
 //         return " LEFT JOIN `glpi_networkports` ON ( `glpi_networkports`.`id` = `glpi_plugin_fusinvsnmp_networkportlogs`.`networkports_id` ) ";
 //			break;
+
+      case "PluginFusinvsnmpPrinterLog":
+         if ($new_table == "glpi_infocoms") {
+            return " LEFT JOIN glpi_infocoms ON (glpi_printers.ID = glpi_infocoms.FK_device AND glpi_infocoms.device_type='".PRINTER_TYPE."')
+                    LEFT JOIN glpi_dropdown_budget ON glpi_dropdown_budget.ID = glpi_infocoms.budget ";
+         }
+
+         switch ($new_table.".".$linkfield) {
+
+				case "glpi_locations.locations_id":
+            case "glpi_printertypes.printertypes_id":
+            case "glpi_printermodels.printermodels_id":
+            case "glpi_states.states_id":
+            case "glpi_users.users_id":
+            case "glpi_manufacturers.manufacturers_id":
+
+               return " LEFT JOIN `".$new_table."` ON (`glpi_printers`.`".$linkfield."` = `".$new_table."`.`id`)  ";
+					break;
+
+            case "glpi_networkports.id":
+               return " LEFT JOIN `glpi_networkports` ON (`glpi_printers`.`id` = `glpi_networkports`.`items_id` AND `glpi_networkports`.`itemtype` = 'Printer') ";
+               break;
+         }
+         break;
+
 	}
 	return "";
 }
@@ -1732,8 +1720,7 @@ function plugin_fusinvsnmp_addOrderBy($type,$id,$order,$key=0) {
 
       case "PluginFusinvsnmpPrinterLog":
          return " GROUP BY ITEM_0_2
-            ORDER BY ".$field." $order ";
-
+            ORDER BY ITEM_".$key." $order ";
          break;
 
 	}
