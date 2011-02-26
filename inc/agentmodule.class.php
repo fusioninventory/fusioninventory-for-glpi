@@ -135,9 +135,9 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       }
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr>";
-      echo "<th>Module</th>";
+      echo "<th>".$LANG['plugin_fusioninventory']['task'][26]."</th>";
       echo "<th>Activation</th>";
-      echo "<th>Module</th>";
+      echo "<th>".$LANG['plugin_fusioninventory']['task'][26]."</th>";
       echo "<th>Activation</th>";
       echo "</tr>";
 

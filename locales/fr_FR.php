@@ -127,6 +127,7 @@ $LANG['plugin_fusioninventory']['agents'][37]="Verrouillé";
 
 $LANG['plugin_fusioninventory']['unknown'][2]="Matériel approuvé";
 $LANG['plugin_fusioninventory']['unknown'][4]="Hub réseau";
+$LANG['plugin_fusioninventory']['unknown'][5]="Matériel inconnu à importer dans l'inventaire";
 
 $LANG['plugin_fusioninventory']['task'][0]="Tâche";
 $LANG['plugin_fusioninventory']['task'][1]="Gestion des tâches";

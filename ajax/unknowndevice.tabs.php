@@ -54,7 +54,8 @@ switch($_POST['glpi_tab']) {
 	case -1 :
       NetworkPort::showForItem('PluginFusioninventoryUnknownDevice', $_POST["id"]);
       $PluginFusioninventoryUnknownDevice->importForm(GLPI_ROOT . '/plugins/fusioninventory/front/unknowndevice.form.php?id='.$_POST["id"],$_POST["id"]);
-      showHistory('PluginFusinvsnmpUnknownDevice',$_POST["id"]);
+      Log::showForItem($PluginFusioninventoryUnknownDevice);
+      Plugin::displayAction($PluginFusioninventoryUnknownDevice, $_REQUEST['glpi_tab']);
       break;
 
 	case 1 :

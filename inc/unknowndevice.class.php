@@ -119,7 +119,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
       $tab[11]['table']     = $this->getTable();
       $tab[11]['field']     = 'ip';
-      $tab[11]['linkfield'] = 'mac';
+      $tab[11]['linkfield'] = 'ip';
       $tab[11]['name']      = $LANG['networking'][14];
       $tab[11]['datatype']  = 'text';
 
@@ -130,9 +130,10 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $tab[12]['datatype']  = 'text';
 
       $tab[13]['table']     = $this->getTable();
-      $tab[13]['field']     = 'itemtype';
-      $tab[13]['linkfield'] = 'itemtype';
+      $tab[13]['field']     = 'item_type';
+      $tab[13]['linkfield'] = 'item_type';
       $tab[13]['name']      = $LANG['common'][17];
+      $tab[13]['datatype']  = 'text';
 
       $tab[14]['table']     = $this->getTable();
       $tab[14]['field']     = 'date_mod';
@@ -224,7 +225,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 			$type_list[] = 'Printer';
 			$type_list[] = 'Peripheral';
 			$type_list[] = 'Phone';
-      Dropdown::dropdownTypes('itemtype',$this->fields["itemtype"],$type_list);
+      Dropdown::dropdownTypes('item_type',$this->fields["item_type"],$type_list);
 		echo "</td>";
       echo "<td align='center'>" . $LANG['common'][18] . "&nbsp;:</td>";
       echo "</td>";
@@ -313,9 +314,14 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 		echo "<table  class='tab_cadre_fixe'>";
 		echo "<tr class='tab_bg_1'>";
+		echo "<th align='center'>";
+      echo $LANG['plugin_fusioninventory']['unknown'][5];
+      echo "</th>";
+      echo "</tr>";
+		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>";
       $this->getFromDB($id);
-      if ($this->fields["itemtype"] != '0') {
+      if ($this->fields["item_type"] != '0') {
          echo "<input type='hidden' name='id' value=$id>";
          echo "<input type='submit' name='import' value=\"".$LANG['buttons'][37]."\" class='submit'>";
       }
@@ -755,7 +761,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                       AND `itemtype` = 'PluginFusioninventoryUnknownDevice'");
 
       $this->getFromDB($items_id);
-      switch ($this->fields['itemtype']) {
+      $data = array();
+      switch ($this->fields['item_type']) {
          case 'Printer':
             $Printer = new Printer();
 
@@ -812,7 +819,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             // Import SNMP if enable
             if (PluginFusioninventoryModule::getModuleId("fusinvsnmp")) {
                $PluginFusinvsnmpUnknownDevice = new PluginFusinvsnmpUnknownDevice();
-               $PluginFusinvsnmpUnknownDevice->import($items_id, $printer_id, 'Printer');
+               $PluginFusinvsnmpUnknownDevice->import($items_id, $NetworkEquipment_id, 'NetworkEquipment');
             }
 
             $this->deleteFromDB($items_id,1);

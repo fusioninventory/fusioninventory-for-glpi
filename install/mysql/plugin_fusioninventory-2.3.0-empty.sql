@@ -208,7 +208,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unknowndevices` (
    `contact` VARCHAR( 255 ) NULL DEFAULT NULL,
    `domain` INT( 11 ) NOT NULL DEFAULT '0',
    `comment` TEXT NULL DEFAULT NULL,
-   `itemtype` VARCHAR( 255 ) NULL DEFAULT NULL,
+   `item_type` VARCHAR( 255 ) NULL DEFAULT NULL,
    `accepted` INT( 1 ) NOT NULL DEFAULT '0',
    `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
    `ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,

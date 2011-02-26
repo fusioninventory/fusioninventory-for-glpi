@@ -61,7 +61,27 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
          $input = str_replace("<br/>*", "", $input);
          return $input;
          break;
+        
    }
+   
+   if ($table == "glpi_plugin_fusioninventory_agentmodules") {
+      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+      $a_modules = $PluginFusioninventoryAgentmodule->find();
+      foreach ($a_modules as $data2) {
+         if ($table.".".$field == "glpi_plugin_fusioninventory_agentmodules.".$data2['modulename']) {
+            if (strstr($data["ITEM_".$num."_0"], '"'.$data['id'].'"')) {
+               if ($data['ITEM_'.$num] == '0') {
+                  return Dropdown::getYesNo('1');
+               } else {
+                  return Dropdown::getYesNo('0');
+               }
+
+            }
+            return Dropdown::getYesNo($data['ITEM_'.$num]);
+         }
+      }
+   }
+
    return "";
 }
 
@@ -317,51 +337,133 @@ function plugin_headings_fusioninventory_xml($item) {
 
 function plugin_fusioninventory_MassiveActions($type) {
    global $LANG;
+   
    switch ($type) {
-      case NETWORKING_TYPE :
+      case "NetworkEquipment":
          return array (
             "plugin_fusioninventory_manage_locks" => $LANG['plugin_fusioninventory']['functionalities'][75]
          );
          break;
 
-      case PRINTER_TYPE :
+      case "Printer":
          return array (
             "plugin_fusioninventory_manage_locks" => $LANG['plugin_fusioninventory']['functionalities'][75]
          );
          break;
+
+      case 'PluginFusioninventoryAgent';
+         $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+         $a_modules = $PluginFusioninventoryAgentmodule->find();
+         $array = array();
+         foreach ($a_modules as $data) {
+            $array["plugin_fusioninventory_agentmodule".$data["modulename"]] = $LANG['plugin_fusioninventory']['task'][26]." - ".$data['modulename'];
+         }
+         return $array;
+         break;
+
+		case "PluginFusioninventoryUnknownDevice";
+			return array (
+				"plugin_fusioninventory_unknown_import" => $LANG["buttons"][37]
+			);
+
    }
    return array ();
 }
 
-function plugin_fusioninventory_MassiveActionsDisplay($type, $action='') {
+function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
+   global $LANG;
+
+   $table = $options['options']['table'];
+   $field = $options['options']['field'];
+   $linkfield = $options['options']['linkfield'];
+
+
+   switch ($table.".".$field) {
+
+      case "glpi_plugin_fusioninventory_unknowndevices.item_type":
+         $type_list = array();
+			$type_list[] = 'Computer';
+			$type_list[] = 'NetworkEquipment';
+			$type_list[] = 'Printer';
+			$type_list[] = 'Peripheral';
+			$type_list[] = 'Phone';
+         Dropdown::dropdownTypes($linkfield,0,$type_list);
+         return true;
+         break;
+
+   }
+
+//   switch ($table) {
+//
+//		case 'glpi_plugin_fusioninventory_agentmodules':
+//         $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+//         $a_modules = $PluginFusioninventoryAgentmodule->find();
+//         foreach ($a_modules as $data) {
+//            if ($table.".".$field == "glpi_plugin_fusioninventory_agentmodules.".$data['modulename']) {
+//               Dropdown::showYesNo($field);
+//               return true;
+//            }
+//         }
+//			break;
+//
+//    }
+   return false;
+}
+
+
+
+function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
    global $LANG, $CFG_GLPI, $DB;
-   switch ($type) {
-      case NETWORKING_TYPE :
-         switch ($action) {
+
+   switch ($options['itemtype']) {
+      case "NetworkEquipment":
+         switch ($options['action']) {
             case "plugin_fusioninventory_manage_locks" :
                $pfil = new PluginFusioninventoryLock;
-               $pfil->showForm($_SERVER["PHP_SELF"], NETWORKING_TYPE, '');
+               $pfil->showForm($_SERVER["PHP_SELF"], "NetworkEquipment");
                break;
          }
          break;
 
-      case PRINTER_TYPE :
-         switch ($action) {
+      case "Printer":
+         switch ($options['action']) {
             case "plugin_fusioninventory_manage_locks" :
-               $pfil = new PluginFusioninventoryLock;
-               $pfil->showForm($_SERVER["PHP_SELF"], NETWORKING_TYPE, '');
+               $pfil = new PluginFusioninventoryLock();
+               $pfil->showForm($_SERVER["PHP_SELF"], "Printer");
                break;
          }
          break;
+
+      case 'PluginFusioninventoryAgent':
+         $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+         $a_modules = $PluginFusioninventoryAgentmodule->find();
+         foreach ($a_modules as $data) {
+            if ($options['action'] == "plugin_fusioninventory_agentmodule".$data['modulename']) {
+               Dropdown::showYesNo($options['action']);
+               echo "&nbsp;<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
+            }
+         }
+
+         break;
+
+		case "PluginFusioninventoryUnknownDevice";
+			if ($options['action'] == "plugin_fusioninventory_unknown_import") {
+            if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","w")) {
+               echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
+            }
+         }
+			break;
+
    }
    return "";
 }
 
 function plugin_fusioninventory_MassiveActionsProcess($data) {
    global $LANG;
+
    switch ($data['action']) {
       case "plugin_fusioninventory_manage_locks" :
-         if (($data['itemtype'] == NETWORKING_TYPE) OR ($data['itemtype'] == PRINTER_TYPE)) {
+         if (($data['itemtype'] == "NetworkEquipment") OR ($data['itemtype'] == "Printer")) {
             foreach ($data['item'] as $key => $val) {
                if ($val == 1) {
                   if (isset($data["lockfield_fusioninventory"])&&count($data["lockfield_fusioninventory"])){
@@ -374,7 +476,55 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
             }
          }
          break;
+
+		case "plugin_fusioninventory_unknown_import" :
+         if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","w")) {
+            $Import = 0;
+            $NoImport = 0;
+            $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+            foreach ($data['item'] as $key => $val) {
+               if ($val == 1) {
+                  list($Import, $NoImport) = $PluginFusioninventoryUnknownDevice->import($key,$Import,$NoImport);
+               }
+            }
+            addMessageAfterRedirect($LANG['plugin_fusioninventory']["discovery"][5]." : ".$Import);
+            addMessageAfterRedirect($LANG['plugin_fusioninventory']["discovery"][9]." : ".$NoImport);
+         }
+			break;
+         
    }
+
+   if (strstr($data['action'], 'plugin_fusioninventory_agentmodule')) {
+      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+      $a_modules = $PluginFusioninventoryAgentmodule->find();
+      foreach ($a_modules as $data2) {
+         if ($data['action'] == "plugin_fusioninventory_agentmodule".$data2['modulename']) {
+            foreach ($data['item'] as $items_id => $val) {
+               if ($data["plugin_fusioninventory_agentmodule".$data2['modulename']] == $data2['is_active']) {
+                  // Remove from exceptions
+                  $a_exceptions = importArrayFromDB($data2['exceptions']);
+                  if (in_array($items_id, $a_exceptions)) {
+                     foreach ($a_exceptions as $key=>$value) {
+                        if ($value == $items_id) {
+                           unset($a_exceptions[$key]);
+                        }
+                     }
+                  }
+                  $data2['exceptions'] = exportArrayToDB($a_exceptions);
+               } else {
+                  // Add to exceptions
+                  $a_exceptions = importArrayFromDB($data2['exceptions']);
+                  if (!in_array($items_id, $a_exceptions)) {
+                     $a_exceptions[] = (string)$items_id;
+                  }
+                  $data2['exceptions'] = exportArrayToDB($a_exceptions);
+               }
+            }
+            $PluginFusioninventoryAgentmodule->update($data2);
+         }
+      }
+   }
+   
 }
 
 // How to display specific update fields ?
@@ -446,6 +596,28 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
 
 
 function plugin_fusioninventory_addSelect($type,$id,$num) {
+	global $SEARCH_OPTION;
+
+   $searchopt = &Search::getOptions($type);
+   $table = $searchopt[$id]["table"];
+   $field = $searchopt[$id]["field"];
+
+   switch ($type) {
+
+      case 'PluginFusioninventoryAgent':
+
+         $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+         $a_modules = $PluginFusioninventoryAgentmodule->find();
+         foreach ($a_modules as $data) {
+            if ($table.".".$field == "glpi_plugin_fusioninventory_agentmodules.".$data['modulename']) {
+               return " `FUSION_".$data['modulename']."`.`is_active` AS ITEM_$num, `FUSION_".$data['modulename']."`.`exceptions`  AS ITEM_".$num."_0,";
+            }
+         }
+         break;
+
+   }
+
+
    return "";
 }
 
@@ -455,7 +627,24 @@ function plugin_fusioninventory_forceGroupBy($type) {
 }
 
 
-function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$already_link_tables) {
+function plugin_fusioninventory_addLeftJoin($itemtype,$ref_table,$new_table,$linkfield,&$already_link_tables) {
+
+   switch ($itemtype) {
+
+      case 'PluginFusioninventoryAgent':
+         $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+         $a_modules = $PluginFusioninventoryAgentmodule->find();
+         foreach ($a_modules as $data) {
+            if ($new_table.".".$linkfield == "glpi_plugin_fusioninventory_agentmodules.".$data['modulename']) {
+               return " LEFT JOIN `glpi_plugin_fusioninventory_agentmodules` AS FUSION_".$data['modulename']."
+                  ON FUSION_".$data['modulename'].".`modulename`='".$data['modulename']."' ";
+            }
+         }
+         break;
+      
+   }
+
+
    return "";
 }
 
@@ -466,6 +655,48 @@ function plugin_fusioninventory_addOrderBy($type,$id,$order,$key=0) {
 
 
 function plugin_fusioninventory_addWhere($link,$nott,$type,$id,$val) {
+	global $SEARCH_OPTION;
+
+   $searchopt = &Search::getOptions($type);
+   $table = $searchopt[$id]["table"];
+   $field = $searchopt[$id]["field"];
+
+   switch ($type) {
+
+      case 'PluginFusioninventoryAgent':
+         $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+         $a_modules = $PluginFusioninventoryAgentmodule->find();
+         foreach ($a_modules as $data) {
+            if ($table.".".$field == "glpi_plugin_fusioninventory_agentmodules.".$data['modulename']) {
+               if (($data['exceptions'] != "[]") AND ($data['exceptions'] != "")) {
+                  $a_exceptions = importArrayFromDB($data['exceptions']);
+                  $current_id = current($a_exceptions);
+                  $in = "(";
+                  foreach($a_exceptions as $agent_id) {
+                     $in .= $agent_id.", ";
+                  }
+                  $in .= ")";
+                  $in = str_replace(", )", ")", $in);
+
+                  if ($val != $data['is_active']) {
+                     return $link." (FUSION_".$data['modulename'].".`exceptions` LIKE '%\"".$current_id."\"%' ) AND `glpi_plugin_fusioninventory_agents`.`id` IN ".$in." ";
+                  } else {
+                     return $link." `glpi_plugin_fusioninventory_agents`.`id` NOT IN ".$in." ";
+                  }
+               } else {
+                  if ($val != $data['is_active']) {
+                     return $link." (FUSION_".$data['modulename'].".`is_active`!='".$data['is_active']."') ";
+                  } else {
+                     return $link." (FUSION_".$data['modulename'].".`is_active`='".$data['is_active']."') ";
+                  }
+               }
+            }
+         }
+         break;
+
+   }
+
+   
    return "";
 }
 

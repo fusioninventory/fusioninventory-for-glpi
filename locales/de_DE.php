@@ -126,6 +126,7 @@ $LANG['plugin_fusioninventory']['agents'][37]="locked";
 
 $LANG['plugin_fusioninventory']['unknown'][2]="Approved devices";
 $LANG['plugin_fusioninventory']['unknown'][4]="Netzwerk-Hub";
+$LANG['plugin_fusioninventory']['unknown'][5]="Import unknown device into asset";
 
 $LANG['plugin_fusioninventory']['task'][0]="Aufgabe";
 $LANG['plugin_fusioninventory']['task'][1]="Aufgabenverwaltung";

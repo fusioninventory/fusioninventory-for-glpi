@@ -338,10 +338,10 @@ logInFile("xxx", print_r($input, true));
       $sql_where = " `[typetable]`.`is_template` = '0' ";
       $sql_where_networkequipment = $sql_where;
       $sql_from = "`[typetable]`";
+      $sql_from_networkequipment = $sql_from;
       $sql_from .= " LEFT JOIN `glpi_networkports`
                   ON (`[typetable]`.`id` = `glpi_networkports`.`items_id`
                       AND `glpi_networkports`.`itemtype` = '[typename]') ";
-      $sql_from_networkequipment = $sql_from;
 
       foreach ($complex_criterias as $criteria) {
          switch ($criteria->fields['criteria']) {
@@ -361,8 +361,13 @@ logInFile("xxx", print_r($input, true));
             case 'mac' :
                $sql_where_temp = " AND `glpi_networkports`.`mac` IN ('";
                $sql_where_networkequipment_temp = " AND `[typetable]`.`mac` IN ('";
-               $sql_where_temp .= implode("', '",$input['mac']);
-               $sql_where_networkequipment_temp .= implode("', '",$input['mac']);
+               if (is_array($input['mac'])) {
+                  $sql_where_temp .= implode("', '",$input['mac']);
+                  $sql_where_networkequipment_temp .= implode("', '",$input['mac']);
+               } else {
+                  $sql_where_temp .= $input['mac'];
+                  $sql_where_networkequipment_temp .= $input['mac'];
+               }
                $sql_where_temp .= "')";
                $sql_where_networkequipment_temp .= "')";
 
@@ -373,8 +378,13 @@ logInFile("xxx", print_r($input, true));
             case 'ip' :
                $sql_where .= " AND `glpi_networkports`.`ip` IN ";
                $sql_where_networkequipment .= " AND `[typetable]`.`ip` IN ('";
-               $sql_where .= implode("', '",$input['ip']);
-               $sql_where_networkequipment .= implode("', '",$input['ip']);
+               if (is_array($input['ip'])) {
+                  $sql_where .= implode("', '",$input['ip']);
+                  $sql_where_networkequipment .= implode("', '",$input['ip']);
+               } else {
+                  $sql_where .= $input['ip'];
+                  $sql_where_networkequipment .= $input['ip'];
+               }
                $sql_where .= ")";
                $sql_where_networkequipment .= ")";
                break;
@@ -449,12 +459,11 @@ logInFile("xxx", print_r($input, true));
                       GROUP BY `[typetable]`.`id`
                       ORDER BY `[typetable]`.`is_deleted` ASC
                       ";
-         if ($itemtype == "PluginFusioninventoryUnknownDevice") {
-            $sql_glpi = str_replace("`[typetable]`.`is_template` = '0'  AND", "", $sql_glpi);
-         }
-            
          if (strstr($sql_glpi, "`[typetable]`.`is_template` = '0'  AND")) {
 
+            if ($itemtype == "PluginFusioninventoryUnknownDevice") {
+               $sql_glpi = str_replace("`[typetable]`.`is_template` = '0'  AND", "", $sql_glpi);
+            }
             $sql_glpi = str_replace("[typetable]", $item->getTable(), $sql_glpi);
             $sql_glpi = str_replace("[typename]", $itemtype, $sql_glpi);
             logInFile("xxx", $sql_glpi."\n");

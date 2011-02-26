@@ -260,11 +260,13 @@ function appear_array(id){
          $text .= $LANG['plugin_fusioninventory']['task'][27]."&nbsp;:";
          $text .= "</th>";
          $text .= "<th>";
-         $device = new $data["itemtype"]();
-         $device->getFromDB($data["items_id"]);
-         $text .= $device->getLink(1);
-         $text .= "&nbsp;";
-         $text .= "(".$device->getTypeName().")";
+         if (!empty($data["itemtype"])) {
+            $device = new $data["itemtype"]();
+            $device->getFromDB($data["items_id"]);
+            $text .= $device->getLink(1);
+            $text .= "&nbsp;";
+            $text .= "(".$device->getTypeName().")";
+         }
          $text .= "</th>";
          $a_return = $this->displayHistoryDetail(array_shift($a_history));
          $count = $a_return[0];
