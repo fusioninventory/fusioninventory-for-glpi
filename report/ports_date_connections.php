@@ -38,7 +38,7 @@ $DBCONNECTION_REQUIRED=0;
 define('GLPI_ROOT', '../../..'); 
 include (GLPI_ROOT . "/inc/includes.php"); 
 
-PluginFusioninventoryProfile::checkRight("fusinvsnmp", "reports","r");
+//PluginFusioninventoryProfile::checkRight("fusinvsnmp", "reports","r");
 
 commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER['PHP_SELF'],"utils","report");
 
@@ -128,7 +128,7 @@ function displaySearchForm() {
 
 	// Display Reset search
 	echo "<td>";
-	echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/report/ports_date_connections.php?reset_search=reset_search' ><img title=\"".$LANG["buttons"][16]."\" alt=\"".$LANG["buttons"][16]."\" src='".$CFG_GLPI["root_doc"]."/pics/reset.png' class='calendrier'></a>";
+	echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusinvsnmp/report/ports_date_connections.php?reset_search=reset_search' ><img title=\"".$LANG["buttons"][16]."\" alt=\"".$LANG["buttons"][16]."\" src='".$CFG_GLPI["root_doc"]."/pics/reset.png' class='calendrier'></a>";
 	echo "</td>";
 
 	echo "<td>";

@@ -38,7 +38,7 @@ $DBCONNECTION_REQUIRED=0;
 define('GLPI_ROOT', '../../..'); 
 include (GLPI_ROOT . "/inc/includes.php"); 
 
-PluginFusioninventoryProfile::checkRight("fusinvsnmp", "reports","r");
+//PluginFusioninventoryProfile::checkRight("fusinvsnmp", "reports","r");
 
 commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER['PHP_SELF'],"utils","report");
 
@@ -58,7 +58,7 @@ $query = "SELECT `glpi_networkequipments`.`name` as `name`, `glpi_networkports`.
                  `glpi_networkports`.`id` as `id`
           FROM `glpi_networkequipments`
                LEFT JOIN `glpi_networkports` ON `items_id` = `glpi_networkequipments`.`id`
-          WHERE `itemtype`='".NETWORKING_TYPE."'
+          WHERE `itemtype`='NetworkEquipment'
           ORDER BY `glpi_networkequipments`.`name`, `glpi_networkports`.`logical_number`;";
 
 $result=$DB->query($query);
