@@ -538,6 +538,71 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
 			}
 			break;
 
+      case "PluginFusinvsnmpPrinterLog":
+         switch ($table.'.'.$field) {
+
+            case 'glpi_printers.name':
+
+               // Search pages in printer history to limit SQL queries
+               if (isset($_SESSION['glpi_plugin_fusioninventory_history_start']))
+                  unset($_SESSION['glpi_plugin_fusioninventory_history_start']);
+               if (isset($_SESSION['glpi_plugin_fusioninventory_history_end']))
+                  unset($_SESSION['glpi_plugin_fusioninventory_history_end']);
+               if ((isset($_SESSION['glpi_plugin_fusioninventory_date_start']))
+                       AND (isset($_SESSION['glpi_plugin_fusioninventory_date_end']))) {
+
+                  $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_printerlogs`
+                     WHERE `printers_id`='".$data['ITEM_0_2']."'
+                        AND `date`>= '".$_SESSION['glpi_plugin_fusioninventory_date_start']."'
+                        AND `date`<= '".$_SESSION['glpi_plugin_fusioninventory_date_end']." 23:59:59'
+                     ORDER BY date asc
+                     LIMIT 1";
+                  $result=$DB->query($query);
+                  while ($data2=$DB->fetch_array($result)) {
+                     $_SESSION['glpi_plugin_fusioninventory_history_start'] = $data2;
+                  }
+                  $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_printerlogs`
+                     WHERE `printers_id`='".$data['ITEM_0_2']."'
+                        AND `date`>= '".$_SESSION['glpi_plugin_fusioninventory_date_start']."'
+                        AND `date`<= '".$_SESSION['glpi_plugin_fusioninventory_date_end']." 23:59:59'
+                     ORDER BY date desc
+                     LIMIT 1";
+                  $result=$DB->query($query);
+                  while ($data2=$DB->fetch_array($result)) {
+                     $_SESSION['glpi_plugin_fusioninventory_history_end'] = $data2;
+                  }
+               }
+               return "";
+               break;
+
+            }
+
+         switch($table) {
+
+            case 'glpi_plugin_fusinvsnmp_printerlogs':
+               if ((isset($_SESSION['glpi_plugin_fusioninventory_history_start'][$field]))
+                               AND (isset($_SESSION['glpi_plugin_fusioninventory_history_end'][$field]))) {
+                  $counter_start = $_SESSION['glpi_plugin_fusioninventory_history_start'][$field];
+                  $counter_end = $_SESSION['glpi_plugin_fusioninventory_history_end'][$field];
+                  if ($_SESSION['glpi_plugin_fusioninventory_date_start'] == "1970-01-01") {
+                     $counter_start = 0;
+                  }
+                  $number = $counter_end - $counter_start;
+                  if (($number == '0')) {
+                      return '-';
+                  } else {
+                     return $number;
+                  }
+
+               } else {
+                  return '-';
+               }
+               break;
+
+            }
+         break;
+
+
 	}
 
 	return "";
@@ -1139,6 +1204,7 @@ function plugin_fusinvsnmp_addSelect($type,$id,$num) {
 
 
 function plugin_fusinvsnmp_forceGroupBy($type) {
+ return true;
    switch ($type) {
       case COMPUTER_TYPE :
          // ** FusionInventory - switch
@@ -1149,6 +1215,10 @@ function plugin_fusinvsnmp_forceGroupBy($type) {
          // ** FusionInventory - switch
          return "GROUP BY glpi_printers.id";
          break;
+
+//      case "PluginFusinvsnmpPrinterLog":
+//         return "GROUP BY ITEM_0";
+//         break;
     }
     return false;
 }
@@ -1516,7 +1586,7 @@ function plugin_fusinvsnmp_addOrderBy($type,$id,$order,$key=0) {
    $table = $searchopt[$id]["table"];
    $field = $searchopt[$id]["field"];
 
-//	echo "ORDER BY : ".$table.".".$field;
+//	echo "ORDER BY :".$type." ".$table.".".$field;
 
 	switch ($type) {
 		// * Computer List (front/computer.php)
@@ -1658,6 +1728,14 @@ function plugin_fusinvsnmp_addOrderBy($type,$id,$order,$key=0) {
 						break;
 
 			}
+         break;
+
+      case "PluginFusinvsnmpPrinterLog":
+         return " GROUP BY ITEM_0_2
+            ORDER BY ".$field." $order ";
+
+         break;
+
 	}
 	return "";
 }

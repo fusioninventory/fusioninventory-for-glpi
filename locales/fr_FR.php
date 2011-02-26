@@ -404,4 +404,7 @@ $LANG['plugin_fusinvsnmp']['stats'][0]="Compteur total";
 $LANG['plugin_fusinvsnmp']['stats'][1]="pages par jour";
 $LANG['plugin_fusinvsnmp']['stats'][2]="Affichage";
 
+$LANG['plugin_fusinvsnmp']["report"][0]="Nombre de jours depuis dernier inventaire";
+$LANG['plugin_fusinvsnmp']["report"][1]="Compteurs d'impression";
+
 ?>

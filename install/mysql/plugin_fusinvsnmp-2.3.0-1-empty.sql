@@ -267,8 +267,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_printerlogs` (
    `pages_color_copy` int(11) NOT NULL DEFAULT '0',
    `pages_total_fax` int(11) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
-   KEY `printers_id` (`printers_id`),
-   KEY `date` (`date`)
+   KEY `printers_id` (`printers_id`,`date`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
