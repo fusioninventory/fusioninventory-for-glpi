@@ -448,6 +448,12 @@ function update221to230() {
       DROP `module_snmpquery`,
       DROP `module_wakeonlan`;";
    $DB->query($sql);
+   $sql = "ALTER TABLE `glpi_plugin_fusioninventory_agents`
+      ADD `entities_id` INT( 11 ) NOT NULL DEFAULT '-1' AFTER `id` ";
+   $DB->query($sql);
+   $sql = "ALTER TABLE `glpi_plugin_fusioninventory_agents`
+      ADD `is_recursive` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `entities_id` ";
+   $DB->query($sql);
 
    /*
     * Drop `glpi_plugin_fusioninventory_agents_inventory_state`
@@ -862,7 +868,10 @@ function update221to230() {
       ADD `pages_color_copy` INT( 11 ) NOT NULL DEFAULT '0',
       ADD `pages_total_fax` INT( 11 ) NOT NULL DEFAULT '0'";
    $DB->query($sql);
-   
+   $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_printerlogs`
+      ADD INDEX `printers_id` ( `printers_id` , `date` ) ";
+   $DB->query($sql);
+
    /*
     * Update `glpi_plugin_fusioninventory_printers`
     * to `glpi_plugin_fusinvsnmp_printers`

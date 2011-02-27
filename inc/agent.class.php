@@ -96,44 +96,55 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 		$tab[1]['name'] = $LANG['common'][16];
 		$tab[1]['datatype'] = 'itemlink';
 
-		$tab[2]['table'] = $this->getTable();
-		$tab[2]['field'] = 'last_contact';
-		$tab[2]['linkfield'] = 'last_contact';
-		$tab[2]['name'] = $LANG['plugin_fusioninventory']['agents'][4];
-		$tab[2]['datatype'] = 'datetime';
+      $tab[2]['table']     = 'glpi_entities';
+      $tab[2]['field']     = 'completename';
+      $tab[2]['linkfield'] = 'entities_id';
+      $tab[2]['name']      = $LANG['entity'][0];
 
-		$tab[3]['table'] = $this->getTable();
-		$tab[3]['field'] = 'lock';
-		$tab[3]['linkfield'] = 'lock';
-		$tab[3]['name'] = $LANG['plugin_fusioninventory']['agents'][37];
-		$tab[3]['datatype'] = 'bool';
+      $tab[3]['table']     = $this->getTable();
+      $tab[3]['field']     = 'is_recursive';
+      $tab[3]['linkfield'] = 'is_recursive';
+      $tab[3]['name']      = $LANG['entity'][9];
+      $tab[3]['datatype']  = 'bool';
 
 		$tab[4]['table'] = $this->getTable();
-		$tab[4]['field'] = 'device_id';
-		$tab[4]['linkfield'] = 'device_id';
-		$tab[4]['name'] = $LANG['plugin_fusioninventory']['agents'][35];
-		$tab[4]['datatype'] = 'text';
+		$tab[4]['field'] = 'last_contact';
+		$tab[4]['linkfield'] = 'last_contact';
+		$tab[4]['name'] = $LANG['plugin_fusioninventory']['agents'][4];
+		$tab[4]['datatype'] = 'datetime';
 
-		$tab[5]['table'] = 'glpi_computers';
-		$tab[5]['field'] = 'name';
-		$tab[5]['linkfield'] = 'items_id';
-		$tab[5]['name'] = $LANG['plugin_fusioninventory']['agents'][23];
-		$tab[5]['datatype'] = 'itemlink';
-      $tab[5]['itemlink_type']  = 'Computer';
+		$tab[5]['table'] = $this->getTable();
+		$tab[5]['field'] = 'lock';
+		$tab[5]['linkfield'] = 'lock';
+		$tab[5]['name'] = $LANG['plugin_fusioninventory']['agents'][37];
+		$tab[5]['datatype'] = 'bool';
 
 		$tab[6]['table'] = $this->getTable();
-		$tab[6]['field'] = 'version';
-		$tab[6]['linkfield'] = 'version';
-		$tab[6]['name'] = $LANG['plugin_fusioninventory']['agents'][25];
+		$tab[6]['field'] = 'device_id';
+		$tab[6]['linkfield'] = 'device_id';
+		$tab[6]['name'] = $LANG['plugin_fusioninventory']['agents'][35];
 		$tab[6]['datatype'] = 'text';
 
-		$tab[7]['table'] = $this->getTable();
-		$tab[7]['field'] = 'token';
-		$tab[7]['linkfield'] = 'token';
-		$tab[7]['name'] = $LANG['plugin_fusioninventory']['agents'][24];
-		$tab[7]['datatype'] = 'text';
+		$tab[7]['table'] = 'glpi_computers';
+		$tab[7]['field'] = 'name';
+		$tab[7]['linkfield'] = 'items_id';
+		$tab[7]['name'] = $LANG['plugin_fusioninventory']['agents'][23];
+		$tab[7]['datatype'] = 'itemlink';
+      $tab[7]['itemlink_type']  = 'Computer';
 
-      $i = 8;
+		$tab[8]['table'] = $this->getTable();
+		$tab[8]['field'] = 'version';
+		$tab[8]['linkfield'] = 'version';
+		$tab[8]['name'] = $LANG['plugin_fusioninventory']['agents'][25];
+		$tab[8]['datatype'] = 'text';
+
+		$tab[9]['table'] = $this->getTable();
+		$tab[9]['field'] = 'token';
+		$tab[9]['linkfield'] = 'token';
+		$tab[9]['name'] = $LANG['plugin_fusioninventory']['agents'][24];
+		$tab[9]['datatype'] = 'text';
+
+      $i = 10;
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
       $a_modules = $PluginFusioninventoryAgentmodule->find();
       foreach ($a_modules as $data) {

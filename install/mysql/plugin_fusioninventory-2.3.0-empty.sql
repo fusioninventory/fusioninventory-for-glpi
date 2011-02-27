@@ -29,6 +29,8 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agents`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_agents` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
+   `entities_id` int(11) NOT NULL DEFAULT '-1',
+   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
    `name` varchar(255) DEFAULT NULL,
    `last_contact` datetime DEFAULT NULL,
    `version` varchar(255) DEFAULT NULL,
@@ -245,12 +247,12 @@ CREATE TABLE `glpi_plugin_fusioninventory_agentmodules` (
 ## glpi_displaypreferences
 INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) 
    VALUES (NULL,'PluginFusioninventoryAgent', '2', '1', '0'),
-          (NULL,'PluginFusioninventoryAgent', '3', '2', '0'),
-          (NULL,'PluginFusioninventoryAgent', '4', '3', '0'),
-          (NULL,'PluginFusioninventoryAgent', '5', '4', '0'),
-          (NULL,'PluginFusioninventoryAgent', '6', '5', '0'),
-          (NULL,'PluginFusioninventoryAgent', '7', '6', '0'),
-          (NULL,'PluginFusioninventoryAgent', '0', '7', '0'),
+          (NULL,'PluginFusioninventoryAgent', '4', '2', '0'),
+          (NULL,'PluginFusioninventoryAgent', '5', '3', '0'),
+          (NULL,'PluginFusioninventoryAgent', '6', '4', '0'),
+          (NULL,'PluginFusioninventoryAgent', '7', '5', '0'),
+          (NULL,'PluginFusioninventoryAgent', '8', '6', '0'),
+          (NULL,'PluginFusioninventoryAgent', '9', '7', '0'),
 
           (NULL, 'PluginFusioninventoryUnknownDevice', '2', '1', '0'),
           (NULL, 'PluginFusioninventoryUnknownDevice', '4', '2', '0'),
