@@ -202,6 +202,11 @@ class PluginFusinvinventoryLibhook {
                if (isset($dataSection['SSN']))
                   $Computer->fields['serial'] = $dataSection['SSN'];
 
+               if (isset($dataSection['TYPE'])) {
+                  $ComputerType = new ComputerType();
+                  $Computer->fields['computertypes_id'] = Dropdown::importExternal('ComputerType',
+                                                                          $dataSection['TYPE']);
+               }
                break;
 
             case 'HARDWARE':
@@ -721,7 +726,13 @@ class PluginFusinvinventoryLibhook {
                   }
                   if (isset($dataSection['SSN']))
                      $Computer->fields['serial'] = $dataSection['SSN'];
-                  
+
+                  if (isset($dataSection['TYPE'])) {
+                     $ComputerType = new ComputerType();
+                     $Computer->fields['computertypes_id'] = Dropdown::importExternal('ComputerType',
+                                                                          $dataSection['TYPE']);
+                  }
+
                   $Computer->update($Computer->fields);
                   break;
 
