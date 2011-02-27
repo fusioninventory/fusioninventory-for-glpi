@@ -138,7 +138,9 @@ function plugin_init_fusinvsnmp() {
 			$report_list = array();
          $report_list["report/switch_ports.history.php"] = $LANG['plugin_fusinvsnmp']['menu'][5];
          $report_list["report/ports_date_connections.php"] = $LANG['plugin_fusinvsnmp']['menu'][6];
-			$PLUGIN_HOOKS['reports']['fusinvsnmp'] = $report_list;
+			$report_list["report/not_queried_recently.php"] = $LANG['plugin_fusinvsnmp']["report"][0];
+         $report_list["front/printerlog.php"] = $LANG['plugin_fusinvsnmp']["report"][1];
+         $PLUGIN_HOOKS['reports']['fusinvsnmp'] = $report_list;
 
 //			if (haveRight("models", "r") || haveRight("configsecurity", "r")) {
 //			if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model", "r")
@@ -168,8 +170,6 @@ function plugin_init_fusinvsnmp() {
             if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity","w")) {
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['configsecurity'] = '../fusinvsnmp/front/configsecurity.form.php?add=1';
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['configsecurity'] = '../fusinvsnmp/front/configsecurity.php';
-//$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configsecurity']['links']['add']
-//                                                      = '/plugins/fusinvsnmp/front/configsecurity.form.php';
             }
 
             $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['rulenetdiscovery']
