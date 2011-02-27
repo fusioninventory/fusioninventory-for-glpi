@@ -37,8 +37,9 @@ $DBCONNECTION_REQUIRED=0;
 define('GLPI_ROOT', '../../..'); 
 include (GLPI_ROOT . "/inc/includes.php"); 
 
-//plugin_fusioninventory_checkRight("reports","r");
 commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","printerlog");
+
+PluginFusioninventoryProfile::checkRight("fusinvsnmp","reportprinter","r");
 
 if (isset($_POST['glpi_plugin_fusioninventory_date_start'])) {
    $_SESSION['glpi_plugin_fusioninventory_date_start'] = $_POST['glpi_plugin_fusioninventory_date_start'];

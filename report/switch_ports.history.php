@@ -38,10 +38,9 @@ $DBCONNECTION_REQUIRED=0;
 define('GLPI_ROOT', '../../..'); 
 include (GLPI_ROOT . "/inc/includes.php"); 
 
-//PluginFusioninventoryProfile::checkRight("fusinvsnmp", "reports","r");
-
 commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER['PHP_SELF'],"utils","report");
 
+PluginFusioninventoryProfile::checkRight("fusinvsnmp","reportnetworkequipment","r");
 
 if (isset($_GET["networkports_id"])) {
 	$ports_id = $_GET["networkports_id"];

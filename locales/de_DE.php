@@ -52,6 +52,8 @@ $LANG['plugin_fusinvsnmp']['profile'][4]="IP-Adressbereich";
 $LANG['plugin_fusinvsnmp']['profile'][5]="SNMP-Discovery der Netzwerkgeräte";
 $LANG['plugin_fusinvsnmp']['profile'][6]="SNMP-Discover der Drucker";
 $LANG['plugin_fusinvsnmp']['profile'][7]="SNMP-Modelle";
+$LANG['plugin_fusinvsnmp']['profile'][8]="Printers report";
+$LANG['plugin_fusinvsnmp']['profile'][9]="Network report";
 
 $LANG['plugin_fusinvsnmp']['setup'][17]="Das Plugin ".$title." benötigt das FusionInventory um selber installiert zu werden.";
 $LANG['plugin_fusinvsnmp']['setup'][18]="Das Plugin ".$title." benötigt ein aktiviertes FusionInventory um deinstalliert zu werden.";

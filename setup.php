@@ -136,10 +136,14 @@ function plugin_init_fusinvsnmp() {
 //         $PLUGIN_HOOKS['item_add']['fusinvsnmp'] = 'plugin_item_add_fusinvsnmp';
 
 			$report_list = array();
-         $report_list["report/switch_ports.history.php"] = $LANG['plugin_fusinvsnmp']['menu'][5];
-         $report_list["report/ports_date_connections.php"] = $LANG['plugin_fusinvsnmp']['menu'][6];
-			$report_list["report/not_queried_recently.php"] = $LANG['plugin_fusinvsnmp']["report"][0];
-         $report_list["front/printerlog.php"] = $LANG['plugin_fusinvsnmp']["report"][1];
+         if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "reportprinter","r")) {
+            $report_list["front/printerlog.php"] = $LANG['plugin_fusinvsnmp']["report"][1];
+         }
+         if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "reportnetworkequipment","r")) {
+            $report_list["report/switch_ports.history.php"] = $LANG['plugin_fusinvsnmp']['menu'][5];
+            $report_list["report/ports_date_connections.php"] = $LANG['plugin_fusinvsnmp']['menu'][6];
+            $report_list["report/not_queried_recently.php"] = $LANG['plugin_fusinvsnmp']["report"][0];
+         }
          $PLUGIN_HOOKS['reports']['fusinvsnmp'] = $report_list;
 
 //			if (haveRight("models", "r") || haveRight("configsecurity", "r")) {

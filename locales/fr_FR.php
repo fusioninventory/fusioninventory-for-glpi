@@ -52,6 +52,8 @@ $LANG['plugin_fusinvsnmp']['profile'][4]="Plages IP";
 $LANG['plugin_fusinvsnmp']['profile'][5]="SNMP des équipements réseaux";
 $LANG['plugin_fusinvsnmp']['profile'][6]="SNMP des imprimantes";
 $LANG['plugin_fusinvsnmp']['profile'][7]="Modèles SNMP";
+$LANG['plugin_fusinvsnmp']['profile'][8]="Rapport imprimantes";
+$LANG['plugin_fusinvsnmp']['profile'][9]="Rapport réseaux";
 
 $LANG['plugin_fusinvsnmp']['setup'][17]="Le plugin ".$title." a besoin que le plugin FusionInventory soit activé pour être lui-même activé.";
 $LANG['plugin_fusinvsnmp']['setup'][18]="Le plugin ".$title." a besoin que le plugin FusionInventory soit activé pour être lui-même désinstallé.";

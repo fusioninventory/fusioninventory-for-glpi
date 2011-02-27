@@ -52,6 +52,8 @@ $LANG['plugin_fusinvsnmp']['profile'][4]="IP Range";
 $LANG['plugin_fusinvsnmp']['profile'][5]="Network equipment SNMP";
 $LANG['plugin_fusinvsnmp']['profile'][6]="Printer SNMP";
 $LANG['plugin_fusinvsnmp']['profile'][7]="SNMP model";
+$LANG['plugin_fusinvsnmp']['profile'][8]="Printers report";
+$LANG['plugin_fusinvsnmp']['profile'][9]="Network report";
 
 $LANG['plugin_fusinvsnmp']['setup'][17]="Plugin ".$title." needs FusionInventory plugin activated before activation.";
 $LANG['plugin_fusinvsnmp']['setup'][18]="Plugin ".$title." needs FusionInventory plugin activated before uninstall.";
