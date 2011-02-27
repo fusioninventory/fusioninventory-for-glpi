@@ -64,6 +64,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       $input['component_soundcard']    = 1;
       $input['component_drive']        = 1;
       $input['component_control']      = 1;
+      $input['transfers_id_auto']      = 1;
 
       foreach ($input as $key => $value) {
          $PluginFusioninventoryConfig->initConfig($plugins_id, array($key => $value));
@@ -245,6 +246,24 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
+      echo "<tr>";
+      echo "<th colspan='4'>".$LANG['plugin_fusinvinventory']['setup'][28];
+      echo "</th>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td colspan='2'>";
+      echo $LANG['plugin_fusinvinventory']['setup'][29]."&nbsp:";
+      echo "</td>";
+      echo "<td colspan='2'>";
+      Dropdown::show("Transfer",
+                     array('name'=>"transfers_id_auto",
+                           'value'=>$PluginFusioninventoryConfig->getValue($plugins_id, 'transfers_id_auto'),
+                           'comment'=>0));
+      echo "</td>";
+      echo "</tr>";
+
+      
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "w")) {
          echo "<tr class='tab_bg_2'><td align='center' colspan='4'>
                <input class='submit' type='submit' name='plugin_fusinvinventory_config_set'
