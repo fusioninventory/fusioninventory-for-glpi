@@ -50,7 +50,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    private $sxml, $ptd, $logFile, $agent, $unknownDeviceCDP;
 
    function __construct() {
-      $this->logFile = GLPI_LOG_DIR.'/fusioninventorycommunication.log';
+      if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+         $this->logFile = GLPI_LOG_DIR.'/fusioninventorycommunication.log';
+      }
    }
 
    /**
