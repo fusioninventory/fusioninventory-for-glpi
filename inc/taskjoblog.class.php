@@ -438,7 +438,6 @@ function appear_array(id){
       $finishState[4] = 0;
       $finishState[5] = 0;
 
-//      $a_jobstatus = $PluginFusioninventoryTaskjobstatus->find('`plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"');
       $a_jobstatus = $PluginFusioninventoryTaskjobstatus->find('`plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'" GROUP BY uniqid,plugin_fusioninventory_agents_id');
 
       $search = '(';
