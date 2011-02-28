@@ -370,7 +370,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                 FROM `glpi_networkports`
                      LEFT JOIN `glpi_plugin_fusioninventory_unknowndevices`
                                ON `items_id`=`glpi_plugin_fusioninventory_unknowndevices`.`id`
-                     WHERE `itemtype`=".'PluginFusioninventoryUnknownDevice'."
+                     WHERE `itemtype`='PluginFusioninventoryUnknownDevice'
                            AND `glpi_plugin_fusioninventory_unknowndevices`.`id` IS NULL;";
       $unknown_infos = array();
       if ($result=$DB->query($query)) {

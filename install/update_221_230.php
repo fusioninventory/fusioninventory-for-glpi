@@ -860,15 +860,41 @@ function update221to230() {
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_printerlogs`
       CHANGE `FK_printers` `printers_id` INT( 11 ) NOT NULL DEFAULT '0'";
    $DB->query($sql);
-   $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_printerlogs`
-      ADD `pages_total_print` INT( 11 ) NOT NULL DEFAULT '0',
-      ADD `pages_n_b_print` INT( 11 ) NOT NULL DEFAULT '0',
-      ADD `pages_color_print` INT( 11 ) NOT NULL DEFAULT '0',
-      ADD `pages_total_copy` INT( 11 ) NOT NULL DEFAULT '0',
-      ADD `pages_n_b_copy` INT( 11 ) NOT NULL DEFAULT '0',
-      ADD `pages_color_copy` INT( 11 ) NOT NULL DEFAULT '0',
-      ADD `pages_total_fax` INT( 11 ) NOT NULL DEFAULT '0'";
-   $DB->query($sql);
+   if (!FieldExists('glpi_plugin_fusinvsnmp_printerlogs', 'pages_total_print')) {
+      $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_printerlogs`
+         ADD `pages_total_print` INT( 11 ) NOT NULL DEFAULT '0'";
+      $DB->query($sql);
+   }
+   if (!FieldExists('glpi_plugin_fusinvsnmp_printerlogs', 'pages_n_b_print')) {
+      $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_printerlogs`
+         ADD `pages_n_b_print` INT( 11 ) NOT NULL DEFAULT '0'";
+      $DB->query($sql);
+   }
+   if (!FieldExists('glpi_plugin_fusinvsnmp_printerlogs', 'pages_color_print')) {
+      $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_printerlogs`
+         ADD `pages_color_print` INT( 11 ) NOT NULL DEFAULT '0'";
+      $DB->query($sql);
+   }
+   if (!FieldExists('glpi_plugin_fusinvsnmp_printerlogs', 'pages_total_copy')) {
+      $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_printerlogs`
+         ADD `pages_total_copy` INT( 11 ) NOT NULL DEFAULT '0'";
+      $DB->query($sql);
+   }
+   if (!FieldExists('glpi_plugin_fusinvsnmp_printerlogs', 'pages_n_b_copy')) {
+      $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_printerlogs`
+         ADD `pages_n_b_copy` INT( 11 ) NOT NULL DEFAULT '0'";
+      $DB->query($sql);
+   }
+   if (!FieldExists('glpi_plugin_fusinvsnmp_printerlogs', 'pages_color_copy')) {
+      $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_printerlogs`
+         ADD `pages_color_copy` INT( 11 ) NOT NULL DEFAULT '0'";
+      $DB->query($sql);
+   }
+   if (!FieldExists('glpi_plugin_fusinvsnmp_printerlogs', 'pages_total_fax')) {
+      $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_printerlogs`
+         ADD `pages_total_fax` INT( 11 ) NOT NULL DEFAULT '0'";
+      $DB->query($sql);
+   }
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_printerlogs`
       ADD INDEX `printers_id` ( `printers_id` , `date` ) ";
    $DB->query($sql);
@@ -1213,8 +1239,8 @@ function update221to230() {
    // Convert datas
    foreach ($typetoname as $key => $itemtype) {
       $sql = "UPDATE `glpi_plugin_fusioninventory_unknowndevices`
-         SET `itemtype` = '".$itemtype."'
-         WHERE `itemtype` = '".$key."'";
+         SET `item_type` = '".$itemtype."'
+         WHERE `item_type` = '".$key."'";
       $DB->query($sql);
    }
 
