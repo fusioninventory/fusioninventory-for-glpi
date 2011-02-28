@@ -966,6 +966,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $a_taskjob = $this->find("`plugin_fusioninventory_tasks_id`='".$this->fields['plugin_fusioninventory_tasks_id']."'
             AND `rescheduled_taskjob_id`='0' ", "id");
       $i = 1;
+      $tab = 0;
       foreach($a_taskjob as $id=>$datas) {
          $i++;
          if ($id == $taskjobs_id) {
