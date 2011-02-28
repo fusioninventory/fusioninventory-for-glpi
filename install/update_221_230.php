@@ -1303,7 +1303,9 @@ function update221to230() {
       VALUES('version', '2.2.1', '".$snmp_id."')";
    $DB->query($sql_ins);
 
-
+   if (!class_exists('PluginFusioninventoryUnknownDevice')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/unknowndevice.class.php");
+   }
    $ptud = new PluginFusioninventoryUnknownDevice();
    $ptud->CleanOrphelinsConnections();
 
