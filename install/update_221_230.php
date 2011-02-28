@@ -1005,7 +1005,7 @@ function update221to230() {
          if (!is_null($data['unknowndevices'])) {
             $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
                (`type`, `right`, `plugins_id`, `profiles_id`)
-               VALUES('unknowndevice', '".$data['unknowndevice']."', '".$plugins_id."', '".$profile_id."')";
+               VALUES('unknowndevice', '".$data['unknowndevices']."', '".$plugins_id."', '".$profile_id."')";
             $DB->query($sql_ins);
          }
          if (!is_null($data['agentsprocesses'])) {
