@@ -52,9 +52,6 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
    function showHistory($taskjobs_id, $width="950") {
       global $DB,$CFG_GLPI,$LANG;
 
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-
 		echo "<script  type='text/javascript'>
 function close_array(id){
 	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/pics/collapse.gif\''+

@@ -905,6 +905,16 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    }
 
 
+
+   /**
+   * Display task jobs 
+   *
+   * @param $items_id integer id of the taskjob
+   * @param $width integer how large in pixel display array
+   *
+   * @return nothing
+   *
+   **/
    function showMiniAction($items_id, $width="950") {
       global $LANG;
       
@@ -935,6 +945,15 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    }
 
 
+
+   /**
+   * Redirect url to task and right taskjob tab
+   *
+   * @param $taskjobs_id integer id of the taskjob
+   *
+   * @return nothing
+   *
+   **/
    function redirectTask($taskjobs_id) {
 
       $this->getFromDB($taskjobs_id);
