@@ -219,8 +219,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
       Dropdown::showFromArray("communication", $com, array('value'=>$this->fields["communication"]));
       echo "</td>";
       
-      echo "<td rowspan='3'>".$LANG['common'][25]."&nbsp;:</td>";
-      echo "<td align='center' rowspan='3'>";
+      echo "<td rowspan='2'>".$LANG['common'][25]."&nbsp;:</td>";
+      echo "<td align='center' rowspan='2'>";
       echo "<textarea cols='45' rows='3' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "</td>";
       echo "</tr>";
@@ -234,10 +234,6 @@ class PluginFusioninventoryTask extends CommonDBTM {
          echo $LANG['choice'][0];
       }
       echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td colspan='2'></td>";
       echo "</tr>";
 
       $this->showFormButtons($options);
