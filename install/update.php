@@ -81,6 +81,15 @@ function pluginFusioninventoryGetCurrentVersion($version) {
 
 
 function pluginFusioninventoryUpdate($current_version) {
+   echo "<center>";
+   echo "<table class='tab_cadre' width='950'>";
+   echo "<tr>";
+   echo "<th>Update process<th>";
+   echo "</tr>";
+
+   echo "<tr class='tab_bg_1'>";
+   echo "<td>";
+
    // update from current_version to last case version + 1
    switch ($current_version){
       case "1.0.0":
@@ -128,7 +137,31 @@ function pluginFusioninventoryUpdate($current_version) {
    $plugins_id = PluginFusioninventoryModule::getModuleId("fusinvinventory");
    include(GLPI_ROOT."/plugins/fusioninventory/inc/profile.class.php");
    PluginFusioninventoryProfile::changeProfile($plugins_id);
-   
+
+   echo "</td>";
+   echo "</tr>";
+   echo "</table></center>";
+
 }
+
+function plugin_fusioninventory_displayMigrationMessage ($id, $msg="") {
+	global $LANG;
+	static $created=0;
+	static $deb;
+
+	if ($created != $id) {
+		if (empty($msg)) $msg=$LANG['rulesengine'][90];
+		echo "<div id='migration_message_$id'><p class='center'>$msg</p></div>";
+		$created = $id;
+		$deb = time();
+	} else {
+		if (empty($msg)) $msg=$LANG['rulesengine'][91];
+		$fin = time();
+		$tps = timestampToString($fin-$deb);
+		echo "<script type='text/javascript'>document.getElementById('migration_message_$id').innerHTML = '<p class=\"center\">$msg ($tps)</p>';</script>\n";
+	}
+	glpi_flush();
+}
+
 
 ?>
