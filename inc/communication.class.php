@@ -232,7 +232,7 @@ class PluginFusioninventoryCommunication {
    static function addLog($p_logs) {
       global $CFG_GLPI;
       if ($_SESSION['glpi_use_mode']==DEBUG_MODE) {
-         file_put_contents(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/communication.log',
+         file_put_contents(GLPI_LOG_DIR.'/fusioninventorycommunication.log',
                            "\n".time().' : '.$p_logs,
                            FILE_APPEND);
       }
