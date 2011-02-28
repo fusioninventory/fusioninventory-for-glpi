@@ -3,19 +3,19 @@
 /*
    ----------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2003-2008 by the INDEPNET Development Team.
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org//
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ----------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
-   FusionInventory is free software; you can redistribute it and/or modify
+   FusionInventory is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2 of the License, or
-   (at your option) any later version.
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -23,14 +23,14 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with FusionInventory; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-   ------------------------------------------------------------------------
- */
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
 
-// Original Author of file: David DURIEUX
-// Purpose of file:
-// ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
+ */
 
 class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
@@ -48,7 +48,15 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
     * 
     */
 
-
+   /**
+   * Display history of taskjob
+   *
+   * @param $taskjobs_id integer id of the taskjob
+   * @param $width integer how large in pixel display array
+   *
+   * @return bool true if form is ok
+   *
+   **/
    function showHistory($taskjobs_id, $width="950") {
       global $DB,$CFG_GLPI,$LANG;
 
@@ -112,8 +120,6 @@ function appear_array(id){
       }
 
 
-
-
       // ***** Display for statusjob OK
       echo "<tr>";
       echo "<th colspan='2'>";
@@ -145,18 +151,21 @@ function appear_array(id){
          $this->showHistoryLines($data['id']);
       }
 
-
-
-// ====================================== //
-
       echo "</table></center>";
 
       return true;
-
    }
 
 
 
+   /**
+   * Display each history line
+   *
+   * @param $taskjobstatus_id integer id of the taskjobstatus
+   *
+   * @return nothing
+   *
+   **/
    function showHistoryLines($taskjobstatus_id) {
       global $LANG;
       
@@ -202,14 +211,21 @@ function appear_array(id){
 
       echo "<tr style='display: none;' id='viewfollowup".$PluginFusioninventoryTaskjobstatus->fields["id"]."'>
          <td colspan='8'>".$this->showHistoryInDetail($PluginFusioninventoryTaskjobstatus->fields['plugin_fusioninventory_agents_id'], $PluginFusioninventoryTaskjobstatus->fields['uniqid'], "850")."</td>
-      </tr>";
-
-
-      
+      </tr>";      
    }
 
 
 
+   /**
+   * Display detail of each history line
+   *
+   * @param  $agents_id integer id of the agent
+   * @param $uniqid integer uniq id of each taskjobs runing
+   * @param $width integer how large in pixel display array
+   *
+   * @return value all text to display
+   *
+   **/
    function showHistoryInDetail($agents_id, $uniqid, $width="950") {
       global $DB,$CFG_GLPI,$LANG;
 
@@ -303,6 +319,15 @@ function appear_array(id){
    }
 
 
+
+   /**
+   * Display high detail of each history line
+   *
+   * @param $datas array datas of history
+   *
+   * @return value all text to display
+   *
+   **/
    function displayHistoryDetail($datas) {
       global $LANG;
 
@@ -365,6 +390,19 @@ function appear_array(id){
    }
 
 
+
+   /**
+   * Add a new line of log for a taskjob status
+   *
+   * @param $taskjobs_id integer id of the taskjob
+   * @param $items_id integer id of the item associated with taskjob status
+   * @param $itemtype value type name of the item associated with taskjob status
+   * @param $state value state of this taskjobstatus
+   * @param $comment value the comment of this insertion
+   *
+   * @return value all text to display
+   *
+   **/
    function addTaskjoblog($taskjobs_id, $items_id, $itemtype, $state, $comment) {
 
       $this->getEmpty();
@@ -380,6 +418,15 @@ function appear_array(id){
    }
 
 
+
+   /**
+   * Display the graph of finished tasks
+   *
+   * @param $taskjobs_id integer id of the taskjob
+   *
+   * @return nothing
+   *
+   **/
    function graphFinish($taskjobs_id) {
       global $LANG;
 
