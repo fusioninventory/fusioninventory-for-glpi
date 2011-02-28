@@ -126,8 +126,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    function showForm($id, $options=array()) {
       global $DB,$CFG_GLPI,$LANG;
 
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
-      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog;
+      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
 
       if ($id!='') {
          $this->getFromDB($id);
@@ -583,8 +583,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       global $DB;
 
       $PluginFusioninventoryTask = new PluginFusioninventoryTask();
-      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog;
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
+      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
 
       // Search for task with periodicity and must be ok (so reinit state of job to 0)
@@ -730,7 +730,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       $this->disableDebug();
 
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
@@ -769,7 +769,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    function RemoteStartAgent($ip, $token) {
 
       $this->disableDebug();
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
       $input = '';
@@ -986,10 +986,10 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    **/
    function manageTasksByObject($itemtype='', $items_id=0) {
       // Create task
-      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
+      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $PluginFusioninventoryTaskjob->showActions($items_id, $itemtype);
       // See task runing
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
+      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryTaskjobstatus->stateTaskjobItem($items_id, $itemtype, 'running');
       // see tasks finished
       $PluginFusioninventoryTaskjobstatus->stateTaskjobItem($items_id, $itemtype, 'nostarted');
