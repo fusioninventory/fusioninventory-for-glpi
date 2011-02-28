@@ -974,6 +974,16 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    }
 
 
+
+   /**
+   * Display task informations for an object
+   *
+   * @param $itemtype value item type of object
+   * @param $items_id integer id of the object
+   *
+   * @return nothing
+   *
+   **/
    function manageTasksByObject($itemtype='', $items_id=0) {
       // Create task
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
@@ -986,8 +996,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       // see tasks finished
       $PluginFusioninventoryTaskjobstatus->stateTaskjobItem($items_id, $itemtype, 'finished');
    }
-
-
 }
 
 ?>
