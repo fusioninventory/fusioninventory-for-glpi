@@ -463,10 +463,10 @@ function update221to230() {
       DROP `module_wakeonlan`;";
    $DB->query($sql);
    $sql = "ALTER TABLE `glpi_plugin_fusioninventory_agents`
-      ADD `entities_id` INT( 11 ) NOT NULL DEFAULT '-1' AFTER `id` ";
+      ADD `entities_id` INT( 11 ) NOT NULL DEFAULT '0' AFTER `id` ";
    $DB->query($sql);
    $sql = "ALTER TABLE `glpi_plugin_fusioninventory_agents`
-      ADD `is_recursive` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `entities_id` ";
+      ADD `is_recursive` TINYINT( 1 ) NOT NULL DEFAULT '1' AFTER `entities_id` ";
    $DB->query($sql);
 
    /*
