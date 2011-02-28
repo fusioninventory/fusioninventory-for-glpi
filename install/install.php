@@ -103,7 +103,8 @@ function pluginFusioninventoryInstall($version) {
                     ('ssl_only', '0', '".$plugins_id."'),
                     ('delete_task', '24', '".$plugins_id."'),
                     ('inventory_frequence', '24', '".$plugins_id."'),
-                    ('agent_port', '62354', '".$plugins_id."');";
+                    ('agent_port', '62354', '".$plugins_id."'),
+                    ('extradebug', '0', '".$plugins_id."')";
    $DB->query($query);
 
    PluginFusioninventoryProfile::changeProfile($plugins_id);

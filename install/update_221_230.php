@@ -498,7 +498,8 @@ function update221to230() {
                ( 'ssl_only', '".$data['ssl_only']."', '".$plugins_id."'),
                ( 'inventory_frequence', '".$data['inventory_frequence']."', '".$plugins_id."'),
                ( 'delete_task', '".$data['delete_agent_process']."', '".$plugins_id."'),
-               ( 'agent_port', '62354', '".$plugins_id."')";
+               ( 'agent_port', '62354', '".$plugins_id."'),
+               ( 'extradebug', '0', '".$plugins_id."')";
       $DB->query($sql_ins);
 
       $sql_ins = "INSERT INTO `glpi_plugin_fusinvsnmp_tmp_configs`

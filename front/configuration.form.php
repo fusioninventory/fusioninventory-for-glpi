@@ -48,6 +48,7 @@ if (isset($_POST['plugin_fusioninventory_config_set'])) {
    $config->updateConfigType($plugins_id, 'inventory_frequence', $_POST['inventory_frequence']);
    $config->updateConfigType($plugins_id, 'delete_task', $_POST['delete_task']);
    $config->updateConfigType($plugins_id, 'agent_port', $_POST['agent_port']);
+   $config->updateConfigType($plugins_id, 'extradebug', $_POST['extradebug']);
    glpi_header($_SERVER['HTTP_REFERER']);
 }
 

@@ -68,6 +68,7 @@ $LANG['plugin_fusioninventory']['functionalities'][60]="Limpar histórico";
 $LANG['plugin_fusioninventory']['functionalities'][73]="Campos";
 $LANG['plugin_fusioninventory']['functionalities'][74]="Valores";
 $LANG['plugin_fusioninventory']['functionalities'][75]="Bloqueios";
+$LANG['plugin_fusioninventory']['functionalities'][76]="Extra-debug";
 
 $LANG['plugin_fusioninventory']['errors'][22]="Elemento autônomo em";
 $LANG['plugin_fusioninventory']['errors'][50]="Versão do GLPI não compatível. Necessário versão 0.78";
