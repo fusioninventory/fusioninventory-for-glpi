@@ -1,40 +1,47 @@
 <?php
+
 /*
- ----------------------------------------------------------------------
- FusionInventory
- Copyright (C) 2003-2008 by the INDEPNET Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org//
- ----------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
-	This file is part of GLPI.
+   This file is part of FusionInventory.
 
-    FusionInventory is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
-    FusionInventory is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with FusionInventory; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ------------------------------------------------------------------------
-*/
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
 
-// Original Author of file: David DURIEUX
-// Purpose of file:
-// ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
+ */
 
 class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
    public $dohistory = true;
 
+   /**
+   * Get name of this type
+   *
+   *@return text name of this type by language of the user connected
+   *
+   **/
    static function getTypeName() {
       global $LANG;
 
@@ -165,6 +172,15 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
    
 
+   /**
+   * Display form for unknown device
+   *
+   * @param $id integer id of the unknown device
+   * @param $options array
+   *
+   * @return bool true if form is ok
+   *
+   **/
 	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 
@@ -307,7 +323,16 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 	}
 
 
-   
+
+   /**
+   * Form to import devices in GLPI inventory (computer, printer...)
+   *
+   * @param $target target page
+   * @param $id integer id of the unknowndevice
+   *
+   * @return nothing
+   *
+   **/
    function importForm($target,$id) {
       global $LANG;
       
@@ -330,6 +355,14 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo "</div>";
    }
 
+
+
+   /**
+   * Clean orphelins connections
+   *
+   * @return nothing
+   *
+   **/
    function CleanOrphelinsConnections() {
       global $DB;
 
@@ -350,83 +383,23 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                              WHERE `id`='".$data["id"]."';";
 				$DB->query($query_update);
          }
-      }
-      
+      }      
    }
 
 
 
-	function FusionUnknownKnownDevice() {
-		global $DB;
-
-		$query = "SELECT *
-                FROM `glpi_networkports`
-                WHERE `mac` != ''
-                      AND `mac` != '00:00:00:00:00:00'
-                      AND `itemtype`=".'PluginFusioninventoryUnknownDevice'."
-                GROUP BY `mac`
-                HAVING COUNT(*)>0;";
-		if ($result=$DB->query($query)) {
-			while ($data=$DB->fetch_array($result)) {
-				// $data = id of unknown device
-				$query_known = "SELECT *
-                            FROM `glpi_networkports`
-                            WHERE `mac` IN ('".$data["mac"]."','".strtoupper($data["mac"])."',
-                                              '".strtolower($data["mac"])."')
-                                  AND `itemtype`!=".'PluginFusioninventoryUnknownDevice'."
-                            LIMIT 0,1;";
-				$result_known=$DB->query($query_known);
-            if ($DB->numrows($result_known) > 0) {
-               $data_known=$DB->fetch_array($result_known);
-
-               $query_update = "UPDATE `glpi_networkports`
-                                SET `items_id`='".$data_known["items_id"]."',
-                                    `itemtype='".$data_known["itemtype"]."',
-                                    `logical_number`='".$data_known["logical_number"]."',
-                                    `name`='".$data_known["name"]."',
-                                    `ip`='".$data_known["ip"]."',
-                                    `networkinterfaces_id`='".$data_known["networkinterfaces_id"]."',
-                                    `netpoints_id`='".$data_known["netpoints_id"]."',
-                                    `netmask`='".$data_known["netmask"]."',
-                                    `gateway`='".$data_known["gateway"]."',
-                                    `subnet`='".$data_known["subnet"]."'
-                                  WHERE `id`='".$data["id"]."';";
-               $DB->query($query_update);
-
-               // Delete old networking port
-               $this->delete($data_known,1);
-
-               // Delete unknown device
-               $a_unknowndevice = $this->getFromDB($data["items_id"]);
-               $this->delete($a_unknowndevice,1);
-
-               // Modify OCS link of this networking port
-               $query = "SELECT *
-                         FROM `glpi_ocs_link`
-                         WHERE `glpi_id`='".$data_known["items_id"]."';";
-               $result = $DB->query($query);
-               if ($DB->numrows($result) == 1) {
-                  $line = $DB->fetch_assoc($result);
-
-                  $import_ip = importArrayFromDB($line["import_ip"]);
-                  $ip_port = $import_ip[$data_known["id"]];
-                  unset($import_ip[$data_known["id"]]);
-                  $import_ip[$data["id"]] = $ip_port;
-
-                  $query_update = "UPDATE `glpi_ocs_link`
-                                   SET `import_ip`='" . exportArrayToDB($import_ip) . "'
-                                   WHERE `glpi_id`='".$line["id"]."';";
-                  $DB->query($query_update);
-               }
-            }
-			}
-		}
-	}
-
+   /**
+   * Convert an unknown device to unknown "networkequipment"
+   *
+   * @param $id integer id of the unknown device
+   *
+   * @return bool
+   *
+   **/
    function convertUnknownToUnknownNetwork($id) {
       global $DB;
 
-      $np = new NetworkPort;
+      $np = new NetworkPort();
 
       $this->getFromDB($id);
 
@@ -632,7 +605,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 //                                          array('query_nb_connections_created' => '1'));
 //                              plugin_fusioninventory_addLogConnection("make",$p_oPort->getValue('ID'));
                            }
-                           releaseHub($this->fields['id'], $p_oPort);
+                           $this->releaseHub($this->fields['id'], $p_oPort);
                            return $this->fields['id'];
                         }
                      }

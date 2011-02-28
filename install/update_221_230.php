@@ -1303,6 +1303,10 @@ function update221to230() {
       VALUES('version', '2.2.1', '".$snmp_id."')";
    $DB->query($sql_ins);
 
+
+   $ptud = new PluginFusioninventoryUnknownDevice();
+   $ptud->CleanOrphelinsConnections();
+
 }
 
 ?>
