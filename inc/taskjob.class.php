@@ -186,7 +186,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusioninventory']['task'][26]."&nbsp;:</td>";
       echo "<td align='center'>";
-      $this->dropdownMethod("method_id", $this->fields['method']);
+      $this->dropdownMethod("method", $this->fields['method']);
       echo "</td>";
       echo "</tr>";
 
