@@ -88,7 +88,7 @@ function pluginFusioninventoryUpdate($current_version) {
    echo "</tr>";
 
    echo "<tr class='tab_bg_1'>";
-   echo "<td>";
+   echo "<td align='center'>";
 
    // update from current_version to last case version + 1
    switch ($current_version){

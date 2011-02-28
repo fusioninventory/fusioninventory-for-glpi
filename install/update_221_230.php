@@ -41,8 +41,14 @@ function update221to230() {
 
    ini_set("max_execution_time", "0");
 
+   echo "<strong>Update 2.2.1 to 2.3.0</strong><br/>";
+   echo "</td>";
+   echo "</tr>";
+
+   echo "<tr class='tab_bg_1'>";
+   echo "<td align='center'>";
+
    plugin_fusioninventory_displayMigrationMessage("230"); // Start
-   echo "update221to230<br/>";
 
    plugin_fusioninventory_displayMigrationMessage("230", $LANG['update'][141]); // Updating schema
    
