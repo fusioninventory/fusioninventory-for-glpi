@@ -67,6 +67,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
       $_SESSION['SOURCEXML'] = $p_xml;
 
+      $result = false;
+
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->import().');
 
