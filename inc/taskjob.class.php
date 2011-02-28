@@ -831,30 +831,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
 
    /**
-   * Display tasks running
-   *
-   * @return nothing
-   *
-   **/
-   function showRunning() {
-      global $DB;
-
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
-
-      $query = "SELECT * FROM ".$this->getTable()."
-         WHERE status='1' ";
-
-      if ($result = $DB->query($query)) {
-         while ($data=$DB->fetch_array($result)) {
-            if ($PluginFusioninventoryTaskjobstatus->stateTaskjob($data['id'], '', 'get') < 100) {
-               $PluginFusioninventoryTaskjobstatus->stateTaskjob($data['id'], '200');
-            }
-         }
-      }
-   }
-   
-   
-   /**
    * Display actions possible in device
    *
    * @return nothing
