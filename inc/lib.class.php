@@ -134,6 +134,12 @@ class PluginFusinvinventoryLib extends CommonDBTM {
             $PluginFusinvinventoryInventory = new PluginFusinvinventoryInventory();
             $PluginFusinvinventoryInventory->createMachineInLib($items_id, $internalId);
          }
+
+         // Link computer to agent FusionInventory
+         $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
+         $PluginFusioninventoryAgent->setAgentWithComputerid($items_id, $xml->DEVICEID);
+
+
          //Sections update
          $xmlSections = $this->_getXMLSections($simpleXMLObj);
          $this->updateLibMachine($xmlSections, $internalId);
