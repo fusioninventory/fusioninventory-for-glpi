@@ -42,9 +42,9 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
 	function export($ID_model) {
 		global $DB;
-		
+
 		PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","r");
-		$query = "SELECT * 
+		$query = "SELECT *
                 FROM `glpi_plugin_fusinvsnmp_models`
                 WHERE `id`='".$ID_model."';";
 
@@ -57,8 +57,8 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 			} else {
 				exit();
          }
-		}	
-			
+		}
+
 		// Construction of XML file
 		$xml = "<model>\n";
 		$xml .= "	<name><![CDATA[".$model_name."]]></name>\n";
@@ -87,27 +87,27 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 				$xml .= "			<activation>".$data["is_active"]."</activation>\n";
 				$xml .= "		</oidobject>\n";
 			}
-		}		
+		}
 		$xml .= "	</oidlist>\n";
 		$xml .= "</model>\n";
-		
+
 		return $xml;
 	}
-	
-	
-	
+
+
+
 	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
-		
+
 		PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model", "r");
-		
+
       $target = GLPI_ROOT.'/plugins/fusinvsnmp/front/model.form.php';
 		echo "<form action='".$target."?add=1' method='post' enctype='multipart/form-data'>";
 
 		echo "<br>";
 		echo "<table class='tab_cadre' cellpadding='1' width='600'><tr><th colspan='2'>";
 		echo $LANG['plugin_fusinvsnmp']['model_info'][10]." :</th></tr>";
-      
+
 		echo "	<tr class='tab_bg_1'>";
 		echo "		<td align='center'>";
 		echo "</td>";
@@ -127,7 +127,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 		echo "</tr>";
 		echo "</table>";
 
-		echo "</form>";		
+		echo "</form>";
 	}
 
 
@@ -174,7 +174,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
                 FROM `glpi_plugin_fusinvsnmp_models`
                 WHERE `name`='".(string)$xml->name."';";
 		$result = $DB->query($query);
-		
+
 		if ($DB->numrows($result) > 0) {
 			if ($message == '1') {
 				$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusinvsnmp']['model_info'][8];
@@ -195,7 +195,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
             case '3':
                $type = "Printer";
                break;
-            
+
          }
 
 			$query = "INSERT INTO `glpi_plugin_fusinvsnmp_models`
@@ -203,7 +203,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
                    VALUES('".(string)$xml->name."','".$type."','".(string)$xml->key."','".(string)$xml->comments."');";
 			$DB->query($query);
 			$plugin_fusinvsnmp_models_id = $DB->insert_id();
-			
+
 			$i = -1;
 			foreach($xml->oidlist->oidobject as $child) {
             unset($plugin_fusinvsnmp_mibobjects_id);
@@ -288,7 +288,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
    }
 
 
-   
+
 	function import_netdiscovery($p_xml, $agentKey) {
 		global $DB,$LANG;
       $test = '';
@@ -337,11 +337,11 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
 	function import_agentonly($content_dir,$file) {
 		global $DB,$LANG;
-		
+
 		$xml = simplexml_load_file($content_dir.$file,'SimpleXMLElement', LIBXML_NOCDATA);
-		
+
 		$num_files = $xml->agent->num_files;
-		
+
 		$file_modif = str_replace(".xml", "-device.xml", $file);
 		$target = $content_dir.$file_modif;
 		$handle = fopen($target, 'a');
@@ -384,7 +384,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
                        `fusioninventory_agent_version`='".$agent_version."'
                    WHERE `id`='".$agent_id."';";
 			$DB->query($query);
- 	            
+
 			$query = "UPDATE `glpi_plugin_fusioninventory_agentprocesses`
                    SET `end_time`='".$agent->end_date."',
                        `status`='3',
@@ -394,8 +394,8 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
                        `end_time_query`='".$agent->end_time_query."'
                    WHERE `process_number`='".$agent->pid."'
                         AND `plugin_fusioninventory_agents_id`='".$agent->id."';";
-			$DB->query($query);           
-		}		
+			$DB->query($query);
+		}
 	}
 
 }

@@ -177,7 +177,6 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_models` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
    `itemtype` VARCHAR( 100 ) COLLATE utf8_unicode_ci NOT NULL,
-   `is_active` int(1) NOT NULL DEFAULT '1',
    `discovery_key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `comment` text COLLATE utf8_unicode_ci,
    PRIMARY KEY (`id`),

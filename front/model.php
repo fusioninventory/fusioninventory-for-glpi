@@ -45,8 +45,6 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 $_GET['target']="model.php";
 
-//searchForm('PluginFusinvsnmpModel',$_GET);
-//showList('PluginFusinvsnmpModel',$_GET);
 Search::show('PluginFusinvsnmpModel');
 
 commonFooter();
