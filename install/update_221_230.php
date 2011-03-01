@@ -800,10 +800,8 @@ function update221to230() {
    $DB->query($sql);
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_models`
       DROP `deleted`,
-      DROP `FK_entities`;";
-   $DB->query($sql);
-   $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_models`
-      CHANGE `activation` `is_active` INT( 1 ) NOT NULL DEFAULT '1'";
+      DROP `FK_entities`,
+      DROP `activation`";
    $DB->query($sql);
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_models`
       CHANGE `comments` `comment` TEXT CHARACTER
