@@ -591,12 +591,21 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
 
 
-   function searchIfmacOnHub($a_ports, $a_portglpi) {
+   /**
+   * Search if port yet connected to hub
+   *
+   * @param $a_port array datas of a port
+   * @param $a_portglpi array all ports connected to the hub
+   *
+   * @return id of the port of the hub where port is connected
+   *
+   **/
+   function searchIfmacOnHub($a_port, $a_portglpi) {
 
-      foreach ($a_ports as $data) {
-         if (isset($a_portglpi[$data['id']])) {
-            return $a_portglpi[$data['id']];
-         }
+      $data= array();
+      $data = current($a_port);
+      if (isset($a_portglpi[$data['id']])) {
+         return $a_portglpi[$data['id']];
       }
       return false;
    }
