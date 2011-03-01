@@ -612,6 +612,15 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
 
 
+   /**
+   * Creation of a hub 
+   *
+   * @param $p_oPort object Informations of the network port
+   * @param $agent_id integer id of the agent
+   *
+   * @return id of the hub (unknowndevice)
+   *
+   **/
    function createHub($p_oPort, $agent_id) {
       global $DB;
 
@@ -676,6 +685,15 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
 
 
+   /**
+   * Remove all connections on a hub
+   *
+   * @param $hub_id integer id of the hub
+   * @param $p_oPort object Informations of the network port
+   *
+   * @return nothing
+   *
+   **/
    function releaseHub($hub_id, $p_oPort) {
 
       $Netport = new NetworkPort();
@@ -705,8 +723,12 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
 
 
-
-
+   /**
+   * Clean hubs (unknown device) yet in inventory (clean connections, networkport, and hub)
+   *
+   * @return nothing
+   *
+   **/
    function cleanUnknownSwitch() {
       global $DB;
 
@@ -734,6 +756,17 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       }
    }
 
+
+
+   /**
+   * Write XML in a folder when unknown device is created from an inventory by agent
+   *
+   * @param $items_id integer id of the unknown device
+   * @param $xml value xml informations (with XML structure)
+   *
+   * @return nothing
+   *
+   **/
    function writeXML($items_id, $xml) {
 
       $folder = substr($items_id,0,-1);
@@ -746,8 +779,6 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/u".$folder."/u".$items_id, 'w');
       fwrite($fileopen, $xml);
       fclose($fileopen);
-
-
    }
 
 
@@ -959,9 +990,6 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       }
       return array($Import, $NoImport);
    }
-
-
-
 }
 
 ?>
