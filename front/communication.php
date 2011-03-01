@@ -1,37 +1,36 @@
 <?php
+
 /*
- * @version $Id$
- -------------------------------------------------------------------------
- FusionInventory
- Coded by the FusionInventory Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org/
- -------------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- --------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: Vincent Mazzoni
+   Co-authors of file: David DURIEUX
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: MAZZONI Vincent
-// Purpose of file: test of communication class
-// ----------------------------------------------------------------------
 
 ini_set("memory_limit", "-1");
 ini_set("max_execution_time", "0");
@@ -86,6 +85,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
    }
    $pta->importToken(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
 
+   $top0 = 0;
    $top0 = gettimeofday();
    if (!$PluginFusioninventoryCommunication->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
       $p_xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
@@ -97,13 +97,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
 <REPLY>
 </REPLY>");
 
-
-         $PluginFusionInventoryConfig        = new PluginFusioninventoryConfig;
-         $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
-
          $a_agent = $pta->InfosByKey($pxml->DEVICEID);
-
-         $single = 0;
 
          // Get taskjob in waiting
          $PluginFusioninventoryCommunication->getTaskAgent($a_agent['id']);
