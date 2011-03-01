@@ -127,12 +127,6 @@ function pluginFusioninventoryUpdate($current_version) {
          update221to230();
 
    }
-//   // Remote IP of switch ports
-//   $query = "UPDATE `glpi_networkports`
-//             SET `ip` = NULL
-//             WHERE `itemtype` ='NetworkEquipment'
-//                AND `ip` IS NOT NULL ";
-//   $DB->query($query);
 
    $plugins_id = PluginFusioninventoryModule::getModuleId("fusinvinventory");
    include(GLPI_ROOT."/plugins/fusioninventory/inc/profile.class.php");
@@ -141,8 +135,9 @@ function pluginFusioninventoryUpdate($current_version) {
    echo "</td>";
    echo "</tr>";
    echo "</table></center>";
-
 }
+
+
 
 function plugin_fusioninventory_displayMigrationMessage ($id, $msg="") {
 	global $LANG;
@@ -162,6 +157,5 @@ function plugin_fusioninventory_displayMigrationMessage ($id, $msg="") {
 	}
 	glpi_flush();
 }
-
 
 ?>

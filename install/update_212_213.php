@@ -60,7 +60,6 @@ function update212to213() {
    echo "<tr class='tab_bg_1'>";
    echo "<td align='center'>";
 
-
 }
 
 ?>
