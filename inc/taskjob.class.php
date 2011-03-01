@@ -347,11 +347,11 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                      'rand'=>$rand,
                      'myname'=>$myname
                      );
-      ajaxUpdateItemOnSelectEvent("dropdown_method_id".$rand,"show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params);
+      ajaxUpdateItemOnSelectEvent("dropdown_method".$rand,"show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params);
 
       if ($value != "0") {
          echo "<script type='text/javascript'>";
-         ajaxUpdateItemJsCode("show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params,true,"dropdown_method_id".$rand);
+         ajaxUpdateItemJsCode("show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params,true,"dropdown_method".$rand);
          echo "</script>";
       }
 
@@ -360,11 +360,11 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                      'rand'=>$rand,
                      'myname'=>$myname
                      );
-      ajaxUpdateItemOnSelectEvent("dropdown_method_id".$rand,"show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params);
+      ajaxUpdateItemOnSelectEvent("dropdown_method".$rand,"show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params);
 
       if ($value != "0") {
          echo "<script type='text/javascript'>";
-         ajaxUpdateItemJsCode("show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params,true,"dropdown_method_id".$rand);
+         ajaxUpdateItemJsCode("show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params,true,"dropdown_method".$rand);
          echo "</script>";
       }
 
