@@ -421,7 +421,16 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    }
 
 
-   
+
+   /**
+   * Manage a hub (many mac on a port mean you have a hub)
+   *
+   * @param $p_oPort object Informations of the network port
+   * @param $agent_id integer id of the agent
+   *
+   * @return bool
+   *
+   **/
    function hubNetwork($p_oPort, $agent_id) {
       global $DB;
 
@@ -508,6 +517,15 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
 
 
+   /**
+   * Delete all ports connected in hub and not found in last inventory
+   *
+   * @param $hub_id integer id of the hub (unknown device)
+   * @param $a_portUsed array list of the ports found in last inventory
+   *
+   * @return nothing
+   *
+   **/
    function deleteNonUsedPortHub($hub_id, $a_portUsed) {
 
       $Netport = new NetworkPort();
@@ -527,40 +545,48 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
 
 
-   function connectPortToHub($a_ports, $hub_id) {
+   /**
+   * Connect a port to hub
+   *
+   * @param $a_port array datas of a port
+   * @param $hub_id integer id of the hub (unknown device)
+   *
+   * @return id of the port of the hub where port is connected
+   *
+   **/
+   function connectPortToHub($a_port, $hub_id) {
       global $DB;
 
       $Netport = new NetworkPort();
       $nn = new NetworkPort_NetworkPort();
 
-      foreach ($a_ports as $data) {
-         //plugin_fusioninventory_addLogConnection("remove",$port_id);
-         $nn->delete(array('id' => $data['id']));
-         // Search free port
-         $query = "SELECT `glpi_networkports`.`id` FROM `glpi_networkports`
-            LEFT JOIN `glpi_networkports_networkports`
-               ON `glpi_networkports`.`id` = `networkports_id_1` OR `glpi_networkports`.`id` = `networkports_id_2`
-            WHERE `itemtype`='".$this->type."'
-               AND `items_id`='".$hub_id."'
-               AND `networkports_id_1` is null
-            LIMIT 1;";
-         $result = $DB->query($query);
-         $freeport_id = 0;
-         if ($DB->numrows($result) == 1) {
-            $freeport = $DB->fetch_assoc($result);
-            $freeport_id = $freeport['id'];
-         } else {
-            // Create port
-            $input = array();
-            $input["items_id"] = $hub_id;
-            $input["itemtype"] = $this->type;
-            $freeport_id = $Netport->add($input);
-         }
-         $nn->add(array('networkports_id_1'=> $data['id'], 'networkports_id_2' => $freeport_id));
-
-         //plugin_fusioninventory_addLogConnection("make",$port_id);
-         return $freeport_id;
+      $data = current($a_port);
+       //plugin_fusioninventory_addLogConnection("remove",$port_id);
+      $nn->delete(array('id' => $data['id']));
+      // Search free port
+      $query = "SELECT `glpi_networkports`.`id` FROM `glpi_networkports`
+         LEFT JOIN `glpi_networkports_networkports`
+            ON `glpi_networkports`.`id` = `networkports_id_1` OR `glpi_networkports`.`id` = `networkports_id_2`
+         WHERE `itemtype`='".$this->type."'
+            AND `items_id`='".$hub_id."'
+            AND `networkports_id_1` is null
+         LIMIT 1;";
+      $result = $DB->query($query);
+      $freeport_id = 0;
+      if ($DB->numrows($result) == 1) {
+         $freeport = $DB->fetch_assoc($result);
+         $freeport_id = $freeport['id'];
+      } else {
+         // Create port
+         $input = array();
+         $input["items_id"] = $hub_id;
+         $input["itemtype"] = $this->type;
+         $freeport_id = $Netport->add($input);
       }
+      $nn->add(array('networkports_id_1'=> $data['id'], 'networkports_id_2' => $freeport_id));
+
+      //plugin_fusioninventory_addLogConnection("make",$port_id);
+      return $freeport_id;
    }
 
 
