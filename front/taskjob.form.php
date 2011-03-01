@@ -107,6 +107,11 @@ if (isset ($_POST["add"])) {
       }
       $_POST['action'] = exportArrayToDB($a_actionlistDB);
    }
+   if (isset($_POST['method_id'])) {
+      $_POST['method'] = $_POST['method_id'];
+   }
+   $_POST['plugins_id'] = $_POST['method-'.$_POST['method']];
+
    $PluginFusioninventoryTaskjob->update($_POST);
 
    glpi_header($_SERVER['HTTP_REFERER']);
