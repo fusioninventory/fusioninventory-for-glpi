@@ -128,13 +128,17 @@ class PluginFusinvinventoryInventory {
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
          $this->rulepassed(0, "Computer");
       }
-      logInFile("xxx",print_r($data, true));
+      if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+         logInFile("xxx",print_r($data, true));
+      }
    }
    
 
 
    function rulepassed($items_id, $itemtype) {
-      logInFile("xxx", "Rule passed : ".$items_id.", ".$itemtype."\n");
+      if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+         logInFile("xxx", "Rule passed : ".$items_id.", ".$itemtype."\n");
+      }
       $xml = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
 
       if ($itemtype == 'Computer') {
@@ -145,10 +149,10 @@ class PluginFusinvinventoryInventory {
             $input = array();
             $input['date_mod'] = date("Y-m-d H:i:s");
             $items_id = $Computer->add($input);
-            $PluginFusinvinventoryComputer = new PluginFusinvinventoryComputer();
-            $input = array();
-            $input['items_id'] = $items_id;
-            $PluginFusinvinventoryComputer->add($input);
+//            $PluginFusinvinventoryComputer = new PluginFusinvinventoryComputer();
+//            $input = array();
+//            $input['items_id'] = $items_id;
+//            $PluginFusinvinventoryComputer->add($input);
             $PluginFusinvinventoryLib->startAction($xml, $items_id, '1');
          } else {
             $PluginFusinvinventoryLib->startAction($xml, $items_id, '0');
@@ -483,7 +487,7 @@ class PluginFusinvinventoryInventory {
          $a_sectionsinfos[] = "VIDEOS/".$deviceGraphicCard_id;
          $xml_video = $xml_content->addChild("VIDEOS");
          $DeviceGraphicCard->getFromDB($deviceGraphicCard_data['devicegraphiccards_id']);
-         $xml_video->addChild("NAME", $DeviceSoundCard->fields['designation']);
+         $xml_video->addChild("NAME", $DeviceGraphicCard->fields['designation']);
          $xml_video->addChild("MEMORY", $deviceGraphicCard_data['specificity']);
       }
 

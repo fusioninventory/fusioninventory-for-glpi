@@ -73,48 +73,8 @@ class PluginFusinvinventoryLibhook {
       $input = $Computer->fields;
       $input['is_deleted'] = 0;
       $input['autoupdatesystems_id'] = Dropdown::importExternal('AutoUpdateSystem', 'FusionInventory');
+      $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
 
-      $_SESSION["plugin_fusinvinventory_entity"] = "0";
-
-      $xml = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
-      // ** Get entity with rules
-         $input_rules = array();
-         if ((isset($xml->CONTENT->BIOS->SSN)) AND (!empty($xml->CONTENT->BIOS->SSN))) {
-            $input_rules['serialnumber'] = $xml->CONTENT->BIOS->SSN;
-         }
-         if ((isset($xml->CONTENT->HARDWARE->NAME)) AND (!empty($xml->CONTENT->HARDWARE->NAME))) {
-            $input_rules['name'] = $xml->CONTENT->HARDWARE->NAME;
-         }
-         if (isset($xml->CONTENT->NETWORKS)) {
-            foreach($xml->CONTENT->NETWORKS as $network) {
-               if ((isset($network->IPADDRESS)) AND (!empty($network->IPADDRESS))) {
-                  $input_rules['ip'][] = $network->IPADDRESS;
-               }
-               if ((isset($network->IPSUBNET)) AND (!empty($network->IPSUBNET))) {
-                  $input_rules['subnet'][] = $network->IPADDRESS;
-               }
-            }
-         }
-         if ((isset($xml->CONTENT->HARDWARE->USERDOMAIN)) AND (!empty($xml->CONTENT->HARDWARE->USERDOMAIN))) {
-            $input_rules['domain'] = $xml->CONTENT->HARDWARE->USERDOMAIN;
-         }
-         if ((isset($xml->CONTENT->ACCOUNTINFO->KEYNAME)) AND ($xml->CONTENT->ACCOUNTINFO->KEYNAME == 'TAG')) {
-            if (isset($xml->CONTENT->ACCOUNTINFO->KEYVALUE)) {
-               $input_rules['tag'] = $xml->CONTENT->ACCOUNTINFO->KEYVALUE;
-            }
-         }
-
-         $ruleEntity = new PluginFusinvinventoryRuleEntityCollection();
-         $dataEntity = array ();
-         $dataEntity = $ruleEntity->processAllRules($input_rules, array());
-         if (isset($dataEntity['entities_id'])) {
-            $input['entities_id'] = $dataEntity['entities_id'];
-            $_SESSION["plugin_fusinvinventory_entity"] = $dataEntity['entities_id'];
-         } else {
-            $input['entities_id'] = "0";
-            $_SESSION["plugin_fusinvinventory_entity"] = "0";
-         }
-         
       $Computer->update($input, 0);
 
       $PluginFusinvinventoryLibhook->writeXMLFusion($items_id);
@@ -142,8 +102,10 @@ class PluginFusinvinventoryLibhook {
     public static function addSections($data, $idmachine) {
        global $DB;
 
-      logInFile("addsection", "[".$idmachine."] ".print_r($data, true));
-
+       if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+         logInFile("addsection", "[".$idmachine."] ".print_r($data, true));
+       }
+       
       $Computer = new Computer;
       $PluginFusinvinventoryComputer = new PluginFusinvinventoryComputer();
 
@@ -202,6 +164,11 @@ class PluginFusinvinventoryLibhook {
                if (isset($dataSection['SSN']))
                   $Computer->fields['serial'] = $dataSection['SSN'];
 
+               if (isset($dataSection['TYPE'])) {
+                  $ComputerType = new ComputerType();
+                  $Computer->fields['computertypes_id'] = Dropdown::importExternal('ComputerType',
+                                                                          $dataSection['TYPE']);
+               }
                break;
 
             case 'HARDWARE':
@@ -517,9 +484,10 @@ class PluginFusinvinventoryLibhook {
       $Computer->getFromDB($idmachine);
       $_SESSION["plugin_fusinvinventory_entity"] = $Computer->fields['entities_id'];
 
+        if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+           logInFile("removesection", "[".$idmachine."] ".print_r($idsections, true));
+        }
         
-        logInFile("removesection", "[".$idmachine."] ".print_r($idsections, true));
-
         foreach ($idsections as $section) {
             $split = explode("/", $section);
             $sectionName = $split[0];
@@ -721,7 +689,13 @@ class PluginFusinvinventoryLibhook {
                   }
                   if (isset($dataSection['SSN']))
                      $Computer->fields['serial'] = $dataSection['SSN'];
-                  
+
+                  if (isset($dataSection['TYPE'])) {
+                     $ComputerType = new ComputerType();
+                     $Computer->fields['computertypes_id'] = Dropdown::importExternal('ComputerType',
+                                                                          $dataSection['TYPE']);
+                  }
+
                   $Computer->update($Computer->fields);
                   break;
 
@@ -746,8 +720,9 @@ class PluginFusinvinventoryLibhook {
             }
          }
       }
-
-       logInFile("updatesection", "[".$idmachine."] ".print_r($data, true));
+      if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+         logInFile("updatesection", "[".$idmachine."] ".print_r($data, true));
+      }
     }
 
 
