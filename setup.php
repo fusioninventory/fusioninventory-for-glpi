@@ -187,6 +187,7 @@ function plugin_version_fusioninventory() {
    return array('name'           => 'FusionInventory',
                 'shortname'      => 'fusioninventory',
                 'version'        => '2.3.0',
+                'oldname'        => 'tracker',
                 'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
                                     & <a href="mailto:v.mazzoni@siprossii.com">Vincent MAZZONI</a>',
                 'homepage'       =>'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/',

@@ -3,19 +3,19 @@
 /*
    ----------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2003-2008 by the INDEPNET Development Team.
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org//
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ----------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
-   FusionInventory is free software; you can redistribute it and/or modify
+   FusionInventory is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2 of the License, or
-   (at your option) any later version.
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -23,17 +23,57 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with FusionInventory; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-   ------------------------------------------------------------------------
- */
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
 
-// Original Author of file: David DURIEUX
-// Purpose of file:
-// ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
+ */
 
 class PluginFusioninventoryTask extends CommonDBTM {
 
+   /**
+   * Get name of this type
+   *
+   *@return text name of this type by language of the user connected
+   *
+   **/
+   static function getTypeName() {
+      global $LANG;
+
+      return $LANG['plugin_fusioninventory']['task'][1];
+   }
+
+
+   
+   function canCreate() {
+      return true;
+   }
+
+   function canView() {
+      return true;
+   }
+
+   function canCancel() {
+      return true;
+   }
+
+   function canUndo() {
+      return true;
+   }
+
+   function canValidate() {
+      return true;
+   }
+
+   function canUpdate() {
+      return true;
+   }
+
+
+   
    function getSearchOptions() {
       global $LANG;
 
@@ -90,39 +130,6 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
 
    
-   static function getTypeName() {
-      global $LANG;
-
-      return $LANG['plugin_fusioninventory']['task'][1];
-   }
-
-
-   function canCreate() {
-      return true;
-   }
-
-   function canView() {
-      return true;
-   }
-
-   function canCancel() {
-      return true;
-   }
-
-   function canUndo() {
-      return true;
-   }
-
-   function canValidate() {
-      return true;
-   }
-
-   function canUpdate() {
-      return true;
-   }
-
-
-
    function defineTabs($options=array()){
       global $LANG,$CFG_GLPI,$DB;
 
@@ -147,6 +154,15 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
 
 
+   /**
+   * Display form for task configuration
+   *
+   * @param $items_id integer ID of the task
+   * @param $options array
+   *
+   *@return bool true if form is ok
+   *
+   **/
    function showForm($id, $options=array()) {
       global $DB,$CFG_GLPI,$LANG;
 
@@ -203,8 +219,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
       Dropdown::showFromArray("communication", $com, array('value'=>$this->fields["communication"]));
       echo "</td>";
       
-      echo "<td rowspan='3'>".$LANG['common'][25]."&nbsp;:</td>";
-      echo "<td align='center' rowspan='3'>";
+      echo "<td rowspan='2'>".$LANG['common'][25]."&nbsp;:</td>";
+      echo "<td align='center' rowspan='2'>";
       echo "<textarea cols='45' rows='3' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "</td>";
       echo "</tr>";
@@ -220,68 +236,12 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<td colspan='2'></td>";
-      echo "</tr>";
-
       $this->showFormButtons($options);
       $this->addDivForTabs();
 
       return true;
    }
-
    
-
-   function ListTask($agent_id, $action) {
-      global $DB;
-
-      $tasks = array();
-      $list = $this->find("`agent_id`='".$agent_id."' AND `action`='".$action."' ");
-      foreach ($list as $data) {
-         switch ($data['itemtype']) {
-
-            case NETWORKING_TYPE:
-               $query = "SELECT glpi_plugin_fusioninventory_tasks.id as id, param, ip, single,
-                           glpi_plugin_fusioninventory_tasks.items_id as items_id, glpi_plugin_fusioninventory_tasks.itemtype as itemtype
-                        FROM `glpi_plugin_fusioninventory_tasks`
-                        INNER JOIN glpi_networkequipments on glpi_plugin_fusioninventory_tasks.items_id=glpi_networkequipments.id
-                        WHERE `agent_id`='".$agent_id."'
-                           AND `action`='".$action."'";
-               break;
-
-            case COMPUTER_TYPE:
-            case PRINTER_TYPE:
-               $query = "SELECT glpi_plugin_fusioninventory_tasks.id as id, param, ip, single,
-                           glpi_plugin_fusioninventory_tasks.items_id as items_id, glpi_plugin_fusioninventory_tasks.itemtype as itemtype
-                        FROM `glpi_plugin_fusioninventory_tasks`
-                        INNER JOIN glpi_networkports on (glpi_plugin_fusioninventory_tasks.items_id=glpi_networkports.items_id
-                                                      AND glpi_plugin_fusioninventory_tasks.itemtype=glpi_networkports.itemtype)
-                        WHERE `agent_id`='".$agent_id."'
-                           AND `action`='".$action."'
-                           AND `ip`!='127.0.0.1'";
-
-               break;
-         }
-      }
-
-      if ($result = $DB->query($query)) {
-         if ($DB->numrows($result) != 0) {
-            while ($data=$DB->fetch_array($result)) {
-               $tasks[$data["id"]] = $data;
-               switch ($tasks[$data["id"]]["itemtype"]) {
-                  case "networking":
-                     $tasks[$data["id"]]["itemtype"]='NETWORKING';
-                     break;
-                  case "printer":
-                     $tasks[$data["id"]]["itemtype"]='PRINTER';
-                     break;
-               }
-            }
-         }
-      }
-      return $tasks;
-   }
-
 }
 
 ?>

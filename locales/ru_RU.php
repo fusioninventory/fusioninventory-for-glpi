@@ -68,6 +68,7 @@ $LANG['plugin_fusioninventory']['functionalities'][60]="Очистить ист�
 $LANG['plugin_fusioninventory']['functionalities'][73]="Поля";
 $LANG['plugin_fusioninventory']['functionalities'][74]="Значения";
 $LANG['plugin_fusioninventory']['functionalities'][75]="Блокировки";
+$LANG['plugin_fusioninventory']['functionalities'][76]="Extra-debug";
 
 $LANG['plugin_fusioninventory']['errors'][22]="Не подключённый элемент в";
 $LANG['plugin_fusioninventory']['errors'][50]="GLPI версия не совместима, требуется версия 0.78";

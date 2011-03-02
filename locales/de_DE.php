@@ -68,6 +68,7 @@ $LANG['plugin_fusioninventory']['functionalities'][60]="Verlauf löschen";
 $LANG['plugin_fusioninventory']['functionalities'][73]="Felder";
 $LANG['plugin_fusioninventory']['functionalities'][74]="Werte";
 $LANG['plugin_fusioninventory']['functionalities'][75]="Sperrungen";
+$LANG['plugin_fusioninventory']['functionalities'][76]="Extra-debug";
 
 $LANG['plugin_fusioninventory']['errors'][22]="Nicht erkannte Elemente in";
 $LANG['plugin_fusioninventory']['errors'][50]="Ihre GLPI-Version ist nicht kompatibel, Voraussetzung ist Version 0.78";

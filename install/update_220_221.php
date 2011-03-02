@@ -1,69 +1,81 @@
 <?php
 
 /*
- * @version $Id$
- ----------------------------------------------------------------------
- FusionInventory
- Coded by the FusionInventory Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org//
- ----------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: DURIEUX David
-// Purpose of file:
-// ----------------------------------------------------------------------
-
 
 // Update from 2.2.0 to 2.2.1
 function update220to221() {
-   global $DB;
+   global $DB, $LANG;
 
+   echo "<strong>Update 2.2.0 to 2.2.1</strong><br/>";
+   echo "</td>";
+   echo "</tr>";
+
+   echo "<tr class='tab_bg_1'>";
+   echo "<td align='center'>";
+
+   plugin_fusioninventory_displayMigrationMessage("221"); // Start
+
+   plugin_fusioninventory_displayMigrationMessage("221", $LANG['update'][141]); // Updating schema
+
+   plugin_fusioninventory_displayMigrationMessage("221", $LANG['update'][141]." Clean networkports not linked with devices");
    // Clean fusion IP when networkequipments_id has been deleted
    // (bug from Tracker 2.1.3 and before)
-   $query = "SELECT `glpi_plugin_fusioninventory_networkequipmentips`.*
-             FROM `glpi_plugin_fusioninventory_networkequipmentips`
+   $query = "SELECT `glpi_plugin_fusioninventory_networking_ifaddr`.*
+             FROM `glpi_plugin_fusioninventory_networking_ifaddr`
                   LEFT JOIN `glpi_networkequipments`
-                     ON `networkequipments_id`=`glpi_networkequipments`.`id`
+                     ON `FK_networking`=`glpi_networkequipments`.`id`
              WHERE `glpi_networkequipments`.`id` is null";
    if ($result=$DB->query($query)) {
       while ($data=$DB->fetch_array($result)) {
-         $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networkequipmentips`
-                          WHERE `id`='".$data['id']."' ";
+         $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networking_ifaddr`
+                          WHERE `ID`='".$data['ID']."' ";
          $DB->query($query_delete);
       }
    }
+
+   plugin_fusioninventory_displayMigrationMessage("221", $LANG['update'][141]." Clean networkequipment IPs not linked with networkequipment (bug Tracker)");
    // delete when IP not valid (bug from Tracker 2.1.3 and before)
    $query = "SELECT * FROM `glpi_plugin_fusioninventory_networkequipmentsips`";
    if ($result=$DB->query($query)) {
       while ($data=$DB->fetch_array($result)) {
          if (!preg_match("/^((25[0-5]|2[0-4]\d|1?\d?\d).){3}(25[0-5]|2[0-4]\d|1?\d?\d)$/",$data['ip'])) {
-            $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networkequipmentips`
-                             WHERE id='".$data['id']."' ";
+            $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networking_ifaddr`
+                             WHERE ID='".$data['ID']."' ";
             $DB->query($query_delete);
          }
       }
    }
+   plugin_fusioninventory_displayMigrationMessage("221", $LANG['update'][141]." Different cleaning DB");
    // locations with entity -1 (bad code)
    $query = "DELETE FROM `glpi_locations`
              WHERE `entities_id`='-1' ";
@@ -103,7 +115,13 @@ function update220to221() {
    $DB->query($query);
 
 
+   plugin_fusioninventory_displayMigrationMessage("221"); // End
 
+   echo "</td>";
+   echo "</tr>";
+
+   echo "<tr class='tab_bg_1'>";
+   echo "<td align='center'>";
 
 }
 

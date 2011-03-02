@@ -68,6 +68,7 @@ $LANG['plugin_fusioninventory']['functionalities'][60]="Nettoyage de l'historiqu
 $LANG['plugin_fusioninventory']['functionalities'][73]="Champs";
 $LANG['plugin_fusioninventory']['functionalities'][74]="Valeurs";
 $LANG['plugin_fusioninventory']['functionalities'][75]="Verrous";
+$LANG['plugin_fusioninventory']['functionalities'][76]="Extra-debug";
 
 $LANG['plugin_fusioninventory']['errors'][22]="Elément inattendu dans";
 $LANG['plugin_fusioninventory']['errors'][50]="La version de GLPI n'est pas compatible, vous avez besoin de la version 0.78";

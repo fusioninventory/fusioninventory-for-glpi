@@ -3,19 +3,19 @@
 /*
    ----------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2003-2008 by the INDEPNET Development Team.
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org//
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ----------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
-   FusionInventory is free software; you can redistribute it and/or modify
+   FusionInventory is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2 of the License, or
-   (at your option) any later version.
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -23,14 +23,14 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with FusionInventory; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-   ------------------------------------------------------------------------
- */
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
 
-// Original Author of file: David DURIEUX
-// Purpose of file:
-// ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
+ */
 
 class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
 
@@ -44,6 +44,18 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
     */
 
 
+   /**
+   * Display state of taskjob
+   *
+   * @param $taskjobs_id integer id of the taskjob
+   * @param $width integer how large in pixel display array
+   * @param $return value display or return in var (html or htmlvar or other value
+   *        to have state number in %)
+   * @param $style '' = normal or 'simple' for very simple display
+   *
+   * @return nothing, html or pourcentage value
+   *
+   **/
    function stateTaskjob ($taskjobs_id, $width = '930', $return = 'html', $style = '') {
       global $DB;
 
@@ -87,12 +99,22 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
 
 
 
+   /**
+   * Display state of an item of a taskjob
+   *
+   * @param $items_id integer id of the item
+   * @param $itemtype value type of the item
+   * @param $state value (all or each state : running, finished, nostarted)
+   *
+   * @return nothing
+   *
+   **/
    function stateTaskjobItem($items_id, $itemtype, $state='all') {
       global $DB,$LANG;
 
-      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog;
-      $PluginFusioninventoryTaskjob     = new PluginFusioninventoryTaskjob;
-      $PluginFusioninventoryTask        = new PluginFusioninventoryTask;
+      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $PluginFusioninventoryTaskjob     = new PluginFusioninventoryTaskjob();
+      $PluginFusioninventoryTask        = new PluginFusioninventoryTask();
       $icon = "";
       $title = "";
 
@@ -146,7 +168,6 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
          }
       }
 
-
       echo "<br/><div align='center'>";
 
       echo "<table  class='tab_cadre_fixe'>";
@@ -195,6 +216,16 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
    }
 
 
+
+   /**
+   * Change the state
+   *
+   * @param $id integer id of the statusjobstatus
+   * @param $state value state to set
+   *
+   * @return nothing
+   *
+   **/
    function changeStatus($id, $state) {
       $this->getFromDB($id);
       $input = $this->fields;
@@ -203,11 +234,19 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
    }
 
 
-   
+
+   /**
+   * Get taskjobs of an agent
+   *
+   * @param $agent_id integer id of the agent
+   *
+   * @return nothing
+   *
+   **/
    function getTaskjobsAgent($agent_id) {
       global $DB;
 
-      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
+      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
 
       $moduleRun = array();
 
@@ -225,6 +264,20 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
    }
 
 
+
+   /**
+   * Change the status to finish
+   *
+   * @param $taskjobstatus integer id of the taskjobstatus
+   * @param $items_id integer id of the item
+   * @param $itemtype value type of the item
+   * @param $error bool error
+   * @param $message value message for the status
+   * @param $unknown bool unknown or not device
+   *
+   * @return nothing
+   *
+   **/
    function changeStatusFinish($taskjobstatus, $items_id, $itemtype, $error=0, $message='', $unknown=0) {
 
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();

@@ -246,7 +246,9 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
 
    function findWithGlobalCriteria($input) {
       global $DB, $CFG_GLPI;
-logInFile("xxx", print_r($input, true));
+      if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+         logInFile("xxx", print_r($input, true));
+      }
       $complex_criterias = array();
       $sql_where         = '';
       $sql_from          = '';
@@ -361,8 +363,13 @@ logInFile("xxx", print_r($input, true));
             case 'mac' :
                $sql_where_temp = " AND `glpi_networkports`.`mac` IN ('";
                $sql_where_networkequipment_temp = " AND `[typetable]`.`mac` IN ('";
-               $sql_where_temp .= implode("', '",$input['mac']);
-               $sql_where_networkequipment_temp .= implode("', '",$input['mac']);
+               if (is_array($input['mac'])) {
+                  $sql_where_temp .= implode("', '",$input['mac']);
+                  $sql_where_networkequipment_temp .= implode("', '",$input['mac']);
+               } else {
+                  $sql_where_temp .= $input['mac'];
+                  $sql_where_networkequipment_temp .= $input['mac'];
+               }
                $sql_where_temp .= "')";
                $sql_where_networkequipment_temp .= "')";
 
@@ -373,8 +380,13 @@ logInFile("xxx", print_r($input, true));
             case 'ip' :
                $sql_where .= " AND `glpi_networkports`.`ip` IN ";
                $sql_where_networkequipment .= " AND `[typetable]`.`ip` IN ('";
-               $sql_where .= implode("', '",$input['ip']);
-               $sql_where_networkequipment .= implode("', '",$input['ip']);
+               if (is_array($input['ip'])) {
+                  $sql_where .= implode("', '",$input['ip']);
+                  $sql_where_networkequipment .= implode("', '",$input['ip']);
+               } else {
+                  $sql_where .= $input['ip'];
+                  $sql_where_networkequipment .= $input['ip'];
+               }
                $sql_where .= ")";
                $sql_where_networkequipment .= ")";
                break;
@@ -428,7 +440,9 @@ logInFile("xxx", print_r($input, true));
 
       // Suivant le / les types, on cherche dans un ou plusieurs / tous les types
       $found = 0;
-      logInFile("xxx", "===============\n");
+      if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+         logInFile("xxx", "===============\n");
+      }
       foreach ($itemtypeselected as $itemtype) {
          if ($itemtype == "NetworkEquipment") {
             $sql_from_temp = $sql_from_networkequipment;
@@ -456,7 +470,9 @@ logInFile("xxx", print_r($input, true));
             }
             $sql_glpi = str_replace("[typetable]", $item->getTable(), $sql_glpi);
             $sql_glpi = str_replace("[typename]", $itemtype, $sql_glpi);
-            logInFile("xxx", $sql_glpi."\n");
+            if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+               logInFile("xxx", $sql_glpi."\n");
+            }
             $result_glpi = $DB->query($sql_glpi);
 
             if ($DB->numrows($result_glpi) > 0) {
@@ -474,7 +490,9 @@ logInFile("xxx", print_r($input, true));
          foreach ($this->actions as $action) {
             if ($action->fields['field'] == '_fusion') {
                if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_NO_IMPORT) {
-                  logInFile("xxx", "Return true because link or Import\n");
+                  if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+                     logInFile("xxx", "Return true because link or Import\n");
+                  }
                   return true;
                }
             }
@@ -497,11 +515,15 @@ logInFile("xxx", print_r($input, true));
          $classname = $_SESSION['plugin_fusioninventory_classrulepassed'];
          $class = new $classname();
       }
-      logInFile("xxx", "execute action\n");
+      if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+         logInFile("xxx", "execute action\n");
+      }
       if (count($this->actions)) {
          foreach ($this->actions as $action) {
             if ($action->fields['field'] == '_fusion') {
-                     logInFile("xxx", "value".$action->fields["value"]."\n");
+               if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+                  logInFile("xxx", "value".$action->fields["value"]."\n");
+               }
                if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_IMPORT) {
                   if (isset($this->criterias_results['found_equipment'])) {
                      foreach ($this->criterias_results['found_equipment'] as $itemtype=>$datas) {
@@ -523,7 +545,7 @@ logInFile("xxx", print_r($input, true));
                               $itemtype_found = 1;
                            }
                         }
-                     }                     
+                     }
                      if ($itemtype_found == "0") {
                         if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
                            $class->rulepassed("0", "PluginFusioninventoryUnknownDevice");
@@ -542,7 +564,7 @@ logInFile("xxx", print_r($input, true));
                      }
                   } else {
                      // no import
-                     $output['action'] = 1;
+                     $output['action'] = 2;
                   }
                }
 

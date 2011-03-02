@@ -3,19 +3,19 @@
 /*
    ----------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2003-2008 by the INDEPNET Development Team.
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org//
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ----------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
-   FusionInventory is free software; you can redistribute it and/or modify
+   FusionInventory is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2 of the License, or
-   (at your option) any later version.
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -23,14 +23,14 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with FusionInventory; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-   ------------------------------------------------------------------------
- */
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
 
-// Original Author of file: David DURIEUX
-// Purpose of file:
-// ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
+   Original Author of file: David Durieux
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
+ */
 
 define('GLPI_ROOT', '../../..');
 
@@ -59,7 +59,7 @@ if (isset($_POST["delete"])) {
 	$ptud->delete($_POST,1);
 
 //	logEvent($_POST["id"], "computers", 4, "inventory", $_SESSION["glpiname"]." ".$LANG['log'][22]);
-	glpi_header($CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/unknowndevice.php");
+	glpi_header(GLPI_ROOT."/plugins/fusioninventory/front/unknowndevice.php");
 } else if (isset($_POST["restore"])) {
 
 
@@ -79,7 +79,7 @@ if (isset($_POST["delete"])) {
    if ($Import == "0") {
       glpi_header($_SERVER['HTTP_REFERER']);
    } else {
-      glpi_header($CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/unknowndevice.php");
+      glpi_header(GLPI_ROOT."/plugins/fusioninventory/front/unknowndevice.php");
    }
 }
 

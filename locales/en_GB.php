@@ -68,6 +68,7 @@ $LANG['plugin_fusioninventory']['functionalities'][60]="Clean history";
 $LANG['plugin_fusioninventory']['functionalities'][73]="Fields";
 $LANG['plugin_fusioninventory']['functionalities'][74]="Values";
 $LANG['plugin_fusioninventory']['functionalities'][75]="Locks";
+$LANG['plugin_fusioninventory']['functionalities'][76]="Extra-debug";
 
 $LANG['plugin_fusioninventory']['errors'][22]="Unattended element in";
 $LANG['plugin_fusioninventory']['errors'][50]="Your GLPI version not compatible, require 0.78";

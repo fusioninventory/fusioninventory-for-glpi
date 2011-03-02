@@ -1,43 +1,53 @@
 <?php
 
 /*
- * @version $Id$
- ----------------------------------------------------------------------
- FusionInventory
- Coded by the FusionInventory Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org//
- ----------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: DURIEUX David
-// Purpose of file:
-// ----------------------------------------------------------------------
-
 
 // Update from 2.1.3 to 2.2.0
 function update213to220() {
-   global $DB;
+   global $DB, $LANG;
+
+   echo "<strong>Update 2.1.3 to 2.2.0</strong><br/>";
+   echo "</td>";
+   echo "</tr>";
+
+   echo "<tr class='tab_bg_1'>";
+   echo "<td align='center'>";
+
+   plugin_fusioninventory_displayMigrationMessage("220"); // Start
+
+   plugin_fusioninventory_displayMigrationMessage("220", $LANG['update'][141]); // Updating schema
+
+   plugin_fusioninventory_displayMigrationMessage("220", $LANG['update'][141]." - Update DB");
 
    $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-2.2.0-update.sql";
    $DBf_handle = fopen($DB_file, "rt");
@@ -46,6 +56,7 @@ function update213to220() {
    foreach ( explode(";\n", "$sql_query") as $sql_line) {
       if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
       if (!empty($sql_line)) {
+         plugin_fusioninventory_displayMigrationMessage("220", $LANG['update'][141]." - Update DB : ".$sql_line);
          $DB->query($sql_line);
       }
    }
@@ -67,6 +78,7 @@ function update213to220() {
       
 
    // **** Migration network history connections
+      plugin_fusioninventory_displayMigrationMessage("220", $LANG['update'][141]." - Migration network history connections");
 
       $sql_connection = "SELECT * FROM `glpi_plugin_fusioninventory_snmp_history`
                         WHERE `Field`='0'
@@ -90,20 +102,25 @@ function update213to220() {
             $dataPort = array();
             if ($thread_connection["old_device_ID"] != "0") {
                $queryPort = "SELECT *
-                             FROM `glpi_networking_ports`
-                             WHERE `ifmac`='".$thread_connection['old_value']."'
+                             FROM `glpi_networkports`
+                             WHERE `mac`='".$thread_connection['old_value']."'
                              LIMIT 0,1;";
                $resultPort = $DB->query($queryPort);
                $dataPort = $DB->fetch_assoc($resultPort);
             } else if ($thread_connection["new_device_ID"] != "0") {
                $queryPort = "SELECT *
-                             FROM `glpi_networking_ports`
-                             WHERE `ifmac`='".$thread_connection['new_value']."'
+                             FROM `glpi_networkports`
+                             WHERE `mac`='".$thread_connection['new_value']."'
                              LIMIT 0,1;";
                $resultPort = $DB->query($queryPort);
                $dataPort = $DB->fetch_assoc($resultPort);
             }
-            $input['FK_port_destination'] = $dataPort['ID'];
+            if (isset($dataPort['id'])) {
+               $input['FK_port_destination'] = $dataPort['id'];
+            } else {
+               $input['FK_port_destination'] = 0;
+            }
+
             $query_ins = "INSERT INTO `glpi_plugin_fusioninventory_snmp_history_connections`
                (`process_number`, `date`, `creation`, `FK_port_source`, `FK_port_destination`)
                VALUES ('".$input['process_number']."',
@@ -120,12 +137,13 @@ function update213to220() {
 
    // **** Clean DB
    // * Clean glpi_plugin_fusioninventory_networking_ports
+   plugin_fusioninventory_displayMigrationMessage("220", $LANG['update'][141]." - Clean glpi_plugin_fusioninventory_networking_ports");
 	$query_select = "SELECT `glpi_plugin_fusioninventory_networking_ports`.`ID`
                     FROM `glpi_plugin_fusioninventory_networking_ports`
-                          LEFT JOIN `glpi_networking_ports`
-                                    ON `glpi_networking_ports`.`ID` = `FK_networking_ports`
-                          LEFT JOIN `glpi_networking` ON `glpi_networking`.`ID` = `on_device`
-                    WHERE `glpi_networking`.`ID` IS NULL";
+                          LEFT JOIN `glpi_networkports`
+                                    ON `glpi_networkports`.`id` = `FK_networking_ports`
+                          LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `glpi_networkports`.`items_id`
+                    WHERE `glpi_networkequipments`.`id` IS NULL";
 	$result=$DB->query($query_select);
 	while ($data=$DB->fetch_array($result)) {
       $query_del = "DELETE FROM `glpi_plugin_fusioninventory_networking_ports`
@@ -133,10 +151,11 @@ function update213to220() {
       $DB->query($query_del);
 	}
 	// * Clean glpi_plugin_fusioninventory_networking_ifaddr
+   plugin_fusioninventory_displayMigrationMessage("220", $LANG['update'][141]." - Clean glpi_plugin_fusioninventory_networking_ifaddr");
 	$query_select = "SELECT `glpi_plugin_fusioninventory_networking_ifaddr`.`ID`
                     FROM `glpi_plugin_fusioninventory_networking_ifaddr`
-                          LEFT JOIN `glpi_networking` ON `glpi_networking`.`ID` = `FK_networking`
-                    WHERE `glpi_networking`.`ID` IS NULL";
+                          LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `FK_networking`
+                    WHERE `glpi_networkequipments`.`id` IS NULL";
 	$result=$DB->query($query_select);
 	while ($data=$DB->fetch_array($result)) {
       $query_del = "DELETE FROM `glpi_plugin_fusioninventory_networking_ifaddr`
@@ -144,10 +163,11 @@ function update213to220() {
       $DB->query($query_del);
 	}
 	// * Clean glpi_plugin_fusioninventory_networking
+	plugin_fusioninventory_displayMigrationMessage("220", $LANG['update'][141]." - Clean glpi_plugin_fusioninventory_networking");
 	$query_select = "SELECT `glpi_plugin_fusioninventory_networking`.`ID`
                     FROM `glpi_plugin_fusioninventory_networking`
-                          LEFT JOIN `glpi_networking` ON `glpi_networking`.`ID` = `FK_networking`
-                    WHERE `glpi_networking`.`ID` IS NULL";
+                          LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `FK_networking`
+                    WHERE `glpi_networkequipments`.`id` IS NULL";
 	$result=$DB->query($query_select);
 	while ($data=$DB->fetch_array($result)) {
        $query_del = "DELETE FROM `glpi_plugin_fusioninventory_networking`
@@ -155,10 +175,11 @@ function update213to220() {
       $DB->query($query_del);
 	}
 	// * Clean glpi_plugin_fusioninventory_printers
+	plugin_fusioninventory_displayMigrationMessage("220", $LANG['update'][141]." - Clean glpi_plugin_fusioninventory_printers");
 	$query_select = "SELECT `glpi_plugin_fusioninventory_printers`.`ID`
                     FROM `glpi_plugin_fusioninventory_printers`
-                          LEFT JOIN `glpi_printers` ON `glpi_printers`.`ID` = `FK_printers`
-                    WHERE `glpi_printers`.`ID` IS NULL";
+                          LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `FK_printers`
+                    WHERE `glpi_printers`.`id` IS NULL";
 	$result=$DB->query($query_select);
 	while ($data=$DB->fetch_array($result)) {
       $query_del = "DELETE FROM `glpi_plugin_fusioninventory_printers`
@@ -166,10 +187,11 @@ function update213to220() {
       $DB->query($query_del);
 	}
 	// * Clean glpi_plugin_fusioninventory_printers_cartridges
+	plugin_fusioninventory_displayMigrationMessage("220", $LANG['update'][141]." - Clean glpi_plugin_fusioninventory_printers_cartridges");
 	$query_select = "SELECT `glpi_plugin_fusioninventory_printers_cartridges`.`ID`
                     FROM `glpi_plugin_fusioninventory_printers_cartridges`
-                          LEFT JOIN `glpi_printers` ON `glpi_printers`.`ID` = `FK_printers`
-                    WHERE `glpi_printers`.`ID` IS NULL";
+                          LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `FK_printers`
+                    WHERE `glpi_printers`.`id` IS NULL";
 	$result=$DB->query($query_select);
 	while ($data=$DB->fetch_array($result)) {
       $query_del = "DELETE FROM `glpi_plugin_fusioninventory_printers_cartridges`
@@ -177,10 +199,11 @@ function update213to220() {
       $DB->query($query_del);
 	}
 	// * Clean glpi_plugin_fusioninventory_printers_history
+	plugin_fusioninventory_displayMigrationMessage("220", $LANG['update'][141]." - Clean glpi_plugin_fusioninventory_printers_history");
 	$query_select = "SELECT `glpi_plugin_fusioninventory_printers_history`.`ID`
                     FROM `glpi_plugin_fusioninventory_printers_history`
-                          LEFT JOIN `glpi_printers` ON `glpi_printers`.`ID` = `FK_printers`
-                    WHERE `glpi_printers`.`ID` IS NULL";
+                          LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `FK_printers`
+                    WHERE `glpi_printers`.`id` IS NULL";
 	$result=$DB->query($query_select);
 	while ($data=$DB->fetch_array($result)) {
       $query_del = "DELETE FROM `glpi_plugin_fusioninventory_printers_history`
@@ -203,7 +226,8 @@ function update213to220() {
    }
 
    // **** Update right
-   $Profile=new Profile();
+   plugin_fusioninventory_displayMigrationMessage("220", $LANG['update'][141]." - Update rights");
+	$Profile=new Profile();
 	$Profile->getFromDB($_SESSION['glpiactiveprofile']['id']);
 	$name=$Profile->fields["name"];
 
@@ -220,11 +244,13 @@ function update213to220() {
 	$DB->query($query);
 
    // **** Delete old agents
-   $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_agents`";
+   plugin_fusioninventory_displayMigrationMessage("220", $LANG['update'][141]." - Delete old agents");
+	$query_delete = "DELETE FROM `glpi_plugin_fusioninventory_agents`";
    $DB->query($query_delete);
 
    // **** Delete models
-   $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_model_infos`";
+   plugin_fusioninventory_displayMigrationMessage("220", $LANG['update'][141]." - Delete models");
+	$query_delete = "DELETE FROM `glpi_plugin_fusioninventory_model_infos`";
    $DB->query($query_delete);
 
 //   // **** Import models
@@ -234,10 +260,12 @@ function update213to220() {
 //   foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/models/*.xml') as $file) $importexport->import($file,0,1);
 
    // **** Update ports history from lang traduction into field constant (MySQL fiel 'Field')
-   update213to220_ConvertField();
+   plugin_fusioninventory_displayMigrationMessage("220", $LANG['update'][141]." - Update ports history from lang traduction into field constant");
+	update213to220_ConvertField();
 
    // **** Delete all values in glpi_plugin_fusioninventory_config_snmp_history
-   $rights = array();
+   plugin_fusioninventory_displayMigrationMessage("220", $LANG['update'][141]." - Delete all values in glpi_plugin_fusioninventory_config_snmp_history");
+	$rights = array();
    $rights['ifmtu'] = '-1';
    $rights['ifdescr'] = '-1';
    $rights['ifinerrors'] = '-1';
@@ -309,9 +337,10 @@ function update213to220() {
    }
 
    // **** Delete all ports present in fusion but deleted in glpi_networking
-   $query = "SELECT glpi_plugin_fusioninventory_networking_ports.ID AS fusinvID FROM `glpi_plugin_fusioninventory_networking_ports`
-      LEFT JOIN `glpi_networking_ports` ON FK_networking_ports=glpi_networking_ports.ID
-      WHERE glpi_networking_ports.ID IS NULL";
+   plugin_fusioninventory_displayMigrationMessage("220", $LANG['update'][141]." - Delete all ports present in fusion but deleted in glpi_networking");
+	$query = "SELECT glpi_plugin_fusioninventory_networking_ports.ID AS fusinvID FROM `glpi_plugin_fusioninventory_networking_ports`
+      LEFT JOIN `glpi_networkports` ON FK_networking_ports=glpi_networkports.id
+      WHERE glpi_networkports.id IS NULL";
    if ($result=$DB->query($query)) {
       while ($data=$DB->fetch_array($result)) {
          $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networking_ports`
@@ -321,19 +350,28 @@ function update213to220() {
    }
 
    // **** Add IP of switch in table glpi_plugin_fusioninventory_networking_ifaddr if not present
-   $query = "SELECT * FROM glpi_networking";
+   plugin_fusioninventory_displayMigrationMessage("220", $LANG['update'][141]." - Add IP of switch in table glpi_plugin_fusioninventory_networking_ifaddr if not present");
+	$query = "SELECT * FROM glpi_networkequipments";
    if ($result=$DB->query($query)) {
       while ($data=$DB->fetch_array($result)) {
          $query_ifaddr = "SELECT * FROM `glpi_plugin_fusioninventory_networking_ifaddr`
-            WHERE `ifaddr`='".$data['ifaddr']."' ";
+            WHERE `ifaddr`='".$data['ip']."' ";
          $result_ifaddr = $DB->query($query_ifaddr);
          if ($DB->numrows($result_ifaddr) == "0") {
             $query_add = "INSERT INTO `glpi_plugin_fusioninventory_networking_ifaddr`
-               (`FK_networking`, `ifaddr`) VALUES ('".$data['ID']."', '".$data['ifaddr']."')";
+               (`FK_networking`, `ifaddr`) VALUES ('".$data['id']."', '".$data['ip']."')";
             $DB->query($query_add);
          }
       }
    }
+
+   plugin_fusioninventory_displayMigrationMessage("220"); // End
+
+   echo "</td>";
+   echo "</tr>";
+
+   echo "<tr class='tab_bg_1'>";
+   echo "<td align='center'>";
 
 }
 
@@ -979,11 +1017,13 @@ function update213to220_ConvertField() {
    echo "<tr>";
    echo "<td>";
    createProgressBar("Update Ports history");
-
+   $i = 0;
+   $nb = 0;
    $query = "SELECT *
              FROM `glpi_plugin_fusioninventory_snmp_history`
              WHERE `Field` != '0';";
    if ($result=$DB->query($query)) {
+      $nb = $DB->numrows($result);
       $i = 0;
       while ($data=$DB->fetch_array($result)) {
          $i++;
@@ -1037,21 +1077,21 @@ function update213to220_ConvertField() {
          $i++;
 
          // Search port from mac address
-         $query_port = "SELECT * FROM `glpi_networking_ports`
-            WHERE `ifmac`='".$data['new_value']."' ";
+         $query_port = "SELECT * FROM `glpi_networkports`
+            WHERE `mac`='".$data['new_value']."' ";
          if ($result_port=$DB->query($query_port)) {
             if ($DB->numrows($result_port) == '1') {
                $input = array();
                $data_port = $DB->fetch_assoc($result_port);
-               $input['FK_port_source'] = $data_port['ID'];
+               $input['FK_port_source'] = $data_port['id'];
 
-               $query_port2 = "SELECT * FROM `glpi_networking_ports`
-                  WHERE `on_device` = '".$data['new_device_ID']."'
-                     AND `device_type` = '".$data['new_device_type']."' ";
+               $query_port2 = "SELECT * FROM `glpi_networkports`
+                  WHERE `items_id` = '".$data['new_device_ID']."'
+                     AND `itemtype` = '".$data['new_device_type']."' ";
                if ($result_port2=$DB->query($query_port2)) {
                   if ($DB->numrows($result_port2) == '1') {
                      $data_port2 = $DB->fetch_assoc($result_port2);
-                     $input['FK_port_destination'] = $data_port2['ID'];
+                     $input['FK_port_destination'] = $data_port2['id'];
 
                      $input['date'] = $data['date_mod'];
                      $input['creation'] = 1;
@@ -1076,8 +1116,8 @@ function update213to220_ConvertField() {
             changeProgressBarPosition($i, $nb, "$i / $nb");
          }
       }
+      changeProgressBarPosition($i, $nb, "$i / $nb");
    }
-   changeProgressBarPosition($i, $nb, "$i / $nb");
    echo "</td>";
    echo "</tr>";
    echo "</table></center>";
@@ -1146,8 +1186,8 @@ function update213to220_ConvertField() {
             changeProgressBarPosition($i, $nb, "$i / $nb");
          }
       }
+      changeProgressBarPosition($i, $nb, "$i / $nb");
    }
-   changeProgressBarPosition($i, $nb, "$i / $nb");
    echo "</td>";
    echo "</tr>";
    echo "</table></center>";

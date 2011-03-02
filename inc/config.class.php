@@ -38,7 +38,23 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryConfig extends CommonDBTM {
 
-   
+   /**
+    * Init config
+    *
+    *@param $p_plugins_id Plugin id
+    *@param $p_insert Array('type'=>'value')
+    * 
+    *@return nothing
+    **/
+   function initConfig($plugins_id, $p_insert) {
+      global $DB;
+
+      foreach ($p_insert as $type=>$value) {
+         $this->addConfig($plugins_id, $type, $value);
+      }
+   }
+
+
    /**
    * Get value of a config field for a fusioninventory plugin
    *
@@ -47,10 +63,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    * 
    *@return value or this field or false
    **/
-   function getValue($p_plugins_id, $p_type) {
+   static function getValue($p_plugins_id, $p_type) {
       global $DB;
 
-      $data = $this->find("`plugins_id`='".$p_plugins_id."'
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+      $data = $PluginFusioninventoryConfig->find("`plugins_id`='".$p_plugins_id."'
                           AND `type`='".$p_type."'");
       $config = current($data);
       if (isset($config['value'])) {
@@ -106,7 +123,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
-       echo "<tr class='tab_bg_1'>";
+      echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][32]." :</td>";
       echo "<td>";
       Dropdown::showInteger("delete_task",
@@ -119,6 +136,16 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<input type='text' name='agent_port' value='".$this->getValue($plugins_id, 'agent_port')."'/>";
       echo "</td>";
       echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][76]." :</td>";
+      echo "<td>";
+      Dropdown::showYesNo("extradebug", $this->is_active($plugins_id, 'extradebug'));
+      echo "</td>";
+
+      echo "<td colspan='2'></td>";
+      echo "</tr>";
+
 
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "w")) {
          echo "<tr class='tab_bg_2'><td align='center' colspan='4'>
@@ -210,24 +237,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $delete = "DELETE FROM `".$this->getTable()."`
                  WHERE `plugins_id`='".$p_plugins_id."';";
       return $DB->query($delete);
-   }
-
-
-   
-   /**
-    * Init config
-    *
-    *@param $p_plugins_id Plugin id
-    *@param $p_insert Array('type'=>'value')
-    * 
-    *@return nothing
-    **/
-   function initConfig($plugins_id, $p_insert) {
-      global $DB;
-
-      foreach ($p_insert as $type=>$value) {
-         $this->addConfig($plugins_id, $type, $value);
-      }
    }
 }
 

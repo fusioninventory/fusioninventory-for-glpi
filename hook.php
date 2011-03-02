@@ -339,13 +339,13 @@ function plugin_fusioninventory_MassiveActions($type) {
    global $LANG;
    
    switch ($type) {
-      case NETWORKING_TYPE :
+      case "NetworkEquipment":
          return array (
             "plugin_fusioninventory_manage_locks" => $LANG['plugin_fusioninventory']['functionalities'][75]
          );
          break;
 
-      case PRINTER_TYPE :
+      case "Printer":
          return array (
             "plugin_fusioninventory_manage_locks" => $LANG['plugin_fusioninventory']['functionalities'][75]
          );
@@ -361,17 +361,38 @@ function plugin_fusioninventory_MassiveActions($type) {
          return $array;
          break;
 
+		case "PluginFusioninventoryUnknownDevice";
+			return array (
+				"plugin_fusioninventory_unknown_import" => $LANG["buttons"][37]
+			);
+
    }
    return array ();
 }
 
-//function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
-//   global $LANG;
-//
-//   $table = $options['options']['table'];
-//   $field = $options['options']['field'];
-//   $linkfield = $options['options']['linkfield'];
-//
+function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
+   global $LANG;
+
+   $table = $options['options']['table'];
+   $field = $options['options']['field'];
+   $linkfield = $options['options']['linkfield'];
+
+
+   switch ($table.".".$field) {
+
+      case "glpi_plugin_fusioninventory_unknowndevices.item_type":
+         $type_list = array();
+			$type_list[] = 'Computer';
+			$type_list[] = 'NetworkEquipment';
+			$type_list[] = 'Printer';
+			$type_list[] = 'Peripheral';
+			$type_list[] = 'Phone';
+         Dropdown::dropdownTypes($linkfield,0,$type_list);
+         return true;
+         break;
+
+   }
+
 //   switch ($table) {
 //
 //		case 'glpi_plugin_fusioninventory_agentmodules':
@@ -386,8 +407,8 @@ function plugin_fusioninventory_MassiveActions($type) {
 //			break;
 //
 //    }
-//   return false;
-//}
+   return false;
+}
 
 
 
@@ -395,20 +416,20 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
    global $LANG, $CFG_GLPI, $DB;
 
    switch ($options['itemtype']) {
-      case NETWORKING_TYPE :
-         switch ($action) {
+      case "NetworkEquipment":
+         switch ($options['action']) {
             case "plugin_fusioninventory_manage_locks" :
                $pfil = new PluginFusioninventoryLock;
-               $pfil->showForm($_SERVER["PHP_SELF"], NETWORKING_TYPE, '');
+               $pfil->showForm($_SERVER["PHP_SELF"], "NetworkEquipment");
                break;
          }
          break;
 
-      case PRINTER_TYPE :
-         switch ($action) {
+      case "Printer":
+         switch ($options['action']) {
             case "plugin_fusioninventory_manage_locks" :
-               $pfil = new PluginFusioninventoryLock;
-               $pfil->showForm($_SERVER["PHP_SELF"], NETWORKING_TYPE, '');
+               $pfil = new PluginFusioninventoryLock();
+               $pfil->showForm($_SERVER["PHP_SELF"], "Printer");
                break;
          }
          break;
@@ -424,6 +445,15 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
          }
 
          break;
+
+		case "PluginFusioninventoryUnknownDevice";
+			if ($options['action'] == "plugin_fusioninventory_unknown_import") {
+            if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","w")) {
+               echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
+            }
+         }
+			break;
+
    }
    return "";
 }
@@ -433,7 +463,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
 
    switch ($data['action']) {
       case "plugin_fusioninventory_manage_locks" :
-         if (($data['itemtype'] == NETWORKING_TYPE) OR ($data['itemtype'] == PRINTER_TYPE)) {
+         if (($data['itemtype'] == "NetworkEquipment") OR ($data['itemtype'] == "Printer")) {
             foreach ($data['item'] as $key => $val) {
                if ($val == 1) {
                   if (isset($data["lockfield_fusioninventory"])&&count($data["lockfield_fusioninventory"])){
@@ -446,6 +476,22 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
             }
          }
          break;
+
+		case "plugin_fusioninventory_unknown_import" :
+         if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","w")) {
+            $Import = 0;
+            $NoImport = 0;
+            $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+            foreach ($data['item'] as $key => $val) {
+               if ($val == 1) {
+                  list($Import, $NoImport) = $PluginFusioninventoryUnknownDevice->import($key,$Import,$NoImport);
+               }
+            }
+            addMessageAfterRedirect($LANG['plugin_fusioninventory']["discovery"][5]." : ".$Import);
+            addMessageAfterRedirect($LANG['plugin_fusioninventory']["discovery"][9]." : ".$NoImport);
+         }
+			break;
+         
    }
 
    if (strstr($data['action'], 'plugin_fusioninventory_agentmodule')) {
@@ -478,7 +524,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
          }
       }
    }
-
+   
 }
 
 // How to display specific update fields ?

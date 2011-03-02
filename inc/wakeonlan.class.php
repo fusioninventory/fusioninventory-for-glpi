@@ -46,11 +46,8 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
 
       $PluginFusioninventoryTask = new PluginFusioninventoryTask();
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
       $OperatingSystem = new OperatingSystem();
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
 
       $uniqid = uniqid();
 

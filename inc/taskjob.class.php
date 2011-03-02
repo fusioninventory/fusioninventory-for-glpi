@@ -3,19 +3,19 @@
 /*
    ----------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2003-2008 by the INDEPNET Development Team.
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org//
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ----------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
-   FusionInventory is free software; you can redistribute it and/or modify
+   FusionInventory is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2 of the License, or
-   (at your option) any later version.
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -23,18 +23,23 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with FusionInventory; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-   ------------------------------------------------------------------------
- */
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
 
-// Original Author of file: David DURIEUX
-// Purpose of file:
-// ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
+ */
 
 class PluginFusioninventoryTaskjob extends CommonDBTM {
 
-
+   /**
+   * Get name of this type
+   *
+   *@return text name of this type by language of the user connected
+   *
+   **/
    static function getTypeName() {
       global $LANG;
       
@@ -42,51 +47,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    }
 
 
-   function getSearchOptions() {
-      global $LANG;
-
-      $tab = array();
-
-      $tab['common'] = $LANG['plugin_fusioninventory']['task'][0];
-
-      $tab[1]['table']          = $this->getTable();
-      $tab[1]['field']          = 'name';
-      $tab[1]['linkfield']      = '';
-      $tab[1]['name']           = $LANG['common'][16];
-      $tab[1]['datatype']       = 'itemlink';
-
-      $tab[2]['table']           = 'glpi_entities';
-      $tab[2]['field']           = 'completename';
-      $tab[2]['linkfield']       = 'entities_id';
-      $tab[2]['name']            = $LANG['entity'][0];
-
-//      $tab[3]['table']          = $this->getTable();
-//      $tab[3]['field']          = 'date_scheduled';
-//      $tab[3]['linkfield']      = '';
-//      $tab[3]['name']           = $LANG['common'][27];
-//      $tab[3]['datatype']       = 'datetime';
-
-      $tab[4]['table']          = 'glpi_plugin_fusioninventory_tasks';
-      $tab[4]['field']          = 'name';
-      $tab[4]['linkfield']      = 'plugin_fusioninventory_tasks_id';
-      $tab[4]['name']           = $LANG['plugin_fusioninventory']['task'][0];
-      $tab[4]['datatype']       = 'itemlink';
-      $tab[4]['itemlink_type']  = 'PluginFusioninventoryTask';
-      
-      $tab[5]['table']          = $this->getTable();
-      $tab[5]['field']          = 'status';
-      $tab[5]['linkfield']      = '';
-      $tab[5]['name']           = 'status';
-
-      $tab[6]['table']          = $this->getTable();
-      $tab[6]['field']          = 'id';
-      $tab[6]['linkfield']      = '';
-      $tab[6]['name']           = 'id';
-
-      return $tab;
-   }
-
-   
 
    function canCreate() {
       return true;
@@ -112,12 +72,62 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       return true;
    }
 
+   
+   
+   function getSearchOptions() {
+      global $LANG;
 
-   function  showForm($id, $options=array()) {
+      $tab = array();
+
+      $tab['common'] = $LANG['plugin_fusioninventory']['task'][0];
+
+      $tab[1]['table']          = $this->getTable();
+      $tab[1]['field']          = 'name';
+      $tab[1]['linkfield']      = '';
+      $tab[1]['name']           = $LANG['common'][16];
+      $tab[1]['datatype']       = 'itemlink';
+
+      $tab[2]['table']           = 'glpi_entities';
+      $tab[2]['field']           = 'completename';
+      $tab[2]['linkfield']       = 'entities_id';
+      $tab[2]['name']            = $LANG['entity'][0];
+
+      $tab[4]['table']          = 'glpi_plugin_fusioninventory_tasks';
+      $tab[4]['field']          = 'name';
+      $tab[4]['linkfield']      = 'plugin_fusioninventory_tasks_id';
+      $tab[4]['name']           = $LANG['plugin_fusioninventory']['task'][0];
+      $tab[4]['datatype']       = 'itemlink';
+      $tab[4]['itemlink_type']  = 'PluginFusioninventoryTask';
+      
+      $tab[5]['table']          = $this->getTable();
+      $tab[5]['field']          = 'status';
+      $tab[5]['linkfield']      = '';
+      $tab[5]['name']           = 'status';
+
+      $tab[6]['table']          = $this->getTable();
+      $tab[6]['field']          = 'id';
+      $tab[6]['linkfield']      = '';
+      $tab[6]['name']           = 'id';
+
+      return $tab;
+   }
+
+   
+
+   /**
+   * Display form for taskjob
+   *
+   * @param $items_id integer id of the taskjob
+   * @param $options array
+   *
+   * @return bool true if form is ok
+   *
+   **/
+   function showForm($id, $options=array()) {
       global $DB,$CFG_GLPI,$LANG;
 
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
-      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog;
+      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
 
       if ($id!='') {
          $this->getFromDB($id);
@@ -176,7 +186,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusioninventory']['task'][26]."&nbsp;:</td>";
       echo "<td align='center'>";
-      $this->dropdownMethod("method_id", $this->fields['method'], $this->fields['method']);
+      $this->dropdownMethod("method", $this->fields['method']);
       echo "</td>";
       echo "</tr>";
 
@@ -244,6 +254,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $class = new $item_type();
          $itemname = $class->getTypeName();
          $class->getFromDB(current($data));
+         $name = '';
+         $idTmp = 0;
          if (current($data) == '.1') {
             $name = $LANG['plugin_fusioninventory']['agents'][32];
             $idTmp = '.1';
@@ -268,7 +280,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</div>";
       echo "</td>";
       echo "</tr>";
-
       
       echo "<script type='text/javascript'>
          function deldef(data) {
@@ -285,8 +296,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             ' <img src=\"".GLPI_ROOT."/pics/delete2.png\" onclick=\'delaction(\"' + elem[0] + '->' + elem[1] + '->' + elem[2] + '->' + elem[3] + '\")\'>', '');
          }
       </script>";
-
-
 
 
       if ($id) {
@@ -309,8 +318,18 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    }
 
 
-
-   function dropdownMethod($myname,$value=0,$valueType=0,$entity_restrict='') {
+   
+   /**
+   * Display methods availables
+   *
+   * @param $myname value name of dropdown
+   * @param $value value name of the method (used for edit taskjob)
+   * @param $entity_restrict restriction of entity if required
+   *
+   * @return value rand of the dropdown
+   *
+   **/
+   function dropdownMethod($myname,$value=0,$entity_restrict='') {
       global $DB,$CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
@@ -328,11 +347,11 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                      'rand'=>$rand,
                      'myname'=>$myname
                      );
-      ajaxUpdateItemOnSelectEvent("dropdown_method_id".$rand,"show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params);
+      ajaxUpdateItemOnSelectEvent("dropdown_method".$rand,"show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params);
 
       if ($value != "0") {
          echo "<script type='text/javascript'>";
-         ajaxUpdateItemJsCode("show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params,true,"dropdown_method_id".$rand);
+         ajaxUpdateItemJsCode("show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params,true,"dropdown_method".$rand);
          echo "</script>";
       }
 
@@ -341,11 +360,11 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                      'rand'=>$rand,
                      'myname'=>$myname
                      );
-      ajaxUpdateItemOnSelectEvent("dropdown_method_id".$rand,"show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params);
+      ajaxUpdateItemOnSelectEvent("dropdown_method".$rand,"show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params);
 
       if ($value != "0") {
          echo "<script type='text/javascript'>";
-         ajaxUpdateItemJsCode("show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params,true,"dropdown_method_id".$rand);
+         ajaxUpdateItemJsCode("show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params,true,"dropdown_method".$rand);
          echo "</script>";
       }
 
@@ -354,7 +373,18 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
 
 
-   function dropdownDefinitionType($myname,$method,$value=0,$entity_restrict='', $title = 0) {
+   /**
+   * Display definitions type (itemtypes)
+   *
+   * @param $myname value name of dropdown
+   * @param $method value name of the method selected
+   * @param $value value name of the definition type (used for edit taskjob)
+   * @param $entity_restrict restriction of entity if required
+   *
+   * @return value rand of the dropdown
+   *
+   **/
+   function dropdownDefinitionType($myname,$method,$value=0,$entity_restrict='') {
       global $DB,$CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
@@ -385,6 +415,20 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    }
 
 
+
+   /**
+   * Display definitions value with preselection of definition type
+   *
+   * @param $myname value name of dropdown
+   * @param $definitiontype value name of the definition type selected
+   * @param $method value name of the method selected
+   * @param $deftypeid value dropdown name of definition type
+   * @param $value value name of the definition (used for edit taskjob)
+   * @param $entity_restrict restriction of entity if required
+   *
+   * @return value rand of the dropdown
+   *
+   **/
    function dropdownDefinition($myname,$definitiontype,$method,$deftypeid,$value=0,$entity_restrict='', $title = 0) {
       global $DB,$CFG_GLPI, $LANG;
 
@@ -396,7 +440,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          }
       }
 
-
+      $rand = '';
       if (is_callable(array("Plugin".$module."Staticmisc", "task_definitionselection_".$definitiontype."_".$method))) {
          $rand = call_user_func(array("Plugin".$module."Staticmisc", "task_definitionselection_".$definitiontype."_".$method), $title);
       }
@@ -417,7 +461,18 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
 
 
-   function dropdownActionType($myname,$method,$value=0,$entity_restrict='', $title = 0) {
+   /**
+   * Display actions type (itemtypes)
+   *
+   * @param $myname value name of dropdown
+   * @param $method value name of the method selected
+   * @param $value value name of the definition type (used for edit taskjob)
+   * @param $entity_restrict restriction of entity if required
+   *
+   * @return value rand of the dropdown
+   *
+   **/
+   function dropdownActionType($myname,$method,$value=0,$entity_restrict='') {
       global $DB,$CFG_GLPI,$LANG;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
@@ -449,7 +504,21 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    }
 
 
-   function dropdownAction($myname,$actiontype,$method,$actiontypeid,$value=0,$entity_restrict='', $title = 0) {
+
+   /**
+   * Display actions value with preselection of action type
+   *
+   * @param $myname value name of dropdown
+   * @param $actiontype value name of the action type selected
+   * @param $method value name of the method selected
+   * @param $actiontypeid value dropdown name of action type
+   * @param $value value name of the definition (used for edit taskjob)
+   * @param $entity_restrict restriction of entity if required
+   *
+   * @return value rand of the dropdown
+   *
+   **/
+   function dropdownAction($myname,$actiontype,$method,$actiontypeid,$value=0,$entity_restrict='') {
       global $DB,$CFG_GLPI, $LANG;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
@@ -459,11 +528,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             $module = $datas['module'];
          }
       }
-
-//
-//      if (is_callable(array("Plugin".$module."Staticmisc", "task_actionselection_".$actiontype."_".$method))) {
-//         $rand = call_user_func(array("Plugin".$module."Staticmisc", "task_actionselection_".$actiontype."_".$method), $title);
-//      }
 
       $a_data = $this->get_agents($method);
 
@@ -485,6 +549,14 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    
 
 
+   /**
+   * Get all agents allowed to a module (task method)
+   *
+   * @param $module value name of dropdown
+   *
+   * @return array [id integed agent id] => $name value agent name
+   *
+   **/
    function get_agents($module) {
       global $LANG;
 
@@ -501,12 +573,18 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
    
 
+   /**
+   * Start tasks have scheduled date now
+   *
+   * @return bool cron is ok or not
+   *
+   **/
    static function cronTaskscheduler() {
       global $DB;
 
       $PluginFusioninventoryTask = new PluginFusioninventoryTask();
-      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog;
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
+      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
 
       // Search for task with periodicity and must be ok (so reinit state of job to 0)
@@ -573,8 +651,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       }
 
       // *** Search task ready
-
-      $remoteStartAgents = array();
       $dateNow = date("Y-m-d H:i:s");
       $query = "SELECT `".$PluginFusioninventoryTaskjob->getTable()."`.*,`glpi_plugin_fusioninventory_tasks`.`communication`, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp
          FROM ".$PluginFusioninventoryTaskjob->getTable()."
@@ -603,6 +679,15 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
 
 
+   /**
+   * Get period in secondes by type and count time
+   *
+   * @param $periodicity_type value type of time (minutes, hours...)
+   * @param $periodicity_count integer number of type time
+   *
+   * @return interger in seconds
+   *
+   **/
    function periodicityToTimestamp($periodicity_type, $periodicity_count) {
       $period = 0;
       switch($periodicity_type) {
@@ -631,18 +716,26 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
 
 
-   function getStateAgent($ip, $agentid, $type="") {
+   /**
+   * Get state of agent
+   *
+   * @param $ip value IP address of the computer where agent is installed
+   * @param $agentid integer id of the agent
+   *
+   * @return bool true if agent is ready
+   *
+   **/
+   function getStateAgent($ip, $agentid) {
       global $LANG;
 
       $this->disableDebug();
-      //PluginFusioninventoryDisplay::disableDebug();
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
+
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
-      $state = false;
       if (empty($ip)) {
-         return $state;
+         return false;
       }
 
       $ctx = stream_context_create(array(
@@ -659,19 +752,27 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       if (strstr($str, "waiting")) {
          return true;
       }
-      return $state;
+      return false;
    }
    
 
 
+   /**
+   * Start agent remotly from server
+   *
+   * @param $ip value IP address of the computer where agent is installed
+   * @param $token value token required to wake agent remotly
+   *
+   * @return bool true if agent wake up
+   *
+   **/
    function RemoteStartAgent($ip, $token) {
 
       $this->disableDebug();
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
       $input = '';
-//      ini_set('default_socket_timeout', 2);
       $ctx = stream_context_create(array(
           'http' => array(
               'timeout' => 2
@@ -681,22 +782,33 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $data = @file_get_contents("http://".$ip.":".$PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port')."/status", 0, $ctx);
       if (isset($data) && !empty($data)) {
          @file_get_contents("http://".$ip.":".$PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port')."/now/".$token, 0, $ctx);
-         $input = 'Agent run Now';
+         //Agent run Now
          $this->reenableusemode();
          return true;
       } else {
-         $input = 'Agent don\'t respond';
+         //Agent not available
          $this->reenableusemode();
          return false;
       }
    }
 
 
+
+   /**
+   * Disable debug mode because we don't want the errors
+   *
+   **/
    function disableDebug() {
       error_reporting(0);
       set_error_handler(array(new PluginFusioninventoryTaskjob(),'errorempty'));
    }
 
+
+
+   /**
+   * Reenable debug mode if user must have it defined in settings
+   *
+   **/
    function reenableusemode() {
       if ($_SESSION['glpi_use_mode']==DEBUG_MODE){
          ini_set('display_errors','On');
@@ -706,35 +818,24 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
    }
 
+
+
+   /**
+   * When disable debug, we transfer all errors in this emtpy function
+   *
+   **/
    function errorempty() {
       
    }
 
 
 
-
-   function showRunning() {
-      global $DB;
-
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
-
-      $query = "SELECT * FROM ".$this->getTable()."
-         WHERE status='1' ";
-
-      if ($result = $DB->query($query)) {
-         while ($data=$DB->fetch_array($result)) {
-            if ($PluginFusioninventoryTaskjobstatus->stateTaskjob($data['id'], '', 'get') < 100) {
-               $PluginFusioninventoryTaskjobstatus->stateTaskjob($data['id'], '200');
-            }
-         }
-      }
-   }
-   
-   
-   /*
-    * Display actions possible in device
-    *
-    */
+   /**
+   * Display actions possible in device
+   *
+   * @return nothing
+   *
+   **/
    function showActions($items_id, $itemtype) {
       global $LANG;
 
@@ -770,7 +871,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $a_parseMethods = array();
       $a_parseMethods[''] = "------";
-      foreach($a_methods as $num=>$data) {
+      foreach($a_methods as $data) {
          if (is_callable(array('Plugin'.$data['module'].'Staticmisc', 'task_action_'.$data['method']))) {
             $a_itemtype = call_user_func(array('Plugin'.$data['module'].'Staticmisc', 'task_action_'.$data['method']));
             if (in_array($itemtype, $a_itemtype)) {
@@ -804,6 +905,16 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    }
 
 
+
+   /**
+   * Display task jobs 
+   *
+   * @param $items_id integer id of the taskjob
+   * @param $width integer how large in pixel display array
+   *
+   * @return nothing
+   *
+   **/
    function showMiniAction($items_id, $width="950") {
       global $LANG;
       
@@ -819,7 +930,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</tr>";
 
       $a_taskjob = $this->find('`id`="'.$items_id.'" ', 'date_scheduled DESC');
-      foreach ($a_taskjob as $is=>$data) {
+      foreach ($a_taskjob as $data) {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>";
          echo convDateTime($data['date_scheduled']);
@@ -834,6 +945,15 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    }
 
 
+
+   /**
+   * Redirect url to task and right taskjob tab
+   *
+   * @param $taskjobs_id integer id of the taskjob
+   *
+   * @return nothing
+   *
+   **/
    function redirectTask($taskjobs_id) {
 
       $this->getFromDB($taskjobs_id);
@@ -841,6 +961,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $a_taskjob = $this->find("`plugin_fusioninventory_tasks_id`='".$this->fields['plugin_fusioninventory_tasks_id']."'
             AND `rescheduled_taskjob_id`='0' ", "id");
       $i = 1;
+      $tab = 0;
       foreach($a_taskjob as $id=>$datas) {
          $i++;
          if ($id == $taskjobs_id) {
@@ -853,20 +974,28 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    }
 
 
+
+   /**
+   * Display task informations for an object
+   *
+   * @param $itemtype value item type of object
+   * @param $items_id integer id of the object
+   *
+   * @return nothing
+   *
+   **/
    function manageTasksByObject($itemtype='', $items_id=0) {
       // Create task
-      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
+      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $PluginFusioninventoryTaskjob->showActions($items_id, $itemtype);
       // See task runing
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
+      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryTaskjobstatus->stateTaskjobItem($items_id, $itemtype, 'running');
       // see tasks finished
       $PluginFusioninventoryTaskjobstatus->stateTaskjobItem($items_id, $itemtype, 'nostarted');
       // see tasks finished
       $PluginFusioninventoryTaskjobstatus->stateTaskjobItem($items_id, $itemtype, 'finished');
    }
-
-
 }
 
 ?>
