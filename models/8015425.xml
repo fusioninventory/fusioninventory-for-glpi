@@ -4,11 +4,21 @@
 	<key>Networking0316</key>
 	<comments><![CDATA[3Com Switch 4500 50-Port Software Version 3Com OS V3.03.00s56
 
+BayStack 420     HW:#02      FW:3.1.0.5   SW:v3.1.0.04
+
+BayStack 5510-24T      HW:03       FW:4.1.0.8   SW:v4.1.0.04
+
+Ethernet Routing Switch 2550T (Stack Enabled)         HW:05       FW:1.0.0.14  SW:v4.3.0.004 BN:00 (c) Nortel Networks
+
 Ethernet Routing Switch 4550T-PWR     HW:03       FW:5.1.0.7   SW:v5.1.0.000 BN:00 (c) Nortel Networks
 
 Ethernet Routing Switch 5520-48T-PWR  HW:34       FW:5.0.0.4   SW:v5.1.0.014 BN:14 (c) Nortel Networks
 
+Ethernet Switch 3510-24T              HW:33       FW:4.0.0.7   SW:v4.0.4.00
+
 Ethernet Switch 425-24T  HW:06       FW:3.5.0.2   SW:v3.5.0.06  BN:6 (c) Nortel Networks
+
+Ethernet Switch 425-48T  HW:32       FW:3.6.0.1   SW:v3.6.0.00 BN:00 (c) Nortel Networks
 
 ]]></comments>
 	<oidlist>
