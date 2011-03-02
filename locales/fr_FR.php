@@ -73,6 +73,7 @@ $LANG['plugin_fusinvinventory']['rule'][30]="Import dans l'inventaire";
 $LANG['plugin_fusinvinventory']['rule'][31]="Import dans le matériel inconnu";
 $LANG['plugin_fusinvinventory']['rule'][100]="Règles d'entité";
 $LANG['plugin_fusinvinventory']['rule'][101]="Etiquette";
+$LANG['plugin_fusinvinventory']['rule'][102]="Ignorer lors de l'import FusionInventory";
 
 $LANG['plugin_fusinvinventory']['blacklist'][0]="Valeur en liste noire";
 $LANG['plugin_fusinvinventory']['blacklist'][1]="Nouvelle valeur à ajouter en liste noire";

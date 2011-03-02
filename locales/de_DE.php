@@ -71,6 +71,7 @@ $LANG['plugin_fusinvinventory']['rule'][30]="Import ins Inventar";
 $LANG['plugin_fusinvinventory']['rule'][31]="Import zu den unbekannten Materialien";
 $LANG['plugin_fusinvinventory']['rule'][100]="Entitätsregeln";
 $LANG['plugin_fusinvinventory']['rule'][101]="Tag";
+$LANG['plugin_fusinvinventory']['rule'][102]="Ignorieren beim Import von FusionInventory";
 
 $LANG['plugin_fusinvinventory']['blacklist'][0]="Werte in der schwarzen Liste";
 $LANG['plugin_fusinvinventory']['blacklist'][1]="Neuen Wert der schwarzen Liste hinzufügen";

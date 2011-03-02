@@ -133,7 +133,7 @@ class PluginFusinvinventoryRuleEntity extends PluginFusioninventoryRule {
       $actions['_affect_entity_by_tag']['type'] = 'text';
       $actions['_affect_entity_by_tag']['force_actions'] = array('regex_result');
 
-      $actions['_ignore_import']['name'] = $LANG['ocsconfig'][6];
+      $actions['_ignore_import']['name'] = $LANG['plugin_fusinvinventory']['rule'][102];
       $actions['_ignore_import']['type'] = 'yesonly';
 
       return $actions;
