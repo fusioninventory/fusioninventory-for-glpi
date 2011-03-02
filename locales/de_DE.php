@@ -30,7 +30,7 @@
 
 // ----------------------------------------------------------------------
 // Original Author of file: Mathieu SIMON
-// Co-authors of file: Alexander Lüthy
+// Co-authors of file: 
 // Purpose of file:
 // ----------------------------------------------------------------------
 
