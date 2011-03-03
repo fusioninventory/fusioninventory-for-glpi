@@ -223,11 +223,11 @@ function plugin_init_fusinvsnmp() {
 function plugin_version_fusinvsnmp() {
 	return array('name'           => 'FusionInventory SNMP',
                 'shortname'      => 'fusinvsnmp',
-                'version'        => '2.3.0-1',
+                'version'        => '2.4.0-1',
                 'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
                                     & <a href="mailto:v.mazzoni@siprossii.com">Vincent MAZZONI</a>',
                 'homepage'       =>'http://forge.fusioninventory.org/projects/pluginfusinvsnmp',
-                'minGlpiVersion' => '0.78'// For compatibility / no install in version < 0.78
+                'minGlpiVersion' => '0.80'// For compatibility / no install in version < 0.78
    );
 }
 
