@@ -186,12 +186,12 @@ function plugin_init_fusioninventory() {
 function plugin_version_fusioninventory() {
    return array('name'           => 'FusionInventory',
                 'shortname'      => 'fusioninventory',
-                'version'        => '2.3.0',
+                'version'        => '2.4.0',
                 'oldname'        => 'tracker',
                 'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
                                     & <a href="mailto:v.mazzoni@siprossii.com">Vincent MAZZONI</a>',
                 'homepage'       =>'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/',
-                'minGlpiVersion' => '0.78'// For compatibility / no install in version < 0.78
+                'minGlpiVersion' => '0.80'// For compatibility / no install in version < 0.78
    );
 }
 
