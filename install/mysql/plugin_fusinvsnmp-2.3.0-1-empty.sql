@@ -181,8 +181,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_models` (
    `comment` text COLLATE utf8_unicode_ci,
    PRIMARY KEY (`id`),
    KEY `name` (`name`),
-   KEY `itemtype` (`itemtype`),
-   KEY `is_active` (`is_active`)
+   KEY `itemtype` (`itemtype`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
