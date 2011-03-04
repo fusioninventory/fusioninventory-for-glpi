@@ -216,7 +216,9 @@ class PluginFusinvinventoryLibhook {
                   }
                }
                if (isset($dataSection['UUID'])) {
-                  $PluginFusinvinventoryComputer->fields['uuid'] = $dataSection['UUID'];
+                  if (!in_array('uuid', $a_lockable)) {
+                     $Computer->fields['uuid'] = $dataSection['UUID'];
+                  }
                }
                break;
 
@@ -820,7 +822,7 @@ class PluginFusinvinventoryLibhook {
        $i++;
        $opt[$i]['xmlSection']       = 'HARDWARE';
        $opt[$i]['xmlSectionChild']  = 'UUID';
-       $opt[$i]['glpiItemtype']     = 'glpi_plugin_fusinvinventory_computers';
+       $opt[$i]['glpiItemtype']     = 'Computer';
        $opt[$i]['glpiField']        = 'uuid';
 
        
