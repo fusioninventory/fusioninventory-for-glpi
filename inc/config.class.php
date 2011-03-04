@@ -1,38 +1,36 @@
 <?php
 
 /*
- * @version $Id$
- ----------------------------------------------------------------------
- FusionInventory
- Coded by the FusionInventory Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org//
- ----------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: DURIEUX David
-// Purpose of file:
-// ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
@@ -41,9 +39,15 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusinvinventoryConfig extends CommonDBTM {
 
 
+   /**
+   * Initialize config values of fusinvinventory plugin
+   *
+   *@return nothing
+   *
+   **/
    function initConfigModule() {
 
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
 
@@ -71,14 +75,21 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       foreach ($input as $key => $value) {
          $PluginFusioninventoryConfig->initConfig($plugins_id, array($key => $value));
       }
-
    }
 
 
 
+   /**
+   * Update values from tab in fusioninventory configuration form
+   *
+   * @param $p_post array values of config to update
+   *
+   * @return nothing
+   *
+   **/
 	function putForm($p_post) {
 
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
       foreach ($p_post as $key => $value) {
@@ -90,10 +101,18 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
 
 
 
+   /**
+   * Display form for config tab in fusioninventory config form
+   *
+   * @param $options array
+   *
+   *@return bool true if form is ok
+   *
+   **/
    function showForm($options=array()) {
       global $LANG;
 
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
 
@@ -273,8 +292,9 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       }
       echo "</table>";
       echo "</form>";
-   }
 
+      return true;
+   }
 }
 
 ?>
