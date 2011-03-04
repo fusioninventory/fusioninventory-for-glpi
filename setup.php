@@ -62,9 +62,6 @@ function plugin_init_fusinvinventory() {
    // ##### 2. register class #####
    Plugin::registerClass('PluginFusinvinventoryInventory');
       //Classes for rulesengine
-   Plugin::registerClass('PluginFusinvinventoryRuleInventory');
-   Plugin::registerClass('PluginFusinvinventoryRuleInventoryCollection',
-                         array('rulecollections_types'=>true));
    Plugin::registerClass('PluginFusinvinventoryRuleEntity');
    Plugin::registerClass('PluginFusinvinventoryRuleEntityCollection',
                          array('rulecollections_types'=>true));
