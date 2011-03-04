@@ -152,17 +152,21 @@ if (isset ($_POST["add"])) {
 } else if (isset($_POST['forceend'])) {
    $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
    $PluginFusioninventoryTaskjobstatus->getFromDB($_POST['taskjobstatus_id']);
-   if ($PluginFusioninventoryTaskjobstatus->fields['state'] != "3") {
-      $PluginFusioninventoryTaskjobstatus->changeStatusFinish($_POST['taskjobstatus_id'],
-                                                                    0,
-                                                                    '',
-                                                                    1,
-                                                                    "Action cancelled by user");
-      $PluginFusioninventoryTaskjob->getFromDB($_POST['taskjobs_id']);
-      $PluginFusioninventoryTaskjob->fields['status'] = 1;
-      $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
+   $a_taskjobstatus = $PluginFusioninventoryTaskjobstatus->find("`uniqid`='".$PluginFusioninventoryTaskjobstatus->fields['uniqid']."'");
+   foreach($a_taskjobstatus as $data) {
+
+      if ($data['state'] != "3") {
+         $PluginFusioninventoryTaskjobstatus->changeStatusFinish($data['id'],
+                                                                       0,
+                                                                       '',
+                                                                       1,
+                                                                       "Action cancelled by user");
+      }
    }
-   
+   $PluginFusioninventoryTaskjob->getFromDB($_POST['taskjobs_id']);
+   $PluginFusioninventoryTaskjob->fields['status'] = 1;
+   $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
+
    glpi_header($_SERVER['HTTP_REFERER']);
 }
 
