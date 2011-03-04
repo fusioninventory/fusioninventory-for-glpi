@@ -44,93 +44,211 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
 
       $PluginFusioninventoryTask = new PluginFusioninventoryTask();
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
-      $OperatingSystem = new OperatingSystem();
-
+      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      
       $uniqid = uniqid();
 
       $PluginFusioninventoryTaskjob->getFromDB($taskjobs_id);
       $PluginFusioninventoryTask->getFromDB($PluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']);
 
-
+      $communication = $PluginFusioninventoryTask->fields['communication'];
       $a_definitions = importArrayFromDB($PluginFusioninventoryTaskjob->fields['definition']);
 
+      $a_actions = importArrayFromDB($PluginFusioninventoryTaskjob->fields['action']);
 
+      $a_agentList = array();
+      
+      if ((!strstr($PluginFusioninventoryTaskjob->fields['action'], '".1"'))
+            AND (!strstr($PluginFusioninventoryTaskjob->fields['action'], '".2"'))) {
 
-/*
- * Case 1 : one agent defined
- */
+         foreach($a_actions as $a_action) {
+            if ((!in_array('.1', $a_action))
+               AND (!in_array('.2', $a_action))) {
 
-
-/*
- * Case 2 : many agents defined
- */
-
-
-
-/*
- * Case 3 : dynamic agent
- */
-
-   // getAgentsSubnet($nb_computers, $subnet='')
-
-
-
-/*
- * Case 4 : dynamic agent same subnet
- */
-
-      $a_subnet = array();
-      foreach($a_definitions as $items_id) {
-         $sql = "SELECT * FROM `glpi_networkports`
-            WHERE `items_id`='".$items_id."'
-               AND `itemtype`='Computer'
-               AND `mac`!='' ";
-         if ($result = $DB->query($sql)) {
-         while ($data=$DB->fetch_array($result)) {
-            $a_subnet[$data_subnet['subnet']]++;
+               $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, ip, subnet, token FROM `glpi_plugin_fusioninventory_agents`
+                  LEFT JOIN `glpi_networkports` ON `glpi_networkports`.`items_id` = `glpi_plugin_fusioninventory_agents`.`items_id`
+                  LEFT JOIN `glpi_computers` ON `glpi_computers`.`id` = `glpi_plugin_fusioninventory_agents`.`items_id`
+                  WHERE `glpi_networkports`.`itemtype`='Computer'
+                     AND  `glpi_plugin_fusioninventory_agents`.`id`='".current($a_action)."'";
+               if ($result = $DB->query($query)) {
+                  while ($data=$DB->fetch_array($result)) {
+                     if ($communication == 'push') {
+                        $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($data['ip'],0);
+                        if ($agentStatus ==  true) {
+                           $a_agentList[] = $data['a_id'];
+                        }
+                     } else if ($communication == 'pull') {
+                        $a_agentList[] = $data['a_id'];
+                     }
+                  }
+               }
+            }            
+         } 
+      }
+      /*
+       * Case 3 : dynamic agent
+       */
+      else if (strstr($PluginFusioninventoryTaskjob->fields['action'], '".1"')) {
+         $a_agentList = $this->getAgentsSubnet(count($a_definitions), $communication);
+      }
+      /*
+       * Case 4 : dynamic agent same subnet
+       */
+      else if (in_array('.2', $a_actions)) {
+         $a_subnet = array();
+         $subnet = '';
+         foreach($a_definitions as $items_id) {
+            $sql = "SELECT * FROM `glpi_networkports`
+               WHERE `items_id`='".$items_id."'
+                  AND `itemtype`='Computer'
+                  AND `mac`!='' ";
+            if ($result = $DB->query($sql)) {
+               while ($data=$DB->fetch_array($result)) {
+                  //$a_subnet[$data_subnet['subnet']]++;
+                  $subnet = $data['subnet'];
+               }
+            }
+         }
+         if ($subnet != '') {
+            $a_agentList = $this->getAgentsSubnet(count($a_definitions), $communication, $subnet);
          }
       }
-   }
-   // getAgentsSubnet($nb_computers, $subnet)
+
+      
+      if (count($a_agentList) == '0') {
+         $a_input = array();
+         $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
+         $a_input['state'] = 1;
+         $a_input['plugin_fusioninventory_agents_id'] = 0;
+         $a_input['itemtype'] = 'Computer';
+         $a_input['items_id'] = 0;
+         $a_input['uniqid'] = $uniqid;
+         $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
+            //Add log of taskjob
+            $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
+            $a_input['state'] = 7;
+            $a_input['date'] = date("Y-m-d H:i:s");
+            $PluginFusioninventoryTaskjoblog->add($a_input);
+
+         $PluginFusioninventoryTaskjobstatus->changeStatusFinish($Taskjobstatus_id,
+                                                                 0,
+                                                                 'Computer',
+                                                                 1,
+                                                                 "Unable to find agent to run this job");
+      } else {
+         $nb_computers = ceil(count($a_definitions) / count($a_agentList));
+
+         $a_input = array();
+         $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
+         $a_input['state'] = 0;
+         $a_input['itemtype'] = 'Computer';
+         $a_input['uniqid'] = $uniqid;
+         while(count($a_definitions) != 0) {
+            $agent_id = array_pop($a_agentList);
+            $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
+            for ($i=0; $i < $nb_computers; $i++) {
+                //Add jobstatus and put status
+                $a_input['items_id'] = current(array_pop($a_definitions));
+                $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
+                  //Add log of taskjob
+                  $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
+                  $a_input['state'] = 7;
+                  $a_input['date'] = date("Y-m-d H:i:s");
+                  $PluginFusioninventoryTaskjoblog->add($a_input);
+                  unset($a_input['state']);
+            }
+         }
+      }
+      $PluginFusioninventoryTaskjob->fields['status'] = 1;
+      $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
+      if ($communication == "push") {
+          // todo prepare to start agent
+      }
 
    }
 
 
 
    // When agent contact server, this function send datas to agent
-   // $a_devices = array(itemtype, items_id);
-   function run($items_id, $itemtype, $taskjobs_id, $taskjobstatus_id) {
+   function run($itemtype, $a_Taskjobstatus) {
       global $DB;
 
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
-      $NetworkPort                        = new NetworkPort;
+      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $NetworkPort                        = new NetworkPort();
 
       $sxml_option = $this->sxml->addChild('OPTION');
       $sxml_option->addChild('NAME', 'WAKEONLAN');
+      
+      $changestatus = 0;
+      foreach ($a_Taskjobstatus as $data) {
+         $a_networkPort = $NetworkPort->find("`itemtype`='Computer' AND `items_id`='".$data['items_id']."' ");
+         $computerip = 0;
+         foreach ($a_networkPort as $datanetwork) {
+            if ($datanetwork['ip'] != "127.0.0.1") {
+               $computerip++;
+               $sxml_param = $sxml_option->addChild('PARAM');
+               $sxml_param->addAttribute('MAC', $datanetwork['mac']);
+               $sxml_param->addAttribute('IP', $datanetwork['ip']);
 
-      // Get ip
-      $a_networkPort = $NetworkPort->find("`itemtype`='".$itemtype."' AND `items_id`='".$items_id."' ");
-      foreach ($a_networkPort as $data) {
-         if ($data['ip'] != "127.0.0.1") {
-            $sxml_param = $sxml_option->addChild('PARAM');
-            $sxml_param->addAttribute('MAC', $data['mac']);
-            $sxml_param->addAttribute('IP', $data['ip']);
+               if ($changestatus == '0') {
+                  $PluginFusioninventoryTaskjobstatus->changeStatus($data['id'], 1);
+                  $PluginFusioninventoryTaskjoblog->addTaskjoblog($data['id'],
+                                          '0',
+                                          'Computer',
+                                          '1',
+                                          '');
+                  $changestatus = $PluginFusioninventoryTaskjobstatus->fields['id'];
+               } else {
+                  $PluginFusioninventoryTaskjobstatus->changeStatusFinish($data['id'],
+                                                                    $data['items_id'],
+                                                                    $data['itemtype'],
+                                                                    0,
+                                                                    "Merged with ".$changestatus);
+               }
 
-            // Update taskjobstatus (state = 3 : finish); Because we haven't return of agent on this action
-            $PluginFusioninventoryTaskjobstatus->changeStatusFinish($taskjobs_id, $items_id, $itemtype, 0, 'WakeOnLan have not return state', 1);
+               // Update taskjobstatus (state = 3 : finish); Because we haven't return of agent on this action
+               $PluginFusioninventoryTaskjobstatus->changeStatusFinish($data['id'],
+                                                                     $data['items_id'],
+                                                                     $data['itemtype'],
+                                                                     0,
+                                                                     'WakeOnLan have not return state',
+                                                                     1);
+            }
+         }
+         if ($computerip == '0') {
+            $PluginFusioninventoryTaskjobstatus->changeStatusFinish($data['id'],
+                                                                    $data['items_id'],
+                                                                    $data['itemtype'],
+                                                                    1,
+                                                                    "No IP found on the computer");
+
          }
       }
+//      if ($changestatus == '0') {
+//         $PluginFusioninventoryTaskjobstatus->changeStatusFinish($taskjobs_id,
+//                                                                 0,
+//                                                                 '',
+//                                                                 1,
+//                                                                 "No IP found on the computer");
+//      }
       return $this->sxml;
    }
 
 
    
-   function getAgentsSubnet($nb_computers, $subnet='') {
+   function getAgentsSubnet($nb_computers, $communication, $subnet='') {
+      global $DB;
 
+      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
       $OperatingSystem = new OperatingSystem();
 
+      // Number of computers min by agent
+      $nb_computerByAgentMin = 20;
+      $nb_agentsMax = ceil($nb_computers / $nb_computerByAgentMin);
+      
       // Get ids of operating systems which can make real wakeonlan
       $a_os = $OperatingSystem->find(" `name` LIKE '%Linux%' ");
       $osfind = '(';
@@ -152,53 +270,55 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
          $osfind = 'AND operatingsystems_id IN '.$osfind;
       }
 
+      $a_agentList = array();
       for ($pass = 0; $pass < $pass_count; $pass++) {
-
-         
-
-
 
          if ($pass == "1") {
             // It's not linux
             $osfind = str_replace('AND operatingsystems_id IN ', 'AND operatingsystems_id NOT IN ', $osfind);
          }
 
-         // Get subnet of device
-         $query_subnet = "SELECT * FROM `glpi_networkports`
-            WHERE `items_id`='".$items_id."'
-               AND `itemtype`='Computer'
-               AND `mac`!='' ";
-         if ($result_subnet = $DB->query($query_subnet)) {
-            while ($data_subnet=$DB->fetch_array($result_subnet)) {
-               $a_agents = $PluginFusioninventoryAgentmodule->getAgentsCanDo('WAKEONLAN');
-               $where = " AND `glpi_plugin_fusioninventory_agents`.`ID` IN (";
-               $where .= implode(',', $a_agents);
-               $where .= ") ";
+         if ($subnet != '') {
+            $subnet = " AND subnet='".$subnet."' ";
+         }
+         $a_agents = $PluginFusioninventoryAgentmodule->getAgentsCanDo('WAKEONLAN');
+         $a_agentsid = array();
+         foreach($a_agents as $a_agent) {
+            $a_agentsid[] = $a_agent['id'];
+         }
+         if (count($a_agentsid) == '0') {
+            return $a_agentList;
+         }
 
-               $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, ip, subnet, token FROM `glpi_plugin_fusioninventory_agents`
-                  LEFT JOIN `glpi_networkports` ON `glpi_networkports`.`items_id` = `glpi_plugin_fusioninventory_agents`.`items_id`
-                  LEFT JOIN `glpi_computers` ON `glpi_computers`.`id` = `glpi_plugin_fusioninventory_agents`.`items_id`
-                  WHERE `glpi_networkports`.`itemtype`='Computer'
-                     AND subnet='".$data_subnet['subnet']."'
-                     ".$osfind."
-                     ".$where." ";
-               if ($result = $DB->query($query)) {
-                  while ($data=$DB->fetch_array($result)) {
-                     if ($communication == 'push') {
-                        $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($data['ip'],0);
-                        if ($agentStatus ==  true) {
-                           $return = array();
-                           $return[0]['ip'] = $data['ip'];
-                           $return[0]['token'] = $data['token'];
-                           $return[0]['agents_id'] = $data['a_id'];
-                           return $return;
+         $where = " AND `glpi_plugin_fusioninventory_agents`.`ID` IN (";
+         $where .= implode(',', $a_agentsid);
+         $where .= ")
+            AND `ip` != '127.0.0.1' ";
+
+         $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, ip, subnet, token FROM `glpi_plugin_fusioninventory_agents`
+            LEFT JOIN `glpi_networkports` ON `glpi_networkports`.`items_id` = `glpi_plugin_fusioninventory_agents`.`items_id`
+            LEFT JOIN `glpi_computers` ON `glpi_computers`.`id` = `glpi_plugin_fusioninventory_agents`.`items_id`
+            WHERE `glpi_networkports`.`itemtype`='Computer'
+               ".$subnet."
+               ".$osfind."
+               ".$where." ";
+         if ($result = $DB->query($query)) {
+            while ($data=$DB->fetch_array($result)) {
+               if ($communication == 'push') {
+                  $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($data['ip'],0);
+                  if ($agentStatus ==  true) {
+                     if (!in_array($a_agentList,$data['a_id'])) {
+                        $a_agentList[] = $data['a_id'];
+                        if (count($a_agentList) >= $nb_agentsMax) {
+                           return $a_agentList;
                         }
-                     } else if ($communication == 'pull') {
-                        $return = array();
-                        $return[0]['ip'] = $data['ip'];
-                        $return[0]['token'] = $data['token'];
-                        $return[0]['agents_id'] = $data['a_id'];
-                        return $return;
+                     }
+                  }
+               } else if ($communication == 'pull') {
+                  if (!in_array($a_agentList,$data['a_id'])) {
+                     $a_agentList[] = $data['a_id'];
+                     if (count($a_agentList) > $nb_agentsMax) {
+                        return $a_agentList;
                      }
                   }
                }
