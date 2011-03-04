@@ -593,9 +593,20 @@ class PluginFusinvinventoryLibhook {
          if ($items_id > 0) { // Object managed into GLPI only!
             switch ($sectionName) {
 
+               case 'CPUS':
+                  $PluginFusinvinventoryImport_Processor = new PluginFusinvinventoryImport_Processor();
+                  $PluginFusinvinventoryImport_Processor->AddUpdateItem("update", $items_id, $dataSection);
+                  break;
+               
                case 'DRIVES':
                   $PluginFusinvinventoryImport_Drive = new PluginFusinvinventoryImport_Drive();
                   $PluginFusinvinventoryImport_Drive->AddUpdateItem("update", $items_id, $dataSection);
+                  break;
+
+               case 'CONTROLLERS':
+                  $id_controller = '';
+                  $PluginFusinvinventoryImport_Controller = new PluginFusinvinventoryImport_Controller();
+                  $id_controller = $PluginFusinvinventoryImport_Controller->AddUpdateItem("update", $items_id, $dataSection);
                   break;
 
               case 'SOUNDS':
@@ -608,15 +619,9 @@ class PluginFusinvinventoryLibhook {
                   $PluginFusinvinventoryImport_Graphiccard->AddUpdateItem("update", $items_id, $dataSection);
                   break;
 
-               case 'CONTROLLERS':
-                  $id_controller = '';
-                  $PluginFusinvinventoryImport_Controller = new PluginFusinvinventoryImport_Controller();
-                  $id_controller = $PluginFusinvinventoryImport_Controller->AddUpdateItem("update", $items_id, $dataSection);
-                  break;
-
-               case 'ANTIVIRUS':
-                  $PluginFusinvinventoryImport_Antivirus =  new PluginFusinvinventoryImport_Antivirus();
-                  $PluginFusinvinventoryImport_Antivirus->AddUpdateItem("update", $items_id, $dataSection);
+               case 'MEMORIES':
+                  $PluginFusinvinventoryImport_Memory = new PluginFusinvinventoryImport_Memory();
+                  $PluginFusinvinventoryImport_Memory->AddUpdateItem("update", $items_id, $dataSection);
                   break;
 
                case 'NETWORKS' :
@@ -624,6 +629,37 @@ class PluginFusinvinventoryLibhook {
                   $PluginFusinvinventoryImport_Networkport->AddUpdateItem("update", $items_id, $dataSection);
                   break;
 
+               case 'SOFTWARES':
+                  // May never require update
+                  break;
+
+               case 'BIOS':
+                  if ((isset($dataSection['SMANUFACTURER']))
+                        AND (!empty($dataSection['SMANUFACTURER']))) {
+
+                     $Computer->fields['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
+                                                                             $dataSection['SMANUFACTURER']);
+                  } else if ((isset($dataSection['BMANUFACTURER']))
+                               AND (!empty($dataSection['BMANUFACTURER']))) {
+
+                     $Computer->fields['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
+                                                                             $dataSection['BMANUFACTURER']);
+                  }
+                  if (isset($dataSection['SMODEL'])) {
+                     $ComputerModel = new ComputerModel;
+                     $Computer->fields['computermodels_id'] = $ComputerModel->import(array('name'=>$dataSection['SMODEL']));
+                  }
+                  if (isset($dataSection['SSN']))
+                     $Computer->fields['serial'] = $dataSection['SSN'];
+
+                  if (isset($dataSection['TYPE'])) {
+                     $ComputerType = new ComputerType();
+                     $Computer->fields['computertypes_id'] = Dropdown::importExternal('ComputerType',
+                                                                          $dataSection['TYPE']);
+                  }
+
+                  $Computer->update($Computer->fields);
+                  break;
 
                case 'HARDWARE':
                   $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_computers', $idmachine);
@@ -671,32 +707,23 @@ class PluginFusinvinventoryLibhook {
                   $Computer->update($Computer->fields);
                   break;
 
-               case 'BIOS':
-                  if ((isset($dataSection['SMANUFACTURER']))
-                        AND (!empty($dataSection['SMANUFACTURER']))) {
+               case 'USBDEVICES':
+                  break;
 
-                     $Computer->fields['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
-                                                                             $dataSection['SMANUFACTURER']);
-                  } else if ((isset($dataSection['BMANUFACTURER']))
-                               AND (!empty($dataSection['BMANUFACTURER']))) {
+               case 'PRINTERS':
+                  break;
 
-                     $Computer->fields['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
-                                                                             $dataSection['BMANUFACTURER']);
-                  }
-                  if (isset($dataSection['SMODEL'])) {
-                     $ComputerModel = new ComputerModel;
-                     $Computer->fields['computermodels_id'] = $ComputerModel->import(array('name'=>$dataSection['SMODEL']));
-                  }
-                  if (isset($dataSection['SSN']))
-                     $Computer->fields['serial'] = $dataSection['SSN'];
+               case 'MONITORS':
+                  break;
 
-                  if (isset($dataSection['TYPE'])) {
-                     $ComputerType = new ComputerType();
-                     $Computer->fields['computertypes_id'] = Dropdown::importExternal('ComputerType',
-                                                                          $dataSection['TYPE']);
-                  }
+               case 'STORAGES':
+                  $PluginFusinvinventoryImport_Storage = new PluginFusinvinventoryImport_Storage();
+                  $PluginFusinvinventoryImport_Storage->AddUpdateItem("update", $items_id, $dataSection);
+                  break;
 
-                  $Computer->update($Computer->fields);
+               case 'ANTIVIRUS':
+                  $PluginFusinvinventoryImport_Antivirus =  new PluginFusinvinventoryImport_Antivirus();
+                  $PluginFusinvinventoryImport_Antivirus->AddUpdateItem("update", $items_id, $dataSection);
                   break;
 
                case 'USERS':
