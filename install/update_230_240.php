@@ -35,24 +35,16 @@
 // ----------------------------------------------------------------------
 
 
-function pluginFusinvinventoryGetCurrentVersion($version) {
+// Update from 2.3.0 to 2.4.0
+function update230to240() {
+   global $DB;
 
-   $versionFound = PluginFusioninventoryConfig::getValue(PluginFusioninventoryModule::getModuleId('fusinvinventory'), 'version');
-   if ($versionFound) {
-      return $versionFound;
-   } else {
-      return $version;
+   $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
+   $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+   if (!PluginFusioninventoryConfig::getValue($plugins_id, "import_vm")) {
+       $PluginFusioninventoryConfig->initConfig($plugins_id, array("import_vm" => "1"));
+
    }
+
 }
-
-
-function pluginFusinvinventoryUpdate($current_version) {
-    switch ($current_version){
-      case "2.3.0":
-			include("update_230_240.php");
-			update100to110();
-
-    }
-}
-
 ?>
