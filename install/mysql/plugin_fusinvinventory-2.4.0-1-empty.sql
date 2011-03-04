@@ -1,14 +1,3 @@
-DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_computers`;
-
-CREATE TABLE `glpi_plugin_fusinvinventory_computers` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `items_id` int(11) NOT NULL default '0',
-  `uuid` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `items_id` (`items_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
 DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_criterias`;
 
 CREATE TABLE `glpi_plugin_fusinvinventory_criterias` (
