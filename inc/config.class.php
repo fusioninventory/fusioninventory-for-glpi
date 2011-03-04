@@ -65,6 +65,8 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       $input['component_drive']        = 1;
       $input['component_control']      = 1;
       $input['transfers_id_auto']      = 1;
+      $a_infos = plugin_version_fusinvinventory();
+      $input['version']                = $a_infos['version'];
 
       foreach ($input as $key => $value) {
          $PluginFusioninventoryConfig->initConfig($plugins_id, array($key => $value));
