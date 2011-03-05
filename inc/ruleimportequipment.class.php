@@ -430,11 +430,7 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                break;
 
             case 'uuid':
-               if (TableExists("glpi_plugin_fusinvinventory_computers")) {
-                  $sql_from_computer .= ' LEFT JOIN `glpi_plugin_fusinvinventory_computers`
-                                    ON `glpi_plugin_fusinvinventory_computers`.`items_id` = `[typetable]`.`id`';
-                  $sql_where_computer .= ' AND `uuid`="'.$input['uuid'].'"';
-               }
+               $sql_where_computer .= ' AND `uuid`="'.$input['uuid'].'"';
                break;
 
          }
