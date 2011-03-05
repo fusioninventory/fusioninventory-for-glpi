@@ -283,7 +283,6 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_printers` (
    PRIMARY KEY (`id`),
    UNIQUE KEY `unicity` (`printers_id`),
    KEY `plugin_fusinvsnmp_configsecurities_id` (`plugin_fusinvsnmp_configsecurities_id`),
-   KEY `printers_id` (`printers_id`),
    KEY `plugin_fusinvsnmp_models_id` (`plugin_fusinvsnmp_models_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
