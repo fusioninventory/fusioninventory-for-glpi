@@ -1,54 +1,56 @@
 <?php
+
 /*
- * @version $Id$
- -------------------------------------------------------------------------
- FusionInventory
- Copyright (C) 2003-2010 by the INDEPNET Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org/
- -------------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- --------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: David DURIEUX
-// Purpose of file: management of communication with agents
-// ----------------------------------------------------------------------
-/**
- * The datas are XML encoded and compressed with Zlib.
- * XML rules :
- * - XML tags in uppercase
- **/
 
 if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-/**
- * Class
- **/
 class PluginFusinvinventoryLib extends CommonDBTM {
 
    var $table = "glpi_plugin_fusinvinventory_libserialization";
 
+
+   /**
+   * Sarting create or update computer and get Entity
+   *
+   * @param $simpleXMLObj simplexml xmlobject of the computer
+   * @param $items_id interger id of the computer
+   * @param $new bool if 1 create a new computer
+   *
+   * @return nothing
+   *
+   **/
    function startAction($simpleXMLObj, $items_id, $new=0) {
       global $DB;
 
@@ -136,7 +138,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          }
 
          // Link computer to agent FusionInventory
-         $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
+         $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
          $PluginFusioninventoryAgent->setAgentWithComputerid($items_id, $xml->DEVICEID);
 
 
@@ -168,11 +170,15 @@ class PluginFusinvinventoryLib extends CommonDBTM {
    }
 
 
+   
    /**
-   * get all sections with its name and data from XML file
-   * @param simpleXML $simpleXMLObj
-   * @return array $xmlSections (name and serialized data)
-   */
+   * get all sections and convert to php array
+   *
+   * @param $simpleXMLObj simplexml XML object of the computer
+   *
+   * @return array XML sections into an array
+   *
+   **/
    private function _getXMLSections($simpleXMLObj) {
 
       $xmlSections = array();
@@ -217,19 +223,21 @@ class PluginFusinvinventoryLib extends CommonDBTM {
 
 
    /**
-   * We create an entry for machine and store the externalId.
-   * @param string $internalId
-   * @param $externalId
+   * Create computer into lib
+   *
+   * @param $internalId value uniq id for internal lib
+   * @param $externalId integer id of the GLPI computer
+   *
+   * @return nothing
+   *
    */
    public function addLibMachine($internalId, $externalId) {
-
 
       $queryInsert = "INSERT INTO `glpi_plugin_fusinvinventory_libserialization`
 		( `internal_id` , `external_id`)
 		VALUES
 		( '" . $internalId . "' , '".$externalId."')";
       $resultInsert = mysql_query($queryInsert);
-
   }
 
 
@@ -237,13 +245,19 @@ class PluginFusinvinventoryLib extends CommonDBTM {
 
    /**
    * Determine if there are sections changements and update
-   * @param array $xmlSections
-   * @param array $infoSections
-   * @param int $internalId
+   * Definition of the existant criteria in each section to known
+   * if can be update or if it's a new section
+   *
+   * @param $xmlSections array XML sections in a php array
+   * @param $internalId value uniq id of internal lib
+   *
+   * @return nothing
+   *
    */
    public function updateLibMachine($xmlSections, $internalId) {
       global $DB;
 
+      $a_sections = array();
       $a_sections[] = "DRIVES";
       $a_sections[] = "SOFTWARES";
       $a_sections[] = "CONTROLLERS";
@@ -525,13 +539,24 @@ if (!unserialize($serializedSectionToRemove)) {
          $serializedSections .= $key."<<=>>".$serializedSection."
 ";
       }
-      $externalId=$infoSections["externalId"];
+      //$externalId=$infoSections["externalId"];
 
       $this->_serializeIntoDB($internalId, $serializedSections);
-
    }
 
 
+
+   /**
+   * Update/insert sections into lib DB
+   * Must be inserted into many yimes because default configuration of MySQL
+   * can only insert 1 Mo of datas and sometimes we have more than this
+   *
+   * @param $internalId value uniq id of internal lib
+   * @param $serializedSections value XML sections serialized
+   *
+   * @return nothing
+   *
+   */
    private function _serializeIntoDB($internalId, $serializedSections) {
       global $DB;
 
@@ -549,6 +574,10 @@ if (!unserialize($serializedSectionToRemove)) {
          $queryUpdate = "UPDATE `glpi_plugin_fusinvinventory_libserialization`
          SET `serialized_sections2` = '" . $a_serializedSections[1] ."'
          WHERE `internal_id` = '" . $internalId . "'";
+      } else {
+         $queryUpdate = "UPDATE `glpi_plugin_fusinvinventory_libserialization`
+         SET `serialized_sections2` = ''
+         WHERE `internal_id` = '" . $internalId . "'";
       }
       $resultUpdate = $DB->query($queryUpdate);
 
@@ -556,16 +585,21 @@ if (!unserialize($serializedSectionToRemove)) {
         $queryUpdate = "UPDATE `glpi_plugin_fusinvinventory_libserialization`
          SET `serialized_sections3` = '" . $a_serializedSections[2] ."'
          WHERE `internal_id` = '" . $internalId . "'";
+      } else {
+         $queryUpdate = "UPDATE `glpi_plugin_fusinvinventory_libserialization`
+         SET `serialized_sections3` = ''
+         WHERE `internal_id` = '" . $internalId . "'";
       }
-      $resultUpdate = $DB->query($queryUpdate);
-      
+      $resultUpdate = $DB->query($queryUpdate);      
    }
 
 
    
    /**
    * get all sections with its serialized datas,and sectionId from database
-   * @param int $internalId
+   *
+   * @param $internalId value uniq id of internal lib
+   *
    * @return array $infoSections (serialized datas and sectionId)
    */
    function _getInfoSections($internalId) {
@@ -589,7 +623,7 @@ if (!unserialize($serializedSectionToRemove)) {
       $serializedSections = htmlspecialchars_decode($rowSelect[1].$rowSelect[2].$rowSelect[3], ENT_QUOTES); // Recover double quotes
 //      $serializedSections = str_replace("\t", "", $serializedSections); // To remove the indentation at beginning of line
       $arraySerializedSections = explode("\n", $serializedSections); // Recovering a table with one line per entry
-      foreach ($arraySerializedSections as $cle=>$valeur) {
+      foreach ($arraySerializedSections as $valeur) {
          $arraySerializedSectionsTemp = explode("<<=>>", $valeur); // For each line, we create a table with data separated
          if (isset($arraySerializedSectionsTemp[0]) AND isset($arraySerializedSectionsTemp[1])) {
             if ($arraySerializedSectionsTemp[0] != "" && $arraySerializedSectionsTemp[1] != "") { // that is added to infosections
@@ -601,25 +635,48 @@ if (!unserialize($serializedSectionToRemove)) {
    }
 
 
-   
+
+   /**
+   * Unserialize sections
+   *
+   * @param $sObject value datas serialized
+   *
+   * @return array each sections into an array
+   */
    function __unserialize($sObject) {
-
-       $__ret =preg_replace('!s:(\d+):"(.*?)";!e', "'s:'.strlen('$2').':\"$2\";'", $sObject );
-
-       return unserialize($__ret);
+      $__ret =preg_replace('!s:(\d+):"(.*?)";!e', "'s:'.strlen('$2').':\"$2\";'", $sObject );
+      return unserialize($__ret);
    }
 
 
+
+   /**
+   * When purge computer, we delete entry in lib DB
+   *
+   * @param $external_id integer GLPI id of the computer
+   *
+   * @return nothing
+   */
    function removeExternalid($external_id) {
       global $DB;
 
       $query_delete = "DELETE FROM `glpi_plugin_fusinvinventory_libserialization`
          WHERE `external_id`='".$external_id."' ";
       $DB->query($query_delete);
-
    }
 
 
+
+   /**
+   * Add existant GLPI computer into lib before update it
+   *
+   * @param $items_id integer id of GLPI Computer
+   * @param $internal_id value uniq id of the computer in lib
+   * @param $simpleXMLObj simplexml XML of the Computer
+   * @param $a_sectionsinfos
+   *
+   * @return nothing
+   */
    function addLibMachineFromGLPI($items_id, $internal_id, $simpleXMLObj, $a_sectionsinfos) {
       $this->addLibMachine($internal_id, $items_id);
 
@@ -636,9 +693,7 @@ if (!unserialize($serializedSectionToRemove)) {
          $serializedSections .= array_shift($a_sectionsinfos)."<<=>>".$serializedSection."
 ";
       }
-
       $this->_serializeIntoDB($internal_id, $serializedSections);
-
    }
 }
 

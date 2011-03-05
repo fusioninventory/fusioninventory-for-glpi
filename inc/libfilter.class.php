@@ -1,58 +1,50 @@
 <?php
+
 /*
- * @version $Id$
- -------------------------------------------------------------------------
- FusionInventory
- Copyright (C) 2003-2010 by the INDEPNET Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org/
- -------------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- --------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: David DURIEUX
-// Purpose of file: management of communication with agents
-// ----------------------------------------------------------------------
-/**
- * The datas are XML encoded and compressed with Zlib.
- * XML rules :
- * - XML tags in uppercase
- **/
 
 if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-/**
- * Class
- **/
 class PluginFusinvinventoryLibfilter extends CommonDBTM {
 
 
     /**
     * get device from pciid
-    * @access public
-    * @param string $pciid
-    */
+    *
+    * @param $section Section of the XML
+    *
+    **/
     public static function filter($section) {
 
         switch($section->getName()) {
@@ -101,15 +93,17 @@ class PluginFusinvinventoryLibfilter extends CommonDBTM {
 
     /**
     * get manufacturer from pciid
-    * @access private
-    * @param string $pciid
+    * 
+    * @param $pciid value id of the PCI (vendor identifiant)
+    *
+    * return manufacturer name or nothing
+    *
     */
     private static function _getDataFromPCIID($pciid) {
        global $DB;
 
       $pciidArray = explode(":", $pciid);
       $vendorId = $pciidArray[0];
-      $deviceId = $pciidArray[1];
 
       $query_select = "SELECT id, name FROM `glpi_plugin_fusinvinventory_pcivendors`
         WHERE `vendorid`='".$vendorId."'
@@ -117,14 +111,11 @@ class PluginFusinvinventoryLibfilter extends CommonDBTM {
       $resultSelect = $DB->query($query_select);
       if ($DB->numrows($resultSelect) > 0) {
          $rowSelect = mysql_fetch_row($resultSelect);
-         $vendors_id = $rowSelect[0];
          $vendors_name = html_entity_decode($rowSelect[1]);
-
          return $vendors_name;
       } else {
          return "";
       }
-
     }
 
     /**
@@ -150,9 +141,13 @@ class PluginFusinvinventoryLibfilter extends CommonDBTM {
 //    }
 
    /**
-   * get data from vendorid and productid
-   * @access private
-   * @param string $usbid
+   * get data from vendorid and productid USB
+   * 
+   * @param $vendorId value USB id of vendor
+   * @param $productId value id of product
+   *
+   * @return array (vendor name, device name)
+   *
    */
    private static function _getDataFromUSBID($vendorId, $productId) {
       global $DB;
@@ -183,8 +178,6 @@ class PluginFusinvinventoryLibfilter extends CommonDBTM {
       }
       return array($vendors_name, $devices_name);
     }
-   
-
 }
 
 ?>

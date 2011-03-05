@@ -1,38 +1,36 @@
 <?php
 
 /*
- * @version $Id$
- ----------------------------------------------------------------------
- FusionInventory
- Coded by the FusionInventory Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org//
- ----------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: DURIEUX David
-// Purpose of file:
-// ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
@@ -40,7 +38,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvinventoryBlacklist extends CommonDBTM {
 
-   
    static function getTypeName() {
       global $LANG;
 
@@ -76,17 +73,17 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
 
       $tab['common'] = $LANG['plugin_fusinvinventory']['menu'][2];
 
-		$tab[1]['table'] = $this->getTable();
-		$tab[1]['field'] = 'value';
+		$tab[1]['table']     = $this->getTable();
+		$tab[1]['field']     = 'value';
 		$tab[1]['linkfield'] = 'value';
-		$tab[1]['name'] = $LANG['plugin_fusinvinventory']['blacklist'][0];
-      $tab[1]['datatype'] = 'itemlink';
+		$tab[1]['name']      = $LANG['plugin_fusinvinventory']['blacklist'][0];
+      $tab[1]['datatype']  = 'itemlink';
 
-      $tab[2]['table'] = 'glpi_plugin_fusinvinventory_criterias';
-		$tab[2]['field'] = 'name';
+      $tab[2]['table']     = 'glpi_plugin_fusinvinventory_criterias';
+		$tab[2]['field']     = 'name';
 		$tab[2]['linkfield'] = 'plugin_fusioninventory_criterium_id';
-		$tab[2]['name'] = $LANG['common'][16];
-      $tab[2]['datetype'] = "itemlink";
+		$tab[2]['name']      = $LANG['common'][16];
+      $tab[2]['datetype']  = "itemlink";
 
       return $tab;
    }
@@ -94,7 +91,7 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
 
    
    function defineTabs($options=array()){
-      global $LANG,$CFG_GLPI;
+      global $LANG;
 
       $PluginFusinvinventoryCriteria = new PluginFusinvinventoryCriteria();
 
@@ -105,12 +102,20 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
          $ong[$i] = $data['name'];
          $i++;
       }
-
       return $ong;
    }
 
 
-   
+
+   /**
+   * Display form for black list
+   *
+   * @param $items_id integer id of the blacklist
+   * @param $options array
+   *
+   *@return bool true if form is ok
+   *
+   **/
    function showForm($items_id, $options=array()) {
       global $LANG;
 
@@ -135,11 +140,20 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
       echo "</tr>";
 
       $this->showFormButtons();
-      
+
+      return true;
    }
 
 
 
+   /**
+   * Remove fields in XML from agent who are blacklisted
+   *
+   * @param $p_xml value XML from agent
+   *
+   *@return value XML cleaned (without blacklisted fields)
+   *
+   **/
    function cleanBlacklist($p_xml) {
       $xml = simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA);
 
@@ -250,7 +264,6 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
       }
       return $xml->asXML();
    }
-
 }
 
 ?>
