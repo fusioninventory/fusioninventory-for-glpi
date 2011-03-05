@@ -159,6 +159,10 @@ class PluginFusinvinventoryLib extends CommonDBTM {
             $PluginFusinvinventoryLibhook = new PluginFusinvinventoryLibhook();
             $PluginFusinvinventoryLibhook->createMachine($items_id);
 
+            // Link computer to agent FusionInventory
+            $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+            $PluginFusioninventoryAgent->setAgentWithComputerid($items_id, $xml->DEVICEID);
+
             $this->addLibMachine($internalId, $items_id);
 
             $this->updateLibMachine($xmlSections, $internalId);

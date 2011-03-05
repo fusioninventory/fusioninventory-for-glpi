@@ -75,10 +75,6 @@ class PluginFusinvinventoryLibhook {
        $changes[1]="";
        $changes[2]='Create computer by FusionInventory';
        Log::history($items_id,'Computer',$changes, 0, HISTORY_LOG_SIMPLE_MESSAGE);
-
-       // Link computer to agent FusionInventory
-       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-       $PluginFusioninventoryAgent->setAgentWithComputerid($items_id, $xml->DEVICEID);
     }
 
 
