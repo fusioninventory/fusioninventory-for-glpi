@@ -1,66 +1,57 @@
 <?php
+
 /*
- * @version $Id$
- -------------------------------------------------------------------------
- FusionInventory
- Copyright (C) 2003-2010 by the INDEPNET Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org/
- -------------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- --------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: MAZZONI Vincent
-// Purpose of file: management of communication with agents
-// ----------------------------------------------------------------------
-/**
- * The datas are XML encoded and compressed with Zlib.
- * XML rules :
- * - XML tags in uppercase
- **/
 
 if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-/**
- * Class
- **/
 class PluginFusinvinventoryLibhook {
-    /**
-    * Disable instance
-    * @access private
-    *
-    */
+
+
     function __construct() {
        $_SESSION["plugin_fusinvinventory_history_add"] = true;
        $_SESSION["plugin_fusinvinventory_no_history_add"] = false;
     }
 
     /**
-    * create a new machine in an application
-    * @access public
-    * @return int $externalId Id to match application data with the library
-    */
+    * create a new computer in GLPI (computer create before but populate it here)
+    *
+    * @param $items_id integer id of the computer
+    *
+    * @return nothing
+    *
+    **/
     public static function createMachine($items_id) {
 
       $PluginFusinvinventoryLibhook = new PluginFusinvinventoryLibhook();
@@ -68,7 +59,7 @@ class PluginFusinvinventoryLibhook {
       $_SESSION["plugin_fusinvinventory_history_add"] = false;
       $_SESSION["plugin_fusinvinventory_no_history_add"] = true;
        // Else create computer
-      $Computer = new Computer;
+      $Computer = new Computer();
       $Computer->getFromDB($items_id);
       $input = $Computer->fields;
       $input['is_deleted'] = 0;
@@ -86,19 +77,21 @@ class PluginFusinvinventoryLibhook {
        Log::history($items_id,'Computer',$changes, 0, HISTORY_LOG_SIMPLE_MESSAGE);
 
        // Link computer to agent FusionInventory
-       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
+       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
        $PluginFusioninventoryAgent->setAgentWithComputerid($items_id, $xml->DEVICEID);
-
     }
+
+
 
     /**
     * add a new section to the machine in an application
-    * @access public
-    * @param int $externalId
-    * @param string $sectionName
-    * @param array $dataSection
-    * @return int $sectionId
-    */
+    * 
+    * @param $data array with section to add
+    * @param $idmachine integer id of the GLPI Computer
+    *
+    * @return $sectionId integer id of the section
+    *
+    **/
     public static function addSections($data, $idmachine) {
        global $DB;
 
@@ -106,7 +99,7 @@ class PluginFusinvinventoryLibhook {
          logInFile("addsection", "[".$idmachine."] ".print_r($data, true));
        }
        
-      $Computer = new Computer;
+      $Computer = new Computer();
       $PluginFusinvinventoryComputer = new PluginFusinvinventoryComputer();
 
       $sectionsId = array();
@@ -122,7 +115,6 @@ class PluginFusinvinventoryLibhook {
          $PluginFusinvinventoryComputer->getFromDB($PluginFusinvinventoryComputer->add($input));
 
       }
-
 
       $_SESSION["plugin_fusinvinventory_entity"] = $Computer->fields['entities_id'];
 
@@ -158,14 +150,13 @@ class PluginFusinvinventoryLibhook {
                                                                           $dataSection['BMANUFACTURER']);
                }
                if (isset($dataSection['SMODEL'])) {
-                  $ComputerModel = new ComputerModel;
+                  $ComputerModel = new ComputerModel();
                   $Computer->fields['computermodels_id'] = $ComputerModel->import(array('name'=>$dataSection['SMODEL']));
                }
                if (isset($dataSection['SSN']))
                   $Computer->fields['serial'] = $dataSection['SSN'];
 
                if (isset($dataSection['TYPE'])) {
-                  $ComputerType = new ComputerType();
                   $Computer->fields['computertypes_id'] = Dropdown::importExternal('ComputerType',
                                                                           $dataSection['TYPE']);
                }
@@ -181,13 +172,13 @@ class PluginFusinvinventoryLibhook {
                }
                if (isset($dataSection['OSNAME'])) {
                   if (!in_array('operatingsystems_id', $a_lockable)) {
-                     $OperatingSystem = new OperatingSystem;
+                     $OperatingSystem = new OperatingSystem();
                      $Computer->fields['operatingsystems_id'] = $OperatingSystem->import(array('name'=>$dataSection['OSNAME']));
                   }
                }
                if (isset($dataSection['OSVERSION'])) {
                   if (!in_array('operatingsystemversions_id', $a_lockable)) {
-                     $OperatingSystemVersion = new OperatingSystemVersion;
+                     $OperatingSystemVersion = new OperatingSystemVersion();
                      $Computer->fields['operatingsystemversions_id'] = $OperatingSystemVersion->import(array('name'=>$dataSection['OSVERSION']));
                   }
                }
@@ -203,14 +194,14 @@ class PluginFusinvinventoryLibhook {
                }
                if (isset($dataSection['WORKGROUP'])) {
                   if (!in_array('domains_id', $a_lockable)) {
-                     $Domain = new Domain;
+                     $Domain = new Domain();
                      $Computer->fields['domains_id'] = $Domain->import(array('name'=>$dataSection['WORKGROUP']));
                   }
                }
                if (isset($dataSection['OSCOMMENTS'])) {
                   if (!in_array('operatingsystemservicepacks_id', $a_lockable)) {
                      if (strstr($dataSection['OSCOMMENTS'], 'Service Pack')) {
-                        $OperatingSystemServicePack = new OperatingSystemServicePack;
+                        $OperatingSystemServicePack = new OperatingSystemServicePack();
                         $Computer->fields['operatingsystemservicepacks_id'] = $OperatingSystemServicePack->import(array('name'=>$dataSection['OSCOMMENTS']));
                      }
                   }
@@ -351,7 +342,7 @@ class PluginFusinvinventoryLibhook {
                // Add software name
                // Add version of software
                // link version with computer : glpi_computers_softwareversions
-               $PluginFusinvinventoryImport_Software = new PluginFusinvinventoryImport_Software;
+               $PluginFusinvinventoryImport_Software = new PluginFusinvinventoryImport_Software();
                if (isset($dataSection['VERSION'])) {
                   $Computer_SoftwareVersion_id = $PluginFusinvinventoryImport_Software->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
                                                                               'version'=>$dataSection['VERSION']));
@@ -466,21 +457,23 @@ class PluginFusinvinventoryLibhook {
 
          }
       }
-
       return $sectionsId;
     }
 
+
+    
     /**
     * remove a machine's section in an application
-    * @access public
-    * @param int $externalId
-    * @param string $sectionName
-    * @param array $dataSection
-    */
-    public static function removeSections($idsections, $idmachine)
-    {
+    * 
+    * @param $idsections array sections with id
+    * @param $idmachine integer id of the GLPI Computer
+    *
+    * @return emtpy array
+    *
+    **/
+    public static function removeSections($idsections, $idmachine) {
 
-      $Computer = new Computer;
+      $Computer = new Computer();
       $Computer->getFromDB($idmachine);
       $_SESSION["plugin_fusinvinventory_entity"] = $Computer->fields['entities_id'];
 
@@ -570,16 +563,24 @@ class PluginFusinvinventoryLibhook {
 
 
 
+   /**
+   * Update glpi for each section
+   *
+   * @param $data array of each sections
+   * @param $idmachine integer id of the GLPI Computer
+   *
+   *@return nothing
+   *
+   **/
     public static function updateSections($data, $idmachine) {
        global $DB;
 
-      $Computer = new Computer;
+      $Computer = new Computer();
       $Computer->getFromDB($idmachine);
       $_SESSION["plugin_fusinvinventory_entity"] = $Computer->fields['entities_id'];
 
       $_SESSION["plugin_fusinvinventory_history_add"] = true;
       $_SESSION["plugin_fusinvinventory_no_history_add"] = false;
-
 
       foreach($data as $section) {
          $dataSection = unserialize($section['dataSection']);
@@ -646,14 +647,13 @@ class PluginFusinvinventoryLibhook {
                                                                              $dataSection['BMANUFACTURER']);
                   }
                   if (isset($dataSection['SMODEL'])) {
-                     $ComputerModel = new ComputerModel;
+                     $ComputerModel = new ComputerModel();
                      $Computer->fields['computermodels_id'] = $ComputerModel->import(array('name'=>$dataSection['SMODEL']));
                   }
                   if (isset($dataSection['SSN']))
                      $Computer->fields['serial'] = $dataSection['SSN'];
 
                   if (isset($dataSection['TYPE'])) {
-                     $ComputerType = new ComputerType();
                      $Computer->fields['computertypes_id'] = Dropdown::importExternal('ComputerType',
                                                                           $dataSection['TYPE']);
                   }
@@ -670,13 +670,13 @@ class PluginFusinvinventoryLibhook {
                      }
                   if (isset($dataSection['OSNAME'])) {
                      if (!in_array('operatingsystems_id', $a_lockable)) {
-                        $OperatingSystem = new OperatingSystem;
+                        $OperatingSystem = new OperatingSystem();
                         $Computer->fields['operatingsystems_id'] = $OperatingSystem->import(array('name'=>$dataSection['OSNAME']));
                      }
                   }
                   if (isset($dataSection['OSVERSION'])) {
                      if (!in_array('operatingsystemversions_id', $a_lockable)) {
-                        $OperatingSystemVersion = new OperatingSystemVersion;
+                        $OperatingSystemVersion = new OperatingSystemVersion();
                         $Computer->fields['operatingsystemversions_id'] = $OperatingSystemVersion->import(array('name'=>$dataSection['OSVERSION']));
                      }
                   }
@@ -692,14 +692,14 @@ class PluginFusinvinventoryLibhook {
                   }
                   if (isset($dataSection['WORKGROUP'])) {
                      if (!in_array('domains_id', $a_lockable)) {
-                        $Domain = new Domain;
+                        $Domain = new Domain();
                         $Computer->fields['domains_id'] = $Domain->import(array('name'=>$dataSection['WORKGROUP']));
                      }
                   }
                   if (isset($dataSection['OSCOMMENTS'])) {
                      if (!in_array('operatingsystemservicepacks_id', $a_lockable)) {
                         if (strstr($dataSection['OSCOMMENTS'], 'Service Pack')) {
-                           $OperatingSystemServicePack = new OperatingSystemServicePack;
+                           $OperatingSystemServicePack = new OperatingSystemServicePack();
                            $Computer->fields['operatingsystemservicepacks_id'] = $OperatingSystemServicePack->import(array('name'=>$dataSection['OSCOMMENTS']));
                         }
                      }
@@ -753,6 +753,16 @@ class PluginFusinvinventoryLibhook {
     }
 
 
+
+
+   /**
+   * Write XML file into files/_plugins/fusinvinventory
+   *
+   * @param $items_id integer id of the computer
+   *
+   *@return nothing
+   *
+   **/
     function writeXMLFusion($items_id) {
       if (isset($_SESSION['SOURCEXML'])) {
          // TODO : Write in _plugins/fusinvinventory/xxx/idmachine.xml
@@ -770,6 +780,13 @@ class PluginFusinvinventoryLibhook {
     }
 
 
+
+   /**
+   * Define Mapping for unlock fields
+   *
+   *@return array of the mapping
+   *
+   **/
     static function getMapping() {
        $opt = array();
 
