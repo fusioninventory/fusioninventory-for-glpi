@@ -1,55 +1,53 @@
 <?php
+
 /*
- * @version $Id$
- -------------------------------------------------------------------------
- FusionInventory
- Copyright (C) 2003-2010 by the INDEPNET Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org/
- -------------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- --------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: MAZZONI Vincent
-// Purpose of file: management of communication with agents
-// ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-/**
- * Class 
- **/
 class PluginFusinvinventoryInventory {
 
    
    /**
-    * Import data
-    *
-    *@param $p_DEVICEID XML code to import
-    *@param $p_CONTENT XML code to import
-    *@return "" (import ok) / error string (import ko)
-    **/
+   * Import data
+   *
+   * @param $p_DEVICEID XML code to import
+   * @param $p_CONTENT XML code of the Computer
+   * @param $p_CONTENT XML code of all agent have sent
+   *
+   * @return nothing (import ok) / error string (import ko)
+   **/
    function import($p_DEVICEID, $p_CONTENT, $p_xml) {
       global $LANG;
 
@@ -62,6 +60,16 @@ class PluginFusinvinventoryInventory {
 
 
 
+   /**
+   * Send Computer to ruleimportequipment
+   *
+   * @param $p_DEVICEID XML code to import
+   * @param $p_CONTENT XML code of the Computer
+   * @param $p_CONTENT XML code of all agent have sent
+   *
+   *@return nothing
+   *
+   **/
    function sendCriteria($p_DEVICEID, $p_CONTENT, $p_xml) {
 
       $PluginFusinvinventoryBlacklist = new PluginFusinvinventoryBlacklist();
@@ -135,6 +143,15 @@ class PluginFusinvinventoryInventory {
    
 
 
+   /**
+   * If rule have found computer or rule give to create computer
+   *
+   * @param $items_id integer id of the computer found (or 0 if must be created)
+   * @param $itemtype value Computer type here
+   *
+   * @return nothing
+   *
+   **/
    function rulepassed($items_id, $itemtype) {
       if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
          logInFile("xxx", "Rule passed : ".$items_id.", ".$itemtype."\n");
@@ -149,10 +166,6 @@ class PluginFusinvinventoryInventory {
             $input = array();
             $input['date_mod'] = date("Y-m-d H:i:s");
             $items_id = $Computer->add($input);
-//            $PluginFusinvinventoryComputer = new PluginFusinvinventoryComputer();
-//            $input = array();
-//            $input['items_id'] = $items_id;
-//            $PluginFusinvinventoryComputer->add($input);
             $PluginFusinvinventoryLib->startAction($xml, $items_id, '1');
          } else {
             $PluginFusinvinventoryLib->startAction($xml, $items_id, '0');
@@ -162,99 +175,15 @@ class PluginFusinvinventoryInventory {
 
    
 
-   function sendUnknownDevice() {
-
-      $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
-
-      $xml = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
-      //Search with serial
-      if ((isset($xml->CONTENT->BIOS->SSN)) AND (!empty($xml->CONTENT->BIOS->SSN))) {
-         $a_device = $PluginFusioninventoryUnknownDevice->find("`serial`='".$xml->CONTENT->BIOS->SSN."'");
-         if (count($a_device) == "1") {
-            foreach ($a_device as $datas) {
-               if (isset($xml->CONTENT->HARDWARE->NAME)) {
-                  $datas['name'] = $xml->CONTENT->HARDWARE->NAME;
-               }
-               if (isset($xml->CONTENT->HARDWARE->USERID)) {
-                  $datas['contact'] = $xml->CONTENT->HARDWARE->USERID;
-               }
-               if ((isset($xml->CONTENT->HARDWARE->USERDOMAIN)) AND (!empty($xml->CONTENT->HARDWARE->USERDOMAIN))) {
-                  $datas['domain'] = Dropdown::importExternal('glpi_domains', $xml->CONTENT->HARDWARE->USERDOMAIN);
-               }
-               $datas['type'] = 'Computer';
-               $PluginFusioninventoryUnknownDevice->add($datas);
-               $PluginFusioninventoryUnknownDevice->writeXML($datas['id'], $_SESSION['SOURCEXML']);
-               return;
-            }
-         }
-      }
-      //Search with mac address
-//       $NetworkPort = new NetworkPort();
-//      if (isset($XML->CONTENT->NETWORKS)) {
-//         foreach ($xml->CONTENT->NETWORKS->children() as $name=>$child) {
-//            $a_port = $NetworkPort->find("`mac`='".$child->MACADDR."' AND `itemtype`='PluginFusioninventoryUnknownDevice'");
-//
-//
-//         }
-//      }
-      //Else add unknown device
-      $input = array();
-      if (isset($xml->CONTENT->HARDWARE->NAME)) {
-         $input['name'] = $xml->CONTENT->HARDWARE->NAME;
-      }
-      if (isset($xml->CONTENT->HARDWARE->USERID)) {
-         $input['contact'] = $xml->CONTENT->HARDWARE->USERID;
-      }
-      if ((isset($xml->CONTENT->HARDWARE->USERDOMAIN)) AND (!empty($xml->CONTENT->HARDWARE->USERDOMAIN))) {
-         $input['domain'] = Dropdown::importExternal('Domain', $xml->CONTENT->HARDWARE->USERDOMAIN);
-      }
-      if (isset($xml->CONTENT->BIOS->SSN)) {
-         $input['serial'] = $xml->CONTENT->BIOS->SSN;
-      }
-      $input['type'] = 'Computer';
-      $unknown_id = $PluginFusioninventoryUnknownDevice->add($input);
-      // Create ports
-      $PluginFusinvinventoryImport_Networkport = new PluginFusinvinventoryImport_Networkport();
-      foreach ($xml->CONTENT->NETWORKS as $child) {
-         $dataSection = array();
-         if (isset($child->DESCRIPTION)) {
-            $dataSection['DESCRIPTION'] = $child->DESCRIPTION;
-         }
-         if (isset($child->IPADDRESS)) {
-            $dataSection['IPADDRESS'] = $child->IPADDRESS;
-         }
-         if (isset($child->IPADDRESS6)) {
-            $dataSection['IPADDRESS6'] = $child->IPADDRESS6;
-         }
-         if (isset($child->IPDHCP)) {
-            $dataSection['IPDHCP'] = $child->IPDHCP;
-         }
-         if (isset($child->IPGATEWAY)) {
-            $dataSection['IPGATEWAY'] = $child->IPGATEWAY;
-         }
-         if (isset($child->IPMASK)) {
-            $dataSection['IPMASK'] = $child->IPMASK;
-         }
-         if (isset($child->IPSUBNET)) {
-            $dataSection['IPSUBNET'] = $child->IPSUBNET;
-         }
-         if (isset($child->MACADDR)) {
-            $dataSection['MACADDR'] = $child->MACADDR;
-         }
-         if (isset($child->STATUS)) {
-            $dataSection['STATUS'] = $child->STATUS;
-         }
-         if (isset($child->VIRTUALDEV)) {
-            $dataSection['VIRTUALDEV'] = $child->VIRTUALDEV;
-         }
-         $PluginFusinvinventoryImport_Networkport->AddUpdateItem("add", $unknown_id, $dataSection, 'PluginFusioninventoryUnknownDevice');
-      }
-
-      $PluginFusioninventoryUnknownDevice->writeXML($unknown_id, $_SESSION['SOURCEXML']);
-   }
-
-
-
+   /**
+   * Create GLPI existant computer (never in lib) in Lib FusionInventory
+   *
+   * @param $items_id integer id of the computer
+   * @param $internal_id value uniq id in internal lib
+   *
+   * @return nothing
+   *
+   **/
    function createMachineInLib($items_id, $internal_id) {
 
       $NetworkPort = new NetworkPort();
