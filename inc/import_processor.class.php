@@ -96,9 +96,9 @@ class PluginFusinvinventoryImport_Processor extends CommonDBTM {
          $array['computers_id'] = $CompDevice->fields['computers_id'];
          $devID = $CompDevice->update($array);
       } else if ($type == "add") {
-         $array = array();
          $array['computers_id'] = $items_id;         
-         $array['specificity'] = $specificity;         
+         $array['specificity'] = $specificity;
+                  logInFile("addcpu", print_r($array, true));
          if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
             $array['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
          }
