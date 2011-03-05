@@ -471,6 +471,11 @@ function update221to230() {
    $sql = "ALTER TABLE `glpi_plugin_fusioninventory_agents`
       ADD `is_recursive` TINYINT( 1 ) NOT NULL DEFAULT '1' AFTER `entities_id` ";
    $DB->query($sql);
+   $sql = "ALTER TABLE `glpi_plugin_fusioninventory_agents`
+      DROP INDEX `key`,
+      ADD INDEX `device_id` (`device_id`),
+      ADD INDEX `item` (`itemtype`,`items_id`) ";
+   $DB->query($sql);
 
    /*
     * Drop `glpi_plugin_fusioninventory_agents_inventory_state`
@@ -561,6 +566,11 @@ function update221to230() {
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevices`
       CHANGE `snmpmodel_id` `plugin_fusinvsnmp_models_id` INT( 11 ) NULL DEFAULT NULL ";
    $DB->query($sql);
+   $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevices`
+      DROP INDEX `type` ,
+      ADD INDEX `plugin_fusinvsnmp_models_id` ( `manufacturers_id`, `plugin_fusinvsnmp_models_id` ),
+      ADD INDEX `itemtype` ( `itemtype` ) ";
+   $DB->query($sql);
 
    /*
     * Update `glpi_plugin_fusioninventory_construct_walks`
@@ -575,6 +585,9 @@ function update221to230() {
    $DB->query($sql);
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevicewalks`
       CHANGE `construct_device_id` `plugin_fusinvsnmp_constructdevices_id` INT( 11 ) NOT NULL DEFAULT '0'";
+   $DB->query($sql);
+   $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevicewalks`
+      ADD INDEX `plugin_fusinvsnmp_constructdevices_id` ( `plugin_fusinvsnmp_constructdevices_id` ) ";
    $DB->query($sql);
 
    /*
@@ -637,6 +650,12 @@ function update221to230() {
          WHERE `itemtype` = '".$key."'";
       $DB->query($sql);
    }
+   $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevice_miboids`
+      DROP INDEX `construct_device_id`
+      ADD UNIQUE `unicity` ( `plugin_fusinvsnmp_miboids_id`,
+         `plugin_fusinvsnmp_constructdevices_id`, `plugin_fusioninventory_mappings_id` ),
+      ADD INDEX `itemtype` ( `itemtype` )";
+   $DB->query($sql);
 
    /*
     * Update `glpi_plugin_fusioninventory_snmp_history_connections`
@@ -668,6 +687,11 @@ function update221to230() {
 
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_networkportconnectionlogs`
       CHANGE `process_number` `plugin_fusioninventory_agentprocesses_id` INT( 11 ) NOT NULL DEFAULT '0'";
+   $DB->query($sql);
+   $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_networkportconnectionlogs`
+      ADD INDEX `networkports_id_source` ( `networkports_id_source`, `networkports_id_destination`,
+          `plugin_fusioninventory_agentprocesses_id` ),
+      ADD INDEX `date_mod` (`date_mod`) ";
    $DB->query($sql);
 
    /*
@@ -721,6 +745,11 @@ function update221to230() {
          WHERE `id`='".$data['id']."' ";
       $DB->query($sql_update);
    }
+   $sql = "ALTER TABLE `glpi_plugin_fusioninventory_locks`
+      DROP INDEX `itemtype`,
+      ADD INDEX `tablename` ( `tablename` ),
+      ADD INDEX `items_id` (`items_id`) ";
+   $DB->query($sql);
 
    /*
     * Drop `glpi_plugin_fusioninventory_lockable`
@@ -780,6 +809,21 @@ function update221to230() {
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_modelmibs`
       CHANGE `activation` `is_active` INT( 1 ) NOT NULL DEFAULT '1'";
    $DB->query($sql);
+   $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_modelmibs`
+       DROP INDEX `FK_model_infos`,
+       DROP INDEX `FK_model_infos_2`,
+       DROP INDEX `FK_model_infos_3`,
+       DROP INDEX `FK_model_infos_4`,
+       DROP INDEX `oid_port_dyn`,
+       DROP INDEX `activation`,
+       ADD INDEX `plugin_fusinvsnmp_models_id` (`plugin_fusinvsnmp_models_id`),
+       ADD INDEX `plugin_fusinvsnmp_models_id_2` (`plugin_fusinvsnmp_models_id`,`oid_port_dyn`),
+       ADD INDEX `plugin_fusinvsnmp_models_id_3` (`plugin_fusinvsnmp_models_id`,`oid_port_counter`,`plugin_fusioninventory_mappings_id`),
+       ADD INDEX `plugin_fusinvsnmp_models_id_4` (`plugin_fusinvsnmp_models_id`,`plugin_fusioninventory_mappings_id`),
+       ADD INDEX `oid_port_dyn` (`oid_port_dyn`),
+       ADD INDEX `is_active` (`is_active`),
+       ADD INDEX `plugin_fusioninventory_mappings_id` (`plugin_fusioninventory_mappings_id`) ";
+   $DB->query($sql);
    
    /*
     * Update `glpi_plugin_fusioninventory_model_infos`
@@ -811,7 +855,11 @@ function update221to230() {
          WHERE `itemtype` = '".$key."'";
       $DB->query($sql);
    }
-
+   $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_models`
+      DROP INDEX `device_type`,
+      ADD INDEX `itemtype` (`itemtype`) ";
+   $DB->query($sql);
+   
    /*
     * Update `glpi_plugin_fusioninventory_networking`
     * to `glpi_plugin_fusinvsnmp_networkequipments`
@@ -838,7 +886,13 @@ function update221to230() {
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_networkequipments`
       CHANGE `memory` `memory` INT( 11 ) NOT NULL DEFAULT '0'";
    $DB->query($sql);
-
+   $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_networkequipments`
+      DROP INDEX `FK_networking`,
+      DROP INDEX `FK_model_infos`,
+      ADD INDEX `networkequipments_id` (`networkequipments_id`),
+      ADD INDEX `plugin_fusinvsnmp_models_id` (`plugin_fusinvsnmp_models_id`,
+         `plugin_fusinvsnmp_configsecurities_id`) ";
+   $DB->query($sql);
    /*
     * Update `glpi_plugin_fusioninventory_networking_ifaddr`
     * to `glpi_plugin_fusinvsnmp_networkequipmentips`
@@ -857,10 +911,15 @@ function update221to230() {
       CHANGE `ifaddr` `ip` VARCHAR( 255 ) CHARACTER
       SET utf8 COLLATE utf8_unicode_ci NOT NULL ";
    $DB->query($sql);
-   
+   $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_networkequipmentips`
+      DROP INDEX `ifaddr`,
+      ADD INDEX `ip` (`ip`),
+      ADD INDEX `networkequipments_id` (`networkequipments_id`) ";
+   $DB->query($sql);
+
    /*
     * Update `glpi_plugin_fusioninventory_networking_ports`
-    * to `glpi_plugin_fusinvsnmp_networkequipmentips`
+    * to `glpi_plugin_fusinvsnmp_networkports`
     */
    plugin_fusioninventory_displayMigrationMessage("230", $LANG['update'][141]." - glpi_plugin_fusinvsnmp_networkequipmentips");
    $sql = "RENAME TABLE `glpi_plugin_fusioninventory_networking_ports`
@@ -878,6 +937,10 @@ function update221to230() {
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_networkports`
       CHANGE `ifmac` `mac` VARCHAR( 255 ) CHARACTER
       SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL ";
+   $DB->query($sql);
+   $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_networkports`
+      DROP INDEX `FK_networking_ports`,
+      ADD INDEX `networkports_id` (`networkports_id`) ";
    $DB->query($sql);
 
    /*
@@ -956,7 +1019,14 @@ function update221to230() {
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_printers`
       CHANGE `FK_snmp_connection` `plugin_fusinvsnmp_configsecurities_id` INT( 11 ) NOT NULL DEFAULT '0'";
    $DB->query($sql);
-
+   $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_printers`
+      DROP INDEX `FK_printers`,
+      DROP INDEX `FK_snmp_connection`,
+      ADD UNIQUE `unicity` (`printers_id`),
+      ADD INDEX `plugin_fusinvsnmp_configsecurities_id` (`plugin_fusinvsnmp_configsecurities_id`),
+      ADD INDEX `plugin_fusinvsnmp_models_id` (`plugin_fusinvsnmp_models_id`) ";
+   $DB->query($sql);
+   
    /*
     * Update `glpi_plugin_fusioninventory_printers_cartridges`
     * to `glpi_plugin_fusinvsnmp_printercartridges`
@@ -995,6 +1065,12 @@ function update221to230() {
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_printercartridges`
       CHANGE `FK_cartridges` `cartridges_id` INT( 11 ) NOT NULL DEFAULT '0'";
    $DB->query($sql);
+   $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_printercartridges`
+      ADD INDEX `printers_id` (`printers_id`),
+      ADD INDEX `plugin_fusioninventory_mappings_id` (`plugin_fusioninventory_mappings_id`),
+      ADD INDEX `cartridges_id` (`cartridges_id`) ";
+   $DB->query($sql);
+
 
    /*
     * Drop `glpi_plugin_fusioninventory_task`
@@ -1115,6 +1191,9 @@ function update221to230() {
       CHANGE `ifaddr_end` `ip_end` VARCHAR( 255 ) CHARACTER
       SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL ";
    $DB->query($sql);
+   $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_ipranges`
+      ADD INDEX `entities_id` (`entities_id`) ";
+   $DB->query($sql);
    
    /*
     * Update `glpi_plugin_fusioninventory_snmp_connection`
@@ -1145,7 +1224,12 @@ function update221to230() {
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_configsecurities`
       CHANGE `deleted` `is_deleted` INT( 1 ) NOT NULL DEFAULT '0'";
    $DB->query($sql);
-
+   $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_configsecurities`
+      DROP INDEX `FK_snmp_version`,
+      ADD INDEX `snmpversion` (`snmpversion`),
+      ADD INDEX `is_deleted` (`is_deleted`) ";
+   $DB->query($sql);
+   
    /*
     * Update `glpi_plugin_fusioninventory_snmp_history`
     * to `glpi_plugin_fusinvsnmp_networkportlogs`
@@ -1202,7 +1286,13 @@ function update221to230() {
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_networkportlogs`
       CHANGE `FK_process` `plugin_fusioninventory_agentprocesses_id` INT( 11 ) NOT NULL ";
    $DB->query($sql);
-
+   $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_networkportlogs`
+      DROP INDEX `FK_ports`,
+      ADD INDEX `networkports_id` (`networkports_id`,`date_mod`),
+      ADD INDEX `plugin_fusioninventory_mappings_id` (`plugin_fusioninventory_mappings_id`),
+      ADD INDEX `plugin_fusioninventory_agentprocesses_id` (`plugin_fusioninventory_agentprocesses_id`),
+      ADD INDEX `date_mod` (`date_mod`) ";
+   $DB->query($sql);
    /*
     * Update `glpi_plugin_fusioninventory_unknown_device`
     * to `glpi_plugin_fusioninventory_unknowndevices`
@@ -1276,6 +1366,12 @@ function update221to230() {
    $DB->query($sql);
    $sql = "ALTER TABLE `glpi_plugin_fusioninventory_unknowndevices`
       ADD `states_id` INT( 11 ) NOT NULL DEFAULT '0'";
+   $DB->query($sql);
+   $sql = "ALTER TABLE `glpi_plugin_fusioninventory_unknowndevices`
+      ADD INDEX `entities_id` (`entities_id`),
+      ADD INDEX `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`),
+      ADD INDEX `is_deleted` (`is_deleted`),
+      ADD INDEX `date_mod` (`date_mod`) ";
    $DB->query($sql);
    
    // Convert datas
