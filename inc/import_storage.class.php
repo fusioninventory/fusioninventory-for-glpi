@@ -204,7 +204,8 @@ class PluginFusinvinventoryImport_Storage extends CommonDBTM {
          if ($type == "Drive") {
             $CompDevice->getFromDB($items_id);
             if ($CompDevice->fields['computers_id'] == $idmachine) {
-               $CompDevice->delete(array("id" => $items_id));
+               $CompDevice->delete(array("id" => $items_id,
+                                             "_itemtype" => 'DeviceDrive'));
             }
          } else if ($type == "HardDrive") {
             $CompHardDevice->getFromDB($items_id);
