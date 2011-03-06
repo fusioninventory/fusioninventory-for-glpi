@@ -149,6 +149,25 @@ class PluginFusinvinventoryAntivirus extends CommonDBTM {
       echo "</table>";
       return true;
    }
+
+
+
+   /**
+   * Delete antivirus on computer
+   *
+   * @param $items_id integer id of the computer
+   *
+   *@return nothing
+   *
+   **/
+   static function cleanComputer($items_id) {
+      $PluginFusinvinventoryAntivirus = new PluginFusinvinventoryAntivirus();
+      $a_antivirus = $PluginFusinvinventoryAntivirus->find("`computers_id`='".$items_id."'");
+      if (count($a_antivirus) > 0) {
+         $input = current($a_antivirus);
+         $PluginFusinvinventoryAntivirus->delete($input);
+      }
+   }
 }
 
 ?>
