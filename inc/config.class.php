@@ -60,7 +60,6 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       $input['import_antivirus']       = 1;
       $input['import_registry']        = 1;
       $input['import_process']         = 1;
-      $input['import_vm']              = 1;
       $input['component_processor']    = 1;
       $input['component_memory']       = 1;
       $input['component_harddrive']    = 1;
@@ -135,10 +134,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       $array[1] = $LANG['plugin_fusinvinventory']['setup'][22];
       $array[2] = $LANG['plugin_fusinvinventory']['setup'][24];
       $array[3] = $LANG['plugin_fusinvinventory']['setup'][27];
-      Dropdown::showFromArray("import_monitor", $array, 
-                              array('value' => 
-                                 $PluginFusioninventoryConfig->getValue($plugins_id, 
-                                                                        'import_monitor')));
+      Dropdown::showFromArray("import_monitor", $array, array('value' => $PluginFusioninventoryConfig->getValue($plugins_id, 'import_monitor')));
       echo "</td>";
       echo "<th colspan='2'>";
       echo $LANG['plugin_fusinvinventory']['setup'][21];
@@ -155,17 +151,13 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       $array[1] = $LANG['plugin_fusinvinventory']['setup'][22];
       $array[2] = $LANG['plugin_fusinvinventory']['setup'][24];
       $array[3] = $LANG['plugin_fusinvinventory']['setup'][27];
-      Dropdown::showFromArray("import_printer", $array, 
-                              array('value' => 
-                                 $PluginFusioninventoryConfig->getValue($plugins_id, 
-                                                                        'import_printer')));
+      Dropdown::showFromArray("import_printer", $array, array('value' => $PluginFusioninventoryConfig->getValue($plugins_id, 'import_printer')));
       echo "</td>";
       echo "<td>";
       echo $LANG['devices'][4];
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("component_processor", 
-                          $PluginFusioninventoryConfig->getValue($plugins_id, 'component_processor'));
+      Dropdown::showYesNo("component_processor", $PluginFusioninventoryConfig->getValue($plugins_id, 'component_processor'));
       echo "</td>";
       echo "</tr>";
 
@@ -179,10 +171,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       $array[1] = $LANG['plugin_fusinvinventory']['setup'][22];
       $array[2] = $LANG['plugin_fusinvinventory']['setup'][24];
       $array[3] = $LANG['plugin_fusinvinventory']['setup'][27];
-      Dropdown::showFromArray("import_peripheral", $array, 
-                              array('value' => 
-                                       $PluginFusioninventoryConfig->getValue($plugins_id, 
-                                                                              'import_peripheral')));
+      Dropdown::showFromArray("import_peripheral", $array, array('value' => $PluginFusioninventoryConfig->getValue($plugins_id, 'import_peripheral')));
       echo "</td>";
       echo "<td>";
       echo $LANG['devices'][6];
@@ -268,12 +257,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo $LANG['computers'][57];
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("import_vm", 
-                          $PluginFusioninventoryConfig->getValue($plugins_id, 'import_vm'));
+      echo "<td colspan='2'>";
       echo "</td>";
       echo "<td>";
       echo $LANG['devices'][20];
