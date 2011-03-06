@@ -75,6 +75,8 @@ class PluginFusinvinventoryImport_Processor extends CommonDBTM {
       $processor['specif_default'] = 0;
       if (isset($dataSection['NAME'])) {
          $processor['designation'] = $dataSection['NAME'];
+      } else if (isset($dataSection['TYPE'])) {
+         $processor['designation'] = $dataSection['TYPE'];
       }
       if (isset($dataSection['SPEED'])) {
          $processor['frequence'] = $dataSection['SPEED'];
