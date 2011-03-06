@@ -313,7 +313,7 @@ class PluginFusioninventorySetup {
          
          $input = array();
          $input['rules_id'] = $rule_id;
-         $input['criteria'] = "osname";
+         $input['criteria'] = "name";
          $input['pattern']= 1;
          $input['condition']=8;
          $rulecriteria->add($input);
