@@ -362,7 +362,8 @@ if (!unserialize($serializedSectionToRemove)) {
                            break;
                            
                         case "INPUTS":
-                           if($arrSectionToAdd["CAPTION"] == $arrSectionToRemove["CAPTION"]) {
+                           if (isset($arrSectionToAdd["CAPTION"]) AND isset($arrSectionToRemove["CAPTION"])
+                                 AND $arrSectionToAdd["CAPTION"] == $arrSectionToRemove["CAPTION"]) {
                               $boolUpdate = true;
                            }
                            break;
@@ -376,7 +377,8 @@ if (!unserialize($serializedSectionToRemove)) {
                            break;
                            
                         case "MONITORS":
-                           if($arrSectionToAdd["DESCRIPTION"] == $arrSectionToRemove["DESCRIPTION"]) {
+                           if (isset($arrSectionToAdd["DESCRIPTION"]) AND isset($arrSectionToRemove["DESCRIPTION"])
+                                 AND $arrSectionToAdd["DESCRIPTION"] == $arrSectionToRemove["DESCRIPTION"]) {
                   				$boolUpdate = true;
                            }
                            break;
@@ -389,13 +391,17 @@ if (!unserialize($serializedSectionToRemove)) {
                            break;
                            
                         case "PORTS":
-                           if($arrSectionToAdd["CAPTION"] == $arrSectionToRemove["CAPTION"]) {
+                           if (isset($arrSectionToAdd["CAPTION"]) AND isset($arrSectionToRemove["CAPTION"])
+                                 AND $arrSectionToAdd["CAPTION"] == $arrSectionToRemove["CAPTION"]) {
                      			$boolUpdate = true;
                            }
                            break;
                            
                         case "PRINTERS":
-                           if($arrSectionToAdd["DESCRIPTION"] == $arrSectionToRemove["DESCRIPTION"] OR $arrSectionToAdd["PORT"] == $arrSectionToRemove["PORT"]) {
+                           if ((isset($arrSectionToAdd["DESCRIPTION"]) AND isset($arrSectionToRemove["DESCRIPTION"])
+                                 AND $arrSectionToAdd["DESCRIPTION"] == $arrSectionToRemove["DESCRIPTION"])
+                              OR (isset($arrSectionToAdd["PORT"]) AND isset($arrSectionToRemove["PORT"])
+                                 AND $arrSectionToAdd["PORT"] == $arrSectionToRemove["PORT"])) {
                   				$boolUpdate = true;
                            }
                            break;
@@ -410,7 +416,8 @@ if (!unserialize($serializedSectionToRemove)) {
                            break;
                            
                         case "SOUNDS":
-                           if($arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]) {
+                           if (isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
+                                 AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]) {
                               $boolUpdate = true;
                            }
                            break;
@@ -425,13 +432,15 @@ if (!unserialize($serializedSectionToRemove)) {
                            break;
                            
                         case "USERS":
-                           if($arrSectionToAdd["LOGIN"] == $arrSectionToRemove["LOGIN"]) {
+                           if(isset($arrSectionToAdd["LOGIN"]) AND isset ($arrSectionToRemove["LOGIN"])
+                                 AND $arrSectionToAdd["LOGIN"] == $arrSectionToRemove["LOGIN"]) {
                               $boolUpdate = true;
                            }
                            break;
                            
                         case "VIDEOS":
-                           if($arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]) {
+                           if (isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
+                                 AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]) {
                               $boolUpdate = true;
                            }
                            break;
