@@ -100,14 +100,14 @@ class PluginFusinvinventoryImport_Virtualmachine extends CommonDBTM {
                                                                   $dataSection["STATUS"]);
       }
 
-      if (isset($disk['name']) && !empty($disk["name"])) {
+      if (count(vm) > 0) {
          if ($type == "update") {
-            $id_vm = $virtualmachine->update($disk);
+            $id_vm = $virtualmachine->update($vm);
          } else if ($type == "add") {
             if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
                $vm['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
             }
-            $id_vm = $virtualmachine->add($disk);
+            $id_vm = $virtualmachine->add($vm);
          }
       }
       return $id_vm;
