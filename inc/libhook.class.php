@@ -433,6 +433,15 @@ class PluginFusinvinventoryLibhook {
                array_push($sectionsId,$section['sectionName']."/".$id_antivirus);
                break;
 
+            case 'VIRTUALMACHINES':
+               $PluginFusinvinventoryImport_Virtualmachine = new PluginFusinvinventoryImport_Virtualmachine();
+               $id_vm = $PluginFusinvinventoryImport_Virtualmachine->addUpdateItem("add",$idmachine,$dataSection);
+               if (empty($id_storage)) {
+                  $id_vm = $j;
+                  $j--;
+               }
+               array_push($sectionsId,$section['sectionName']."/".$id_vm);
+               break;
             // TODO :
             /*
              *
@@ -547,6 +556,11 @@ class PluginFusinvinventoryLibhook {
                   case 'ANTIVIRUS':
                      $PluginFusinvinventoryImport_Antivirus =  new PluginFusinvinventoryImport_Antivirus();
                      $PluginFusinvinventoryImport_Antivirus->deleteItem($items_id, $idmachine);
+                     break;
+
+                  case 'VIRTUALMACHINES':
+                     $virtualmachine =  new PluginFusinvinventoryImport_Virtualmachine();
+                     $virtualmachine->deleteItem($items_id, $idmachine);
                      break;
 
                }
@@ -720,6 +734,11 @@ class PluginFusinvinventoryLibhook {
                case 'ANTIVIRUS':
                   $PluginFusinvinventoryImport_Antivirus =  new PluginFusinvinventoryImport_Antivirus();
                   $PluginFusinvinventoryImport_Antivirus->AddUpdateItem("update", $items_id, $dataSection);
+                  break;
+
+               case 'VIRTUALMACHINES':
+                  $PluginFusinvinventoryImport_Virtualmachine =  new PluginFusinvinventoryImport_Virtualmachine();
+                  $PluginFusinvinventoryImport_Virtualmachine->AddUpdateItem("update", $items_id, $dataSection);
                   break;
 
                case 'USERS':
