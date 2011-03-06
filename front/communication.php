@@ -74,7 +74,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
        OR ($ssl == "0")) {
       // echo "On continue";
    } else {
-      $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='ISO-8859-1'?>
+      $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
 </REPLY>");
       $PluginFusioninventoryCommunication->noSSL();
@@ -110,7 +110,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
          echo $PluginFusioninventoryCommunication->getSend();
       }
    } else {
-      $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='ISO-8859-1'?>
+      $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
 </REPLY>");
       $PluginFusioninventoryCommunication->emptyAnswer();
