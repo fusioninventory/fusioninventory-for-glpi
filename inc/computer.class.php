@@ -38,6 +38,23 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvinventoryComputer extends CommonDBTM {
 
+
+   /**
+   * Delete uuid on computer
+   *
+   * @param $items_id integer id of the computer
+   *
+   *@return nothing
+   *
+   **/
+   static function cleanComputer($items_id) {
+      $PluginFusinvinventoryComputer = new PluginFusinvinventoryComputer();
+      $a_uuid = $PluginFusinvinventoryComputer->find("`items_id`='".$items_id."'");
+      if (count($a_uuid) > 0) {
+         $input = current($a_uuid);
+         $PluginFusinvinventoryComputer->delete($input);
+      }
+   }
 }
 
 ?>

@@ -90,11 +90,21 @@ class PluginFusinvinventoryLock {
                      $itemtype = $datas['glpiItemtype'];
                      $class = new $itemtype();
                      $class->getFromDB($item->fields['items_id']);
-                     $libunserialized = unserialize($infoSections["sections"][$datas['xmlSection']."/".$item->fields['items_id']]);
-                     if ($table != "") {
+                     if ($itemtypeLink == "User") {
+                        foreach($infoSections["sections"] as $sectionname=>$serializeddatas) {
+                           if (strstr($sectionname, "USERS/")) {
+                              if (!strstr($sectionname, "USERS/-")) {
+                                 $users_id = str_replace("USERS/", "", $sectionname);
+                                 $class->fields[$datas['glpiField']] = $users_id;
+                              }
+                           }
+                        }
+                     } else if ($table != "") {
+                        $libunserialized = unserialize($infoSections["sections"][$datas['xmlSection']."/".$item->fields['items_id']]);
                         $vallib = Dropdown::importExternal($itemtypeLink,$libunserialized[$datas['xmlSectionChild']]);
                         $class->fields[$datas['glpiField']] = $vallib;
                      } else {
+                        $libunserialized = unserialize($infoSections["sections"][$datas['xmlSection']."/".$item->fields['items_id']]);
                         $class->fields[$datas['glpiField']] = $libunserialized[$datas['xmlSectionChild']];
                      }
                      $class->update($class->fields);

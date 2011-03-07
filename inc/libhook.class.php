@@ -42,6 +42,7 @@ class PluginFusinvinventoryLibhook {
     function __construct() {
        $_SESSION["plugin_fusinvinventory_history_add"] = true;
        $_SESSION["plugin_fusinvinventory_no_history_add"] = false;
+       $_SESSION["plugin_fusinvinventory_userdefined"] = 0;
     }
 
     /**
@@ -205,23 +206,6 @@ class PluginFusinvinventoryLibhook {
                if (isset($dataSection['UUID'])) {
                   if (!in_array('uuid', $a_lockable)) {
                      $Computer->fields['uuid'] = $dataSection['UUID'];
-                  }
-               }
-               break;
-
-            case 'USERS':
-               $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_computers', $idmachine);
-
-               if (isset($dataSection['LOGIN'])) {
-                  if (!in_array('users_id', $a_lockable)) {
-                     $Computer->fields['contact'] = $dataSection['LOGIN'];
-                     $query = "SELECT `id`
-                               FROM `glpi_users`
-                               WHERE `name` = '" . $dataSection['LOGIN'] . "';";
-                     $result = $DB->query($query);
-                     if ($DB->numrows($result) == 1) {
-                        $Computer->fields["users_id"] = $DB->result($result, 0, 0);
-                     }
                   }
                }
                break;
@@ -444,6 +428,17 @@ class PluginFusinvinventoryLibhook {
                }
                array_push($sectionsId,$section['sectionName']."/".$id_vm);
                break;
+
+            case 'USERS':
+               $PluginFusinvinventoryImport_User = new PluginFusinvinventoryImport_User();
+               $id_user = $PluginFusinvinventoryImport_User->AddUpdateItem("add", $idmachine, $dataSection);
+               if (empty($id_user)) {
+                  $id_user = $j;
+                  $j--;
+               }
+               array_push($sectionsId,$section['sectionName']."/".$id_user);
+               break;
+
             // TODO :
             /*
              *
@@ -563,6 +558,11 @@ class PluginFusinvinventoryLibhook {
                   case 'VIRTUALMACHINES':
                      $virtualmachine =  new PluginFusinvinventoryImport_Virtualmachine();
                      $virtualmachine->deleteItem($items_id, $idmachine);
+                     break;
+
+                  case 'USERS':
+                     $PluginFusinvinventoryImport_User = new PluginFusinvinventoryImport_User();
+                     $PluginFusinvinventoryImport_User->deleteItem($items_id, $idmachine);
                      break;
 
                }
@@ -860,7 +860,7 @@ class PluginFusinvinventoryLibhook {
        
        // ** USERS
        $i++;
-       $opt[$i]['xmlSection']       = 'HARDWARE';
+       $opt[$i]['xmlSection']       = 'USERS';
        $opt[$i]['xmlSectionChild']  = 'LOGIN';
        $opt[$i]['glpiItemtype']     = 'Computer';
        $opt[$i]['glpiField']        = 'users_id';
