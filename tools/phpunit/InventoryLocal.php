@@ -69,6 +69,14 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
            SET `is_active`='0'
            WHERE `modulename`='INVENTORY' ";
         $result = $DB->query($query);
+
+        // Activate Extra-debug
+         $plugin = new Plugin();
+         $data = $plugin->find("`name` = 'FusionInventory'");
+         $fields = current($data);
+         $plugins_id = $fields['id'];
+         $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+         $PluginFusioninventoryConfig->updateConfigType($plugins_id, "extradebug", "1");
        
     }
 
@@ -197,12 +205,17 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
       $emulatorAgent = new emulatorAgent;
       $emulatorAgent->server_urlpath = "/glpi078/plugins/fusioninventory/front/communication.php";
       $input_xml = $xml->asXML();
-      $emulatorAgent->sendProlog($input_xml);
+      $returnAgent = $emulatorAgent->sendProlog($input_xml);
+      echo "====================\n";
+      echo $xmlFile."\n";
+      echo $returnAgent."\n";
 
       $Computer = new Computer();
 //      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
       if (isset($xml->CONTENT->BIOS->SSN)) {
          if ($xml->CONTENT->BIOS->SSN == '30003000000000000000000000300000000000000000000000000000000000000000000000000000000000') {
+            unset($xml->CONTENT->BIOS->SSN);
+         } else if ($xml->CONTENT->BIOS->SSN == 'To Be Filled By O.E.M.') {
             unset($xml->CONTENT->BIOS->SSN);
          } else {
             $xml->CONTENT->BIOS->SSN = trim($xml->CONTENT->BIOS->SSN);
@@ -304,10 +317,11 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
                   }
                }
             } else {
-               $query = "SELECT * FROM `glpi_computers_items`
+               $query = "SELECT `glpi_printers`.* FROM `glpi_computers_items`
                         INNER JOIN `glpi_printers` on `glpi_printers`.`id`=`items_id`
                         WHERE `computers_id` = '".$items_id."'
                             AND `itemtype` = 'Printer'";
+               echo $query."\n";
                $result=$DB->query($query);
                $printer_select = array();
                while ($data=$DB->fetch_array($result)) {
@@ -321,7 +335,7 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
                }
                $this->assertEquals(count($printer_select['id']), "1" , 'Problem to find printer for fields verification ['.$xmlFile.']');
                if (strstr($child->PORT, "USB")) {
-                  $this->assertEquals("1", $datas['have_usb'] , 'Difference of printers fields ['.$xmlFile.']');
+                  $this->assertEquals("1", $printer_select['have_usb'] , 'Difference of printers fields ['.$xmlFile.']');
                }
             }
 
@@ -406,6 +420,9 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
       foreach ($xml->CONTENT->CPUS as $child) {
          if (isset($child->NAME)) {
             $a_cpuXML["'".$i."-".$child->NAME."'"] = 1;
+            $i++;
+         } else if (isset($child->TYPE)) {
+            $a_cpuXML["'".$i."-".$child->TYPE."'"] = 1;
             $i++;
          }
       }
@@ -732,6 +749,8 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
       $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
       if ($xml->CONTENT->BIOS->SSN == '30003000000000000000000000300000000000000000000000000000000000000000000000000000000000') {
+         unset($xml->CONTENT->BIOS->SSN);
+      } else if ($xml->CONTENT->BIOS->SSN == 'To Be Filled By O.E.M.') {
          unset($xml->CONTENT->BIOS->SSN);
       }
 
