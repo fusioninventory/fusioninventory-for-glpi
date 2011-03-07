@@ -40,7 +40,9 @@ $prof=new PluginFusioninventoryProfile();
 
 //Save profile
 if (isset ($_POST)) {
-   $prof->updateProfiles($_POST);
+   if (haveRight("profile", "w")) {
+      $prof->updateProfiles($_POST);
+   }
    glpi_header($_SERVER['HTTP_REFERER']);
 }
 
