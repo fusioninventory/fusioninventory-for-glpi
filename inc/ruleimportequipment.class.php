@@ -421,7 +421,7 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                break;
 
             case 'states_id':
-                $condition = "";
+               $condition = "";
                if ($criteria->fields['condition'] == PluginFusioninventoryRule::PATTERN_IS) {
                   $condition = " IN ";
                } else {

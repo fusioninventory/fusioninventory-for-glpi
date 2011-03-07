@@ -77,10 +77,10 @@ function plugin_init_fusioninventory() {
 
       if (isset($_SESSION["glpiID"])) {
 
-   //      if (haveRight("configuration", "r")) {// Config page
-   //      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "r")) {// Config page
-   //         $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/functionalities.form.php';
-   //      }
+         if (haveRight("configuration", "r") || haveRight("profile", "w")) {// Config page
+            $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/configuration.form.php';
+         }
+
          $PLUGIN_HOOKS['use_massive_action']['fusioninventory']=1;
          $PLUGIN_HOOKS['pre_item_update']['fusioninventory'] = array('Plugin' =>'plugin_pre_item_update_fusioninventory');
    //      $PLUGIN_HOOKS['pre_item_delete']['fusioninventory'] = 'plugin_pre_item_delete_fusioninventory';
