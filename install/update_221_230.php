@@ -201,11 +201,16 @@ function update221to230() {
     */
    //networkports with item_type = 0
    $NetworkPort = new NetworkPort();
+   $NetworkPort_Vlan = new NetworkPort_Vlan();
    $NetworkPort_NetworkPort = new NetworkPort_NetworkPort();
    $a_networkports = $NetworkPort->find("`itemtype`=''");
    foreach ($a_networkports as $data) {
       if ($NetworkPort_NetworkPort->getFromDBForNetworkPort($data['id'])) {
          $NetworkPort_NetworkPort->delete($NetworkPort_NetworkPort->fields);
+      }
+      $a_vlans = $NetworkPort_Vlan->find("`networkports_id`='".$data['id']."'");
+      foreach ($a_vlans as $a_vlan) {
+         $NetworkPort_Vlan->delete($a_vlan);
       }
       $NetworkPort->delete($data, 1);
    }
