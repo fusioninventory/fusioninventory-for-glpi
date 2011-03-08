@@ -349,7 +349,7 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 
       if (!empty($PluginFusioninventoryTaskjob->fields['action'])) {
          $array = importArrayFromDB($PluginFusioninventoryTaskjob->fields['action']);
-         $defaultValue = key(current($array))."-".current(current($array));
+         $defaultValue = current(current($array));
       }
       $a_data = $PluginFusioninventoryTaskjob->get_agents($module_name);
       Dropdown::showFromArray('action', $a_data, array('value' => $defaultValue));
