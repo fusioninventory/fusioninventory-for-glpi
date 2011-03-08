@@ -561,13 +561,14 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       global $LANG;
 
       $array = array();
-      $array[".1"] = $LANG['plugin_fusioninventory']['agents'][32];
-      $array[".2"] = $LANG['plugin_fusioninventory']['agents'][33];
+      $array[".1"] = " ".$LANG['plugin_fusioninventory']['agents'][32];
+      $array[".2"] = " ".$LANG['plugin_fusioninventory']['agents'][33];
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
       $array1 = $PluginFusioninventoryAgentmodule->getAgentsCanDo(strtoupper($module));
       foreach ($array1 as $id => $data) {
          $array[$id] = $data['name'];
       }
+      asort($array);
       return $array;
    }
 
