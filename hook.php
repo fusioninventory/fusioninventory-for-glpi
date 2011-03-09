@@ -644,7 +644,6 @@ function plugin_fusinvsnmp_install() {
    $version = "2.3.0-1";
    include_once (GLPI_ROOT . "/plugins/fusinvsnmp/install/update.php");
    $version_detected = pluginFusinvsnmpGetCurrentVersion($version);
-   echo $version_detected;
    if ((isset($version_detected)) AND ($version_detected != $version)) {
       pluginFusinvsnmpUpdate($version_detected);
    } else {
