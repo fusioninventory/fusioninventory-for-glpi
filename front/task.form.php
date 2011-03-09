@@ -47,8 +47,8 @@ PluginFusioninventoryMenu::displayMenu("mini");
 if (isset ($_POST["add"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task","w");
    
-   $pft->add($_POST);
-   glpi_header($_SERVER['HTTP_REFERER']);
+   $itens_id = $pft->add($_POST);
+   glpi_header(str_replace("add=1", "", $_SERVER['HTTP_REFERER'])."id=".$itens_id);
 } else if (isset($_POST["delete"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task","w");
 
