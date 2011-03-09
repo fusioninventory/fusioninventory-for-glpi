@@ -529,10 +529,15 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          }
       }
 
-      $a_data = $this->get_agents($method);
+      $a_methods = PluginFusioninventoryStaticmisc::getmethods();
+      $rand = '';
+      if (is_callable(array("Plugin".$module."Staticmisc", "task_actionselection_PluginFusioninventoryAgent_".$method))) {
+         $rand = call_user_func(array("Plugin".$module."Staticmisc", "task_actionselection_PluginFusioninventoryAgent_".$method));
+      } else {
+         $a_data = $this->get_agents($method);
 
-      $rand = Dropdown::showFromArray('actionselectiontoadd', $a_data);
-
+         $rand = Dropdown::showFromArray('actionselectiontoadd', $a_data);
+      }
       echo "&nbsp;<input type='button' name='addAObject' id='addAObject' value='".$LANG['buttons'][8]."' class='submit'/>";
 
             $params=array('selection'=>'__VALUE__',
