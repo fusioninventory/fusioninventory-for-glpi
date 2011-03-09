@@ -1,42 +1,36 @@
 <?php
+
 /*
- * @version $Id$
- -------------------------------------------------------------------------
- FusionInventory
- Copyright (C) 2003-2010 by the INDEPNET Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org/
- -------------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- --------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: Vincent Mazzoni
+   Co-authors of file: David Durieux
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: MAZZONI Vincent
-// Purpose of file: management of communication with agents
-// ----------------------------------------------------------------------
-/**
- * The datas are XML encoded and compressed with Zlib.
- * XML rules :
- * - XML tags in uppercase
- **/
 
 if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
@@ -50,9 +44,12 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
    /**
     * Import data
     *
-    *@param $p_DEVICEID XML code to import
-    *@param $p_CONTENT XML code to import
-    *@return "" (import ok) / error string (import ko)
+    * @param $p_DEVICEID XML code to import
+    * @param $p_CONTENT XML code to import
+    * @param $p_xml value XML code to import
+    *
+    * @return "" (import ok) / error string (import ko)
+    * 
     **/
    function import($p_DEVICEID, $p_CONTENT, $p_xml) {
 
@@ -91,7 +88,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
       $PluginFusioninventoryTaskjobstatus->getFromDB($p_CONTENT->PROCESSNUMBER);
       if ($PluginFusioninventoryTaskjobstatus->fields['state'] != "3") {
-         $pti = new PluginFusinvsnmpImportExport;
+         $pti = new PluginFusinvsnmpImportExport();
          $errors.=$pti->import_netdiscovery($p_CONTENT, $p_DEVICEID);
          if (isset($p_CONTENT->AGENT->END)) {
             if ((isset($p_CONTENT->DICO)) AND ($p_CONTENT->DICO == "REQUEST")) {
@@ -192,14 +189,8 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
    function rulepassed($items_id, $itemtype) {
       global $DB;
 
-      $PluginFusinvsnmpCommunicationSNMP = new PluginFusinvsnmpCommunicationSNMP();
-
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->rulepassed().');
-
-      $xml = simplexml_load_string($_SESSION['SOURCE_XMLDEVICE'],'SimpleXMLElement', LIBXML_NOCDATA);
-
-      $datacriteria = unserialize($_SESSION['plugin_fusinvsnmp_datacriteria']);
 
       $class = new $itemtype();
       if ($items_id == "0") {
@@ -286,7 +277,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
 
    function importDevice($itemtype, $items_id) {
-
+      
       $xml = simplexml_load_string($_SESSION['SOURCE_XMLDEVICE'],'SimpleXMLElement', LIBXML_NOCDATA);
       $class = new $itemtype();
       $class->getFromDB($items_id);
@@ -312,8 +303,6 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       switch ($itemtype) {
          
          case 'Computer':
-         case 'Printer':
-
 
             break;
 
@@ -348,10 +337,12 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
             //Manage IP and Mac address
             $NetworkPort = new NetworkPort();
+            $a_unknownPorts = array();
             $a_unknownPorts = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
                   AND `items_id`='".$class->fields['id']."'");
             $update = 0;
             foreach ($a_unknownPorts as $a_unknownPort) {
+               logInFile("print", print_r($a_unknownPort, true));
                if (isset($xml->MAC) AND !empty($xml->MAC)) {
                   $xml->MAC = strtolower((string)$xml->MAC);
                   if ($a_unknownPort['mac'] == (string)$xml->MAC) {
@@ -364,10 +355,16 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                      $update = 1;
                      break;
                   }
+               } else if (isset($xml->IP) AND !empty($xml->IP)) {
+                  if ($a_unknownPort['ip'] == (string)$xml->IP) {
+                     unset($a_unknownPorts[$a_unknownPort['id']]);
+                     $update = 1;
+                     break;
+                  }
                }
             }
             foreach ($a_unknownPorts as $a_unknownPort) {
-               $NetworkPort->delete($a_unknownPort, 1);
+               $NetworkPort->delete($a_unknownPort);
             }
             if ($update == '0') {
                $input = array();
@@ -413,22 +410,6 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                $PluginFusinvsnmpUnknownDevice->fields['plugin_fusinvsnmp_configsecurities_id'] = $xml->AUTHSNMP;
             }
             $PluginFusinvsnmpUnknownDevice->update($PluginFusinvsnmpUnknownDevice->fields);
-
-
-//
-//            $class->update($class->fields);
-//            if (isset($class->fields['ip'])) {
-//               if ($class->fields['ip'] && !in_array('ip', $a_lockable)) {
-//                  $class->fields['ip'] = $xml->IP;
-//               }
-//            }
-//            if (isset($class->fields['mac'])) {
-//               if ($class->fields['mac'] && !in_array('mac', $a_lockable)) {
-//                  $class->fields['mac'] = $xml->MAC;
-//               }
-//            }
-
-            
             break;
          
          case 'NetworkEquipment':
@@ -442,64 +423,89 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             $class->update($class->fields);
 
             // Update SNMP informations
-            $ptd = new PluginFusinvsnmpNetworkEquipment();
-            $ptd->load($items_id);
-            $ptd->setValue('sysdescr', $xml->DESCRIPTION);
+            $PluginFusinvsnmpNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
+            $a_snmpnetworkequipments = $PluginFusinvsnmpNetworkEquipment->find("`networkequipments_id`='".$items_id."'");
+            if (count($a_snmpnetworkequipments) > 0) {
+               $a_snmpnetworkequipment = current($a_snmpnetworkequipments);
+               $PluginFusinvsnmpNetworkEquipment->load($a_snmpnetworkequipment['id']);
+               $PluginFusinvsnmpNetworkEquipment->setValue('id', $a_snmpnetworkequipment['id']);
+            } else {
+               $PluginFusinvsnmpNetworkEquipment->load();
+               $PluginFusinvsnmpNetworkEquipment->setValue('networkequipments_id', $items_id);
+            }
+            $PluginFusinvsnmpNetworkEquipment->setValue('sysdescr', $xml->DESCRIPTION);
             $PluginFusinvsnmpModel = new PluginFusinvsnmpModel();
             $model_id = $PluginFusinvsnmpModel->getModelByKey($xml->MODELSNMP);
-            $ptd->setValue('plugin_fusinvsnmp_models_id', $model_id);
-            $ptd->setValue('plugin_fusinvsnmp_configsecurities_id', $xml->AUTHSNMP);
-            $ptd->updateDB();
+            $PluginFusinvsnmpNetworkEquipment->setValue('plugin_fusinvsnmp_models_id', $model_id);
+            $PluginFusinvsnmpNetworkEquipment->setValue('plugin_fusinvsnmp_configsecurities_id', $xml->AUTHSNMP);
+            $PluginFusinvsnmpNetworkEquipment->updateDB();
             break;
+
+         case 'Printer':
+
+            $class->fields['have_ethernet'] = '1';
+            $class->update($class->fields);
+
+            //Manage IP and Mac address
+            $NetworkPort = new NetworkPort();
+            $a_printerports = array();
+            $a_printerports = $NetworkPort->find("`itemtype`='Printer'
+                  AND `items_id`='".$class->fields['id']."'");
+            $update = 0;
+            foreach ($a_printerports as $a_printerport) {
+               if (isset($xml->MAC) AND !empty($xml->MAC)) {
+                  $xml->MAC = strtolower((string)$xml->MAC);
+                  if ($a_printerport['mac'] == (string)$xml->MAC) {
+                     $a_printerport['mac'] = (string)$xml->MAC;
+                     if (isset($xml->IP)) {
+                        $a_printerport['ip'] = (string)$xml->IP;
+                     }
+                     $NetworkPort->update($a_printerport);
+                     unset($a_printerports[$a_printerport['id']]);
+                     $update = 1;
+                     break;
+                  }
+               }
+            }
+            foreach ($a_printerports as $a_printerport) {
+               if ($a_printerport['ip'] != '127.0.0.1') {
+                  $NetworkPort->delete($a_printerport, 1);
+               }
+            }
+            if ($update == '0') {
+               $input = array();
+               if (isset($xml->MAC) AND !empty($xml->MAC)) {
+                  $input['mac'] = (string)$xml->MAC;
+               }
+               if (isset($xml->IP)) {
+                  $input['ip'] = (string)$xml->IP;
+               }
+               $input['items_id'] = $class->fields['id'];
+               $input['itemtype'] = 'Printer';
+               $input['entities_id'] = $class->fields['entities_id'];
+               $NetworkPort->add($input);
+            }
+            
+            // Update SNMP informations
+            $PluginFusinvsnmpPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
+            $a_snmpprinters = $PluginFusinvsnmpPrinter->find("`printers_id`='".$items_id."'");
+            if (count($a_snmpprinters) > 0) {
+               $a_snmpprinter = current($a_snmpprinters);
+               $PluginFusinvsnmpPrinter->load($a_snmpprinter['id']);
+               $PluginFusinvsnmpPrinter->setValue('id', $a_snmpprinter['id']);
+            } else {
+               $PluginFusinvsnmpPrinter->load();
+               $PluginFusinvsnmpPrinter->setValue('printers_id', $items_id);
+            }
+            $PluginFusinvsnmpPrinter->setValue('sysdescr', $xml->DESCRIPTION);
+            $PluginFusinvsnmpModel = new PluginFusinvsnmpModel();
+            $model_id = $PluginFusinvsnmpModel->getModelByKey($xml->MODELSNMP);
+            $PluginFusinvsnmpPrinter->setValue('plugin_fusinvsnmp_models_id', $model_id);
+            $PluginFusinvsnmpPrinter->setValue('plugin_fusinvsnmp_configsecurities_id', $xml->AUTHSNMP);
+            $PluginFusinvsnmpPrinter->updateDB();
+            break;
+            
       }
-
-
-
-
-//      if ($class->fields['name'] && !in_array('name', $a_lockable)) {
-//         if (!empty($xml->NETBIOSNAME)) {
-//            $class->fields['name'] = $xml->NETBIOSNAME;
-//         } else if (!empty($xml->SNMPHOSTNAME)) {
-//            $class->fields['name'] = $xml->SNMPHOSTNAME;
-//         } else if (!empty($xml->DNSHOSTNAME)) {
-//            $class->fields['name'] = $xml->DNSHOSTNAME;
-//         }
-//      }
-//      if (isset($class->fields['dnsname'])) {
-//         if ($class->fields['dnsname'] && !in_array('dnsname', $a_lockable)) {
-//            $class->fields['dnsname'] = $xml->DNSHOSTNAME;
-//         }
-//      }
-//      if ($class->fields['serial'] && !in_array('serial', $a_lockable))
-//         $class->fields['serial'] = trim($xml->SERIAL);
-//      if ($class->fields['contact'] && !in_array('contact', $a_lockable))
-//         $class->fields['contact'] = $xml->USERSESSION;
-//      if (isset($class->fields['domain'])) {
-//         if ($class->fields['domain'] && !in_array('domain', $a_lockable)) {
-//            if (!empty($xml->WORKGROUP)) {
-//            $class->fields['domain'] = Dropdown::importExternal("Domain",
-//                                    $xml->WORKGROUP,$xml->ENTITY);
-//            }
-//         }
-//      }
-//      if (isset($class->fields['ip'])) {
-//         if ($class->fields['ip'] && !in_array('ip', $a_lockable)) {
-//            $class->fields['ip'] = $xml->IP;
-//         }
-//      }
-//      if (isset($class->fields['mac'])) {
-//         if ($class->fields['mac'] && !in_array('mac', $a_lockable)) {
-//            $class->fields['mac'] = $xml->MAC;
-//         }
-//      }
-//
-//      if ($itemtype == 'PluginFusioninventoryUnknownDevice') {
-//         if ($class->fields['comment'] && !in_array('comment', $a_lockable))
-//            $class->fields['comment'] = trim($xml->DESCRIPTION);
-//      }
-
-//      $class->update($class->fields);
-      
    }
 
 }
