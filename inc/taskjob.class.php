@@ -683,6 +683,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             $PluginFusioninventoryTaskjob->remoteStartAgent($ip, $PluginFusioninventoryAgent->fields['token']);
          }
       }
+      unset($_SESSION['glpi_plugin_fusioninventory']['agents']);
       if ($return == '1') {
          return 1;
       }
