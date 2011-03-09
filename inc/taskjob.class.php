@@ -531,12 +531,19 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $rand = '';
-      if (is_callable(array("Plugin".$module."Staticmisc", "task_actionselection_PluginFusioninventoryAgent_".$method))) {
-         $rand = call_user_func(array("Plugin".$module."Staticmisc", "task_actionselection_PluginFusioninventoryAgent_".$method));
-      } else {
-         $a_data = $this->get_agents($method);
 
-         $rand = Dropdown::showFromArray('actionselectiontoadd', $a_data);
+      if ($actiontype == "PluginFusioninventoryAgent") {
+         if (is_callable(array("Plugin".$module."Staticmisc", "task_actionselection_PluginFusioninventoryAgent_".$method))) {
+            $rand = call_user_func(array("Plugin".$module."Staticmisc", "task_actionselection_PluginFusioninventoryAgent_".$method));
+         } else {
+            $a_data = $this->get_agents($method);
+
+            $rand = Dropdown::showFromArray('actionselectiontoadd', $a_data);
+         }
+      } else {
+         if (is_callable(array("Plugin".$module."Staticmisc", "task_definitionselection_".$actiontype."_".$method))) {
+            $rand = call_user_func(array("Plugin".$module."Staticmisc", "task_definitionselection_".$actiontype."_".$method));
+         }
       }
       echo "&nbsp;<input type='button' name='addAObject' id='addAObject' value='".$LANG['buttons'][8]."' class='submit'/>";
 
