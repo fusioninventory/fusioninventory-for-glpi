@@ -59,7 +59,6 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
 
       $NetworkEquipment = new NetworkEquipment();
       $NetworkPort = new NetworkPort();
-      $Printer = new Printer();
 
       /*
        * * Different possibilities  :
@@ -155,7 +154,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
 
       $a_actions = importArrayFromDB($PluginFusioninventoryTaskjob->fields['action']);
 
-      // For dynamic agent same subnet, it's an another management
+      // *** For dynamic agent same subnet, it's an another management ***
       if (strstr($PluginFusioninventoryTaskjob->fields['action'], '".2"')) {
          $a_subnet = array();
          $a_agentList = array();
@@ -264,6 +263,9 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                            unset($a_input['state']);
                            $a_input['plugin_fusioninventory_agents_id'] = 0;
                            $a_input['state'] = 0;
+                        if ($communication == "push") {
+                           $_SESSION['glpi_plugin_fusioninventory']['agents'][$agent_id] = 1;
+                        }
                      }
                   }
                }
@@ -391,6 +393,9 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                      $a_input['date'] = date("Y-m-d H:i:s");
                      $PluginFusioninventoryTaskjoblog->add($a_input);
                      unset($a_input['state']);
+                  if ($communication == "push") {
+                     $_SESSION['glpi_plugin_fusioninventory']['agents'][$agent_id] = 1;
+                  }
                }
                $PluginFusioninventoryTaskjob->fields['status'] = 1;
                $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
@@ -398,181 +403,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
 
             }
          }
-         if ($communication == "push") {
-             // todo prepare to start agent
-         }
       }
-
-
-
-
-
- // ==========================================================================//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//      //list all agents
-//      $a_agent = importArrayFromDB($PluginFusioninventoryTaskjob->fields['action']);
-//      $dynagent = 0;
-//      $a_agentlist = array();
-//      foreach ($a_agent as $agent) {
-//         $agent_id = current($agent);
-//         if ($agent_id == '.1') {
-//            $dynagent = 1;
-//         } else {
-//            // Detect if agent exists
-//            if ($PluginFusioninventoryAgent->getFromDB($agent_id)) {
-//               $a_ip = $PluginFusioninventoryAgent->getIPs($agent_id);
-//               $PluginFusioninventoryAgent->getFromDB($agent_id);
-//               foreach($a_ip as $ip) {
-//                  if ($PluginFusioninventoryTask->fields['communication'] == 'push') {
-//                     $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($ip,0);
-//                     if ($agentStatus) {
-//                        $a_agentlist[$agent_id] = $ip;
-//                     }
-//                  } else if ($PluginFusioninventoryTask->fields['communication'] == 'pull') {
-//                     $a_agentlist[$agent_id] = 1;
-//                  }
-//               }
-//            }
-//         }
-//      }
-//      if ($dynagent == '1') {
-//         $a_agents = $PluginFusioninventoryAgentmodule->getAgentsCanDo('SNMPQUERY');
-//         foreach($a_agents as $data) {
-//            if (($count_ip / 10) >= count($a_agentlist)) {
-//               $a_ip = $PluginFusioninventoryAgent->getIPs($data['id']);
-//               $PluginFusioninventoryAgent->getFromDB($data['id']);
-//               foreach($a_ip as $ip) {
-//                  if ($PluginFusioninventoryTask->fields['communication'] == 'push') {
-//                     $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($ip,0);
-//                     if ($agentStatus) {
-//                        $a_agentlist[$data['id']] = $ip;
-//                     }
-//                  } else if ($PluginFusioninventoryTask->fields['communication'] == 'pull') {
-//                     $a_agentlist[$data['id']] = 1;
-//                  }
-//               }
-//            }
-//         }
-//      }
-//
-//      // *** Add jobstatus
-//      if (count($a_agentlist) == '0') {
-//         $a_input = array();
-//         $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
-//         $a_input['state'] = 1;
-//         $a_input['plugin_fusioninventory_agents_id'] = 0;
-//         $a_input['itemtype'] = '';
-//         $a_input['items_id'] = 0;
-//         $a_input['uniqid'] = $uniqid;
-//         $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
-//            //Add log of taskjob
-//            $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
-//            $a_input['state'] = 7;
-//            $a_input['date'] = date("Y-m-d H:i:s");
-//            $PluginFusioninventoryTaskjoblog->add($a_input);
-//         $PluginFusioninventoryTaskjobstatus->changeStatusFinish($Taskjobstatus_id,
-//                                                                 0,
-//                                                                 '',
-//                                                                 1,
-//                                                                 "Unable to find agent to run this job");
-//         $PluginFusioninventoryTaskjob->fields['status'] = 1;
-//         $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
-//      } elseif ($count_device == '0') {
-//logInFile("inventory", "unable2");
-//         $a_input = array();
-//         $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
-//         $a_input['state'] = 1;
-//         $a_input['plugin_fusioninventory_agents_id'] = 0;
-//         $a_input['itemtype'] = '';
-//         $a_input['items_id'] = 0;
-//         $a_input['uniqid'] = $uniqid;
-//         //$Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
-//            //Add log of taskjob
-//            $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
-//            $a_input['state'] = 7;
-//            $a_input['date'] = date("Y-m-d H:i:s");
-//            $PluginFusioninventoryTaskjoblog->add($a_input);
-//         $PluginFusioninventoryTaskjobstatus->changeStatusFinish($Taskjobstatus_id,
-//                                                                 0,
-//                                                                 '',
-//                                                                 1,
-//                                                                 "No devices to inventory");
-//         $PluginFusioninventoryTaskjob->fields['status'] = 1;
-//         $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
-//      } else {
-//logInFile("inventory", "else");
-//logInFile("inventory", print_r($a_agentlist, true));
-//         foreach ($a_agentlist as $agent_id => $ip) {
-//            //Add jobstatus and put status (waiting on server = 0)
-//            $a_input = array();
-//            $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
-//            $a_input['state'] = 0;
-//            $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
-//            $a_input['uniqid'] = $uniqid;
-//logInFile("inventory", $count_device);
-//            $alternate = 0;
-//            for ($d=0; $d < ceil($count_device / count($a_agentlist)); $d++) {
-//               $getdevice = "NetworkEquipment";
-//               if ($alternate == "1") {
-//                  $getdevice = "Printer";
-//                  $alternate = 0;
-//               } else {
-//                  $getdevice = "NetworkEquipment";
-//                  $alternate++;
-//               }
-//               if (count($a_NetworkEquipment) == '0') {
-//                  $getdevice = "Printer";
-//               } else if (count($a_Printer) == '0') {
-//                  $getdevice = "NetworkEquipment";
-//               }
-//               $a_input['itemtype'] = $getdevice;
-//
-//               switch($getdevice) {
-//
-//                  case 'NetworkEquipment':
-//                     $a_input['items_id'] = array_pop($a_NetworkEquipment);
-//                     break;
-//
-//                  case 'Printer':
-//                     $a_input['items_id'] = array_pop($a_Printer);
-//                     break;
-//
-//               }
-//               $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
-//               //Add log of taskjob
-//                  $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
-//                  $a_input['state'] = 7;
-//                  $a_input['date'] = date("Y-m-d H:i:s");
-//                  $PluginFusioninventoryTaskjoblog->add($a_input);
-//                  unset($a_input['state']);
-//            }
-//logInFile("inventory", print_r($a_input, true));
-//            $PluginFusioninventoryTaskjob->fields['status'] = 1;
-//            $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
-//
-//
-//         }
-//         if ($PluginFusioninventoryTask->fields['communication'] == 'push') {
-//            foreach ($a_agentlist as $agent_id => $ip) {
-//               $PluginFusioninventoryAgent->getFromDB($agent_id);
-//               $PluginFusioninventoryTaskjob->remoteStartAgent($ip, $PluginFusioninventoryAgent->fields['token']);
-//            }
-//         }
-//      }
    }
 
 
@@ -589,15 +420,12 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
       $PluginFusinvsnmpAgentconfig = new  PluginFusinvsnmpAgentconfig;
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
-      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      $PluginFusinvsnmpIPRange = new PluginFusinvsnmpIPRange;
       $PluginFusinvsnmpConfigSecurity = new PluginFusinvsnmpConfigSecurity;
       $PluginFusinvsnmpCommunicationSNMP = new PluginFusinvsnmpCommunicationSNMP;
       $PluginFusinvsnmpModel = new PluginFusinvsnmpModel();
 
       $NetworkEquipment = new NetworkEquipment();
-      $Printer = new Printer();
       $NetworkPort = new NetworkPort();
       $PluginFusinvsnmpNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
       $PluginFusinvsnmpPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");

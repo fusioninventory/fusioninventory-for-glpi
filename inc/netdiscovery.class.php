@@ -58,6 +58,9 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
 
       $PluginFusioninventoryTaskjob->getFromDB($taskjobs_id);
       $PluginFusioninventoryTask->getFromDB($PluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']);
+
+      $communication = $PluginFusioninventoryTask->fields['communication'];
+      
       //list all iprange
       $a_iprange = importArrayFromDB($PluginFusioninventoryTaskjob->fields['definition']);
       $count_ip = 0;
@@ -163,6 +166,9 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
                   $PluginFusinvsnmpIPRange->getFromDB($iprange_id);
                   $s = ip2long($PluginFusinvsnmpIPRange->fields['ip_start']);
                   $e = ip2long($PluginFusinvsnmpIPRange->fields['ip_end']);
+                  if ($communication == "push") {
+                     $_SESSION['glpi_plugin_fusioninventory']['agents'][$agent_id] = 1;
+                  }
                   if (($e-$s+1 - $nbIpRangeip) == $nbIpAgent) {
                      $a_input['items_id'] = $iprange_id;
                      $a_input['specificity'] = $iptimes."-".$nbIpAgent;
@@ -220,14 +226,6 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
 
             $PluginFusioninventoryTaskjob->fields['status'] = 1;
             $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
-
-
-         }
-         if ($PluginFusioninventoryTask->fields['communication'] == 'push') {
-            foreach ($a_agentlist as $agent_id => $ip) {
-               $PluginFusioninventoryAgent->getFromDB($agent_id);
-               $PluginFusioninventoryTaskjob->remoteStartAgent($ip, $PluginFusioninventoryAgent->fields['token']);
-            }
          }
       }
    }
