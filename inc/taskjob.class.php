@@ -588,6 +588,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
 
+      $_SESSION['glpi_plugin_fusioninventory']['agents'] = array();
+
       // Search for task with periodicity and must be ok (so reinit state of job to 0)
       $query = "SELECT *, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp FROM `".$PluginFusioninventoryTask->getTable()."`
          WHERE `is_active`='1'
@@ -670,6 +672,15 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             $class = new $className;
             $class->prepareRun($data['id']);
             $return = 1;
+         }
+      }
+      // Start agents must start in push mode
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+      foreach($_SESSION['glpi_plugin_fusioninventory']['agents'] as $agents_id=>$num) {
+         $a_ips = $PluginFusioninventoryAgent->getIPs($agents_id);
+         foreach ($a_ips as $ip) {
+            $PluginFusioninventoryAgent->getFromDB($agents_id);
+            $PluginFusioninventoryTaskjob->remoteStartAgent($ip, $PluginFusioninventoryAgent->fields['token']);
          }
       }
       if ($return == '1') {
