@@ -156,6 +156,8 @@ $LANG['plugin_fusioninventory']['task'][35]="minutes";
 $LANG['plugin_fusioninventory']['task'][36]="heures";
 $LANG['plugin_fusioninventory']['task'][37]="jours";
 $LANG['plugin_fusioninventory']['task'][38]="mois";
+$LANG['plugin_fusioninventory']['task'][39]="Impossible de lancer la tâche car il reste des actions en cours!";
+$LANG['plugin_fusioninventory']['task'][40]="Forcer l'exécution";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Démarré";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";

@@ -44,7 +44,12 @@ PluginFusioninventoryProfile::checkRight("fusioninventory", "task","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-if (isset ($_POST["add"])) {
+if (isset($_POST['forcestart'])) {
+   PluginFusioninventoryProfile::checkRight("fusioninventory", "task","w");
+   $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+   $PluginFusioninventoryTaskjob->forceRunningTask($_POST['id']);
+   glpi_header($_SERVER['HTTP_REFERER']);
+} else if (isset ($_POST["add"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task","w");
    
    $itens_id = $pft->add($_POST);
