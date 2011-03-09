@@ -157,15 +157,14 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                   $a_input['date'] = date("Y-m-d H:i:s");
                   $PluginFusioninventoryTaskjoblog->add($a_input);
                   unset($a_input['state']);
+                  if ($communication == "push") {
+                     $_SESSION['glpi_plugin_fusioninventory']['agents'][$agent_id] = 1;
+                  }
             }
          }
       }
       $PluginFusioninventoryTaskjob->fields['status'] = 1;
       $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
-      if ($communication == "push") {
-          // todo prepare to start agent
-      }
-
    }
 
 
