@@ -53,11 +53,14 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
    *
    * @param $taskjobs_id integer id of the taskjob
    * @param $width integer how large in pixel display array
+   * @param $options array to display with specific options
+   *     - items_id integer id of item to display history
+   *     - itemtype value type of item to display
    *
    * @return bool true if form is ok
    *
    **/
-   function showHistory($taskjobs_id, $width="950") {
+   function showHistory($taskjobs_id, $width="950", $options=array()) {
       global $DB,$CFG_GLPI,$LANG;
 
 		echo "<script  type='text/javascript'>
@@ -75,18 +78,21 @@ function appear_array(id){
 		echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusioninventory/prototype.js'></script>";
       echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusioninventory/effects.js'></script>";
 
-
-
-
       echo "<center><table class='tab_cadrehov' style='width: ".$width."px'>";
       echo "<tr>";
       echo "<th colspan='8'>".$LANG['title'][38]."</th>";
       echo "</tr>";
 
+      $where = '';
+      if (isset($options['items_id']) AND isset($options['itemtype'])) {
+         $where = " AND `items_id`='".$options['items_id']."'
+                    AND `itemtype`='".$options['itemtype']."' ";
+      }
 
       $query = 'SELECT * FROM `glpi_plugin_fusioninventory_taskjobstatus`
          WHERE `plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"
             AND `state`!="3"
+            '.$where.'
          GROUP BY uniqid,plugin_fusioninventory_agents_id
          ORDER BY `id` DESC';
       // ***** Display for all status running / prepared
