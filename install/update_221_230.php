@@ -1473,6 +1473,32 @@ function update221to230() {
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/unknowndevice.class.php");
    }
 
+   /*
+    *  Convert displaypreferences
+    */
+   $sql = "DELETE FROM `glpi_displaypreferences`
+      WHERE `itemtype`='5150' ";
+   $DB->query($sql);
+   $sql = "UPDATE `glpi_displaypreferences`
+      SET `itemtype`='PluginFusioninventoryUnknownDevice'
+      WHERE `itemtype`='5153' ";
+   $DB->query($sql);
+   $sql = "UPDATE `glpi_displaypreferences`
+      SET `itemtype`='PluginFusioninventoryAgent'
+      WHERE `itemtype`='5158' ";
+   $DB->query($sql);
+   $sql = "DELETE FROM `glpi_displaypreferences`
+      WHERE `itemtype`='5161' ";
+   $DB->query($sql);
+   $sql = "UPDATE `glpi_displaypreferences`
+      SET `itemtype`='PluginFusioninventoryConfig'
+      WHERE `itemtype`='5165' ";
+   $DB->query($sql);
+   $sql = "DELETE FROM `glpi_displaypreferences`
+      WHERE `itemtype`='5166' ";
+   $DB->query($sql);
+
+
    plugin_fusioninventory_displayMigrationMessage("230", $LANG['update'][141]." - Clean unknown devices");
    $ptud = new PluginFusioninventoryUnknownDevice();
    $ptud->CleanOrphelinsConnections();
