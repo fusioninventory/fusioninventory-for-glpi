@@ -736,6 +736,9 @@ function appear_array(id){
                            if (!empty($link2)) {
                               echo "<br/>".$link2;
                            }
+                           if ($item->getField("hub") == "1") {
+                              $this->displayHubConnections($data_device["items_id"], $background_img);
+                           }
                            echo "</td>";
                         } else {
 									echo "<td>".$link1;
@@ -845,6 +848,48 @@ function appear_array(id){
       return $size;
    }
 
+
+   function displayHubConnections($items_id, $background_img){
+
+      $NetworkPort = new NetworkPort();
+      
+      $a_ports = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
+                                    AND `items_id`='".$items_id."'");
+      echo "<table width='100%' class='tab_cadre' cellpadding='5'>";
+      foreach ($a_ports as $a_port) {
+         if ($a_port['name'] != "Link") {
+            if ($id = $NetworkPort->getContact($a_port['id'])) {
+               $NetworkPort->getFromDB($id);
+               if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+                  $classname = $NetworkPort->fields['itemtype'];
+                  $Class = new $classname;
+                  $Class->getFromDB($NetworkPort->fields['items_id']);
+                  if ($Class->fields['accepted'] == 1) {
+                     echo "<tr>";
+                     echo "<td style='background:#bfec75'
+                                              class='tab_bg_1_2'>".$Class->getLink(1)."</td>";
+                     echo "</tr>";
+                  } else {
+                     echo "<tr>";
+                     echo "<td style='background:#cf9b9b'
+                                              class='tab_bg_1_2'>".$Class->getLink(1)."</td>";
+                     echo "</tr>";
+                  }
+               } else {
+                  $classname = $NetworkPort->fields['itemtype'];
+                  $Class = new $classname;
+                  $Class->getFromDB($NetworkPort->fields['items_id']);
+                  echo "<tr>";
+                  echo "<td ".$background_img."
+                                           class='tab_bg_1_2'>".$Class->getLink(1)."</td>";
+                  echo "</tr>";
+
+               }
+            }
+         }
+      }
+      echo "</table>";
+   }
 }
 
 ?>
