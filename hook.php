@@ -1722,6 +1722,12 @@ function plugin_fusinvsnmp_addOrderBy($type,$id,$order,$key=0) {
             ORDER BY ITEM_".$key." $order ";
          break;
 
+      case "PluginFusinvsnmpStateInventory":
+         return " GROUP BY ITEM_0
+            ORDER BY ITEM_".$key." $order ";
+         break;
+
+
 	}
 	return "";
 }
