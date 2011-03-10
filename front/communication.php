@@ -81,7 +81,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
       exit();
    }
    if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
-      file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".rand(), gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
+      file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".uniqid(), gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
    }
    $pta->importToken(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
 
