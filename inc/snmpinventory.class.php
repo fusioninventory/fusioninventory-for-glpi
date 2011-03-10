@@ -351,7 +351,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
             $PluginFusioninventoryTaskjob->fields['status'] = 1;
             $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
          } else {
-            foreach ($a_agentList as $agent_id => $ip) {
+            foreach ($a_agentList as $agent_id) {
                //Add jobstatus and put status (waiting on server = 0)
                $a_input = array();
                $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
@@ -386,6 +386,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                         break;
 
                   }
+                  logInFile("uuuu", print_r($a_input, true));
                   $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
                   //Add log of taskjob
                      $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
@@ -397,11 +398,10 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                      $_SESSION['glpi_plugin_fusioninventory']['agents'][$agent_id] = 1;
                   }
                }
-               $PluginFusioninventoryTaskjob->fields['status'] = 1;
-               $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
-
-
             }
+            $PluginFusioninventoryTaskjob->fields['status'] = 1;
+            $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
+
          }
       }
    }
@@ -410,11 +410,10 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
 
    // When agent contact server, this function send datas to agent
    /*
-    * $itemtype = type of device in definition
-    * $array = array with different ID
+    * $a_Taskjobstatus array with all taskjobstatus
     *
     */
-   function run($itemtype, $a_Taskjobstatus) {
+   function run($a_Taskjobstatus) {
       global $DB;
       
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
@@ -441,6 +440,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
          $sxml_param->addAttribute('CORE_QUERY', "1");
          $sxml_param->addAttribute('THREADS_QUERY', $PluginFusinvsnmpAgentconfig->fields["threads_snmpquery"]);
          $sxml_param->addAttribute('PID', $current['id']);
+
 
       $changestatus = 0;
       foreach ($a_Taskjobstatus as $taskjobstatusdatas) {
@@ -502,7 +502,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
             $PluginFusinvsnmpCommunicationSNMP->addAuth($sxml_option, $snmpauth['id']);
          }
       }
-
+      // Add models
       $modelslist=$PluginFusinvsnmpModel->find();
       if (count($modelslist)){
          foreach ($modelslist as $model){
@@ -511,11 +511,11 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
             }
          }
       }
-
       return $this->sxml;
    }
 
 
+   
    function getAgentsSubnet($nb_computers, $communication, $subnet='') {
       global $DB;
 

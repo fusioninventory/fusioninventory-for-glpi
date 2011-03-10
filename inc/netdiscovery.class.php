@@ -234,11 +234,10 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
 
    // When agent contact server, this function send datas to agent
    /*
-    * $itemtype = type of device in definition
-    * $array = array with different ID
+    * $a_Taskjobstatus array with all taskjobstatus
     *
     */
-   function run($itemtype, $a_Taskjobstatus) {
+   function run($a_Taskjobstatus) {
       global $DB;
 
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
