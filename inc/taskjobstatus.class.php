@@ -159,6 +159,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
          $query = "SELECT * FROM `".$this->getTable()."`
             LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` on `glpi_plugin_fusioninventory_taskjobs`.`id` = `plugin_fusioninventory_taskjobs_id`
             WHERE `items_id`='".$items_id."' AND `itemtype`='".$itemtype."'".$search."
+            GROUP BY `plugin_fusioninventory_taskjobs_id`
             ORDER BY `".$this->getTable()."`.`id` DESC";
          $a_taskjobs = array();
          if ($result = $DB->query($query)) {
@@ -185,7 +186,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       echo "<br/>";
 
       foreach ($a_taskjobs as $data) {
-         echo "<table  class='tab_cadre_fixe' style='width: 800px'>";
+         echo "<table  class='tab_cadre_fixe' style='width: 900px'>";
          echo "<tr>";
          echo "<th>";
          $PluginFusioninventoryTask->getFromDB($data['plugin_fusioninventory_tasks_id']);
@@ -205,7 +206,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
                $this->stateTaskjob($data['plugin_fusioninventory_taskjobs_id'], '730');
                echo "<br/>";
             }
-            $PluginFusioninventoryTaskjoblog->showHistory($data['plugin_fusioninventory_taskjobs_id'], '750');
+            $PluginFusioninventoryTaskjoblog->showHistory($data['plugin_fusioninventory_taskjobs_id'], '750', array('items_id' => $items_id, 'itemtype' => $itemtype));
          }
          echo "<br/>";
          echo "</td>";
@@ -257,8 +258,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
 
          $pluginName = PluginFusioninventoryModule::getModuleName($PluginFusioninventoryTaskjob->fields['plugins_id']);
          $className = "Plugin".ucfirst($pluginName).ucfirst($PluginFusioninventoryTaskjob->fields['method']);
-         $data['className'] = $className;
-         $moduleRun[$data['itemtype']][] = $data;
+         $moduleRun[$className][] = $data;
       }
       return $moduleRun;
    }

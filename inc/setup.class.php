@@ -54,7 +54,10 @@ class PluginFusioninventorySetup {
       $result=$DB->query($query);
       while ($data=$DB->fetch_array($result)) {
          if ((strstr($data[0],"glpi_plugin_fusioninventory_"))
-                OR (strstr($data[0], "glpi_dropdown_plugin_fusioninventory"))) {
+                OR (strstr($data[0], "glpi_dropdown_plugin_fusioninventory"))
+                OR (strstr($data[0], "glpi_plugin_tracker"))
+                OR (strstr($data[0], "glpi_dropdown_plugin_tracker"))) {
+
             $query_delete = "DROP TABLE `".$data[0]."`;";
             $DB->query($query_delete) or die($DB->error());
          }
@@ -200,50 +203,6 @@ class PluginFusioninventorySetup {
          $input['value'] = '0';
          $ruleaction->add($input);
 
-     $ranking++;
-     // Create rule for : Computer + mac
-      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
-      $input = array();
-      $input['is_active']=1;
-      $input['name']='Computer mac';
-      $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
-      $input['ranking'] = $ranking;
-      $rule_id = $rulecollection->add($input);
-
-         // Add criteria
-         $rule = $rulecollection->getRuleClass();
-         $rulecriteria = new RuleCriteria(get_class($rule));
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['criteria'] = "mac";
-         $input['pattern']= 1;
-         $input['condition']=10;
-         $rulecriteria->add($input);
-
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['criteria'] = "mac";
-         $input['pattern']= 1;
-         $input['condition']=8;
-         $rulecriteria->add($input);
-
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['criteria'] = "itemtype";
-         $input['pattern']= 'Computer';
-         $input['condition']=0;
-         $rulecriteria->add($input);
-
-         // Add action
-         $ruleaction = new RuleAction(get_class($rule));
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['action_type'] = 'assign';
-         $input['field'] = '_fusion';
-         $input['value'] = '0';
-         $ruleaction->add($input);
-
       $ranking++;
       // Create rule for : Computer + uuid
       $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
@@ -289,6 +248,50 @@ class PluginFusioninventorySetup {
          $input['value'] = '0';
          $ruleaction->add($input);
 
+     $ranking++;
+     // Create rule for : Computer + mac
+      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Computer mac';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['ranking'] = $ranking;
+      $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "mac";
+         $input['pattern']= 1;
+         $input['condition']=10;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "mac";
+         $input['pattern']= 1;
+         $input['condition']=8;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "itemtype";
+         $input['pattern']= 'Computer';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '0';
+         $ruleaction->add($input);
+
 
       $ranking++;
       // Create rule for : Computer import
@@ -313,7 +316,7 @@ class PluginFusioninventorySetup {
          
          $input = array();
          $input['rules_id'] = $rule_id;
-         $input['criteria'] = "osname";
+         $input['criteria'] = "name";
          $input['pattern']= 1;
          $input['condition']=8;
          $rulecriteria->add($input);

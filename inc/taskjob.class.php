@@ -529,10 +529,22 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          }
       }
 
-      $a_data = $this->get_agents($method);
+      $a_methods = PluginFusioninventoryStaticmisc::getmethods();
+      $rand = '';
 
-      $rand = Dropdown::showFromArray('actionselectiontoadd', $a_data);
+      if ($actiontype == "PluginFusioninventoryAgent") {
+         if (is_callable(array("Plugin".$module."Staticmisc", "task_actionselection_PluginFusioninventoryAgent_".$method))) {
+            $rand = call_user_func(array("Plugin".$module."Staticmisc", "task_actionselection_PluginFusioninventoryAgent_".$method));
+         } else {
+            $a_data = $this->get_agents($method);
 
+            $rand = Dropdown::showFromArray('actionselectiontoadd', $a_data);
+         }
+      } else {
+         if (is_callable(array("Plugin".$module."Staticmisc", "task_definitionselection_".$actiontype."_".$method))) {
+            $rand = call_user_func(array("Plugin".$module."Staticmisc", "task_definitionselection_".$actiontype."_".$method));
+         }
+      }
       echo "&nbsp;<input type='button' name='addAObject' id='addAObject' value='".$LANG['buttons'][8]."' class='submit'/>";
 
             $params=array('selection'=>'__VALUE__',
@@ -561,13 +573,14 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       global $LANG;
 
       $array = array();
-      $array[".1"] = $LANG['plugin_fusioninventory']['agents'][32];
-      $array[".2"] = $LANG['plugin_fusioninventory']['agents'][33];
+      $array[".1"] = " ".$LANG['plugin_fusioninventory']['agents'][32];
+      $array[".2"] = " ".$LANG['plugin_fusioninventory']['agents'][33];
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
       $array1 = $PluginFusioninventoryAgentmodule->getAgentsCanDo(strtoupper($module));
       foreach ($array1 as $id => $data) {
          $array[$id] = $data['name'];
       }
+      asort($array);
       return $array;
    }
 
@@ -583,9 +596,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       global $DB;
 
       $PluginFusioninventoryTask = new PluginFusioninventoryTask();
-      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+
+      $_SESSION['glpi_plugin_fusioninventory']['agents'] = array();
 
       // Search for task with periodicity and must be ok (so reinit state of job to 0)
       $query = "SELECT *, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp FROM `".$PluginFusioninventoryTask->getTable()."`
@@ -594,60 +607,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       
       $result = $DB->query($query);
       while ($data=$DB->fetch_array($result)) {
-         $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp($data['periodicity_type'], $data['periodicity_count']);
-         
-         // Calculate next execution from last
-         $queryJob = "SELECT * FROM `".$PluginFusioninventoryTaskjob->getTable()."`
-            WHERE `plugin_fusioninventory_tasks_id`='".$data['id']."'
-            ORDER BY `id` DESC
-            LIMIT 1";
-
-         $finished = 2;
-         $resultJob = $DB->query($queryJob);
-         while ($dataJob=$DB->fetch_array($resultJob)) {
-            $a_taskjobstatus = $PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$dataJob['id']."'", "id DESC", 1);
-            $taskjobstatusfinished = 0;
-            foreach ($a_taskjobstatus as $statusdata) {
-               $a_joblog = $PluginFusioninventoryTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$statusdata['id']."'");
-               foreach($a_joblog as $joblogdata) {
-                  switch ($joblogdata['state']) {
-
-                     case '2':
-                     case '3':
-                     case '4':
-                     case '5':
-                        // finished
-                        $taskjobstatusfinished++;
-                        break;
-
-                  }
-               }
-            }
-
-            if ((count($a_taskjobstatus) == $taskjobstatusfinished)
-                    AND ($finished != "0")
-                    AND (($data['date_scheduled_timestamp'] + $period) < date('U')) ) {
-
-               $finished = 1;
-            } else {
-               $finished = 0;
-            }
-         }
-         // if all jobs are finished, we calculate if we reinitialize all jobs
-         if ($finished == "1") {
-            $data['execution_id']++;
-            $queryUpdate = "UPDATE `".$PluginFusioninventoryTaskjob->getTable()."`
-               SET `status`='0', `execution_id`='".$data['execution_id']."'
-               WHERE `plugin_fusioninventory_tasks_id`='".$data['id']."'";
-            $DB->query($queryUpdate);
-
-            if (($data['date_scheduled_timestamp'] + $period) <= date('U')) {
-               $data['date_scheduled'] = date("Y-m-d H:i:s", date('U'));
-            } else {
-               $data['date_scheduled'] = date("Y-m-d H:i:s", $data['date_scheduled_timestamp'] + $period);
-            }
-            $PluginFusioninventoryTask->update($data);
-         }
+         $PluginFusioninventoryTaskjob->reinitializeTaskjobs($data['id']);
       }
 
       // *** Search task ready
@@ -671,12 +631,154 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             $return = 1;
          }
       }
+      // Start agents must start in push mode
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+      foreach($_SESSION['glpi_plugin_fusioninventory']['agents'] as $agents_id=>$num) {
+         $a_ips = $PluginFusioninventoryAgent->getIPs($agents_id);
+         foreach ($a_ips as $ip) {
+            $PluginFusioninventoryAgent->getFromDB($agents_id);
+            $PluginFusioninventoryTaskjob->remoteStartAgent($ip, $PluginFusioninventoryAgent->fields['token']);
+         }
+      }
+      unset($_SESSION['glpi_plugin_fusioninventory']['agents']);
       if ($return == '1') {
          return 1;
       }
       return 0;
    }
 
+
+
+   /**
+   * re initialize all taskjob of a taskjob
+   *
+   * @param $tasks_id integer id of the task
+   *
+   * @return bool true if all taskjob are ready (so finished from old runnning job)
+   *
+   **/
+   function reinitializeTaskjobs($tasks_id, $disableTimeVerification = 0) {
+      global $DB;
+
+      $PluginFusioninventoryTask = new PluginFusioninventoryTask();
+      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+
+      $query = "SELECT *, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp FROM `".$PluginFusioninventoryTask->getTable()."`
+         WHERE `id`='".$tasks_id."' 
+            LIMIT 1";
+      $result = $DB->query($query);
+      $data = $DB->fetch_assoc($result);
+
+      $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp($data['periodicity_type'], $data['periodicity_count']);
+
+      // Calculate next execution from last
+      $queryJob = "SELECT * FROM `".$PluginFusioninventoryTaskjob->getTable()."`
+         WHERE `plugin_fusioninventory_tasks_id`='".$tasks_id."'
+         ORDER BY `id` DESC
+         LIMIT 1";
+
+      $finished = 2;
+      $resultJob = $DB->query($queryJob);
+      while ($dataJob=$DB->fetch_array($resultJob)) {
+         $a_taskjobstatus = $PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$dataJob['id']."'", "id DESC", 1);
+         $taskjobstatusfinished = 0;
+         foreach ($a_taskjobstatus as $statusdata) {
+            $a_joblog = $PluginFusioninventoryTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$statusdata['id']."'");
+            foreach($a_joblog as $joblogdata) {
+               switch ($joblogdata['state']) {
+
+                  case '2':
+                  case '3':
+                  case '4':
+                  case '5':
+                     // finished
+                     $taskjobstatusfinished++;
+                     break;
+
+               }
+            }
+         }
+
+         if ((count($a_taskjobstatus) == $taskjobstatusfinished)
+                 AND ($finished != "0")
+                 AND (($data['date_scheduled_timestamp'] + $period) < date('U')) ) {
+
+            $finished = 1;
+         } else if ((count($a_taskjobstatus) == $taskjobstatusfinished)
+                 AND ($finished != "0")
+                 AND $disableTimeVerification == "1") {
+
+             $finished = 1;
+         } else {
+            $finished = 0;
+         }
+      }
+      // if all jobs are finished, we calculate if we reinitialize all jobs
+      if ($finished == "1") {
+         $data['execution_id']++;
+         $queryUpdate = "UPDATE `".$PluginFusioninventoryTaskjob->getTable()."`
+            SET `status`='0', `execution_id`='".$data['execution_id']."'
+            WHERE `plugin_fusioninventory_tasks_id`='".$data['id']."'";
+         $DB->query($queryUpdate);
+
+         if (($data['date_scheduled_timestamp'] + $period) <= date('U')) {
+            $data['date_scheduled'] = date("Y-m-d H:i:s", date('U'));
+         } else {
+            $data['date_scheduled'] = date("Y-m-d H:i:s", $data['date_scheduled_timestamp'] + $period);
+         }
+         $PluginFusioninventoryTask->update($data);
+         return true;
+      } else {
+         return false;
+      }
+   }
+
+
+
+   /**
+   * Force running a task
+   *
+   * @param $tasks_id integer id of the task
+   *
+   * @return nothing
+   *
+   **/
+   function forceRunningTask($tasks_id) {
+      global $LANG,$DB;
+      
+      if ($this->reinitializeTaskjobs($tasks_id, 1)) {
+         $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+         $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+         $_SESSION['glpi_plugin_fusioninventory']['agents'] = array();
+
+         $query = "SELECT `".$PluginFusioninventoryTaskjob->getTable()."`.*,`glpi_plugin_fusioninventory_tasks`.`communication`, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp
+            FROM ".$PluginFusioninventoryTaskjob->getTable()."
+            LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
+            WHERE `is_active`='1'
+               AND `status` = '0' ";
+         $result = $DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
+            // Get module name
+            $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
+            $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
+            $class = new $className;
+            $class->prepareRun($data['id']);
+         }
+         foreach($_SESSION['glpi_plugin_fusioninventory']['agents'] as $agents_id=>$num) {
+            $a_ips = $PluginFusioninventoryAgent->getIPs($agents_id);
+            foreach ($a_ips as $ip) {
+               $PluginFusioninventoryAgent->getFromDB($agents_id);
+               $PluginFusioninventoryTaskjob->remoteStartAgent($ip, $PluginFusioninventoryAgent->fields['token']);
+            }
+         }
+         unset($_SESSION['glpi_plugin_fusioninventory']['agents']);         
+      } else {
+         $_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusioninventory']['task'][39];
+      }
+   }
+   
 
 
    /**

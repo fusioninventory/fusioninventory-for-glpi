@@ -299,11 +299,12 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
       }
 
       //Build the request to check if the machine exists in GLPI
+      $where_entity = "";
       if (isset($input['entities_id'])) {
          if (is_array($input['entities_id'])) {
-            $where_entity = implode($input['entities_id'],',');
+            $where_entity .= implode($input['entities_id'],',');
          } else {
-            $where_entity = $input['entities_id'];
+            $where_entity .= $input['entities_id'];
          }
       }
 
@@ -420,19 +421,22 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                break;
 
             case 'states_id':
+               $condition = "";
                if ($criteria->fields['condition'] == PluginFusioninventoryRule::PATTERN_IS) {
                   $condition = " IN ";
                } else {
-                  $conditin = " NOT IN ";
+                  $condition = " NOT IN ";
                }
                $sql_where .= " AND `[typetable]`.`states_id`
                                  $condition ('".$criteria->fields['pattern']."')";
                break;
 
             case 'uuid':
-               $sql_from_computer .= ' LEFT JOIN `glpi_plugin_fusinvinventory_computers`
-                                 ON `glpi_plugin_fusinvinventory_computers`.`items_id` = `[typetable]`.`id`';
-               $sql_where_computer .= ' AND `uuid`="'.$input['uuid'].'"';
+               if (TableExists("glpi_plugin_fusinvinventory_computers")) {
+                  $sql_from_computer .= ' LEFT JOIN `glpi_plugin_fusinvinventory_computers`
+                                    ON `glpi_plugin_fusinvinventory_computers`.`items_id` = `[typetable]`.`id`';
+                  $sql_where_computer .= ' AND `uuid`="'.$input['uuid'].'"';
+               }
                break;
 
          }
@@ -444,6 +448,8 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
          logInFile("xxx", "===============\n");
       }
       foreach ($itemtypeselected as $itemtype) {
+         $sql_from_temp = "";
+         $sql_where_temp = "";
          if ($itemtype == "NetworkEquipment") {
             $sql_from_temp = $sql_from_networkequipment;
             $sql_where_temp = $sql_where_networkequipment;

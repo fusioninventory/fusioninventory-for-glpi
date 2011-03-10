@@ -156,6 +156,8 @@ $LANG['plugin_fusioninventory']['task'][35]="Minuten";
 $LANG['plugin_fusioninventory']['task'][36]="Stunden";
 $LANG['plugin_fusioninventory']['task'][37]="Tage";
 $LANG['plugin_fusioninventory']['task'][38]="Monate";
+$LANG['plugin_fusioninventory']['task'][39]="Unable to run task because some jobs is running yet!";
+$LANG['plugin_fusioninventory']['task'][40]="Force running";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="gestartet";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="OK";
