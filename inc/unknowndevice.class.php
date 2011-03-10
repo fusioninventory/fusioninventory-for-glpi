@@ -90,11 +90,13 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
 
 		echo "<td align='center'>".$LANG['plugin_fusinvsnmp']['model_info'][4]."&nbsp;:</td>";
 		echo "<td align='center'>";
-      Dropdown::show("PluginFusinvsnmpModel",
+      if (!empty($PluginFusioninventoryUnknownDevice->fields['itemtype'])) {
+         Dropdown::show("PluginFusinvsnmpModel",
                      array('name'=>"plugin_fusinvsnmp_models_id",
                            'value'=>$this->fields['plugin_fusinvsnmp_models_id'],
                            'comment'=>1,
                            'condition'=>"`itemtype`='".$PluginFusioninventoryUnknownDevice->fields['itemtype']."'"));
+      }
       echo "</td>";
       echo "</tr>";
 
