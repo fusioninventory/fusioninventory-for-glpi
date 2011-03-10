@@ -390,6 +390,15 @@ function appear_array(id){
 
       $text .= "</td>";
       $text .= "<td align='center'>";
+      $matches = array();
+      preg_match_all("/\[\[(.*)\:\:(.*)\]\]/", $datas['comment'], $matches);
+      foreach($matches[0] as $num=>$commentvalue) {
+         $classname = $matches[1][$num];
+         $Class = new $classname;
+         $Class->getFromDB($matches[2][$num]);
+         $datas['comment'] = str_replace($commentvalue, $Class->getLink(), $datas['comment']);
+      }
+
       $text .= $datas['comment'];
       $text .= "</td>";
       return array($finish, $text);
