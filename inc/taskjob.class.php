@@ -657,7 +657,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    * @return bool true if all taskjob are ready (so finished from old runnning job)
    *
    **/
-   function reinitializeTaskjobs($tasks_id) {
+   function reinitializeTaskjobs($tasks_id, $disableTimeVerification = 0) {
       global $DB;
 
       $PluginFusioninventoryTask = new PluginFusioninventoryTask();
@@ -706,6 +706,11 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                  AND (($data['date_scheduled_timestamp'] + $period) < date('U')) ) {
 
             $finished = 1;
+         } else if ((count($a_taskjobstatus) == $taskjobstatusfinished)
+                 AND ($finished != "0")
+                 AND $disableTimeVerification == "1") {
+
+             $finished = 1;
          } else {
             $finished = 0;
          }
@@ -743,7 +748,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    function forceRunningTask($tasks_id) {
       global $LANG,$DB;
       
-      if ($this->reinitializeTaskjobs($tasks_id)) {
+      if ($this->reinitializeTaskjobs($tasks_id, 1)) {
          $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
          $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
          $_SESSION['glpi_plugin_fusioninventory']['agents'] = array();
@@ -755,14 +760,11 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                AND `status` = '0' ";
          $result = $DB->query($query);
          while ($data=$DB->fetch_array($result)) {
-            $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp($data['periodicity_type'], $data['periodicity_count']);
-            if (($data['date_scheduled_timestamp'] + $period) <= date('U')) {
-               // Get module name
-               $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
-               $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
-               $class = new $className;
-               $class->prepareRun($data['id']);
-            }
+            // Get module name
+            $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
+            $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
+            $class = new $className;
+            $class->prepareRun($data['id']);
          }
          foreach($_SESSION['glpi_plugin_fusioninventory']['agents'] as $agents_id=>$num) {
             $a_ips = $PluginFusioninventoryAgent->getIPs($agents_id);
