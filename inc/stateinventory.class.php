@@ -73,7 +73,10 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
       echo "<th>nb query</th>";
       echo "</tr>";
 
-      $sql = "SELECT * FROM `glpi_plugin_fusioninventory_taskjobstatus`
+      $sql = "SELECT `glpi_plugin_fusioninventory_taskjobstatus`.*
+            FROM `glpi_plugin_fusioninventory_taskjobstatus`
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` on `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
+         WHERE `method` = 'snmpinventory'
          GROUP BY `uniqid`
          ORDER BY `uniqid` DESC";
       $result=$DB->query($sql);
