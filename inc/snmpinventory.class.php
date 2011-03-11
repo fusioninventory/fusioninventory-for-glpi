@@ -485,7 +485,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                                        '0',
                                        'PluginFusioninventoryAgent',
                                        '1',
-                                       '');
+                                       $PluginFusinvsnmpAgentconfig->fields["threads_snmpquery"].' threads');
                $changestatus = $PluginFusioninventoryTaskjobstatus->fields['id'];
             } else {
                $PluginFusioninventoryTaskjobstatus->changeStatusFinish($taskjobstatusdatas['id'],
