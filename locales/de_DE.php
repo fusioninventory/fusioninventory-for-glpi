@@ -417,4 +417,6 @@ $LANG['plugin_fusinvsnmp']['stats'][2]="Display";
 
 $LANG['plugin_fusinvsnmp']["report"][0]="Anzahl Tage seite der letzten Inventarisierung";
 $LANG['plugin_fusinvsnmp']["report"][1]="Seitenzähler";
+
+$LANG['plugin_fusinvsnmp']["codetasklog"][1]="devices queried";
 ?>

@@ -94,7 +94,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $this->agent['id'];
             $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
             $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
-            $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = $nb_devices.' devices queried';
+            $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = $nb_devices.' ==fusinvsnmp::1==';
             $this->addtaskjoblog();
 
          }

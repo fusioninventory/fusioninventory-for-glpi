@@ -409,4 +409,5 @@ $LANG['plugin_fusinvsnmp']['stats'][2]="Affichage";
 $LANG['plugin_fusinvsnmp']["report"][0]="Nombre de jours depuis dernier inventaire";
 $LANG['plugin_fusinvsnmp']["report"][1]="Compteurs d'impression";
 
+$LANG['plugin_fusinvsnmp']["codetasklog"][1]="équipements inventoriés";
 ?>

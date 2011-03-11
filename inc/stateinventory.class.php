@@ -51,91 +51,98 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
       return true;
    }
 
-   
-   function getSearchOptions() {
-      global $LANG;
 
-      $tab = array();
+   function display() {
+      global $DB,$LANG;
 
-      $tab['common'] = $LANG['plugin_fusioninventory']['agents'][28];
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      
+      echo "<table class='tab_cadre_fixe'>";
 
-		$tab[1]['table'] = $this->getTable();
-		$tab[1]['field'] = 'uniqid';
-		$tab[1]['linkfield'] = 'uniqid';
-		$tab[1]['name'] = 'uniqid';
-		$tab[1]['datatype'] = 'text';
+		echo "<tr class='tab_bg_1'>";
+      echo "<th>uniqid</th>";
+      echo "<th>agent</th>";
+      echo "<th>state</th>";
+      echo "<th>startdate</th>";
+      echo "<th>enddate</th>";
+      echo "<th>totaltime execution</th>";
+      echo "<th>ratio nb/s</th>";
+      echo "<th>nbthreads</th>";
+      echo "<th>nb query</th>";
+      echo "</tr>";
 
-		$tab[2]['table'] = "glpi_plugin_fusioninventory_agents";
-		$tab[2]['field'] = 'name';
-		$tab[2]['linkfield'] = 'plugin_fusioninventory_agents_id';
-		$tab[2]['name'] = $LANG['plugin_fusioninventory']['agents'][28];
-		$tab[2]['datatype'] = 'itemlink';
-      $tab[2]['itemlink_type']  = 'PluginFusioninventoryAgent';
+      $sql = "SELECT * FROM `glpi_plugin_fusioninventory_taskjobstatus`
+         GROUP BY `uniqid`
+         ORDER BY `uniqid` DESC";
+      $result=$DB->query($sql);
+      while ($data=$DB->fetch_array($result)) {
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>".$data['uniqid']."</td>";
+         $PluginFusioninventoryAgent->getFromDB($data['plugin_fusioninventory_agents_id']);
+         echo "<td>".$PluginFusioninventoryAgent->getLink(1)."</td>";
+         $nb_query = 0;
+         $nb_threads = 0;
+         $start_date = "";
+         $end_date = "";
+         $a_taskjobstatus = $PluginFusioninventoryTaskjobstatus->find("`uniqid`='".$data['uniqid']."'");
+         foreach ($a_taskjobstatus as $datastatus) {
+            $a_taskjoblog = $PluginFusioninventoryTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$datastatus['id']."'");
+            foreach($a_taskjoblog as $taskjoblog) {
+               if (strstr($taskjoblog['comment'], " ==fusinvsnmp::1==")) {
+                  $nb_query += str_replace(" ==fusinvsnmp::1==", "", $taskjoblog['comment']);
+               } else if ($taskjoblog['state'] == "1") {
+                  $nb_threads = str_replace(" threads", "", $taskjoblog['comment']);
+                  $start_date = $taskjoblog['date'];
+               }
 
-		$tab[4]['table'] = 'glpi_plugin_fusioninventory_taskjobstatus';
-		$tab[4]['field'] = 'state';
-		$tab[4]['linkfield'] = 'plugin_fusioninventory_taskjob_id';
-		$tab[4]['name'] = 'state';
-		$tab[4]['datatype'] = 'number';
-      $tab[4]['itemlink_type']  = 'glpi_plugin_fusioninventory_taskjobstatus';
-//
-//		$tab[5]['table'] = $this->getTable();
-//		$tab[5]['field'] = 'start_time';
-//		$tab[5]['linkfield'] = 'start_time';
-//		$tab[5]['name'] = $LANG['plugin_fusinvsnmp']['state'][4];
-//		$tab[5]['datatype'] = 'datetime';
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//		$tab[6]['table'] = $this->getTable();
-//		$tab[6]['field'] = 'end_time';
-//		$tab[6]['linkfield'] = 'end_time';
-//		$tab[6]['name'] = $LANG['plugin_fusinvsnmp']['state'][5];
-//		$tab[6]['datatype'] = 'datetime';
-//
-//		$tab[7]['table'] = $this->getTable();
-//		$tab[7]['field'] = 'threads';
-//		$tab[7]['linkfield'] = 'threads';
-//		$tab[7]['name'] = $LANG['plugin_fusinvsnmp']['agents'][24];
-//		$tab[7]['datatype'] = 'number';
-//
-//		$tab[8]['table'] = $this->getTable();
-//		$tab[8]['field'] = 'nb_ip';
-//		$tab[8]['linkfield'] = 'nb_ip';
-//		$tab[8]['name'] = $LANG['plugin_fusinvsnmp']['processes'][37];
-//		$tab[8]['datatype'] = 'number';
-//
-//		$tab[9]['table'] = $this->getTable();
-//		$tab[9]['field'] = 'nb_found';
-//		$tab[9]['linkfield'] = 'nb_found';
-//		$tab[9]['name'] = $LANG['plugin_fusinvsnmp']['state'][6];
-//		$tab[9]['datatype'] = 'number';
-//
-//		$tab[10]['table'] = $this->getTable();
-//		$tab[10]['field'] = 'nb_error';
-//		$tab[10]['linkfield'] = 'nb_error';
-//		$tab[10]['name'] = $LANG['plugin_fusinvsnmp']['state'][7];
-//		$tab[10]['datatype'] = 'number';
-//
-//		$tab[11]['table'] = $this->getTable();
-//		$tab[11]['field'] = 'nb_exists';
-//		$tab[11]['linkfield'] = 'nb_exists';
-//		$tab[11]['name'] = 'Devices existent';
-//		$tab[11]['datatype'] = 'number';
-//
-//		$tab[12]['table'] = $this->getTable();
-//		$tab[12]['field'] = 'nb_import';
-//		$tab[12]['linkfield'] = 'nb_import';
-//		$tab[12]['name'] = 'devices imported';
-//		$tab[12]['datatype'] = 'number';
-//      
-      return $tab;
+               if (($taskjoblog['state'] == "2")
+                  OR ($taskjoblog['state'] == "3")
+                  OR ($taskjoblog['state'] == "4")
+                  OR ($taskjoblog['state'] == "5")) {
+
+                  if (!strstr($taskjoblog['comment'], 'Merged with ')) {
+                     $end_date = $taskjoblog['date'];
+                  }
+               }
+            }
+         }
+         // State
+         echo "<td>";
+         switch ($data['state']) {
+
+            case 0:
+               echo $LANG['plugin_fusioninventory']['taskjoblog'][7];
+               break;
+
+            case 1:
+            case 2:
+               echo $LANG['plugin_fusioninventory']['taskjoblog'][1];
+               break;
+
+            case 3:
+               echo $LANG['plugin_fusioninventory']['task'][20];
+               break;
+
+         }
+         echo "</td>";
+         
+         echo "<td>".convDateTime($start_date)."</td>";
+         echo "<td>".convDateTime($end_date)."</td>";
+         $date1 = new DateTime($start_date);
+         $date2 = new DateTime($end_date);
+         $interval = $date1->diff($date2);
+         echo "<td>".$interval->h."h ".$interval->i."min ".$interval->s."s</td>";
+         echo "<td>".round($nb_query / (strtotime($end_date) - strtotime($start_date)), 2)."</td>";
+         echo "<td>".$nb_threads."</td>";
+         echo "<td>".$nb_query."</td>";
+         echo "</tr>";      
+      }
+
+
+      echo "</table>";
+
    }
 }
 
