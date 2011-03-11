@@ -215,8 +215,8 @@ function appear_array(id){
       echo "</td>";
       echo "</tr>";
 
-      echo "<tr style='display: none;' id='viewfollowup".$PluginFusioninventoryTaskjobstatus->fields["id"]."'>
-         <td colspan='8'>".$this->showHistoryInDetail($PluginFusioninventoryTaskjobstatus->fields['plugin_fusioninventory_agents_id'], $PluginFusioninventoryTaskjobstatus->fields['uniqid'], "850")."</td>
+      echo "<tr style='display: none;' id='viewfollowup".$PluginFusioninventoryTaskjobstatus->fields["id"]."' class='tab_bg_4'>
+         <td colspan='8'>".$this->showHistoryInDetail($PluginFusioninventoryTaskjobstatus->fields['plugin_fusioninventory_agents_id'], $PluginFusioninventoryTaskjobstatus->fields['uniqid'], "900")."</td>
       </tr>";      
    }
 
@@ -241,84 +241,117 @@ function appear_array(id){
       $text = "<center><table class='tab_cadrehov' style='width: ".$width."px'>";
 
       $a_jobstatus = $PluginFusioninventoryTaskjobstatus->find('`plugin_fusioninventory_agents_id`="'.$agents_id.'" AND `uniqid`="'.$uniqid.'"', '`id` DESC');
+      $a_devices_merged = array();
 
       foreach ($a_jobstatus as $data) {
 
          $displayforceend = 0;
          $a_history = $this->find('`plugin_fusioninventory_taskjobstatus_id` = "'.$data['id'].'"', 'id');
 
-         $text .= "<tr>";
-         $text .= "<th colspan='2'><img src='".GLPI_ROOT."/pics/puce.gif' />".$LANG['plugin_fusioninventory']['processes'][38]."&nbsp;: ".$data['id']."</th>";
-         $text .= "<th>";
-         $text .= $LANG['common'][27];
-         $text .= "</th>";
-         $text .= "<th>";
-         $text .= $LANG['joblist'][0];
-         $text .= "</th>";
-         $text .= "<th>";
-         $text .= $LANG['common'][25];
-         $text .= "</th>";
-         $text .= "</tr>";
+         if (strstr(exportArrayToDB($a_history), "Merged with ")) {
+            $classname = $data['itemtype'];
+            $Class = new $classname;
+            $Class->getFromDB($data['items_id']);
+            $a_devices_merged[] = $Class->getLink(1)."&nbsp;(".$Class->getTypeName().")";
+         } else {
+            $text .= "<tr>";
+            $text .= "<th colspan='2'><img src='".GLPI_ROOT."/pics/puce.gif' />".$LANG['plugin_fusioninventory']['processes'][38]."&nbsp;: ".$data['id']."</th>";
+            $text .= "<th>";
+            $text .= $LANG['common'][27];
+            $text .= "</th>";
+            $text .= "<th>";
+            $text .= $LANG['joblist'][0];
+            $text .= "</th>";
+            $text .= "<th>";
+            $text .= $LANG['common'][25];
+            $text .= "</th>";
+            $text .= "</tr>";
 
-         $text .= "<tr class='tab_bg_1'>";
-         $text .= "<th>";
-         $text .= $LANG['plugin_fusioninventory']['agents'][28]."&nbsp;:";
-         $text .= "</th>";
-         $text .= "<th>";
-         $PluginFusioninventoryAgent->getFromDB($data['plugin_fusioninventory_agents_id']);
-         $text .= $PluginFusioninventoryAgent->getLink(1);
-         $text .= "</th>";
-         $a_return = $this->displayHistoryDetail(array_shift($a_history));
-         $count = $a_return[0];
-         $text .= $a_return[1];
-         $displayforceend += $count;
-         $text .= "</tr>";
-
-         $text .= "<tr class='tab_bg_1'>";
-         $text .= "<th>";
-         $text .= $LANG['plugin_fusioninventory']['task'][27]."&nbsp;:";
-         $text .= "</th>";
-         $text .= "<th>";
-         if (!empty($data["itemtype"])) {
-            $device = new $data["itemtype"]();
-            $device->getFromDB($data["items_id"]);
-            $text .= $device->getLink(1);
-            $text .= "&nbsp;";
-            $text .= "(".$device->getTypeName().")";
-         }
-         $text .= "</th>";
-         $a_return = $this->displayHistoryDetail(array_shift($a_history));
-         $count = $a_return[0];
-         $text .= $a_return[1];
-         $displayforceend += $count;
-         $text .= "</tr>";
-
-         if (count($a_history) > 0) {
             $text .= "<tr class='tab_bg_1'>";
-            $text .= "<td colspan='2' rowspan='".count($a_history)."'>";
-            $text .= "</td>";
+            $text .= "<th>";
+            $text .= $LANG['plugin_fusioninventory']['agents'][28]."&nbsp;:";
+            $text .= "</th>";
+            $text .= "<th>";
+            $PluginFusioninventoryAgent->getFromDB($data['plugin_fusioninventory_agents_id']);
+            $text .= $PluginFusioninventoryAgent->getLink(1);
+            $text .= "</th>";
             $a_return = $this->displayHistoryDetail(array_shift($a_history));
             $count = $a_return[0];
             $text .= $a_return[1];
             $displayforceend += $count;
             $text .= "</tr>";
 
-            foreach ($a_history as $datas) {
+            $text .= "<tr class='tab_bg_1'>";
+            $text .= "<th>";
+            $text .= $LANG['plugin_fusioninventory']['task'][27]."&nbsp;:";
+            $text .= "</th>";
+            $text .= "<th>";
+            if (!empty($data["itemtype"])) {
+               $device = new $data["itemtype"]();
+               $device->getFromDB($data["items_id"]);
+               $text .= $device->getLink(1);
+               $text .= "&nbsp;";
+               $text .= "(".$device->getTypeName().")";
+            }
+            $text .= "</th>";
+            $a_return = $this->displayHistoryDetail(array_shift($a_history));
+            $count = $a_return[0];
+            $text .= $a_return[1];
+            $displayforceend += $count;
+            $text .= "</tr>";
+
+            while (count($a_history) != 0) {
+               if (count($a_devices_merged) > 0) {
+                  $text .= "<tr class='tab_bg_1'>";
+                  $text .= "<th></th>";
+                  $text .= "<th>";
+                  $text .= array_pop($a_devices_merged);
+                  $text .= "</th>";
+                  $a_return = $this->displayHistoryDetail(array_shift($a_history));
+                  $count = $a_return[0];
+                  $text .= $a_return[1];
+                  $displayforceend += $count;
+                  $text .= "</tr>";                  
+               } else {
+                  $text .= "<tr class='tab_bg_1'>";
+                  $text .= "<td colspan='2' rowspan='".count($a_history)."'>";
+                  $text .= "</td>";
+                  $a_return = $this->displayHistoryDetail(array_shift($a_history));
+                  $count = $a_return[0];
+                  $text .= $a_return[1];
+                  $displayforceend += $count;
+                  $text .= "</tr>";
+
+                  foreach ($a_history as $datas) {
+                     $text .= "<tr class='tab_bg_1'>";
+                     $a_return = $this->displayHistoryDetail(array_shift($a_history));
+                     $count = $a_return[0];
+                     $text .= $a_return[1];
+                     $displayforceend += $count;
+                     $text .= "</tr>";
+                  }
+               }
+            }
+            $display = 1;
+            while (count($a_devices_merged) != 0) {
                $text .= "<tr class='tab_bg_1'>";
-               $a_return = $this->displayHistoryDetail(array_shift($a_history));
-               $count = $a_return[0];
-               $text .= $a_return[1];
-               $displayforceend += $count;
+               $text .= "<th></th>";
+               $text .= "<th>";
+               $text .= array_pop($a_devices_merged);
+               $text .= "</th>";
+               if ($display == "1") {
+                  $text .= "<td colspan='3' rowspan='".(count($a_devices_merged) + 1)."'></td>";
+                  $display = 0;
+               }
                $text .= "</tr>";
             }
 
+
+            $text .= "<tr class='tab_bg_4'>";
+            $text .= "<td colspan='5' height='4'>";
+            $text .= "</td>";
+            $text .= "</tr>";
          }
-
-         $text .= "<tr class='tab_bg_4'>";
-         $text .= "<td colspan='5' height='4'>";
-         $text .= "</td>";
-         $text .= "</tr>";
-
       }
       $text .= "</table></center>";
       return $text;
