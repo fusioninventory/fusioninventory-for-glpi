@@ -142,9 +142,21 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          PluginFusioninventoryCommunication::addLog($child->getName());
          switch ($child->getName()) {
             case 'DEVICE' :
+               if (isset($child->ERROR)) {
+                  $itemtype = "";
+                  if ((string)$child->ERROR->TYPE == "NETWORKING") {
+                     $itemtype = "NetworkEquipment";
+                  } else if ((string)$child->ERROR->TYPE == "PRINTER") {
+                     $itemtype = "Printer";
+                  }
+                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[detail] '.(string)$child->ERROR->MESSAGE.' [['.$itemtype.'::'.$child->ERROR->ID.']]';
+                  $this->addtaskjoblog();
+               } else {
+
 //               $errors.=$this->importDevice($child);
-               $this->sendCriteria($this->sxml->DEVICEID, $child);
-               $nbDevices++;
+                  $this->sendCriteria($this->sxml->DEVICEID, $child);
+                  $nbDevices++;
+               }
                break;
 
             case 'AGENT' :
@@ -169,9 +181,13 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
             case 'PROCESSNUMBER' :
                break;
+
+            case 'MODULEVERSION' :
+               break;
             
             default :
-               $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CONTENT : '.$child->getName()."\n";
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[detail] '.$LANG['plugin_fusioninventory']['errors'][22].' CONTENT : '.$child->getName();
+               $this->addtaskjoblog();
          }
       }
       return $errors;

@@ -71,6 +71,7 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
       echo "<th>ratio nb/s</th>";
       echo "<th>nbthreads</th>";
       echo "<th>nb query</th>";
+      echo "<th>nb error</th>";
       echo "</tr>";
 
       $sql = "SELECT `glpi_plugin_fusioninventory_taskjobstatus`.*
@@ -89,12 +90,15 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
          $nb_threads = 0;
          $start_date = "";
          $end_date = "";
+         $nb_errors = 0;
          $a_taskjobstatus = $PluginFusioninventoryTaskjobstatus->find("`uniqid`='".$data['uniqid']."'");
          foreach ($a_taskjobstatus as $datastatus) {
             $a_taskjoblog = $PluginFusioninventoryTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$datastatus['id']."'");
             foreach($a_taskjoblog as $taskjoblog) {
                if (strstr($taskjoblog['comment'], " ==fusinvsnmp::1==")) {
                   $nb_query += str_replace(" ==fusinvsnmp::1==", "", $taskjoblog['comment']);
+               } else if (strstr($taskjoblog['comment'], " No response from remote host")) {
+                  $nb_errors++;
                } else if ($taskjoblog['state'] == "1") {
                   $nb_threads = str_replace(" threads", "", $taskjoblog['comment']);
                   $start_date = $taskjoblog['date'];
@@ -140,6 +144,7 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
          echo "<td>".round($nb_query / (strtotime($end_date) - strtotime($start_date)), 2)."</td>";
          echo "<td>".$nb_threads."</td>";
          echo "<td>".$nb_query."</td>";
+         echo "<td>".$nb_errors."</td>";
          echo "</tr>";      
       }
 
