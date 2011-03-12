@@ -60,6 +60,17 @@ class PluginFusinvsnmpNetworkEquipmentIP extends PluginFusinvsnmpCommonDBTM {
          $this->add($this->ptcdUpdates);
       }
    }
+
+
+   // Get all IP of the switch
+   function getIP($items_id) {
+      $a_ips = $this->find("`networkequipments_id`='".$items_id."'");
+      $array = array();
+      foreach ($a_ips as $ip) {
+         $array[] = $ip['ip'];
+      }
+      return $array;
+   }
 }
 
 ?>
