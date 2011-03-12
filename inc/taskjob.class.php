@@ -1260,7 +1260,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       } else {
          $this->fields['action'] = exportArrayToDB($a_actions);
       }
-      $this->update($this->fields);
+      $this->update($this->fields);      
    }
 
 }
