@@ -92,7 +92,11 @@ function plugin_init_fusinvinventory() {
 
    if (isset($_SESSION["glpiID"])) {
 
-      //$PLUGIN_HOOKS['init_session']['fusioninventory'] = array('Profile', 'initSession');
+		if (haveRight("configuration", "r") || haveRight("profile", "w")) {// Config page
+         $PluginFusioninventoryConfiguration = new PluginFusioninventoryConfiguration();
+         $a_tabs = $PluginFusioninventoryConfiguration->defineTabs();
+         $PLUGIN_HOOKS['config_page']['fusinvinventory'] = '../fusioninventory/front/configuration.form.php?glpi_tab='.array_search($a_plugin['name'], $a_tabs);
+      }
 
       $PLUGIN_HOOKS['use_massive_action']['fusinvinventory']=1;
       $PLUGIN_HOOKS['pre_item_purge']['fusinvinventory'] = array('Computer' =>'plugin_pre_item_purge_fusinvinventory',
