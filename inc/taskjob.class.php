@@ -126,6 +126,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    function showForm($id, $options=array()) {
       global $DB,$CFG_GLPI,$LANG;
 
+      $this->verifyDefinitionActions($id);
+
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
 
@@ -621,6 +623,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $result = $DB->query($query);
       $return = 0;
       while ($data=$DB->fetch_array($result)) {
+         $PluginFusioninventoryTaskjob->verifyDefinitionActions($data['id']);
          $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp($data['periodicity_type'], $data['periodicity_count']);
          if (($data['date_scheduled_timestamp'] + $period) <= date('U')) {
             // Get module name
@@ -766,6 +769,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $result = $DB->query($query);
          while ($data=$DB->fetch_array($result)) {
             // Get module name
+            $PluginFusioninventoryTaskjob->verifyDefinitionActions($data['id']);
             $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
             $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
             $class = new $className;
@@ -1219,6 +1223,44 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             }
          }         
       }
+   }
+
+
+   /**
+    * Verify if definition or action not deleted
+    *
+    * @param $items_id interge id of taskjobs
+    *
+    */
+   function verifyDefinitionActions($items_id) {
+      $this->getFromDB($items_id);
+      $a_definitions = importArrayFromDB($this->fields['definition']);
+      foreach ($a_definitions as $num=>$data) {
+         $classname = key($data);
+         $Class = new $classname;
+         if (!$Class->getFromDB(current($data))) {
+            unset($a_definitions[$num]);
+         }
+      }
+      if (count($a_definitions) == '0') {
+         $this->fields['definition'] = '';
+      } else {
+         $this->fields['definition'] = exportArrayToDB($a_definitions);
+      }
+      $a_actions = importArrayFromDB($this->fields['action']);
+      foreach ($a_actions as $num=>$data) {
+         $classname = key($data);
+         $Class = new $classname;
+         if (!$Class->getFromDB(current($data))) {
+            unset($a_actions[$num]);
+         }
+      }
+      if (count($a_actions) == '0') {
+         $this->fields['action'] = '';
+      } else {
+         $this->fields['action'] = exportArrayToDB($a_actions);
+      }
+      $this->update($this->fields);
    }
 
 }
