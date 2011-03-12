@@ -410,4 +410,6 @@ $LANG['plugin_fusinvsnmp']["report"][0]="Nombre de jours depuis dernier inventai
 $LANG['plugin_fusinvsnmp']["report"][1]="Compteurs d'impression";
 
 $LANG['plugin_fusinvsnmp']["codetasklog"][1]="équipements inventoriés";
+$LANG['plugin_fusinvsnmp']["codetasklog"][2]="équipements découverts";
+$LANG['plugin_fusinvsnmp']["codetasklog"][3]="Dictionnaire trop vieux sur l'agent, demande postée par l'agent";
 ?>

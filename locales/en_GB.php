@@ -412,4 +412,6 @@ $LANG['plugin_fusinvsnmp']["report"][0]="Number of days since last inventory";
 $LANG['plugin_fusinvsnmp']["report"][1]="Printed page counter";
 
 $LANG['plugin_fusinvsnmp']["codetasklog"][1]="devices queried";
+$LANG['plugin_fusinvsnmp']["codetasklog"][2]="devices found";
+$LANG['plugin_fusinvsnmp']["codetasklog"][3]="Dico too old on agent, request posted by agent";
 ?>
