@@ -333,6 +333,7 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                $itemtypeselected[] = $itemtype;
             }
          }
+         $itemtypeselected[] = "PluginFusioninventoryUnknownDevice";
       }
 
 
