@@ -36,7 +36,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryConfiguration extends CommonGLPI {
+class PluginFusioninventoryConfiguration extends CommonDBTM {
 
    
    function defineTabs($options=array()){
@@ -44,8 +44,8 @@ class PluginFusioninventoryConfiguration extends CommonGLPI {
 
       $tabs = array();
       $moduleTabs = array();
-      $tabs[0]=$LANG['plugin_fusioninventory']['functionalities'][2];
-      $tabs[1]=$LANG['plugin_fusioninventory']['agents'][27];
+      $tabs[1]=$LANG['plugin_fusioninventory']['functionalities'][2];
+      $tabs[2]=$LANG['plugin_fusioninventory']['agents'][27];
       if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'])) {
          $fusionTabs = $tabs;
          $moduleTabForms = $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'];
@@ -53,7 +53,7 @@ class PluginFusioninventoryConfiguration extends CommonGLPI {
             foreach ($moduleTabForms as $module=>$form) {
                $plugin = new Plugin;
                if ($plugin->isActivated($module)) {
-                  $tabs = array_merge($tabs, array_keys($form));
+                  $tabs[] = key($form);
                }
             }
             $moduleTabs = array_diff($tabs, $fusionTabs);
@@ -62,6 +62,18 @@ class PluginFusioninventoryConfiguration extends CommonGLPI {
       }
       return $tabs;
    }
+
+
+
+   function showForm($options=array()) {
+      global $DB,$CFG_GLPI,$LANG;
+
+      $this->showTabs($options);
+      $this->addDivForTabs();
+
+      return true;
+   }
+
 
 }
 

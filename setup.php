@@ -78,7 +78,7 @@ function plugin_init_fusioninventory() {
       if (isset($_SESSION["glpiID"])) {
 
          if (haveRight("configuration", "r") || haveRight("profile", "w")) {// Config page
-            $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/configuration.form.php';
+            $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/configuration.form.php?glpi_tab=1';
          }
 
          $PLUGIN_HOOKS['use_massive_action']['fusioninventory']=1;
