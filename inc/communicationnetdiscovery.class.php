@@ -77,11 +77,12 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                foreach($p_CONTENT->DEVICE as $child) {
                   $nb_devices++;
                }
-               $PluginFusioninventoryTaskjoblog->addTaskjoblog($p_CONTENT->PROCESSNUMBER,
-                                                      $a_agent['id'],
-                                                      'PluginFusioninventoryAgent',
-                                                      '6',
-                                                      $nb_devices.' devices found');
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = $p_CONTENT->PROCESSNUMBER;
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $a_agent['id'];
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = $nb_devices.' ==fusinvsnmp::2==';
+               $this->addtaskjoblog();
             }
          }
       }
@@ -96,12 +97,13 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                $PluginFusinvsnmpAgentconfig->loadAgentconfig($PluginFusioninventoryAgent->fields['id']);
                $PluginFusinvsnmpAgentconfig->fields["senddico"] = "1";
                $PluginFusinvsnmpAgentconfig->update($PluginFusinvsnmpAgentconfig->fields);
-               $PluginFusioninventoryTaskjoblog->addTaskjoblog($p_CONTENT->PROCESSNUMBER,
-                                                      $a_agent['id'],
-                                                      'PluginFusioninventoryAgent',
-                                                      '6',
-                                                      'Dico too old on agent, request posted by agent');
 
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = $p_CONTENT->PROCESSNUMBER;
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $a_agent['id'];
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==fusinvsnmp::3==';
+               $this->addtaskjoblog();
             }
 
             $PluginFusioninventoryTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
@@ -197,6 +199,13 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
          $input = array();
          $input['date_mod'] = date("Y-m-d H:i:s");
          $items_id = $class->add($input);
+         $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
+               '[detail] Add '.$class->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
+         $this->addtaskjoblog();
+      } else {
+         $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
+               '[detail] Update '.$class->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
+         $this->addtaskjoblog();
       }
       $this->importDevice($itemtype, $items_id);
    }
@@ -508,6 +517,17 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       }
    }
 
+
+   function addtaskjoblog() {
+
+      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $PluginFusioninventoryTaskjoblog->addTaskjoblog(
+                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'],
+                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'],
+                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'],
+                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'],
+                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment']);
+   }
 }
 
 ?>
