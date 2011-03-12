@@ -641,6 +641,11 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          }
       }
       unset($_SESSION['glpi_plugin_fusioninventory']['agents']);
+
+      // Detect if running task have a problem
+      $PluginFusioninventoryTaskjob->CronCheckRunnningJobs();
+
+
       if ($return == '1') {
          return 1;
       }
@@ -855,6 +860,45 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          return true;
       }
       return false;
+   }
+
+
+   // $items_id = agent id
+   function getRealStateAgent($items_id) {
+      global $LANG;
+
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+      $a_ip = $PluginFusioninventoryAgent->getIPs($items_id);
+      if (count($a_ip) > 0) {
+
+         $this->disableDebug();
+
+         $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+
+         $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
+
+         $ctx = stream_context_create(array(
+             'http' => array(
+                 'timeout' => 2
+                 )
+             )
+         );
+
+         foreach ($a_ip as $ip) {
+            $url = "http://".$ip.":".$PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port')."/status";
+
+            $str = @file_get_contents($url, 0, $ctx);
+            $this->reenableusemode();
+            if (strstr($str, "waiting")) {
+               return "waiting";
+            } else if (strstr($str, "running")) {
+               return "running";
+            }
+         }
+         return "noanswer";
+      } else {
+         return "noip";
+      }
    }
    
 
@@ -1098,6 +1142,75 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       // see tasks finished
       $PluginFusioninventoryTaskjobstatus->stateTaskjobItem($items_id, $itemtype, 'finished');
    }
+
+
+
+   function CronCheckRunnningJobs() {
+      global $DB;
+
+      // Get all taskjobstatus running
+      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+
+      $a_taskjobstatus = $PluginFusioninventoryTaskjobstatus->find("`state`='0'
+                                                      OR `state`='1'
+                                                      OR `state`='2'
+                                                      GROUP BY uniqid, plugin_fusioninventory_agents_id");
+      foreach($a_taskjobstatus as $data) {
+         $sql = "SELECT * FROM `glpi_plugin_fusioninventory_tasks`
+            LEFT JOIN `glpi_plugin_fusioninventory_taskjobs`
+               on `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
+            WHERE `glpi_plugin_fusioninventory_taskjobs`.`id`='".$data['plugin_fusioninventory_taskjobs_id']."'
+            LIMIT 1 ";
+         if ($result = $DB->query($sql)) {
+            if ($DB->numrows($result) != 0) {
+               $task = $DB->fetch_assoc($result);
+               if ($task['communication'] == 'push') {
+                  $a_valid = $PluginFusioninventoryTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$data['id']."'
+                           AND (`date`+100) < (NOW() + 0)", "", "1");
+
+                  if (count($a_valid) == '1') {
+                     // Get agent status
+                     $agentreturn = $this->getRealStateAgent($data['plugin_fusioninventory_agents_id']);
+
+                     switch ($agentreturn) {
+
+                        case 'waiting':
+                           // token is bad and must force cancel task in server
+                           $PluginFusioninventoryTaskjobstatus->changeStatusFinish($data['id'],
+                                                                 0,
+                                                                 '',
+                                                                 1,
+                                                                 "Bad token");
+                           break;
+
+                        case 'running':
+                            // just wait and do nothing
+
+                           break;
+
+                        case 'noanswer':
+                           // agent crash or computer is shutdown and force cancel task in server
+                          $PluginFusioninventoryTaskjobstatus->changeStatusFinish($data['id'],
+                                                                 0,
+                                                                 '',
+                                                                 1,
+                                                                 "Agent stopped/crashed");
+                           break;
+
+                        case 'noip':
+                           // just wait and do nothing
+
+                           break;
+
+                     }
+                  }
+               }
+            }
+         }         
+      }
+   }
+
 }
 
 ?>
