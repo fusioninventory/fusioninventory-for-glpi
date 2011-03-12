@@ -64,21 +64,25 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       $state[1] = 0;
       $state[2] = 0;
       $state[3] = 0;
-      $a_taskjobstatus = $this->find("`plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'");
+      $a_taskjobstatus = $this->find("`plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."' AND `state`!='3'");
       $total = 0;
-      foreach ($a_taskjobstatus as $data) {
-         $total++;
-         $state[$data['state']]++;         
-      }
-      $globalState = 0;
-      if ($total == '0') {
-         $globalState = 0;
+      if (count($a_taskjobstatus) == '0') {
+         $globalState = 100;
       } else {
-         $first = 25;
-         $second = ((($state[1]+$state[2]+$state[3]) * 100) / $total) / 4;
-         $third = ((($state[2]+$state[3]) * 100) / $total) / 4;
-         $fourth = (($state[3] * 100) / $total) / 4;
-         $globalState = $first + $second + $third + $fourth;
+         foreach ($a_taskjobstatus as $data) {
+            $total++;
+            $state[$data['state']]++;
+         }
+         $globalState = 0;
+         if ($total == '0') {
+            $globalState = 0;
+         } else {
+            $first = 25;
+            $second = ((($state[1]+$state[2]+$state[3]) * 100) / $total) / 4;
+            $third = ((($state[2]+$state[3]) * 100) / $total) / 4;
+            $fourth = (($state[3] * 100) / $total) / 4;
+            $globalState = $first + $second + $third + $fourth;
+         }
       }
       if ($return == 'html') {
          if ($style == 'simple') {
