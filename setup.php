@@ -117,7 +117,9 @@ function plugin_init_fusinvsnmp() {
 	if (isset($_SESSION["glpiID"])) {
 
 		if (haveRight("configuration", "r") || haveRight("profile", "w")) {// Config page
-			$PLUGIN_HOOKS['config_page']['fusinvsnmp'] = '../fusioninventory/front/configuration.form.php';
+         $PluginFusioninventoryConfiguration = new PluginFusioninventoryConfiguration();
+         $a_tabs = $PluginFusioninventoryConfiguration->defineTabs();
+         $PLUGIN_HOOKS['config_page']['fusinvsnmp'] = '../fusioninventory/front/configuration.form.php?glpi_tab='.array_search($a_plugin['name'], $a_tabs);
       }
 
 		// Define SQL table restriction of entity
