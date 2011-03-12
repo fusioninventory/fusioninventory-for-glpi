@@ -34,6 +34,8 @@
 
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
+header("Content-Type: text/html; charset=UTF-8");
+header_nocache();
 
 checkRight("config","w");
 
@@ -64,12 +66,12 @@ if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", 
          }
          break;
 
-      case 0 :
+      case 1:
          $config = new PluginFusioninventoryConfig;
          $config->showForm(array('target'=>$_POST['target']));
          break;
 
-      case 1:
+      case 2:
          $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
          $PluginFusioninventoryAgentmodule->showForm();
          break;

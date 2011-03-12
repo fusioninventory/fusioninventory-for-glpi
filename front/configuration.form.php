@@ -66,7 +66,11 @@ if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration'])) {
 }
 
 $configuration = new PluginFusioninventoryConfiguration();
-$configuration->show();
+if (isset($_GET['glpi_tab'])) {
+   $_SESSION['glpi_tabs']['pluginfusioninventoryconfiguration'] = $_GET['glpi_tab'];
+}
+$configuration->showForm();
+unset($_SESSION['glpi_tabs']['pluginfusioninventoryconfiguration']);
 
 commonFooter();
 
