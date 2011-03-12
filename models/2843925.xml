@@ -4,6 +4,8 @@
 	<key>Networking0348</key>
 	<comments><![CDATA[HP J4902A ProCurve Switch 6108, revision H.07.90, ROM H.07.40 (/sw/code/build/fish(ff03))
 
+ProCurve J8697A Switch 5406zl, revision K.14.49m, ROM K.12.22 (/sw/code/build/btm(K_t4a_m_dev))
+
 ]]></comments>
 	<oidlist>
 		<oidobject>
