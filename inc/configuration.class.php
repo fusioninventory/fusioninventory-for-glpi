@@ -64,7 +64,7 @@ class PluginFusioninventoryConfiguration extends CommonDBTM {
    }
 
 
-
+   
    function showForm($options=array()) {
       global $DB,$CFG_GLPI,$LANG;
 
