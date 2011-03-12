@@ -1177,11 +1177,16 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
                         case 'waiting':
                            // token is bad and must force cancel task in server
-                           $PluginFusioninventoryTaskjobstatus->changeStatusFinish($data['id'],
-                                                                 0,
-                                                                 '',
-                                                                 1,
-                                                                 "Bad token");
+                           $a_statustmp = $PluginFusioninventoryTaskjobstatus->find("`uniqid`='".$data['uniqid']."'
+                                                      AND `plugin_fusioninventory_agents_id`='".$data['plugin_fusioninventory_agents_id']."'
+                                                      AND (`state`='2' OR `state`='1' OR `state`='0') ");
+                           foreach($a_statustmp as $datatmp) {
+                              $PluginFusioninventoryTaskjobstatus->changeStatusFinish($datatmp['id'],
+                                                                    0,
+                                                                    '',
+                                                                    1,
+                                                                    "==fusioninventory::1==");
+                           }
                            break;
 
                         case 'running':
@@ -1191,11 +1196,16 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
                         case 'noanswer':
                            // agent crash or computer is shutdown and force cancel task in server
-                          $PluginFusioninventoryTaskjobstatus->changeStatusFinish($data['id'],
-                                                                 0,
-                                                                 '',
-                                                                 1,
-                                                                 "Agent stopped/crashed");
+                           $a_statustmp = $PluginFusioninventoryTaskjobstatus->find("`uniqid`='".$data['uniqid']."'
+                                                      AND `plugin_fusioninventory_agents_id`='".$data['plugin_fusioninventory_agents_id']."'
+                                                      AND (`state`='2' OR `state`='1') ");
+                           foreach($a_statustmp as $datatmp) {
+                              $PluginFusioninventoryTaskjobstatus->changeStatusFinish($datatmp['id'],
+                                                                  0,
+                                                                  '',
+                                                                  1,
+                                                                  "==fusioninventory::2==");
+                           }
                            break;
 
                         case 'noip':
