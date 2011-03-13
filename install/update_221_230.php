@@ -257,5 +257,65 @@ function update221to230() {
       WHERE `itemtype`='5153'";
    $DB->query($sql);
 
+   /*
+    * Create tasks
+    */
+   $PluginFusioninventoryTask = new PluginFusioninventoryTask();
+   $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+
+   $sql = "SELECT * FROM `glpi_plugin_fusinvsnmp_tmp_tasks`";
+   $result=$DB->query($sql);
+   while ($data=$DB->fetch_array($result)) {
+         // Create task NETDISCOVERY
+         $input = array();
+         $permanent = exportArrayToDB(array('-1'=>$data['rangeip_id'], 'module'=>'NETDISCOVERY'));
+         $input['name'] = "NETDISCOVERY of IP Range (permanent)";
+         $input['date_creation'] = date("Y-m-d H:i:s");
+         $input['is_active'] = $data['discoveractive'];
+         $input['permanent'] = $permanent;
+         $input["entities_id"]  = $data['entities_id'];
+         $input['date_scheduled'] = date("Y-m-d H:i:s");
+         $input['periodicity_count'] = "1";
+         $input['periodicity_type'] = "hours";
+
+         $task_id = $PluginFusioninventoryTask->add($input);
+
+         $input = array();
+         $input['plugin_fusioninventory_tasks_id'] = $task_id;
+         $input['plugins_id'] = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
+         $input['method'] = 'netdiscovery';
+         $input['action'] = '[{"PluginFusioninventoryAgent":"'.$data['discoveragent_id'].'"}]';
+         $input['definition'] = '[{"PluginFusinvsnmpIPRange":"'.$data['rangeip_id'].'"}]';
+         $input["entities_id"]  = $data['entities_id'];
+
+         $PluginFusioninventoryTaskjob->add($input);
+
+         // Create task SNMPINVENTORY
+         $input = array();
+         $permanent = exportArrayToDB(array('-1'=>$data['rangeip_id'], 'module'=>'SNMPQUERY'));
+         $input['name'] = "SNMPQUERY of IP Range (permanent)";
+         $input['date_creation'] = date("Y-m-d H:i:s");
+         $input['is_active'] = $data['queryactive'];
+         $input['permanent'] = $permanent;
+         $input["entities_id"]  = $data['entities_id'];
+         $input['date_scheduled'] = date("Y-m-d H:i:s");
+         $input['periodicity_count'] = "1";
+         $input['periodicity_type'] = "hours";
+
+         $task_id = $PluginFusioninventoryTask->add($input);
+
+         $input = array();
+         $input['plugin_fusioninventory_tasks_id'] = $task_id;
+         $input['plugins_id'] = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
+         $input['method'] = 'snmpinventory';
+         $input['action'] = '[{"PluginFusioninventoryAgent":"'.$data['queryagent_id'].'"}]';
+         $input['definition'] = '[{"PluginFusinvsnmpIPRange":"'.$data['rangeip_id'].'"}]';
+         $input["entities_id"]  = $data['entities_id'];
+
+         $PluginFusioninventoryTaskjob->add($input);
+   }
+   $sql = "DROP TABLE `glpi_plugin_fusinvsnmp_tmp_tasks`";
+   $DB->query($sql);
+
 }
 ?>
