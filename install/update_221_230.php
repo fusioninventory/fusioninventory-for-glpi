@@ -266,14 +266,14 @@ function update221to230() {
    $sql = "SELECT * FROM `glpi_plugin_fusinvsnmp_tmp_tasks`";
    $result=$DB->query($sql);
    while ($data=$DB->fetch_array($result)) {
-         $sql_select = "SELECT * FROM ``
+         $sql_select = "SELECT * FROM `glpi_plugin_fusinvsnmp_ipranges`
             WHERE `id`='".$data['rangeip_id']."'";
          $result_select = $DB->query($sql_select);
          $data_iprange = $DB->fetch_assoc($result_select);
 
          // Create task NETDISCOVERY
          $input = array();
-         $permanent = exportArrayToDB(array('-1'=>$data['rangeip_id'], 'module'=>'NETDISCOVERY'));
+         $permanent = exportArrayToDB(array('PluginFusinvsnmpIPRange'=>$data['rangeip_id'], 'module'=>'NETDISCOVERY'));
          $input['name'] = "NETDISCOVERY of IP Range (permanent) : ".$data_iprange['name'];
          $input['date_creation'] = date("Y-m-d H:i:s");
          $input['is_active'] = $data['discoveractive'];
@@ -297,7 +297,7 @@ function update221to230() {
 
          // Create task SNMPINVENTORY
          $input = array();
-         $permanent = exportArrayToDB(array('-1'=>$data['rangeip_id'], 'module'=>'SNMPQUERY'));
+         $permanent = exportArrayToDB(array('PluginFusinvsnmpIPRange'=>$data['rangeip_id'], 'module'=>'SNMPQUERY'));
          $input['name'] = "SNMPQUERY of IP Range (permanent) : ".$data_iprange['name'];
          $input['date_creation'] = date("Y-m-d H:i:s");
          $input['is_active'] = $data['queryactive'];
