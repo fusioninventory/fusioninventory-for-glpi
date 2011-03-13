@@ -75,7 +75,7 @@ class PluginFusinvinventoryLock {
 
                // Get serialization
                $query = "SELECT * FROM `glpi_plugin_fusinvinventory_libserialization`
-                  WHERE `external_id`='".$item->fields['items_id']."'
+                  WHERE `computers_id`='".$item->fields['items_id']."'
                      LIMIT 1";
                if ($result = $DB->query($query)) {
                   if ($DB->numrows($result) == '1') {

@@ -37,29 +37,36 @@ function plugin_fusinvinventory_getAddSearchOptions($itemtype) {
 
    $sopt = array();
    if ($itemtype == 'Computer') {
-         $sopt[1071]['table']     = 'glpi_plugin_fusinvinventory_antivirus';
-         $sopt[1071]['field']     = 'name';
-         $sopt[1071]['linkfield'] = '';
-         $sopt[1071]['name']      = 'Antivirus name';
-         $sopt[1071]['datatype']  = 'text';
 
-         $sopt[1072]['table']     = 'glpi_plugin_fusinvinventory_antivirus';
-         $sopt[1072]['field']     = 'version';
-         $sopt[1072]['linkfield'] = '';
-         $sopt[1072]['name']      = 'Antivirus version';
-         $sopt[1072]['datatype']  = 'text';
+         $sopt[5150]['table']     = 'glpi_plugin_fusinvinventory_libserialization';
+         $sopt[5150]['field']     = 'last_fusioninventory_update';
+         $sopt[5150]['linkfield'] = 'last_fusioninventory_update';
+         $sopt[5150]['name']      = $LANG['plugin_fusioninventory']['title'][1]." - ".$LANG['plugin_fusinvsnmp']['snmp'][53];
+         $sopt[5150]['datatype']  = 'datetime';
 
-         $sopt[1073]['table']     = 'glpi_plugin_fusinvinventory_antivirus';
-         $sopt[1073]['field']     = 'is_active';
-         $sopt[1073]['linkfield'] = '';
-         $sopt[1073]['name']      = 'Antivirus activé';
-         $sopt[1073]['datatype']  = 'bool';
+         $sopt[5151]['table']     = 'glpi_plugin_fusinvinventory_antivirus';
+         $sopt[5151]['field']     = 'name';
+         $sopt[5151]['linkfield'] = '';
+         $sopt[5151]['name']      = 'Antivirus name';
+         $sopt[5151]['datatype']  = 'text';
 
-         $sopt[1074]['table']     = 'glpi_plugin_fusinvinventory_antivirus';
-         $sopt[1074]['field']     = 'uptodate';
-         $sopt[1074]['linkfield'] = '';
-         $sopt[1074]['name']      = 'Antivirus à jour';
-         $sopt[1074]['datatype']  = 'bool';
+         $sopt[5152]['table']     = 'glpi_plugin_fusinvinventory_antivirus';
+         $sopt[5152]['field']     = 'version';
+         $sopt[5152]['linkfield'] = '';
+         $sopt[5152]['name']      = 'Antivirus version';
+         $sopt[5152]['datatype']  = 'text';
+
+         $sopt[5153]['table']     = 'glpi_plugin_fusinvinventory_antivirus';
+         $sopt[5153]['field']     = 'is_active';
+         $sopt[5153]['linkfield'] = '';
+         $sopt[5153]['name']      = 'Antivirus activé';
+         $sopt[5153]['datatype']  = 'bool';
+
+         $sopt[5154]['table']     = 'glpi_plugin_fusinvinventory_antivirus';
+         $sopt[5154]['field']     = 'uptodate';
+         $sopt[5154]['linkfield'] = '';
+         $sopt[5154]['name']      = 'Antivirus à jour';
+         $sopt[5154]['datatype']  = 'bool';
    }
    return $sopt;
 }
