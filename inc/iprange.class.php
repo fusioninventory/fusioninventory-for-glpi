@@ -214,8 +214,7 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 
       $this->showFormButtons($options);
       $this->addDivForTabs();
-
-      }
+   }
 
 
    function checkip($a_input) {
@@ -256,8 +255,6 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
          $method = "snmpinventory";
       }
 
-      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
       $PluginFusioninventoryTask = new PluginFusioninventoryTask();
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
