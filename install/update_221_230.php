@@ -893,6 +893,16 @@ function update221to230() {
       ADD INDEX `plugin_fusinvsnmp_models_id` (`plugin_fusinvsnmp_models_id`,
          `plugin_fusinvsnmp_configsecurities_id`) ";
    $DB->query($sql);
+   // Put networkequipment comment to sysdescr
+   $NetworkEquipment = new NetworkEquipment();
+   $a_networkequipemts = $NetworkEquipment->find();
+   foreach ($a_networkequipemts as $data) {
+      $sql_update = "UPDATE `glpi_plugin_fusinvsnmp_networkequipments`
+         SET `sysdescr`='".$data['comment']."'
+         WHERE `networkequipments_id`='".$data['id']."' ";
+      $DB->query($sql_update);
+   }
+
    /*
     * Update `glpi_plugin_fusioninventory_networking_ifaddr`
     * to `glpi_plugin_fusinvsnmp_networkequipmentips`
@@ -1026,7 +1036,16 @@ function update221to230() {
       ADD INDEX `plugin_fusinvsnmp_configsecurities_id` (`plugin_fusinvsnmp_configsecurities_id`),
       ADD INDEX `plugin_fusinvsnmp_models_id` (`plugin_fusinvsnmp_models_id`) ";
    $DB->query($sql);
-   
+   // Put printer comment to sysdescr
+   $Printer = new Printer();
+   $a_printers = $Printer->find();
+   foreach ($a_printers as $data) {
+      $sql_update = "UPDATE `glpi_plugin_fusinvsnmp_printers`
+         SET `sysdescr`='".$data['comment']."'
+         WHERE `printers_id`='".$data['id']."' ";
+      $DB->query($sql_update);
+   }
+
    /*
     * Update `glpi_plugin_fusioninventory_printers_cartridges`
     * to `glpi_plugin_fusinvsnmp_printercartridges`
