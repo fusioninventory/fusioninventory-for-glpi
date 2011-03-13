@@ -2022,84 +2022,60 @@ function plugin_fusinvsnmp_addWhere($link,$nott,$type,$id,$val) {
 	return "";
 }
 
-function plugin_pre_item_purge_fusinvsnmp($parm) {
+function plugin_item_purge_fusinvsnmp($parm) {
 	global $DB;
 
-	if (isset($parm["_item_type_"])) {
-		switch ($parm["_item_type_"]) {
-			case NETWORKING_TYPE :
+   switch (get_class($parm)) {
+
+			case 'NetworkEquipment':
 				// Delete all ports
 				$query_delete = "DELETE FROM `glpi_plugin_fusinvsnmp_networkequipments`
-                             WHERE `networkequipments_id`='".$parm["id"]."';";
+                             WHERE `networkequipments_id`='".$parm->fields["id"]."';";
 				$DB->query($query_delete);
 
-				$query_select = "SELECT `glpi_plugin_fusinvsnmp_networkports`.`id`
+				$query_select = "SELECT `glpi_plugin_fusinvsnmp_networkports`.`id`,
+                                 `glpi_networkports`.`id` as nid
                              FROM `glpi_plugin_fusinvsnmp_networkports`
                                   LEFT JOIN `glpi_networkports`
                                             ON `glpi_networkports`.`id` = `networkports_id`
-                             WHERE `items_id`='".$parm["id"]."'
-                                   AND `itemtype`='".NETWORKING_TYPE."';";
+                             WHERE `items_id`='".$parm->fields["id"]."'
+                                   AND `itemtype`='NetworkEquipment';";
 				$result=$DB->query($query_select);
 				while ($data=$DB->fetch_array($result)) {
 					$query_delete = "DELETE FROM `glpi_plugin_fusinvsnmp_networkports`
                                 WHERE `id`='".$data["id"]."';";
 					$DB->query($query_delete);
+               $query_delete = "DELETE FROM `glpi_plugin_fusinvsnmp_networkportlogs`
+                              WHERE `networkports_id`='".$data['nid']."'";
+               $DB->query($query_delete);
 				}
 
-				$query_select = "SELECT `glpi_plugin_fusinvsnmp_networkequipmentips`.`id`
-                             FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
-                                  LEFT JOIN `glpi_networkequipments`
-                                            ON `glpi_networkequipments`.`id` = `networkequipments_id`
-                             WHERE `networkequipments_id`='".$parm["id"]."';";
-				$result=$DB->query($query_select);
-				while ($data=$DB->fetch_array($result)) {
-					$query_delete = "DELETE FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
-                                WHERE `id`='".$data["id"]."';";
-					$DB->query($query_delete);
-				}
+            $query_delete = "DELETE FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
+                             WHERE `networkequipments_id`='".$parm->fields["id"]."';";
+				$DB->query($query_delete);
+
             break;
 
-			case PRINTER_TYPE :
+			case "Printer":
 				$query_delete = "DELETE FROM `glpi_plugin_fusinvsnmp_printers`
-                             WHERE `printers_id`='".$parm["id"]."';";
+                             WHERE `printers_id`='".$parm->fields["id"]."';";
 				$DB->query($query_delete);
 				$query_delete = "DELETE FROM `glpi_plugin_fusinvsnmp_printercartridges`
-                             WHERE `printers_id`='".$parm["id"]."';";
+                             WHERE `printers_id`='".$parm->fields["id"]."';";
 				$DB->query($query_delete);
 				$query_delete = "DELETE FROM `glpi_plugin_fusinvsnmp_printerlogs`
-                             WHERE `printers_id`='".$parm["id"]."';";
+                             WHERE `printers_id`='".$parm->fields["id"]."';";
 				$DB->query($query_delete);
             break;
 
          case 'PluginFusioninventoryUnknownDevice' :
-            // Delete ports and connections if exists
-            $np=new NetworkPort;
-            $nn = new NetworkPort_NetworkPort();
-            $query = "SELECT `id`
-                      FROM `glpi_networkports`
-                      WHERE `items_id` = '".$parm["id"]."'
-                            AND `itemtype` = 'PluginFusioninventoryUnknownDevice';";
-            $result = $DB->query($query);
-            while ($data = $DB->fetch_array($result)) {
-               if ($nn->getFromDBForNetworkPort($data['id'])) {
-                  $nn->delete($data);
-               }
-               $np->delete(array("id"=>$data["id"]));
-            }
+            $query_delete = "DELETE FROM `glpi_plugin_fusinvsnmp_unknowndevices`
+                             WHERE `plugin_fusioninventory_unknowndevices_id`='".$parm->fields["id"]."';";
+				$DB->query($query_delete);
             break;
-
-         case COMPUTER_TYPE :
-            // Delete link between computer and agent fusion
-            $query = "UPDATE `glpi_plugin_fusinvsnmp_agents`
-                        SET `items_id` = '0'
-                           AND `itemtype` = '0'
-                        WHERE `items_id` = '".$parm["id"]."'
-                           AND `itemtype` = '1' ";
-            $DB->query($query);
-            break;
-
+            
 		}
-   }
+
 	return $parm;
 }
 
