@@ -425,7 +425,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    /**
    * Manage a hub (many mac on a port mean you have a hub)
    *
-   * @param $p_oPort object Informations of the network port
+   * @param $p_oPort object Informations of the network port (switch port)
    * @param $agent_id integer id of the agent
    *
    * @return bool
@@ -437,12 +437,11 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $nn = new NetworkPort_NetworkPort();
       $Netport = new NetworkPort();
       //$PluginFusionInventoryAgentsProcesses = new PluginFusioninventoryAgentsProcesses;
-
       // Get port connected on switch port
       $hub_id = 0;
       if ($ID = $nn->getOppositeContact($p_oPort->getValue('id'))) {
          $Netport->getFromDB($ID);
-         if ($Netport->fields["itemtype"] == $this->type) {
+         if ($Netport->fields["itemtype"] == $this->getType()) {
             $this->getFromDB($Netport->fields["items_id"]);
             if ($this->fields["hub"] == "1") {
                $this->releaseHub($this->fields['id'], $p_oPort);
@@ -471,7 +470,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       // Get all ports connected to this hub
       $a_portglpi = array();
       $a_ports = $Netport->find("`items_id`='".$hub_id."'
-          AND `itemtype`='".$this->type."'");
+          AND `itemtype`='".$this->getType()."'");
       foreach ($a_ports as $data) {
          if ($id = $nn->getOppositeContact($data['id'])) {
             $a_portglpi[$id] = $data['id'];
@@ -502,7 +501,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             $unknown_id = $this->add($input);
             $input = array();
             $input["items_id"] = $unknown_id;
-            $input["itemtype"] = $this->type;
+            $input["itemtype"] = $this->getType();
             $input["mac"] = $ifmac;
             $id_port = $Netport->add($input);
             $a_portcreate = array();
@@ -532,7 +531,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $nn = new NetworkPort_NetworkPort();
 
       $a_ports = $Netport->find("`items_id`='".$hub_id."'
-          AND `itemtype`='".$this->type."'
+          AND `itemtype`='".$this->getType()."'
           AND (`name` != 'Link' OR `name` IS NULL)");
       foreach ($a_ports as $data) {
          if (!isset($a_portUsed[$data['id']])) {
@@ -567,7 +566,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $query = "SELECT `glpi_networkports`.`id` FROM `glpi_networkports`
          LEFT JOIN `glpi_networkports_networkports`
             ON `glpi_networkports`.`id` = `networkports_id_1` OR `glpi_networkports`.`id` = `networkports_id_2`
-         WHERE `itemtype`='".$this->type."'
+         WHERE `itemtype`='".$this->getType()."'
             AND `items_id`='".$hub_id."'
             AND `networkports_id_1` is null
          LIMIT 1;";
@@ -580,7 +579,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          // Create port
          $input = array();
          $input["items_id"] = $hub_id;
-         $input["itemtype"] = $this->type;
+         $input["itemtype"] = $this->getType();
          $freeport_id = $Netport->add($input);
       }
       $nn->add(array('networkports_id_1'=> $data['id'], 'networkports_id_2' => $freeport_id));
@@ -634,11 +633,11 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          foreach ($a_ports as $data) {
             if ($ID = $nn->getOppositeContact($p_oPort->getValue('id'))) {
                $Netport->getFromDB($ID);
-               if ($Netport->fields["itemtype"] == $this->type) {
+               if ($Netport->fields["itemtype"] == $this->getType()) {
                   if ($this->fields["hub"] == "1") {
                      $a_portLink = $Netport->find("`name`='Link'
                         AND `items_id`='".$this->fields['id']."'
-                        AND `itemtype`='".$this->type."'");
+                        AND `itemtype`='".$this->getType()."'");
                      foreach ($a_portLink as $dataLink) {
                         if ($nn->getOppositeContact($dataLink['id'])) {
 
@@ -672,7 +671,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
       $input = array();
       $input["items_id"] = $hub_id;
-      $input["itemtype"] = $this->type;
+      $input["itemtype"] = $this->getType();
       $input["name"] = "Link";
       $port_id = $Netport->add($input);
       if ($nn->add(array('networkports_id_1'=> $p_oPort->getValue('id'), 'networkports_id_2' => $port_id))) {
@@ -706,7 +705,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
       // get all ports of hub
       $releasePorts = array();
-      $a_ports = $Netport->find("`items_id`='".$hub_id."' AND `itemtype`='".$this->type."' AND (`name` != 'Link' OR `name` IS NULL)");
+      $a_ports = $Netport->find("`items_id`='".$hub_id."' AND `itemtype`='".$this->getType()."' AND (`name` != 'Link' OR `name` IS NULL)");
       foreach ($a_ports as $port_id=>$data) {
          if ($id = $nn->getOppositeContact($port_id)) {
             $Netport->getFromDB($id);
@@ -742,7 +741,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          while ($data=$DB->fetch_array($result)) {
             $query_port = "SELECT * FROM `glpi_networkports`
                WHERE items_id='".$data['id']."'
-                  AND itemtype='".$this->type."' ";
+                  AND itemtype='".$this->getType()."' ";
             if ($result_port=$DB->query($query_port)) {
                while ($data_port=$DB->fetch_array($result_port)) {
                   //plugin_fusioninventory_addLogConnection("remove",$data_port['ID']);
