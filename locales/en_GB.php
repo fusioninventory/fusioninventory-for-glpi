@@ -54,7 +54,7 @@ $LANG['plugin_fusioninventory']['setup'][17]="Other FusionInventory plugins (fus
 
 $LANG['plugin_fusioninventory']['functionalities'][0]="Features";
 $LANG['plugin_fusioninventory']['functionalities'][2]="General configuration";
-$LANG['plugin_fusioninventory']['functionalities'][6]="Key";
+$LANG['plugin_fusioninventory']['functionalities'][6]="Legend";
 $LANG['plugin_fusioninventory']['functionalities'][8]="Agent port";
 $LANG['plugin_fusioninventory']['functionalities'][9]="Retention in days";
 $LANG['plugin_fusioninventory']['functionalities'][16]="SNMP authentication";
