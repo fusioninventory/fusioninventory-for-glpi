@@ -288,7 +288,8 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
          }
          // Create task
          $input = array();
-         $input['name'] = $module_name." of IP Range (permanent)";
+         $this->getFromDB($items_id);
+         $input['name'] = $module_name." of IP Range (permanent) : ".$this->getName();
          $input['date_creation'] = date("Y-m-d H:i:s");
          $input['is_active'] = 0;
          $input['permanent'] = $permanent;

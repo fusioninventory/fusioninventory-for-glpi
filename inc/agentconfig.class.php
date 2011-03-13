@@ -74,16 +74,16 @@ class PluginFusinvsnmpAgentconfig extends CommonDBTM {
 
       $this->showFormHeader($options);
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusinvsnmp']['agents'][26]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      echo $this->fields["version_netdiscovery"];
-      echo "</td>";
-      echo "<td>".$LANG['plugin_fusinvsnmp']['agents'][27]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      echo $this->fields["version_snmpquery"];
-      echo "</td>";
-      echo "</tr>";
+//      echo "<tr class='tab_bg_1'>";
+//      echo "<td>".$LANG['plugin_fusinvsnmp']['agents'][26]."&nbsp;:</td>";
+//      echo "<td align='center'>";
+//      echo $this->fields["version_netdiscovery"];
+//      echo "</td>";
+//      echo "<td>".$LANG['plugin_fusinvsnmp']['agents'][27]."&nbsp;:</td>";
+//      echo "<td align='center'>";
+//      echo $this->fields["version_snmpquery"];
+//      echo "</td>";
+//      echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusinvsnmp']['agents'][24]."&nbsp;:</td>";
