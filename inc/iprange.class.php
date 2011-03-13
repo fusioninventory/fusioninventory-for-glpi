@@ -260,7 +260,7 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
 
 
-      $permanent = exportArrayToDB(array($this->type=>$items_id, 'module'=>$module_name));
+      $permanent = exportArrayToDB(array($this->getType()=>$items_id, 'module'=>$module_name));
 
       $task_id = 0;
       $taskjob_id= 0;
