@@ -479,6 +479,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       $PluginFusinvsnmpNetworkEquipmentIP = new PluginFusinvsnmpNetworkEquipmentIP();
 
       $a_ip = $PluginFusinvsnmpNetworkEquipmentIP->getIP($id);
+      asort($a_ip);
       foreach ($a_ip as $ip) {
          if ($count == '0') {
             echo "<tr class='tab_bg_1'>";
@@ -487,7 +488,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
          echo $ip;
          echo "</td>";
          $count++;
-         if ($count == "9") {
+         if ($count == "8") {
             $count = 0;
             echo "</tr>";
          }
