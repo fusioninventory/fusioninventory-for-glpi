@@ -57,6 +57,29 @@ class PluginFusioninventoryRuleImportEquipmentCollection extends PluginFusioninv
       return array_merge($input,$params);
    }
 
+
+   function getRuleClassName() {
+      if (preg_match('/(.*)Collection/',get_class($this),$rule_class)) {
+         return $rule_class[1];
+      }
+      else {
+         return "";
+      }
+   }
+   /**
+    * Get a instance of the class to manipulate rule of this collection
+    *
+   **/
+   function getRuleClass() {
+      $name = $this->getRuleClassName();
+      if ($name !=  '') {
+         return new $name ();
+      }
+      else {
+         return null;
+      }
+   }
+
 }
 
 ?>
