@@ -123,7 +123,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjobs` (
   KEY `entities_id` (`entities_id`),
   KEY `plugins_id` (`plugins_id`),
   KEY `users_id` (`users_id`),
-  KEY `rescheduled_taskjob_id` (`rescheduled_taskjob_id`)
+  KEY `rescheduled_taskjob_id` (`rescheduled_taskjob_id`),
+  KEY `method` (`method`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
