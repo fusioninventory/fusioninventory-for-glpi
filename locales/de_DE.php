@@ -41,7 +41,7 @@ $LANG['plugin_fusinvsnmp']['title'][2]="Verbindungs-Historie";
 $LANG['plugin_fusinvsnmp']['title'][5]="FusionInventory-Sperrungen";
 $LANG['plugin_fusinvsnmp']['title'][6]="SNMP";
 
-$LANG['plugin_fusinvsnmp']['config'][3] = "Inventar";
+$LANG['plugin_fusinvsnmp']['config'][3] = "Inventar SNMP";
 $LANG['plugin_fusinvsnmp']['config'][4] = "Verlauf Geräte";
 $LANG['plugin_fusinvsnmp']['config'][8] = "Nie";
 $LANG['plugin_fusinvsnmp']['config'][9] = "Immer";
