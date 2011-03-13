@@ -123,9 +123,19 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
                      break;
 
                   case 'STORAGES':
-                     $DeviceHardDrive = new Computer_Device('DeviceHardDrive');
-                     if (!$DeviceHardDrive->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
-                        $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['devices'][1]);
+                     $array_section = unserialize($section);
+                     $PluginFusinvinventoryImport_Storage = new PluginFusinvinventoryImport_Storage();
+                     $type_tmp = $PluginFusinvinventoryImport_Storage->getTypeDrive($array_section);
+                     if ($type_tmp == "Drive") {
+                        $DeviceDrive = new Computer_Device('DeviceDrive');
+                        if (!$DeviceDrive->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
+                           $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['devices'][19]);
+                        }
+                     } else {
+                        $DeviceHardDrive = new Computer_Device('DeviceHardDrive');
+                        if (!$DeviceHardDrive->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
+                           $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['devices'][1]);
+                        }
                      }
                      break;
 
