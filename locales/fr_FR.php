@@ -87,4 +87,5 @@ $LANG['plugin_fusinvinventory']['antivirus'][1]="Pas d'antivirus sur cet ordinat
 $LANG['plugin_fusinvinventory']['antivirus'][2]="Version";
 $LANG['plugin_fusinvinventory']['antivirus'][3]="A jour";
 
+$LANG['plugin_fusinvinventory']['computer'][0]="Dernier inventaire";
 ?>
