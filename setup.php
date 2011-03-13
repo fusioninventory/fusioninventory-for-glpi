@@ -98,17 +98,8 @@ function plugin_init_fusinvsnmp() {
                                                                 'submitbutton'=>'plugin_fusinvsnmp_config_set',
                                                                 'submitmethod'=>'putForm');
    }
-//   if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp']
-//                       [$LANG['plugin_fusinvsnmp']['title'][5]])) {
-//      $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp']
-//               [$LANG['plugin_fusinvsnmp']['title'][5]] = array('class'=>'PluginFusinvsnmpConfigLogField',
-//                                                                'submitbutton'=>'plugin_fusinvsnmp_configlogfield_set',
-//                                                                'submitmethod'=>'putForm');
-//   }
 
-	//$PLUGIN_HOOKS['init_session']['fusioninventory'] = array('Profile', 'initSession');
    $PLUGIN_HOOKS['change_profile']['fusinvsnmp'] = PluginFusioninventoryProfile::changeprofile($moduleId,$a_plugin['shortname']);
-
 
 	$PLUGIN_HOOKS['cron']['fusinvsnmp'] = 20*MINUTE_TIMESTAMP; // All 20 minutes
 
@@ -133,7 +124,9 @@ function plugin_init_fusinvsnmp() {
 
 			$PLUGIN_HOOKS['use_massive_action']['fusinvsnmp']=1;
 //         $PLUGIN_HOOKS['pre_item_delete']['fusinvsnmp'] = 'plugin_pre_item_delete_fusinvsnmp';
-//			$PLUGIN_HOOKS['pre_item_purge']['fusinvsnmp'] = '';
+         $PLUGIN_HOOKS['item_purge']['fusinvsnmp'] = array('NetworkEquipment' =>'plugin_item_purge_fusinvsnmp',
+                                                           'Printer' =>'plugin_item_purge_fusinvsnmp',
+                                                           'PluginFusioninventoryUnknownDevice' =>'plugin_item_purge_fusinvsnmp');
 //			$PLUGIN_HOOKS['item_update']['fusinvsnmp'] = 'plugin_item_update_fusinvsnmp';
 //         $PLUGIN_HOOKS['item_add']['fusinvsnmp'] = 'plugin_item_add_fusinvsnmp';
 
@@ -148,11 +141,6 @@ function plugin_init_fusinvsnmp() {
          }
          $PLUGIN_HOOKS['reports']['fusinvsnmp'] = $report_list;
 
-//			if (haveRight("models", "r") || haveRight("configsecurity", "r")) {
-//			if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model", "r")
-//             || PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity", "r")) {
-////				$PLUGIN_HOOKS['menu_entry']['fusinvsnmp'] = true;
-//         }
 
          // Tabs for each type
          $PLUGIN_HOOKS['headings']['fusinvsnmp'] = 'plugin_get_headings_fusinvsnmp';
@@ -194,14 +182,8 @@ function plugin_init_fusinvsnmp() {
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['iprange'] = '../fusinvsnmp/front/iprange.form.php?add=1';
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['iprange'] = '../fusinvsnmp/front/iprange.php';
             }
-//            $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['constructdevice'] = 'front/construct_device.form.php?add=1';
-//            $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['search']['constructdevice'] = 'front/construct_device.php';
 
-//            if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configuration","r")) {
-//               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['config'] = 'front/functionalities.form.php';
-//            }
 			}
-//         $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']["<img  src='".GLPI_ROOT."/plugins/fusinvsnmp/pics/books.png' title='".$LANG['plugin_fusinvsnmp']['setup'][16]."' alt='".$LANG['plugin_fusinvsnmp']['setup'][16]."'>"] = 'front/documentation.php';
 
          // Fil ariane
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['models']['title'] = $LANG['plugin_fusinvsnmp']['model_info'][4];
