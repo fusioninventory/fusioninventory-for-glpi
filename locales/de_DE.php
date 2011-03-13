@@ -52,6 +52,7 @@ $LANG['plugin_fusinvinventory']['menu'][0]="XML-Datei eines Agents importieren";
 $LANG['plugin_fusinvinventory']['menu'][1]="Kriterien";
 $LANG['plugin_fusinvinventory']['menu'][2]="Schwarze Liste";
 $LANG['plugin_fusinvinventory']['menu'][3]="Entitätsregeln";
+$LANG['plugin_fusinvinventory']['menu'][4]="Integrity check of datas";
 
 $LANG['plugin_fusinvinventory']['importxml'][0]="Import von einer XML-Datei eines Agents";
 $LANG['plugin_fusinvinventory']['importxml'][1]="Computer wurde in GLPI importiert";
@@ -85,4 +86,5 @@ $LANG['plugin_fusinvinventory']['antivirus'][1]="Keine Antiviren-Software auf di
 $LANG['plugin_fusinvinventory']['antivirus'][2]="Version";
 $LANG['plugin_fusinvinventory']['antivirus'][3]="Aktuell";
 
+$LANG['plugin_fusinvinventory']['computer'][0]="Letzte Inventarisierung";
 ?>

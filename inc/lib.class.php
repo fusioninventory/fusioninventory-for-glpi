@@ -582,7 +582,7 @@ if (!unserialize($serializedSectionToRemove)) {
    * @return nothing
    *
    */
-   private function _serializeIntoDB($internalId, $serializedSections) {
+   function _serializeIntoDB($internalId, $serializedSections) {
       global $DB;
 
 

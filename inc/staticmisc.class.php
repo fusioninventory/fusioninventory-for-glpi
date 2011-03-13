@@ -87,6 +87,12 @@ class PluginFusinvinventoryStaticmisc {
          $a_menu[3]['pic']  = GLPI_ROOT."/plugins/fusinvinventory/pics/menu_blacklist.png";
          $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusinvinventory/front/blacklist.php";
       }
+
+      if (PluginFusioninventoryProfile::haveRight("fusinvinventory", "importxml","w")) {
+         $a_menu[4]['name'] = $LANG['plugin_fusinvinventory']['menu'][4];
+         $a_menu[4]['pic']  = GLPI_ROOT."/plugins/fusinvinventory/pics/menu_checkintegrity.png";
+         $a_menu[4]['link'] = GLPI_ROOT."/plugins/fusinvinventory/front/libintegrity.form.php";
+      }
       return $a_menu;
    }
 
