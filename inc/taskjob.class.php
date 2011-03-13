@@ -126,7 +126,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    function showForm($id, $options=array()) {
       global $DB,$CFG_GLPI,$LANG;
 
-      $this->verifyDefinitionActions($id);
+      if ($id != '') {
+         $this->verifyDefinitionActions($id);
+      }
 
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
