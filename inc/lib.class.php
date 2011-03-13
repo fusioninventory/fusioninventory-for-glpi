@@ -121,7 +121,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       //if ($internalId = $this->isMachineExist()) {
          // Get internal ID with $items_id
          $query = "SELECT * FROM `glpi_plugin_fusinvinventory_libserialization`
-            WHERE `external_id`='".$items_id."'
+            WHERE `computers_id`='".$items_id."'
                LIMIT 1";
          if ($result = $DB->query($query)) {
             if ($DB->numrows($result) == '1') {
@@ -242,7 +242,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
    public function addLibMachine($internalId, $externalId) {
 
       $queryInsert = "INSERT INTO `glpi_plugin_fusinvinventory_libserialization`
-		( `internal_id` , `external_id`)
+		( `internal_id` , `computers_id`)
 		VALUES
 		( '" . $internalId . "' , '".$externalId."')";
       $resultInsert = mysql_query($queryInsert);
@@ -590,7 +590,8 @@ if (!unserialize($serializedSectionToRemove)) {
       $a_serializedSections = str_split(htmlspecialchars($serializedSections, ENT_QUOTES), 800000);
 
       $queryUpdate = "UPDATE `glpi_plugin_fusinvinventory_libserialization`
-		SET `serialized_sections1` = '" . $a_serializedSections[0] ."'
+		SET `serialized_sections1` = '" . $a_serializedSections[0] ."',
+         `last_fusioninventory_update`='".date("Y-m-d H:i:s")."'
       WHERE `internal_id` = '" . $internalId . "'";
 
       $resultUpdate = $DB->query($queryUpdate);
@@ -640,7 +641,7 @@ if (!unserialize($serializedSectionToRemove)) {
       $arraySerializedSections = array();
       $arraySerializedSectionsTemp = array();
 
-      $querySelect = "SELECT `external_id`, `serialized_sections1`, `serialized_sections2`, `serialized_sections3` FROM `glpi_plugin_fusinvinventory_libserialization`
+      $querySelect = "SELECT `computers_id`, `serialized_sections1`, `serialized_sections2`, `serialized_sections3` FROM `glpi_plugin_fusinvinventory_libserialization`
          WHERE `internal_id` = '$internalId'";
       $resultSelect = $DB->query($querySelect);
       $rowSelect = mysql_fetch_row($resultSelect);
@@ -678,15 +679,15 @@ if (!unserialize($serializedSectionToRemove)) {
    /**
    * When purge computer, we delete entry in lib DB
    *
-   * @param $external_id integer GLPI id of the computer
+   * @param $computers_id integer GLPI id of the computer
    *
    * @return nothing
    */
-   function removeExternalid($external_id) {
+   function removeExternalid($computers_id) {
       global $DB;
 
       $query_delete = "DELETE FROM `glpi_plugin_fusinvinventory_libserialization`
-         WHERE `external_id`='".$external_id."' ";
+         WHERE `computers_id`='".$computers_id."' ";
       $DB->query($query_delete);
    }
 
