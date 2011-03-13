@@ -341,7 +341,11 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $a_methods2 = array();
       $a_methods2[''] = "------";
       foreach ($a_methods as $datas) {
-         $a_methods2[$datas['method']] = $datas['method'];
+         if (isset($datas['name'])) {
+            $a_methods2[$datas['method']] = $datas['name'];
+         } else {
+            $a_methods2[$datas['method']] = $datas['method'];
+         }
       }
       $rand = Dropdown::showFromArray($myname, $a_methods2, array('value'=>$value));
 
