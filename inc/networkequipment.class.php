@@ -528,6 +528,15 @@ function appear_array(id){
       'onClick=\'Effect.Appear(\"viewfollowup'+id+'\");close_array('+id+');\' />';
 }
 
+function close_legend(id){
+	document.getElementById('legendlink').innerHTML = '<a '+
+   ' onClick=\'Effect.Fade(\"legend\");appear_legend();\'>[ ".$LANG['plugin_fusioninventory']['functionalities'][6]." ]</a>';
+}
+function appear_legend(id){
+	document.getElementById('legendlink').innerHTML = '<a '+
+   ' onClick=\'Effect.Appear(\"legend\");close_legend();\'>[ ".$LANG['plugin_fusioninventory']['functionalities'][6]." ]</a>';
+}
+
 		</script>";
 
 		echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusioninventory/prototype.js'></script>";
@@ -551,9 +560,26 @@ function appear_array(id){
       if ($_SESSION["glpilanguage"] == "fr_FR") {
          $url_legend = "https://forge.indepnet.net/wiki/fusioninventory/Fr_VI_visualisationsdonnees_2_reseau";
       }
-      echo " <a href='".$url_legend."'>[ ".$LANG['plugin_fusioninventory']['functionalities'][6]." ]</a>";
+      echo "<a href='legend'></a>";
+      echo "<div id='legendlink'><a onClick='Effect.Appear(\"legend\");close_legend();'>[ ".$LANG['plugin_fusioninventory']['functionalities'][6]." ]</a></div>";
 		echo "</th>";
 		echo "</tr>";
+
+      // Display legend
+      echo "
+      <tr class='tab_bg_1' style='display: none;' id='legend'>
+         <td colspan='".(mysql_num_rows($result_array) + 2)."'>
+         <ul>
+            <li>".$LANG['plugin_fusinvsnmp']['legend'][0]."&nbsp;:</li>
+         </ul>
+         <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/port_trunk.png' width='750' />
+         <ul>
+            <li>".$LANG['plugin_fusinvsnmp']['legend'][1]."&nbsp;:</li>
+         </ul>
+         <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/connected_trunk.png' width='750' />
+         </td>
+      </tr>";
+
 
 		echo "<tr class='tab_bg_1'>";
 
