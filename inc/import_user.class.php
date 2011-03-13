@@ -56,6 +56,10 @@ class PluginFusinvinventoryImport_User extends CommonDBTM {
 
       $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_computers', $items_id);
 
+      if (!isset($_SESSION["plugin_fusinvinventory_userdefined"])) {
+         $_SESSION["plugin_fusinvinventory_userdefined"] = 0;
+      }
+
       $Computer->getFromDB($items_id);
       if (isset($dataSection['LOGIN'])) {
          if (!in_array('contact', $a_lockable)) {
@@ -97,6 +101,10 @@ class PluginFusinvinventoryImport_User extends CommonDBTM {
    **/
    function deleteItem($items_id, $idmachine) {
       $Computer = new Computer();
+
+      if (!isset($_SESSION["plugin_fusinvinventory_userdefined"])) {
+         $_SESSION["plugin_fusinvinventory_userdefined"] = 0;
+      }
       $Computer->getFromDB($idmachine);
       if (!strstr($items_id, "-")) {
          $User = new User();
