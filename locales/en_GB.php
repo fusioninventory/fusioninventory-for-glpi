@@ -54,6 +54,7 @@ $LANG['plugin_fusinvinventory']['menu'][0]="Import agent XML file";
 $LANG['plugin_fusinvinventory']['menu'][1]="Criteria rules";
 $LANG['plugin_fusinvinventory']['menu'][2]="BlackList";
 $LANG['plugin_fusinvinventory']['menu'][3]="Entity rules";
+$LANG['plugin_fusinvinventory']['menu'][4]="Integrity check of datas";
 
 $LANG['plugin_fusinvinventory']['importxml'][0]="Import XML file from an Agent";
 $LANG['plugin_fusinvinventory']['importxml'][1]="Computer injected into GLPI";
