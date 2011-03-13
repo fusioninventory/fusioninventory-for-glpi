@@ -1184,6 +1184,32 @@ function update221to230() {
     * to `glpi_plugin_fusinvsnmp_ipranges`
     */
    plugin_fusioninventory_displayMigrationMessage("230", $LANG['update'][141]." - glpi_plugin_fusinvsnmp_ipranges");
+   $sql = "CREATE TABLE `glpi_plugin_fusinvsnmp_tmp_tasks` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `rangeip_id` int(11) NOT NULL DEFAULT '0',
+   `discoveragent_id` int(11) NOT NULL DEFAULT '0',
+   `discoveractive` int(1) NOT NULL DEFAULT '0',
+   `queryagent_id` int(11) NOT NULL DEFAULT '0',
+   `queryactive` int(1) NOT NULL DEFAULT '0',
+   `entities_id` int(11) NOT NULL DEFAULT '0',
+   PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+   $DB->query($sql);
+   $sql = "SELECT * FROM `glpi_plugin_fusioninventory_rangeip`";
+   $result=$DB->query($sql);
+   while ($data=$DB->fetch_array($result)) {
+      $sql_insert = "INSERT INTO `glpi_plugin_fusinvsnmp_tmp_tasks`
+         (`rangeip_id`, `discoveragent_id`, `discoveractive`,
+         `queryagent_id`, `queryactive`, `entities_id`)
+         VALUES ('".$data['ID']."',
+                 '".$data['FK_fusioninventory_agents_discover']."',
+                 '".$data['discover']."',
+                 '".$data['FK_fusioninventory_agents_query']."',
+                 '".$data['query']."',
+                 '".$data['FK_entities']."')";
+      $DB->query($sql_insert);
+   }
+
    $sql = "RENAME TABLE `glpi_plugin_fusioninventory_rangeip`
       TO `glpi_plugin_fusinvsnmp_ipranges`";
    $DB->query($sql);
