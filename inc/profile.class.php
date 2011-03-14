@@ -259,7 +259,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
             $a_profil = call_user_func(array("Plugin".ucfirst($pluginname)."Staticmisc", "profiles"));
 
             echo "<tr>";
-            echo "<th colspan='4'>".$LANG['plugin_fusioninventory']['profile'][0]." ".$LANG['plugin_'.$pluginname]['profile'][1]." :</th>";
+            echo "<th colspan='4'>".$LANG['plugin_fusioninventory']['profile'][0]." ".$LANG['plugin_'.$pluginname]['title'][0]." :</th>";
             echo "</tr>";
 
             $i = 0;

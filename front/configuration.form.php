@@ -1,37 +1,36 @@
 <?php
+
 /*
- * @version $Id$
- ----------------------------------------------------------------------
- FusionInventory
- Copynetwork (C) 2003-2010 by the INDEPNET Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org//
- ----------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: Vincent Mazzoni
+   Co-authors of file: David DURIEUX
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: Vincent MAZZONI
-// Purpose of file:
-// ----------------------------------------------------------------------
 
 define('GLPI_ROOT', '../../..');
 
@@ -42,12 +41,13 @@ checkRight("config","w");
 commonHeader($LANG['plugin_fusioninventory']['functionalities'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","configuration");
 
 if (isset($_POST['plugin_fusioninventory_config_set'])) {
-   $config = new PluginFusioninventoryConfig;
+   $config = new PluginFusioninventoryConfig();
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
    $config->updateConfigType($plugins_id, 'ssl_only', $_POST['ssl_only']);
    $config->updateConfigType($plugins_id, 'inventory_frequence', $_POST['inventory_frequence']);
    $config->updateConfigType($plugins_id, 'delete_task', $_POST['delete_task']);
    $config->updateConfigType($plugins_id, 'agent_port', $_POST['agent_port']);
+   $config->updateConfigType($plugins_id, 'extradebug', $_POST['extradebug']);
    glpi_header($_SERVER['HTTP_REFERER']);
 }
 
@@ -65,8 +65,12 @@ if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration'])) {
    }
 }
 
-$configuration = new PluginFusioninventoryConfiguration;
-$configuration->show();
+$configuration = new PluginFusioninventoryConfiguration();
+if (isset($_GET['glpi_tab'])) {
+   $_SESSION['glpi_tabs']['pluginfusioninventoryconfiguration'] = $_GET['glpi_tab'];
+}
+$configuration->showForm();
+unset($_SESSION['glpi_tabs']['pluginfusioninventoryconfiguration']);
 
 commonFooter();
 

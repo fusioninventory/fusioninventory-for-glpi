@@ -54,7 +54,7 @@ $LANG['plugin_fusioninventory']['setup'][17]="Other FusionInventory plugins (fus
 
 $LANG['plugin_fusioninventory']['functionalities'][0]="Features";
 $LANG['plugin_fusioninventory']['functionalities'][2]="General configuration";
-$LANG['plugin_fusioninventory']['functionalities'][6]="Key";
+$LANG['plugin_fusioninventory']['functionalities'][6]="Legend";
 $LANG['plugin_fusioninventory']['functionalities'][8]="Agent port";
 $LANG['plugin_fusioninventory']['functionalities'][9]="Retention in days";
 $LANG['plugin_fusioninventory']['functionalities'][16]="SNMP authentication";
@@ -68,6 +68,7 @@ $LANG['plugin_fusioninventory']['functionalities'][60]="Clean history";
 $LANG['plugin_fusioninventory']['functionalities'][73]="Fields";
 $LANG['plugin_fusioninventory']['functionalities'][74]="Values";
 $LANG['plugin_fusioninventory']['functionalities'][75]="Locks";
+$LANG['plugin_fusioninventory']['functionalities'][76]="Extra-debug";
 
 $LANG['plugin_fusioninventory']['errors'][22]="Unattended element in";
 $LANG['plugin_fusioninventory']['errors'][50]="Your GLPI version not compatible, require 0.78";
@@ -155,6 +156,8 @@ $LANG['plugin_fusioninventory']['task'][35]="minutes";
 $LANG['plugin_fusioninventory']['task'][36]="hours";
 $LANG['plugin_fusioninventory']['task'][37]="days";
 $LANG['plugin_fusioninventory']['task'][38]="months";
+$LANG['plugin_fusioninventory']['task'][39]="Unable to run task because some jobs is running yet!";
+$LANG['plugin_fusioninventory']['task'][40]="Force running";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Started";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";
@@ -168,4 +171,6 @@ $LANG['plugin_fusioninventory']['update'][0]="your history table has more than 3
 
 $LANG['plugin_fusioninventory']['xml'][0]="XML";
 
+$LANG['plugin_fusioninventory']['codetasklog'][1]="Bad token, impossible to start agent";
+$LANG['plugin_fusioninventory']['codetasklog'][2]="Agent stopped/crashed";
 ?>

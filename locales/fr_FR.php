@@ -68,6 +68,7 @@ $LANG['plugin_fusioninventory']['functionalities'][60]="Nettoyage de l'historiqu
 $LANG['plugin_fusioninventory']['functionalities'][73]="Champs";
 $LANG['plugin_fusioninventory']['functionalities'][74]="Valeurs";
 $LANG['plugin_fusioninventory']['functionalities'][75]="Verrous";
+$LANG['plugin_fusioninventory']['functionalities'][76]="Extra-debug";
 
 $LANG['plugin_fusioninventory']['errors'][22]="Elément inattendu dans";
 $LANG['plugin_fusioninventory']['errors'][50]="La version de GLPI n'est pas compatible, vous avez besoin de la version 0.78";
@@ -155,6 +156,8 @@ $LANG['plugin_fusioninventory']['task'][35]="minutes";
 $LANG['plugin_fusioninventory']['task'][36]="heures";
 $LANG['plugin_fusioninventory']['task'][37]="jours";
 $LANG['plugin_fusioninventory']['task'][38]="mois";
+$LANG['plugin_fusioninventory']['task'][39]="Impossible de lancer la tâche car il reste des actions en cours!";
+$LANG['plugin_fusioninventory']['task'][40]="Forcer l'exécution";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Démarré";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";
@@ -168,4 +171,6 @@ $LANG['plugin_fusioninventory']['update'][0]="Votre historique fait plus de 300 
 
 $LANG['plugin_fusioninventory']['xml'][0]="XML";
 
+$LANG['plugin_fusioninventory']['codetasklog'][1]="Mauvais jeton, impossible d'agir sur l'agent";
+$LANG['plugin_fusioninventory']['codetasklog'][2]="Agent arrêté ou crashé";
 ?>

@@ -232,7 +232,7 @@ class PluginFusioninventoryCommunication {
    static function addLog($p_logs) {
       global $CFG_GLPI;
       if ($_SESSION['glpi_use_mode']==DEBUG_MODE) {
-         file_put_contents(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/communication.log',
+         file_put_contents(GLPI_LOG_DIR.'/fusioninventorycommunication.log',
                            "\n".time().' : '.$p_logs,
                            FILE_APPEND);
       }
@@ -250,11 +250,9 @@ class PluginFusioninventoryCommunication {
 
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $moduleRun = $PluginFusioninventoryTaskjobstatus->getTaskjobsAgent($agent_id);
-      foreach ($moduleRun as $itemtype => $array) {
-         $array_tmp = current($array);
-         $className = $array_tmp['className'];
+      foreach ($moduleRun as $className => $array) {
          $class = new $className();
-         $this->sxml = $class->Run($itemtype, $array);
+         $this->sxml = $class->Run($array);
       }
    }
 

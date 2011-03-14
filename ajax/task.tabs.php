@@ -54,10 +54,26 @@ $a_taskjob = $pftj->find("`plugin_fusioninventory_tasks_id`='".$_POST["id"]."'
 $i = 1;
 
 switch($_POST['glpi_tab']) {
-//   case -1 :
-//      $pfia->showFormAdvancedOptions($_POST["id"]);
-//      break;
-//
+   case -1 :
+      foreach($a_taskjob as $taskjob_id=>$datas) {
+         $pftj->showForm($taskjob_id);
+         $PluginFusioninventoryTaskjoblog->showHistory($taskjob_id);
+         $taskjob_id_next = $taskjob_id;
+         for ($j=2 ; $j > 1; $j++) {
+            $a_taskjobreties = $pftj->find("`rescheduled_taskjob_id`='".$taskjob_id_next."' ", "", 1);
+            if (!empty($a_taskjobreties)) {
+               foreach($a_taskjobreties as $taskjob_id_next=>$datas2) {
+                  $pftj->showForm($taskjob_id_next);
+                  $PluginFusioninventoryTaskjoblog->showHistory($taskjob_id_next);
+               }
+            } else {
+               $j = 0;
+            }
+         }
+         echo "<br/>";
+      }
+      break;
+
    case 1 :
 //      $pfia->showFormAdvancedOptions($_POST["id"]);
       break;

@@ -77,10 +77,10 @@ function plugin_init_fusioninventory() {
 
       if (isset($_SESSION["glpiID"])) {
 
-   //      if (haveRight("configuration", "r")) {// Config page
-   //      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "r")) {// Config page
-   //         $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/functionalities.form.php';
-   //      }
+         if (haveRight("configuration", "r") || haveRight("profile", "w")) {// Config page
+            $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/configuration.form.php?glpi_tab=1';
+         }
+
          $PLUGIN_HOOKS['use_massive_action']['fusioninventory']=1;
          $PLUGIN_HOOKS['pre_item_update']['fusioninventory'] = array('Plugin' =>'plugin_pre_item_update_fusioninventory');
    //      $PLUGIN_HOOKS['pre_item_delete']['fusioninventory'] = 'plugin_pre_item_delete_fusioninventory';
@@ -178,7 +178,7 @@ function plugin_init_fusioninventory() {
 
    // Add unknown devices in list of devices with networport
    $CFG_GLPI["netport_types"][] = "PluginFusioninventoryUnknownDevice";
-   $CFG_GLPI["state_types"][] = "PluginFusioninventoryUnknownDevice";
+   //$CFG_GLPI["state_types"][] = "PluginFusioninventoryUnknownDevice";
 
 }
 

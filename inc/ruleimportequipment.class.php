@@ -246,7 +246,9 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
 
    function findWithGlobalCriteria($input) {
       global $DB, $CFG_GLPI;
-logInFile("xxx", print_r($input, true));
+      if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+         logInFile("xxx", print_r($input, true));
+      }
       $complex_criterias = array();
       $sql_where         = '';
       $sql_from          = '';
@@ -297,11 +299,12 @@ logInFile("xxx", print_r($input, true));
       }
 
       //Build the request to check if the machine exists in GLPI
+      $where_entity = "";
       if (isset($input['entities_id'])) {
          if (is_array($input['entities_id'])) {
-            $where_entity = implode($input['entities_id'],',');
+            $where_entity .= implode($input['entities_id'],',');
          } else {
-            $where_entity = $input['entities_id'];
+            $where_entity .= $input['entities_id'];
          }
       }
 
@@ -330,6 +333,7 @@ logInFile("xxx", print_r($input, true));
                $itemtypeselected[] = $itemtype;
             }
          }
+         $itemtypeselected[] = "PluginFusioninventoryUnknownDevice";
       }
 
 
@@ -418,19 +422,22 @@ logInFile("xxx", print_r($input, true));
                break;
 
             case 'states_id':
+               $condition = "";
                if ($criteria->fields['condition'] == PluginFusioninventoryRule::PATTERN_IS) {
                   $condition = " IN ";
                } else {
-                  $conditin = " NOT IN ";
+                  $condition = " NOT IN ";
                }
                $sql_where .= " AND `[typetable]`.`states_id`
                                  $condition ('".$criteria->fields['pattern']."')";
                break;
 
             case 'uuid':
-               $sql_from_computer .= ' LEFT JOIN `glpi_plugin_fusinvinventory_computers`
-                                 ON `glpi_plugin_fusinvinventory_computers`.`items_id` = `[typetable]`.`id`';
-               $sql_where_computer .= ' AND `uuid`="'.$input['uuid'].'"';
+               if (TableExists("glpi_plugin_fusinvinventory_computers")) {
+                  $sql_from_computer .= ' LEFT JOIN `glpi_plugin_fusinvinventory_computers`
+                                    ON `glpi_plugin_fusinvinventory_computers`.`items_id` = `[typetable]`.`id`';
+                  $sql_where_computer .= ' AND `uuid`="'.$input['uuid'].'"';
+               }
                break;
 
          }
@@ -438,8 +445,12 @@ logInFile("xxx", print_r($input, true));
 
       // Suivant le / les types, on cherche dans un ou plusieurs / tous les types
       $found = 0;
-      logInFile("xxx", "===============\n");
+      if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+         logInFile("xxx", "===============\n");
+      }
       foreach ($itemtypeselected as $itemtype) {
+         $sql_from_temp = "";
+         $sql_where_temp = "";
          if ($itemtype == "NetworkEquipment") {
             $sql_from_temp = $sql_from_networkequipment;
             $sql_where_temp = $sql_where_networkequipment;
@@ -466,7 +477,9 @@ logInFile("xxx", print_r($input, true));
             }
             $sql_glpi = str_replace("[typetable]", $item->getTable(), $sql_glpi);
             $sql_glpi = str_replace("[typename]", $itemtype, $sql_glpi);
-            logInFile("xxx", $sql_glpi."\n");
+            if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+               logInFile("xxx", $sql_glpi."\n");
+            }
             $result_glpi = $DB->query($sql_glpi);
 
             if ($DB->numrows($result_glpi) > 0) {
@@ -484,7 +497,9 @@ logInFile("xxx", print_r($input, true));
          foreach ($this->actions as $action) {
             if ($action->fields['field'] == '_fusion') {
                if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_NO_IMPORT) {
-                  logInFile("xxx", "Return true because link or Import\n");
+                  if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+                     logInFile("xxx", "Return true because link or Import\n");
+                  }
                   return true;
                }
             }
@@ -507,11 +522,15 @@ logInFile("xxx", print_r($input, true));
          $classname = $_SESSION['plugin_fusioninventory_classrulepassed'];
          $class = new $classname();
       }
-      logInFile("xxx", "execute action\n");
+      if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+         logInFile("xxx", "execute action\n");
+      }
       if (count($this->actions)) {
          foreach ($this->actions as $action) {
             if ($action->fields['field'] == '_fusion') {
-                     logInFile("xxx", "value".$action->fields["value"]."\n");
+               if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+                  logInFile("xxx", "value".$action->fields["value"]."\n");
+               }
                if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_IMPORT) {
                   if (isset($this->criterias_results['found_equipment'])) {
                      foreach ($this->criterias_results['found_equipment'] as $itemtype=>$datas) {
@@ -533,7 +552,7 @@ logInFile("xxx", print_r($input, true));
                               $itemtype_found = 1;
                            }
                         }
-                     }                     
+                     }
                      if ($itemtype_found == "0") {
                         if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
                            $class->rulepassed("0", "PluginFusioninventoryUnknownDevice");
@@ -552,7 +571,7 @@ logInFile("xxx", print_r($input, true));
                      }
                   } else {
                      // no import
-                     $output['action'] = 1;
+                     $output['action'] = 2;
                   }
                }
 
