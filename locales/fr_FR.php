@@ -406,7 +406,13 @@ $LANG['plugin_fusinvsnmp']['stats'][0]="Compteur total";
 $LANG['plugin_fusinvsnmp']['stats'][1]="pages par jour";
 $LANG['plugin_fusinvsnmp']['stats'][2]="Affichage";
 
-$LANG['plugin_fusinvsnmp']["report"][0]="Nombre de jours depuis dernier inventaire";
-$LANG['plugin_fusinvsnmp']["report"][1]="Compteurs d'impression";
+$LANG['plugin_fusinvsnmp']['report'][0]="Nombre de jours depuis dernier inventaire";
+$LANG['plugin_fusinvsnmp']['report'][1]="Compteurs d'impression";
 
+$LANG['plugin_fusinvsnmp']['codetasklog'][1]="équipements inventoriés";
+$LANG['plugin_fusinvsnmp']['codetasklog'][2]="équipements découverts";
+$LANG['plugin_fusinvsnmp']['codetasklog'][3]="Dictionnaire trop vieux sur l'agent, demande postée par l'agent";
+
+$LANG['plugin_fusinvsnmp']['legend'][0]="Connexion avec un switch or un serveur en mode trunk ou taggé";
+$LANG['plugin_fusinvsnmp']['legend'][1]="Connexion autre (avec un ordinateur, une imprimante...)";
 ?>

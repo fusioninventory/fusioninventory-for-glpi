@@ -214,8 +214,7 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 
       $this->showFormButtons($options);
       $this->addDivForTabs();
-
-      }
+   }
 
 
    function checkip($a_input) {
@@ -256,14 +255,12 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
          $method = "snmpinventory";
       }
 
-      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
       $PluginFusioninventoryTask = new PluginFusioninventoryTask();
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
 
 
-      $permanent = exportArrayToDB(array($this->type=>$items_id, 'module'=>$module_name));
+      $permanent = exportArrayToDB(array($this->getType()=>$items_id, 'module'=>$module_name));
 
       $task_id = 0;
       $taskjob_id= 0;
@@ -291,7 +288,8 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
          }
          // Create task
          $input = array();
-         $input['name'] = $module_name." of IP Range (permanent)";
+         $this->getFromDB($items_id);
+         $input['name'] = $module_name." of IP Range (permanent) : ".$this->getName();
          $input['date_creation'] = date("Y-m-d H:i:s");
          $input['is_active'] = 0;
          $input['permanent'] = $permanent;

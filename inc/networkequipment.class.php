@@ -465,6 +465,43 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 		echo "</table>";
       echo "</form>";
 
+
+      // ***** IP list ***** //
+      echo "<table class='tab_cadre_fixe'>";
+
+		echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='8'>";
+      echo $LANG['networking'][14];
+      echo "</th>";
+      echo "</tr>";
+
+      $count = 0;
+      $PluginFusinvsnmpNetworkEquipmentIP = new PluginFusinvsnmpNetworkEquipmentIP();
+
+      $a_ip = $PluginFusinvsnmpNetworkEquipmentIP->getIP($id);
+      asort($a_ip);
+      foreach ($a_ip as $ip) {
+         if ($count == '0') {
+            echo "<tr class='tab_bg_1'>";
+         }
+         echo "<td width='118' align='center'>";
+         echo $ip;
+         echo "</td>";
+         $count++;
+         if ($count == "8") {
+            $count = 0;
+            echo "</tr>";
+         }
+      }
+      if ($count != "9") {
+         for ($i=$count; $i < 8; $i++) {
+            echo "<td>";
+            echo "</td>";
+         }
+         echo "</tr>";
+      }
+      echo "</table>";
+
       echo "<br/>";
 
 // ********************************************************************************************** //
@@ -491,6 +528,15 @@ function appear_array(id){
       'onClick=\'Effect.Appear(\"viewfollowup'+id+'\");close_array('+id+');\' />';
 }
 
+function close_legend(id){
+	document.getElementById('legendlink').innerHTML = '<a '+
+   ' onClick=\'Effect.Fade(\"legend\");appear_legend();\'>[ ".$LANG['plugin_fusioninventory']['functionalities'][6]." ]</a>';
+}
+function appear_legend(id){
+	document.getElementById('legendlink').innerHTML = '<a '+
+   ' onClick=\'Effect.Appear(\"legend\");close_legend();\'>[ ".$LANG['plugin_fusioninventory']['functionalities'][6]." ]</a>';
+}
+
 		</script>";
 
 		echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusioninventory/prototype.js'></script>";
@@ -514,9 +560,26 @@ function appear_array(id){
       if ($_SESSION["glpilanguage"] == "fr_FR") {
          $url_legend = "https://forge.indepnet.net/wiki/fusioninventory/Fr_VI_visualisationsdonnees_2_reseau";
       }
-      echo " <a href='".$url_legend."'>[ ".$LANG['plugin_fusioninventory']['functionalities'][6]." ]</a>";
+      echo "<a href='legend'></a>";
+      echo "<div id='legendlink'><a onClick='Effect.Appear(\"legend\");close_legend();'>[ ".$LANG['plugin_fusioninventory']['functionalities'][6]." ]</a></div>";
 		echo "</th>";
 		echo "</tr>";
+
+      // Display legend
+      echo "
+      <tr class='tab_bg_1' style='display: none;' id='legend'>
+         <td colspan='".(mysql_num_rows($result_array) + 2)."'>
+         <ul>
+            <li>".$LANG['plugin_fusinvsnmp']['legend'][0]."&nbsp;:</li>
+         </ul>
+         <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/port_trunk.png' width='750' />
+         <ul>
+            <li>".$LANG['plugin_fusinvsnmp']['legend'][1]."&nbsp;:</li>
+         </ul>
+         <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/connected_trunk.png' width='750' />
+         </td>
+      </tr>";
+
 
 		echo "<tr class='tab_bg_1'>";
 
@@ -736,6 +799,9 @@ function appear_array(id){
                            if (!empty($link2)) {
                               echo "<br/>".$link2;
                            }
+                           if ($item->getField("hub") == "1") {
+                              $this->displayHubConnections($data_device["items_id"], $background_img);
+                           }
                            echo "</td>";
                         } else {
 									echo "<td>".$link1;
@@ -845,6 +911,48 @@ function appear_array(id){
       return $size;
    }
 
+
+   function displayHubConnections($items_id, $background_img){
+
+      $NetworkPort = new NetworkPort();
+      
+      $a_ports = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
+                                    AND `items_id`='".$items_id."'");
+      echo "<table width='100%' class='tab_cadre' cellpadding='5'>";
+      foreach ($a_ports as $a_port) {
+         if ($a_port['name'] != "Link") {
+            if ($id = $NetworkPort->getContact($a_port['id'])) {
+               $NetworkPort->getFromDB($id);
+               if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+                  $classname = $NetworkPort->fields['itemtype'];
+                  $Class = new $classname;
+                  $Class->getFromDB($NetworkPort->fields['items_id']);
+                  if ($Class->fields['accepted'] == 1) {
+                     echo "<tr>";
+                     echo "<td style='background:#bfec75'
+                                              class='tab_bg_1_2'>".$Class->getLink(1)."</td>";
+                     echo "</tr>";
+                  } else {
+                     echo "<tr>";
+                     echo "<td style='background:#cf9b9b'
+                                              class='tab_bg_1_2'>".$Class->getLink(1)."</td>";
+                     echo "</tr>";
+                  }
+               } else {
+                  $classname = $NetworkPort->fields['itemtype'];
+                  $Class = new $classname;
+                  $Class->getFromDB($NetworkPort->fields['items_id']);
+                  echo "<tr>";
+                  echo "<td ".$background_img."
+                                           class='tab_bg_1_2'>".$Class->getLink(1)."</td>";
+                  echo "</tr>";
+
+               }
+            }
+         }
+      }
+      echo "</table>";
+   }
 }
 
 ?>

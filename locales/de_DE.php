@@ -41,7 +41,7 @@ $LANG['plugin_fusinvsnmp']['title'][2]="Verbindungs-Historie";
 $LANG['plugin_fusinvsnmp']['title'][5]="FusionInventory-Sperrungen";
 $LANG['plugin_fusinvsnmp']['title'][6]="SNMP";
 
-$LANG['plugin_fusinvsnmp']['config'][3] = "Inventar";
+$LANG['plugin_fusinvsnmp']['config'][3] = "Inventar SNMP";
 $LANG['plugin_fusinvsnmp']['config'][4] = "Verlauf Geräte";
 $LANG['plugin_fusinvsnmp']['config'][8] = "Nie";
 $LANG['plugin_fusinvsnmp']['config'][9] = "Immer";
@@ -415,6 +415,13 @@ $LANG['plugin_fusinvsnmp']['stats'][0]="Total counter";
 $LANG['plugin_fusinvsnmp']['stats'][1]="Seiten/Tag";
 $LANG['plugin_fusinvsnmp']['stats'][2]="Display";
 
-$LANG['plugin_fusinvsnmp']["report"][0]="Anzahl Tage seite der letzten Inventarisierung";
-$LANG['plugin_fusinvsnmp']["report"][1]="Seitenzähler";
+$LANG['plugin_fusinvsnmp']['report'][0]="Anzahl Tage seite der letzten Inventarisierung";
+$LANG['plugin_fusinvsnmp']['report'][1]="Seitenzähler";
+
+$LANG['plugin_fusinvsnmp']['codetasklog'][1]="devices queried";
+$LANG['plugin_fusinvsnmp']['codetasklog'][2]="devices found";
+$LANG['plugin_fusinvsnmp']['codetasklog'][3]="Dico too old on agent, request posted by agent";
+
+$LANG['plugin_fusinvsnmp']['legend'][0]="Connection with a switch or a server in trunk or tagged mode";
+$LANG['plugin_fusinvsnmp']['legend'][1]="Other connections (with a computer, a printer...)";
 ?>
