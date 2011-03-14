@@ -50,7 +50,8 @@ class PluginFusioninventoryStaticmisc {
 
       $a_tasks = array();
       $a_tasks[] = array('module'               => 'fusioninventory',
-                         'method'               => 'wakeonlan');
+                         'method'               => 'wakeonlan',
+                         'name'                 => $LANG['plugin_fusioninventory']['profile'][5]);
 
       return $a_tasks;
    }
