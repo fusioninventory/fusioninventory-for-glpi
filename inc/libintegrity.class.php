@@ -183,6 +183,49 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
 
                }
             }
+            if ($split[1] < 0) {
+               switch ($split[0]) {
+
+                  case 'MONITORS':
+                     // Monitors must be created  but not created (in case
+                     // of changes configuration of monitor import)
+                     $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+                     if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                             "import_monitor") == '3') { //Import on serial number
+
+                        $unserializedsection = unserialize($section);
+                        if (isset($unserializedsection['SERIAL'])
+                                AND !empty($unserializedsection['SERIAL'])) {
+
+                           // Search in DB if exist
+                           $query_monitor = "SELECT * FROM `glpi_computers_items`
+                              LEFT JOIN `glpi_monitors` on `glpi_monitors`.`id`=`items_id`
+                              WHERE `computers_id`='".$computer_id."'
+                                 AND `itemtype`='monitor'";
+                           if ($result_monitor = $DB->query($query_monitor)) {
+                              if ($DB->numrows($result_monitor) == 0) {
+                                 $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['help'][28]);
+                              }
+                           }
+                        }
+                     } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                             "import_monitor") == '2') { //Import on serial number
+
+                        // Search in DB if exist
+                        $query_monitor = "SELECT * FROM `glpi_computers_items`
+                           LEFT JOIN `glpi_monitors` on `glpi_monitors`.`id`=`items_id`
+                           WHERE `computers_id`='".$computer_id."'
+                              AND `itemtype`='monitor'";
+                        if ($result_monitor = $DB->query($query_monitor)) {
+                           if ($DB->numrows($result_monitor) == 0) {
+                              $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['help'][28]);
+                           }
+                        }
+                     }
+                     break;
+
+               }
+            }
          }
          if ($text != '') {
 
