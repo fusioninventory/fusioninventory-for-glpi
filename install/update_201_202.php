@@ -36,7 +36,7 @@
 function update201to202() {
    global $DB;
 
-   $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_tracker-2.0.2-update";
+   $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_tracker-2.0.2-update.sql";
    $DBf_handle = fopen($DB_file, "rt");
    $sql_query = fread($DBf_handle, filesize($DB_file));
    fclose($DBf_handle);

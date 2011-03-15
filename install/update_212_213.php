@@ -34,7 +34,7 @@
 
 // Update from 2.1.2 to 2.1.3
 function update212to213() {
-   global $DB;
+   global $DB,$LANG;
 
    echo "<strong>Update 2.1.2 to 2.1.3</strong><br/>";
    echo "</td>";
