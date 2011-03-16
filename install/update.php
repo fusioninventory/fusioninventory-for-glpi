@@ -51,7 +51,7 @@ function pluginFusioninventoryGetCurrentVersion($version) {
       if (((TableExists("glpi_plugin_tracker_agents")) &&
            (!FieldExists("glpi_plugin_tracker_config", "version"))) &&
          (!TableExists("glpi_plugin_fusioninventory_config"))) {
-         return "2.0.2";
+         return "2.0.1";
       }
       if (((TableExists("glpi_plugin_tracker_agents")) &&
            (FieldExists("glpi_plugin_tracker_config", "version"))) ||

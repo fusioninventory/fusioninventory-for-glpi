@@ -34,24 +34,72 @@
 
 // Update from 2.1.0 to 2.1.1
 function update210to211() {
-   global $DB;
+   global $DB,$LANG;
 
-   $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_tracker-2.1.1-update.sql";
-   $DBf_handle = fopen($DB_file, "rt");
-   $sql_query = fread($DBf_handle, filesize($DB_file));
-   fclose($DBf_handle);
-   foreach ( explode(";\n", "$sql_query") as $sql_line) {
-      if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
-      if (!empty($sql_line)) {
-         $DB->query($sql_line);
-      }
+   echo "<strong>Update 2.1.0 to 2.1.1</strong><br/>";
+   echo "</td>";
+   echo "</tr>";
+
+   echo "<tr class='tab_bg_1'>";
+   echo "<td align='center'>";
+
+   plugin_fusioninventory_displayMigrationMessage("211"); // Start
+
+   plugin_fusioninventory_displayMigrationMessage("211", $LANG['update'][141]); // Updating schema
+
+
+   if (!isIndex("glpi_plugin_tracker_tmp_netports", "cdp")) {
+      $sql = "ALTER TABLE `glpi_plugin_tracker_tmp_netports`
+         ADD INDEX (`cdp`)";
+      $DB->query($sql);
+   }
+   if (!isIndex("glpi_plugin_tracker_tmp_netports", "FK_networking")) {
+      $sql = "ALTER TABLE `glpi_plugin_tracker_tmp_netports`
+         ADD INDEX `FK_networking` ( `FK_networking` , `FK_networking_port` )";
+      $DB->query($sql);
+   }
+   if (!isIndex("glpi_plugin_tracker_model_infos", "device_type")) {
+      $sql = "ALTER TABLE `glpi_plugin_tracker_model_infos`
+         ADD INDEX (`device_type`)";
+      $DB->query($sql);
+   }
+   if (!isIndex("glpi_plugin_tracker_snmp_connection", "FK_snmp_version")) {
+      $sql = "ALTER TABLE `glpi_plugin_tracker_snmp_connection`
+         ADD INDEX (`FK_snmp_version`)";
+      $DB->query($sql);
+   }
+   if (!isIndex("glpi_plugin_tracker_printers", "FK_snmp_connection")) {
+      $sql = "ALTER TABLE `glpi_plugin_tracker_printers`
+         ADD INDEX (`FK_snmp_connection`)";
+      $DB->query($sql);
+   }
+   if (!isIndex("glpi_plugin_tracker_tmp_connections", "macaddress")) {
+      $sql = "ALTER TABLE `glpi_plugin_tracker_tmp_connections`
+         ADD INDEX (`macaddress`)";
+      $DB->query($sql);
+   }
+   if (!TableExists("glpi_plugin_tracker_config_snmp_history")) {
+      $sql = "CREATE TABLE `glpi_plugin_tracker_config_snmp_history` (
+         `id` INT( 8 ) NOT NULL AUTO_INCREMENT ,
+         `field` VARCHAR( 255 ) NOT NULL ,
+         PRIMARY KEY ( `id` ) ,
+         INDEX ( `field` )
+      ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+      $DB->query($sql);
    }
 
    $DB->query("UPDATE `glpi_plugin_tracker_config`
                SET `version` = '2.1.1'
-               WHERE `id`=1
+               WHERE `ID`=1
                LIMIT 1 ;");
 
+   plugin_fusioninventory_displayMigrationMessage("211"); // End
+
+   echo "</td>";
+   echo "</tr>";
+
+   echo "<tr class='tab_bg_1'>";
+   echo "<td align='center'>";
 }
 
 ?>

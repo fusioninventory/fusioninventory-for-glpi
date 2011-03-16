@@ -99,13 +99,13 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 		$tab[6]['table']     = $this->getTable();
 		$tab[6]['field']     = 'contact';
 		$tab[6]['linkfield'] = 'contact';
-		$tab[6]['name']      = 'contact';
+		$tab[6]['name']      = $LANG['common'][92];
 		$tab[6]['datatype']  = 'text';
 
 		$tab[7]['table']     = $this->getTable();
 		$tab[7]['field']     = 'hub';
 		$tab[7]['linkfield'] = 'hub';
-		$tab[7]['name']      ='hub';
+		$tab[7]['name']      = $LANG['plugin_fusioninventory']['unknown'][4];
 		$tab[7]['datatype']  = 'bool';
 
       $tab[8]['table']     = 'glpi_entities';

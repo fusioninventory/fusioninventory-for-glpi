@@ -102,7 +102,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $tab[5]['table']          = $this->getTable();
       $tab[5]['field']          = 'status';
       $tab[5]['linkfield']      = '';
-      $tab[5]['name']           = 'status';
+      $tab[5]['name']           = $LANG['state'][0];
 
       $tab[6]['table']          = $this->getTable();
       $tab[6]['field']          = 'id';

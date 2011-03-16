@@ -34,8 +34,8 @@
 
 // Update from 2.1.2 to 2.1.3
 function update212to213() {
-   global $DB;
-
+   global $DB,$LANG;
+   
    echo "<strong>Update 2.1.2 to 2.1.3</strong><br/>";
    echo "</td>";
    echo "</tr>";
@@ -49,7 +49,7 @@ function update212to213() {
 
    $DB->query("UPDATE `glpi_plugin_tracker_config`
                SET `version` = '2.1.3'
-               WHERE `id`=1
+               WHERE `ID`=1
                LIMIT 1 ;");
 
    plugin_fusioninventory_displayMigrationMessage("213"); // End
