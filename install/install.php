@@ -105,6 +105,73 @@ function pluginFusinvinventoryInstall() {
       $PluginFusinvinventoryConfig = new PluginFusinvinventoryConfig();
       $PluginFusinvinventoryConfig->initConfigModule();
 
+      // Récupérer la config des entités des regles OCS
+      if (!class_exists('PluginFusinvinventoryRuleEntityCollection')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusinvinventory/inc/ruleentitycollection.class.php");
+      }
+      if (!class_exists('PluginFusinvinventoryRuleEntity')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusinvinventory/inc/rruleentity.class.php");
+      }
+      $Rule = new Rule();
+      $RuleCriteria = new RuleCriteria();
+      $RuleAction = new RuleAction();
+
+      $a_rules = $Rule->find("`sub_type`='RuleOcs'", "`ranking`");
+      foreach($a_rules as $data) {
+         $rulecollection = new PluginFusinvinventoryRuleEntityCollection();
+         $input = $data;
+         unset($input['id']);
+         $input['sub_type'] = 'PluginFusinvinventoryRuleEntity';
+         $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $a_criteria = $RuleCriteria->find("`rules_id`='".$data['id']."'");
+         foreach ($a_criteria as $datacrit) {
+            $input = $datacrit;
+            unset($input['id']);
+            switch ($input['criteria']) {
+
+                  case 'IPADDRESS':
+                     $input['criteria'] = 'ip';
+                     break;
+
+                  case 'TAG':
+                     $input['criteria'] = 'tag';
+                     break;
+
+                  case 'DOMAIN':
+                     $input['criteria'] = 'domain';
+                     break;
+
+                  case 'IPSUBNET':
+                     $input['criteria'] = 'subnet';
+                     break;
+
+                  case 'SSN':
+                     $input['criteria'] = 'serial';
+                     break;
+
+            }
+
+            $input['rules_id'] = $rule_id;
+            $rulecriteria->add($input);
+         }
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $a_rules = $RuleAction->find("`rules_id`='".$data['id']."'");
+         foreach ($a_rules as $dataaction) {
+            $input = $dataaction;
+            unset($input['id']);
+            if ($input['field'] == '_ignore_ocs_import') {
+               $input['field'] = "_ignore_import";
+            }
+            $input['rules_id'] = $rule_id;
+            $ruleaction->add($input);
+         }
+      }
    }
 }
 
