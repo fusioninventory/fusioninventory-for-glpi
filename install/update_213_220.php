@@ -419,183 +419,185 @@ function update213to220_ConvertField() {
    $constantsfield['networking > location'] = 'location';
    $constantsfield['Netzwerk > Standort'] = 'location';
 
-   $constantsfield['rÃ©seaux > firmware'] = 'firmware';
+   $constantsfield['réseaux > firmware'] = 'firmware';
    $constantsfield['networking > firmware'] = 'firmware';
    $constantsfield['Netzwerk > Firmware'] = 'firmware';
    
-   $constantsfield['rÃ©seaux > firmware'] = 'firmware1';
+   $constantsfield['réseaux > firmware'] = 'firmware1';
    $constantsfield['networking > firmware'] = 'firmware1';
    $constantsfield['Netzwerk > Firmware'] = 'firmware1';
 
-   $constantsfield['rÃ©seaux > firmware'] = 'firmware2';
+   $constantsfield['réseaux > firmware'] = 'firmware2';
    $constantsfield['networking > firmware'] = 'firmware2';
    $constantsfield['Netzwerk > Firmware'] = 'firmware2';
 
-   $constantsfield['rÃ©seaux > contact'] = 'contact';
+   $constantsfield['réseaux > contact'] = 'contact';
    $constantsfield['networking > contact'] = 'contact';
    $constantsfield['Netzwerk > Kontakt'] = 'contact';
    
-   $constantsfield['rÃ©seaux > description'] = 'comments';
+   $constantsfield['réseaux > description'] = 'comments';
    $constantsfield['networking > comments'] = 'comments';
    $constantsfield['Netzwerk > Kommentar'] = 'comments';
 
-   $constantsfield['rÃ©seaux > uptime'] = 'uptime';
+   $constantsfield['réseaux > uptime'] = 'uptime';
    $constantsfield['networking > uptime'] = 'uptime';
    $constantsfield['Netzwerk > Uptime'] = 'uptime';
 
-   $constantsfield['rÃ©seaux > utilisation du CPU'] = 'cpu';
+   $constantsfield['réseaux > utilisation du CPU'] = 'cpu';
    $constantsfield['networking > CPU usage'] = 'cpu';
    $constantsfield['Netzwerk > CPU Auslastung'] = 'cpu';
 
-   $constantsfield['rÃ©seaux > CPU user'] = 'cpuuser';
+   $constantsfield['réseaux > CPU user'] = 'cpuuser';
    $constantsfield['networking > CPU usage (user)'] = 'cpuuser';
    $constantsfield['Netzwerk > CPU Benutzer'] = 'cpuuser';
 
-   $constantsfield['rÃ©seaux > CPU systÃ¨me'] = 'cpusystem';
+   $constantsfield['réseaux > CPU système'] = 'cpusystem';
    $constantsfield['networking > CPU usage (system)'] = 'cpusystem';
    $constantsfield['Netzwerk > CPU System'] = 'cpusystem';
 
-   $constantsfield['rÃ©seaux > numÃ©ro de sÃ©rie'] = 'serial';
+   $constantsfield['réseaux > numéro de série'] = 'serial';
    $constantsfield['networking > serial number'] = 'serial';
    $constantsfield['Netzwerk > Seriennummer'] = 'serial';
 
-   $constantsfield['rÃ©seaux > numÃ©ro d\'inventaire'] = 'otherserial';
+   $constantsfield['réseaux > numéro d\'inventaire'] = 'otherserial';
    $constantsfield['networking > Inventory number'] = 'otherserial';
    $constantsfield['Netzwerk > Inventarnummer'] = 'otherserial';
 
-   $constantsfield['rÃ©seaux > nom'] = 'name';
+   $constantsfield['réseaux > nom'] = 'name';
    $constantsfield['networking > name'] = 'name';
    $constantsfield['Netzwerk > Name'] = 'name';
 
-   $constantsfield['rÃ©seaux > mÃ©moire totale'] = 'ram';
+   $constantsfield['réseaux > mémoire totale'] = 'ram';
    $constantsfield['networking > total memory'] = 'ram';
    $constantsfield['Netzwerk > Gesamter Speicher'] = 'ram';
 
-   $constantsfield['rÃ©seaux > mÃ©moire libre'] = 'memory';
+   $constantsfield['réseaux > mémoire libre'] = 'memory';
    $constantsfield['networking > free memory'] = 'memory';
    $constantsfield['Netzwerk > Freier Speicher'] = 'memory';
 
-   $constantsfield['rÃ©seaux > VLAN'] = 'vtpVlanName';
+   $constantsfield['réseaux > VLAN'] = 'vtpVlanName';
    $constantsfield['networking > VLAN'] = 'vtpVlanName';
    $constantsfield['Netzwerk > VLAN'] = 'vtpVlanName';
 
-   $constantsfield['rÃ©seaux > port > vlan'] = 'vmvlan';
+   $constantsfield['réseaux > port > vlan'] = 'vmvlan';
    $constantsfield['networking > port > vlan'] = 'vmvlan';
 
-   $constantsfield['rÃ©seaux > modÃ¨le'] = 'entPhysicalModelName';
+   $constantsfield['réseaux > modèle'] = 'entPhysicalModelName';
    $constantsfield['networking > model'] = 'entPhysicalModelName';
    $constantsfield['Netzwerk > Modell'] = 'entPhysicalModelName';
 
-   $constantsfield['rÃ©seaux > adresse MAC'] = 'macaddr';
+   $constantsfield['réseaux > adresse MAC'] = 'macaddr';
    $constantsfield['networking > MAC address'] = 'macaddr';
    $constantsfield['Netzwerk > MAC Adresse'] = 'macaddr';
 
-   $constantsfield['rÃ©seaux > Adresse CDP'] = 'cdpCacheAddress';
+   $constantsfield['réseaux > Adresse CDP'] = 'cdpCacheAddress';
    $constantsfield['networking > CDP address'] = 'cdpCacheAddress';
    $constantsfield['Netzwerk > Adresse CDP'] = 'cdpCacheAddress';
 
-   $constantsfield['rÃ©seaux > port CDP'] = 'cdpCacheDevicePort';
+   $constantsfield['réseaux > port CDP'] = 'cdpCacheDevicePort';
    $constantsfield['networking > CDP port'] = 'cdpCacheDevicePort';
    $constantsfield['Netzwerk > Port CDP'] = 'cdpCacheDevicePort';
 
-   $constantsfield['rÃ©seaux > chassis id distant LLDP'] = 'lldpRemChassisId';
+   $constantsfield['réseaux > chassis id distant LLDP'] = 'lldpRemChassisId';
    $constantsfield['networking > remote chassis id LLDP'] = 'lldpRemChassisId';
 
-   $constantsfield['rÃ©seaux > port distant LLDP'] = 'lldpRemPortId';
+   $constantsfield['réseaux > port distant LLDP'] = 'lldpRemPortId';
    $constantsfield['networking > remote port LLDP'] = 'lldpRemPortId';
 
-   $constantsfield['rÃ©seaux > chassis id local LLDP'] = 'lldpLocChassisId';
+   $constantsfield['réseaux > chassis id local LLDP'] = 'lldpLocChassisId';
    $constantsfield['networking > localchassis id LLDP'] = 'lldpLocChassisId';
 
-   $constantsfield['rÃ©seaux > port > trunk/tagged'] = 'vlanTrunkPortDynamicStatus';
+   $constantsfield['réseaux > port > trunk/tagged'] = 'vlanTrunkPortDynamicStatus';
    $constantsfield['networking > port > trunk/tagged'] = 'vlanTrunkPortDynamicStatus';
    $constantsfield['Netzwerk > Port > trunk/tagged'] = 'vlanTrunkPortDynamicStatus';
 
-   $constantsfield['rÃ©seaux > Adresses mac filtrÃ©es (dot1dTpFdbAddress)'] = 'dot1dTpFdbAddress';
+   $constantsfield['trunk'] = 'vlanTrunkPortDynamicStatus';
+
+   $constantsfield['réseaux > Adresses mac filtrées (dot1dTpFdbAddress)'] = 'dot1dTpFdbAddress';
    $constantsfield['networking > MAC address filters (dot1dTpFdbAddress)'] = 'dot1dTpFdbAddress';
    $constantsfield['Netzwerk > MAC Adressen Filter (dot1dTpFdbAddress)'] = 'dot1dTpFdbAddress';
 
-   $constantsfield['rÃ©seaux > adresses physiques mÃ©morisÃ©es (ipNetToMediaPhysAddress)'] = 'ipNetToMediaPhysAddress';
+   $constantsfield['réseaux > adresses physiques mémorisées (ipNetToMediaPhysAddress)'] = 'ipNetToMediaPhysAddress';
    $constantsfield['networking > Physical addresses in memory (ipNetToMediaPhysAddress)'] = 'ipNetToMediaPhysAddress';
    $constantsfield['Netzwerk > Physikalische Adressen im Speicher (ipNetToMediaPhysAddress)'] = 'ipNetToMediaPhysAddress';
 
-   $constantsfield['rÃ©seaux > instances de ports (dot1dTpFdbPort)'] = 'dot1dTpFdbPort';
+   $constantsfield['réseaux > instances de ports (dot1dTpFdbPort)'] = 'dot1dTpFdbPort';
    $constantsfield['networking > Port instances (dot1dTpFdbPort)'] = 'dot1dTpFdbPort';
    $constantsfield['Netzwerk > Instanzen des Ports (dot1dTpFdbPort)'] = 'dot1dTpFdbPort';
 
-   $constantsfield['rÃ©seaux > numÃ©ro de ports associÃ© ID du port (dot1dBasePortIfIndex)'] = 'dot1dBasePortIfIndex';
+   $constantsfield['réseaux > numéro de ports associé ID du port (dot1dBasePortIfIndex)'] = 'dot1dBasePortIfIndex';
    $constantsfield['networking > Port number associated with port ID (dot1dBasePortIfIndex)'] = 'dot1dBasePortIfIndex';
    $constantsfield['Netzwerk > Verkn&uuml;pfung der Portnummerierung mit der ID des Ports (dot1dBasePortIfIndex)'] = 'dot1dBasePortIfIndex';
 
-   $constantsfield['rÃ©seaux > addresses IP'] = 'ipAdEntAddr';
+   $constantsfield['réseaux > addresses IP'] = 'ipAdEntAddr';
    $constantsfield['networking > IP addresses'] = 'ipAdEntAddr';
    $constantsfield['Netzwerk > IP Adressen'] = 'ipAdEntAddr';
 
-   $constantsfield['rÃ©seaux > portVlanIndex'] = 'PortVlanIndex';
+   $constantsfield['réseaux > portVlanIndex'] = 'PortVlanIndex';
    $constantsfield['networking > portVlanIndex'] = 'PortVlanIndex';
    $constantsfield['Netzwerk > portVlanIndex'] = 'PortVlanIndex';
 
-   $constantsfield['rÃ©seaux > port > numÃ©ro index'] = 'ifIndex';
+   $constantsfield['réseaux > port > numéro index'] = 'ifIndex';
    $constantsfield['networking > port > index number'] = 'ifIndex';
    $constantsfield['Netzwerk > Port > Nummerischer Index'] = 'ifIndex';
 
-   $constantsfield['rÃ©seaux > port > mtu'] = 'ifmtu';
+   $constantsfield['réseaux > port > mtu'] = 'ifmtu';
    $constantsfield['networking > port > mtu'] = 'ifmtu';
    $constantsfield['Netzwerk > Port > MTU'] = 'ifmtu';
 
-   $constantsfield['rÃ©seaux > port > vitesse'] = 'ifspeed';
+   $constantsfield['réseaux > port > vitesse'] = 'ifspeed';
    $constantsfield['networking > port > speed'] = 'ifspeed';
    $constantsfield['Netzwerk > Port > Geschwindigkeit'] = 'ifspeed';
 
-   $constantsfield['rÃ©seaux > port > statut interne'] = 'ifinternalstatus';
+   $constantsfield['réseaux > port > statut interne'] = 'ifinternalstatus';
    $constantsfield['networking > port > internal status'] = 'ifinternalstatus';
    $constantsfield['Netzwerk > Port > Interner Zustand'] = 'ifinternalstatus';
 
-   $constantsfield['rÃ©seaux > port > Dernier changement'] = 'iflastchange';
+   $constantsfield['réseaux > port > Dernier changement'] = 'iflastchange';
    $constantsfield['networking > ports > Last change'] = 'iflastchange';
    $constantsfield['Netzwerk > Ports > Letzte &Auml;nderung'] = 'iflastchange';
 
-   $constantsfield['rÃ©seaux > port > nombre d\'octets entrÃ©s'] = 'ifinoctets';
+   $constantsfield['réseaux > port > nombre d\'octets entrés'] = 'ifinoctets';
    $constantsfield['networking > port > number of bytes in'] = 'ifinoctets';
    $constantsfield['Netzwerk > Port > Anzahl eingegangene Bytes'] = 'ifinoctets';
 
-   $constantsfield['rÃ©seaux > port > nombre d\'octets sortis'] = 'ifoutoctets';
+   $constantsfield['réseaux > port > nombre d\'octets sortis'] = 'ifoutoctets';
    $constantsfield['networking > port > number of bytes out'] = 'ifoutoctets';
    $constantsfield['Netzwerk > Port > Anzahl ausgehende Bytes'] = 'ifoutoctets';
 
-   $constantsfield['rÃ©seaux > port > nombre d\'erreurs entrÃ©es'] = 'ifinerrors';
+   $constantsfield['réseaux > port > nombre d\'erreurs entrées'] = 'ifinerrors';
    $constantsfield['networking > port > number of input errors'] = 'ifinerrors';
    $constantsfield['Netzwerk > Port > Anzahl Input Fehler'] = 'ifinerrors';
 
-   $constantsfield['rÃ©seaux > port > nombre d\'erreurs sorties'] = 'ifouterrors';
+   $constantsfield['réseaux > port > nombre d\'erreurs sorties'] = 'ifouterrors';
    $constantsfield['networking > port > number of output errors'] = 'ifouterrors';
    $constantsfield['Netzwerk > Port > Anzahl Fehler Ausgehend'] = 'ifouterrors';
 
-   $constantsfield['rÃ©seaux > port > statut de la connexion'] = 'ifstatus';
+   $constantsfield['réseaux > port > statut de la connexion'] = 'ifstatus';
    $constantsfield['networking > port > connection status'] = 'ifstatus';
    $constantsfield['Netzwerk > Port > Verbingungszustand'] = 'ifstatus';
 
-   $constantsfield['rÃ©seaux > port > adresse MAC'] = 'ifPhysAddress';
+   $constantsfield['réseaux > port > adresse MAC'] = 'ifPhysAddress';
    $constantsfield['networking > port > MAC address'] = 'ifPhysAddress';
    $constantsfield['Netzwerk > Port > MAC Adresse'] = 'ifPhysAddress';
 
-   $constantsfield['rÃ©seaux > port > nom'] = 'ifName';
+   $constantsfield['réseaux > port > nom'] = 'ifName';
    $constantsfield['networking > port > name'] = 'ifName';
    $constantsfield['Netzwerk > Port > Name'] = 'ifName';
 
-   $constantsfield['rÃ©seaux > port > type'] = 'ifType';
+   $constantsfield['réseaux > port > type'] = 'ifType';
    $constantsfield['networking > ports > type'] = 'ifType';
    $constantsfield['Netzwerk > Ports > Typ'] = 'ifType';
 
-   $constantsfield['rÃ©seaux > port > description du port'] = 'ifdescr';
+   $constantsfield['réseaux > port > description du port'] = 'ifdescr';
    $constantsfield['networking > port > port description'] = 'ifdescr';
    $constantsfield['Netzwerk > Port > Port Bezeichnung'] = 'ifdescr';
 
-   $constantsfield['rÃ©seaux > port > type de duplex'] = 'portDuplex';
+   $constantsfield['réseaux > port > type de duplex'] = 'portDuplex';
    $constantsfield['networking > port > duplex type'] = 'portDuplex';
    $constantsfield['Netzwerk > Port > Duplex Typ'] = 'portDuplex';
 
-   $constantsfield['imprimante > modÃ¨le'] = 'model';
+   $constantsfield['imprimante > modèle'] = 'model';
    $constantsfield['printer > model'] = 'model';
    $constantsfield['Drucker > Modell'] = 'model';
 
@@ -603,7 +605,7 @@ function update213to220_ConvertField() {
    $constantsfield['printer > manufacturer'] = 'enterprise';
    $constantsfield['Drucker > Hersteller'] = 'enterprise';
 
-   $constantsfield['imprimante > numÃ©ro de sÃ©rie'] = 'serial';
+   $constantsfield['imprimante > numéro de série'] = 'serial';
    $constantsfield['printer > serial number'] = 'serial';
    $constantsfield['Drucker > Seriennummer'] = 'serial';
 
@@ -619,11 +621,11 @@ function update213to220_ConvertField() {
    $constantsfield['printer > name'] = 'name';
    $constantsfield['Drucker > Name'] = 'name';
 
-   $constantsfield['imprimante > numÃ©ro d\'inventaire'] = 'otherserial';
+   $constantsfield['imprimante > numéro d\'inventaire'] = 'otherserial';
    $constantsfield['printer > Inventory number'] = 'otherserial';
    $constantsfield['Drucker > Inventarnummer'] = 'otherserial';
 
-   $constantsfield['imprimante > mÃ©moire totale'] = 'memory';
+   $constantsfield['imprimante > mémoire totale'] = 'memory';
    $constantsfield['printer > total memory'] = 'memory';
    $constantsfield['Drucker > Gesamter Speicher'] = 'memory';
 
@@ -631,7 +633,7 @@ function update213to220_ConvertField() {
    $constantsfield['printer > location'] = 'location';
    $constantsfield['Drucker > Standort'] = 'location';
 
-   $constantsfield['Informations diverses regroupÃ©es'] = 'informations';
+   $constantsfield['Informations diverses regroupées'] = 'informations';
    $constantsfield['Many informations grouped'] = 'informations';
    $constantsfield['Many informations grouped'] = 'informations';
 
@@ -641,7 +643,7 @@ function update213to220_ConvertField() {
    $constantsfield['Toner Noir Max'] = 'tonerblackmax';
    $constantsfield['Black toner Max'] = 'tonerblackmax';
 
-   $constantsfield['Toner Noir UtilisÃ©'] = 'tonerblackused';
+   $constantsfield['Toner Noir Utilisé'] = 'tonerblackused';
 
    $constantsfield['Toner Noir Restant'] = 'tonerblackremaining';
 
@@ -651,7 +653,7 @@ function update213to220_ConvertField() {
    $constantsfield['Toner Noir Max'] = 'tonerblack2max';
    $constantsfield['Black toner Max'] = 'tonerblack2max';
 
-   $constantsfield['Toner Noir UtilisÃ©'] = 'tonerblack2used';
+   $constantsfield['Toner Noir Utilisé'] = 'tonerblack2used';
 
    $constantsfield['Toner Noir Restant'] = 'tonerblack2remaining';
 
@@ -661,7 +663,7 @@ function update213to220_ConvertField() {
    $constantsfield['Toner Cyan Max'] = 'tonercyanmax';
    $constantsfield['Cyan toner Max'] = 'tonercyanmax';
 
-   $constantsfield['Toner Cyan UtilisÃ©'] = 'tonercyanused';
+   $constantsfield['Toner Cyan Utilisé'] = 'tonercyanused';
 
    $constantsfield['Toner Cyan Restant'] = 'tonercyanremaining';
 
@@ -671,8 +673,8 @@ function update213to220_ConvertField() {
    $constantsfield['Toner Magenta Max'] = 'tonermagentamax';
    $constantsfield['Magenta toner Max'] = 'tonermagentamax';
 
-   $constantsfield['Toner Magenta UtilisÃ©'] = 'tonermagentaused';
-   $constantsfield['Magenta toner UtilisÃ©'] = 'tonermagentaused';
+   $constantsfield['Toner Magenta Utilisé'] = 'tonermagentaused';
+   $constantsfield['Magenta toner Utilisé'] = 'tonermagentaused';
 
    $constantsfield['Toner Magenta Restant'] = 'tonermagentaremaining';
    $constantsfield['Magenta toner Restant'] = 'tonermagentaremaining';
@@ -683,23 +685,23 @@ function update213to220_ConvertField() {
    $constantsfield['Toner Jaune Max'] = 'toneryellowmax';
    $constantsfield['Yellow toner Max'] = 'toneryellowmax';
 
-   $constantsfield['Toner Jaune UtilisÃ©'] = 'toneryellowused';
-   $constantsfield['Yellow toner UtilisÃ©'] = 'toneryellowused';
+   $constantsfield['Toner Jaune Utilisé'] = 'toneryellowused';
+   $constantsfield['Yellow toner Utilisé'] = 'toneryellowused';
 
    $constantsfield['Toner Jaune Restant'] = 'toneryellowremaining';
    $constantsfield['Yellow toner Restant'] = 'toneryellowremaining';
 
-   $constantsfield['Bac rÃ©cupÃ©rateur de dÃ©chet'] = 'wastetoner';
+   $constantsfield['Bac récupérateur de déchet'] = 'wastetoner';
    $constantsfield['Waste bin'] = 'wastetoner';
    $constantsfield['Abfalleimer'] = 'wastetoner';
 
-   $constantsfield['Bac rÃ©cupÃ©rateur de dÃ©chet Max'] = 'wastetonermax';
+   $constantsfield['Bac récupérateur de déchet Max'] = 'wastetonermax';
    $constantsfield['Waste bin Max'] = 'wastetonermax';
 
-   $constantsfield['Bac rÃ©cupÃ©rateur de dÃ©chet UtilisÃ©'] = 'wastetonerused';
-   $constantsfield['Waste bin UtilisÃ©'] = 'wastetonerused';
+   $constantsfield['Bac récupérateur de déchet Utilisé'] = 'wastetonerused';
+   $constantsfield['Waste bin Utilisé'] = 'wastetonerused';
 
-   $constantsfield['Bac rÃ©cupÃ©rateur de dÃ©chet Restant'] = 'wastetonerremaining';
+   $constantsfield['Bac récupérateur de déchet Restant'] = 'wastetonerremaining';
    $constantsfield['Waste bin Restant'] = 'wastetonerremaining';
 
    $constantsfield['Cartouche noir'] = 'cartridgeblack';
@@ -741,8 +743,8 @@ function update213to220_ConvertField() {
    $constantsfield['Kit de maintenance Max'] = 'maintenancekitmax';
    $constantsfield['Maintenance kit Max'] = 'maintenancekitmax';
 
-   $constantsfield['Kit de maintenance UtilisÃ©'] = 'maintenancekitused';
-   $constantsfield['Maintenance kit UtilisÃ©'] = 'maintenancekitused';
+   $constantsfield['Kit de maintenance Utilisé'] = 'maintenancekitused';
+   $constantsfield['Maintenance kit Utilisé'] = 'maintenancekitused';
 
    $constantsfield['Kit de maintenance Restant'] = 'maintenancekitremaining';
    $constantsfield['Maintenance kit Restant'] = 'maintenancekitremaining';
@@ -753,8 +755,8 @@ function update213to220_ConvertField() {
    $constantsfield['Tambour Noir Max'] = 'drumblackmax';
    $constantsfield['Black drum Max'] = 'drumblackmax';
 
-   $constantsfield['Tambour Noir UtilisÃ©'] = 'drumblackused';
-   $constantsfield['Black drum UtilisÃ©'] = 'drumblackused';
+   $constantsfield['Tambour Noir Utilisé'] = 'drumblackused';
+   $constantsfield['Black drum Utilisé'] = 'drumblackused';
 
    $constantsfield['Tambour Noir Restant'] = 'drumblackremaining';
    $constantsfield['Black drum Restant'] = 'drumblackremaining';
@@ -765,8 +767,8 @@ function update213to220_ConvertField() {
    $constantsfield['Tambour Cyan Max'] = 'drumcyanmax';
    $constantsfield['Cyan drum Max'] = 'drumcyanmax';
 
-   $constantsfield['Tambour Cyan UtilisÃ©'] = 'drumcyanused';
-   $constantsfield['Cyan drum UtilisÃ©'] = 'drumcyanused';
+   $constantsfield['Tambour Cyan Utilisé'] = 'drumcyanused';
+   $constantsfield['Cyan drum Utilisé'] = 'drumcyanused';
 
    $constantsfield['Tambour Cyan Restant'] = 'drumcyanremaining';
    $constantsfield['Cyan drumRestant'] = 'drumcyanremaining';
@@ -777,8 +779,8 @@ function update213to220_ConvertField() {
    $constantsfield['Tambour Magenta Max'] = 'drummagentamax';
    $constantsfield['Magenta drum Max'] = 'drummagentamax';
 
-   $constantsfield['Tambour Magenta UtilisÃ©'] = 'drummagentaused';
-   $constantsfield['Magenta drum UtilisÃ©'] = 'drummagentaused';
+   $constantsfield['Tambour Magenta Utilisé'] = 'drummagentaused';
+   $constantsfield['Magenta drum Utilisé'] = 'drummagentaused';
 
    $constantsfield['Tambour Magenta Restant'] = 'drummagentaremaining';
    $constantsfield['Magenta drum Restant'] = 'drummagentaremaining';
@@ -789,61 +791,61 @@ function update213to220_ConvertField() {
    $constantsfield['Tambour Jaune Max'] = 'drumyellowmax';
    $constantsfield['Yellow drum Max'] = 'drumyellowmax';
 
-   $constantsfield['Tambour Jaune UtilisÃ©'] = 'drumyellowused';
-   $constantsfield['Yellow drum UtilisÃ©'] = 'drumyellowused';
+   $constantsfield['Tambour Jaune Utilisé'] = 'drumyellowused';
+   $constantsfield['Yellow drum Utilisé'] = 'drumyellowused';
 
    $constantsfield['Tambour Jaune Restant'] = 'drumyellowremaining';
    $constantsfield['Yellow drum Restant'] = 'drumyellowremaining';
 
-   $constantsfield['imprimante > compteur > nombre total de pages imprimÃ©es'] = 'pagecountertotalpages';
+   $constantsfield['imprimante > compteur > nombre total de pages imprimées'] = 'pagecountertotalpages';
    $constantsfield['printer > meter > total number of printed pages'] = 'pagecountertotalpages';
    $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Seiten'] = 'pagecountertotalpages';
 
-   $constantsfield['imprimante > compteur > nombre de pages noir et blanc imprimÃ©es'] = 'pagecounterblackpages';
+   $constantsfield['imprimante > compteur > nombre de pages noir et blanc imprimées'] = 'pagecounterblackpages';
    $constantsfield['printer > meter > number of printed black and white pages'] = 'pagecounterblackpages';
    $constantsfield['Drucker > Messung > Gesamtanzahl gedrucker Schwarz/Wei&szlig; Seiten'] = 'pagecounterblackpages';
 
-   $constantsfield['imprimante > compteur > nombre de pages couleur imprimÃ©es'] = 'pagecountercolorpages';
+   $constantsfield['imprimante > compteur > nombre de pages couleur imprimées'] = 'pagecountercolorpages';
    $constantsfield['printer > meter > number of printed color pages'] = 'pagecountercolorpages';
    $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Farbseiten'] = 'pagecountercolorpages';
 
-   $constantsfield['imprimante > compteur > nombre de pages recto/verso imprimÃ©es'] = 'pagecounterrectoversopages';
+   $constantsfield['imprimante > compteur > nombre de pages recto/verso imprimées'] = 'pagecounterrectoversopages';
    $constantsfield['printer > meter > number of printed duplex pages'] = 'pagecounterrectoversopages';
    $constantsfield['Drucker > Messung > Anzahl der gedruckten Duplex Seiten'] = 'pagecounterrectoversopages';
 
-   $constantsfield['imprimante > compteur > nombre de pages scannÃ©es'] = 'pagecounterscannedpages';
+   $constantsfield['imprimante > compteur > nombre de pages scannées'] = 'pagecounterscannedpages';
    $constantsfield['printer > meter > nomber of scanned pages'] = 'pagecounterscannedpages';
    $constantsfield['Drucker > Messung > Anzahl der gescannten Seiten'] = 'pagecounterscannedpages';
 
-   $constantsfield['imprimante > compteur > nombre total de pages imprimÃ©es (impression)'] = 'pagecountertotalpages_print';
+   $constantsfield['imprimante > compteur > nombre total de pages imprimées (impression)'] = 'pagecountertotalpages_print';
    $constantsfield['printer > meter > total number of printed pages (print mode)'] = 'pagecountertotalpages_print';
    $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Seiten (Druck)'] = 'pagecountertotalpages_print';
    
-   $constantsfield['imprimante > compteur > nombre de pages noir et blanc imprimÃ©es (impression)'] = 'pagecounterblackpages_print';
+   $constantsfield['imprimante > compteur > nombre de pages noir et blanc imprimées (impression)'] = 'pagecounterblackpages_print';
    $constantsfield['printer > meter > number of printed black and white pages (print mode)'] = 'pagecounterblackpages_print';
    $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Schwarz/Wei&szlig; Seiten (Druck)'] = 'pagecounterblackpages_print';
 
-   $constantsfield['imprimante > compteur > nombre de pages couleur imprimÃ©es (impression)'] = 'pagecountercolorpages_print';
+   $constantsfield['imprimante > compteur > nombre de pages couleur imprimées (impression)'] = 'pagecountercolorpages_print';
    $constantsfield['printer > meter > number of printed color pages (print mode)'] = 'pagecountercolorpages_print';
    $constantsfield['Drucker > Messung > Gesamtanzahl farbig gedruckter Seiten (Druck)'] = 'pagecountercolorpages_print';
 
-   $constantsfield['imprimante > compteur > nombre total de pages imprimÃ©es (copie)'] = 'pagecountertotalpages_copy';
+   $constantsfield['imprimante > compteur > nombre total de pages imprimées (copie)'] = 'pagecountertotalpages_copy';
    $constantsfield['printer > meter > total number of printed pages (copy mode)'] = 'pagecountertotalpages_copy';
    $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Seiten (Kopie)'] = 'pagecountertotalpages_copy';
 
-   $constantsfield['imprimante > compteur > nombre de pages noir et blanc imprimÃ©es (copie)'] = 'pagecounterblackpages_copy';
+   $constantsfield['imprimante > compteur > nombre de pages noir et blanc imprimées (copie)'] = 'pagecounterblackpages_copy';
    $constantsfield['printer > meter > number of printed black and white pages (copy mode)'] = 'pagecounterblackpages_copy';
    $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Schwarz/Wei&szlig; Seite (Kopie)'] = 'pagecounterblackpages_copy';
 
-   $constantsfield['imprimante > compteur > nombre de pages couleur imprimÃ©es (copie)'] = 'pagecountercolorpages_copy';
+   $constantsfield['imprimante > compteur > nombre de pages couleur imprimées (copie)'] = 'pagecountercolorpages_copy';
    $constantsfield['printer > meter > number of printed color pages (copy mode)'] = 'pagecountercolorpages_copy';
    $constantsfield['Drucker > Messung > Gesamtanzahl farbig gedruckter Seiten (Kopie)'] = 'pagecountercolorpages_copy';
 
-   $constantsfield['imprimante > compteur > nombre total de pages imprimÃ©es (fax)'] = 'pagecountertotalpages_fax';
+   $constantsfield['imprimante > compteur > nombre total de pages imprimées (fax)'] = 'pagecountertotalpages_fax';
    $constantsfield['printer > meter > total number of printed pages (fax mode)'] = 'pagecountertotalpages_fax';
    $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Seiten (Fax)'] = 'pagecountertotalpages_fax';
 
-   $constantsfield['imprimante > compteur > nombre total de pages larges imprimÃ©es'] = 'pagecounterlargepages';
+   $constantsfield['imprimante > compteur > nombre total de pages larges imprimées'] = 'pagecounterlargepages';
    $constantsfield['printer > meter > total number of large printed pages'] = 'pagecounterlargepages';
 
    $constantsfield['imprimante > port > adresse MAC'] = 'ifPhysAddress';
@@ -862,7 +864,7 @@ function update213to220_ConvertField() {
    $constantsfield['printer > port > type'] = 'ifType';
    $constantsfield['Drucker > port > Typ'] = 'ifType';
 
-   $constantsfield['imprimante > port > numÃ©ro index'] = 'ifIndex';
+   $constantsfield['imprimante > port > numéro index'] = 'ifIndex';
    $constantsfield['printer > port > index number'] = 'ifIndex';
    $constantsfield['Drucker > Port > Indexnummer'] = 'ifIndex';
 
