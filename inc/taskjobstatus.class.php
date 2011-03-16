@@ -92,7 +92,8 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
          }
       } else if ($return == 'htmlvar') {
          if ($style == 'simple') {
-            return PluginFusioninventoryDisplay::getProgressBar($width,ceil($globalState), array('simple' => 1));
+            return PluginFusioninventoryDisplay::getProgressBar($width,ceil($globalState), 
+                                                                array('simple' => 1));
          } else {
             return PluginFusioninventoryDisplay::getProgressBar($width,ceil($globalState));
          }
@@ -137,10 +138,12 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
             break;
 
          case 'nostarted';
-            $query = "SELECT *, `glpi_plugin_fusioninventory_taskjobs`.`id` as tjid FROM `glpi_plugin_fusioninventory_taskjobs`
-               LEFT JOIN ".$this->getTable()." on `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
-               WHERE `definition` LIKE '%\"".$itemtype."\":\"".$items_id."\"%'
-                  AND `plugin_fusioninventory_taskjobs_id` is null";
+            $query = "SELECT *, `glpi_plugin_fusioninventory_taskjobs`.`id` as tjid 
+                      FROM `glpi_plugin_fusioninventory_taskjobs`
+                      LEFT JOIN ".$this->getTable()." ON `plugin_fusioninventory_taskjobs_id` = 
+                        `glpi_plugin_fusioninventory_taskjobs`.`id`
+                      WHERE `definition` LIKE '%\"".$itemtype."\":\"".$items_id."\"%'
+                        AND `plugin_fusioninventory_taskjobs_id` is null";
             $a_taskjobs = array();
             if ($result = $DB->query($query)) {
                while ($data=$DB->fetch_array($result)) {
@@ -161,10 +164,11 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       $a_taskjobs = array();
       if (isset($search)) {
          $query = "SELECT * FROM `".$this->getTable()."`
-            LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` on `glpi_plugin_fusioninventory_taskjobs`.`id` = `plugin_fusioninventory_taskjobs_id`
-            WHERE `items_id`='".$items_id."' AND `itemtype`='".$itemtype."'".$search."
-            GROUP BY `plugin_fusioninventory_taskjobs_id`
-            ORDER BY `".$this->getTable()."`.`id` DESC";
+                   LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` ON 
+                     `glpi_plugin_fusioninventory_taskjobs`.`id` = `plugin_fusioninventory_taskjobs_id`
+                   WHERE `items_id`='".$items_id."' AND `itemtype`='".$itemtype."'".$search."
+                   GROUP BY `plugin_fusioninventory_taskjobs_id`
+                   ORDER BY `".$this->getTable()."`.`id` DESC";
          $a_taskjobs = array();
          if ($result = $DB->query($query)) {
             while ($data=$DB->fetch_array($result)) {
@@ -210,7 +214,9 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
                $this->stateTaskjob($data['plugin_fusioninventory_taskjobs_id'], '730');
                echo "<br/>";
             }
-            $PluginFusioninventoryTaskjoblog->showHistory($data['plugin_fusioninventory_taskjobs_id'], '750', array('items_id' => $items_id, 'itemtype' => $itemtype));
+            $PluginFusioninventoryTaskjoblog->showHistory($data['plugin_fusioninventory_taskjobs_id'],
+                                                          '750', array('items_id' => $items_id, 
+                                                                       'itemtype' => $itemtype));
          }
          echo "<br/>";
          echo "</td>";
