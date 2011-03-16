@@ -520,8 +520,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 
 		echo "<script  type='text/javascript'>
 function close_array(id){
-   document.getElementById('viewfollowuphistory'+id).innerHTML = 'hh';
-	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/pics/collapse.gif\''+
+   document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/pics/collapse.gif\''+
       'onClick=\'Effect.Fade(\"viewfollowup'+id+'\");appear_array('+id+');\' />';
 }
 function appear_array(id){
