@@ -114,6 +114,10 @@ function update220to221() {
                    AND `num` NOT IN (30, 1, 2, 3)";
    $DB->query($query);
 
+   $DB->query("UPDATE `glpi_plugin_fusioninventory_config`
+      SET `version` = '2.2.1'
+      WHERE `ID`=1
+      LIMIT 1");
 
    plugin_fusioninventory_displayMigrationMessage("221"); // End
 
