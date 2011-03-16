@@ -34,14 +34,32 @@
 
 // Update from 2.1.1 to 2.1.2
 function update211to212() {
-   global $DB;
+   global $DB,$LANG;
+
+   echo "<strong>Update 2.1.1 to 2.1.2</strong><br/>";
+   echo "</td>";
+   echo "</tr>";
+
+   echo "<tr class='tab_bg_1'>";
+   echo "<td align='center'>";
+
+   plugin_fusioninventory_displayMigrationMessage("212"); // Start
+
+   plugin_fusioninventory_displayMigrationMessage("212", $LANG['update'][141]); // Updating schema
+
 
    $DB->query("UPDATE `glpi_plugin_tracker_config`
-               SET `version` = '2.1.3'
-               WHERE `id`=1
+               SET `version` = '2.1.2'
+               WHERE `ID`=1
                LIMIT 1 ;");
-   //PluginFusioninventoryDb::clean_db();
+   
+   plugin_fusioninventory_displayMigrationMessage("212"); // End
 
+   echo "</td>";
+   echo "</tr>";
+
+   echo "<tr class='tab_bg_1'>";
+   echo "<td align='center'>";
 }
 
 ?>

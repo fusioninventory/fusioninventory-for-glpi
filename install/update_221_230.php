@@ -926,6 +926,23 @@ function update221to230() {
       ADD INDEX `ip` (`ip`),
       ADD INDEX `networkequipments_id` (`networkequipments_id`) ";
    $DB->query($sql);
+   // TODO : check all IP addresses valides
+   $sql = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkequipmentips`";
+   $result=$DB->query($sql);
+   while ($data=$DB->fetch_array($result)) {
+      $delete = 1;
+      if (strstr($data['ip'], ".")){
+         $splitip = explode(".", $data['ip']);
+         if (count($splitip) == '4') {
+            $delete = 0;
+         }
+      }
+      if ($delete == '1') {
+         $sql = "DELETE FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
+            WHERE `id`='".$data['id']."'";
+         $DB->query($sql);
+      }      
+   }
 
    /*
     * Update `glpi_plugin_fusioninventory_networking_ports`
@@ -1290,8 +1307,7 @@ function update221to230() {
       CHANGE `FK_ports` `networkports_id` INT( 11 ) NOT NULL ";
    $DB->query($sql);
    // Convert Mapping
-   $sql = "SELECT * FROM `glpi_plugin_fusioninventory_mappings`
-      WHERE `itemtype`='NetworkEquipment' ";
+   $sql = "SELECT * FROM `glpi_plugin_fusioninventory_mappings`";
    $result=$DB->query($sql);
    while ($data=$DB->fetch_array($result)) {
       $sql_update = "UPDATE `glpi_plugin_fusinvsnmp_networkportlogs`
