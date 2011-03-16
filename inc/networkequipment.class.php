@@ -520,12 +520,13 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 
 		echo "<script  type='text/javascript'>
 function close_array(id){
+   document.getElementById('viewfollowuphistory'+id).innerHTML = 'hh';
 	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/pics/collapse.gif\''+
       'onClick=\'Effect.Fade(\"viewfollowup'+id+'\");appear_array('+id+');\' />';
 }
 function appear_array(id){
 	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/pics/expand.gif\''+
-      'onClick=\'Effect.Appear(\"viewfollowup'+id+'\");close_array('+id+');\' />';
+      'onClick=\'Effect.Appear(\"viewfollowup'+id+'\");close_array('+id+');\' id=\'plusmoinsl'+id+'\' />';
 }
 
 function close_legend(id){
@@ -537,12 +538,11 @@ function appear_legend(id){
    ' onClick=\'Effect.Appear(\"legend\");close_legend();\'>[ ".$LANG['plugin_fusioninventory']['functionalities'][6]." ]</a>';
 }
 
-		</script>";
 
+		</script>";
 		echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusioninventory/prototype.js'></script>";
       echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusioninventory/effects.js'></script>";
-
-
+      
 		echo "<table class='tab_cadre' cellpadding='5' width='1100'>";
 
 		echo "<tr class='tab_bg_1'>";
@@ -680,9 +680,11 @@ function appear_legend(id){
 				echo "<tr class='tab_bg_1 center' height='40'".$background_img.">";
 				echo "<td id='plusmoins".$data["id"]."'><img src='".GLPI_ROOT.
                      "/pics/expand.gif' onClick='Effect.Appear(\"viewfollowup".$data["id"].
-                     "\");close_array(".$data["id"].");' /></td>";
+                     "\");close_array(".$data["id"].");' id='plusmoinsl".$data["id"]."'\'/>";
+            echo "</td>";
 				echo "<td><a href='networkport.form.php?id=".$data["id"]."'>".
-                     $data["name"]."</a></td>";
+                     $data["name"]."</a>";
+            echo "</td>";
 
 				$query_array = "SELECT *
                             FROM `glpi_displaypreferences`
@@ -881,10 +883,14 @@ function appear_legend(id){
 				// Historique
 
 				echo "
-				<tr style='display: none;' id='viewfollowup".$data["id"]."'>
-					<td colspan='".(mysql_num_rows($result_array) + 2)."'>".
-                  PluginFusinvsnmpNetworkPortLog::showHistory($data["id"])."</td>
-				</tr>
+				<tr style='display: hidden;' id='viewfollowup".$data["id"]."'>";
+            echo "<td colspan='".(mysql_num_rows($result_array) + 2)."' id='viewfollowuphistory".$data["id"]."'></td>";
+            ajaxUpdateItemOnEvent('plusmoinsl'.$data["id"],
+                                  'viewfollowuphistory'.$data["id"],
+                                  GLPI_ROOT."/plugins/fusinvsnmp/ajax/showporthistory.php",
+                                  array('ports_id' => $data["id"]),
+                                  array("click"));
+				echo "</tr>
 				";
 			}
 		}
@@ -946,7 +952,7 @@ function appear_legend(id){
                   echo "<td ".$background_img."
                                            class='tab_bg_1_2'>".$Class->getLink(1)."</td>";
                   echo "</tr>";
-
+                  
                }
             }
          }
