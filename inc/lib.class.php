@@ -59,27 +59,29 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       // ** Get entity with rules
          $input_rules = array();
          if ((isset($xml->CONTENT->BIOS->SSN)) AND (!empty($xml->CONTENT->BIOS->SSN))) {
-            $input_rules['serialnumber'] = $xml->CONTENT->BIOS->SSN;
+            $input_rules['serialnumber'] = (string)$xml->CONTENT->BIOS->SSN;
          }
          if ((isset($xml->CONTENT->HARDWARE->NAME)) AND (!empty($xml->CONTENT->HARDWARE->NAME))) {
-            $input_rules['name'] = $xml->CONTENT->HARDWARE->NAME;
+            $input_rules['name'] = (string)$xml->CONTENT->HARDWARE->NAME;
          }
          if (isset($xml->CONTENT->NETWORKS)) {
             foreach($xml->CONTENT->NETWORKS as $network) {
                if ((isset($network->IPADDRESS)) AND (!empty($network->IPADDRESS))) {
-                  $input_rules['ip'][] = $network->IPADDRESS;
+                  if ((string)$network->IPADDRESS != '127.0.0.1') {
+                     $input_rules['ip'][] = (string)$network->IPADDRESS;
+                  }
                }
                if ((isset($network->IPSUBNET)) AND (!empty($network->IPSUBNET))) {
-                  $input_rules['subnet'][] = $network->IPADDRESS;
+                  $input_rules['subnet'][] = (string)$network->IPSUBNET;
                }
             }
          }
          if ((isset($xml->CONTENT->HARDWARE->USERDOMAIN)) AND (!empty($xml->CONTENT->HARDWARE->USERDOMAIN))) {
-            $input_rules['domain'] = $xml->CONTENT->HARDWARE->USERDOMAIN;
+            $input_rules['domain'] = (string)$xml->CONTENT->HARDWARE->USERDOMAIN;
          }
          if ((isset($xml->CONTENT->ACCOUNTINFO->KEYNAME)) AND ($xml->CONTENT->ACCOUNTINFO->KEYNAME == 'TAG')) {
             if (isset($xml->CONTENT->ACCOUNTINFO->KEYVALUE)) {
-               $input_rules['tag'] = $xml->CONTENT->ACCOUNTINFO->KEYVALUE;
+               $input_rules['tag'] = (string)$xml->CONTENT->ACCOUNTINFO->KEYVALUE;
             }
          }
 
@@ -140,7 +142,6 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          // Link computer to agent FusionInventory
          $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
          $PluginFusioninventoryAgent->setAgentWithComputerid($items_id, $xml->DEVICEID);
-
 
          //Sections update
          $xmlSections = $this->_getXMLSections($simpleXMLObj);
