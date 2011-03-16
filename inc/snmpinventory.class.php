@@ -461,20 +461,23 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
 
                case 'Printer':
                   $a_Printerport = $NetworkPort->find("`itemtype`='Printer' AND `items_id`='".$taskjobstatusdatas['items_id']."'");
+                  $port_id = '';
                   foreach($a_Printerport as $portdata) {
                      if (!empty($portdata['ip']) AND ($portdata['ip'] != '127.0.0.1')) {
                         $port_ip = $portdata['ip'];
                         break;
                      }
                   }
-                  $sxml_device->addAttribute('TYPE', 'PRINTER');
-                  $sxml_device->addAttribute('ID', $taskjobstatusdatas['items_id']);
-                  $sxml_device->addAttribute('IP', $port_ip);
-                  $a_data = $PluginFusinvsnmpPrinter->find("`printers_id`='".$taskjobstatusdatas['items_id']."'", "", "1");
-                  $data = current($a_data);
-                  $sxml_device->addAttribute('AUTHSNMP_ID', $data['plugin_fusinvsnmp_configsecurities_id']);
-                  $sxml_device->addAttribute('MODELSNMP_ID', $data['plugin_fusinvsnmp_models_id']);
-                  $modelslistused[$data['plugin_fusinvsnmp_models_id']] = 1;
+                  if ($port_id != '') {
+                     $sxml_device->addAttribute('TYPE', 'PRINTER');
+                     $sxml_device->addAttribute('ID', $taskjobstatusdatas['items_id']);
+                     $sxml_device->addAttribute('IP', $port_ip);
+                     $a_data = $PluginFusinvsnmpPrinter->find("`printers_id`='".$taskjobstatusdatas['items_id']."'", "", "1");
+                     $data = current($a_data);
+                     $sxml_device->addAttribute('AUTHSNMP_ID', $data['plugin_fusinvsnmp_configsecurities_id']);
+                     $sxml_device->addAttribute('MODELSNMP_ID', $data['plugin_fusinvsnmp_models_id']);
+                     $modelslistused[$data['plugin_fusinvsnmp_models_id']] = 1;
+                  }
                   break;
                
             }
