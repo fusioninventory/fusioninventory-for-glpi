@@ -561,7 +561,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
                WHERE `networkports_id_source`='".$ID_port."'
                   OR `networkports_id_destination`='".$ID_port."'
                ORDER BY `date_mod` DESC
-               LIMIT 0,30
+               LIMIT 30
                )
             AS `DerivedTable1`
             UNION ALL
@@ -577,13 +577,13 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
                         `glpi_plugin_fusioninventory_mappings`.`id`
                WHERE `networkports_id`='".$ID_port."'
                ORDER BY `date_mod` DESC
-               LIMIT 0,30
+               LIMIT 30
                )
             AS `DerivedTable2`)
          AS `MainTable`
          ORDER BY `date_mod` DESC, `id` DESC
-         LIMIT 0,30";
-   //echo $query."<br/>";
+         LIMIT 30";
+//   echo $query."<br/>";
       $text = "<table class='tab_cadre' cellpadding='5' width='950'>";
 
       $text .= "<tr class='tab_bg_1'>";
@@ -670,7 +670,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
       $text .= "<tr class='tab_bg_1'>";
       $text .= "<th colspan='8'>";
-      $text .= "<a href='".GLPI_ROOT."/plugins/fusioninventory/report/switch_ports.history.php?networkports_id=".$ID_port."'>Voir l'historique complet</a>";
+      $text .= "<a href='".GLPI_ROOT."/plugins/fusinvsnmp/report/switch_ports.history.php?networkports_id=".$ID_port."'>Voir l'historique complet</a>";
       $text .= "</th>";
       $text .= "</tr>";
       $text .= "</table>";

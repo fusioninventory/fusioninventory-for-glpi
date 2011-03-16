@@ -69,7 +69,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
 		$tab[2]['table'] = $this->getTable();
 		$tab[2]['field'] = 'itemtype';
 		$tab[2]['linkfield'] = 'itemtype';
-		$tab[2]['name'] = 'itemtype';
+		$tab[2]['name'] = $LANG['state'][6];
 
 		$tab[5]['table'] = $this->getTable();
 		$tab[5]['field'] = 'discovery_key';
@@ -79,7 +79,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
 		$tab[6]['table'] = $this->getTable();
 		$tab[6]['field'] = 'comment';
 		$tab[6]['linkfield'] = 'comment';
-		$tab[6]['name'] = 'comment';
+		$tab[6]['name'] = $LANG['common'][25];
 
 
 
