@@ -1258,7 +1258,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       foreach ($a_actions as $num=>$data) {
          $classname = key($data);
          $Class = new $classname;
-         if (!$Class->getFromDB(current($data))) {
+         if (!$Class->getFromDB(current($data))
+                 AND (current($data) != ".1")
+                 AND (current($data) != ".2")) {
             unset($a_actions[$num]);
          }
       }
