@@ -388,7 +388,7 @@ class PluginFusinvinventoryInventory {
       }
 
 
-      // TODO      
+      // ** STORAGE
       $CompDeviceDrive = new Computer_Device('DeviceDrive');
       $DeviceDrive = new DeviceDrive();
       $a_deviceDrive = $CompDeviceDrive->find("`computers_id`='".$items_id."' ");
@@ -403,6 +403,24 @@ class PluginFusinvinventoryInventory {
             $xml_storage->addChild("MANUFACTURER", $manufacturer);
          }
          $interface = Dropdown::getDropdownName(getTableForItemType('InterfaceType'), $DeviceDrive->fields['interfacetypes_id']);
+         if ($interface != "&nbsp;") {
+            $xml_storage->addChild("INTERFACE", $interface);
+         }
+      }
+      $CompDeviceHardDrive = new Computer_Device('DeviceHardDrive');
+      $DeviceHardDrive = new DeviceHardDrive();
+      $a_DeviceHardDrive = $CompDeviceHardDrive->find("`computers_id`='".$items_id."' ");
+      foreach ($a_DeviceHardDrive as $DeviceHardDrive_id => $DeviceHardDrive_data) {
+         $a_sectionsinfos[] = "STORAGES/".$DeviceHardDrive_id;
+         $xml_storage = $xml_content->addChild("STORAGES");
+         $DeviceHardDrive->getFromDB($DeviceHardDrive_data['deviceharddrives_id']);
+         $xml_storage->addChild("NAME", $DeviceHardDrive->fields['designation']);
+         $xml_storage->addChild("MODEL", $DeviceHardDrive->fields['designation']);
+         $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'), $DeviceHardDrive->fields['manufacturers_id']);
+         if ($manufacturer != "&nbsp;") {
+            $xml_storage->addChild("MANUFACTURER", $manufacturer);
+         }
+         $interface = Dropdown::getDropdownName(getTableForItemType('InterfaceType'), $DeviceHardDrive->fields['interfacetypes_id']);
          if ($interface != "&nbsp;") {
             $xml_storage->addChild("INTERFACE", $interface);
          }
