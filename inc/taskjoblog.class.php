@@ -78,10 +78,10 @@ function appear_array(id){
 		echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusioninventory/prototype.js'></script>";
       echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusioninventory/effects.js'></script>";
 
-      echo "<center><table class='tab_cadrehov' style='width: ".$width."px'>";
-      echo "<tr>";
-      echo "<th colspan='8'>".$LANG['title'][38]."</th>";
-      echo "</tr>";
+      $start = 0;
+      if (isset($_REQUEST["start"])) {
+         $start = $_REQUEST["start"];
+      }
 
       $where = '';
       if (isset($options['items_id']) AND isset($options['itemtype'])) {
@@ -89,12 +89,18 @@ function appear_array(id){
                     AND `itemtype`='".$options['itemtype']."' ";
       }
 
+      echo "<center><table class='tab_cadrehov' style='width: ".$width."px'>";
+      echo "<tr>";
+      echo "<th colspan='8'>".$LANG['title'][38]."</th>";
+      echo "</tr>";
+
       $query = 'SELECT * FROM `glpi_plugin_fusioninventory_taskjobstatus`
          WHERE `plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"
             AND `state`!="3"
             '.$where.'
          GROUP BY uniqid,plugin_fusioninventory_agents_id
          ORDER BY `id` DESC';
+      $result = $DB->query($query);
       // ***** Display for all status running / prepared
       echo "<tr>";
       echo "<th colspan='2'>";
@@ -104,7 +110,7 @@ function appear_array(id){
       echo $LANG['plugin_fusioninventory']['task'][19]."&nbsp;:";
       echo "</th>";
       echo "</tr>";
-      $result = $DB->query($query);
+
       echo "<tr>";
       echo "<th></th>";
       echo "<th>Uniqid</th>";
@@ -135,7 +141,23 @@ function appear_array(id){
       echo $LANG['plugin_fusioninventory']['task'][20]."&nbsp;:";
       echo "</th>";
       echo "</tr>";
+
+      echo "<tr>";
+      echo "<th colspan='8'>";
+      $querycount = 'SELECT count(*) AS cpt FROM `glpi_plugin_fusioninventory_taskjobstatus`
+         WHERE `plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"
+            AND `state`="3"
+            '.$where.'
+         GROUP BY uniqid,plugin_fusioninventory_agents_id';
+      $resultcount = $DB->query($querycount);
+      $number = $DB->numrows($resultcount);
+
+      printAjaxPager('',$start,$number);
+      echo "</th>";
+      echo "</tr>";
+
       $query = str_replace('`state`!="3"', '`state`="3"', $query);
+      $query .= ' LIMIT '.intval($start).','.intval($_SESSION['glpilist_limit']);
       $result = $DB->query($query);
       echo "<tr>";
       echo "<th></th>";
@@ -157,6 +179,12 @@ function appear_array(id){
          $this->showHistoryLines($data['id']);
       }
 
+      echo "<tr>";
+      echo "<th colspan='8'>";
+      printAjaxPager('',$start,$number);
+      echo "</th>";
+      echo "</tr>";
+      
       echo "</table></center>";
 
       return true;
