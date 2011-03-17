@@ -473,7 +473,7 @@ class PluginFusinvinventoryLibhook {
     * @return emtpy array
     *
     **/
-    public static function removeSections($idsections, $idmachine) {
+    public static function removeSections($idsections, $idmachine, $sectiondetail) {
 
       $Computer = new Computer();
       $Computer->getFromDB($idmachine);
@@ -547,7 +547,7 @@ class PluginFusinvinventoryLibhook {
 
                   case 'STORAGES':
                      $PluginFusinvinventoryImport_Storage = new PluginFusinvinventoryImport_Storage();
-                     $PluginFusinvinventoryImport_Storage->deleteItem($items_id, $idmachine);
+                     $PluginFusinvinventoryImport_Storage->deleteItem($items_id, $idmachine, $sectiondetail[$section]);
                      break;
 
                   case 'ANTIVIRUS':

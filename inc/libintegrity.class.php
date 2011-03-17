@@ -201,7 +201,7 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
                            $query_monitor = "SELECT * FROM `glpi_computers_items`
                               LEFT JOIN `glpi_monitors` on `glpi_monitors`.`id`=`items_id`
                               WHERE `computers_id`='".$computer_id."'
-                                 AND `itemtype`='monitor'";
+                                 AND `itemtype`='Monitor'";
                            if ($result_monitor = $DB->query($query_monitor)) {
                               if ($DB->numrows($result_monitor) == 0) {
                                  $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['help'][28]);
@@ -215,9 +215,47 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
                         $query_monitor = "SELECT * FROM `glpi_computers_items`
                            LEFT JOIN `glpi_monitors` on `glpi_monitors`.`id`=`items_id`
                            WHERE `computers_id`='".$computer_id."'
-                              AND `itemtype`='monitor'";
+                              AND `itemtype`='Monitor'";
                         if ($result_monitor = $DB->query($query_monitor)) {
                            if ($DB->numrows($result_monitor) == 0) {
+                              $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['help'][28]);
+                           }
+                        }
+                     }
+                     break;
+
+                  case 'PRINTERS':
+                     // Printers must be created  but not created (in case
+                     // of changes configuration of printer import)
+                     $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+                     if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                             "import_printer") == '3') { //Import on serial number
+
+                        $unserializedsection = unserialize($section);
+                        if (isset($unserializedsection['SERIAL'])
+                                AND !empty($unserializedsection['SERIAL'])) {
+
+                           // Search in DB if exist
+                           $query_printer = "SELECT * FROM `glpi_computers_items`
+                              LEFT JOIN `glpi_printers` on `glpi_printers`.`id`=`items_id`
+                              WHERE `computers_id`='".$computer_id."'
+                                 AND `itemtype`='Printer'";
+                           if ($result_printer = $DB->query($query_printer)) {
+                              if ($DB->numrows($result_printer) == 0) {
+                                 $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['help'][28]);
+                              }
+                           }
+                        }
+                     } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                             "import_printer") == '2') { //Import on serial number
+
+                        // Search in DB if exist
+                        $query_printer = "SELECT * FROM `glpi_computers_items`
+                           LEFT JOIN `glpi_printers` on `glpi_printers`.`id`=`items_id`
+                           WHERE `computers_id`='".$computer_id."'
+                              AND `itemtype`='Printer'";
+                        if ($result_printer = $DB->query($query_printer)) {
+                           if ($DB->numrows($result_printer) == 0) {
                               $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['help'][28]);
                            }
                         }

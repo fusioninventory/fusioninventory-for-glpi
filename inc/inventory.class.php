@@ -281,6 +281,44 @@ class PluginFusinvinventoryInventory {
             $xml_cpu->addChild("MANUFACTURER", $manufacturer);
          }
       }
+      
+      // ** STORAGE
+      $CompDeviceDrive = new Computer_Device('DeviceDrive');
+      $DeviceDrive = new DeviceDrive();
+      $a_deviceDrive = $CompDeviceDrive->find("`computers_id`='".$items_id."' ");
+      foreach ($a_deviceDrive as $deviceDrive_id => $deviceDrive_data) {
+         $a_sectionsinfos[] = "STORAGES/".$deviceDrive_id;
+         $xml_storage = $xml_content->addChild("STORAGES");
+         $DeviceDrive->getFromDB($deviceDrive_data['devicedrives_id']);
+         $xml_storage->addChild("NAME", $DeviceDrive->fields['designation']);
+         $xml_storage->addChild("MODEL", $DeviceDrive->fields['designation']);
+         $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'), $DeviceDrive->fields['manufacturers_id']);
+         if ($manufacturer != "&nbsp;") {
+            $xml_storage->addChild("MANUFACTURER", $manufacturer);
+         }
+         $interface = Dropdown::getDropdownName(getTableForItemType('InterfaceType'), $DeviceDrive->fields['interfacetypes_id']);
+         if ($interface != "&nbsp;") {
+            $xml_storage->addChild("INTERFACE", $interface);
+         }
+      }
+      $CompDeviceHardDrive = new Computer_Device('DeviceHardDrive');
+      $DeviceHardDrive = new DeviceHardDrive();
+      $a_DeviceHardDrive = $CompDeviceHardDrive->find("`computers_id`='".$items_id."' ");
+      foreach ($a_DeviceHardDrive as $DeviceHardDrive_id => $DeviceHardDrive_data) {
+         $a_sectionsinfos[] = "STORAGES/".$DeviceHardDrive_id;
+         $xml_storage = $xml_content->addChild("STORAGES");
+         $DeviceHardDrive->getFromDB($DeviceHardDrive_data['deviceharddrives_id']);
+         $xml_storage->addChild("NAME", $DeviceHardDrive->fields['designation']);
+         $xml_storage->addChild("MODEL", $DeviceHardDrive->fields['designation']);
+         $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'), $DeviceHardDrive->fields['manufacturers_id']);
+         if ($manufacturer != "&nbsp;") {
+            $xml_storage->addChild("MANUFACTURER", $manufacturer);
+         }
+         $interface = Dropdown::getDropdownName(getTableForItemType('InterfaceType'), $DeviceHardDrive->fields['interfacetypes_id']);
+         if ($interface != "&nbsp;") {
+            $xml_storage->addChild("INTERFACE", $interface);
+         }
+      }
 
       // ** DRIVES
       $ComputerDisk = new ComputerDisk;
@@ -386,27 +424,7 @@ class PluginFusinvinventoryInventory {
             $xml_sound->addChild("MANUFACTURER", $manufacturer);
          }
       }
-
-
-      // TODO      
-      $CompDeviceDrive = new Computer_Device('DeviceDrive');
-      $DeviceDrive = new DeviceDrive();
-      $a_deviceDrive = $CompDeviceDrive->find("`computers_id`='".$items_id."' ");
-      foreach ($a_deviceDrive as $deviceDrive_id => $deviceDrive_data) {
-         $a_sectionsinfos[] = "STORAGES/".$deviceDrive_id;
-         $xml_storage = $xml_content->addChild("STORAGES");
-         $DeviceDrive->getFromDB($deviceDrive_data['devicedrives_id']);
-         $xml_storage->addChild("NAME", $DeviceDrive->fields['designation']);
-         $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'), $DeviceDrive->fields['manufacturers_id']);
-         if ($manufacturer != "&nbsp;") {
-            $xml_storage->addChild("MANUFACTURER", $manufacturer);
-         }
-         $interface = Dropdown::getDropdownName(getTableForItemType('InterfaceType'), $DeviceDrive->fields['interfacetypes_id']);
-         if ($interface != "&nbsp;") {
-            $xml_storage->addChild("INTERFACE", $interface);
-         }
-      }
-      
+     
 
       // ** VIDEOS
       $CompDeviceGraphicCard = new Computer_Device('DeviceGraphicCard');
@@ -419,7 +437,7 @@ class PluginFusinvinventoryInventory {
          $xml_video->addChild("NAME", $DeviceGraphicCard->fields['designation']);
          $xml_video->addChild("MEMORY", $deviceGraphicCard_data['specificity']);
       }
-
+      
       $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
       $PluginFusinvinventoryLib->addLibMachineFromGLPI($items_id, $internal_id, $xml, $a_sectionsinfos);
    }
