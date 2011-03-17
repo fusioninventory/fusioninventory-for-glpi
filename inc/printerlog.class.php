@@ -573,18 +573,40 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
             }
          }
 // TODO : correct title (not total of printed)
+         $type = 'line';
          if ($graphType == 'day') {
             $type = 'bar';
-         } else {
-            $type = 'line';
          }
 
-         Stat::showGraph($input,
-                  array('title'  => $name,
-                     'unit'      => '',
-                     'type'      => $type,
-                     'height'    => 400,
-                     'showtotal' => false));
+         $continue = 1;
+         foreach($input as $datas) {
+            if (count($datas) > 60) {
+               $continue = 0;
+            }
+         }
+         if ($continue == '0') {
+            echo "<table class='tab_cadre' cellpadding='5' width='900'>";
+            echo "<tr class='tab_bg_1'>";
+            echo "<th>";
+            echo $name;
+            echo "</th>";
+            echo "</tr>";
+
+            echo "<tr class='tab_bg_1'>";
+            echo "<td align='center'>";
+            echo $LANG['plugin_fusinvsnmp']['printhistory'][1];
+            echo "</td>";
+            echo "</tr>";
+
+            echo "</table><br/>";
+         } else {
+            Stat::showGraph($input,
+                     array('title'  => $name,
+                        'unit'      => '',
+                        'type'      => $type,
+                        'height'    => 400,
+                        'showtotal' => false));
+         }
       }
    }
 

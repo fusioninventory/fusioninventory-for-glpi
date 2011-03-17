@@ -415,4 +415,6 @@ $LANG['plugin_fusinvsnmp']['codetasklog'][3]="Dictionnaire trop vieux sur l'agen
 
 $LANG['plugin_fusinvsnmp']['legend'][0]="Connexion avec un switch or un serveur en mode trunk ou taggé";
 $LANG['plugin_fusinvsnmp']['legend'][1]="Connexion autre (avec un ordinateur, une imprimante...)";
+
+$LANG['plugin_fusinvsnmp']['printhistory'][1]="Trop de données à afficher";
 ?>
