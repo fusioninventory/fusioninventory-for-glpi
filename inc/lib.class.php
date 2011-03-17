@@ -506,14 +506,17 @@ if (!unserialize($serializedSectionToRemove)) {
 
       if ($sectionsToRemove) {
          $sectionsIdToRemove = array();
+         $sectiondetail = array();
       	foreach($sectionsToRemove as $sectionId => $serializedSection) {
             unset($infoSections["sections"][$sectionId]);
             array_push($sectionsIdToRemove, $sectionId);
+            $sectiondetail[$sectionId] = $serializedSection;
          }
 
          call_user_func(array($classhook,"removeSections"),
 		       $sectionsIdToRemove,
-		       $infoSections["externalId"]);
+		       $infoSections["externalId"],
+             $sectiondetail);
       }
       if ($sectionsToAdd) {
          $datasToAdd = array();

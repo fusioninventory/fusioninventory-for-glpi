@@ -438,7 +438,7 @@ class PluginFusinvinventoryInventory {
          $xml_video->addChild("NAME", $DeviceGraphicCard->fields['designation']);
          $xml_video->addChild("MEMORY", $deviceGraphicCard_data['specificity']);
       }
-
+      
       $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
       $PluginFusinvinventoryLib->addLibMachineFromGLPI($items_id, $internal_id, $xml, $a_sectionsinfos);
    }
