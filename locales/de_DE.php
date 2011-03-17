@@ -424,4 +424,6 @@ $LANG['plugin_fusinvsnmp']['codetasklog'][3]="Dico too old on agent, request pos
 
 $LANG['plugin_fusinvsnmp']['legend'][0]="Connection with a switch or a server in trunk or tagged mode";
 $LANG['plugin_fusinvsnmp']['legend'][1]="Other connections (with a computer, a printer...)";
+
+$LANG['plugin_fusinvsnmp']['printhistory'][1]="Too datas to display";
 ?>
