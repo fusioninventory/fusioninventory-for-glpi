@@ -38,16 +38,17 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
 
-commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","tasks");
+commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins",
+             "fusioninventory","tasks");
 
-PluginFusioninventoryProfile::checkRight("fusioninventory", "task","r");
+PluginFusioninventoryProfile::checkRight("fusioninventory", "task", "r");
 
 
 if (isset ($_POST["add"])) {
-   PluginFusioninventoryProfile::checkRight("fusioninventory", "task","w");
+   PluginFusioninventoryProfile::checkRight("fusioninventory", "task", "w");
 
    if (isset($_POST['method_id'])) {
-      $_POST['method'] = $_POST['method_id'];
+      $_POST['method']  = $_POST['method_id'];
    }
    $_POST['plugins_id'] = $_POST['method-'.$_POST['method']];
 
@@ -77,12 +78,12 @@ if (isset ($_POST["add"])) {
    $PluginFusioninventoryTaskjob->add($_POST);
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset($_POST["delete"])) {
-   PluginFusioninventoryProfile::checkRight("fusioninventory", "task","w");
+   PluginFusioninventoryProfile::checkRight("fusioninventory", "task", "w");
 
    $PluginFusioninventoryTaskjob->delete($_POST);
    glpi_header(GLPI_ROOT."/plugins/fusioninventory/front/task.php");
 } else if (isset($_POST["update"])) {
-   PluginFusioninventoryProfile::checkRight("fusioninventory", "task","w");
+   PluginFusioninventoryProfile::checkRight("fusioninventory", "task", "w");
 
 
    if (!empty($_POST['definitionlist'])) {
@@ -129,12 +130,12 @@ if (isset ($_POST["add"])) {
    // Add job with this device
    $input = array();
    $input['plugin_fusioninventory_tasks_id'] = $task_id;
-   $input['name'] = $method;
+   $input['name']           = $method;
    $input['date_scheduled'] = $_POST['date_scheduled'];
 
-   $input['plugins_id'] = PluginFusioninventoryModule::getModuleId($module);
-   $input['method'] = $method;
-   $a_selectionDB = array();
+   $input['plugins_id']     = PluginFusioninventoryModule::getModuleId($module);
+   $input['method']         = $method;
+   $a_selectionDB           = array();
    $a_selectionDB[][$_POST['itemtype']] = $_POST['items_id'];
    $input['definition'] = exportArrayToDB($a_selectionDB);
    if (is_callable("plugin_".$module."_task_selection_type_".$method)) {
@@ -156,11 +157,8 @@ if (isset ($_POST["add"])) {
    foreach($a_taskjobstatus as $data) {
 
       if ($data['state'] != "3") {
-         $PluginFusioninventoryTaskjobstatus->changeStatusFinish($data['id'],
-                                                                       0,
-                                                                       '',
-                                                                       1,
-                                                                       "Action cancelled by user");
+         $PluginFusioninventoryTaskjobstatus->changeStatusFinish($data['id'], 0, '', 1,
+                                                                 "Action cancelled by user");
       }
    }
    $PluginFusioninventoryTaskjob->getFromDB($_POST['taskjobs_id']);
