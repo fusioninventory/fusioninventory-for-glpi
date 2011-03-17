@@ -99,6 +99,8 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          // Transfer if entity is different
          $Computer = new Computer();
          $Computer->getFromDB($items_id);
+         $Computer->fields['autoupdatesystems_id'] = Dropdown::importExternal('AutoUpdateSystem', 'FusionInventory');
+         $Computer->update($Computer->fields);
          $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
          if ($Computer->getEntityID() != $_SESSION["plugin_fusinvinventory_entity"]) {
             $Transfer = new Transfer();
