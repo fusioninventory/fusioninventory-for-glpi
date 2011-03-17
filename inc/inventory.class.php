@@ -397,6 +397,7 @@ class PluginFusinvinventoryInventory {
          $xml_storage = $xml_content->addChild("STORAGES");
          $DeviceDrive->getFromDB($deviceDrive_data['devicedrives_id']);
          $xml_storage->addChild("NAME", $DeviceDrive->fields['designation']);
+         $xml_storage->addChild("MODEL", $DeviceDrive->fields['designation']);
          $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'), $DeviceDrive->fields['manufacturers_id']);
          if ($manufacturer != "&nbsp;") {
             $xml_storage->addChild("MANUFACTURER", $manufacturer);
