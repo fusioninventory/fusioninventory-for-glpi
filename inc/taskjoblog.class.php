@@ -48,6 +48,14 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
     * 
     */
 
+   const TASK_STARTED            = 1;
+   const TASK_OK                 = 2;
+   const TASK_ERROR_OR_REPLANNED = 3;
+   const TASK_ERROR              = 4;
+   const TASK_UNKNOWN            = 5;
+   const TASK_RUNNING            = 6;
+   const TASK_PREPARED           = 7;
+
    /**
    * Display history of taskjob
    *
