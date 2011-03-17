@@ -293,7 +293,7 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
          $input['date_creation'] = date("Y-m-d H:i:s");
          $input['is_active'] = 0;
          $input['permanent'] = $permanent;
-         $input["entities_id"]  = $_SESSION["glpiactive_entity"];
+         $input["entities_id"]  = $this->getEntityID();
          $input['date_scheduled'] = date("Y-m-d H:i:s");
          $input['periodicity_count'] = "1";
          $input['periodicity_type'] = "hours";
