@@ -337,7 +337,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
             $a_input['itemtype'] = '';
             $a_input['items_id'] = 0;
             $a_input['uniqid'] = $uniqid;
-            //$Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
+            $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
                //Add log of taskjob
                $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
                $a_input['state'] = 7;
