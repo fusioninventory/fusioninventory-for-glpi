@@ -99,6 +99,8 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          // Transfer if entity is different
          $Computer = new Computer();
          $Computer->getFromDB($items_id);
+         $Computer->fields['autoupdatesystems_id'] = Dropdown::importExternal('AutoUpdateSystem', 'FusionInventory');
+         $Computer->update($Computer->fields);
          $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
          if ($Computer->getEntityID() != $_SESSION["plugin_fusinvinventory_entity"]) {
             $Transfer = new Transfer();
@@ -506,14 +508,17 @@ if (!unserialize($serializedSectionToRemove)) {
 
       if ($sectionsToRemove) {
          $sectionsIdToRemove = array();
+         $sectiondetail = array();
       	foreach($sectionsToRemove as $sectionId => $serializedSection) {
             unset($infoSections["sections"][$sectionId]);
             array_push($sectionsIdToRemove, $sectionId);
+            $sectiondetail[$sectionId] = $serializedSection;
          }
 
          call_user_func(array($classhook,"removeSections"),
 		       $sectionsIdToRemove,
-		       $infoSections["externalId"]);
+		       $infoSections["externalId"],
+             $sectiondetail);
       }
       if ($sectionsToAdd) {
          $datasToAdd = array();

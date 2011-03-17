@@ -152,67 +152,27 @@ class PluginFusinvinventoryImport_Storage extends CommonDBTM {
    *@return nothing
    *
    **/
-   function deleteItem($items_id, $idmachine) {
+   function deleteItem($items_id, $idmachine, $sectiondetail) {
+      $sectiondetail = unserialize($sectiondetail);
 
       // Detect if it's drive or harddrive
-      $xml = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
+      $typeDevice = $this->getTypeDrive($sectiondetail);
 
-      $a_designation = array();
-      foreach ($xml->CONTENT->STORAGES as $child) {
-         $data = array();
-         if (isset($child->MODEL)) {
-            $data['MODEL'] = $child->MODEL;
-         }
-         if (isset($child->TYPE)) {
-            $data['TYPE'] = $child->TYPE;
-         }
-         if (isset($child->NAME)) {
-            $data['NAME'] = $child->NAME;
-         }
-         $typeDevice = $this->getTypeDrive($data);
-
-
-         if (isset($child->MODEL)) {
-            $a_designation['"'.$child->MODEL."'"] = $typeDevice;
-         } else if (isset($child->NAME)) {
-            $a_designation['"'.$child->NAME."'"] = $typeDevice;
-         }
-      }
       $CompDevice = new Computer_Device('DeviceDrive');
-      $DeviceDrive = new DeviceDrive();
       
-      $a_drives = $CompDevice->find("`computers_id`='".$idmachine."' ");
-      foreach ($a_drives as $id => $data) {
-         $DeviceDrive->getFromDB($data['devicedrives_id']);
-         if (isset($a_designation['"'.$DeviceDrive->fields['designation']."'"])) {
-            unset($a_designation['"'.$DeviceDrive->fields['designation']."'"]);
-         }
-      }
-
       $CompHardDevice = new Computer_Device('DeviceHardDrive');
-      $DeviceHardDrive = new DeviceHardDrive();
-
-      $a_drives = $CompHardDevice->find("`computers_id`='".$idmachine."' ");
-      foreach ($a_drives as $id => $data) {
-         $DeviceHardDrive->getFromDB($data['deviceharddrives_id']);
-         if (isset($a_designation['"'.$DeviceHardDrive->fields['designation']."'"])) {
-            unset($a_designation['"'.$DeviceHardDrive->fields['designation']."'"]);
+      
+      if ($typeDevice == "Drive") {
+         $CompDevice->getFromDB($items_id);
+         if ($CompDevice->fields['computers_id'] == $idmachine) {
+            $CompDevice->delete(array("id" => $items_id,
+                                          "_itemtype" => 'DeviceDrive'));
          }
-      }
-
-      foreach($a_designation as $type) {
-         if ($type == "Drive") {
-            $CompDevice->getFromDB($items_id);
-            if ($CompDevice->fields['computers_id'] == $idmachine) {
-               $CompDevice->delete(array("id" => $items_id,
-                                             "_itemtype" => 'DeviceDrive'));
-            }
-         } else if ($type == "HardDrive") {
-            $CompHardDevice->getFromDB($items_id);
-            if ($CompHardDevice->fields['computers_id'] == $idmachine) {
-               $CompHardDevice->delete(array("id" => $items_id,
-                                             "_itemtype" => 'DeviceHardDrive'));
-            }
+      } else if ($typeDevice == "HardDrive") {
+         $CompHardDevice->getFromDB($items_id);
+         if ($CompHardDevice->fields['computers_id'] == $idmachine) {
+            $CompHardDevice->delete(array("id" => $items_id,
+                                          "_itemtype" => 'DeviceHardDrive'));
          }
       }
    }
