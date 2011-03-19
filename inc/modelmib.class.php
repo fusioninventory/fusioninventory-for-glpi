@@ -272,7 +272,7 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
       $types = array();
       $types[] = "-----";
       $oMapping = new PluginFusioninventoryMapping;
-      $mappings = $oMapping->find();
+      $mappings = $oMapping->find("`itemtype`='".$type_model."'");
       foreach ($mappings as $name=>$mapping) {
          if (!isset($LANG['plugin_fusinvsnmp']['mapping'][$mapping['locale']])) {
             $types[$mapping['id']] = $mapping['name'];
