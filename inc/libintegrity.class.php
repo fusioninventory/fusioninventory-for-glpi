@@ -47,10 +47,9 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
       $Computer = new Computer();
 
+      $start = 0;
       if (isset($_REQUEST["start"])) {
          $start = $_REQUEST["start"];
-      } else {
-         $start = 0;
       }
 
       // Total Number of events
@@ -58,10 +57,9 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
                                      "");
 
       // Display the pager
-      printAjaxPager($LANG['title'][38],$start,$number);
+      printPager($start,$number,GLPI_ROOT."/plugins/fusinvinventory/front/libintegrity.form.php",'');
 
-
-      echo "<br/><form method='post' name='' id=''  action=\"".GLPI_ROOT . "/plugins/fusinvinventory/front/libintegrity.form.php\">";
+      echo "<form method='post' name='' id=''  action=\"".GLPI_ROOT . "/plugins/fusinvinventory/front/libintegrity.form.php\">";
       echo "<table class='tab_cadre' width='500'>";
       echo "<tr>";
       echo "<th colspan='2'>";
@@ -190,6 +188,8 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
 
                   case 'BIOS':
                   case 'HARDWARE':
+                  case 'ANTIVIRUS':
+                  case 'USERS':
                      break;
 
                   default:
@@ -300,6 +300,9 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       echo "</tr>";
       echo "</table>";
       echo "</form>";
+
+      printPager($start,$number,GLPI_ROOT."/plugins/fusinvinventory/front/libintegrity.form.php",'');
+
    }
 
 
