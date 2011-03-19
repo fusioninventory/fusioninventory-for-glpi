@@ -461,14 +461,14 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
 
                case 'Printer':
                   $a_Printerport = $NetworkPort->find("`itemtype`='Printer' AND `items_id`='".$taskjobstatusdatas['items_id']."'");
-                  $port_id = '';
+                  $port_ip = '';
                   foreach($a_Printerport as $portdata) {
-                     if (!empty($portdata['ip']) AND ($portdata['ip'] != '127.0.0.1')) {
+                     if ($portdata['ip'] != '' AND ($portdata['ip'] != '127.0.0.1')) {
                         $port_ip = $portdata['ip'];
                         break;
                      }
                   }
-                  if ($port_id != '') {
+                  if ($port_ip != '') {
                      $sxml_device->addAttribute('TYPE', 'PRINTER');
                      $sxml_device->addAttribute('ID', $taskjobstatusdatas['items_id']);
                      $sxml_device->addAttribute('IP', $port_ip);
