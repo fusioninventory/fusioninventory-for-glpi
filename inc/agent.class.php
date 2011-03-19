@@ -435,19 +435,36 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $a_ip = $this->getIPs($_POST['id'], 'Computer');
       $waiting = 0;
       foreach($a_ip as $ip) {
-         $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($ip,0);
-         if ($agentStatus) {
+         $agentStatus = $PluginFusioninventoryTaskjob->getRealStateAgent($agent_id);
+         if ($agentStatus == 'waiting') {
             if ($waiting == '0') {
                $waiting = 1;
-               echo $LANG['plugin_fusioninventory']['agents'][22];
+               echo $LANG['plugin_fusioninventory']['agents'][38];
                echo "<input type='hidden' name='ip' value='".$ip."' />";
                echo "<input type='hidden' name='agent_id' value='".$agent_id."' />";
                break;
             }
          }
+         if ($waiting == '0') {
+            switch($agentStatus) {
+
+               case 'running':
+                  $waiting = $LANG['plugin_fusioninventory']['agents'][39];
+                  break;
+
+               case 'noanswer':
+                  $waiting = $LANG['plugin_fusioninventory']['agents'][30];
+                  break;
+
+               case 'noanswer':
+                  $waiting = $LANG['plugin_fusioninventory']['agents'][40];
+                  break;
+
+            }
+         }
       }
-      if ($waiting == '0') {
-         echo $LANG['plugin_fusioninventory']['agents'][30];
+      if ($waiting != '1') {
+         echo $waiting;
       }
       echo "</td>";
       echo "</tr>";
