@@ -125,6 +125,9 @@ $LANG['plugin_fusioninventory']['agents'][34]="Activation (by default)";
 $LANG['plugin_fusioninventory']['agents'][35]="Device_id";
 $LANG['plugin_fusioninventory']['agents'][36]="Agent modules";
 $LANG['plugin_fusioninventory']['agents'][37]="locked";
+$LANG['plugin_fusioninventory']['agents'][38]="Available";
+$LANG['plugin_fusioninventory']['agents'][39]="Running";
+$LANG['plugin_fusioninventory']['agents'][40]="Computer without known IP";
 
 $LANG['plugin_fusioninventory']['unknown'][2]="Подтверждённые устройства";
 $LANG['plugin_fusioninventory']['unknown'][4]="Сетевой хаб";

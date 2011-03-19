@@ -125,6 +125,9 @@ $LANG['plugin_fusioninventory']['agents'][34]="Aktivierung (Standard)";
 $LANG['plugin_fusioninventory']['agents'][35]="Device_id";
 $LANG['plugin_fusioninventory']['agents'][36]="Agenten-Module";
 $LANG['plugin_fusioninventory']['agents'][37]="gesperrt";
+$LANG['plugin_fusioninventory']['agents'][38]="Available";
+$LANG['plugin_fusioninventory']['agents'][39]="Running";
+$LANG['plugin_fusioninventory']['agents'][40]="Computer without known IP";
 
 $LANG['plugin_fusioninventory']['unknown'][2]="Genehmigte Geräte";
 $LANG['plugin_fusioninventory']['unknown'][4]="Netzwerk-Hub";

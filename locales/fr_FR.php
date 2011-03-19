@@ -125,6 +125,9 @@ $LANG['plugin_fusioninventory']['agents'][34]="Activation (par défaut)";
 $LANG['plugin_fusioninventory']['agents'][35]="Identifiant";
 $LANG['plugin_fusioninventory']['agents'][36]="Modules de l'agent";
 $LANG['plugin_fusioninventory']['agents'][37]="Verrouillé";
+$LANG['plugin_fusioninventory']['agents'][38]="Disponible";
+$LANG['plugin_fusioninventory']['agents'][39]="En cours d'éxécution";
+$LANG['plugin_fusioninventory']['agents'][40]="Ordinateur sans IP connue";
 
 $LANG['plugin_fusioninventory']['unknown'][2]="Matériel approuvé";
 $LANG['plugin_fusioninventory']['unknown'][4]="Hub réseau";
