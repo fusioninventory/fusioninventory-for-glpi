@@ -386,7 +386,6 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                         break;
 
                   }
-                  logInFile("uuuu", print_r($a_input, true));
                   $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
                   //Add log of taskjob
                      $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
