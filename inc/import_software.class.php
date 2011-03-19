@@ -57,10 +57,16 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
          return;
       }
 
+      $manufacturer = NULL;
+      if (isset($array['PUBLISHER'])) {
+         $manufacturer = Manufacturer::processName($array['PUBLISHER']);
+      }
+
       $rulecollection = new RuleDictionnarySoftwareCollection();
       $Software = new Software();
 
       $res_rule = $rulecollection->processAllRules(array("name"=>$array['name'],
+                                                         "manufacturer"=>$manufacturer,
                                                          "old_version"=>$array['version']));
       $modified_name = "";
       if (isset($res_rule["name"])) {
@@ -75,13 +81,7 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
          $modified_version = $array['version'];
       }
 
-      $manufacturer = 0;
-      if (isset($array['PUBLISHER'])) {
-         $manufacturer = Dropdown::importExternal('Manufacturer', $array['PUBLISHER']);
-      }
-
       $software_id = $Software->addOrRestoreFromTrash($modified_name, $manufacturer, $_SESSION["plugin_fusinvinventory_entity"]);
-
 
       $isNewVers = 0;
       $query = "SELECT `id`
@@ -101,7 +101,7 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
          $input["softwares_id"] = $software_id;
          $input["name"] = $modified_version;
          if (isset($array['PUBLISHER'])) {
-            $input["manufacturers_id"] = Dropdown::importExternal('Manufacturer', $array['PUBLISHER']);
+            $input["manufacturers_id"] = $manufacturer;
          }
          $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
          $isNewVers = $SoftwareVersion->add($input);
