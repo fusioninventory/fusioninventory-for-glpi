@@ -76,6 +76,16 @@ class PluginFusinvinventoryLibhook {
        $changes[1]="";
        $changes[2]='Create computer by FusionInventory';
        Log::history($items_id,'Computer',$changes, 0, HISTORY_LOG_SIMPLE_MESSAGE);
+
+      // Transfer agent entity
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+      if ($agent_id = $PluginFusioninventoryAgent->getAgentWithComputerid($items_id)) {
+         $PluginFusioninventoryAgent->getFromDB($agent_id);
+         if ($PluginFusioninventoryAgent->getEntityID() != $_SESSION["plugin_fusinvinventory_entity"]) {
+            $PluginFusioninventoryAgent->fields['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+            $PluginFusioninventoryAgent->update($PluginFusioninventoryAgent->fields);
+         }
+      }
     }
 
 
