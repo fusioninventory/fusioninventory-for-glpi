@@ -335,12 +335,18 @@ class PluginFusinvinventoryLibhook {
                // Add version of software
                // link version with computer : glpi_computers_softwareversions
                $PluginFusinvinventoryImport_Software = new PluginFusinvinventoryImport_Software();
+               if (!isset($dataSection['PUBLISHER'])) {
+                  $dataSection['PUBLISHER'] = NULL;
+               }
+
                if (isset($dataSection['VERSION'])) {
                   $Computer_SoftwareVersion_id = $PluginFusinvinventoryImport_Software->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
-                                                                              'version'=>$dataSection['VERSION']));
+                                                                              'version'=>$dataSection['VERSION'],
+                                                                              'PUBLISHER'=>$dataSection['PUBLISHER']));
                } else {
                   $Computer_SoftwareVersion_id = $PluginFusinvinventoryImport_Software->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
-                                                                              'version'=>'0'));
+                                                                              'version'=>'0',
+                                                                              'PUBLISHER'=>$dataSection['PUBLISHER']));
                }
                if (empty($Computer_SoftwareVersion_id)) {
                   $Computer_SoftwareVersion_id = $j;
