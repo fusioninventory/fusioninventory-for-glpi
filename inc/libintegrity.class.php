@@ -47,7 +47,21 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
       $Computer = new Computer();
 
-      echo "<form method='post' name='' id=''  action=\"".GLPI_ROOT . "/plugins/fusinvinventory/front/libintegrity.form.php\">";
+      if (isset($_REQUEST["start"])) {
+         $start = $_REQUEST["start"];
+      } else {
+         $start = 0;
+      }
+
+      // Total Number of events
+      $number = countElementsInTable("glpi_plugin_fusinvinventory_libserialization",
+                                     "");
+
+      // Display the pager
+      printAjaxPager($LANG['title'][38],$start,$number);
+
+
+      echo "<br/><form method='post' name='' id=''  action=\"".GLPI_ROOT . "/plugins/fusinvinventory/front/libintegrity.form.php\">";
       echo "<table class='tab_cadre' width='500'>";
       echo "<tr>";
       echo "<th colspan='2'>";
@@ -58,7 +72,8 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
 
-      $query = "SELECT * FROM `glpi_plugin_fusinvinventory_libserialization`";
+      $query = "SELECT * FROM `glpi_plugin_fusinvinventory_libserialization`
+          LIMIT ".intval($start)."," . intval($_SESSION['glpilist_limit']);
       $result=$DB->query($query);
 		while ($a_computerlib=$DB->fetch_array($result)) {
          $computer_id = $a_computerlib['computers_id'];
@@ -265,14 +280,12 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
                }
             }
          }
+         echo "<tr>";
+         echo "<th colspan='2'>";
+         echo $Computer->getLink(1);
+         echo "</th>";
+         echo "</tr>";
          if ($text != '') {
-
-            echo "<tr>";
-            echo "<th colspan='2'>";
-            echo $Computer->getLink(1);
-            echo "</th>";
-            echo "</tr>";
-            
             echo $text;
          }
       }
