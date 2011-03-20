@@ -271,6 +271,45 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $PluginFusioninventoryTaskjob->delete($a_taskjob, 1);
       }
    }
+
+
+
+   /**
+   * Purge task and taskjob related with method 
+   *
+   * @param $method value name of the method
+   *
+   * @return nothing
+   *
+   **/
+   static function cleanTasksbyMethod($method) {
+      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $PluginFusioninventoryTask = new PluginFusioninventoryTask();
+
+      $a_taskjobs = $PluginFusioninventoryTaskjob->find("`method`='".$method."'");
+      $task_id = 0;
+      foreach($a_taskjobs as $a_taskjob) {
+         $PluginFusioninventoryTaskjob->delete($a_taskjob, 1);
+         if (($task_id != $a_taskjob['plugin_fusioninventory_tasks_id'])
+            AND ($task_id != '0')) {
+
+            // Search if this task have other taskjobs, if not, we will delete it
+            $findtaskjobs = $PluginFusioninventoryTaskjob->find("`plugin_fusioninventory_tasks_id`='".$task_id."'");
+            if (count($findtaskjobs) == '0') {
+               $PluginFusioninventoryTask->delete(array('id'=>$task_id), 1);
+            }
+         }
+         $task_id = $a_taskjob['plugin_fusioninventory_tasks_id'];         
+      }
+      if ($task_id != '0') {
+
+         // Search if this task have other taskjobs, if not, we will delete it
+         $findtaskjobs = $PluginFusioninventoryTaskjob->find("`plugin_fusioninventory_tasks_id`='".$task_id."'");
+         if (count($findtaskjobs) == '0') {
+            $PluginFusioninventoryTask->delete(array('id'=>$task_id), 1);
+         }
+      }
+   }
    
 }
 
