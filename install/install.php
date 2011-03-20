@@ -156,6 +156,10 @@ function pluginFusinvsnmpUninstall() {
 //      $np->cleanDBonPurge($NetworkPort['id']);
 //      $np->deleteFromDB($NetworkPort['id']);
 //   }
+
+   PluginFusioninventoryTask::cleanTasksbyMethod('netdiscovery');
+   PluginFusioninventoryTask::cleanTasksbyMethod('snmpquery');
+
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
 
    $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
