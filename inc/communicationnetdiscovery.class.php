@@ -171,12 +171,12 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       $data = array ();
       $data = $rule->processAllRules($input, array());
       if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
-         logInFile("xxx", print_r($data, true));
+         logInFile("pluginFusioninventory-rules", print_r($data, true));
       }
       if ((isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1'))
             OR (isset($data['action']) AND ($data['action'] == '2'))) {
          if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
-            logInFile("xxx", "norulematch = 1");
+            logInFile("pluginFusioninventory-rules", "norulematch = 1");
          }
          if (isset($input['itemtype'])) {
             $this->rulepassed(0, $input['itemtype']);
@@ -351,7 +351,6 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                   AND `items_id`='".$class->fields['id']."'");
             $update = 0;
             foreach ($a_unknownPorts as $a_unknownPort) {
-               logInFile("print", print_r($a_unknownPort, true));
                if (isset($xml->MAC) AND !empty($xml->MAC)) {
                   $xml->MAC = strtolower((string)$xml->MAC);
                   if ($a_unknownPort['mac'] == (string)$xml->MAC) {
