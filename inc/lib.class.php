@@ -310,11 +310,11 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                      //Finally, we have to determine if it's an update or not
                      $boolUpdate = false;
 if (!unserialize($serializedSectionToAdd)) {
-   logInFile('serialise', $serializedSectionToAdd);
+   //logInFile('serialise', $serializedSectionToAdd);
 }
                      $arrSectionToAdd = unserialize($serializedSectionToAdd);
 if (!unserialize($serializedSectionToRemove)) {
-   logInFile('serialise', $serializedSectionToRemove);
+   //logInFile('serialise', $serializedSectionToRemove);
 }
                      $arrSectionToRemove = unserialize($serializedSectionToRemove);
                      

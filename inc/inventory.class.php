@@ -137,7 +137,7 @@ class PluginFusinvinventoryInventory {
          $this->rulepassed(0, "Computer");
       }
       if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
-         logInFile("xxx",print_r($data, true));
+         logInFile("pluginFusioninventory-rules",print_r($data, true));
       }
    }
    
@@ -154,7 +154,7 @@ class PluginFusinvinventoryInventory {
    **/
    function rulepassed($items_id, $itemtype) {
       if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
-         logInFile("xxx", "Rule passed : ".$items_id.", ".$itemtype."\n");
+         logInFile("pluginFusioninventory-rules", "Rule passed : ".$items_id.", ".$itemtype."\n");
       }
       $xml = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
 
