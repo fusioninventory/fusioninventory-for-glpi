@@ -198,6 +198,8 @@ function pluginFusinvinventoryUninstall() {
       $PluginFusioninventorySetup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/machines');
    }
 
+   PluginFusioninventoryTask::cleanTasksbyMethod('inventory');
+
    // Delete config
    $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
