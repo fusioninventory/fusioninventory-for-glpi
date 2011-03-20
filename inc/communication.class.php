@@ -233,7 +233,7 @@ class PluginFusioninventoryCommunication {
       global $CFG_GLPI;
       if ($_SESSION['glpi_use_mode']==DEBUG_MODE) {
          if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
-            file_put_contents(GLPI_LOG_DIR.'/fusioninventorycommunication.log',
+            file_put_contents(GLPI_LOG_DIR.'/pluginFusioninventory-communication.log',
                               "\n".time().' : '.$p_logs,
                               FILE_APPEND);
          }
