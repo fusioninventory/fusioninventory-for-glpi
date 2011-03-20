@@ -103,7 +103,7 @@ class PluginFusinvinventoryLibhook {
        global $DB;
 
        if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
-         logInFile("addsection", "[".$idmachine."] ".print_r($data, true));
+         logInFile("pluginFusinvinventory-addsection", "[".$idmachine."] ".print_r($data, true));
        }
        
       $Computer = new Computer();
@@ -484,7 +484,7 @@ class PluginFusinvinventoryLibhook {
       $_SESSION["plugin_fusinvinventory_entity"] = $Computer->fields['entities_id'];
 
         if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
-           logInFile("removesection", "[".$idmachine."] ".print_r($idsections, true));
+           logInFile("pluginFusinvinventory-removesection", "[".$idmachine."] ".print_r($idsections, true));
         }
         
         foreach ($idsections as $section) {
@@ -759,7 +759,7 @@ class PluginFusinvinventoryLibhook {
          }
       }
       if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
-         logInFile("updatesection", "[".$idmachine."] ".print_r($data, true));
+         logInFile("pluginFusinvinventory-updatesection", "[".$idmachine."] ".print_r($data, true));
       }
     }
 
