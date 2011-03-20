@@ -325,10 +325,10 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       if ($count_discovery_devices != "0") {
          $ptap->updateState($_SESSION['glpi_plugin_fusioninventory_processnumber'], array('nb_found' => $count_discovery_devices), $agent['id']);
          foreach($p_xml->DEVICE as $discovery) {
-
-            $PluginFusinvsnmpCommunicationNetDiscovery = new PluginFusinvsnmpCommunicationNetDiscovery();
-            $PluginFusinvsnmpCommunicationNetDiscovery->sendCriteria($discovery);
-
+            if (count($discovery) > 0) {
+               $PluginFusinvsnmpCommunicationNetDiscovery = new PluginFusinvsnmpCommunicationNetDiscovery();
+               $PluginFusinvsnmpCommunicationNetDiscovery->sendCriteria($discovery);
+            }
          }
       }
 	}
