@@ -152,10 +152,11 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[detail] '.(string)$child->ERROR->MESSAGE.' [['.$itemtype.'::'.$child->ERROR->ID.']]';
                   $this->addtaskjoblog();
                } else {
-
 //               $errors.=$this->importDevice($child);
-                  $this->sendCriteria($this->sxml->DEVICEID, $child);
-                  $nbDevices++;
+                  if (count($child) > 0) {
+                     $this->sendCriteria($this->sxml->DEVICEID, $child);
+                     $nbDevices++;
+                  }
                }
                break;
 
