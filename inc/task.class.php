@@ -250,6 +250,27 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       return true;
    }
+
+
+
+   /**
+   * Purge task and taskjob
+   *
+   * @param $parm object to purge
+   *
+   * @return nothing
+   *
+   **/
+   static function purgeTask($parm) {
+      // $parm["id"]
+      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+
+      // all taskjobs
+      $a_taskjobs = $PluginFusioninventoryTaskjob->find("`plugin_fusioninventory_tasks_id`='".$parm->fields["id"]."'");
+      foreach($a_taskjobs as $a_taskjob) {
+         $PluginFusioninventoryTaskjob->delete($a_taskjob, 1);
+      }
+   }
    
 }
 

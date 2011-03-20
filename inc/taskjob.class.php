@@ -1271,6 +1271,24 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $this->update($this->fields);      
    }
 
+
+
+   static function purgeTaskjob($parm) {
+      // $parm["id"]
+      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+
+      // all taskjobs
+      $a_taskjobstatuss = $PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$parm->fields["id"]."'");
+      foreach($a_taskjobstatuss as $a_taskjobstatus) {
+         $a_taskjoblogs = $PluginFusioninventoryTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$a_taskjobstatus['id']."'");
+         foreach($a_taskjoblogs as $a_taskjoblog) {
+            $PluginFusioninventoryTaskjoblog->delete($a_taskjoblog, 1);
+         }
+         $PluginFusioninventoryTaskjobstatus->delete($a_taskjobstatus, 1);
+      }
+   }
+
 }
 
 ?>
