@@ -1063,7 +1063,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       if ((isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1'))
             OR (isset($data['action']) AND ($data['action'] == '2'))) {
          if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
-            logInFile("xxx", "norulematch = 1");
+            logInFile("pluginFusioninventory-rules", "norulematch = 1");
          }
          if (isset($input['itemtype'])) {
             $this->rulepassed(0, $input['itemtype']);
