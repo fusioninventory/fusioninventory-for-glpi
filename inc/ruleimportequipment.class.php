@@ -247,7 +247,7 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
    function findWithGlobalCriteria($input) {
       global $DB, $CFG_GLPI;
       if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
-         logInFile("xxx", print_r($input, true));
+         logInFile("pluginFusioninventory-rules", print_r($input, true));
       }
       $complex_criterias = array();
       $sql_where         = '';
@@ -446,7 +446,7 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
       // Suivant le / les types, on cherche dans un ou plusieurs / tous les types
       $found = 0;
       if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
-         logInFile("xxx", "===============\n");
+         logInFile("pluginFusioninventory-rules", "===============\n");
       }
       foreach ($itemtypeselected as $itemtype) {
          $sql_from_temp = "";
@@ -478,7 +478,7 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
             $sql_glpi = str_replace("[typetable]", $item->getTable(), $sql_glpi);
             $sql_glpi = str_replace("[typename]", $itemtype, $sql_glpi);
             if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
-               logInFile("xxx", $sql_glpi."\n");
+               logInFile("pluginFusioninventory-rules", $sql_glpi."\n");
             }
             $result_glpi = $DB->query($sql_glpi);
 
@@ -498,7 +498,7 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
             if ($action->fields['field'] == '_fusion') {
                if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_NO_IMPORT) {
                   if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
-                     logInFile("xxx", "Return true because link or Import\n");
+                     logInFile("pluginFusioninventory-rules", "Return true because link or Import\n");
                   }
                   return true;
                }
@@ -523,13 +523,13 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
          $class = new $classname();
       }
       if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
-         logInFile("xxx", "execute action\n");
+         logInFile("pluginFusioninventory-rules", "execute action\n");
       }
       if (count($this->actions)) {
          foreach ($this->actions as $action) {
             if ($action->fields['field'] == '_fusion') {
                if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
-                  logInFile("xxx", "value".$action->fields["value"]."\n");
+                  logInFile("pluginFusioninventory-rules", "value".$action->fields["value"]."\n");
                }
                if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_IMPORT) {
                   if (isset($this->criterias_results['found_equipment'])) {
