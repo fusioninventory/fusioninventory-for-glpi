@@ -902,14 +902,14 @@ class PluginFusinvinventoryLibhook {
     *
     **/
     function Suppliertag($items_id, $partnumber) {
-      // If plugin supliertag installed, update model table
-      $Plugin = new Plugin();
-      if ($Plugin->isActivated('manufacturersimports')) {
-         $PluginManufacturersimportsModel = new PluginManufacturersimportsModel();
-         $PluginManufacturersimportsModel->addModel($items_id, 'Computer', $partnumber);
-      }       
+      if ($partnumber != 'Not Specified') {
+         $Plugin = new Plugin();
+         if ($Plugin->isActivated('manufacturersimports')) {
+            $PluginManufacturersimportsModel = new PluginManufacturersimportsModel();
+            $PluginManufacturersimportsModel->addModel($items_id, 'Computer', $partnumber);
+         }
+      }
     }
-
 }
 
 ?>
