@@ -556,6 +556,14 @@ function appear_array(id){
 
    }
 
+   static function getByUniqID($uuid) {
+      $results = getAllDatasFromTable('glpi_plugin_fusioninventory_taskjobstatus',
+                                      "`uniqid`='$uuid'");
+      foreach ($results as $result) {
+         return $result;
+      }
+      return array();
+   }
 }
 
 ?>
