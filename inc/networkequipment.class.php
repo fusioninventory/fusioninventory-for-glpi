@@ -312,22 +312,17 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 
-		$history = new PluginFusinvsnmpNetworkPortLog();
-
 		if (!PluginFusioninventoryProfile::haveRight("fusinvsnmp", "networkequipment","r")) {
 			return false;
       }
+      $canedit = false;
 		if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "networkequipment","w")) {
 			$canedit = true;
-      } else {
-			$canedit = false;
       }
 
 		$this->oFusionInventory_networkequipment->id = $id;
 
 		$nw=new NetworkPort_NetworkPort();
-		$plugin_fusioninventory_snmp = new PluginFusinvsnmpSNMP();
-
 		
       if (!$data = $this->oFusionInventory_networkequipment->find("`networkequipments_id`='".$id."'", '', 1)) {
          // Add in database if not exist
