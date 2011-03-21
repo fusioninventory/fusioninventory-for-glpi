@@ -167,6 +167,10 @@ class PluginFusinvinventoryLibhook {
                   $Computer->fields['computertypes_id'] = Dropdown::importExternal('ComputerType',
                                                                           $dataSection['TYPE']);
                }
+               if (isset($dataSection['SKUNUMBER'])) {
+                  $PluginFusinvinventoryLibhook = new PluginFusinvinventoryLibhook();
+                  $PluginFusinvinventoryLibhook->Suppliertag($idmachine, $dataSection['SKUNUMBER']);
+               }
                break;
 
             case 'HARDWARE':
@@ -668,6 +672,10 @@ class PluginFusinvinventoryLibhook {
                      $Computer->fields['computertypes_id'] = Dropdown::importExternal('ComputerType',
                                                                           $dataSection['TYPE']);
                   }
+                  if (isset($dataSection['SKUNUMBER'])) {
+                     $PluginFusinvinventoryLibhook = new PluginFusinvinventoryLibhook();
+                     $PluginFusinvinventoryLibhook->Suppliertag($idmachine, $dataSection['SKUNUMBER']);
+                  }
 
                   $Computer->update($Computer->fields);
                   break;
@@ -881,6 +889,27 @@ class PluginFusinvinventoryLibhook {
 
        return $opt;
     }
+
+
+
+    /**
+    * Update model for HP for suppliertag plugin
+    *
+    * @param $items_id integer id of the computer
+    * @param $partnumber value HP partnumber
+    *
+    * @return nothing
+    *
+    **/
+    function Suppliertag($items_id, $partnumber) {
+      // If plugin supliertag installed, update model table
+      $Plugin = new Plugin();
+      if ($Plugin->isActivated('manufacturersimports')) {
+         $PluginManufacturersimportsModel = new PluginManufacturersimportsModel();
+         $PluginManufacturersimportsModel->addModel($items_id, 'Computer', $partnumber);
+      }       
+    }
+
 }
 
 ?>
