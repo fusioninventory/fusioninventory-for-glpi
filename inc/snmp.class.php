@@ -280,6 +280,31 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
 		return($PortID);
 	}
 
+
+
+   function getPortIDfromSysmacandPortnumber($sysmac, $ifnumber) {
+      global $DB;
+
+      $PortID = '';
+      $queryPort = "SELECT *
+         FROM `glpi_plugin_fusinvsnmp_networkports`
+         LEFT JOIN `glpi_networkports`
+            ON `glpi_plugin_fusinvsnmp_networkports`.`networkports_id`=
+               `glpi_networkports`.`id`
+         WHERE `glpi_networkports`.`mac`='".$sysmac."'
+            AND `glpi_networkports`.`itemtype`='NetworkEquipment'
+            AND `logical_number`='".$ifnumber."'";
+      $resultPort = $DB->query($queryPort);
+      $dataPort = $DB->fetch_assoc($resultPort);
+      if ($DB->numrows($resultPort) == "1") {
+         $PortID = $dataPort['networkports_id'];
+      }
+      return($PortID);
+      
+   }
+   
+
+
 	/**
 	 * Get port id from device MAC address
 	 *

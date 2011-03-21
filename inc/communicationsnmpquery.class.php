@@ -117,6 +117,14 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                                                       $this->agent['id'],
                                                       'PluginFusioninventoryAgent');
          }
+         if (isset($p_CONTENT->AGENT->START)) {
+            $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = $p_CONTENT->PROCESSNUMBER;
+            $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $this->agent['id'];
+            $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
+            $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
+            $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==fusinvsnmp::6==';
+            $this->addtaskjoblog();
+         }
       }
       return $result;
    }
@@ -867,25 +875,40 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->importConnection().');
       $errors='';
-      $portID=''; $mac=''; $ip='';
+      $portID=''; $mac=''; $ip=''; $sysmac=''; $ifnumber='';
       $ptsnmp= new PluginFusinvsnmpSNMP;
       if ($p_cdp==1) {
          $ifdescr='';
          foreach ($p_connection->children() as $name=>$child) {
             switch ($child->getName()) {
+               
                case 'IP' :
                   $ip=(string)$child;
                   $p_oPort->addIp($ip);
                   break;
+
                case 'IFDESCR' :
                   $ifdescr=(string)$child;
                   break;
+
+               case 'SYSMAC': // LLDP Nortel
+                  $sysmac=(string)$child;
+                  break;
+
+               case 'IFNUMBER': // LLDP Nortel
+                  $ifnumber=(string)$child;
+                  break;
+               
                default :
                   $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CONNECTION (CDP='.$p_cdp.') : '
                            .$child->getName()."\n";
             }
          }
-         $portID=$ptsnmp->getPortIDfromDeviceIP($ip, $ifdescr);
+         if ($ip != '' AND $ifdescr!='') {
+            $portID=$ptsnmp->getPortIDfromDeviceIP($ip, $ifdescr);
+         } else if($sysmac != '' AND $ifnumber!='') {
+            $portID=$ptsnmp->getPortIDfromSysmacandPortnumber($sysmac, $ifnumber);
+         }
       } else {
          foreach ($p_connection->children() as $name=>$child) {
             switch ($child->getName()) {
@@ -1019,8 +1042,11 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->sendCriteria().');
 
-//      $PluginFusinvinventoryBlacklist = new PluginFusinvinventoryBlacklist();
-//      $p_xml = $PluginFusinvinventoryBlacklist->cleanBlacklist($p_xml);
+      // Manual blacklist
+       if ((isset($p_CONTENT->INFO->SERIAL)) AND ($p_CONTENT->INFO->SERIAL == 'null')) {
+          unset($p_CONTENT->INFO->SERIAL);
+       }
+       // End manual blacklist
 
        $_SESSION['SOURCE_XMLDEVICE'] = $p_CONTENT->asXML();
 
@@ -1111,7 +1137,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
          $class->update($class->fields);
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
-               '[detail] Update unknown device [[PluginFusioninventoryUnknownDevice::'.$items_id.']]';
+            '[detail] ==fusinvsnmp::5== Update '.PluginFusioninventoryUnknownDevice::getTypeName().' [[PluginFusioninventoryUnknownDevice::'.$items_id.']]';
          $this->addtaskjoblog();
 
       } else {

@@ -58,7 +58,24 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      
+
+      $start = 0;
+      if (isset($_REQUEST["start"])) {
+         $start = $_REQUEST["start"];
+      }
+
+      // Total Number of events
+      $querycount = "SELECT count(*) AS cpt FROM `glpi_plugin_fusioninventory_taskjobstatus`
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` on `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
+         WHERE `method` = 'snmpinventory'
+         GROUP BY `uniqid`
+         ORDER BY `uniqid` DESC ";
+      $resultcount = $DB->query($querycount);
+      $number = $DB->numrows($resultcount);
+
+      // Display the pager
+      printPager($start,$number,GLPI_ROOT."/plugins/fusinvsnmp/front/stateinventory.php",'');
+
       echo "<table class='tab_cadre_fixe'>";
 
 		echo "<tr class='tab_bg_1'>";
@@ -79,7 +96,8 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
          LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` on `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
          WHERE `method` = 'snmpinventory'
          GROUP BY `uniqid`
-         ORDER BY `uniqid` DESC";
+         ORDER BY `uniqid` DESC
+         LIMIT ".intval($start)."," . intval($_SESSION['glpilist_limit']);
       $result=$DB->query($sql);
       while ($data=$DB->fetch_array($result)) {
          echo "<tr class='tab_bg_1'>";
@@ -101,8 +119,10 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
                   $nb_errors++;
                } else if ($taskjoblog['state'] == "1") {
                   $nb_threads = str_replace(" threads", "", $taskjoblog['comment']);
+               } else if (strstr($taskjoblog['comment'], "==fusinvsnmp::6==")) {
                   $start_date = $taskjoblog['date'];
                }
+
 
                if (($taskjoblog['state'] == "2")
                   OR ($taskjoblog['state'] == "3")

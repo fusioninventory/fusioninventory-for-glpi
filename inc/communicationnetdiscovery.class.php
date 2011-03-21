@@ -200,11 +200,11 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
          $input['date_mod'] = date("Y-m-d H:i:s");
          $items_id = $class->add($input);
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
-               '[detail] Add '.$class->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
+               '[detail] ==fusinvsnmp::4== '.$class->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
          $this->addtaskjoblog();
       } else {
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
-               '[detail] Update '.$class->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
+               '[detail] ==fusinvsnmp::5== '.$class->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
          $this->addtaskjoblog();
       }
       $this->importDevice($itemtype, $items_id);
