@@ -619,24 +619,24 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   $errors.=$this->importVlans($child, $ptp);
                   break;
                case 'IFNAME' :
-                  //PluginFusioninventoryNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
+                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('name', $child);
                   break;
                case 'MAC' :
-                  //PluginFusioninventoryNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
+                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   if (!strstr($child, '00:00:00')) {
                      $ptp->setValue('mac', $child);
                   }
                   break;
                case 'IFNUMBER' :
-                  //PluginFusioninventoryNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
+                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('logical_number', $child);
                   break;
                case 'IFTYPE' : // already managed
                   break;
                case 'TRUNK' :
                   if ((string)$child == '1') {
-                     //PluginFusioninventoryNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
+                     PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                      $ptp->setValue('trunk', 1);
                   }
                   break;
@@ -657,7 +657,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                case 'IFOUTOCTETS' :
                case 'IFSPEED' :
                case 'IFSTATUS' :
-                  //PluginFusioninventoryNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
+                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue(strtolower($name), $p_port->$name);
                   break;
                default :

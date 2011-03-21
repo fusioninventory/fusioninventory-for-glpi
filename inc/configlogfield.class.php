@@ -88,11 +88,12 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
 	function getValue($field) {
 		global $DB;
 
-      
+      // Get mapping
+      // 	plugin_fusioninventory_mappings_id
 
 		$query = "SELECT days
                 FROM ".$this->getTable()."
-                WHERE `field`='".$field."'
+                WHERE `plugin_fusioninventory_mappings_id`='".$a_mapping['id']."'
                 LIMIT 1;";
 		if ($result = $DB->query($query)) {
 			if ($this->fields = $DB->fetch_row($result)) {
