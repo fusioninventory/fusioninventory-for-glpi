@@ -875,25 +875,40 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->importConnection().');
       $errors='';
-      $portID=''; $mac=''; $ip='';
+      $portID=''; $mac=''; $ip=''; $sysmac=''; $ifnumber='';
       $ptsnmp= new PluginFusinvsnmpSNMP;
       if ($p_cdp==1) {
          $ifdescr='';
          foreach ($p_connection->children() as $name=>$child) {
             switch ($child->getName()) {
+               
                case 'IP' :
                   $ip=(string)$child;
                   $p_oPort->addIp($ip);
                   break;
+
                case 'IFDESCR' :
                   $ifdescr=(string)$child;
                   break;
+
+               case 'SYSMAC': // LLDP Nortel
+                  $sysmac=(string)$child;
+                  break;
+
+               case 'IFNUMBER': // LLDP Nortel
+                  $ifnumber=(string)$child;
+                  break;
+               
                default :
                   $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CONNECTION (CDP='.$p_cdp.') : '
                            .$child->getName()."\n";
             }
          }
-         $portID=$ptsnmp->getPortIDfromDeviceIP($ip, $ifdescr);
+         if ($ip != '' AND $ifdescr!='') {
+            $portID=$ptsnmp->getPortIDfromDeviceIP($ip, $ifdescr);
+         } else if($sysmac != '' AND $ifnumber!='') {
+            $portID=$ptsnmp->getPortIDfromSysmacandPortnumber($sysmac, $ifnumber);
+         }
       } else {
          foreach ($p_connection->children() as $name=>$child) {
             switch ($child->getName()) {
