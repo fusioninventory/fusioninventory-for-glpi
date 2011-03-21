@@ -1111,7 +1111,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
          $class->update($class->fields);
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
-               '[detail] Update unknown device [[PluginFusioninventoryUnknownDevice::'.$items_id.']]';
+            '[detail] ==fusinvsnmp::5== Update '.PluginFusioninventoryUnknownDevice::getTypeName().' [[PluginFusioninventoryUnknownDevice::'.$items_id.']]';
          $this->addtaskjoblog();
 
       } else {
