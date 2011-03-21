@@ -1042,8 +1042,11 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->sendCriteria().');
 
-//      $PluginFusinvinventoryBlacklist = new PluginFusinvinventoryBlacklist();
-//      $p_xml = $PluginFusinvinventoryBlacklist->cleanBlacklist($p_xml);
+      // Manual blacklist
+       if ((isset($p_CONTENT->INFO->SERIAL)) AND ($p_CONTENT->INFO->SERIAL == 'null')) {
+          unset($p_CONTENT->INFO->SERIAL);
+       }
+       // End manual blacklist
 
        $_SESSION['SOURCE_XMLDEVICE'] = $p_CONTENT->asXML();
 
