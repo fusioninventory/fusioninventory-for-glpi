@@ -101,8 +101,10 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
                   $nb_errors++;
                } else if ($taskjoblog['state'] == "1") {
                   $nb_threads = str_replace(" threads", "", $taskjoblog['comment']);
+               } else if (strstr($taskjoblog['comment'], "==fusinvsnmp::6==")) {
                   $start_date = $taskjoblog['date'];
                }
+
 
                if (($taskjoblog['state'] == "2")
                   OR ($taskjoblog['state'] == "3")

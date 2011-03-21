@@ -423,6 +423,7 @@ $LANG['plugin_fusinvsnmp']['codetasklog'][2]="devices found";
 $LANG['plugin_fusinvsnmp']['codetasklog'][3]="Dico too old on agent, request posted by agent";
 $LANG['plugin_fusinvsnmp']['codetasklog'][4]=$LANG['log'][20];
 $LANG['plugin_fusinvsnmp']['codetasklog'][5]=$LANG['log'][21];
+$LANG['plugin_fusinvsnmp']['codetasklog'][6]="Inventory started";
 
 $LANG['plugin_fusinvsnmp']['legend'][0]="Connection with a switch or a server in trunk or tagged mode";
 $LANG['plugin_fusinvsnmp']['legend'][1]="Other connections (with a computer, a printer...)";

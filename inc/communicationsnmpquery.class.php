@@ -117,6 +117,14 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                                                       $this->agent['id'],
                                                       'PluginFusioninventoryAgent');
          }
+         if (isset($p_CONTENT->AGENT->START)) {
+            $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = $p_CONTENT->PROCESSNUMBER;
+            $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $this->agent['id'];
+            $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
+            $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
+            $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==fusinvsnmp::6==';
+            $this->addtaskjoblog();
+         }
       }
       return $result;
    }
