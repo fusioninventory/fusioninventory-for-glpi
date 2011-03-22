@@ -285,7 +285,9 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                      LEFT JOIN `glpi_networkports` ON `glpi_networkports`.`items_id` = `glpi_plugin_fusioninventory_agents`.`items_id`
                      LEFT JOIN `glpi_computers` ON `glpi_computers`.`id` = `glpi_plugin_fusioninventory_agents`.`items_id`
                      WHERE `glpi_networkports`.`itemtype`='Computer'
-                        AND  `glpi_plugin_fusioninventory_agents`.`id`='".current($a_action)."'";
+                        AND `glpi_plugin_fusioninventory_agents`.`id`='".current($a_action)."'
+                        AND `glpi_networkports`.`ip`!='127.0.0.1'
+                        AND `glpi_networkports`.`ip`!='' ";
                   if ($result = $DB->query($query)) {
                      while ($data=$DB->fetch_array($result)) {
                         if ($communication == 'push') {
@@ -360,41 +362,46 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                $a_input['uniqid'] = $uniqid;
                $alternate = 0;
                for ($d=0; $d < ceil($count_device / count($a_agentList)); $d++) {
-                  $getdevice = "NetworkEquipment";
-                  if ($alternate == "1") {
-                     $getdevice = "Printer";
-                     $alternate = 0;
-                  } else {
+                  if ((count($a_NetworkEquipment) + count($a_Printer)) > 0) {
+                     logInFile("sure", $count_device." - ".ceil($count_device / count($a_agentList))." - ".count($a_agentList)."\n");
+                     logInFile("sure", print_r($a_NetworkEquipment, true));
+                     logInFile("sure", print_r($a_agentList, true));
                      $getdevice = "NetworkEquipment";
-                     $alternate++;
-                  }
-                  if (count($a_NetworkEquipment) == '0') {
-                     $getdevice = "Printer";
-                  } else if (count($a_Printer) == '0') {
-                     $getdevice = "NetworkEquipment";
-                  }
-                  $a_input['itemtype'] = $getdevice;
+                     if ($alternate == "1") {
+                        $getdevice = "Printer";
+                        $alternate = 0;
+                     } else {
+                        $getdevice = "NetworkEquipment";
+                        $alternate++;
+                     }
+                     if (count($a_NetworkEquipment) == '0') {
+                        $getdevice = "Printer";
+                     } else if (count($a_Printer) == '0') {
+                        $getdevice = "NetworkEquipment";
+                     }
+                     $a_input['itemtype'] = $getdevice;
 
-                  switch($getdevice) {
+                     switch($getdevice) {
 
-                     case 'NetworkEquipment':
-                        $a_input['items_id'] = array_pop($a_NetworkEquipment);
-                        break;
+                        case 'NetworkEquipment':
+                           $a_input['items_id'] = array_pop($a_NetworkEquipment);
+                           break;
 
-                     case 'Printer':
-                        $a_input['items_id'] = array_pop($a_Printer);
-                        break;
+                        case 'Printer':
+                           $a_input['items_id'] = array_pop($a_Printer);
+                           break;
 
-                  }
-                  $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
-                  //Add log of taskjob
-                     $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
-                     $a_input['state'] = 7;
-                     $a_input['date'] = date("Y-m-d H:i:s");
-                     $PluginFusioninventoryTaskjoblog->add($a_input);
-                     unset($a_input['state']);
-                  if ($communication == "push") {
-                     $_SESSION['glpi_plugin_fusioninventory']['agents'][$agent_id] = 1;
+                     }
+                     $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
+                     //Add log of taskjob
+                        $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
+                        $a_input['state'] = 7;
+                        $a_input['date'] = date("Y-m-d H:i:s");
+                        $PluginFusioninventoryTaskjoblog->add($a_input);
+                        unset($a_input['state']);
+                     if ($communication == "push") {
+                        $_SESSION['glpi_plugin_fusioninventory']['agents'][$agent_id] = 1;
+                     }
                   }
                }
             }
