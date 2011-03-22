@@ -2,7 +2,11 @@
 	<name><![CDATA[8800076]]></name>
 	<type>2</type>
 	<key>Networking0043</key>
-	<comments><![CDATA[HP J4812A ProCurve Switch 2512, revision F.05.61, ROM F.01.01  (/sw/code/build/info(s02))
+	<comments><![CDATA[HP J4812A ProCurve Switch 2512, revision F.02.02, ROM F.01.01  (/sw/code/build/info(f00))
+
+HP J4812A ProCurve Switch 2512, revision F.05.61, ROM F.01.01  (/sw/code/build/info(s02))
+
+HP J4813A ProCurve Switch 2524, revision F.02.11, ROM F.02.01  (/sw/code/build/info(f00))
 
 HP J4813A ProCurve Switch 2524, revision F.05.17, ROM F.02.01  (/sw/code/build/info(s02))
 
@@ -23,6 +27,8 @@ HP J4865A ProCurve Switch 4108GL, revision G.07.70, ROM G.05.02 (/sw/code/build/
 HP J4899A ProCurve Switch 2650, revision H.07.02, ROM H.07.01 (/sw/code/build/fish(f02))
 
 HP J4899A ProCurve Switch 2650, revision H.08.53, ROM H.08.02 (/sw/code/build/fish(f04))
+
+HP J4900B ProCurve Switch 2626, revision H.08.67, ROM H.08.02 (/sw/code/build/fish(f04))
 
 HP J4906A ProCurve Switch 3400cl-48G, revision M.08.51, ROM I.08.02 (/sw/code/build/makf(f04))
 

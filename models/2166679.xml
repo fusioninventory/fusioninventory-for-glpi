@@ -164,36 +164,6 @@ H3C Comware software. H3C S9505E Product Version S9500E-CMW520-R1238P02. Copyrig
 		</oidobject>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.4.20.1.1]]></oid>
-			<portcounter>0</portcounter>
-			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
- 			<mapping_name><![CDATA[ipAdEntAddr]]></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.4.22.1.2]]></oid>
-			<portcounter>0</portcounter>
-			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
- 			<mapping_name><![CDATA[ipNetToMediaPhysAddress]]></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.1.6.0]]></oid>
-			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>2</mapping_type>
- 			<mapping_name><![CDATA[location]]></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
 			<oid><![CDATA[.1.3.6.1.2.1.17.1.1.0]]></oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
@@ -204,11 +174,11 @@ H3C Comware software. H3C S9505E Product Version S9500E-CMW520-R1238P02. Copyrig
 		</oidobject>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.1.5.0]]></oid>
+			<oid><![CDATA[.1.3.6.1.2.1.1.6.0]]></oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
 			<mapping_type>2</mapping_type>
- 			<mapping_name><![CDATA[name]]></mapping_name>
+ 			<mapping_name><![CDATA[location]]></mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>
@@ -229,6 +199,36 @@ H3C Comware software. H3C S9505E Product Version S9500E-CMW520-R1238P02. Copyrig
 			<dynamicport>0</dynamicport>
 			<mapping_type>0</mapping_type>
  			<mapping_name><![CDATA[]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.4.20.1.1]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[ipAdEntAddr]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.4.22.1.2]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[ipNetToMediaPhysAddress]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.1.5.0]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[name]]></mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>
