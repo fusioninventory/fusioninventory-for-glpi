@@ -58,14 +58,13 @@ if (isset($_POST['update'])) {
 			break;
 
       case 'history' :
-         $pficlf = new PluginFusinvsnmpConfigLogField();
+         $PluginFusinvsnmpConfigLogField = new PluginFusinvsnmpConfigLogField();
          foreach ($_POST as $key=>$val) {
             $split = explode("-", $key);
-            if (is_int($split[0])) {
-               $input = array();
-               $input['id']   = $split[0];
-               $input['days'] = $val;
-               $pficlf->update($input);
+            if (isset($split[1]) AND is_numeric($split[1])) {
+               $PluginFusinvsnmpConfigLogField->getFromDB($split[1]);
+               $PluginFusinvsnmpConfigLogField->fields['days'] = $val;
+               $PluginFusinvsnmpConfigLogField->update($PluginFusinvsnmpConfigLogField->fields);
             }
          }
          break;
