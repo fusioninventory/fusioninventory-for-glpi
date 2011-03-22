@@ -489,7 +489,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $a_actioninitiontype['PluginFusioninventoryAgent'] = PluginFusioninventoryAgent::getTypeName();
       foreach ($a_methods as $datas) {
          if ($method == $datas['method']) {
-            $module = $datas['module'];
+            $module = ucfirst($datas['module']);
             if (is_callable(array("Plugin".$module."Staticmisc", "task_actiontype_".$method))) {
                $a_actioninitiontype = call_user_func(array("Plugin".$module."Staticmisc", "task_actiontype_".$method), $a_actioninitiontype);
             }
