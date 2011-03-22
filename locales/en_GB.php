@@ -422,4 +422,9 @@ $LANG['plugin_fusinvsnmp']['legend'][0]="Connection with a switch or a server in
 $LANG['plugin_fusinvsnmp']['legend'][1]="Other connections (with a computer, a printer...)";
 
 $LANG['plugin_fusinvsnmp']['printhistory'][1]="Too datas to display";
+
+$LANG['plugin_fusinvsnmp']["portlogs"][0]="History configuration";
+$LANG['plugin_fusinvsnmp']["portlogs"][1]="List of fields for which to keep history";
+$LANG['plugin_fusinvsnmp']["portlogs"][2]="Retention in days";
+
 ?>
