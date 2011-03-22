@@ -57,10 +57,10 @@ $LANG['plugin_fusioninventory']['functionalities'][2]="Grundlegende Konfiguratio
 $LANG['plugin_fusioninventory']['functionalities'][6]="Legende";
 $LANG['plugin_fusioninventory']['functionalities'][8]="Netzwerkports Agents";
 $LANG['plugin_fusioninventory']['functionalities'][9]="Speicherung (in Tagen)";
-$LANG['plugin_fusioninventory']['functionalities'][16]="SNMP Authentifizierung ";
+$LANG['plugin_fusioninventory']['functionalities'][16]="SNMP-Authentifizierung ";
 $LANG['plugin_fusioninventory']['functionalities'][17]="Datenbank";
 $LANG['plugin_fusioninventory']['functionalities'][18]="Dateien";
-$LANG['plugin_fusioninventory']['functionalities'][19]="Bitte Konfigurieren Sie die SNMP Authentifizierung im Setup des Plugins";
+$LANG['plugin_fusioninventory']['functionalities'][19]="Bitte Konfigurieren Sie die SNMP-Authentifizierung im Setup des Plugins";
 $LANG['plugin_fusioninventory']['functionalities'][27]="Nur SSL für die Kommunikation mit dem Agent verwenden";
 $LANG['plugin_fusioninventory']['functionalities'][29]="Feldliste, die in den Verlauf verschoben werden";
 $LANG['plugin_fusioninventory']['functionalities'][32]="Agent-Aufgabe am Ende löschen";
@@ -174,6 +174,7 @@ $LANG['plugin_fusioninventory']['update'][0]="Ihre Verlaufstabelle hat mehr als 
 
 $LANG['plugin_fusioninventory']['xml'][0]="XML";
 
-$LANG['plugin_fusioninventory']['codetasklog'][1]="Bad token, impossible to start agent";
-$LANG['plugin_fusioninventory']['codetasklog'][2]="Agent stopped/crashed";
+$LANG['plugin_fusioninventory']['codetasklog'][1]="Falcher Token, kann den Agent nicht starten";
+$LANG['plugin_fusioninventory']['codetasklog'][2]="Agent gestoppt/abgestürzt";
+
 ?>
