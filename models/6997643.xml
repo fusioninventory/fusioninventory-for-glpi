@@ -26,6 +26,8 @@ ProCurve J4899C Switch 2650, revision H.10.83, ROM H.08.05 (/sw/code/build/fish(
 
 ProCurve J4900B Switch 2626, revision H.08.106, ROM H.08.02 (/sw/code/build/fish(ts_08_5))
 
+ProCurve J4900B Switch 2626, revision H.10.31, ROM H.08.02 (/sw/code/build/fish(mkfs))
+
 ProCurve J4900B Switch 2626, revision H.10.83, ROM H.08.02 (/sw/code/build/fish(mkfs))
 
 ProCurve J4903A Switch 2824, revision I.08.105, ROM I.08.07 (/sw/code/build/mako(ts_08_5))
@@ -99,6 +101,8 @@ ProCurve J9085A Switch 2610-24, revision R.11.16, ROM R.10.06 (/sw/code/build/ne
 ProCurve J9085A Switch 2610-24, revision R.11.30, ROM R.10.06 (/sw/code/build/nemo(ndx))
 
 ProCurve J9087A Switch 2610-24-PWR, revision R.11.22, ROM R.10.06 (/sw/code/build/nemo(ndx))
+
+ProCurve J9087A Switch 2610-24-PWR, revision R.11.30, ROM R.10.06 (/sw/code/build/nemo(ndx))
 
 ProCurve J9088A Switch 2610-48, revision R.11.07, ROM R.10.06 (/sw/code/build/nemo(ndx))
 
