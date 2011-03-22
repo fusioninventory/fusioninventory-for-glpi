@@ -363,9 +363,6 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                $alternate = 0;
                for ($d=0; $d < ceil($count_device / count($a_agentList)); $d++) {
                   if ((count($a_NetworkEquipment) + count($a_Printer)) > 0) {
-                     logInFile("sure", $count_device." - ".ceil($count_device / count($a_agentList))." - ".count($a_agentList)."\n");
-                     logInFile("sure", print_r($a_NetworkEquipment, true));
-                     logInFile("sure", print_r($a_agentList, true));
                      $getdevice = "NetworkEquipment";
                      if ($alternate == "1") {
                         $getdevice = "Printer";

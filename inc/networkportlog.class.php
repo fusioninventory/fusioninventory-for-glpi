@@ -500,7 +500,9 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       //echo $ptp->getValue($db_field);
       if ($ptp->getValue($db_field) != $value_new) {
          $a_mapping = $PluginFusioninventoryMapping->get('NetworkEquipment', $field);
-
+         if (!isset($a_mapping['id'])) {
+            logInFile("mapping", $field."\n");
+         }
          $days = $pficlf->getValue($a_mapping['id']);
 
          if ((isset($days)) AND ($days != '-1')) {
