@@ -2,7 +2,9 @@
 	<name><![CDATA[8503512]]></name>
 	<type>2</type>
 	<key>Networking0344</key>
-	<comments><![CDATA[ProCurve J8773A Switch 4208vl, revision L.11.20, ROM L.10.03 (/sw/code/build/rmm(rm11))
+	<comments><![CDATA[ProCurve J4900B Switch 2626, revision H.10.50, ROM H.08.05 (/sw/code/build/fish(mkfs))
+
+ProCurve J8773A Switch 4208vl, revision L.11.20, ROM L.10.03 (/sw/code/build/rmm(rm11))
 
 ProCurve J9021A Switch 2810-24G, revision N.11.06, ROM N.10.01 (/sw/code/build/bass(bh2))
 
