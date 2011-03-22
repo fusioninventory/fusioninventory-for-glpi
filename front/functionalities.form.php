@@ -60,9 +60,10 @@ if (isset($_POST['update'])) {
       case 'history' :
          $pficlf = new PluginFusinvsnmpConfigLogField();
          foreach ($_POST as $key=>$val) {
-            if (is_int($key)) {
+            $split = explode("-", $key);
+            if (is_int($split[0])) {
                $input = array();
-               $input['id']   = $key;
+               $input['id']   = $split[0];
                $input['days'] = $val;
                $pficlf->update($input);
             }

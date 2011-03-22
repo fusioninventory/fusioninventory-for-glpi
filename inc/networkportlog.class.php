@@ -61,10 +61,10 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       if ($status == "field") {
 
 			$query = "INSERT INTO `glpi_plugin_fusinvsnmp_networkportlogs` (
-                               `networkports_id`,`field`,`value_old`,`value_new`,`date_mod`,`plugin_fusioninventory_agentprocesses_id`)
-                   VALUES('".$array["networkports_id"]."','".addslashes($array["field"])."',
+                               `networkports_id`,`plugin_fusioninventory_mappings_id`,`value_old`,`value_new`,`date_mod`)
+                   VALUES('".$array["networkports_id"]."','".$array["plugin_fusioninventory_mappings_id"]."',
                           '".$array["value_old"]."','".$array["value_new"]."',
-                          '".date("Y-m-d H:i:s")."','".$plugin_fusioninventory_agentprocesses_id."');";
+                          '".date("Y-m-d H:i:s")."');";
          $DB->query($query);
 		}
  	}
@@ -460,8 +460,10 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
    static function networkport_addLog($port_id, $value_new, $field) {
       $ptp = new PluginFusinvsnmpNetworkPort;
-      $ptsnmph = new PluginFusinvsnmpNetworkPortLog;
+      $ptsnmph = new PluginFusinvsnmpNetworkPortLog();
       $pficlf = new PluginFusinvsnmpConfigLogField();
+      $PluginFusioninventoryMapping = new PluginFusioninventoryMapping();
+
 
       $db_field = $field;
       switch ($field) {
@@ -496,17 +498,20 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
       $ptp->load($port_id);
       //echo $ptp->getValue($db_field);
-//      if ($ptp->getValue($db_field) != $value_new) {
-//         $days = $pficlf->getValue($field);
-//
-//         if ((isset($days)) AND ($days != '-1')) {
-//            $array["networkports_id"] = $port_id;
-//            $array["field"] = $field;
-//            $array["value_old"] = $ptp->getValue($db_field);
-//            $array["value_new"] = $value_new;
-//            $ptsnmph->insert_connection("field",$array,$_SESSION['glpi_plugin_fusioninventory_processnumber']);
-//         }
-//      }
+      if ($ptp->getValue($db_field) != $value_new) {
+         $a_mapping = $PluginFusioninventoryMapping->get('NetworkEquipment', $field);
+
+         $days = $pficlf->getValue($a_mapping['id']);
+
+         if ((isset($days)) AND ($days != '-1')) {
+            $array = array();
+            $array["networkports_id"] = $port_id;
+            $array["plugin_fusioninventory_mappings_id"] = $a_mapping['id'];
+            $array["value_old"] = $ptp->getValue($db_field);
+            $array["value_new"] = $value_new;
+            $ptsnmph->insert_connection("field",$array,$_SESSION['glpi_plugin_fusioninventory_processnumber']);
+         }
+      }
    }
 
    // $status = connection or disconnection
@@ -570,7 +575,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
                   `date_mod` as `date_mod`, `plugin_fusioninventory_agentprocesses_id`,
                   `networkports_id` AS `networkports_id_source`,
                   NULL as `networkports_id_destination`,
-                  `tablefield` AS `field`, `value_old`, `value_new`
+                  `name` AS `field`, `value_old`, `value_new`
                FROM `glpi_plugin_fusinvsnmp_networkportlogs`
                   LEFT JOIN `glpi_plugin_fusioninventory_mappings`
                      ON `glpi_plugin_fusinvsnmp_networkportlogs`.`plugin_fusioninventory_mappings_id` =
@@ -653,11 +658,13 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
                // Changes values
                $text .= "<td align='center' colspan='2'></td>";
 //               $text .= "<td align='center'>".$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$data["field"]]['name']."</td>";
-               $map = new PluginFusioninventoryMapping;
+               $map = new PluginFusioninventoryMapping();
                $mapfields = $map->get('NetworkEquipment', $data["field"]);
                if ($mapfields != false) {
                   $text .= "<td align='center'>".
                      $LANG['plugin_fusinvsnmp']['mapping'][$mapfields["locale"]]."</td>";
+               } else {
+                  $text .= "<td align='center'></td>";
                }
                $text .= "<td align='center'>".$data["value_old"]."</td>";
                $text .= "<td align='center'>-></td>";

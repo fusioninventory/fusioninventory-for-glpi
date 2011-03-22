@@ -88,11 +88,12 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
 	function getValue($field) {
 		global $DB;
 
-      
+      // Get mapping
+      // 	plugin_fusioninventory_mappings_id
 
 		$query = "SELECT days
                 FROM ".$this->getTable()."
-                WHERE `field`='".$field."'
+                WHERE `plugin_fusioninventory_mappings_id`='".$a_mapping['id']."'
                 LIMIT 1;";
 		if ($result = $DB->query($query)) {
 			if ($this->fields = $DB->fetch_row($result)) {
@@ -154,17 +155,22 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
 	function showForm($options=array()) {
 		global $LANG,$DB;
 
-//      $this->showFormHeader($options);
       echo "<form name='form' method='post' action='".$options['target']."'>";
       echo "<div class='center' id='tabsbody'>";
       echo "<table class='tab_cadre_fixe'>";
 
 		echo "<tr>";
+		echo "<th colspan='2'>";
+		echo $LANG['plugin_fusinvsnmp']["portlogs"][0];
+		echo "</th>";
+		echo "</tr>";
+
+		echo "<tr>";
 		echo "<th>";
-		echo $LANG['plugin_fusioninventory']['functionalities'][29];
+		echo $LANG['plugin_fusinvsnmp']["portlogs"][1];
 		echo "</th>";
 		echo "<th>";
-		echo $LANG['plugin_fusioninventory']['functionalities'][9];
+		echo $LANG['plugin_fusinvsnmp']["portlogs"][2];
 		echo "</th>";
 		echo "</tr>";
 
@@ -198,7 +204,8 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
 //      $this->showFormButtons($options);
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "w")) {
          echo "<tr class='tab_bg_2'><td align='center' colspan='4'>
-               <input class='submit' type='submit' name='plugin_fusinvsnmp_configlogfield_set'
+               <input type='hidden' name='tabs' value='history'/>
+               <input class='submit' type='submit' name='update'
                       value='" . $LANG['buttons'][7] . "'></td></tr>";
       }
       echo "</table>";
@@ -220,6 +227,7 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
    function putForm($p_post) {
       foreach ($p_post as $field=>$log) {
          if (substr($field, 0, 6) == 'field-') {
+            $input = array();
             $input['id'] = substr($field, 6);
             $input['days'] = $log;
             $this->update($input);
