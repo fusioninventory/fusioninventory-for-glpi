@@ -83,7 +83,8 @@ class PluginFusinvinventoryImport_Memory extends CommonDBTM {
          $memory["designation"] .= $dataSection["DESCRIPTION"];
       }
       if ((!isset($dataSection["CAPACITY"])) OR ((isset($dataSection["CAPACITY"])) AND (!is_numeric($dataSection["CAPACITY"])))) {
-         $dataSection["CAPACITY"]=0;
+         return;
+         //$dataSection["CAPACITY"]=0;
       }
 
       $memory["specif_default"] = $dataSection["CAPACITY"];
@@ -95,7 +96,7 @@ class PluginFusinvinventoryImport_Memory extends CommonDBTM {
          $memory["devicememorytypes_id"]
                = Dropdown::importExternal('DeviceMemoryType', $dataSection["TYPE"]);
       }
-
+      
       $DeviceMemory = new DeviceMemory();
       $memory_id = $DeviceMemory->import($memory);
       if ($memory_id) {

@@ -925,10 +925,11 @@ class PluginFusinvinventoryLibhook {
     **/
     function Suppliertag($items_id, $partnumber) {
       if ($partnumber != 'Not Specified') {
+         $a_partnumber = explode("#", $partnumber);
          $Plugin = new Plugin();
          if ($Plugin->isActivated('manufacturersimports')) {
             $PluginManufacturersimportsModel = new PluginManufacturersimportsModel();
-            $PluginManufacturersimportsModel->addModel($items_id, 'Computer', $partnumber);
+            $PluginManufacturersimportsModel->addModel($items_id, 'Computer', $a_partnumber[0]);
          }
       }
     }
