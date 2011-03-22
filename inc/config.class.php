@@ -87,7 +87,10 @@ class PluginFusinvSNMPConfig extends CommonDBTM {
                       value='" . $LANG['buttons'][7] . "'></td></tr>";
       }
       echo "</table>";
-      echo "</form>";
+      echo "</form><br/>";
+
+      $PluginFusinvsnmpConfigLogField = new PluginFusinvsnmpConfigLogField();
+      $PluginFusinvsnmpConfigLogField->showForm(array('target'=>GLPI_ROOT."/plugins/fusinvsnmp/front/functionalities.form.php"));
 
       return true;
 	}
