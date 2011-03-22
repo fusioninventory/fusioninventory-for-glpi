@@ -98,16 +98,19 @@ class PluginFusioninventoryMenu {
       echo "<tr>";
       echo "<td>";
       if (!empty($a_menu)) {
-         $width_status = PluginFusioninventoryMenu::htmlMenu("fusioninventory", $a_menu, $type, $width_status);
+         $width_status = PluginFusioninventoryMenu::htmlMenu("fusioninventory", $a_menu, $type, 
+                                                             $width_status);
       }
 
       // Get menu from plugins fusinv...
       $a_modules = PluginFusioninventoryModule::getAll();
       foreach ($a_modules as $datas) {
-         if (is_callable(array("Plugin".$datas['directory']."Staticmisc", "displayMenu"))) {
-            $a_menu = call_user_func(array("Plugin".ucfirst($datas['directory'])."Staticmisc", "displayMenu"));
+         $class = "Plugin".ucfirst($datas['directory'])."Staticmisc";
+         if (is_callable(array($class, "displayMenu"))) {
+            $a_menu = call_user_func(array($class, "displayMenu"));
             if (!empty($a_menu)) {
-               $width_status = PluginFusioninventoryMenu::htmlMenu($datas['directory'], $a_menu, $type, $width_status);
+               $width_status = PluginFusioninventoryMenu::htmlMenu($datas['directory'], $a_menu, 
+                                                                   $type, $width_status);
             }
          }
       }
