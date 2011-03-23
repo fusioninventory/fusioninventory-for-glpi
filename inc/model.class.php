@@ -1,38 +1,36 @@
 <?php
 
 /*
- * @version $Id$
- ----------------------------------------------------------------------
- FusionInventory
- Coded by the FusionInventory Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org//
- ----------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: DURIEUX David
-// Purpose of file:
-// ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
@@ -81,9 +79,6 @@ class PluginFusinvsnmpModel extends CommonDBTM {
 		$tab[6]['linkfield'] = 'comment';
 		$tab[6]['name'] = $LANG['common'][25];
 
-
-
-
       return $tab;
    }
 
@@ -100,11 +95,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
 			$this->getEmpty();	
       }
 
-//      $this->getFromDB($id);
-//      $this->showTabs($options);
-//      $this->showFormHeader($options);
       $target = GLPI_ROOT.'/plugins/fusinvsnmp/front/model.form.php';
-//            $this->showTabs($id, "",$_SESSION['glpi_tab']);
             $this->showTabs($id);
 		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
@@ -126,6 +117,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
 		echo "<td align='center'>";
 
 		$selected_value = $this->fields["itemtype"];
+      $selected = '';
 		echo "<select name='itemtype'>\n";
 		if ($selected_value == "0"){$selected = 'selected';}else{$selected = '';}
 		echo "<option value='0' ".$selected.">-----</option>\n";
@@ -150,7 +142,6 @@ class PluginFusinvsnmpModel extends CommonDBTM {
 		echo nl2br($this->fields["comment"]);
 		echo "</td>";
 		echo "</tr>";
-
 
 		echo "<tr class='tab_bg_2'><td colspan='2'>";
       if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
@@ -184,7 +175,10 @@ class PluginFusinvsnmpModel extends CommonDBTM {
 	function oidlist($ID_Device,$type) {
 		global $DB;
 
+      $oids = array();
+
 		switch ($type) {
+
 			case NETWORKING_TYPE :
 				$query = "SELECT * 
                       FROM `glpi_plugin_fusinvsnmp_networkequipments`
@@ -209,10 +203,10 @@ class PluginFusinvsnmpModel extends CommonDBTM {
                       WHERE `printers_id`='".$ID_Device."'
                             AND `glpi_plugin_fusinvsnmp_modelmibs`.`is_active`='1' ";
 				break;
+
 		}
 		if (!empty($query)) {
 			$result=$DB->query($query);
-			$exclude = array();
 			while ($data=$DB->fetch_array($result)) {
 				$oids[$data['oid_port_counter']][$data['oid_port_dyn']][$data['mapping_name']] =
                Dropdown::getDropdownName('glpi_plugin_fusinvsnmp_miboids',$data['plugin_fusinvsnmp_miboids_id']);
@@ -220,6 +214,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
 			return $oids;
 		}
 	}
+
 
 
    function getrightmodel($device_id, $type, $comment="") {
@@ -255,6 +250,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
       }
       $sysdescr = str_replace("\r", "", $sysdescr);
       $sysdescr = str_replace("\n", "", $sysdescr);
+      $modelgetted = '';
       if (!empty($sysdescr)) {
          $xml = @simplexml_load_file(GLPI_ROOT.'/plugins/fusinvsnmp/tool/discovery.xml','SimpleXMLElement', LIBXML_NOCDATA);
          foreach ($xml->DEVICE as $device) {
@@ -313,6 +309,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
    }
 
 
+
    function getModelBySysdescr($sysdescr) {
       $key = $this->getrightmodel('0', '', $sysdescr);
       if (isset($key) AND !empty($key)) {
@@ -323,8 +320,6 @@ class PluginFusinvsnmpModel extends CommonDBTM {
       }
       return 0;
    }
-
-
 }
 
 ?>
