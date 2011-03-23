@@ -80,16 +80,33 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
       $PluginFusioninventoryCommunication->noSSL();
       exit();
    }
-   if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
-      file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".uniqid(), gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
+
+   // Check XML integrity
+   $xml = '';
+   if (@gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"])) {
+      $xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
+   } else {
+      $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
    }
-   $pta->importToken(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
+   if (@simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA)) {
+      $pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA);
+   } else {
+      $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
+<REPLY>
+</REPLY>");
+      $PluginFusioninventoryCommunication->emptyAnswer();
+   }
+
+   //
+
+   if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+      file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".uniqid(), $xml);
+   }
+   $pta->importToken($xml);
 
    $top0 = 0;
    $top0 = gettimeofday();
-   if (!$PluginFusioninventoryCommunication->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
-      $p_xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
-      $pxml = @simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA);
+   if (!$PluginFusioninventoryCommunication->import($xml)) {
 
       if (isset($pxml->DEVICEID)) {
 
