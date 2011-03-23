@@ -107,22 +107,13 @@ class PluginFusinvinventoryLibhook {
        }
        
       $Computer = new Computer();
-      $PluginFusinvinventoryComputer = new PluginFusinvinventoryComputer();
 
       $sectionsId = array();
       $Computer->getFromDB($idmachine);
 
-      $a_ids = $PluginFusinvinventoryComputer->find("`items_id`='".$idmachine."'");
-      if (count($a_ids) > 0) {
-         $a_id = current($a_ids);
-         $PluginFusinvinventoryComputer->getFromDB($a_id['id']);
-      } else {
-         $input = array();
-         $input['items_id'] = $idmachine;
-         $PluginFusinvinventoryComputer->getFromDB($PluginFusinvinventoryComputer->add($input));
-
-      }
-
+      $input = array();
+      $input['items_id'] = $idmachine;
+ 
       $_SESSION["plugin_fusinvinventory_entity"] = $Computer->fields['entities_id'];
 
       if (!isset($_SESSION["plugin_fusinvinventory_history_add"])) {
@@ -247,7 +238,6 @@ class PluginFusinvinventoryLibhook {
       }
 
       $Computer->update($Computer->fields, $_SESSION["plugin_fusinvinventory_history_add"]);
-      $PluginFusinvinventoryComputer->update($PluginFusinvinventoryComputer->fields);
       $j = -1;
 
       foreach($data as $section) {
