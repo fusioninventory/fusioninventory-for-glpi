@@ -100,6 +100,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          $Computer = new Computer();
          $Computer->getFromDB($items_id);
          $Computer->fields['autoupdatesystems_id'] = Dropdown::importExternal('AutoUpdateSystem', 'FusionInventory');
+         $_SESSION['glpiactiveentities_string'] = $Computer->fields['entities_id'];
          $Computer->update($Computer->fields);
          $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
          if ($Computer->getEntityID() != $_SESSION["plugin_fusinvinventory_entity"]) {
