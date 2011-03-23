@@ -341,10 +341,12 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $a_methods2 = array();
       $a_methods2[''] = "------";
       foreach ($a_methods as $datas) {
-         if (isset($datas['name'])) {
-            $a_methods2[$datas['method']] = $datas['name'];
-         } else {
-            $a_methods2[$datas['method']] = $datas['method'];
+         if (!((isset($datas['hidetask']) AND $datas['hidetask'] == '1'))) {
+            if (isset($datas['name'])) {
+               $a_methods2[$datas['method']] = $datas['name'];
+            } else {
+               $a_methods2[$datas['method']] = $datas['method'];
+            }
          }
       }
       $rand = Dropdown::showFromArray($myname, $a_methods2, array('value'=>$value));
@@ -489,7 +491,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $a_actioninitiontype['PluginFusioninventoryAgent'] = PluginFusioninventoryAgent::getTypeName();
       foreach ($a_methods as $datas) {
          if ($method == $datas['method']) {
-            $module = $datas['module'];
+            $module = ucfirst($datas['module']);
             if (is_callable(array("Plugin".$module."Staticmisc", "task_actiontype_".$method))) {
                $a_actioninitiontype = call_user_func(array("Plugin".$module."Staticmisc", "task_actiontype_".$method), $a_actioninitiontype);
             }
@@ -1270,6 +1272,24 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $this->fields['action'] = exportArrayToDB($a_actions);
       }
       $this->update($this->fields);      
+   }
+
+
+
+   static function purgeTaskjob($parm) {
+      // $parm["id"]
+      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+
+      // all taskjobs
+      $a_taskjobstatuss = $PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$parm->fields["id"]."'");
+      foreach($a_taskjobstatuss as $a_taskjobstatus) {
+         $a_taskjoblogs = $PluginFusioninventoryTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$a_taskjobstatus['id']."'");
+         foreach($a_taskjoblogs as $a_taskjoblog) {
+            $PluginFusioninventoryTaskjoblog->delete($a_taskjoblog, 1);
+         }
+         $PluginFusioninventoryTaskjobstatus->delete($a_taskjobstatus, 1);
+      }
    }
 
 }

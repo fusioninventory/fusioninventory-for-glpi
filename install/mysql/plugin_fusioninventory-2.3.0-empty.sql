@@ -132,7 +132,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjobs` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_taskjoblogs`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_taskjoblogs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `plugin_fusioninventory_taskjobstatus_id` int(11) NOT NULL DEFAULT '0',
   `date` datetime DEFAULT NULL,
   `items_id` int(11) NOT NULL DEFAULT '0',
@@ -148,7 +148,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjoblogs` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_taskjobstatus`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_taskjobstatus` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `plugin_fusioninventory_taskjobs_id` int(11) NOT NULL DEFAULT '0',
   `items_id` int(11) NOT NULL DEFAULT '0',
   `itemtype` varchar(100) DEFAULT NULL,

@@ -58,7 +58,7 @@ function plugin_init_fusioninventory() {
 
       $a_plugin = plugin_version_fusioninventory();
       $moduleId = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
-
+      
       // ##### 4. Set in session module_id #####
 
       $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = $moduleId;
@@ -84,16 +84,19 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['use_massive_action']['fusioninventory']=1;
          $PLUGIN_HOOKS['pre_item_update']['fusioninventory'] = array('Plugin' =>'plugin_pre_item_update_fusioninventory');
    //      $PLUGIN_HOOKS['pre_item_delete']['fusioninventory'] = 'plugin_pre_item_delete_fusioninventory';
-         $PLUGIN_HOOKS['item_purge']['fusioninventory'] = array('NetworkPort_NetworkPort' =>'plugin_item_purge_fusioninventory');
+         $PLUGIN_HOOKS['item_purge']['fusioninventory'] = array('NetworkPort_NetworkPort' =>'plugin_item_purge_fusioninventory',
+                                                                'PluginFusioninventoryTask'=>array('PluginFusioninventoryTask','purgeTask'),
+                                                                'PluginFusioninventoryTaskjob'=>array('PluginFusioninventoryTaskjob','purgeTaskjob'));
 
          
-         $PLUGIN_HOOKS['item_update']['fusioninventory'] = array('Computer' =>'plugin_item_update_fusioninventory',
-                                                                  'NetworkEquipment' =>'plugin_item_update_fusioninventory',
-                                                                  'Printer' =>'plugin_item_update_fusioninventory',
-                                                                  'Monitor' =>'plugin_item_update_fusioninventory',
-                                                                  'Peripheral' =>'plugin_item_update_fusioninventory',
-                                                                  'Phone' =>'plugin_item_update_fusioninventory',
-                                                                  'NetworkPort' =>'plugin_item_update_fusioninventory');
+         $PLUGIN_HOOKS['item_update']['fusioninventory'] = 
+            array('Computer'         => 'plugin_item_update_fusioninventory',
+                  'NetworkEquipment' => 'plugin_item_update_fusioninventory',
+                  'Printer'          => 'plugin_item_update_fusioninventory',
+                  'Monitor'          => 'plugin_item_update_fusioninventory',
+                  'Peripheral'       => 'plugin_item_update_fusioninventory',
+                  'Phone'            => 'plugin_item_update_fusioninventory',
+                  'NetworkPort'      => 'plugin_item_update_fusioninventory');
 
 
          
