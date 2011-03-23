@@ -1,37 +1,36 @@
 <?php
+
 /*
- * @version $Id$
- -------------------------------------------------------------------------
- FusionInventory
- Coded by the FusionInventory Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org/
- -------------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- --------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: Vincent MAZZONI
+   Co-authors of file:
+   Purpose of file: modelisation of a networking switch
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: MAZZONI Vincent
-// Purpose of file: modelisation of a networking switch
-// ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
@@ -39,18 +38,12 @@ if (!defined('GLPI_ROOT')) {
 
 require_once(GLPI_ROOT.'/plugins/fusinvsnmp/inc/commondbtm.class.php');
 
-/**
- * Class to use networking switches
- **/
 class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
    private $ports=array(), $ifaddrs=array();
    private $oFusionInventory_networkequipment;
    private $newPorts=array(), $updatesPorts=array();
    private $newIfaddrs=array(), $updatesIfaddrs=array();
 
-	/**
-	 * Constructor
-	**/
    function __construct() {
       parent::__construct("glpi_networkequipments");
       $this->dohistory=true;
@@ -91,6 +84,8 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       }
    }
 
+
+
    /**
     * Update an existing preloaded switch with the instance values
     *
@@ -107,6 +102,8 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       // ports
       $this->savePorts();
    }
+
+
 
    /**
     * Get ports
@@ -133,6 +130,8 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       return $portsIds;
    }
 
+
+
    /**
     * Get ports
     *
@@ -141,6 +140,8 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
    function getPorts() {
       return $this->ports;
    }
+
+
 
    /**
     * Get index of port object
@@ -159,16 +160,10 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
             }
          }
       }
-//      if ($portIndex == '' AND $p_ip != '') {
-//         foreach ($this->ports as $index => $oPort) {
-//            if ($oPort->getValue('ip')==$p_ip) {
-//               $portIndex = $index;
-//               break;
-//            }
-//         }
-//      }
       return $portIndex;
    }
+
+
 
    /**
     * Get index of ip object
@@ -189,6 +184,8 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       return $ifaddrIndex;
    }
 
+
+
    /**
     * Get port object
     *
@@ -198,6 +195,8 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
    function getPort($p_index) {
       return $this->ports[$p_index];
    }
+
+
 
    /**
     * Save new ports
@@ -220,6 +219,8 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
          }
       }
    }
+
+
 
    /**
     * Save ifadddrs
@@ -244,6 +245,8 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       }
    }
 
+
+
    /**
     * Add new port
     *
@@ -257,6 +260,8 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
          $this->updatesPorts[]=$p_portIndex;
       }
    }
+
+
 
    /**
     * Get ips
@@ -282,6 +287,8 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       return $ifaddrsIds;
    }
 
+
+
    /**
     * Get ip object
     *
@@ -291,6 +298,8 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
    function getIfaddr($p_index) {
       return $this->ifaddrs[$p_index];
    }
+
+
 
    /**
     * Add IP
@@ -308,6 +317,8 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
          $this->updatesIfaddrs[]=$p_ifaddrIndex;
       }
    }
+
+
 
 	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
@@ -915,6 +926,7 @@ function appear_legend(id){
       }
       return $size;
    }
+
 
 
    function displayHubConnections($items_id, $background_img){

@@ -334,15 +334,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                            } else {
                               $types = array();
                               $types[] = "-----";
-//                              foreach ($FUSIONINVENTORY_MAPPING as $type=>$mapping43) {
-//                                 if (($type_model == $type) OR ($type_model == "0")) {
-//                                    if (isset($FUSIONINVENTORY_MAPPING[$type])) {
-//                                       foreach ($FUSIONINVENTORY_MAPPING[$type] as $name=>$mapping) {
-//                                          $types[$type."||".$name]=$FUSIONINVENTORY_MAPPING[$type][$name]["name"]." (".$name.")";
-//                                       }
-//                                    }
-//                                 }
-//                              }
+
                               $map = new PluginFusioninventoryMapping();
                               $maps = $map->find();
                               foreach ($maps as $mapfields) {
@@ -442,15 +434,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                } else {
                   $types = array();
                   $types[] = "-----";
-//                  foreach ($FUSIONINVENTORY_MAPPING as $type=>$mapping43) {
-//                     if (($type_model == $type) OR ($type_model == "0")) {
-//                        if (isset($FUSIONINVENTORY_MAPPING[$type])) {
-//                           foreach ($FUSIONINVENTORY_MAPPING[$type] as $name=>$mapping) {
-//                              $types[$type."||".$name]=$FUSIONINVENTORY_MAPPING[$type][$name]["name"]." (".$name.")";
-//                           }
-//                        }
-//                     }
-//                  }
+
                   $map = new PluginFusioninventoryMapping();
                   $maps = $map->find();
                   foreach ($maps as $mapfields) {
@@ -616,8 +600,6 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                $DB->query($query_update);
 
             }
-
-
          }
       }
 
@@ -765,6 +747,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
 
    }
 
+   
 
    function formatXmlString($sxml) {
       $xml = str_replace("><", ">\n<", $sxml->asXML());
@@ -798,6 +781,8 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       return $sxml;
    }
 
+
+   
    function cleanmodels() {
       global $DB;
 
@@ -818,6 +803,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
        }
    }
 
+   
 
    function exportmodels() {
       global $DB;

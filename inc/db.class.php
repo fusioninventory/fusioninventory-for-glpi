@@ -1,104 +1,42 @@
 <?php
+
 /*
- * @version $Id$
- ----------------------------------------------------------------------
- FusionInventory
- Copynetwork (C) 2003-2010 by the INDEPNET Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org//
- ----------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: Vincent MAZZONI
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: MAZZONI Vincent
-// Purpose of file:
-// ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
 class PluginFuvinvsnmpDb extends CommonDBTM {
-//   static function createfirstaccess($id) {
-//      global $DB;
-//
-//      $plugin_fusinvsnmp_Profile=new PluginFusinvsnmpProfile;
-//      if (!$plugin_fusinvsnmp_Profile->GetfromDB($id)) {
-//         $Profile=new Profile;
-//         $Profile->GetfromDB($id);
-//         $name=$Profile->fields["name"];
-//
-//         $query = "INSERT INTO `glpi_plugin_fusinvsnmp_profiles` (
-//                   `id`, `name`, `interface`, `is_default`, `snmp_networking`, `snmp_printers`,
-//                   `snmp_models`, `snmp_authentication`, `iprange`, `agents`, `remotecontrol`,
-//                   `agentprocesses`, `unknowndevices`, `reports`, `deviceinventory`, `netdiscovery`,
-//                   `snmp_query`, `wol`, `configuration` )
-//                   VALUES ('$id', '$name','fusinvsnmp','0','w','w',
-//                     'w','w','w','w','w',
-//                     'r','w','r','w','w',
-//                     'w','w','w');";
-//         $DB->query($query);
-//      }
-//   }
-
-//   static function createaccess($id) {
-//      global $DB;
-//
-//      $Profile=new Profile;
-//      $Profile->GetfromDB($id);
-//      $name=$Profile->fields["name"];
-//
-//      $query = "INSERT INTO `glpi_plugin_fusinvsnmp_profiles` (
-//                   `id`, `name` , `interface`, `is_default`, `snmp_networking`, `snmp_printers`,
-//                   `snmp_models`, `snmp_authentication`, `iprange`, `agents`, `remotecontrol`,
-//                   `agentprocesses`, `unknowndevices`, `reports`, `deviceinventory`, `netdiscovery`,
-//                   `snmp_query`, `wol`, `configuration` )
-//                VALUES ('$id', '$name','fusinvsnmp','0',NULL,NULL,
-//                   NULL,NULL,NULL,NULL,NULL,
-//                   NULL,NULL,NULL,NULL,NULL,
-//                   NULL,NULL,NULL);";
-//      $DB->query($query);
-//   }
-
-//   static function updateaccess($id) {
-//      global $DB;
-//
-//      $Profile=new Profile;
-//      $Profile->GetfromDB($id);
-//      $name=$Profile->fields["name"];
-//
-//      $query = "UPDATE `glpi_plugin_fusinvsnmp_profiles`
-//                  SET `interface`='fusinvsnmp', `snmp_networking`='w',
-//                      `snmp_printers`='w', `snmp_models`='w',
-//                      `snmp_authentication`='w', `iprange`='w',
-//                      `agents`='w', `remotecontrol`='w',
-//                      `agentprocesses`='r', `unknowndevices`='w',
-//                      `reports`='r', `deviceinventory`='w',
-//                      `netdiscovery`='w', `snmp_query`='w',
-//                      `wol`='w', `configuration`='w'
-//                  WHERE `name`='".$name."'";
-//      $DB->query($query);
-//
-//   }
 
    static function getDeviceFieldFromId($type, $id, $field, $return) {
       global $DB;
@@ -135,6 +73,8 @@ class PluginFuvinvsnmpDb extends CommonDBTM {
       return $return;
    }
 
+
+   
    static function clean_db() {
       global $DB;
 
@@ -208,6 +148,8 @@ class PluginFuvinvsnmpDb extends CommonDBTM {
       }
    }
 
+
+   
    static function lock_wire_check() {
       while (1) {
          $file_lock = GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/wire.lock";
@@ -226,6 +168,8 @@ class PluginFuvinvsnmpDb extends CommonDBTM {
       }
    }
 
+
+   
    static function lock_wire_unlock() {
       $file_lock = GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/wire.lock";
       $fp =  fopen($file_lock,"r+");

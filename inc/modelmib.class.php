@@ -1,37 +1,36 @@
 <?php
+
 /*
- * @version $Id$
- ----------------------------------------------------------------------
- FusionInventory
- Coded by the FusionInventory Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org//
- ----------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: DURIEUX David
-// Purpose of file:
-// ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
@@ -145,7 +144,7 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
                echo "</td>";
 
                echo "<td align='center'>";
-               $mapping = new PluginFusioninventoryMapping;
+               $mapping = new PluginFusioninventoryMapping();
                $mapping->getFromDB($data['plugin_fusioninventory_mappings_id']);
                if (isset($mapping->fields['locale'])) {
                   if (!isset($LANG['plugin_fusinvsnmp']['mapping'][$mapping->fields['locale']])) {
@@ -215,6 +214,7 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
       }
    }
 
+   
 
    function showFormAdd($id, $type_model, $mappings_used) {
       global $DB,$CFG_GLPI,$LANG,$IMPORT_TYPES;
@@ -271,9 +271,9 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
       echo "<td align='center'>";
       $types = array();
       $types[] = "-----";
-      $oMapping = new PluginFusioninventoryMapping;
+      $oMapping = new PluginFusioninventoryMapping();
       $mappings = $oMapping->find("`itemtype`='".$type_model."'");
-      foreach ($mappings as $name=>$mapping) {
+      foreach ($mappings as $mapping) {
          if (!isset($LANG['plugin_fusinvsnmp']['mapping'][$mapping['locale']])) {
             $types[$mapping['id']] = $mapping['name'];
          } else {
@@ -306,6 +306,7 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
       echo "</table></form></div>";
 	}
 
+
 	
 	function deleteMib($item_coche) {
 		global $DB;
@@ -322,9 +323,10 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
 	function activation($id) {
 		global $DB;
 		
-		$mib_networking = new PluginFusinvsnmpModelMib;
+		$mib_networking = new PluginFusinvsnmpModelMib();
 		
 		$mib_networking->getFromDB($id);
+      $data = array();
 		$data['id'] = $id;
 		$data = $mib_networking->fields;
 		if ($mib_networking->fields["is_active"] == "1") {
@@ -335,6 +337,8 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
 		$mib_networking->update($data);
 	}
 
+
+   
    function oidList($p_sxml_node,$p_id) {
 		global $DB;
 

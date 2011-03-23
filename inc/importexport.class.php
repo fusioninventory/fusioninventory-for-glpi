@@ -1,37 +1,36 @@
 <?php
+
 /*
- * @version $Id$
- ----------------------------------------------------------------------
- FusionInventory
- Coded by the FusionInventory Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org//
- ----------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: David DURIEUX
-// Purpose of file:
-// ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
@@ -47,6 +46,11 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 		$query = "SELECT *
                 FROM `glpi_plugin_fusinvsnmp_models`
                 WHERE `id`='".$ID_model."';";
+
+      $model_name = "";
+      $type = "";
+      $discovery_key = "";
+      $comment = "";
 
 		if ($result=$DB->query($query)) {
 			if ($DB->numrows($result) != 0) {
@@ -114,12 +118,6 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 		echo "<td align='center'>";
 		echo "<input type='file' name='importfile' value=''/>";
 
-//      $this->showFormButtons($options);
-//
-//      echo "<div id='tabcontent'></div>";
-//      echo "<script type='text/javascript'>loadDefaultTab();</script>";
-//
-//      return true;
       if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
          echo "&nbsp;<input type='submit' value='".$LANG["buttons"][37]."' class='submit'/>";
       }
@@ -291,15 +289,9 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
 	function import_netdiscovery($p_xml, $agentKey) {
 		global $DB,$LANG;
-      $test = '';
-      $p_criteria = array();
 
-		$walks            = new PluginFusinvsnmpWalk;
-      $ptap             = new PluginFusinvsnmpStateDiscovery;
-      $pta              = new PluginFusioninventoryAgent;
-		$config_discovery = new PluginFusioninventoryConfig;
-      $np               = new NetworkPort;
-      $ptud             = new PluginFusioninventoryUnknownDevice;
+      $ptap             = new PluginFusinvsnmpStateDiscovery();
+      $pta              = new PluginFusioninventoryAgent();
 
       $agent = $pta->InfosByKey($agentKey);
 
@@ -339,8 +331,6 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 		global $DB,$LANG;
 
 		$xml = simplexml_load_file($content_dir.$file,'SimpleXMLElement', LIBXML_NOCDATA);
-
-		$num_files = $xml->agent->num_files;
 
 		$file_modif = str_replace(".xml", "-device.xml", $file);
 		$target = $content_dir.$file_modif;
