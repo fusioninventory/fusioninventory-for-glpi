@@ -1,38 +1,36 @@
 <?php
 
 /*
- * @version $Id$
- ----------------------------------------------------------------------
- FusionInventory
- Coded by the FusionInventory Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org//
- ----------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: DURIEUX David
-// Purpose of file:
-// ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
@@ -146,7 +144,17 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 		}
 
 		$xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml",'SimpleXMLElement', LIBXML_NOCDATA);
-		
+
+      $numero = array();
+      $name = array();
+      $snmp_version = array();
+      $community = array();
+      $username = array();
+      $authentication = array();
+      $auth_passphrase = array();
+      $encryption = array();
+      $priv_passphrase = array();
+
 		$i = -1;
 		foreach($xml->auth[0] as $num) {
 			$i++;
@@ -205,10 +213,10 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 			}
 		}
       
-		foreach ($numero AS $key=>$numero) {
+		foreach ($numero AS $key=>$numerosimple) {
 			if ($array == '0') {
 				echo "<tr class='tab_bg_1'>";
-				echo "<td align='center'>".$numero."</td>";
+				echo "<td align='center'>".$numerosimple."</td>";
 				echo "<td align='center'>".$name[$key]."</td>";
 				echo "<td align='center'>".$snmp_version[$key]."</td>";
 				echo "<td align='center'>".$community[$key]."</td>";
@@ -219,7 +227,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 				echo "<td align='center'>".$priv_passphrase[$key]."</td>";
 				echo "</tr>";
 			} else if ($array == '1') {
-				$array_auth["$numero"]['IDC'] = $numero;
+				$array_auth["$numero"]['IDC'] = $numerosimple;
 				$array_auth["$numero"]['name']= $name[$key];
 				$array_auth["$numero"]['namec']=$snmp_version[$key];
 				$array_auth["$numero"]['community']=$community[$key];
@@ -237,6 +245,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 		}
 	}
 	
+
 
 	// for file stored snmp authentication
 	function add_xml() {
@@ -324,17 +333,20 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 		
 		return $id;
 	}
-	
+
+
+
 	function showDropdownSNMPVersion($p_value=NULL) {
       $snmpVersions = array(0=>'-----', '1', '2c', '3');
-      if (is_null($p_value)) {
-         $options = array();
-      } else {
+      $options = array();
+      if (!is_null($p_value)) {
          $options = array('value'=>$p_value);
       }
       Dropdown::showFromArray("snmpversion", $snmpVersions, $options);
    }
 
+
+   
    function getSNMPVersion($id) {
       switch($id) {
 
@@ -354,16 +366,19 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
       return '';
    }
 
+
+   
 	function showDropdownSNMPAuth($p_value=NULL) {
       $authentications = array(0=>'-----', 'MD5', 'SHA');
-      if (is_null($p_value)) {
-         $options = array();
-      } else {
+      $options = array();
+      if (!is_null($p_value)) {
          $options = array('value'=>$p_value);
       }
       Dropdown::showFromArray("authentication", $authentications, $options);
    }
 
+
+   
    function getSNMPAuthProtocol($id) {
       switch($id) {
 
@@ -379,15 +394,18 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
       return '';
    }
 
+
+
 	function showDropdownSNMPEncryption($p_value=NULL) {
       $encryptions = array(0=>'-----', 'DES', 'AES128', 'AES192', 'AES256');
-      if (is_null($p_value)) {
-         $options = array();
-      } else {
+      $options = array();
+      if (!is_null($p_value)) {
          $options = array('value'=>$p_value);
       }
       Dropdown::showFromArray("encryption", $encryptions, $options);
    }
+
+
 
    function getSNMPEncryption($id) {
       switch($id) {
@@ -411,6 +429,8 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
       }
       return '';
    }
+
+
 
 	function selectbox($selected=0) {
 		$xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml",'SimpleXMLElement', LIBXML_NOCDATA);
@@ -458,7 +478,8 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 	function GetInfos($ID_Device,$xml_auth_rep,$type) {
 		global $DB,$CFG_GLPI,$LANG;
 
-		$config = new PluginFusioninventoryConfig;
+		$config = new PluginFusioninventoryConfig();
+      $ID_auth = 0;
 
 		if ($ID_Device != "all") {
 			switch ($type) {
@@ -502,11 +523,12 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 			$snmp_auth[1]["id"] = 0;
 		}
 
+      $snmp_auth = array();
 		if ($config->getValue("storagesnmpauth") == "file") {
 			$xml = simplexml_load_file($xml_auth_rep."auth.xml",'SimpleXMLElement', LIBXML_NOCDATA);
 		
 			$i=-1;
-			foreach($xml->auth[0] as $num) {
+         foreach($xml->auth[0] as $num) {
 				$i++;
 				$j = 0;
 				$recup = 0;
@@ -603,14 +625,13 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 				}
 			}	
 		} else if ($config->getValue("storagesnmpauth") == "DB") {
+         $query = "SELECT *
+                   FROM `glpi_plugin_fusinvsnmp_configsecurities`
+                   WHERE `id`='".$ID_auth."' ";
 			if ($ID_Device == "all") {
 				$query = "SELECT *
                       FROM `glpi_plugin_fusinvsnmp_configsecurities`";
-         } else {
-				$query = "SELECT *
-                      FROM `glpi_plugin_fusinvsnmp_configsecurities`
-                      WHERE `id`='".$ID_auth."';";
-			}
+         }
 			$result=$DB->query($query);
 			if (($DB->numrows($result) == "0") AND ($ID_Device != "all")) {
 				$snmp_auth["Name"] = "";
@@ -699,7 +720,8 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 
 	function GetSNMPAuthName_XML($ID_auth,$xml_auth_rep) {
 		$xml = simplexml_load_file($xml_auth_rep."auth.xml",'SimpleXMLElement', LIBXML_NOCDATA);
-		
+
+      $snmp_auth_name = "";
 		$i=-1;
 		foreach($xml->auth[0] as $num) {
 			$i++;
@@ -734,6 +756,8 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
       return true;
    }
 
+
+   
    function canView() {
       return true;
    }

@@ -1,37 +1,36 @@
 <?php
+
 /*
- * @version $Id: computer.tabs.php 8003 2009-02-26 11:03:19Z moyo $
- -------------------------------------------------------------------------
- FusionInventory
- Coded by the FusionInventory Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org/
- -------------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- --------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: David DURIEUX
-// Purpose of file:
-// ----------------------------------------------------------------------
 
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
@@ -46,18 +45,22 @@ if(!isset($_POST["sort"])) $_POST["sort"] = "";
 if(!isset($_POST["order"])) $_POST["order"] = "";
 if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 
-$PluginFusinvsnmpIPRange = new PluginFusinvsnmpIPRange;
-
 switch($_POST['glpi_tab']) {
    case -1:
-      //$PluginFusioninventoryAgent->showFormAdvancedOptions($_POST["id"]);
+      $PluginFusinvsnmpIPRange = new PluginFusinvsnmpIPRange();
+      $PluginFusinvsnmpIPRange->permanentTask($_POST["id"], "NETDISCOVERY", $_POST['allowcreate']);
+      $PluginFusinvsnmpIPRange->permanentTask($_POST["id"], "SNMPQUERY", $_POST['allowcreate']);
+      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $PluginFusioninventoryTaskjob->manageTasksByObject("PluginFusinvsnmpIPRange", $_POST['id']);
       break;
 
    case 1:
+      $PluginFusinvsnmpIPRange = new PluginFusinvsnmpIPRange();
       $PluginFusinvsnmpIPRange->permanentTask($_POST["id"], "NETDISCOVERY", $_POST['allowcreate']);
       break;
 
    case 2:
+      $PluginFusinvsnmpIPRange = new PluginFusinvsnmpIPRange();
       $PluginFusinvsnmpIPRange->permanentTask($_POST["id"], "SNMPQUERY", $_POST['allowcreate']);
       break;
 
