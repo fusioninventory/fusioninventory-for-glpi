@@ -446,7 +446,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       echo "<b>$day</b> ".$LANG["stats"][31]." ";
       echo "<b>$hour</b> ".$LANG["job"][21]." ";
       echo "<b>$minute</b> ".$LANG["job"][22]." ";
-      echo " ".strtolower($LANG["rulesengine"][42])." <b>$sec</b> ".$LANG["stats"][34]." ";
+      echo " ".$LANG['choice'][3]." <b>$sec</b> ".$LANG["stats"][34]." ";
       echo "</td>";
 		echo "</tr>";
 
