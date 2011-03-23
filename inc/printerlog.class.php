@@ -559,7 +559,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 
                   if ($graphType == 'day') {
                      if (!isset($pages[$data['printers_id']])) {
-                        $pages[$data['printers_id']] = $data[$graphField];
+                        $pages[$data['printers_id']] = 0;
                      }
                      $oPrinter->getFromDB($data['printers_id']);
 
@@ -579,12 +579,17 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
          }
 
          $continue = 1;
-         foreach($input as $datas) {
+         foreach($input as $num=>$datas) {
             if (count($datas) > 60) {
                $continue = 0;
+            } else if (count($datas) == '1') {
+               $input[$num] = array_merge(array('' => "0"),$input[$num]);
+            } else if (count($data) == '0') {
+               $continue = '-1';
             }
          }
-         if ($continue == '0') {
+
+         if (($continue == '0') OR ($continue == '-1')) {
             echo "<table class='tab_cadre' cellpadding='5' width='900'>";
             echo "<tr class='tab_bg_1'>";
             echo "<th>";
@@ -594,7 +599,9 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 
             echo "<tr class='tab_bg_1'>";
             echo "<td align='center'>";
-            echo $LANG['plugin_fusinvsnmp']['printhistory'][1];
+            if ($continue == '0') {
+               echo $LANG['plugin_fusinvsnmp']['printhistory'][1];
+            }
             echo "</td>";
             echo "</tr>";
 
