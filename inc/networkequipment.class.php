@@ -424,6 +424,11 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       echo "</td>";
       echo "<td>";
       $sysUpTime = $this->oFusionInventory_networkequipment->fields['uptime'];
+      $day = 0;
+      $hour = 0;
+      $minute = 0;
+      $sec = 0;
+      $ticks = 0;
       if (strstr($sysUpTime, "days")) {
          list($day, $hour, $minute, $sec, $ticks) = sscanf($sysUpTime, "%d days, %d:%d:%d.%d");
       } else if (strstr($sysUpTime, "hours")) {
