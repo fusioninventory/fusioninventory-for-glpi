@@ -1,20 +1,21 @@
 <?php
+
 /*
    ----------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2003-2008 by the INDEPNET Development Team.
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org//
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ----------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
-   FusionInventory is free software; you can redistribute it and/or modify
+   FusionInventory is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2 of the License, or
-   (at your option) any later version.
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -22,14 +23,14 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with FusionInventory; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-   ------------------------------------------------------------------------
- */
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
 
-// Original Author of file: David DURIEUX
-// Purpose of file:
-// ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
+ */
 
 if (!defined('GLPI_ROOT')) {
 	define('GLPI_ROOT', '../../..');
@@ -41,7 +42,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","r");
 
-$importexport = new PluginFusinvsnmpImportExport;
+$PluginFusinvsnmpImportExport = new PluginFusinvsnmpImportExport();
 
 header("Expires: 0");
 header("Cache-control: private");
@@ -50,7 +51,6 @@ header("Content-Description: File Transfer");
 header('Content-type: application/xml; charset="utf-8"',true);
 header("Content-disposition: attachment; filename=export.xml");
 
-
-echo $importexport->export($_GET["model"]);
+echo $PluginFusinvsnmpImportExport->export($_GET["model"]);
 
 ?>
