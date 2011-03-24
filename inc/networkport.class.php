@@ -571,34 +571,12 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
 
 
    /**
-    * Get ports to connect
-    *
-    *@return array of ports
-    **/
-   function getPortsToConnect() {
-      return $this->portsToConnect;
-   }
-
-
-
-   /**
     * Get MAC addresses to connect
     *
     *@return array of MAC addresses
     **/
    function getMacsToConnect() {
       return $this->portMacs;
-   }
-
-
-
-   /**
-    * Get IP addresses to connect
-    *
-    *@return array of IP addresses
-    **/
-   function getIpsToConnect() {
-      return $this->portIps;
    }
 
 

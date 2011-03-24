@@ -104,53 +104,7 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
 	}
 
    
-
-   function updateTrackertoFusion() {
-      global $DB;
-
-      // Fields to history
-      $rights = array();
-      $rights['ifmtu'] = '-1';
-      $rights['ifdescr'] = '-1';
-      $rights['ifinerrors'] = '-1';
-      $rights['ifinoctets'] = '-1';
-      $rights['ifinternalstatus'] = '-1';
-      $rights['iflastchange'] = '-1';
-      $rights['ifName'] = '-1';
-      $rights['ifouterrors'] = '-1';
-      $rights['ifoutoctets'] = '-1';
-      $rights['ifspeed'] = '-1';
-      $rights['ifstatus'] = '-1';
-      $rights['vlanTrunkPortDynamicStatus'] = '-1';
-      $rights['portDuplex'] = '-1';
-      $rights['ifIndex'] = '-1';
-      $rights['macaddr'] = '-1';
-
-      $query = "SELECT *
-                FROM ".$this->getTable().";";
-      if ($result=$DB->query($query)) {
-			while ($data=$DB->fetch_array($result)) {
-            $val = str_replace("2-", "", $data['field']);
-            if (isset($rights[$val])) {
-               $rights[$val] = '0';
-            }
-         }
-      }
-
-      $query = "TRUNCATE TABLE `".$this->getTable()."`";
-      $DB->query($query);
-
-      // Add rights in DB
-      foreach ($rights as $field=>$value){
-         $input = array();
-         $input['field'] = $field;
-         $input['days']  = $value;
-         $this->add($input);
-      }
-   }
-
    
-		
 	function showForm($options=array()) {
 		global $LANG,$DB;
 

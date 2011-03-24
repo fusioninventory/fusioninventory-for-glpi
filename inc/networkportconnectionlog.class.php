@@ -38,57 +38,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpNetworkPortConnectionLog extends CommonDBTM {
 
-
-   function migration() {
-      global $DB;
-
-      $PluginFusinvsnmpNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
-
-      $sql_connection = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkportlogs`
-                        WHERE `field`='0'
-                        ORDER BY `plugin_fusioninventory_agentprocesses_id` DESC, `date_mod` DESC;";
-      $result_connection = $DB->query($sql_connection);
-      while ($thread_connection = $DB->fetch_array($result_connection)) {
-         $input = array();
-         $dataPort = array();
-         $input['plugin_fusioninventory_agentprocesses_id'] = $thread_connection['plugin_fusioninventory_agentprocesses_id'];
-         $input['date'] = $thread_connection['date_mod'];
-         if (($thread_connection["old_device_ID"] != "0")
-                 OR ($thread_connection["new_device_ID"] != "0")) {
-
-            if ($thread_connection["old_device_ID"] != "0") {
-               // disconnection
-               $input['creation'] = '0';
-            } else if ($thread_connection["new_device_ID"] != "0") {
-               // connection
-               $input['creation'] = '1';
-            }
-            $input['networkports_id_source'] = $thread_connection["networkports_id"];
-
-            if ($thread_connection["old_device_ID"] != "0") {
-               $queryPort = "SELECT *
-                             FROM `glpi_networkports`
-                             WHERE `mac`='".$thread_connection['old_value']."'
-                             LIMIT 0,1;";
-               $resultPort = $DB->query($queryPort);
-               $dataPort = $DB->fetch_assoc($resultPort);
-            } else if ($thread_connection["new_device_ID"] != "0") {
-               $queryPort = "SELECT *
-                             FROM `glpi_networkports`
-                             WHERE `mac`='".$thread_connection['new_value']."'
-                             LIMIT 0,1;";
-               $resultPort = $DB->query($queryPort);
-               $dataPort = $DB->fetch_assoc($resultPort);
-            }
-            $input['networkports_id_destination'] = $dataPort['id'];
-            $this->add($input);
-            $PluginFusinvsnmpNetworkPortLog->deleteFromDB($thread_connection['id'], 1);
-         }
-      }
-   }
-
-   
-
    function showForm($input='') {
       global $DB,$LANG,$CFG_GLPI,$INFOFORM_PAGES;
 
