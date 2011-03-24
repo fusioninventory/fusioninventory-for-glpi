@@ -1,37 +1,36 @@
 <?php
+
 /*
- * @version $Id$
- ----------------------------------------------------------------------
- FusionInventory
- Coded by the FusionInventory Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org//
- ----------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: DURIEUX David
-// Purpose of file:
-// ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
@@ -179,10 +178,9 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 //      $tab[100]['linkfield'] = 'id';
 //      $tab[100]['name'] = 'id';
 
-
-
       return $tab;
    }
+
 
 
 	function countAllEntries($id) {
@@ -199,6 +197,8 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 		}
 		return $num;
 	}
+
+
 
 	/* Gets history (and the number of entries) of one printer */
 	function getEntries($id, $begin, $limit) {
@@ -234,6 +234,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 
 		if ($result = $DB->query($query)) {
 			if ($fields = $DB->fetch_assoc($result)) {
+            $output = array();
 				$output['num_days'] =
                ceil((strtotime($fields['max_date']) - strtotime($fields['min_date']))/(60*60*24));
 				$output['num_pages'] = $fields['max_pages'] - $fields['min_pages'];
@@ -243,7 +244,9 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 		}
 		return false;
 	}
-	
+
+
+
 	function showForm($id, $options=array()) {
 		global $LANG;
 		
@@ -280,10 +283,9 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 		echo "<br>";
 		printPager($_GET['start'], $numrows, $_SERVER['PHP_SELF'], $parameters);
 
+      $limit = $numrows;
 		if ($_SESSION["glpilist_limit"] < $numrows) {
 			$limit = $_SESSION["glpilist_limit"];
-      } else {
-			$limit = $numrows;
       }
 		// Get history
 		if (!($data = $this->getEntries($id, $_GET['start'], $limit))) {
@@ -329,6 +331,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 	}
 
 
+   
    /**
     * Show printer graph form
     **/
@@ -412,7 +415,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 
       echo "<form method='post' name='snmp_form' id='snmp_form' action='".GLPI_ROOT."/plugins/fusinvsnmp/front/printer_info.form.php'>";
       echo "<table class='tab_cadre' cellpadding='5' width='950'>";
-      $mapping = new PluginFusioninventoryMapping;
+      $mapping = new PluginFusioninventoryMapping();
       $maps = $mapping->find("`itemtype`='Printer'");
       foreach ($maps as $mapfields) {
          if (!isset($mapfields["shortlocale"])) {
@@ -530,6 +533,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
          if ($result = $DB->query($query)) {
             if ($DB->numrows($result) != 0) {
                $pages = array();
+               $data = array();
                while ($data = $DB->fetch_assoc($result)) {
                   switch($timeUnit) {
 
@@ -584,8 +588,11 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
                $continue = 0;
             } else if (count($datas) == '1') {
                $input[$num] = array_merge(array('' => "0"),$input[$num]);
-            } else if (count($data) == '0') {
+            } else if (count($datas) == '0') {
                $continue = '-1';
+            } else {
+               array_shift($datas);
+               $input[$num] = $datas;
             }
          }
 

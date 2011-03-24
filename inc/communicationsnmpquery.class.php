@@ -616,6 +616,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          }
 
          foreach ($p_port->children() as $name=>$child) {
+            $trunk = 0;
             switch ($name) {
                case 'CONNECTIONS' :
                   $errors.=$this->importConnections($child, $ptp);
@@ -643,6 +644,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   if ((string)$child == '1') {
                      PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                      $ptp->setValue('trunk', 1);
+                     $trunk = 1;
                   }
                   break;
 
@@ -667,6 +669,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   break;
                default :
                   $errors.=$LANG['plugin_fusioninventory']['errors'][22].' PORT : '.$name."\n";
+            }
+            if ($trunk == "0") {
+               $ptp->setValue('trunk', 0);
             }
          }
          $this->ptd->addPort($ptp, $portIndex);

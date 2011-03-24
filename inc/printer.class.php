@@ -1,54 +1,47 @@
 <?php
+
 /*
- * @version $Id$
- -------------------------------------------------------------------------
- FusionInventory
- Coded by the FusionInventory Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org/
- -------------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- --------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: Vincent MAZZONI
+   Co-authors of file:
+   Purpose of file: modelisation of a printer
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: MAZZONI Vincent
-// Purpose of file: modelisation of a printer
-// ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-/**
- * Class to use printers
- **/
 class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
    private $oFusionInventory_printer;
    private $oFusionInventory_printer_history;
    private $ports=array(), $newPorts=array(), $updatesPorts=array();
    private $cartridges=array(), $newCartridges=array(), $updatesCartridges=array();
 
-	/**
-	 * Constructor
-	**/
    function __construct() {
       parent::__construct("glpi_printers");
       $this->dohistory=true;
@@ -84,6 +77,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       return true;
    }
 
+   
 
    /**
     * Load an existing networking printer
@@ -128,6 +122,8 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       }
    }
 
+
+
    /**
     * Update an existing preloaded printer with the instance values
     *
@@ -150,6 +146,8 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
          $this->oFusionInventory_printer_history->updateDB();
       }
    }
+
+
 
    /**
     * Get ports
@@ -176,6 +174,8 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       return $portsIds;
    }
 
+
+
    /**
     * Get ports
     *
@@ -184,6 +184,8 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
    function getPorts() {
       return $this->ports;
    }
+
+
 
    /**
     * Get index of port object
@@ -213,6 +215,8 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       return $portIndex;
    }
 
+
+
    /**
     * Get index of cartridge object
     *
@@ -232,6 +236,8 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       return $cartridgeIndex;
    }
 
+
+
    /**
     * Get port object
     *
@@ -241,6 +247,8 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
    function getPort($p_index) {
       return $this->ports[$p_index];
    }
+
+
 
    /**
     * Save new ports
@@ -264,6 +272,8 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       }
    }
 
+
+
    /**
     * Get cartridge object
     *
@@ -273,6 +283,8 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
    function getCartridge($p_index) {
       return $this->cartridges[$p_index];
    }
+
+
 
    /**
     * Save new cartridges
@@ -296,6 +308,8 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       }
    }
 
+
+
    /**
     * Add new port
     *
@@ -309,6 +323,8 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
          $this->updatesPorts[]=$p_portIndex;
       }
    }
+
+
 
    /**
     * Get cartridges
@@ -334,6 +350,8 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       return $cartridgesIds;
    }
 
+
+
    /**
     * Add new cartridge
     *
@@ -348,6 +366,8 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       }
    }
 
+
+
    /**
     * Add new page counter
     *
@@ -359,14 +379,13 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
          $this->oFusionInventory_printer_history->setValue($p_name, $p_state,
                                                    $this->oFusionInventory_printer_history, 0);
    }
-   
+
+
+
 	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 
 		PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printer","r");
-
-		$plugin_fusioninventory_printer = new PluginFusinvsnmpPrinter;
-		$plugin_fusioninventory_snmp = new PluginFusinvsnmpSNMP;
 
       $this->oFusionInventory_printer->id = $id;
       
@@ -455,14 +474,9 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
 		echo "</td>";
 		echo "</tr>";
 
-//      $this->oFusionInventory_printer->showFormButtons($options);
 		echo "</table></form>";
 		echo "</div>";
-
 	}
-
-
-
 }
 
 ?>

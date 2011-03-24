@@ -3,19 +3,19 @@
 /*
    ----------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2003-2008 by the INDEPNET Development Team.
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org//
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ----------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
-   FusionInventory is free software; you can redistribute it and/or modify
+   FusionInventory is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2 of the License, or
-   (at your option) any later version.
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -23,20 +23,21 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with FusionInventory; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-   ------------------------------------------------------------------------
- */
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
 
-// Original Author of file: David DURIEUX
-// Purpose of file:
-// ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
+ */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
 class PluginFusinvsnmpStaticmisc {
+   
    static function task_methods() {
       global $LANG;
 
@@ -54,8 +55,8 @@ class PluginFusinvsnmpStaticmisc {
    }
 
 
-   // *** NETDISCOVERY ***
 
+   // *** NETDISCOVERY ***
    static function task_definitiontype_netdiscovery($a_itemtype) {
       global $LANG;
 
@@ -63,6 +64,7 @@ class PluginFusinvsnmpStaticmisc {
 
       return $a_itemtype;
    }
+
 
 
    static function task_definitionselection_PluginFusinvsnmpIPRange_netdiscovery($title) {
@@ -79,7 +81,6 @@ class PluginFusinvsnmpStaticmisc {
    
 
    // *** SNMPINVENTORY ***
-
    static function task_definitiontype_snmpinventory($a_itemtype) {
       global $LANG;
 
@@ -91,10 +92,12 @@ class PluginFusinvsnmpStaticmisc {
    }
 
 
+
    static function task_definitionselection_PluginFusinvsnmpIPRange_snmpinventory($title) {
       $rand = PluginFusinvsnmpStaticmisc::task_definitionselection_PluginFusinvsnmpIPRange_netdiscovery($title);
       return $rand;
    }
+
 
 
    static function task_definitionselection_NetworkEquipment_snmpinventory($title) {
@@ -107,6 +110,7 @@ class PluginFusinvsnmpStaticmisc {
       $rand = Dropdown::show("NetworkEquipment", $options);
       return $rand;
    }
+
 
 
    static function task_definitionselection_Printer_snmpinventory($title) {
@@ -157,6 +161,7 @@ class PluginFusinvsnmpStaticmisc {
 
    # Selection type for actions
    static function task_selection_type_snmpinventory($itemtype) {
+      $selection_type = '';
       switch ($itemtype) {
 
          case 'PluginFusinvsnmpIPRange':
@@ -178,7 +183,7 @@ class PluginFusinvsnmpStaticmisc {
 
 
    static function task_selection_type_netdiscovery($itemtype) {
-      echo $itemtype;
+      $selection_type = '';
       switch ($itemtype) {
 
          case 'PluginFusinvsnmpIPRange':
@@ -226,6 +231,7 @@ class PluginFusinvsnmpStaticmisc {
    }
 
 
+   
    static function profiles() {
       global $LANG;
 

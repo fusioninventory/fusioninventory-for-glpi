@@ -1,98 +1,42 @@
 <?php
+
 /*
- * @version $Id$
- ----------------------------------------------------------------------
- FusionInventory
- Coded by the FusionInventory Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org//
- ----------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: David DURIEUX
-// Purpose of file:
-// ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
 class PluginFusinvsnmpSNMP extends CommonDBTM {
-
-	/**
-	 * Get links between oid and fields 
-	 *
-	 * @param $ID_Model id of the SNMP model
-	 *
-	 * @return array : array with object name, mapping(type, name)
-	 *
-	**/
-	function GetLinkOidToFields($ID_Device,$type) {
-		global $DB;
-		
-		$ObjectLink = array();
-
-		if ($type == NETWORKING_TYPE) {
-			$query_add = "LEFT JOIN `glpi_plugin_fusinvsnmp_networkequipments`
-                                 ON `glpi_plugin_fusinvsnmp_networkequipments`.`plugin_fusinvsnmp_models_id`=
-                                    `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusinvsnmp_models_id`
-                    WHERE `networkequipments_id`='".$ID_Device."'
-                          AND `glpi_plugin_fusinvsnmp_networkequipments`.`plugin_fusinvsnmp_models_id`!='0' ";
-      } else if($type == PRINTER_TYPE) {
-			$query_add = "LEFT JOIN `glpi_plugin_fusinvsnmp_printers`
-                                 ON `glpi_plugin_fusinvsnmp_printers`.`plugin_fusinvsnmp_models_id`=
-                                    `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusinvsnmp_models_id`
-                    WHERE `printers_id`='".$ID_Device."'
-                          AND `glpi_plugin_fusinvsnmp_printers`.`plugin_fusinvsnmp_models_id`!='0' ";
-      }
-			
-		$query = "SELECT `glpi_plugin_fusioninventory_mappings`.`itemtype`,
-                       `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`,
-                       `glpi_plugin_fusinvsnmp_modelmibs`.`oid_port_dyn`,
-                       `glpi_plugin_fusinvsnmp_miboids`.`name` AS `name`
-                FROM `glpi_plugin_fusinvsnmp_modelmibs`
-                     LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-                               ON `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusioninventory_mappings_id`=
-                                  `glpi_plugin_fusioninventory_mappings`.`id`
-                     LEFT JOIN `glpi_plugin_fusinvsnmp_miboids`
-                               ON `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusinvsnmp_miboids_id`=
-                                  `glpi_plugin_fusinvsnmp_miboids`.`id`
-               ".$query_add."
-                   AND `oid_port_counter`='0'
-                   AND `glpi_plugin_fusinvsnmp_modelmibs`.`is_active`='1';";
-
-		if ($result=$DB->query($query)) {
-			while ($data=$DB->fetch_array($result)) {
-				if ($data["oid_port_dyn"] == "1") {
-					$data["name"] = $data["name"].".";
-            }
-				$ObjectLink[$data["name"]] = $data["mapping_name"];
-			}
-		}
-		return $ObjectLink;
-	}
-	
-
 
 	/**
 	 * Description
@@ -128,48 +72,13 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
 		$DB->query($query);
 	}
 	
-	
+
 
 	/**
 	 * Description
 	 *
-	 * @param
-	 * @param
-	 *
-	 * @return
-	 *
-	**/
-	function update_printer_infos($id, $plugin_fusinvsnmp_models_id, $plugin_fusinvsnmp_configsecurities_id) {
-		global $DB;
-
-		$query = "SELECT *
-                FROM `glpi_plugin_fusinvsnmp_printers`
-                WHERE `printers_id`='".$id."';";
-		$result = $DB->query($query);
-		if ($DB->numrows($result) == "0") {
-			$queryInsert = "INSERT INTO `glpi_plugin_fusinvsnmp_printers`(`printers_id`)
-                         VALUES('".$id."');";
-
-			$DB->query($queryInsert);
-		}
-		if (empty($plugin_fusinvsnmp_configsecurities_id)) {
-			$plugin_fusinvsnmp_configsecurities_id = 0;
-      }
-		$query = "UPDATE `glpi_plugin_fusinvsnmp_printers`
-                SET `plugin_fusinvsnmp_models_id`='".$plugin_fusinvsnmp_models_id."',
-                    `plugin_fusinvsnmp_configsecurities_id`='".$plugin_fusinvsnmp_configsecurities_id."'
-                WHERE `printers_id`='".$id."';";
-	
-		$DB->query($query);
-	}
-	
-	
-
-	/**
-	 * Description
-	 *
-	 * @param
-	 * @param
+	 * @param $IP value ip of the device
+	 * @param $ifDescr value description/name of the port
 	 *
 	 * @return
 	 *
@@ -177,8 +86,8 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
 	function getPortIDfromDeviceIP($IP, $ifDescr) {
 		global $DB;
 
-      $pfiud = new PluginFusioninventoryUnknownDevice();
-      $np = new NetworkPort();
+      $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $NetworkPort = new NetworkPort();
 
       $PortID = "";
 		$query = "SELECT *
@@ -240,7 +149,7 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
                $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
                $input['ip'] = $IP;
                $input['name'] = $ifDescr;
-               $PortID = $np->add($input);
+               $PortID = $NetworkPort->add($input);
             }
             return $PortID;
          }
@@ -253,28 +162,28 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
          $result = $DB->query($query);
          if ($DB->numrows($result) == "1") {
             $data = $DB->fetch_assoc($result);
-            if ($pfiud->convertUnknownToUnknownNetwork($data['items_id'])) {
+            if ($PluginFusioninventoryUnknownDevice->convertUnknownToUnknownNetwork($data['items_id'])) {
                // Add port
                $input = array();
                $input['items_id'] = $data['items_id'];
                $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
                $input['ip'] = $IP;
                $input['name'] = $ifDescr;
-               $PortID = $np->add($input);
+               $PortID = $NetworkPort->add($input);
                return $PortID;
             }
          }
          // Add unknown device
          $input = array();
          $input['ip'] = $IP;
-         $unkonwn_id = $pfiud->add($input);
+         $unkonwn_id = $PluginFusioninventoryUnknownDevice->add($input);
          // Add port
          $input = array();
          $input['items_id'] = $unkonwn_id;
          $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
          $input['ip'] = $IP;
          $input['name'] = $ifDescr;
-         $PortID = $np->add($input);
+         $PortID = $NetworkPort->add($input);
          return($PortID);
       }
 		return($PortID);
@@ -326,48 +235,16 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
 		return($data["id"]);
 	}
 
-	/**
-	 * Get SNMP model of the device 
-	 *
-	 * @param $ID_Device id of the device
-	 * @param $type type of device (NETWORKING_TYPE, PRINTER_TYPE ...)
-	 *
-	 * @return id of the SNMP model or nothing 
-	 *
-	**/
-	function GetSNMPModel($ID_Device,$type) {
-		global $DB;
 
-		switch ($type) {
-			case NETWORKING_TYPE :
-				$query = "SELECT plugin_fusinvsnmp_models_id
-				FROM glpi_plugin_fusinvsnmp_networkequipments 
-				WHERE networkequipments_id='".$ID_Device."' ";
-				break;
-
-			case PRINTER_TYPE :
-				$query = "SELECT `plugin_fusinvsnmp_models_id`
-                      FROM `glpi_plugin_fusinvsnmp_printers`
-                      WHERE `printers_id`='".$ID_Device."';";
-				break;
-		}
-		if (isset($query)) {
-			if (($result = $DB->query($query))) {
-				if ($DB->numrows($result) != 0) {
-					return $DB->result($result, 0, "plugin_fusinvsnmp_models_id");
-            }
-			}
-		}
-	}
-
+   
    static function auth_dropdown($selected="") {
       global $DB;
 
-      $plugin_fusioninventory_snmp_auth = new PluginFusinvsnmpConfigSecurity;
-      $config = new PluginFusioninventoryConfig;
+      $PluginFusinvsnmpConfigSecurity = new PluginFusinvsnmpConfigSecurity();
+      $config = new PluginFusioninventoryConfig();
 
       if ($config->getValue($_SESSION["plugin_fusinvsnmp_moduleid"], "storagesnmpauth") == "file") {
-         echo $plugin_fusioninventory_snmp_auth->selectbox($selected);
+         echo $PluginFusinvsnmpConfigSecurity->selectbox($selected);
       } else  if ($config->getValue($_SESSION["plugin_fusinvsnmp_moduleid"], "storagesnmpauth") == "DB") {
          Dropdown::show("PluginFusinvsnmpConfigSecurity",
                         array('name' => "plugin_fusinvsnmp_configsecurities_id",
@@ -376,6 +253,8 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
       }
    }
 
+
+   
    static function hex_to_string($value) {
       if (strstr($value, "0x0115")) {
          $hex = str_replace("0x0115","",$value);

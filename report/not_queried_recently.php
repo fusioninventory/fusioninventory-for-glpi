@@ -1,35 +1,36 @@
 <?php
+
 /*
    ----------------------------------------------------------------------
-   GLPI - Gestionnaire Libre de Parc Informatique
-   Copyright (C) 2003-2008 by the INDEPNET Development Team.
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
-   http://indepnet.net/   http://glpi-project.org/
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ----------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of GLPI.
+   This file is part of FusionInventory.
 
-   GLPI is free software; you can redistribute it and/or modify
+   FusionInventory is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2 of the License, or
-   (at your option) any later version.
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
-   GLPI is distributed in the hope that it will be useful,
+   FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with GLPI; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-   ------------------------------------------------------------------------
- */
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
 
-// Original Author of file: David DURIEUX
-// Purpose of file:
-// ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
+ */
 
 //Options for GLPI 0.71 and newer : need slave db to access the report
 $USEDBREPLICATE=1;
@@ -86,8 +87,7 @@ echo "</table></form>";
 
 
 if(isset($_GET["FK_networking_ports"])) {
-
-   echo plugin_fusioninventory_snmp_showHistory($FK_port, 0);
+   echo PluginFusinvsnmpNetworkPortLog::showHistory($_GET["FK_networking_ports"]);
 }
 
 echo "</form>";
