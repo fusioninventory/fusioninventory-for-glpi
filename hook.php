@@ -773,6 +773,8 @@ function plugin_item_purge_fusioninventory($parm) {
       case 'NetworkPort_NetworkPort':
          // If remove connection of a hub port (unknown device), we must delete this port too
          $NetworkPort = new NetworkPort();
+         $NetworkPort_Vlan = new NetworkPort_Vlan();
+
          $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
 
          $NetworkPort->getFromDB($parm->getField('networkports_id_1'));
@@ -786,6 +788,10 @@ function plugin_item_purge_fusioninventory($parm) {
          if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
             $PluginFusioninventoryUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
             if ($PluginFusioninventoryUnknownDevice->fields['hub'] == '1') {
+               $a_vlans = $NetworkPort_Vlan->getVlansForNetworkPort($NetworkPort->fields['id']);
+               foreach ($a_vlans as $vlan_id) {
+                  $NetworkPort_Vlan->unassignVlan($NetworkPort->fields['id'], $vlan_id);
+               }
                $NetworkPort->delete($NetworkPort->fields);
             }
          }
