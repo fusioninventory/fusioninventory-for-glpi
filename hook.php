@@ -1101,8 +1101,8 @@ function plugin_fusinvsnmp_MassiveActionsFieldsDisplay($type,$table,$field,$link
 			break;
 
 		case 'glpi_plugin_fusinvsnmp_discovery.plugin_fusinvsnmp_snmpauths_id' :
-			$plugin_fusinvsnmp_snmp = new PluginFusinvsnmpConfigSecurity;
-			echo $plugin_fusinvsnmp_snmp->selectbox();
+			$PluginFusinvsnmpConfigSecurity = new PluginFusinvsnmpConfigSecurity();
+			echo $PluginFusinvsnmpConfigSecurity->selectbox();
 			return true;
 			break;
 

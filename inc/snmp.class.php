@@ -330,11 +330,11 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
    static function auth_dropdown($selected="") {
       global $DB;
 
-      $plugin_fusioninventory_snmp_auth = new PluginFusinvsnmpConfigSecurity();
+      $PluginFusinvsnmpConfigSecurity = new PluginFusinvsnmpConfigSecurity();
       $config = new PluginFusioninventoryConfig();
 
       if ($config->getValue($_SESSION["plugin_fusinvsnmp_moduleid"], "storagesnmpauth") == "file") {
-         echo $plugin_fusioninventory_snmp_auth->selectbox($selected);
+         echo $PluginFusinvsnmpConfigSecurity->selectbox($selected);
       } else  if ($config->getValue($_SESSION["plugin_fusinvsnmp_moduleid"], "storagesnmpauth") == "DB") {
          Dropdown::show("PluginFusinvsnmpConfigSecurity",
                         array('name' => "plugin_fusinvsnmp_configsecurities_id",
