@@ -1,38 +1,36 @@
 <?php
 
 /*
- * @version $Id$
- ----------------------------------------------------------------------
- FusionInventory
- Coded by the FusionInventory Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org//
- ----------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: DURIEUX David
-// Purpose of file:
-// ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
@@ -44,7 +42,7 @@ class PluginFusinvsnmpNetworkPortConnectionLog extends CommonDBTM {
    function migration() {
       global $DB;
 
-      $ptsnmph = new PluginFusinvsnmpNetworkPortLog;
+      $PluginFusinvsnmpNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
 
       $sql_connection = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkportlogs`
                         WHERE `field`='0'
@@ -52,6 +50,7 @@ class PluginFusinvsnmpNetworkPortConnectionLog extends CommonDBTM {
       $result_connection = $DB->query($sql_connection);
       while ($thread_connection = $DB->fetch_array($result_connection)) {
          $input = array();
+         $dataPort = array();
          $input['plugin_fusioninventory_agentprocesses_id'] = $thread_connection['plugin_fusioninventory_agentprocesses_id'];
          $input['date'] = $thread_connection['date_mod'];
          if (($thread_connection["old_device_ID"] != "0")
@@ -83,15 +82,17 @@ class PluginFusinvsnmpNetworkPortConnectionLog extends CommonDBTM {
             }
             $input['networkports_id_destination'] = $dataPort['id'];
             $this->add($input);
-            $ptsnmph->deleteFromDB($thread_connection['id'], 1);
+            $PluginFusinvsnmpNetworkPortLog->deleteFromDB($thread_connection['id'], 1);
          }
       }
    }
 
+   
+
    function showForm($input='') {
       global $DB,$LANG,$CFG_GLPI,$INFOFORM_PAGES;
 
-      $np = new NetworkPort;
+      $NetworkPort = new NetworkPort();
 
       echo "<table class='tab_cadre' cellpadding='5' width='950'>";
       echo "<tr class='tab_bg_1'>";
@@ -120,6 +121,7 @@ class PluginFusinvsnmpNetworkPortConnectionLog extends CommonDBTM {
 
       echo "</tr>";
 
+      $condition = '';
       if (!isset($input['plugin_fusioninventory_agentprocesses_id'])) {
          $condition = '';
       } else {
@@ -149,14 +151,14 @@ class PluginFusinvsnmpNetworkPortConnectionLog extends CommonDBTM {
             echo "</td>";
 
             echo "<td>";
-            $np->getFromDB($data['networkports_id_source']);
-            $item = new $np->fields["itemtype"];
-            $item->getFromDB($np->fields["items_id"]);
+            $NetworkPort->getFromDB($data['networkports_id_source']);
+            $item = new $NetworkPort->fields["itemtype"];
+            $item->getFromDB($NetworkPort->fields["items_id"]);
             $link1 = $item->getLink(1);
 
-            $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networkport.form.php?id=" . $np->fields["id"] . "\">";
-            if (rtrim($np->fields["name"]) != "")
-               $link .= $np->fields["name"];
+            $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networkport.form.php?id=" . $NetworkPort->fields["id"] . "\">";
+            if (rtrim($NetworkPort->fields["name"]) != "")
+               $link .= $NetworkPort->fields["name"];
             else
                $link .= $LANG['common'][0];
             $link .= "</a>";
@@ -172,13 +174,13 @@ class PluginFusinvsnmpNetworkPortConnectionLog extends CommonDBTM {
             echo "</td>";
 
             echo "<td>";
-            $np->getFromDB($data['networkports_id_destination']);
-            $item = new $np->fields["itemtype"];
-            $item->getFromDB($np->fields["items_id"]);
+            $NetworkPort->getFromDB($data['networkports_id_destination']);
+            $item = new $NetworkPort->fields["itemtype"];
+            $item->getFromDB($NetworkPort->fields["items_id"]);
             $link1 = $item->getLink(1);
-            $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networkport.form.php?id=" . $np->fields["id"] . "\">";
-            if (rtrim($np->fields["name"]) != "")
-               $link .= $np->fields["name"];
+            $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networkport.form.php?id=" . $NetworkPort->fields["id"] . "\">";
+            if (rtrim($NetworkPort->fields["name"]) != "")
+               $link .= $NetworkPort->fields["name"];
             else
                $link .= $LANG['common'][0];
             $link .= "</a>";

@@ -1,45 +1,41 @@
 <?php
+
 /*
- * @version $Id$
- -------------------------------------------------------------------------
- FusionInventory
- Coded by the FusionInventory Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org/
- -------------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- --------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: Vincent MAZZONI
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: MAZZONI Vincent
-// Purpose of file: modelisation of a networking switch port
-// ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-/**
- * Class to use networking ports
- **/
 class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
    private $oFusioninventory_networkport; // link fusioninventory table object
    private $fusinvsnmp_networkports_id; // id in link fusioninventory table
@@ -53,12 +49,10 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
    private $noTrunk=false; // true if call to setNoTrunk()
    private $glpi_type=NETWORKING_TYPE; // NETWORKING_TYPE, PRINTER_TYPE...
 
-	/**
-	 * Constructor
-	**/
    function __construct($p_type=NULL, $p_logFile='') {
       global $CFG_GLPI;
-      
+
+      $logFile = '';
       if ($p_logFile != '') {
          $logFile = $p_logFile;
       } else {
@@ -71,6 +65,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       if ($p_type!=NULL) $this->glpi_type = $p_type;
       $this->type='PluginFusinvsnmpNetworkPort';
    }
+
+
 
    /**
     * Load an optionnaly existing port
@@ -108,6 +104,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       }
    }
 
+
+   
    /**
     * Update an existing preloaded port with the instance values
     *
@@ -122,6 +120,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       $this->assignVlans(); // update vlans
    }
 
+
+
    /**
     * Add a new port with the instance values
     *
@@ -134,7 +134,7 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
          // update core
          $this->ptcdUpdates['items_id']=$p_id;
          $this->ptcdUpdates['itemtype']=$this->glpi_type;
-//         $this->ptcdUpdates['itemtype']=NETWORKING_TYPE;
+
          $portID=parent::add($this->ptcdUpdates);
          $this->load($portID);
          // update fusioninventory
@@ -151,6 +151,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       }
    }
 
+
+
    /**
     * Add a new FusionInventory port with the instance values
     *
@@ -161,6 +163,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       $fusinvsnmp_networkports_id = $this->oFusioninventory_networkport->add($this->oFusioninventory_networkport->ptcdUpdates);
       return $fusinvsnmp_networkports_id;
    }
+
+
 
    /**
     * Delete a loaded port
@@ -175,6 +179,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       parent::deleteDB(); // core
    }
 
+
+
    /**
     * Add connection
     *
@@ -184,6 +190,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
    function addConnection($p_port) {
       $this->portsToConnect[]=$p_port;
    }
+
+
 
    /**
     * Add connection to unknown device
@@ -196,6 +204,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       $this->unknownDevicesToConnect[]=array('mac'=>$p_mac, 'ip'=>$p_ip);
    }
 
+
+
    /**
     * Manage connection to unknown device
     *
@@ -204,21 +214,23 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
     *@return nothing
     **/
    function PortUnknownConnection($p_mac, $p_ip) {
-      $ptud = new PluginFusioninventoryUnknownDevice();
+      $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $unknown_infos = array();
       $unknown_infos["name"] = '';
-      $newID=$ptud->add($unknown_infos);
+      $newID=$PluginFusioninventoryUnknownDevice->add($unknown_infos);
       // Add networking_port
-      $np=new NetworkPort();
+      $NetworkPort =new NetworkPort();
       $port_add = array();
       $port_add["items_id"] = $newID;
       $port_add["itemtype"] = 'PluginFusioninventoryUnknownDevice';
       $port_add["ip"] = $p_ip;
       $port_add['mac'] = $p_mac;
-      $dport = $np->add($port_add);
-      $ptsnmp=new PluginFusinvsnmpSNMP();
+      $dport = $NetworkPort->add($port_add);
       $this->connectDB($dport);
    }
 
+
+   
    /**
     * Connect this port to another one in DB
     *
@@ -254,6 +266,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       }
    }
 
+
+   
     /**
     * Connect this port to another one in DB
     *
@@ -283,6 +297,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       }
    }
 
+
+   
    /**
     * Disconnect a port in DB
     *
@@ -315,6 +331,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       }
    }
 
+
+   
    /**
     * Add vlan
     *
@@ -326,6 +344,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       $this->portVlans[]=array('number'=>$p_number, 'name'=>$p_name);
    }
 
+
+   
    /**
     * Add MAC address
     *
@@ -336,6 +356,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       $this->portMacs[]=$p_mac;
    }
 
+   
+
    /**
     * Add IP address
     *
@@ -345,6 +367,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
    function addIp($p_ip) {
       $this->portIps[]=$p_ip;
    }
+
+   
 
    /**
     * Assign vlans to this port
@@ -363,6 +387,7 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
          $vlans[] = Dropdown::importExternal("Vlan", $vlan['number'], 0, array(), $vlan['name']);
       }
       if (count($vlans)) { // vlans to add/update
+         $ports = array();
          $ports[] = $this->getValue('id');
          if ($this->connectedPort != '') $ports[] = $this->connectedPort;
          foreach ($ports AS $num=>$tmp_port) {
@@ -394,7 +419,6 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
                   }
 
                   foreach ($this->portVlans as $portVlan) {
-                     $vlanInDB=false;
                      $key='';
                      foreach ($vlansDBnumber as $vlanKey=>$vlanDBnumber) {
                         if ($vlanDBnumber==$portVlan['number']) {
@@ -440,6 +464,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       }
    }
 
+
+
    /**
     * Assign vlan
     *
@@ -454,6 +480,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
                 VALUES ('$p_port','$p_vlan')";
       $DB->query($query);
    }
+
+
 
    /**
     * Clean vlan
@@ -482,6 +510,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       $DB->query($query);
 	}
 
+
+
    /**
     * Get index of connection to switch
     *
@@ -492,6 +522,7 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
 
       $macs='';
       $ptp = new PluginFusinvsnmpNetworkPort;
+      $mac = array();
       foreach($this->portsToConnect as $index=>$portConnection) {
          if ($macs!='') $macs.=', ';
          $ptp->load($portConnection);
@@ -510,6 +541,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       }
       return '';
    }
+
+
 
    /**
     * Get connected port in DB
@@ -535,6 +568,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       return '';
    }
 
+
+
    /**
     * Get ports to connect
     *
@@ -543,6 +578,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
    function getPortsToConnect() {
       return $this->portsToConnect;
    }
+
+
 
    /**
     * Get MAC addresses to connect
@@ -553,6 +590,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       return $this->portMacs;
    }
 
+
+
    /**
     * Get IP addresses to connect
     *
@@ -561,6 +600,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
    function getIpsToConnect() {
       return $this->portIps;
    }
+
+
 
    /**
     * Set CDP
@@ -571,6 +612,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       $this->cdp=true;
    }
 
+
+
    /**
     * Get CDP
     *
@@ -580,6 +623,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       return $this->cdp;
    }
 
+
+
    /**
     * Get noTrunk
     *
@@ -588,6 +633,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
    function getNoTrunk() {
       return $this->noTrunk;
    }
+
+
 
    /**
     * Set no trunk
@@ -601,6 +648,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       $this->noTrunk = true;
       $this->setValue('trunk', 0);
    }
+
+
 
    /**
     * Is real port (not virtual or loopback)
@@ -629,6 +678,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       return $real;
    }
 
+
+
    static function getUniqueObjectfieldsByportID($id) {
       global $DB;
 
@@ -655,9 +706,6 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       }
       return($array);
    }
-
-
-   
 }
 
 ?>
