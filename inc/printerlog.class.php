@@ -584,8 +584,11 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
                $continue = 0;
             } else if (count($datas) == '1') {
                $input[$num] = array_merge(array('' => "0"),$input[$num]);
-            } else if (count($data) == '0') {
+            } else if (count($datas) == '0') {
                $continue = '-1';
+            } else {
+               array_shift($datas);
+               $input[$num] = $datas;
             }
          }
 
