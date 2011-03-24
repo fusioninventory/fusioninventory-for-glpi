@@ -104,7 +104,7 @@ class PluginFusinvinventoryImport_Virtualmachine extends CommonDBTM {
          $vm['uuid']=$dataSection["UUID"];
       }
 
-      if (count(vm) > 0) {
+      if (count($vm) > 0) {
          if ($type == "update") {
             $id_vm = $virtualmachine->update($vm);
          } else if ($type == "add") {
