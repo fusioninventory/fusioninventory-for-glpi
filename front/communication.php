@@ -83,11 +83,16 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
 
    // Check XML integrity
    $xml = '';
-   if (@gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"])) {
+   $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+   $PluginFusioninventoryTaskjob->disableDebug();
+   $comp = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
+   $PluginFusioninventoryTaskjob->reenableusemode();
+   if ($comp) {
       $xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
    } else {
       $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
    }
+
    if (@simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA)) {
       $pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA);
    } else {
