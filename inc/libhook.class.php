@@ -129,12 +129,12 @@ class PluginFusinvinventoryLibhook {
 
       $_SESSION["plugin_fusinvinventory_entity"] = $Computer->fields['entities_id'];
 
-//      if (!isset($_SESSION["plugin_fusinvinventory_history_add"])) {
-//         $_SESSION["plugin_fusinvinventory_history_add"] = true;
-//      }
-//      if (!isset($_SESSION["plugin_fusinvinventory_no_history_add"])) {
-//         $_SESSION["plugin_fusinvinventory_no_history_add"] = false;
-//      }
+      if (!isset($_SESSION["plugin_fusinvinventory_history_add"])) {
+         $_SESSION["plugin_fusinvinventory_history_add"] = true;
+      }
+      if (!isset($_SESSION["plugin_fusinvinventory_no_history_add"])) {
+         $_SESSION["plugin_fusinvinventory_no_history_add"] = false;
+      }
 
       $ignore_controllers = array();
       $ignore_USB = array();

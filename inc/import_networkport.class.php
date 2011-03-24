@@ -75,7 +75,7 @@ class PluginFusinvinventoryImport_Networkport extends CommonDBTM {
 
       $a_NetworkPort['itemtype'] = $itemtype;
       if (isset($dataSection["DESCRIPTION"])) {
-         $a_NetworkPort['name'] = addslashes($dataSection["DESCRIPTION"]);
+         $a_NetworkPort['name'] = $dataSection["DESCRIPTION"];
       }
       if (isset($dataSection["IPADDRESS"])) {
          $a_NetworkPort['ip'] = $dataSection["IPADDRESS"];
