@@ -68,6 +68,11 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
       $res_rule = $rulecollection->processAllRules(array("name"=>$array['name'],
                                                          "manufacturer"=>$manufacturer,
                                                          "old_version"=>$array['version']));
+
+      if (isset($res_rule['_ignore_ocs_import']) AND $res_rule['_ignore_ocs_import'] == "1") {
+         // Ignrore import software
+         return;
+      }
       $modified_name = "";
       if (isset($res_rule["name"])) {
          $modified_name = $res_rule["name"];
