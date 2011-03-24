@@ -61,7 +61,14 @@ if (isset($_POST["delete"])) {
 //	logEvent($_POST["id"], "computers", 4, "inventory", $_SESSION["glpiname"]." ".$LANG['log'][22]);
 	glpi_header(GLPI_ROOT."/plugins/fusioninventory/front/unknowndevice.php");
 } else if (isset($_POST["restore"])) {
+   $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+   $PluginFusioninventoryUnknownDevice->check($_POST['id'],'d');
 
+   if ($PluginFusioninventoryUnknownDevice->restore($_POST)) {
+      Event::log($_POST["id"],"PluginFusioninventoryUnknownDevice", 4, "inventory",
+               $_SESSION["glpiname"]." ".$LANG['log'][23]." ".$PluginFusioninventoryUnknownDevice->getField('name'));
+   }
+   $PluginFusioninventoryUnknownDevice->redirectToList();
 
 } else if (isset($_POST["purge"]) || isset($_GET["purge"])) {
 
