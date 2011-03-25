@@ -71,7 +71,7 @@ function plugin_init_fusioninventory() {
       $PLUGIN_HOOKS['change_profile']['fusioninventory'] =
          PluginFusioninventoryProfile::changeprofile($moduleId);
 
-      $PLUGIN_HOOKS['cron']['fusioninventory'] = 20*MINUTE_TIMESTAMP; // All 20 minutes
+//      $PLUGIN_HOOKS['cron']['fusioninventory'] = 20*MINUTE_TIMESTAMP; // All 20 minutes
 
       $PLUGIN_HOOKS['add_javascript']['fusioninventory']="script.js";
 
