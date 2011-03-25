@@ -72,7 +72,7 @@ if (isset($_POST['update'])) {
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if ((isset($_POST['Clean_history']))) {
    $PluginFusinvsnmpNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
-   $PluginFusinvsnmpNetworkPortLog->cronCleanHistory();
+   $PluginFusinvsnmpNetworkPortLog->cronCleannetworkportlogs();
    glpi_header($_SERVER['HTTP_REFERER']);
 }
 

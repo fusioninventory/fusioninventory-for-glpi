@@ -627,8 +627,8 @@ function cron_plugin_fusinvsnmp() {
 //   $ptud->CleanOrphelinsConnections();
 //	$ptud->FusionUnknownKnownDevice();
 //   #Clean server script processes history
-   $pfisnmph = new PluginFusinvsnmpNetworkPortLog;
-   $pfisnmph->cronCleanHistory();
+//   $pfisnmph = new PluginFusinvsnmpNetworkPortLog;
+//   $pfisnmph->cronCleanHistory();
    return 1;
 }
 
