@@ -56,7 +56,7 @@ if (isset($_POST["delete"])) {
 
 	$ptud->check($_POST['id'],'w');
 
-	$ptud->delete($_POST,1);
+	$ptud->delete($_POST);
 
 //	logEvent($_POST["id"], "computers", 4, "inventory", $_SESSION["glpiname"]." ".$LANG['log'][22]);
 	glpi_header(GLPI_ROOT."/plugins/fusioninventory/front/unknowndevice.php");
@@ -71,7 +71,11 @@ if (isset($_POST["delete"])) {
    $PluginFusioninventoryUnknownDevice->redirectToList();
 
 } else if (isset($_POST["purge"]) || isset($_GET["purge"])) {
+   PluginFusioninventoryProfile::checkRight("fusioninventory", "unknowndevice","w");
 
+	$ptud->check($_POST['id'],'w');
+
+	$ptud->delete($_POST,1);
 
 } else if (isset($_POST["update"])) {
 	$ptud->check($_POST['id'],'w');
