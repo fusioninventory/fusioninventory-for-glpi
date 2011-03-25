@@ -397,7 +397,21 @@ if (!unserialize($serializedSectionToRemove)) {
                            break;
                            
                         case "NETWORKS":
-                           if(isset($arrSectionToAdd["MACADDR"]) AND isset($arrSectionToRemove["MACADDR"])
+                           if (isset($arrSectionToAdd['DESCRIPTION']) AND isset($arrSectionToRemove['DESCRIPTION'])
+                                   AND isset($arrSectionToAdd["MACADDR"]) AND isset($arrSectionToRemove["MACADDR"])
+                                   AND $arrSectionToAdd["MACADDR"] != "08:00:27:B7:0E:D3"
+                                   AND $arrSectionToAdd['DESCRIPTION'] == "Miniport d'ordonnancement de paquets") {
+                              
+                              $len = strlen($arrSectionToAdd['MACADDR']);
+                              if ($len > 0)
+                                 $xmlSections[$arrayId]['sectionData'] = str_replace('"MACADDR";s:'.$len.':"'.$arrSectionToAdd['MACADDR'].'"', '"MACADDR";s:0:""', $xmlSections[$arrayId]['sectionData']);
+                              $len = strlen($arrSectionToRemove['MACADDR']);
+                              if ($len > 0)
+                                 $xmlSections[$arrayId]['sectionData'] = str_replace('"MACADDR";s:'.$len.':"'.$arrSectionToRemove['MACADDR'].'"', '"MACADDR";s:0:""', $xmlSections[$arrayId]['sectionData']);
+
+                              $boolUpdate = true;
+                              
+                           } else if(isset($arrSectionToAdd["MACADDR"]) AND isset($arrSectionToRemove["MACADDR"])
                                  AND $arrSectionToAdd["MACADDR"] == $arrSectionToRemove["MACADDR"]) {
                   				$boolUpdate = true;
                            }
