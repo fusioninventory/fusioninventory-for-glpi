@@ -185,17 +185,18 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
    
    
-   function cronCleanHistory() {
+   static function cronCleannetworkportlogs() {
       global $DB;
 
       $PluginFusinvsnmpConfigLogField = new PluginFusinvsnmpConfigLogField();
-
+      $PluginFusinvsnmpNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
+      
       $a_list = $PluginFusinvsnmpConfigLogField->find();
       if (count($a_list)){
          foreach ($a_list as $data){
 
-            $query_delete = "DELETE FROM `".$this->getTable()."`
-               WHERE `field`='".$data['field']."' ";
+            $query_delete = "DELETE FROM `".$PluginFusinvsnmpNetworkPortLog->getTable()."`
+               WHERE `plugin_fusioninventory_mappings_id`='".$data['plugin_fusioninventory_mappings_id']."' ";
 
             switch($data['days']) {
 
