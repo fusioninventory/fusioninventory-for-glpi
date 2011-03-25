@@ -1014,7 +1014,7 @@ function update213to220_ConvertField() {
          $i++;
 
          // Search port from mac address
-         $query_port = "SELECT * FROM `glpi_networking_ports`
+         $query_port = "SELECT * FROM `glpi_networkports`
             WHERE `mac`='".$data['old_value']."' ";
          if ($result_port=$DB->query($query_port)) {
             if ($DB->numrows($result_port) == '1') {
@@ -1022,7 +1022,7 @@ function update213to220_ConvertField() {
                $data_port = $DB->fetch_assoc($result_port);
                $input['FK_port_source'] = $data_port['id'];
 
-               $query_port2 = "SELECT * FROM `glpi_networking_ports`
+               $query_port2 = "SELECT * FROM `glpi_networkports`
                   WHERE `items_id` = '".$data['old_device_ID']."'
                      AND `itemtype` = '".$data['old_device_type']."' ";
                if ($result_port2=$DB->query($query_port2)) {

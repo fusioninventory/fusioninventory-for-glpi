@@ -65,7 +65,7 @@ function update220to221() {
 
    plugin_fusioninventory_displayMigrationMessage("221", $LANG['update'][141]." Clean networkequipment IPs not linked with networkequipment (bug Tracker)");
    // delete when IP not valid (bug from Tracker 2.1.3 and before)
-   $query = "SELECT * FROM `glpi_plugin_fusioninventory_networkequipmentsips`";
+   $query = "SELECT * FROM `glpi_plugin_fusioninventory_networking_ifaddr`";
    if ($result=$DB->query($query)) {
       while ($data=$DB->fetch_array($result)) {
          if (!preg_match("/^((25[0-5]|2[0-4]\d|1?\d?\d).){3}(25[0-5]|2[0-4]\d|1?\d?\d)$/",$data['ip'])) {
