@@ -414,6 +414,12 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    function forceRemoteAgent() {
       global $LANG;
 
+      $agent_id = $this->getAgentWithComputerid($_POST['id']);
+
+      if (!$agent_id) {
+         return;
+      }
+
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
 
       echo "<form method='post' name='' id=''  action=\"".GLPI_ROOT . "/plugins/fusioninventory/front/agent.form.php\">";
@@ -430,7 +436,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo $LANG['state'][0]."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      $agent_id = $this->getAgentWithComputerid($_POST['id']);
+
       $this->getFromDB($agent_id);
       $a_ip = $this->getIPs($_POST['id'], 'Computer');
       $waiting = 0;
