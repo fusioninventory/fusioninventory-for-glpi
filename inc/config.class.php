@@ -128,7 +128,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::showInteger("delete_task",
                             $this->getValue($plugins_id, 'delete_task'),1,240);
-      echo " ".$LANG['gmt'][1];
+      echo " ".strtolower($LANG['stats'][31]);
       echo "</td>";
 
       echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][8]." :</td>";
