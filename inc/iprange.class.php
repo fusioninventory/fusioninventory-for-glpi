@@ -117,8 +117,8 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 
       $ong = array();
       if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
-         $ong[1] = $LANG['plugin_fusinvsnmp']['task'][15];
-         $ong[2] = $LANG['plugin_fusinvsnmp']['task'][16];
+         $ong[1] = $LANG['plugin_fusinvsnmp']['task'][15]." (".$LANG['plugin_fusinvsnmp']['title'][6].")";
+         $ong[2] = $LANG['plugin_fusinvsnmp']['task'][16]." (".$LANG['plugin_fusinvsnmp']['title'][6].")";
          $ong[3] = $LANG['plugin_fusioninventory']['task'][18];
       }
       return $ong;
