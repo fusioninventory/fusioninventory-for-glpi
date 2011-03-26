@@ -242,6 +242,21 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             break;
 
          case 'PluginFusioninventoryUnknownDevice':
+            // Write XML file
+            if (isset($_SESSION['SOURCE_XMLDEVICE'])) {
+               $folder = substr($items_id,0,-1);
+               if (empty($folder)) {
+                  $folder = '0';
+               }
+               if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$itemtype."/".$folder)) {
+                  mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$itemtype."/".$folder, 0777, true);
+               }
+               $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$itemtype."/".$folder."/".$items_id, 'w');
+               fwrite($fileopen, $_SESSION['SOURCE_XMLDEVICE']);
+               fclose($fileopen);
+             }
+             
+
             if (!in_array('contact', $a_lockable))
                $class->fields['contact'] = (string)$xml->USERSESSION;
             if (!in_array('domain', $a_lockable)) {
