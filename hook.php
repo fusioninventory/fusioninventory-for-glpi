@@ -312,8 +312,8 @@ function plugin_headings_fusioninventory_xml($item) {
    if (empty($folder)) {
       $folder = '0';
    }
-   if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/u".$folder."/u".$id)) {
-      $xml = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/u".$folder."/u".$id);
+   if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".$id)) {
+      $xml = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".$id);
       $xml = str_replace("<", "&lt;", $xml);
       $xml = str_replace(">", "&gt;", $xml);
       $xml = str_replace("\n", "<br/>", $xml);
