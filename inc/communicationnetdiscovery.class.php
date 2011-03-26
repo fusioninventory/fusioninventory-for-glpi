@@ -249,7 +249,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                   $folder = '0';
                }
                if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$itemtype."/".$folder)) {
-                  mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/".$itemtype."/".$folder, 0777, true);
+                  mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$itemtype."/".$folder, 0777, true);
                }
                $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$itemtype."/".$folder."/".$items_id, 'w');
                fwrite($fileopen, $_SESSION['SOURCE_XMLDEVICE']);
