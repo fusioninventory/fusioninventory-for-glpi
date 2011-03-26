@@ -98,6 +98,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
    } else {
       $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
+   <ERROR>XML not well formed!</ERROR>
 </REPLY>");
       $PluginFusioninventoryCommunication->emptyAnswer();
    }
