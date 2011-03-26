@@ -68,7 +68,7 @@ function update220to221() {
    $query = "SELECT * FROM `glpi_plugin_fusioninventory_networking_ifaddr`";
    if ($result=$DB->query($query)) {
       while ($data=$DB->fetch_array($result)) {
-         if (!preg_match("/^((25[0-5]|2[0-4]\d|1?\d?\d).){3}(25[0-5]|2[0-4]\d|1?\d?\d)$/",$data['ip'])) {
+         if (!preg_match("/^((25[0-5]|2[0-4]\d|1?\d?\d).){3}(25[0-5]|2[0-4]\d|1?\d?\d)$/",$data['ifaddr'])) {
             $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networking_ifaddr`
                              WHERE ID='".$data['ID']."' ";
             $DB->query($query_delete);
