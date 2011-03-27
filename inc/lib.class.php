@@ -56,45 +56,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
 
       $_SESSION["plugin_fusinvinventory_entity"] = "0";
       $xml = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
-      // ** Get entity with rules
-         $input_rules = array();
-         if ((isset($xml->CONTENT->BIOS->SSN)) AND (!empty($xml->CONTENT->BIOS->SSN))) {
-            $input_rules['serialnumber'] = (string)$xml->CONTENT->BIOS->SSN;
-         }
-         if ((isset($xml->CONTENT->HARDWARE->NAME)) AND (!empty($xml->CONTENT->HARDWARE->NAME))) {
-            $input_rules['name'] = (string)$xml->CONTENT->HARDWARE->NAME;
-         }
-         if (isset($xml->CONTENT->NETWORKS)) {
-            foreach($xml->CONTENT->NETWORKS as $network) {
-               if ((isset($network->IPADDRESS)) AND (!empty($network->IPADDRESS))) {
-                  if ((string)$network->IPADDRESS != '127.0.0.1') {
-                     $input_rules['ip'][] = (string)$network->IPADDRESS;
-                  }
-               }
-               if ((isset($network->IPSUBNET)) AND (!empty($network->IPSUBNET))) {
-                  $input_rules['subnet'][] = (string)$network->IPSUBNET;
-               }
-            }
-         }
-         if ((isset($xml->CONTENT->HARDWARE->USERDOMAIN)) AND (!empty($xml->CONTENT->HARDWARE->USERDOMAIN))) {
-            $input_rules['domain'] = (string)$xml->CONTENT->HARDWARE->USERDOMAIN;
-         }
-         if ((isset($xml->CONTENT->ACCOUNTINFO->KEYNAME)) AND ($xml->CONTENT->ACCOUNTINFO->KEYNAME == 'TAG')) {
-            if (isset($xml->CONTENT->ACCOUNTINFO->KEYVALUE)) {
-               $input_rules['tag'] = (string)$xml->CONTENT->ACCOUNTINFO->KEYVALUE;
-            }
-         }
-
-         $ruleEntity = new PluginFusinvinventoryRuleEntityCollection();
-         $dataEntity = array ();
-         $dataEntity = $ruleEntity->processAllRules($input_rules, array());
-         if (isset($dataEntity['entities_id'])) {
-            $_SESSION["plugin_fusinvinventory_entity"] = $dataEntity['entities_id'];
-         } else {
-            $_SESSION["plugin_fusinvinventory_entity"] = "0";
-         }
-
-
+      
       if ($new == "0") {
          // Transfer if entity is different
          $Computer = new Computer();
