@@ -49,18 +49,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_statediscoveries` (
 
 ## glpi_displaypreferences
 INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`)
-   VALUES (NULL, 'PluginFusinvsnmpModel', '3', '1', '0'),
-          (NULL, 'PluginFusinvsnmpModel', '5', '2', '0'),
-
-          (NULL, 'PluginFusinvsnmpConfigSecurity', '3', '1', '0'),
-          (NULL, 'PluginFusinvsnmpConfigSecurity', '4', '2', '0'),
-          (NULL, 'PluginFusinvsnmpConfigSecurity', '5', '3', '0'),
-          (NULL, 'PluginFusinvsnmpConfigSecurity', '7', '4', '0'),
-          (NULL, 'PluginFusinvsnmpConfigSecurity', '8', '5', '0'),
-          (NULL, 'PluginFusinvsnmpConfigSecurity', '9', '6', '0'),
-          (NULL, 'PluginFusinvsnmpConfigSecurity', '10', '7', '0'),
-
-          (NULL,'PluginFusinvsnmpNetworkEquipment', '2', '1', '0'),
+   VALUES (NULL,'PluginFusinvsnmpNetworkEquipment', '2', '1', '0'),
           (NULL,'PluginFusinvsnmpNetworkEquipment', '3', '2', '0'),
           (NULL,'PluginFusinvsnmpNetworkEquipment', '4', '3', '0'),
           (NULL,'PluginFusinvsnmpNetworkEquipment', '5', '4', '0'),
@@ -82,10 +71,6 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
           (NULL,'PluginFusinvsnmpAgent', '13', '6', '0'),
           (NULL,'PluginFusinvsnmpAgent', '14', '7', '0'),
 
-          (NULL,'PluginFusinvsnmpIPRange', '2', '1', '0'),
-          (NULL,'PluginFusinvsnmpIPRange', '3', '2', '0'),
-          (NULL,'PluginFusinvsnmpIPRange', '4', '3', '0'),
-
           (NULL,'PluginFusinvsnmpAgentProcess', '2', '1', '0'),
           (NULL,'PluginFusinvsnmpAgentProcess', '3', '2', '0'),
           (NULL,'PluginFusinvsnmpAgentProcess', '4', '3', '0'),
@@ -103,9 +88,6 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
           (NULL,'PluginFusinvsnmpNetworkPortLog', '4', '3', '0'),
           (NULL,'PluginFusinvsnmpNetworkPortLog', '5', '4', '0'),
           (NULL,'PluginFusinvsnmpNetworkPortLog', '6', '5', '0'),
-
-          (NULL,'PluginFusinvsnmpNetworkPort', '2', '1', '0'),
-          (NULL,'PluginFusinvsnmpNetworkPort', '3', '2', '0'),
 
           (NULL,'PluginFusinvsnmpStateDiscovery', '2', '1', '0'),
           (NULL,'PluginFusinvsnmpStateDiscovery', '4', '2', '0'),
