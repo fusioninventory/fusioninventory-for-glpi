@@ -50,8 +50,8 @@ class PluginFusioninventoryMenu {
       global $LANG;
 
       // FOR THE BETA
-      echo "<a href='http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/wiki/Beta_test'>
-         <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/betaI.png'/></a><br/>";
+      echo "<center><a href='http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/wiki/Beta_test'>
+         <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/beta.png'/></a></center><br/>";
 
       // END FOR THE BETA
 
