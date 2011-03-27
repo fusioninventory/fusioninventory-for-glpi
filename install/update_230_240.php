@@ -45,6 +45,16 @@ function update230to240() {
        $PluginFusioninventoryConfig->initConfig($plugins_id, array("import_vm" => "1"));
 
    }
-
+   $Computer = new Computer();
+   $sql = "SELECT * FROM `glpi_plugin_fusinvinventory_computers`";
+   $result=$DB->query($sql);
+   while ($data = $DB->fetch_array($result)) {
+      if ($Computer->getFromDB($data['items_id'])) {
+         $Computer->fields['uuid'] = $data['uuid'];
+         $Computer->update($Computer->fields);
+      }
+   }
+   $sql = "DROP TABLE `glpi_plugin_fusinvinventory_computers`";
+   $DB->query($sql);
 }
 ?>
