@@ -566,11 +566,21 @@ function update221to230() {
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevices`
       CHANGE `snmpmodel_id` `plugin_fusinvsnmp_models_id` INT( 11 ) NULL DEFAULT NULL ";
    $DB->query($sql);
-   $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevices`
-      DROP INDEX `type` ,
-      ADD INDEX `plugin_fusinvsnmp_models_id` ( `manufacturers_id`, `plugin_fusinvsnmp_models_id` ),
+   if (isIndex('glpi_plugin_fusinvsnmp_constructdevices', 'type')) {
+      $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevices`
+         DROP INDEX `type`";
+      $DB->query($sql);
+   }
+   if (!isIndex('glpi_plugin_fusinvsnmp_constructdevices', 'plugin_fusinvsnmp_models_id')) {
+      $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevices`
+      ADD INDEX `plugin_fusinvsnmp_models_id` ( `manufacturers_id`, `plugin_fusinvsnmp_models_id` )";
+      $DB->query($sql);
+   }
+   if (!isIndex('glpi_plugin_fusinvsnmp_constructdevices', 'itemtype')) {
+      $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevices`
       ADD INDEX `itemtype` ( `itemtype` ) ";
-   $DB->query($sql);
+      $DB->query($sql);
+   }
 
    /*
     * Update `glpi_plugin_fusioninventory_construct_walks`
@@ -650,12 +660,22 @@ function update221to230() {
          WHERE `itemtype` = '".$key."'";
       $DB->query($sql);
    }
-   $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevice_miboids`
-      DROP INDEX `construct_device_id`
-      ADD UNIQUE `unicity` ( `plugin_fusinvsnmp_miboids_id`,
-         `plugin_fusinvsnmp_constructdevices_id`, `plugin_fusioninventory_mappings_id` ),
+   if (isIndex('glpi_plugin_fusinvsnmp_constructdevice_miboids', 'construct_device_id')) {
+      $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevice_miboids`
+         DROP INDEX `construct_device_id`";
+      $DB->query($sql);
+   }
+   if (!isIndex('glpi_plugin_fusinvsnmp_constructdevice_miboids', 'unicity')) {
+      $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevice_miboids`
+         ADD UNIQUE `unicity` ( `plugin_fusinvsnmp_miboids_id`,
+         `plugin_fusinvsnmp_constructdevices_id`, `plugin_fusioninventory_mappings_id` )";
+      $DB->query($sql);
+   }
+   if (!isIndex('glpi_plugin_fusinvsnmp_constructdevice_miboids', 'itemtype')) {
+      $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevice_miboids`
       ADD INDEX `itemtype` ( `itemtype` )";
-   $DB->query($sql);
+      $DB->query($sql);
+   }
 
    /*
     * Update `glpi_plugin_fusioninventory_snmp_history_connections`
@@ -1094,6 +1114,9 @@ function update221to230() {
       WHERE `object_name`='".$data['name']."' ";
       $DB->query($sql_update);
    }
+   $sql_delete = "DELETE FROM `glpi_plugin_fusinvsnmp_printercartridges`
+      WHERE `object_name` LIKE 'cartridges%'";
+   $DB->query($sql_delete);
     // End convert mapping
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_printercartridges`
       CHANGE `object_name` `plugin_fusioninventory_mappings_id` INT( 11 ) NOT NULL DEFAULT '0' ";
