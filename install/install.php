@@ -98,7 +98,7 @@ function pluginFusioninventoryInstall($version) {
                          (`type`, `value`, `plugins_id`)
              VALUES ('version', '".$version."', '".$plugins_id."'),
                     ('ssl_only', '0', '".$plugins_id."'),
-                    ('delete_task', '24', '".$plugins_id."'),
+                    ('delete_task', '20', '".$plugins_id."'),
                     ('inventory_frequence', '24', '".$plugins_id."'),
                     ('agent_port', '62354', '".$plugins_id."'),
                     ('extradebug', '0', '".$plugins_id."')";
@@ -114,6 +114,8 @@ function pluginFusioninventoryInstall($version) {
    $PluginFusioninventoryAgentmodule->add($input);
 
    CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '60', array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
+   Crontask::Register('PluginFusioninventoryTaskjobstatus', 'cleantaskjob', (3600 * 24), array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
+
 
    $PluginFusioninventorySetup = new PluginFusioninventorySetup();
    $PluginFusioninventorySetup->initRules();

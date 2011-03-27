@@ -312,15 +312,15 @@ function plugin_headings_fusioninventory_xml($item) {
    if (empty($folder)) {
       $folder = '0';
    }
-   if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/u".$folder."/u".$id)) {
-      $xml = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/u".$folder."/u".$id);
+   if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".$id)) {
+      $xml = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".$id);
       $xml = str_replace("<", "&lt;", $xml);
       $xml = str_replace(">", "&gt;", $xml);
       $xml = str_replace("\n", "<br/>", $xml);
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
       echo "<tr>";
       echo "<th>".$LANG['plugin_fusioninventory']['xml'][0];
-      echo " (".$LANG['common'][26]."&nbsp;: " . convDateTime(date("Y-m-d H:i:s", filemtime(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/u".$folder."/u".$id))).")";
+      echo " (".$LANG['common'][26]."&nbsp;: " . convDateTime(date("Y-m-d H:i:s", filemtime(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".$id))).")";
       echo "</th>";
       echo "</tr>";
 

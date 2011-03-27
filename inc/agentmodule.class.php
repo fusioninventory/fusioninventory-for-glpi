@@ -62,7 +62,15 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          echo "</tr>";
          
          echo "<tr class='tab_bg_1'>";
-         echo "<td align='center'><strong>".$data["modulename"]."</strong></td>";
+         $a_methods = PluginFusioninventoryStaticmisc::getmethods();
+         $modulename = $data["modulename"];
+         foreach ($a_methods as $datamod) {
+            if (isset($datamod['name'])
+                    AND (strtolower($data["modulename"]) == $datamod['method'])) {
+               $modulename = $datamod['name'];
+            }
+         }
+         echo "<td align='center'><strong>".$modulename."</strong></td>";
          echo "<td align='center'>";
          $checked = $data['is_active'];
          $check = "";
@@ -146,7 +154,15 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       foreach ($a_modules as $data) {
          if ($i == 0)
             echo "<tr class='tab_bg_1'>";
-         echo "<td width='50%'>".$data["modulename"]." :</td>";
+         $a_methods = PluginFusioninventoryStaticmisc::getmethods();
+         $modulename = $data["modulename"];
+         foreach ($a_methods as $datamod) {
+            if (isset($datamod['name'])
+                    AND (strtolower($data["modulename"]) == $datamod['method'])) {
+               $modulename = $datamod['name'];
+            }
+         }
+         echo "<td width='50%'>".$modulename." :</td>";
          echo "<td align='center'>";
 
          $checked = $data['is_active'];

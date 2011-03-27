@@ -330,6 +330,26 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
 
    }
 
+   
+
+   static function cronCleantaskjob() {
+      global $DB;
+
+      $retentiontime = PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'delete_task');
+      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $sql = "SELECT * FROM `glpi_plugin_fusioninventory_taskjoblogs`
+         WHERE  `date` < date_add(now(),interval -".$retentiontime." day)
+         GROUP BY `plugin_fusioninventory_taskjobstatus_id`";
+      if ($result=$DB->query($sql)) {
+			while ($data=$DB->fetch_array($result)) {
+            $PluginFusioninventoryTaskjobstatus->getFromDB($data['plugin_fusioninventory_taskjobstatus_id']);
+            $PluginFusioninventoryTaskjobstatus->delete($PluginFusioninventoryTaskjobstatus->fields, 1);
+            $sql_delete = "DELETE FROM `glpi_plugin_fusioninventory_taskjoblogs`
+               WHERE `plugin_fusioninventory_taskjobstatus_id` = '".$data['plugin_fusioninventory_taskjobstatus_id']."'";
+            $DB->query($sql_delete);
+         }
+      }
+   }
 }
 
 ?>
