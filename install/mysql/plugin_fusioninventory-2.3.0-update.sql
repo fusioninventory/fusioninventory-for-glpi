@@ -91,27 +91,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjobstatus` (
 ## INSERT
 ## glpi_displaypreferences
 INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`)
-   VALUES (NULL,'PluginFusioninventoryAgent', '2', '1', '0'),
-          (NULL,'PluginFusioninventoryAgent', '4', '2', '0'),
-          (NULL,'PluginFusioninventoryAgent', '5', '3', '0'),
-          (NULL,'PluginFusioninventoryAgent', '6', '4', '0'),
-          (NULL,'PluginFusioninventoryAgent', '7', '5', '0'),
-          (NULL,'PluginFusioninventoryAgent', '8', '6', '0'),
-          (NULL,'PluginFusioninventoryAgent', '9', '7', '0'),
-
-          (NULL, 'PluginFusioninventoryUnknownDevice', '2', '1', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '4', '2', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '3', '3', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '5', '4', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '7', '5', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '10', '6', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '11', '7', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '18', '8', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '14', '9', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '15', '10', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '9', '11', '0'),
-
-          (NULL, 'PluginFusioninventoryTask', '2', '1', '0'),
+   VALUES (NULL, 'PluginFusioninventoryTask', '2', '1', '0'),
           (NULL, 'PluginFusioninventoryTask', '3', '2', '0'),
           (NULL, 'PluginFusioninventoryTask', '4', '3', '0'),
           (NULL, 'PluginFusioninventoryTask', '5', '4', '0'),
