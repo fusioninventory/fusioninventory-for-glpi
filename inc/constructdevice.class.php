@@ -1,38 +1,36 @@
 <?php
 
 /*
- * @version $Id$
- ----------------------------------------------------------------------
- FusionInventory
- Coded by the FusionInventory Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org//
- ----------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: DURIEUX David
-// Purpose of file:
-// ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
@@ -85,7 +83,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
 			$type_list[] = PHONE_TYPE;
 
          // GENERIC OBJECT : Search types in generic object
-         $plugin = new Plugin;
+         $plugin = new Plugin();
          if ($plugin->isActivated('genericobject')) {
             if (TableExists("glpi_plugin_genericobject_types")) {
                $query = "SELECT * FROM `glpi_plugin_genericobject_types`
@@ -111,6 +109,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
 	}
 
 
+   
    function manageWalks($target, $id) {
 		global $DB,$CFG_GLPI,$LANG,$IMPORT_TYPES;
 
@@ -328,23 +327,15 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                            echo $LANG['plugin_fusioninventory']['mib'][8]." : ";
                            if (isset($a_mibs['id'])) {
                               if ($a_mibs["oid_port_counter"] == "0") {
-                                 $mapping = new PluginFusioninventoryMapping;
+                                 $mapping = new PluginFusioninventoryMapping();
                                  $mappings = $mapping->get($a_mibs['itemtype'], $a_mibs['mapping_name']);
                                  echo $LANG['plugin_fusinvsnmp']['mapping'][$mappings->fields['locale']]." ( ".$a_mibs["mapping_name"]." )";
                               }
                            } else {
                               $types = array();
                               $types[] = "-----";
-//                              foreach ($FUSIONINVENTORY_MAPPING as $type=>$mapping43) {
-//                                 if (($type_model == $type) OR ($type_model == "0")) {
-//                                    if (isset($FUSIONINVENTORY_MAPPING[$type])) {
-//                                       foreach ($FUSIONINVENTORY_MAPPING[$type] as $name=>$mapping) {
-//                                          $types[$type."||".$name]=$FUSIONINVENTORY_MAPPING[$type][$name]["name"]." (".$name.")";
-//                                       }
-//                                    }
-//                                 }
-//                              }
-                              $map = new PluginFusioninventoryMapping;
+
+                              $map = new PluginFusioninventoryMapping();
                               $maps = $map->find();
                               foreach ($maps as $mapfields) {
                                  if (($type_model == $type) OR ($type_model == "0")) {
@@ -434,7 +425,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                echo $LANG['plugin_fusioninventory']['mib'][8]." : ";
                if (isset($a_mibs['id'])) {
                   if ($a_mibs["oid_port_counter"] == "0") {
-                     $mapping = new PluginFusioninventoryMapping;
+                     $mapping = new PluginFusioninventoryMapping();
                      $mappings = $mapping->get($a_mibs['itemtype'], $a_mibs['mapping_name']);
                      if ($mappings) {
                         echo $LANG['plugin_fusinvsnmp']['mapping'][$mappings->fields['locale']];
@@ -443,16 +434,8 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                } else {
                   $types = array();
                   $types[] = "-----";
-//                  foreach ($FUSIONINVENTORY_MAPPING as $type=>$mapping43) {
-//                     if (($type_model == $type) OR ($type_model == "0")) {
-//                        if (isset($FUSIONINVENTORY_MAPPING[$type])) {
-//                           foreach ($FUSIONINVENTORY_MAPPING[$type] as $name=>$mapping) {
-//                              $types[$type."||".$name]=$FUSIONINVENTORY_MAPPING[$type][$name]["name"]." (".$name.")";
-//                           }
-//                        }
-//                     }
-//                  }
-                  $map = new PluginFusioninventoryMapping;
+
+                  $map = new PluginFusioninventoryMapping();
                   $maps = $map->find();
                   foreach ($maps as $mapfields) {
                      if (($type_model == $type) OR ($type_model == "0")) {
@@ -501,8 +484,8 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
    function generatemodels() {
       global $DB;
 
-      $ptmi = new PluginFusinvsnmpModel;
-      $ptmn = new PluginFusinvsnmpModelMib;
+      $ptmi = new PluginFusinvsnmpModel();
+      $ptmn = new PluginFusinvsnmpModelMib();
 
       $query = "SELECT glpi_plugin_fusinvsnmp_constructdevices.id, type
          FROM glpi_plugin_fusinvsnmp_constructdevices
@@ -617,8 +600,6 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                $DB->query($query_update);
 
             }
-
-
          }
       }
 
@@ -766,6 +747,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
 
    }
 
+   
 
    function formatXmlString($sxml) {
       $xml = str_replace("><", ">\n<", $sxml->asXML());
@@ -799,6 +781,8 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       return $sxml;
    }
 
+
+   
    function cleanmodels() {
       global $DB;
 
@@ -819,11 +803,12 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
        }
    }
 
+   
 
    function exportmodels() {
       global $DB;
 
-      $pfiie = new PluginFusinvsnmpImportExport;
+      $pfiie = new PluginFusinvsnmpImportExport();
 
       $query_models = "SELECT * FROM glpi_plugin_fusinvsnmp_models";
       if ($result_models = $DB->query($query_models)) {

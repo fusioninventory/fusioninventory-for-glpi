@@ -1,38 +1,36 @@
 <?php
 
 /*
- * @version $Id$
- ----------------------------------------------------------------------
- FusionInventory
- Coded by the FusionInventory Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org//
- ----------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: DURIEUX David
-// Purpose of file:
-// ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
@@ -146,7 +144,17 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 		}
 
 		$xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml",'SimpleXMLElement', LIBXML_NOCDATA);
-		
+
+      $numero = array();
+      $name = array();
+      $snmp_version = array();
+      $community = array();
+      $username = array();
+      $authentication = array();
+      $auth_passphrase = array();
+      $encryption = array();
+      $priv_passphrase = array();
+
 		$i = -1;
 		foreach($xml->auth[0] as $num) {
 			$i++;
@@ -205,10 +213,10 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 			}
 		}
       
-		foreach ($numero AS $key=>$numero) {
+		foreach ($numero AS $key=>$numerosimple) {
 			if ($array == '0') {
 				echo "<tr class='tab_bg_1'>";
-				echo "<td align='center'>".$numero."</td>";
+				echo "<td align='center'>".$numerosimple."</td>";
 				echo "<td align='center'>".$name[$key]."</td>";
 				echo "<td align='center'>".$snmp_version[$key]."</td>";
 				echo "<td align='center'>".$community[$key]."</td>";
@@ -219,7 +227,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 				echo "<td align='center'>".$priv_passphrase[$key]."</td>";
 				echo "</tr>";
 			} else if ($array == '1') {
-				$array_auth["$numero"]['IDC'] = $numero;
+				$array_auth["$numero"]['IDC'] = $numerosimple;
 				$array_auth["$numero"]['name']= $name[$key];
 				$array_auth["$numero"]['namec']=$snmp_version[$key];
 				$array_auth["$numero"]['community']=$community[$key];
@@ -237,6 +245,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 		}
 	}
 	
+
 
 	// for file stored snmp authentication
 	function add_xml() {
@@ -324,17 +333,20 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 		
 		return $id;
 	}
-	
+
+
+
 	function showDropdownSNMPVersion($p_value=NULL) {
       $snmpVersions = array(0=>'-----', '1', '2c', '3');
-      if (is_null($p_value)) {
-         $options = array();
-      } else {
+      $options = array();
+      if (!is_null($p_value)) {
          $options = array('value'=>$p_value);
       }
       Dropdown::showFromArray("snmpversion", $snmpVersions, $options);
    }
 
+
+   
    function getSNMPVersion($id) {
       switch($id) {
 
@@ -354,16 +366,19 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
       return '';
    }
 
+
+   
 	function showDropdownSNMPAuth($p_value=NULL) {
       $authentications = array(0=>'-----', 'MD5', 'SHA');
-      if (is_null($p_value)) {
-         $options = array();
-      } else {
+      $options = array();
+      if (!is_null($p_value)) {
          $options = array('value'=>$p_value);
       }
       Dropdown::showFromArray("authentication", $authentications, $options);
    }
 
+
+   
    function getSNMPAuthProtocol($id) {
       switch($id) {
 
@@ -379,15 +394,18 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
       return '';
    }
 
+
+
 	function showDropdownSNMPEncryption($p_value=NULL) {
       $encryptions = array(0=>'-----', 'DES', 'AES128', 'AES192', 'AES256');
-      if (is_null($p_value)) {
-         $options = array();
-      } else {
+      $options = array();
+      if (!is_null($p_value)) {
          $options = array('value'=>$p_value);
       }
       Dropdown::showFromArray("encryption", $encryptions, $options);
    }
+
+
 
    function getSNMPEncryption($id) {
       switch($id) {
@@ -411,6 +429,8 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
       }
       return '';
    }
+
+
 
 	function selectbox($selected=0) {
 		$xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml",'SimpleXMLElement', LIBXML_NOCDATA);
@@ -445,295 +465,14 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 
 
 
-	/**
-	 * Get SNMP version and authentification 
-	 *
-	 * @param $ID_Device id of the device ("all" if we want to get all snmp auth)
-	 * @param $xml_auth_rep folder where as stocked authxml file (if the management is by FILE)
-	 * @param $type type of device (NETWORKING_TYPE, PRINTER_TYPE ...)
-	 *
-	 * @return $snmp_auth : array with auth informations && version
-	 *
-	**/
-	function GetInfos($ID_Device,$xml_auth_rep,$type) {
-		global $DB,$CFG_GLPI,$LANG;
-
-		$config = new PluginFusioninventoryConfig;
-
-		if ($ID_Device != "all") {
-			switch ($type) {
-				case NETWORKING_TYPE :
-					$query = "SELECT *
-                         FROM `glpi_plugin_fusinvsnmp_networkequipments`
-                         WHERE `networkequipments_id`='".$ID_Device."';";
-					break;
-
-				case PRINTER_TYPE :
-					$query = "SELECT *
-                         FROM `glpi_plugin_fusinvsnmp_printers`
-                         WHERE `printers_id`='".$ID_Device."';";
-					break;
-			}		
-			$result=$DB->query($query);
-			if ($DB->numrows($result) > 0) {
-				$ID_auth = $DB->result($result,0,"plugin_fusinvsnmp_configsecurities_id");
-         } else {
-				return;
-         }
-		} else {
-			// Put Default community of devices
-			$snmp_auth[0]["Name"] = "Public-v2c";
-			$snmp_auth[0]["snmp_version"] = "2c";
-			$snmp_auth[0]["community"] = "public";
-			$snmp_auth[0]["username"] = "";
-			$snmp_auth[0]["authentication"] = "";
-			$snmp_auth[0]["auth_passphrase"] = "";
-			$snmp_auth[0]["encryption"] = "";
-			$snmp_auth[0]["priv_passphrase"] = "";			
-			$snmp_auth[0]["id"] = 0;
-			$snmp_auth[1]["Name"] = "Public-v1";
-			$snmp_auth[1]["snmp_version"] = "1";
-			$snmp_auth[1]["community"] = "public";
-			$snmp_auth[1]["username"] = "";
-			$snmp_auth[1]["authentication"] = "";
-			$snmp_auth[1]["auth_passphrase"] = "";
-			$snmp_auth[1]["encryption"] = "";
-			$snmp_auth[1]["priv_passphrase"] = "";		
-			$snmp_auth[1]["id"] = 0;
-		}
-
-		if ($config->getValue("storagesnmpauth") == "file") {
-			$xml = simplexml_load_file($xml_auth_rep."auth.xml",'SimpleXMLElement', LIBXML_NOCDATA);
-		
-			$i=-1;
-			foreach($xml->auth[0] as $num) {
-				$i++;
-				$j = 0;
-				$recup = 0;
-				foreach($xml->auth->conf[$i] as $item) {
-					$j++;
-					switch ($j) {
-						case 1:
-							if ($ID_Device == "all") {
-								$recup = 1;
-								$snmp_auth[($i+2)]["id"] = $item;
-							} else if ($item == $ID_auth) {
-								$recup = 1;
-                     }
-							break;
-
-						case 2:
-							if (($recup == "1") AND ($ID_Device != "all")) {
-								$snmp_auth["Name"] = $item;
-                     }
-							if ($ID_Device == "all") {
-								$snmp_auth[($i+2)]["Name"] = $item;
-                     }
-							break;
-
-						case 3:
-							if (($recup == "1") AND ($ID_Device != "all")) {
-								$snmp_auth["snmp_version"] = Dropdown::getDropdownName(
-                              "glpi_plugin_fusioninventory_snmpversions",$item);
-                     }
-							if ($ID_Device == "all") {
-								$snmp_auth[($i+2)]["snmp_version"] = Dropdown::getDropdownName(
-                              "glpi_plugin_fusioninventory_snmpversions",$item);
-                     }
-							break;
-
-						case 4:
-							if (($recup == "1") AND ($ID_Device != "all")) {
-								$snmp_auth["community"] = $item;
-                     }
-							if ($ID_Device == "all") {
-								$snmp_auth[($i+2)]["community"] = $item;
-                     }
-							break;
-
-						case 5:
-							if (($recup == "1") AND ($ID_Device != "all")) {
-								$snmp_auth["username"] = $item;
-                     }
-							if ($ID_Device == "all") {
-								$snmp_auth[($i+2)]["username"] = $item;
-                     }
-							break;
-
-						case 7:
-							if (($recup == "1") AND ($ID_Device != "all")) {
-								$snmp_auth["authentication"] = Dropdown::getDropdownName(
-                              "glpi_plugin_fusioninventory_snmpprotocolauths",$item);
-                     }
-							if ($ID_Device == "all") {
-								$snmp_auth[($i+2)]["authentication"] = Dropdown::getDropdownName(
-                              "glpi_plugin_fusioninventory_snmpprotocolauths",$item);
-                     }
-							break;
-
-                  case 8:
-							if (($recup == "1") AND ($ID_Device != "all")) {
-								$snmp_auth["auth_passphrase"] = $item;
-                     }
-							if ($ID_Device == "all") {
-								$snmp_auth[($i+2)]["auth_passphrase"] = $item;
-                     }
-							break;
-                  
-						case 9:
-							if (($recup == "1") AND ($ID_Device != "all")) {
-								$snmp_auth["encryption"] = Dropdown::getDropdownName(
-                              "glpi_plugin_fusioninventory_snmpprotocolprivs",$item);
-                     }
-							if ($ID_Device == "all") {
-									$snmp_auth[($i+2)]["encryption"] = Dropdown::getDropdownName(
-                              "glpi_plugin_fusioninventory_snmpprotocolprivs",$item);
-                     }
-							break;
-
-						case 10:
-							if (($recup == "1") AND ($ID_Device != "all")) {
-                        $snmp_auth["priv_passphrase"] = $item;
-                     }
-							if ($ID_Device == "all") {
-									$snmp_auth[($i+2)]["priv_passphrase"] = $item;
-                     }
-							break;
-					}
-				}
-			}	
-		} else if ($config->getValue("storagesnmpauth") == "DB") {
-			if ($ID_Device == "all") {
-				$query = "SELECT *
-                      FROM `glpi_plugin_fusinvsnmp_configsecurities`";
-         } else {
-				$query = "SELECT *
-                      FROM `glpi_plugin_fusinvsnmp_configsecurities`
-                      WHERE `id`='".$ID_auth."';";
-			}
-			$result=$DB->query($query);
-			if (($DB->numrows($result) == "0") AND ($ID_Device != "all")) {
-				$snmp_auth["Name"] = "";
-				$snmp_auth["snmp_version"] = "";
-				$snmp_auth["community"] = "";
-				$snmp_auth["username"] = "";
-				$snmp_auth["authentication"] = "";
-				$snmp_auth["auth_passphrase"] = "";
-				$snmp_auth["encryption"] = "";
-				$snmp_auth["priv_passphrase"] = "";
-			} else if ($ID_Device != "all") {
-				$snmp_auth["Name"] = $DB->result($result,0,"name");
-				$snmp_auth["snmp_version"] = Dropdown::getDropdownName(
-               "glpi_plugin_fusioninventory_snmpversions",$DB->result($result,0,
-               "plugin_fusioninventory_snmpversions_id"));
-				$snmp_auth["community"] = $DB->result($result,0,"community");
-				$snmp_auth["username"] = $DB->result($result,0,"username");
-				$snmp_auth["authentication"] = Dropdown::getDropdownName(
-               "glpi_plugin_fusioninventory_snmpprotocolauths",$DB->result($result,0,
-               "authentication"));
-				$snmp_auth["auth_passphrase"] = $DB->result($result,0,"auth_passphrase");
-				$snmp_auth["encryption"] = Dropdown::getDropdownName(
-               "glpi_plugin_fusioninventory_snmpprotocolprivs",$DB->result($result,0,
-               "encryption"));
-				$snmp_auth["priv_passphrase"] = $DB->result($result,0,"priv_passphrase");
-			} else if ($ID_Device == "all") {
-				$i = 2;
-				while ($data=$DB->fetch_array($result)) {
-					if (($snmp_auth[0]["snmp_version"] == Dropdown::getDropdownName(
-                        "glpi_plugin_fusioninventory_snmpversions",$data["plugin_fusioninventory_snmpversions_id"]))
-                  AND ($snmp_auth[0]["community"] == $data["community"])) {
-                  
-						$snmp_auth[0]["id"] = $data["id"];
-                } else if (($snmp_auth[1]["snmp_version"] == Dropdown::getDropdownName(
-                         "glpi_plugin_fusioninventory_snmpversions",$data["plugin_fusioninventory_snmpversions_id"]))
-                  AND ($snmp_auth[1]["community"] == $data["community"])) {
-
-						$snmp_auth[1]["id"] = $data["id"];
-               } else {
-						$snmp_auth[$i]["id"] = $data["id"];
-						$snmp_auth[$i]["Name"] = $data["name"];
-						$snmp_auth[$i]["snmp_version"] = Dropdown::getDropdownName(
-                     "glpi_plugin_fusioninventory_snmpversions",$data["plugin_fusioninventory_snmpversions_id"]);
-						$snmp_auth[$i]["community"] = $data["community"];
-						$snmp_auth[$i]["username"] = $data["username"];
-						$snmp_auth[$i]["authentication"] = Dropdown::getDropdownName(
-                     "glpi_plugin_fusioninventory_snmpprotocolauths",$data["authentication"]);
-						$snmp_auth[$i]["auth_passphrase"] = $data["auth_passphrase"];
-						$snmp_auth[$i]["encryption"] = Dropdown::getDropdownName(
-                     "glpi_plugin_fusioninventory_snmpprotocolprivs",$data["encryption"]);
-						$snmp_auth[$i]["priv_passphrase"] = $data["priv_passphrase"];
-						$i++;
-					}
-				}
-			}
-		}
-		return $snmp_auth;
-	}
-
-
-
-	function GetSNMPAuthDevice($ID_Device,$type) {
-		global $DB;
-
-		switch ($type) {
-			case 'NetworkEquipment':
-				$query = "SELECT plugin_fusinvsnmp_configsecurities_id
-				FROM glpi_plugin_fusinvsnmp_networkequipments 
-				WHERE networkequipments_id='".$ID_Device."' ";
-				break;
-
-			case 'Printer':
-				$query = "SELECT `plugin_fusinvsnmp_configsecurities_id`
-                      FROM `glpi_plugin_fusinvsnmp_printers`
-                      WHERE `printers_id`='".$ID_Device."';";
-				break;
-		}
-		
-		if ((isset($query)) && ($result = $DB->query($query))) {
-			if ($DB->numrows($result) != 0) {
-				return $DB->result($result, 0, "plugin_fusinvsnmp_configsecurities_id");
-         }
-		}	
-	}
-
-
-	function GetSNMPAuthName_XML($ID_auth,$xml_auth_rep) {
-		$xml = simplexml_load_file($xml_auth_rep."auth.xml",'SimpleXMLElement', LIBXML_NOCDATA);
-		
-		$i=-1;
-		foreach($xml->auth[0] as $num) {
-			$i++;
-			$j = 0;
-			$recup = 0;
-			foreach($xml->auth->conf[$i] as $item) {
-				$j++;
-				switch ($j) {
-					case 1:
-						if ($item == $ID_auth) {
-							$recup = 1;
-                  }
-						break;
-
-					case 2:
-						if ($recup == "1") {
-								$snmp_auth_name = $item;
-                  }
-						break;
-				}
-			}
-		}
-		if (isset($snmp_auth_name)) {
-			return "<a href='".GLPI_ROOT . "/plugins/fusioninventory/front/configsecurity.php'>".
-                $snmp_auth_name."</a>";
-      }
-	}
-
    function canCreate() {
 //      return plugin_fusioninventory_haveTypeRight('PluginFusinvsnmpConfigSecurity', 'w');
 //      return plugin_fusinvsnmp_haveTypeRight('PluginFusinvsnmpConfigSecurity', 'w');
       return true;
    }
 
+
+   
    function canView() {
       return true;
    }

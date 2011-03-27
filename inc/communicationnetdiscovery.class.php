@@ -26,8 +26,8 @@
    along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: Vincent Mazzoni
-   Co-authors of file: David Durieux
+   Original Author of file: Vincent MAZZONI
+   Co-authors of file: David DURIEUX
    Purpose of file:
    ----------------------------------------------------------------------
  */
@@ -55,8 +55,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
       global $LANG;
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
-      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      $pta  = new PluginFusioninventoryAgent();
+      $PluginFusioninventoryAgent  = new PluginFusioninventoryAgent();
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
       $PluginFusinvsnmpAgentconfig = new PluginFusinvsnmpAgentconfig();
 
@@ -66,7 +65,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
       $errors = '';
 
-      $a_agent = $pta->InfosByKey($p_DEVICEID);
+      $a_agent = $PluginFusioninventoryAgent->InfosByKey($p_DEVICEID);
       if (isset($p_CONTENT->PROCESSNUMBER)) {
          $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $p_CONTENT->PROCESSNUMBER;
          $PluginFusioninventoryTaskjobstatus->getFromDB($p_CONTENT->PROCESSNUMBER);
@@ -89,8 +88,8 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
       $PluginFusioninventoryTaskjobstatus->getFromDB($p_CONTENT->PROCESSNUMBER);
       if ($PluginFusioninventoryTaskjobstatus->fields['state'] != "3") {
-         $pti = new PluginFusinvsnmpImportExport();
-         $errors.=$pti->import_netdiscovery($p_CONTENT, $p_DEVICEID);
+         $PluginFusinvsnmpImportExport = new PluginFusinvsnmpImportExport();
+         $errors.=$PluginFusinvsnmpImportExport->import_netdiscovery($p_CONTENT, $p_DEVICEID);
          if (isset($p_CONTENT->AGENT->END)) {
             if ((isset($p_CONTENT->DICO)) AND ($p_CONTENT->DICO == "REQUEST")) {
                $PluginFusioninventoryAgent->getFromDB($PluginFusioninventoryTaskjobstatus->fields["plugin_fusioninventory_agents_id"]);
@@ -211,79 +210,6 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
    }
 
 
-//   function checkCriteria($a_criteria) {
-//      global $DB;
-//
-//      $PluginFusinvsnmpCommunicationSNMP = new PluginFusinvsnmpCommunicationSNMP();
-//
-//      $xml = simplexml_load_string($_SESSION['SOURCE_XMLDEVICE'],'SimpleXMLElement', LIBXML_NOCDATA);
-//
-//      switch ($xml->TYPE) {
-//
-//         case '0':
-//            // Don't know what device type it is
-//
-//            break;
-//
-//         case '1':
-//            // Computer
-//            $a_return = $PluginFusinvsnmpCommunicationSNMP->searchDevice($a_criteria, 'Computer');
-//            $result = $a_return[0];
-//            $input = $a_return[1];
-//
-//            break;
-//
-//         case '2':
-//            // NetworkEquipment
-//            $a_return = $PluginFusinvsnmpCommunicationSNMP->searchDevice($a_criteria, 'NetworkEquipment');
-//            $result = $a_return[0];
-//            $input = $a_return[1];
-//            if ($DB->numrows($result)) {
-//               $this->importDevice('NetworkEquipment', $DB->result($result,0,'id'));
-//            } else {
-//               // unknowndevice
-//               $a_return = $PluginFusinvsnmpCommunicationSNMP->searchDevice($a_criteria, 'PluginFusioninventoryUnknownDevice');
-//               $result = $a_return[0];
-//               $input = $a_return[1];
-//               if (isset($result) AND ($DB->numrows($result) > 0)) {
-//                  $this->importDevice('PluginFusioninventoryUnknownDevice', $DB->result($result,0,'id'));
-//               } else {
-//                  $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
-//                  $input['plugin_fusioninventory_agents_id'] = $_SESSION['glpi_plugin_fusioninventory_agentid'];
-//                  $id = $PluginFusioninventoryUnknownDevice->add($input);
-//                  $this->importDevice('PluginFusioninventoryUnknownDevice', $id);
-//               }
-//            }
-//            break;
-//
-//         case '3':
-//            // Printer
-//            $a_return = $PluginFusinvsnmpCommunicationSNMP->searchDevice($a_criteria, 'Printer');
-//            $result = $a_return[0];
-//            $input = $a_return[1];
-//            if (isset($result) AND ($DB->numrows($result) > 0)) {
-//               $this->importDevice('Printer', $DB->result($result,0,'id'));
-//            } else {
-//               // unknowndevice
-//               $a_return = $PluginFusinvsnmpCommunicationSNMP->searchDevice($a_criteria, 'PluginFusioninventoryUnknownDevice');
-//               $result = $a_return[0];
-//               $input = $a_return[1];
-//               if (isset($result) AND ($DB->numrows($result) > 0)) {
-//                  $this->importDevice('PluginFusioninventoryUnknownDevice', $DB->result($result,0,'id'));
-//               } else {
-//                  $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
-//                  $input['plugin_fusioninventory_agents_id'] = $_SESSION['glpi_plugin_fusioninventory_agentid'];
-//                  $id = $PluginFusioninventoryUnknownDevice->add($input);
-//                  $this->importDevice('PluginFusioninventoryUnknownDevice', $id);
-//               }
-//            }
-//            break;
-//
-//      }
-//
-//
-//   }
-
 
    function importDevice($itemtype, $items_id) {
       
@@ -316,6 +242,21 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             break;
 
          case 'PluginFusioninventoryUnknownDevice':
+            // Write XML file
+            if (isset($_SESSION['SOURCE_XMLDEVICE'])) {
+               $folder = substr($items_id,0,-1);
+               if (empty($folder)) {
+                  $folder = '0';
+               }
+               if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$itemtype."/".$folder)) {
+                  mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$itemtype."/".$folder, 0777, true);
+               }
+               $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$itemtype."/".$folder."/".$items_id, 'w');
+               fwrite($fileopen, $_SESSION['SOURCE_XMLDEVICE']);
+               fclose($fileopen);
+             }
+             
+
             if (!in_array('contact', $a_lockable))
                $class->fields['contact'] = (string)$xml->USERSESSION;
             if (!in_array('domain', $a_lockable)) {

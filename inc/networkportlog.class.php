@@ -1,37 +1,36 @@
 <?php
+
 /*
- * @version $Id$
- ----------------------------------------------------------------------
- FusionInventory
- Coded by the FusionInventory Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org//
- ----------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: DURIEUX David
-// Purpose of file:
-// ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
@@ -53,8 +52,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 	function insert_connection($status,$array,$plugin_fusioninventory_agentprocesses_id=0) {
 		global $DB,$CFG_GLPI;
 
-      $pthc = new PluginFusinvsnmpNetworkPortConnectionLog;
-
+      $input = array();
       $input['date'] = date("Y-m-d H:i:s");
       $input['networkports_id'] = $array['networkports_id'];
 
@@ -69,6 +67,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 		}
  	}
 
+   
 
    function showForm($id, $options=array()) {
       global $LANG, $DB;
@@ -86,15 +85,9 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
       $options="";
 
-//      foreach ($FUSIONINVENTORY_MAPPING as $type=>$mapping43) {
-//         if (isset($FUSIONINVENTORY_MAPPING[$type])) {
-//            foreach ($FUSIONINVENTORY_MAPPING[$type] as $name=>$mapping) {
-//               $listName[$type."-".$name]=$FUSIONINVENTORY_MAPPING[$type][$name]["name"];
-//            }
-//         }
-//      }
       $map = new PluginFusioninventoryMapping;
       $maps = $map->find();
+      $listName = array();
       foreach ($maps as $mapfields) {
          $listName[$mapfields['itemtype']."-".$mapfields['name']]=
             $LANG['plugin_fusinvsnmp']['mapping'][$mapfields["locale"]];
@@ -162,7 +155,6 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       echo "</td>";
 		echo "</tr>";
 
-
 		echo "<tr>";
 		echo "<th colspan='3'>";
 		echo $LANG['plugin_fusioninventory']['functionalities'][60]." :";
@@ -176,7 +168,6 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       }
       echo "</td>";
       echo "</tr>";
-
 
 		echo "<tr>";
 		echo "<th colspan='3'>";
@@ -192,224 +183,20 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       return true;
    }
 
-   function UpdateConfigFields($data) {
+   
+   
+   static function cronCleannetworkportlogs() {
       global $DB;
 
-		if (isset($data['plugin_fusioninventory_extraction_to_add'])) {
-			foreach ($data['plugin_fusioninventory_extraction_to_add'] as $key=>$id_value) {
-				$query = "INSERT INTO `glpi_plugin_fusinvsnmp_configlogfields` (`field`)
-                      VALUES ('".$id_value."');";
-				$DB->query($query);
-			}
-      }
-
-		if (isset($data['plugin_fusioninventory_extraction_to_delete'])) {
-			foreach ($data['plugin_fusioninventory_extraction_to_delete'] as $key=>$id_value) {
-				$query = "DELETE FROM `glpi_plugin_fusinvsnmp_configlogfields`
-                      WHERE `field`='".$id_value."';";
-				$DB->query($query);
-			}
-      }
-   }
-
-   function ConvertField($force=0) {
-      global $DB, $LANG;
-
-      $constantsfield = array();
-//      foreach ($FUSIONINVENTORY_MAPPING[NETWORKING_TYPE] as $fieldtype=>$array) {
-//         $constantsfield[$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$fieldtype]['name']] = $fieldtype;
-//      }
-      $map = new PluginFusioninventoryMapping;
-      $maps = $map->find("`itemtype`='NetworkEquipment'");
-      foreach ($maps as $mapfields) {
-         $constantsfield[$LANG['plugin_fusinvsnmp']['mapping'][$mapfields["locale"]]] =
-            $mapfields['name'];
-      }
-
-      echo "<center><table align='center' width='500'>";
-      echo "<tr>";
-      echo "<td>";
-      echo $LANG['plugin_fusinvsnmp']['setup'][19]."...";
-      echo "</td>";
-      echo "</tr>";
-      echo "<tr>";
-      echo "<td>";
-      createProgressBar("Update Ports history");
-
-      $query = "SELECT *
-                FROM ".$this->getTable()."
-                WHERE `field` != '0';";
-      if ($result=$DB->query($query)) {
-         $nb = $DB->numrows($result);
-         if (($nb > 300000) AND ($force == '0')) {
-            echo $LANG['plugin_fusioninventory']['update'][0]."<br/>";
-            echo "cd glpi/plugins/fusioninventory/front/ && php -f cli_update.php";
-            echo "<br/>Waiting...";
-            file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/cli-update.txt", "1");
-            sleep(20);
-            return;
-         }
-
-         $i = 0;
-			while ($data=$DB->fetch_array($result)) {
-            $i++;
-            if (isset($constantsfield[$data['field']])) {
-               $data['field'] = $constantsfield[$data['field']];
-               $query_update = "UPDATE `".$this->getTable()."`
-                  SET `field`='".$data['field']."'
-                  WHERE `id`='".$data['id']."' ";
-               $DB->query($query_update);
-               if (preg_match("/000$/", $i)) {
-                  changeProgressBarPosition($i, $nb, "$i / $nb");
-               }
-            }
-         }
-      }
-      changeProgressBarPosition($i, $nb, "$i / $nb");
-      echo "</td>";
-      echo "</tr>";
-      echo "</table></center>";
-
-
-      // Move connections from glpi_plugin_fusinvsnmp_networkportlogs to glpi_plugin_fusinvsnmp_networkportconnectionlogs
-      $pfihc = new PluginFusinvsnmpNetworkPortConnectionLog;
-
-      echo "<br/><center><table align='center' width='500'>";
-      echo "<tr>";
-      echo "<td>";
-      echo $LANG['plugin_fusinvsnmp']['setup'][20]."...";
-      echo "</td>";
-      echo "</tr>";
-      echo "<tr>";
-      echo "<td>";
-      createProgressBar("Move create connections");
-      $query = "SELECT *
-                FROM ".$this->getTable()."
-                WHERE `field` = '0' 
-                  AND ((`value_old` NOT LIKE '%:%')
-                        OR (`value_old` IS NULL))";
-      if ($result=$DB->query($query)) {
-         $nb = $DB->numrows($result);
-         $i = 0;
-         changeProgressBarPosition($i, $nb, "$i / $nb");
-			while ($data=$DB->fetch_array($result)) {
-            $i++;
-
-            // Search port from mac address
-            $query_port = "SELECT * FROM `glpi_networkports`
-               WHERE `mac`='".$data['value_new']."' ";
-            if ($result_port=$DB->query($query_port)) {
-               if ($DB->numrows($result_port) == '1') {
-                  $input = array();
-                  $data_port = $DB->fetch_assoc($result_port);
-                  $input['networkports_id_source'] = $data_port['id'];
-
-                  $query_port2 = "SELECT * FROM `glpi_networkports`
-                     WHERE `items_id` = '".$data['new_device_ID']."'
-                        AND `itemtype` = '".$data['new_itemtype']."' ";
-                  if ($result_port2=$DB->query($query_port2)) {
-                     if ($DB->numrows($result_port2) == '1') {
-                        $data_port2 = $DB->fetch_assoc($result_port2);
-                        $input['networkports_id_destination'] = $data_port2['id'];
-
-                        $input['date'] = $data['date_mod'];
-                        $input['creation'] = 1;
-                        $input['plugin_fusioninventory_agentprocesses_id'] = $data['plugin_fusioninventory_agentprocesses_id'];
-                        $pfihc->add($input);
-                     }
-                  }
-               }
-            }
-
-            $query_delete = "DELETE FROM `".$this->getTable()."`
-                  WHERE `id`='".$data['id']."' ";
-            $DB->query($query_delete);
-            if (preg_match("/00$/", $i)) {
-               changeProgressBarPosition($i, $nb, "$i / $nb");
-            }
-         }
-      }
-      changeProgressBarPosition($i, $nb, "$i / $nb");
-      echo "</td>";
-      echo "</tr>";
-      echo "</table></center>";
-
-
-      echo "<br/><center><table align='center' width='500'>";
-      echo "<tr>";
-      echo "<td>";
-      echo $LANG['plugin_fusinvsnmp']['setup'][21]."...";
-      echo "</td>";
-      echo "</tr>";
-      echo "<tr>";
-      echo "<td>";
-      createProgressBar("Move delete connections");
-      $query = "SELECT *
-                FROM ".$this->getTable()."
-                WHERE `field` = '0'
-                  AND ((`value_new` NOT LIKE '%:%')
-                        OR (`value_new` IS NULL))";
-      if ($result=$DB->query($query)) {
-         $nb = $DB->numrows($result);
-         $i = 0;
-         changeProgressBarPosition($i, $nb, "$i / $nb");
-			while ($data=$DB->fetch_array($result)) {
-            $i++;
-            
-            // Search port from mac address
-            $query_port = "SELECT * FROM `glpi_networkports`
-               WHERE `mac`='".$data['value_old']."' ";
-            if ($result_port=$DB->query($query_port)) {
-               if ($DB->numrows($result_port) == '1') {
-                  $input = array();
-                  $data_port = $DB->fetch_assoc($result_port);
-                  $input['networkports_id_source'] = $data_port['id'];
-
-                  $query_port2 = "SELECT * FROM `glpi_networkports`
-                     WHERE `items_id` = '".$data['old_device_ID']."'
-                        AND `itemtype` = '".$data['old_itemtype']."' ";
-                  if ($result_port2=$DB->query($query_port2)) {
-                     if ($DB->numrows($result_port2) == '1') {
-                        $data_port2 = $DB->fetch_assoc($result_port2);
-                        $input['networkports_id_destination'] = $data_port2['id'];
-
-                        $input['date'] = $data['date_mod'];
-                        $input['creation'] = 1;
-                        $input['plugin_fusioninventory_agentprocesses_id'] = $data['plugin_fusioninventory_agentprocesses_id'];
-                        if ($input['networkports_id_source'] != $input['networkports_id_destination']) {
-                           $pfihc->add($input);
-                        }
-                     }
-                  }
-               }
-            }
-
-            $query_delete = "DELETE FROM `".$this->getTable()."`
-                  WHERE `id`='".$data['id']."' ";
-            $DB->query($query_delete);
-            if (preg_match("/00$/", $i)) {
-               changeProgressBarPosition($i, $nb, "$i / $nb");
-            }
-         }
-      }
-      changeProgressBarPosition($i, $nb, "$i / $nb");
-      echo "</td>";
-      echo "</tr>";
-      echo "</table></center>";
-   }
-
-
-   function cronCleanHistory() {
-      global $DB;
-
-      $pficlf = new PluginFusinvsnmpConfigLogField();
-
-      $a_list = $pficlf->find();
+      $PluginFusinvsnmpConfigLogField = new PluginFusinvsnmpConfigLogField();
+      $PluginFusinvsnmpNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
+      
+      $a_list = $PluginFusinvsnmpConfigLogField->find();
       if (count($a_list)){
          foreach ($a_list as $data){
 
-            $query_delete = "DELETE FROM `".$this->getTable()."`
-               WHERE `field`='".$data['field']."' ";
+            $query_delete = "DELETE FROM `".$PluginFusinvsnmpNetworkPortLog->getTable()."`
+               WHERE `plugin_fusioninventory_mappings_id`='".$data['plugin_fusioninventory_mappings_id']."' ";
 
             switch($data['days']) {
 
@@ -431,10 +218,12 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       }
    }
 
+
+   
    static function addLog($port,$field,$value_old,$value_new,$mapping,$plugin_fusioninventory_agentprocesses_id=0) {
       global $DB,$CFG_GLPI;
 
-      $history = new PluginFusinvsnmpNetworkPortLog;
+      $PluginFusinvsnmpNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
       $doHistory = 1;
       if ($mapping != "") {
          $query = "SELECT *
@@ -447,21 +236,23 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       }
 
       if ($doHistory == "1") {
-
+         $array = array();
          $array["networkports_id"] = $port;
          $array["field"] = $field;
          $array["value_old"] = $value_old;
          $array["value_new"] = $value_new;
 
          // Ajouter en DB
-         $history->insert_connection("field",$array,$plugin_fusioninventory_agentprocesses_id);
+         $PluginFusinvsnmpNetworkPortLog->insert_connection("field",$array,$plugin_fusioninventory_agentprocesses_id);
       }
    }
 
+   
+
    static function networkport_addLog($port_id, $value_new, $field) {
       $ptp = new PluginFusinvsnmpNetworkPort;
-      $ptsnmph = new PluginFusinvsnmpNetworkPortLog();
-      $pficlf = new PluginFusinvsnmpConfigLogField();
+      $PluginFusinvsnmpNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
+      $PluginFusinvsnmpConfigLogField = new PluginFusinvsnmpConfigLogField();
       $PluginFusioninventoryMapping = new PluginFusioninventoryMapping();
 
 
@@ -483,7 +274,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
             break;
 
          case 'trunk':
-            $field = 'trunk';
+            $field = 'vlanTrunkPortDynamicStatus';
             break;
 
          case 'iftype':
@@ -501,7 +292,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       if ($ptp->getValue($db_field) != $value_new) {
          $a_mapping = $PluginFusioninventoryMapping->get('NetworkEquipment', $field);
 
-         $days = $pficlf->getValue($a_mapping['id']);
+         $days = $PluginFusinvsnmpConfigLogField->getValue($a_mapping['id']);
 
          if ((isset($days)) AND ($days != '-1')) {
             $array = array();
@@ -509,29 +300,27 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
             $array["plugin_fusioninventory_mappings_id"] = $a_mapping['id'];
             $array["value_old"] = $ptp->getValue($db_field);
             $array["value_new"] = $value_new;
-            $ptsnmph->insert_connection("field",$array,$_SESSION['glpi_plugin_fusioninventory_processnumber']);
+            $PluginFusinvsnmpNetworkPortLog->insert_connection("field",$array,$_SESSION['glpi_plugin_fusioninventory_processnumber']);
          }
       }
    }
 
+
+   
    // $status = connection or disconnection
    static function addLogConnection($status,$port,$plugin_fusioninventory_agentprocesses_id=0) {
       global $DB,$CFG_GLPI;
 
       $PluginFusinvsnmpNetworkPortConnectionLog = new PluginFusinvsnmpNetworkPortConnectionLog;
-      $nw=new NetworkPort_NetworkPort();
+      $NetworkPort_NetworkPort=new NetworkPort_NetworkPort();
 
       $input = array();
-
-      if (($plugin_fusioninventory_agentprocesses_id == '0') AND (isset($_SESSION['glpi_plugin_fusioninventory_processnumber']))) {
-//         $input['plugin_fusioninventory_agentprocesses_id'] = $_SESSION['glpi_plugin_fusioninventory_processnumber'];
-      }
 
       // Récupérer le port de la machine associé au port du switch
 
       // Récupérer le type de matériel
       $input["networkports_id_source"] = $port;
-      $opposite_port = $nw->getOppositeContact($port);
+      $opposite_port = $NetworkPort_NetworkPort->getOppositeContact($port);
       if (!$opposite_port) {
          return;
       }
@@ -554,7 +343,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
    static function showHistory($ID_port) {
       global $DB,$LANG,$INFOFORM_PAGES,$CFG_GLPI;
 
-      $np = new NetworkPort;
+      $np = new NetworkPort();
 
       $query = "
          SELECT * FROM(
@@ -588,7 +377,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
          AS `MainTable`
          ORDER BY `date_mod` DESC, `id` DESC
          LIMIT 30";
-//   echo $query."<br/>";
+
       $text = "<table class='tab_cadre' cellpadding='5' width='950'>";
 
       $text .= "<tr class='tab_bg_1'>";

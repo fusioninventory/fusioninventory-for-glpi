@@ -1,38 +1,36 @@
 <?php
 
 /*
- * @version $Id$
- ----------------------------------------------------------------------
- FusionInventory
- Coded by the FusionInventory Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org//
- ----------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: DURIEUX David
-// Purpose of file:
-// ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
@@ -113,17 +111,19 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
    }
 
 
+
    function defineTabs($options=array()){
       global $LANG,$CFG_GLPI,$DB;
 
       $ong = array();
       if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
-         $ong[1] = $LANG['plugin_fusinvsnmp']['task'][15];
-         $ong[2] = $LANG['plugin_fusinvsnmp']['task'][16];
+         $ong[1] = $LANG['plugin_fusinvsnmp']['task'][15]." (".$LANG['plugin_fusinvsnmp']['title'][6].")";
+         $ong[2] = $LANG['plugin_fusinvsnmp']['task'][16]." (".$LANG['plugin_fusinvsnmp']['title'][6].")";
          $ong[3] = $LANG['plugin_fusioninventory']['task'][18];
       }
       return $ong;
    }
+
 
 
 	function showForm($id, $options=array()) {
@@ -217,6 +217,7 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
    }
 
 
+
    function checkip($a_input) {
       global $LANG;
 
@@ -246,9 +247,11 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
    }
 
 
+
    function permanentTask($items_id, $module_name, $allowcreate=0) {
       global $LANG;
 
+      $method = '';
       if ($module_name == "NETDISCOVERY") {
          $method = "netdiscovery";
       } else if ($module_name == "SNMPQUERY") {
@@ -372,7 +375,6 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 
       $PluginFusioninventoryTaskjoblog->showHistory($PluginFusioninventoryTaskjob->fields['id']);
    }
-
 }
 
 ?>
