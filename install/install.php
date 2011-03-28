@@ -153,10 +153,16 @@ function pluginFusinvinventoryInstall() {
                      $input['criteria'] = 'serial';
                      break;
 
+                  case 'MACHINE_NAME':
+                     $input['criteria'] = 'name';
+                     break;
             }
 
             $input['rules_id'] = $rule_id;
-            $rulecriteria->add($input);
+            if (($input['criteria'] != 'OCS_SERVER')
+                  AND ($input['criteria'] != 'DESCRIPTION')){
+               $rulecriteria->add($input);
+            }
          }
 
          // Add action
