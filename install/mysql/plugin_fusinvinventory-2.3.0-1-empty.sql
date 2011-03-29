@@ -31,7 +31,8 @@ CREATE TABLE `glpi_plugin_fusinvinventory_libserialization` (
   `hash` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `last_fusioninventory_update` datetime DEFAULT NULL,
   PRIMARY KEY (`internal_id`),
-  KEY `computers_id` (`computers_id`)
+  KEY `computers_id` (`computers_id`),
+  KEY `last_fusioninventory_update` (`last_fusioninventory_update`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
