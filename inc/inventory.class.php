@@ -194,12 +194,16 @@ class PluginFusinvinventoryInventory {
             $ruleEntity = new PluginFusinvinventoryRuleEntityCollection();
             $dataEntity = array ();
             $dataEntity = $ruleEntity->processAllRules($input_rules, array());
+            
             if (isset($dataEntity['entities_id'])) {
                $_SESSION["plugin_fusinvinventory_entity"] = $dataEntity['entities_id'];
             } else {
                $_SESSION["plugin_fusinvinventory_entity"] = "0";
             }
 
+            if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+               logInFile("pluginFusinvinventory-entityrules",print_r($dataEntity, true));
+            }
 
          if ($items_id == '0') {
             $input = array();
