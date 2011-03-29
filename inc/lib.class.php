@@ -54,7 +54,6 @@ class PluginFusinvinventoryLib extends CommonDBTM {
    function startAction($simpleXMLObj, $items_id, $new=0) {
       global $DB;
 
-      $_SESSION["plugin_fusinvinventory_entity"] = "0";
       $xml = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
       
       if ($new == "0") {

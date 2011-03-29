@@ -63,16 +63,26 @@ class PluginFusinvinventoryRuleEntity extends PluginFusioninventoryRule {
 
    function executeActions($output,$params) {
 
+      if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+         logInFile("pluginFusinvinventory-entityrules", "execute action\n");
+      }
+
       if (count($this->actions)) {
          foreach ($this->actions as $action) {
             switch ($action->fields["action_type"]) {
                case "assign" :
+                  if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+                     logInFile("pluginFusinvinventory-entityrules", "value ".$action->fields["value"]."\n");
+                  }
                   $output[$action->fields["field"]] = $action->fields["value"];
                   break;
 
                case "regex_result" :
                   //Assign entity using the regex's result
                   if ($action->fields["field"] == "_affect_entity_by_tag") {
+                     if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+                        logInFile("pluginFusinvinventory-entityrules", "value".$action->fields["value"]."\n");
+                     }
                      //Get the TAG from the regex's results
                      $res = RuleAction::getRegexResultById($action->fields["value"],
                                                            $this->regex_results[0]);
