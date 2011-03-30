@@ -465,8 +465,11 @@ if (!unserialize($serializedSectionToRemove)) {
                            break;
 
                         case "VIRTUALMACHINES":
-                           if (isset($arrSectionToAdd["UUID"]) AND isset($arrSectionToRemove["UUID"])
-                                 AND $arrSectionToAdd["UUID"] == $arrSectionToRemove["UUID"]) {
+                           if ((isset($arrSectionToAdd["UUID"]) AND isset($arrSectionToRemove["UUID"])
+                                 AND $arrSectionToAdd["UUID"] == $arrSectionToRemove["UUID"])
+                              OR (isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
+                                 AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"])){
+         
                               $boolUpdate = true;
                            }
                             break;

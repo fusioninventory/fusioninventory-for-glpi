@@ -483,6 +483,25 @@ class PluginFusinvinventoryInventory {
          $xml_video->addChild("MEMORY", $deviceGraphicCard_data['specificity']);
       }
 
+      // ** VIRTUALMACHINES
+      $ComputerVirtualMachine = new ComputerVirtualMachine();
+      $a_VirtualMachines = $ComputerVirtualMachine->find("`computers_id`='".$items_id."' ");
+      foreach ($a_VirtualMachines as $VirtualMachines_id=>$VirtualMachines_data) {
+         $a_sectionsinfos[] = "VIRTUALMACHINES/".$VirtualMachines_id;
+         $xml_virtualmachine = $xml_content->addChild("VIRTUALMACHINES");
+         $xml_virtualmachine->addChild("MEMORY", $VirtualMachines_data['ram']."MB");
+         $xml_virtualmachine->addChild("NAME", $VirtualMachines_data['name']);
+
+         $xml_virtualmachine->addChild("STATUS", Dropdown::getDropdownName("glpi_virtualmachinestates",
+                              $VirtualMachines_data['virtualmachinestates_id']));
+         $xml_virtualmachine->addChild("SUBSYSTEM", Dropdown::getDropdownName("glpi_virtualmachinesystems",
+                              $VirtualMachines_data['virtualmachinesystems_id']));
+         $xml_virtualmachine->addChild("UUID", $VirtualMachines_data['uuid']);
+         $xml_virtualmachine->addChild("VCPU", $VirtualMachines_data['vcpu']);
+         $xml_virtualmachine->addChild("VMTYPE", Dropdown::getDropdownName("glpi_virtualmachinetypes",
+                              $VirtualMachines_data['virtualmachinetypes_id']));
+      }
+
       $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
       $PluginFusinvinventoryLib->addLibMachineFromGLPI($items_id, $internal_id, $xml, $a_sectionsinfos);
    }
