@@ -89,6 +89,10 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
    $PluginFusioninventoryTaskjob->reenableusemode();
    if ($comp) {
       $xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
+      logInFile("ocs2", $xml);
+   } else if (gzinflate (substr($GLOBALS["HTTP_RAW_POST_DATA"], 2))) {
+      // ** OCS agent 2.0 Compatibility
+      $xml = gzinflate (substr($GLOBALS["HTTP_RAW_POST_DATA"], 2));
    } else {
       $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
    }
