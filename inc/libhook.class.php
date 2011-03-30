@@ -172,34 +172,59 @@ class PluginFusinvinventoryLibhook {
                      $Computer->fields['operatingsystems_id'] = $OperatingSystem->import(array('name'=>$dataSection['OSNAME']));
                   }
                }
-               if (isset($dataSection['OSVERSION'])) {
-                  if (!in_array('operatingsystemversions_id', $a_lockable)) {
+               if (!in_array('operatingsystemversions_id', $a_lockable)) {
+                  $addfield = 0;
+                  if (isset($dataSection['OSVERSION'])) {
                      $OperatingSystemVersion = new OperatingSystemVersion();
                      $Computer->fields['operatingsystemversions_id'] = $OperatingSystemVersion->import(array('name'=>$dataSection['OSVERSION']));
+                     $addfield = 1;
+                  }
+                  if ($addfield == '0') {
+                     $Computer->fields['operatingsystemversions_id'] = 0;
                   }
                }
-               if (isset($dataSection['WINPRODID'])) {
-                  if (!in_array('os_licenseid', $a_lockable)) {
+               if (!in_array('os_licenseid', $a_lockable)) {
+                  $addfield = 0;
+                  if (isset($dataSection['WINPRODID'])) {
                      $Computer->fields['os_licenseid'] = $dataSection['WINPRODID'];
+                     $addfield = 1;
+                  }
+                  if ($addfield == '0') {
+                     $Computer->fields['os_licenseid'] = '';
                   }
                }
-               if (isset($dataSection['WINPRODKEY'])) {
-                  if (!in_array('os_license_number', $a_lockable)) {
+               if (!in_array('os_license_number', $a_lockable)) {
+                  $addfield = 0;
+                  if (isset($dataSection['WINPRODKEY'])) {
                      $Computer->fields['os_license_number'] = $dataSection['WINPRODKEY'];
+                     $addfield = 1;
+                  }
+                  if ($addfield == '0') {
+                     $Computer->fields['os_license_number'] = '';
                   }
                }
-               if (isset($dataSection['WORKGROUP'])) {
-                  if (!in_array('domains_id', $a_lockable)) {
+               if (!in_array('domains_id', $a_lockable)) {
+                  $addfield = 0;
+                  if (isset($dataSection['WORKGROUP'])) {
                      $Domain = new Domain();
                      $Computer->fields['domains_id'] = $Domain->import(array('name'=>$dataSection['WORKGROUP']));
+                     $addfield = 1;
+                  }
+                  if ($addfield == '0') {
+                     $Computer->fields['domains_id'] = 0;
                   }
                }
-               if (isset($dataSection['OSCOMMENTS'])) {
-                  if (!in_array('operatingsystemservicepacks_id', $a_lockable)) {
+               if (!in_array('operatingsystemservicepacks_id', $a_lockable)) {
+                  $addfield = 0;
+                  if (isset($dataSection['OSCOMMENTS'])) {
                      if (strstr($dataSection['OSCOMMENTS'], 'Service Pack')) {
                         $OperatingSystemServicePack = new OperatingSystemServicePack();
                         $Computer->fields['operatingsystemservicepacks_id'] = $OperatingSystemServicePack->import(array('name'=>$dataSection['OSCOMMENTS']));
+                        $addfield = 1;
                      }
+                  }
+                  if ($addfield == '0') {
+                     $Computer->fields['operatingsystemservicepacks_id'] = 0;
                   }
                }
                if (isset($dataSection['UUID'])) {

@@ -194,12 +194,16 @@ class PluginFusinvinventoryInventory {
             $ruleEntity = new PluginFusinvinventoryRuleEntityCollection();
             $dataEntity = array ();
             $dataEntity = $ruleEntity->processAllRules($input_rules, array());
+            
             if (isset($dataEntity['entities_id'])) {
                $_SESSION["plugin_fusinvinventory_entity"] = $dataEntity['entities_id'];
             } else {
                $_SESSION["plugin_fusinvinventory_entity"] = "0";
             }
 
+            if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+               logInFile("pluginFusinvinventory-entityrules",print_r($dataEntity, true));
+            }
 
          if ($items_id == '0') {
             $input = array();
@@ -298,11 +302,12 @@ class PluginFusinvinventoryInventory {
          $a_sectionsinfos[] = "CONTROLLERS/".$deviceControl_id;
          $xml_controller = $xml_content->addChild("CONTROLLERS");
          $DeviceControl->getFromDB($deviceControl_data['devicecontrols_id']);
-         $xml_controller->addChild("NAME", $DeviceControl->fields['designation']);
+         $xml_controller->addChild("CAPTION", $DeviceControl->fields['designation']);
          $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'), $DeviceControl->fields['manufacturers_id']);
          if ($manufacturer != "&nbsp;") {
             $xml_controller->addChild("MANUFACTURER", $manufacturer);
          }
+         $xml_controller->addChild("NAME", $DeviceControl->fields['designation']);
       }
 
 
@@ -440,8 +445,8 @@ class PluginFusinvinventoryInventory {
          $Software->getFromDB($SoftwareVersion->fields['softwares_id']);
          $a_sectionsinfos[] = "SOFTWARES/".$softwareversion_id;
          $xml_software = $xml_content->addChild("SOFTWARES");
-         $xml_software->addChild("VERSION", $SoftwareVersion->fields['name']);
          $xml_software->addChild("NAME", $Software->fields['name']);
+         $xml_software->addChild("VERSION", $SoftwareVersion->fields['name']);
          $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'), $Software->fields['manufacturers_id']);
          if ($manufacturer != "&nbsp;") {
             $xml_software->addChild("PUBLISHER", $manufacturer);
@@ -477,7 +482,7 @@ class PluginFusinvinventoryInventory {
          $xml_video->addChild("NAME", $DeviceGraphicCard->fields['designation']);
          $xml_video->addChild("MEMORY", $deviceGraphicCard_data['specificity']);
       }
-      
+
       $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
       $PluginFusinvinventoryLib->addLibMachineFromGLPI($items_id, $internal_id, $xml, $a_sectionsinfos);
    }

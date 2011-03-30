@@ -31,7 +31,8 @@ CREATE TABLE `glpi_plugin_fusinvinventory_libserialization` (
   `hash` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `last_fusioninventory_update` datetime DEFAULT NULL,
   PRIMARY KEY (`internal_id`),
-  KEY `computers_id` (`computers_id`)
+  KEY `computers_id` (`computers_id`),
+  KEY `last_fusioninventory_update` (`last_fusioninventory_update`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -118,7 +119,8 @@ INSERT INTO `glpi_plugin_fusinvinventory_blacklists` (`id`, `plugin_fusioninvent
 (39, 5, '*'),
 (40, 5, 'System Product Name'),
 (41, 5, 'Product Name'),
-(42, 5, 'System Name');
+(42, 5, 'System Name'),
+(43, 2, 'FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF');
 
 INSERT INTO `glpi_displaypreferences` (`itemtype`, `num`, `rank`, `users_id`) VALUES
 ('PluginFusinvinventoryBlacklist', 2, 1, 0);

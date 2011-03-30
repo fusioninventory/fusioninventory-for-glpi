@@ -54,7 +54,6 @@ class PluginFusinvinventoryLib extends CommonDBTM {
    function startAction($simpleXMLObj, $items_id, $new=0) {
       global $DB;
 
-      $_SESSION["plugin_fusinvinventory_entity"] = "0";
       $xml = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
       
       if ($new == "0") {
@@ -318,8 +317,8 @@ if (!unserialize($serializedSectionToRemove)) {
                            if (((isset($arrSectionToAdd["GUID"]) AND isset($arrSectionToRemove["GUID"])
                                  AND ($arrSectionToAdd["GUID"] == $arrSectionToRemove["GUID"]))
                               OR (isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
-                                 AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]))
-                              AND (isset($arrSectionToAdd["VERSION"]) AND isset($arrSectionToRemove["VERSION"])
+                                 AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"])
+                              AND isset($arrSectionToAdd["VERSION"]) AND isset($arrSectionToRemove["VERSION"])
                                  AND $arrSectionToAdd["VERSION"] == $arrSectionToRemove["VERSION"])) {
 
                               $boolUpdate = true;
@@ -327,10 +326,15 @@ if (!unserialize($serializedSectionToRemove)) {
                            break;
 
                         case "CONTROLLERS":
-                           if (isset($arrSectionToAdd["PCIID"]) AND isset($arrSectionToRemove["PCIID"])
+                           if ((isset($arrSectionToAdd["PCIID"]) AND isset($arrSectionToRemove["PCIID"])
                                  AND $arrSectionToAdd["PCIID"] == $arrSectionToRemove["PCIID"]
                                  AND isset($arrSectionToAdd["PCISLOT"]) AND isset($arrSectionToRemove["PCISLOT"])
-                                 AND $arrSectionToAdd["PCISLOT"] == $arrSectionToRemove["PCISLOT"]) {
+                                 AND $arrSectionToAdd["PCISLOT"] == $arrSectionToRemove["PCISLOT"])
+                               OR (!isset($arrSectionToRemove["PCIID"])
+                                 AND isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
+                                 AND isset($arrSectionToAdd['MANUFACTURER']) AND isset($arrSectionToRemove['MANUFACTURER'])
+                                 AND isset($arrSectionToAdd['CAPTION']) AND isset($arrSectionToRemove['CAPTION']) )) {
+
                               $boolUpdate = true;
                            }
                            break;
@@ -350,9 +354,14 @@ if (!unserialize($serializedSectionToRemove)) {
                            break;
 
                         case "MEMORIES":
-                           if (isset($arrSectionToAdd["SERIALNUMBER"])
+                           if ((isset($arrSectionToAdd["SERIALNUMBER"])
                                  AND isset($arrSectionToRemove["SERIALNUMBER"])
-                                 AND $arrSectionToAdd["SERIALNUMBER"] == $arrSectionToRemove["SERIALNUMBER"]) {
+                                 AND $arrSectionToAdd["SERIALNUMBER"] == $arrSectionToRemove["SERIALNUMBER"])
+                              OR (!isset($arrSectionToRemove["SERIALNUMBER"])
+                                 AND isset($arrSectionToAdd["DESCRIPTION"]) AND isset($arrSectionToRemove["DESCRIPTION"])
+                                 AND isset($arrSectionToAdd["CAPACITY"]) AND isset($arrSectionToRemove["CAPACITY"])
+                                 AND isset($arrSectionToAdd["SPEED"]) AND isset($arrSectionToRemove["SPEED"]))) {
+
                   				$boolUpdate = true;
                            }
                            break;
@@ -480,12 +489,8 @@ if (!unserialize($serializedSectionToRemove)) {
                                      "dataSection"=>$xmlSections[$arrayId]['sectionData']));
 
                         $existUpdate++;
-                     } else {
-                        //push element into an temporary array, to allow update transposition
-                        $sectionsToAddTmp[$arrayId] = $sectionsToAdd[$arrayId];
-                        unset($sectionsToAdd[$arrayId]);
+                        break;
                      }
-                     break;
                   }
                }
             }
@@ -494,14 +499,6 @@ if (!unserialize($serializedSectionToRemove)) {
             call_user_func(array($classhook,"updateSections"),
                            $datasToUpdate,
                            $infoSections["externalId"]);
-         }
-
-         if (!empty($sectionsToAddTmp)) {
-            //Retrieve removed data in sectionsToAdd
-            foreach($sectionsToAddTmp as $k => $v) {
-               $sectionsToAdd[$k] = $v;
-            }
-            ksort($sectionsToAdd);
          }
       }
 
