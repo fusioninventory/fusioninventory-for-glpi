@@ -145,7 +145,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       } else if ((isset($p_xml->DNSHOSTNAME)) AND (!empty($p_xml->DNSHOSTNAME))) {
          $input['name'] = (string)$p_xml->DNSHOSTNAME;
       }
-
+      $input['entities_id'] = (string)$p_xml->ENTITY;
       switch ($p_xml->TYPE) {
 
          case '1':
@@ -178,16 +178,16 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             logInFile("pluginFusioninventory-rules", "norulematch = 1");
          }
          if (isset($input['itemtype'])) {
-            $this->rulepassed(0, $input['itemtype']);
+            $this->rulepassed(0, $input['itemtype'],$input['entities_id']);
          } else {
-            $this->rulepassed(0, "PluginFusioninventoryUnknownDevice");
+            $this->rulepassed(0, "PluginFusioninventoryUnknownDevice",$input['entities_id']);
          }
       }
    }
 
 
 
-   function rulepassed($items_id, $itemtype) {
+   function rulepassed($items_id, $itemtype, $entities_id=0) {
       global $DB;
 
       PluginFusioninventoryCommunication::addLog(
@@ -197,6 +197,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       if ($items_id == "0") {
          $input = array();
          $input['date_mod'] = date("Y-m-d H:i:s");
+         $input['entities_id'] = $entities_id;
          $items_id = $class->add($input);
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
                '[detail] ==fusinvsnmp::4== '.$class->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
