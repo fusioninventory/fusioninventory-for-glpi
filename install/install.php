@@ -225,6 +225,10 @@ function pluginFusinvinventoryUninstall() {
       $Rule->delete($data);
    }
 
+   // Delete display preferences
+   $query="DELETE FROM `glpi_displaypreferences`
+        WHERE `itemtype` LIKE 'PluginFusinvinventory%';";
+   $DB->query($query) or die($DB->error());
    
    $query = "SHOW TABLES;";
    $result=$DB->query($query);
