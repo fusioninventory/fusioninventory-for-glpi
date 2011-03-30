@@ -302,11 +302,12 @@ class PluginFusinvinventoryInventory {
          $a_sectionsinfos[] = "CONTROLLERS/".$deviceControl_id;
          $xml_controller = $xml_content->addChild("CONTROLLERS");
          $DeviceControl->getFromDB($deviceControl_data['devicecontrols_id']);
-         $xml_controller->addChild("NAME", $DeviceControl->fields['designation']);
+         $xml_controller->addChild("CAPTION", $DeviceControl->fields['designation']);
          $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'), $DeviceControl->fields['manufacturers_id']);
          if ($manufacturer != "&nbsp;") {
             $xml_controller->addChild("MANUFACTURER", $manufacturer);
          }
+         $xml_controller->addChild("NAME", $DeviceControl->fields['designation']);
       }
 
 
@@ -481,7 +482,7 @@ class PluginFusinvinventoryInventory {
          $xml_video->addChild("NAME", $DeviceGraphicCard->fields['designation']);
          $xml_video->addChild("MEMORY", $deviceGraphicCard_data['specificity']);
       }
-      
+
       $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
       $PluginFusinvinventoryLib->addLibMachineFromGLPI($items_id, $internal_id, $xml, $a_sectionsinfos);
    }
