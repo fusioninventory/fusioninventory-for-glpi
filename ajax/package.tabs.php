@@ -39,35 +39,46 @@ header("Content-Type: text/html; charset=UTF-8");
 header_nocache();
 
 if(!isset($_POST["id"])) {
-	exit();
+   exit();
 }
 
-if(!isset($_POST["sort"])) $_POST["sort"] = "";
-if(!isset($_POST["order"])) $_POST["order"] = "";
-if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
+if(!isset($_POST["sort"])) {
+   $_POST["sort"] = "";
+}
+if(!isset($_POST["order"])) {
+   $_POST["order"] = "";
+}
+if(!isset($_POST["withtemplate"])) {
+   $_POST["withtemplate"] = "";
+}
 
-$PluginFusinvdeployPackage = new PluginFusinvdeployPackage;
+$package          = new PluginFusinvdeployPackage();
+$deployInstall    = new PluginFusinvdeployInstall();
+$deployUninstall  = new PluginFusinvdeployUninstall();
 
-switch($_POST['glpi_tab']) {
-	case -1 :
-     	break;
+if ($package->can($_POST['id'],'r')) {
+   switch($_POST['glpi_tab']) {
+      case -1 :
+         $deployInstall->showForm($_POST['id']);
+         $deployUninstall->showForm($_POST['id']);
+         Log::showForItem($package);
+         break;
 
-	case 1 :
-      $PluginFusinvdeployPackage->showFormGenerate($_POST['id']);
-		break;
-
-   case 2 :
-      $PluginFusinvdeployPackage_File = new PluginFusinvdeployPackage_File;
-      $PluginFusinvdeployPackage_File->listFiles($_POST['id']);
-		break;
-
-   case 4 :
-      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-      $PluginFusioninventoryTaskjob->manageTasksByObject("PluginFusinvdeployPackage", $_POST['id']);
-      break;
-
-   default :
-		break;
+      case 2 :
+         $deployInstall->showForm($_POST['id']);
+         break;
+   
+      case 3 :
+         $deployUninstall->showForm($_POST['id']);
+         break;
+   
+      case 12 :
+         Log::showForItem($package);
+         break;
+   
+      default :
+         break;
+   }
 }
 
 ajaxFooter();

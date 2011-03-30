@@ -37,60 +37,82 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusinvdeployStaticmisc {
+
+   const DEPLOYMETHOD_INSTALL   = 'deploymentinstall';
+   const DEPLOYMETHOD_UNINSTALL = 'deploymentuninstall';
+
    static function task_methods() {
       global $LANG;
 
-      $a_tasks = array();
-      $a_tasks[] = array('module'         => 'fusinvdeploy',
-                         'method'         => 'ocsdeploy',
-                         'selection_type' => 'devices',
-                         'selection_type_name' => "devices");
-      $a_tasks[] = array('module'         => 'fusinvdeploy',
-                         'method'         => 'ocsdeploy',
-                         'selection_type' => 'rules');
-      $a_tasks[] = array('module'         => 'fusinvdeploy',
-                         'method'         => 'ocsdeploy',
-                         'selection_type' => 'devicegroups');
-      return $a_tasks;
+      return array(array('module'         => 'fusinvdeploy',
+                         'method'         => self::DEPLOYMETHOD_INSTALL,
+                         'name'           => $LANG['plugin_fusinvdeploy']['package'][16]),
+                   array('module'         => 'fusinvdeploy',
+                         'method'         => self::DEPLOYMETHOD_UNINSTALL,
+                         'name'           => $LANG['plugin_fusinvdeploy']['package'][17]));
+   }
+
+   static function getItemtypeActions() {
+      return array('PluginFusinvdeployPackage');
+   }
+   /*
+   # Actions with itemtype autorized
+   static function task_action_deploymentinstall() {
+      return self::getItemtypeActions();
    }
 
    # Actions with itemtype autorized
-   static function task_action_ocsdeploy() {
-      $a_itemtype = array();
-      $a_itemtype[] = 'PluginFusinvdeployPackage';
-      $a_itemtype[] = 'Computer';
+   static function task_action_deploymentuninstall() {
+      return self::getItemtypeActions();
+   }*/
 
-      return $a_itemtype;
-   }
-
-   # Selection type for actions
-   static function task_selection_type_ocsdeploy($itemtype) {
-      switch ($itemtype) {
-
-         case 'PluginFusinvdeployPackage':
-         case 'Computer';
-            $selection_type = 'devices';
-            break;
-
-      }
-
-      return $selection_type;
-   }
-
-   # Select arguments if exist
-   static function task_argument_ocsdeploy($title) {
+   static function getDefinitionType() {
       global $LANG;
-      
-      //$a_list = $PluginFusinvdeployPackage->find();
-      if ($title == '1') {
-         echo $LANG['plugin_fusinvdeploy']["package"][7]."&nbsp;:";
-      } else {
-         $options = array();
-         $options['entity'] = $_SESSION['glpiactive_entity'];
-         $options['entity_sons'] = 1;
-         $options['name'] = 'argument';
-         Dropdown::show("PluginFusinvdeployPackage", $options);
-      }
+      return array(0 => DROPDOWN_EMPTY_VALUE,
+                   'PluginFusinvdeployPackage' => $LANG['plugin_fusinvdeploy']['package'][7]);
+   }
+
+   static function task_definitiontype_deploymentinstall($a_itemtype) {
+      return self::getDefinitionType();
+   }
+
+   static function task_definitiontype_deploymentuninstall($a_itemtype) {
+      return self::getDefinitionType();
+   }
+
+   static function getDeploymentSelections() {
+      global $LANG;
+
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name']        = 'definitionselectiontoadd';
+      return Dropdown::show("PluginFusinvdeployPackage", $options);
+   }
+
+   static function getDeploymentActions() {
+      global $LANG;
+
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = haveAccessToEntity($_SESSION['glpiactive_entity'],1);
+      $options['name']        = 'actionselectiontoadd';
+      return Dropdown::show("Computer", $options);
+
+   }
+
+   static function task_definitionselection_PluginFusinvdeployPackage_deploymentinstall() {
+      return self::getDeploymentSelections();
+   }
+
+   static function task_definitionselection_PluginFusinvdeployPackage_deploymentuninstall() {
+      return self::getDeploymentSelections();
+   }
+
+   static function task_actionselection_PluginFusioninventoryAgent_deploymentinstall() {
+      return self::getDeploymentActions();
+   }
+
+   static function task_actionselection_PluginFusioninventoryAgent_deploymentuninstall() {
+      return self::getDeploymentActions();
    }
 
    static function displayMenu() {
@@ -103,9 +125,10 @@ class PluginFusinvdeployStaticmisc {
          $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/package.php";
       }
 
-      $a_menu[1]['name'] = $LANG['plugin_fusinvdeploy']["files"][0];
+
+      $a_menu[1]['name'] = $LANG['plugin_fusinvdeploy']['form']['mirror'][1];
       $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_files.png";
-      $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/file.php";
+      $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/mirror.php";
 
       if (PluginFusioninventoryProfile::haveRight("fusinvdeploy", "status", "r")) {
          $a_menu[2]['name'] = $LANG['plugin_fusinvdeploy']["deploystatus"][0];
@@ -120,13 +143,10 @@ class PluginFusinvdeployStaticmisc {
    static function profiles() {
       global $LANG;
 
-      $a_profil = array();
-      $a_profil[] = array('profil'  => 'packages',
-                          'name'    => $LANG['plugin_fusinvdeploy']['profile'][2]);
-      $a_profil[] = array('profil'  => 'status',
-                          'name'    => $LANG['plugin_fusinvdeploy']['profile'][3]);
-
-      return $a_profil;
+      return array(array('profil'  => 'packages',
+                         'name'    => $LANG['plugin_fusinvdeploy']['profile'][2]),
+                   array('profil'  => 'status',
+                         'name'    => $LANG['plugin_fusinvdeploy']['profile'][3]));
    }
 
 }

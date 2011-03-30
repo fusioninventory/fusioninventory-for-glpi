@@ -38,20 +38,20 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 //PluginFusioninventoryProfile::checkRight("Fusioninventory", "agents","r");
 
-$PluginFusinvdeployPackage_File = new PluginFusinvdeployPackage_File();
+$file = new PluginFusinvdeployPackage_File();
 
 if (isset ($_POST["add"])) {
-//	PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
-	$PluginFusinvdeployPackage_File->add($_POST);
-	glpi_header($_SERVER['HTTP_REFERER']);
+// PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
+   $file->add($_POST);
+   glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["update"])) {
-//	PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
-	$PluginFusinvdeployPackage_File->update($_POST);
-	glpi_header($_SERVER['HTTP_REFERER']);
+// PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
+   $file->update($_POST);
+   glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["delete"])) {
-//	PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
-	$PluginFusinvdeployPackage_File->delete($_POST);
-	glpi_header("agent.php");
+// PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
+   $file->delete($_POST);
+   glpi_header("agent.php");
 }
 
 ?>

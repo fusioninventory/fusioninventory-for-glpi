@@ -77,7 +77,7 @@ function pluginFusinvdeployInstall() {
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
       $input = array();
       $input['plugins_id'] = $plugins_id;
-      $input['modulename'] = "OCSDEPLOY";
+      $input['modulename'] = "DEPLOYMENT";
       $input['is_active']  = 1;
       $input['exceptions'] = exportArrayToDB(array());
       $PluginFusioninventoryAgentmodule->add($input);

@@ -40,10 +40,12 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvdeployFile extends CommonDBTM {
    
+   private $split_size = 1000000;
+   
    static function getTypeName() {
       global $LANG;
 
-      return $LANG['plugin_fusinvdeploy']["files"][0];
+      return $LANG['plugin_fusinvdeploy']['package'][12];
    }
 
    function canCreate() {
@@ -54,90 +56,111 @@ class PluginFusinvdeployFile extends CommonDBTM {
       return true;
    }
 
-   function canCancel() {
-      return true;
+   function getEmpty() {
+      $this->fields['retention'] = 0;
    }
-
-   function canUndo() {
-      return true;
-   }
-
-   function canValidate() {
-      return true;
-   }
-
-
-
-   function defineTabs($options=array()){
-      global $LANG,$CFG_GLPI;
-
-      $ong = array();
-//      if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
-//         $ong[1]="test";
-//      }
-      return $ong;
-   }
-
-
    
-   function showForm($id, $options=array()) {
-      global $DB,$CFG_GLPI,$LANG;
-
-      if ($id!='') {
-         $this->getFromDB($id);
-      } else {
-         $this->getEmpty();
+   function prepareInputForAdd($input) {
+      if (isset($result['p2p-retention-duration'])) {
+         $tmp['p2p-retention-duration'] = 0;
       }
-
-      $this->showTabs($options);
-      $options['formoptions'] = " enctype='multipart/form-data'";
-      $this->showFormHeader($options);
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['common'][16]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      echo "<input type='text' name='name' value='".$this->fields["name"]."' size='30'/>";
-      echo "</td>";
-      echo "<td>".$LANG['plugin_fusinvdeploy']['files'][1]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      echo "<input type='text' name='filename' value='".$this->fields["filename"]."' size='30'/>";
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusinvdeploy']['files'][2]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      echo "<input type='text' name='version' value='".$this->fields["version"]."' size='30'/>";
-      echo "</td>";
-      echo "<td>".$LANG['plugin_fusinvdeploy']['files'][3]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      echo "";
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td></td>";
-      echo "<td align='center'>";
-      echo "";
-      echo "</td>";
+      return $input;
+   }
+   
+   static function cleanForPackage($orders_id) {
+      global $DB;
+      $query = "DELETE FROM `glpi_plugin_fusinvdeploy_files` 
+                WHERE `plugin_fusinvdeploy_orders_id`='$orders_id'";
+      $DB->query($query);
+   }
+   
+   static function getForOrder($orders_id) {
+      $results = getAllDatasFromTable('glpi_plugin_fusinvdeploy_files',
+                                      "`plugin_fusinvdeploy_orders_id`='$orders_id'");
       
-      if ($this->fields["filename"] == "") {
-         echo "<td>".$LANG['plugin_fusinvdeploy']['files'][4]."&nbsp;:</td>";
-         echo "<td align='center'>";
-         echo "<input type='file' name='uploadfile' size='39'>";
-      } else {
-         echo "<td colspan='2' align='center'>";
-         echo $LANG['document'][26];
+      $files = array();
+      foreach ($results as $result) {
+         $tmp['uncompress']                = $result['uncompress'];
+         $tmp['name']                      = $result['name'];
+         $tmp['is_p2p']                    = $result['is_p2p'];
+         $mirrors = PluginFusinvdeployFile_Mirror::getForFile($result['id']);
+         if (!empty($mirrors)) {
+            $tmp['mirrors'] = $mirrors;
+         }
+         
+         $fileparts = PluginFusinvdeployFilepart::getForFile($result['id']);
+         if (!empty($fileparts)) {
+            $tmp['multiparts'] = $fileparts;
+         }
+         if (isset($result['p2p-retention-duration'])) {
+            $tmp['p2p-retention-duration'] = $result['p2p-retention-duration'];
+         } else {
+            $tmp['p2p-retention-duration'] = 0;
+         }
+         $files[$result['sha512']]         = $tmp;
       }
-      echo "</td>";
-      echo "</tr>";
+      
+      return $files;
+   }
+   
+   function getNumberOfPartsFromFilesize($size){
+      
+     return ceil($size / $this->split_size);
+   
+   }
+   
+   
+   function getExtension($file){
+      $extension        = explode(".", $file);
+      $extension        = $extension[count($extension) - 1];
+   
+      return $extension;
+   }
+   
+   /**
+    * Split a file into fragments
+    * @param file_name name of the file to split
+    * @param part_num number of fragments to do
+    * @param orders_id indicates the order for which the file is uploaded
+    * @param files_id  the ID of the file updated
+    * @return OK
+    */
+   function splitFile($file_name, $parts_num, $order_id, $file_id) {
+      global $DB;
+      
+      $PluginFusinvdeployFilepart = new PluginFusinvdeployFilepart;
+      
+      $handle = fopen($file_name, 'rb') or die("error opening file");
+      $file_size = filesize($file_name);
+      $parts_size = $this->split_size;
+      $modulus=$file_size % $parts_num;
+      for($i=0;$i<$parts_num;$i++) {
+         if($modulus!=0 & $i==$parts_num-1) {
+            $parts[$i] = fread($handle,$parts_size+$modulus) or die("error reading file");
+         }
+         else {
+            $parts[$i] = fread($handle,$parts_size) or die("error reading file");
+         }
+      }
 
-      $this->showFormButtons($options);
-      $this->addDivForTabs();
-
-      return true;
+      fclose($handle) or die("error closing file handle");
+      for($i=0;$i<$parts_num;$i++) {
+         $filename = "splited_".time()."_order_{$order_id}_file_{$file_id}_{$i}.gz";
+         $part_handle = fopen(GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/{$filename}", 'wb') 
+            or die("error opening file for writing");
+         fwrite($part_handle,gzencode($parts[$i])) or die("error writing splited file");
+            
+         $sum       = hash_file('sha512', GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/".$filename);
+         $part_data = array('name'                          => $filename,
+                            'sha512'                        => $sum,
+                            'order'                         => $i, 
+                            'plugin_fusinvdeploy_orders_id' => $order_id, 
+                            'plugin_fusinvdeploy_files_id'  => $file_id);  
+         
+         $PluginFusinvdeployFilepart->add($part_data);
+      }
+      return 'OK';
    }
 
 }
-
 ?>

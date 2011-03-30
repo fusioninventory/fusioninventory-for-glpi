@@ -33,42 +33,36 @@
 // ----------------------------------------------------------------------
 
 define('GLPI_ROOT', '../../..');
-
 include (GLPI_ROOT . "/inc/includes.php");
 
-commonHeader($LANG['plugin_fusinvdeploy']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","packages");
+commonHeader($LANG['plugin_fusinvdeploy']["title"][0],$_SERVER["PHP_SELF"],"plugins",
+   "fusioninventory","packages");
 
 //PluginFusioninventoryProfile::checkRight("Fusioninventory", "agents","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-$PluginFusinvdeployPackage = new PluginFusinvdeployPackage;
+$package = new PluginFusinvdeployPackage();
 
 if (isset ($_POST["add"])) {
-//	PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
-	$PluginFusinvdeployPackage->add($_POST);
-	glpi_header($_SERVER['HTTP_REFERER']);
+// PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
+   $newID = $package->add($_POST);
+   glpi_header(getItemTypeFormURL('PluginFusinvdeployPackage')."?id=".$newID);
 } else if (isset ($_POST["update"])) {
-//	PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
-	$PluginFusinvdeployPackage->update($_POST);
-	glpi_header($_SERVER['HTTP_REFERER']);
+// PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
+   $package->update($_POST);
+   glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["delete"])) {
-//	PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
-	$PluginFusinvdeployPackage->delete($_POST);
-	glpi_header("agent.php");
-} else if (isset($_POST['generate'])) {
-   $PluginFusinvdeployPackage->generatePackage($_POST['id']);
-   glpi_header($_SERVER['HTTP_REFERER']);
-} else if (isset($_POST['regenerate'])) {
-   $PluginFusinvdeployPackage->generatePackage($_POST['id'], 1);
-   glpi_header($_SERVER['HTTP_REFERER']);
+// PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
+   $package->delete($_POST);
+   glpi_header(getItemTypeSearchURL('PluginFusinvdeployPackage'));
 }
 
 $id = "";
 if (isset($_GET["id"])) {
-	$id = $_GET["id"];
+   $id = $_GET["id"];
 }
-$PluginFusinvdeployPackage->showForm($id);
+$package->showForm($id);
 commonFooter();
 
 ?>

@@ -37,19 +37,21 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG['plugin_fusinvdeploy']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","deploy");
+commonHeader($LANG['plugin_fusinvdeploy']["title"][0],$_SERVER["PHP_SELF"],"plugins",
+             "fusioninventory","deploy");
 
 //PluginFusioninventoryProfile::checkRight("fusinvdeploy", "files","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-
+$groupobject = new PluginGroupobjectGroupobject;
+$groupobject->show();
 
 
 // Afficher les deploiements par package
 // => camembert (ok, erreur)
 // => barres sur le nombre de deploiement réussi sur les derniers jours
-plugin_fusinvdeploy_statedeploy_packages();
+//plugin_fusinvdeploy_statedeploy_packages();
 
 
 
