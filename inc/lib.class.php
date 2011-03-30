@@ -317,8 +317,8 @@ if (!unserialize($serializedSectionToRemove)) {
                            if (((isset($arrSectionToAdd["GUID"]) AND isset($arrSectionToRemove["GUID"])
                                  AND ($arrSectionToAdd["GUID"] == $arrSectionToRemove["GUID"]))
                               OR (isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
-                                 AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]))
-                              AND (isset($arrSectionToAdd["VERSION"]) AND isset($arrSectionToRemove["VERSION"])
+                                 AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"])
+                              AND isset($arrSectionToAdd["VERSION"]) AND isset($arrSectionToRemove["VERSION"])
                                  AND $arrSectionToAdd["VERSION"] == $arrSectionToRemove["VERSION"])) {
 
                               $boolUpdate = true;
@@ -489,12 +489,8 @@ if (!unserialize($serializedSectionToRemove)) {
                                      "dataSection"=>$xmlSections[$arrayId]['sectionData']));
 
                         $existUpdate++;
-                     } else {
-                        //push element into an temporary array, to allow update transposition
-                        $sectionsToAddTmp[$arrayId] = $sectionsToAdd[$arrayId];
-                        unset($sectionsToAdd[$arrayId]);
+                        break;
                      }
-                     break;
                   }
                }
             }
@@ -503,14 +499,6 @@ if (!unserialize($serializedSectionToRemove)) {
             call_user_func(array($classhook,"updateSections"),
                            $datasToUpdate,
                            $infoSections["externalId"]);
-         }
-
-         if (!empty($sectionsToAddTmp)) {
-            //Retrieve removed data in sectionsToAdd
-            foreach($sectionsToAddTmp as $k => $v) {
-               $sectionsToAdd[$k] = $v;
-            }
-            ksort($sectionsToAdd);
          }
       }
 

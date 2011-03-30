@@ -445,8 +445,8 @@ class PluginFusinvinventoryInventory {
          $Software->getFromDB($SoftwareVersion->fields['softwares_id']);
          $a_sectionsinfos[] = "SOFTWARES/".$softwareversion_id;
          $xml_software = $xml_content->addChild("SOFTWARES");
-         $xml_software->addChild("VERSION", $SoftwareVersion->fields['name']);
          $xml_software->addChild("NAME", $Software->fields['name']);
+         $xml_software->addChild("VERSION", $SoftwareVersion->fields['name']);
          $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'), $Software->fields['manufacturers_id']);
          if ($manufacturer != "&nbsp;") {
             $xml_software->addChild("PUBLISHER", $manufacturer);
