@@ -517,8 +517,60 @@ function refreshRetChecks() {
 }
 
 /**** DEFINE GENERAL FORM ****/
+function {$render}actionFormSave() {
+   if ({$render}actionForm.record == null) {
+      Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
+      return;
+   }
+   if (!{$render}actionForm.getForm().isValid()) {
+      Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
+      return false;
+   }
+
+   var action_id = {$render}actionForm.record.data.{$render}id;
+
+   {$render}actionForm.getForm().updateRecord({$render}actionForm.record);
+   {$render}actionForm.getForm().submit({
+      url : '../ajax/package_action.save.php?package_id={$id}&render={$render}',
+      waitMsg: '{$LANG['plugin_fusinvdeploy']['form']['message'][2]}',
+      success: function(fileForm, o){
+         {$render}actionGridStore.reload({
+            callback: function() {
+               var index = {$render}actionGrid.store.findExact('{$render}id', action_id);
+               if (index != -1) {$render}actionGrid.getSelectionModel().selectRow(index);
+               else {
+                  var mystoreItems = {$render}actionGrid.store.data.items;
+                  var indexes = new Array(mystoreItems.length);
+                  for (var i = 0; i <= mystoreItems.length-1; i++) {
+                     indexes[i] = mystoreItems[i].id;
+                  }
+                  indexes.sort();
+                  var row_id = indexes[mystoreItems.length-1];
+                  var record = {$render}actionGrid.store.getById(row_id);
+                  {$render}actionGrid.getSelectionModel().selectRecords([record]);
+               }
+            }
+         });
+
+      },
+      failure: function(fileForm, action){
+         switch (action.failureType) {
+            case Ext.form.Action.CLIENT_INVALID:
+               Ext.Msg.alert('Failure', 'Form fields may not be submitted with invalid values');
+               break;
+            case Ext.form.Action.CONNECT_FAILURE:
+               Ext.Msg.alert('Failure', 'Ajax communication failed');
+               break;
+            case Ext.form.Action.SERVER_INVALID:
+               Ext.Msg.alert('Failure', action.result.msg);
+         }
+
+      }
+   });
+}
+
 var {$render}actionForm = new Ext.FormPanel({
-   region: 'west',
+   region: 'east',
    collapsible: true,
    collapsed: true,
    labelWidth: {$label_width},
@@ -551,6 +603,7 @@ var {$render}actionForm = new Ext.FormPanel({
       triggerAction: 'all',
       listeners: {select:{fn:function(){
          {$render}Command_refreshDynFieldset({$render}actionForm.getForm().findField('{$render}itemtype').value);
+         {$render}actionFormSave();
       }}}
    }),
    {$render}Command_dynFieldset
@@ -560,63 +613,15 @@ var {$render}actionForm = new Ext.FormPanel({
       iconCls: 'exticon-save',
       disabled:true,
       handler: function(btn,ev) {
-         if ({$render}actionForm.record == null) {
-            Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
-            return;
-         }
-         if (!{$render}actionForm.getForm().isValid()) {
-            Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
-            return false;
-         }
-
-         var action_id = {$render}actionForm.record.data.{$render}id;
-
-         {$render}actionForm.getForm().updateRecord({$render}actionForm.record);
-         {$render}actionForm.getForm().submit({
-            url : '../ajax/package_action.save.php?package_id={$id}&render={$render}',
-            waitMsg: '{$LANG['plugin_fusinvdeploy']['form']['message'][2]}',
-            success: function(fileForm, o){
-               {$render}actionGridStore.reload({
-                  callback: function() {
-                     var index = {$render}actionGrid.store.findExact('{$render}id', action_id);
-                     if (index != -1) {$render}actionGrid.getSelectionModel().selectRow(index);
-                     else {
-                        var mystoreItems = {$render}actionGrid.store.data.items;
-                        var indexes = new Array(mystoreItems.length);
-                        for (var i = 0; i <= mystoreItems.length-1; i++) {
-                           indexes[i] = mystoreItems[i].id;
-                        }
-                        indexes.sort();
-                        var row_id = indexes[mystoreItems.length-1];
-                        var record = {$render}actionGrid.store.getById(row_id);
-                        {$render}actionGrid.getSelectionModel().selectRecords([record]);
-                     }
-                  }
-               });
-
-            },
-            failure: function(fileForm, action){
-               switch (action.failureType) {
-                  case Ext.form.Action.CLIENT_INVALID:
-                     Ext.Msg.alert('Failure', 'Form fields may not be submitted with invalid values');
-                     break;
-                  case Ext.form.Action.CONNECT_FAILURE:
-                     Ext.Msg.alert('Failure', 'Ajax communication failed');
-                     break;
-                  case Ext.form.Action.SERVER_INVALID:
-                     Ext.Msg.alert('Failure', action.result.msg);
-               }
-
-            }
-         });
+         {$render}actionFormSave()
       }
    }],
-   loadData : function({$render}rec) {
-      {$render}actionForm.record = {$render}rec;
-      {$render}Command_refreshDynFieldset({$render}rec.data.{$render}itemtype);
-      {$render}actionForm.getForm().loadRecord({$render}rec);
+   loadData : function(rec) {
+      {$render}actionForm.record = rec;
+      {$render}Command_refreshDynFieldset(rec.data.{$render}itemtype);
+      {$render}actionForm.getForm().loadRecord(rec);
 
-      if ({$render}rec.data.{$render}itemtype == 'PluginFusinvdeployAction_Command') {
+      if (rec.data.{$render}itemtype == 'PluginFusinvdeployAction_Command') {
          refreshRetChecks()
       }
    }

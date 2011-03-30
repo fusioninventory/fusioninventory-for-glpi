@@ -274,7 +274,7 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
 var {$render}fileForm = new Ext.FormPanel({
    collapsible: true,
    collapsed: true,
-   region: 'west',
+   region: 'east',
    labelWidth: {$label_width},
    fileUpload        : true,
    method            :'POST',

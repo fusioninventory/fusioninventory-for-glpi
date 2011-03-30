@@ -370,7 +370,7 @@ function {$render}refreshDynFieldset(val) {
 
 //define form
 var {$render}checkForm = new Ext.FormPanel({
-   region: 'west',
+   region: 'east',
    collapsible: true,
    collapsed: true,
    labelWidth: {$label_width},
