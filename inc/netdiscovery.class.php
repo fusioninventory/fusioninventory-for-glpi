@@ -399,8 +399,16 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
 
             if (!is_null($PluginFusioninventoryTaskjobstatus->fields['specificity'])) {
                $a_split = explode("-", $PluginFusioninventoryTaskjobstatus->fields['specificity']);
+
                $first_ip = ip2long($PluginFusinvsnmpIPRange->fields["ip_start"]);
-               $first_ip = long2ip($first_ip + ($a_split[0] * $a_split[1]));
+               $end_ip = ip2long($PluginFusinvsnmpIPRange->fields["ip_end"]);
+
+               // Get nomber of agents
+               $a_taskjobstatus = $PluginFusioninventoryTaskjobstatus->find("
+                     `uniqid`='".$PluginFusioninventoryTaskjobstatus->fields['uniqid']."'
+                      AND `items_id`='".$PluginFusioninventoryTaskjobstatus->fields['items_id']."'");
+
+               $first_ip = long2ip($first_ip + ($a_split[0] * ceil(($end_ip-$first_ip+1)/count($a_taskjobstatus))));
                $last_ip = long2ip(ip2long($first_ip) + $a_split[1] - 1);
                $sxml_rangeip->addAttribute('IPSTART', $first_ip);
                $sxml_rangeip->addAttribute('IPEND', $last_ip);
