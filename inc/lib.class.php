@@ -320,10 +320,15 @@ if (!unserialize($serializedSectionToRemove)) {
                            break;
 
                         case "CONTROLLERS":
-                           if (isset($arrSectionToAdd["PCIID"]) AND isset($arrSectionToRemove["PCIID"])
+                           if ((isset($arrSectionToAdd["PCIID"]) AND isset($arrSectionToRemove["PCIID"])
                                  AND $arrSectionToAdd["PCIID"] == $arrSectionToRemove["PCIID"]
                                  AND isset($arrSectionToAdd["PCISLOT"]) AND isset($arrSectionToRemove["PCISLOT"])
-                                 AND $arrSectionToAdd["PCISLOT"] == $arrSectionToRemove["PCISLOT"]) {
+                                 AND $arrSectionToAdd["PCISLOT"] == $arrSectionToRemove["PCISLOT"])
+                               OR (!isset($arrSectionToRemove["PCIID"])
+                                 AND isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
+                                 AND isset($arrSectionToAdd['MANUFACTURER']) AND isset($arrSectionToRemove['MANUFACTURER'])
+                                 AND isset($arrSectionToAdd['CAPTION']) AND isset($arrSectionToRemove['CAPTION']) )) {
+
                               $boolUpdate = true;
                            }
                            break;
@@ -343,9 +348,14 @@ if (!unserialize($serializedSectionToRemove)) {
                            break;
 
                         case "MEMORIES":
-                           if (isset($arrSectionToAdd["SERIALNUMBER"])
+                           if ((isset($arrSectionToAdd["SERIALNUMBER"])
                                  AND isset($arrSectionToRemove["SERIALNUMBER"])
-                                 AND $arrSectionToAdd["SERIALNUMBER"] == $arrSectionToRemove["SERIALNUMBER"]) {
+                                 AND $arrSectionToAdd["SERIALNUMBER"] == $arrSectionToRemove["SERIALNUMBER"])
+                              OR (!isset($arrSectionToRemove["SERIALNUMBER"])
+                                 AND isset($arrSectionToAdd["DESCRIPTION"]) AND isset($arrSectionToRemove["DESCRIPTION"])
+                                 AND isset($arrSectionToAdd["CAPACITY"]) AND isset($arrSectionToRemove["CAPACITY"])
+                                 AND isset($arrSectionToAdd["SPEED"]) AND isset($arrSectionToRemove["SPEED"]))) {
+
                   				$boolUpdate = true;
                            }
                            break;
