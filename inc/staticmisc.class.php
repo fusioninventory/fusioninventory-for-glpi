@@ -47,18 +47,13 @@ class PluginFusinvinventoryStaticmisc {
    *   method value name of method
    **/
    static function task_methods() {
-      global $LANG;
-
-      $a_tasks = array();
-      $a_tasks[] = array('module'         => 'fusinvinventory',
-                         'method'         => 'inventory',
-                         'selection_type' => 'devices',
-                         'hidetask'       => 1);
-
-      return $a_tasks;
+      return array( array('module'         => 'fusinvinventory',
+                          'method'         => 'inventory',
+                          'selection_type' => 'devices'),
+                    array('module'         => 'fusioninventory',
+                          'method'         => 'esx',
+                          'selection_type' => 'devices'));
    }
-
-   
 
    /**
    * Display menu of this plugin

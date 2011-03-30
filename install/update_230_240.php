@@ -56,5 +56,19 @@ function update230to240() {
    }
    $sql = "DROP TABLE `glpi_plugin_fusinvinventory_computers`";
    $DB->query($sql);
+   
+   $query = "SELECT count(*) as cpt " .
+            "FROM `glpi_plugin_fusioninventory_agentmodules` WHERE `modulename`='ESX'";
+   $result = $DB->query($result);
+   if (!$DB->numrows($result)) {
+      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
+      $input = array();
+      $input['plugins_id'] = $plugins_id;
+      $input['modulename'] = "INVENTORY";
+      $input['is_active']  = 1;
+      $input['exceptions'] = exportArrayToDB(array());
+      $input['modulename'] = "ESX";
+      $PluginFusioninventoryAgentmodule->add($input);
+   }
 }
 ?>

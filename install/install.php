@@ -101,6 +101,9 @@ function pluginFusinvinventoryInstall() {
       $input['exceptions'] = exportArrayToDB(array());
       $PluginFusioninventoryAgentmodule->add($input);
 
+      $input['modulename'] = "ESX";
+      $PluginFusioninventoryAgentmodule->add($input);
+
       // Create configuration
       $PluginFusinvinventoryConfig = new PluginFusinvinventoryConfig();
       $PluginFusinvinventoryConfig->initConfigModule();
