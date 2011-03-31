@@ -76,6 +76,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
          } else {
             $input = array();
             $input['networkequipments_id'] = $this->getValue('id');
+            $_SESSION['glpi_plugins_fusinvsnmp_table'] = 'glpi_networkequipments';
             $id = $this->oFusionInventory_networkequipment->add($input);
             $this->oFusionInventory_networkequipment->load($id);
             $this->ptcdLinkedObjects[]=$this->oFusionInventory_networkequipment;
@@ -339,6 +340,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
          // Add in database if not exist
          $input = array();
          $input['networkequipments_id'] = $id;
+         $_SESSION['glpi_plugins_fusinvsnmp_table'] = 'glpi_networkequipments';
          $ID_tn = $this->oFusionInventory_networkequipment->add($input);
          $this->oFusionInventory_networkequipment->getFromDB($ID_tn);
       } else {

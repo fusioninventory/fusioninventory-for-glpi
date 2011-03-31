@@ -393,6 +393,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
          // Add in database if not exist
          $input = array();
          $input['printers_id'] = $id;
+         $_SESSION['glpi_plugins_fusinvsnmp_table'] = 'glpi_printers';
          $ID_tn = $this->oFusionInventory_printer->add($input);
          $this->oFusionInventory_printer->getFromDB($ID_tn);
       } else {
