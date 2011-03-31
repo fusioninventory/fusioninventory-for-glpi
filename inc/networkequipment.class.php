@@ -893,7 +893,7 @@ function appear_legend(id){
 				// Historique
 
 				echo "
-				<tr style='display: hidden;' id='viewfollowup".$data["id"]."'>";
+				<tr style='display: none;' id='viewfollowup".$data["id"]."'>";
             echo "<td colspan='".(mysql_num_rows($result_array) + 2)."' id='viewfollowuphistory".$data["id"]."'></td>";
             ajaxUpdateItemOnEvent('plusmoinsl'.$data["id"],
                                   'viewfollowuphistory'.$data["id"],
