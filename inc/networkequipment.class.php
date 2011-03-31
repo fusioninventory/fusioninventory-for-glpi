@@ -418,10 +418,11 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       $result2 = $DB->query($query2);
       $data2 = $DB->fetch_assoc($result2);
       $ram_pourcentage = 0;
-      if (!empty($data2["ram"])) {
+      if (!empty($data2["ram"]) AND !empty($this->oFusionInventory_networkequipment->fields['memory'])) {
          $ram_pourcentage = ceil((100 * ($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory'])) / $data2["ram"]);
       }
-      if (($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory']) < 0) {
+      if ((($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory']) < 0)
+           OR (empty($this->oFusionInventory_networkequipment->fields['memory']))) {
          echo "<center><strong>".$LANG['plugin_fusinvsnmp']['snmp'][54]."</strong></center>";
       } else {
          displayProgressBar(250, $ram_pourcentage,
