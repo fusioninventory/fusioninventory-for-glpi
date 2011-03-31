@@ -353,6 +353,12 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       echo "<form name='form' method='post' action='".$options['target']."'>";
       echo "<table class='tab_cadre_fixe'>";
 
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='4'>";
+      echo $LANG['plugin_fusinvsnmp']['title'][1];
+      echo "</th>";
+      echo "</tr>";
+
 		echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
       echo $LANG['plugin_fusinvsnmp']['snmp'][4]."&nbsp;:";
