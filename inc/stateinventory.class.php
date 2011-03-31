@@ -158,8 +158,14 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
          echo "<td>".convDateTime($end_date)."</td>";
          $date1 = new DateTime($start_date);
          $date2 = new DateTime($end_date);
-         $interval = $date1->diff($date2);
-         echo "<td>".$interval->h."h ".$interval->i."min ".$interval->s."s</td>";
+
+         if (phpversion() >= 5.3) {
+            $interval = $date1->diff($date2);
+            echo "<td>".$interval->h."h ".$interval->i."min ".$interval->s."s</td>";
+         } else {
+            $interval = $this->date_diff($start_date, $end_date);
+            echo "<td>".$interval."s</td>";
+         }
          echo "<td>".round($nb_query / (strtotime($end_date) - strtotime($start_date)), 2)."</td>";
          echo "<td>".$nb_threads."</td>";
          echo "<td>".$nb_query."</td>";
@@ -170,6 +176,19 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
       echo "</table>";
 
    }
+
+
+   function date_diff($date1, $date2) {
+       $current = $date1;
+       $datetime2 = date_create($date2);
+       $count = 0;
+       while(date_create($current) < $datetime2){
+           $current = gmdate("Y-m-d h:i:s", strtotime("+1 day", strtotime($current)));
+           $count++;
+       }
+       return $count;
+   }
+
 }
 
 ?>
