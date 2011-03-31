@@ -83,7 +83,6 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
             $this->ptcdLinkedObjects[]=$input;
          }
       }
-      logInFile('ttt', print_r($this->oFusionInventory_networkequipment, true));
    }
 
 

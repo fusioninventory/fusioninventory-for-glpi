@@ -579,6 +579,27 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       return $this->portMacs;
    }
 
+   
+
+   /**
+    *
+    */
+   function deleteMacToConnect($mac, $items_id) {
+      foreach ($this->portMacs as $num=>$macaddress) {
+         if ($mac == $macaddress) {
+            unset($this->portMacs[$num]);
+         }
+      }
+      $array = array();
+      foreach ($this->portsToConnect as $num=>$ports_id) {
+         if ($items_id != $ports_id) {
+            $array[] = $ports_id;
+         }
+      }
+      $this->portsToConnect = array();
+      $this->portsToConnect = $array;
+    }
+
 
 
    /**
