@@ -407,7 +407,13 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       echo "<form method='post' name='snmp_form' id='snmp_form'
                  action=\"".$options['target']."\">";
       echo "<table class='tab_cadre' cellpadding='5' width='950'>";
-      
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='4'>";
+      echo $LANG['plugin_fusinvsnmp']['title'][1];
+      echo "</th>";
+      echo "</tr>";
+
 		echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
       echo $LANG['plugin_fusinvsnmp']['snmp'][4];
