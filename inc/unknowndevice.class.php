@@ -766,18 +766,44 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    * @return nothing
    *
    **/
-   function writeXML($items_id, $xml) {
+   static function writeXML($items_id, $xml) {
 
       $folder = substr($items_id,0,-1);
       if (empty($folder)) {
          $folder = '0';
       }
-      if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/u".$folder)) {
-         mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/u".$folder);
+      if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice")) {
+         mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice");
       }
-      $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/u".$folder."/u".$items_id, 'w');
+      if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder)) {
+         mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder);
+      }
+      $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".$items_id, 'w');
       fwrite($fileopen, $xml);
       fclose($fileopen);
+   }
+
+
+
+   /**
+   * Purge unknwon devices
+   *
+   * @param $pram object to purge
+   *
+   * @return nothing
+   *
+   **/
+   static function purgeUnknownDevice($parm) {
+
+      // Delete XML file if exist
+      $folder = substr($parm->fields["id"],0,-1);
+      if (empty($folder)) {
+         $folder = '0';
+      }
+      
+      if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".$parm->fields["id"])) {
+         unlink(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".$parm->fields["id"]);
+      }
    }
 
 
