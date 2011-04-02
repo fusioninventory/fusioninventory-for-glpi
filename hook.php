@@ -2068,7 +2068,7 @@ function plugin_item_purge_fusinvsnmp($parm) {
          case 'PluginFusioninventoryUnknownDevice' :
             $query_delete = "DELETE FROM `glpi_plugin_fusinvsnmp_unknowndevices`
                              WHERE `plugin_fusioninventory_unknowndevices_id`='".$parm->fields["id"]."';";
-				$DB->query($query_delete);
+            $DB->query($query_delete);
             break;
             
 		}
