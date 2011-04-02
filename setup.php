@@ -86,7 +86,8 @@ function plugin_init_fusioninventory() {
    //      $PLUGIN_HOOKS['pre_item_delete']['fusioninventory'] = 'plugin_pre_item_delete_fusioninventory';
          $PLUGIN_HOOKS['item_purge']['fusioninventory'] = array('NetworkPort_NetworkPort' =>'plugin_item_purge_fusioninventory',
                                                                 'PluginFusioninventoryTask'=>array('PluginFusioninventoryTask','purgeTask'),
-                                                                'PluginFusioninventoryTaskjob'=>array('PluginFusioninventoryTaskjob','purgeTaskjob'));
+                                                                'PluginFusioninventoryTaskjob'=>array('PluginFusioninventoryTaskjob','purgeTaskjob'),
+                                                                'PluginFusioninventoryUnknownDevice' =>array('PluginFusioninventoryUnknownDevice','purgeUnknownDevice'));
 
          
          $PLUGIN_HOOKS['item_update']['fusioninventory'] = 
