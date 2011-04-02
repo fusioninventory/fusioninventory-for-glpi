@@ -14,12 +14,12 @@ function installGLPI() {
    include_once (GLPI_ROOT . "/config/config_db.php");
 
    $DB = new DB;
-   if (!$DB->runFile(GLPI_ROOT ."/install/mysql/glpi-0.78-empty.sql")) {
+   if (!$DB->runFile(GLPI_ROOT ."/install/mysql/glpi-0.80-empty.sql")) {
       echo "Errors occurred inserting default database\n";
    }
    update078to0781(false);
 
-   $query = "UPDATE `glpi_configs` SET `version` = ' 0.78.2', language='fr_FR',founded_new_version='' ;";
+   $query = "UPDATE `glpi_configs` SET `version` = ' 0.80', language='fr_FR',founded_new_version='' ;";
    $DB->query($query);
 
    // update default language
