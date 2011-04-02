@@ -315,7 +315,14 @@ if (!unserialize($serializedSectionToRemove)) {
                            
                         case "SOFTWARES":
                            if (((isset($arrSectionToAdd["GUID"]) AND isset($arrSectionToRemove["GUID"])
-                                 AND ($arrSectionToAdd["GUID"] == $arrSectionToRemove["GUID"]))
+                                 AND ($arrSectionToAdd["GUID"] == $arrSectionToRemove["GUID"])
+                                 AND isset($arrSectionToAdd["VERSION"]) AND isset($arrSectionToRemove["VERSION"])
+                                 AND $arrSectionToAdd["VERSION"] == $arrSectionToRemove["VERSION"])
+
+                              OR (isset($arrSectionToAdd["GUID"]) AND isset($arrSectionToRemove["GUID"])
+                                 AND ($arrSectionToAdd["GUID"] == $arrSectionToRemove["GUID"])
+                                 AND !isset($arrSectionToAdd["VERSION"]))
+
                               OR (isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
                                  AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"])
                               AND isset($arrSectionToAdd["VERSION"]) AND isset($arrSectionToRemove["VERSION"])
