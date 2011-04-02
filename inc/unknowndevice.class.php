@@ -804,6 +804,15 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".$parm->fields["id"])) {
          unlink(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".$parm->fields["id"]);
       }
+
+      // Delete Networkports
+      $NetworkPort = new NetworkPort();
+      $a_ports = $NetworkPort->find("`items_id`='".$parm->fields["id"]."'
+                     AND `itemtype`='PluginFusioninventoryUnknownDevice'");
+      foreach($a_ports as $a_port) {
+         $NetworkPort->delete($a_port, 1);
+      }
+
    }
 
 
