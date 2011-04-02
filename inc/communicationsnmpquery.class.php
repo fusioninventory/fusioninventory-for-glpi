@@ -866,7 +866,80 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          }
       }
       if ($p_oPort->getValue('trunk')!=1) {
-         if ($count > 1) { // MultipleMac
+          if ($count == '2') {
+            // detect if phone IP is one of the 2 devices
+            $phonecase = 0;
+            $NetworkPort = new NetworkPort();
+            $macNotPhone_id = 0;
+            $macNotPhone = '';
+            $phonePort_id = 0;
+            foreach ($p_oPort->getMacsToConnect() as $num=>$ifmac) {
+               $a_ports = $NetworkPort->find("`mac`='".$ifmac."'");
+               $a_port = current($a_ports);
+               if ($a_port['itemtype'] == 'Phone') {
+                  // Connect phone on switch port and other (computer..) in this phone
+                  $phonePort_id = $a_port['id'];
+                  $phonecase++;
+               } else {
+                  $a_ports = $NetworkPort->find("`mac`='".$ifmac."'");
+                  $a_port = current($a_ports);
+                  $macNotPhone_id = $a_port['id'];
+                  $macNotPhone = $ifmac;
+               }
+            }
+            if ($phonecase == '1') {
+               $NetworkPort->getFromDB($phonePort_id);
+               $Phone = new Phone();
+               $Phone->getFromDB($NetworkPort->fields['items_id']);
+               $a_portsPhone = $NetworkPort->find("`items_id`='".$NetworkPort->fields['items_id']."'
+                                                AND `itemtype`='Phone'
+                                                AND `name`='Link'");
+               $portLink_id = 0;
+               if (count($a_portsPhone) == '1') {
+                  $a_portPhone = current($a_portsPhone);
+                  $portLink_id = $a_portPhone['id'];
+               } else {
+                  // Create Port Link
+                  $input = array();
+                  $input['name'] = 'Link';
+                  $input['itemtype'] = 'Phone';
+                  $input['items_id'] = $Phone->fields['id'];
+                  $input['entities_id'] = $Phone->fields['entities_id'];
+                  $portLink_id = $NetworkPort->add($input);
+               }
+               $NetworkPort_NetworkPort = new NetworkPort_NetworkPort();
+               if ($opposite_id == $NetworkPort_NetworkPort->getOppositeContact($portLink_id)) {
+                  if ($opposite_id != $macNotPhone_id) {
+                     $p_oPort->disconnectDB($portLink_id); // disconnect this port
+                     $p_oPort->disconnectDB($macNotPhone_id);     // disconnect destination port
+                  }
+               }
+               if (!isset($macNotPhone_id)) {
+                  // Create unknown ports
+                  $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+                  $unknown_infos = array();
+                  $unknown_infos["name"] = '';
+                  $newID=$PluginFusioninventoryUnknownDevice->add($unknown_infos);
+                  // Add networking_port
+                  $NetworkPort =new NetworkPort();
+                  $port_add = array();
+                  $port_add["items_id"] = $newID;
+                  $port_add["itemtype"] = 'PluginFusioninventoryUnknownDevice';
+                  $port_add['mac'] = $macNotPhone;
+                  $macNotPhone_id = $NetworkPort->add($port_add);
+               }
+               $NetworkPort_NetworkPort->add(array('networkports_id_1'=> $portLink_id,
+                               'networkports_id_2' => $macNotPhone_id));
+               $p_oPort->deleteMacToConnect($macNotPhone, $macNotPhone_id);
+               if (!$p_oPort->getNoTrunk()) {
+                  $p_oPort->setValue('trunk', 0);
+               }
+            } else {
+               $p_oPort->setNoTrunk();
+               $pfiud = new PluginFusioninventoryUnknownDevice;
+               $pfiud->hubNetwork($p_oPort, $this->agent);
+            }
+         } else if ($count > 1) { // MultipleMac
             $p_oPort->setNoTrunk();
             $pfiud = new PluginFusioninventoryUnknownDevice;
             $pfiud->hubNetwork($p_oPort, $this->agent);
@@ -875,10 +948,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $p_oPort->setValue('trunk', 0);
             }
          }
-//      } else {
-//         if ($p_oPort->getValue('trunk') == '-1') {
-//            $p_oPort->setValue('trunk', '0');
-//         }
       }
       return $errors;
    }
