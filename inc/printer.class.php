@@ -455,7 +455,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       echo "</td>";
       echo "<td colspan='2'>";
       echo "</td>";
-      echo "</tr";
+      echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANG['plugin_fusinvsnmp']['functionalities'][43]."&nbsp;:</td>";
