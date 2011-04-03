@@ -76,6 +76,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
          } else {
             $input = array();
             $input['networkequipments_id'] = $this->getValue('id');
+            $_SESSION['glpi_plugins_fusinvsnmp_table'] = 'glpi_networkequipments';
             $id = $this->oFusionInventory_networkequipment->add($input);
             $this->oFusionInventory_networkequipment->load($id);
             $this->ptcdLinkedObjects[]=$this->oFusionInventory_networkequipment;
@@ -339,6 +340,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
          // Add in database if not exist
          $input = array();
          $input['networkequipments_id'] = $id;
+         $_SESSION['glpi_plugins_fusinvsnmp_table'] = 'glpi_networkequipments';
          $ID_tn = $this->oFusionInventory_networkequipment->add($input);
          $this->oFusionInventory_networkequipment->getFromDB($ID_tn);
       } else {
@@ -352,6 +354,12 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 		// Form networking informations
       echo "<form name='form' method='post' action='".$options['target']."'>";
       echo "<table class='tab_cadre_fixe'>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='4'>";
+      echo $LANG['plugin_fusinvsnmp']['title'][1];
+      echo "</th>";
+      echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
@@ -412,10 +420,11 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       $result2 = $DB->query($query2);
       $data2 = $DB->fetch_assoc($result2);
       $ram_pourcentage = 0;
-      if (!empty($data2["ram"])) {
+      if (!empty($data2["ram"]) AND !empty($this->oFusionInventory_networkequipment->fields['memory'])) {
          $ram_pourcentage = ceil((100 * ($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory'])) / $data2["ram"]);
       }
-      if (($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory']) < 0) {
+      if ((($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory']) < 0)
+           OR (empty($this->oFusionInventory_networkequipment->fields['memory']))) {
          echo "<center><strong>".$LANG['plugin_fusinvsnmp']['snmp'][54]."</strong></center>";
       } else {
          displayProgressBar(250, $ram_pourcentage,
@@ -462,7 +471,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       echo "<b>$day</b> ".$LANG["stats"][31]." ";
       echo "<b>$hour</b> ".$LANG["job"][21]." ";
       echo "<b>$minute</b> ".$LANG["job"][22]." ";
-      echo " ".strtolower($LANG["rulesengine"][42])." <b>$sec</b> ".$LANG["stats"][34]." ";
+      echo " ".$LANG['choice'][3]." <b>$sec</b> ".$LANG["stats"][34]." ";
       echo "</td>";
 		echo "</tr>";
 
@@ -893,7 +902,7 @@ function appear_legend(id){
 				// Historique
 
 				echo "
-				<tr style='display: hidden;' id='viewfollowup".$data["id"]."'>";
+				<tr style='display: none;' id='viewfollowup".$data["id"]."'>";
             echo "<td colspan='".(mysql_num_rows($result_array) + 2)."' id='viewfollowuphistory".$data["id"]."'></td>";
             ajaxUpdateItemOnEvent('plusmoinsl'.$data["id"],
                                   'viewfollowuphistory'.$data["id"],

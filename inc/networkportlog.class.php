@@ -466,7 +466,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
       $text .= "<tr class='tab_bg_1'>";
       $text .= "<th colspan='8'>";
-      $text .= "<a href='".GLPI_ROOT."/plugins/fusinvsnmp/report/switch_ports.history.php?networkports_id=".$ID_port."'>Voir l'historique complet</a>";
+      $text .= "<a href='../plugins/fusinvsnmp/report/switch_ports.history.php?networkports_id=".$ID_port."'>Voir l'historique complet</a>";
       $text .= "</th>";
       $text .= "</tr>";
       $text .= "</table>";
