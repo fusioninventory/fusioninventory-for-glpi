@@ -160,6 +160,9 @@ class PluginFusinvinventoryLibhook {
                if (isset($dataSection['TYPE'])) {
                   $Computer->fields['computertypes_id'] = Dropdown::importExternal('ComputerType',
                                                                           $dataSection['TYPE']);
+               } else if (isset($dataSection['MMODEL'])) {
+                  $Computer->fields['computertypes_id'] = Dropdown::importExternal('ComputerType',
+                                                                          $dataSection['MMODEL']);
                }
                if (isset($dataSection['SKUNUMBER'])) {
                   $PluginFusinvinventoryLibhook = new PluginFusinvinventoryLibhook();
@@ -690,6 +693,9 @@ class PluginFusinvinventoryLibhook {
                   if (isset($dataSection['TYPE'])) {
                      $Computer->fields['computertypes_id'] = Dropdown::importExternal('ComputerType',
                                                                           $dataSection['TYPE']);
+                  } else if (isset($dataSection['MMODEL'])) {
+                     $Computer->fields['computertypes_id'] = Dropdown::importExternal('ComputerType',
+                                                                             $dataSection['MMODEL']);
                   }
                   if (isset($dataSection['SKUNUMBER'])) {
                      $PluginFusinvinventoryLibhook = new PluginFusinvinventoryLibhook();
