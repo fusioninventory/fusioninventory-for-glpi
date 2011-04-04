@@ -153,7 +153,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   }
                   $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[detail] '.(string)$child->ERROR->MESSAGE.' [['.$itemtype.'::'.$child->ERROR->ID.']]';
                   $this->addtaskjoblog();
-               } else if (!isset($child->INFO)) {
+               } else if (!isset($child->INFO->COMMENTS)
+                       AND !isset($child->INFO->NAME)
+                       AND !isset($child->INFO->SERIAL)) {
                   $itemtype = "";
                   if ((string)$child->TYPE == "NETWORKING") {
                      $itemtype = "NetworkEquipment";
