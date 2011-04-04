@@ -153,6 +153,15 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   }
                   $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[detail] '.(string)$child->ERROR->MESSAGE.' [['.$itemtype.'::'.$child->ERROR->ID.']]';
                   $this->addtaskjoblog();
+               } else if (!isset($child->INFO)) {
+                  $itemtype = "";
+                  if ((string)$child->TYPE == "NETWORKING") {
+                     $itemtype = "NetworkEquipment";
+                  } else if ((string)$child->TYPE == "PRINTER") {
+                     $itemtype = "Printer";
+                  }
+                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[detail] No informations [['.$itemtype.'::'.$child->ID.']]';
+                  $this->addtaskjoblog();
                } else {
 //               $errors.=$this->importDevice($child);
                   if (count($child) > 0) {
