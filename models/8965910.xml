@@ -2,7 +2,12 @@
 	<name><![CDATA[8965910]]></name>
 	<type>2</type>
 	<key>Networking0256</key>
-	<comments><![CDATA[Cisco Internetwork Operating System Software ^M
+	<comments><![CDATA[Cisco Internetwork Operating System Software 
+IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(19)EA1c, RELEASE SOFTWARE (fc2)
+Copyright (c) 1986-2004 by cisco Systems, Inc.
+Compiled Mon 02-Feb-04 23:29 by yenanh
+
+Cisco Internetwork Operating System Software ^M
 IOS (tm) C2940 Software (C2940-I6K2L2Q4-M), Version 12.1(22)EA13, RELEASE SOFTWARE (fc2)^M
 Technical Support: http://www.cisco.com/techsupport^M
 Copyright (c) 1986-2009 by cisco Systems, Inc.^M

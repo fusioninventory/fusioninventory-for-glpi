@@ -4,6 +4,8 @@
 	<key>Networking0211</key>
 	<comments><![CDATA[BayStack 450-24T HW:RevL  FW:V1.36 SW:v1.3.1.2
 
+Wireless Switch, Version 4.2.1.0-005R MIB=01a
+
 ]]></comments>
 	<oidlist>
 		<oidobject>
