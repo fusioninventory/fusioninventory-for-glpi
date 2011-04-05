@@ -468,19 +468,6 @@ class PluginFusinvinventoryLibhook {
                array_push($sectionsId,$section['sectionName']."/".$id_user);
                break;
 
-            // TODO :
-            /*
-             *
-             * VIRTUALMACHINES
-             * MODEMS
-             * ENVS
-             * UPDATES
-             * BATTERIES
-             * PROCESSES
-             *
-             */
-
-
             default:
                array_push($sectionsId,$section['sectionName']."/".$j);
                $j--;
