@@ -88,8 +88,8 @@ class PluginFusioninventoryMenu {
          $a_menu[5]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/unknowndevice.php";
       }
 
-      echo "<div align='center'>";
-      echo "<table width='950'>";
+      echo "<div align='center' style='z-index: 100;position:absolute;width: 100%; margin: 0 auto;'>";
+      echo "<table width='100%'>";
       echo "<tr>";
       echo "<td align='center'>";
 
@@ -120,7 +120,7 @@ class PluginFusioninventoryMenu {
       echo "</td>";
       echo "</tr>";
       echo "</table>";
-      echo "</div>";
+      echo "</div><br/><br/>";
    }
 
 
@@ -140,57 +140,50 @@ class PluginFusioninventoryMenu {
       $width_max = 950;
 
       $width = 0;
-      $height = 0;
-      if ($type == "big") {
-         $width="120";
-         $height="100";
-      } else if ($type == "mini") {
-         $width="50";
-         $height="40";
-      }
-
-      if (((count($a_menu) * $width) + $width_status) > $width_max) {
+      $width="230";
+ 
+      if (($width + $width_status) > $width_max) {
          $width_status = 0;
          echo "</td>";
          echo "</tr>";
          echo "</table>";
          echo "<table>";
          echo "<tr>";
-         echo "<td>";
+         echo "<td valign='top'>";
       } else {
          echo "</td>";
-         echo "<td>";
+         echo "<td valign='top'>";
       }
-      $width_status = ((count($a_menu) * $width) + $width_status);
+      $width_status = ($width + $width_status);
 
-      echo "<table class='tab_cadre'>";
+      echo "<table class='tab_cadre'
+         onMouseOver='document.getElementById(\"menu".$plugin_name."\").style.display=\"block\"'
+         onMouseOut='document.getElementById(\"menu".$plugin_name."\").style.display=\"none\"'>";
 
       echo "<tr>";
-      echo "<th colspan='".count($a_menu)."' nowrap>".$LANG['plugin_'.$plugin_name]['title'][0]."</th>";
+      echo "<th colspan='".count($a_menu)."' nowrap width='".$width."'>
+         &nbsp;".$LANG['plugin_'.$plugin_name]['title'][0]."&nbsp;</th>";
       echo "</tr>";
 
-      echo "<tr class='tab_bg_1'>";
-      $i = 0;
-      foreach ($a_menu as $menu_id) {         
-         echo "<td align='center' width='".$width."' height='".$height."'>";
-         if ($type == "big") {
-            echo "<a href='".$menu_id['link']."'>
-            <img src='".$menu_id['pic']."'/>
-            <br/><b>".$menu_id['name']."</b></a>";
-         } else if ($type == "mini") {
-            $i++;
-            $menu_id['pic'] = str_replace("/menu_","/menu_mini_" ,$menu_id['pic']);
-            echo "<a href='".$menu_id['link']."'>
-               <img src='".$menu_id['pic']."'
-                onmouseout=\"cleanhide('".$plugin_name."_".$i."')\"
-                onmouseover=\"cleandisplay('".$plugin_name."_".$i."')\" /></a>";
-            echo "<span class='over_link' id='".$plugin_name."_".$i."'>".$menu_id['name']."</span>";
-         }
-         echo "</td>";
+      echo "<tr class='tab_bg_1' id='menu".$plugin_name."' style='display:none'>";
+      echo "<td>";
+
+      echo "<table>";
+      foreach ($a_menu as $menu_id) {
+         echo "<tr>";
+         $menu_id['pic'] = str_replace("/menu_","/menu_mini_" ,$menu_id['pic']);
+         echo "<th>
+               <img src='".$menu_id['pic']."' width='16' height='16'/></th>";
+         echo "<th colspan='".(count($a_menu) - 1)."' width='190'>
+                  <a href='".$menu_id['link']."'>".$menu_id['name']."</a></th>";
+         echo "</tr>";
       }
-      echo "</tr>";
-
       echo "</table>";
+
+      echo "</td>";
+      echo "</tr>";
+      echo "</table>";
+
 
       return $width_status;
    }
