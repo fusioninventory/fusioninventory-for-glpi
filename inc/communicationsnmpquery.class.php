@@ -378,6 +378,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $this->ptd = new PluginFusinvsnmpNetworkEquipment();
       $this->ptd->load($this->deviceId);
 
+      $_SESSION["plugin_fusinvinventory_entity"] = $this->ptd->getValue('entities_id');
+
       foreach ($p_info->children() as $child) {
          switch ($child->getName()) {
             case 'ID' : // already managed
@@ -450,6 +452,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $errors='';
       $this->ptd = new PluginFusinvsnmpPrinter();
       $this->ptd->load($this->deviceId);
+
+      $_SESSION["plugin_fusinvinventory_entity"] = $this->ptd->getValue('entities_id');
+
       foreach ($p_info->children() as $child) {
          switch ($child->getName()) {
             case 'ID' : // already managed

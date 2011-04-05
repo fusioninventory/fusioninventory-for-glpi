@@ -217,6 +217,7 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
       $unknown_infos = array();
       $unknown_infos["name"] = '';
+      $unknown_infos['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
       $newID=$PluginFusioninventoryUnknownDevice->add($unknown_infos);
       // Add networking_port
       $NetworkPort =new NetworkPort();
