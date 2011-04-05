@@ -161,6 +161,18 @@ class PluginFusinvinventoryLibhook {
                }
                break;
 
+            case 'ACCOUNTINFO':
+               if (isset($dataSection['KEYVALUE'])
+                       AND isset($dataSection['KEYNAME'])
+                       AND $dataSection['KEYNAME'] == 'TAG') {
+
+                  if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusinvinventory_moduleid"], 'location') == '1') {
+                     $Computer->fields['locations_id'] = Dropdown::importExternal('Location',
+                                                                          $dataSection['KEYVALUE']);
+                  }
+               }
+               break;
+
             case 'HARDWARE':
                $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_computers', $idmachine);
 
@@ -471,6 +483,21 @@ class PluginFusinvinventoryLibhook {
                array_push($sectionsId,$section['sectionName']."/".$id_user);
                break;
 
+<<<<<<< HEAD
+=======
+            // TODO :
+            /*
+             *
+             * MODEMS
+             * ENVS
+             * UPDATES
+             * BATTERIES
+             * PROCESSES
+             *
+             */
+
+
+>>>>>>> bf99a7aa94668933ac5a35a05849249c084d680e
             default:
                array_push($sectionsId,$section['sectionName']."/".$j);
                $j--;
@@ -695,8 +722,21 @@ class PluginFusinvinventoryLibhook {
                      $PluginFusinvinventoryLibhook = new PluginFusinvinventoryLibhook();
                      $PluginFusinvinventoryLibhook->Suppliertag($idmachine, $dataSection['SKUNUMBER']);
                   }
-
+                  
                   $Computer->update($Computer->fields);
+                  break;
+
+               case 'ACCOUNTINFO':
+                  if (isset($dataSection['KEYVALUE'])
+                          AND isset($dataSection['KEYNAME'])
+                          AND $dataSection['KEYNAME'] == 'TAG') {
+                          
+                     if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusinvinventory_moduleid"], 'location') == 1) {
+                        $Computer->fields['locations_id'] = Dropdown::importExternal('Location',
+                                                                             $dataSection['KEYVALUE']);
+                        $Computer->update($Computer->fields);
+                     }
+                  }
                   break;
 
                case 'HARDWARE':

@@ -60,26 +60,31 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          // Transfer if entity is different
          $Computer = new Computer();
          $Computer->getFromDB($items_id);
-         $Computer->fields['autoupdatesystems_id'] = Dropdown::importExternal('AutoUpdateSystem', 'FusionInventory');
-         $_SESSION['glpiactiveentities_string'] = $Computer->fields['entities_id'];
+         $Computer->fields['autoupdatesystems_id'] = Dropdown::importExternal('AutoUpdateSystem', 
+                                                                              'FusionInventory');
+         $_SESSION['glpiactiveentities_string']    = $Computer->fields['entities_id'];
          $Computer->update($Computer->fields);
          $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
          if ($Computer->getEntityID() != $_SESSION["plugin_fusinvinventory_entity"]) {
             $Transfer = new Transfer();
             // get value in Config ($config['transfers_id_auto'])
-            $Transfer->getFromDB($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
-                    'transfers_id_auto'));
+            $Transfer->getFromDB(
+                $PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                                                       'transfers_id_auto'));
 
             $item_to_transfer = array("Computer" => array($items_id=>$items_id));
 
-            $Transfer->moveItems($item_to_transfer, $_SESSION["plugin_fusinvinventory_entity"], $Transfer->fields);
+            $Transfer->moveItems($item_to_transfer, $_SESSION["plugin_fusinvinventory_entity"], 
+                                 $Transfer->fields);
          }
          // Transfer agent entity
          $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
          if ($agent_id = $PluginFusioninventoryAgent->getAgentWithComputerid($items_id)) {
             $PluginFusioninventoryAgent->getFromDB($agent_id);
-            if ($PluginFusioninventoryAgent->getEntityID() != $_SESSION["plugin_fusinvinventory_entity"]) {
-               $PluginFusioninventoryAgent->fields['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+            if ($PluginFusioninventoryAgent->getEntityID() 
+                  != $_SESSION["plugin_fusinvinventory_entity"]) {
+               $PluginFusioninventoryAgent->fields['entities_id'] 
+                  = $_SESSION["plugin_fusinvinventory_entity"];
                $PluginFusioninventoryAgent->update($PluginFusioninventoryAgent->fields);
             }
          }
@@ -87,8 +92,8 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       //if ($internalId = $this->isMachineExist()) {
          // Get internal ID with $items_id
          $query = "SELECT * FROM `glpi_plugin_fusinvinventory_libserialization`
-            WHERE `computers_id`='".$items_id."'
-               LIMIT 1";
+                   WHERE `computers_id`='".$items_id."'
+                   LIMIT 1";
          if ($result = $DB->query($query)) {
             if ($DB->numrows($result) == '1') {
                $a_serialized = $DB->fetch_assoc($result);
@@ -136,8 +141,10 @@ class PluginFusinvinventoryLib extends CommonDBTM {
             $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
             if ($agent_id = $PluginFusioninventoryAgent->getAgentWithComputerid($items_id)) {
                $PluginFusioninventoryAgent->getFromDB($agent_id);
-               if ($PluginFusioninventoryAgent->getEntityID() != $_SESSION["plugin_fusinvinventory_entity"]) {
-                  $PluginFusioninventoryAgent->fields['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+               if ($PluginFusioninventoryAgent->getEntityID() 
+                     != $_SESSION["plugin_fusinvinventory_entity"]) {
+                  $PluginFusioninventoryAgent->fields['entities_id'] 
+                     = $_SESSION["plugin_fusinvinventory_entity"];
                   $PluginFusioninventoryAgent->update($PluginFusioninventoryAgent->fields);
                }
             }
@@ -194,11 +201,11 @@ class PluginFusinvinventoryLib extends CommonDBTM {
 
          //sectionId initialization, we will affect id after hook createSection return value.
          $serializedSectionData = serialize($sectionData);
-         array_push($xmlSections, (array(
-         "sectionId" => 0,
-         "sectionName" => $section->getName(),
-         "sectionDatawName" => $serializedSectionData.$section->getName(),
-         "sectionData" => $serializedSectionData)));
+         array_push($xmlSections, 
+                    array("sectionId"        => 0,
+                          "sectionName"      => $section->getName(),
+                          "sectionDatawName" => $serializedSectionData.$section->getName(),
+                          "sectionData"      => $serializedSectionData));
       }
       return $xmlSections;
    }
@@ -216,10 +223,9 @@ class PluginFusinvinventoryLib extends CommonDBTM {
    */
    public function addLibMachine($internalId, $externalId) {
 
-      $queryInsert = "INSERT INTO `glpi_plugin_fusinvinventory_libserialization`
-		( `internal_id` , `computers_id`)
-		VALUES
-		( '" . $internalId . "' , '".$externalId."')";
+      $queryInsert = "INSERT INTO `glpi_plugin_fusinvinventory_libserialization` 
+                      ( `internal_id` , `computers_id`)
+                      VALUES ('" . $internalId . "' , '".$externalId."')";
       $resultInsert = mysql_query($queryInsert);
   }
 
@@ -240,7 +246,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
    public function updateLibMachine($xmlSections, $internalId) {
       global $DB;
 
-      $a_sections = array();
+      $a_sections   = array();
       $a_sections[] = "DRIVES";
       $a_sections[] = "SOFTWARES";
       $a_sections[] = "CONTROLLERS";
@@ -258,6 +264,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       $a_sections[] = "VIDEOS";
       $a_sections[] = "USBDEVICES";
       $a_sections[] = "VIRTUALMACHINES";
+      
       // Retrieve all sections stored in info file
       $infoSections = $this->_getInfoSections($internalId);
       // Retrieve all sections from xml file
@@ -268,7 +275,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       }
 
       //Retrieve changes, sections to Add and sections to Remove
-      $sectionsToAdd = array_diff($serializedSectionsFromXML, $infoSections["sections"]);
+      $sectionsToAdd    = array_diff($serializedSectionsFromXML, $infoSections["sections"]);
       $sectionsToRemove = array_diff($infoSections["sections"], $serializedSectionsFromXML);
 
       $classhook = "PluginFusinvinventoryLibhook";
@@ -279,20 +286,21 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          $datasToUpdate = array();
          $existUpdate = 0;
          foreach($sectionsToRemove as $sectionId => $serializedSectionToRemove) {
-            $sectionName=substr($infoSections["sections"][$sectionId], strpos($infoSections["sections"][$sectionId], '}')+1);
+            $sectionName=substr($infoSections["sections"][$sectionId], 
+                                strpos($infoSections["sections"][$sectionId], '}')+1);
             if (in_array($sectionName, $a_sections)) {
                foreach($sectionsToAdd as $arrayId => $serializedSectionToAdd) {
                   //check if we have the same section Name for an sectionToRemove and an sectionToAdd
                   if($xmlSections[$arrayId]['sectionName'] == $sectionName) {
                      //Finally, we have to determine if it's an update or not
                      $boolUpdate = false;
-if (!unserialize($serializedSectionToAdd)) {
-   //logInFile('serialise', $serializedSectionToAdd);
-}
-                     $arrSectionToAdd = unserialize($serializedSectionToAdd);
-if (!unserialize($serializedSectionToRemove)) {
-   //logInFile('serialise', $serializedSectionToRemove);
-}
+                     if (!unserialize($serializedSectionToAdd)) {
+                        //logInFile('serialise', $serializedSectionToAdd);
+                     }
+                                          $arrSectionToAdd = unserialize($serializedSectionToAdd);
+                     if (!unserialize($serializedSectionToRemove)) {
+                        //logInFile('serialise', $serializedSectionToRemove);
+                     }
                      $arrSectionToRemove = unserialize($serializedSectionToRemove);
                      
                      //TODO: Traiter les notices sur les indices de tableau qui n'existent pas.
