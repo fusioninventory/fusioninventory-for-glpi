@@ -309,6 +309,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       }
    }
 
+   
 }
 
 ?>

@@ -242,6 +242,16 @@ CREATE TABLE `glpi_plugin_fusioninventory_agentmodules` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+CREATE TABLE `glpi_plugin_fusioninventory_ipranges` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `name` varchar(255) DEFAULT NULL,
+   `entities_id` int(11) NOT NULL DEFAULT '0',
+   `ip_start` varchar(255) DEFAULT NULL,
+   `ip_end` varchar(255) DEFAULT NULL,
+   PRIMARY KEY (`id`),
+   KEY `entities_id` (`entities_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+          
 
 ## INSERT
 ## glpi_displaypreferences
@@ -279,3 +289,6 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
           (NULL,'PluginFusioninventoryTaskjob', '3', '3', '0'),
           (NULL,'PluginFusioninventoryTaskjob', '4', '4', '0'),
           (NULL,'PluginFusioninventoryTaskjob', '5', '5', '0');
+
+          DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_ipranges`;
+
