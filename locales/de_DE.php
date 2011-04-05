@@ -47,6 +47,8 @@ $LANG['plugin_fusinvinventory']['setup'][24]="Einmaliger Import";
 $LANG['plugin_fusinvinventory']['setup'][25]="Registrierungsdatei";
 $LANG['plugin_fusinvinventory']['setup'][26]="Prozess";
 $LANG['plugin_fusinvinventory']['setup'][27]="Einmaliger Import via Seriennummer";
+$LANG['plugin_fusinvinventory']['setup'][28]="Automatic computers transfer";
+$LANG['plugin_fusinvinventory']['setup'][29]="Model for automatic computers transfer in an other entity";
 
 $LANG['plugin_fusinvinventory']['menu'][0]="XML-Datei eines Agents importieren";
 $LANG['plugin_fusinvinventory']['menu'][1]="Kriterien";
