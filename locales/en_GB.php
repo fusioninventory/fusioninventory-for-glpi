@@ -80,13 +80,11 @@ $LANG['plugin_fusinvsnmp']['snmp'][48]="Number of bytes sent";
 $LANG['plugin_fusinvsnmp']['snmp'][49]="Number of errors in reception";
 $LANG['plugin_fusinvsnmp']['snmp'][50]="Connection";
 $LANG['plugin_fusinvsnmp']['snmp'][51]="Duplex";
-$LANG['plugin_fusinvsnmp']['snmp'][52]="Date of last FusionInventory inventory";
 $LANG['plugin_fusinvsnmp']['snmp'][53]="Last inventory";
 $LANG['plugin_fusinvsnmp']['snmp'][54]="Datas not available";
 
 $LANG['plugin_fusinvsnmp']['snmpauth'][1]="Community";
 $LANG['plugin_fusinvsnmp']['snmpauth'][2]="User";
-$LANG['plugin_fusinvsnmp']['snmpauth'][3]="Authentication scheme";
 $LANG['plugin_fusinvsnmp']['snmpauth'][4]="Encryption protocol for authentication ";
 $LANG['plugin_fusinvsnmp']['snmpauth'][5]="Password";
 $LANG['plugin_fusinvsnmp']['snmpauth'][6]="Encryption protocol for data (write)";
