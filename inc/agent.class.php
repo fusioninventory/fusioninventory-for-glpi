@@ -216,7 +216,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          echo $oComputer->getLink(1);
          echo "<input type='hidden' name='items_id' value='".$this->fields["items_id"]."'/>";
       } else {
-         Computer_Item::dropdownConnect(COMPUTER_TYPE,COMPUTER_TYPE,'items_id', $_SESSION['glpiactive_entity']);
+         Computer_Item::dropdownConnect(COMPUTER_TYPE,COMPUTER_TYPE,'items_id', 
+                                        $_SESSION['glpiactive_entity']);
       }
       echo "</td>";
       echo "<td>".$LANG['plugin_fusioninventory']['agents'][24]." :</td>";
@@ -299,8 +300,10 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             if (isset($sxml->TOKEN)) {
                $a_input['token'] = $sxml->TOKEN;
             }
-            $a_input['name'] = $sxml->DEVICEID;
-            $a_input['device_id'] = $sxml->DEVICEID;
+            
+            $a_input['name']         = $sxml->DEVICEID;
+            $a_input['device_id']    = $sxml->DEVICEID;
+            $a_input['entities_id']  = 0;
             $a_input['last_contact'] = date("Y-m-d H:i:s");
             $pta->add($a_input);
             return;
@@ -422,7 +425,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
 
-      echo "<form method='post' name='' id=''  action=\"".GLPI_ROOT . "/plugins/fusioninventory/front/agent.form.php\">";
+      echo "<form method='post' name='' id=''  action=\"".GLPI_ROOT . 
+         "/plugins/fusioninventory/front/agent.form.php\">";
       echo "<table class='tab_cadre' width='500'>";
       
       echo "<tr>";
@@ -478,7 +482,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       if ($waiting == '1') {
          echo "<tr>";
          echo "<th colspan='2'>";
-         echo "<input name='startagent' value=\"".$LANG['plugin_fusioninventory']['agents'][31]."\" class='submit' type='submit'>";
+         echo "<input name='startagent' value=\"".$LANG['plugin_fusioninventory']['agents'][31].
+            "\" class='submit' type='submit'>";
          echo "</th>";
          echo "</tr>";
       }
