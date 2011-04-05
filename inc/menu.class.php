@@ -88,7 +88,7 @@ class PluginFusioninventoryMenu {
          $a_menu[5]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/unknowndevice.php";
       }
 
-      echo "<div align='center' style='z-index: 100;position:absolute;width: 100%; margin: 0 auto;'>";
+      echo "<div align='center' style='z-index: 1;position:absolute;width: 100%; margin: 0 auto;'>";
       echo "<table width='100%'>";
       echo "<tr>";
       echo "<td align='center'>";
@@ -120,7 +120,7 @@ class PluginFusioninventoryMenu {
       echo "</td>";
       echo "</tr>";
       echo "</table>";
-      echo "</div><br/><br/>";
+      echo "</div><br/><br/><br/>";
    }
 
 
