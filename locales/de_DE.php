@@ -80,24 +80,17 @@ $LANG['plugin_fusinvsnmp']['snmp'][48]="Anzahl gesendeter Bytes";
 $LANG['plugin_fusinvsnmp']['snmp'][49]="Anzahl von Fehlern beim Empfang";
 $LANG['plugin_fusinvsnmp']['snmp'][50]="Verbindung";
 $LANG['plugin_fusinvsnmp']['snmp'][51]="Duplex";
-$LANG['plugin_fusinvsnmp']['snmp'][52]="Datum des letzen FusionInventory Inventarisierung";
 $LANG['plugin_fusinvsnmp']['snmp'][53]="Letzte Inventarisierung";
 $LANG['plugin_fusinvsnmp']['snmp'][54]="Keine Daten verfügbar";
 
 $LANG['plugin_fusinvsnmp']['snmpauth'][1]="SNMP Community";
 $LANG['plugin_fusinvsnmp']['snmpauth'][2]="Benutzer";
-$LANG['plugin_fusinvsnmp']['snmpauth'][3]="Authentifizierungsmodell";
 $LANG['plugin_fusinvsnmp']['snmpauth'][4]="Verschlüsseungs für die Authentifizierung ";
 $LANG['plugin_fusinvsnmp']['snmpauth'][5]="Passwort";
 $LANG['plugin_fusinvsnmp']['snmpauth'][6]="Verschlüsselungmethode für Daten (schreiben)";
 $LANG['plugin_fusinvsnmp']['snmpauth'][7]="Passwort (schreiben)";
 
 $LANG['plugin_fusinvsnmp']['errors'][50]="Version von GLPI ist nicht kompatibel, benötige Version 0.78";
-
-$LANG['plugin_fusinvsnmp']['history'][0] = "Alt";
-$LANG['plugin_fusinvsnmp']['history'][1] = "Neu";
-$LANG['plugin_fusinvsnmp']['history'][2] = "Trennen";
-$LANG['plugin_fusinvsnmp']['history'][3] = "Verbindung";
 
 $LANG['plugin_fusinvsnmp']['prt_history'][0]="Verlauf und Statistik der Druckerzähler";
 $LANG['plugin_fusinvsnmp']['prt_history'][12]="Gedruckte Seiten gesamt";
@@ -382,8 +375,6 @@ $LANG['plugin_fusinvsnmp']['menu'][5]="Switchs ports history";
 $LANG['plugin_fusinvsnmp']['menu'][6]="Nicht verwendete Switch-Ports";
 $LANG['plugin_fusinvsnmp']['menu'][9]="Discovery status";
 $LANG['plugin_fusinvsnmp']['menu'][10]="Status Netzwerkinventar";
-
-$LANG['plugin_fusinvsnmp']['buttons'][0]="Entdecke";
 
 $LANG['plugin_fusinvsnmp']['discovery'][5]="Anzahl importierter Geräte";
 $LANG['plugin_fusinvsnmp']['discovery'][9]="Number of devices not imported because type non defined";
