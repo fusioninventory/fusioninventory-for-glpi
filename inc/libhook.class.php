@@ -158,6 +158,18 @@ class PluginFusinvinventoryLibhook {
                }
                break;
 
+            case 'ACCOUNTINFO':
+               if (isset($dataSection['KEYVALUE'])
+                       AND isset($dataSection['KEYNAME'])
+                       AND $dataSection['KEYNAME'] == 'TAG') {
+
+                  if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusinvinventory_moduleid"], 'location') == '1') {
+                     $Computer->fields['locations_id'] = Dropdown::importExternal('Location',
+                                                                          $dataSection['KEYVALUE']);
+                  }
+               }
+               break;
+
             case 'HARDWARE':
                $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_computers', $idmachine);
 
@@ -471,7 +483,6 @@ class PluginFusinvinventoryLibhook {
             // TODO :
             /*
              *
-             * VIRTUALMACHINES
              * MODEMS
              * ENVS
              * UPDATES
@@ -702,8 +713,21 @@ class PluginFusinvinventoryLibhook {
                      $PluginFusinvinventoryLibhook = new PluginFusinvinventoryLibhook();
                      $PluginFusinvinventoryLibhook->Suppliertag($idmachine, $dataSection['SKUNUMBER']);
                   }
-
+                  
                   $Computer->update($Computer->fields);
+                  break;
+
+               case 'ACCOUNTINFO':
+                  if (isset($dataSection['KEYVALUE'])
+                          AND isset($dataSection['KEYNAME'])
+                          AND $dataSection['KEYNAME'] == 'TAG') {
+                          
+                     if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusinvinventory_moduleid"], 'location') == 1) {
+                        $Computer->fields['locations_id'] = Dropdown::importExternal('Location',
+                                                                             $dataSection['KEYVALUE']);
+                        $Computer->update($Computer->fields);
+                     }
+                  }
                   break;
 
                case 'HARDWARE':

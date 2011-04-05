@@ -43,8 +43,11 @@ function update230to240() {
    $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
    if (!PluginFusioninventoryConfig::getValue($plugins_id, "import_vm")) {
        $PluginFusioninventoryConfig->initConfig($plugins_id, array("import_vm" => "1"));
-
    }
+   if (!PluginFusioninventoryConfig::getValue($plugins_id, "location")) {
+       $PluginFusioninventoryConfig->initConfig($plugins_id, array("location" => "0"));
+   }
+
    $Computer = new Computer();
    $sql = "SELECT * FROM `glpi_plugin_fusinvinventory_computers`";
    $result=$DB->query($sql);
@@ -56,5 +59,7 @@ function update230to240() {
    }
    $sql = "DROP TABLE `glpi_plugin_fusinvinventory_computers`";
    $DB->query($sql);
+
+   
 }
 ?>

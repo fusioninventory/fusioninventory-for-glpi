@@ -72,6 +72,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       $input['transfers_id_auto']      = 1;
       $a_infos = plugin_version_fusinvinventory();
       $input['version']                = $a_infos['version'];
+      $input['location']               = 0;
 
       foreach ($input as $key => $value) {
          $PluginFusioninventoryConfig->initConfig($plugins_id, array($key => $value));
@@ -94,7 +95,10 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
       foreach ($p_post as $key => $value) {
-         if ((strstr($key, "component_")) OR (strstr($key, "import_"))) {
+         if ((strstr($key, "component_"))
+                 OR (strstr($key, "import_"))
+                 OR (strstr($key, "location"))) {
+
             $PluginFusioninventoryConfig->updateConfigType($plugins_id, $key, $value);
          }
       }
@@ -280,6 +284,20 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_control", $PluginFusioninventoryConfig->getValue($plugins_id, 'component_control'));
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>";
+      echo $LANG['common'][15];
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showFromArray("location",
+                              array("0"=>"------",
+                                    "1"=>$LANG['plugin_fusinvinventory']['rule'][8]),
+                              array('value'=>$PluginFusioninventoryConfig->getValue($plugins_id, 'location')));
+      echo "</td>";
+      echo "<td colspan='2'>";
       echo "</td>";
       echo "</tr>";
 
