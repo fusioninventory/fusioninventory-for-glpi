@@ -116,9 +116,9 @@ class PluginFusinvsnmpNetworkPortConnectionLog extends CommonDBTM {
 
             echo "<td>";
             if ($data['creation'] == '1') {
-               echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/connection_ok.png'/>";
+               echo "<img src='".GLPI_ROOT."/plugins/fusinvsnmp/pics/connection_ok.png'/>";
             } else {
-               echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/connection_notok.png'/>";
+               echo "<img src='".GLPI_ROOT."/plugins/fusinvsnmp/pics/connection_notok.png'/>";
             }
             echo "</td>";
 
