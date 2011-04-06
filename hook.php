@@ -38,11 +38,11 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
    $sopt = array();
    if ($itemtype == 'PluginFusioninventoryUnknownDevice') {
 
-      $sopt[100]['table']         = 'glpi_plugin_fusinvsnmp_unknowndevices';
-      $sopt[100]['field']         = 'sysdescr';
-      $sopt[100]['linkfield']     = 'sysdescr';
-      $sopt[100]['name']          = $LANG['plugin_fusinvsnmp']['snmp'][4];
-      $sopt[100]['datatype']      = 'text';
+      $sopt[100]['table']     = 'glpi_plugin_fusinvsnmp_unknowndevices';
+      $sopt[100]['field']     = 'sysdescr';
+      $sopt[100]['linkfield'] = '';
+      $sopt[100]['name']      = $LANG['plugin_fusinvsnmp']['snmp'][4];
+      $sopt[100]['datatype']  = 'text';
 
       $sopt[101]['table']='glpi_plugin_fusinvsnmp_models';
       $sopt[101]['field']='name';
@@ -1452,86 +1452,16 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
 			break;
 
 		case 'PluginFusioninventoryUnknownDevice' :
-         $leftjoin = "";
-         $already_link_tables_tmp = $already_link_tables;
-         array_pop($already_link_tables_tmp);
-         
-         $leftjoin_fusinvsnmp_unknowndevices = 1;
-         if ((in_array('glpi_plugin_fusinvsnmp_models.id', $already_link_tables_tmp))
-            OR (in_array('glpi_plugin_fusinvsnmp_configsecurities.id', $already_link_tables_tmp))
-            OR (in_array('glpi_plugin_fusinvsnmp_unknowndevices.sysdescr', $already_link_tables_tmp))) {
-
-            $leftjoin_fusinvsnmp_unknowndevices = 0;
-         }
 
          switch ($new_table.".".$linkfield) {
 
-				// ** FusionInventory - SNMP models
-				case "glpi_plugin_fusinvsnmp_models.id" :
-               $return = "";
-               if ($leftjoin_fusinvsnmp_unknowndevices == "1") {
-                  $return = " LEFT JOIN glpi_plugin_fusinvsnmp_unknowndevices ON (glpi_plugin_fusioninventory_unknowndevices.id = glpi_plugin_fusinvsnmp_unknowndevices.plugin_fusioninventory_unknowndevices_id) ";
-               }
-					return $return." LEFT JOIN glpi_plugin_fusinvsnmp_models ON (glpi_plugin_fusinvsnmp_unknowndevices.plugin_fusinvsnmp_models_id = glpi_plugin_fusinvsnmp_models.id) ";
-					break;
-
-				// ** FusionInventory - SNMP authentification
-				case "glpi_plugin_fusinvsnmp_configsecurities.id":
-               $return = "";
-               if ($leftjoin_fusinvsnmp_unknowndevices == "1") {
-                  $return = " LEFT JOIN glpi_plugin_fusinvsnmp_unknowndevices ON (glpi_plugin_fusioninventory_unknowndevices.id = glpi_plugin_fusinvsnmp_unknowndevices.plugin_fusioninventory_unknowndevices_id) ";
-               }
-               return $return." LEFT JOIN glpi_plugin_fusinvsnmp_configsecurities ON glpi_plugin_fusinvsnmp_unknowndevices.plugin_fusinvsnmp_configsecurities_id = glpi_plugin_fusinvsnmp_configsecurities.id ";
-					break;
-
-				case "glpi_plugin_fusinvsnmp_unknowndevices.sysdescr" :
-               $return = " ";
-               if ($leftjoin_fusinvsnmp_unknowndevices == "1") {
-                  $return = " LEFT JOIN glpi_plugin_fusinvsnmp_unknowndevices ON (glpi_plugin_fusioninventory_unknowndevices.id = glpi_plugin_fusinvsnmp_unknowndevices.plugin_fusioninventory_unknowndevices_id) ";
-               }
-					return $return;
-					break;
+            case "glpi_plugin_fusinvsnmp_unknowndevices.plugin_fusinvsnmp_unknowndevices_id":
+               return " LEFT JOIN glpi_plugin_fusinvsnmp_unknowndevices ON (glpi_plugin_fusioninventory_unknowndevices.id = glpi_plugin_fusinvsnmp_unknowndevices.plugin_fusioninventory_unknowndevices_id) ";
+               break;
 
 			}
-         return $leftjoin;
+         return;
 			break;
-//
-//
-//		// * Ports date connection - report (plugins/fusinvsnmp/report/ports_date_connections.php)
-//		case 'PluginFusinvsnmpNetworkport' :
-//			switch ($new_table.".".$linkfield) {
-//
-//				// ** Location of switch
-//				case "glpi_locations.networkports_id" :
-//					return " LEFT JOIN glpi_networkports ON (glpi_plugin_fusinvsnmp_networkports.networkports_id = glpi_networkports.id) ".
-//						" LEFT JOIN glpi_networkequipments ON glpi_networkports.items_id = glpi_networkequipments.id".
-//						" LEFT JOIN glpi_locations ON glpi_locations.id = glpi_networkequipments.location";
-//					break;
-//
-//			}
-//			break;
-//
-//		// * range IP list (plugins/fusinvsnmp/front/iprange.php)
-//		case 'PluginFusinvsnmpIPRange' :
-//			switch ($new_table.".".$linkfield) {
-//
-//				// ** Agent name associed to IP range and link to agent form
-//				case "glpi_plugin_fusinvsnmp_agents.plugin_fusinvsnmp_agents_id_discovery" :
-//					return " LEFT JOIN glpi_plugin_fusinvsnmp_agents ON (glpi_plugin_fusinvsnmp_agents.id = glpi_plugin_fusinvsnmp_ipranges.plugin_fusinvsnmp_agents_id_discovery) ";
-//					break;
-//
-//            case "glpi_plugin_fusinvsnmp_agents.plugin_fusinvsnmp_agents_id_query" :
-//               return " LEFT JOIN glpi_plugin_fusinvsnmp_agents AS gpta ON (glpi_plugin_fusinvsnmp_ipranges.plugin_fusinvsnmp_agents_id_query = gpta.id) ";
-//               break;
-//            
-//
-//			}
-//			break;
-//
-//      // * ports updates list (report/switch_ports.history.php)
-//		case 'PluginFusinvsnmpNetworkPortLog' :
-//         return " LEFT JOIN `glpi_networkports` ON ( `glpi_networkports`.`id` = `glpi_plugin_fusinvsnmp_networkportlogs`.`networkports_id` ) ";
-//			break;
 
       case "PluginFusinvsnmpPrinterLog":
          if ($new_table == "glpi_infocoms") {
