@@ -401,10 +401,14 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
             $text .= "<tr class='tab_bg_1'>";
             if (!empty($data["networkports_id_destination"])) {
                // Connections and disconnections
+               $imgfolder = GLPI_ROOT."/plugins/fusinvsnmp/pics";
+               if (strstr($_SERVER['PHP_SELF'], 'fusinvsnmp/ajax/showporthistory.php')) {
+                  $imgfolder = "../plugins/fusinvsnmp/pics";
+               }
                if ($data['field'] == '1') {
-                  $text .= "<td align='center'><img src='".GLPI_ROOT."/plugins/fusioninventory/pics/connection_ok.png'/></td>";
+                  $text .= "<td align='center'><img src='".$imgfolder."/connection_ok.png'/></td>";
                } else {
-                  $text .= "<td align='center'><img src='".GLPI_ROOT."/plugins/fusioninventory/pics/connection_notok.png'/></td>";
+                  $text .= "<td align='center'><img src='".$imgfolder."/connection_notok.png'/></td>";
                }
                if ($ID_port == $data["networkports_id_source"]) {
                   $np->getFromDB($data["networkports_id_destination"]);
