@@ -380,6 +380,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
       $_SESSION["plugin_fusinvinventory_entity"] = $this->ptd->getValue('entities_id');
 
+      $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_networkequipments', $this->ptd->getValue('id'));
+
       foreach ($p_info->children() as $child) {
          switch ($child->getName()) {
             case 'ID' : // already managed
@@ -393,14 +395,20 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $this->ptd->setValue('cpu', $p_info->CPU[0]);
                break;
             case 'FIRMWARE' :
-               $NetworkEquipmentFirmware = new NetworkEquipmentFirmware();
-               $this->ptd->setValue('networkequipmentfirmwares_id', $NetworkEquipmentFirmware->import(array('name' => (string)$p_info->FIRMWARE)));
+               if (!in_array('networkequipmentfirmwares_id', $a_lockable)) {
+                  $NetworkEquipmentFirmware = new NetworkEquipmentFirmware();
+                  $this->ptd->setValue('networkequipmentfirmwares_id', $NetworkEquipmentFirmware->import(array('name' => (string)$p_info->FIRMWARE)));
+               }
                break;
             case 'MAC' :
-               $this->ptd->setValue('mac', $p_info->MAC[0]);
+               if (!in_array('mac', $a_lockable)) {
+                  $this->ptd->setValue('mac', $p_info->MAC[0]);
+               }
                break;
             case 'MEMORY' :
-               $this->ptd->setValue('memory', $p_info->MEMORY[0]);
+               if (!in_array('memory', $a_lockable)) {
+                  $this->ptd->setValue('memory', $p_info->MEMORY[0]);
+               }
                break;
             case 'MODEL' :
                $NetworkEquipmentModel = new NetworkEquipmentModel();
@@ -408,18 +416,24 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $this->ptd->setValue('networkequipmentmodels_id', $networkequipmentmodels_id);
                break;
             case 'LOCATION' :
-              $Location = new Location();
-              $this->ptd->setValue('locations_id', $Location->import(array('name' => (string)$p_info->LOCATION,
-                                                                           'entities_id' => $this->ptd->getValue('entities_id'))));
+               if (!in_array('locations_id', $a_lockable)) {
+                  $Location = new Location();
+                  $this->ptd->setValue('locations_id', $Location->import(array('name' => (string)$p_info->LOCATION,
+                                                                    'entities_id' => $this->ptd->getValue('entities_id'))));
+               }
                break;
             case 'NAME' :
-               $this->ptd->setValue('name', $p_info->NAME[0]);
+               if (!in_array('name', $a_lockable)) {
+                  $this->ptd->setValue('name', $p_info->NAME[0]);
+               }
                break;
             case 'RAM' :
                $this->ptd->setValue('ram', $p_info->RAM[0]);
                break;
             case 'SERIAL' :
-               $this->ptd->setValue('serial', $p_info->SERIAL[0]);
+               if (!in_array('serial', $a_lockable)) {
+                  $this->ptd->setValue('serial', $p_info->SERIAL[0]);
+               }
                break;
             case 'UPTIME' :
                $this->ptd->setValue('uptime', $p_info->UPTIME[0]);
@@ -455,6 +469,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
       $_SESSION["plugin_fusinvinventory_entity"] = $this->ptd->getValue('entities_id');
 
+      $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_printers', $this->ptd->getValue('id'));
+
       foreach ($p_info->children() as $child) {
          switch ($child->getName()) {
             case 'ID' : // already managed
@@ -468,30 +484,44 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $this->ptd->setValue('memory_size', (string)$p_info->MEMORY);
                break;
             case 'MODEL' :
-               $PrinterModel = new PrinterModel();
-               $printermodels_id = $PrinterModel->import(array('name'=>(string)$p_info->MODEL));
-               $this->ptd->setValue('printermodels_id', $printermodels_id);
+               if (!in_array('printermodels_id', $a_lockable)) {
+                  $PrinterModel = new PrinterModel();
+                  $printermodels_id = $PrinterModel->import(array('name'=>(string)$p_info->MODEL));
+                  $this->ptd->setValue('printermodels_id', $printermodels_id);
+               }
                break;
             case 'NAME' :
-               $this->ptd->setValue('name', (string)$p_info->NAME);
+               if (!in_array('name', $a_lockable)) {
+                  $this->ptd->setValue('name', (string)$p_info->NAME);
+               }
                break;
             case 'SERIAL' :
-               $this->ptd->setValue('serial', (string)$p_info->SERIAL);
+               if (!in_array('serial', $a_lockable)) {
+                  $this->ptd->setValue('serial', (string)$p_info->SERIAL);
+               }
                break;
             case 'OTHERSERIAL' :
-               $this->ptd->setValue('otherserial', (string)$p_info->OTHERSERIAL);
+               if (!in_array('otherserial', $a_lockable)) {
+                  $this->ptd->setValue('otherserial', (string)$p_info->OTHERSERIAL);
+               }
                break;
             case 'LOCATION' :
-               $Location = new Location();
-               $this->ptd->setValue('locations_id', $Location->import(array('name' => (string)$p_info->LOCATION,
+               if (!in_array('locations_id', $a_lockable)) {
+                  $Location = new Location();
+                  $this->ptd->setValue('locations_id', $Location->import(array('name' => (string)$p_info->LOCATION,
                                                                            'entities_id' => $this->ptd->getValue('entities_id'))));
+               }
                break;
             case 'CONTACT' :
-               $this->ptd->setValue('contact', (string)$p_info->CONTACT);
+               if (!in_array('contact', $a_lockable)) {
+                  $this->ptd->setValue('contact', (string)$p_info->CONTACT);
+               }
                break;
             case 'MANUFACTURER' :
-               $Manufacturer = new Manufacturer();
-               $this->ptd->setValue('manufacturers_id', $Manufacturer->import(array('name' => (string)$p_info->MANUFACTURER)));
+               if (!in_array('manufacturers_id', $a_lockable)) {
+                  $Manufacturer = new Manufacturer();
+                  $this->ptd->setValue('manufacturers_id', $Manufacturer->import(array('name' => (string)$p_info->MANUFACTURER)));
+               }
                break;
             default :
                $errors.=$LANG['plugin_fusioninventory']['errors'][22].' INFO : '.$child->getName()."\n";
