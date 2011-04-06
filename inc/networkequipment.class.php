@@ -591,11 +591,11 @@ function appear_legend(id){
          <ul>
             <li>".$LANG['plugin_fusinvsnmp']['legend'][0]."&nbsp;:</li>
          </ul>
-         <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/port_trunk.png' width='750' />
+         <img src='".GLPI_ROOT."/plugins/fusinvsnmp/pics/port_trunk.png' width='750' />
          <ul>
             <li>".$LANG['plugin_fusinvsnmp']['legend'][1]."&nbsp;:</li>
          </ul>
-         <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/connected_trunk.png' width='750' />
+         <img src='".GLPI_ROOT."/plugins/fusinvsnmp/pics/connected_trunk.png' width='750' />
          </td>
       </tr>";
 
@@ -687,14 +687,14 @@ function appear_legend(id){
 				if (($data["trunk"] == "1") AND (strstr($data["ifstatus"], "up")
                   OR strstr($data["ifstatus"], "1"))) {
 					$background_img = " style='background-image: url(\"".GLPI_ROOT.
-                                    "/plugins/fusioninventory/pics/port_trunk.png\"); '";
+                                    "/plugins/fusinvsnmp/pics/port_trunk.png\"); '";
             } else if (($data["trunk"] == "-1") AND (strstr($data["ifstatus"], "up")
                         OR strstr($data["ifstatus"], "1"))) {
 					$background_img = " style='background-image: url(\"".GLPI_ROOT.
-                                    "/plugins/fusioninventory/pics/multiple_mac_addresses.png\"); '";
+                                    "/plugins/fusinvsnmp/pics/multiple_mac_addresses.png\"); '";
             } else if (strstr($data["ifstatus"], "up") OR strstr($data["ifstatus"], "1")) {
 					$background_img = " style='background-image: url(\"".GLPI_ROOT.
-                                    "/plugins/fusioninventory/pics/connected_trunk.png\"); '";
+                                    "/plugins/fusinvsnmp/pics/connected_trunk.png\"); '";
             }
 				echo "<tr class='tab_bg_1 center' height='40'".$background_img.">";
 				echo "<td id='plusmoins".$data["id"]."'><img src='".GLPI_ROOT.
