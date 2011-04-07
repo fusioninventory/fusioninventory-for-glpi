@@ -63,6 +63,9 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          $Computer->fields['autoupdatesystems_id'] = Dropdown::importExternal('AutoUpdateSystem', 'FusionInventory');
          $_SESSION['glpiactiveentities_string'] = $Computer->fields['entities_id'];
          $Computer->update($Computer->fields);
+         if ($_SESSION["plugin_fusinvinventory_entity"] == "N/A") {
+            $_SESSION["plugin_fusinvinventory_entity"] = $Computer->fields['entities_id'];
+         }
          $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
          if ($Computer->getEntityID() != $_SESSION["plugin_fusinvinventory_entity"]) {
             $Transfer = new Transfer();
@@ -115,6 +118,9 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          $PluginFusinvinventoryLibhook->writeXMLFusion($items_id);
       } else {
          // New Computer
+         if ($_SESSION["plugin_fusinvinventory_entity"] == "N/A") {
+            $_SESSION["plugin_fusinvinventory_entity"] = 0;
+         }
 
          //We launch CreateMachine() hook and provide an InternalId
          $xmlSections = $this->_getXMLSections($simpleXMLObj);

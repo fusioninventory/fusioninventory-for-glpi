@@ -198,7 +198,7 @@ class PluginFusinvinventoryInventory {
             if (isset($dataEntity['entities_id'])) {
                $_SESSION["plugin_fusinvinventory_entity"] = $dataEntity['entities_id'];
             } else {
-               $_SESSION["plugin_fusinvinventory_entity"] = "0";
+               $_SESSION["plugin_fusinvinventory_entity"] = "N/A";
             }
 
             if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
