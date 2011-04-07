@@ -1150,12 +1150,14 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $rule = new PluginFusioninventoryRuleImportEquipmentCollection();
       $data = array();
       $data = $rule->processAllRules($input, array());
-      if ((isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1'))
-            OR (isset($data['action']) AND ($data['action'] == '2'))) {
+      if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
          if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
             logInFile("pluginFusioninventory-rules", "norulematch = 1");
          }
-         if (isset($input['itemtype'])) {
+         if (isset($input['itemtype'])
+              AND isset($data['action'])
+              AND ($data['action'] == PluginFusioninventoryRuleImportEquipment::LINK_RESULT_IMPORT)) {
+
             $this->rulepassed(0, $input['itemtype']);
          } else {
             $this->rulepassed(0, "PluginFusioninventoryUnknownDevice");
