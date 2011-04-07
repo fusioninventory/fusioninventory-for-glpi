@@ -120,6 +120,10 @@ class PluginFusinvinventoryStaticmisc {
 
       return $a_profil;
    }
+   
+   static function credential_types() {
+     return array('PluginFusinvinventoryVmwareESX');
+   }
 }
 
 ?>
