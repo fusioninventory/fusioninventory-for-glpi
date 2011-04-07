@@ -39,21 +39,18 @@ if (!defined('GLPI_ROOT')) {
 }
 
 
-
+$sub_type = 0;
 if (isset($_POST["sub_type"])) {
    $sub_type = $_POST["sub_type"];
 } else if (isset($_GET["sub_type"])) {
    $sub_type = $_GET["sub_type"];
-} else {
-   $sub_type = 0;
 }
 
+$rules_id = 0;
 if (isset($_POST["rules_id"])) {
    $rules_id = $_POST["rules_id"];
 } else if (isset($_GET["rules_id"])) {
    $rules_id = $_GET["rules_id"];
-} else {
-   $rules_id = 0;
 }
 
 $rule = new $sub_type();
