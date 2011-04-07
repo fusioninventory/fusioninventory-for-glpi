@@ -63,6 +63,19 @@ function update230to240() {
       $DB->query($query) or die ("Rename itemtype in glpi_plugin_fusioninventory_taskjobstatus".
                                  $LANG['update'][90] . $DB->error());
       
+      $query = "CREATE TABLE  `glpi_plugin_fusioninventory_credentials` (
+                  `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+                  `name` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
+                  `username` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
+                  `password` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
+                  `comment` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ,
+                  `date_mod` DATETIME NOT NULL ,
+                  `itemtype` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
+                  PRIMARY KEY (  `id` )
+                  ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
+      $DB->query($query) or die ("Create table glpi_plugin_fusioninventory_credentials".
+                                 $LANG['update'][90] . $DB->error());
+                  
       //Now taskjob
       $job = new PluginFusioninventoryTaskjob();
       foreach (getAllDatasFromTable('glpi_plugin_fusioninventory_taskjobs') as $taskjob) {

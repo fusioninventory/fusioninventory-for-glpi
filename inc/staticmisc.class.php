@@ -131,25 +131,27 @@ class PluginFusioninventoryStaticmisc {
    static function profiles() {
       global $LANG;
 
-      $a_profil = array();
-      $a_profil[] = array('profil'  => 'agent',
-                          'name'    => $LANG['plugin_fusioninventory']['profile'][2]);
-      $a_profil[] = array('profil'  => 'remotecontrol',
-                          'name'    => $LANG['plugin_fusioninventory']['profile'][3]);
-      $a_profil[] = array('profil'  => 'configuration',
-                          'name'    => $LANG['plugin_fusioninventory']['profile'][4]);
-      $a_profil[] = array('profil'  => 'wol',
-                          'name'    => $LANG['plugin_fusioninventory']['profile'][5]);
-      $a_profil[] = array('profil'  => 'unknowndevice',
-                          'name'    => $LANG['plugin_fusioninventory']['profile'][6]);
-      $a_profil[] = array('profil'  => 'task',
-                          'name'    => $LANG['plugin_fusioninventory']['profile'][7]);
-      $a_profil[] = array('profil'  => 'iprange',
-                          'name'    => $LANG['plugin_fusioninventory']['menu'][2]);
-
-      return $a_profil;
+      return array(array('profil'  => 'agent',
+                         'name'    => $LANG['plugin_fusioninventory']['profile'][2]),
+                   array('profil'  => 'remotecontrol',
+                         'name'    => $LANG['plugin_fusioninventory']['profile'][3]),
+                   array('profil'  => 'configuration',
+                         'name'    => $LANG['plugin_fusioninventory']['profile'][4]),
+                   array('profil'  => 'wol',
+                         'name'    => $LANG['plugin_fusioninventory']['profile'][5]),
+                   array('profil'  => 'unknowndevice',
+                         'name'    => $LANG['plugin_fusioninventory']['profile'][6]),
+                   array('profil'  => 'task',
+                         'name'    => $LANG['plugin_fusioninventory']['profile'][7]),
+                   array('profil'  => 'iprange',
+                         'name'    => $LANG['plugin_fusioninventory']['menu'][2]),
+                   array('profil'  => 'credential',
+                         'name'    => $LANG['plugin_fusioninventory']['menu'][5]));
    }
 
+   static function getCredentialsItemTypes() {
+      return array();
+   }
 }
 
 ?>

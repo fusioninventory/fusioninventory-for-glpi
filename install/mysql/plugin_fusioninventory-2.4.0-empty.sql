@@ -255,6 +255,19 @@ CREATE TABLE `glpi_plugin_fusioninventory_ipranges` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
           
 
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_credentials`;
+
+CREATE TABLE  `glpi_plugin_fusioninventory_credentials` (
+`id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+`name` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
+`username` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
+`password` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
+`comment` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ,
+`date_mod` DATETIME NOT NULL ,
+`itemtype` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
+PRIMARY KEY (  `id` )
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
 ## INSERT
 ## glpi_displaypreferences
 INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) 

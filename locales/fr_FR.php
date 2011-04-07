@@ -103,6 +103,7 @@ $LANG['plugin_fusioninventory']['menu'][1] = "Gestion des agents";
 $LANG['plugin_fusioninventory']['menu'][2] = "Plages IP";
 $LANG['plugin_fusioninventory']['menu'][3] = "Menu";
 $LANG['plugin_fusioninventory']['menu'][4] = "Matériel inconnu";
+$LANG['plugin_fusioninventory']['menu'][5] = "Comptes";
 $LANG['plugin_fusioninventory']['menu'][7] = "Actions en cours d'exécution";
 
 $LANG['plugin_fusioninventory']['discovery'][5] = "Nombre de matériels importés";

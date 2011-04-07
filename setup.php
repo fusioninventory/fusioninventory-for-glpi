@@ -54,6 +54,7 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventorySetup');
       Plugin::registerClass('PluginFusioninventoryAgentmodule');
       Plugin::registerClass('PluginFusioninventoryIPRange');
+      Plugin::registerClass('PluginFusioninventoryCredential');
 
       // ##### 3. get informations of the plugin #####
 
@@ -176,6 +177,13 @@ function plugin_init_fusioninventory() {
                '../fusioninventory/front/iprange.form.php?add=1';
             $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['iprange'] = 
                '../fusioninventory/front/iprange.php';
+         }
+
+         if (PluginFusioninventoryProfile::haveRight("fusioninventory", "credential","w")) {
+            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['credential'] = 
+               '../fusioninventory/front/credential.form.php?add=1';
+            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['credential'] = 
+               '../fusioninventory/front/credential.php';
          }
 
       }

@@ -94,6 +94,12 @@ class PluginFusioninventoryMenu {
          $a_menu[6]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/iprange.php";
       }
 
+      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "credential", "r")) {
+         $a_menu[7]['name'] = $LANG['plugin_fusioninventory']['menu'][5];
+         $a_menu[7]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_credentials.png";
+         $a_menu[7]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/credential.php";
+      }
+
       echo "<div align='center'>";
       echo "<table width='950'>";
       echo "<tr>";
