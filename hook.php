@@ -32,6 +32,20 @@
    ----------------------------------------------------------------------
  */
 
+function plugin_fusinvsnmp_getDatabaseRelations() {
+   $plugin = new Plugin();
+   if ($plugin->isActivated("fusinvsnmp"))
+      return array (
+         "glpi_plugin_fusinvsnmp_models" => array (
+            "glpi_plugin_fusinvsnmp_unknowndevices" => "plugin_fusinvsnmp_models_id"
+         )
+      );
+   else
+      return array ();
+}
+
+
+
 function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
    global $LANG;
 
@@ -40,16 +54,15 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
 
       $sopt[100]['table']         = 'glpi_plugin_fusinvsnmp_unknowndevices';
       $sopt[100]['field']         = 'sysdescr';
-      $sopt[100]['linkfield']     = 'sysdescr';
+      $sopt[100]['linkfield']     = '';
       $sopt[100]['name']          = $LANG['plugin_fusinvsnmp']['snmp'][4];
       $sopt[100]['datatype']      = 'text';
 
       $sopt[101]['table']='glpi_plugin_fusinvsnmp_models';
       $sopt[101]['field']='name';
-      $sopt[101]['linkfield']='id';
+      $sopt[101]['linkfield']='';
       $sopt[101]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".$LANG['plugin_fusinvsnmp']['model_info'][4];
       $sopt[101]['datatype'] = 'itemlink';
-      $sopt[101]['itemlink_type'] = 'PluginFusinvsnmpModel';
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
 
@@ -58,15 +71,14 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
       if ($PluginFusioninventoryConfig->getValue($plugins_id, "storagesnmpauth") == "file") {
          $sopt[102]['table'] = 'glpi_plugin_fusinvsnmp_printers';
          $sopt[102]['field'] = 'plugin_fusinvsnmp_configsecurities_id';
-         $sopt[102]['linkfield'] = 'id';
+         $sopt[102]['linkfield'] = '';
          $sopt[102]['name'] = $LANG['plugin_fusioninventory']['title'][1]." - ".$LANG['plugin_fusinvsnmp']['functionalities'][43];
       } else {
          $sopt[102]['table']='glpi_plugin_fusinvsnmp_configsecurities';
          $sopt[102]['field']='name';
-         $sopt[102]['linkfield']='id';
+         $sopt[102]['linkfield']='';
          $sopt[102]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".$LANG['plugin_fusinvsnmp']['functionalities'][43];
          $sopt[102]['datatype'] = 'itemlink';
-         $sopt[102]['itemlink_type'] = 'PluginFusinvsnmpConfigSecurity';
       }
 
    }
@@ -896,6 +908,14 @@ function plugin_fusinvsnmp_MassiveActions($type) {
 				"plugin_fusinvsnmp_assign_auth" => $LANG['plugin_fusinvsnmp']['massiveaction'][2]
 			);
 			break;
+
+		case 'PluginFusioninventoryUnknownDevice':
+			return array (
+            "plugin_fusinvsnmp_assign_model" => $LANG['plugin_fusinvsnmp']['massiveaction'][1],
+				"plugin_fusinvsnmp_assign_auth" => $LANG['plugin_fusinvsnmp']['massiveaction'][2]
+			);
+			break;
+
 	}
 	return array ();
 }
@@ -906,6 +926,7 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($options=array()) {
 	switch ($options['itemtype']) {
 		case 'NetworkEquipment':
 		case 'Printer':
+      case 'PluginFusioninventoryUnknownDevice':
 			switch ($options['action']) {
 
             case "plugin_fusinvsnmp_get_model" :
@@ -919,6 +940,11 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($options=array()) {
                   $query_models = "SELECT *
                                    FROM `glpi_plugin_fusinvsnmp_models`
                                    WHERE `itemtype`!='".$options['itemtype']."'";
+                  if ($options['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+                     $query_models = "SELECT *
+                                   FROM `glpi_plugin_fusinvsnmp_models`
+                                   WHERE `itemtype`='nothing'";
+                  }
                   $result_models=$DB->query($query_models);
                   $exclude_models = array();
                   while ($data_models=$DB->fetch_array($result_models)) {
@@ -991,7 +1017,24 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
                   $PluginFusinvsnmpPrinter->updateDB();
 					}
 				}
-			}
+			} else if($data['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+            foreach ($data['item'] as $items_id => $val) {
+					if ($val == 1) {
+                  $PluginFusinvsnmpUnknownDevice = new PluginFusinvsnmpUnknownDevice();
+                  $a_snmps = $PluginFusinvsnmpUnknownDevice->find("`plugin_fusioninventory_unknowndevices_id`='".$items_id."'");
+                  $input = array();
+                  if (count($a_snmps) > 0) {
+                     $input = current($a_snmps);
+                     $input['plugin_fusinvsnmp_models_id'] = $data['snmp_model'];
+                     $PluginFusinvsnmpUnknownDevice->update($input);
+                  } else {
+                     $input['plugin_fusioninventory_unknowndevices_id'] = $items_id;
+                     $input['plugin_fusinvsnmp_models_id'] = $data['snmp_model'];
+                     $PluginFusinvsnmpUnknownDevice->add($input);
+                  }
+					}
+				}
+         }
 			break;
       
 		case "plugin_fusinvsnmp_assign_auth" :
@@ -1013,6 +1056,23 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
                   $PluginFusinvsnmpPrinter->load($items_id);
                   $PluginFusinvsnmpPrinter->setValue('plugin_fusinvsnmp_configsecurities_id', $data['plugin_fusinvsnmp_configsecurities_id']);
                   $PluginFusinvsnmpPrinter->updateDB();
+                }
+				}
+			} else if($data['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+				foreach ($data['item'] as $items_id => $val) {
+					if ($val == 1) {
+                  $PluginFusinvsnmpUnknownDevice = new PluginFusinvsnmpUnknownDevice();
+                  $a_snmps = $PluginFusinvsnmpUnknownDevice->find("`plugin_fusioninventory_unknowndevices_id`='".$items_id."'");
+                  $input = array();
+                  if (count($a_snmps) > 0) {
+                     $input = current($a_snmps);
+                     $input['plugin_fusinvsnmp_configsecurities_id'] = $data['plugin_fusinvsnmp_configsecurities_id'];
+                     $PluginFusinvsnmpUnknownDevice->update($input);
+                  } else {
+                     $input['plugin_fusioninventory_unknowndevices_id'] = $items_id;
+                     $input['plugin_fusinvsnmp_configsecurities_id'] = $data['plugin_fusinvsnmp_configsecurities_id'];
+                     $PluginFusinvsnmpUnknownDevice->add($input);
+                  }
                 }
 				}
 			}
@@ -1455,10 +1515,10 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
          $leftjoin = "";
          $already_link_tables_tmp = $already_link_tables;
          array_pop($already_link_tables_tmp);
-         
+
          $leftjoin_fusinvsnmp_unknowndevices = 1;
-         if ((in_array('glpi_plugin_fusinvsnmp_models.id', $already_link_tables_tmp))
-            OR (in_array('glpi_plugin_fusinvsnmp_configsecurities.id', $already_link_tables_tmp))
+         if ((in_array('glpi_plugin_fusinvsnmp_models.', $already_link_tables_tmp))
+            OR (in_array('glpi_plugin_fusinvsnmp_configsecurities.', $already_link_tables_tmp))
             OR (in_array('glpi_plugin_fusinvsnmp_unknowndevices.sysdescr', $already_link_tables_tmp))) {
 
             $leftjoin_fusinvsnmp_unknowndevices = 0;
@@ -1467,7 +1527,7 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
          switch ($new_table.".".$linkfield) {
 
 				// ** FusionInventory - SNMP models
-				case "glpi_plugin_fusinvsnmp_models.id" :
+				case "glpi_plugin_fusinvsnmp_models." :
                $return = "";
                if ($leftjoin_fusinvsnmp_unknowndevices == "1") {
                   $return = " LEFT JOIN glpi_plugin_fusinvsnmp_unknowndevices ON (glpi_plugin_fusioninventory_unknowndevices.id = glpi_plugin_fusinvsnmp_unknowndevices.plugin_fusioninventory_unknowndevices_id) ";
@@ -1476,7 +1536,7 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
 					break;
 
 				// ** FusionInventory - SNMP authentification
-				case "glpi_plugin_fusinvsnmp_configsecurities.id":
+				case "glpi_plugin_fusinvsnmp_configsecurities.":
                $return = "";
                if ($leftjoin_fusinvsnmp_unknowndevices == "1") {
                   $return = " LEFT JOIN glpi_plugin_fusinvsnmp_unknowndevices ON (glpi_plugin_fusioninventory_unknowndevices.id = glpi_plugin_fusinvsnmp_unknowndevices.plugin_fusioninventory_unknowndevices_id) ";
