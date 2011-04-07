@@ -45,6 +45,10 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
    const RULE_ACTION_LINK_OR_IMPORT    = 0;
    const RULE_ACTION_LINK_OR_NO_IMPORT = 1;
 
+   const LINK_RESULT_NO_IMPORT = 0;
+   const LINK_RESULT_IMPORT    = 1;
+   const LINK_RESULT_LINK      = 2;
+
    var $restrict_matching = PluginFusioninventoryRule::AND_MATCHING;
 
 
@@ -208,7 +212,10 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
       }
 
       switch ($condition) {
-         case PluginFusioninventoryRule::PATTERN_FIND :
+         case PluginFusioninventoryRule::PATTERN_FIND:
+            return false;
+            break;
+         
          case PluginFusioninventoryRuleImportEquipment::PATTERN_IS_EMPTY :
             Dropdown::showYesNo($name, 0, 0);
             return true;
@@ -531,8 +538,13 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                   if (isset($this->criterias_results['found_equipment'])) {
                      foreach ($this->criterias_results['found_equipment'] as $itemtype=>$datas) {
                         $items_id = current($datas);
+                        $output['found_equipment'] = array($items_id, $itemtype);
                         if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
                            $class->rulepassed($items_id, $itemtype);
+                           return $output;
+                        } else {
+                           $output['action'] = self::LINK_RESULT_LINK;
+                           return $output;
                         }
                      }
                   } else {
@@ -544,6 +556,10 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                               $itemtype = $criteria->fields['pattern'];
                               if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
                                  $class->rulepassed("0", $itemtype);
+                                 return $output;
+                              } else {
+                                 $output['action'] = self::LINK_RESULT_IMPORT;
+                                 return $output;
                               }
                               $itemtype_found = 1;
                            }
@@ -552,28 +568,35 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                      if ($itemtype_found == "0") {
                         if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
                            $class->rulepassed("0", "PluginFusioninventoryUnknownDevice");
+                           return $output;
+                        } else {
+                           $output['action'] = self::LINK_RESULT_IMPORT;
+                           return $output;
                         }
                      }
-                     $output['action'] = 0;
                   }
-
                } else if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_NO_IMPORT) {
                   if (isset($this->criterias_results['found_equipment'])) {
                      foreach ($this->criterias_results['found_equipment'] as $itemtype=>$datas) {
                         $items_id = current($datas);
+                        $output['found_equipment'] = array($items_id, $itemtype);
                         if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
                            $class->rulepassed($items_id, $itemtype);
+                           return $output;
+                        } else {
+                           $output['action'] = self::LINK_RESULT_LINK;
+                           return $output;
                         }
                      }
                   } else {
                      // no import
-                     $output['action'] = 2;
+                     $output['action'] = self::LINK_RESULT_IMPORT;
                   }
                }
 
             } else {
                // no import
-               $output['action'] = 1;
+               $output['action'] = self::LINK_RESULT_NO_IMPORT;
             }
          }
       }
@@ -588,26 +611,19 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
       $display = false;
       $tested  = false;
 
-      if ($test
-          || $condition == PluginFusioninventoryRule::PATTERN_EXISTS
-          || $condition == PluginFusioninventoryRule::PATTERN_DOES_NOT_EXISTS) {
-         Dropdown::showYesNo($name, 0, 0);
-         $display = true;
-         $tested  = true;
-
-      } else if (isset($crit['type'])
+      if (isset($crit['type'])
                  && ($test
                      ||$condition == PluginFusioninventoryRule::PATTERN_IS
                      || $condition == PluginFusioninventoryRule::PATTERN_IS_NOT)) {
 
          switch ($crit['type']) {
             case "yesonly" :
-               Dropdown::showYesNo($name, $crit['table'], 0);
+               Dropdown::showYesNo($name, $value, 0);
                $display = true;
                break;
 
             case "yesno" :
-               Dropdown::showYesNo($name, $crit['table']);
+               Dropdown::showYesNo($name, $value);
                $display = true;
                break;
 
@@ -628,7 +644,7 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                $types = $this->getTypes();
                ksort($types);
 
-               Dropdown::dropdownTypes($name, 0 ,array_keys($types));
+               Dropdown::dropdownTypes($name, $value ,array_keys($types));
                $display = true;
                break;
 
@@ -683,15 +699,45 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
       }
    }
 
-//   function preProcessPreviewResults($output) {
-//      global $LANG;
-//
-//      if (isset($output["action"])) {
-//
-//
-//      }
-//      return $output;
-//   }
+   function preProcessPreviewResults($output) {
+      global $LANG;
+
+      //If ticket is assign to an object, display this information first
+      if (isset($output["action"])) {
+         echo "<tr class='tab_bg_2'>";
+         echo "<td>".$LANG['rulesengine'][11]."</td>";
+         echo "<td>";
+
+         switch ($output["action"]) {
+            case self::LINK_RESULT_LINK :
+               echo $LANG['setup'][620];
+               break;
+
+            case self::LINK_RESULT_NO_IMPORT:
+               echo $LANG['ocsconfig'][11];
+               break;
+
+            case self::LINK_RESULT_IMPORT:
+               echo $LANG['buttons'][37];
+               break;
+         }
+         
+         echo "</td>";
+         echo "</tr>";
+         if ($output["action"] != self::LINK_RESULT_NO_IMPORT
+             && isset($output["found_equipment"])) {
+            echo "<tr class='tab_bg_2'>";
+            $className = $output["found_equipment"][1];
+            $class = new $className;
+            if ($class->getFromDB($output["found_equipment"][0])) {
+               echo "<td>".$LANG['setup'][620]."</td>";
+               echo "<td>".$class->getLink(true)."</td>";
+            }
+            echo "</tr>";
+         }
+      }
+      return $output;
+   }
 
 }
 
