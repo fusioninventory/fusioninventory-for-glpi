@@ -483,8 +483,6 @@ class PluginFusinvinventoryLibhook {
                array_push($sectionsId,$section['sectionName']."/".$id_user);
                break;
 
-<<<<<<< HEAD
-=======
             // TODO :
             /*
              *
@@ -496,8 +494,6 @@ class PluginFusinvinventoryLibhook {
              *
              */
 
-
->>>>>>> bf99a7aa94668933ac5a35a05849249c084d680e
             default:
                array_push($sectionsId,$section['sectionName']."/".$j);
                $j--;
