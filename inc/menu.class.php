@@ -88,6 +88,12 @@ class PluginFusioninventoryMenu {
          $a_menu[5]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/unknowndevice.php";
       }
 
+      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "iprange", "r")) {
+         $a_menu[6]['name'] = $LANG['plugin_fusioninventory']['menu'][2];
+         $a_menu[6]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_rangeip.png";
+         $a_menu[6]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/iprange.php";
+      }
+
       echo "<div align='center'>";
       echo "<table width='950'>";
       echo "<tr>";
@@ -166,7 +172,8 @@ class PluginFusioninventoryMenu {
       echo "<table class='tab_cadre'>";
 
       echo "<tr>";
-      echo "<th colspan='".count($a_menu)."' nowrap>".$LANG['plugin_'.$plugin_name]['title'][0]."</th>";
+      echo "<th colspan='".count($a_menu)."' nowrap>".$LANG['plugin_'.$plugin_name]['title'][0].
+         "</th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";

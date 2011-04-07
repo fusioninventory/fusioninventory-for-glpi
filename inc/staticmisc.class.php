@@ -144,6 +144,8 @@ class PluginFusioninventoryStaticmisc {
                           'name'    => $LANG['plugin_fusioninventory']['profile'][6]);
       $a_profil[] = array('profil'  => 'task',
                           'name'    => $LANG['plugin_fusioninventory']['profile'][7]);
+      $a_profil[] = array('profil'  => 'iprange',
+                          'name'    => $LANG['plugin_fusioninventory']['menu'][2]);
 
       return $a_profil;
    }

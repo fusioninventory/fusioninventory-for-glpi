@@ -100,6 +100,7 @@ $LANG['plugin_fusioninventory']['processes'][1]  = "PID";
 $LANG['plugin_fusioninventory']['processes'][38] = "Numéro de process";
 
 $LANG['plugin_fusioninventory']['menu'][1] = "Gestion des agents";
+$LANG['plugin_fusioninventory']['menu'][2] = "Plages IP";
 $LANG['plugin_fusioninventory']['menu'][3] = "Menu";
 $LANG['plugin_fusioninventory']['menu'][4] = "Matériel inconnu";
 $LANG['plugin_fusioninventory']['menu'][7] = "Actions en cours d'exécution";
@@ -158,6 +159,11 @@ $LANG['plugin_fusioninventory']['task'][37] = "jours";
 $LANG['plugin_fusioninventory']['task'][38] = "mois";
 $LANG['plugin_fusioninventory']['task'][39] = "Impossible de lancer la tâche car il reste des actions en cours!";
 $LANG['plugin_fusioninventory']['task'][40] = "Forcer l'exécution";
+$LANG['plugin_fusioninventory']['task'][41] = "Tâche permanente - Découverte";
+$LANG['plugin_fusioninventory']['task'][42] = "Tâche permanente - Inventaire";
+$LANG['plugin_fusioninventory']['task'][43] = "Mode de communication";
+$LANG['plugin_fusioninventory']['task'][44] = "Créer la tâche automatiquement";
+
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1] = "Démarré";
 $LANG['plugin_fusioninventory']['taskjoblog'][2] = "Ok";
@@ -173,5 +179,11 @@ $LANG['plugin_fusioninventory']['xml'][0] = "XML";
 
 $LANG['plugin_fusioninventory']['codetasklog'][1] = "Mauvais jeton, impossible d'agir sur l'agent";
 $LANG['plugin_fusioninventory']['codetasklog'][2] = "Agent arrêté ou crashé";
+
+$LANG['plugin_fusioninventory']['iprange'][0]="Début de la plage IP";
+$LANG['plugin_fusioninventory']['iprange'][1]="Fin de la plage IP";
+$LANG['plugin_fusioninventory']['iprange'][2]="Plage IP";
+$LANG['plugin_fusioninventory']['iprange'][3]="Activation";
+$LANG['plugin_fusioninventory']['iprange'][7]="IP incorrecte";
 
 ?>

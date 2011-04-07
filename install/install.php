@@ -74,7 +74,7 @@ function pluginFusioninventoryInstall($version) {
    fclose($DBf_handle);
    foreach ( explode(";\n", "$sql_query") as $sql_line) {
       if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
-      if (!empty($sql_line)) $DB->query($sql_line)/* or die($DB->error())*/;
+      if (!empty($sql_line)) $DB->query($sql_line);
    }
 
    if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
@@ -113,8 +113,10 @@ function pluginFusioninventoryInstall($version) {
    $input['exceptions'] = exportArrayToDB(array());
    $PluginFusioninventoryAgentmodule->add($input);
 
-   CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '60', array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
-   Crontask::Register('PluginFusioninventoryTaskjobstatus', 'cleantaskjob', (3600 * 24), array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
+   CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '60', 
+                      array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30));
+   Crontask::Register('PluginFusioninventoryTaskjobstatus', 'cleantaskjob', (3600 * 24), 
+                      array('mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30));
 
 
    $PluginFusioninventorySetup = new PluginFusioninventorySetup();

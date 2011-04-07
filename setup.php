@@ -53,6 +53,7 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryProfile');
       Plugin::registerClass('PluginFusioninventorySetup');
       Plugin::registerClass('PluginFusioninventoryAgentmodule');
+      Plugin::registerClass('PluginFusioninventoryIPRange');
 
       // ##### 3. get informations of the plugin #####
 
@@ -75,7 +76,10 @@ function plugin_init_fusioninventory() {
 
       $PLUGIN_HOOKS['add_javascript']['fusioninventory']="script.js";
 
+
       if (isset($_SESSION["glpiID"])) {
+
+         $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusinvsnmp_ipranges';
 
          if (haveRight("configuration", "r") || haveRight("profile", "w")) {// Config page
             $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/configuration.form.php?glpi_tab=1';
@@ -162,6 +166,18 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['ruleimportequipment']['title'] = $LANG['plugin_fusioninventory']['rules'][2];
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['ruleimportequipment']['page']  = '/plugins/fusioninventory/front/ruleimportequipment.php';
 
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['iprange']['title'] = 
+            $LANG['plugin_fusioninventory']['menu'][2];
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['iprange']['page']  = 
+            '/plugins/fusioninventory/front/iprange.php';
+
+         if (PluginFusioninventoryProfile::haveRight("fusioninventory", "iprange","w")) {
+            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['iprange'] = 
+               '../fusioninventory/front/iprange.form.php?add=1';
+            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['iprange'] = 
+               '../fusioninventory/front/iprange.php';
+         }
+
       }
    } else { // plugin not active, need $moduleId for uninstall check
       include_once(GLPI_ROOT.'/plugins/fusioninventory/inc/module.class.php');
@@ -179,6 +195,7 @@ function plugin_init_fusioninventory() {
          exit;
       }
    }
+
 
    // Add unknown devices in list of devices with networport
    $CFG_GLPI["netport_types"][] = "PluginFusioninventoryUnknownDevice";

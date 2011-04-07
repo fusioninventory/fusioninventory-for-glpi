@@ -53,10 +53,10 @@ class PluginFusioninventoryProfile extends CommonDBTM {
          $p_profiles_id = $_SESSION['glpiactiveprofile']['id'];
       }
       $pfp = new PluginFusioninventoryProfile();
-      return $pfp->add(array('type'=>$p_type,
-                             'right'=>$p_right,
-                             'plugins_id'=>$p_plugins_id,
-                             'profiles_id'=>$p_profiles_id));
+      return $pfp->add(array('type'       => $p_type,
+                             'right'      => $p_right,
+                             'plugins_id' => $p_plugins_id,
+                             'profiles_id'=> $p_profiles_id));
    }
 
 
@@ -76,11 +76,11 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       if (is_null($p_profiles_id)) {
          $p_profiles_id = $_SESSION['glpiactiveprofile']['id'];
       }
-      return $this->update(array('id'=>$p_id,
-                                 'type'=>$p_type,
-                                 'right'=>$p_right,
-                                 'plugins_id'=>$p_plugins_id,
-                                 'profiles_id'=>$p_profiles_id));
+      return $this->update(array('id'         => $p_id,
+                                 'type'       => $p_type,
+                                 'right'      => $p_right,
+                                 'plugins_id' => $p_plugins_id,
+                                 'profiles_id'=> $p_profiles_id));
    }
 
 
@@ -96,7 +96,8 @@ class PluginFusioninventoryProfile extends CommonDBTM {
 
       if (isset($pluginname)) {
          if (is_callable(array("Plugin".ucfirst($pluginname)."Staticmisc", "profiles"))) {
-            $a_profile = call_user_func(array("Plugin".ucfirst($pluginname)."Staticmisc", "profiles"));
+            $a_profile = call_user_func(array("Plugin".ucfirst($pluginname)."Staticmisc", 
+                                        "profiles"));
 
             foreach ($a_profile as $data) {
                PluginFusioninventoryProfile::addProfile($plugins_id, $data['profil'], 'w');
@@ -149,7 +150,8 @@ class PluginFusioninventoryProfile extends CommonDBTM {
             "w" => array("w"),
                );
       if (isset($_SESSION["glpi_plugin_".$p_moduleName."_profile"][$p_type])
-                &&in_array($_SESSION["glpi_plugin_".$p_moduleName."_profile"][$p_type],$matches[$p_right])) {
+                && in_array($_SESSION["glpi_plugin_".$p_moduleName."_profile"][$p_type], 
+                            $matches[$p_right])) {
          return true;
       } else {
          return false;
@@ -259,7 +261,8 @@ class PluginFusioninventoryProfile extends CommonDBTM {
             $a_profil = call_user_func(array("Plugin".ucfirst($pluginname)."Staticmisc", "profiles"));
 
             echo "<tr>";
-            echo "<th colspan='4'>".$LANG['plugin_fusioninventory']['profile'][0]." ".$LANG['plugin_'.$pluginname]['title'][0]." :</th>";
+            echo "<th colspan='4'>".$LANG['plugin_fusioninventory']['profile'][0]." ";
+            echo $LANG['plugin_'.$pluginname]['title'][0]." :</th>";
             echo "</tr>";
 
             $i = 0;
@@ -272,7 +275,8 @@ class PluginFusioninventoryProfile extends CommonDBTM {
                echo "</td>";
                echo "<td>";
                echo Profile::dropdownNoneReadWrite($pluginname."-".$data['profil'],
-                              $this->getRightDB($pluginname, $data['profil'], $items_id),1,1,1);
+                                                   $this->getRightDB($pluginname, $data['profil'], 
+                                                   $items_id), 1, 1, 1);
                echo "</td>";
                $i++;
                if ($i == '2') {
@@ -307,9 +311,10 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       foreach($profiles as $key => $value) {
          if (strstr($key, "-")) {
             $profilName = explode("-", $key);
-            $a_profile = $this->find("`plugins_id`='".PluginFusioninventoryModule::getModuleId($profilName[0])."'
-                        AND `profiles_id`='".$profiles['profile_id']."'
-                        AND `type`='".$profilName[1]."' ");
+            $a_profile = $this->find("`plugins_id`='".
+                                      PluginFusioninventoryModule::getModuleId($profilName[0])."'
+                                      AND `profiles_id`='".$profiles['profile_id']."'
+                                      AND `type`='".$profilName[1]."' ");
             if (count($a_profile) > 0) {
                foreach ($a_profile as $data) {
                   $this->updateProfile($data['id'],

@@ -100,6 +100,7 @@ $LANG['plugin_fusioninventory']['processes'][1]="PID";
 $LANG['plugin_fusioninventory']['processes'][38]="Process number";
 
 $LANG['plugin_fusioninventory']['menu'][1]="Управление агентами";
+$LANG['plugin_fusioninventory']['menu'][2]="IP range configuration";
 $LANG['plugin_fusioninventory']['menu'][3]="Меню";
 $LANG['plugin_fusioninventory']['menu'][4]="Неизвестное устройство";
 $LANG['plugin_fusioninventory']['menu'][7]="Запущенные работы";
@@ -161,6 +162,11 @@ $LANG['plugin_fusioninventory']['task'][37]="days";
 $LANG['plugin_fusioninventory']['task'][38]="months";
 $LANG['plugin_fusioninventory']['task'][39]="Unable to run task because some jobs is running yet!";
 $LANG['plugin_fusioninventory']['task'][40]="Force running";
+$LANG['plugin_fusioninventory']['task'][41]="Permanent task - Discovery";
+$LANG['plugin_fusioninventory']['task'][42]="Permanent task - Inventory";
+$LANG['plugin_fusioninventory']['task'][43]="Communication type";
+$LANG['plugin_fusioninventory']['task'][44]="Create task easily";
+
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Начато";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";
@@ -176,4 +182,11 @@ $LANG['plugin_fusioninventory']['xml'][0]="XML";
 
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Bad token, impossible to start agent";
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Agent stopped/crashed";
+
+$LANG['plugin_fusioninventory']['iprange'][0]="Start of IP range";
+$LANG['plugin_fusioninventory']['iprange'][1]="End of IP range";
+$LANG['plugin_fusioninventory']['iprange'][2]="IP Ranges";
+$LANG['plugin_fusioninventory']['iprange'][3]="Query";
+$LANG['plugin_fusioninventory']['iprange'][7]="Bad IP";
+
 ?>

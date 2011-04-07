@@ -242,6 +242,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_agentmodules` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_ipranges`;
+
 CREATE TABLE `glpi_plugin_fusioninventory_ipranges` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(255) DEFAULT NULL,
