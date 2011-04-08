@@ -87,12 +87,16 @@ function plugin_init_fusioninventory() {
          }
 
          $PLUGIN_HOOKS['use_massive_action']['fusioninventory']=1;
-         $PLUGIN_HOOKS['pre_item_update']['fusioninventory'] = array('Plugin' =>'plugin_pre_item_update_fusioninventory');
-   //      $PLUGIN_HOOKS['pre_item_delete']['fusioninventory'] = 'plugin_pre_item_delete_fusioninventory';
-         $PLUGIN_HOOKS['item_purge']['fusioninventory'] = array('NetworkPort_NetworkPort' =>'plugin_item_purge_fusioninventory',
-                                                                'PluginFusioninventoryTask'=>array('PluginFusioninventoryTask','purgeTask'),
-                                                                'PluginFusioninventoryTaskjob'=>array('PluginFusioninventoryTaskjob','purgeTaskjob'),
-                                                                'PluginFusioninventoryUnknownDevice' =>array('PluginFusioninventoryUnknownDevice','purgeUnknownDevice'));
+         $PLUGIN_HOOKS['pre_item_update']['fusioninventory'] = array('Plugin' => 'plugin_pre_item_update_fusioninventory');
+         
+         $p = array('NetworkPort_NetworkPort'            =>'plugin_item_purge_fusioninventory',
+                    'PluginFusioninventoryTask'          => array('PluginFusioninventoryTask',
+                                                                  'purgeTask'),
+                    'PluginFusioninventoryTaskjob'       => array('PluginFusioninventoryTaskjob',
+                                                                  'purgeTaskjob'),
+                    'PluginFusioninventoryUnknownDevice' => array('PluginFusioninventoryUnknownDevice',
+                                                                  'purgeUnknownDevice'));
+         $PLUGIN_HOOKS['item_purge']['fusioninventory'] = $p;
 
          
          $PLUGIN_HOOKS['item_update']['fusioninventory'] = 
@@ -180,9 +184,9 @@ function plugin_init_fusioninventory() {
          }
 
          if (PluginFusioninventoryProfile::haveRight("fusioninventory", "credential","w")) {
-            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['credential'] = 
+            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['PluginFusioninventoryCredential'] = 
                '../fusioninventory/front/credential.form.php?add=1';
-            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['credential'] = 
+            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['PluginFusioninventoryCredential'] = 
                '../fusioninventory/front/credential.php';
          }
 
@@ -207,7 +211,6 @@ function plugin_init_fusioninventory() {
 
    // Add unknown devices in list of devices with networport
    $CFG_GLPI["netport_types"][] = "PluginFusioninventoryUnknownDevice";
-   //$CFG_GLPI["state_types"][] = "PluginFusioninventoryUnknownDevice";
 
 }
 

@@ -62,6 +62,12 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
          return $input;
          break;
         
+      case "glpi_plugin_fusioninventory_credentials.itemtype":
+        if ($label = PluginFusioninventoryCredential::getLabelByItemtype($data['ITEM_'.$num])) {
+           return $label;
+        } else {
+           return '';
+        }
    }
    
    if ($table == "glpi_plugin_fusioninventory_agentmodules") {

@@ -38,6 +38,9 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryCredential extends CommonDropdown {
 
+   public $first_level_menu  = "plugins";
+   public $second_level_menu = "fusioninventory";
+
    static function getTypeName() {
       global $LANG;
 
@@ -45,15 +48,11 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    }
 
    function canCreate() {
-      return PluginFusioninventoryProfile::haveRight('fusioninventory','credential','w');
+      return PluginFusioninventoryProfile::haveRight('fusioninventory', 'credential', 'w');
    }
 
    function canView() {
-      return PluginFusioninventoryProfile::haveRight('fusioninventory','credential','r');
-   }
-
-   static function getItemtypesForCredentials() {
-      return array();
+      return PluginFusioninventoryProfile::haveRight('fusioninventory', 'credential', 'r');
    }
    
    function getAdditionalFields() {
@@ -90,23 +89,18 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
       //Criteria already added : only display the selected itemtype
       if ($ID > 0) {
-          $item = new $this->fields['itemtype'];
-          echo $item->getTypeName();
-          echo "<input type='hidden' name='itemtype' value='".$this->fields['itemtype']."'";
+         if ($label = self::getLabelByItemtype($this->fields['itemtype'])) {
+            echo $label;
+            echo "<input type='hidden' name='itemtype' value='".$this->fields['itemtype']."'";
+         }
 
       } else {
          //Add criteria : display dropdown
-         $options[0] = DROPDOWN_EMPTY_VALUE;
-         foreach (self::getItemtypesForCredentials() as $itemtype) {
-            if (class_exists($itemtype)) {
-               $item = new $itemtype();
-               if ($item->can(-1,'r')) {
-                  $options[$itemtype] = $item->getTypeName($itemtype);
-               }
-            }
-         }
+         $options = PluginFusioninventoryStaticmisc::getCredentialsItemTypes();
+         $options[''] = DROPDOWN_EMPTY_VALUE;
          asort($options);
          $rand = Dropdown::showFromArray('itemtype', $options);
+         
       }
 
    }
@@ -139,29 +133,62 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
       $tab[1]['table'] = $this->getTable();
       $tab[1]['field'] = 'name';
-      $tab[1]['linkfield'] = 'name';
       $tab[1]['name'] = $LANG['common'][16];
       $tab[1]['datatype'] = 'itemlink';
 
       $tab[2]['table'] = 'glpi_entities';
       $tab[2]['field'] = 'completename';
-      $tab[2]['linkfield'] = 'entities_id';
       $tab[2]['name'] = $LANG['entity'][0];
 
-      $tab[3]['table'] = $this->getTable();
-      $tab[3]['field'] = 'ip_start';
-      $tab[3]['linkfield'] = 'ip_start';
-      $tab[3]['name'] = $LANG['plugin_fusioninventory']['iprange'][0];
+      $tab[3]['table']         = $this->getTable();
+      $tab[3]['field']         = 'itemtype';
+      $tab[3]['name']          = $LANG['common'][17];
+      $tab[3]['massiveaction'] = false;
 
       $tab[4]['table'] = $this->getTable();
-      $tab[4]['field'] = 'ip_end';
-      $tab[4]['linkfield'] = 'ip_end';
-      $tab[4]['name'] = $LANG['plugin_fusioninventory']['iprange'][1];
+      $tab[4]['field'] = 'username';
+      $tab[4]['name'] = $LANG['login'][6];
 
       return $tab;
    }
 
+   /**
+    * Perform checks to be sure that an itemtype and at least a field are selected
+    *
+    * @param input the values to insert in DB
+    *
+    * @return input the values to insert, but modified
+   **/
+   static function checkBeforeInsert($input) {
+      global $LANG;
 
+      if (!$input['itemtype']) {
+         addMessageAfterRedirect($LANG['setup'][817], true, ERROR);
+         $input = array();
+
+      }
+      return $input;
+   }
+
+
+   function prepareInputForAdd($input) {
+      return self::checkBeforeInsert($input);
+   }
+
+
+   function prepareInputForUpdate($input) {
+      return $input;
+   }
+
+   static function getLabelByItemtype($itemtype) {
+      $credentialtypes = PluginFusioninventoryStaticmisc::getCredentialsItemTypes();
+      if (isset($credentialtypes[$itemtype])) {
+         return $credentialtypes[$itemtype];
+
+      } else {
+         return false;
+      }
+   } 
 }
 
 ?>

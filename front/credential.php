@@ -32,21 +32,10 @@
    ----------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', '../../..');
-}
+define('GLPI_ROOT', '../../..');
+include (GLPI_ROOT . "/inc/includes.php");
 
-include (GLPI_ROOT."/inc/includes.php");
-
-commonHeader($LANG['plugin_fusioninventory']['menu'][5],$_SERVER["PHP_SELF"], "plugins", 
-             "fusioninventory","credential");
-
-PluginFusioninventoryProfile::checkRight("fusioninventory", "credential","r");
-
-PluginFusioninventoryMenu::displayMenu("mini");
-
-Search::show('PluginFusioninventoryCredential');
-
-commonFooter();
+$dropdown = new PluginFusioninventoryCredential();
+include (GLPI_ROOT . "/front/dropdown.common.php");
 
 ?>
