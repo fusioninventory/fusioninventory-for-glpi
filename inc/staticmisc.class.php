@@ -60,8 +60,6 @@ class PluginFusinvinventoryStaticmisc {
                          'name'           => $LANG['plugin_fusinvinventory']['title'][2]));
    }
 
-   
-
    /**
    * Display menu of this plugin
    *

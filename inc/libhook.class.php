@@ -494,7 +494,6 @@ class PluginFusinvinventoryLibhook {
              *
              */
 
-
             default:
                array_push($sectionsId,$section['sectionName']."/".$j);
                $j--;
