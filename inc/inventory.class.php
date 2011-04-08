@@ -206,6 +206,9 @@ class PluginFusinvinventoryInventory {
             }
 
          if ($items_id == '0') {
+            if ($_SESSION["plugin_fusinvinventory_entity"] == 'N/A') {
+               $_SESSION["plugin_fusinvinventory_entity"] = 0;
+            }
             $input = array();
             $input['date_mod'] = date("Y-m-d H:i:s");
             $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
