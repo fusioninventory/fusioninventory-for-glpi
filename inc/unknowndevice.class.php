@@ -493,6 +493,9 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             // Create unknown device
             $input = array();
             $input['name'] = '';
+            if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
+               $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+            }
                // get source entity :
 //               $Netport->getDeviceData($p_oPort->getValue("items_id"),$p_oPort->getValue("itemtype"));
 //               if (isset($Netport->entities_id)) {
@@ -661,6 +664,9 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $input = array();
       $input['hub'] = "1";
       $input['name'] = "hub";
+      if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
+         $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+      }
 //      $input["plugin_fusioninventory_agents_id"] = $agent_id;
          // get source entity :
 //         $datas = $Netport->getDeviceData($p_oPort->getValue("items_id"),$p_oPort->getValue("itemtype"));
@@ -766,18 +772,44 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    * @return nothing
    *
    **/
-   function writeXML($items_id, $xml) {
+   static function writeXML($items_id, $xml) {
 
       $folder = substr($items_id,0,-1);
       if (empty($folder)) {
          $folder = '0';
       }
-      if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/u".$folder)) {
-         mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/u".$folder);
+      if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice")) {
+         mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice");
       }
-      $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/u".$folder."/u".$items_id, 'w');
+      if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder)) {
+         mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder);
+      }
+      $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".$items_id, 'w');
       fwrite($fileopen, $xml);
       fclose($fileopen);
+   }
+
+
+
+   /**
+   * Purge unknwon devices
+   *
+   * @param $pram object to purge
+   *
+   * @return nothing
+   *
+   **/
+   static function purgeUnknownDevice($parm) {
+
+      // Delete XML file if exist
+      $folder = substr($parm->fields["id"],0,-1);
+      if (empty($folder)) {
+         $folder = '0';
+      }
+      
+      if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".$parm->fields["id"])) {
+         unlink(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".$parm->fields["id"]);
+      }
    }
 
 

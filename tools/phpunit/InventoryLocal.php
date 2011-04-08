@@ -321,7 +321,6 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
                         INNER JOIN `glpi_printers` on `glpi_printers`.`id`=`items_id`
                         WHERE `computers_id` = '".$items_id."'
                             AND `itemtype` = 'Printer'";
-               echo $query."\n";
                $result=$DB->query($query);
                $printer_select = array();
                while ($data=$DB->fetch_array($result)) {
@@ -606,7 +605,8 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
       $a_memoryXML = array();
       $i = 0;
       foreach ($xml->CONTENT->MEMORIES as $child) {
-         if (isset($child->CAPTION)) {
+         if (isset($child->CAPTION)
+                 AND (string)$child->CAPACITY != 'No') {
             $a_memoryXML["'".$i."-".$child->CAPTION."'"] = 1;
             $i++;
          }
@@ -664,7 +664,9 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
       foreach ($xml->CONTENT->NETWORKS as $child) {
          if ((isset($child->MACADDR)) AND (!empty($child->MACADDR))
-                 AND ((string)$child->MACADDR != "50:50:54:50:30:30")) {
+                 AND ((string)$child->MACADDR != "50:50:54:50:30:30")
+                 AND ((string)$child->DESCRIPTION != "Miniport d'ordonnancement de paquets")) {
+
             $query = "SELECT * FROM `glpi_networkports`
             WHERE `items_id`='".$items_id."'
                AND `itemtype`='".$itemtype."'

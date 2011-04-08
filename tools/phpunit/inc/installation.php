@@ -33,7 +33,7 @@ function installGLPI() {
 
 function installFusionPlugins() {
    global $DB;
-   
+
    $Plugin = new Plugin();
 
    $Plugin->init();
@@ -45,7 +45,7 @@ function installFusionPlugins() {
       $Plugin->install($fields['id']);
       $Plugin->activate($fields['id']);
    }
-   
+
    $query = "SELECT * FROM glpi_plugins
       WHERE directory LIKE 'fusinv%' ";
    $result = $DB->query($query);
@@ -55,7 +55,7 @@ function installFusionPlugins() {
    }
 
    $Plugin->init();
-   
+
    if (isset($_SESSION["glpi_plugins"]) && is_array($_SESSION["glpi_plugins"])) {
       //doHook("config");
       if (count($_SESSION["glpi_plugins"])) {
