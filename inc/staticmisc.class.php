@@ -49,13 +49,15 @@ class PluginFusinvinventoryStaticmisc {
    static function task_methods() {
       global $LANG;
 
-      $a_tasks = array();
-      $a_tasks[] = array('module'         => 'fusinvinventory',
+      return array(array('module'         => 'fusinvinventory',
                          'method'         => 'inventory',
                          'selection_type' => 'devices',
-                         'hidetask'       => 1);
-
-      return $a_tasks;
+                         'hidetask'       => 1,
+                         'name'           => $LANG['plugin_fusinvinventory']['title'][1]),
+                   array('module'         => 'fusinvinventory',
+                         'method'         => 'esx',
+                         'selection_type' => 'devices',
+                         'name'           => $LANG['plugin_fusinvinventory']['title'][2]));
    }
 
    
@@ -110,19 +112,19 @@ class PluginFusinvinventoryStaticmisc {
    static function profiles() {
       global $LANG;
 
-      $a_profil = array();
-      $a_profil[] = array('profil'  => 'existantrule',
-                          'name'    => $LANG['plugin_fusinvinventory']['profile'][2]);
-      $a_profil[] = array('profil'  => 'importxml',
-                          'name'    => $LANG['plugin_fusinvinventory']['profile'][3]);
-      $a_profil[] = array('profil'  => 'blacklist',
-                          'name'    => $LANG['plugin_fusinvinventory']['profile'][4]);
-
-      return $a_profil;
+      return array(array('profil'  => 'existantrule',
+                         'name'    => $LANG['plugin_fusinvinventory']['profile'][2]),
+                   array('profil'  => 'importxml',
+                         'name'    => $LANG['plugin_fusinvinventory']['profile'][3]),
+                   array('profil'  => 'blacklist',
+                         'name'    => $LANG['plugin_fusinvinventory']['profile'][4]),
+                   array('profil'  => 'blacklist',
+                         'name'    => $LANG['plugin_fusinvinventory']['vmwareesx'][0]));
    }
    
    static function credential_types() {
-     return array('PluginFusinvinventoryVmwareESX');
+     global $LANG;
+     return array('PluginFusinvinventoryVmwareESX' => $LANG['plugin_fusinvinventory']['vmwareesx'][0]);
    }
 }
 

@@ -36,23 +36,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusinvinventoryVmwareESX extends CommonDBTM {
-   
-   
-   static function getTypeName() {
-      global $LANG;
-
-      return $LANG['plugin_fusinvinventory']['vmwareesx'][0];
-   }
-
-   function canCreate() {
-      return true;
-   }
-
-   function canView() {
-      return true;
-   }
-
+class PluginFusinvinventoryVmwareESX {
 }
 
 ?>
