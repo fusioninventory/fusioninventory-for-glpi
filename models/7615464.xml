@@ -2,7 +2,11 @@
 	<name><![CDATA[7615464]]></name>
 	<type>2</type>
 	<key>Networking0690</key>
-	<comments><![CDATA[ProCurve J8698A Switch 5412zl, revision K.13.60, ROM K.12.17 (/sw/code/build/btm(t3a))
+	<comments><![CDATA[ProCurve J8692A Switch 3500yl-24G, revision K.12.05, ROM K.11.03 (/sw/code/build/btm(t2a))
+
+ProCurve J8698A Switch 5412zl, revision K.13.60, ROM K.12.17 (/sw/code/build/btm(t3a))
+
+ProCurve J9087A Switch 2610-24-PWR, revision R.11.25, ROM R.10.06 (/sw/code/build/nemo(ndx))
 
 ]]></comments>
 	<oidlist>
