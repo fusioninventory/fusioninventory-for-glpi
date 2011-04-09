@@ -95,7 +95,9 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
    } else {
       $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
    }
-
+   if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+      file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".uniqid(), $xml);
+   }
    if (@simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA)) {
       $pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA);
    } else {
@@ -108,9 +110,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
 
    //
 
-   if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
-      file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".uniqid(), $xml);
-   }
+
    $pta->importToken($xml);
 
    $top0 = 0;
