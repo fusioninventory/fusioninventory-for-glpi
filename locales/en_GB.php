@@ -87,8 +87,8 @@ $LANG['plugin_fusinvsnmp']['snmpauth'][1]="Community";
 $LANG['plugin_fusinvsnmp']['snmpauth'][2]="User";
 $LANG['plugin_fusinvsnmp']['snmpauth'][4]="Encryption protocol for authentication ";
 $LANG['plugin_fusinvsnmp']['snmpauth'][5]="Password";
-$LANG['plugin_fusinvsnmp']['snmpauth'][6]="Encryption protocol for data (write)";
-$LANG['plugin_fusinvsnmp']['snmpauth'][7]="Password (write)";
+$LANG['plugin_fusinvsnmp']['snmpauth'][6]="Encryption protocol for data";
+$LANG['plugin_fusinvsnmp']['snmpauth'][7]="Password";
 
 $LANG['plugin_fusinvsnmp']['errors'][50]="GLPI version not compatible, require 0.78";
 

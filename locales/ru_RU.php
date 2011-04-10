@@ -87,8 +87,8 @@ $LANG['plugin_fusinvsnmp']['snmpauth'][1]="Community";
 $LANG['plugin_fusinvsnmp']['snmpauth'][2]="Пользователь";
 $LANG['plugin_fusinvsnmp']['snmpauth'][4]="Протокол шифрования для аунтификации ";
 $LANG['plugin_fusinvsnmp']['snmpauth'][5]="Пароль";
-$LANG['plugin_fusinvsnmp']['snmpauth'][6]="Протокол шифрования для данных (записи)";
-$LANG['plugin_fusinvsnmp']['snmpauth'][7]="Пароль (Записи)";
+$LANG['plugin_fusinvsnmp']['snmpauth'][6]="Протокол шифрования для данных";
+$LANG['plugin_fusinvsnmp']['snmpauth'][7]="Пароль";
 
 $LANG['plugin_fusinvsnmp']['errors'][50]="Не совместимая версия с GLPI, рекомендуемая 0.78";
 
