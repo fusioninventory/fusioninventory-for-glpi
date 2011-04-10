@@ -73,6 +73,26 @@ class Plugins_Fusioninventory_Discovery_Modeles extends PHPUnit_Framework_TestCa
    }
 
 
+   public function testModelesProcurveLLDP() {
+      global $DB;
+      
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_mibs`
+         LEFT JOIN `glpi_dropdown_plugin_fusioninventory_mib_oid` on `mib_oid_id`=`glpi_dropdown_plugin_fusioninventory_mib_oid`.`ID`
+         WHERE (name = '.1.0.8802.1.1.2.1.4.1.1.5'
+            OR name = '.1.0.8802.1.1.2.1.4.1.1.7')
+            AND oid_port_dyn='0' ";
+      $notok = 0;
+      $list = "";
+      if ($result = $DB->query($query)) {
+			while ($data=$DB->fetch_array($result)) {
+            $notok++;
+            $list .= $data['construct_device_id'].", ";
+         }
+      }
+      $this->assertEquals($notok, 0 , 'Some construct_devices have LLDP not good :'.$list);
+   }
+
+
 
    public function testModelesCiscoHaveCDPoids() {
       global $DB;

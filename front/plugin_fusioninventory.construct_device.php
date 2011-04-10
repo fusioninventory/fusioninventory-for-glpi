@@ -91,6 +91,10 @@ if (isset($_GET['generatemodels']) AND $_GET['generatemodels'] == '1') {
 
    commonFooter();
    exit;
+} else if (isset($_GET['exportwiki']) AND $_GET['exportwiki'] == '1') {
+   $ptcd = new PluginFusionInventoryConstructDevice;
+   $ptcd->exportWiki();
+   exit;
 }
 
 echo " | ";
@@ -115,6 +119,8 @@ echo " | ";
 echo "<a href='".$_SERVER["PHP_SELF"]."?exportall=1'>Export</a>";
 echo " | ";
 echo "<a href='".$_SERVER["PHP_SELF"]."?importall=1'>Import</a>";
+echo " | ";
+echo "<a href='".$_SERVER["PHP_SELF"]."?exportwiki=1'>Export wiki</a>";
 echo " | ";
 
 searchForm(PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE,$_GET);

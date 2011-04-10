@@ -625,7 +625,7 @@ function plugin_fusioninventory_getSearchOption() {
 
   	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][2]['table'] = 'glpi_dropdown_manufacturer';
 	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][2]['field'] = 'name';
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][2]['linkfield'] = 'manufacturer';
+	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][2]['linkfield'] = 'FK_glpi_enterprise';
 	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][2]['name'] = $LANG['common'][5];
 
 	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][3]['table'] = 'glpi_plugin_fusioninventory_construct_device';
@@ -2355,6 +2355,12 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
             return " LEFT JOIN glpi_networking_ports ON (glpi_printers.ID = glpi_networking_ports.on_device AND glpi_networking_ports.device_type='".PRINTER_TYPE."')  ";
          } else if ($new_table == "glpi_plugin_fusioninventory_printers") {
             return " LEFT JOIN glpi_plugin_fusioninventory_printers ON (glpi_printers.ID = glpi_plugin_fusioninventory_printers.FK_printers) ";
+         }
+         break;
+
+       case PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE:
+         if ($new_table== "glpi_enterprises") {
+            return " LEFT JOIN glpi_dropdown_manufacturer ON (glpi_plugin_fusioninventory_construct_device.FK_glpi_enterprise = glpi_dropdown_manufacturer.ID) ";
          }
          break;
 

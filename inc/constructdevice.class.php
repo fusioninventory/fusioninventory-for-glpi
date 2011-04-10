@@ -104,6 +104,7 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       $mapping_pre[2]['.1.3.6.1.4.1.171.10.37.20.1.8.0']    = 'entPhysicalModelName';
       $mapping_pre[2]['.1.3.6.1.4.1.171.10.37.20.1.9.0']    = 'firmware';
       $mapping_pre[2]['.1.3.6.1.2.1.2.1.0']                 = '';
+      $mapping_pre[2]['.1.0.8802.1.1.2.1.5.32962.1.2.3.1.2']          = 'PortVlanIndex';
       // Omnistack LS6200 :
          $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.11.67108992'] = 'serial';
       // 3Com
@@ -247,6 +248,52 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['setup'][71].": 	</td><td>\n";
       dropdownValue("glpi_dropdown_firmware", "firmware", $this->fields["firmware"]);
+      echo "</td>";
+      echo "</tr>\n";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['common'][22].": 	</td><td>\n";
+      if ($this->fields["type"] == NETWORKING_TYPE) {
+         dropdownValue("glpi_dropdown_model_networking", "networkmodel_id", $this->fields["networkmodel_id"]);
+      } else if ($this->fields["type"] == PRINTER_TYPE) {
+         dropdownValue("glpi_dropdown_model_printers", "printermodel_id", $this->fields["printermodel_id"]);
+      }
+      echo "</td>";
+      echo "</tr>\n";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>have_someinformations: 	</td><td>\n";
+      dropdownYesNo("have_someinformations", $this->fields["have_someinformations"]);
+      echo "</td>";
+      echo "</tr>\n";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>have_serialnumber: 	</td><td>\n";
+      dropdownYesNo("have_importantinformations", $this->fields["have_importantinformations"]);
+      echo "</td>";
+      echo "</tr>\n";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>have_ports: 	</td><td>\n";
+      dropdownYesNo("have_ports", $this->fields["have_ports"]);
+      echo "</td>";
+      echo "</tr>\n";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>have_portsconnections: 	</td><td>\n";
+      dropdownYesNo("have_portsconnections", $this->fields["have_portsconnections"]);
+      echo "</td>";
+      echo "</tr>\n";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>have_vlan: 	</td><td>\n";
+      dropdownYesNo("have_vlan", $this->fields["have_vlan"]);
+      echo "</td>";
+      echo "</tr>\n";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>have_trunk: 	</td><td>\n";
+      dropdownYesNo("have_trunk", $this->fields["have_trunk"]);
       echo "</td>";
       echo "</tr>\n";
 
@@ -1633,6 +1680,132 @@ echo "Number of devices non exist : ".$i;
       // detect all oids
 
       exit;
+   }
+
+
+   function exportWiki() {
+      global $DB;
+
+      // Networkequipments
+      echo "h1. Network devices compatible with FusionInventory<br/>";
+      echo "<br/>{{>toc}}<br/><br/>";
+      echo "<br/>";
+
+      echo "Legend :<br/>";
+      echo "* Some informations : FusionInventory gather some informations about the network device, but not the most important ones (ie serial number and/or name) ;<br/>";
+      echo "* Important informations : FusionInventory retrieve all important informations (serial number, name, etc.) ;<br/>";
+      echo "* Ports : FusionInventory can get all physical ports informations (name, speed, errors, state, etc.) ;<br/>";
+      echo "* Ports connections : FusionInventory can detect remote devices connected on each port of the switch ;<br/>";
+      echo "* Vlans : FusionInventory can retrieve VLANs for each port of the switch ;<br/>";
+      echo "* Trunk/tagged : FusionInventory can get trunk/tagged information for each port of the switch.<br/>";
+      echo "<br/><br/>";
+
+      echo "The following SNMP models are compatible with FusionInventory for GLPI :<br/>";
+      echo "* 2.2.x for GLPI 0.72<br/>";
+      echo "* 2.3.x for GLPI 0.78<br/>";
+      echo "* 2.4.x for GLPI 0.80<br/><br/><br/>";
+
+      $ok = "=.!full.png!";
+      $notok = "=.!none.png!";
+
+      //$a_lists = $this->find("`FK_glpi_enterprise`>0 AND `type`='2' GROUP BY FK_glpi_enterprise");
+      $sql_manu = "SELECT glpi_plugin_fusioninventory_construct_device.* FROM glpi_plugin_fusioninventory_construct_device
+         LEFT JOIN glpi_dropdown_manufacturer on glpi_dropdown_manufacturer.id = FK_glpi_enterprise
+         WHERE `FK_glpi_enterprise`>0
+            AND `glpi_plugin_fusioninventory_construct_device`.`type`='2'
+         GROUP BY FK_glpi_enterprise
+         ORDER BY glpi_dropdown_manufacturer.name";
+      if ($result_manu=$DB->query($sql_manu)) {
+         while ($a_list=$DB->fetch_array($result_manu)) {
+
+            $manufacturer = getDropdownName("glpi_dropdown_manufacturer", $a_list['FK_glpi_enterprise']);
+            echo "<br/>";
+            echo "h2. ".$manufacturer."<br/>";
+            echo "<br/>";
+            $count = 0;
+            echo "|_.Model |_.Firmware |_.Some informations |_.Serial Number |_.Ports |_.Ports connections |_.Vlans |_.Trunk/tagged |_.SNMP model |<br/>";
+            $a_devices = $this->find("`FK_glpi_enterprise`='".$a_list['FK_glpi_enterprise']."'
+                           AND `type`='2'");
+            $sql = "SELECT `glpi_dropdown_model_networking`.`name` as modelname,
+                           `glpi_dropdown_firmware`.`name` as firmwarename,
+                           `glpi_plugin_fusioninventory_model_infos`.`name` as snmpmodelname,
+                           glpi_plugin_fusioninventory_construct_device.* FROM `glpi_plugin_fusioninventory_construct_device`
+               LEFT JOIN glpi_dropdown_model_networking on glpi_dropdown_model_networking.id = networkmodel_id
+               LEFT JOIN glpi_dropdown_firmware on glpi_dropdown_firmware.id = firmware
+               LEFT JOIN glpi_plugin_fusioninventory_model_infos on glpi_plugin_fusioninventory_model_infos.id = snmpmodel_id
+               WHERE `FK_glpi_enterprise`='".$a_list['FK_glpi_enterprise']."'
+                  AND `type`='2'
+               ORDER BY `glpi_dropdown_model_networking`.`name`,
+                  `glpi_dropdown_firmware`.`name`";
+
+            $modelname = '';
+            $firmwarename = '';
+            $snmpmodelname = '';
+            if ($result=$DB->query($sql)) {
+               while ($data=$DB->fetch_array($result)) {
+                  if ($data['modelname'] == $modelname) {
+                     $displaymodel = $data['modelname'];
+                  } else {
+                     $modelname = $data['modelname'];
+                     $displaymodel = $data['modelname'];
+                  }
+                  if ($data['firmwarename'] == $firmwarename) {
+                     $displayfirmware = $data['firmwarename'];
+                  } else {
+                     $firmwarename = $data['firmwarename'];
+                     $displayfirmware = $data['firmwarename'];
+                  }
+                  if ($displayfirmware == '') {
+                     $displayfirmware = '-';
+                  }
+                  if (isset($data['snmpmodelname'])) {
+                     $snmpmodelname = '"'.$data['snmpmodelname'].'":http://forge.fusioninventory.org/projects/pluginfusinvsnmp/repository/revisions/master/changes/models/'.$data['snmpmodelname'].'.xml';
+                  }
+                  $have_someinfo = $notok;
+                  $have_importantinfo = $notok;
+                  $have_ports = $notok;
+                  $have_portsconnections = $notok;
+                  $have_vlan = $notok;
+                  $have_trunk = $notok;
+                  $add = 0;
+                  if ($data['have_someinformations'] == '1') {
+                     $have_someinfo = $ok;
+                     $add = 1;
+                  }
+                  if ($data['have_importantinformations'] == '1') {
+                     $have_importantinfo = $ok;
+                     $add = 1;
+                  }
+                  if ($data['have_ports'] == '1') {
+                     $have_ports = $ok;
+                     $add = 1;
+                  }
+                  if ($data['have_portsconnections'] == '1') {
+                     $have_portsconnections = $ok;
+                     $add = 1;
+                  }
+                  if ($data['have_vlan'] == '1') {
+                     $have_vlan = $ok;
+                     $add = 1;
+                  }
+                  if ($data['have_trunk'] == '1') {
+                     $have_trunk = $ok;
+                     $add = 1;
+                  }
+                  if ($add == '1') {
+                     $count++;
+                     if ($count > 10) {
+                        echo "|_.Model |_.Firmware |_.Some informations |_.Serial Number |_.Ports |_.Ports connections |_.Vlans |_.Trunk/tagged |_.SNMP model |<br/>";
+                        $count = 0;
+                     }
+                     echo "| ".$displaymodel." | ".$displayfirmware." |".$have_someinfo." |".$have_importantinfo." |".$have_ports." |".$have_portsconnections." |".$have_vlan." |".$have_trunk." |=.".$snmpmodelname." |<br/>";
+                  }
+               }
+            }
+         }
+      }
+
+
    }
 
 }
