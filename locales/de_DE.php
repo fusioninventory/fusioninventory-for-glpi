@@ -87,8 +87,8 @@ $LANG['plugin_fusinvsnmp']['snmpauth'][1]="SNMP Community";
 $LANG['plugin_fusinvsnmp']['snmpauth'][2]="Benutzer";
 $LANG['plugin_fusinvsnmp']['snmpauth'][4]="Verschlüsseungs für die Authentifizierung ";
 $LANG['plugin_fusinvsnmp']['snmpauth'][5]="Passwort";
-$LANG['plugin_fusinvsnmp']['snmpauth'][6]="Verschlüsselungmethode für Daten (schreiben)";
-$LANG['plugin_fusinvsnmp']['snmpauth'][7]="Passwort (schreiben)";
+$LANG['plugin_fusinvsnmp']['snmpauth'][6]="Verschlüsselungmethode für Daten";
+$LANG['plugin_fusinvsnmp']['snmpauth'][7]="Passwort";
 
 $LANG['plugin_fusinvsnmp']['errors'][50]="Version von GLPI ist nicht kompatibel, benötige Version 0.78";
 
