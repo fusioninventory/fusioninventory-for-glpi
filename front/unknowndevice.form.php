@@ -36,8 +36,7 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-
-$ptud = new PluginFusioninventoryUnknownDevice();
+$PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
 $ptt  = new PluginFusioninventoryTask();
 
 commonHeader($LANG['plugin_fusioninventory']['title'][0], $_SERVER["PHP_SELF"], "plugins", "fusioninventory","unknown");
@@ -50,17 +49,23 @@ $id = "";
 if (isset($_GET["id"])) {
 	$id = $_GET["id"];
 }
-
-if (isset($_POST["delete"])) {
+if (isset ($_POST["add"])) {
+   PluginFusioninventoryProfile::checkRight("fusioninventory", "unknowndevice","w");
+   if (($_POST['items_id'] != "0") AND ($_POST['items_id'] != "")) {
+      $_POST['itemtype'] = '1';
+   }
+   $PluginFusioninventoryUnknownDevice->add($_POST);
+   glpi_header($_SERVER['HTTP_REFERER']);
+} else if (isset($_POST["delete"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "unknowndevice","w");
 
-	$ptud->check($_POST['id'],'w');
+	$PluginFusioninventoryUnknownDevice->check($_POST['id'],'w');
 
-	$ptud->delete($_POST);
+	$PluginFusioninventoryUnknownDevice->delete($_POST);
 
-   $ptud->redirectToList();
+   $PluginFusioninventoryUnknownDevice->redirectToList();
 } else if (isset($_POST["restore"])) {
-   $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+   
    $PluginFusioninventoryUnknownDevice->check($_POST['id'],'d');
 
    if ($PluginFusioninventoryUnknownDevice->restore($_POST)) {
@@ -72,18 +77,18 @@ if (isset($_POST["delete"])) {
 } else if (isset($_POST["purge"]) || isset($_GET["purge"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "unknowndevice","w");
 
-	$ptud->check($_POST['id'],'w');
+	$PluginFusioninventoryUnknownDevice->check($_POST['id'],'w');
 
-	$ptud->delete($_POST,1);
-   $ptud->redirectToList();
+	$PluginFusioninventoryUnknownDevice->delete($_POST,1);
+   $PluginFusioninventoryUnknownDevice->redirectToList();
 } else if (isset($_POST["update"])) {
-	$ptud->check($_POST['id'],'w');
-	$ptud->update($_POST);
+	$PluginFusioninventoryUnknownDevice->check($_POST['id'],'w');
+	$PluginFusioninventoryUnknownDevice->update($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset($_POST["import"])) {
    $Import = 0;
    $NoImport = 0;
-   list($Import, $NoImport) = $ptud->import($_POST['id'],$Import,$NoImport);
+   list($Import, $NoImport) = $PluginFusioninventoryUnknownDevice->import($_POST['id'],$Import,$NoImport);
    addMessageAfterRedirect($LANG['plugin_fusioninventory']['discovery'][5]." : ".$Import);
    addMessageAfterRedirect($LANG['plugin_fusioninventory']['discovery'][9]." : ".$NoImport);
    if ($Import == "0") {
@@ -93,7 +98,7 @@ if (isset($_POST["delete"])) {
    }
 }
 
-$ptud->showForm($id);
+$PluginFusioninventoryUnknownDevice->showForm($id);
 
 commonFooter();
 
