@@ -362,24 +362,14 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>";
+      echo "<td align='center' rowspan='3'>";
       echo $LANG['plugin_fusinvsnmp']['snmp'][4]."&nbsp;:";
       echo "</td>";
-      echo "<td>";
+      echo "<td rowspan='3'>";
       echo "<textarea name='sysdescr' cols='45' rows='5'>";
       echo $this->oFusionInventory_networkequipment->fields['sysdescr'];
       echo "</textarea>";
-      echo "</td>";
-      echo "<td align='center'>";
-      echo $LANG['plugin_fusinvsnmp']['snmp'][53]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      echo convDateTime($this->oFusionInventory_networkequipment->fields['last_fusioninventory_update']);
-      echo "</td>";
-      echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center' rowspan='2'>".$LANG['plugin_fusinvsnmp']['model_info'][4]."&nbsp;:</td>";
+      echo "<td align='center' rowspan='2'>".$LANG['plugin_fusinvsnmp']['model_info'][4]."&nbsp;:</td>";
 		echo "<td align='center'>";
 		$query_models = "SELECT *
                        FROM `glpi_plugin_fusinvsnmp_models`
@@ -396,6 +386,30 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
                            'comment'=>0,
                            'used'=>$exclude_models));
       echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>";
+      echo "<input type='submit' name='GetRightModel'
+              value='".$LANG['plugin_fusinvsnmp']['model_info'][13]."' class='submit'/>";
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>".$LANG['plugin_fusinvsnmp']['functionalities'][43]."&nbsp;:</td>";
+		echo "<td align='center'>";
+		PluginFusinvsnmpSNMP::auth_dropdown($this->oFusionInventory_networkequipment->fields['plugin_fusinvsnmp_configsecurities_id']);
+		echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "</td>";
+      echo "<td align='center'>";
+      echo $LANG['plugin_fusinvsnmp']['snmp'][53]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      echo convDateTime($this->oFusionInventory_networkequipment->fields['last_fusioninventory_update']);
+      echo "</td>";
       echo "<td align='center'>";
       echo $LANG['plugin_fusinvsnmp']['snmp'][13]."&nbsp;:";
       echo "</td>";
@@ -406,39 +420,6 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 		echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>";
-      echo "<input type='submit' name='GetRightModel'
-              value='".$LANG['plugin_fusinvsnmp']['model_info'][13]."' class='submit'/>";
-      echo "</td>";
-      echo "<td align='center'>";
-        echo $LANG['plugin_fusinvsnmp']['snmp'][14]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      $query2 = "SELECT *
-                 FROM `glpi_networkequipments`
-                 WHERE `id`='".$id."';";
-      $result2 = $DB->query($query2);
-      $data2 = $DB->fetch_assoc($result2);
-      $ram_pourcentage = 0;
-      if (!empty($data2["ram"]) AND !empty($this->oFusionInventory_networkequipment->fields['memory'])) {
-         $ram_pourcentage = ceil((100 * ($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory'])) / $data2["ram"]);
-      }
-      if ((($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory']) < 0)
-           OR (empty($this->oFusionInventory_networkequipment->fields['memory']))) {
-         echo "<center><strong>".$LANG['plugin_fusinvsnmp']['snmp'][54]."</strong></center>";
-      } else {
-         displayProgressBar(250, $ram_pourcentage,
-                        array('title' => " (".($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory'])." Mo / ".
-                         $data2["ram"]." Mo)"));
-      }
-      echo "</td>";
-      echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_fusinvsnmp']['functionalities'][43]."&nbsp;:</td>";
-		echo "<td align='center'>";
-		PluginFusinvsnmpSNMP::auth_dropdown($this->oFusionInventory_networkequipment->fields['plugin_fusinvsnmp_configsecurities_id']);
-		echo "</td>";
       echo "<td align='center'>";
       echo $LANG['plugin_fusinvsnmp']['snmp'][12]."&nbsp;:";
       echo "</td>";
@@ -473,7 +454,29 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       echo "<b>$minute</b> ".$LANG["job"][22]." ";
       echo " ".$LANG['choice'][3]." <b>$sec</b> ".$LANG["stats"][34]." ";
       echo "</td>";
-		echo "</tr>";
+      echo "<td align='center'>";
+      echo $LANG['plugin_fusinvsnmp']['snmp'][14]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      $query2 = "SELECT *
+                 FROM `glpi_networkequipments`
+                 WHERE `id`='".$id."';";
+      $result2 = $DB->query($query2);
+      $data2 = $DB->fetch_assoc($result2);
+      $ram_pourcentage = 0;
+      if (!empty($data2["ram"]) AND !empty($this->oFusionInventory_networkequipment->fields['memory'])) {
+         $ram_pourcentage = ceil((100 * ($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory'])) / $data2["ram"]);
+      }
+      if ((($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory']) < 0)
+           OR (empty($this->oFusionInventory_networkequipment->fields['memory']))) {
+         echo "<center><strong>".$LANG['plugin_fusinvsnmp']['snmp'][54]."</strong></center>";
+      } else {
+         displayProgressBar(250, $ram_pourcentage,
+                        array('title' => " (".($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory'])." Mo / ".
+                         $data2["ram"]." Mo)"));
+      }
+      echo "</td>";
+      echo "</tr>";
 
 		echo "<tr class='tab_bg_2 center'>";
 		echo "<td colspan='4'>";
@@ -487,7 +490,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 
 
       // ***** IP list ***** //
-      echo "<table class='tab_cadre_fixe'>";
+      echo "<table class='tab_cadre' width='950'>";
 
 		echo "<tr class='tab_bg_1'>";
       echo "<th colspan='8'>";
