@@ -38,7 +38,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
    $searchopt = &Search::getOptions($type);
    $table = $searchopt[$id]["table"];
    $field = $searchopt[$id]["field"];
-
+         
    switch ($table.'.'.$field) {
 
       case "glpi_plugin_fusioninventory_tasks.id" :
@@ -651,6 +651,15 @@ function plugin_fusioninventory_addLeftJoin($itemtype,$ref_table,$new_table,$lin
 
 function plugin_fusioninventory_addOrderBy($type,$id,$order,$key=0) {
    return "";
+}
+
+
+function plugin_fusioninventory_addDefaultWhere($type) {
+   if ($type == 'PluginFusioninventoryTaskjob') {
+      return " ( select count(*) FROM `glpi_plugin_fusioninventory_taskjobstatus`
+			WHERE plugin_fusioninventory_taskjobs_id= `glpi_plugin_fusioninventory_taskjobs`.`id`
+         AND `state`!='3' )";
+   }
 }
 
 
