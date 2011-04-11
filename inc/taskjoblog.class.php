@@ -71,23 +71,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
    function showHistory($taskjobs_id, $width="950", $options=array()) {
       global $DB,$CFG_GLPI,$LANG;
 
-		echo "<script  type='text/javascript'>
-function close_array(id){
-	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/plugins/fusioninventory/pics/collapse.png\''+
-      'onClick=\'Effect.Fade(\"viewfollowup'+id+'\");appear_array('+id+');\' />';
-   document.getElementById('plusmoins'+id).style.backgroundColor = '#e4e4e2';
-}
-function appear_array(id){
-	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/plugins/fusioninventory/pics/expand.png\''+
-      'onClick=\'Effect.Appear(\"viewfollowup'+id+'\");close_array('+id+');\' />';
-   document.getElementById('plusmoins'+id).style.backgroundColor = '#f2f2f2';
-
-}
-
-		</script>";
-
-		echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusioninventory/prototype.js'></script>";
-      echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusioninventory/effects.js'></script>";
+      $this->javascriptHistory();
 
       $start = 0;
       if (isset($_REQUEST["start"])) {
@@ -200,6 +184,28 @@ function appear_array(id){
 
 
 
+   function javascriptHistory() {
+      		echo "<script  type='text/javascript'>
+function close_array(id){
+	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/plugins/fusioninventory/pics/collapse.png\''+
+      'onClick=\'Effect.Fade(\"viewfollowup'+id+'\");appear_array('+id+');\' />';
+   document.getElementById('plusmoins'+id).style.backgroundColor = '#e4e4e2';
+}
+function appear_array(id){
+	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/plugins/fusioninventory/pics/expand.png\''+
+      'onClick=\'Effect.Appear(\"viewfollowup'+id+'\");close_array('+id+');\' />';
+   document.getElementById('plusmoins'+id).style.backgroundColor = '#f2f2f2';
+
+}
+
+		</script>";
+
+		echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusioninventory/prototype.js'></script>";
+      echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusioninventory/effects.js'></script>";
+
+   }
+
+
    /**
    * Display each history line
    *
@@ -208,13 +214,13 @@ function appear_array(id){
    * @return nothing
    *
    **/
-   function showHistoryLines($taskjobstatus_id, $displayprocess = 1) {
+   function showHistoryLines($taskjobstatus_id, $displayprocess = 1, $displaytaskjob=0) {
       global $LANG;
       
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryTaskjobstatus->getFromDB($taskjobstatus_id);
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-
+      
       $displayforceend = 0;
       $a_history = $this->find('`plugin_fusioninventory_taskjobstatus_id` = "'.$PluginFusioninventoryTaskjobstatus->fields['id'].'"', 'id');
 
@@ -229,6 +235,15 @@ function appear_array(id){
       if ($displayprocess == '1') {
          echo "<td>";
          echo $PluginFusioninventoryTaskjobstatus->fields['id'];
+         echo "</td>";
+      }
+      if ($displaytaskjob == '1') {
+         $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+         $PluginFusioninventoryTask = new PluginFusioninventoryTask();
+         $PluginFusioninventoryTaskjob->getFromDB($PluginFusioninventoryTaskjobstatus->fields['plugin_fusioninventory_taskjobs_id']);
+         $PluginFusioninventoryTask->getFromDB($PluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']);
+         echo "<td>";
+         echo $PluginFusioninventoryTaskjob->getLink(1)." (".$PluginFusioninventoryTask->getLink().")";
          echo "</td>";
       }
       echo "<td>";

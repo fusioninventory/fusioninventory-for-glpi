@@ -1137,8 +1137,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    **/
    function manageTasksByObject($itemtype='', $items_id=0) {
       // Create task
-      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-      //$PluginFusioninventoryTaskjob->showActions($items_id, $itemtype);
+//      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+//      $PluginFusioninventoryTaskjob->showActions($items_id, $itemtype);
       // See task runing
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryTaskjobstatus->stateTaskjobItem($items_id, $itemtype, 'running');
