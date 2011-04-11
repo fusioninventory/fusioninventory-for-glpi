@@ -66,9 +66,8 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       $state[3] = 0;
       $a_taskjobstatus = $this->find("`plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."' AND `state`!='3'");
       $total = 0;
-      if (count($a_taskjobstatus) == '0') {
-         $globalState = 100;
-      } else {
+      if (count($a_taskjobstatus) > 0) {
+
          foreach ($a_taskjobstatus as $data) {
             $total++;
             $state[$data['state']]++;
@@ -83,22 +82,23 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
             $fourth = (($state[3] * 100) / $total) / 4;
             $globalState = $first + $second + $third + $fourth;
          }
-      }
-      if ($return == 'html') {
-         if ($style == 'simple') {
-            displayProgressBar($width,ceil($globalState), array('simple' => 1));
+
+         if ($return == 'html') {
+            if ($style == 'simple') {
+               displayProgressBar($width,ceil($globalState), array('simple' => 1));
+            } else {
+               displayProgressBar($width,ceil($globalState));
+            }
+         } else if ($return == 'htmlvar') {
+            if ($style == 'simple') {
+               return PluginFusioninventoryDisplay::getProgressBar($width,ceil($globalState),
+                                                                   array('simple' => 1));
+            } else {
+               return PluginFusioninventoryDisplay::getProgressBar($width,ceil($globalState));
+            }
          } else {
-            displayProgressBar($width,ceil($globalState));
+            return ceil($globalState);
          }
-      } else if ($return == 'htmlvar') {
-         if ($style == 'simple') {
-            return PluginFusioninventoryDisplay::getProgressBar($width,ceil($globalState), 
-                                                                array('simple' => 1));
-         } else {
-            return PluginFusioninventoryDisplay::getProgressBar($width,ceil($globalState));
-         }
-      } else {
-         return ceil($globalState);
       }
    }
 
