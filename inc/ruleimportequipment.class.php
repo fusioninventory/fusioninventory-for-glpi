@@ -219,6 +219,14 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
          case PluginFusioninventoryRuleImportEquipment::PATTERN_IS_EMPTY :
             Dropdown::showYesNo($name, 0, 0);
             return true;
+
+         case PluginFusioninventoryRule::PATTERN_EXISTS:
+            echo Dropdown::showYesNo($name, 1, 0);
+            return true;
+
+         case PluginFusioninventoryRule::PATTERN_DOES_NOT_EXISTS:
+            echo Dropdown::showYesNo($name, 1, 0);
+            return true;
       }
 
       return false;
