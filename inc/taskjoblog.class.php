@@ -117,7 +117,7 @@ function appear_array(id){
       echo "</th>";
       echo "<td>";
       if ($DB->numrows($result) > 0) {
-         echo "<table>";
+         echo "<table class='tab_cadre'>";
          echo "<tr>";
          echo "<th></th>";
          echo "<th>Uniqid</th>";
@@ -144,13 +144,13 @@ function appear_array(id){
 
 
       // ***** Display for statusjob OK
-      echo "<table class='tab_cadre' style='width: ".$width."px'>";
+      echo "<table class='tab_cadre' width='".$width."'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th width='32'>";
       echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_finished.png'/>";
       echo "</td>";
       echo "<td>";
-         echo "<table>";
+         echo "<table class='tab_cadre' >";
          echo "<tr>";
          echo "<td colspan='5'>";
          $querycount = 'SELECT count(*) AS cpt FROM `glpi_plugin_fusioninventory_taskjobstatus`
