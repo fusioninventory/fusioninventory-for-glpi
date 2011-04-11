@@ -75,10 +75,13 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 function close_array(id){
 	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/plugins/fusioninventory/pics/collapse.png\''+
       'onClick=\'Effect.Fade(\"viewfollowup'+id+'\");appear_array('+id+');\' />';
+   document.getElementById('plusmoins'+id).style.backgroundColor = '#e4e4e2';
 }
 function appear_array(id){
 	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/plugins/fusioninventory/pics/expand.png\''+
       'onClick=\'Effect.Appear(\"viewfollowup'+id+'\");close_array('+id+');\' />';
+   document.getElementById('plusmoins'+id).style.backgroundColor = '#f2f2f2';
+
 }
 
 		</script>";
@@ -109,11 +112,11 @@ function appear_array(id){
       $result = $DB->query($query);
       // ***** Display for all status running / prepared
       echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='2'>";
+      echo "<th width='32'>";
       echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_running.png'/>";
       echo "</th>";
       echo "<td>";
-
+      if ($DB->numrows($result) > 0) {
          echo "<table>";
          echo "<tr>";
          echo "<th></th>";
@@ -134,7 +137,7 @@ function appear_array(id){
             $this->showHistoryLines($data['id']);
          }
          echo "</table>";
-
+      }
       echo "</td>";
       echo "</tr>";
       echo "</table><br/>";
@@ -143,7 +146,7 @@ function appear_array(id){
       // ***** Display for statusjob OK
       echo "<table class='tab_cadre' style='width: ".$width."px'>";
       echo "<tr class='tab_bg_1'>";
-      echo "<th>";
+      echo "<th width='32'>";
       echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_finished.png'/>";
       echo "</td>";
       echo "<td>";
