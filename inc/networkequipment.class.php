@@ -543,11 +543,11 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 
 		echo "<script  type='text/javascript'>
 function close_array(id){
-   document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/pics/collapse.gif\''+
+   document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/plugins/fusioninventory/pics/collapse.png\''+
       'onClick=\'Effect.Fade(\"viewfollowup'+id+'\");appear_array('+id+');\' />';
 }
 function appear_array(id){
-	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/pics/expand.gif\''+
+	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/plugins/fusioninventory/pics/expand.png\''+
       'onClick=\'Effect.Appear(\"viewfollowup'+id+'\");close_array('+id+');\' id=\'plusmoinsl'+id+'\' />';
 }
 
@@ -701,7 +701,7 @@ function appear_legend(id){
             }
 				echo "<tr class='tab_bg_1 center' height='40'".$background_img.">";
 				echo "<td id='plusmoins".$data["id"]."'><img src='".GLPI_ROOT.
-                     "/pics/expand.gif' onClick='Effect.Appear(\"viewfollowup".$data["id"].
+                     "/plugins/fusioninventory/pics/expand.png' onClick='Effect.Appear(\"viewfollowup".$data["id"].
                      "\");close_array(".$data["id"].");' id='plusmoinsl".$data["id"]."'\'/>";
             echo "</td>";
 				echo "<td><a href='networkport.form.php?id=".$data["id"]."'>".
