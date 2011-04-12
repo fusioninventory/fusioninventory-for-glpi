@@ -139,22 +139,23 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
             $icon = "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_finished.png'/>";
             break;
 
-         case 'nostarted';
-            $query = "SELECT *, `glpi_plugin_fusioninventory_taskjobs`.`id` as tjid 
-                      FROM `glpi_plugin_fusioninventory_taskjobs`
-                      LEFT JOIN ".$this->getTable()." ON `plugin_fusioninventory_taskjobs_id` = 
-                        `glpi_plugin_fusioninventory_taskjobs`.`id`
-                      WHERE `definition` LIKE '%\"".$itemtype."\":\"".$items_id."\"%'
-                        AND `plugin_fusioninventory_taskjobs_id` is null";
-            $a_taskjobs = array();
-            if ($result = $DB->query($query)) {
-               while ($data=$DB->fetch_array($result)) {
-                  $a_taskjobs[] = $data;                  
-               }
-            }
-            $title = $LANG['plugin_fusioninventory']['task'][22];
-            $icon = "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_scheduled.png'/>";
-            break;
+//         case 'nostarted';
+//            $query = "SELECT *, `glpi_plugin_fusioninventory_taskjobs`.`id` as tjid
+//                      FROM `glpi_plugin_fusioninventory_taskjobs`
+//                      LEFT JOIN ".$this->getTable()." ON `plugin_fusioninventory_taskjobs_id` =
+//                        `glpi_plugin_fusioninventory_taskjobs`.`id`
+//                      WHERE `definition` LIKE '%\"".$itemtype."\":\"".$items_id."\"%'
+//                        AND `plugin_fusioninventory_taskjobs_id` is null";
+//            echo $query;
+//            $a_taskjobs = array();
+//            if ($result = $DB->query($query)) {
+//               while ($data=$DB->fetch_array($result)) {
+//                  $a_taskjobs[] = $data;
+//               }
+//            }
+//            $title = $LANG['plugin_fusioninventory']['task'][22];
+//            $icon = "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_scheduled.png'/>";
+//            break;
 
          case 'all':
             $search = "";
@@ -163,6 +164,10 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
             break;
 
       }
+      if (!isset($search)) {
+         return;
+      }
+
       $a_taskjobs = array();
       if (isset($search)) {
          $query = "SELECT * FROM `".$this->getTable()."`
@@ -176,7 +181,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
          }
       }
 
-      echo "<br/><div align='center'>";
+      echo "<div align='center'>";
       echo "<table  class='tab_cadre' width='950'>";
 
       echo "<tr class='tab_bg_1'>";
