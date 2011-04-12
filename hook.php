@@ -783,6 +783,7 @@ function plugin_headings_actions_fusinvsnmp($item) {
 			if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "printer", "r")) {
 				$array[1] = "plugin_headings_fusinvsnmp_printerInfo";
 			}
+         $array[2] = "plugin_headings_fusinvsnmp_xml";
 			return $array;
 			break;
 
