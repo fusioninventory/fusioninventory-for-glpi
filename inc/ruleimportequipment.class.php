@@ -89,6 +89,14 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
       $criterias['entities_id']['name']      = $LANG['plugin_fusioninventory']['rulesengine'][152].' : '.$LANG['plugin_fusioninventory']['rules'][4];
       $criterias['entities_id']['linkfield'] = 'entities_id';
       $criterias['entities_id']['type']      = 'dropdown';
+      $criterias['entities_id']['allow_condition'] = array(PluginFusioninventoryRule::PATTERN_IS,
+                                                           PluginFusioninventoryRule::PATTERN_IS_NOT,
+                                                           PluginFusioninventoryRule::PATTERN_CONTAIN,
+                                                           PluginFusioninventoryRule::PATTERN_NOT_CONTAIN,
+                                                           PluginFusioninventoryRule::PATTERN_BEGIN,
+                                                           PluginFusioninventoryRule::PATTERN_END,
+                                                           PluginFusioninventoryRule::REGEX_MATCH,
+                                                           PluginFusioninventoryRule::REGEX_NOT_MATCH);
 
       $criterias['states_id']['table']           = 'glpi_states';
       $criterias['states_id']['field']           = 'name';
@@ -218,6 +226,14 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
          
          case PluginFusioninventoryRuleImportEquipment::PATTERN_IS_EMPTY :
             Dropdown::showYesNo($name, 0, 0);
+            return true;
+
+         case PluginFusioninventoryRule::PATTERN_EXISTS:
+            echo Dropdown::showYesNo($name, 1, 0);
+            return true;
+
+         case PluginFusioninventoryRule::PATTERN_DOES_NOT_EXISTS:
+            echo Dropdown::showYesNo($name, 1, 0);
             return true;
       }
 
