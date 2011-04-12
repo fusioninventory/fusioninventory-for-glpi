@@ -425,6 +425,12 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       }
 
       echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='3'>";
+      echo $LANG['plugin_fusinvsnmp']['report'][1];
+      echo "</th>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
       echo "<td class='left'>".$LANG['search'][8]."&nbsp;:</td>";
       echo "<td class='left' colspan='2'>";
       showDateFormItem("graph_begin", $begin);
