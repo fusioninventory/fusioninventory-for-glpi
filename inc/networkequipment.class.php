@@ -846,10 +846,10 @@ function appear_legend(id){
 							// ** Connection status
 							echo "<td>";
 							if (strstr($data["ifstatus"], "up") OR strstr($data["ifstatus"], "1")) {
-								echo "<img src='".GLPI_ROOT."/pics/greenbutton.png'/>";
+								echo "<img src='".GLPI_ROOT."/plugins/fusinvsnmp/pics/wired_on.png'/>";
                      } else if (strstr($data["ifstatus"], "down")
                                 OR strstr($data["ifstatus"], "2")) {
-								echo "<img src='".GLPI_ROOT."/pics/redbutton.png'/>";
+								echo "<img src='".GLPI_ROOT."/plugins/fusinvsnmp/pics/wired_off.png'/>";
                      } else if (strstr($data["ifstatus"], "testing")
                                 OR strstr($data["ifstatus"], "3")) {
 								echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/yellowbutton.png'/>";
