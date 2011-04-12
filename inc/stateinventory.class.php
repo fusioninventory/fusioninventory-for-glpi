@@ -153,7 +153,7 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
 
          }
          echo "</td>";
-         
+
          echo "<td>".convDateTime($start_date)."</td>";
          echo "<td>".convDateTime($end_date)."</td>";
          $date1 = new DateTime($start_date);
