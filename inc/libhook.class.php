@@ -928,6 +928,12 @@ class PluginFusinvinventoryLibhook {
        $opt[$i]['glpiItemtype']     = 'Computer';
        $opt[$i]['glpiField']        = 'users_id';
 
+       $i++;
+       $opt[$i]['xmlSection']       = 'USERS';
+       $opt[$i]['xmlSectionChild']  = 'LOGIN';
+       $opt[$i]['glpiItemtype']     = 'Computer';
+       $opt[$i]['glpiField']        = 'contact';
+
 
        // ** BIOS
        $i++;
