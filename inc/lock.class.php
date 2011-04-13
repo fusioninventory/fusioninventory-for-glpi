@@ -91,11 +91,29 @@ class PluginFusinvinventoryLock {
                      $class = new $itemtype();
                      $class->getFromDB($item->fields['items_id']);
                      if ($itemtypeLink == "User") {
+                        $update_user = 0;
                         foreach($infoSections["sections"] as $sectionname=>$serializeddatas) {
                            if (strstr($sectionname, "USERS/")) {
                               if (!strstr($sectionname, "USERS/-")) {
                                  $users_id = str_replace("USERS/", "", $sectionname);
                                  $class->fields[$datas['glpiField']] = $users_id;
+                                 $update_user = 1;
+                              }
+                           }
+                        }
+                        if ($update_user == '0') {
+                           foreach($infoSections["sections"] as $sectionname=>$serializeddatas) {
+                              if (strstr($sectionname, "USERS/")) {
+                                 if (strstr($sectionname, "USERS/-")) {
+                                    $users_name = str_replace("USERS/-", "", $sectionname);
+                                    $query_user = "SELECT `id`
+                                              FROM `glpi_users`
+                                              WHERE `name` = '".$users_name."';";
+                                    $result_user = $DB->query($query_user);
+                                    if ($DB->numrows($result_user) == 1) {
+                                       $class->fields[$datas['glpiField']] = $DB->result($result_user, 0, 0);
+                                    }
+                                 }
                               }
                            }
                         }
@@ -105,7 +123,23 @@ class PluginFusinvinventoryLock {
                         $class->fields[$datas['glpiField']] = $vallib;
                      } else {
                         $libunserialized = unserialize($infoSections["sections"][$datas['xmlSection']."/".$item->fields['items_id']]);
-                        $class->fields[$datas['glpiField']] = $libunserialized[$datas['xmlSectionChild']];
+
+                        if ($datas['glpiField'] == 'contact') {
+                           $contact = '';
+                           foreach($infoSections["sections"] as $sectionname=>$serializeddatas) {
+                              if (strstr($sectionname, "USERS/")) {
+                                 $unserialiseUser = unserialize($serializeddatas);
+                                 if ($contact == '') {
+                                    $contact .= $unserialiseUser['LOGIN'];
+                                 } else {
+                                    $contact .= "/".$unserialiseUser['LOGIN'];
+                                 }
+                              }
+                           }
+                           $class->fields[$datas['glpiField']] = $contact;
+                        } else {
+                           $class->fields[$datas['glpiField']] = $libunserialized[$datas['xmlSectionChild']];
+                        }
                      }
                      $class->update($class->fields);
                   }
