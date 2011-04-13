@@ -86,11 +86,48 @@ class PluginFusioninventoryLock extends CommonDBTM{
             } else {
                $checked = '';
             }
+            if ((strstr($key, "_id")
+                    OR ($key == 'is_ocs_import'))
+               AND $val == '0'){
+               
+               $val = "";
+            }
+
             // Get name of field
             $array = search::getOptions($p_itemtype);
             $num = search::getOptionNumber($p_itemtype, $key);
-            if (isset($array[$num]['name'])) {
-               $key = $array[$num]['name'];
+            // Specific keys
+            $key1 = $key;
+            switch($key) {
+
+               case 'users_id_tech':
+                  $key1 = $LANG['common'][10];
+                  break;
+
+               case 'computermodels_id':
+                  $key1 = $LANG['common'][22];
+                  break;
+
+               case 'computertypes_id':
+                  $key1 = $LANG['common'][17];
+                  break;
+
+               case 'states_id':
+                  $key1 = $LANG['state'][0];
+                  break;
+
+               case 'ticket_tco':
+                  $key1 = $LANG['financial'][91];
+                  break;
+
+            }
+            // standards keys
+            if ($key1 != $key) {
+               $key = $key1;
+            } else {
+               if (isset($array[$num]['name'])) {
+                  $key = $array[$num]['name'];
+               }
             }
 
             // Get value of field
