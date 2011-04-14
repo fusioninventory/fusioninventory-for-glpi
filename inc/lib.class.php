@@ -76,15 +76,6 @@ class PluginFusinvinventoryLib extends CommonDBTM {
 
             $Transfer->moveItems($item_to_transfer, $_SESSION["plugin_fusinvinventory_entity"], $Transfer->fields);
          }
-         // Transfer agent entity
-         $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-         if ($agent_id = $PluginFusioninventoryAgent->getAgentWithComputerid($items_id)) {
-            $PluginFusioninventoryAgent->getFromDB($agent_id);
-            if ($PluginFusioninventoryAgent->getEntityID() != $_SESSION["plugin_fusinvinventory_entity"]) {
-               $PluginFusioninventoryAgent->fields['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
-               $PluginFusioninventoryAgent->update($PluginFusioninventoryAgent->fields);
-            }
-         }
 
       //if ($internalId = $this->isMachineExist()) {
          // Get internal ID with $items_id
@@ -108,6 +99,16 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          // Link computer to agent FusionInventory
          $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
          $PluginFusioninventoryAgent->setAgentWithComputerid($items_id, $xml->DEVICEID);
+
+         // Transfer agent entity
+         $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+         if ($agent_id = $PluginFusioninventoryAgent->getAgentWithComputerid($items_id)) {
+            $PluginFusioninventoryAgent->getFromDB($agent_id);
+            if ($PluginFusioninventoryAgent->getEntityID() != $_SESSION["plugin_fusinvinventory_entity"]) {
+               $PluginFusioninventoryAgent->fields['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+               $PluginFusioninventoryAgent->update($PluginFusioninventoryAgent->fields);
+            }
+         }
 
          //Sections update
          $xmlSections = $this->_getXMLSections($simpleXMLObj);
