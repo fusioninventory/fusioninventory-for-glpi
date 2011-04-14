@@ -121,8 +121,10 @@ class PluginFusinvinventoryInventory {
                }
             }
          }
-         if ((isset($xml->CONTENT->BIOS->ASSETTAG)) AND (!empty($xml->CONTENT->BIOS->ASSETTAG))) {
-            $input['tag'] = (string)$xml->CONTENT->BIOS->ASSETTAG;
+         if ((isset($xml->CONTENT->ACCOUNTINFO->KEYNAME)) AND ($xml->CONTENT->ACCOUNTINFO->KEYNAME == 'TAG')) {
+            if (isset($xml->CONTENT->ACCOUNTINFO->KEYVALUE)) {
+               $input['tag'] = (string)$xml->CONTENT->ACCOUNTINFO->KEYVALUE;
+            }
          }
          if ((isset($xml->CONTENT->HARDWARE->NAME)) AND (!empty($xml->CONTENT->HARDWARE->NAME))) {
             $input['name'] = (string)$xml->CONTENT->HARDWARE->NAME;
