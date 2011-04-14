@@ -1337,10 +1337,20 @@ function update221to230() {
       SET `Field` = '".$data['id']."'
       WHERE `Field`='".$data['name']."' ";
       $DB->query($sql_update);
+      if ($data['name'] == "vlanTrunkPortDynamicStatus") {
+         $sql_update = "UPDATE `glpi_plugin_fusinvsnmp_networkportlogs`
+         SET `Field` = '".$data['id']."'
+         WHERE `Field`='trunk' ";
+         $DB->query($sql_update);
+      }
    }
    $sql = "DELETE FROM `glpi_plugin_fusinvsnmp_networkportlogs`
       WHERE `Field`='ip'";
    $DB->query($sql);
+   $sql = "DELETE FROM `glpi_plugin_fusinvsnmp_networkportlogs`
+      WHERE `Field` NOT REGEXP '[0-9]+'";
+   $DB->query($sql);
+
    // End convert mapping
    $sql = "ALTER TABLE `glpi_plugin_fusinvsnmp_networkportlogs`
       CHANGE `Field` `plugin_fusioninventory_mappings_id` INT( 11 ) NOT NULL DEFAULT '0'";
