@@ -184,8 +184,8 @@ class PluginFusinvinventoryInventory {
                   }
                }
             }
-            if ((isset($xml->CONTENT->HARDWARE->USERDOMAIN)) AND (!empty($xml->CONTENT->HARDWARE->USERDOMAIN))) {
-               $input_rules['domain'] = (string)$xml->CONTENT->HARDWARE->USERDOMAIN;
+            if ((isset($xml->CONTENT->HARDWARE->WORKGROUP)) AND (!empty($xml->CONTENT->HARDWARE->WORKGROUP))) {
+               $input_rules['domain'] = (string)$xml->CONTENT->HARDWARE->WORKGROUP;
             }
             if ((isset($xml->CONTENT->ACCOUNTINFO->KEYNAME)) AND ($xml->CONTENT->ACCOUNTINFO->KEYNAME == 'TAG')) {
                if (isset($xml->CONTENT->ACCOUNTINFO->KEYVALUE)) {
