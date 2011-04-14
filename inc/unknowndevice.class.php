@@ -493,6 +493,9 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             // Create unknown device
             $input = array();
             $input['name'] = '';
+            if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
+               $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+            }
                // get source entity :
 //               $Netport->getDeviceData($p_oPort->getValue("items_id"),$p_oPort->getValue("itemtype"));
 //               if (isset($Netport->entities_id)) {
@@ -661,6 +664,9 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $input = array();
       $input['hub'] = "1";
       $input['name'] = "hub";
+      if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
+         $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+      }
 //      $input["plugin_fusioninventory_agents_id"] = $agent_id;
          // get source entity :
 //         $datas = $Netport->getDeviceData($p_oPort->getValue("items_id"),$p_oPort->getValue("itemtype"));
