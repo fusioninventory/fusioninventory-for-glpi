@@ -87,6 +87,18 @@ function update230to240() {
             $job->update($taskjob);
          }
       }
+      
+      if (!TableExists("glpi_plugin_fusioninventory_credentials_items")) {
+         $query = "CREATE TABLE  `glpi_plugin_fusioninventory_credentials_items` (
+                     `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+                     `plugin_fusioninventory_credentials_id` INT( 11 ) NOT NULL DEFAULT  '0',
+                     `itemtype` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
+                     `items_id` INT NOT NULL ,
+                     PRIMARY KEY (  `id` )
+                     ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
+         $DB->query($query) or die ("Create table glpi_plugin_credential_items".
+                                    $LANG['update'][90] . $DB->error());
+      }
    }
    plugin_fusioninventory_displayMigrationMessage("240"); // End
 }

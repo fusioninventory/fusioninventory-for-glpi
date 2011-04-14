@@ -148,22 +148,6 @@ class PluginFusioninventoryStaticmisc {
                    array('profil'  => 'credential',
                          'name'    => $LANG['plugin_fusioninventory']['menu'][5]));
    }
-
-   /**
-    * Get all modules that can declare credentials
-    */
-   static function getCredentialsItemTypes() {
-      $itemtypes = array();
-      foreach (PluginFusioninventoryModule::getAll() as $data) {
-         if (is_callable(array('Plugin'.ucfirst($data['directory']).'Staticmisc', 
-                               'credential_types'))) {
-            $itemtypes = array_merge($itemtypes, 
-               call_user_func(array('Plugin'.ucfirst($data['directory']).'Staticmisc', 
-                                    'credential_types')));
-         }
-      }
-      return $itemtypes;
-   }
 }
 
 ?>

@@ -284,6 +284,9 @@ function plugin_headings_fusioninventory_tasks($item, $itemtype='', $items_id=0)
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
       $PluginFusioninventoryAgent->forceRemoteAgent();
    }
+   if (PluginFusioninventoryCredential::hasCredentialsForItemtype($itemtype)) {
+      PluginFusioninventoryCredential::showForItem($item);
+   }
    $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
    $PluginFusioninventoryTaskjob->manageTasksByObject($itemtype, $items_id);
 

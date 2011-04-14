@@ -96,7 +96,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
       } else {
          //Add criteria : display dropdown
-         $options = PluginFusioninventoryStaticmisc::getCredentialsItemTypes();
+         $options = self::getCredentialsItemTypes();
          $options[''] = DROPDOWN_EMPTY_VALUE;
          asort($options);
          $rand = Dropdown::showFromArray('itemtype', $options);
@@ -180,15 +180,191 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       return $input;
    }
 
-   static function getLabelByItemtype($itemtype) {
-      $credentialtypes = PluginFusioninventoryStaticmisc::getCredentialsItemTypes();
-      if (isset($credentialtypes[$itemtype])) {
-         return $credentialtypes[$itemtype];
+   /**
+    * Get an itemtype label by his credential itemtype
+    * @param $credential_itemtype for example PluginFusinvinventoryVmwareESX
+    * @return the label associated with the itemtype, or false if no credential found
+    */
+   static function getLabelByItemtype($credential_itemtype) {
+      $credentialtypes = self::findItemtypeType($credential_itemtype);
+      if (!empty($credentialtypes)) {
+         return $credentialtypes['name'];
 
       } else {
          return false;
       }
    } 
+   
+   static function hasCredentialsForItemtype($itemtype) {
+      foreach (PluginFusioninventoryModule::getAll() as $data) {
+         $class = 'Plugin'.ucfirst($data['directory']).'Staticmisc';
+
+         if (is_callable(array($class, 'credential_types'))) {
+            $res = call_user_func(array($class, 'credential_types'));
+            foreach ($res as $credential) {
+               if (in_array($itemtype,$credential['targets'])) {
+                  return true;
+               }
+            }
+         }
+      }
+      return false;
+   }
+   
+   /**
+    * Find a credential by his itemtype
+    */
+   static function findItemtypeType($credential_itemtype) {
+      foreach (PluginFusioninventoryModule::getAll() as $data) {
+         $class = 'Plugin'.ucfirst($data['directory']).'Staticmisc';
+
+         if (is_callable(array($class, 'credential_types'))) {
+            $res = call_user_func(array($class, 'credential_types'));
+            foreach ($res as $credential) {
+               if ($credential['itemtype'] == $credential_itemtype) {
+                  return $credential;
+               }
+            }
+         }
+      }
+      return array();
+   }
+   
+   /**
+    * Get all modules that can declare credentials
+    */
+   static function getCredentialsItemTypes() {
+      $itemtypes = array();
+      foreach (PluginFusioninventoryModule::getAll() as $data) {
+         $class = 'Plugin'.ucfirst($data['directory']).'Staticmisc';
+
+         if (is_callable(array($class, 'credential_types'))) {
+            $res = call_user_func(array($class, 'credential_types'));
+            foreach ($res as $credential) {
+               $itemtypes[$credential['itemtype']] = $credential['name'];
+            }
+         }
+      }
+      return $itemtypes;
+   }
+
+   static function getForItemtype($itemtype) {
+      $itemtypes = array();
+      foreach (PluginFusioninventoryModule::getAll() as $data) {
+         $class = 'Plugin'.ucfirst($data['directory']).'Staticmisc';
+         if (is_callable(array($class, 'credential_types'))) {
+            foreach (call_user_func(array($class, 'credential_types')) as $credential) {
+               if (in_array($itemtype, $credential['targets'])) {
+                  $itemtypes[$credential['itemtype']] = $credential['name'];
+               }
+            }
+         }
+      }
+      return $itemtypes;
+   }
+   
+   static function showForItem(CommonDBTM $item) {
+      global $LANG, $CFG_GLPI;
+      
+      $ID = $item->fields['id'];
+
+      if (!$item->getFromDB($ID) || !$item->can($ID, "r")) {
+         return false;
+      }
+      $canedit = $item->can($ID, "w");
+
+      echo "<div class='spaced center'>";
+
+      $credentials = getAllDatasFromTable('glpi_plugin_fusioninventory_credentials_items',
+                                          "`items_id` = '".$ID."' 
+                                            AND `itemtype`='".get_class($item)."'");
+
+      echo "<form method='post' action='".getItemTypeFormURL('PluginFusioninventoryCredential_Item').
+         "' name='credential_form' id='credential_form'>";
+      echo "<table class='tab_cadre_fixe'>";
+      
+      echo "<tr class='tab_bg_2'><th colspan='3'>";
+      echo $LANG['plugin_fusioninventory']['credential'][1]."</th></tr>";
+
+      echo "<tr class='tab_bg_2'><th colspan='3'>".$LANG['plugin_fusioninventory']['credential'][4].
+         "</th></tr>";
+
+      $types = self::getForItemtype(get_class($item));
+      if (!empty($types)) {
+         echo "<tr class='tab_bg_2'><td>";
+         echo $LANG['plugin_fusioninventory']['credential'][3]."</td>"; 
+         echo "<td>";
+         $types[''] = DROPDOWN_EMPTY_VALUE;
+         $rand = Dropdown::showFromArray('itemtype',$types);
+
+         $params = array('itemtype' => '__VALUE__',
+                         'id'       => $ID,
+                         'target'   => get_class($item));
+         $url = $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownCredentials.php";
+         ajaxUpdateItemOnSelectEvent("dropdown_itemtype$rand", "span_credentials",
+                                     $url,
+                                     $params);
+         echo "&nbsp;<span id='span_credentials' name='span_credentials'></span>";
+         echo "</td>";
+         echo "</tr>";
+      }
+      echo "</table>";
+
+      echo "<table class='tab_cadre_fixe'>";
+
+      if (empty($credentials)) {
+         echo "<tr><td colspan='2' class='center'>".$LANG['plugin_fusioninventory']['credential'][2].
+            "</td></tr>";
+      } else {
+
+         $sel ="";
+         if (isset ($_GET["select"]) && $_GET["select"] == "all") {
+            $sel = "checked";
+         }
+ 
+         $obj = new PluginFusioninventoryCredential();
+         echo "<tr><th></th><th>".$LANG['common'][17]."</td><th>".$LANG['common'][16]."</td></tr>";
+         foreach ($credentials as $credential) {
+            $obj->getFromDB($credential['plugin_fusioninventory_credentials_id']);
+
+            echo "<tr><td class='center'>";
+            echo "<input type='checkbox' name='item[".$credential['id']."]' value='1' $sel>";
+            echo "</td>";
+            echo "<td>";
+            echo self::getLabelByItemtype($obj->fields['itemtype']);
+            echo "</td><td>";
+            echo $obj->getLink(true);
+            echo "</td></tr>";
+         }
+
+         openArrowMassive("credential_form", true);
+         closeArrowMassive('delete', $LANG['buttons'][6]);
+         
+      }
+      echo "</table></form>";
+      echo "</div>";
+
+   }
+   
+   static function dropdownCredentialsForItemtype($params = array()) {
+      global $LANG;
+
+      if ($params['itemtype'] != '') {
+
+         $results = getAllDatasFromTable('glpi_plugin_fusioninventory_credentials',
+                                         "`itemtype`='".$params['itemtype']."'");
+         $types = array();
+
+         foreach ($results as $result) {
+            $types[$result['id']] = $result['name'];
+         }
+         Dropdown::showFromArray('plugin_fusioninventory_credentials_id', $types);
+         echo "&nbsp;<input type='submit' class='submit' name='add' value='".
+            $LANG['buttons'][8]."'>";
+         echo "<input type='hidden' name='itemtype' value='".$params['target']."'>";
+         echo "<input type='hidden' name='items_id' value='".$params['id']."'>";
+      }
+   }
 }
 
 ?>
