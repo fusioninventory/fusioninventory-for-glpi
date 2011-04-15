@@ -360,6 +360,5 @@ $LANG['plugin_fusioninventory']['xml'][0]="XML";
 
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Плохой маркер. не возможно запустить агент";
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Агент остановлен/сломан";
-
+$LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['ocsconfig'][11];
 ?>
->>>>>>> fixes

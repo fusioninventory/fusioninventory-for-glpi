@@ -606,7 +606,7 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                      }
                   } else {
                      // no import
-                     $output['action'] = self::LINK_RESULT_IMPORT;
+                     $output['action'] = self::LINK_RESULT_NO_IMPORT;
                   }
                }
 

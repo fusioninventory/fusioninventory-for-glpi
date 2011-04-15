@@ -178,5 +178,5 @@ $LANG['plugin_fusioninventory']['xml'][0]="XML";
 
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Falcher Token, kann den Agent nicht starten";
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Agent gestoppt/abgestürzt";
-
+$LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['ocsconfig'][11];
 ?>
