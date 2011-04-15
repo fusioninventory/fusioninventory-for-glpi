@@ -148,6 +148,34 @@ class PluginFusinvinventoryRuleEntity extends PluginFusioninventoryRule {
 
       return $actions;
    }
+
+
+   function displayAdditionalRuleCondition($condition, $criteria, $name, $value, $test=false) {
+      if ($test) {
+         return false;
+      }
+
+      switch ($condition) {
+         case PluginFusioninventoryRule::PATTERN_FIND:
+            return false;
+            break;
+
+         case PluginFusioninventoryRuleImportEquipment::PATTERN_IS_EMPTY :
+            Dropdown::showYesNo($name, 0, 0);
+            return true;
+
+         case PluginFusioninventoryRule::PATTERN_EXISTS:
+            echo Dropdown::showYesNo($name, 1, 0);
+            return true;
+
+         case PluginFusioninventoryRule::PATTERN_DOES_NOT_EXISTS:
+            echo Dropdown::showYesNo($name, 1, 0);
+            return true;
+      }
+
+      return false;
+   }
+
 }
 
 ?>
