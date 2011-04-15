@@ -72,6 +72,8 @@ $LANG['plugin_fusioninventory']['functionalities'][76]="Extra-debug";
 
 $LANG['plugin_fusioninventory']['errors'][22]="Elemento autônomo em";
 $LANG['plugin_fusioninventory']['errors'][50]="Versão do GLPI não compatível. Necessário versão 0.78";
+$LANG['plugin_fusioninventory']['errors'][1] = "PHP allow_url_fopen is off, can't wake agent to do inventory";
+$LANG['plugin_fusioninventory']['errors'][2] = "PHP allow_url_fopen is off, push mode can't work";
 
 $LANG['plugin_fusioninventory']['rules'][2]="Equipment import and link rules";
 $LANG['plugin_fusioninventory']['rules'][3]="Search GLPI equipment with the status";
