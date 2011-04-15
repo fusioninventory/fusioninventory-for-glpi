@@ -33,45 +33,23 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+   define('GLPI_ROOT', '../../..');
 }
 
+include (GLPI_ROOT."/inc/includes.php");
 
-class PluginFusioninventoryWizard {
+commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","wizard-start");
 
-   function filAriane($a_list) {
-      echo "<td valign='top'>";
-      echo "<strong>Fil d'ariane</strong><br/>";
-      echo "* choix de l'action";
-      echo "</td>";
-      
-   }
+PluginFusioninventoryMenu::displayMenu("mini");
 
+$PluginFusioninventoryWizard = new PluginFusioninventoryWizard();
 
-   function displayButtons($a_buttons) {
-      echo "<center><table>";
-      echo "<tr>";
-      $this->filAriane(array());
-      echo "<td>";
-         echo "<table CELLspacing='10'>";
-         echo "<tr>";
-         foreach ($a_buttons as $name=>$link) {
-            echo "<td background='".GLPI_ROOT."/plugins/fusioninventory/pics/wizard_button.png'
-               width='240' height='155' align='center'>";
-            echo "<a href='".$link."'><strong>".$name."</strong></a>";
-            echo "</td>";
-         }
-         echo "</tr>";
-         echo "</table>";
-      echo "</td>";
-      echo "</tr>";
-      echo "</table></center>";
+$a_buttons = array('Découvrir le matériel sur le réseau'=>'front',
+                  'Inventorier les ordinateurs'=>'front',
+                  'Inventorier les imprimantes et switches'=>'front');
 
-      
-   }
+$PluginFusioninventoryWizard->displayButtons($a_buttons);
 
-
-
-}
+commonFooter();
 
 ?>
