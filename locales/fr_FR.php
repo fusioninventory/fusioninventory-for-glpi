@@ -178,5 +178,5 @@ $LANG['plugin_fusioninventory']['xml'][0]="XML";
 
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Mauvais jeton, impossible d'agir sur l'agent";
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Agent arrêté ou crashé";
-
+$LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['ocsconfig'][11];
 ?>
