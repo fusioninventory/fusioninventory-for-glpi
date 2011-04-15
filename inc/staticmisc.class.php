@@ -116,13 +116,100 @@ class PluginFusinvinventoryStaticmisc {
                          'name'    => $LANG['plugin_fusinvinventory']['profile'][3]),
                    array('profil'  => 'blacklist',
                          'name'    => $LANG['plugin_fusinvinventory']['profile'][4]),
-                   array('profil'  => 'blacklist',
+                   array('profil'  => 'esx',
                          'name'    => $LANG['plugin_fusinvinventory']['vmwareesx'][0]));
    }
    
    static function credential_types() {
      global $LANG;
-     return array('PluginFusinvinventoryVmwareESX' => $LANG['plugin_fusinvinventory']['vmwareesx'][0]);
+ 
+     $tmp = array ('itemtype'  => 'PluginFusinvinventoryVmwareESX', //Credential itemtype
+                   'name'      => $LANG['plugin_fusinvinventory']['vmwareesx'][0], //Label
+                   'targets'   => array('Computer'));
+                   
+     return array($tmp);
+   }
+
+   /**
+   * Get types of datas available to select for taskjob definition for WakeOnLan method
+   *
+   * @param $a_itemtype array types yet added for definitions
+   *
+   * @return array ('itemtype'=>'value','itemtype'=>'value'...)
+   *   itemtype itemtype of object
+   *   value name of the itemtype
+   **/
+   static function task_definitiontype_esx($a_itemtype) {
+      return array ('' => DROPDOWN_EMPTY_VALUE, 'Computer' => Computer::getTypeName());
+   }
+
+
+
+   /**
+   * Get all devices of definition type 'Computer' defined in task_definitiontype_wakeonlan
+   *
+   * @param $title value ???(not used I think)
+   *
+   * @return dropdown list of computers
+   *
+   **/
+   static function task_definitionselection_Computer_esx($title) {
+      global $DB;
+
+      $query = "SELECT `c`.`id`, `c`.`name` 
+                FROM `glpi_plugin_fusioninventory_credentials_items` as `ci`
+                LEFT JOIN `glpi_plugin_fusioninventory_credentials` as `cr`
+                     ON `cr`.`id` = `ci`.`plugin_fusioninventory_credentials_id`
+                LEFT JOIN `glpi_computers` as `c` ON `ci`.`items_id` = `c`.`id`
+                WHERE `cr`.`itemtype`='PluginFusinvinventoryVmwareESX'".
+                  getEntitiesRestrictRequest(' AND','c');
+      
+      $results = $DB->query($query);
+      $agents = array();
+      while ($data = $DB->fetch_array($results)) {
+         $agents[$data['id']] = $data['name'];
+      }
+      return Dropdown::showFromArray('definitionselectiontoadd',$agents);
+   }
+
+
+   /**
+   * Get all devices of definition type 'Computer' defined in task_definitiontype_wakeonlan
+   *
+   * @param $title value ???(not used I think)
+   *
+   * @return dropdown list of computers
+   *
+   **/
+   static function task_actionselection_Computer_esx($title) {
+      global $DB;
+
+      $options = array();
+      $options['name'] = 'definitionactiontoadd';
+
+      $module = new PluginFusioninventoryAgentmodule();
+      $module_infos = $module->getActivationExceptions('esx');
+      $agent = new PluginFusioninventoryAgent();
+      $exceptions = json_decode($module_infos['exceptions'],true);
+
+      if (!empty($exceptions)) {
+         $in = " AND `a`.`id` NOT IN (".implode($exceptions,',').")";
+      } else {
+         $in = "";
+      }
+
+      $query = "SELECT `c`.`id`, `c`.`name` 
+                FROM `glpi_plugin_fusioninventory_agents` as `a` 
+                LEFT JOIN `glpi_computers` as `c` ON `a`.`items_id` = `c`.`id`
+                WHERE `a`.`items_id` IS NOT NULL $in";
+      $query.= getEntitiesRestrictRequest(' AND','glpi_plugin_fusioninventory_agents');
+      
+      $results = $DB->query($query);
+      $agents = array();
+      while ($data = $DB->fetch_array($results)) {
+         $agents[$data['id']] = $data['name'];
+      }
+      return Dropdown::showFromArray('definitionselectiontoadd',$agents);
    }
 }
 
