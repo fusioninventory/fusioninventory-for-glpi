@@ -40,52 +40,55 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryWizard {
 
    function filAriane($a_list) {
-      $i = 0;
-      echo "<table class='tab_cadre'>";
+
+      echo "<table class='tab_cadre' width='250'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th>";
       echo "<strong>Fil d'ariane</strong>";
       echo "</th>";
       echo "</tr>";
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo "<img src='".GLPI_ROOT."/pics/right.png'/>";
-      echo " choix de l'action";
-      $i++;
-      echo "</td>";
-      echo "</tr>";
+      foreach ($a_list as $name=>$link) {
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>";
+         $split = explode("/", $_SERVER["PHP_SELF"]);
+         if (strstr($link, array_pop($split))) {
+            echo "<img src='".GLPI_ROOT."/pics/right.png'/>";
+         } else {
+            echo "<img src='".GLPI_ROOT."/pics/right_off.png'/>";
+         }
+         echo " <a href='".$link."'>".$name."</a>";
+         echo "</td>";
+         echo "</tr>";
+      }
 
       echo "</table>";
    }
 
 
-   function displayButtons($a_buttons) {
+   function displayButtons($a_buttons, $a_filariane) {
 
       echo "<style type='text/css'>
-.bgout {
-   background-image: url(".GLPI_ROOT."/plugins/fusioninventory/pics/wizard_button.png);
-}
-.bgover {
-   background-image: url(".GLPI_ROOT."/plugins/fusioninventory/pics/wizard_button_active.png);
-}
-</style>";
-      echo "<center><table>";
+      .bgout {
+         background-image: url(".GLPI_ROOT."/plugins/fusioninventory/pics/wizard_button.png);
+      }
+      .bgover {
+         background-image: url(".GLPI_ROOT."/plugins/fusioninventory/pics/wizard_button_active.png);
+      }
+      </style>";
+      echo "<center><table width='950'>";
       echo "<tr>";
-      echo "<td valign='top'>";
-      $this->filAriane(array());
-      echo "</td>";
-      echo "<td>";
+      echo "<td height='8'></td>";
+      echo "<td rowspan='2'>";
          echo "<table cellspacing='10'>";
          echo "<tr>";
-         $t= 0;
-         foreach ($a_buttons as $name=>$link) {
-            $t++;
+         foreach ($a_buttons as $array) {
             echo "<td class='bgout'
                onmouseover='this.className=\"bgover\"' onmouseout='this.className=\"bgout\"'
+               onClick='location.href=\"".$array[1]."\"'
                width='240' height='155' align='center'>";
-            echo "<strong>".$name."</strong><br/>";
-            if ($t == '1') {
-            echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/networkscan.png'/>";
+            echo "<strong>".$array[0]."</strong><br/>";
+            if ($array[2] != '') {
+               echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/".$array[2]."'/>";
             }
             echo "</td>";
          }
@@ -93,6 +96,13 @@ class PluginFusioninventoryWizard {
          echo "</table>";
       echo "</td>";
       echo "</tr>";
+
+      echo "<tr>";
+      echo "<td valign='top'>";
+      $this->filAriane($a_filariane);
+      echo "</td>";
+      echo "</tr>";
+
       echo "</table></center>";
 
       

@@ -44,15 +44,18 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 $PluginFusioninventoryWizard = new PluginFusioninventoryWizard();
 
-$a_buttons = array(array('Découvrir le matériel sur le réseau',
+$a_buttons = array(array('Des ordinateurs et leur périphériques',
                          GLPI_ROOT.'/plugins/fusioninventory/front/wizard_networkdiscover.php',
-                         'networkscan.png'),
-                   array('Inventorier des matériels',
+                         ''),
+                   array('Des imprimantes réseaux ou des matériels réseaux',
                           GLPI_ROOT.'/plugins/fusioninventory/front/wizard_inventory.php',
                           ''));
-$a_ariane = array("choix de l'action"=>GLPI_ROOT."/plugins/fusioninventory/front/wizard_start.php");
 
-echo "<center>Bienvenue dans FusionInventory. Que désirez vous ?</center><br/>";
+$a_ariane = array("choix de l'action"=>GLPI_ROOT."/plugins/fusioninventory/front/wizard_start.php",
+                  "Type de matériel à inventorier"=>GLPI_ROOT."/plugins/fusioninventory/front/wizard_inventory.php");
+
+
+echo "<center>Quels types matériel voulez-vous inventorier  ?</center><br/>";
 
 $PluginFusioninventoryWizard->displayButtons($a_buttons, $a_ariane);
 
