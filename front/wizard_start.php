@@ -48,6 +48,8 @@ $a_buttons = array('Découvrir le matériel sur le réseau'=>'front',
                   'Inventorier les ordinateurs'=>'front',
                   'Inventorier les imprimantes et switches'=>'front');
 
+echo "<center>Bienvenue dans FusionInventory. Que désirez vous ?</center><br/>";
+
 $PluginFusioninventoryWizard->displayButtons($a_buttons);
 
 commonFooter();

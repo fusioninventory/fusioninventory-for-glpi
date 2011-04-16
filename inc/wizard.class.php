@@ -40,23 +40,46 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryWizard {
 
    function filAriane($a_list) {
-      echo "<td valign='top'>";
-      echo "<strong>Fil d'ariane</strong><br/>";
-      echo "* choix de l'action";
+      $i = 0;
+      echo "<table class='tab_cadre'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<th>";
+      echo "<strong>Fil d'ariane</strong>";
+      echo "</th>";
+      echo "</tr>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>";
+      echo "<img src='".GLPI_ROOT."/pics/right.png'/>";
+      echo " choix de l'action";
+      $i++;
       echo "</td>";
-      
+      echo "</tr>";
+
+      echo "</table>";
    }
 
 
    function displayButtons($a_buttons) {
+
+      echo "<style type='text/css'>
+.bgout {
+   background-image: url(".GLPI_ROOT."/plugins/fusioninventory/pics/wizard_button.png);
+}
+.bgover {
+   background-image: url(".GLPI_ROOT."/plugins/fusioninventory/pics/wizard_button_active.png);
+}
+</style>";
       echo "<center><table>";
       echo "<tr>";
+      echo "<td valign='top'>";
       $this->filAriane(array());
+      echo "</td>";
       echo "<td>";
-         echo "<table CELLspacing='10'>";
+         echo "<table cellspacing='10'>";
          echo "<tr>";
          foreach ($a_buttons as $name=>$link) {
-            echo "<td background='".GLPI_ROOT."/plugins/fusioninventory/pics/wizard_button.png'
+            echo "<td class='bgout'
+               onmouseover='this.className=\"bgover\"' onmouseout='this.className=\"bgout\"'
                width='240' height='155' align='center'>";
             echo "<a href='".$link."'><strong>".$name."</strong></a>";
             echo "</td>";
