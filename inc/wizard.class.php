@@ -77,11 +77,16 @@ class PluginFusioninventoryWizard {
       echo "<td>";
          echo "<table cellspacing='10'>";
          echo "<tr>";
+         $t= 0;
          foreach ($a_buttons as $name=>$link) {
+            $t++;
             echo "<td class='bgout'
                onmouseover='this.className=\"bgover\"' onmouseout='this.className=\"bgout\"'
                width='240' height='155' align='center'>";
-            echo "<a href='".$link."'><strong>".$name."</strong></a>";
+            echo "<strong>".$name."</strong><br/>";
+            if ($t == '1') {
+            echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/networkscan.png'/>";
+            }
             echo "</td>";
          }
          echo "</tr>";
