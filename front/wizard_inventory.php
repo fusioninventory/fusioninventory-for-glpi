@@ -46,7 +46,7 @@ $PluginFusioninventoryWizard = new PluginFusioninventoryWizard();
 
 $a_buttons = array(array('Des ordinateurs et leur périphériques',
                          GLPI_ROOT.'/plugins/fusioninventory/front/wizard_networkdiscover.php',
-                         ''),
+                         'computer_peripheral.png'),
                    array('Des imprimantes réseaux ou des matériels réseaux',
                           GLPI_ROOT.'/plugins/fusioninventory/front/wizard_inventory.php',
                           ''));
