@@ -40,7 +40,9 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryWizard {
 
    function filAriane($a_list) {
-
+      if (count($a_list) == '0') {
+         return;
+      }
       echo "<table class='tab_cadre' width='250'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th>";
@@ -77,8 +79,7 @@ class PluginFusioninventoryWizard {
       </style>";
       echo "<center><table width='950'>";
       echo "<tr>";
-      echo "<td height='8'></td>";
-      echo "<td rowspan='2'>";
+      echo "<td rowspan='2' align='center'>";
          echo "<table cellspacing='10'>";
          echo "<tr>";
          foreach ($a_buttons as $array) {
@@ -95,6 +96,7 @@ class PluginFusioninventoryWizard {
          echo "</tr>";
          echo "</table>";
       echo "</td>";
+      echo "<td height='8'></td>";
       echo "</tr>";
 
       echo "<tr>";
@@ -119,19 +121,20 @@ class PluginFusioninventoryWizard {
       </style>";
       echo "<center><table width='950'>";
       echo "<tr>";
-      echo "<td valign='top'>";
-      $this->filAriane($a_filariane);
-      echo "</td>";
       echo "<td>";
       $class = new $classname;
       $class->showForm(array('target'=>$_SERVER["PHP_SELF"]));
       echo "</td>";
+      echo "<td valign='top'>";
+      $this->filAriane($a_filariane);
+      echo "</td>";
       echo "</tr>";
 
       echo "<tr>";
-      echo "<td colspan='2' align='right'>";
+      echo "<td align='right'>";
       echo "<input class='submit' type='submit' name='next' value='".$a_button['name']." >'/>";
       echo "</td>";
+      echo "<td></td>";
       echo "</tr>";
 
       echo "</table></center>";
@@ -143,7 +146,6 @@ class PluginFusioninventoryWizard {
       return array(
       "choix de l'action"=>GLPI_ROOT."/plugins/fusioninventory/front/wizard_start.php",
       "Type de matériel à inventorier"=>GLPI_ROOT."/plugins/fusioninventory/front/wizard_inventory.php",
-      "Inventaire ordinateur"=>GLPI_ROOT."/plugins/fusioninventory/front/wizard_inventorycomputer.php",
       "Options d'importation"=>GLPI_ROOT."/plugins/fusioninventory/front/wizard_inventorycomputeroptions.php",
       "Règles d'import d'ordinateurs"=>"",
       "Règles de sélection de l'entité"=>"",

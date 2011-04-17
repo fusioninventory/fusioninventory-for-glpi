@@ -50,9 +50,9 @@ $a_buttons = array(array('Découvrir le matériel sur le réseau',
                    array('Inventorier des matériels',
                           GLPI_ROOT.'/plugins/fusioninventory/front/wizard_inventory.php',
                           'general_inventory.png'));
-$a_ariane = array("choix de l'action"=>GLPI_ROOT."/plugins/fusioninventory/front/wizard_start.php");
+$a_ariane = array();
 
-echo "<center>Bienvenue dans FusionInventory. Que désirez vous ?</center><br/>";
+echo "<center>Bienvenue dans FusionInventory. Commencer la configuration ?</center><br/>";
 
 $PluginFusioninventoryWizard->displayButtons($a_buttons, $a_ariane);
 

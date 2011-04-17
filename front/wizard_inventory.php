@@ -40,12 +40,12 @@ include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","wizard-start");
 
-PluginFusioninventoryMenu::displayMenu("mini");
+//PluginFusioninventoryMenu::displayMenu("mini");
 
 $PluginFusioninventoryWizard = new PluginFusioninventoryWizard();
 
 $a_buttons = array(array('Des ordinateurs et leur périphériques',
-                         GLPI_ROOT.'/plugins/fusioninventory/front/wizard_inventorycomputer.php',
+                         GLPI_ROOT.'/plugins/fusioninventory/front/wizard_inventorycomputeroptions.php',
                          'computer_peripheral.png'),
                    array('Des imprimantes réseaux ou des matériels réseaux',
                           '',
