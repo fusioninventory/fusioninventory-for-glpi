@@ -119,11 +119,19 @@ class PluginFusinvinventoryLock {
                         }
                      } else if ($table != "") {
                         $libunserialized = unserialize($infoSections["sections"][$datas['xmlSection']."/".$item->fields['items_id']]);
-                        $vallib = Dropdown::importExternal($itemtypeLink,$libunserialized[$datas['xmlSectionChild']]);
+                        if ($datas['xmlSectionChild'] == "TYPE") {
+                           if ($libunserialized[$datas['xmlSectionChild']] != "") {
+                              $vallib = Dropdown::importExternal($itemtypeLink,$libunserialized[$datas['xmlSectionChild']]);
+                           } else {
+                              $vallib = Dropdown::importExternal($itemtypeLink,$libunserialized["MMODEL"]);
+                           }
+                        } else {
+                           $vallib = Dropdown::importExternal($itemtypeLink,$libunserialized[$datas['xmlSectionChild']]);
+                        }
                         $class->fields[$datas['glpiField']] = $vallib;
                      } else {
                         $libunserialized = unserialize($infoSections["sections"][$datas['xmlSection']."/".$item->fields['items_id']]);
-
+                        
                         if ($datas['glpiField'] == 'contact') {
                            $contact = '';
                            foreach($infoSections["sections"] as $sectionname=>$serializeddatas) {
