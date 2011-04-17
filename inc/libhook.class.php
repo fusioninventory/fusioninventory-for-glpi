@@ -918,6 +918,12 @@ class PluginFusinvinventoryLibhook {
        $opt[$i]['glpiItemtype']     = 'Computer';
        $opt[$i]['glpiField']        = 'serial';
 
+       $i++;
+       $opt[$i]['xmlSection']       = 'BIOS';
+       $opt[$i]['xmlSectionChild']  = 'TYPE';
+       $opt[$i]['glpiItemtype']     = 'Computer';
+       $opt[$i]['glpiField']        = 'computertypes_id';
+
        return $opt;
     }
 
