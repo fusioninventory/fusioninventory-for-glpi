@@ -108,7 +108,8 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                           ON `plugin_fusinvsnmp_models_id`=`glpi_plugin_fusinvsnmp_models`.`id`
                      WHERE `glpi_networkequipments`.`is_deleted`='0'
                           AND `plugin_fusinvsnmp_models_id`!='0'
-                          AND `plugin_fusinvsnmp_configsecurities_id`!='0'";
+                          AND `plugin_fusinvsnmp_configsecurities_id`!='0'
+                          AND `glpi_plugin_fusinvsnmp_models`.`itemtype`='NetworkEquipment'";
          if ($PluginFusinvsnmpIPRange->fields['entities_id'] != '-1') {
            $query .= "AND `glpi_networkequipments`.`entities_id`='".$PluginFusinvsnmpIPRange->fields['entities_id']."' ";
          }
@@ -136,7 +137,8 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                        ON `plugin_fusinvsnmp_configsecurities_id`=`glpi_plugin_fusinvsnmp_configsecurities`.`id`
                   WHERE `glpi_printers`.`is_deleted`=0
                         AND `plugin_fusinvsnmp_models_id`!='0'
-                        AND `plugin_fusinvsnmp_configsecurities_id`!='0'";
+                        AND `plugin_fusinvsnmp_configsecurities_id`!='0'
+                        AND `glpi_plugin_fusinvsnmp_models`.`itemtype`='Printer'";
          if ($PluginFusinvsnmpIPRange->fields['entities_id'] != '-1') {
             $query .= "AND `glpi_printers`.`entities_id`='".$PluginFusinvsnmpIPRange->fields['entities_id']."' ";
          }
