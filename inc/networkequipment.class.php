@@ -52,7 +52,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
    }
 
 
-   
+  
    /**
     * Load an existing networking switch
     *
@@ -600,12 +600,13 @@ function appear_legend(id){
 
 		echo "<tr class='tab_bg_1'>";
 
-		echo '<th><img alt="'.$LANG['setup'][252].'"
-                     title="'.$LANG['setup'][252].'"
-                     src="'.GLPI_ROOT.'/pics/options_search.png" class="pointer"
-                     onclick="var w = window.open(\''.GLPI_ROOT.
-                        '/front/popup.php?popup=search_config&itemtype=PluginFusinvsnmpNetworkEquipment\' ,\'glpipopup\',
-                        \'height=400, width=1000, top=100, left=100, scrollbars=yes\' ); w.focus();"></th>';
+		echo '<th>';
+//      echo '<img alt="'.$LANG['setup'][252].'"
+//                     title="'.$LANG['setup'][252].'"
+//                     src="'.GLPI_ROOT.'/pics/options_search.png" class="pointer"
+//                     onclick="var w = window.open(\''.GLPI_ROOT.
+//                        '/front/popup.php?popup=search_config&itemtype=PluginFusinvsnmpNetworkEquipment\' ,\'glpipopup\',
+//                        \'height=400, width=1000, top=100, left=100, scrollbars=yes\' ); w.focus();"></th>';
 		echo "<th>".$LANG["common"][16]."</th>";
 
 		$query_array = "SELECT *
