@@ -86,7 +86,7 @@ class PluginFusioninventoryWizard {
                onmouseover='this.className=\"bgover\"' onmouseout='this.className=\"bgout\"'
                onClick='location.href=\"".$array[1]."\"'
                width='240' height='155' align='center'>";
-            echo "<strong>".$array[0]."</strong><br/>";
+            echo "<strong>".$array[0]."</strong><br/><br/>";
             if ($array[2] != '') {
                echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/".$array[2]."'/>";
             }
