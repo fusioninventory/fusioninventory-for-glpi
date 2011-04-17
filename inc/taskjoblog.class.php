@@ -302,14 +302,9 @@ function appear_array(id){
             $text .= $LANG['common'][25];
             $text .= "</th>";
             $text .= "</tr>";
-
             $text .= "<tr class='tab_bg_1'>";
-            $text .= "<th>";
-            $text .= $LANG['plugin_fusioninventory']['agents'][28]."&nbsp;:";
-            $text .= "</th>";
-            $text .= "<th>";
-            $PluginFusioninventoryAgent->getFromDB($data['plugin_fusioninventory_agents_id']);
-            $text .= $PluginFusioninventoryAgent->getLink(1);
+            $text .= "<th colspan='2'>";
+            $text .= $LANG['plugin_fusioninventory']['agents'][28];
             $text .= "</th>";
             $a_return = $this->displayHistoryDetail(array_shift($a_history));
             $count = $a_return[0];
@@ -318,10 +313,28 @@ function appear_array(id){
             $text .= "</tr>";
 
             $text .= "<tr class='tab_bg_1'>";
-            $text .= "<th>";
-            $text .= $LANG['plugin_fusioninventory']['task'][27]."&nbsp;:";
+            $text .= "<td colspan='2'>";
+            $PluginFusioninventoryAgent->getFromDB($data['plugin_fusioninventory_agents_id']);
+            $text .= $PluginFusioninventoryAgent->getLink(1);
+            $text .= "</td>";
+            $a_return = $this->displayHistoryDetail(array_shift($a_history));
+            $count = $a_return[0];
+            $text .= $a_return[1];
+            $displayforceend += $count;
+            $text .= "</tr>";
+
+            $text .= "<tr class='tab_bg_1'>";
+            $text .= "<th colspan='2'>";
+            $text .= $LANG['plugin_fusioninventory']['task'][27];
             $text .= "</th>";
-            $text .= "<th>";
+            $a_return = $this->displayHistoryDetail(array_shift($a_history));
+            $count = $a_return[0];
+            $text .= $a_return[1];
+            $displayforceend += $count;
+            $text .= "</tr>";
+
+            $text .= "<tr class='tab_bg_1'>";
+            $text .= "<td colspan='2'>";
             if (!empty($data["itemtype"])) {
                $device = new $data["itemtype"]();
                $device->getFromDB($data["items_id"]);
@@ -329,12 +342,13 @@ function appear_array(id){
                $text .= "&nbsp;";
                $text .= "(".$device->getTypeName().")";
             }
-            $text .= "</th>";
+            $text .= "</td>";
             $a_return = $this->displayHistoryDetail(array_shift($a_history));
             $count = $a_return[0];
             $text .= $a_return[1];
             $displayforceend += $count;
             $text .= "</tr>";
+
 
             while (count($a_history) != 0) {
                if (count($a_devices_merged) > 0) {
