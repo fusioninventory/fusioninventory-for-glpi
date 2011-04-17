@@ -104,11 +104,52 @@ class PluginFusioninventoryWizard {
       echo "</tr>";
 
       echo "</table></center>";
-
-      
    }
 
 
+   function displayShowForm($a_button, $a_filariane, $classname) {
+
+      echo "<style type='text/css'>
+      .bgout {
+         background-image: url(".GLPI_ROOT."/plugins/fusioninventory/pics/wizard_button.png);
+      }
+      .bgover {
+         background-image: url(".GLPI_ROOT."/plugins/fusioninventory/pics/wizard_button_active.png);
+      }
+      </style>";
+      echo "<center><table width='950'>";
+      echo "<tr>";
+      echo "<td valign='top'>";
+      $this->filAriane($a_filariane);
+      echo "</td>";
+      echo "<td>";
+      $class = new $classname;
+      $class->showForm(array('target'=>$_SERVER["PHP_SELF"]));
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr>";
+      echo "<td colspan='2' align='right'>";
+      echo "<input class='submit' type='submit' name='next' value='".$a_button['name']." >'/>";
+      echo "</td>";
+      echo "</tr>";
+
+      echo "</table></center>";
+   }
+
+
+
+   function filInventoryComputer() {
+      return array(
+      "choix de l'action"=>GLPI_ROOT."/plugins/fusioninventory/front/wizard_start.php",
+      "Type de matériel à inventorier"=>GLPI_ROOT."/plugins/fusioninventory/front/wizard_inventory.php",
+      "Inventaire ordinateur"=>GLPI_ROOT."/plugins/fusioninventory/front/wizard_inventorycomputer.php",
+      "Options d'importation"=>GLPI_ROOT."/plugins/fusioninventory/front/wizard_inventorycomputeroptions.php",
+      "Règles d'import d'ordinateurs"=>"",
+      "Règles de sélection de l'entité"=>"",
+      "Configuration des agents"=>"");
+
+   }
 
 }
 

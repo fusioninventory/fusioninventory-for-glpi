@@ -44,20 +44,13 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 $PluginFusioninventoryWizard = new PluginFusioninventoryWizard();
 
-$a_buttons = array(array('Des ordinateurs et leur périphériques',
-                         GLPI_ROOT.'/plugins/fusioninventory/front/wizard_inventorycomputer.php',
-                         'computer_peripheral.png'),
-                   array('Des imprimantes réseaux ou des matériels réseaux',
-                          '',
-                          ''));
-
-$a_ariane = array("choix de l'action"=>GLPI_ROOT."/plugins/fusioninventory/front/wizard_start.php",
-                  "Type de matériel à inventorier"=>GLPI_ROOT."/plugins/fusioninventory/front/wizard_inventory.php");
+$a_button = array('name' => 'Suivant',
+                  'link' => GLPI_ROOT.'/plugins/fusioninventory/front/wizard_inventorycomputeroptions.php');
 
 
-echo "<center>Quels types matériel voulez-vous inventorier  ?</center><br/>";
-
-$PluginFusioninventoryWizard->displayButtons($a_buttons, $a_ariane);
+$PluginFusioninventoryWizard->displayShowForm($a_button,
+                                             $PluginFusioninventoryWizard->filInventoryComputer(),
+                                             "PluginFusinvinventoryConfig");
 
 commonFooter();
 
