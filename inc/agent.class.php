@@ -109,7 +109,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
 		$tab[4]['table'] = $this->getTable();
 		$tab[4]['field'] = 'last_contact';
-		$tab[4]['linkfield'] = 'last_contact';
+		$tab[4]['linkfield'] = '';
 		$tab[4]['name'] = $LANG['plugin_fusioninventory']['agents'][4];
 		$tab[4]['datatype'] = 'datetime';
 

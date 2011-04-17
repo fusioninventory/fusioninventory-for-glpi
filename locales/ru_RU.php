@@ -72,6 +72,8 @@ $LANG['plugin_fusioninventory']['functionalities'][76]="Отладка";
 
 $LANG['plugin_fusioninventory']['errors'][22]="Не подключённый элемент в";
 $LANG['plugin_fusioninventory']['errors'][50]="GLPI версия не совместима, требуется версия 0.78";
+$LANG['plugin_fusioninventory']['errors'][1] = "PHP allow_url_fopen is off, can't wake agent to do inventory";
+$LANG['plugin_fusioninventory']['errors'][2] = "PHP allow_url_fopen is off, push mode can't work";
 
 $LANG['plugin_fusioninventory']['rules'][2]="Импорт оборудования и ссылок правил";
 $LANG['plugin_fusioninventory']['rules'][3]="Поиск GLPI оборудования со статусом";
@@ -176,5 +178,5 @@ $LANG['plugin_fusioninventory']['xml'][0]="XML";
 
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Плохой маркер. не возможно запустить агент";
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Агент остановлен/сломан";
-
+$LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['ocsconfig'][11];
 ?>

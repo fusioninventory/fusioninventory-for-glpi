@@ -275,8 +275,11 @@ function plugin_headings_fusioninventory_tasks($item, $itemtype='', $items_id=0)
    }
    if ($itemtype == 'Computer') {
       // Possibility to remote agent
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-      $PluginFusioninventoryAgent->forceRemoteAgent();
+      $allowed = PluginFusioninventoryTaskjob::getAllowurlfopen(1);
+      if (!isset($allowed)) {
+         $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+         $PluginFusioninventoryAgent->forceRemoteAgent();
+      }
    }
    $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
    $PluginFusioninventoryTaskjob->manageTasksByObject($itemtype, $items_id);
