@@ -279,13 +279,18 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                if ((!in_array('.1', $a_action))
                   AND (!in_array('.2', $a_action))) {
 
-                  $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, ip, subnet, token FROM `glpi_plugin_fusioninventory_agents`
-                     LEFT JOIN `glpi_networkports` ON `glpi_networkports`.`items_id` = `glpi_plugin_fusioninventory_agents`.`items_id`
-                     LEFT JOIN `glpi_computers` ON `glpi_computers`.`id` = `glpi_plugin_fusioninventory_agents`.`items_id`
-                     WHERE `glpi_networkports`.`itemtype`='Computer'
-                        AND `glpi_plugin_fusioninventory_agents`.`id`='".current($a_action)."'
-                        AND `glpi_networkports`.`ip`!='127.0.0.1'
-                        AND `glpi_networkports`.`ip`!='' ";
+                  if ($communication == 'push') {
+                     $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, ip, subnet, token FROM `glpi_plugin_fusioninventory_agents`
+                        LEFT JOIN `glpi_networkports` ON `glpi_networkports`.`items_id` = `glpi_plugin_fusioninventory_agents`.`items_id`
+                        LEFT JOIN `glpi_computers` ON `glpi_computers`.`id` = `glpi_plugin_fusioninventory_agents`.`items_id`
+                        WHERE `glpi_networkports`.`itemtype`='Computer'
+                           AND `glpi_plugin_fusioninventory_agents`.`id`='".current($a_action)."'
+                           AND `glpi_networkports`.`ip`!='127.0.0.1'
+                           AND `glpi_networkports`.`ip`!='' ";
+                  } else if ($communication == 'pull') {
+                     $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, token FROM `glpi_plugin_fusioninventory_agents`
+                        WHERE `glpi_plugin_fusioninventory_agents`.`id`='".current($a_action)."'";
+                  }
                   if ($result = $DB->query($query)) {
                      while ($data=$DB->fetch_array($result)) {
                         if ($communication == 'push') {
