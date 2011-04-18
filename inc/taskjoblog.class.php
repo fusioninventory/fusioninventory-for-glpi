@@ -371,9 +371,9 @@ function appear_array(id){
                if (count($a_devices_merged) > 0) {
                   $text .= "<tr class='tab_bg_1'>";
                   $text .= "<th></th>";
-                  $text .= "<th>";
+                  $text .= "<td>";
                   $text .= array_pop($a_devices_merged);
-                  $text .= "</th>";
+                  $text .= "</td>";
                   $a_return = $this->displayHistoryDetail(array_shift($a_history));
                   $count = $a_return[0];
                   $text .= $a_return[1];
