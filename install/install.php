@@ -178,6 +178,9 @@ function pluginFusinvinventoryInstall() {
             $ruleaction->add($input);
          }
       }
+      // Import OCS locks
+      $PluginFusinvinventoryLock = new PluginFusinvinventoryLock();
+      $PluginFusinvinventoryLock->importFromOcs();
    }
 }
 

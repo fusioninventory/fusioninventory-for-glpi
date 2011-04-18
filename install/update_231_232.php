@@ -32,42 +32,28 @@
    ----------------------------------------------------------------------
  */
 
-function pluginFusinvinventoryGetCurrentVersion($version) {
-   $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
-   $version_installed = $PluginFusioninventoryConfig->getValue(PluginFusioninventoryModule::getModuleId("fusinvinventory"),
-                                             "version");
+// Update from 2.3.1 to 2.3.2
+function update231to232() {
+   global $DB, $CFG_GLPI, $LANG;
 
-   if ($version_installed) {
-      return $version_installed;
-   } else {
-      return $version;
-   }
-}
-
-
-function pluginFusinvinventoryUpdate($current_version) {
-
-   echo "<center>";
-   echo "<table class='tab_cadre' width='950'>";
-   echo "<tr>";
-   echo "<th>Update process<th>";
+   echo "<strong>Update 2.3.1 to 2.3.2</strong><br/>";
+   echo "</td>";
    echo "</tr>";
 
    echo "<tr class='tab_bg_1'>";
    echo "<td align='center'>";
 
-   switch ($current_version) {
+   plugin_fusioninventory_displayMigrationMessage("232"); // Start
 
-      case "2.3.1-1":
-         include("update_231_232");
-         update231to232();
-         break;
+   plugin_fusioninventory_displayMigrationMessage("232", $LANG['update'][141]); // Updating schema
+   
+   plugin_fusioninventory_displayMigrationMessage("232", $LANG['update'][141]." - import locks");
 
-   }
+   // Import OCS locks
+   $PluginFusinvinventoryLock = new PluginFusinvinventoryLock();
+   $PluginFusinvinventoryLock->importFromOcs();
 
-   echo "</td>";
-   echo "</tr>";
-   echo "</table></center>";
+   plugin_fusioninventory_displayMigrationMessage("232"); // End
 }
 
 ?>

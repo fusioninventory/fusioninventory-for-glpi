@@ -156,6 +156,36 @@ class PluginFusinvinventoryLock {
          }
       }
    }
+
+
+   
+    /**
+    * Import OCS locks
+    *
+    * @return nothing
+    **/
+   function importFromOcs() {
+      global $DB;
+
+      $PluginFusioninventoryLock = new PluginFusioninventoryLock();
+
+      $sql = "SELECT * FROM `glpi_ocslinks`";
+      $result=$DB->query($sql);
+      while ($data=$DB->fetch_array($result)) {
+         $a_ocslocks = importArrayFromDB($data['computer_update']);
+         $a_fields = array();
+         foreach ($a_ocslocks as $num=>$field) {
+            if (!strstr($field, "_version")
+                  AND $field != "date_mod") {
+               
+               $a_fields[] = $field;
+            }
+         }
+         if (count($a_fields) > 0) {
+            $PluginFusioninventoryLock->addLocks("Computer", $data['computers_id'], $a_fields);
+         }
+      }
+   }
 }
 
 ?>
