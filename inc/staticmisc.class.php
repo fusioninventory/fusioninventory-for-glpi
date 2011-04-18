@@ -53,6 +53,7 @@ class PluginFusinvinventoryStaticmisc {
       $a_tasks[] = array('module'         => 'fusinvinventory',
                          'method'         => 'inventory',
                          'selection_type' => 'devices',
+                         'name'           => $LANG['Menu'][38],
                          'hidetask'       => 1);
 
       return $a_tasks;
