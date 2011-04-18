@@ -102,8 +102,10 @@ function plugin_init_fusioninventory() {
 
          
    //      $PLUGIN_HOOKS['item_add']['fusioninventory'] = 'plugin_item_add_fusioninventory';
-
-         $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
+         $Plugin = new Plugin();
+         if ($Plugin->isActivated('fusioninventory')) {
+            $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
+         }
 
          // Tabs for each type
          $PLUGIN_HOOKS['headings']['fusioninventory'] = 'plugin_get_headings_fusioninventory';
@@ -190,7 +192,7 @@ function plugin_init_fusioninventory() {
 function plugin_version_fusioninventory() {
    return array('name'           => 'FusionInventory',
                 'shortname'      => 'fusioninventory',
-                'version'        => '2.3.0',
+                'version'        => '2.3.1',
                 'oldname'        => 'tracker',
                 'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
                                     & <a href="mailto:v.mazzoni@siprossii.com">Vincent MAZZONI</a>',
