@@ -51,6 +51,9 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       $this->oFusionInventory_networkequipment->type = 'PluginFusinvsnmpNetworkEquipment';
    }
 
+   function getType() {
+      return "NetworkEquipment";
+   }
 
   
    /**

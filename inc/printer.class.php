@@ -57,6 +57,12 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
 
    }
 
+
+   function getType() {
+      return "Printer";
+   }
+
+
    function canCreate() {
       return true;
    }
