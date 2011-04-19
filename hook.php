@@ -86,13 +86,13 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
    if ($itemtype == 'Computer') {
       $sopt[5192]['table']='glpi_plugin_fusinvsnmp_networkequipments';
       $sopt[5192]['field']='id';
-      $sopt[5192]['linkfield']='id';
+      $sopt[5192]['linkfield']='';
       $sopt[5192]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".$LANG["reports"][52];
       $sopt[5192]['forcegroupby']='1';
 
       $sopt[5193]['table']='glpi_plugin_fusinvsnmp_networkports';
       $sopt[5193]['field']='id';
-      $sopt[5193]['linkfield']='id';
+      $sopt[5193]['linkfield']='';
       $sopt[5193]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".$LANG["reports"][46];
       $sopt[5193]['forcegroupby']='1';
    }
@@ -193,6 +193,13 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
       $sopt[5196]['linkfield']     = 'sysdescr';
       $sopt[5196]['name']          = $LANG['plugin_fusinvsnmp']['snmp'][4];
       $sopt[5196]['datatype']      = 'text';
+   }
+   if ($itemtype == 'PluginFusioninventoryAgent') {
+      $sopt[5197]['table']         = 'glpi_plugin_fusinvsnmp_agentconfigs';
+      $sopt[5197]['field']         = 'threads_netdiscovery';
+      $sopt[5197]['linkfield']     = 'threads_netdiscovery';
+      $sopt[5197]['name']          = "threads SNMP";
+      $sopt[5197]['datatype']      = 'bool';
    }
 
    return $sopt;
@@ -922,8 +929,9 @@ function plugin_fusinvsnmp_MassiveActions($type) {
 }
 
 function plugin_fusinvsnmp_MassiveActionsDisplay($options=array()) {
-
+   
 	global $LANG, $CFG_GLPI, $DB;
+
 	switch ($options['itemtype']) {
 		case 'NetworkEquipment':
 		case 'Printer':
@@ -1116,10 +1124,15 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
 
 // How to display specific update fields ?
 // Massive Action functions
-function plugin_fusinvsnmp_MassiveActionsFieldsDisplay($type,$table,$field,$linkfield) {
+function plugin_fusinvsnmp_MassiveActionsFieldsDisplay($options=array()) {
 	global $LANG;
+
+   $table = $options['options']['table'];
+   $field = $options['options']['field'];
+   $linkfield = $options['options']['linkfield'];
+
 	// Table fields
-	//echo $table.".".$field."<br/>";
+   //echo $table.".".$field."<br/>";
 	switch ($table.".".$field) {
 
 		case 'glpi_plugin_fusinvsnmp_configsecurities.name':
