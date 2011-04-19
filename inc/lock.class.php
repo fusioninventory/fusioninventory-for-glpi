@@ -68,7 +68,9 @@ class PluginFusioninventoryLock extends CommonDBTM{
          $item->getFromDB($p_items_id);
       }
 
-      echo "<form method='post' action=\"$p_target\">";
+      if (!strstr($p_target, "ajax/dropdownMassiveAction.php")) {
+         echo "<form method='post' action='".$p_target."'>";
+      }
       echo "<input type='hidden' name='id' value='$p_items_id'>";
       echo "<input type='hidden' name='type' value='$p_itemtype'>";
       echo "<table class='tab_cadre'>";
@@ -153,7 +155,9 @@ class PluginFusioninventoryLock extends CommonDBTM{
                       value='" . $LANG['buttons'][7] . "'></td></tr>";
 
       echo "</table>";
-      echo "</form>";
+      if (!strstr($p_target, "ajax/dropdownMassiveAction.php")) {
+         echo "</form>";
+      }
       echo "</div>";
    }
 
