@@ -53,11 +53,13 @@ class PluginFusinvinventoryStaticmisc {
                          'method'         => 'inventory',
                          'selection_type' => 'devices',
                          'hidetask'       => 1,
-                         'name'           => $LANG['plugin_fusinvinventory']['title'][1]),
+                         'name'           => $LANG['plugin_fusinvinventory']['title'][1],
+                         'use_rest'       => false),
                    array('module'         => 'fusinvinventory',
-                         'method'         => 'esx',
+                         'method'         => 'ESX',
                          'selection_type' => 'devices',
-                         'name'           => $LANG['plugin_fusinvinventory']['title'][2]));
+                         'name'           => $LANG['plugin_fusinvinventory']['title'][2],
+                         'use_rest'       => true));
    }
 
    /**
@@ -116,7 +118,7 @@ class PluginFusinvinventoryStaticmisc {
                          'name'    => $LANG['plugin_fusinvinventory']['profile'][3]),
                    array('profil'  => 'blacklist',
                          'name'    => $LANG['plugin_fusinvinventory']['profile'][4]),
-                   array('profil'  => 'esx',
+                   array('profil'  => 'ESX',
                          'name'    => $LANG['plugin_fusinvinventory']['vmwareesx'][0]));
    }
    
@@ -139,7 +141,7 @@ class PluginFusinvinventoryStaticmisc {
    *   itemtype itemtype of object
    *   value name of the itemtype
    **/
-   static function task_definitiontype_esx($a_itemtype) {
+   static function task_definitiontype_ESX($a_itemtype) {
       return array ('' => DROPDOWN_EMPTY_VALUE, 'Computer' => Computer::getTypeName());
    }
 
@@ -153,7 +155,7 @@ class PluginFusinvinventoryStaticmisc {
    * @return dropdown list of computers
    *
    **/
-   static function task_definitionselection_Computer_esx($title) {
+   static function task_definitionselection_Computer_ESX($title) {
       global $DB;
 
       $query = "SELECT `c`.`id`, `c`.`name` 
@@ -181,7 +183,7 @@ class PluginFusinvinventoryStaticmisc {
    * @return dropdown list of computers
    *
    **/
-   static function task_actionselection_Computer_esx($title) {
+   static function task_actionselection_Computer_ESX($title) {
       global $DB;
 
       $options = array();
@@ -210,6 +212,16 @@ class PluginFusinvinventoryStaticmisc {
          $agents[$data['id']] = $data['name'];
       }
       return Dropdown::showFromArray('definitionselectiontoadd',$agents);
+   }
+   
+   /**
+    * Get ESX task parameters to send to the agent
+    * @return an array of parameters
+    */
+   static function task_ESX_getParameters() {
+      global $CFG_GLPI;
+      return array ('periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'ESX', 
+                    'remote' => $CFG_GLPI['root_doc'].'/plugins/fusinvinventory/b/');
    }
 }
 
