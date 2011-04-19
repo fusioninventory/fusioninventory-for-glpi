@@ -799,42 +799,46 @@ function appear_legend(id){
                                          WHERE `id`='".$opposite_port."';";
 
 								$result_device = $DB->query($query_device);
-								$data_device = $DB->fetch_assoc($result_device);
+                        if ($DB->numrows($result_device) > 0) {
+                           $data_device = $DB->fetch_assoc($result_device);
 
-								$item = new $data_device["itemtype"];
-                        $item->getFromDB($data_device["items_id"]);
-								$link1 = $item->getLink(1);
-								$link = str_replace($item->getName(0), $data_device["mac"],
-                                            $item->getLink());
-                        $link2 = str_replace($item->getName(0), $data_device["ip"],
-                                             $item->getLink());
-								if ($data_device["itemtype"] == 'PluginFusioninventoryUnknownDevice') {
-                           if ($item->getField("accepted") == "1") {
-                              echo "<td style='background:#bfec75'
-                                        class='tab_bg_1_2'>".$link1;
+                           $item = new $data_device["itemtype"];
+                           $item->getFromDB($data_device["items_id"]);
+                           $link1 = $item->getLink(1);
+                           $link = str_replace($item->getName(0), $data_device["mac"],
+                                               $item->getLink());
+                           $link2 = str_replace($item->getName(0), $data_device["ip"],
+                                                $item->getLink());
+                           if ($data_device["itemtype"] == 'PluginFusioninventoryUnknownDevice') {
+                              if ($item->getField("accepted") == "1") {
+                                 echo "<td style='background:#bfec75'
+                                           class='tab_bg_1_2'>".$link1;
+                              } else {
+                                 echo "<td background='#cf9b9b'
+                                           class='tab_bg_1_2'>".$link1;
+                              }
+                              if (!empty($link)) {
+                                 echo "<br/>".$link;
+                              }
+                              if (!empty($link2)) {
+                                 echo "<br/>".$link2;
+                              }
+                              if ($item->getField("hub") == "1") {
+                                 $this->displayHubConnections($data_device["items_id"], $background_img);
+                              }
+                              echo "</td>";
                            } else {
-                              echo "<td background='#cf9b9b'
-                                        class='tab_bg_1_2'>".$link1;
+                              echo "<td>".$link1;
+                              if (!empty($link)) {
+                                 echo "<br/>".$link;
+                              }
+                              if (!empty($link2)) {
+                                 echo "<br/>".$link2;
+                              }
+                              echo "</td>";
                            }
-                           if (!empty($link)) {
-                              echo "<br/>".$link;
-                           }
-                           if (!empty($link2)) {
-                              echo "<br/>".$link2;
-                           }
-                           if ($item->getField("hub") == "1") {
-                              $this->displayHubConnections($data_device["items_id"], $background_img);
-                           }
-                           echo "</td>";
                         } else {
-									echo "<td>".$link1;
-                           if (!empty($link)) {
-                              echo "<br/>".$link;
-                           }
-                           if (!empty($link2)) {
-                              echo "<br/>".$link2;
-                           }
-                           echo "</td>";
+                           echo "<td></td>";
                         }
 							} else {
 								echo "<td></td>";
