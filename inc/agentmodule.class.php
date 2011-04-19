@@ -205,7 +205,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    
 
    /**
-   * Get datas (activation, exceptions...) for a module
+   * Get data (activation, exceptions...) for a module
    *
    * @param $module_name value Name of the module 
    *
