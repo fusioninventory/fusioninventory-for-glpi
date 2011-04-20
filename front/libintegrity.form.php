@@ -51,6 +51,11 @@ if (!empty($_POST)) {
          $PluginFusinvinventoryLibintegrity->Import($infos);
       }
    }
+   if (isset($_POST['glpidelete'])) {
+      foreach($_POST['glpidelete'] as $infos=>$num) {
+         $PluginFusinvinventoryLibintegrity->deleteGLPI($infos);
+      }
+   }
    glpi_header($_SERVER['HTTP_REFERER']);
 }
 
