@@ -409,7 +409,7 @@ class PluginFusinvinventoryInventory {
       // ** MONITORS
       $Monitor = new Monitor();
       $Computer_Item = new Computer_Item();
-      $a_ComputerMonitor = $Computer_Item->find("`computers_id`='".$items_id."' AND 'itemtype' = 'Monitor'");
+      $a_ComputerMonitor = $Computer_Item->find("`computers_id`='".$items_id."' AND `itemtype` = 'Monitor'");
       foreach ($a_ComputerMonitor as $ComputerMonitor_id => $ComputerMonitor_data) {
          $a_sectionsinfos[] = "MONITORS/".$ComputerMonitor_id;
          $xml_monitor = $xml_content->addChild("MONITORS");
@@ -427,7 +427,7 @@ class PluginFusinvinventoryInventory {
       // ** PRINTERS
       $Printer = new Printer();
       $Computer_Item = new Computer_Item();
-      $a_ComputerPrinter = $Computer_Item->find("`computers_id`='".$items_id."' AND 'itemtype' = 'Printer'");
+      $a_ComputerPrinter = $Computer_Item->find("`computers_id`='".$items_id."' AND `itemtype` = 'Printer'");
       foreach ($a_ComputerPrinter as $ComputerPrinter_id => $ComputerPrinter_data) {
          $a_sectionsinfos[] = "PRINTERS/".$ComputerPrinter_id;
          $xml_printer = $xml_content->addChild("PRINTERS");
