@@ -716,11 +716,11 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                default :
                   $errors.=$LANG['plugin_fusioninventory']['errors'][22].' PORT : '.$name."\n";
             }
-            if ($trunk == "0") {
-               if ($ptp->getValue('trunk') == '1') {
-                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), '0', 'trunk');
-                  $ptp->setValue('trunk', 0);
-               }
+         }
+         if ($trunk == "0") {
+            if ($ptp->getValue('trunk') == '1') {
+               PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), '0', 'trunk');
+               $ptp->setValue('trunk', 0);
             }
          }
          $this->ptd->addPort($ptp, $portIndex);
