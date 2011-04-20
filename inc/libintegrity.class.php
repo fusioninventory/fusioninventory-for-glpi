@@ -277,6 +277,44 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
                      }
                      break;
 
+                  case 'USBDEVICES':
+                     // Printers must be created  but not created (in case
+                     // of changes configuration of printer import)
+                     $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+                     if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                             "import_peripheral") == '3') { //Import on serial number
+
+                        $unserializedsection = unserialize($section);
+                        if (isset($unserializedsection['SERIAL'])
+                                AND !empty($unserializedsection['SERIAL'])) {
+
+                           // Search in DB if exist
+                           $query_peripheral = "SELECT * FROM `glpi_computers_items`
+                              LEFT JOIN `glpi_peripherals` on `glpi_peripherals`.`id`=`items_id`
+                              WHERE `computers_id`='".$computer_id."'
+                                 AND `itemtype`='Peripherals'";
+                           if ($result_peripheral = $DB->query($query_peripheral)) {
+                              if ($DB->numrows($result_peripheral) == 0) {
+                                 $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['help'][28]);
+                              }
+                           }
+                        }
+                     } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                             "import_periheral") == '2') { //Import on serial number
+
+                        // Search in DB if exist
+                        $query_peripheral = "SELECT * FROM `glpi_computers_items`
+                           LEFT JOIN `glpi_peripherals` on `glpi_peripherals`.`id`=`items_id`
+                           WHERE `computers_id`='".$computer_id."'
+                              AND `itemtype`='Peripheral'";
+                        if ($result_peripheral = $DB->query($query_peripheral)) {
+                           if ($DB->numrows($result_peripheral) == 0) {
+                              $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['help'][28]);
+                           }
+                        }
+                     }
+                     break;
+
                }
             }
          }
