@@ -898,13 +898,24 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          }
       }
       $count = 0;
+      $a_macsFound = array();
       foreach ($p_connections->children() as $child) {
          switch ($child->getName()) {
             case 'CDP' : // already managed
                break;
             case 'CONNECTION' :
-               $count++;
-               $errors.=$this->importConnection($child, $p_oPort, $cdp);
+               $continue = 1;
+               if (isset($child->MAC)) {
+                  if (isset($a_macsFound[(string)$child->MAC])) {
+                     $continue = 0;
+                  } else {
+                     $a_macsFound[(string)$child->MAC] = 1;
+                  }
+               }
+               if ($continue == '1') {
+                  $count++;
+                  $errors.=$this->importConnection($child, $p_oPort, $cdp);
+               }
                break;
             default :
                $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CONNECTIONS : '
@@ -994,6 +1005,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CONNECTION (CDP='.$p_cdp.') : '
                            .$child->getName()."\n";
             }
+
          }
       }
       if ($portID != '') {
