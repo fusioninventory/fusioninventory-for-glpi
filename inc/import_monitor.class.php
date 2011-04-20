@@ -106,7 +106,7 @@ class PluginFusinvinventoryImport_Monitor extends CommonDBTM {
                } else {
                   $a_monitor = array();
                }
-               $a_monitor['is_global'] = 'yes';
+               $a_monitor['is_global'] = 1;
             }
 
          }
