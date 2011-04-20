@@ -337,8 +337,11 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $ip = array();
       $Computers_id = 0;
       if ($type == 'Agent') {
-         $this->getFromDB($items_id);
-         $Computers_id = $this->fields['items_id'];
+         if ($this->getFromDB($items_id)) {
+            $Computers_id = $this->fields['items_id'];
+         } else {
+            return array();
+         }
       } else {
          $Computers_id = $items_id;
       }
