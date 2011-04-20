@@ -104,7 +104,7 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
                } else {
                   $a_Peripheral = array();
                }
-               $a_Peripheral['is_global'] = 'yes';
+               $a_Peripheral['is_global'] = 1;
             }
 
          }

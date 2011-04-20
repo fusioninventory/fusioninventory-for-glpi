@@ -105,7 +105,7 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
                } else {
                   $a_printer = array();
                }
-               $a_printer['is_global'] = 'yes';
+               $a_printer['is_global'] = 1;
             }
 
          }
