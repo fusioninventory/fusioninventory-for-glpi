@@ -488,6 +488,20 @@ class PluginFusinvinventoryInventory {
          $xml_video->addChild("MEMORY", $deviceGraphicCard_data['specificity']);
       }
 
+      // ** USBDEVICES (PERIPHERALS)
+      $Peripheral = new Peripheral();
+      $Computer_Item = new Computer_Item();
+      $a_ComputerPeripheral = $Computer_Item->find("`computers_id`='".$items_id."' AND `itemtype`='Peripheral'");
+      foreach ($a_ComputerPeripheral as $ComputerPeripheral_id => $ComputerPeripheral_data) {
+         $a_sectionsinfos[] = "USBDEVICES/".$ComputerPeripheral_id;
+         $xml_peripheral = $xml_content->addChild("USBDEVICES");
+         $Peripheral->getFromDB($ComputerPeripheral_data['items_id']);
+         $xml_peripheral->addChild("NAME", $Peripheral->fields['name']);
+         if ($Peripheral->fields['serial'] != "") {
+            $xml_peripheral->addChild("SERIAL", $Peripheral->fields['serial']);
+         }
+      }
+
       $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
       $PluginFusinvinventoryLib->addLibMachineFromGLPI($items_id, $internal_id, $xml, $a_sectionsinfos);
    }
