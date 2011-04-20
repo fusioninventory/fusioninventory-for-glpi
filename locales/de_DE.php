@@ -72,8 +72,8 @@ $LANG['plugin_fusioninventory']['functionalities'][76]="Extra-debug";
 
 $LANG['plugin_fusioninventory']['errors'][22]="Nicht erkannte Elemente in";
 $LANG['plugin_fusioninventory']['errors'][50]="Ihre GLPI-Version ist nicht kompatibel, Voraussetzung ist Version 0.78";
-$LANG['plugin_fusioninventory']['errors'][1] = "PHP allow_url_fopen is off, can't wake agent to do inventory";
-$LANG['plugin_fusioninventory']['errors'][2] = "PHP allow_url_fopen is off, push mode can't work";
+$LANG['plugin_fusioninventory']['errors'][1] = "PHP allow_url_fopen ist ausgeschaltet, kann Agent für Inventarisierung nicht wecken";
+$LANG['plugin_fusioninventory']['errors'][2] = "PHP allow_url_fopen ist ausgeschaltet, der Push-Modus funktioniert dann nicht";
 
 $LANG['plugin_fusioninventory']['rules'][2]="Importregeln für Geräte";
 $LANG['plugin_fusioninventory']['rules'][3]="Durchsuche GLPI nach Material mit dem Status";
@@ -107,7 +107,7 @@ $LANG['plugin_fusioninventory']['menu'][4]="Ubekanntes Gerät";
 $LANG['plugin_fusioninventory']['menu'][7]="Aktive / Laufende Aufgaben";
 
 $LANG['plugin_fusioninventory']['discovery'][5]="Anzahl importierter Geräte";
-$LANG['plugin_fusioninventory']['discovery'][9]="Number of devices not imported because type non defined";
+$LANG['plugin_fusioninventory']['discovery'][9]="Anzahl nicht importierter Geräte, da nicht definiert";
 
 $LANG['plugin_fusioninventory']['agents'][4]="Letzter Kontakt";
 $LANG['plugin_fusioninventory']['agents'][6]="Deaktiviert";
@@ -126,14 +126,14 @@ $LANG['plugin_fusioninventory']['agents'][33]="Dynamische Auto-Verwaltung des Ag
 $LANG['plugin_fusioninventory']['agents'][34]="Aktivierung (Standard)";
 $LANG['plugin_fusioninventory']['agents'][35]="Device_id";
 $LANG['plugin_fusioninventory']['agents'][36]="Agenten-Module";
-$LANG['plugin_fusioninventory']['agents'][37]="gesperrt";
-$LANG['plugin_fusioninventory']['agents'][38]="Available";
-$LANG['plugin_fusioninventory']['agents'][39]="Running";
-$LANG['plugin_fusioninventory']['agents'][40]="Computer without known IP";
+$LANG['plugin_fusioninventory']['agents'][37]="Gesperrt";
+$LANG['plugin_fusioninventory']['agents'][38]="Verfügbar";
+$LANG['plugin_fusioninventory']['agents'][39]="Ausführend";
+$LANG['plugin_fusioninventory']['agents'][40]="Computer mit unbekannter IP-Adresse";
 
 $LANG['plugin_fusioninventory']['unknown'][2]="Genehmigte Geräte";
 $LANG['plugin_fusioninventory']['unknown'][4]="Netzwerk-Hub";
-$LANG['plugin_fusioninventory']['unknown'][5]="Import unknown device into asset";
+$LANG['plugin_fusioninventory']['unknown'][5]="Unbekannte Geräte inventarisieren";
 
 $LANG['plugin_fusioninventory']['task'][0]="Aufgabe";
 $LANG['plugin_fusioninventory']['task'][1]="Aufgabenverwaltung";
@@ -142,7 +142,7 @@ $LANG['plugin_fusioninventory']['task'][14]="Geplanter Zeitpunkt";
 $LANG['plugin_fusioninventory']['task'][16]="Neue Aufgabe";
 $LANG['plugin_fusioninventory']['task'][17]="Regelmässigkeit";
 $LANG['plugin_fusioninventory']['task'][18]="Aufgaben";
-$LANG['plugin_fusioninventory']['task'][19]="Laufende Augfaben";
+$LANG['plugin_fusioninventory']['task'][19]="Laufende Aufgaben";
 $LANG['plugin_fusioninventory']['task'][20]="Beendete Aufgaben";
 $LANG['plugin_fusioninventory']['task'][21]="Aufgabe zu diesem Gerät";
 $LANG['plugin_fusioninventory']['task'][22]="Nur geplante Aufgaben";
@@ -161,8 +161,8 @@ $LANG['plugin_fusioninventory']['task'][35]="Minuten";
 $LANG['plugin_fusioninventory']['task'][36]="Stunden";
 $LANG['plugin_fusioninventory']['task'][37]="Tage";
 $LANG['plugin_fusioninventory']['task'][38]="Monate";
-$LANG['plugin_fusioninventory']['task'][39]="Unable to run task because some jobs is running yet!";
-$LANG['plugin_fusioninventory']['task'][40]="Force running";
+$LANG['plugin_fusioninventory']['task'][39]="Kann Aufgabe nicht ausführen, andere Aufgaben sind noch ausstehend!";
+$LANG['plugin_fusioninventory']['task'][40]="Ausführung erzwingen";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="gestartet";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="OK";
