@@ -237,8 +237,11 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             $class->fields['name'] = (string)$xml->DNSHOSTNAME;
          }
       }
-      //if (!in_array('serial', $a_lockable))
-         $class->fields['serial'] = trim($xml->SERIAL);
+      if (!in_array('serial', $a_lockable)) {
+         if (trim($xml->SERIAL) != '') {
+            $class->fields['serial'] = trim($xml->SERIAL);
+         }
+      }
       
       if (isset($xml->ENTITY) AND !empty($xml->ENTITY)) {
          $class->fields['entities_id'] = $xml->ENTITY;
@@ -352,7 +355,9 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                if (($model_id == '0') AND (isset($xml->DESCRIPTION)) AND (!empty($xml->DESCRIPTION))) {
                   $model_id = $PluginFusinvsnmpModel->getModelBySysdescr($xml->DESCRIPTION);
                }
-               $PluginFusinvsnmpUnknownDevice->fields['plugin_fusinvsnmp_models_id'] = $model_id;
+               if ($model_id != '0') {
+                  $PluginFusinvsnmpUnknownDevice->fields['plugin_fusinvsnmp_models_id'] = $model_id;
+               }
             }
 
             if (isset($xml->AUTHSNMP) AND !empty($xml->AUTHSNMP)) {
@@ -385,7 +390,9 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             $PluginFusinvsnmpNetworkEquipment->setValue('sysdescr', $xml->DESCRIPTION);
             $PluginFusinvsnmpModel = new PluginFusinvsnmpModel();
             $model_id = $PluginFusinvsnmpModel->getModelByKey($xml->MODELSNMP);
-            $PluginFusinvsnmpNetworkEquipment->setValue('plugin_fusinvsnmp_models_id', $model_id);
+            if ($model_id != '0') {
+               $PluginFusinvsnmpNetworkEquipment->setValue('plugin_fusinvsnmp_models_id', $model_id);
+            }
             $PluginFusinvsnmpNetworkEquipment->setValue('plugin_fusinvsnmp_configsecurities_id', $xml->AUTHSNMP);
             $PluginFusinvsnmpNetworkEquipment->updateDB();
             break;
@@ -449,7 +456,9 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             $PluginFusinvsnmpPrinter->setValue('sysdescr', $xml->DESCRIPTION);
             $PluginFusinvsnmpModel = new PluginFusinvsnmpModel();
             $model_id = $PluginFusinvsnmpModel->getModelByKey($xml->MODELSNMP);
-            $PluginFusinvsnmpPrinter->setValue('plugin_fusinvsnmp_models_id', $model_id);
+            if ($model_id != '0') {
+               $PluginFusinvsnmpPrinter->setValue('plugin_fusinvsnmp_models_id', $model_id);
+            }
             $PluginFusinvsnmpPrinter->setValue('plugin_fusinvsnmp_configsecurities_id', $xml->AUTHSNMP);
             $PluginFusinvsnmpPrinter->updateDB();
             break;
