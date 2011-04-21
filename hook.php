@@ -209,10 +209,10 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
    if ($itemtype == 'PluginFusioninventoryAgent') {
       $sopt[5197]['table']         = 'glpi_plugin_fusinvsnmp_agentconfigs';
       $sopt[5197]['field']         = 'threads_netdiscovery';
-      $sopt[5197]['linkfield']     = 'id';
+      $sopt[5197]['linkfield']     = 'plugin_fusioninventory_agents_id';
       $sopt[5197]['name']          = "threads SNMP";
-      $sopt[5197]['datatype']      = 'number';
-      $sopt[5197]['itemlink_type'] = 'PluginFusinvsnmpAgentconfig';
+//      $sopt[5197]['datatype']      = 'number';
+//      $sopt[5197]['itemlink_type'] = 'PluginFusinvsnmpAgentconfig';
    }
 
    return $sopt;
