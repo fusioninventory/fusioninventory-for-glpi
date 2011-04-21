@@ -211,10 +211,16 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
    if ($itemtype == 'PluginFusioninventoryAgent') {
       $sopt[5197]['table']         = 'glpi_plugin_fusinvsnmp_agentconfigs';
       $sopt[5197]['field']         = 'threads_netdiscovery';
-      $sopt[5197]['linkfield']     = 'plugin_fusioninventory_agents_id';
-      $sopt[5197]['name']          = "threads SNMP";
-//      $sopt[5197]['datatype']      = 'number';
-//      $sopt[5197]['itemlink_type'] = 'PluginFusinvsnmpAgentconfig';
+      $sopt[5197]['linkfield']     = 'id';
+      $sopt[5197]['name']          = $LANG['plugin_fusinvsnmp']['agents'][24]."&nbsp;(".strtolower($LANG['plugin_fusinvsnmp']['config'][4]).")";
+      $sopt[5197]['itemlink_type'] = 'PluginFusinvsnmpAgentconfig';
+
+      $sopt[5198]['table']         = 'glpi_plugin_fusinvsnmp_agentconfigs';
+      $sopt[5198]['field']         = 'threads_snmpquery';
+      $sopt[5198]['linkfield']     = 'id';
+      $sopt[5198]['name']          = $LANG['plugin_fusinvsnmp']['agents'][24]."&nbsp;(".strtolower($LANG['plugin_fusinvsnmp']['config'][3]).")";
+      $sopt[5198]['itemlink_type'] = 'PluginFusinvsnmpAgentconfig';
+
    }
 
    return $sopt;
@@ -898,6 +904,13 @@ function plugin_fusinvsnmp_MassiveActions($type) {
          );
          break;
 
+      case 'PluginFusioninventoryAgent':
+         return array(
+            "plugin_fusinvsnmp_set_discovery_threads" => $LANG['plugin_fusinvsnmp']['agents'][24]."&nbsp;(".strtolower($LANG['plugin_fusinvsnmp']['config'][4]).")",
+            "plugin_fusinvsnmp_set_snmpinventory_threads" => $LANG['plugin_fusinvsnmp']['agents'][24]."&nbsp;(".strtolower($LANG['plugin_fusinvsnmp']['config'][3]).")"
+         );
+         break;
+
    }
    return array ();
 }
@@ -952,6 +965,23 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($options=array()) {
                }
                break;
 
+         }
+         break;
+
+      case 'PluginFusioninventoryAgent':
+         switch ($options['action']) {
+
+            case 'plugin_fusinvsnmp_set_discovery_threads':
+               echo Dropdown::showInteger('threads_netdiscovery', '10');
+               echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
+                     $LANG["buttons"][2] . "\" >";
+               break;
+
+            case 'plugin_fusinvsnmp_set_snmpinventory_threads':
+               echo Dropdown::showInteger('threads_snmpquery', '5');
+               echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
+                     $LANG["buttons"][2] . "\" >";
+               break;
          }
          break;
 
@@ -1095,6 +1125,44 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
                      $PluginFusinvsnmpUnknownDevice->add($input);
                   }
                 }
+            }
+         }
+         break;
+
+      case "plugin_fusinvsnmp_set_discovery_threads" :
+         foreach ($data['item'] as $items_id => $val) {
+            if ($val == 1) {
+               $PluginFusinvsnmpAgentconfig = new PluginFusinvsnmpAgentconfig();
+               $a_agents = $PluginFusinvsnmpAgentconfig->find("`plugin_fusioninventory_agents_id`='".$items_id."'");
+               $input = array();
+               if (count($a_agents) > 0) {
+                  $input = current($a_agents);
+                  $input['threads_netdiscovery'] = $data['threads_netdiscovery'];
+                  $PluginFusinvsnmpAgentconfig->update($input);
+               } else {
+                  $input['plugin_fusioninventory_agents_id'] = $items_id;
+                  $input['threads_netdiscovery'] = $data['threads_netdiscovery'];
+                  $PluginFusinvsnmpAgentconfig->add($input);
+               }
+            }
+         }
+         break;
+
+      case "plugin_fusinvsnmp_set_snmpinventory_threads" :
+         foreach ($data['item'] as $items_id => $val) {
+            if ($val == 1) {
+               $PluginFusinvsnmpAgentconfig = new PluginFusinvsnmpAgentconfig();
+               $a_agents = $PluginFusinvsnmpAgentconfig->find("`plugin_fusioninventory_agents_id`='".$items_id."'");
+               $input = array();
+               if (count($a_agents) > 0) {
+                  $input = current($a_agents);
+                  $input['threads_snmpquery'] = $data['threads_snmpquery'];
+                  $PluginFusinvsnmpAgentconfig->update($input);
+               } else {
+                  $input['plugin_fusioninventory_agents_id'] = $items_id;
+                  $input['threads_snmpquery'] = $data['threads_snmpquery'];
+                  $PluginFusinvsnmpAgentconfig->add($input);
+               }
             }
          }
          break;
@@ -1302,7 +1370,7 @@ function plugin_fusinvsnmp_forceGroupBy($type) {
 
 function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfield,&$already_link_tables) {
 
-//echo "Left Join : ".$new_table.".".$linkfield."<br/>";
+echo "Left Join : ".$new_table.".".$linkfield."<br/>";
    switch ($itemtype) {
       // * Computer List (front/computer.php)
       case 'Computer':
@@ -1625,6 +1693,13 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
                return " LEFT JOIN `glpi_networkports` ON (`glpi_printers`.`id` = `glpi_networkports`.`items_id` AND `glpi_networkports`.`itemtype` = 'Printer') ";
                break;
          }
+         break;
+
+      case 'PluginFusioninventoryAgent';
+         if ($new_table.".".$linkfield == 'glpi_plugin_fusinvsnmp_agentconfigs.id') {
+            return " LEFT JOIN `glpi_plugin_fusinvsnmp_agentconfigs` ON (`glpi_plugin_fusioninventory_agents`.`id` = `glpi_plugin_fusinvsnmp_agentconfigs`.`plugin_fusioninventory_agents_id`) ";
+         }
+
          break;
 
    }
