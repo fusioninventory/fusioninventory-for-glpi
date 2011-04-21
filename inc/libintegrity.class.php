@@ -59,7 +59,7 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       // Display the pager
       printPager($start,$number,GLPI_ROOT."/plugins/fusinvinventory/front/libintegrity.form.php",'');
 
-      echo "<form method='post' name='' id=''  action=\"".GLPI_ROOT . "/plugins/fusinvinventory/front/libintegrity.form.php\">";
+      echo "<form method='post' name='integritylist' id='integritylist'  action=\"".GLPI_ROOT . "/plugins/fusinvinventory/front/libintegrity.form.php\">";
       echo "<table class='tab_cadre' width='950'>";
       
       echo "<tr>";
@@ -490,7 +490,22 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       }
       echo "</td>";
       echo "</tr>";
-      
+
+      echo "<tr>";
+      echo "<th colspan='3' align='center'>";
+         echo "<table align='center'>";
+         echo "<tr>";
+         echo "<td align='center'><a onclick= \"if ( markCheckboxes('integritylist') ) return false;\"
+                   href='".$_SERVER['PHP_SELF']."?select=all'>".$LANG["buttons"][18]."</a></td>";
+         echo "<td>/</td><td align='center'><a onclick= \"if ( unMarkCheckboxes('integritylist') )
+               return false;\" href='".$_SERVER['PHP_SELF']."?select=none'>".
+               $LANG["buttons"][19]."</a>";
+         echo "</td>";
+         echo "</tr>";
+         echo "</table>";
+      echo "</th>";
+      echo "</tr>";
+
       echo "<tr>";
       echo "<th colspan='3'>";
       echo "<input class='submit' type='submit' name='actionimport'
