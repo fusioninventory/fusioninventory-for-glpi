@@ -61,6 +61,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          $Computer = new Computer();
          $Computer->getFromDB($items_id);
          $Computer->fields['autoupdatesystems_id'] = Dropdown::importExternal('AutoUpdateSystem', 'FusionInventory');
+         $Computer->fields['is_ocs_import'] = 0;
          $Computer->update($Computer->fields);
          if ($_SESSION["plugin_fusinvinventory_entity"] == "N/A") {
             $_SESSION["plugin_fusinvinventory_entity"] = $Computer->fields['entities_id'];
