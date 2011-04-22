@@ -132,6 +132,13 @@ class PluginFusinvinventoryStaticmisc {
      return array($tmp);
    }
 
+   //------------------------------------------ ---------------------------------------------//
+   //------------------------------------------ TASKS --------------------------------------//
+   //------------------------------------------ -------------------------------------------//
+
+   //------------------------------------------ Selection---------------------------------//
+
+
    /**
    * Get types of datas available to select for taskjob definition for WakeOnLan method
    *
@@ -144,8 +151,6 @@ class PluginFusinvinventoryStaticmisc {
    static function task_definitiontype_ESX($a_itemtype) {
       return array ('' => DROPDOWN_EMPTY_VALUE, 'Computer' => Computer::getTypeName());
    }
-
-
 
    /**
    * Get all devices of definition type 'Computer' defined in task_definitiontype_wakeonlan
@@ -175,15 +180,21 @@ class PluginFusinvinventoryStaticmisc {
    }
 
 
+   //------------------------------------------ Actions-------------------------------------//
+
+   static function task_actiontype_ESX($a_itemtype) {
+      global $LANG;
+      return array ('' => DROPDOWN_EMPTY_VALUE, 
+                    'PluginFusioninventoryAgent' => $LANG['plugin_fusioninventory']['profile'][2]);
+   }
+
    /**
    * Get all devices of definition type 'Computer' defined in task_definitiontype_wakeonlan
-   *
-   * @param $title value ???(not used I think)
    *
    * @return dropdown list of computers
    *
    **/
-   static function task_actionselection_Computer_ESX($title) {
+   static function task_actionselection_PluginFusioninventoryAgent_ESX() {
       global $DB;
 
       $options = array();
@@ -200,9 +211,8 @@ class PluginFusinvinventoryStaticmisc {
          $in = "";
       }
 
-      $query = "SELECT `c`.`id`, `c`.`name` 
+      $query = "SELECT `a`.`id`, `a`.`name` 
                 FROM `glpi_plugin_fusioninventory_agents` as `a` 
-                LEFT JOIN `glpi_computers` as `c` ON `a`.`items_id` = `c`.`id`
                 WHERE `a`.`items_id` IS NOT NULL $in";
       $query.= getEntitiesRestrictRequest(' AND','glpi_plugin_fusioninventory_agents');
       
@@ -211,17 +221,22 @@ class PluginFusinvinventoryStaticmisc {
       while ($data = $DB->fetch_array($results)) {
          $agents[$data['id']] = $data['name'];
       }
-      return Dropdown::showFromArray('definitionselectiontoadd',$agents);
+      return Dropdown::showFromArray('actionselectiontoadd',$agents);
    }
-   
+
+   //------------------------------------------ ---------------------------------------------//
+   //------------------------------------------ REST PARAMS---------------------------------//
+   //------------------------------------------ -------------------------------------------//
+
    /**
     * Get ESX task parameters to send to the agent
+    * For the moment it's hardcoded, but in a future release it may be in DB
     * @return an array of parameters
     */
    static function task_ESX_getParameters() {
       global $CFG_GLPI;
       return array ('periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'ESX', 
-                    'remote' => $CFG_GLPI['root_doc'].'/plugins/fusinvinventory/b/');
+                    'remote' => $CFG_GLPI['root_doc'].'/plugins/fusinvinventory/b/esx/');
    }
 }
 
