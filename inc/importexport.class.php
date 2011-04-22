@@ -199,6 +199,13 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
          $a_oidsDB = array();
          $models_data = $DB->fetch_assoc($result);
          $PluginFusinvsnmpModelMib = new PluginFusinvsnmpModelMib();
+         $pluginFusinvsnmpModel = new PluginFusinvsnmpModel();
+         $pluginFusinvsnmpModel->getFromDB($models_data['id']);
+         $input = array();
+         $input['id'] = $pluginFusinvsnmpModel->fields['id'];
+         $input['comment'] = (string)$xml->comments;
+         $pluginFusinvsnmpModel->update($input);
+
          $a_oids = $PluginFusinvsnmpModelMib->find("`plugin_fusinvsnmp_models_id`='".$models_data['id']."'");
          foreach ($a_oids as $data) {
             $oid = Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_miboids", $data['plugin_fusinvsnmp_miboids_id']);
