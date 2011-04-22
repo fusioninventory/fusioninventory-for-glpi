@@ -1432,7 +1432,7 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
 
          $leftjoin_fusinvsnmp_networkequipments = 1;
          if ((in_array('glpi_plugin_fusinvsnmp_networkequipments.cpu', $already_link_tables_tmp))
-            OR (in_array('glpi_plugin_fusinvsnmp_networkequipments.last_fusioninventory_update', $already_link_tables_tmp))
+            OR (in_array('glpi_plugin_fusinvsnmp_networkequipments.', $already_link_tables_tmp))
             OR (in_array('glpi_plugin_fusinvsnmp_models.id', $already_link_tables_tmp))
             OR (in_array('glpi_plugin_fusinvsnmp_configsecurities.id', $already_link_tables_tmp))
             OR (in_array('glpi_plugin_fusinvsnmp_networkequipments.sysdescr', $already_link_tables_tmp))) {
@@ -1443,7 +1443,7 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
          switch ($new_table.".".$linkfield) {
 
             // ** FusionInventory - last inventory
-            case "glpi_plugin_fusinvsnmp_networkequipments.last_fusioninventory_update" :
+            case "glpi_plugin_fusinvsnmp_networkequipments." :
                if ($leftjoin_fusinvsnmp_networkequipments == "1") {
                   return " LEFT JOIN glpi_plugin_fusinvsnmp_networkequipments ON (glpi_networkequipments.id = glpi_plugin_fusinvsnmp_networkequipments.networkequipments_id) ";
                }
