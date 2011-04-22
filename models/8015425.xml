@@ -2,11 +2,17 @@
 	<name><![CDATA[8015425]]></name>
 	<type>2</type>
 	<key>Networking0316</key>
-	<comments><![CDATA[3Com Switch 4500 50-Port Software Version 3Com OS V3.03.00s56
+	<comments><![CDATA[3Com Switch 4200G 12-Port Software Version 3Com OS V3.02.00s56
+
+3Com Switch 4500 50-Port Software Version 3Com OS V3.03.00s56
 
 BayStack 420     HW:#02      FW:3.1.0.5   SW:v3.1.0.04
 
+BayStack 460 - 24T - PWR     HW:07       FW:3.6.0.1   SW:v3.1.9.04 ISVN:3
+
 BayStack 5510-24T      HW:03       FW:4.1.0.8   SW:v4.1.0.04
+
+Business Policy Switch 2000  HW:11       FW:3.6.0.6   SW:v3.2.0.02 ISVN:3
 
 Ethernet Routing Switch 2550T (Stack Enabled)         HW:05       FW:1.0.0.14  SW:v4.3.0.004 BN:00 (c) Nortel Networks
 
