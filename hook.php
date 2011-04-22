@@ -190,21 +190,21 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
 
       $sopt[5194]['table']='glpi_plugin_fusinvsnmp_networkequipments';
       $sopt[5194]['field']='last_fusioninventory_update';
-      $sopt[5194]['linkfield']='last_fusioninventory_update';
+      $sopt[5194]['linkfield']='';
       $sopt[5194]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".
          $LANG['plugin_fusinvsnmp']['snmp'][53];
       $sopt[5194]['datatype'] = 'datetime';
 
       $sopt[5195]['table']='glpi_plugin_fusinvsnmp_networkequipments';
       $sopt[5195]['field']='cpu';
-      $sopt[5195]['linkfield']='cpu';
+      $sopt[5195]['linkfield']='';
       $sopt[5195]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".
          $LANG['plugin_fusinvsnmp']['snmp'][13];
       $sopt[5195]['datatype'] = 'number';
 
       $sopt[5196]['table']         = 'glpi_plugin_fusinvsnmp_networkequipments';
       $sopt[5196]['field']         = 'sysdescr';
-      $sopt[5196]['linkfield']     = 'sysdescr';
+      $sopt[5196]['linkfield']     = '';
       $sopt[5196]['name']          = $LANG['plugin_fusinvsnmp']['snmp'][4];
       $sopt[5196]['datatype']      = 'text';
    }
