@@ -1494,10 +1494,10 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
          array_pop($already_link_tables_tmp);
 
          $leftjoin_fusinvsnmp_printers = 1;
-         if ((in_array('glpi_plugin_fusinvsnmp_printers.last_fusioninventory_update', $already_link_tables_tmp))
+         if ((in_array('glpi_plugin_fusinvsnmp_printers.', $already_link_tables_tmp))
             OR (in_array('glpi_plugin_fusinvsnmp_models.id', $already_link_tables_tmp))
             OR (in_array('glpi_plugin_fusinvsnmp_configsecurities.id', $already_link_tables_tmp))
-            OR (in_array('glpi_plugin_fusinvsnmp_printers.sysdescr', $already_link_tables_tmp))) {
+            OR (in_array('glpi_plugin_fusinvsnmp_printers.', $already_link_tables_tmp))) {
 
             $leftjoin_fusinvsnmp_printers = 0;
          }
@@ -1505,7 +1505,7 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
          switch ($new_table.".".$linkfield) {
 
             // ** FusionInventory - last inventory
-            case "glpi_plugin_fusinvsnmp_printers.last_fusioninventory_update" :
+            case "glpi_plugin_fusinvsnmp_printers." :
                if ($leftjoin_fusinvsnmp_printers == "1") {
                   return " LEFT JOIN glpi_plugin_fusinvsnmp_printers ON (glpi_printers.id = glpi_plugin_fusinvsnmp_printers.printers_id) ";
                }
@@ -1530,7 +1530,7 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
                return $return." LEFT JOIN glpi_plugin_fusinvsnmp_configsecurities ON glpi_plugin_fusinvsnmp_printers.plugin_fusinvsnmp_configsecurities_id = glpi_plugin_fusinvsnmp_configsecurities.id ";
                break;
 
-            case "glpi_plugin_fusinvsnmp_printers.sysdescr":
+            case "glpi_plugin_fusinvsnmp_printers.":
                $return = " ";
                if ($leftjoin_fusinvsnmp_printers == "1") {
                   $return = " LEFT JOIN glpi_plugin_fusinvsnmp_printers ON glpi_printers.id = glpi_plugin_fusinvsnmp_printers.printers_id ";
@@ -1597,7 +1597,7 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
          $leftjoin_fusinvsnmp_unknowndevices = 1;
          if ((in_array('glpi_plugin_fusinvsnmp_models.', $already_link_tables_tmp))
             OR (in_array('glpi_plugin_fusinvsnmp_configsecurities.', $already_link_tables_tmp))
-            OR (in_array('glpi_plugin_fusinvsnmp_unknowndevices.sysdescr', $already_link_tables_tmp))) {
+            OR (in_array('glpi_plugin_fusinvsnmp_unknowndevices.', $already_link_tables_tmp))) {
 
             $leftjoin_fusinvsnmp_unknowndevices = 0;
          }
