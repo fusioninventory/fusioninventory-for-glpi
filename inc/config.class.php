@@ -97,7 +97,8 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       foreach ($p_post as $key => $value) {
          if ((strstr($key, "component_"))
                  OR (strstr($key, "import_"))
-                 OR (strstr($key, "location"))) {
+                 OR (strstr($key, "location"))
+                 OR (strstr($key, "transfers_id_auto"))) {
 
             $PluginFusioninventoryConfig->updateConfigType($plugins_id, $key, $value);
          }
