@@ -69,6 +69,12 @@ function update231to232() {
       }
      
    }
+
+   // Clean networkports not attached with a device
+   $sql = "DELETE FROM `glpi_networkports`
+      WHERE `itemtype`=''
+         OR `items_id`='0' ";
+   $DB->query($sql);
    
    
    plugin_fusioninventory_displayMigrationMessage("232"); // End
