@@ -63,7 +63,7 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
       $sopt[101]['linkfield']='';
       $sopt[101]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".
          $LANG['plugin_fusinvsnmp']['model_info'][4];
-      $sopt[101]['datatype'] = 'itemlink';
+//      $sopt[101]['datatype'] = 'itemlink';
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
 
@@ -81,7 +81,7 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
          $sopt[102]['linkfield']='';
          $sopt[102]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".
             $LANG['plugin_fusinvsnmp']['functionalities'][43];
-         $sopt[102]['datatype'] = 'itemlink';
+//         $sopt[102]['datatype'] = 'itemlink';
       }
 
    }
