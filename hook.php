@@ -1622,7 +1622,7 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
                return $return." LEFT JOIN glpi_plugin_fusinvsnmp_configsecurities ON glpi_plugin_fusinvsnmp_unknowndevices.plugin_fusinvsnmp_configsecurities_id = glpi_plugin_fusinvsnmp_configsecurities.id ";
                break;
 
-            case "glpi_plugin_fusinvsnmp_unknowndevices.sysdescr" :
+            case "glpi_plugin_fusinvsnmp_unknowndevices." :
                $return = " ";
                if ($leftjoin_fusinvsnmp_unknowndevices == "1") {
                   $return = " LEFT JOIN glpi_plugin_fusinvsnmp_unknowndevices ON (glpi_plugin_fusioninventory_unknowndevices.id = glpi_plugin_fusinvsnmp_unknowndevices.plugin_fusioninventory_unknowndevices_id) ";
