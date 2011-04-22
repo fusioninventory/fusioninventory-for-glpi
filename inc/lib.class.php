@@ -60,10 +60,11 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          // Transfer if entity is different
          $Computer = new Computer();
          $Computer->getFromDB($items_id);
-         $Computer->fields['autoupdatesystems_id'] = Dropdown::importExternal('AutoUpdateSystem', 'FusionInventory');
+         $input = array();
+         $input['autoupdatesystems_id'] = Dropdown::importExternal('AutoUpdateSystem', 'FusionInventory');
          $_SESSION['glpiactiveentities_string'] = $Computer->fields['entities_id'];
-         $Computer->fields['is_ocs_import'] = 0;
-         $Computer->update($Computer->fields);
+         $input['is_ocs_import'] = 0;
+         $Computer->update($input);
          if ($_SESSION["plugin_fusinvinventory_entity"] == "N/A") {
             $_SESSION["plugin_fusinvinventory_entity"] = $Computer->fields['entities_id'];
          }
@@ -107,8 +108,10 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          if ($agent_id = $PluginFusioninventoryAgent->getAgentWithComputerid($items_id)) {
             $PluginFusioninventoryAgent->getFromDB($agent_id);
             if ($PluginFusioninventoryAgent->getEntityID() != $_SESSION["plugin_fusinvinventory_entity"]) {
-               $PluginFusioninventoryAgent->fields['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
-               $PluginFusioninventoryAgent->update($PluginFusioninventoryAgent->fields);
+               $input = array();
+               $input['id'] = $PluginFusioninventoryAgent->fields['id'];
+               $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+               $PluginFusioninventoryAgent->update($input);
             }
          }
 
@@ -145,8 +148,10 @@ class PluginFusinvinventoryLib extends CommonDBTM {
             if ($agent_id = $PluginFusioninventoryAgent->getAgentWithComputerid($items_id)) {
                $PluginFusioninventoryAgent->getFromDB($agent_id);
                if ($PluginFusioninventoryAgent->getEntityID() != $_SESSION["plugin_fusinvinventory_entity"]) {
-                  $PluginFusioninventoryAgent->fields['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
-                  $PluginFusioninventoryAgent->update($PluginFusioninventoryAgent->fields);
+                  $input = array();
+                  $input['id'] = $PluginFusioninventoryAgent->fields['id'];
+                  $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+                  $PluginFusioninventoryAgent->update($input);
                }
             }
 
