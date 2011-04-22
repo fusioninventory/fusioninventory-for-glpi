@@ -166,7 +166,7 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
             $interval = $this->date_diff($start_date, $end_date);
             echo "<td>".$interval."s</td>";
          }
-         echo "<td>".round($nb_query / (strtotime($end_date) - strtotime($start_date)), 2)."</td>";
+         echo "<td>".round(($nb_query - $nb_errors) / (strtotime($end_date) - strtotime($start_date)), 2)."</td>";
          echo "<td>".$nb_threads."</td>";
          echo "<td>".$nb_query."</td>";
          echo "<td>".$nb_errors."</td>";
