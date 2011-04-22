@@ -96,8 +96,10 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
             }
          } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                  "import_printer") == '1') {
+            // Global
             if ((isset($dataSection['NAME'])) AND (!empty($dataSection['NAME']))) {
-               $a_printers = $printer->find("`name`='".$dataSection['NAME']."'","", 1);
+               $a_printers = $printer->find("`name`='".$dataSection['NAME']."'
+                              AND `is_global`='1'","", 1);
                if (count($a_printers) > 0) {
                   foreach($a_printers as $data) {
                      $a_printer = $data;
@@ -129,6 +131,10 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
 
       $printer_id = 0;
       if (!isset($a_printer['id'])) {
+         if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                 "import_printer") == '1') {
+            $a_printer['is_global'] = 1;
+         }
          $printer_id = $printer->add($a_printer);
       } else {
          $printer_id = $a_printer['id'];
