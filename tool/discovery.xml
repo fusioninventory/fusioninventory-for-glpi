@@ -171,7 +171,7 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Deskjet 6940 series]]></SYSDESCR>
-      <MANUFACTURER>0</MANUFACTURER>
+      <MANUFACTURER>51</MANUFACTURER>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0089</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
@@ -203,7 +203,7 @@
       <SYSDESCR><![CDATA[HP Color LaserJet 2840]]></SYSDESCR>
       <MANUFACTURER>51</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0372</MODELSNMP>
+      <MODELSNMP>Printer0380</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -747,7 +747,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C870 Software (C870-ADVIPSERVICESK9-M), Version 12.4(6)T, RELEASE SOFTWARE (fc1)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2006 by Cisco Systems, Inc.^MCompiled Thu 23-Feb-06 04:00 by ccai]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1235</MODELSNMP>
+      <MODELSNMP>Networking1294</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -755,7 +755,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C870 Software (C870-ADVIPSERVICESK9-M), Version 12.4(6)T, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2006 by Cisco Systems, Inc.Compiled Thu 23-Feb-06 04:00 by ccai]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1235</MODELSNMP>
+      <MODELSNMP>Networking1294</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -800,7 +800,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(25)SEE3, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Thu 22-Feb-07 13:57 by myl]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1198</MODELSNMP>
+      <MODELSNMP>Networking1257</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -808,7 +808,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(35)SE5, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2007 by Cisco Systems, Inc.^MCompiled Thu 19-Jul-07 20:06 by nachen]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1199</MODELSNMP>
+      <MODELSNMP>Networking1258</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -816,7 +816,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(35)SE5, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Thu 19-Jul-07 20:06 by nachen]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1199</MODELSNMP>
+      <MODELSNMP>Networking1258</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -1078,7 +1078,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-I5-M), Version 12.2(25)SEA, RELEASE SOFTWARE (fc)^Copyright (c) 1986-2005 by Cisco Systems, Inc.^MCompiled Tue 25-Jan-05 20:26 by antonino]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0162</MODELSNMP>
+      <MODELSNMP>Networking1255</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -1086,7 +1086,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-I5-M), Version 12.2(25)SEA, RELEASE SOFTWARE (fc)^Copyright (c) 1986-2005 by Cisco Systems, Inc.Compiled Tue 25-Jan-05 20:26 by antonino]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0162</MODELSNMP>
+      <MODELSNMP>Networking1255</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -1113,7 +1113,7 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[TOSHIBA e-STUDIO353]]></SYSDESCR>
-      <MANUFACTURER>0</MANUFACTURER>
+      <MANUFACTURER>83</MANUFACTURER>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0057</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
@@ -1121,7 +1121,7 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[deskjet 6127]]></SYSDESCR>
-      <MANUFACTURER>0</MANUFACTURER>
+      <MANUFACTURER>51</MANUFACTURER>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0089</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
@@ -1580,7 +1580,7 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Officejet 6300 series]]></SYSDESCR>
-      <MANUFACTURER>0</MANUFACTURER>
+      <MANUFACTURER>51</MANUFACTURER>
       <TYPE>3</TYPE>
    </DEVICE>
    <DEVICE>
@@ -1963,17 +1963,17 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[TOSHIBA e-STUDIO232]]></SYSDESCR>
-      <MANUFACTURER>0</MANUFACTURER>
+      <MANUFACTURER>83</MANUFACTURER>
       <TYPE>3</TYPE>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[TOSHIBA e-STUDIO2500c]]></SYSDESCR>
-      <MANUFACTURER>0</MANUFACTURER>
+      <MANUFACTURER>83</MANUFACTURER>
       <TYPE>3</TYPE>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[TOSHIBA e-STUDIO281c]]></SYSDESCR>
-      <MANUFACTURER>0</MANUFACTURER>
+      <MANUFACTURER>83</MANUFACTURER>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0280</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
@@ -1981,12 +1981,12 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[TOSHIBA e-STUDIO2820C]]></SYSDESCR>
-      <MANUFACTURER>0</MANUFACTURER>
+      <MANUFACTURER>83</MANUFACTURER>
       <TYPE>3</TYPE>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[TOSHIBA e-STUDIO351c]]></SYSDESCR>
-      <MANUFACTURER>0</MANUFACTURER>
+      <MANUFACTURER>83</MANUFACTURER>
       <TYPE>3</TYPE>
    </DEVICE>
    <DEVICE>
@@ -2215,7 +2215,7 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[TOSHIBA e-STUDIO 3520C]]></SYSDESCR>
-      <MANUFACTURER>0</MANUFACTURER>
+      <MANUFACTURER>83</MANUFACTURER>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0061</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
@@ -2428,7 +2428,7 @@
       <SYSDESCR><![CDATA[FS726T]]></SYSDESCR>
       <MANUFACTURER>77</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0017</MODELSNMP>
+      <MODELSNMP>Networking0388</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -2443,14 +2443,14 @@
       <SYSDESCR><![CDATA[BayStack 450-12T HW:RevD  FW:V1.48 SW:v4.3.0.4 ISVN:2]]></SYSDESCR>
       <MANUFACTURER>68</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0073</MODELSNMP>
+      <MODELSNMP>Networking0211</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[BayStack 450-24T HW:RevL  FW:V1.47 SW:v3.1.0.22  ISVN:1]]></SYSDESCR>
       <MANUFACTURER>68</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0073</MODELSNMP>
+      <MODELSNMP>Networking0211</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -2949,14 +2949,14 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C870 Software (C870-ADVIPSERVICESK9-M), Version 12.4(4)T7, RELEASE SOFTWARE (fc1)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2006 by Cisco Systems, Inc.^MCompiled Wed 29-Nov-06 00:43 by kellythw]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1196</MODELSNMP>
+      <MODELSNMP>Networking1253</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C870 Software (C870-ADVIPSERVICESK9-M), Version 12.4(4)T7, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2006 by Cisco Systems, Inc.Compiled Wed 29-Nov-06 00:43 by kellythw]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1196</MODELSNMP>
+      <MODELSNMP>Networking1253</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
    </DEVICE>
    <DEVICE>
@@ -2975,14 +2975,14 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C1310 Software (C1310-K9W7-M), Version 12.4(10b)JA1, RELEASE SOFTWARE (fc2)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2008 by Cisco Systems, Inc.^MCompiled Wed 30-Jan-08 12:18 by prod_rel_team]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1197</MODELSNMP>
+      <MODELSNMP>Networking1254</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C1310 Software (C1310-K9W7-M), Version 12.4(10b)JA1, RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Wed 30-Jan-08 12:18 by prod_rel_team]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1197</MODELSNMP>
+      <MODELSNMP>Networking1254</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
    </DEVICE>
    <DEVICE>
@@ -3059,7 +3059,7 @@
       <SYSDESCR><![CDATA[Cisco Systems Catalyst 1900]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0165</MODELSNMP>
+      <MODELSNMP>Networking1256</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -3218,7 +3218,7 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Photosmart D7200 series]]></SYSDESCR>
-      <MANUFACTURER>0</MANUFACTURER>
+      <MANUFACTURER>51</MANUFACTURER>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0093</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
@@ -3227,7 +3227,7 @@
       <SYSDESCR><![CDATA[HP P]]></SYSDESCR>
       <MANUFACTURER>51</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0049</MODELSNMP>
+      <MODELSNMP>Networking0380</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -3241,7 +3241,7 @@
       <SYSDESCR><![CDATA[HP ProCurve Access Point 420: v2.2.3 v3.0.6]]></SYSDESCR>
       <MANUFACTURER>51</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0049</MODELSNMP>
+      <MODELSNMP>Networking0380</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -3418,7 +3418,7 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[DesignJet 500PS+HPGL2 (C7770C)]]></SYSDESCR>
-      <MANUFACTURER>0</MANUFACTURER>
+      <MANUFACTURER>51</MANUFACTURER>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0093</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
@@ -3439,7 +3439,7 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Deskjet 6800]]></SYSDESCR>
-      <MANUFACTURER>0</MANUFACTURER>
+      <MANUFACTURER>51</MANUFACTURER>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0089</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
@@ -3574,7 +3574,7 @@
       <SYSDESCR><![CDATA[EthAirNet Wireless LAN]]></SYSDESCR>
       <MANUFACTURER>0</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0073</MODELSNMP>
+      <MODELSNMP>Networking0211</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -3587,14 +3587,14 @@
       <SYSDESCR><![CDATA[(c) Intel Corporation, 550T Express 550T Switch, Version 2.32 ]]></SYSDESCR>
       <MANUFACTURER>18</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0073</MODELSNMP>
+      <MODELSNMP>Networking0211</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[(c) Intel Corporation, 550T Express 550T Switch, Version 2.32]]></SYSDESCR>
       <MANUFACTURER>18</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0073</MODELSNMP>
+      <MODELSNMP>Networking0211</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -3711,14 +3711,14 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software ^MIOS (tm) C2600 Software (C2600-D-M), Version 12.2(12c), RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2003 by cisco Systems, Inc.^MCompiled Wed 05-Feb-03 16:21 by kellythw]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1200</MODELSNMP>
+      <MODELSNMP>Networking1259</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C2600 Software (C2600-D-M), Version 12.2(12c), RELEASE SOFTWARE (fc1)Copyright (c) 1986-2003 by cisco Systems, Inc.Compiled Wed 05-Feb-03 16:21 by kellythw]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1200</MODELSNMP>
+      <MODELSNMP>Networking1259</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -3795,7 +3795,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C1130 Software (C1130-K9W7-M), Version 12.4(10b)JDA3, RELEASE SOFTWARE (fc1)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2009 by Cisco Systems, Inc.^MCompiled Sun 07-Jun-09 02:59 by prod_rel_team]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1201</MODELSNMP>
+      <MODELSNMP>Networking1260</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3803,7 +3803,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C1130 Software (C1130-K9W7-M), Version 12.4(10b)JDA3, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Sun 07-Jun-09 02:59 by prod_rel_team]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1201</MODELSNMP>
+      <MODELSNMP>Networking1260</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3811,7 +3811,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C1130 Software (C1130-K9W7-M), Version 12.4(3g)JA1, RELEASE SOFTWARE (fc1)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2007 by Cisco Systems, Inc.^MCompiled Thu 19-Jul-07 23:19 by kellythw]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1202</MODELSNMP>
+      <MODELSNMP>Networking1261</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3819,7 +3819,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C1130 Software (C1130-K9W7-M), Version 12.4(3g)JA1, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Thu 19-Jul-07 23:19 by kellythw]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1202</MODELSNMP>
+      <MODELSNMP>Networking1261</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3827,7 +3827,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C1310 Software (C1310-K9W7-M), Version 12.4(10b)JDA2, RELEASE SOFTWARE (fc1)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2008 by Cisco Systems, Inc.^MCompiled Mon 24-Nov-08 17:45 by prod_rel_team]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1203</MODELSNMP>
+      <MODELSNMP>Networking1262</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3835,7 +3835,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C1310 Software (C1310-K9W7-M), Version 12.4(10b)JDA2, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Mon 24-Nov-08 17:45 by prod_rel_team]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1203</MODELSNMP>
+      <MODELSNMP>Networking1262</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3875,7 +3875,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE3, RELEASE SOFTWARE (fc1)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2009 by Cisco Systems, Inc.^MCompiled Wed 22-Jul-09 07:03 by prod_rel_team]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1204</MODELSNMP>
+      <MODELSNMP>Networking1263</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3883,7 +3883,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE3, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Wed 22-Jul-09 07:03 by prod_rel_team]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1204</MODELSNMP>
+      <MODELSNMP>Networking1263</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3891,7 +3891,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C3550 Software (C3550-IPSERVICESK9-M), Version 12.2(25)SEC, RELEASE SOFTWARE (fc2)^MCopyright (c) 1986-2005 by Cisco Systems, Inc.^MCompiled Fri 15-Jul-05 01:40 by antonino]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1205</MODELSNMP>
+      <MODELSNMP>Networking1264</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3899,7 +3899,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C3550 Software (C3550-IPSERVICESK9-M), Version 12.2(25)SEC, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2005 by Cisco Systems, Inc.Compiled Fri 15-Jul-05 01:40 by antonino]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1205</MODELSNMP>
+      <MODELSNMP>Networking1264</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3923,7 +3923,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C3560E Software (C3560E-UNIVERSALK9-M), Version 12.2(50)SE, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2009 by Cisco Systems, Inc.^MCompiled Sat 28-Feb-09 02:53 by weiliu]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1206</MODELSNMP>
+      <MODELSNMP>Networking1265</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3931,7 +3931,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C3560E Software (C3560E-UNIVERSALK9-M), Version 12.2(50)SE, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Sat 28-Feb-09 02:53 by weiliu]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1206</MODELSNMP>
+      <MODELSNMP>Networking1265</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3955,7 +3955,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, CBS31X0 Software (CBS31X0-UNIVERSALK9-M), Version 12.2(50)SE1, RELEASE SOFTWARE (fc2)^MCopyright (c) 1986-2009 by Cisco Systems, Inc.^MCompiled Mon 06-Apr-09 09:28 by amvarma]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1207</MODELSNMP>
+      <MODELSNMP>Networking1266</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3963,7 +3963,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, CBS31X0 Software (CBS31X0-UNIVERSALK9-M), Version 12.2(50)SE1, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Mon 06-Apr-09 09:28 by amvarma]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1207</MODELSNMP>
+      <MODELSNMP>Networking1266</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3971,7 +3971,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, s72033_rp Software (s72033_rp-ADVIPSERVICESK9_WAN-M), Version 12.2(33)SXH4, RELEASE SOFTWARE (fc1)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2008 by Cisco Systems, Inc.^MCompiled Mon 10-Nov-08 07:00 by pr]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1208</MODELSNMP>
+      <MODELSNMP>Networking1267</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3979,7 +3979,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, s72033_rp Software (s72033_rp-ADVIPSERVICESK9_WAN-M), Version 12.2(33)SXH4, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Mon 10-Nov-08 07:00 by pr]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1208</MODELSNMP>
+      <MODELSNMP>Networking1267</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3987,7 +3987,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, s72033_rp Software (s72033_rp-ADVIPSERVICESK9_WAN-M), Version 12.2(33)SXI, RELEASE SOFTWARE (fc2)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2008 by Cisco Systems, Inc.^MCompiled Fri 07-Nov-08 04:00 by pro]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1209</MODELSNMP>
+      <MODELSNMP>Networking1268</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3995,7 +3995,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, s72033_rp Software (s72033_rp-ADVIPSERVICESK9_WAN-M), Version 12.2(33)SXI, RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Fri 07-Nov-08 04:00 by pro]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1209</MODELSNMP>
+      <MODELSNMP>Networking1268</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4019,7 +4019,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software ^MIOS (tm) C2950 Software (C2950-I6K2L2Q4-M), Version 12.1(22)EA12, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2008 by cisco Systems, Inc.^MCompiled Tue 08-Jul-08 00:03 by amvarma]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1210</MODELSNMP>
+      <MODELSNMP>Networking1269</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4027,7 +4027,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C2950 Software (C2950-I6K2L2Q4-M), Version 12.1(22)EA12, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2008 by cisco Systems, Inc.Compiled Tue 08-Jul-08 00:03 by amvarma]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1210</MODELSNMP>
+      <MODELSNMP>Networking1269</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4035,7 +4035,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software ^MIOS (tm) C2950 Software (C2950-I6K2L2Q4-M), Version 12.1(22)EA8a, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2006 by cisco Systems, Inc.^MCompiled Fri 28-Jul-06 17:00 by weiliu]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1211</MODELSNMP>
+      <MODELSNMP>Networking1270</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4043,7 +4043,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C2950 Software (C2950-I6K2L2Q4-M), Version 12.1(22)EA8a, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2006 by cisco Systems, Inc.Compiled Fri 28-Jul-06 17:00 by weiliu]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1211</MODELSNMP>
+      <MODELSNMP>Networking1270</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4051,7 +4051,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software ^MIOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(22)EA6, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2005 by cisco Systems, Inc.^MCompiled Fri 21-Oct-05 01:59 by yenanh]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1212</MODELSNMP>
+      <MODELSNMP>Networking1271</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4059,7 +4059,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(22)EA6, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2005 by cisco Systems, Inc.Compiled Fri 21-Oct-05 01:59 by yenanh]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1212</MODELSNMP>
+      <MODELSNMP>Networking1271</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4067,7 +4067,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software ^MIOS (tm) C2950lre Software (C2950lre-I6L2Q4-M), Version 12.1(22)EA9, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2006 by cisco Systems, Inc.^MCompiled Fri 01-Dec-06 18:06 by weiliu]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1213</MODELSNMP>
+      <MODELSNMP>Networking1272</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4075,7 +4075,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C2950lre Software (C2950lre-I6L2Q4-M), Version 12.1(22)EA9, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2006 by cisco Systems, Inc.Compiled Fri 01-Dec-06 18:06 by weiliu]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1213</MODELSNMP>
+      <MODELSNMP>Networking1272</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4083,7 +4083,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C1100 Software (C1100-K9W7-M), Version 12.3(8)JEC, RELEASE SOFTWARE (fc1)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2007 by Cisco Systems, Inc.^MCompiled Thu 25-Oct-07 22:19 by dchih]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1214</MODELSNMP>
+      <MODELSNMP>Networking1273</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4091,7 +4091,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C1100 Software (C1100-K9W7-M), Version 12.3(8)JEC, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Thu 25-Oct-07 22:19 by dchih]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1214</MODELSNMP>
+      <MODELSNMP>Networking1273</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4099,7 +4099,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C1130 Software (C1130-K9W7-M), Version 12.4(10b)JDA, RELEASE SOFTWARE (fc1)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2008 by Cisco Systems, Inc.^MCompiled Thu 30-Oct-08 11:45 by prod_rel_team]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1215</MODELSNMP>
+      <MODELSNMP>Networking1274</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4107,7 +4107,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C1130 Software (C1130-K9W7-M), Version 12.4(10b)JDA, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Thu 30-Oct-08 11:45 by prod_rel_team]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1215</MODELSNMP>
+      <MODELSNMP>Networking1274</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4542,7 +4542,7 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[TOSHIBA e-STUDIO283]]></SYSDESCR>
-      <MANUFACTURER>0</MANUFACTURER>
+      <MANUFACTURER>83</MANUFACTURER>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0155</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
@@ -4579,7 +4579,7 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[TOSHIBA e-STUDIO350]]></SYSDESCR>
-      <MANUFACTURER>0</MANUFACTURER>
+      <MANUFACTURER>83</MANUFACTURER>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0164</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
@@ -4595,14 +4595,14 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[TOSHIBA TEC B-EV4]]></SYSDESCR>
-      <MANUFACTURER>0</MANUFACTURER>
+      <MANUFACTURER>83</MANUFACTURER>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0098</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Deskjet 6980 series]]></SYSDESCR>
-      <MANUFACTURER>0</MANUFACTURER>
+      <MANUFACTURER>51</MANUFACTURER>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0089</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
@@ -4623,7 +4623,7 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[TOSHIBA e-STUDIO4520C]]></SYSDESCR>
-      <MANUFACTURER>0</MANUFACTURER>
+      <MANUFACTURER>83</MANUFACTURER>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0162</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
@@ -4631,7 +4631,7 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[TOSHIBA e-STUDIO167]]></SYSDESCR>
-      <MANUFACTURER>0</MANUFACTURER>
+      <MANUFACTURER>83</MANUFACTURER>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0111</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
@@ -4732,7 +4732,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C1200 Software (C1200-K9W7-M), Version 12.3(8)JEA, RELEASE SOFTWARE (fc2)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2006 by Cisco Systems, Inc.^MCompiled Wed 23-Aug-06 16:42 by kellythw]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1216</MODELSNMP>
+      <MODELSNMP>Networking1275</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4740,7 +4740,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C1200 Software (C1200-K9W7-M), Version 12.3(8)JEA, RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2006 by Cisco Systems, Inc.Compiled Wed 23-Aug-06 16:42 by kellythw]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1216</MODELSNMP>
+      <MODELSNMP>Networking1275</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4748,7 +4748,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C1200 Software (C1200-K9W7-M), Version 12.3(8)JEC, RELEASE SOFTWARE (fc1)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2007 by Cisco Systems, Inc.^MCompiled Thu 25-Oct-07 22:24 by dchih]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1217</MODELSNMP>
+      <MODELSNMP>Networking1276</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4756,7 +4756,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C1200 Software (C1200-K9W7-M), Version 12.3(8)JEC, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Thu 25-Oct-07 22:24 by dchih]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1217</MODELSNMP>
+      <MODELSNMP>Networking1276</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4772,7 +4772,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C1200 Software (C1200-K9W7-M), Version 12.3(8)JEA1, RELEASE SOFTWARE (fc1)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2007 by Cisco Systems, Inc.^MCompiled Mon 15-Jan-07 23:17 by kellythw]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1218</MODELSNMP>
+      <MODELSNMP>Networking1277</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4780,7 +4780,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C1200 Software (C1200-K9W7-M), Version 12.3(8)JEA1, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Mon 15-Jan-07 23:17 by kellythw]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1218</MODELSNMP>
+      <MODELSNMP>Networking1277</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4820,7 +4820,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C1240 Software (C1240-K9W7-M), Version 12.3(8)JA, RELEASE SOFTWARE (fc2)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2006 by Cisco Systems, Inc.^MCompiled Mon 27-Feb-06 09:17 by ssearch]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1219</MODELSNMP>
+      <MODELSNMP>Networking1278</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4828,7 +4828,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C1240 Software (C1240-K9W7-M), Version 12.3(8)JA, RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2006 by Cisco Systems, Inc.Compiled Mon 27-Feb-06 09:17 by ssearch]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1219</MODELSNMP>
+      <MODELSNMP>Networking1278</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4836,7 +4836,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C1200 Software (C1200-K9W7-M), Version 12.3(8)JA2, RELEASE SOFTWARE (fc1)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2006 by Cisco Systems, Inc.^MCompiled Tue 30-May-06 18:07 by pwade]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1220</MODELSNMP>
+      <MODELSNMP>Networking1279</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4844,7 +4844,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C1200 Software (C1200-K9W7-M), Version 12.3(8)JA2, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2006 by Cisco Systems, Inc.Compiled Tue 30-May-06 18:07 by pwade]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1220</MODELSNMP>
+      <MODELSNMP>Networking1279</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4892,14 +4892,14 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software ^MIOS (tm) C3500XL Software (C3500XL-C3H2S-M), Version 12.0(5.2)XU, MAINTENANCE INTERIM SOFTWARE^MCopyright (c) 1986-2000 by cisco Systems, Inc.^MCompiled Mon 17-Jul-00 18:29 by ayounes]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1221</MODELSNMP>
+      <MODELSNMP>Networking1280</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C3500XL Software (C3500XL-C3H2S-M), Version 12.0(5.2)XU, MAINTENANCE INTERIM SOFTWARECopyright (c) 1986-2000 by cisco Systems, Inc.Compiled Mon 17-Jul-00 18:29 by ayounes]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1221</MODELSNMP>
+      <MODELSNMP>Networking1280</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -4973,7 +4973,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software^M IOS (tm) C2900XL Software (C2900XL-C3H2S-M), Version 12.0(5)WC17, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2007 by cisco Systems, Inc.^MCompiled Tue 13-Feb-07 15:27 by antonino]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1222</MODELSNMP>
+      <MODELSNMP>Networking1281</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4981,7 +4981,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C2900XL Software (C2900XL-C3H2S-M), Version 12.0(5)WC17, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2007 by cisco Systems, Inc.Compiled Tue 13-Feb-07 15:27 by antonino]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1222</MODELSNMP>
+      <MODELSNMP>Networking1281</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4989,7 +4989,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software^M IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(11)EA1, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2002 by cisco Systems, Inc.^MCompiled Wed 28-Aug-02 10:25 by antonino]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1223</MODELSNMP>
+      <MODELSNMP>Networking1282</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4997,7 +4997,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(11)EA1, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2002 by cisco Systems, Inc.Compiled Wed 28-Aug-02 10:25 by antonino]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1223</MODELSNMP>
+      <MODELSNMP>Networking1282</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -5005,7 +5005,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software^M IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(12c)EA1, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2002 by cisco Systems, Inc.^MCompiled Sun 24-Nov-02 23:31 by antonino]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1224</MODELSNMP>
+      <MODELSNMP>Networking1283</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -5013,7 +5013,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(12c)EA1, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2002 by cisco Systems, Inc.Compiled Sun 24-Nov-02 23:31 by antonino]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1224</MODELSNMP>
+      <MODELSNMP>Networking1283</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -5021,7 +5021,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software^MIOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(13)EA1, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2003 by cisco Systems, Inc.^MCompiled Tue 04-Mar-03 02:14 by yenanh]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1225</MODELSNMP>
+      <MODELSNMP>Networking1284</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -5029,7 +5029,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System SoftwareIOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(13)EA1, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2003 by cisco Systems, Inc.Compiled Tue 04-Mar-03 02:14 by yenanh]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1225</MODELSNMP>
+      <MODELSNMP>Networking1284</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -5037,7 +5037,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software ^M IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(14)EA1a, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2003 by cisco Systems, Inc.^MCompiled Tue 02-Sep-03 03:33 by antonino]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1226</MODELSNMP>
+      <MODELSNMP>Networking1285</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -5045,7 +5045,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software  IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(14)EA1a, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2003 by cisco Systems, Inc.Compiled Tue 02-Sep-03 03:33 by antonino]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1226</MODELSNMP>
+      <MODELSNMP>Networking1285</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -5053,7 +5053,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software^M IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(20)EA1, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2004 by cisco Systems, Inc.^MCompiled Wed 04-Feb-04 21:21 by yenanh]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1227</MODELSNMP>
+      <MODELSNMP>Networking1286</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -5061,7 +5061,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(20)EA1, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2004 by cisco Systems, Inc.Compiled Wed 04-Feb-04 21:21 by yenanh]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1227</MODELSNMP>
+      <MODELSNMP>Networking1286</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -5069,7 +5069,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software^M IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(22)EA4, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2005 by cisco Systems, Inc.^MCompiled Wed 23-Mar-05 15:33 by yenanh]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1228</MODELSNMP>
+      <MODELSNMP>Networking1287</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -5077,7 +5077,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(22)EA4, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2005 by cisco Systems, Inc.Compiled Wed 23-Mar-05 15:33 by yenanh]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1228</MODELSNMP>
+      <MODELSNMP>Networking1287</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -5085,7 +5085,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software^; IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(22)EA4a, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2005 by cisco Systems, Inc.^MCompiled Fri 16-Sep-05 10:46 by yenanh]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1229</MODELSNMP>
+      <MODELSNMP>Networking1288</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -5093,7 +5093,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software^; IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(22)EA4a, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2005 by cisco Systems, Inc.Compiled Fri 16-Sep-05 10:46 by yenanh]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1229</MODELSNMP>
+      <MODELSNMP>Networking1288</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -5101,7 +5101,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software^MIOS (tm) C3500XL Software (C3500XL-C3H2S-M), Version 12.0(5)WC17, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2007 by cisco Systems, Inc.^MCompiled Tue 13-Feb-07 15:04 by antonino]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1230</MODELSNMP>
+      <MODELSNMP>Networking1289</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -5109,7 +5109,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System SoftwareIOS (tm) C3500XL Software (C3500XL-C3H2S-M), Version 12.0(5)WC17, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2007 by cisco Systems, Inc.Compiled Tue 13-Feb-07 15:04 by antonino]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1230</MODELSNMP>
+      <MODELSNMP>Networking1289</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -5117,7 +5117,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-ADVIPSERVICESK9-M), Version 12.2(40)SE, RELEASE SOFTWARE (fc3)Copyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Fri 24-Aug-07 00:56 by myl]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1231</MODELSNMP>
+      <MODELSNMP>Networking1290</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -5125,7 +5125,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software^M IOS (tm) Catalyst 4000 L3 Switch Software (cat4000-I9K91S-M), Version 12.2(20)EWA3, RELEASE SOFTWARE (fc1)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2005 by cisco Systems, Inc.]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1232</MODELSNMP>
+      <MODELSNMP>Networking1291</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -5133,7 +5133,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) Catalyst 4000 L3 Switch Software (cat4000-I9K91S-M), Version 12.2(20)EWA3, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2005 by cisco Systems, Inc.]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1232</MODELSNMP>
+      <MODELSNMP>Networking1291</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -5162,7 +5162,7 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[DesignJet 1050C (C6074A)]]></SYSDESCR>
-      <MANUFACTURER>0</MANUFACTURER>
+      <MANUFACTURER>51</MANUFACTURER>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0093</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
@@ -5549,7 +5549,7 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[DesignJet 800PS (C7780C)]]></SYSDESCR>
-      <MANUFACTURER>0</MANUFACTURER>
+      <MANUFACTURER>51</MANUFACTURER>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0245</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.11.2.4.3.1.25.0</SERIAL>
@@ -5557,7 +5557,7 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Deskjet 1280]]></SYSDESCR>
-      <MANUFACTURER>0</MANUFACTURER>
+      <MANUFACTURER>51</MANUFACTURER>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0093</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
@@ -6069,7 +6069,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software ^MIOS (tm) C2600 Software (C2600-ADVIPSERVICESK9-M), Version 12.3(26), RELEASE SOFTWARE (fc2)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2008 by cisco Systems, Inc.^MCompiled Mon 1]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1233</MODELSNMP>
+      <MODELSNMP>Networking1292</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -6077,7 +6077,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C2600 Software (C2600-ADVIPSERVICESK9-M), Version 12.3(26), RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2008 by cisco Systems, Inc.Compiled Mon 1]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1233</MODELSNMP>
+      <MODELSNMP>Networking1292</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -6266,7 +6266,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, 1841 Software (C1841-IPBASE-M), Version 12.4(1c), RELEASE SOFTWARE (fc1)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2005 by Cisco Systems, Inc.^MCompiled Tue 25-Oct-05 17:10 by evmiller]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1234</MODELSNMP>
+      <MODELSNMP>Networking1293</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -6274,7 +6274,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, 1841 Software (C1841-IPBASE-M), Version 12.4(1c), RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2005 by Cisco Systems, Inc.Compiled Tue 25-Oct-05 17:10 by evmiller]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1234</MODELSNMP>
+      <MODELSNMP>Networking1293</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -6376,7 +6376,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 12.2(37)SE, RELEASE SOFTWARE (fc2)^MCopyright (c) 1986-2007 by Cisco Systems, Inc.^MCompiled Thu 10-May-07 16:31 by antonino]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1236</MODELSNMP>
+      <MODELSNMP>Networking1295</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -6384,7 +6384,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 12.2(37)SE, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Thu 10-May-07 16:31 by antonino]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1236</MODELSNMP>
+      <MODELSNMP>Networking1295</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -6392,7 +6392,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPSERVICESK9-M), Version 12.2(37)SE, RELEASE SOFTWARE (fc2)^MCopyright (c) 1986-2007 by Cisco Systems, Inc.^MCompiled Thu 10-May-07 16:31 by antonino]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1237</MODELSNMP>
+      <MODELSNMP>Networking1296</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -6400,7 +6400,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPSERVICESK9-M), Version 12.2(37)SE, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Thu 10-May-07 16:31 by antonino]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1237</MODELSNMP>
+      <MODELSNMP>Networking1296</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -6480,7 +6480,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, s72033_rp Software (s72033_rp-IPSERVICESK9-VM), Version 12.2(33)SXI, RELEASE SOFTWARE (fc2)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2008 by Cisco Systems, Inc.^MCompiled Fri 07-Nov-08 15:40 by prod_rel_]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1238</MODELSNMP>
+      <MODELSNMP>Networking1297</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -6488,7 +6488,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, s72033_rp Software (s72033_rp-IPSERVICESK9-VM), Version 12.2(33)SXI, RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Fri 07-Nov-08 15:40 by prod_rel_]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1238</MODELSNMP>
+      <MODELSNMP>Networking1297</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -6754,7 +6754,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software ^MIOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(22)EA4a, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2005 by cisco Systems, Inc.^MCompiled Fri 16-Sep-05 10:46 by yenanh]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1239</MODELSNMP>
+      <MODELSNMP>Networking1298</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -6762,7 +6762,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(22)EA4a, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2005 by cisco Systems, Inc.Compiled Fri 16-Sep-05 10:46 by yenanh]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1239</MODELSNMP>
+      <MODELSNMP>Networking1298</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -6826,13 +6826,13 @@
       <SYSDESCR><![CDATA[Cisco NX-OS(tm) n5000, Software (n5000-uk9), Version 4.1(3)N1(1), RELEASE SOFTWARE Copyright (c) 2002-2008 by Cisco Systems, Inc. Device Manager Version 4.2(1),  Compiled 7/23/2009 17:00:00]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1240</MODELSNMP>
+      <MODELSNMP>Networking1299</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C181X Software (C181X-ADVENTERPRISEK9-M), Version 12.4(6)T7, RELEASE SOFTWARE (fc5)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2007 by Cisco Systems, Inc.^MCompiled Thu 29-Mar-07 02:54 by khuie]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1241</MODELSNMP>
+      <MODELSNMP>Networking1300</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -6840,7 +6840,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C181X Software (C181X-ADVENTERPRISEK9-M), Version 12.4(6)T7, RELEASE SOFTWARE (fc5)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Thu 29-Mar-07 02:54 by khuie]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1241</MODELSNMP>
+      <MODELSNMP>Networking1300</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -6848,21 +6848,21 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software ^MIOS (tm) C2600 Software (C2600-D-M), Version 12.2(17a), RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2003 by cisco Systems, Inc.^MCompiled Thu 19-Jun-03 16:34 by pwade]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1242</MODELSNMP>
+      <MODELSNMP>Networking1301</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C2600 Software (C2600-D-M), Version 12.2(17a), RELEASE SOFTWARE (fc1)Copyright (c) 1986-2003 by cisco Systems, Inc.Compiled Thu 19-Jun-03 16:34 by pwade]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1242</MODELSNMP>
+      <MODELSNMP>Networking1301</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, 2800 Software (C2800NM-ADVIPSERVICESK9-M), Version 12.4(13a), RELEASE SOFTWARE (fc1)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2007 by Cisco Systems, Inc.^MCompiled Tue 06-Mar-07 17:01 by prod_rel_team]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1243</MODELSNMP>
+      <MODELSNMP>Networking1302</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -6870,7 +6870,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, 2800 Software (C2800NM-ADVIPSERVICESK9-M), Version 12.4(13a), RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Tue 06-Mar-07 17:01 by prod_rel_team]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1243</MODELSNMP>
+      <MODELSNMP>Networking1302</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -7127,7 +7127,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software ^MIOS (tm) C1700 Software (C1700-K9SY7-M), Version 12.2(15)ZL1, EARLY DEPLOYMENT RELEASE SOFTWARE (fc1)^MSynched to technology version 12.3(0.1)^MTAC Support: http://www.cisco.com/tac^MCopyright (c) 1986-2003 b]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1244</MODELSNMP>
+      <MODELSNMP>Networking1303</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -7135,7 +7135,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C1700 Software (C1700-K9SY7-M), Version 12.2(15)ZL1, EARLY DEPLOYMENT RELEASE SOFTWARE (fc1)Synched to technology version 12.3(0.1)TAC Support: http://www.cisco.com/tacCopyright (c) 1986-2003 b]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1244</MODELSNMP>
+      <MODELSNMP>Networking1303</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -7143,7 +7143,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software ^MIOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(20)EA1a, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2004 by cisco Systems, Inc.^MCompiled Mon 19-Apr-04 20:58 by yenanh]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1245</MODELSNMP>
+      <MODELSNMP>Networking1304</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -7151,7 +7151,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(20)EA1a, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2004 by cisco Systems, Inc.Compiled Mon 19-Apr-04 20:58 by yenanh]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1245</MODELSNMP>
+      <MODELSNMP>Networking1304</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -7159,7 +7159,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software ^MIOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(22)EA8, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2006 by cisco Systems, Inc.^MCompiled Fri 12-May-06 17:19 by myl]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1246</MODELSNMP>
+      <MODELSNMP>Networking1305</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -7167,7 +7167,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(22)EA8, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2006 by cisco Systems, Inc.Compiled Fri 12-May-06 17:19 by myl]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1246</MODELSNMP>
+      <MODELSNMP>Networking1305</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -7175,7 +7175,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C2970 Software (C2970-LANBASEK9-M), Version 12.2(25)SEE1, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2006 by Cisco Systems, Inc.^MCompiled Mon 22-May-06 07:54 by yenanh]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1247</MODELSNMP>
+      <MODELSNMP>Networking1306</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -7183,7 +7183,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C2970 Software (C2970-LANBASEK9-M), Version 12.2(25)SEE1, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2006 by Cisco Systems, Inc.Compiled Mon 22-May-06 07:54 by yenanh]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1247</MODELSNMP>
+      <MODELSNMP>Networking1306</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -7207,7 +7207,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software ^MIOS (tm) C3750 Software (C3750-I5-M), Version 12.1(19)EA1d, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2004 by cisco Systems, Inc.^MCompiled Mon 05-Apr-04 22:06 by antonino]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1248</MODELSNMP>
+      <MODELSNMP>Networking1307</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -7215,7 +7215,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C3750 Software (C3750-I5-M), Version 12.1(19)EA1d, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2004 by cisco Systems, Inc.Compiled Mon 05-Apr-04 22:06 by antonino]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1248</MODELSNMP>
+      <MODELSNMP>Networking1307</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -7506,14 +7506,14 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software^MIOS (tm) 4000 Software (XX-D-M), Version 10.3(4), RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-1995 by cisco Systems, Inc.^MCompiled Thu 29-Jun-95 07:13 by pitoscia]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1249</MODELSNMP>
+      <MODELSNMP>Networking1308</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System SoftwareIOS (tm) 4000 Software (XX-D-M), Version 10.3(4), RELEASE SOFTWARE (fc1)Copyright (c) 1986-1995 by cisco Systems, Inc.Compiled Thu 29-Jun-95 07:13 by pitoscia]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1249</MODELSNMP>
+      <MODELSNMP>Networking1308</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -7740,7 +7740,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, s72033_rp Software (s72033_rp-IPSERVICESK9_WAN-VM), Version 12.2(33)SXI3, RELEASE SOFTWARE (fc2)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2009 by Cisco Systems, Inc.^MCompiled Tue 27-Oct-09 05:12 by prod]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1250</MODELSNMP>
+      <MODELSNMP>Networking1309</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -7748,7 +7748,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, s72033_rp Software (s72033_rp-IPSERVICESK9_WAN-VM), Version 12.2(33)SXI3, RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Tue 27-Oct-09 05:12 by prod]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1250</MODELSNMP>
+      <MODELSNMP>Networking1309</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -7762,7 +7762,7 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[TOSHIBA e-STUDIO452]]></SYSDESCR>
-      <MANUFACTURER>-1</MANUFACTURER>
+      <MANUFACTURER>83</MANUFACTURER>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0057</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
@@ -7938,7 +7938,7 @@
       <SYSDESCR><![CDATA[3Com Switch 4200G 12-Port Software Version 3Com OS V3.02.00s56]]></SYSDESCR>
       <MANUFACTURER>52</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0385</MODELSNMP>
+      <MODELSNMP>Networking0316</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -7994,7 +7994,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(44)SE6, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2009 by Cisco Systems, Inc.^MCompiled Mon 09-Mar-09 13:49 by gereddy]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0387</MODELSNMP>
+      <MODELSNMP>Networking0088</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -8002,7 +8002,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(44)SE6, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Mon 09-Mar-09 13:49 by gereddy]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0387</MODELSNMP>
+      <MODELSNMP>Networking0088</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -8073,7 +8073,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C1240 Software (C1240-K9W7-M), Version 12.4(10b)JA3, RELEASE SOFTWARE (fc1)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2008 by Cisco Systems, Inc.^MCompiled Wed 19-Mar-08 18:25 by prod_rel_team]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0390</MODELSNMP>
+      <MODELSNMP>Networking0288</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -8081,7 +8081,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C1240 Software (C1240-K9W7-M), Version 12.4(10b)JA3, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Wed 19-Mar-08 18:25 by prod_rel_team]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0390</MODELSNMP>
+      <MODELSNMP>Networking0288</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -8454,7 +8454,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C1100 Software (C1100-K9W7-M), Version 12.2(13)JA3, EARLY DEPLOYMENT RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2004 by cisco Systems, Inc.Compi]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1251</MODELSNMP>
+      <MODELSNMP>Networking1310</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -8697,7 +8697,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 12.2(53)SE, RELEASE SOFTWARE (fc2)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2009 by Cisco Systems, Inc.^MCompiled Sun 13-Dec-09 16:25 by prod_rel_team]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1252</MODELSNMP>
+      <MODELSNMP>Networking1311</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -8705,7 +8705,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 12.2(53)SE, RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Sun 13-Dec-09 16:25 by prod_rel_team]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1252</MODELSNMP>
+      <MODELSNMP>Networking1311</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -8727,7 +8727,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, 2800 Software (C2800NM-IPBASE-M), Version 12.4(3g), RELEASE SOFTWARE (fc2)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2006 by Cisco Systems, Inc.^MCompiled Mon 06-Nov-06 02:36 by alnguyen]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0454</MODELSNMP>
+      <MODELSNMP>Networking0373</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -8735,7 +8735,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, 2800 Software (C2800NM-IPBASE-M), Version 12.4(3g), RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2006 by Cisco Systems, Inc.Compiled Mon 06-Nov-06 02:36 by alnguyen]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0454</MODELSNMP>
+      <MODELSNMP>Networking0373</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -8891,7 +8891,7 @@
       <SYSDESCR><![CDATA[ProCurve J8698A Switch 5412zl, revision K.13.60, ROM K.12.17 (/sw/code/build/btm(t3a))]]></SYSDESCR>
       <MANUFACTURER>51</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0690</MODELSNMP>
+      <MODELSNMP>Networking0343</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -9382,7 +9382,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software ^MIOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(22)EA3, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2005 by cisco Systems, Inc.^MCompiled Tue 25-Jan-05 18:19 by antonino]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0760</MODELSNMP>
+      <MODELSNMP>Networking0756</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -9390,7 +9390,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(22)EA3, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2005 by cisco Systems, Inc.Compiled Tue 25-Jan-05 18:19 by antonino]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0760</MODELSNMP>
+      <MODELSNMP>Networking0756</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -9466,7 +9466,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software ^MIOS (tm) C3550 Software (C3550-I9Q3L2-M), Version 12.1(19)EA1c, RELEASE SOFTWARE (fc2)^MCopyright (c) 1986-2004 by cisco Systems, Inc.^MCompiled Tue 03-Feb-04 04:47 by yenanh]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0760</MODELSNMP>
+      <MODELSNMP>Networking0756</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -9474,7 +9474,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C3550 Software (C3550-I9Q3L2-M), Version 12.1(19)EA1c, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2004 by cisco Systems, Inc.Compiled Tue 03-Feb-04 04:47 by yenanh]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0760</MODELSNMP>
+      <MODELSNMP>Networking0756</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -9545,7 +9545,7 @@
       <SYSDESCR><![CDATA[HP J4904A ProCurve Switch 2848, revision I.08.71, ROM I.08.07 (/sw/code/build/mako(ts_08_5))]]></SYSDESCR>
       <MANUFACTURER>51</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0825</MODELSNMP>
+      <MODELSNMP>Networking0043</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -9704,7 +9704,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software ^MIOS (tm) C1200 Software (C1200-K9W7-M), Version 12.2(13)JA2, EARLY DEPLOYMENT RELEASE SOFTWARE (fc1)^MTAC Support: http://www.cisco.com/tac^MCopyright (c) 1986-2004 by cisco Systems, Inc.^MCompiled Fri 30-Jan]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1120</MODELSNMP>
+      <MODELSNMP>Networking1312</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -9712,7 +9712,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C1200 Software (C1200-K9W7-M), Version 12.2(13)JA2, EARLY DEPLOYMENT RELEASE SOFTWARE (fc1)TAC Support: http://www.cisco.com/tacCopyright (c) 1986-2004 by cisco Systems, Inc.Compiled Fri 30-Jan]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1120</MODELSNMP>
+      <MODELSNMP>Networking1312</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -10036,7 +10036,7 @@
       <SYSDESCR><![CDATA[Alcatel-Lucent OS9616/OS9716-CFM2 6.4.3.640.R01 Service Release, October 11, 2010.]]></SYSDESCR>
       <MANUFACTURER>65</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1125</MODELSNMP>
+      <MODELSNMP>Networking1124</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -10044,7 +10044,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP 4000 1.06 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0377</MODELSNMP>
+      <MODELSNMP>Printer0316</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -10052,7 +10052,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP 4000 1.08 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0378</MODELSNMP>
+      <MODELSNMP>Printer0381</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -10060,7 +10060,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP C5000 1.20 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0379</MODELSNMP>
+      <MODELSNMP>Printer0382</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -10181,7 +10181,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C850 Software (C850-ADVSECURITYK9-M), Version 12.4(15)T13, RELEASE SOFTWARE (fc3)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2010 by Cisco Systems, Inc.^MCompiled Wed 07-Apr-10 20:49 by prod_rel_team]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1194</MODELSNMP>
+      <MODELSNMP>Networking1313</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -10189,7 +10189,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C850 Software (C850-ADVSECURITYK9-M), Version 12.4(15)T13, RELEASE SOFTWARE (fc3)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems, Inc.Compiled Wed 07-Apr-10 20:49 by prod_rel_team]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1194</MODELSNMP>
+      <MODELSNMP>Networking1313</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -10197,7 +10197,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C870 Software (C870-ADVIPSERVICESK9-M), Version 12.4(24)T2, RELEASE SOFTWARE (fc2)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2009 by Cisco Systems, Inc.^MCompiled Tue 20-Oct-09 04:56 by prod_rel_team]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1195</MODELSNMP>
+      <MODELSNMP>Networking1314</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -10205,7 +10205,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C870 Software (C870-ADVIPSERVICESK9-M), Version 12.4(24)T2, RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Tue 20-Oct-09 04:56 by prod_rel_team]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1195</MODELSNMP>
+      <MODELSNMP>Networking1314</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -10229,7 +10229,7 @@
       <SYSDESCR><![CDATA[ProCurve J8692A Switch 3500yl-24G, revision K.12.05, ROM K.11.03 (/sw/code/build/btm(t2a))]]></SYSDESCR>
       <MANUFACTURER>51</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0690</MODELSNMP>
+      <MODELSNMP>Networking0343</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -10251,7 +10251,7 @@
       <SYSDESCR><![CDATA[ProCurve J9087A Switch 2610-24-PWR, revision R.11.25, ROM R.10.06 (/sw/code/build/nemo(ndx))]]></SYSDESCR>
       <MANUFACTURER>51</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0690</MODELSNMP>
+      <MODELSNMP>Networking0343</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -10339,6 +10339,173 @@
       <MANUFACTURER>51</MANUFACTURER>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking0058</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[PROCURVE J9028B - PB.03.04]]></SYSDESCR>
+      <MANUFACTURER>51</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1315</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Ethernet Routing Switch 4550T         HW:04       FW:5.3.0.3   SW:v5.3.1.001 BN:01 (c) Nortel Networks]]></SYSDESCR>
+      <MANUFACTURER>68</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1316</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[BayStack 460 - 24T - PWR     HW:07       FW:3.6.0.1   SW:v3.1.9.04 ISVN:3]]></SYSDESCR>
+      <MANUFACTURER>68</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0316</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Ethernet Switch 470-48T      HW:33       FW:3.6.0.7   SW:v3.7.4.15  BN:00 ISVN:2 (c) Nortel Networks]]></SYSDESCR>
+      <MANUFACTURER>68</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1316</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Ethernet Routing Switch 5510-24T      HW:05       FW:6.0.0.8   SW:v6.1.1.017 BN:17 (c) Nortel Networks]]></SYSDESCR>
+      <MANUFACTURER>68</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1316</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Business Policy Switch 2000  HW:11       FW:3.6.0.6   SW:v3.2.0.02 ISVN:3]]></SYSDESCR>
+      <MANUFACTURER>68</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0316</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, s72033_rp Software (s72033_rp-IPBASEK9-VM), Version 12.2(33)SXI, RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2008 by Cisco Systems, Inc.^MCompiled Fri 07-Nov-08 10:38 by prod_rel_team]]></SYSDESCR>
+      <MANUFACTURER>50</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0318</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, s72033_rp Software (s72033_rp-IPBASEK9-VM), Version 12.2(33)SXI, RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Fri 07-Nov-08 10:38 by prod_rel_team]]></SYSDESCR>
+      <MANUFACTURER>50</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0318</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 12.2(55)SE1, RELEASE SOFTWARE (fc1)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2010 by Cisco Systems, Inc.^MCompiled Thu 02-Dec-10 07:16 by prod_rel_team]]></SYSDESCR>
+      <MANUFACTURER>50</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0384</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 12.2(55)SE1, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems, Inc.Compiled Thu 02-Dec-10 07:16 by prod_rel_team]]></SYSDESCR>
+      <MANUFACTURER>50</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0384</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(55)SE1, RELEASE SOFTWARE (fc1)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2010 by Cisco Systems, Inc.^MCompiled Thu 02-Dec-10 08:16 by prod_rel_team]]></SYSDESCR>
+      <MANUFACTURER>50</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0384</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(55)SE1, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems, Inc.Compiled Thu 02-Dec-10 08:16 by prod_rel_team]]></SYSDESCR>
+      <MANUFACTURER>50</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0384</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software ^MIOS (tm) C2950lre Software (C2950lre-I6K2L2Q4-M), Version 12.1(22)EA11, RELEASE SOFTWARE (fc2)^MCopyright (c) 1986-2008 by cisco Systems, Inc.^MCompiled Tue 08-Jan-08 11:16 by amvarma]]></SYSDESCR>
+      <MANUFACTURER>50</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1317</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C2950lre Software (C2950lre-I6K2L2Q4-M), Version 12.1(22)EA11, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2008 by cisco Systems, Inc.Compiled Tue 08-Jan-08 11:16 by amvarma]]></SYSDESCR>
+      <MANUFACTURER>50</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1317</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software ^MIOS (tm) C2950 Software (C2950-I6K2L2Q4-M), Version 12.1(22)EA14, RELEASE SOFTWARE (fc1)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2010 by cisco Systems, Inc.^MCompiled Tue 26-O]]></SYSDESCR>
+      <MANUFACTURER>50</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0256</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C2950 Software (C2950-I6K2L2Q4-M), Version 12.1(22)EA14, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by cisco Systems, Inc.Compiled Tue 26-O]]></SYSDESCR>
+      <MANUFACTURER>50</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0256</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software ^MIOS (tm) C2940 Software (C2940-I6K2L2Q4-M), Version 12.1(22)EA14, RELEASE SOFTWARE (fc1)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2010 by cisco Systems, Inc.^MCompiled Tue 26-O]]></SYSDESCR>
+      <MANUFACTURER>50</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0256</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C2940 Software (C2940-I6K2L2Q4-M), Version 12.1(22)EA14, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by cisco Systems, Inc.Compiled Tue 26-O]]></SYSDESCR>
+      <MANUFACTURER>50</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0256</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[ProCurve J9279A Switch 2510G-24, revision Y.11.12, ROM N.10.02 (/sw/code/build/cod(cod11))]]></SYSDESCR>
+      <MANUFACTURER>51</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0343</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C1130 Software (C1130-K9W7-M), Version 12.4(25d)JA, RELEASE SOFTWARE (fc1)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2010 by Cisco Systems, Inc.^MCompiled Thu 09-Dec-10 15:08 by prod_rel_team]]></SYSDESCR>
+      <MANUFACTURER>50</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0288</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C1130 Software (C1130-K9W7-M), Version 12.4(25d)JA, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems, Inc.Compiled Thu 09-Dec-10 15:08 by prod_rel_team]]></SYSDESCR>
+      <MANUFACTURER>50</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0288</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>

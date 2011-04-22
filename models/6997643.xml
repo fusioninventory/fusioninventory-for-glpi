@@ -44,6 +44,8 @@ ProCurve J4904A Switch 2848, revision I.10.73, ROM I.08.07 (/sw/code/build/mako(
 
 ProCurve J8164A Switch 2626-PWR, revision H.10.38, ROM H.08.02 (/sw/code/build/fish(mf_v10_fishp))
 
+ProCurve J8692A Switch 3500yl-24G, revision K.12.05, ROM K.11.03 (/sw/code/build/btm(t2a))
+
 ProCurve J8693A Switch 3500yl-48G, revision K.12.57, ROM K.12.12 (/sw/code/build/btm(t2g))
 
 ProCurve J8693A Switch 3500yl-48G, revision K.13.63, ROM K.12.17 (/sw/code/build/btm(t3a))
@@ -51,6 +53,8 @@ ProCurve J8693A Switch 3500yl-48G, revision K.13.63, ROM K.12.17 (/sw/code/build
 ProCurve J8697A Switch 5406zl, revision K.12.57, ROM K.12.12 (/sw/code/build/btm(t2g))
 
 ProCurve J8697A Switch 5406zl, revision K.14.41, ROM K.12.20 (/sw/code/build/btm(t4a))
+
+ProCurve J8698A Switch 5412zl, revision K.13.60, ROM K.12.17 (/sw/code/build/btm(t3a))
 
 ProCurve J8698A Switch 5412zl, revision K.14.41, ROM K.12.20 (/sw/code/build/btm(t4a))
 
@@ -104,6 +108,8 @@ ProCurve J9085A Switch 2610-24, revision R.11.30, ROM R.10.06 (/sw/code/build/ne
 
 ProCurve J9087A Switch 2610-24-PWR, revision R.11.22, ROM R.10.06 (/sw/code/build/nemo(ndx))
 
+ProCurve J9087A Switch 2610-24-PWR, revision R.11.25, ROM R.10.06 (/sw/code/build/nemo(ndx))
+
 ProCurve J9087A Switch 2610-24-PWR, revision R.11.30, ROM R.10.06 (/sw/code/build/nemo(ndx))
 
 ProCurve J9088A Switch 2610-48, revision R.11.07, ROM R.10.06 (/sw/code/build/nemo(ndx))
@@ -131,6 +137,8 @@ ProCurve J9264A Switch 6600ml-24G-4XG, revision K.14.41, ROM K.12.20 (/sw/code/b
 ProCurve J9264A Switch 6600ml-24G-4XG, revision K.14.47, ROM K.12.20 (/sw/code/build/btm(t4a))
 
 ProCurve J9279A Switch 2510G-24, revision Y.11.08, ROM N.10.02 (/sw/code/build/cod(cod11))
+
+ProCurve J9279A Switch 2510G-24, revision Y.11.12, ROM N.10.02 (/sw/code/build/cod(cod11))
 
 ProCurve J9279A Switch 2510G-24, revision Y.11.16, ROM N.10.02 (/sw/code/build/cod(cod11))
 
