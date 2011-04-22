@@ -202,8 +202,12 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
          $a_oids = $PluginFusinvsnmpModelMib->find("`plugin_fusinvsnmp_models_id`='".$models_data['id']."'");
          foreach ($a_oids as $data) {
             $oid = Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_miboids", $data['plugin_fusinvsnmp_miboids_id']);
-            $PluginFusioninventoryMapping->getFromDB($data['plugin_fusioninventory_mappings_id']);
-            $oid_name = $PluginFusioninventoryMapping->fields["name"];
+            if ($data['plugin_fusioninventory_mappings_id'] == 0) {
+               $oid_name = '';
+            } else {
+               $PluginFusioninventoryMapping->getFromDB($data['plugin_fusioninventory_mappings_id']);
+               $oid_name = $PluginFusioninventoryMapping->fields["name"];
+            }
             $a_oidsDB[$oid."-".$oid_name] = $data['id'];
          }
          foreach($xml->oidlist->oidobject as $child) {
@@ -256,8 +260,12 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
             }
             $input["plugin_fusioninventory_mappings_id"] = 0;
             if (isset($child->mapping_name)) {
-               $a_mappings = $PluginFusioninventoryMapping->get($mapping_type, $child->mapping_name);
-               $input["plugin_fusioninventory_mappings_id"] = $a_mappings['id'];
+               if ($child->mapping_name == '') {
+                  $input["plugin_fusioninventory_mappings_id"] = 0;
+               } else {
+                  $a_mappings = $PluginFusioninventoryMapping->get($mapping_type, $child->mapping_name);
+                  $input["plugin_fusioninventory_mappings_id"] = $a_mappings['id'];
+               }
             }
             $input["plugin_fusinvsnmp_miblabels_id"] = 0;
             if (isset($a_oidsDB[$child->oid."-".$child->mapping_name])) {
