@@ -368,10 +368,12 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
          
          case 'NetworkEquipment':
             if (isset($xml->MAC) AND !empty($xml->MAC)) {
-               $class->fields['mac'] = $xml->MAC;
+               if (!in_array('mac', $a_lockable))
+                  $class->fields['mac'] = $xml->MAC;
             }
             if (isset($xml->IP)) {
-               $class->fields['ip'] = $xml->IP;
+               if (!in_array('ip', $a_lockable))
+                  $class->fields['ip'] = $xml->IP;
             }
 
             $class->update($class->fields);
