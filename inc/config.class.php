@@ -93,7 +93,10 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
       foreach ($p_post as $key => $value) {
-         if ((strstr($key, "component_")) OR (strstr($key, "import_"))) {
+         if ((strstr($key, "component_"))
+                 OR (strstr($key, "import_"))
+                 OR (strstr($key, "transfers_id_auto"))) {
+
             $PluginFusioninventoryConfig->updateConfigType($plugins_id, $key, $value);
          }
       }
