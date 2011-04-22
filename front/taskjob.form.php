@@ -33,18 +33,16 @@
  */
 
 define('GLPI_ROOT', '../../..');
-
 include (GLPI_ROOT . "/inc/includes.php");
 
-$PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+$mytaskjob = new PluginFusioninventoryTaskjob();
 
 commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins",
              "fusioninventory","tasks");
 
 PluginFusioninventoryProfile::checkRight("fusioninventory", "task", "r");
 
-
-if (isset ($_POST["add"])) {
+if (isset($_POST['add']) || isset($_POST['update'])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task", "w");
 
    if (isset($_POST['method_id'])) {
@@ -52,123 +50,91 @@ if (isset ($_POST["add"])) {
    }
    $_POST['plugins_id'] = $_POST['method-'.$_POST['method']];
 
-   if (!empty($_POST['definitionlist'])) {
-      $a_definitionlist = explode(',', $_POST['definitionlist']);
-      $a_definitionlistDB = array();
-      foreach ($a_definitionlist as $data) {
-         $dataDB = explode('-&gt;', $data);
-         if (isset($dataDB[1]) AND $dataDB > 0) {
-            $a_definitionlistDB[][$dataDB[0]] = $dataDB[1];
+   foreach (array('definitionlist' => 'definition', 'actionlist' => 'action') as $list => $tosave) {
+      if (!empty($_POST[$list])) {
+         $a_definitionlist   = explode(',', $_POST[$list]);
+         $a_definitionlistDB = array();
+         foreach ($a_definitionlist as $data) {
+            $dataDB          = explode('-&gt;', $data);
+            if (isset($dataDB[1]) AND $dataDB > 0) {
+               $a_definitionlistDB[][$dataDB[0]] = $dataDB[1];
+            }
          }
+         $_POST[$tosave] = exportArrayToDB($a_definitionlistDB);
+
       }
-      $_POST['definition'] = exportArrayToDB($a_definitionlistDB);
-   }
-   if (!empty($_POST['actionlist'])) {
-      $a_actionlist = explode(',', $_POST['actionlist']);
-      $a_actionlistDB = array();
-      foreach ($a_actionlist as $data) {
-         $dataDB = explode('-&gt;', $data);
-         if (isset($dataDB[1]) AND $dataDB > 0) {
-            $a_actionlistDB[][$dataDB[0]] = $dataDB[1];
-         }
-      }
-      $_POST['action'] = exportArrayToDB($a_actionlistDB);
    }
 
-   $PluginFusioninventoryTaskjob->add($_POST);
+   logDebug($_POST);
+   if (isset($_POST['add'])) {
+      $mytaskjob->add($_POST);
+   } else {
+      $mytaskjob->update($_POST);
+   }
    glpi_header($_SERVER['HTTP_REFERER']);
+   
+
 } else if (isset($_POST["delete"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task", "w");
 
-   $PluginFusioninventoryTaskjob->delete($_POST);
-   glpi_header(GLPI_ROOT."/plugins/fusioninventory/front/task.php");
-} else if (isset($_POST["update"])) {
-   PluginFusioninventoryProfile::checkRight("fusioninventory", "task", "w");
-
-
-   if (!empty($_POST['definitionlist'])) {
-      $a_definitionlist = explode(',', $_POST['definitionlist']);
-      $a_definitionlistDB = array();
-      foreach ($a_definitionlist as $data) {
-         $dataDB = explode('-&gt;', $data);
-         if (isset($dataDB[1]) AND $dataDB > 0) {
-            $a_definitionlistDB[][$dataDB[0]] = $dataDB[1];
-         }
-      }
-      $_POST['definition'] = exportArrayToDB($a_definitionlistDB);
-   }
-   if (!empty($_POST['actionlist'])) {
-      $a_actionlist = explode(',', $_POST['actionlist']);
-      $a_actionlistDB = array();
-      foreach ($a_actionlist as $data) {
-         $dataDB = explode('-&gt;', $data);
-         if (isset($dataDB[1]) AND $dataDB > 0) {
-            $a_actionlistDB[][$dataDB[0]] = $dataDB[1];
-         }
-      }
-      $_POST['action'] = exportArrayToDB($a_actionlistDB);
-   }
-   if (isset($_POST['method_id'])) {
-      $_POST['method'] = $_POST['method_id'];
-   }
-   $_POST['plugins_id'] = $_POST['method-'.$_POST['method']];
-
-   $PluginFusioninventoryTaskjob->update($_POST);
-
-   glpi_header($_SERVER['HTTP_REFERER']);
-} else if (isset($_POST['itemaddaction'])) {
-   $array = explode("||", $_POST['methodaction']);
-   $module = $array[0];
-   $method = $array[1];
+   $mytaskjob->delete($_POST);
+   glpi_header(getItemTypeFormURL('PluginFusioninventoryTask')."?id=".
+                                     $_POST['plugin_fusioninventory_tasks_id']);
+                                     
+} elseif (isset($_POST['itemaddaction'])) {
+   $array                     = explode("||", $_POST['methodaction']);
+   $module                    = $array[0];
+   $method                    = $array[1];
    // Add task
-   $PluginFusioninventoryTask = new PluginFusioninventoryTask();
-   $input = array();
-   $input['name'] = $method;
+   $mytask = new PluginFusioninventoryTask();
+   $input                     = array();
+   $input['name']             = $method;
 
-   $task_id = $PluginFusioninventoryTask->add($input);
+   $task_id = $mytask->add($input);
    
    // Add job with this device
    $input = array();
    $input['plugin_fusioninventory_tasks_id'] = $task_id;
-   $input['name']           = $method;
-   $input['date_scheduled'] = $_POST['date_scheduled'];
+   $input['name']                            = $method;
+   $input['date_scheduled']                  = $_POST['date_scheduled'];
 
-   $input['plugins_id']     = PluginFusioninventoryModule::getModuleId($module);
-   $input['method']         = $method;
-   $a_selectionDB           = array();
-   $a_selectionDB[][$_POST['itemtype']] = $_POST['items_id'];
-   $input['definition'] = exportArrayToDB($a_selectionDB);
-   if (is_callable("plugin_".$module."_task_selection_type_".$method)) {
-      $input['selection_type'] =
-         call_user_func("plugin_".$module."_task_selection_type_".$method, $_POST['itemtype']);
+   $input['plugins_id']                      = PluginFusioninventoryModule::getModuleId($module);
+   $input['method']                          = $method;
+   $a_selectionDB                            = array();
+   $a_selectionDB[][$_POST['itemtype']]      = $_POST['items_id'];
+   $input['definition']                      = exportArrayToDB($a_selectionDB);
+   
+   $taskname = "plugin_".$module."_task_selection_type_".$method;
+   if (is_callable($taskname)) {
+      $input['selection_type'] = call_user_func($taskname, $_POST['itemtype']);
    }
-   $PluginFusioninventoryTaskjob->add($input);
+   $mytaskjob->add($input);
    // Upsate task to activate it
-   $PluginFusioninventoryTask->getFromDB($task_id);
-   $PluginFusioninventoryTask->fields['is_active'] = "1";
-   $PluginFusioninventoryTask->update($PluginFusioninventoryTask->fields);
+   $mytask->getFromDB($task_id);
+   $mytask->fields['is_active'] = "1";
+   $mytask->update($mytask->fields);
    // force running this job (?)
 
    glpi_header($_SERVER['HTTP_REFERER']);
-} else if (isset($_POST['forceend'])) {
-   $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
-   $PluginFusioninventoryTaskjobstatus->getFromDB($_POST['taskjobstatus_id']);
-   $a_taskjobstatus = $PluginFusioninventoryTaskjobstatus->find("`uniqid`='".$PluginFusioninventoryTaskjobstatus->fields['uniqid']."'");
+   
+} elseif (isset($_POST['forceend'])) {
+   $mytaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+   $mytaskjobstatus->getFromDB($_POST['taskjobstatus_id']);
+   $a_taskjobstatus = $mytaskjobstatus->find("`uniqid`='".$mytaskjobstatus->fields['uniqid']."'");
    foreach($a_taskjobstatus as $data) {
 
-      if ($data['state'] != "3") {
-         $PluginFusioninventoryTaskjobstatus->changeStatusFinish($data['id'], 0, '', 1,
-                                                                 "Action cancelled by user");
+      if ($data['state'] != PluginFusioninventoryTaskjobstatus.FINISHED) {
+         $mytaskjobstatus->changeStatusFinish($data['id'], 0, '', 1, "Action cancelled by user");
       }
    }
-   $PluginFusioninventoryTaskjob->getFromDB($_POST['taskjobs_id']);
-   $PluginFusioninventoryTaskjob->fields['status'] = 1;
-   $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
+   $mytaskjob->getFromDB($_POST['taskjobs_id']);
+   $mytaskjob->fields['status'] = 1;
+   $mytaskjob->update($mytaskjob->fields);
 
    glpi_header($_SERVER['HTTP_REFERER']);
 }
 
-$PluginFusioninventoryTaskjob->redirectTask($_GET['id']);
+$mytaskjob->redirectTask($_GET['id']);
 
 commonFooter();
 

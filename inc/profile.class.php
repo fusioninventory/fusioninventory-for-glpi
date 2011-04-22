@@ -95,9 +95,9 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       global $DB;
 
       if (isset($pluginname)) {
-         if (is_callable(array("Plugin".ucfirst($pluginname)."Staticmisc", "profiles"))) {
-            $a_profile = call_user_func(array("Plugin".ucfirst($pluginname)."Staticmisc", 
-                                        "profiles"));
+         $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($pluginname);
+         if (is_callable(array($class, "profiles"))) {
+            $a_profile = call_user_func(array($class, "profiles"));
 
             foreach ($a_profile as $data) {
                PluginFusioninventoryProfile::addProfile($plugins_id, $data['profil'], 'w');
@@ -257,8 +257,10 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       }
 
       foreach ($a_module as $pluginname) {
-         if (is_callable(array("Plugin".ucfirst($pluginname)."Staticmisc", "profiles"))) {
-            $a_profil = call_user_func(array("Plugin".ucfirst($pluginname)."Staticmisc", "profiles"));
+         $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($pluginname);
+         
+         if (is_callable(array($class, "profiles"))) {
+            $a_profil = call_user_func(array($class, "profiles"));
 
             echo "<tr>";
             echo "<th colspan='4'>".$LANG['plugin_fusioninventory']['profile'][0]." ";

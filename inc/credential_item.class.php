@@ -32,32 +32,13 @@
    ----------------------------------------------------------------------
  */
 
-if(!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', '../..');
+if (!defined('GLPI_ROOT')) {
+   die("Sorry. You can't access directly to this file");
 }
-include (GLPI_ROOT."/inc/includes.php");
 
-//Agent communication using REST protocol
-if (isset($_GET['a']) && isset($_GET['d'])) {
-   $response = PluginFusioninventoryRestCommunication::communicate($_GET);
-   if ($response) {
-      echo json_encode($response);
-   } else {
-      PluginFusioninventoryRestCommunication::sendError();
-   }
+class PluginFusioninventoryCredential_Item extends CommonDBRelation {
 
-} else {
-   //Agent posting an inventory
-   if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
-      include(GLPI_ROOT ."/plugins/fusioninventory/front/communication.php");
-
-   } else {
-      commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"], "plugins", 
-                   "fusioninventory");
-   
-      glpi_header(GLPI_ROOT ."/plugins/fusioninventory/front/menu.php");
-      commonFooter();
-   }
+    var $auto_message_on_action=false;
 
 }
 

@@ -524,8 +524,13 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     * @return an array with the agent's attributes or an empty array if no agent found
     */
    static function getByDeviceID($device_id) {
-      return getAllDatasFromTable('glpi_plugin_fusioninventory_agents',
-                                  "`device_id`='$device_id' AND `lock`='0'");
+      $agents =  getAllDatasFromTable('glpi_plugin_fusioninventory_agents',
+                                      "`device_id`='$device_id' AND `lock`='0'");
+      if (!empty($agents)) {
+         return array_pop($agents);
+      } else {
+         return false;
+      }
    }
 }
 

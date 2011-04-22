@@ -197,7 +197,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    
    static function hasCredentialsForItemtype($itemtype) {
       foreach (PluginFusioninventoryModule::getAll() as $data) {
-         $class = 'Plugin'.ucfirst($data['directory']).'Staticmisc';
+        $class= PluginFusioninventoryStaticmisc::getStaticmiscClass($data['directory']);
 
          if (is_callable(array($class, 'credential_types'))) {
             $res = call_user_func(array($class, 'credential_types'));
@@ -216,7 +216,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
     */
    static function findItemtypeType($credential_itemtype) {
       foreach (PluginFusioninventoryModule::getAll() as $data) {
-         $class = 'Plugin'.ucfirst($data['directory']).'Staticmisc';
+         $class= PluginFusioninventoryStaticmisc::getStaticmiscClass($data['directory']);
 
          if (is_callable(array($class, 'credential_types'))) {
             $res = call_user_func(array($class, 'credential_types'));
@@ -236,7 +236,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    static function getCredentialsItemTypes() {
       $itemtypes = array();
       foreach (PluginFusioninventoryModule::getAll() as $data) {
-         $class = 'Plugin'.ucfirst($data['directory']).'Staticmisc';
+         $class= PluginFusioninventoryStaticmisc::getStaticmiscClass($data['directory']);
 
          if (is_callable(array($class, 'credential_types'))) {
             $res = call_user_func(array($class, 'credential_types'));
@@ -251,7 +251,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    static function getForItemtype($itemtype) {
       $itemtypes = array();
       foreach (PluginFusioninventoryModule::getAll() as $data) {
-         $class = 'Plugin'.ucfirst($data['directory']).'Staticmisc';
+         $class= PluginFusioninventoryStaticmisc::getStaticmiscClass($data['directory']);
          if (is_callable(array($class, 'credential_types'))) {
             foreach (call_user_func(array($class, 'credential_types')) as $credential) {
                if (in_array($itemtype, $credential['targets'])) {
@@ -261,6 +261,18 @@ class PluginFusioninventoryCredential extends CommonDropdown {
          }
       }
       return $itemtypes;
+   }
+   
+   /**
+    * Get all credentials for an item
+    * @param itemtype the itemtype
+    * @param items_id the asset's id
+    * @return an array with all credentials for this asset (or an empty array if none)
+    */
+   static function getForItem($itemtype, $items_id) {
+      return getAllDatasFromTable('glpi_plugin_fusioninventory_credentials_items',
+                                   "`items_id` = '".$items_id."' 
+                                            AND `itemtype`='".$itemtype."'");      
    }
    
    static function showForItem(CommonDBTM $item) {

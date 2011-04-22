@@ -117,7 +117,7 @@ class PluginFusioninventoryMenu {
       // Get menu from plugins fusinv...
       $a_modules = PluginFusioninventoryModule::getAll();
       foreach ($a_modules as $datas) {
-         $class = "Plugin".ucfirst($datas['directory'])."Staticmisc";
+         $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($datas['directory']);
          if (is_callable(array($class, "displayMenu"))) {
             $a_menu = call_user_func(array($class, "displayMenu"));
             if (!empty($a_menu)) {

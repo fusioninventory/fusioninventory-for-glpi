@@ -37,12 +37,16 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
    /*
     * Define different state
     *
-    * 0 : define for each job, what computer and what agent will do task
-    * 1 : server has sent datas to agent
+    * 0 : task prepared : not data yet sent
+    * 1 : server has sent data to agent
     * 2 : return of agent data and update glpi
     * 3 : finish
     */
 
+   const PREPARED             = 0;
+   const SERVER_HAS_SENT_DATA = 1;
+   const AGENT_HAS_SENT_DATA  = 2;
+   const FINISHED             = 3;
 
    /**
    * Display state of taskjob
@@ -64,7 +68,8 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       $state[1] = 0;
       $state[2] = 0;
       $state[3] = 0;
-      $a_taskjobstatus = $this->find("`plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."' AND `state`!='3'");
+      $a_taskjobstatus = $this->find("`plugin_fusioninventory_taskjobs_id`='".
+                                        $taskjobs_id."' AND `state`!='".self::FINISHED."'");
       $total = 0;
       if (count($a_taskjobstatus) == '0') {
          $globalState = 100;
@@ -92,10 +97,10 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
          }
       } else if ($return == 'htmlvar') {
          if ($style == 'simple') {
-            return PluginFusioninventoryDisplay::getProgressBar($width,ceil($globalState), 
+            return PluginFusioninventoryDisplay::getProgressBar($width, ceil($globalState), 
                                                                 array('simple' => 1));
          } else {
-            return PluginFusioninventoryDisplay::getProgressBar($width,ceil($globalState));
+            return PluginFusioninventoryDisplay::getProgressBar($width, ceil($globalState));
          }
       } else {
          return ceil($globalState);
@@ -117,7 +122,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
    function stateTaskjobItem($items_id, $itemtype, $state='all') {
       global $DB,$LANG;
 
-      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $PluginFusioninventoryTaskjoblog  = new PluginFusioninventoryTaskjoblog();
       $PluginFusioninventoryTaskjob     = new PluginFusioninventoryTaskjob();
       $PluginFusioninventoryTask        = new PluginFusioninventoryTask();
       $icon = "";
@@ -126,13 +131,13 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       switch ($state) {
 
          case 'running':
-            $search = " AND `state`!='3'";
+            $search = " AND `state`!='".self::FINISHED."'";
             $title = $LANG['plugin_fusioninventory']['task'][19];
             $icon = "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_running.png'/>";
             break;
 
          case 'finished':
-            $search = " AND `state`='3'";
+            $search = " AND `state`='".self::FINISHED."'";
             $title = $LANG['plugin_fusioninventory']['task'][20];
             $icon = "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_finished.png'/>";
             break;
@@ -261,7 +266,8 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
 
       $moduleRun = array();
 
-      $a_taskjobstatus = $this->find("`plugin_fusioninventory_agents_id`='".$agent_id."' AND `state`='0'");
+      $a_taskjobstatus = $this->find("`plugin_fusioninventory_agents_id`='".$agent_id.
+                                     "' AND `state`='".self::PREPARED."'");
       foreach ($a_taskjobstatus as $data) {
          // Get job and data to send to agent
          $PluginFusioninventoryTaskjob->getFromDB($data['plugin_fusioninventory_taskjobs_id']);

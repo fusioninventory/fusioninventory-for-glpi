@@ -111,9 +111,10 @@ class PluginFusioninventoryStaticmisc {
       $a_methods = call_user_func(array('PluginFusioninventoryStaticmisc', 'task_methods'));
       $a_modules = PluginFusioninventoryModule::getAll();
       foreach ($a_modules as $data) {
-         if (is_callable(array('Plugin'.ucfirst($data['directory']).'Staticmisc', 'task_methods'))) {
+         $class = $class= PluginFusioninventoryStaticmisc::getStaticmiscClass($data['directory']);
+         if (is_callable(array($class, 'task_methods'))) {
             $a_methods = array_merge($a_methods, 
-               call_user_func(array('Plugin'.ucfirst($data['directory']).'Staticmisc', 'task_methods')));
+               call_user_func(array($class, 'task_methods')));
          }
       }
       return $a_methods;
@@ -148,6 +149,13 @@ class PluginFusioninventoryStaticmisc {
                          'name'    => $LANG['plugin_fusioninventory']['menu'][2]),
                    array('profil'  => 'credential',
                          'name'    => $LANG['plugin_fusioninventory']['menu'][5]));
+   }
+   
+   /**
+    * 
+    */
+   static function getStaticMiscClass($module) {
+      return "Plugin".ucfirst($module)."Staticmisc";
    }
 }
 
