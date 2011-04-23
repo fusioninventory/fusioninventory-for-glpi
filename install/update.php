@@ -35,7 +35,8 @@
 function pluginFusioninventoryGetCurrentVersion($version) {
    global $DB;
    if ((!TableExists("glpi_plugin_tracker_config")) &&
-      (!TableExists("glpi_plugin_fusioninventory_config"))) {
+      (!TableExists("glpi_plugin_fusioninventory_config")) &&
+      (!TableExists("glpi_plugin_fusioninventory_configs"))) {
       return $version;
    } else if ((TableExists("glpi_plugin_tracker_config")) ||
          (TableExists("glpi_plugin_fusioninventory_config"))) {
@@ -63,6 +64,7 @@ function pluginFusioninventoryGetCurrentVersion($version) {
          } else if (TableExists("glpi_plugin_fusioninventory_config")) {
             $query = "SELECT version FROM glpi_plugin_fusioninventory_config LIMIT 1";
          }
+
          $data = array();
          if ($result=$DB->query($query)) {
             if ($DB->numrows($result) == "1") {
@@ -75,8 +77,21 @@ function pluginFusioninventoryGetCurrentVersion($version) {
          } else {
             return $data['version'];
          }
-      }      
+      }
+   } else if (TableExists("glpi_plugin_fusioninventory_configs")) {
+      $query = "SELECT value FROM glpi_plugin_fusioninventory_configs
+         WHERE `type`='version'
+            AND `plugins_id`='".PluginFusioninventoryModule::getModuleId('fusioninventory')."'
+         LIMIT 1";
+      $data = array();
+      if ($result=$DB->query($query)) {
+         if ($DB->numrows($result) == "1") {
+            $data = $DB->fetch_assoc($result);
+            return $data['value'];
+         }
+      }
    }
+
 }
 
 
