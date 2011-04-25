@@ -226,8 +226,8 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       $class = new $itemtype();
       $class->getFromDB($items_id);
 
-      $a_lockable = PluginFusioninventoryLock::getLockFields($itemtype, $items_id);
-
+      $a_lockable = PluginFusioninventoryLock::getLockFields(getTableForItemType($itemtype), $items_id);
+      
       if (!in_array('name', $a_lockable)) {
          if (isset($xml->NETBIOSNAME) AND !empty($xml->NETBIOSNAME)) {
             $class->fields['name'] = (string)$xml->NETBIOSNAME;

@@ -527,7 +527,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
 
 
    
-   function getAgentsSubnet($nb_computers, $communication, $subnet='') {
+   function getAgentsSubnet($nb_computers, $communication, $subnet='', $ipstart='', $ipend='') {
       global $DB;
 
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
@@ -542,6 +542,9 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
 
       if ($subnet != '') {
          $subnet = " AND `ip` LIKE '".$subnet."%' ";
+      } else if ($ipstart != '' AND $ipend != '') {
+         $subnet = " AND ( INET_ATON(`ip`) > INET_ATON('".$ipstart."')
+            AND  INET_ATON(`ip`) < INET_ATON('".$ipend."') ) ";
       }
       $a_agents = $PluginFusioninventoryAgentmodule->getAgentsCanDo('SNMPQUERY');
       $a_agentsid = array();
