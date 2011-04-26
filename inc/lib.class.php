@@ -558,8 +558,12 @@ if (!unserialize($serializedSectionToRemove)) {
 
       $serializedSections = "";
       foreach($infoSections["sections"] as $key => $serializedSection) {
-         $serializedSections .= $key."<<=>>".$serializedSection."
+         if (!strstr($key, "ENVS/")
+               AND !strstr($key, "PROCESSES/")) {
+
+            $serializedSections .= $key."<<=>>".$serializedSection."
 ";
+         }
       }
       //$externalId=$infoSections["externalId"];
 
@@ -713,8 +717,12 @@ if (!unserialize($serializedSectionToRemove)) {
 
       $serializedSections = "";
       foreach($serializedSectionsFromXML as $key => $serializedSection) {
-         $serializedSections .= array_shift($a_sectionsinfos)."<<=>>".$serializedSection."
+         if (!strstr($key, "ENVS/")
+               AND !strstr($key, "PROCESSES/")) {
+
+            $serializedSections .= array_shift($a_sectionsinfos)."<<=>>".$serializedSection."
 ";
+         }
       }
       $this->_serializeIntoDB($internal_id, $serializedSections);
    }
