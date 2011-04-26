@@ -281,7 +281,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
                }
             }
             if ($i == '1') {
-               echo "<td></td>";
+               echo "<td colspan='2'></td>";
                echo "</tr>";
             }
          }
