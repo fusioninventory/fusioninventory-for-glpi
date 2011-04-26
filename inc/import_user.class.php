@@ -101,19 +101,25 @@ class PluginFusinvinventoryImport_User extends CommonDBTM {
    **/
    function deleteItem($items_id, $idmachine) {
       $Computer = new Computer();
+      $User = new User();
+
+      $input = array();
 
       if (!isset($_SESSION["plugin_fusinvinventory_userdefined"])) {
          $_SESSION["plugin_fusinvinventory_userdefined"] = 0;
       }
       $Computer->getFromDB($idmachine);
       if (!strstr($items_id, "-")) {
-         $User = new User();
          $User->getFromDB($items_id);
-         $items_id = "-".$User->getName();
+         //$items_id = "-".$User->getName();
          $Computer->fields["users_id"] = 0;
          $_SESSION["plugin_fusinvinventory_userdefined"] = 0;
       }
       $username = preg_replace("/^-/", "", $items_id);
+      if (is_numeric($username)) {
+         $User->getFromDB($items_id);
+         $username = $User->getField("name");
+      }
       if (strstr($Computer->fields['contact'], "/".$username)) {
          $Computer->fields['contact'] = str_replace("/".$username, "", $Computer->fields['contact']);
       } else {
