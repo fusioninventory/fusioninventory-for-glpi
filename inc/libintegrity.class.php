@@ -570,8 +570,12 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
          if ($name == $sectioncomplete) {
             $name = $newsectioncomplete;
          }
-         $serializedSections .= $name."<<=>>".$datas."
+         if (!strstr($name, "ENVS/")
+                 AND !strstr($name, "PROCESSES/")) {
+
+            $serializedSections .= $name."<<=>>".$datas."
 ";
+                 }
       }
       $PluginFusinvinventoryLib->_serializeIntoDB($data['internal_id'], $serializedSections);
    }
