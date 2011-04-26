@@ -249,6 +249,50 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       switch ($itemtype) {
          
          case 'Computer':
+            if (isset($xml->WORKGROUP)) {
+               $domain = new Domain();
+               $class->fields['domains_id'] = $domain->import(array('name'=>(string)$xml->WORKGROUP));
+            }
+            $class->update($class->fields);
+            //Manage IP and Mac address
+            $NetworkPort = new NetworkPort();
+            $a_computerports = array();
+            $a_computerports = $NetworkPort->find("`itemtype`='Computer'
+                  AND `items_id`='".$class->fields['id']."'");
+            $update = 0;
+            foreach ($a_computerports as $a_computerport) {
+               if (isset($xml->MAC) AND !empty($xml->MAC)) {
+                  $xml->MAC = strtolower((string)$xml->MAC);
+                  if ($a_computerport['mac'] == (string)$xml->MAC) {
+                     $a_computerport['mac'] = (string)$xml->MAC;
+                     if (isset($xml->IP)) {
+                        $a_computerport['ip'] = (string)$xml->IP;
+                     }
+                     $NetworkPort->update($a_computerport);
+                     unset($a_computerports[$a_computerport['id']]);
+                     $update = 1;
+                     break;
+                  }
+               }
+            }
+            foreach ($a_computerports as $a_computerport) {
+               if ($a_computerport['ip'] != '127.0.0.1') {
+                  $NetworkPort->delete($a_computerport, 1);
+               }
+            }
+            if ($update == '0') {
+               $input = array();
+               if (isset($xml->MAC) AND !empty($xml->MAC)) {
+                  $input['mac'] = (string)$xml->MAC;
+               }
+               if (isset($xml->IP)) {
+                  $input['ip'] = (string)$xml->IP;
+               }
+               $input['items_id'] = $class->fields['id'];
+               $input['itemtype'] = 'Computer';
+               $input['entities_id'] = $class->fields['entities_id'];
+               $NetworkPort->add($input);
+            }
 
             break;
 
