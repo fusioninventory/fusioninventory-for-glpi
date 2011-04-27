@@ -157,8 +157,10 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
                                                                        'PluginFusinvsnmpIPRange',
                                                                        1,
                                                                        "Unable to find agent to run this job");
-               $PluginFusioninventoryTaskjob->fields['status'] = 1;
-               $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
+               $input_taskjob = array();
+               $input_taskjob['id'] = $PluginFusioninventoryTaskjob->fields['id'];
+               $input_taskjob['status'] = 1;
+               $PluginFusioninventoryTaskjob->update($input_taskjob);
             } else {
                $s = $PluginFusinvsnmpIPRange->getIp2long($PluginFusinvsnmpIPRange->fields['ip_start']);
                $e = $PluginFusinvsnmpIPRange->getIp2long($PluginFusinvsnmpIPRange->fields['ip_end']);
@@ -193,9 +195,10 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
                   if (($iptimes) >= ($e-$s+1)) {
                      break;
                   }
-
-                  $PluginFusioninventoryTaskjob->fields['status'] = 1;
-                  $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
+                  $input_taskjob = array();
+                  $input_taskjob['id'] = $PluginFusioninventoryTaskjob->fields['id'];
+                  $input_taskjob['status'] = 1;
+                  $PluginFusioninventoryTaskjob->update($input_taskjob);
                }               
             }
          }
@@ -221,8 +224,10 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
                                                                  'PluginFusinvsnmpIPRange',
                                                                  1,
                                                                  "Unable to find agent to run this job");
-         $PluginFusioninventoryTaskjob->fields['status'] = 1;
-         $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
+         $input_taskjob = array();
+         $input_taskjob['id'] = $PluginFusioninventoryTaskjob->fields['id'];
+         $input_taskjob['status'] = 1;
+         $PluginFusioninventoryTaskjob->update($input_taskjob);
       } else {
          $iptimes = 0;
          $nbIpadded = 0;
@@ -332,9 +337,10 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
 //                  }
                }
             }
-
-            $PluginFusioninventoryTaskjob->fields['status'] = 1;
-            $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
+            $input_taskjob = array();
+            $input_taskjob['id'] = $PluginFusioninventoryTaskjob->fields['id'];
+            $input_taskjob['status'] = 1;
+            $PluginFusioninventoryTaskjob->update($input_taskjob);
          }
       }
    }
@@ -378,8 +384,10 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
 
             $sxml_option->addChild('DICO', file_get_contents(GLPI_ROOT."/plugins/fusinvsnmp/tool/discovery.xml"));
          }
-         $PluginFusinvsnmpAgentconfig->fields["senddico"] = "0";
-         $PluginFusinvsnmpAgentconfig->update($PluginFusinvsnmpAgentconfig->fields);
+         $input = array();
+         $input['id'] = $PluginFusinvsnmpAgentconfig->fields['id'];
+         $input["senddico"] = "0";
+         $PluginFusinvsnmpAgentconfig->update($input);
       }
 
       $sxml_param = $sxml_option->addChild('PARAM');

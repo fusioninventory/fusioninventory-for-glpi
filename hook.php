@@ -1026,9 +1026,9 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
                   if (count($a_networkequipments) > 0) {
                      $a_networkequipment = current($a_networkequipments);
                      $PluginFusinvsnmpNetworkEquipment->getFromDB($a_networkequipment['id']);
-                     $PluginFusinvsnmpNetworkEquipment->fields['plugin_fusinvsnmp_models_id'] = 
-                        $data['snmp_model'];
-                     $PluginFusinvsnmpNetworkEquipment->update($PluginFusinvsnmpNetworkEquipment->fields);
+                     $input['id'] = $PluginFusinvsnmpNetworkEquipment->fields['id'];
+                     $input['plugin_fusinvsnmp_models_id'] = $data['snmp_model'];
+                     $PluginFusinvsnmpNetworkEquipment->update($input);
                   } else {
                      $input['networkequipments_id'] = $items_id;
                      $input['plugin_fusinvsnmp_models_id'] = $data['snmp_model'];
@@ -1045,8 +1045,9 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
                   if (count($a_printers) > 0) {
                      $a_printer = current($a_printers);
                      $PluginFusinvsnmpPrinter->getFromDB($a_printer['id']);
-                     $PluginFusinvsnmpPrinter->fields['plugin_fusinvsnmp_models_id'] = $data['snmp_model'];
-                     $PluginFusinvsnmpPrinter->update($PluginFusinvsnmpPrinter->fields);
+                     $input['id'] = $PluginFusinvsnmpPrinter->fields['id'];
+                     $input['plugin_fusinvsnmp_models_id'] = $data['snmp_model'];
+                     $PluginFusinvsnmpPrinter->update($input);
                   } else {
                      $input['printers_id'] = $items_id;
                      $input['plugin_fusinvsnmp_models_id'] = $data['snmp_model'];
@@ -1084,8 +1085,9 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
                   if (count($a_networkequipments) > 0) {
                      $a_networkequipment = current($a_networkequipments);
                      $PluginFusinvsnmpNetworkEquipment->getFromDB($a_networkequipment['id']);
-                     $PluginFusinvsnmpNetworkEquipment->fields['plugin_fusinvsnmp_configsecurities_id'] = $data['plugin_fusinvsnmp_configsecurities_id'];
-                     $PluginFusinvsnmpNetworkEquipment->update($PluginFusinvsnmpNetworkEquipment->fields);
+                     $input['id'] = $PluginFusinvsnmpNetworkEquipment->fields['id'];
+                     $input['plugin_fusinvsnmp_configsecurities_id'] = $data['plugin_fusinvsnmp_configsecurities_id'];
+                     $PluginFusinvsnmpNetworkEquipment->update($input);
                   } else {
                      $input['networkequipments_id'] = $items_id;
                      $input['plugin_fusinvsnmp_configsecurities_id'] = $data['plugin_fusinvsnmp_configsecurities_id'];
@@ -1102,8 +1104,9 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
                   if (count($a_printers) > 0) {
                      $a_printer = current($a_printers);
                      $PluginFusinvsnmpPrinter->getFromDB($a_printer['id']);
-                     $PluginFusinvsnmpPrinter->fields['plugin_fusinvsnmp_configsecurities_id'] = $data['plugin_fusinvsnmp_configsecurities_id'];
-                     $PluginFusinvsnmpPrinter->update($PluginFusinvsnmpPrinter->fields);
+                     $input['id'] = $PluginFusinvsnmpPrinter->fields['id'];
+                     $input['plugin_fusinvsnmp_configsecurities_id'] = $data['plugin_fusinvsnmp_configsecurities_id'];
+                     $PluginFusinvsnmpPrinter->update($input);
                   } else {
                      $input['printers_id'] = $items_id;
                      $input['plugin_fusinvsnmp_configsecurities_id'] = $data['plugin_fusinvsnmp_configsecurities_id'];
