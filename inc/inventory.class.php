@@ -74,16 +74,6 @@ class PluginFusinvinventoryInventory {
 
       $PluginFusinvinventoryBlacklist = new PluginFusinvinventoryBlacklist();
       $p_xml = $PluginFusinvinventoryBlacklist->cleanBlacklist($p_xml);
-      // Blacklist mac of "miniport*" for windows because have same mac as principal network ports
-      if (isset($p_xml->CONTENT->NETWORKS)) {
-         foreach($p_xml->CONTENT->NETWORKS as $network) {
-            if ((isset($network->DESCRIPTION))
-                    AND ((string)$network->DESCRIPTION == "Miniport d'ordonnancement de paquets")) {
-               $network->MACADDR = "";
-            }
-         }
-      }
-      
 
       $_SESSION['SOURCEXML'] = $p_xml;
 
