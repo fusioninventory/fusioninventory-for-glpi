@@ -263,120 +263,81 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       return $itemtypes;
    }
    
-   /**
-    * Get all credentials for an item
-    * @param itemtype the itemtype
-    * @param items_id the asset's id
-    * @return an array with all credentials for this asset (or an empty array if none)
-    */
-   static function getForItem($itemtype, $items_id) {
-      return getAllDatasFromTable('glpi_plugin_fusioninventory_credentials_items',
-                                   "`items_id` = '".$items_id."' 
-                                            AND `itemtype`='".$itemtype."'");      
-   }
    
-   static function showForItem(CommonDBTM $item) {
-      global $LANG, $CFG_GLPI;
-      
-      $ID = $item->fields['id'];
+   static function dropdownCredentials($params = array()) {
+      global $CFG_GLPI;
 
-      if (!$item->getFromDB($ID) || !$item->can($ID, "r")) {
-         return false;
-      }
-      $canedit = $item->can($ID, "w");
+      if ($params['id'] == -1) {
+         $p['value']    = '';
+         $p['itemtype'] = '';
+         $p['id']       = 0;
 
-      echo "<div class='spaced center'>";
-
-      $credentials = getAllDatasFromTable('glpi_plugin_fusioninventory_credentials_items',
-                                          "`items_id` = '".$ID."' 
-                                            AND `itemtype`='".get_class($item)."'");
-
-      echo "<form method='post' action='".getItemTypeFormURL('PluginFusioninventoryCredential_Item').
-         "' name='credential_form' id='credential_form'>";
-      echo "<table class='tab_cadre_fixe'>";
-      
-      echo "<tr class='tab_bg_2'><th colspan='3'>";
-      echo $LANG['plugin_fusioninventory']['credential'][1]."</th></tr>";
-
-      echo "<tr class='tab_bg_2'><th colspan='3'>".$LANG['plugin_fusioninventory']['credential'][4].
-         "</th></tr>";
-
-      $types = self::getForItemtype(get_class($item));
-      if (!empty($types)) {
-         echo "<tr class='tab_bg_2'><td>";
-         echo $LANG['plugin_fusioninventory']['credential'][3]."</td>"; 
-         echo "<td>";
-         $types[''] = DROPDOWN_EMPTY_VALUE;
-         $rand = Dropdown::showFromArray('itemtype',$types);
-
-         $params = array('itemtype' => '__VALUE__',
-                         'id'       => $ID,
-                         'target'   => get_class($item));
-         $url = $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownCredentials.php";
-         ajaxUpdateItemOnSelectEvent("dropdown_itemtype$rand", "span_credentials",
-                                     $url,
-                                     $params);
-         echo "&nbsp;<span id='span_credentials' name='span_credentials'></span>";
-         echo "</td>";
-         echo "</tr>";
-      }
-      echo "</table>";
-
-      echo "<table class='tab_cadre_fixe'>";
-
-      if (empty($credentials)) {
-         echo "<tr><td colspan='2' class='center'>".$LANG['plugin_fusioninventory']['credential'][2].
-            "</td></tr>";
       } else {
-
-         $sel ="";
-         if (isset ($_GET["select"]) && $_GET["select"] == "all") {
-            $sel = "checked";
-         }
- 
-         $obj = new PluginFusioninventoryCredential();
-         echo "<tr><th></th><th>".$LANG['common'][17]."</td><th>".$LANG['common'][16]."</td></tr>";
-         foreach ($credentials as $credential) {
-            $obj->getFromDB($credential['plugin_fusioninventory_credentials_id']);
-
-            echo "<tr><td class='center'>";
-            echo "<input type='checkbox' name='item[".$credential['id']."]' value='1' $sel>";
-            echo "</td>";
-            echo "<td>";
-            echo self::getLabelByItemtype($obj->fields['itemtype']);
-            echo "</td><td>";
-            echo $obj->getLink(true);
-            echo "</td></tr>";
-         }
-
-         openArrowMassive("credential_form", true);
-         closeArrowMassive('delete', $LANG['buttons'][6]);
-         
+         $credential = new PluginFusioninventoryCredential();
+         $credential->getFromDB($params['id']);
+         $p = $credential->fields;
       }
-      echo "</table></form>";
-      echo "</div>";
+      
+      $types     = self::getCredentialsItemTypes();
+      $types[''] = DROPDOWN_EMPTY_VALUE;
+      $rand      = Dropdown::showFromArray('plugin_fusioninventory_credentials_id', $types, 
+                                           array('value' => $p['itemtype']));
 
+      $params    = array('itemtype' => '__VALUE__',
+                         'id'       => $p['id']);
+      $url       = $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownCredentials.php";
+      ajaxUpdateItemOnSelectEvent("dropdown_plugin_fusioninventory_credentials_id$rand", 
+                                  "span_credentials", $url, $params);
+
+      echo "&nbsp;<span name='span_credentials' id='span_credentials'>"; 
+      if ($p['id']) {
+         self::dropdownCredentialsForItemtype($p);
+      }
+      echo "</span>";
+      
    }
-   
    static function dropdownCredentialsForItemtype($params = array()) {
       global $LANG;
 
       if ($params['itemtype'] != '') {
 
-         $results = getAllDatasFromTable('glpi_plugin_fusioninventory_credentials',
-                                         "`itemtype`='".$params['itemtype']."'");
+         $p['value']    = '';
+         $p['itemtype'] = '';
+         $p['id']       = 0;
+         foreach ($params as $key => $value) {
+            $p[$key] = $value;
+         }
+
+         $condition = "`itemtype`='".$p['itemtype']."'";
+         $condition.= getEntitiesRestrictRequest(" AND","glpi_plugin_fusioninventory_credentials",
+                                                 "entities_id", $_SESSION['glpiactiveentities'], 
+                                                 true);
+         $results   = getAllDatasFromTable('glpi_plugin_fusioninventory_credentials',
+                                           $condition);
          $types = array();
 
          foreach ($results as $result) {
             $types[$result['id']] = $result['name'];
          }
-         Dropdown::showFromArray('plugin_fusioninventory_credentials_id', $types);
-         echo "&nbsp;<input type='submit' class='submit' name='add' value='".
-            $LANG['buttons'][8]."'>";
-         echo "<input type='hidden' name='itemtype' value='".$params['target']."'>";
-         echo "<input type='hidden' name='items_id' value='".$params['id']."'>";
+         Dropdown::showFromArray('plugin_fusioninventory_credentials_id', $types, 
+                                 array('value' => $value));
       }
    }
+   
+   /**
+    * Check if there's at least one credential itemetype
+    * 
+    * @return true if there's at least one type, false otherwise
+    */
+   static function hasAlLeastOneType() {
+      $types = self::getCredentialsItemTypes();
+      return (!empty($types));
+   }
+   
+   function title() {
+      PluginFusioninventoryMenu::displayMenu("mini");
+   }
+
 }
 
 ?>

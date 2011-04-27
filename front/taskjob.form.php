@@ -65,7 +65,6 @@ if (isset($_POST['add']) || isset($_POST['update'])) {
       }
    }
 
-   logDebug($_POST);
    if (isset($_POST['add'])) {
       $mytaskjob->add($_POST);
    } else {
@@ -123,7 +122,7 @@ if (isset($_POST['add']) || isset($_POST['update'])) {
    $a_taskjobstatus = $mytaskjobstatus->find("`uniqid`='".$mytaskjobstatus->fields['uniqid']."'");
    foreach($a_taskjobstatus as $data) {
 
-      if ($data['state'] != PluginFusioninventoryTaskjobstatus.FINISHED) {
+      if ($data['state'] != PluginFusioninventoryTaskjobstatus::FINISHED) {
          $mytaskjobstatus->changeStatusFinish($data['id'], 0, '', 1, "Action cancelled by user");
       }
    }

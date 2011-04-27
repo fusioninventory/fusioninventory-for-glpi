@@ -53,7 +53,6 @@ class PluginFusioninventoryStaticmisc {
                          'method'               => 'wakeonlan',
                          'name'                 => $LANG['plugin_fusioninventory']['profile'][5],
                          'use_rest'             => false);
-
       return $a_tasks;
    }
 
@@ -152,7 +151,10 @@ class PluginFusioninventoryStaticmisc {
    }
    
    /**
+    * Get name of the staticmisc class for a module
+    * @param module the module name
     * 
+    * @return the name of the staticmisc class associated with it
     */
    static function getStaticMiscClass($module) {
       return "Plugin".ucfirst($module)."Staticmisc";

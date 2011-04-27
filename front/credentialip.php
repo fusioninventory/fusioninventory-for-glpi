@@ -32,14 +32,10 @@
    ----------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
-}
+define('GLPI_ROOT', '../../..');
+include (GLPI_ROOT . "/inc/includes.php");
 
-class PluginFusioninventoryCredential_Item extends CommonDBRelation {
-
-    var $auto_message_on_action=false;
-
-}
+$dropdown = new PluginFusioninventoryCredentialIp();
+include (GLPI_ROOT . "/front/dropdown.common.php");
 
 ?>

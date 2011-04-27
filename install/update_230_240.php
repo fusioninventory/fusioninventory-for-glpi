@@ -65,6 +65,8 @@ function update230to240() {
       
       $query = "CREATE TABLE  `glpi_plugin_fusioninventory_credentials` (
                   `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+                  `entities_id` INT( 11 ) NOT NULL AUTO_INCREMENT DEFAULT '0',
+                  `is_recursive` TINYINT( 1 ) NOT NULL AUTO_INCREMENT DEFAULT '0' ,
                   `name` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
                   `username` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
                   `password` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
@@ -88,15 +90,18 @@ function update230to240() {
          }
       }
       
-      if (!TableExists("glpi_plugin_fusioninventory_credentials_items")) {
-         $query = "CREATE TABLE  `glpi_plugin_fusioninventory_credentials_items` (
+      if (!TableExists("glpi_plugin_fusioninventory_credentialips")) {
+         $query = "CREATE TABLE  `glpi_plugin_fusioninventory_credentialips` (
                      `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+                     `entities_id` INT( 11 ) NOT NULL AUTO_INCREMENT DEFAULT '0',
                      `plugin_fusioninventory_credentials_id` INT( 11 ) NOT NULL DEFAULT  '0',
-                     `itemtype` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
-                     `items_id` INT NOT NULL ,
+                     `name` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
+                     `ip` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
+                     `comment` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ,
+                     `date_mod` DATETIME NOT NULL ,
                      PRIMARY KEY (  `id` )
                      ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
-         $DB->query($query) or die ("Create table glpi_plugin_credential_items".
+         $DB->query($query) or die ("Create table glpi_plugin_fusioninventory_credentialips".
                                     $LANG['update'][90] . $DB->error());
       }
    }

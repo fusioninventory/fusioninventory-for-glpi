@@ -39,6 +39,12 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryRestCommunication {
 
+   /**
+    * Manage communication between agent and server
+    * @params an array of GET parameters given by the agent
+    * 
+    * @return an array of orders to send to the agent
+    */
    static function communicate($params = array()) {
       $response = array();
       if (isset ($params['a']) && isset($params['d'])) {
@@ -62,9 +68,15 @@ class PluginFusioninventoryRestCommunication {
       return $response;
    }
    
+   /**
+    * Get configuration for an agent
+    * @params an array of GET parameters given by the agent
+    * 
+    * @return an array of orders to send to the agent
+    */
    static function getConfigByAgent($params = array()) {
       $schedule = array();
-
+      
       if (isset($params['task'])) {
          foreach ($params['task'] as $task => $version) {
             foreach (PluginFusioninventoryStaticmisc::getmethods() as $method) {
@@ -72,15 +84,15 @@ class PluginFusioninventoryRestCommunication {
                if (isset($method['use_rest']) 
                      && $method['use_rest'] 
                         && method_exists($class, "task_".$task."_getParameters")) {
-                  $schedule[$task] = call_user_func(array($class, "task_".$task."_getParameters"));
+                  $schedule[] = call_user_func(array($class, "task_".$task."_getParameters"));
+
                }
                
             }
          }
          
       }
-      $schedule['configValidityPeriod'] = 600;
-      return array ('schedule' => $schedule);
+      return array('configValidityPeriod' => 600, 'schedule' => $schedule);
    }
    
    /**
@@ -115,21 +127,32 @@ class PluginFusioninventoryRestCommunication {
          $p[$key] = $value;
       }
 
+      $taskjobstatus = new PluginFusioninventoryTaskjobstatus();
+
+      logDebug($p);
       //Get the agent ID by his deviceid
-      if (PluginFusioninventoryAgent::getByDeviceID($params['d'])) {
+      //Get task job status : identifier is the uuid given by the agent
+      if (PluginFusioninventoryAgent::getByDeviceID($p['d']) 
+         && $taskjobstatus->getFromDB($p['u'])) {
          
+         /*
          $job = PluginFusioninventoryTaskjoblog::getByUniqID($p['uuid']);
-         
          if ($update_job) {
             $taskjob = new PluginFusioninventoryTaskjoblog();
             $taskjob->update($job);
-         }
+         }*/
+         
+         //Get taskjoblog associated
+         $taskjob = new PluginFusioninventoryTaskjob();
+         $taskjob->getFromDB($taskjobstatus->fields['plugin_fusioninventory_taskjobs_id']);
+         
          $taskjoblog = new PluginFusioninventoryTaskjoblog();
-         $tmp['plugin_fusioninventory_taskjobstatus_id'] = $job['id'];
-         $tmp['itemtype']                                = $job['itemtype'];
-         $tmp['items_id']                                = $job['items_id'];
-         $tmp['comment']                                 = $p['msg'];
-         $tmp['date']                                    = date("Y-m-d H:i:s");
+         
+         $tmp['id']        = $p['u'];
+         $tmp['itemtype']  = $taskjob->fields['itemtype'];
+         $tmp['items_id']  = $taskjob->fields['items_id'];
+         $tmp['comment']   = $p['msg'];
+         $tmp['date']      = date("Y-m-d H:i:s");
          if ($p['s'] == 'ko') {
             $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_ERROR;
          } else {

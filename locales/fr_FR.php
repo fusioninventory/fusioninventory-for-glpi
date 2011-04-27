@@ -104,6 +104,7 @@ $LANG['plugin_fusioninventory']['menu'][2] = "Plages IP";
 $LANG['plugin_fusioninventory']['menu'][3] = "Menu";
 $LANG['plugin_fusioninventory']['menu'][4] = "Matériel inconnu";
 $LANG['plugin_fusioninventory']['menu'][5] = "Comptes";
+$LANG['plugin_fusioninventory']['menu'][6] = "Matériels distants à inventorier";
 $LANG['plugin_fusioninventory']['menu'][7] = "Actions en cours d'exécution";
 
 $LANG['plugin_fusioninventory']['discovery'][5] = "Nombre de matériels importés";
@@ -181,11 +182,9 @@ $LANG['plugin_fusioninventory']['xml'][0] = "XML";
 $LANG['plugin_fusioninventory']['codetasklog'][1] = "Mauvais jeton, impossible d'agir sur l'agent";
 $LANG['plugin_fusioninventory']['codetasklog'][2] = "Agent arrêté ou crashé";
 
-$LANG['plugin_fusioninventory']['credential'][1] = "Comptes associés au poste";
-$LANG['plugin_fusioninventory']['credential'][2] = "Pas de compte associé";
+$LANG['plugin_fusioninventory']['credential'][1] = "Compte d'inventaire distant";
+$LANG['plugin_fusioninventory']['credential'][2] = "Matériel distant à inventorier";
 $LANG['plugin_fusioninventory']['credential'][3] = "Compte";
-$LANG['plugin_fusioninventory']['credential'][4] = "Associer un compte à cet élément";
-
 
 $LANG['plugin_fusioninventory']['iprange'][0]="Début de la plage IP";
 $LANG['plugin_fusioninventory']['iprange'][1]="Fin de la plage IP";

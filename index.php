@@ -55,7 +55,7 @@ if (isset($_GET['a']) && isset($_GET['d'])) {
       commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"], "plugins", 
                    "fusioninventory");
    
-      glpi_header(GLPI_ROOT ."/plugins/fusioninventory/front/menu.php");
+      glpi_header(getItemTypeSearchURL('PluginFusioninventoryMenu'));
       commonFooter();
    }
 

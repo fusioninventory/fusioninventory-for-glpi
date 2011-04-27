@@ -37,21 +37,6 @@
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
 
-$item = new PluginFusioninventoryCredential_Item();
-if (isset($_POST['add'])) {
-   $item->add($_POST);
-   
-} elseif (isset($_POST['delete'])) {
-
-   if (isset($_POST['item']) && !empty($_POST['item'])) {
-      foreach ($_POST['item'] as $id => $value) {
-         if ($value == 1) {
-            $item->delete(array('id' => $id));
-            
-         }
-      }
-      
-   }
-}
-glpi_header($_SERVER['HTTP_REFERER']);
+$dropdown = new PluginFusioninventoryCredentialIp();
+include (GLPI_ROOT . "/front/dropdown.common.form.php");
 ?>

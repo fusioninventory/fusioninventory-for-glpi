@@ -100,13 +100,13 @@ function plugin_init_fusioninventory() {
 
          
          $PLUGIN_HOOKS['item_update']['fusioninventory'] = 
-            array('Computer'         => 'plugin_item_update_fusioninventory',
-                  'NetworkEquipment' => 'plugin_item_update_fusioninventory',
-                  'Printer'          => 'plugin_item_update_fusioninventory',
-                  'Monitor'          => 'plugin_item_update_fusioninventory',
-                  'Peripheral'       => 'plugin_item_update_fusioninventory',
-                  'Phone'            => 'plugin_item_update_fusioninventory',
-                  'NetworkPort'      => 'plugin_item_update_fusioninventory');
+                                 array('Computer'         => 'plugin_item_update_fusioninventory',
+                                       'NetworkEquipment' => 'plugin_item_update_fusioninventory',
+                                       'Printer'          => 'plugin_item_update_fusioninventory',
+                                       'Monitor'          => 'plugin_item_update_fusioninventory',
+                                       'Peripheral'       => 'plugin_item_update_fusioninventory',
+                                       'Phone'            => 'plugin_item_update_fusioninventory',
+                                       'NetworkPort'      => 'plugin_item_update_fusioninventory');
 
 
          
@@ -183,11 +183,23 @@ function plugin_init_fusioninventory() {
                '../fusioninventory/front/iprange.php';
          }
 
-         if (PluginFusioninventoryProfile::haveRight("fusioninventory", "credential","w")) {
-            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['PluginFusioninventoryCredential'] = 
-               '../fusioninventory/front/credential.form.php?add=1';
-            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['PluginFusioninventoryCredential'] = 
-               '../fusioninventory/front/credential.php';
+         if (PluginFusioninventoryCredential::hasAlLeastOneType()) {
+            if (PluginFusioninventoryProfile::haveRight("fusioninventory", "credential","w")) {
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['PluginFusioninventoryCredential'] = 
+                  '../fusioninventory/front/credential.form.php?add=1';
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['PluginFusioninventoryCredential'] = 
+                  '../fusioninventory/front/credential.php';
+
+            }
+
+            if (PluginFusioninventoryProfile::haveRight("fusioninventory", "credential","w")) {
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['PluginFusioninventoryCredentialIp'] = 
+                  '../fusioninventory/front/credentialip.form.php?add=1';
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['PluginFusioninventoryCredentialIp'] = 
+                  '../fusioninventory/front/credentialip.php';
+   
+            }
+
          }
 
       }
@@ -211,6 +223,13 @@ function plugin_init_fusioninventory() {
 
    // Add unknown devices in list of devices with networport
    $CFG_GLPI["netport_types"][] = "PluginFusioninventoryUnknownDevice";
+
+   $plugin = new Plugin();
+   if ($plugin->isInstalled('fusioninventory') 
+      && $plugin->isActivated('fusioninventory') 
+         && isFusioninventoryUserAgent($_SERVER['HTTP_USER_AGENT'])) {
+      include(GLPI_ROOT ."/plugins/fusioninventory/front/communication.php");
+   }
 
 }
 
@@ -238,20 +257,21 @@ function plugin_fusioninventory_check_prerequisites() {
    }
 }
 
-
+/**
+ * Check if HTTP request comes from an inventory agent (Fusion or legacy OCS)
+ * @param useragent the user agent coming from $_SERVER
+ * 
+ * @return bool : true if request comes from an agent, false otherwise
+ */
+function isFusioninventoryUserAgent($useragent = '') {
+   return (preg_match("/[fusioninventory|ocsinventory]/i",$useragent));
+}
 
 function plugin_fusioninventory_check_config() {
    return true;
 }
 
-
-
 function plugin_fusioninventory_haveTypeRight($type,$right) {
-//   switch ($type) {
-//      case 'PluginFusioninventoryConfigSNMPSecurity' :
-//         return PluginFusioninventoryProfile::haveRight("snmp_authentication",$right);
-//         break;
-//   }
    return true;
 }
 
