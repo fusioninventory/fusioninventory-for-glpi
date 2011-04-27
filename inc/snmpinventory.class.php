@@ -200,7 +200,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
          $a_input['items_id'] = 0;
          $a_input['uniqid'] = $uniqid;
          foreach($a_agentsubnet as $subnet=>$a_agentList) {
-            if (!isset($a_agentList) or empty($a_agentList)) {
+            if (!isset($a_agentList) OR (isset($a_agentList) AND count($a_agentList) == '0')) {
                // No agent available for this subnet
                for ($i=0; $i < 2; $i++) {
                   $itemtype = 'Printer';
