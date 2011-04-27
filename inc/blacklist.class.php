@@ -262,6 +262,16 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
             
          }
       }
+      // Blacklist mac of "miniport*" for windows because have same mac as principal network ports
+      if (isset($xml->CONTENT->NETWORKS)) {
+         foreach($xml->CONTENT->NETWORKS as $network) {
+            logInFile("KOIN", "*".(string)$network->DESCRIPTION."*\n");
+            if ((isset($network->DESCRIPTION))
+                    AND ((string)$network->DESCRIPTION == "Miniport d'ordonnancement de paquets")) {
+               $network->MACADDR = "";
+            }
+         }
+      }
       return $xml->asXML();
    }
 }
