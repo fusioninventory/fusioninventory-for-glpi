@@ -1216,8 +1216,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             }
          } else if ($p_CONTENT->INFO->TYPE=='PRINTER') {
             $input['itemtype'] = "Printer";
-            if (isset($p_CONTENT->CONTENT->PORTS)) {
-               foreach($p_CONTENT->CONTENT->PORTS as $port) {
+            if (isset($p_CONTENT->PORTS)) {
+               foreach($p_CONTENT->PORTS as $port) {
                   if ((isset($port->MAC)) AND (!empty($port->MAC))) {
                      $input['mac'][] = (string)$port->MAC;
                   }
