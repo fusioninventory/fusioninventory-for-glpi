@@ -66,7 +66,8 @@ class PluginFusinvinventoryLibhook {
        // Else create computer
       $Computer = new Computer();
       $Computer->getFromDB($items_id);
-      $input = $Computer->fields;
+      $input = array();
+      $input['id'] = $Computer->fields['id'];
       $input['is_deleted'] = 0;
       $input['autoupdatesystems_id'] = Dropdown::importExternal('AutoUpdateSystem', 'FusionInventory');
       $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
