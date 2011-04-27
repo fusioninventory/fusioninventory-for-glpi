@@ -1224,7 +1224,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             $input['itemtype'] = "Printer";
          }
          // TODO : add import ports 
-
+         PluginFusioninventoryUnknownDevice::writeXML($items_id, $_SESSION['SOURCE_XMLDEVICE']);
          $class->update($input);
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
             '[detail] ==fusinvsnmp::5== Update '.PluginFusioninventoryUnknownDevice::getTypeName().' [[PluginFusioninventoryUnknownDevice::'.$items_id.']]';
