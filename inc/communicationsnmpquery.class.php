@@ -506,6 +506,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   if (strstr($otherserial, "chr(hex")) {
                      $otherserial = str_replace("chr(hex(", "", $otherserial);
                      $otherserial = str_replace("))", "", $otherserial);
+                     $otherserial = substr($otherserial, 4);
                      $otherserial = $this->hexToStr($otherserial);
                   }                  
                   $this->ptd->setValue('otherserial', $otherserial);
