@@ -163,11 +163,14 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
    *
    **/
    function deleteItem($items_id, $idmachine) {
-      $Computer_Item = new Computer_Item();
-      $Computer_Item->getFromDB($items_id);
-      if ($Computer_Item->fields['computers_id'] == $idmachine) {
-         $Computer_Item->delete(array("id" => $items_id,
-                                      "itemtype" => "Printer"));
+      if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                 "import_printer") != '0') {
+         $Computer_Item = new Computer_Item();
+         $Computer_Item->getFromDB($items_id);
+         if ($Computer_Item->fields['computers_id'] == $idmachine) {
+            $Computer_Item->delete(array("id" => $items_id,
+                                         "itemtype" => "Printer"));
+         }
       }
    }
 }
