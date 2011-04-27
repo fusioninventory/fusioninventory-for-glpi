@@ -168,6 +168,7 @@ class PluginFusinvinventoryImport_Monitor extends CommonDBTM {
    *
    **/
    function deleteItem($items_id, $idmachine) {
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                  "import_monitor") != '0') {
          $Computer_Item = new Computer_Item();
