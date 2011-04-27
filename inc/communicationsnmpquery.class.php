@@ -1270,23 +1270,25 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       }
       if ($itemtype == "PluginFusioninventoryUnknownDevice") {
          $class->getFromDB($items_id);
+         $input = array();
+         $input['id'] = $class->fields['id'];
          if ((isset($xml->INFO->NAME)) AND (!empty($xml->INFO->NAME))) {
-            $class->fields['name'] = (string)$xml->INFO->NAME;
+            $input['name'] = (string)$xml->INFO->NAME;
          }
          if ((isset($xml->INFO->SERIAL)) AND (!empty($xml->INFO->SERIAL))) {
-            $class->fields['serial'] = (string)$xml->INFO->SERIAL;
+            $input['serial'] = (string)$xml->INFO->SERIAL;
          }
          if ((isset($xml->INFO->OTHERSERIAL)) AND (!empty($xml->INFO->OTHERSERIAL))) {
-            $class->fields['otherserial'] = (string)$xml->INFO->OTHERSERIAL;
+            $input['otherserial'] = (string)$xml->INFO->OTHERSERIAL;
          }
          if ($xml->INFO->TYPE=='NETWORKING') {
-            $class->fields['itemtype'] = "NetworkEquipment";
+            $input['itemtype'] = "NetworkEquipment";
          } else if ($xml->INFO->TYPE=='PRINTER') {
-            $class->fields['itemtype'] = "Printer";
+            $input['itemtype'] = "Printer";
          }
          // TODO : add import ports 
 
-         $class->update($class->fields);
+         $class->update($input);
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
             '[detail] ==fusinvsnmp::5== Update '.PluginFusioninventoryUnknownDevice::getTypeName().' [[PluginFusioninventoryUnknownDevice::'.$items_id.']]';
          $this->addtaskjoblog();

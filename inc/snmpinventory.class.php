@@ -334,8 +334,10 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                                                                     '',
                                                                     1,
                                                                     "Unable to find agent to run this job");
-            $PluginFusioninventoryTaskjob->fields['status'] = 1;
-            $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
+            $input_taskjob = array();
+            $input_taskjob['id'] = $PluginFusioninventoryTaskjob->fields['id'];
+            $input_taskjob['status'] = 1;
+            $PluginFusioninventoryTaskjob->update($input_taskjob);
          } elseif ($count_device == '0') {
             $a_input = array();
             $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
@@ -355,8 +357,10 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                                                                     '',
                                                                     1,
                                                                     "No devices to inventory");
-            $PluginFusioninventoryTaskjob->fields['status'] = 1;
-            $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
+            $input_taskjob = array();
+            $input_taskjob['id'] = $PluginFusioninventoryTaskjob->fields['id'];
+            $input_taskjob['status'] = 1;
+            $PluginFusioninventoryTaskjob->update($input_taskjob);
          } else {
             foreach ($a_agentList as $agent_id) {
                //Add jobstatus and put status (waiting on server = 0)
@@ -407,9 +411,10 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                   }
                }
             }
-            $PluginFusioninventoryTaskjob->fields['status'] = 1;
-            $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
-
+            $input_taskjob = array();
+            $input_taskjob['id'] = $PluginFusioninventoryTaskjob->fields['id'];
+            $input_taskjob['status'] = 1;
+            $PluginFusioninventoryTaskjob->update($input_taskjob);
          }
       }
    }

@@ -59,8 +59,10 @@ if (isset($_POST['update'])) {
             $split = explode("-", $key);
             if (isset($split[1]) AND is_numeric($split[1])) {
                $PluginFusinvsnmpConfigLogField->getFromDB($split[1]);
-               $PluginFusinvsnmpConfigLogField->fields['days'] = $val;
-               $PluginFusinvsnmpConfigLogField->update($PluginFusinvsnmpConfigLogField->fields);
+               $input = array();
+               $input['id'] = $PluginFusinvsnmpConfigLogField->fields['id'];
+               $input['days'] = $val;
+               $PluginFusinvsnmpConfigLogField->update($input);
             }
          }
          break;

@@ -94,8 +94,10 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             if ((isset($p_CONTENT->DICO)) AND ($p_CONTENT->DICO == "REQUEST")) {
                $PluginFusioninventoryAgent->getFromDB($PluginFusioninventoryTaskjobstatus->fields["plugin_fusioninventory_agents_id"]);
                $PluginFusinvsnmpAgentconfig->loadAgentconfig($PluginFusioninventoryAgent->fields['id']);
-               $PluginFusinvsnmpAgentconfig->fields["senddico"] = "1";
-               $PluginFusinvsnmpAgentconfig->update($PluginFusinvsnmpAgentconfig->fields);
+               $input = array();
+               $input['id'] = $PluginFusinvsnmpAgentconfig->fields['id'];
+               $input["senddico"] = "1";
+               $PluginFusinvsnmpAgentconfig->update($input);
 
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = $p_CONTENT->PROCESSNUMBER;
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $a_agent['id'];
@@ -225,26 +227,28 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       $xml = simplexml_load_string($_SESSION['SOURCE_XMLDEVICE'],'SimpleXMLElement', LIBXML_NOCDATA);
       $class = new $itemtype();
       $class->getFromDB($items_id);
+      $input = array();
+      $input['id'] = $class->fields['id'];
 
       $a_lockable = PluginFusioninventoryLock::getLockFields(getTableForItemType($itemtype), $items_id);
       
       if (!in_array('name', $a_lockable)) {
          if (isset($xml->NETBIOSNAME) AND !empty($xml->NETBIOSNAME)) {
-            $class->fields['name'] = (string)$xml->NETBIOSNAME;
+            $input['name'] = (string)$xml->NETBIOSNAME;
          } else if (isset($xml->SNMPHOSTNAME) AND !empty($xml->SNMPHOSTNAME)) {
-            $class->fields['name'] = (string)$xml->SNMPHOSTNAME;
+            $input['name'] = (string)$xml->SNMPHOSTNAME;
          } else if (isset($xml->DNSHOSTNAME) AND !empty($xml->DNSHOSTNAME)) {
-            $class->fields['name'] = (string)$xml->DNSHOSTNAME;
+            $input['name'] = (string)$xml->DNSHOSTNAME;
          }
       }
       if (!in_array('serial', $a_lockable)) {
          if (trim($xml->SERIAL) != '') {
-            $class->fields['serial'] = trim($xml->SERIAL);
+            $input['serial'] = trim($xml->SERIAL);
          }
       }
       
       if (isset($xml->ENTITY) AND !empty($xml->ENTITY)) {
-         $class->fields['entities_id'] = $xml->ENTITY;
+         $input['entities_id'] = $xml->ENTITY;
       }
       
       switch ($itemtype) {
@@ -254,9 +258,9 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             if (Dropdown::getDropdownName("glpi_autoupdatesystems", $class->fields['autoupdatesystems_id']) != 'FusionInventory') {
                if (isset($xml->WORKGROUP)) {
                   $domain = new Domain();
-                  $class->fields['domains_id'] = $domain->import(array('name'=>(string)$xml->WORKGROUP));
+                  $input['domains_id'] = $domain->import(array('name'=>(string)$xml->WORKGROUP));
                }
-               $class->update($class->fields);
+               $class->update($input);
                //Manage IP and Mac address
                $NetworkPort = new NetworkPort();
                $a_computerports = array();
@@ -307,10 +311,10 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
              
 
             if (!in_array('contact', $a_lockable))
-               $class->fields['contact'] = (string)$xml->USERSESSION;
+               $input['contact'] = (string)$xml->USERSESSION;
             if (!in_array('domain', $a_lockable)) {
                if (!empty($xml->WORKGROUP)) {
-               $class->fields['domain'] = Dropdown::importExternal("Domain",
+               $input['domain'] = Dropdown::importExternal("Domain",
                                        (string)$xml->WORKGROUP,(string) $xml->ENTITY);
                }
             }
@@ -318,21 +322,21 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                switch ((string)$xml->TYPE) {
 
                   case '1':
-                     $class->fields['itemtype'] = 'Computer';
+                     $input['itemtype'] = 'Computer';
                      break;
 
                   case '2':
-                     $class->fields['itemtype'] = 'NetworkEquipment';
+                     $input['itemtype'] = 'NetworkEquipment';
                      break;
 
                   case '3':
-                     $class->fields['itemtype'] = 'Printer';
+                     $input['itemtype'] = 'Printer';
                      break;
                   
                }
             }
-            $class->fields['plugin_fusioninventory_agents_id'] = $_SESSION['glpi_plugin_fusioninventory_agentid'];
-            $class->update($class->fields);
+            $input['plugin_fusioninventory_agents_id'] = $_SESSION['glpi_plugin_fusioninventory_agentid'];
+            $class->update($input);
 
             //Manage IP and Mac address
             $NetworkPort = new NetworkPort();
@@ -391,8 +395,10 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                $device_id = $PluginFusinvsnmpUnknownDevice->add($input);
                $PluginFusinvsnmpUnknownDevice->getFromDB($device_id);
             }
+            $input = array();
+            $input['id'] = $PluginFusinvsnmpUnknownDevice->fields['id'];
             if (isset($xml->DESCRIPTION) AND !empty($xml->DESCRIPTION)) {
-               $PluginFusinvsnmpUnknownDevice->fields['sysdescr'] = $xml->DESCRIPTION;
+               $input['sysdescr'] = $xml->DESCRIPTION;
             }
             // <MODELSNMP>Printer0093</MODELSNMP>
             if (isset($xml->MODELSNMP) AND !empty($xml->MODELSNMP)) {
@@ -402,27 +408,27 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                   $model_id = $PluginFusinvsnmpModel->getModelBySysdescr($xml->DESCRIPTION);
                }
                if ($model_id != '0') {
-                  $PluginFusinvsnmpUnknownDevice->fields['plugin_fusinvsnmp_models_id'] = $model_id;
+                  $input['plugin_fusinvsnmp_models_id'] = $model_id;
                }
             }
 
             if (isset($xml->AUTHSNMP) AND !empty($xml->AUTHSNMP)) {
-               $PluginFusinvsnmpUnknownDevice->fields['plugin_fusinvsnmp_configsecurities_id'] = $xml->AUTHSNMP;
+               $input['plugin_fusinvsnmp_configsecurities_id'] = $xml->AUTHSNMP;
             }
-            $PluginFusinvsnmpUnknownDevice->update($PluginFusinvsnmpUnknownDevice->fields);
+            $PluginFusinvsnmpUnknownDevice->update($input);
             break;
          
          case 'NetworkEquipment':
             if (isset($xml->MAC) AND !empty($xml->MAC)) {
                if (!in_array('mac', $a_lockable))
-                  $class->fields['mac'] = $xml->MAC;
+                  $input['mac'] = $xml->MAC;
             }
             if (isset($xml->IP)) {
                if (!in_array('ip', $a_lockable))
-                  $class->fields['ip'] = $xml->IP;
+                  $input['ip'] = $xml->IP;
             }
 
-            $class->update($class->fields);
+            $class->update($input);
 
             // Update SNMP informations
             $PluginFusinvsnmpNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
@@ -447,8 +453,8 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
          case 'Printer':
 
-            $class->fields['have_ethernet'] = '1';
-            $class->update($class->fields);
+            $input['have_ethernet'] = '1';
+            $class->update($input);
 
             //Manage IP and Mac address
             $NetworkPort = new NetworkPort();
