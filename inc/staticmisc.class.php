@@ -49,17 +49,21 @@ class PluginFusinvinventoryStaticmisc {
    static function task_methods() {
       global $LANG;
 
-      return array(array('module'         => 'fusinvinventory',
-                         'method'         => 'inventory',
-                         'selection_type' => 'devices',
-                         'hidetask'       => 1,
-                         'name'           => $LANG['plugin_fusinvinventory']['title'][1],
-                         'use_rest'       => false),
-                   array('module'         => 'fusinvinventory',
-                         'method'         => 'ESX',
-                         'selection_type' => 'devices',
-                         'name'           => $LANG['plugin_fusinvinventory']['title'][2],
-                         'use_rest'       => true));
+      $methods[] =  array('module'         => 'fusinvinventory',
+                          'method'         => 'inventory',
+                          'selection_type' => 'devices',
+                          'hidetask'       => 1,
+                          'name'           => $LANG['plugin_fusinvinventory']['title'][1],
+                          'use_rest'       => false);
+                          
+     //if (PluginFusioninventoryCredential::hasAlLeastOneType()) {
+     $methods[] = array('module'         => 'fusinvinventory',
+                        'method'         => 'ESX',
+                        'selection_type' => 'devices',
+                        'name'           => $LANG['plugin_fusinvinventory']['title'][2],
+                        'use_rest'       => true);
+        //}
+        return $methods;
    }
 
    /**
@@ -149,7 +153,8 @@ class PluginFusinvinventoryStaticmisc {
    *   value name of the itemtype
    **/
    static function task_definitiontype_ESX($a_itemtype) {
-      return array ('' => DROPDOWN_EMPTY_VALUE, 'Computer' => Computer::getTypeName());
+      return array ('' => DROPDOWN_EMPTY_VALUE, 
+                    'PluginFusioninventoryCredentialIp' => PluginFusioninventoryCredentialIp::getTypeName());
    }
 
    /**
@@ -160,19 +165,18 @@ class PluginFusinvinventoryStaticmisc {
    * @return dropdown list of computers
    *
    **/
-   static function task_definitionselection_Computer_ESX($title) {
-      global $DB;
+   static function task_definitionselection_PluginFusioninventoryCredentialIp_ESX($title) {
+      global $DB, $LANG;
 
-      $query = "SELECT `c`.`id`, `c`.`name` 
-                FROM `glpi_plugin_fusioninventory_credentials_items` as `ci`
-                LEFT JOIN `glpi_plugin_fusioninventory_credentials` as `cr`
-                     ON `cr`.`id` = `ci`.`plugin_fusioninventory_credentials_id`
-                LEFT JOIN `glpi_computers` as `c` ON `ci`.`items_id` = `c`.`id`
-                WHERE `cr`.`itemtype`='PluginFusinvinventoryVmwareESX'".
-                  getEntitiesRestrictRequest(' AND','c');
-      
+      $query = "SELECT `a`.`id`, `a`.`name` 
+                FROM `glpi_plugin_fusioninventory_credentialips` as `a` 
+                LEFT JOIN `glpi_plugin_fusioninventory_credentials` as `c` 
+                   ON `c`.`id` = `a`.`plugin_fusioninventory_credentials_id` 
+                WHERE `c`.`itemtype`='PluginFusinvinventoryVmwareESX'";
+      $query.= getEntitiesRestrictRequest(' AND','glpi_plugin_fusioninventory_credentialips');
       $results = $DB->query($query);
-      $agents = array();
+
+      //$agents['.1'] = $LANG['common'][66];
       while ($data = $DB->fetch_array($results)) {
          $agents[$data['id']] = $data['name'];
       }
@@ -194,7 +198,7 @@ class PluginFusinvinventoryStaticmisc {
    * @return dropdown list of computers
    *
    **/
-   static function task_actionselection_PluginFusioninventoryAgent_ESX() {
+   static function task_actionselection_PluginFusioninventoryCredentialIp_ESX() {
       global $DB;
 
       $options = array();
@@ -212,16 +216,18 @@ class PluginFusinvinventoryStaticmisc {
       }
 
       $query = "SELECT `a`.`id`, `a`.`name` 
-                FROM `glpi_plugin_fusioninventory_agents` as `a` 
-                WHERE `a`.`items_id` IS NOT NULL $in";
-      $query.= getEntitiesRestrictRequest(' AND','glpi_plugin_fusioninventory_agents');
+                FROM `glpi_plugin_fusioninventory_credentialips` as `a` 
+                LEFT JOIN `glpi_plugin_fusioninventory_credentials` as `c` 
+                   ON `c`.`id` = `a`.`plugin_fusioninventory_credentials_id` 
+                WHERE `c`.`itemtype`='PluginFusioninventoryVmwareESX'";
+      $query.= getEntitiesRestrictRequest(' AND','glpi_plugin_fusioninventory_credentialips');
       
       $results = $DB->query($query);
-      $agents = array();
+      $credentialips = array();
       while ($data = $DB->fetch_array($results)) {
-         $agents[$data['id']] = $data['name'];
+         $credentialips[$data['id']] = $data['name'];
       }
-      return Dropdown::showFromArray('actionselectiontoadd',$agents);
+      return Dropdown::showFromArray('actionselectiontoadd',$credentialips);
    }
 
    //------------------------------------------ ---------------------------------------------//
@@ -235,8 +241,9 @@ class PluginFusinvinventoryStaticmisc {
     */
    static function task_ESX_getParameters() {
       global $CFG_GLPI;
+
       return array ('periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'ESX', 
-                    'remote' => $CFG_GLPI['root_doc'].'/plugins/fusinvinventory/b/esx/');
+                    'remote' => 'http://172.28.218.102/glpi080/plugins/fusinvinventory/b/esx/');
    }
 }
 

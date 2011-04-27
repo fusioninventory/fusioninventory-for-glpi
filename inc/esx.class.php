@@ -26,7 +26,7 @@
    along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
+   Original Author of file: Walid Nouh
    Co-authors of file:
    Purpose of file:
    ----------------------------------------------------------------------
@@ -147,55 +147,42 @@ class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
       $response      = array();
       $taskjoblog    = new PluginFusioninventoryTaskjoblog();
       $taskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $credential    = new PluginFusioninventoryCredential();
+      $credentialip  = new PluginFusioninventoryCredentialIp();
+      $uuid = '';
       
       //Get the agent ID by his deviceid
       if ($agents = PluginFusioninventoryAgent::getByDeviceID($device_id)) {
          
          //Get tasks associated with the agent
          $tasks_list = $taskjobstatus->getTaskjobsAgent($agents['id']);
-         logDebug($tasks_list);
          foreach ($tasks_list as $itemtype => $tasks) {
-            
             //Foreach task for this agent build the response array
             foreach ($tasks as $task) {
-               $tmp = array();
-               $tmp['ip']= self::getEsxCorrectIP($task['items_id']);
-               $credentials = PluginFusioninventoryCredential:: getForItem($itemtype, 
-                                                                           $task['items_id']);
-               $cred = array_pop($credentials);
-               $tmp['username'] = $cred['username'];
-               $tmp['password'] = $cred['password'];
-               $response[] = $tmp;
+               if ($task['state'] == PluginFusioninventoryTaskjobstatus::PREPARED) {
+                  $credentialip->getFromDB($task['items_id']);
+                  $credential->getFromDB($credentialip->fields['plugin_fusioninventory_credentials_id']);
+                  $tmp['uuid']     = $task['id'];
+                  $tmp['host']     = $credentialip->fields['ip'];
+                  $tmp['user']     = $credential->fields['username'];
+                  $tmp['password'] = $credential->fields['password'];
+                  $response['jobs'][] = $tmp;
+
                }
             }
          }
-
+      }
       return $response;
    }
 
-   
-   static function getEsxCorrectIP($esx_id) {
-      global $DB;
-      
-      $query = "SELECT `ip`
-                FROM `glpi_networkports`
-                WHERE `items_id` = '$ID'
-                   AND `itemtype` = '$itemtype'
-                      AND `ip` != '127.0.0.1'
-               ORDER BY `name`, `logical_number`";
-      $results = $DB->query($query);
-      $esxip = false;
-      //The good way to find the ESX IP is to try to find the administrative console...
-      while ($ip = $DB->fetch_array($results)) {
-         $handle = fopen("http://".$ip['ip']."/sdk/vimService");
-         if ($handle) {
-            $esxip = $ip;
-            fclose($handle);
-            break;
-            
-         }
-      }
-      return $esxip;
+   /**
+    * Check if the ip give is the one of the remote management ESX
+    * @param ip the ip to check
+    * 
+    * @return true if it's the right IP, false otherwise
+    */
+   static function testIP($ip) {
+      return (@fopen("http://".$ip['ip']."/sdk/vimService",'r'));
    }
 }
 

@@ -104,6 +104,7 @@ function pluginFusinvinventoryInstall() {
       $input['modulename'] = "ESX";
       $PluginFusioninventoryAgentmodule->add($input);
 
+       include(GLPI_ROOT . "/plugins/fusinvinventory/inc/config.class.php");
       // Create configuration
       $PluginFusinvinventoryConfig = new PluginFusinvinventoryConfig();
       $PluginFusinvinventoryConfig->initConfigModule();
@@ -113,7 +114,7 @@ function pluginFusinvinventoryInstall() {
          include(GLPI_ROOT . "/plugins/fusinvinventory/inc/ruleentitycollection.class.php");
       }
       if (!class_exists('PluginFusinvinventoryRuleEntity')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusinvinventory/inc/rruleentity.class.php");
+         include(GLPI_ROOT . "/plugins/fusinvinventory/inc/ruleentity.class.php");
       }
       $Rule = new Rule();
       $RuleCriteria = new RuleCriteria();

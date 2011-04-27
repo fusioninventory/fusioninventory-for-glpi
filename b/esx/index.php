@@ -43,14 +43,19 @@ $response = false;
 if (isset($_GET['a']) && isset($_GET['d'])) {
    switch ($_GET['a']) {
       case 'getJobs':
+         //Specific to ESX
+
          $response = PluginFusinvinventoryESX::getJobs($_GET['d']);
          break;
       case 'setLog':
+         //Generic method to update logs
+         PluginFusioninventoryRestCommunication::updateLog($_GET);
          break;
    }
    
    if ($response) {
       echo json_encode($response);
+      logDebug($response);
    } else {
       PluginFusioninventoryRestCommunication::sendError();
     }
