@@ -282,7 +282,7 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
                      FROM `glpi_networkports_networkports`
                      WHERE `networkports_id_1` IN ('".$this->getValue('id')."', '".$destination_port."')
                            AND `networkports_id_2` IN ('".$this->getValue('id')."', '".$destination_port."');";
-      
+
       if ($resultVerif=$DB->query($queryVerif)) {
          if ($DB->numrows($resultVerif) == "0") { // no existing connection between those 2 ports
             $this->disconnectDB($this->getValue('id')); // disconnect this port
