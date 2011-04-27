@@ -501,7 +501,7 @@ class PluginFusinvinventoryInventory {
             $xml_peripheral->addChild("SERIAL", $Peripheral->fields['serial']);
          }
       }
-
+      
       $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
       $PluginFusinvinventoryLib->addLibMachineFromGLPI($items_id, $internal_id, $xml, $a_sectionsinfos);
    }

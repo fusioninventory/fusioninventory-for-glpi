@@ -347,8 +347,15 @@ if (!unserialize($serializedSectionToRemove)) {
                                  AND $arrSectionToAdd["PCISLOT"] == $arrSectionToRemove["PCISLOT"])
                                OR (!isset($arrSectionToRemove["PCIID"])
                                  AND isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
+                                 AND isset($arrSectionToAdd["NAME"]) == isset($arrSectionToRemove["NAME"])
                                  AND isset($arrSectionToAdd['MANUFACTURER']) AND isset($arrSectionToRemove['MANUFACTURER'])
-                                 AND isset($arrSectionToAdd['CAPTION']) AND isset($arrSectionToRemove['CAPTION']) )) {
+                                 AND isset($arrSectionToAdd['MANUFACTURER']) == isset($arrSectionToRemove['MANUFACTURER'])
+                                 AND isset($arrSectionToAdd['CAPTION']) AND isset($arrSectionToRemove['CAPTION'])
+                                 AND isset($arrSectionToAdd['CAPTION']) == isset($arrSectionToRemove['CAPTION']))
+                               OR (!isset($arrSectionToRemove["PCIID"])
+                                 AND isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
+                                 AND isset($arrSectionToAdd["NAME"]) == isset($arrSectionToRemove["NAME"])
+                                 AND !isset($arrSectionToRemove['MANUFACTURER']))) {
 
                               $boolUpdate = true;
                            }
