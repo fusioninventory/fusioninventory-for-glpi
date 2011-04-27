@@ -502,7 +502,13 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                break;
             case 'OTHERSERIAL' :
                if (!in_array('otherserial', $a_lockable)) {
-                  $this->ptd->setValue('otherserial', (string)$p_info->OTHERSERIAL);
+                  $otherserial = (string)$p_info->OTHERSERIAL;
+                  if (strstr($otherserial, "chr(hex")) {
+                     $otherserial = str_replace("chr(hex(", "", $otherserial);
+                     $otherserial = str_replace("))", "", $otherserial);
+                     $otherserial = $this->hexToStr($otherserial);
+                  }                  
+                  $this->ptd->setValue('otherserial', $otherserial);
                }
                break;
             case 'LOCATION' :
@@ -1313,6 +1319,18 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                      $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'],
                      $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment']);
    }
+
+
+
+   function hexToStr($hex) {
+       $string='';
+       for ($i=0; $i < strlen($hex)-1; $i+=2) {
+           $string .= chr(hexdec($hex[$i].$hex[$i+1]));
+       }
+       return $string;
+   }
+
+
 
 }
 
