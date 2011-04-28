@@ -53,6 +53,14 @@ function update231to232() {
    $PluginFusinvinventoryLock = new PluginFusinvinventoryLock();
    $PluginFusinvinventoryLock->importFromOcs();
 
+   $config = new PluginFusioninventoryConfig();
+   $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
+
+   //Add configuration entry for default state of a newly imported asset
+   if (!$config->getValue($plugins_id, 'states_id_default')) {
+      $config->addConfig($plugins_id, 'states_id_default', 0);
+   }
+   
    plugin_fusioninventory_displayMigrationMessage("232"); // End
 }
 

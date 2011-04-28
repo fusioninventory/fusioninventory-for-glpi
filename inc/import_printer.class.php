@@ -135,6 +135,9 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
                  "import_printer") == '1') {
             $a_printer['is_global'] = 1;
          }
+
+         PluginFusinvinventoryInventory::addDefaultStateIfNeeded($a_printer, true, 
+                                                                 $a_printer['is_global']);
          $printer_id = $printer->add($a_printer);
       } else {
          $printer_id = $a_printer['id'];

@@ -214,6 +214,9 @@ class PluginFusinvinventoryInventory {
             $input = array();
             $input['date_mod'] = date("Y-m-d H:i:s");
             $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+
+            self::addDefaultStateIfNeeded($input, false);
+            logDebug($input);
             $items_id = $Computer->add($input);
             $PluginFusinvinventoryLib->startAction($xml, $items_id, '1');
          } else {
@@ -222,6 +225,17 @@ class PluginFusinvinventoryInventory {
       }
    }
 
+   static function addDefaultStateIfNeeded(&$input, $check_management = false, $management_value = 0) {
+      $config = new PluginFusioninventoryConfig();
+      $state = $config->getValue($_SESSION["plugin_fusinvinventory_moduleid"], "states_id_default");
+      if ($state) {
+         if (!$check_management || ($check_management && !$management_value)) {
+            $input['states_id'] = $state;
+         
+         }
+      
+      }
+   }
    
 
    /**

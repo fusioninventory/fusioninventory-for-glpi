@@ -56,10 +56,11 @@ function pluginFusinvinventoryUpdate($current_version) {
    echo "<tr class='tab_bg_1'>";
    echo "<td align='center'>";
 
-   switch ($current_version) {
+   include(GLPI_ROOT."/plugins/fusioninventory/install/update.php");
 
-      case "2.3.1-1":
-         include("update_231_232");
+   switch ($current_version) {
+      case "2.3.2-1":
+         include("update_231_232.php");
          update231to232();
          break;
 

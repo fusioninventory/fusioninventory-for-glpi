@@ -140,6 +140,10 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
                  "import_peripheral") == '1') {
             $a_Peripheral['is_global'] = 1;
          }
+
+         PluginFusinvinventoryInventory::addDefaultStateIfNeeded($a_Peripheral, true, 
+                                                                 $a_Peripheral['is_global']);
+         
          $peripheral_id = $Peripheral->add($a_Peripheral);
       }
 
