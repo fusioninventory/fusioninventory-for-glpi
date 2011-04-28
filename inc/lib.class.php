@@ -266,6 +266,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       $a_sections[] = "USERS";
       $a_sections[] = "VIDEOS";
       $a_sections[] = "USBDEVICES";
+      $a_sections[] = "CPUS";
       // Retrieve all sections stored in info file
       $infoSections = $this->_getInfoSections($internalId);
       // Retrieve all sections from xml file
@@ -482,6 +483,15 @@ if (!unserialize($serializedSectionToRemove)) {
                                    AND $arrSectionToAdd["SUBCLASS"] == $arrSectionToRemove["SUBCLASS"]
                                    AND $arrSectionToAdd["VENDORID"] == $arrSectionToRemove["VENDORID"])) {
 
+                              $boolUpdate = true;
+                           }
+                           break;
+
+                        case "CPUS":
+                           if (isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
+                                 AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]
+                                 AND isset($arrSectionToAdd['MANUFACTURER']) AND isset($arrSectionToRemove['MANUFACTURER'])
+                                 AND isset($arrSectionToAdd['MANUFACTURER']) == isset($arrSectionToRemove['MANUFACTURER'])) {
                               $boolUpdate = true;
                            }
                            break;

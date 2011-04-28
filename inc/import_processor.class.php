@@ -95,6 +95,7 @@ class PluginFusinvinventoryImport_Processor extends CommonDBTM {
       $array['deviceprocessors_id'] = $Processor_id;
       if ($type == "update") {
          $array['id'] = $items_id;
+         $array['specificity'] = $specificity;
          $array['computers_id'] = $CompDevice->fields['computers_id'];
          $devID = $CompDevice->update($array);
       } else if ($type == "add") {
