@@ -66,7 +66,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          $_SESSION['glpiactiveentities_string'] = $Computer->fields['entities_id'];
          $input['is_ocs_import'] = 0;
          $Computer->update($input);
-         if ($_SESSION["plugin_fusinvinventory_entity"] == "N/A") {
+         if ($_SESSION["plugin_fusinvinventory_entity"] == NOT_AVAILABLE) {
             $_SESSION["plugin_fusinvinventory_entity"] = $Computer->fields['entities_id'];
          }
          $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
@@ -124,7 +124,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          $PluginFusinvinventoryLibhook->writeXMLFusion($items_id);
       } else {
          // New Computer
-         if ($_SESSION["plugin_fusinvinventory_entity"] == "N/A") {
+         if ($_SESSION["plugin_fusinvinventory_entity"] == NOT_AVAILABLE) {
             $_SESSION["plugin_fusinvinventory_entity"] = 0;
          }
 

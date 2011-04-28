@@ -70,6 +70,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       $input['component_drive']        = 1;
       $input['component_control']      = 1;
       $input['transfers_id_auto']      = 1;
+      $input['states_id_default']      = 0;
       $a_infos = plugin_version_fusinvinventory();
       $input['version']                = $a_infos['version'];
       $input['location']               = 0;
@@ -95,12 +96,9 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
       foreach ($p_post as $key => $value) {
-         if ((strstr($key, "component_"))
-                 OR (strstr($key, "import_"))
-                 OR (strstr($key, "location"))
-                 OR (strstr($key, "transfers_id_auto"))) {
-
+         if (preg_match("/[component_|import_|transfers_id_auto|states_id_auto]/",$key)) {
             $PluginFusioninventoryConfig->updateConfigType($plugins_id, $key, $value);
+
          }
       }
    }
@@ -170,7 +168,8 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_processor", 
-                          $PluginFusioninventoryConfig->getValue($plugins_id, 'component_processor'));
+                          $PluginFusioninventoryConfig->getValue($plugins_id, 
+                                                                'component_processor'));
       echo "</td>";
       echo "</tr>";
 
@@ -193,7 +192,8 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       echo $LANG['devices'][6];
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("component_memory", $PluginFusioninventoryConfig->getValue($plugins_id, 'component_memory'));
+      Dropdown::showYesNo("component_memory", 
+                          $PluginFusioninventoryConfig->getValue($plugins_id, 'component_memory'));
       echo "</td>";
       echo "</tr>";
 
@@ -202,13 +202,15 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       echo $LANG['Menu'][4];
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("import_software", $PluginFusioninventoryConfig->getValue($plugins_id, 'import_software'));
+      Dropdown::showYesNo("import_software", 
+                          $PluginFusioninventoryConfig->getValue($plugins_id, 'import_software'));
       echo "</td>";
       echo "<td>";
       echo $LANG['devices'][1];
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("component_harddrive", $PluginFusioninventoryConfig->getValue($plugins_id, 'component_harddrive'));
+      Dropdown::showYesNo("component_harddrive", 
+                          $PluginFusioninventoryConfig->getValue($plugins_id, 'component_harddrive'));
       echo "</td>";
       echo "</tr>";
 
@@ -217,13 +219,15 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       echo $LANG['computers'][8];
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("import_volume", $PluginFusioninventoryConfig->getValue($plugins_id, 'import_volume'));
+      Dropdown::showYesNo("import_volume", 
+                          $PluginFusioninventoryConfig->getValue($plugins_id, 'import_volume'));
       echo "</td>";
       echo "<td>";
       echo $LANG['devices'][3];
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("component_networkcard", $PluginFusioninventoryConfig->getValue($plugins_id, 'component_networkcard'));
+      Dropdown::showYesNo("component_networkcard", 
+                          $PluginFusioninventoryConfig->getValue($plugins_id, 'component_networkcard'));
       echo "</td>";
       echo "</tr>";
 
@@ -232,13 +236,15 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       echo $LANG['plugin_fusinvinventory']['antivirus'][0];
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("import_antivirus", $PluginFusioninventoryConfig->getValue($plugins_id, 'import_antivirus'));
+      Dropdown::showYesNo("import_antivirus", 
+                          $PluginFusioninventoryConfig->getValue($plugins_id, 'import_antivirus'));
       echo "</td>";
       echo "<td>";
       echo $LANG['devices'][2];
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("component_graphiccard", $PluginFusioninventoryConfig->getValue($plugins_id, 'component_graphiccard'));
+      Dropdown::showYesNo("component_graphiccard", 
+                          $PluginFusioninventoryConfig->getValue($plugins_id, 'component_graphiccard'));
       echo "</td>";
       echo "</tr>";
 
@@ -247,13 +253,15 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       echo $LANG['plugin_fusinvinventory']['setup'][25];
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("import_registry", $PluginFusioninventoryConfig->getValue($plugins_id, 'import_registry'));
+      Dropdown::showYesNo("import_registry", 
+                          $PluginFusioninventoryConfig->getValue($plugins_id, 'import_registry'));
       echo "</td>";
       echo "<td>";
       echo $LANG['devices'][7];
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("component_soundcard", $PluginFusioninventoryConfig->getValue($plugins_id, 'component_soundcard'));
+      Dropdown::showYesNo("component_soundcard", 
+                          $PluginFusioninventoryConfig->getValue($plugins_id, 'component_soundcard'));
       echo "</td>";
       echo "</tr>";
 
@@ -262,17 +270,20 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       echo $LANG['plugin_fusinvinventory']['setup'][26];
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("import_process", $PluginFusioninventoryConfig->getValue($plugins_id, 'import_process'));
+      Dropdown::showYesNo("import_process", 
+                          $PluginFusioninventoryConfig->getValue($plugins_id, 'import_process'));
       echo "</td>";
       echo "<td>";
       echo $LANG['devices'][19];
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("component_drive", $PluginFusioninventoryConfig->getValue($plugins_id, 'component_drive'));
+      Dropdown::showYesNo("component_drive", 
+                          $PluginFusioninventoryConfig->getValue($plugins_id, 'component_drive'));
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
+
       echo "<td>";
       echo $LANG['computers'][57];
       echo "</td>";
@@ -284,7 +295,9 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       echo $LANG['devices'][20];
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("component_control", $PluginFusioninventoryConfig->getValue($plugins_id, 'component_control'));
+      Dropdown::showYesNo("component_control", 
+                          $PluginFusioninventoryConfig->getValue($plugins_id, 
+                                                                 'component_control'));
       echo "</td>";
       echo "</tr>";
 
@@ -298,8 +311,12 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
                                     "1"=>$LANG['plugin_fusinvinventory']['rule'][8]),
                               array('value'=>$PluginFusioninventoryConfig->getValue($plugins_id, 'location')));
       echo "</td>";
-      echo "<td colspan='2'>";
-      echo "</td>";
+      echo "<td>" . $LANG['ocsconfig'][16] . " </td>\n<td>";
+      Dropdown::show('State',
+                     array('name'   => 'states_id_default',
+                           'value'  => $PluginFusioninventoryConfig->getValue($plugins_id, 
+                                                                              'states_id_default')));
+      echo "</td>\n";
       echo "</tr>";
 
       echo "<tr>";
@@ -307,18 +324,17 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       echo "</th>";
       echo "</tr>";
 
-      echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2'>";
       echo $LANG['plugin_fusinvinventory']['setup'][29]."&nbsp:";
       echo "</td>";
       echo "<td colspan='2'>";
       Dropdown::show("Transfer",
                      array('name'=>"transfers_id_auto",
-                           'value'=>$PluginFusioninventoryConfig->getValue($plugins_id, 'transfers_id_auto'),
+                           'value'=>$PluginFusioninventoryConfig->getValue($plugins_id, 
+                                                                           'transfers_id_auto'),
                            'comment'=>0));
       echo "</td>";
       echo "</tr>";
-
       
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "w")) {
          echo "<tr class='tab_bg_2'><td align='center' colspan='4'>

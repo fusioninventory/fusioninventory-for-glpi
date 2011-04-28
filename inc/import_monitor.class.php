@@ -55,7 +55,7 @@ class PluginFusinvinventoryImport_Monitor extends CommonDBTM {
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
-              "import_monitor") == '0') {
+                                                 "import_monitor") == '0') {
          return;
       }
 
@@ -139,6 +139,10 @@ class PluginFusinvinventoryImport_Monitor extends CommonDBTM {
                  "import_monitor") == '1') {
             $a_monitor['is_global'] = 1;
          }
+
+      PluginFusinvinventoryInventory::addDefaultStateIfNeeded($a_monitor, true, 
+                                                              $a_monitor['is_global']);
+
          $monitor_id = $monitor->add($a_monitor);
       } else {
          $monitor->update($a_monitor);
