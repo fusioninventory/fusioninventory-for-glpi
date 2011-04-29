@@ -47,9 +47,9 @@ class PluginFusioninventoryRestCommunication {
     */
    static function communicate($params = array()) {
       $response = array();
-      if (isset ($params['a']) && isset($params['d'])) {
-         if (PluginFusioninventoryAgent::getByDeviceID($params['d'])) {
-            switch ($params['a']) {
+      if (isset ($params['action']) && isset($params['machineid'])) {
+         if (PluginFusioninventoryAgent::getByDeviceID($params['machineid'])) {
+            switch ($params['action']) {
                case 'getConfig':
                   $response = self::getConfigByAgent($params);
                   break;
@@ -116,31 +116,21 @@ class PluginFusioninventoryRestCommunication {
     * @param params parameters from the GET HTTP request
     * @return nothing
     */
-   static function updateLog($params = array(),$update_job = true) {
-      $p['d']         = ''; //DeviceId
-      $p['part']      = ''; //fragment downloaded
+   static function updateLog($params = array()) {
+      $p['machineid'] = ''; //DeviceId
       $p['uuid']      = ''; //Task uuid
-      $p['s']         = 'ok'; //status of the task
-      $p['c']         = ''; //current step of processing
-      $p['msg']       = ''; //Message to be logged
+      $p['msg']       = 'ok'; //status of the task
+      $p['code']      = ''; //current step of processing
       foreach ($params as $key => $value) {
          $p[$key] = $value;
       }
 
       $taskjobstatus = new PluginFusioninventoryTaskjobstatus();
 
-      logDebug($p);
       //Get the agent ID by his deviceid
       //Get task job status : identifier is the uuid given by the agent
-      if (PluginFusioninventoryAgent::getByDeviceID($p['d']) 
-         && $taskjobstatus->getFromDB($p['u'])) {
-         
-         /*
-         $job = PluginFusioninventoryTaskjoblog::getByUniqID($p['uuid']);
-         if ($update_job) {
-            $taskjob = new PluginFusioninventoryTaskjoblog();
-            $taskjob->update($job);
-         }*/
+      if (PluginFusioninventoryAgent::getByDeviceID($p['machineid']) 
+         && $taskjobstatus->getFromDB($p['uuid'])) {
          
          //Get taskjoblog associated
          $taskjob = new PluginFusioninventoryTaskjob();
@@ -148,26 +138,20 @@ class PluginFusioninventoryRestCommunication {
          
          $taskjoblog = new PluginFusioninventoryTaskjoblog();
          
-         $tmp['id']        = $p['u'];
-         $tmp['itemtype']  = $taskjob->fields['itemtype'];
-         $tmp['items_id']  = $taskjob->fields['items_id'];
+         $tmp['plugin_fusioninventory_taskjobstatus_id'] = $taskjobstatus->fields['id'];
+         $tmp['itemtype']  = $taskjobstatus->fields['itemtype'];
+         $tmp['items_id']  = $taskjobstatus->fields['items_id'];
          $tmp['comment']   = $p['msg'];
          $tmp['date']      = date("Y-m-d H:i:s");
-         if ($p['s'] == 'ko') {
-            $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_ERROR;
+         if ($p['code'] == 'ok') {
+            $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_OK;
          } else {
-            if ($p['c'] == '') {
-               $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_OK;
-            } else {
-               $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_RUNNING;
-            }
+            $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_ERROR;
          }
          $taskjoblog->add($tmp);
-         
       }
       self::sendOk();
    }
-   
+ 
 }
-
 ?>

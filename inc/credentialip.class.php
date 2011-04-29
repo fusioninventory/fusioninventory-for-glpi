@@ -77,7 +77,11 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
       
       switch ($field['type']) {
          case 'credentials' :
-            $field['id'] = $ID;
+            if ($ID > 0) {
+               $field['id'] = $this->fields['plugin_fusioninventory_credentials_id'];
+            } else {
+               $field['id'] = -1;
+            }
             PluginFusioninventoryCredential::dropdownCredentials($field);
             break;
       }

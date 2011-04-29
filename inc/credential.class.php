@@ -161,7 +161,11 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    **/
    static function checkBeforeInsert($input) {
       global $LANG;
-
+      
+      if ($input['password'] == '') {
+         unset($input['password']);
+      }
+      
       if (!$input['itemtype']) {
          addMessageAfterRedirect($LANG['setup'][817], true, ERROR);
          $input = array();
