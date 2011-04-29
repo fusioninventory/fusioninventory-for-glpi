@@ -1217,7 +1217,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          } else if ($p_CONTENT->INFO->TYPE=='PRINTER') {
             $input['itemtype'] = "Printer";
             if (isset($p_CONTENT->PORTS)) {
-               foreach($p_CONTENT->PORTS as $port) {
+               foreach($p_CONTENT->PORTS->children() as $port) {
                   if ((isset($port->MAC)) AND (!empty($port->MAC))) {
                      $input['mac'][] = (string)$port->MAC;
                   }
@@ -1233,6 +1233,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          if ((isset($p_CONTENT->INFO->NAME)) AND (!empty($p_CONTENT->INFO->NAME))) {
             $input['name'] = (string)$p_CONTENT->INFO->NAME;
          }
+
       $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize($input);
       $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusinvsnmpCommunicationSNMPQuery";
       $rule = new PluginFusioninventoryRuleImportEquipmentCollection();
