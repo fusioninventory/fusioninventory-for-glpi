@@ -102,8 +102,10 @@ function plugin_init_fusioninventory() {
 
          
    //      $PLUGIN_HOOKS['item_add']['fusioninventory'] = 'plugin_item_add_fusioninventory';
-
-         $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
+         $Plugin = new Plugin();
+         if ($Plugin->isActivated('fusioninventory')) {
+            $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
+         }
 
          // Tabs for each type
          $PLUGIN_HOOKS['headings']['fusioninventory'] = 'plugin_get_headings_fusioninventory';
@@ -181,8 +183,7 @@ function plugin_init_fusioninventory() {
    }
 
    // Add unknown devices in list of devices with networport
-   $CFG_GLPI["networkport_types"][] = "PluginFusioninventoryUnknownDevice";
-   //$CFG_GLPI["state_types"][] = "PluginFusioninventoryUnknownDevice";
+//   $CFG_GLPI["netport_types"][] = "PluginFusioninventoryUnknownDevice";
 
 }
 

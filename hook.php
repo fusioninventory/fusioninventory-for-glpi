@@ -109,7 +109,7 @@ function cron_plugin_fusioninventory() {
 function plugin_fusioninventory_install() {
    global $DB, $LANG, $CFG_GLPI;
 
-   $version = "2.3.0";
+   $version = "2.3.1";
    include (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
    $version_detected = pluginFusioninventoryGetCurrentVersion($version);
    if ((isset($version_detected)) AND ($version_detected != $version)) {
@@ -275,8 +275,11 @@ function plugin_headings_fusioninventory_tasks($item, $itemtype='', $items_id=0)
    }
    if ($itemtype == 'Computer') {
       // Possibility to remote agent
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-      $PluginFusioninventoryAgent->forceRemoteAgent();
+      $allowed = PluginFusioninventoryTaskjob::getAllowurlfopen(1);
+      if (!isset($allowed)) {
+         $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+         $PluginFusioninventoryAgent->forceRemoteAgent();
+      }
    }
    $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
    $PluginFusioninventoryTaskjob->manageTasksByObject($itemtype, $items_id);
@@ -783,13 +786,15 @@ function plugin_item_purge_fusioninventory($parm) {
          // If remove connection of a hub port (unknown device), we must delete this port too
          $NetworkPort = new NetworkPort();
          $NetworkPort_Vlan = new NetworkPort_Vlan();
-
          $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+
+         $a_hubs = array();
 
          $NetworkPort->getFromDB($parm->getField('networkports_id_1'));
         if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
             $PluginFusioninventoryUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
             if ($PluginFusioninventoryUnknownDevice->fields['hub'] == '1') {
+               $a_hubs[$NetworkPort->fields['items_id']] = 1;
                $NetworkPort->delete($NetworkPort->fields);
             }
          }
@@ -799,9 +804,18 @@ function plugin_item_purge_fusioninventory($parm) {
             if ($PluginFusioninventoryUnknownDevice->fields['hub'] == '1') {
                $a_vlans = $NetworkPort_Vlan->getVlansForNetworkPort($NetworkPort->fields['id']);
                foreach ($a_vlans as $vlan_id) {
+                  $a_hubs[$NetworkPort->fields['items_id']] = 1;
                   $NetworkPort_Vlan->unassignVlan($NetworkPort->fields['id'], $vlan_id);
                }
                $NetworkPort->delete($NetworkPort->fields);
+            }
+         }
+         // If hub have no port, delete it
+         foreach ($a_hubs as $unkowndevice_id=>$num) {
+            $a_networkports = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
+               AND `items_id`='".$unkowndevice_id."' ");
+            if (count($a_networkports) < 2) {
+               $PluginFusioninventoryUnknownDevice->delete(array('id'=>$unkowndevice_id), 1);
             }
          }
 

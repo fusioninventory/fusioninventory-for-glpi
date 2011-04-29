@@ -425,11 +425,13 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
 
             case 'name' :
                if ($criteria->fields['condition'] == self::PATTERN_IS_EMPTY) {
-                  $sql_where .= " AND (`[typetable]`.`name`=''
+                  $sql_where_temp = " AND (`[typetable]`.`name`=''
                                        OR `[typetable]`.`name` IS NULL) ";
                } else {
-                  $sql_where .= " AND (`[typetable]`.`name`='".$input['name']."') ";
+                  $sql_where_temp = " AND (`[typetable]`.`name`='".$input['name']."') ";
                }
+               $sql_where .= $sql_where_temp;
+               $sql_where_networkequipment .= $sql_where_temp;
                break;
 
             case 'hdserial':
@@ -606,7 +608,7 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                      }
                   } else {
                      // no import
-                     $output['action'] = self::LINK_RESULT_IMPORT;
+                     $output['action'] = self::LINK_RESULT_NO_IMPORT;
                   }
                }
 
