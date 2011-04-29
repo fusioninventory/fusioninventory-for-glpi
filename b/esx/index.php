@@ -40,12 +40,11 @@ include (GLPI_ROOT."/inc/includes.php");
 $response = false;
 
 //Agent communication using REST protocol
-if (isset($_GET['a']) && isset($_GET['d'])) {
-   switch ($_GET['a']) {
+if (isset($_GET['action']) && isset($_GET['machineid'])) {
+   switch ($_GET['action']) {
       case 'getJobs':
          //Specific to ESX
-
-         $response = PluginFusinvinventoryESX::getJobs($_GET['d']);
+         $response = PluginFusinvinventoryESX::getJobs($_GET['machineid']);
          break;
       case 'setLog':
          //Generic method to update logs
@@ -55,7 +54,6 @@ if (isset($_GET['a']) && isset($_GET['d'])) {
    
    if ($response) {
       echo json_encode($response);
-      logDebug($response);
    } else {
       PluginFusioninventoryRestCommunication::sendError();
     }

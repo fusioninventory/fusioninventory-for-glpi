@@ -243,7 +243,7 @@ class PluginFusinvinventoryStaticmisc {
       global $CFG_GLPI;
 
       return array ('periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'ESX', 
-                    'remote' => 'http://172.28.218.102/glpi080/plugins/fusinvinventory/b/esx/');
+                    'remote' => PluginFusioninventoryAgentmodule::getUrlForModule('ESX'));
    }
 }
 

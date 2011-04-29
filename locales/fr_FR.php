@@ -37,7 +37,7 @@ $version="2.4.0-1";
 
 $LANG['plugin_fusinvinventory']['title'][0]="$title";
 $LANG['plugin_fusinvinventory']['title'][1]="Inventaire local";
-$LANG['plugin_fusinvinventory']['title'][2]="Inventaire distant Vmware ESX/ESXi/vCenter";
+$LANG['plugin_fusinvinventory']['title'][2]="Inventaire distant Vmware";
 
 
 $LANG['plugin_fusinvinventory']['setup'][17]="Le plugin ".$title." a besoin que le plugin FusionInventory soit activé pour être lui-même activé.";

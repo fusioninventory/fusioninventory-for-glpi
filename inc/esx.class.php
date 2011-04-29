@@ -149,7 +149,7 @@ class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
       $taskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $credential    = new PluginFusioninventoryCredential();
       $credentialip  = new PluginFusioninventoryCredentialIp();
-      $uuid = '';
+      $uuid          = '';
       
       //Get the agent ID by his deviceid
       if ($agents = PluginFusioninventoryAgent::getByDeviceID($device_id)) {
@@ -162,10 +162,10 @@ class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
                if ($task['state'] == PluginFusioninventoryTaskjobstatus::PREPARED) {
                   $credentialip->getFromDB($task['items_id']);
                   $credential->getFromDB($credentialip->fields['plugin_fusioninventory_credentials_id']);
-                  $tmp['uuid']     = $task['id'];
-                  $tmp['host']     = $credentialip->fields['ip'];
-                  $tmp['user']     = $credential->fields['username'];
-                  $tmp['password'] = $credential->fields['password'];
+                  $tmp['uuid']        = $task['id'];
+                  $tmp['host']        = $credentialip->fields['ip'];
+                  $tmp['user']        = $credential->fields['username'];
+                  $tmp['password']    = $credential->fields['password'];
                   $response['jobs'][] = $tmp;
 
                }
