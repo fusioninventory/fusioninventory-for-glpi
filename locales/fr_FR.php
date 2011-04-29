@@ -411,7 +411,7 @@ $LANG['plugin_fusinvsnmp']['report'][1]="Compteurs d'impression";
 
 $LANG['plugin_fusinvsnmp']['codetasklog'][1]="équipements inventoriés";
 $LANG['plugin_fusinvsnmp']['codetasklog'][2]="équipements découverts";
-$LANG['plugin_fusinvsnmp']['codetasklog'][3]="Base de définition des matériels (SNMP) pas à jour sur l'agent, envoi à la prochaine exécution";
+$LANG['plugin_fusinvsnmp']['codetasklog'][3]="La base de définition des matériels SNMP de l'agent n'est plus à jour. Lors de sa prochaine exécution, il récupérera une nouvelle version sur le serveur.";
 $LANG['plugin_fusinvsnmp']['codetasklog'][4]=$LANG['log'][20];
 $LANG['plugin_fusinvsnmp']['codetasklog'][5]=$LANG['log'][21];
 $LANG['plugin_fusinvsnmp']['codetasklog'][6]="L'inventaire a démarré";
