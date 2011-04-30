@@ -87,8 +87,8 @@ $LANG['plugin_fusinvsnmp']['snmpauth'][1]="SNMP Community";
 $LANG['plugin_fusinvsnmp']['snmpauth'][2]="Benutzer";
 $LANG['plugin_fusinvsnmp']['snmpauth'][4]="Verschlüsseungs für die Authentifizierung ";
 $LANG['plugin_fusinvsnmp']['snmpauth'][5]="Passwort";
-$LANG['plugin_fusinvsnmp']['snmpauth'][6]="Verschlüsselungmethode für Daten (schreiben)";
-$LANG['plugin_fusinvsnmp']['snmpauth'][7]="Passwort (schreiben)";
+$LANG['plugin_fusinvsnmp']['snmpauth'][6]="Verschlüsselungmethode für Daten";
+$LANG['plugin_fusinvsnmp']['snmpauth'][7]="Passwort";
 
 $LANG['plugin_fusinvsnmp']['errors'][50]="Version von GLPI ist nicht kompatibel, benötige Version 0.78";
 
@@ -406,7 +406,7 @@ $LANG['plugin_fusinvsnmp']['report'][1]="Seitenzähler";
 
 $LANG['plugin_fusinvsnmp']['codetasklog'][1]="inventarisierte / abgefragte Geräte";
 $LANG['plugin_fusinvsnmp']['codetasklog'][2]="entdeckte Gerät";
-$LANG['plugin_fusinvsnmp']['codetasklog'][3]="Dico too old on agent, request posted by agent";
+$LANG['plugin_fusinvsnmp']['codetasklog'][3]="SNMP equipment definition isn't up to date on agent. For the next run, it will get new version from server.";
 $LANG['plugin_fusinvsnmp']['codetasklog'][4]=$LANG['log'][20];
 $LANG['plugin_fusinvsnmp']['codetasklog'][5]=$LANG['log'][21];
 $LANG['plugin_fusinvsnmp']['codetasklog'][6]="Inventory started";

@@ -87,8 +87,8 @@ $LANG['plugin_fusinvsnmp']['snmpauth'][1]="Community";
 $LANG['plugin_fusinvsnmp']['snmpauth'][2]="User";
 $LANG['plugin_fusinvsnmp']['snmpauth'][4]="Encryption protocol for authentication ";
 $LANG['plugin_fusinvsnmp']['snmpauth'][5]="Password";
-$LANG['plugin_fusinvsnmp']['snmpauth'][6]="Encryption protocol for data (write)";
-$LANG['plugin_fusinvsnmp']['snmpauth'][7]="Password (write)";
+$LANG['plugin_fusinvsnmp']['snmpauth'][6]="Encryption protocol for data";
+$LANG['plugin_fusinvsnmp']['snmpauth'][7]="Password";
 
 $LANG['plugin_fusinvsnmp']['errors'][50]="GLPI version not compatible, require 0.78";
 
@@ -406,7 +406,7 @@ $LANG['plugin_fusinvsnmp']['report'][1]="Printed page counter";
 
 $LANG['plugin_fusinvsnmp']['codetasklog'][1]="devices queried";
 $LANG['plugin_fusinvsnmp']['codetasklog'][2]="devices found";
-$LANG['plugin_fusinvsnmp']['codetasklog'][3]="Dico too old on agent, request posted by agent";
+$LANG['plugin_fusinvsnmp']['codetasklog'][3]="SNMP equipment definition isn't up to date on agent. For the next run, it will get new version from server.";
 $LANG['plugin_fusinvsnmp']['codetasklog'][4]=$LANG['log'][20];
 $LANG['plugin_fusinvsnmp']['codetasklog'][5]=$LANG['log'][21];
 $LANG['plugin_fusinvsnmp']['codetasklog'][6]="Inventory started";

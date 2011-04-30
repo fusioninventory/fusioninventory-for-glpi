@@ -58,24 +58,28 @@ if (isset ($_POST["add"])) {
       $PluginFusioninventoryTask = new PluginFusioninventoryTask();
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $PluginFusioninventoryTask->getFromDB($_POST['task_id']);
+      $input_task = array();
+      $input_task['id'] = $PluginFusioninventoryTask->fields['id'];
       $PluginFusioninventoryTaskjob->getFromDB($_POST['taskjob_id']);
-      $PluginFusioninventoryTask->fields["is_active"] = $_POST['is_active'];
-      $PluginFusioninventoryTask->fields["periodicity_count"] = $_POST['periodicity_count'];
-      $PluginFusioninventoryTask->fields["periodicity_type"] = $_POST['periodicity_type'];
+      $input_taskjob = array();
+      $input_taskjob['id'] = $PluginFusioninventoryTaskjob->fields['id'];
+      $input_task["is_active"] = $_POST['is_active'];
+      $input_task["periodicity_count"] = $_POST['periodicity_count'];
+      $input_task["periodicity_type"] = $_POST['periodicity_type'];
       if (!empty($_POST['action'])) {
          $a_actionDB = array();
          $a_actionDB[]['PluginFusioninventoryAgent'] = $_POST['action'];
-         $PluginFusioninventoryTaskjob->fields["action"] = exportArrayToDB($a_actionDB);
+         $input_taskjob["action"] = exportArrayToDB($a_actionDB);
       } else {
-         $PluginFusioninventoryTaskjob->fields["action"] = '';
+         $input_taskjob["action"] = '';
       }
       $a_definition = array();
       $a_definition[]['PluginFusinvsnmpIPRange'] = $_POST['iprange'];
-      $PluginFusioninventoryTaskjob->fields['definition'] = exportArrayToDB($a_definition);
-      $PluginFusioninventoryTask->fields["communication"] = $_POST['communication'];
+      $input_taskjob['definition'] = exportArrayToDB($a_definition);
+      $input_task["communication"] = $_POST['communication'];
 
-      $PluginFusioninventoryTask->update($PluginFusioninventoryTask->fields);
-      $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
+      $PluginFusioninventoryTask->update($input_task);
+      $PluginFusioninventoryTaskjob->update($input_taskjob);
    } else {
       PluginFusioninventoryProfile::checkRight("fusinvsnmp", "iprange","w");
       if ($PluginFusinvsnmpIPRange->checkip($_POST)) {

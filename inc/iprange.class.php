@@ -375,6 +375,15 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 
       $PluginFusioninventoryTaskjoblog->showHistory($PluginFusioninventoryTaskjob->fields['id']);
    }
+
+
+   function getIp2long($ip) {
+      $int = ip2long($ip);
+      if ($int < 0) {
+         $int = sprintf("%u\n", ip2long($ip));
+      }
+      return $int;
+   }
 }
 
 ?>

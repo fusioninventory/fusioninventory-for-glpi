@@ -108,7 +108,8 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                           ON `plugin_fusinvsnmp_models_id`=`glpi_plugin_fusinvsnmp_models`.`id`
                      WHERE `glpi_networkequipments`.`is_deleted`='0'
                           AND `plugin_fusinvsnmp_models_id`!='0'
-                          AND `plugin_fusinvsnmp_configsecurities_id`!='0'";
+                          AND `plugin_fusinvsnmp_configsecurities_id`!='0'
+                          AND `glpi_plugin_fusinvsnmp_models`.`itemtype`='NetworkEquipment'";
          if ($PluginFusinvsnmpIPRange->fields['entities_id'] != '-1') {
            $query .= "AND `glpi_networkequipments`.`entities_id`='".$PluginFusinvsnmpIPRange->fields['entities_id']."' ";
          }
@@ -136,7 +137,8 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                        ON `plugin_fusinvsnmp_configsecurities_id`=`glpi_plugin_fusinvsnmp_configsecurities`.`id`
                   WHERE `glpi_printers`.`is_deleted`=0
                         AND `plugin_fusinvsnmp_models_id`!='0'
-                        AND `plugin_fusinvsnmp_configsecurities_id`!='0'";
+                        AND `plugin_fusinvsnmp_configsecurities_id`!='0'
+                        AND `glpi_plugin_fusinvsnmp_models`.`itemtype`='Printer'";
          if ($PluginFusinvsnmpIPRange->fields['entities_id'] != '-1') {
             $query .= "AND `glpi_printers`.`entities_id`='".$PluginFusinvsnmpIPRange->fields['entities_id']."' ";
          }
@@ -198,7 +200,10 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
          $a_input['items_id'] = 0;
          $a_input['uniqid'] = $uniqid;
          foreach($a_agentsubnet as $subnet=>$a_agentList) {
-            if (!isset($a_agentList) or empty($a_agentList)) {
+            if (!isset($a_agentList)
+                    OR (isset($a_agentList) AND is_array($a_agentList) AND count($a_agentList) == '0')
+                    OR (isset($a_agentList) AND !is_array($a_agentList) AND $a_agentList == '')) {
+
                // No agent available for this subnet
                for ($i=0; $i < 2; $i++) {
                   $itemtype = 'Printer';
@@ -248,7 +253,8 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                         $a_input['itemtype'] = $itemtype;
                         $a_input['items_id'] = $items_id;
                         if ($nbagent == $nb_devicebyagent) {
-                           $agent_id = current(array_pop($a_agentList));
+                           $agent_id = array_pop($a_agentList);
+                           $nbagent = 0;
                         }
                         $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
                         $nbagent++;
@@ -279,13 +285,18 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                if ((!in_array('.1', $a_action))
                   AND (!in_array('.2', $a_action))) {
 
-                  $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, ip, subnet, token FROM `glpi_plugin_fusioninventory_agents`
-                     LEFT JOIN `glpi_networkports` ON `glpi_networkports`.`items_id` = `glpi_plugin_fusioninventory_agents`.`items_id`
-                     LEFT JOIN `glpi_computers` ON `glpi_computers`.`id` = `glpi_plugin_fusioninventory_agents`.`items_id`
-                     WHERE `glpi_networkports`.`itemtype`='Computer'
-                        AND `glpi_plugin_fusioninventory_agents`.`id`='".current($a_action)."'
-                        AND `glpi_networkports`.`ip`!='127.0.0.1'
-                        AND `glpi_networkports`.`ip`!='' ";
+                  if ($communication == 'push') {
+                     $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, ip, subnet, token FROM `glpi_plugin_fusioninventory_agents`
+                        LEFT JOIN `glpi_networkports` ON `glpi_networkports`.`items_id` = `glpi_plugin_fusioninventory_agents`.`items_id`
+                        LEFT JOIN `glpi_computers` ON `glpi_computers`.`id` = `glpi_plugin_fusioninventory_agents`.`items_id`
+                        WHERE `glpi_networkports`.`itemtype`='Computer'
+                           AND `glpi_plugin_fusioninventory_agents`.`id`='".current($a_action)."'
+                           AND `glpi_networkports`.`ip`!='127.0.0.1'
+                           AND `glpi_networkports`.`ip`!='' ";
+                  } else if ($communication == 'pull') {
+                     $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, token FROM `glpi_plugin_fusioninventory_agents`
+                        WHERE `glpi_plugin_fusioninventory_agents`.`id`='".current($a_action)."'";
+                  }
                   if ($result = $DB->query($query)) {
                      while ($data=$DB->fetch_array($result)) {
                         if ($communication == 'push') {
@@ -327,8 +338,10 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                                                                     '',
                                                                     1,
                                                                     "Unable to find agent to run this job");
-            $PluginFusioninventoryTaskjob->fields['status'] = 1;
-            $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
+            $input_taskjob = array();
+            $input_taskjob['id'] = $PluginFusioninventoryTaskjob->fields['id'];
+            $input_taskjob['status'] = 1;
+            $PluginFusioninventoryTaskjob->update($input_taskjob);
          } elseif ($count_device == '0') {
             $a_input = array();
             $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
@@ -348,8 +361,10 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                                                                     '',
                                                                     1,
                                                                     "No devices to inventory");
-            $PluginFusioninventoryTaskjob->fields['status'] = 1;
-            $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
+            $input_taskjob = array();
+            $input_taskjob['id'] = $PluginFusioninventoryTaskjob->fields['id'];
+            $input_taskjob['status'] = 1;
+            $PluginFusioninventoryTaskjob->update($input_taskjob);
          } else {
             foreach ($a_agentList as $agent_id) {
                //Add jobstatus and put status (waiting on server = 0)
@@ -400,9 +415,10 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                   }
                }
             }
-            $PluginFusioninventoryTaskjob->fields['status'] = 1;
-            $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
-
+            $input_taskjob = array();
+            $input_taskjob['id'] = $PluginFusioninventoryTaskjob->fields['id'];
+            $input_taskjob['status'] = 1;
+            $PluginFusioninventoryTaskjob->update($input_taskjob);
          }
       }
    }
@@ -520,7 +536,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
 
 
    
-   function getAgentsSubnet($nb_computers, $communication, $subnet='') {
+   function getAgentsSubnet($nb_computers, $communication, $subnet='', $ipstart='', $ipend='') {
       global $DB;
 
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
@@ -535,6 +551,9 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
 
       if ($subnet != '') {
          $subnet = " AND `ip` LIKE '".$subnet."%' ";
+      } else if ($ipstart != '' AND $ipend != '') {
+         $subnet = " AND ( INET_ATON(`ip`) > INET_ATON('".$ipstart."')
+            AND  INET_ATON(`ip`) < INET_ATON('".$ipend."') ) ";
       }
       $a_agents = $PluginFusioninventoryAgentmodule->getAgentsCanDo('SNMPQUERY');
       $a_agentsid = array();

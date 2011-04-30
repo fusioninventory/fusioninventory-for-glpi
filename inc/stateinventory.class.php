@@ -153,20 +153,27 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
 
          }
          echo "</td>";
-         
+
          echo "<td>".convDateTime($start_date)."</td>";
          echo "<td>".convDateTime($end_date)."</td>";
-         $date1 = new DateTime($start_date);
-         $date2 = new DateTime($end_date);
 
-         if (phpversion() >= 5.3) {
-            $interval = $date1->diff($date2);
-            echo "<td>".$interval->h."h ".$interval->i."min ".$interval->s."s</td>";
-         } else {
-            $interval = $this->date_diff($start_date, $end_date);
-            echo "<td>".$interval."s</td>";
+         if ($end_date == '') {
+            $end_date = date("U");
          }
-         echo "<td>".round($nb_query / (strtotime($end_date) - strtotime($start_date)), 2)."</td>";
+         if ($start_date == '') {
+            echo "<td>-</td>";
+            echo "<td>-</td>";
+         } else {
+            if (phpversion() >= 5.3) {
+               $date1 = new DateTime($start_date);
+               $date2 = new DateTime($end_date);
+               $interval = $date1->diff($date2);
+               echo "<td>".$interval->h."h ".$interval->i."min ".$interval->s."s</td>";
+            } else {
+               $interval = $this->date_diff($start_date, $end_date);
+            }
+            echo "<td>".round(($nb_query - $nb_errors) / (strtotime($end_date) - strtotime($start_date)), 2)."</td>";
+         }
          echo "<td>".$nb_threads."</td>";
          echo "<td>".$nb_query."</td>";
          echo "<td>".$nb_errors."</td>";
@@ -179,16 +186,19 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
 
 
    function date_diff($date1, $date2) {
-       $current = $date1;
-       $datetime2 = date_create($date2);
-       $count = 0;
-       while(date_create($current) < $datetime2){
-           $current = gmdate("Y-m-d h:i:s", strtotime("+1 day", strtotime($current)));
-           $count++;
-       }
-       return $count;
-   }
+      $timestamp1 = strtotime($date1);
+      $timestamp2 = strtotime($date2);
+      
+      $interval = array();
+      $timestamp = $timestamp2 - $timestamp1;
+      $nb_min = floor($timestamp / 60);
+      $interval['s'] = $timestamp - ($nb_min * 60);
+      $nb_hour = floor($nb_min / 60);
+      $interval['i'] = $nb_min - ($nb_hour * 60);
 
+      echo "<td>".$nb_hour."h ".$interval['i']."min ".$interval['s']."s</td>";
+
+   }
 }
 
 ?>

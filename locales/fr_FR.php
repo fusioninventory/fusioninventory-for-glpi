@@ -87,8 +87,8 @@ $LANG['plugin_fusinvsnmp']['snmpauth'][1]="Communauté";
 $LANG['plugin_fusinvsnmp']['snmpauth'][2]="Utilisateur";
 $LANG['plugin_fusinvsnmp']['snmpauth'][4]="Protocole de cryptage pour authentification ";
 $LANG['plugin_fusinvsnmp']['snmpauth'][5]="Mot de passe";
-$LANG['plugin_fusinvsnmp']['snmpauth'][6]="Protocole de cryptage pour les données (écriture)";
-$LANG['plugin_fusinvsnmp']['snmpauth'][7]="Mot de passe (écriture)";
+$LANG['plugin_fusinvsnmp']['snmpauth'][6]="Protocole de cryptage pour les données";
+$LANG['plugin_fusinvsnmp']['snmpauth'][7]="Mot de passe";
 
 $LANG['plugin_fusinvsnmp']['errors'][50]="La version de GLPI n'est pas compatible, vous avez besoin de la version 0.78";
 
@@ -406,7 +406,7 @@ $LANG['plugin_fusinvsnmp']['report'][1]="Compteurs d'impression";
 
 $LANG['plugin_fusinvsnmp']['codetasklog'][1]="équipements inventoriés";
 $LANG['plugin_fusinvsnmp']['codetasklog'][2]="équipements découverts";
-$LANG['plugin_fusinvsnmp']['codetasklog'][3]="Dictionnaire trop vieux sur l'agent, demande postée par l'agent";
+$LANG['plugin_fusinvsnmp']['codetasklog'][3]="La base de définition des matériels SNMP de l'agent n'est plus à jour. Lors de sa prochaine exécution, il récupérera une nouvelle version sur le serveur.";
 $LANG['plugin_fusinvsnmp']['codetasklog'][4]=$LANG['log'][20];
 $LANG['plugin_fusinvsnmp']['codetasklog'][5]=$LANG['log'][21];
 $LANG['plugin_fusinvsnmp']['codetasklog'][6]="L'inventaire a démarré";

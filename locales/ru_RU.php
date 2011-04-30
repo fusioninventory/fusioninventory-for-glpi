@@ -33,7 +33,7 @@
  */
 
 $title="FusionInventory SNMP";
-$version="2.3.0-1";
+$version="2.3.1-1";
 
 $LANG['plugin_fusinvsnmp']['title'][0]="$title";
 $LANG['plugin_fusinvsnmp']['title'][1]="SNMP information";
@@ -87,8 +87,8 @@ $LANG['plugin_fusinvsnmp']['snmpauth'][1]="Community";
 $LANG['plugin_fusinvsnmp']['snmpauth'][2]="Пользователь";
 $LANG['plugin_fusinvsnmp']['snmpauth'][4]="Протокол шифрования для аунтификации ";
 $LANG['plugin_fusinvsnmp']['snmpauth'][5]="Пароль";
-$LANG['plugin_fusinvsnmp']['snmpauth'][6]="Протокол шифрования для данных (записи)";
-$LANG['plugin_fusinvsnmp']['snmpauth'][7]="Пароль (Записи)";
+$LANG['plugin_fusinvsnmp']['snmpauth'][6]="Протокол шифрования для данных";
+$LANG['plugin_fusinvsnmp']['snmpauth'][7]="Пароль";
 
 $LANG['plugin_fusinvsnmp']['errors'][50]="Не совместимая версия с GLPI, рекомендуемая 0.78";
 
@@ -406,7 +406,7 @@ $LANG['plugin_fusinvsnmp']['report'][1]="Printed page counter";
 
 $LANG['plugin_fusinvsnmp']['codetasklog'][1]="devices queried";
 $LANG['plugin_fusinvsnmp']['codetasklog'][2]="devices found";
-$LANG['plugin_fusinvsnmp']['codetasklog'][3]="Dico too old on agent, request posted by agent";
+$LANG['plugin_fusinvsnmp']['codetasklog'][3]="SNMP equipment definition isn't up to date on agent. For the next run, it will get new version from server.";
 $LANG['plugin_fusinvsnmp']['codetasklog'][4]=$LANG['log'][20];
 $LANG['plugin_fusinvsnmp']['codetasklog'][5]=$LANG['log'][21];
 $LANG['plugin_fusinvsnmp']['codetasklog'][6]="Inventory started";

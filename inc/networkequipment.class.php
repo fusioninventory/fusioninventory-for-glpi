@@ -51,8 +51,11 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       $this->oFusionInventory_networkequipment->type = 'PluginFusinvsnmpNetworkEquipment';
    }
 
+   function getType() {
+      return "NetworkEquipment";
+   }
 
-   
+  
    /**
     * Load an existing networking switch
     *
@@ -311,7 +314,10 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
     **/
    function addIfaddr($p_oIfaddr, $p_ifaddrIndex='') {
       if (count($this->newIfaddrs)==0) { // the first IP goes in glpi_networkequipments.ip
-         $this->setValue('ip', $p_oIfaddr->getValue('ip'));
+         $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_networkequipments', $p_oIfaddr->getValue('networkequipments_id'));
+         if (!in_array('ip', $a_lockable)) {
+            $this->setValue('ip', $p_oIfaddr->getValue('ip'));
+         }
       }
       $this->newIfaddrs[]=$p_oIfaddr;
       if (is_int($p_ifaddrIndex)) {
@@ -362,24 +368,14 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>";
+      echo "<td align='center' rowspan='3'>";
       echo $LANG['plugin_fusinvsnmp']['snmp'][4]."&nbsp;:";
       echo "</td>";
-      echo "<td>";
+      echo "<td rowspan='3'>";
       echo "<textarea name='sysdescr' cols='45' rows='5'>";
       echo $this->oFusionInventory_networkequipment->fields['sysdescr'];
       echo "</textarea>";
-      echo "</td>";
-      echo "<td align='center'>";
-      echo $LANG['plugin_fusinvsnmp']['snmp'][53]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      echo convDateTime($this->oFusionInventory_networkequipment->fields['last_fusioninventory_update']);
-      echo "</td>";
-      echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center' rowspan='2'>".$LANG['plugin_fusinvsnmp']['model_info'][4]."&nbsp;:</td>";
+      echo "<td align='center' rowspan='2'>".$LANG['plugin_fusinvsnmp']['model_info'][4]."&nbsp;:</td>";
 		echo "<td align='center'>";
 		$query_models = "SELECT *
                        FROM `glpi_plugin_fusinvsnmp_models`
@@ -396,6 +392,30 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
                            'comment'=>0,
                            'used'=>$exclude_models));
       echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>";
+      echo "<input type='submit' name='GetRightModel'
+              value='".$LANG['plugin_fusinvsnmp']['model_info'][13]."' class='submit'/>";
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>".$LANG['plugin_fusinvsnmp']['functionalities'][43]."&nbsp;:</td>";
+		echo "<td align='center'>";
+		PluginFusinvsnmpSNMP::auth_dropdown($this->oFusionInventory_networkequipment->fields['plugin_fusinvsnmp_configsecurities_id']);
+		echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "</td>";
+      echo "<td align='center'>";
+      echo $LANG['plugin_fusinvsnmp']['snmp'][53]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      echo convDateTime($this->oFusionInventory_networkequipment->fields['last_fusioninventory_update']);
+      echo "</td>";
       echo "<td align='center'>";
       echo $LANG['plugin_fusinvsnmp']['snmp'][13]."&nbsp;:";
       echo "</td>";
@@ -406,39 +426,6 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 		echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>";
-      echo "<input type='submit' name='GetRightModel'
-              value='".$LANG['plugin_fusinvsnmp']['model_info'][13]."' class='submit'/>";
-      echo "</td>";
-      echo "<td align='center'>";
-        echo $LANG['plugin_fusinvsnmp']['snmp'][14]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      $query2 = "SELECT *
-                 FROM `glpi_networkequipments`
-                 WHERE `id`='".$id."';";
-      $result2 = $DB->query($query2);
-      $data2 = $DB->fetch_assoc($result2);
-      $ram_pourcentage = 0;
-      if (!empty($data2["ram"]) AND !empty($this->oFusionInventory_networkequipment->fields['memory'])) {
-         $ram_pourcentage = ceil((100 * ($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory'])) / $data2["ram"]);
-      }
-      if ((($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory']) < 0)
-           OR (empty($this->oFusionInventory_networkequipment->fields['memory']))) {
-         echo "<center><strong>".$LANG['plugin_fusinvsnmp']['snmp'][54]."</strong></center>";
-      } else {
-         displayProgressBar(250, $ram_pourcentage,
-                        array('title' => " (".($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory'])." Mo / ".
-                         $data2["ram"]." Mo)"));
-      }
-      echo "</td>";
-      echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_fusinvsnmp']['functionalities'][43]."&nbsp;:</td>";
-		echo "<td align='center'>";
-		PluginFusinvsnmpSNMP::auth_dropdown($this->oFusionInventory_networkequipment->fields['plugin_fusinvsnmp_configsecurities_id']);
-		echo "</td>";
       echo "<td align='center'>";
       echo $LANG['plugin_fusinvsnmp']['snmp'][12]."&nbsp;:";
       echo "</td>";
@@ -473,7 +460,29 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       echo "<b>$minute</b> ".$LANG["job"][22]." ";
       echo " ".$LANG['choice'][3]." <b>$sec</b> ".$LANG["stats"][34]." ";
       echo "</td>";
-		echo "</tr>";
+      echo "<td align='center'>";
+      echo $LANG['plugin_fusinvsnmp']['snmp'][14]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      $query2 = "SELECT *
+                 FROM `glpi_networkequipments`
+                 WHERE `id`='".$id."';";
+      $result2 = $DB->query($query2);
+      $data2 = $DB->fetch_assoc($result2);
+      $ram_pourcentage = 0;
+      if (!empty($data2["ram"]) AND !empty($this->oFusionInventory_networkequipment->fields['memory'])) {
+         $ram_pourcentage = ceil((100 * ($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory'])) / $data2["ram"]);
+      }
+      if ((($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory']) < 0)
+           OR (empty($this->oFusionInventory_networkequipment->fields['memory']))) {
+         echo "<center><strong>".$LANG['plugin_fusinvsnmp']['snmp'][54]."</strong></center>";
+      } else {
+         displayProgressBar(250, $ram_pourcentage,
+                        array('title' => " (".($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory'])." Mo / ".
+                         $data2["ram"]." Mo)"));
+      }
+      echo "</td>";
+      echo "</tr>";
 
 		echo "<tr class='tab_bg_2 center'>";
 		echo "<td colspan='4'>";
@@ -487,7 +496,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 
 
       // ***** IP list ***** //
-      echo "<table class='tab_cadre_fixe'>";
+      echo "<table class='tab_cadre' width='950'>";
 
 		echo "<tr class='tab_bg_1'>";
       echo "<th colspan='8'>";
@@ -540,11 +549,11 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 
 		echo "<script  type='text/javascript'>
 function close_array(id){
-   document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/pics/collapse.gif\''+
+   document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/plugins/fusioninventory/pics/collapse.png\''+
       'onClick=\'Effect.Fade(\"viewfollowup'+id+'\");appear_array('+id+');\' />';
 }
 function appear_array(id){
-	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/pics/expand.gif\''+
+	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/plugins/fusioninventory/pics/expand.png\''+
       'onClick=\'Effect.Appear(\"viewfollowup'+id+'\");close_array('+id+');\' id=\'plusmoinsl'+id+'\' />';
 }
 
@@ -591,23 +600,24 @@ function appear_legend(id){
          <ul>
             <li>".$LANG['plugin_fusinvsnmp']['legend'][0]."&nbsp;:</li>
          </ul>
-         <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/port_trunk.png' width='750' />
+         <img src='".GLPI_ROOT."/plugins/fusinvsnmp/pics/port_trunk.png' width='750' />
          <ul>
             <li>".$LANG['plugin_fusinvsnmp']['legend'][1]."&nbsp;:</li>
          </ul>
-         <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/connected_trunk.png' width='750' />
+         <img src='".GLPI_ROOT."/plugins/fusinvsnmp/pics/connected_trunk.png' width='750' />
          </td>
       </tr>";
 
 
 		echo "<tr class='tab_bg_1'>";
 
-		echo '<th><img alt="'.$LANG['setup'][252].'"
-                     title="'.$LANG['setup'][252].'"
-                     src="'.GLPI_ROOT.'/pics/options_search.png" class="pointer"
-                     onclick="var w = window.open(\''.GLPI_ROOT.
-                        '/front/popup.php?popup=search_config&itemtype=PluginFusinvsnmpNetworkEquipment\' ,\'glpipopup\',
-                        \'height=400, width=1000, top=100, left=100, scrollbars=yes\' ); w.focus();"></th>';
+		echo '<th>';
+//      echo '<img alt="'.$LANG['setup'][252].'"
+//                     title="'.$LANG['setup'][252].'"
+//                     src="'.GLPI_ROOT.'/pics/options_search.png" class="pointer"
+//                     onclick="var w = window.open(\''.GLPI_ROOT.
+//                        '/front/popup.php?popup=search_config&itemtype=PluginFusinvsnmpNetworkEquipment\' ,\'glpipopup\',
+//                        \'height=400, width=1000, top=100, left=100, scrollbars=yes\' ); w.focus();"></th>';
 		echo "<th>".$LANG["common"][16]."</th>";
 
 		$query_array = "SELECT *
@@ -687,18 +697,18 @@ function appear_legend(id){
 				if (($data["trunk"] == "1") AND (strstr($data["ifstatus"], "up")
                   OR strstr($data["ifstatus"], "1"))) {
 					$background_img = " style='background-image: url(\"".GLPI_ROOT.
-                                    "/plugins/fusioninventory/pics/port_trunk.png\"); '";
+                                    "/plugins/fusinvsnmp/pics/port_trunk.png\"); '";
             } else if (($data["trunk"] == "-1") AND (strstr($data["ifstatus"], "up")
                         OR strstr($data["ifstatus"], "1"))) {
 					$background_img = " style='background-image: url(\"".GLPI_ROOT.
-                                    "/plugins/fusioninventory/pics/multiple_mac_addresses.png\"); '";
+                                    "/plugins/fusinvsnmp/pics/multiple_mac_addresses.png\"); '";
             } else if (strstr($data["ifstatus"], "up") OR strstr($data["ifstatus"], "1")) {
 					$background_img = " style='background-image: url(\"".GLPI_ROOT.
-                                    "/plugins/fusioninventory/pics/connected_trunk.png\"); '";
+                                    "/plugins/fusinvsnmp/pics/connected_trunk.png\"); '";
             }
 				echo "<tr class='tab_bg_1 center' height='40'".$background_img.">";
 				echo "<td id='plusmoins".$data["id"]."'><img src='".GLPI_ROOT.
-                     "/pics/expand.gif' onClick='Effect.Appear(\"viewfollowup".$data["id"].
+                     "/plugins/fusioninventory/pics/expand.png' onClick='Effect.Appear(\"viewfollowup".$data["id"].
                      "\");close_array(".$data["id"].");' id='plusmoinsl".$data["id"]."'\'/>";
             echo "</td>";
 				echo "<td><a href='networkport.form.php?id=".$data["id"]."'>".
@@ -797,42 +807,46 @@ function appear_legend(id){
                                          WHERE `id`='".$opposite_port."';";
 
 								$result_device = $DB->query($query_device);
-								$data_device = $DB->fetch_assoc($result_device);
+                        if ($DB->numrows($result_device) > 0) {
+                           $data_device = $DB->fetch_assoc($result_device);
 
-								$item = new $data_device["itemtype"];
-                        $item->getFromDB($data_device["items_id"]);
-								$link1 = $item->getLink(1);
-								$link = str_replace($item->getName(0), $data_device["mac"],
-                                            $item->getLink());
-                        $link2 = str_replace($item->getName(0), $data_device["ip"],
-                                             $item->getLink());
-								if ($data_device["itemtype"] == 'PluginFusioninventoryUnknownDevice') {
-                           if ($item->getField("accepted") == "1") {
-                              echo "<td style='background:#bfec75'
-                                        class='tab_bg_1_2'>".$link1;
+                           $item = new $data_device["itemtype"];
+                           $item->getFromDB($data_device["items_id"]);
+                           $link1 = $item->getLink(1);
+                           $link = str_replace($item->getName(0), $data_device["mac"],
+                                               $item->getLink());
+                           $link2 = str_replace($item->getName(0), $data_device["ip"],
+                                                $item->getLink());
+                           if ($data_device["itemtype"] == 'PluginFusioninventoryUnknownDevice') {
+                              if ($item->getField("accepted") == "1") {
+                                 echo "<td style='background:#bfec75'
+                                           class='tab_bg_1_2'>".$link1;
+                              } else {
+                                 echo "<td background='#cf9b9b'
+                                           class='tab_bg_1_2'>".$link1;
+                              }
+                              if (!empty($link)) {
+                                 echo "<br/>".$link;
+                              }
+                              if (!empty($link2)) {
+                                 echo "<br/>".$link2;
+                              }
+                              if ($item->getField("hub") == "1") {
+                                 $this->displayHubConnections($data_device["items_id"], $background_img);
+                              }
+                              echo "</td>";
                            } else {
-                              echo "<td background='#cf9b9b'
-                                        class='tab_bg_1_2'>".$link1;
+                              echo "<td>".$link1;
+                              if (!empty($link)) {
+                                 echo "<br/>".$link;
+                              }
+                              if (!empty($link2)) {
+                                 echo "<br/>".$link2;
+                              }
+                              echo "</td>";
                            }
-                           if (!empty($link)) {
-                              echo "<br/>".$link;
-                           }
-                           if (!empty($link2)) {
-                              echo "<br/>".$link2;
-                           }
-                           if ($item->getField("hub") == "1") {
-                              $this->displayHubConnections($data_device["items_id"], $background_img);
-                           }
-                           echo "</td>";
                         } else {
-									echo "<td>".$link1;
-                           if (!empty($link)) {
-                              echo "<br/>".$link;
-                           }
-                           if (!empty($link2)) {
-                              echo "<br/>".$link2;
-                           }
-                           echo "</td>";
+                           echo "<td></td>";
                         }
 							} else {
 								echo "<td></td>";
@@ -843,10 +857,10 @@ function appear_legend(id){
 							// ** Connection status
 							echo "<td>";
 							if (strstr($data["ifstatus"], "up") OR strstr($data["ifstatus"], "1")) {
-								echo "<img src='".GLPI_ROOT."/pics/greenbutton.png'/>";
+								echo "<img src='".GLPI_ROOT."/plugins/fusinvsnmp/pics/wired_on.png'/>";
                      } else if (strstr($data["ifstatus"], "down")
                                 OR strstr($data["ifstatus"], "2")) {
-								echo "<img src='".GLPI_ROOT."/pics/redbutton.png'/>";
+								echo "<img src='".GLPI_ROOT."/plugins/fusinvsnmp/pics/wired_off.png'/>";
                      } else if (strstr($data["ifstatus"], "testing")
                                 OR strstr($data["ifstatus"], "3")) {
 								echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/yellowbutton.png'/>";

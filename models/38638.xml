@@ -7,20 +7,10 @@ Technical Support: http://www.cisco.com/techsupport^M
 Copyright (c) 1986-2005 by Cisco Systems, Inc.^M
 Compiled Tue 23-Aug-05 13:41 by dch
 
-Cisco IOS Software, Catalyst 4500 L3 Switch Software (cat4500-ENTSERVICES-M), Version 12.2(52)SG, RELEASE SOFTWARE (fc1)^M
-Technical Support: http://www.cisco.com/techsupport^M
-Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
-Compiled Tue 12-May-09 17:58 by 
-
 Cisco IOS Software, Catalyst 4500 L3 Switch Software (cat4500-ENTSERVICESK9-M), Version 12.2(37)SG1, RELEASE SOFTWARE (fc2)^M
 Technical Support: http://www.cisco.com/techsupport^M
 Copyright (c) 1986-2007 by Cisco Systems, Inc.^M
 Compiled Mon 30-Jul-07 13:47
-
-Cisco IOS Software, Catalyst 4500 L3 Switch Software (cat4500-ENTSERVICESK9-M), Version 12.2(53)SG, RELEASE SOFTWARE (fc3)^M
-Technical Support: http://www.cisco.com/techsupport^M
-Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
-Compiled Thu 16-Jul-09 19:10 b
 
 Cisco IOS Software, Catalyst 4500 L3 Switch Software (cat4500-IPBASEK9-M), Version 12.2(40)SG, RELEASE SOFTWARE (fc2)^M
 Technical Support: http://www.cisco.com/techsupport^M
@@ -46,6 +36,11 @@ Cisco IOS Software, s72033_rp Software (s72033_rp-IPBASEK9-M), Version 12.2(33)S
 Technical Support: http://www.cisco.com/techsupport^M
 Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
 Compiled Tue 27-Oct-09 11:12 by prod_rel_team
+
+Cisco IOS Software, s72033_rp Software (s72033_rp-IPBASEK9-VM), Version 12.2(33)SXI, RELEASE SOFTWARE (fc2)
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2008 by Cisco Systems, Inc.^M
+Compiled Fri 07-Nov-08 10:38 by prod_rel_team
 
 Cisco IOS Software, s72033_rp Software (s72033_rp-IPSERVICESK9_WAN-M), Version 12.2(33)SXI2a, RELEASE SOFTWARE (fc2)^M
 Technical Support: http://www.cisco.com/techsupport^M

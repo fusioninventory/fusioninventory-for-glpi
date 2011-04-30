@@ -380,6 +380,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
       $_SESSION["plugin_fusinvinventory_entity"] = $this->ptd->getValue('entities_id');
 
+      $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_networkequipments', $this->ptd->getValue('id'));
+
       foreach ($p_info->children() as $child) {
          switch ($child->getName()) {
             case 'ID' : // already managed
@@ -393,14 +395,20 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $this->ptd->setValue('cpu', $p_info->CPU[0]);
                break;
             case 'FIRMWARE' :
-               $NetworkEquipmentFirmware = new NetworkEquipmentFirmware();
-               $this->ptd->setValue('networkequipmentfirmwares_id', $NetworkEquipmentFirmware->import(array('name' => (string)$p_info->FIRMWARE)));
+               if (!in_array('networkequipmentfirmwares_id', $a_lockable)) {
+                  $NetworkEquipmentFirmware = new NetworkEquipmentFirmware();
+                  $this->ptd->setValue('networkequipmentfirmwares_id', $NetworkEquipmentFirmware->import(array('name' => (string)$p_info->FIRMWARE)));
+               }
                break;
             case 'MAC' :
-               $this->ptd->setValue('mac', $p_info->MAC[0]);
+               if (!in_array('mac', $a_lockable)) {
+                  $this->ptd->setValue('mac', $p_info->MAC[0]);
+               }
                break;
             case 'MEMORY' :
-               $this->ptd->setValue('memory', $p_info->MEMORY[0]);
+               if (!in_array('memory', $a_lockable)) {
+                  $this->ptd->setValue('memory', $p_info->MEMORY[0]);
+               }
                break;
             case 'MODEL' :
                $NetworkEquipmentModel = new NetworkEquipmentModel();
@@ -408,18 +416,24 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $this->ptd->setValue('networkequipmentmodels_id', $networkequipmentmodels_id);
                break;
             case 'LOCATION' :
-              $Location = new Location();
-              $this->ptd->setValue('locations_id', $Location->import(array('name' => (string)$p_info->LOCATION,
-                                                                           'entities_id' => $this->ptd->getValue('entities_id'))));
+               if (!in_array('locations_id', $a_lockable)) {
+                  $Location = new Location();
+                  $this->ptd->setValue('locations_id', $Location->import(array('name' => (string)$p_info->LOCATION,
+                                                                    'entities_id' => $this->ptd->getValue('entities_id'))));
+               }
                break;
             case 'NAME' :
-               $this->ptd->setValue('name', $p_info->NAME[0]);
+               if (!in_array('name', $a_lockable)) {
+                  $this->ptd->setValue('name', $p_info->NAME[0]);
+               }
                break;
             case 'RAM' :
                $this->ptd->setValue('ram', $p_info->RAM[0]);
                break;
             case 'SERIAL' :
-               $this->ptd->setValue('serial', $p_info->SERIAL[0]);
+               if (!in_array('serial', $a_lockable)) {
+                  $this->ptd->setValue('serial', $p_info->SERIAL[0]);
+               }
                break;
             case 'UPTIME' :
                $this->ptd->setValue('uptime', $p_info->UPTIME[0]);
@@ -455,6 +469,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
       $_SESSION["plugin_fusinvinventory_entity"] = $this->ptd->getValue('entities_id');
 
+      $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_printers', $this->ptd->getValue('id'));
+
       foreach ($p_info->children() as $child) {
          switch ($child->getName()) {
             case 'ID' : // already managed
@@ -468,30 +484,51 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $this->ptd->setValue('memory_size', (string)$p_info->MEMORY);
                break;
             case 'MODEL' :
-               $PrinterModel = new PrinterModel();
-               $printermodels_id = $PrinterModel->import(array('name'=>(string)$p_info->MODEL));
-               $this->ptd->setValue('printermodels_id', $printermodels_id);
+               if (!in_array('printermodels_id', $a_lockable)) {
+                  $PrinterModel = new PrinterModel();
+                  $printermodels_id = $PrinterModel->import(array('name'=>(string)$p_info->MODEL));
+                  $this->ptd->setValue('printermodels_id', $printermodels_id);
+               }
                break;
             case 'NAME' :
-               $this->ptd->setValue('name', (string)$p_info->NAME);
+               if (!in_array('name', $a_lockable)) {
+                  $this->ptd->setValue('name', (string)$p_info->NAME);
+               }
                break;
             case 'SERIAL' :
-               $this->ptd->setValue('serial', (string)$p_info->SERIAL);
+               if (!in_array('serial', $a_lockable)) {
+                  $this->ptd->setValue('serial', (string)$p_info->SERIAL);
+               }
                break;
             case 'OTHERSERIAL' :
-               $this->ptd->setValue('otherserial', (string)$p_info->OTHERSERIAL);
+               if (!in_array('otherserial', $a_lockable)) {
+                  $otherserial = (string)$p_info->OTHERSERIAL;
+                  if (strstr($otherserial, "chr(hex")) {
+                     $otherserial = str_replace("chr(hex(", "", $otherserial);
+                     $otherserial = str_replace("))", "", $otherserial);
+                     $otherserial = substr($otherserial, 4);
+                     $otherserial = $this->hexToStr($otherserial);
+                  }                  
+                  $this->ptd->setValue('otherserial', $otherserial);
+               }
                break;
             case 'LOCATION' :
-               $Location = new Location();
-               $this->ptd->setValue('locations_id', $Location->import(array('name' => (string)$p_info->LOCATION,
+               if (!in_array('locations_id', $a_lockable)) {
+                  $Location = new Location();
+                  $this->ptd->setValue('locations_id', $Location->import(array('name' => (string)$p_info->LOCATION,
                                                                            'entities_id' => $this->ptd->getValue('entities_id'))));
+               }
                break;
             case 'CONTACT' :
-               $this->ptd->setValue('contact', (string)$p_info->CONTACT);
+               if (!in_array('contact', $a_lockable)) {
+                  $this->ptd->setValue('contact', (string)$p_info->CONTACT);
+               }
                break;
             case 'MANUFACTURER' :
-               $Manufacturer = new Manufacturer();
-               $this->ptd->setValue('manufacturers_id', $Manufacturer->import(array('name' => (string)$p_info->MANUFACTURER)));
+               if (!in_array('manufacturers_id', $a_lockable)) {
+                  $Manufacturer = new Manufacturer();
+                  $this->ptd->setValue('manufacturers_id', $Manufacturer->import(array('name' => (string)$p_info->MANUFACTURER)));
+               }
                break;
             default :
                $errors.=$LANG['plugin_fusioninventory']['errors'][22].' INFO : '.$child->getName()."\n";
@@ -686,11 +723,11 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                default :
                   $errors.=$LANG['plugin_fusioninventory']['errors'][22].' PORT : '.$name."\n";
             }
-            if ($trunk == "0") {
-               if ($ptp->getValue('trunk') == '1') {
-                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), '0', 'trunk');
-                  $ptp->setValue('trunk', 0);
-               }
+         }
+         if ($trunk == "0") {
+            if ($ptp->getValue('trunk') == '1') {
+               PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), '0', 'trunk');
+               $ptp->setValue('trunk', 0);
             }
          }
          $this->ptd->addPort($ptp, $portIndex);
@@ -868,13 +905,24 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          }
       }
       $count = 0;
+      $a_macsFound = array();
       foreach ($p_connections->children() as $child) {
          switch ($child->getName()) {
             case 'CDP' : // already managed
                break;
             case 'CONNECTION' :
-               $count++;
-               $errors.=$this->importConnection($child, $p_oPort, $cdp);
+               $continue = 1;
+               if (isset($child->MAC)) {
+                  if (isset($a_macsFound[(string)$child->MAC])) {
+                     $continue = 0;
+                  } else {
+                     $a_macsFound[(string)$child->MAC] = 1;
+                  }
+               }
+               if ($continue == '1') {
+                  $count++;
+                  $errors.=$this->importConnection($child, $p_oPort, $cdp);
+               }
                break;
             default :
                $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CONNECTIONS : '
@@ -1033,6 +1081,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CONNECTION (CDP='.$p_cdp.') : '
                            .$child->getName()."\n";
             }
+
          }
       }
       if ($portID != '') {
@@ -1167,8 +1216,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             }
          } else if ($p_CONTENT->INFO->TYPE=='PRINTER') {
             $input['itemtype'] = "Printer";
-            if (isset($p_CONTENT->CONTENT->PORTS)) {
-               foreach($p_CONTENT->CONTENT->PORTS as $port) {
+            if (isset($p_CONTENT->PORTS)) {
+               foreach($p_CONTENT->PORTS->children() as $port) {
                   if ((isset($port->MAC)) AND (!empty($port->MAC))) {
                      $input['mac'][] = (string)$port->MAC;
                   }
@@ -1184,17 +1233,26 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          if ((isset($p_CONTENT->INFO->NAME)) AND (!empty($p_CONTENT->INFO->NAME))) {
             $input['name'] = (string)$p_CONTENT->INFO->NAME;
          }
+
       $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize($input);
       $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusinvsnmpCommunicationSNMPQuery";
       $rule = new PluginFusioninventoryRuleImportEquipmentCollection();
       $data = array();
       $data = $rule->processAllRules($input, array());
-      if ((isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1'))
-            OR (isset($data['action']) AND ($data['action'] == '2'))) {
+      if (isset($data['action'])
+              AND ($data['action'] == PluginFusioninventoryRuleImportEquipment::LINK_RESULT_NO_IMPORT)) {
+
+         $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==fusioninventory::3== '.implode(",", $input);
+         $this->addtaskjoblog();
+      }
+      if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
          if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
             logInFile("pluginFusioninventory-rules", "norulematch = 1");
          }
-         if (isset($input['itemtype'])) {
+         if (isset($input['itemtype'])
+              AND isset($data['action'])
+              AND ($data['action'] == PluginFusioninventoryRuleImportEquipment::LINK_RESULT_IMPORT)) {
+
             $this->rulepassed(0, $input['itemtype']);
          } else {
             $this->rulepassed(0, "PluginFusioninventoryUnknownDevice");
@@ -1220,23 +1278,25 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       }
       if ($itemtype == "PluginFusioninventoryUnknownDevice") {
          $class->getFromDB($items_id);
+         $input = array();
+         $input['id'] = $class->fields['id'];
          if ((isset($xml->INFO->NAME)) AND (!empty($xml->INFO->NAME))) {
-            $class->fields['name'] = (string)$xml->INFO->NAME;
+            $input['name'] = (string)$xml->INFO->NAME;
          }
          if ((isset($xml->INFO->SERIAL)) AND (!empty($xml->INFO->SERIAL))) {
-            $class->fields['serial'] = (string)$xml->INFO->SERIAL;
+            $input['serial'] = (string)$xml->INFO->SERIAL;
          }
          if ((isset($xml->INFO->OTHERSERIAL)) AND (!empty($xml->INFO->OTHERSERIAL))) {
-            $class->fields['otherserial'] = (string)$xml->INFO->OTHERSERIAL;
+            $input['otherserial'] = (string)$xml->INFO->OTHERSERIAL;
          }
          if ($xml->INFO->TYPE=='NETWORKING') {
-            $class->fields['itemtype'] = "NetworkEquipment";
+            $input['itemtype'] = "NetworkEquipment";
          } else if ($xml->INFO->TYPE=='PRINTER') {
-            $class->fields['itemtype'] = "Printer";
+            $input['itemtype'] = "Printer";
          }
          // TODO : add import ports 
-
-         $class->update($class->fields);
+         PluginFusioninventoryUnknownDevice::writeXML($items_id, $_SESSION['SOURCE_XMLDEVICE']);
+         $class->update($input);
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
             '[detail] ==fusinvsnmp::5== Update '.PluginFusioninventoryUnknownDevice::getTypeName().' [[PluginFusioninventoryUnknownDevice::'.$items_id.']]';
          $this->addtaskjoblog();
@@ -1261,6 +1321,18 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                      $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'],
                      $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment']);
    }
+
+
+
+   function hexToStr($hex) {
+       $string='';
+       for ($i=0; $i < strlen($hex)-1; $i+=2) {
+           $string .= chr(hexdec($hex[$i].$hex[$i+1]));
+       }
+       return $string;
+   }
+
+
 
 }
 
