@@ -806,10 +806,10 @@ function plugin_item_purge_fusioninventory($parm) {
             $PluginFusioninventoryUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
             if ($PluginFusioninventoryUnknownDevice->fields['hub'] == '1') {
                $a_vlans = $NetworkPort_Vlan->getVlansForNetworkPort($NetworkPort->fields['id']);
-               foreach ($a_vlans as $vlan_id) {
-                  $a_hubs[$NetworkPort->fields['items_id']] = 1;
+               foreach ($a_vlans as $vlan_id) {                  
                   $NetworkPort_Vlan->unassignVlan($NetworkPort->fields['id'], $vlan_id);
                }
+               $a_hubs[$NetworkPort->fields['items_id']] = 1;
                $NetworkPort->delete($NetworkPort->fields);
             }
          }
