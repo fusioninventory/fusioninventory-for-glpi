@@ -361,8 +361,8 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       $com = array();
-      $com['push'] = "push";
-      $com['pull'] = "pull";
+      $com['push'] = $LANG['plugin_fusioninventory']['task'][41];
+      $com['pull'] = $LANG['plugin_fusioninventory']['task'][42];
       Dropdown::showFromArray("communication", $com, array('value'=>$PluginFusioninventoryTask->fields["communication"]));
       echo "</td>";
       echo "</tr>";
