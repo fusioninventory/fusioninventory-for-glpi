@@ -179,4 +179,8 @@ $LANG['plugin_fusioninventory']['xml'][0]="XML";
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Bad token, impossible to start agent";
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Agent stopped/crashed";
 $LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['ocsconfig'][11];
+
+$LANG['plugin_fusioninventory']['locks'][0]="Delete locks";
+$LANG['plugin_fusioninventory']['locks'][1]="Add locks";
+
 ?>
