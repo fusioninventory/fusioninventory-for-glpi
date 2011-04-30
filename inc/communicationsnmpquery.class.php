@@ -502,7 +502,14 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                break;
             case 'OTHERSERIAL' :
                if (!in_array('otherserial', $a_lockable)) {
-                  $this->ptd->setValue('otherserial', (string)$p_info->OTHERSERIAL);
+                  $otherserial = (string)$p_info->OTHERSERIAL;
+                  if (strstr($otherserial, "chr(hex")) {
+                     $otherserial = str_replace("chr(hex(", "", $otherserial);
+                     $otherserial = str_replace("))", "", $otherserial);
+                     $otherserial = substr($otherserial, 4);
+                     $otherserial = $this->hexToStr($otherserial);
+                  }                  
+                  $this->ptd->setValue('otherserial', $otherserial);
                }
                break;
             case 'LOCATION' :
@@ -1140,8 +1147,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             }
          } else if ($p_CONTENT->INFO->TYPE=='PRINTER') {
             $input['itemtype'] = "Printer";
-            if (isset($p_CONTENT->CONTENT->PORTS)) {
-               foreach($p_CONTENT->CONTENT->PORTS as $port) {
+            if (isset($p_CONTENT->PORTS)) {
+               foreach($p_CONTENT->PORTS->children() as $port) {
                   if ((isset($port->MAC)) AND (!empty($port->MAC))) {
                      $input['mac'][] = (string)$port->MAC;
                   }
@@ -1157,6 +1164,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          if ((isset($p_CONTENT->INFO->NAME)) AND (!empty($p_CONTENT->INFO->NAME))) {
             $input['name'] = (string)$p_CONTENT->INFO->NAME;
          }
+
       $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize($input);
       $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusinvsnmpCommunicationSNMPQuery";
       $rule = new PluginFusioninventoryRuleImportEquipmentCollection();
@@ -1201,23 +1209,25 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       }
       if ($itemtype == "PluginFusioninventoryUnknownDevice") {
          $class->getFromDB($items_id);
+         $input = array();
+         $input['id'] = $class->fields['id'];
          if ((isset($xml->INFO->NAME)) AND (!empty($xml->INFO->NAME))) {
-            $class->fields['name'] = (string)$xml->INFO->NAME;
+            $input['name'] = (string)$xml->INFO->NAME;
          }
          if ((isset($xml->INFO->SERIAL)) AND (!empty($xml->INFO->SERIAL))) {
-            $class->fields['serial'] = (string)$xml->INFO->SERIAL;
+            $input['serial'] = (string)$xml->INFO->SERIAL;
          }
          if ((isset($xml->INFO->OTHERSERIAL)) AND (!empty($xml->INFO->OTHERSERIAL))) {
-            $class->fields['otherserial'] = (string)$xml->INFO->OTHERSERIAL;
+            $input['otherserial'] = (string)$xml->INFO->OTHERSERIAL;
          }
          if ($xml->INFO->TYPE=='NETWORKING') {
-            $class->fields['itemtype'] = "NetworkEquipment";
+            $input['itemtype'] = "NetworkEquipment";
          } else if ($xml->INFO->TYPE=='PRINTER') {
-            $class->fields['itemtype'] = "Printer";
+            $input['itemtype'] = "Printer";
          }
          // TODO : add import ports 
-
-         $class->update($class->fields);
+         PluginFusioninventoryUnknownDevice::writeXML($items_id, $_SESSION['SOURCE_XMLDEVICE']);
+         $class->update($input);
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
             '[detail] ==fusinvsnmp::5== Update '.PluginFusioninventoryUnknownDevice::getTypeName().' [[PluginFusioninventoryUnknownDevice::'.$items_id.']]';
          $this->addtaskjoblog();
@@ -1242,6 +1252,18 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                      $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'],
                      $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment']);
    }
+
+
+
+   function hexToStr($hex) {
+       $string='';
+       for ($i=0; $i < strlen($hex)-1; $i+=2) {
+           $string .= chr(hexdec($hex[$i].$hex[$i+1]));
+       }
+       return $string;
+   }
+
+
 
 }
 

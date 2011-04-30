@@ -313,7 +313,10 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
     **/
    function addIfaddr($p_oIfaddr, $p_ifaddrIndex='') {
       if (count($this->newIfaddrs)==0) { // the first IP goes in glpi_networkequipments.ip
-         $this->setValue('ip', $p_oIfaddr->getValue('ip'));
+         $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_networkequipments', $p_oIfaddr->getValue('networkequipments_id'));
+         if (!in_array('ip', $a_lockable)) {
+            $this->setValue('ip', $p_oIfaddr->getValue('ip'));
+         }
       }
       $this->newIfaddrs[]=$p_oIfaddr;
       if (is_int($p_ifaddrIndex)) {

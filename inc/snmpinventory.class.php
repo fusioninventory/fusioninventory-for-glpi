@@ -200,7 +200,10 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
          $a_input['items_id'] = 0;
          $a_input['uniqid'] = $uniqid;
          foreach($a_agentsubnet as $subnet=>$a_agentList) {
-            if (!isset($a_agentList) or empty($a_agentList)) {
+            if (!isset($a_agentList)
+                    OR (isset($a_agentList) AND is_array($a_agentList) AND count($a_agentList) == '0')
+                    OR (isset($a_agentList) AND !is_array($a_agentList) AND $a_agentList == '')) {
+
                // No agent available for this subnet
                for ($i=0; $i < 2; $i++) {
                   $itemtype = 'Printer';
@@ -250,7 +253,8 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                         $a_input['itemtype'] = $itemtype;
                         $a_input['items_id'] = $items_id;
                         if ($nbagent == $nb_devicebyagent) {
-                           $agent_id = current(array_pop($a_agentList));
+                           $agent_id = array_pop($a_agentList);
+                           $nbagent = 0;
                         }
                         $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
                         $nbagent++;
@@ -334,8 +338,10 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                                                                     '',
                                                                     1,
                                                                     "Unable to find agent to run this job");
-            $PluginFusioninventoryTaskjob->fields['status'] = 1;
-            $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
+            $input_taskjob = array();
+            $input_taskjob['id'] = $PluginFusioninventoryTaskjob->fields['id'];
+            $input_taskjob['status'] = 1;
+            $PluginFusioninventoryTaskjob->update($input_taskjob);
          } elseif ($count_device == '0') {
             $a_input = array();
             $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
@@ -355,8 +361,10 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                                                                     '',
                                                                     1,
                                                                     "No devices to inventory");
-            $PluginFusioninventoryTaskjob->fields['status'] = 1;
-            $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
+            $input_taskjob = array();
+            $input_taskjob['id'] = $PluginFusioninventoryTaskjob->fields['id'];
+            $input_taskjob['status'] = 1;
+            $PluginFusioninventoryTaskjob->update($input_taskjob);
          } else {
             foreach ($a_agentList as $agent_id) {
                //Add jobstatus and put status (waiting on server = 0)
@@ -407,9 +415,10 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                   }
                }
             }
-            $PluginFusioninventoryTaskjob->fields['status'] = 1;
-            $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
-
+            $input_taskjob = array();
+            $input_taskjob['id'] = $PluginFusioninventoryTaskjob->fields['id'];
+            $input_taskjob['status'] = 1;
+            $PluginFusioninventoryTaskjob->update($input_taskjob);
          }
       }
    }
@@ -527,7 +536,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
 
 
    
-   function getAgentsSubnet($nb_computers, $communication, $subnet='') {
+   function getAgentsSubnet($nb_computers, $communication, $subnet='', $ipstart='', $ipend='') {
       global $DB;
 
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
@@ -542,6 +551,9 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
 
       if ($subnet != '') {
          $subnet = " AND `ip` LIKE '".$subnet."%' ";
+      } else if ($ipstart != '' AND $ipend != '') {
+         $subnet = " AND ( INET_ATON(`ip`) > INET_ATON('".$ipstart."')
+            AND  INET_ATON(`ip`) < INET_ATON('".$ipend."') ) ";
       }
       $a_agents = $PluginFusioninventoryAgentmodule->getAgentsCanDo('SNMPQUERY');
       $a_agentsid = array();
