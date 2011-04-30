@@ -310,6 +310,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
                               array("0"=>"------",
                                     "1"=>$LANG['plugin_fusinvinventory']['rule'][8]),
                               array('value'=>$PluginFusioninventoryConfig->getValue($plugins_id, 'location')));
+
       echo "</td>";
       echo "<td>" . $LANG['ocsconfig'][16] . " </td>\n<td>";
       Dropdown::show('State',
