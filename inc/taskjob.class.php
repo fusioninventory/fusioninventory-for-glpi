@@ -613,7 +613,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       // Search for task with periodicity and must be ok (so reinit state of job to 0)
       $query = "SELECT *, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp FROM `".$PluginFusioninventoryTask->getTable()."`
          WHERE `is_active`='1'
-            AND `periodicity_count` != '0'";
+            AND `periodicity_count` != '0'
+            AND `periodicity_type` IS NOT NULL
+            AND `periodicity_type` != '0'";
       
       $result = $DB->query($query);
       while ($data=$DB->fetch_array($result)) {

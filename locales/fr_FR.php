@@ -179,4 +179,8 @@ $LANG['plugin_fusioninventory']['xml'][0]="XML";
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Mauvais jeton, impossible d'agir sur l'agent";
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Agent arrêté ou crashé";
 $LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['ocsconfig'][11];
+
+$LANG['plugin_fusioninventory']['locks'][0]="Supprimer les verrous";
+$LANG['plugin_fusioninventory']['locks'][1]="Ajouter les verrous";
+
 ?>
