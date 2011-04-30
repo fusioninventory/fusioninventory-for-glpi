@@ -304,21 +304,6 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_printercartridges` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-
-DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_ipranges`;
-
-CREATE TABLE `glpi_plugin_fusinvsnmp_ipranges` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `name` varchar(255) DEFAULT NULL,
-   `entities_id` int(11) NOT NULL DEFAULT '0',
-   `ip_start` varchar(255) DEFAULT NULL,
-   `ip_end` varchar(255) DEFAULT NULL,
-   PRIMARY KEY (`id`),
-   KEY `entities_id` (`entities_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
-
 DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_configsecurities`;
 
 CREATE TABLE `glpi_plugin_fusinvsnmp_configsecurities` (
