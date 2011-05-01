@@ -100,6 +100,7 @@ $LANG['plugin_fusioninventory']['processes'][1]="PID";
 $LANG['plugin_fusioninventory']['processes'][38]="Номер процесса";
 
 $LANG['plugin_fusioninventory']['menu'][1]="Управление агентами";
+$LANG['plugin_fusioninventory']['menu'][2]="IP range configuration";
 $LANG['plugin_fusioninventory']['menu'][3]="Меню";
 $LANG['plugin_fusioninventory']['menu'][4]="Неизвестное устройство";
 $LANG['plugin_fusioninventory']['menu'][7]="Запущенные работы";
@@ -161,6 +162,10 @@ $LANG['plugin_fusioninventory']['task'][37]="дни";
 $LANG['plugin_fusioninventory']['task'][38]="месяцы";
 $LANG['plugin_fusioninventory']['task'][39]="Не возможно запустить задачу потому что некоторые задачи все еще запущены!";
 $LANG['plugin_fusioninventory']['task'][40]="Принудительный запуск";
+$LANG['plugin_fusioninventory']['task'][41]="Permanent task - Discovery";
+$LANG['plugin_fusioninventory']['task'][42]="Permanent task - Inventory";
+$LANG['plugin_fusioninventory']['task'][43]="Communication type";
+$LANG['plugin_fusioninventory']['task'][44]="Create task easily";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Начато";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";
@@ -177,4 +182,11 @@ $LANG['plugin_fusioninventory']['xml'][0]="XML";
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Плохой маркер. не возможно запустить агент";
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Агент остановлен/сломан";
 $LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['ocsconfig'][11];
+
+$LANG['plugin_fusioninventory']['iprange'][0]="Start of IP range";
+$LANG['plugin_fusioninventory']['iprange'][1]="End of IP range";
+$LANG['plugin_fusioninventory']['iprange'][2]="IP Ranges";
+$LANG['plugin_fusioninventory']['iprange'][3]="Query";
+$LANG['plugin_fusioninventory']['iprange'][7]="Bad IP";
+
 ?>

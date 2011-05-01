@@ -101,10 +101,13 @@ $LANG['plugin_fusioninventory']['choice'][3] = "et";
 $LANG['plugin_fusioninventory']['processes'][1]="PID";
 $LANG['plugin_fusioninventory']['processes'][38]="Numéro de process";
 
-$LANG['plugin_fusioninventory']['menu'][1]="Gestion des agents";
-$LANG['plugin_fusioninventory']['menu'][3]="Menu";
-$LANG['plugin_fusioninventory']['menu'][4]="Matériel inconnu";
-$LANG['plugin_fusioninventory']['menu'][7]="Actions en cours d'exécution";
+$LANG['plugin_fusioninventory']['menu'][1] ="Gestion des agents";
+$LANG['plugin_fusioninventory']['menu'][2] = "Plages IP";
+$LANG['plugin_fusioninventory']['menu'][3] ="Menu";
+$LANG['plugin_fusioninventory']['menu'][4] ="Matériel inconnu";
+$LANG['plugin_fusioninventory']['menu'][5] = "Comptes";
+$LANG['plugin_fusioninventory']['menu'][6] = "Matériels distants à inventorier";
+$LANG['plugin_fusioninventory']['menu'][7] ="Actions en cours d'exécution";
 
 $LANG['plugin_fusioninventory']['discovery'][5]="Nombre de matériels importés";
 $LANG['plugin_fusioninventory']['discovery'][9]="Nombre de matériels non importés car type non défini";
@@ -130,6 +133,7 @@ $LANG['plugin_fusioninventory']['agents'][37]="Verrouillé";
 $LANG['plugin_fusioninventory']['agents'][38]="Disponible";
 $LANG['plugin_fusioninventory']['agents'][39]="En cours d'éxécution";
 $LANG['plugin_fusioninventory']['agents'][40]="Ordinateur sans IP connue";
+$LANG['plugin_fusioninventory']['agents'][41] = "URL d'accès au service";
 
 $LANG['plugin_fusioninventory']['unknown'][2]="Matériel approuvé";
 $LANG['plugin_fusioninventory']['unknown'][4]="Hub réseau";
@@ -179,5 +183,15 @@ $LANG['plugin_fusioninventory']['xml'][0]="XML";
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Mauvais jeton, impossible d'agir sur l'agent";
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Agent arrêté ou crashé";
 $LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['ocsconfig'][11];
+
+$LANG['plugin_fusioninventory']['credential'][1] = "Compte d'inventaire distant";
+$LANG['plugin_fusioninventory']['credential'][2] = "Matériel distant à inventorier";
+$LANG['plugin_fusioninventory']['credential'][3] = "Compte";
+
+$LANG['plugin_fusioninventory']['iprange'][0]="Début de la plage IP";
+$LANG['plugin_fusioninventory']['iprange'][1]="Fin de la plage IP";
+$LANG['plugin_fusioninventory']['iprange'][2]="Plage IP";
+$LANG['plugin_fusioninventory']['iprange'][3]="Activation";
+$LANG['plugin_fusioninventory']['iprange'][7]="IP incorrecte";
 
 ?>

@@ -52,8 +52,8 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
       $a_modules = $this->find();
       foreach ($a_modules as $data) {
-         echo "<form name='form_ic' method='post' action='".GLPI_ROOT.
-               "/plugins/fusioninventory/front/agentmodule.form.php'>";
+         
+         echo "<form name='form_ic' method='post' action='".getItemTypeFormURL(__CLASS__)."'>";
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr>";
          echo "<th width='130'>".$LANG['plugin_fusioninventory']['task'][26]."</th>";
@@ -64,10 +64,17 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          $a_methods = PluginFusioninventoryStaticmisc::getmethods();
          $modulename = $data["modulename"];
+         $use_rest = false;
+         
          foreach ($a_methods as $datamod) {
-            if (isset($datamod['name'])
-                    AND (strtolower($data["modulename"]) == $datamod['method'])) {
-               $modulename = $datamod['name'];
+            if (strtolower($data["modulename"]) == strtolower($datamod['method'])) {
+               if (isset($datamod['use_rest']) && $datamod['use_rest'] != '') {
+                  $use_rest = true;
+               }
+               if (isset($datamod['name'])) {
+                  $modulename = $datamod['name'];
+               }
+               break;
             }
          }
          echo "<td align='center'><strong>".$modulename."</strong></td>";
@@ -108,6 +115,19 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             echo "</tr>";
             echo "</table>";
          echo "</td>";
+
+         if ($use_rest) {
+            echo "<tr>";
+            echo "<td class='tab_bg_2 center'>";
+            echo $LANG['plugin_fusioninventory']['agents'][41];
+            echo "</td><td colspan='2'>";
+            echo "<input type='text' name='url' value='".$data['url']."' size='70'>";
+            echo "</td>";
+            echo "</tr>";
+         } else {
+            echo "<input type='hidden' name='url' value='' />";
+         }
+
          echo "<tr>";
          echo "<td class='tab_bg_2 center' colspan='3'>";
          echo "<input type='submit' name='update' value=\"".$LANG['buttons'][7]."\" class='submit'>";
@@ -205,7 +225,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    
 
    /**
-   * Get datas (activation, exceptions...) for a module
+   * Get data (activation, exceptions...) for a module
    *
    * @param $module_name value Name of the module 
    *
@@ -309,6 +329,16 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       }
    }
 
+   static function getUrlForModule($module) {
+      $agentmodule = new PluginFusioninventoryAgentmodule();
+      $modules = $agentmodule->find("`modulename`='".strtoupper($module)."'");
+      if (!empty($modules)) {
+         $tmp = array_pop($modules);
+         return $tmp['url'];
+      } else {
+         return false;
+      }
+   }
 }
 
 ?>

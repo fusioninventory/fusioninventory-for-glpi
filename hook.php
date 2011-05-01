@@ -62,6 +62,12 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
          return $input;
          break;
         
+      case "glpi_plugin_fusioninventory_credentials.itemtype":
+        if ($label = PluginFusioninventoryCredential::getLabelByItemtype($data['ITEM_'.$num])) {
+           return $label;
+        } else {
+           return '';
+        }
    }
    
    if ($table == "glpi_plugin_fusioninventory_agentmodules") {
@@ -109,7 +115,7 @@ function cron_plugin_fusioninventory() {
 function plugin_fusioninventory_install() {
    global $DB, $LANG, $CFG_GLPI;
 
-   $version = "2.3.1";
+   $version = "2.4.0";
    include (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
    $version_detected = pluginFusioninventoryGetCurrentVersion($version);
    if ((isset($version_detected)) AND ($version_detected != $version)) {
@@ -281,6 +287,7 @@ function plugin_headings_fusioninventory_tasks($item, $itemtype='', $items_id=0)
          $PluginFusioninventoryAgent->forceRemoteAgent();
       }
    }
+
    $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
    $PluginFusioninventoryTaskjob->manageTasksByObject($itemtype, $items_id);
 

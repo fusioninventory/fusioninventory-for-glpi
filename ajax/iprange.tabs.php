@@ -32,33 +32,47 @@
    ----------------------------------------------------------------------
  */
 
-if(!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', '../..');
+define('GLPI_ROOT', '../../..');
+include (GLPI_ROOT . "/inc/includes.php");
+header("Content-Type: text/html; charset=UTF-8");
+header_nocache();
+
+if(!isset($_POST["id"])) {
+   exit();
 }
-include (GLPI_ROOT."/inc/includes.php");
 
-//Agent communication using REST protocol
-if (isset($_GET['action']) && isset($_GET['machineid'])) {
-   $response = PluginFusioninventoryRestCommunication::communicate($_GET);
-   if ($response) {
-      echo json_encode($response);
-   } else {
-      PluginFusioninventoryRestCommunication::sendError();
-   }
+if(!isset($_POST["sort"])) $_POST["sort"] = "";
+if(!isset($_POST["order"])) $_POST["order"] = "";
+if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 
-} else {
-   //Agent posting an inventory
-   if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
-      include(GLPI_ROOT ."/plugins/fusioninventory/front/communication.php");
+$iprange = new PluginFusioninventoryIPRange();
 
-   } else {
-      commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"], "plugins", 
-                   "fusioninventory");
-   
-      glpi_header(getItemTypeSearchURL('PluginFusioninventoryMenu'));
-      commonFooter();
-   }
+switch($_POST['glpi_tab']) {
+   case -1:
+      $iprange->permanentTask($_POST["id"], "NETDISCOVERY", $_POST['allowcreate']);
+      $iprange->permanentTask($_POST["id"], "SNMPQUERY", $_POST['allowcreate']);
+      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $PluginFusioninventoryTaskjob->manageTasksByObject("PluginFusinvsnmpIPRange", $_POST['id']);
+      break;
 
+   case 1:
+      $iprange->permanentTask($_POST["id"], "NETDISCOVERY", $_POST['allowcreate']);
+      break;
+
+   case 2:
+      $iprange->permanentTask($_POST["id"], "SNMPQUERY", $_POST['allowcreate']);
+      break;
+
+   case 3:
+      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $PluginFusioninventoryTaskjob->manageTasksByObject("PluginFusinvsnmpIPRange", $_POST['id']);
+      break;
+
+   default:
+
+      break;
 }
+
+ajaxFooter();
 
 ?>

@@ -32,33 +32,10 @@
    ----------------------------------------------------------------------
  */
 
-if(!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', '../..');
-}
-include (GLPI_ROOT."/inc/includes.php");
+define('GLPI_ROOT', '../../..');
+include (GLPI_ROOT . "/inc/includes.php");
 
-//Agent communication using REST protocol
-if (isset($_GET['action']) && isset($_GET['machineid'])) {
-   $response = PluginFusioninventoryRestCommunication::communicate($_GET);
-   if ($response) {
-      echo json_encode($response);
-   } else {
-      PluginFusioninventoryRestCommunication::sendError();
-   }
-
-} else {
-   //Agent posting an inventory
-   if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
-      include(GLPI_ROOT ."/plugins/fusioninventory/front/communication.php");
-
-   } else {
-      commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"], "plugins", 
-                   "fusioninventory");
-   
-      glpi_header(getItemTypeSearchURL('PluginFusioninventoryMenu'));
-      commonFooter();
-   }
-
-}
+$dropdown = new PluginFusioninventoryCredential();
+include (GLPI_ROOT . "/front/dropdown.common.php");
 
 ?>

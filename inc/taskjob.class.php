@@ -397,8 +397,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       foreach ($a_methods as $datas) {
          if ($method == $datas['method']) {
             $module = $datas['module'];
-            if (is_callable(array("Plugin".$module."Staticmisc", "task_definitiontype_".$method))) {
-               $a_definitiontype = call_user_func(array("Plugin".$module."Staticmisc", "task_definitiontype_".$method), $a_definitiontype);
+            $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($module);
+            if (is_callable(array($class, "task_definitiontype_".$method))) {
+               $a_definitiontype = call_user_func(array($class, "task_definitiontype_".$method), $a_definitiontype);
             }
 
          }
@@ -445,8 +446,12 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       }
 
       $rand = '';
-      if (is_callable(array("Plugin".$module."Staticmisc", "task_definitionselection_".$definitiontype."_".$method))) {
-         $rand = call_user_func(array("Plugin".$module."Staticmisc", "task_definitionselection_".$definitiontype."_".$method), $title);
+      $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($module);
+
+      if (is_callable(array($class, "task_definitionselection_".$definitiontype."_".$method))) {
+         $rand = call_user_func(array($class, 
+                                      "task_definitionselection_".$definitiontype."_".$method), 
+                                $title);
       }
 
       echo "&nbsp;<input type='button' name='addObject' id='addObject' value='".$LANG['buttons'][8]."' class='submit'/>";
@@ -486,8 +491,11 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       foreach ($a_methods as $datas) {
          if ($method == $datas['method']) {
             $module = ucfirst($datas['module']);
-            if (is_callable(array("Plugin".$module."Staticmisc", "task_actiontype_".$method))) {
-               $a_actioninitiontype = call_user_func(array("Plugin".$module."Staticmisc", "task_actiontype_".$method), $a_actioninitiontype);
+            $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($module);
+
+            if (is_callable(array($class, "task_actiontype_".$method))) {
+               $a_actioninitiontype = call_user_func(array($class, "task_actiontype_".$method), 
+                                                     $a_actioninitiontype);
             }
 
          }
@@ -524,7 +532,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    **/
    function dropdownAction($myname,$actiontype,$method,$actiontypeid,$value=0,$entity_restrict='') {
       global $DB,$CFG_GLPI, $LANG;
-
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $module = '';
       foreach ($a_methods as $datas) {
@@ -536,17 +543,20 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $rand = '';
 
+      $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($module);
       if ($actiontype == "PluginFusioninventoryAgent") {
-         if (is_callable(array("Plugin".$module."Staticmisc", "task_actionselection_PluginFusioninventoryAgent_".$method))) {
-            $rand = call_user_func(array("Plugin".$module."Staticmisc", "task_actionselection_PluginFusioninventoryAgent_".$method));
+         $actionselection_method = "task_actionselection_PluginFusioninventoryAgent_".$method;
+         if (is_callable(array($class, $actionselection_method))) {
+            $rand = call_user_func(array($class, $actionselection_method));
          } else {
             $a_data = $this->get_agents($method);
 
             $rand = Dropdown::showFromArray('actionselectiontoadd', $a_data);
          }
       } else {
-         if (is_callable(array("Plugin".$module."Staticmisc", "task_definitionselection_".$actiontype."_".$method))) {
-            $rand = call_user_func(array("Plugin".$module."Staticmisc", "task_definitionselection_".$actiontype."_".$method));
+         $definitionselection_method = "task_definitionselection_".$actiontype."_".$method;
+         if (is_callable(array($class, $definitionselection_method))) {
+            $rand = call_user_func(array($class, $definitionselection_method));
          }
       }
       echo "&nbsp;<input type='button' name='addAObject' id='addAObject' value='".$LANG['buttons'][8]."' class='submit'/>";
@@ -1023,8 +1033,10 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $a_parseMethods = array();
       $a_parseMethods[''] = "------";
       foreach($a_methods as $data) {
-         if (is_callable(array('Plugin'.$data['module'].'Staticmisc', 'task_action_'.$data['method']))) {
-            $a_itemtype = call_user_func(array('Plugin'.$data['module'].'Staticmisc', 'task_action_'.$data['method']));
+         $class = $class= PluginFusioninventoryStaticmisc::getStaticmiscClass($data['directory']);
+         
+         if (is_callable(array($class, 'task_action_'.$data['method']))) {
+            $a_itemtype = call_user_func(array($class, 'task_action_'.$data['method']));
             if (in_array($itemtype, $a_itemtype)) {
                $a_parseMethods[$data['module']."||".$data['method']] = $data['method'];
             }
@@ -1119,8 +1131,10 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             $tab = $i;
          }
       }
-      glpi_header(GLPI_ROOT."/plugins/fusioninventory/front/task.form.php?"
-              ."itemtype=PluginFusioninventoryTask&id=".$this->fields['plugin_fusioninventory_tasks_id']."&glpi_tab=".$tab);
+      glpi_header(getItemTypeFormURL('PluginFusioninventoryTask')
+                                     ."?itemtype=PluginFusioninventoryTask&id=".
+                                        $this->fields['plugin_fusioninventory_tasks_id'].
+                                           "&glpi_tab=".$tab);
 
    }
 
