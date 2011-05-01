@@ -59,6 +59,8 @@ function pluginFusinvinventoryUpdate($current_version) {
    include(GLPI_ROOT."/plugins/fusioninventory/install/update.php");
 
    switch ($current_version) {
+
+      case "2.3.0-1":
       case "2.3.1-1":
          include("update_231_232.php");
          update231to232();

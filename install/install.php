@@ -42,7 +42,7 @@ function pluginFusinvinventoryInstall() {
    $version_detected = pluginfusinvinventoryGetCurrentVersion($a_plugin['version']);
    if ((isset($version_detected)) AND ($version_detected != $a_plugin['version'])) {
       // Update
-      pluginFusinvinventoryUpdate($a_plugin['version']);
+      pluginFusinvinventoryUpdate($version_detected);
    } else {
       // Installation
       // Add new module in plugin_fusioninventory (core)
