@@ -192,6 +192,7 @@ class PluginFusioninventoryCommunication {
          $result .= $line . "\n";
          $token   = strtok("\n");
          $pad    += $indent;
+         $indent = 0;
       }
       $this->setXML($result);
       return $this->sxml->asXML();
@@ -254,8 +255,8 @@ class PluginFusioninventoryCommunication {
       $moduleRun = $PluginFusioninventoryTaskjobstatus->getTaskjobsAgent($agent_id);
       foreach ($moduleRun as $className => $array) {
          $class = new $className();
-         $this->sxml_temp = $class->Run($array);
-         $this->append_simplexml($this->sxml, $this->sxml_temp);
+         $sxml_temp = $class->run($array);
+         $this->append_simplexml($this->sxml, $sxml_temp);
       }
    }
 
