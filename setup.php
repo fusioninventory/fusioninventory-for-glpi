@@ -184,7 +184,6 @@ function plugin_init_fusioninventory() {
 
 
    $plugin = new Plugin();
-   logInFile("userag", $_SERVER['HTTP_USER_AGENT']);
    if ($plugin->isInstalled('fusioninventory') 
       && $plugin->isActivated('fusioninventory') 
          && isset($_SERVER['HTTP_USER_AGENT']) 
