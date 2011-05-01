@@ -198,7 +198,7 @@ function plugin_init_fusioninventory() {
 function plugin_version_fusioninventory() {
    return array('name'           => 'FusionInventory',
                 'shortname'      => 'fusioninventory',
-                'version'        => '2.3.1',
+                'version'        => '2.3.2',
                 'oldname'        => 'tracker',
                 'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
                                     & <a href="mailto:v.mazzoni@siprossii.com">Vincent MAZZONI</a>',
