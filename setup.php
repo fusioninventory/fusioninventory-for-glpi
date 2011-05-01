@@ -100,7 +100,7 @@ function plugin_init_fusioninventory() {
                   'NetworkPort'      => 'plugin_item_update_fusioninventory');
 
 
-         
+         $PLUGIN_HOOKS['item_transfer']['fusioninventory'] = 'plugin_item_transfer_fusioninventory';
    //      $PLUGIN_HOOKS['item_add']['fusioninventory'] = 'plugin_item_add_fusioninventory';
          $Plugin = new Plugin();
          if ($Plugin->isActivated('fusioninventory')) {
