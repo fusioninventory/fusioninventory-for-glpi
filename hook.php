@@ -634,7 +634,7 @@ function plugin_fusinvsnmp_install() {
       pluginFusinvsnmpUpdate($version_detected);
    } else {
       include_once (GLPI_ROOT . "/plugins/fusinvsnmp/install/install.php");
-      pluginFusinvsnmpInstall($version);
+      pluginFusinvsnmpInstall($version_detected);
    }
 
 
