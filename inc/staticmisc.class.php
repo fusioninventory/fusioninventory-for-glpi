@@ -176,11 +176,14 @@ class PluginFusinvinventoryStaticmisc {
       $query.= getEntitiesRestrictRequest(' AND','glpi_plugin_fusioninventory_credentialips');
       $results = $DB->query($query);
 
+      $agents = array();
       //$agents['.1'] = $LANG['common'][66];
       while ($data = $DB->fetch_array($results)) {
          $agents[$data['id']] = $data['name'];
       }
-      return Dropdown::showFromArray('definitionselectiontoadd',$agents);
+      if (!empty($agents)) {
+         return Dropdown::showFromArray('definitionselectiontoadd',$agents);
+      }
    }
 
 
