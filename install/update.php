@@ -151,13 +151,17 @@ function pluginFusioninventoryUpdate($current_version) {
          
    }
 
-   $plugins_id = PluginFusioninventoryModule::getModuleId("fusinvinventory");
-   include(GLPI_ROOT."/plugins/fusioninventory/inc/profile.class.php");
+   $plugins_id = PluginFusioninventoryModule::getModuleId("fusioninventory");
+   include_once(GLPI_ROOT."/plugins/fusioninventory/inc/profile.class.php");
    PluginFusioninventoryProfile::changeProfile($plugins_id);
 
    echo "</td>";
    echo "</tr>";
    echo "</table></center>";
+
+   $config = new PluginFusioninventoryConfig();
+   $config->updateConfigType($plugins_id, 'version', "2.3.2");
+
 }
 
 
