@@ -829,5 +829,24 @@ function plugin_item_purge_fusioninventory($parm) {
 }
 
 
+function plugin_item_transfer_fusioninventory($parm) {
+   switch ($parm['type']) {
+
+      case 'Computer':
+         $pluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+
+         if ($agent_id = $pluginFusioninventoryAgent->getAgentWithComputerid($parm['id'])) {
+            $input = array();
+            $input['id'] = $agent_id;
+            $input['entities_id'] = $_POST['to_entity'];
+            $pluginFusioninventoryAgent->update($input);
+         }
+
+         break;
+   }
+   return false;
+}
+
+
 
 ?>
