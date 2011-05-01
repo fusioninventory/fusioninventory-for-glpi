@@ -189,6 +189,7 @@ function plugin_init_fusioninventory() {
          && isset($_SERVER['HTTP_USER_AGENT']) 
             && isFusioninventoryUserAgent($_SERVER['HTTP_USER_AGENT'])) {
       include(GLPI_ROOT ."/plugins/fusioninventory/front/communication.php");
+      exit;
    }
 
 }
