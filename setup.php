@@ -142,7 +142,7 @@ function plugin_init_fusinvinventory() {
 function plugin_version_fusinvinventory() {
    return array('name'           => 'FusionInventory INVENTORY',
                 'shortname'      => 'fusinvinventory',
-                'version'        => '2.3.1-1',
+                'version'        => '2.3.2-1',
                 'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
                                     & <a href="mailto:v.mazzoni@siprossii.com">Vincent MAZZONI</a>',
                 'homepage'       =>'http://forge.fusioninventory.org/projects/pluginfusinvinventory',
