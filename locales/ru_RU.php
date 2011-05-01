@@ -163,8 +163,8 @@ $LANG['plugin_fusioninventory']['task'][37]="дни";
 $LANG['plugin_fusioninventory']['task'][38]="месяцы";
 $LANG['plugin_fusioninventory']['task'][39]="Не возможно запустить задачу потому что некоторые задачи все еще запущены!";
 $LANG['plugin_fusioninventory']['task'][40]="Принудительный запуск";
-$LANG['plugin_fusioninventory']['task'][41]="Push: server contact the agent";
-$LANG['plugin_fusioninventory']['task'][42]="Passive: wait for the agent to contact the server";
+$LANG['plugin_fusioninventory']['task'][41]="Server contacts the agent (push)";
+$LANG['plugin_fusioninventory']['task'][42]="Agent contacts the server (pull)";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Начато";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";

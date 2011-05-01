@@ -163,8 +163,8 @@ $LANG['plugin_fusioninventory']['task'][37]="Tage";
 $LANG['plugin_fusioninventory']['task'][38]="Monate";
 $LANG['plugin_fusioninventory']['task'][39]="Unable to run task because some jobs is running yet!";
 $LANG['plugin_fusioninventory']['task'][40]="Force running";
-$LANG['plugin_fusioninventory']['task'][41]="Push: server contact the agent";
-$LANG['plugin_fusioninventory']['task'][42]="Passive: wait for the agent to contact the server";
+$LANG['plugin_fusioninventory']['task'][41]="Server contacts the agent (push)";
+$LANG['plugin_fusioninventory']['task'][42]="Agent contacts the server (pull)";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="gestartet";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="OK";
