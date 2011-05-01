@@ -184,6 +184,7 @@ function plugin_init_fusioninventory() {
 
 
    $plugin = new Plugin();
+   logInFile("userag", $_SERVER['HTTP_USER_AGENT']);
    if ($plugin->isInstalled('fusioninventory') 
       && $plugin->isActivated('fusioninventory') 
          && isset($_SERVER['HTTP_USER_AGENT']) 
@@ -226,7 +227,7 @@ function plugin_fusioninventory_check_prerequisites() {
  * @return bool : true if request comes from an agent, false otherwise
  */
 function isFusioninventoryUserAgent($useragent = '') {
-   return (preg_match("/(fusioninventory|ocsinventory)/i",$useragent));
+   return (preg_match("/(fusioninventory|ocsinventory|ocs-ng)/i",$useragent));
 }
 
 
