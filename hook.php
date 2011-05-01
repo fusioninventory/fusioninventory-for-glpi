@@ -264,8 +264,13 @@ function plugin_headings_fusioninventory_locks($item) {
    $type = get_Class($item);
    $id = $item->getField('id');
    $fusioninventory_locks = new PluginFusioninventoryLock();
-   $fusioninventory_locks->showForm(getItemTypeFormURL('PluginFusioninventoryLock').'?id='.$id,
+   if ($id == '') {
+      $fusioninventory_locks->showForm(getItemTypeFormURL('PluginFusioninventoryLock'),
+                                                       $type);
+   } else {
+      $fusioninventory_locks->showForm(getItemTypeFormURL('PluginFusioninventoryLock').'?id='.$id,
                                                        $type, $id);
+   }
 }
 
 function plugin_headings_fusioninventory_tasks($item, $itemtype='', $items_id=0) {
@@ -471,9 +476,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
                if ($val == 1) {
                   if (isset($data["lockfield_fusioninventory"])&&count($data["lockfield_fusioninventory"])){
                      $tab=PluginFusioninventoryLock::exportChecksToArray($data["lockfield_fusioninventory"]);
-                        PluginFusioninventoryLock::setLockArray($data['type'], $key, $tab);
-                  } else {
-                     PluginFusioninventoryLock::setLockArray($data['type'], $key, array());
+                        PluginFusioninventoryLock::setLockArray($data['type'], $key, $tab, $data['actionlock']);
                   }
                }
             }
@@ -794,10 +797,10 @@ function plugin_item_purge_fusioninventory($parm) {
             $PluginFusioninventoryUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
             if ($PluginFusioninventoryUnknownDevice->fields['hub'] == '1') {
                $a_vlans = $NetworkPort_Vlan->getVlansForNetworkPort($NetworkPort->fields['id']);
-               foreach ($a_vlans as $vlan_id) {
-                  $a_hubs[$NetworkPort->fields['items_id']] = 1;
+               foreach ($a_vlans as $vlan_id) {                  
                   $NetworkPort_Vlan->unassignVlan($NetworkPort->fields['id'], $vlan_id);
                }
+               $a_hubs[$NetworkPort->fields['items_id']] = 1;
                $NetworkPort->delete($NetworkPort->fields);
             }
          }

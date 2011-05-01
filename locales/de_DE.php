@@ -163,6 +163,8 @@ $LANG['plugin_fusioninventory']['task'][37]="Tage";
 $LANG['plugin_fusioninventory']['task'][38]="Monate";
 $LANG['plugin_fusioninventory']['task'][39]="Unable to run task because some jobs is running yet!";
 $LANG['plugin_fusioninventory']['task'][40]="Force running";
+$LANG['plugin_fusioninventory']['task'][41]="Push: server contact the agent";
+$LANG['plugin_fusioninventory']['task'][42]="Passive: wait for the agent to contact the server";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="gestartet";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="OK";
@@ -179,4 +181,8 @@ $LANG['plugin_fusioninventory']['xml'][0]="XML";
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Falcher Token, kann den Agent nicht starten";
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Agent gestoppt/abgestürzt";
 $LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['ocsconfig'][11];
+
+$LANG['plugin_fusioninventory']['locks'][0]="Delete locks";
+$LANG['plugin_fusioninventory']['locks'][1]="Add locks";
+
 ?>

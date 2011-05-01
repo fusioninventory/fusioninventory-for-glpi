@@ -214,8 +214,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "<td>".$LANG['plugin_fusioninventory']['task'][33]."&nbsp;:</td>";
       echo "<td align='center'>";
       $com = array();
-      $com['push'] = "push";
-      $com['pull'] = "pull";
+      $com['push'] = $LANG['plugin_fusioninventory']['task'][41];
+      $com['pull'] = $LANG['plugin_fusioninventory']['task'][42];
       Dropdown::showFromArray("communication", $com, array('value'=>$this->fields["communication"]));
       echo "</td>";
       

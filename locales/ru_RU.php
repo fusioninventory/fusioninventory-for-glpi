@@ -163,6 +163,8 @@ $LANG['plugin_fusioninventory']['task'][37]="дни";
 $LANG['plugin_fusioninventory']['task'][38]="месяцы";
 $LANG['plugin_fusioninventory']['task'][39]="Не возможно запустить задачу потому что некоторые задачи все еще запущены!";
 $LANG['plugin_fusioninventory']['task'][40]="Принудительный запуск";
+$LANG['plugin_fusioninventory']['task'][41]="Push: server contact the agent";
+$LANG['plugin_fusioninventory']['task'][42]="Passive: wait for the agent to contact the server";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Начато";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";
@@ -179,4 +181,8 @@ $LANG['plugin_fusioninventory']['xml'][0]="XML";
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Плохой маркер. не возможно запустить агент";
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Агент остановлен/сломан";
 $LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['ocsconfig'][11];
+
+$LANG['plugin_fusioninventory']['locks'][0]="Delete locks";
+$LANG['plugin_fusioninventory']['locks'][1]="Add locks";
+
 ?>

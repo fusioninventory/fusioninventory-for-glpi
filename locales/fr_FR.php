@@ -163,6 +163,8 @@ $LANG['plugin_fusioninventory']['task'][37]="jours";
 $LANG['plugin_fusioninventory']['task'][38]="mois";
 $LANG['plugin_fusioninventory']['task'][39]="Impossible de lancer la tâche car il reste des actions en cours!";
 $LANG['plugin_fusioninventory']['task'][40]="Forcer l'exécution";
+$LANG['plugin_fusioninventory']['task'][41]="Push : le serveur contacte l'agent";
+$LANG['plugin_fusioninventory']['task'][42]="Passif : attend que l'agent contacte le serveur";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Démarré";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";
@@ -179,4 +181,8 @@ $LANG['plugin_fusioninventory']['xml'][0]="XML";
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Mauvais jeton, impossible d'agir sur l'agent";
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Agent arrêté ou crashé";
 $LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['ocsconfig'][11];
+
+$LANG['plugin_fusioninventory']['locks'][0]="Supprimer les verrous";
+$LANG['plugin_fusioninventory']['locks'][1]="Ajouter les verrous";
+
 ?>
