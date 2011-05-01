@@ -70,6 +70,10 @@ function pluginFusinvinventoryUpdate($current_version) {
    echo "</td>";
    echo "</tr>";
    echo "</table></center>";
+
+   $config = new PluginFusioninventoryConfig();
+   $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
+   $config->updateConfigType($plugins_id, 'version', "2.3.2-1");
 }
 
 ?>
