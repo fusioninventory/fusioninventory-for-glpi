@@ -182,8 +182,15 @@ function plugin_init_fusioninventory() {
       }
    }
 
-   // Add unknown devices in list of devices with networport
-//   $CFG_GLPI["netport_types"][] = "PluginFusioninventoryUnknownDevice";
+
+   $plugin = new Plugin();
+   if ($plugin->isInstalled('fusioninventory') 
+      && $plugin->isActivated('fusioninventory') 
+         && isset($_SERVER['HTTP_USER_AGENT']) 
+            && isFusioninventoryUserAgent($_SERVER['HTTP_USER_AGENT'])) {
+      include(GLPI_ROOT ."/plugins/fusioninventory/front/communication.php");
+      exit;
+   }
 
 }
 
@@ -211,6 +218,16 @@ function plugin_fusioninventory_check_prerequisites() {
    }
 }
 
+
+/**
+ * Check if HTTP request comes from an inventory agent (Fusion or legacy OCS)
+ * @param useragent the user agent coming from $_SERVER
+ * 
+ * @return bool : true if request comes from an agent, false otherwise
+ */
+function isFusioninventoryUserAgent($useragent = '') {
+   return (preg_match("/(fusioninventory|ocsinventory)/i",$useragent));
+}
 
 
 function plugin_fusioninventory_check_config() {
