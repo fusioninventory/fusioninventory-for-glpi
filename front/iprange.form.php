@@ -49,9 +49,11 @@ if (isset ($_POST["add"])) {
    if ($PluginFusinvsnmpIPRange->checkip($_POST)) {
       $_POST['ip_start'] = $_POST['ip_start0'].".".$_POST['ip_start1'].".".$_POST['ip_start2'].".".$_POST['ip_start3'];
       $_POST['ip_end'] = $_POST['ip_end0'].".".$_POST['ip_end1'].".".$_POST['ip_end2'].".".$_POST['ip_end3'];
-      $PluginFusinvsnmpIPRange->add($_POST);
+      $newID = $PluginFusinvsnmpIPRange->add($_POST);
+      glpi_header(getItemTypeFormURL('PluginFusinvsnmpIPRange')."?id=$newID");
+   } else {
+      glpi_header($_SERVER['HTTP_REFERER']);
    }
-	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["update"])) {
    if (isset($_POST['communication'])) {
       //task permanent update
@@ -88,7 +90,7 @@ if (isset ($_POST["add"])) {
          $PluginFusinvsnmpIPRange->update($_POST);
       }
    }
-	glpi_header($_SERVER['HTTP_REFERER']);
+   glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["delete"])) {
    if (isset($_POST['communication'])) {
       $PluginFusioninventoryTask = new PluginFusioninventoryTask();
@@ -99,13 +101,13 @@ if (isset ($_POST["add"])) {
       PluginFusioninventoryProfile::checkRight("fusinvsnmp", "iprange","w");
 
       $PluginFusinvsnmpIPRange->delete($_POST);
-      glpi_header("iprange.php");
+      glpi_header(getItemTypeSearchURL('PluginFusinvsnmpIPRange'));
    }
 }
 
 $id = "";
 if (isset($_GET["id"])) {
-	$id = $_GET["id"];
+   $id = $_GET["id"];
 }
 $allowcreate = 0;
 if (isset($_GET['allowcreate']))
