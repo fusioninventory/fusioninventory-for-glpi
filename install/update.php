@@ -159,6 +159,7 @@ function pluginFusioninventoryUpdate($current_version) {
    echo "</tr>";
    echo "</table></center>";
 
+   include_once(GLPI_ROOT."/plugins/fusioninventory/inc/config.class.php");
    $config = new PluginFusioninventoryConfig();
    $config->updateConfigType($plugins_id, 'version', "2.3.2");
 
