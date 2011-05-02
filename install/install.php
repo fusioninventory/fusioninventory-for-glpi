@@ -72,6 +72,7 @@ function pluginFusinvsnmpInstall() {
       // Import models
       PluginFusinvsnmpModel::importAllModels();
 
+      include_once (GLPI_ROOT . "/plugins/fusioninventory/inc/staticmisc.class.php");
       $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
       PluginFusioninventoryProfile::initProfile($a_plugin['shortname'], $plugins_id);
 
