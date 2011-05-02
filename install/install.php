@@ -82,7 +82,7 @@ function pluginFusinvinventoryInstall() {
       if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'])) {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
       }
-
+      include_once (GLPI_ROOT . "/plugins/fusioninventory/inc/staticmisc.class.php");
       $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
       PluginFusioninventoryProfile::initProfile($a_plugin['shortname'], $plugins_id);
       // Creation of profile
