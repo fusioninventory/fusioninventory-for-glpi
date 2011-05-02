@@ -42,7 +42,7 @@ function pluginFusinvinventoryInstall() {
    $version_detected = pluginfusinvinventoryGetCurrentVersion($a_plugin['version']);
    if ((isset($version_detected)) AND ($version_detected != $a_plugin['version'])) {
       // Update
-      pluginFusinvinventoryUpdate($a_plugin['version']);
+      pluginFusinvinventoryUpdate($version_detected);
    } else {
       // Installation
       // Add new module in plugin_fusioninventory (core)
@@ -82,7 +82,7 @@ function pluginFusinvinventoryInstall() {
       if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'])) {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
       }
-
+      include_once (GLPI_ROOT . "/plugins/fusioninventory/inc/staticmisc.class.php");
       $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
       PluginFusioninventoryProfile::initProfile($a_plugin['shortname'], $plugins_id);
       // Creation of profile
@@ -110,7 +110,7 @@ function pluginFusinvinventoryInstall() {
          include(GLPI_ROOT . "/plugins/fusinvinventory/inc/ruleentitycollection.class.php");
       }
       if (!class_exists('PluginFusinvinventoryRuleEntity')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusinvinventory/inc/rruleentity.class.php");
+         include(GLPI_ROOT . "/plugins/fusinvinventory/inc/ruleentity.class.php");
       }
       $Rule = new Rule();
       $RuleCriteria = new RuleCriteria();
@@ -179,6 +179,7 @@ function pluginFusinvinventoryInstall() {
          }
       }
       // Import OCS locks
+      include_once GLPI_ROOT . "/plugins/fusinvinventory/inc/lock.class.php";
       $PluginFusinvinventoryLock = new PluginFusinvinventoryLock();
       $PluginFusinvinventoryLock->importFromOcs();
    }
