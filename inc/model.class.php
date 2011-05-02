@@ -366,7 +366,9 @@ class PluginFusinvsnmpModel extends CommonDBTM {
       foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) {
          $importexport->import($file,0,1);
          $i++;
-         changeProgressBarPosition($i,$nb,"$i / $nb");
+         if (substr($i, -1) == '0') {
+            changeProgressBarPosition($i,$nb,"$i / $nb");
+         }
       }
       echo "</td>";
       echo "</table>";
