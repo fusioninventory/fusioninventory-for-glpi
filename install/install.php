@@ -40,11 +40,11 @@ function pluginFusinvsnmpInstall() {
    // Get informations of plugin
    $a_plugin = plugin_version_fusinvsnmp();
 
-   include_once (GLPI_ROOT . "/plugins/fusinvsnmp/install/update.php");
+   include (GLPI_ROOT . "/plugins/fusinvsnmp/install/update.php");
    $version_detected = pluginfusinvsnmpGetCurrentVersion($a_plugin['version']);
    if ((isset($version_detected)) AND ($version_detected != $a_plugin['version'])) {
       // Update
-      pluginFusinvsnmpUpdate();
+      pluginFusinvsnmpUpdate($version_detected);
    } else {
       // Installation
 
@@ -71,7 +71,7 @@ function pluginFusinvsnmpInstall() {
 
       // Import models
       $importexport = new PluginFusinvsnmpImportExport();
-      
+
       $nb = 0;
       foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) {
          $nb++;
@@ -100,7 +100,7 @@ function pluginFusinvsnmpInstall() {
       $configSNMP = new PluginFusinvSNMPConfig;
       $configSNMP->initConfigModule();
       // Creation config values
-//      PluginFusioninventoryConfig::add($modules_id, type, value);
+   //      PluginFusioninventoryConfig::add($modules_id, type, value);
 
       PluginFusioninventoryProfile::changeProfile($plugins_id);
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
@@ -110,7 +110,7 @@ function pluginFusinvsnmpInstall() {
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());
       $PluginFusioninventoryAgentmodule->add($input);
-      
+
       $input = array();
       $input['plugins_id'] = $plugins_id;
       $input['modulename'] = "NETDISCOVERY";
@@ -118,9 +118,8 @@ function pluginFusinvsnmpInstall() {
       $input['exceptions'] = exportArrayToDB(array());
       $PluginFusioninventoryAgentmodule->add($input);
 
+      Crontask::Register('PluginFusinvsnmpNetworkPortLog', 'cleannetworkportlogs', (3600 * 24), array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
    }
-   Crontask::Register('PluginFusinvsnmpNetworkPortLog', 'cleannetworkportlogs', (3600 * 24), array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
-
 }
 
 

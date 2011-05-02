@@ -129,7 +129,14 @@ function pluginFusinvsnmpUpdate($current_version) {
       case "2.2.1":
 			include("update_221_230.php");
 			update221to230();
-
+      case "2.3.0":
+      case "2.3.1":
+			include("update_231_232.php");
+			update231to232();
    }
+
+   $config = new PluginFusioninventoryConfig();
+   $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
+   $config->updateConfigType($plugins_id, 'version', "2.3.2-1");
 }
 ?>

@@ -627,16 +627,8 @@ function cron_plugin_fusinvsnmp() {
 function plugin_fusinvsnmp_install() {
    global $DB, $LANG, $CFG_GLPI;
 
-   $version = "2.3.1-1";
-   include_once (GLPI_ROOT . "/plugins/fusinvsnmp/install/update.php");
-   $version_detected = pluginFusinvsnmpGetCurrentVersion($version);
-   if ((isset($version_detected)) AND ($version_detected != $version)) {
-      pluginFusinvsnmpUpdate($version_detected);
-   } else {
-      include_once (GLPI_ROOT . "/plugins/fusinvsnmp/install/install.php");
-      pluginFusinvsnmpInstall($version);
-   }
-
+   include_once (GLPI_ROOT . "/plugins/fusinvsnmp/install/install.php");
+   pluginFusinvsnmpInstall();
 
    return true;
 }
@@ -655,7 +647,7 @@ function plugin_fusinvsnmp_uninstall() {
 * @return 0 (no need update) OR 1 (need update)
 **/
 function plugin_fusinvsnmp_needUpdate() {
-   $version = "2.3.1";
+   $version = "2.3.2";
    include (GLPI_ROOT . "/plugins/fusinvsnmp/install/update.php");
    $version_detected = pluginFusinvsnmpGetCurrentVersion($version);
    if ((isset($version_detected)) AND ($version_detected != $version)) {
