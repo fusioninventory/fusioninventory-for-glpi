@@ -54,6 +54,8 @@ ProCurve J4906A Switch 3400cl-48G, revision M.10.30, ROM I.08.12 (/sw/code/build
 
 ProCurve J4906A Switch 3400cl-48G, revision M.10.76, ROM I.08.12 (/sw/code/build/makf(mkfs))
 
+ProCurve J8698A Switch 5412zl, revision K.12.57, ROM K.12.12 (/sw/code/build/btm(t2g))
+
 ProCurve J8762A Switch 2600-8-PWR, revision H.10.74, ROM H.08.03 (/sw/code/build/fish(mkfs))
 
 ProCurve J8771A Switch 4202vl-48G, revision L.11.24, ROM L.10.02 (/sw/code/build/rmm(rm11))
