@@ -323,6 +323,68 @@ class PluginFusinvsnmpModel extends CommonDBTM {
       }
       return 0;
    }
+
+
+   static function importAllModels() {
+      /*
+       * Manage models migration
+       */
+      $NewModelList = array();
+      foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) {
+         $file = str_replace("../plugins/fusinvsnmp/models/", "", $file);
+         $NewModelList[$file] = 1;
+      }
+
+
+      // Delete old models
+      $PluginFusinvsnmpModel = new PluginFusinvsnmpModel();
+      $a_models = $PluginFusinvsnmpModel->find("");
+      foreach ($a_models as $a_model) {
+         $delete = 1;
+         if (!isset($NewModelList[$a_model['name'].".xml"])) {
+            $PluginFusinvsnmpModel->delete($a_model, 1);
+         }
+      }
+
+      // Import models
+      $importexport = new PluginFusinvsnmpImportExport();
+
+      $nb = 0;
+      foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) {
+         $nb++;
+      }
+      $i = 0;
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<th align='center'>";
+      echo "Importing SNMP models, please wait...";
+      echo "</th>";
+      echo "</tr>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>";
+      createProgressBar("Importing SNMP models, please wait...");
+      foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) {
+         $importexport->import($file,0,1);
+         $i++;
+         changeProgressBarPosition($i,$nb,"$i / $nb");
+      }
+      echo "</td>";
+      echo "</table>";
+
+      // Reload model for networkequipment have sysdescr
+      $networkequipmentext = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
+      $a_networkequipments = $networkequipmentext->find("`sysdescr`!=''");
+      foreach ($a_networkequipments as $a_networkequipment) {
+         $PluginFusinvsnmpModel->getrightmodel($a_networkequipment['networkequipments_id'], "NetworkEquipment");
+      }
+      // Reload model for printers have sysdescr
+      $printerext = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
+      $a_printers = $printerext->find("`sysdescr`!=''");
+      foreach ($a_printers as $a_printer) {
+         $PluginFusinvsnmpModel->getrightmodel($a_printer['printers_id'], "Printer");
+      }
+   }
+
 }
 
 ?>
