@@ -454,7 +454,7 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
          break;
 
       // * range IP list (plugins/fusinvsnmp/front/iprange.php)
-      case 'PluginFusinvsnmpIPRange' :
+      case 'PluginFusioninventoryIPRange' :
          switch ($table.'.'.$field) {
 
 
@@ -675,6 +675,11 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
 
    $type = get_Class($item);
    switch ($type) {
+      case 'PluginFusioninventoryIPRange':
+         $commonlabel = " (".$LANG['plugin_fusinvsnmp']['title'][6].")";
+         return array (1 => $LANG['plugin_fusinvsnmp']['task'][15].$commonlabel, 
+                       2 => $LANG['plugin_fusinvsnmp']['task'][16].$commonlabel);
+                       
       case 'Computer':
          if ($withtemplate) { //?
             return array();
@@ -793,11 +798,26 @@ function plugin_headings_actions_fusinvsnmp($item) {
          $array[1] = "plugin_headings_fusinvsnmp_unknowndevices";
          return $array;
          break;
+      
+      case 'PluginFusioninventoryIPRange':
+         return array(1 => 'plugin_headings_fusinvsnmp_task_netdiscovery',
+                      2 => 'plugin_headings_fusinvsnmp_task_snmpquery');
 
    }
    return false;
 }
 
+function plugin_headings_fusinvsnmp_task_netdiscovery($type, $id) {
+   $iprange = new PluginFusioninventoryIPRange();
+   $iprange->permanentTask($_POST["id"], "NETDISCOVERY", true);
+   
+}
+
+function plugin_headings_fusinvsnmp_task_snmpquery($type, $id) {
+   $iprange = new PluginFusioninventoryIPRange();
+   $iprange->permanentTask($_POST["id"], "NSNMPQUERY", true);
+   
+}
 
 function plugin_headings_fusinvsnmp_printerInfo($type, $id) {
 
@@ -1345,7 +1365,7 @@ function plugin_fusinvsnmp_addSelect($type,$id,$num) {
          }
          break;
 
-      case 'PluginFusinvsnmpIPRange' :
+      case 'PluginFusioninventoryIPRange' :
          switch ($table.".".$SEARCH_OPTION[$type][$id]["linkfield"]) {
 
             case "glpi_plugin_fusinvsnmp_agents.plugin_fusinvsnmp_agents_id_query" :
@@ -1749,7 +1769,7 @@ function plugin_fusinvsnmp_addOrderBy($type,$id,$order,$key=0) {
          break;
 
       // * range IP list (plugins/fusinvsnmp/front/iprange.php)
-      case 'PluginFusinvsnmpIPRange' :
+      case 'PluginFusioninventoryIPRange' :
          switch ($table.".".$field) {
          
             // ** Agent name associed to IP range and link to agent form
@@ -2021,11 +2041,11 @@ function plugin_fusinvsnmp_addWhere($link,$nott,$type,$id,$val) {
          break;
 
       // * range IP list (plugins/fusinvsnmp/front/iprange.php)
-      case 'PluginFusinvsnmpIPRange' :
+      case 'PluginFusioninventoryIPRange' :
          switch ($table.".".$field) {
 
             // ** Name of range IP and link to form
-            case "glpi_plugin_fusinvsnmp_ipranges.name" :
+            case "glpi_plugin_fusioninventory_ipranges.name" :
                break;
 
             // ** Agent name associed to IP range and link to agent form

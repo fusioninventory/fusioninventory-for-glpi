@@ -64,7 +64,7 @@ function plugin_init_fusinvsnmp() {
    Plugin::registerClass('PluginFusinvsnmpNetworkEquipment');
    Plugin::registerClass('PluginFusinvsnmpPrinter');
    Plugin::registerClass('PluginFusinvsnmpPrinterCartridge');
-   Plugin::registerClass('PluginFusinvsnmpIPRange');
+   //Plugin::registerClass('PluginFusinvsnmpIPRange');
    Plugin::registerClass('PluginFusinvsnmpConfigSecurity');
    Plugin::registerClass('PluginFusinvsnmpNetworkPortLog');
    Plugin::registerClass('PluginFusinvsnmpAgentconfig');
@@ -113,7 +113,7 @@ function plugin_init_fusinvsnmp() {
 
 		// Define SQL table restriction of entity
 		$CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusinvsnmp_discovery';
-		$CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusinvsnmp_ipranges';
+		//$CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusinvsnmp_ipranges';
       $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusinvsnmp_unknowndevices';
 
 //		if(isset($_SESSION["glpi_plugin_fusinvsnmp_installed"]) && $_SESSION["glpi_plugin_fusinvsnmp_installed"]==1) {
@@ -147,7 +147,7 @@ function plugin_init_fusinvsnmp() {
 //         if (PluginFusinvsnmpAuth::haveRight("models","r")
          if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","r")
             OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity","r")
-            OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "iprange","r")
+            //OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "iprange","r")
             OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "agents","r")
             OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "agentsprocesses","r")
             OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "unknowndevices","r")
@@ -174,13 +174,13 @@ function plugin_init_fusinvsnmp() {
             $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['rulesnmpinventory']
                = '../fusinvsnmp/front/ruleinventory.php';
 
-
+/*
             if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "iprange","w")) {
 //               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['iprange'] = 'front/iprange.form.php?add=1';
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['iprange'] = '../fusinvsnmp/front/iprange.form.php?add=1';
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['iprange'] = '../fusinvsnmp/front/iprange.php';
             }
-
+*/
 			}
 
          // Fil ariane

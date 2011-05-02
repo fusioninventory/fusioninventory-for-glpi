@@ -49,7 +49,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
-      $PluginFusinvsnmpIPRange = new PluginFusinvsnmpIPRange();
+      $PluginFusinvsnmpIPRange = new PluginFusioninventoryIPRange();
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
 
       $uniqid = uniqid();
@@ -142,7 +142,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
                $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
                $a_input['state'] = 1;
                $a_input['plugin_fusioninventory_agents_id'] = 0;
-               $a_input['itemtype'] = 'PluginFusinvsnmpIPRange';
+               $a_input['itemtype'] = 'PluginFusioninventoryIPRange';
                $a_input['items_id'] = $iprange_id;
                $a_input['uniqid'] = $uniqid;
                $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
@@ -154,7 +154,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
 
                $PluginFusioninventoryTaskjobstatus->changeStatusFinish($Taskjobstatus_id,
                                                                        0,
-                                                                       'PluginFusinvsnmpIPRange',
+                                                                       'PluginFusioninventoryIPRange',
                                                                        1,
                                                                        "Unable to find agent to run this job");
                $input_taskjob = array();
@@ -175,7 +175,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
                   $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
                   $a_input['state'] = 0;
                   $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
-                  $a_input['itemtype'] = 'PluginFusinvsnmpIPRange';
+                  $a_input['itemtype'] = 'PluginFusioninventoryIPRange';
                   $a_input['uniqid'] = $uniqid;
 
                   $a_input['items_id'] = $iprange_id;
@@ -209,7 +209,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
          $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
          $a_input['state'] = 1;
          $a_input['plugin_fusioninventory_agents_id'] = 0;
-         $a_input['itemtype'] = 'PluginFusinvsnmpIPRange';
+         $a_input['itemtype'] = 'PluginFusioninventoryIPRange';
          $a_input['items_id'] = 0;
          $a_input['uniqid'] = $uniqid;
          $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
@@ -221,7 +221,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
 
          $PluginFusioninventoryTaskjobstatus->changeStatusFinish($Taskjobstatus_id,
                                                                  0,
-                                                                 'PluginFusinvsnmpIPRange',
+                                                                 'PluginFusioninventoryIPRange',
                                                                  1,
                                                                  "Unable to find agent to run this job");
          $input_taskjob = array();
@@ -243,7 +243,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
             $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
             $a_input['state'] = 0;
             $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
-            $a_input['itemtype'] = 'PluginFusinvsnmpIPRange';
+            $a_input['itemtype'] = 'PluginFusioninventoryIPRange';
             $a_input['uniqid'] = $uniqid;
 
 //            $nbIpAgent = $numberIpByAgent;
@@ -360,7 +360,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      $PluginFusinvsnmpIPRange = new PluginFusinvsnmpIPRange;
+      $PluginFusinvsnmpIPRange = new PluginFusioninventoryIPRange;
       $PluginFusinvsnmpConfigSecurity = new PluginFusinvsnmpConfigSecurity;
       $PluginFusinvsnmpCommunicationSNMP = new PluginFusinvsnmpCommunicationSNMP;
 

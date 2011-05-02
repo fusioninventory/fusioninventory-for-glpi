@@ -60,21 +60,21 @@ class PluginFusinvsnmpStaticmisc {
    static function task_definitiontype_netdiscovery($a_itemtype) {
       global $LANG;
 
-      $a_itemtype['PluginFusinvsnmpIPRange'] = $LANG['plugin_fusinvsnmp']['iprange'][2];
+      $a_itemtype['PluginFusioninventoryIPRange'] = $LANG['plugin_fusinvsnmp']['iprange'][2];
 
       return $a_itemtype;
    }
 
 
 
-   static function task_definitionselection_PluginFusinvsnmpIPRange_netdiscovery($title) {
+   static function task_definitionselection_PluginFusioninventoryIPRange_netdiscovery($title) {
       global $LANG;
 
       $options = array();
       $options['entity'] = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
       $options['name'] = 'definitionselectiontoadd';
-      $rand = Dropdown::show("PluginFusinvsnmpIPRange", $options);
+      $rand = Dropdown::show("PluginFusioninventoryIPRange", $options);
       return $rand;
    }
 
@@ -84,7 +84,7 @@ class PluginFusinvsnmpStaticmisc {
    static function task_definitiontype_snmpinventory($a_itemtype) {
       global $LANG;
 
-      $a_itemtype['PluginFusinvsnmpIPRange'] = $LANG['plugin_fusinvsnmp']['iprange'][2];
+      $a_itemtype['PluginFusioninventoryIPRange'] = $LANG['plugin_fusinvsnmp']['iprange'][2];
       $a_itemtype['NetworkEquipment'] = NetworkEquipment::getTypeName();
       $a_itemtype['Printer'] = Printer::getTypeName();
 
@@ -93,8 +93,8 @@ class PluginFusinvsnmpStaticmisc {
 
 
 
-   static function task_definitionselection_PluginFusinvsnmpIPRange_snmpinventory($title) {
-      $rand = PluginFusinvsnmpStaticmisc::task_definitionselection_PluginFusinvsnmpIPRange_netdiscovery($title);
+   static function task_definitionselection_PluginFusioninventoryIPRange_snmpinventory($title) {
+      $rand = PluginFusinvsnmpStaticmisc::task_definitionselection_PluginFusioninventoryIPRange_netdiscovery($title);
       return $rand;
    }
 
@@ -151,7 +151,7 @@ class PluginFusinvsnmpStaticmisc {
       $a_itemtype = array();
       $a_itemtype[] = PRINTER_TYPE;
       $a_itemtype[] = NETWORKING_TYPE;
-      $a_itemtype[] = 'PluginFusinvsnmpIPRange';
+      $a_itemtype[] = 'PluginFusioninventoryIPRange';
 
       return $a_itemtype;
    }
@@ -164,7 +164,7 @@ class PluginFusinvsnmpStaticmisc {
       $selection_type = '';
       switch ($itemtype) {
 
-         case 'PluginFusinvsnmpIPRange':
+         case 'PluginFusioninventoryIPRange':
             $selection_type = 'iprange';
             break;
 
@@ -186,7 +186,7 @@ class PluginFusinvsnmpStaticmisc {
       $selection_type = '';
       switch ($itemtype) {
 
-         case 'PluginFusinvsnmpIPRange':
+         case 'PluginFusioninventoryIPRange':
             $selection_type = 'iprange';
             break;
 
@@ -213,11 +213,13 @@ class PluginFusinvsnmpStaticmisc {
          $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/configsecurity.php";
       }
 
+/*
       if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "iprange", "r")) {
          $a_menu[2]['name'] = $LANG['plugin_fusinvsnmp']['menu'][2];
          $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_rangeip.png";
          $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/iprange.php";
       }
+*/
 
       $a_menu[5]['name'] = $LANG['plugin_fusinvsnmp']['menu'][9];
       $a_menu[5]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_discovery_status.png";
@@ -240,8 +242,8 @@ class PluginFusinvsnmpStaticmisc {
                           'name'    => $LANG['plugin_fusinvsnmp']['profile'][2]);
       $a_profil[] = array('profil'  => 'configsecurity',
                           'name'    => $LANG['plugin_fusinvsnmp']['profile'][3]);
-      $a_profil[] = array('profil'  => 'iprange',
-                          'name'    => $LANG['plugin_fusinvsnmp']['profile'][4]);
+      //$a_profil[] = array('profil'  => 'iprange',
+      //                    'name'    => $LANG['plugin_fusinvsnmp']['profile'][4]);
       $a_profil[] = array('profil'  => 'networkequipment',
                           'name'    => $LANG['plugin_fusinvsnmp']['profile'][5]);
       $a_profil[] = array('profil'  => 'printer',

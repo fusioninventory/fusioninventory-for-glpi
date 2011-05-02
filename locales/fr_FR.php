@@ -411,6 +411,11 @@ $LANG['plugin_fusinvsnmp']['codetasklog'][4]=$LANG['log'][20];
 $LANG['plugin_fusinvsnmp']['codetasklog'][5]=$LANG['log'][21];
 $LANG['plugin_fusinvsnmp']['codetasklog'][6]="L'inventaire a démarré";
 
+$LANG['plugin_fusinvsnmp']['task'][15]="Tâche permanente - Découverte";
+$LANG['plugin_fusinvsnmp']['task'][16]="Tâche permanente - Inventaire";
+$LANG['plugin_fusinvsnmp']['task'][17]="Mode de communication";
+$LANG['plugin_fusinvsnmp']['task'][18]="Créer la tâche automatiquement";
+
 $LANG['plugin_fusinvsnmp']['legend'][0]="Connexion avec un switch or un serveur en mode trunk ou taggé";
 $LANG['plugin_fusinvsnmp']['legend'][1]="Connexion autre (avec un ordinateur, une imprimante...)";
 
