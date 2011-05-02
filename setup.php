@@ -80,7 +80,7 @@ function plugin_init_fusioninventory() {
 
       if (isset($_SESSION["glpiID"])) {
 
-         $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusinvsnmp_ipranges';
+         $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusioninventory_ipranges';
 
          if (haveRight("configuration", "r") || haveRight("profile", "w")) {// Config page
             $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/configuration.form.php?glpi_tab=1';
@@ -228,7 +228,6 @@ function plugin_init_fusioninventory() {
          && isset($_SERVER['HTTP_USER_AGENT']) 
             && isFusioninventoryUserAgent($_SERVER['HTTP_USER_AGENT'])) {
       include(GLPI_ROOT ."/plugins/fusioninventory/front/communication.php");
-      exit;
    }
 
 }

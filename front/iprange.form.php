@@ -36,7 +36,7 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-$PluginFusinvsnmpIPRange = new PluginFusioninventoryIPRange();
+$iprange = new PluginFusioninventoryIPRange();
 
 commonHeader($LANG['plugin_fusioninventory']['title'][0], $_SERVER["PHP_SELF"], "plugins", 
              "fusioninventory", "iprange");
@@ -47,12 +47,12 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 if (isset ($_POST["add"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "iprange","w");
-   if ($PluginFusinvsnmpIPRange->checkip($_POST)) {
+   if ($iprange->checkip($_POST)) {
       $_POST['ip_start']  = $_POST['ip_start0'].".".$_POST['ip_start1'].".";
       $_POST['ip_start'] .= $_POST['ip_start2'].".".$_POST['ip_start3'];
       $_POST['ip_end']    = $_POST['ip_end0'].".".$_POST['ip_end1'].".";
       $_POST['ip_end']   .= $_POST['ip_end2'].".".$_POST['ip_end3'];
-      $newID = $PluginFusinvsnmpIPRange->add($_POST);
+      $newID = $iprange->add($_POST);
       glpi_header(getItemTypeFormURL('PluginFusioninventoryIPRange')."?id=$newID");
    } else {
       glpi_header($_SERVER['HTTP_REFERER']);
@@ -87,12 +87,12 @@ if (isset ($_POST["add"])) {
       $PluginFusioninventoryTaskjob->update($input_taskjob);
    } else {
       PluginFusioninventoryProfile::checkRight("fusioninventory", "iprange","w");
-      if ($PluginFusinvsnmpIPRange->checkip($_POST)) {
+      if ($iprange->checkip($_POST)) {
          $_POST['ip_start']  = $_POST['ip_start0'].".".$_POST['ip_start1'].".";
          $_POST['ip_start'] .= $_POST['ip_start2'].".".$_POST['ip_start3'];
          $_POST['ip_end']    = $_POST['ip_end0'].".".$_POST['ip_end1'].".";
          $_POST['ip_end']   .= $_POST['ip_end2'].".".$_POST['ip_end3'];
-         $PluginFusinvsnmpIPRange->update($_POST);
+         $iprange->update($_POST);
       }
    }
    glpi_header($_SERVER['HTTP_REFERER']);
@@ -105,7 +105,7 @@ if (isset ($_POST["add"])) {
    } else {
       PluginFusioninventoryProfile::checkRight("fusioninventory", "iprange","w");
 
-      $PluginFusinvsnmpIPRange->delete($_POST);
+      $iprange->delete($_POST);
       glpi_header(getItemTypeSearchURL('PluginFusioninventoryIPRange'));
    }
 }
@@ -119,7 +119,7 @@ if (isset($_GET['allowcreate'])) {
    $allowcreate = $_GET['allowcreate'];
 }
 
-$PluginFusinvsnmpIPRange->showForm($id, array( "allowcreate"=> $allowcreate));
+$iprange->showForm($id, array( "allowcreate"=> $allowcreate));
 
 commonFooter();
 

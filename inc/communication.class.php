@@ -128,20 +128,24 @@ class PluginFusioninventoryCommunication {
       if (!isset($agent['id'])) {
          return true;
       }
+
       if (isset($this->sxml->CONTENT->MODULEVERSION)) {
+
+
          $PluginFusioninventoryAgent->setAgentVersions($agent['id'], $xmltag, (string)$this->sxml->CONTENT->MODULEVERSION);
       } else if (isset($this->sxml->CONTENT->VERSIONCLIENT)) {
          $version = str_replace("FusionInventory-Agent_", "", (string)$this->sxml->CONTENT->VERSIONCLIENT);
          $PluginFusioninventoryAgent->setAgentVersions($agent['id'], $xmltag, $version);
       }
 
+
       if (!$PluginFusioninventoryAgentmodule->getAgentsCanDo($xmltag, $agent['id'])) {
          return true;
+
       }
-      
+
       if (isset($_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"])) {
          $moduleClass = $_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"];
-
          $moduleCommunication = new $moduleClass();
          $errors.=$moduleCommunication->import($this->sxml->DEVICEID, $this->sxml->CONTENT, $p_xml);
       } else {

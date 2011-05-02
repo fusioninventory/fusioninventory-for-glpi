@@ -148,6 +148,9 @@ function pluginFusioninventoryUpdate($current_version) {
       case "2.3.1":
          include("update_231_232.php");
          update231to232();
+      case "2.4.0":
+         include("update_232_240.php");
+         update233to240();
    }
 
    $plugins_id = PluginFusioninventoryModule::getModuleId("fusinvinventory");

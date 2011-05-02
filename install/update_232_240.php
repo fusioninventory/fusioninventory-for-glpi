@@ -33,12 +33,12 @@
  */
 
 // Update from 2.2.1 to 2.3.0
-function update230to240() {
+function update232to240() {
    global $DB, $CFG_GLPI, $LANG;
 
    ini_set("max_execution_time", "0");
 
-   echo "<strong>Update 2.3.0 to 2.4.0</strong><br/>";
+   echo "<strong>Update 2.3.2 to 2.4.0</strong><br/>";
    echo "</td>";
    echo "</tr>";
 
@@ -57,6 +57,12 @@ function update230to240() {
       
       //Migrate itemtype in all tables
       //First taskjobstatus
+      $query = "UPDATE `glpi_displaypreferences` " .
+               "SET `itemtype`='PluginFusioninventoryIPRange' " .
+               "WHERE `itemtype`='PluginFusinvsnmpIPRange'";
+      $DB->query($query) or die ("Rename itemtype in glpi_displaypreferences".
+                                 $LANG['update'][90] . $DB->error());
+
       $query = "UPDATE `glpi_plugin_fusioninventory_taskjobstatus` " .
                "SET `itemtype`='PluginFusioninventoryIPRange' " .
                "WHERE `itemtype`='PluginFusinvsnmpIPRange'";
