@@ -110,7 +110,7 @@ function pluginFusinvinventoryInstall() {
          include(GLPI_ROOT . "/plugins/fusinvinventory/inc/ruleentitycollection.class.php");
       }
       if (!class_exists('PluginFusinvinventoryRuleEntity')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusinvinventory/inc/rruleentity.class.php");
+         include(GLPI_ROOT . "/plugins/fusinvinventory/inc/ruleentity.class.php");
       }
       $Rule = new Rule();
       $RuleCriteria = new RuleCriteria();
@@ -179,6 +179,7 @@ function pluginFusinvinventoryInstall() {
          }
       }
       // Import OCS locks
+      include_once GLPI_ROOT . "/plugins/fusinvinventory/inc/lock.class.php";
       $PluginFusinvinventoryLock = new PluginFusinvinventoryLock();
       $PluginFusinvinventoryLock->importFromOcs();
    }
