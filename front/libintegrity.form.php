@@ -46,8 +46,15 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 $PluginFusinvinventoryLibintegrity = new PluginFusinvinventoryLibintegrity();
 if (!empty($_POST)) {
-   foreach($_POST['reimport'] as $infos=>$num) {
-      $PluginFusinvinventoryLibintegrity->Import($infos);
+   if (isset($_POST['reimport'])) {
+      foreach($_POST['reimport'] as $infos=>$num) {
+         $PluginFusinvinventoryLibintegrity->Import($infos);
+      }
+   }
+   if (isset($_POST['glpidelete'])) {
+      foreach($_POST['glpidelete'] as $infos=>$num) {
+         $PluginFusinvinventoryLibintegrity->deleteGLPI($infos);
+      }
    }
    glpi_header($_SERVER['HTTP_REFERER']);
 }

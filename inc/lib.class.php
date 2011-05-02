@@ -60,10 +60,15 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          // Transfer if entity is different
          $Computer = new Computer();
          $Computer->getFromDB($items_id);
-         $Computer->fields['autoupdatesystems_id'] = Dropdown::importExternal('AutoUpdateSystem', 
-                                                                              'FusionInventory');
-         $_SESSION['glpiactiveentities_string']    = $Computer->fields['entities_id'];
-         $Computer->update($Computer->fields);
+         $input = array();
+         $input['id'] = $Computer->fields['id'];
+         $input['autoupdatesystems_id'] = Dropdown::importExternal('AutoUpdateSystem', 'FusionInventory');
+         $_SESSION['glpiactiveentities_string'] = $Computer->fields['entities_id'];
+         $input['is_ocs_import'] = 0;
+         $Computer->update($input);
+         if ($_SESSION["plugin_fusinvinventory_entity"] == NOT_AVAILABLE) {
+            $_SESSION["plugin_fusinvinventory_entity"] = $Computer->fields['entities_id'];
+         }
          $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
          if ($Computer->getEntityID() != $_SESSION["plugin_fusinvinventory_entity"]) {
             $Transfer = new Transfer();
@@ -76,17 +81,6 @@ class PluginFusinvinventoryLib extends CommonDBTM {
 
             $Transfer->moveItems($item_to_transfer, $_SESSION["plugin_fusinvinventory_entity"], 
                                  $Transfer->fields);
-         }
-         // Transfer agent entity
-         $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-         if ($agent_id = $PluginFusioninventoryAgent->getAgentWithComputerid($items_id)) {
-            $PluginFusioninventoryAgent->getFromDB($agent_id);
-            if ($PluginFusioninventoryAgent->getEntityID() 
-                  != $_SESSION["plugin_fusinvinventory_entity"]) {
-               $PluginFusioninventoryAgent->fields['entities_id'] 
-                  = $_SESSION["plugin_fusinvinventory_entity"];
-               $PluginFusioninventoryAgent->update($PluginFusioninventoryAgent->fields);
-            }
          }
 
       //if ($internalId = $this->isMachineExist()) {
@@ -112,6 +106,18 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
          $PluginFusioninventoryAgent->setAgentWithComputerid($items_id, $xml->DEVICEID);
 
+         // Transfer agent entity
+         $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+         if ($agent_id = $PluginFusioninventoryAgent->getAgentWithComputerid($items_id)) {
+            $PluginFusioninventoryAgent->getFromDB($agent_id);
+            if ($PluginFusioninventoryAgent->getEntityID() != $_SESSION["plugin_fusinvinventory_entity"]) {
+               $input = array();
+               $input['id'] = $PluginFusioninventoryAgent->fields['id'];
+               $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+               $PluginFusioninventoryAgent->update($input);
+            }
+         }
+
          //Sections update
          $xmlSections = $this->_getXMLSections($simpleXMLObj);
          $this->updateLibMachine($xmlSections, $internalId);
@@ -120,6 +126,9 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          $PluginFusinvinventoryLibhook->writeXMLFusion($items_id);
       } else {
          // New Computer
+         if ($_SESSION["plugin_fusinvinventory_entity"] == NOT_AVAILABLE) {
+            $_SESSION["plugin_fusinvinventory_entity"] = 0;
+         }
 
          //We launch CreateMachine() hook and provide an InternalId
          $xmlSections = $this->_getXMLSections($simpleXMLObj);
@@ -264,7 +273,8 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       $a_sections[] = "VIDEOS";
       $a_sections[] = "USBDEVICES";
       $a_sections[] = "VIRTUALMACHINES";
-      
+      $a_sections[] = "CPUS";
+
       // Retrieve all sections stored in info file
       $infoSections = $this->_getInfoSections($internalId);
       // Retrieve all sections from xml file
@@ -322,7 +332,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                            break;
                            
                         case "SOFTWARES":
-                           if (((isset($arrSectionToAdd["GUID"]) AND isset($arrSectionToRemove["GUID"])
+                           if ((isset($arrSectionToAdd["GUID"]) AND isset($arrSectionToRemove["GUID"])
                                  AND ($arrSectionToAdd["GUID"] == $arrSectionToRemove["GUID"])
                                  AND isset($arrSectionToAdd["VERSION"]) AND isset($arrSectionToRemove["VERSION"])
                                  AND $arrSectionToAdd["VERSION"] == $arrSectionToRemove["VERSION"])
@@ -332,9 +342,12 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                                  AND !isset($arrSectionToAdd["VERSION"]))
 
                               OR (isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
-                                 AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"])
-                              AND isset($arrSectionToAdd["VERSION"]) AND isset($arrSectionToRemove["VERSION"])
-                                 AND $arrSectionToAdd["VERSION"] == $arrSectionToRemove["VERSION"])) {
+                                 AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]
+                                 AND isset($arrSectionToAdd["VERSION"]) AND isset($arrSectionToRemove["VERSION"])
+                                 AND $arrSectionToAdd["VERSION"] == $arrSectionToRemove["VERSION"])
+                              OR (isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
+                                 AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]
+                                 AND !isset($arrSectionToAdd["VERSION"]))) {
 
                               $boolUpdate = true;
                            }
@@ -347,8 +360,15 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                                  AND $arrSectionToAdd["PCISLOT"] == $arrSectionToRemove["PCISLOT"])
                                OR (!isset($arrSectionToRemove["PCIID"])
                                  AND isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
+                                 AND isset($arrSectionToAdd["NAME"]) == isset($arrSectionToRemove["NAME"])
                                  AND isset($arrSectionToAdd['MANUFACTURER']) AND isset($arrSectionToRemove['MANUFACTURER'])
-                                 AND isset($arrSectionToAdd['CAPTION']) AND isset($arrSectionToRemove['CAPTION']) )) {
+                                 AND isset($arrSectionToAdd['MANUFACTURER']) == isset($arrSectionToRemove['MANUFACTURER'])
+                                 AND isset($arrSectionToAdd['CAPTION']) AND isset($arrSectionToRemove['CAPTION'])
+                                 AND isset($arrSectionToAdd['CAPTION']) == isset($arrSectionToRemove['CAPTION']))
+                               OR (!isset($arrSectionToRemove["PCIID"])
+                                 AND isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
+                                 AND isset($arrSectionToAdd["NAME"]) == isset($arrSectionToRemove["NAME"])
+                                 AND !isset($arrSectionToRemove['MANUFACTURER']))) {
 
                               $boolUpdate = true;
                            }
@@ -489,6 +509,15 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                            }
                             break;
 
+                        case "CPUS":
+                           if (isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
+                                 AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]
+                                 AND isset($arrSectionToAdd['MANUFACTURER']) AND isset($arrSectionToRemove['MANUFACTURER'])
+                                 AND isset($arrSectionToAdd['MANUFACTURER']) == isset($arrSectionToRemove['MANUFACTURER'])) {
+                              $boolUpdate = true;
+                           }
+                           break;
+
                         default:
                            break;
 
@@ -569,8 +598,12 @@ class PluginFusinvinventoryLib extends CommonDBTM {
 
       $serializedSections = "";
       foreach($infoSections["sections"] as $key => $serializedSection) {
-         $serializedSections .= $key."<<=>>".$serializedSection."
+         if (!strstr($key, "ENVS/")
+               AND !strstr($key, "PROCESSES/")) {
+
+            $serializedSections .= $key."<<=>>".$serializedSection."
 ";
+         }
       }
       //$externalId=$infoSections["externalId"];
 
@@ -724,8 +757,12 @@ class PluginFusinvinventoryLib extends CommonDBTM {
 
       $serializedSections = "";
       foreach($serializedSectionsFromXML as $key => $serializedSection) {
-         $serializedSections .= array_shift($a_sectionsinfos)."<<=>>".$serializedSection."
+         if (!strstr($key, "ENVS/")
+               AND !strstr($key, "PROCESSES/")) {
+
+            $serializedSections .= array_shift($a_sectionsinfos)."<<=>>".$serializedSection."
 ";
+         }
       }
       $this->_serializeIntoDB($internal_id, $serializedSections);
    }

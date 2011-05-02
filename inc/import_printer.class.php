@@ -96,8 +96,10 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
             }
          } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                  "import_printer") == '1') {
+            // Global
             if ((isset($dataSection['NAME'])) AND (!empty($dataSection['NAME']))) {
-               $a_printers = $printer->find("`name`='".$dataSection['NAME']."'","", 1);
+               $a_printers = $printer->find("`name`='".$dataSection['NAME']."'
+                              AND `is_global`='1'","", 1);
                if (count($a_printers) > 0) {
                   foreach($a_printers as $data) {
                      $a_printer = $data;
@@ -105,7 +107,7 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
                } else {
                   $a_printer = array();
                }
-               $a_printer['is_global'] = 'yes';
+               $a_printer['is_global'] = 1;
             }
 
          }
@@ -129,6 +131,13 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
 
       $printer_id = 0;
       if (!isset($a_printer['id'])) {
+         if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                 "import_printer") == '1') {
+            $a_printer['is_global'] = 1;
+         }
+
+         PluginFusinvinventoryInventory::addDefaultStateIfNeeded($a_printer, true, 
+                                                                 $a_printer['is_global']);
          $printer_id = $printer->add($a_printer);
       } else {
          $printer_id = $a_printer['id'];
@@ -157,11 +166,15 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
    *
    **/
    function deleteItem($items_id, $idmachine) {
-      $Computer_Item = new Computer_Item();
-      $Computer_Item->getFromDB($items_id);
-      if ($Computer_Item->fields['computers_id'] == $idmachine) {
-         $Computer_Item->delete(array("id" => $items_id,
-                                      "itemtype" => "Printer"));
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+      if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                 "import_printer") != '0') {
+         $Computer_Item = new Computer_Item();
+         $Computer_Item->getFromDB($items_id);
+         if ($Computer_Item->fields['computers_id'] == $idmachine) {
+            $Computer_Item->delete(array("id" => $items_id,
+                                         "itemtype" => "Printer"));
+         }
       }
    }
 }

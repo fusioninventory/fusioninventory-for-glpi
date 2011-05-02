@@ -123,8 +123,10 @@ class PluginFusinvinventoryInventory {
                }
             }
          }
-         if ((isset($xml->CONTENT->BIOS->ASSETTAG)) AND (!empty($xml->CONTENT->BIOS->ASSETTAG))) {
-            $input['tag'] = (string)$xml->CONTENT->BIOS->ASSETTAG;
+         if ((isset($xml->CONTENT->ACCOUNTINFO->KEYNAME)) AND ($xml->CONTENT->ACCOUNTINFO->KEYNAME == 'TAG')) {
+            if (isset($xml->CONTENT->ACCOUNTINFO->KEYVALUE)) {
+               $input['tag'] = (string)$xml->CONTENT->ACCOUNTINFO->KEYVALUE;
+            }
          }
          if ((isset($xml->CONTENT->HARDWARE->NAME)) AND (!empty($xml->CONTENT->HARDWARE->NAME))) {
             $input['name'] = (string)$xml->CONTENT->HARDWARE->NAME;
@@ -186,9 +188,8 @@ class PluginFusinvinventoryInventory {
                   }
                }
             }
-            if ((isset($xml->CONTENT->HARDWARE->USERDOMAIN)) 
-                  AND (!empty($xml->CONTENT->HARDWARE->USERDOMAIN))) {
-               $input_rules['domain'] = (string)$xml->CONTENT->HARDWARE->USERDOMAIN;
+            if ((isset($xml->CONTENT->HARDWARE->WORKGROUP)) AND (!empty($xml->CONTENT->HARDWARE->WORKGROUP))) {
+               $input_rules['domain'] = (string)$xml->CONTENT->HARDWARE->WORKGROUP;
             }
             if ((isset($xml->CONTENT->ACCOUNTINFO->KEYNAME)) 
                   AND ($xml->CONTENT->ACCOUNTINFO->KEYNAME == 'TAG')) {
@@ -204,7 +205,7 @@ class PluginFusinvinventoryInventory {
             if (isset($dataEntity['entities_id'])) {
                $_SESSION["plugin_fusinvinventory_entity"] = $dataEntity['entities_id'];
             } else {
-               $_SESSION["plugin_fusinvinventory_entity"] = "0";
+               $_SESSION["plugin_fusinvinventory_entity"] = "N/A";
             }
 
             if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 
@@ -213,9 +214,15 @@ class PluginFusinvinventoryInventory {
             }
 
          if ($items_id == '0') {
-            $input                = array();
-            $input['date_mod']    = date("Y-m-d H:i:s");
+            if ($_SESSION["plugin_fusinvinventory_entity"] == NOT_AVAILABLE) {
+               $_SESSION["plugin_fusinvinventory_entity"] = 0;
+            }
+            $input = array();
+            $input['date_mod'] = date("Y-m-d H:i:s");
             $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+
+            self::addDefaultStateIfNeeded($input, false);
+            logDebug($input);
             $items_id = $Computer->add($input);
             $PluginFusinvinventoryLib->startAction($xml, $items_id, '1');
          } else {
@@ -224,6 +231,17 @@ class PluginFusinvinventoryInventory {
       }
    }
 
+   static function addDefaultStateIfNeeded(&$input, $check_management = false, $management_value = 0) {
+      $config = new PluginFusioninventoryConfig();
+      $state = $config->getValue($_SESSION["plugin_fusinvinventory_moduleid"], "states_id_default");
+      if ($state) {
+         if (!$check_management || ($check_management && !$management_value)) {
+            $input['states_id'] = $state;
+         
+         }
+      
+      }
+   }
    
 
    /**
@@ -529,7 +547,21 @@ class PluginFusinvinventoryInventory {
                                        Dropdown::getDropdownName("glpi_virtualmachinetypes",
                                                                  $VirtualMachines_data['virtualmachinetypes_id']));
       }
-
+      
+      // ** USBDEVICES (PERIPHERALS)
+      $Peripheral = new Peripheral();
+      $Computer_Item = new Computer_Item();
+      $a_ComputerPeripheral = $Computer_Item->find("`computers_id`='".$items_id."' AND `itemtype`='Peripheral'");
+      foreach ($a_ComputerPeripheral as $ComputerPeripheral_id => $ComputerPeripheral_data) {
+         $a_sectionsinfos[] = "USBDEVICES/".$ComputerPeripheral_id;
+         $xml_peripheral = $xml_content->addChild("USBDEVICES");
+         $Peripheral->getFromDB($ComputerPeripheral_data['items_id']);
+         $xml_peripheral->addChild("NAME", $Peripheral->fields['name']);
+         if ($Peripheral->fields['serial'] != "") {
+            $xml_peripheral->addChild("SERIAL", $Peripheral->fields['serial']);
+         }
+      }
+      
       $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
       $PluginFusinvinventoryLib->addLibMachineFromGLPI($items_id, $internal_id, $xml, $a_sectionsinfos);
    }

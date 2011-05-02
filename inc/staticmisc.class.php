@@ -38,7 +38,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvinventoryStaticmisc {
 
-
    /**
    * Get task methods of this plugin fusinvinventory
    *
@@ -53,7 +52,7 @@ class PluginFusinvinventoryStaticmisc {
                           'method'         => 'inventory',
                           'selection_type' => 'devices',
                           'hidetask'       => 1,
-                          'name'           => $LANG['plugin_fusinvinventory']['title'][1],
+                          'name'           => $LANG['Menu'][38],
                           'use_rest'       => false);
                           
      //if (PluginFusioninventoryCredential::hasAlLeastOneType()) {

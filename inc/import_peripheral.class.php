@@ -95,8 +95,10 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
             }
          } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                  "import_peripheral") == '1') {
+            // GLOBAL
             if ((isset($dataSection['NAME'])) AND (!empty($dataSection['NAME']))) {
-               $a_peripherals = $Peripheral->find("`name`='".$dataSection['NAME']."'","", 1);
+               $a_peripherals = $Peripheral->find("`name`='".$dataSection['NAME']."'
+                              AND `is_global`='1'","", 1);
                if (count($a_peripherals) > 0) {
                   foreach($a_peripherals as $data) {
                      $a_Peripheral = $data;
@@ -104,7 +106,7 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
                } else {
                   $a_Peripheral = array();
                }
-               $a_Peripheral['is_global'] = 'yes';
+               $a_Peripheral['is_global'] = 1;
             }
 
          }
@@ -134,6 +136,14 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
       if ($type == "update") {
          $Peripheral->update($a_Peripheral);
       } else if ($type == "add") {
+         if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                 "import_peripheral") == '1') {
+            $a_Peripheral['is_global'] = 1;
+         }
+
+         PluginFusinvinventoryInventory::addDefaultStateIfNeeded($a_Peripheral, true, 
+                                                                 $a_Peripheral['is_global']);
+         
          $peripheral_id = $Peripheral->add($a_Peripheral);
       }
 
@@ -160,11 +170,15 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
    *
    **/
    function deleteItem($items_id, $idmachine) {
-      $Computer_Item = new Computer_Item();
-      $Computer_Item->getFromDB($items_id);
-      if ($Computer_Item->fields['computers_id'] == $idmachine) {
-         $Computer_Item->delete(array("id" => $items_id,
-                                      "itemtype" => "Peripheral"));
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+      if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                 "import_peripheral") != '0') {
+         $Computer_Item = new Computer_Item();
+         $Computer_Item->getFromDB($items_id);
+         if ($Computer_Item->fields['computers_id'] == $idmachine) {
+            $Computer_Item->delete(array("id" => $items_id,
+                                         "itemtype" => "Peripheral"));
+         }
       }
    }
 }

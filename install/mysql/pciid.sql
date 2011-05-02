@@ -11585,7 +11585,7 @@ INSERT INTO `glpi_plugin_fusinvinventory_pcidevices`
 (9508, '9865', 'PCI 9865 Multi-I/O Controller', '1962'),
 (9509, '9901', 'PCIe 9901 Multi-I/O Controller', '1962'),
 (9510, '9904', '4-Port PCIe Serial Adapter', '1962'),
-(9511, '9990', 'MCS9990 PCIe to 4&acirc;ÄêPort USB 2.0 Host Controller', '1962'),
+(9511, '9990', 'MCS9990 PCIe to 4&acirc;Port USB 2.0 Host Controller', '1962'),
 (9512, '0001', 'SG2010 PCI over Starfabric Bridge', '1963'),
 (9513, '0002', 'SG2010 PCI to Starfabric Gateway', '1963'),
 (9514, '0003', 'SG1010 Starfabric Switch and PCI Bridge', '1963'),

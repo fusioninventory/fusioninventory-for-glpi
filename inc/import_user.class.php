@@ -61,12 +61,14 @@ class PluginFusinvinventoryImport_User extends CommonDBTM {
       }
 
       $Computer->getFromDB($items_id);
+      $input = array();
+      $input['id'] = $Computer->fields['id'];
       if (isset($dataSection['LOGIN'])) {
          if (!in_array('contact', $a_lockable)) {
             if ($_SESSION["plugin_fusinvinventory_userdefined"] == 0) {
-               $Computer->fields['contact'] = $dataSection['LOGIN'];
+               $input['contact'] = $dataSection['LOGIN'];
             } else {
-               $Computer->fields['contact'] .= "/".$dataSection['LOGIN'];
+               $input['contact'] .= "/".$dataSection['LOGIN'];
             }
          }
          if ((!in_array('users_id', $a_lockable))
@@ -76,13 +78,13 @@ class PluginFusinvinventoryImport_User extends CommonDBTM {
                       WHERE `name` = '" . $dataSection['LOGIN'] . "';";
             $result = $DB->query($query);
             if ($DB->numrows($result) == 1) {
-               $Computer->fields["users_id"] = $DB->result($result, 0, 0);
+               $input["users_id"] = $DB->result($result, 0, 0);
                $_SESSION["plugin_fusinvinventory_userdefined"] = 1;
-               $Computer->update($Computer->fields);
+               $Computer->update($input);
                return $DB->result($result, 0, 0);
             }
          }
-         $Computer->update($Computer->fields);
+         $Computer->update($input);
          return "-".$dataSection['LOGIN'];
       }
       return "";
@@ -101,26 +103,33 @@ class PluginFusinvinventoryImport_User extends CommonDBTM {
    **/
    function deleteItem($items_id, $idmachine) {
       $Computer = new Computer();
+      $User = new User();
+
+      $input = array();
 
       if (!isset($_SESSION["plugin_fusinvinventory_userdefined"])) {
          $_SESSION["plugin_fusinvinventory_userdefined"] = 0;
       }
       $Computer->getFromDB($idmachine);
+      $input = array();
+      $input['id'] = $Computer->fields['id'];
       if (!strstr($items_id, "-")) {
-         $User = new User();
          $User->getFromDB($items_id);
-         $items_id = "-".$User->getName();
-         $Computer->fields["users_id"] = 0;
+         //$Computer->fields["users_id"] = 0;
          $_SESSION["plugin_fusinvinventory_userdefined"] = 0;
       }
       $username = preg_replace("/^-/", "", $items_id);
-      if (strstr($Computer->fields['contact'], "/".$username)) {
-         $Computer->fields['contact'] = str_replace("/".$username, "", $Computer->fields['contact']);
-      } else {
-         $Computer->fields['contact'] = str_replace($username, "", $Computer->fields['contact']);
+      if (is_numeric($username)) {
+         $User->getFromDB($items_id);
+         $username = $User->getField("name");
       }
-      $username = preg_replace("/^/", "", $Computer->fields['contact']);
-      $Computer->update($Computer->fields);      
+      if (strstr($Computer->fields['contact'], "/".$username)) {
+         $input['contact'] = str_replace("/".$username, "", $Computer->fields['contact']);
+      } else {
+         $input['contact'] = str_replace($username, "", $Computer->fields['contact']);
+      }
+      $input['contact'] = preg_replace("/^\//", "", $input['contact']);
+      $Computer->update($input);
    }
 }
 

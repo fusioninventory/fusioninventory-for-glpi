@@ -59,16 +59,26 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       // Display the pager
       printPager($start,$number,GLPI_ROOT."/plugins/fusinvinventory/front/libintegrity.form.php",'');
 
-      echo "<form method='post' name='' id=''  action=\"".GLPI_ROOT . "/plugins/fusinvinventory/front/libintegrity.form.php\">";
-      echo "<table class='tab_cadre' width='500'>";
+      echo "<form method='post' name='integritylist' id='integritylist'  action=\"".GLPI_ROOT . "/plugins/fusinvinventory/front/libintegrity.form.php\">";
+      echo "<table class='tab_cadre' width='950'>";
+      
       echo "<tr>";
-      echo "<th colspan='2'>";
-      echo $LANG['buttons'][37];
+      echo "<th colspan='3'>";
+      echo "Check integrity";
       echo "</th>";
       echo "</tr>";
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
+      echo "<tr>";
+      echo "<th>";
+      echo $LANG['common'][16];
+      echo "</th>";
+      echo "<th>";
+      echo "Only in GLPI (to delete)";
+      echo "</th>";
+      echo "<th>";
+      echo "Only in last inventory (to import)";
+      echo "</th>";
+      echo "</tr>";
 
       $query = "SELECT * FROM `glpi_plugin_fusinvinventory_libserialization`
           LIMIT ".intval($start)."," . intval($_SESSION['glpilist_limit']);
@@ -78,6 +88,7 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
          $a_sections = $PluginFusinvinventoryLib->_getInfoSections($a_computerlib['internal_id']);
          $Computer->getFromDB($computer_id);
          $text = "";
+         $a_sections_lib = array();
          foreach($a_sections['sections'] as $name=>$section) {
             //echo $name."<br/>";
             $split = explode("/", $name);
@@ -86,52 +97,73 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
 
                   case 'CONTROLLERS':
                      $DeviceControl = new Computer_Device('DeviceControl');
-                     if (!$DeviceControl->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
+                     if (!$a_lists = $DeviceControl->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
                         $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['devices'][20]);
+                     } else {
+                        $a_list = current($a_lists);
+                        $a_sections_lib['CONTROLLERS'][$a_list['id']] = 1;
                      }
                      break;
 
                   case 'CPUS':
                      $DeviceProcessor = new Computer_Device('DeviceProcessor');
-                     if (!$DeviceProcessor->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
+                     if (!$a_lists = $DeviceProcessor->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
                         $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['devices'][4]);
+                     } else {
+                        $a_list = current($a_lists);
+                        $a_sections_lib['CPUS'][$a_list['id']] = 1;
                      }
                      break;
 
                   case 'DRIVES':
                      $ComputerDisk = new ComputerDisk();
-                     if (!$ComputerDisk->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
+                     if (!$a_lists = $ComputerDisk->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
                         $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['devices'][19]);
+                     } else {
+                        $a_list = current($a_lists);
+                        $a_sections_lib['DRIVES'][$a_list['id']] = 1;
                      }
                      break;
 
                   case 'MEMORIES':
                      $DeviceMemory = new Computer_Device('DeviceMemory');
-                     if (!$DeviceMemory->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
+                     if (!$a_lists = $DeviceMemory->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
                         $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['devices'][6]);
+                     } else {
+                        $a_list = current($a_lists);
+                        $a_sections_lib['MEMORIES'][$a_list['id']] = 1;
                      }
                      break;
 
                   case 'NETWORKS':
                      $NetworkPort = new NetworkPort();
-                     if (!$NetworkPort->find("`id`='".$split[1]."' 
+                     if (!$a_lists = $NetworkPort->find("`id`='".$split[1]."'
                                              AND `items_id`='".$computer_id."'
                                              AND `itemtype`='Computer'")) {
                         $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['networking'][4]);
+                     } else {
+                        $a_list = current($a_lists);
+                        $a_sections_lib['NETWORKS'][$a_list['id']] = 1;
                      }
                      break;
 
                   case 'SOFTWARES':
                      $Computer_SoftwareVersion = new Computer_SoftwareVersion();
-                     if (!$Computer_SoftwareVersion->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
+                     if (!$a_lists = $Computer_SoftwareVersion->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
                         $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['help'][31]);
+                     } else {
+                        $a_list = current($a_lists);
+                        $a_sections_lib['SOFTWARES'][$a_list['id']] = 1;
                      }
                      break;
 
                   case 'SOUNDS':
                      $DeviceSoundCard = new Computer_Device('DeviceSoundCard');
-                     if (!$DeviceSoundCard->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
+                     if (!$a_lists = $DeviceSoundCard->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
                         $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['devices'][7]);
+                     } else {
+                        $a_list = current($a_lists);
+                        $a_sections_lib['SOUNDS'][$a_list['id']] = 1;
                      }
                      break;
 
@@ -141,48 +173,66 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
                      $type_tmp = $PluginFusinvinventoryImport_Storage->getTypeDrive($array_section);
                      if ($type_tmp == "Drive") {
                         $DeviceDrive = new Computer_Device('DeviceDrive');
-                        if (!$DeviceDrive->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
+                        if (!$a_lists = $DeviceDrive->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
                            $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['devices'][19]);
+                        } else {
+                           $a_list = current($a_lists);
+                           $a_sections_lib['Drive'][$a_list['id']] = 1;
                         }
                      } else {
                         $DeviceHardDrive = new Computer_Device('DeviceHardDrive');
-                        if (!$DeviceHardDrive->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
+                        if (!$a_lists = $DeviceHardDrive->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
                            $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['devices'][1]);
+                        } else {
+                           $a_list = current($a_lists);
+                           $a_sections_lib['STORAGES'][$a_list['id']] = 1;
                         }
                      }
                      break;
 
                   case 'VIDEOS':
                      $DeviceGraphicCard = new Computer_Device('DeviceGraphicCard');
-                     if (!$DeviceGraphicCard->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
+                     if (!$a_lists = $DeviceGraphicCard->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
                         $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['devices'][2]);
-                     }
+                     } else {
+                           $a_list = current($a_lists);
+                           $a_sections_lib['VIDEOS'][$a_list['id']] = 1;
+                        }
                      break;
 
                   case 'MONITORS':
                      $Computer_Item = new Computer_Item();
-                     if (!$Computer_Item->find("`id`='".$split[1]."' 
+                     if (!$a_lists = $Computer_Item->find("`id`='".$split[1]."'
                                                 AND `computers_id`='".$computer_id."'
                                                 AND `itemtype`='Monitor'")) {
                         $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['help'][28]);
+                     } else {
+                        $a_list = current($a_lists);
+                        $a_sections_lib['MONITORS'][$a_list['id']] = 1;
                      }
                      break;
 
                   case 'PRINTERS':
                      $Computer_Item = new Computer_Item();
-                     if (!$Computer_Item->find("`id`='".$split[1]."'
+                     if (!$a_lists = $Computer_Item->find("`id`='".$split[1]."'
                                                 AND `computers_id`='".$computer_id."'
                                                 AND `itemtype`='Printer'")) {
                         $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['help'][27]);
+                     } else {
+                        $a_list = current($a_lists);
+                        $a_sections_lib['PRINTERS'][$a_list['id']] = 1;
                      }
                      break;
 
                   case 'USBDEVICES':
                      $Computer_Item = new Computer_Item();
-                     if (!$Computer_Item->find("`id`='".$split[1]."'
+                     if (!$a_lists = $Computer_Item->find("`id`='".$split[1]."'
                                                 AND `computers_id`='".$computer_id."'
                                                 AND `itemtype`='Peripheral'")) {
                         $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['help'][29]);
+                     } else {
+                        $a_list = current($a_lists);
+                        $a_sections_lib['USBDEVICES'][$a_list['id']] = 1;
                      }
                      break;
 
@@ -277,11 +327,160 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
                      }
                      break;
 
+                  case 'USBDEVICES':
+                     // Printers must be created  but not created (in case
+                     // of changes configuration of printer import)
+                     $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+                     if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                             "import_peripheral") == '3') { //Import on serial number
+
+                        $unserializedsection = unserialize($section);
+                        if (isset($unserializedsection['SERIAL'])
+                                AND !empty($unserializedsection['SERIAL'])) {
+
+                           // Search in DB if exist
+                           $query_peripheral = "SELECT * FROM `glpi_computers_items`
+                              LEFT JOIN `glpi_peripherals` on `glpi_peripherals`.`id`=`items_id`
+                              WHERE `computers_id`='".$computer_id."'
+                                 AND `itemtype`='Peripherals'";
+                           if ($result_peripheral = $DB->query($query_peripheral)) {
+                              if ($DB->numrows($result_peripheral) == 0) {
+                                 $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['help'][28]);
+                              }
+                           }
+                        }
+                     } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                             "import_periheral") == '2') { //Import on serial number
+
+                        // Search in DB if exist
+                        $query_peripheral = "SELECT * FROM `glpi_computers_items`
+                           LEFT JOIN `glpi_peripherals` on `glpi_peripherals`.`id`=`items_id`
+                           WHERE `computers_id`='".$computer_id."'
+                              AND `itemtype`='Peripheral'";
+                        if ($result_peripheral = $DB->query($query_peripheral)) {
+                           if ($DB->numrows($result_peripheral) == 0) {
+                              $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['help'][28]);
+                           }
+                        }
+                     }
+                     break;
+
                }
             }
          }
+
+         // Check now sections in GLPI ant not in lib
+         foreach($a_sections_lib as $sectionName=>$data) {
+            switch ($sectionName) {
+
+               case "CONTROLLERS":
+                  $DeviceControl = new Computer_Device('DeviceControl');
+                  $a_sectionsGLPI = $DeviceControl->find("`computers_id`='".$computer_id."'");
+                  $name = $LANG['devices'][20];
+                  $itemtype = "DeviceControl";
+                  break;
+
+               case 'CPUS':
+                  $DeviceProcessor = new Computer_Device('DeviceProcessor');
+                  $a_sectionsGLPI = $DeviceProcessor->find("`computers_id`='".$computer_id."'");
+                  $name = $LANG['devices'][4];
+                  $itemtype = "DeviceProcessor";
+                  break;
+
+               case 'DRIVES':
+                  $ComputerDisk = new ComputerDisk();
+                  $a_sectionsGLPI = $ComputerDisk->find("`computers_id`='".$computer_id."'");
+                  $name = $LANG['devices'][19];
+                  $itemtype = "ComputerDisk";
+                  break;
+
+               case 'MEMORIES':
+                  $DeviceMemory = new Computer_Device('DeviceMemory');
+                  $a_sectionsGLPI = $DeviceMemory->find("`computers_id`='".$computer_id."'");
+                  $name = $LANG['devices'][6];
+                  $itemtype = "DeviceMemory";
+                  break;
+
+               case 'NETWORKS':
+                  $NetworkPort = new NetworkPort();
+                  $a_sectionsGLPI = $NetworkPort->find("`items_id`='".$computer_id."'
+                                             AND `itemtype`='Computer'");
+                  $name = $LANG['networking'][4];
+                  $itemtype = "NetworkPort";
+                  break;
+
+               case 'SOFTWARES':
+                  $Computer_SoftwareVersion = new Computer_SoftwareVersion();
+                  $a_sectionsGLPI = $Computer_SoftwareVersion->find("`computers_id`='".$computer_id."'");
+                  $name = $LANG['help'][31];
+                  $itemtype = "NetworkPort";
+                  break;
+
+               case 'SOUNDS':
+                  $DeviceSoundCard = new Computer_Device('DeviceSoundCard');
+                  $a_sectionsGLPI = $DeviceSoundCard->find("`computers_id`='".$computer_id."'");
+                  $name = $LANG['devices'][7];
+                  $itemtype = "DeviceSoundCard";
+                  break;
+
+               case 'Drive':
+                  $DeviceDrive = new Computer_Device('DeviceDrive');
+                  $a_sectionsGLPI = $DeviceDrive->find("`computers_id`='".$computer_id."'");
+                  $name = $LANG['devices'][19];
+                  $itemtype = "DeviceDrive";
+                  break;
+
+               case 'STORAGES':
+                  $DeviceHardDrive = new Computer_Device('DeviceHardDrive');
+                  $a_sectionsGLPI = $DeviceHardDrive->find("`computers_id`='".$computer_id."'");
+                  $name= $LANG['devices'][1];
+                  $itemtype = "DeviceHardDrive";
+                  break;
+
+               case 'VIDEOS':
+                  $DeviceGraphicCard = new Computer_Device('DeviceGraphicCard');
+                  $a_sectionsGLPI = $DeviceGraphicCard->find("`computers_id`='".$computer_id."'");
+                  $name= $LANG['devices'][2];
+                  $itemtype = "DeviceGraphicCard";
+                  break;
+
+               case 'MONITORS':
+                  $Computer_Item = new Computer_Item();
+                  $a_sectionsGLPI = $Computer_Item->find("`computers_id`='".$computer_id."'
+                                                AND `itemtype`='Monitor'");
+                  $name = $LANG['help'][28];
+                  $itemtype = "Computer_Item";
+                  break;
+
+               case "PRINTERS":
+                  $Computer_Item = new Computer_Item();
+                  $a_sectionsGLPI = $Computer_Item->find("`computers_id`='".$computer_id."'
+                                                AND `itemtype`='Printer'");
+                  $name = $LANG['help'][27];
+                  $itemtype = "Computer_Item";
+                  break;
+
+               case 'USBDEVICES':
+                  $Computer_Item = new Computer_Item();
+                  $a_sectionsGLPI = $Computer_Item->find("`computers_id`='".$computer_id."'
+                                                AND `itemtype`='Peripheral'");
+                  $name = $LANG['help'][29];
+                  $itemtype = "Computer_Item";
+                  break;
+
+            }
+            foreach($a_sectionsGLPI as $section_id=>$datasection) {
+                if (!isset($data[$section_id])) {
+                  $text .= $this->displaySectionNotValid($computer_id, $itemtype, $name, $section_id);
+               }
+            }
+
+            
+         }
+
+
          echo "<tr>";
-         echo "<th colspan='2'>";
+         echo "<th colspan='3'>";
          echo $Computer->getLink(1);
          echo "</th>";
          echo "</tr>";
@@ -291,11 +490,26 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       }
       echo "</td>";
       echo "</tr>";
-      
+
       echo "<tr>";
-      echo "<th colspan='2'>";
+      echo "<th colspan='3' align='center'>";
+         echo "<table align='center'>";
+         echo "<tr>";
+         echo "<td align='center'><a onclick= \"if ( markCheckboxes('integritylist') ) return false;\"
+                   href='".$_SERVER['PHP_SELF']."?select=all'>".$LANG["buttons"][18]."</a></td>";
+         echo "<td>/</td><td align='center'><a onclick= \"if ( unMarkCheckboxes('integritylist') )
+               return false;\" href='".$_SERVER['PHP_SELF']."?select=none'>".
+               $LANG["buttons"][19]."</a>";
+         echo "</td>";
+         echo "</tr>";
+         echo "</table>";
+      echo "</th>";
+      echo "</tr>";
+
+      echo "<tr>";
+      echo "<th colspan='3'>";
       echo "<input class='submit' type='submit' name='actionimport'
-                      value='" . $LANG['buttons'][37] . "'>";
+                      value='" . $LANG['buttons'][7] . "'>";
       echo "</th>";
       echo "</tr>";
       echo "</table>";
@@ -306,13 +520,23 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
    }
 
 
-   function displaySectionNotValid($computers_id, $sectionname, $name) {
+   function displaySectionNotValid($computers_id, $sectionname, $name, $onlyGLPI = 0) {
       $text = "<tr class='tab_bg_1'>";
       $text .= "<td>";
       $text .= $name;
+      if ($onlyGLPI != '0') {
+         $text .= " (".$onlyGLPI.")";
+      }
       $text .= "</td>";
-      $text .= "<td align='center' width='30' >";
-      $text .= "<input type=\"checkbox\" name=\"reimport[".$computers_id."/".$sectionname."]\" value=\"1\" >";
+      $text .= "<td align='center' width='250' >";
+      if ($onlyGLPI != '0') {
+         $text .= "<input type=\"checkbox\" name=\"glpidelete[".$onlyGLPI."/".$sectionname."]\" value=\"1\" >";
+      }
+      $text .= "</td>";
+      $text .= "<td align='center' width='250' >";
+      if ($onlyGLPI == '0') {
+         $text .= "<input type=\"checkbox\" name=\"reimport[".$computers_id."/".$sectionname."]\" value=\"1\" >";
+      }
       $text .= "</td>";
       return $text;
    }
@@ -346,10 +570,35 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
          if ($name == $sectioncomplete) {
             $name = $newsectioncomplete;
          }
-         $serializedSections .= $name."<<=>>".$datas."
+         if (!strstr($name, "ENVS/")
+                 AND !strstr($name, "PROCESSES/")) {
+
+            $serializedSections .= $name."<<=>>".$datas."
 ";
+                 }
       }
       $PluginFusinvinventoryLib->_serializeIntoDB($data['internal_id'], $serializedSections);
+   }
+
+
+   function deleteGLPI($import) {
+      global $DB;
+
+      $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
+
+      $split = explode("/", $import);
+      $items_id = $split[0];
+      $itemtype = $split[1];
+      if (strstr($itemtype, "Device")) {
+         $class = new Computer_Device($itemtype);
+         $class->delete(array('id'=>$items_id,
+                                   "_itemtype" => $itemtype), 1);
+      } else {
+         $class = new $itemtype();
+         $class->delete(array('id'=>$items_id), 1);
+      }
+      
+
    }
    
 }
