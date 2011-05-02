@@ -75,7 +75,15 @@ function update231to232() {
       WHERE `itemtype`=''
          OR `items_id`='0' ";
    $DB->query($sql);
-   
+
+   // Clean hub (unknown device) have no port (so empty hub)
+   $sql = "DELETE FROM `glpi_plugin_fusioninventory_unknowndevices`
+      WHERE `hub`=1
+         AND not exists (SELECT * FROM `glpi_networkports`
+            WHERE `itemtype`='PluginFusioninventoryUnknownDevice'
+               AND `items_id`=`glpi_plugin_fusioninventory_unknowndevices`.`id`
+            )";
+   $DB->query($sql);
    
    plugin_fusioninventory_displayMigrationMessage("232"); // End
 }

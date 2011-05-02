@@ -49,27 +49,19 @@ $iprange = new PluginFusioninventoryIPRange();
 
 switch($_POST['glpi_tab']) {
    case -1:
-      $iprange->permanentTask($_POST["id"], "NETDISCOVERY", $_POST['allowcreate']);
-      $iprange->permanentTask($_POST["id"], "SNMPQUERY", $_POST['allowcreate']);
+      //$iprange->permanentTask($_POST["id"], "NETDISCOVERY", $_POST['allowcreate']);
+      //$iprange->permanentTask($_POST["id"], "SNMPQUERY", $_POST['allowcreate']);
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-      $PluginFusioninventoryTaskjob->manageTasksByObject("PluginFusinvsnmpIPRange", $_POST['id']);
+      $PluginFusioninventoryTaskjob->manageTasksByObject("PluginFusioninventoryIPRange", $_POST['id']);
       break;
 
    case 1:
-      $iprange->permanentTask($_POST["id"], "NETDISCOVERY", $_POST['allowcreate']);
-      break;
-
-   case 2:
-      $iprange->permanentTask($_POST["id"], "SNMPQUERY", $_POST['allowcreate']);
-      break;
-
-   case 3:
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-      $PluginFusioninventoryTaskjob->manageTasksByObject("PluginFusinvsnmpIPRange", $_POST['id']);
+      $PluginFusioninventoryTaskjob->manageTasksByObject("PluginFusioninventoryIPRange", $_POST['id']);
       break;
 
-   default:
-
+   default :
+      Plugin::displayAction($iprange, $_REQUEST['glpi_tab']);
       break;
 }
 

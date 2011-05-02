@@ -138,7 +138,7 @@ $LANG['plugin_fusioninventory']['task'][0]="Задача";
 $LANG['plugin_fusioninventory']['task'][1]="Менеджмент Задач";
 $LANG['plugin_fusioninventory']['task'][2]="Действие";
 $LANG['plugin_fusioninventory']['task'][14]="До даты";
-$LANG['plugin_fusioninventory']['task'][16]="Новое действие";
+$LANG['plugin_fusioninventory']['task'][44]="Новое действие";
 $LANG['plugin_fusioninventory']['task'][17]="Частота";
 $LANG['plugin_fusioninventory']['task'][18]="Задачи";
 $LANG['plugin_fusioninventory']['task'][19]="Запущеные задачи";
@@ -162,10 +162,8 @@ $LANG['plugin_fusioninventory']['task'][37]="дни";
 $LANG['plugin_fusioninventory']['task'][38]="месяцы";
 $LANG['plugin_fusioninventory']['task'][39]="Не возможно запустить задачу потому что некоторые задачи все еще запущены!";
 $LANG['plugin_fusioninventory']['task'][40]="Принудительный запуск";
-$LANG['plugin_fusioninventory']['task'][41]="Permanent task - Discovery";
-$LANG['plugin_fusioninventory']['task'][42]="Permanent task - Inventory";
-$LANG['plugin_fusioninventory']['task'][43]="Communication type";
-$LANG['plugin_fusioninventory']['task'][44]="Create task easily";
+$LANG['plugin_fusioninventory']['task'][41]="Server contacts the agent (push)";
+$LANG['plugin_fusioninventory']['task'][42]="Agent contacts the server (pull)";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Начато";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";
@@ -183,10 +181,7 @@ $LANG['plugin_fusioninventory']['codetasklog'][1]="Плохой маркер. н
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Агент остановлен/сломан";
 $LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['ocsconfig'][11];
 
-$LANG['plugin_fusioninventory']['iprange'][0]="Start of IP range";
-$LANG['plugin_fusioninventory']['iprange'][1]="End of IP range";
-$LANG['plugin_fusioninventory']['iprange'][2]="IP Ranges";
-$LANG['plugin_fusioninventory']['iprange'][3]="Query";
-$LANG['plugin_fusioninventory']['iprange'][7]="Bad IP";
+$LANG['plugin_fusioninventory']['locks'][0]="Delete locks";
+$LANG['plugin_fusioninventory']['locks'][1]="Add locks";
 
 ?>

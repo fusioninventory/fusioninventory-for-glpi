@@ -140,7 +140,7 @@ $LANG['plugin_fusioninventory']['task'][0]="Task";
 $LANG['plugin_fusioninventory']['task'][1]="Task management";
 $LANG['plugin_fusioninventory']['task'][2]="Action";
 $LANG['plugin_fusioninventory']['task'][14]="Scheduled date";
-$LANG['plugin_fusioninventory']['task'][16]="New action";
+$LANG['plugin_fusioninventory']['task'][44]="New action";
 $LANG['plugin_fusioninventory']['task'][17]="Periodicity";
 $LANG['plugin_fusioninventory']['task'][18]="Tasks";
 $LANG['plugin_fusioninventory']['task'][19]="Running tasks";
@@ -164,10 +164,8 @@ $LANG['plugin_fusioninventory']['task'][37]="days";
 $LANG['plugin_fusioninventory']['task'][38]="months";
 $LANG['plugin_fusioninventory']['task'][39]="Unable to run task because some jobs is running yet!";
 $LANG['plugin_fusioninventory']['task'][40]="Force running";
-$LANG['plugin_fusioninventory']['task'][41]="Permanent task - Discovery";
-$LANG['plugin_fusioninventory']['task'][42]="Permanent task - Inventory";
-$LANG['plugin_fusioninventory']['task'][43]="Communication type";
-$LANG['plugin_fusioninventory']['task'][44]="Create task easily";
+$LANG['plugin_fusioninventory']['task'][41]="Server contacts the agent (push)";
+$LANG['plugin_fusioninventory']['task'][42]="Agent contacts the server (pull)";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Started";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";
@@ -190,4 +188,8 @@ $LANG['plugin_fusioninventory']['iprange'][1]="End of IP range";
 $LANG['plugin_fusioninventory']['iprange'][2]="IP Ranges";
 $LANG['plugin_fusioninventory']['iprange'][3]="Query";
 $LANG['plugin_fusioninventory']['iprange'][7]="Bad IP";
+
+$LANG['plugin_fusioninventory']['locks'][0]="Delete locks";
+$LANG['plugin_fusioninventory']['locks'][1]="Add locks";
+
 ?>

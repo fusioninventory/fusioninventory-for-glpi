@@ -140,7 +140,7 @@ $LANG['plugin_fusioninventory']['task'][0]="Aufgabe";
 $LANG['plugin_fusioninventory']['task'][1]="Aufgabenverwaltung";
 $LANG['plugin_fusioninventory']['task'][2]="Aufgabe / Befehl";
 $LANG['plugin_fusioninventory']['task'][14]="Geplanter Zeitpunkt";
-$LANG['plugin_fusioninventory']['task'][16]="Neue Aufgabe";
+$LANG['plugin_fusioninventory']['task'][44]="Neue Aufgabe";
 $LANG['plugin_fusioninventory']['task'][17]="Regelmässigkeit";
 $LANG['plugin_fusioninventory']['task'][18]="Aufgaben";
 $LANG['plugin_fusioninventory']['task'][19]="Laufende Augfaben";
@@ -164,10 +164,8 @@ $LANG['plugin_fusioninventory']['task'][37]="Tage";
 $LANG['plugin_fusioninventory']['task'][38]="Monate";
 $LANG['plugin_fusioninventory']['task'][39]="Unable to run task because some jobs is running yet!";
 $LANG['plugin_fusioninventory']['task'][40]="Force running";
-$LANG['plugin_fusioninventory']['task'][41]="Dauerhafte Aufgabe - Entdeckung";
-$LANG['plugin_fusioninventory']['task'][42]="Dauerhafte Aufgaber - Inventarisierung";
-$LANG['plugin_fusioninventory']['task'][43]="Kommunikationsmodus";
-$LANG['plugin_fusioninventory']['task'][44]="Task automatisch erstellen (einfacher)";
+$LANG['plugin_fusioninventory']['task'][41]="Server contacts the agent (push)";
+$LANG['plugin_fusioninventory']['task'][42]="Agent contacts the server (pull)";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="gestartet";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="OK";
@@ -190,4 +188,8 @@ $LANG['plugin_fusioninventory']['iprange'][1]="Ende des IP-Adressbereichs";
 $LANG['plugin_fusioninventory']['iprange'][2]="IP-Adressbereich";
 $LANG['plugin_fusioninventory']['iprange'][3]="Abfrage";
 $LANG['plugin_fusioninventory']['iprange'][7]="IP-Adresse inkorrekt";
+
+$LANG['plugin_fusioninventory']['locks'][0]="Delete locks";
+$LANG['plugin_fusioninventory']['locks'][1]="Add locks";
+
 ?>

@@ -38,13 +38,12 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","iprange");
+commonHeader($LANG['plugin_fusioninventory']['title'][0], $_SERVER["PHP_SELF"], "plugins", 
+             "fusioninventory", "iprange");
 
-PluginFusioninventoryProfile::checkRight("fusinvsnmp", "iprange","r");
+PluginFusioninventoryProfile::checkRight("fusioninventory", "iprange","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
-
-$_GET['target']="iprange.php";
 
 Search::show('PluginFusioninventoryIPRange');
 

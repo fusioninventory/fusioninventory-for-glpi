@@ -109,7 +109,7 @@ function plugin_init_fusioninventory() {
                                        'NetworkPort'      => 'plugin_item_update_fusioninventory');
 
 
-         
+         $PLUGIN_HOOKS['item_transfer']['fusioninventory'] = 'plugin_item_transfer_fusioninventory';
    //      $PLUGIN_HOOKS['item_add']['fusioninventory'] = 'plugin_item_add_fusioninventory';
          $Plugin = new Plugin();
          if ($Plugin->isActivated('fusioninventory')) {
@@ -228,6 +228,7 @@ function plugin_init_fusioninventory() {
          && isset($_SERVER['HTTP_USER_AGENT']) 
             && isFusioninventoryUserAgent($_SERVER['HTTP_USER_AGENT'])) {
       include(GLPI_ROOT ."/plugins/fusioninventory/front/communication.php");
+      exit;
    }
 
 }
@@ -263,7 +264,7 @@ function plugin_fusioninventory_check_prerequisites() {
  * @return bool : true if request comes from an agent, false otherwise
  */
 function isFusioninventoryUserAgent($useragent = '') {
-   return (preg_match("/(fusioninventory|ocsinventory)/i",$useragent));
+   return (preg_match("/(fusioninventory|ocsinventory|ocs-ng)/i",$useragent));
 }
 
 function plugin_fusioninventory_check_config() {

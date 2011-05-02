@@ -72,7 +72,7 @@ class PluginFusioninventoryMenu {
       if(PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
          $a_menu[3]['name'] = $LANG['plugin_fusioninventory']['menu'][7];
          $a_menu[3]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_runningjob.png";
-         $a_menu[3]['link'] = getItemTypeSearchURL('PluginFusioninventorTaskJob');
+         $a_menu[3]['link'] = getItemTypeSearchURL('PluginFusioninventoryTaskJob');
       }
 
       //if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice", "r")) {
@@ -91,7 +91,7 @@ class PluginFusioninventoryMenu {
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "iprange", "r")) {
          $a_menu[6]['name'] = $LANG['plugin_fusioninventory']['menu'][2];
          $a_menu[6]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_rangeip.png";
-         $a_menu[6]['link'] = getItemTypeSearchURL('PluginFusioninventoryIpRange');
+         $a_menu[6]['link'] = getItemTypeSearchURL('PluginFusioninventoryIPRange');
       }
 
       if (PluginFusioninventoryCredential::hasAlLeastOneType() 
