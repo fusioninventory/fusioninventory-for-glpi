@@ -104,7 +104,16 @@ function plugin_init_fusioninventory() {
    //      $PLUGIN_HOOKS['item_add']['fusioninventory'] = 'plugin_item_add_fusioninventory';
          $Plugin = new Plugin();
          if ($Plugin->isActivated('fusioninventory')) {
-            $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
+            if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agents", "r")
+               OR PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","r")
+               OR PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration","r")
+               OR PluginFusioninventoryProfile::haveRight("fusioninventory", "wol","r")
+               OR PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","r")
+               OR PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")
+               ) {
+            
+               $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
+            }
          }
 
          // Tabs for each type
