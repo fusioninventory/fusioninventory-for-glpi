@@ -647,7 +647,7 @@ function plugin_fusinvsnmp_uninstall() {
 * @return 0 (no need update) OR 1 (need update)
 **/
 function plugin_fusinvsnmp_needUpdate() {
-   $version = "2.3.2";
+   $version = "2.3.2-1";
    include (GLPI_ROOT . "/plugins/fusinvsnmp/install/update.php");
    $version_detected = pluginFusinvsnmpGetCurrentVersion($version);
    if ((isset($version_detected)) AND ($version_detected != $version)) {
