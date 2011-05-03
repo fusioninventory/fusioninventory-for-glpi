@@ -36,10 +36,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-include_once(GLPI_ROOT."/plugins/fusioninventory/inc/rulecollection.class.php");
-
-
-class PluginFusinvinventoryRuleEntityCollection extends PluginFusioninventoryRuleCollection {
+class PluginFusinvinventoryRuleEntityCollection extends RuleCollection {
 
    // From RuleCollection
    public $stop_on_first_match=true;
