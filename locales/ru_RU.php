@@ -33,7 +33,7 @@
  */
 
 $title="FusionInventory INVENTORY";
-$version="2.3.1-1";
+$version="2.4.0-1";
 
 $LANG['plugin_fusinvinventory']['title'][0]="$title";
 $LANG['plugin_fusinvinventory']['title'][1]="Local inventory";
@@ -93,5 +93,4 @@ $LANG['plugin_fusinvinventory']['antivirus'][3]="Обновление";
 $LANG['plugin_fusinvinventory']['computer'][0]="Последняя версия inventory";
 
 $LANG['plugin_fusinvinventory']['vmwareesx'][0]="Vmware ESX/ESXi/vCenter";
-
 ?>

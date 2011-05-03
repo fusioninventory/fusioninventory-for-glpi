@@ -42,7 +42,7 @@ function pluginFusinvinventoryInstall() {
    $version_detected = pluginfusinvinventoryGetCurrentVersion($a_plugin['version']);
    if ((isset($version_detected)) AND ($version_detected != $a_plugin['version'])) {
       // Update
-      pluginFusinvinventoryUpdate($a_plugin['version']);
+      pluginFusinvinventoryUpdate($version_detected);
    } else {
       // Installation
       // Add new module in plugin_fusioninventory (core)
@@ -68,8 +68,7 @@ function pluginFusinvinventoryInstall() {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
       }
 
-      //Profiles management
-      include_once (GLPI_ROOT . "/plugins/fusinvinventory/inc/staticmisc.class.php");
+      include_once (GLPI_ROOT . "/plugins/fusioninventory/inc/staticmisc.class.php");
       $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
       PluginFusioninventoryProfile::initProfile($a_plugin['shortname'], $plugins_id);
       PluginFusioninventoryProfile::changeProfile($plugins_id);
@@ -165,7 +164,7 @@ function pluginFusinvinventoryInstall() {
       }
 
       // Import OCS locks
-      include(GLPI_ROOT . "/plugins/fusinvinventory/inc/lock.class.php");
+      include_once GLPI_ROOT . "/plugins/fusinvinventory/inc/lock.class.php";
       $PluginFusinvinventoryLock = new PluginFusinvinventoryLock();
       $PluginFusinvinventoryLock->importFromOcs();
    }
