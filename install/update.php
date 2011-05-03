@@ -148,17 +148,23 @@ function pluginFusioninventoryUpdate($current_version) {
          include("update_231_232.php");
          update231to232();
       case "2.3.2":
-         include("update_231_232.php");
+         include("update_232_240.php");
          update230to240();
+      case "2.4.0":
    }
 
-   $plugins_id = PluginFusioninventoryModule::getModuleId("fusinvinventory");
-   include(GLPI_ROOT."/plugins/fusioninventory/inc/profile.class.php");
+   $plugins_id = PluginFusioninventoryModule::getModuleId("fusioninventory");
+   include_once(GLPI_ROOT."/plugins/fusioninventory/inc/profile.class.php");
    PluginFusioninventoryProfile::changeProfile($plugins_id);
 
    echo "</td>";
    echo "</tr>";
    echo "</table></center>";
+
+   include_once(GLPI_ROOT."/plugins/fusioninventory/inc/config.class.php");
+   $config = new PluginFusioninventoryConfig();
+   $config->updateConfigType($plugins_id, 'version', "2.4.0");
+
 }
 
 
