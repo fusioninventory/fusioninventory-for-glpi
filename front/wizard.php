@@ -44,7 +44,11 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 if (isset($_GET["wizz"])) {
    if (method_exists('PluginFusioninventoryWizard',$_GET["wizz"])) {
-      PluginFusioninventoryWizard::$_GET["wizz"]();
+      $ariane = '';
+      if (isset($_GET['ariane'])) {
+         $ariane = $_GET['ariane'];
+      }
+      PluginFusioninventoryWizard::$_GET["wizz"]($ariane);
    }
 } else {
    PluginFusioninventoryWizard::w_start();

@@ -39,7 +39,14 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryWizard {
 
-   function filAriane($a_list) {
+   function filAriane($ariane) {
+      if (method_exists("PluginFusioninventoryWizard", $ariane)) {
+         $pluginFusioninventoryWizard = new PluginFusioninventoryWizard();
+         $a_list = $pluginFusioninventoryWizard->$ariane();
+      } else {
+         return;
+      }
+
       if (count($a_list) == '0') {
          return;
       }
@@ -52,13 +59,16 @@ class PluginFusioninventoryWizard {
       foreach ($a_list as $name=>$link) {
          echo "<tr class='tab_bg_1'>";
          echo "<td>";
-         $split = explode("/", $_SERVER["PHP_SELF"]);
-         if (strstr($link, array_pop($split))) {
+         if (strstr($link, $_GET['wizz'])) {
             echo "<img src='".GLPI_ROOT."/pics/right.png'/>";
          } else {
             echo "<img src='".GLPI_ROOT."/pics/right_off.png'/>";
          }
-         echo " <a href='".$link."'>".$name."</a>";
+         $getariane = "&ariane=".$ariane;
+         if ($link == "w_start") {
+            $getariane = "";
+         }
+         echo " <a href='".GLPI_ROOT."/plugins/fusioninventory/front/wizard.php?wizz=".$link.$getariane."'>".$name."</a>";
          echo "</td>";
          echo "</tr>";
       }
@@ -67,7 +77,7 @@ class PluginFusioninventoryWizard {
    }
 
 
-   static function displayButtons($a_buttons, $a_filariane) {
+   static function displayButtons($a_buttons, $filariane) {
 
       $pluginFusioninventoryWizard = new PluginFusioninventoryWizard();
 
@@ -85,9 +95,13 @@ class PluginFusioninventoryWizard {
          echo "<table cellspacing='10'>";
          echo "<tr>";
          foreach ($a_buttons as $array) {
+            $getariane = '';
+            if (isset($array[3]) AND $array[3] != '') {
+               $getariane = '&ariane='.$array[3];
+            }
             echo "<td class='bgout'
                onmouseover='this.className=\"bgover\"' onmouseout='this.className=\"bgout\"'
-               onClick='location.href=\"".$array[1]."\"'
+               onClick='location.href=\"".GLPI_ROOT."/plugins/fusioninventory/front/wizard.php?wizz=".$array[1].$getariane."\"'
                width='240' height='155' align='center'>";
             echo "<strong>".$array[0]."</strong><br/><br/>";
             if ($array[2] != '') {
@@ -103,7 +117,7 @@ class PluginFusioninventoryWizard {
 
       echo "<tr>";
       echo "<td valign='top'>";
-      $pluginFusioninventoryWizard->filAriane($a_filariane);
+      $pluginFusioninventoryWizard->filAriane($filariane);
       echo "</td>";
       echo "</tr>";
 
@@ -111,7 +125,9 @@ class PluginFusioninventoryWizard {
    }
 
 
-   function displayShowForm($a_button, $a_filariane, $classname) {
+   static function displayShowForm($a_button, $a_filariane, $classname) {
+
+      $pluginFusioninventoryWizard = new PluginFusioninventoryWizard();
 
       echo "<style type='text/css'>
       .bgout {
@@ -128,7 +144,7 @@ class PluginFusioninventoryWizard {
       $class->showForm(array('target'=>$_SERVER["PHP_SELF"]));
       echo "</td>";
       echo "<td valign='top'>";
-      $this->filAriane($a_filariane);
+      $pluginFusioninventoryWizard->filAriane($a_filariane);
       echo "</td>";
       echo "</tr>";
 
@@ -174,7 +190,7 @@ class PluginFusioninventoryWizard {
       "choix de l'action"                  => "w_start",
       "Type de matériel à inventorier"     => GLPI_ROOT."/plugins/fusioninventory/front/wizard_inventory.php",
       "Choix (decouverte ou inventaire)"   => "",
-      "Authentification SNMP"              => "",
+      "Authentification SNMP"              => "w_authsnmp",
       "Règles d'import"                    => "",
       "Création de taches d'exécution"     => "",
       "Affichage des inventaires réalisés" => "");
@@ -199,7 +215,7 @@ class PluginFusioninventoryWizard {
 
    function fil_Part_NetDiscovery() {
       return array(
-      "Authentification SNMP"              => "",
+      "Authentification SNMP"              => "w_authsnmp",
       "Règles d'import"                    => "",
       "Création de taches d'exécution"     => "",
       "Affichage des inventaires réalisés" => "");
@@ -215,10 +231,12 @@ class PluginFusioninventoryWizard {
    static function w_start($ariane='') {
       $a_buttons = array(array('Découvrir le matériel sur le réseau',
                                'w_authsnmp',
-                               'networkscan.png'),
+                               'networkscan.png',
+                               'filNetDiscovery'),
                          array('Inventorier des matériels',
                                 'w_wiz_inventory',
-                                'general_inventory.png'));
+                                'general_inventory.png',
+                                ''));
 
       echo "<center>Bienvenue dans FusionInventory. Commencer la configuration ?</center><br/>";
 
@@ -227,6 +245,10 @@ class PluginFusioninventoryWizard {
 
 
    static function w_authsnmp($ariane='') {
+      $a_button = array('name' => 'Suivant',
+                  'link' => 'w_rangeip');
+
+      PluginFusioninventoryWizard::displayShowForm($a_button, $ariane, "PluginFusinvsnmpConfigSecurity");
 
       
    }
