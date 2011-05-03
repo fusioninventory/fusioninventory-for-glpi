@@ -91,4 +91,6 @@ $LANG['plugin_fusinvinventory']['antivirus'][2]="Version";
 $LANG['plugin_fusinvinventory']['antivirus'][3]="Aktuell";
 
 $LANG['plugin_fusinvinventory']['computer'][0]="Letzte Inventarisierung";
+
+$LANG['plugin_fusinvinventory']['vmwareesx'][0]="Vmware ESX/ESXi/vCenter";
 ?>
