@@ -50,19 +50,16 @@ $iprange = new PluginFusioninventoryIPRange();
 switch($_POST['glpi_tab']) {
    case -1:
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-      $PluginFusioninventoryTaskjob->manageTasksByObject("PluginFusioninventoryIPRange", 
-                                                         $_POST['id']);
+      $PluginFusioninventoryTaskjob->manageTasksByObject("PluginFusioninventoryIPRange", $_POST['id']);
       break;
 
    case 1:
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-      $PluginFusioninventoryTaskjob->manageTasksByObject("PluginFusioninventoryIPRange", 
-                                                         $_POST['id']);
+      $PluginFusioninventoryTaskjob->manageTasksByObject("PluginFusioninventoryIPRange", $_POST['id']);
       break;
 
-   default:
+   default :
       Plugin::displayAction($iprange, $_REQUEST['glpi_tab']);
-
       break;
 }
 

@@ -23,8 +23,6 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_lock`;
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_task`;
 #DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unknown_device`;
 
-
-
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agents`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_agents` (
@@ -235,6 +233,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_agentmodules` (
    `is_active` int(1) NOT NULL DEFAULT '0',
    `exceptions` TEXT COMMENT 'array(agent_id)',
    `entities_id` int(11) NOT NULL DEFAULT '-1',
+   `url` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
    PRIMARY KEY (`id`),
    UNIQUE KEY `unicity` (`plugins_id`, `modulename`),
    KEY `is_active` (`is_active`),
@@ -315,11 +314,12 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
           (NULL, 'PluginFusioninventoryTask', '7', '6', '0'),
           (NULL, 'PluginFusioninventoryTask', '30', '7', '0'),
 
+          (NULL,'PluginFusinvsnmpIPRange', '2', '1', '0'),
+          (NULL,'PluginFusinvsnmpIPRange', '3', '2', '0'),
+-         (NULL,'PluginFusinvsnmpIPRange', '4', '3', '0'),
+
           (NULL,'PluginFusioninventoryTaskjob', '1', '1', '0'),
           (NULL,'PluginFusioninventoryTaskjob', '2', '2', '0'),
           (NULL,'PluginFusioninventoryTaskjob', '3', '3', '0'),
           (NULL,'PluginFusioninventoryTaskjob', '4', '4', '0'),
           (NULL,'PluginFusioninventoryTaskjob', '5', '5', '0');
-
-          DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_ipranges`;
-

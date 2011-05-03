@@ -102,6 +102,7 @@ $LANG['plugin_fusioninventory']['processes'][1]="PID";
 $LANG['plugin_fusioninventory']['processes'][38]="Prozessnummer";
 
 $LANG['plugin_fusioninventory']['menu'][1]="Agent-Verwaltung";
+$LANG['plugin_fusioninventory']['menu'][2]="IP-Adressbereich Konfiguration";
 $LANG['plugin_fusioninventory']['menu'][3]="Menü";
 $LANG['plugin_fusioninventory']['menu'][4]="Ubekanntes Gerät";
 $LANG['plugin_fusioninventory']['menu'][5] = "Credentials";
@@ -142,7 +143,7 @@ $LANG['plugin_fusioninventory']['task'][0]="Aufgabe";
 $LANG['plugin_fusioninventory']['task'][1]="Aufgabenverwaltung";
 $LANG['plugin_fusioninventory']['task'][2]="Aufgabe / Befehl";
 $LANG['plugin_fusioninventory']['task'][14]="Geplanter Zeitpunkt";
-$LANG['plugin_fusioninventory']['task'][16]="Neue Aufgabe";
+$LANG['plugin_fusioninventory']['task'][44]="Neue Aufgabe";
 $LANG['plugin_fusioninventory']['task'][17]="Regelmässigkeit";
 $LANG['plugin_fusioninventory']['task'][18]="Aufgaben";
 $LANG['plugin_fusioninventory']['task'][19]="Laufende Augfaben";
@@ -189,13 +190,12 @@ $LANG['plugin_fusioninventory']['credential'][1] = "Credential for remote invent
 $LANG['plugin_fusioninventory']['credential'][2] = "Remote device inventory";
 $LANG['plugin_fusioninventory']['credential'][3] = "Credentials";
 
-$LANG['plugin_fusioninventory']['locks'][0]="Delete locks";
-$LANG['plugin_fusioninventory']['locks'][1]="Add locks";
-
 $LANG['plugin_fusioninventory']['iprange'][0]="Start des IP-Adressbereichs";
 $LANG['plugin_fusioninventory']['iprange'][1]="Ende des IP-Adressbereichs";
 $LANG['plugin_fusioninventory']['iprange'][2]="IP-Adressbereich";
 $LANG['plugin_fusioninventory']['iprange'][3]="Abfrage";
 $LANG['plugin_fusioninventory']['iprange'][7]="IP-Adresse inkorrekt";
 
+$LANG['plugin_fusioninventory']['locks'][0]="Delete locks";
+$LANG['plugin_fusioninventory']['locks'][1]="Add locks";
 ?>

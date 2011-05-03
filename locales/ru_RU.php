@@ -100,10 +100,9 @@ $LANG['plugin_fusioninventory']['processes'][1]="PID";
 $LANG['plugin_fusioninventory']['processes'][38]="Номер процесса";
 
 $LANG['plugin_fusioninventory']['menu'][1]="Управление агентами";
+$LANG['plugin_fusioninventory']['menu'][2]="IP range configuration";
 $LANG['plugin_fusioninventory']['menu'][3]="Меню";
 $LANG['plugin_fusioninventory']['menu'][4]="Неизвестное устройство";
-$LANG['plugin_fusioninventory']['menu'][5] = "Credentials";
-$LANG['plugin_fusioninventory']['menu'][6]="Remote devices to inventory";
 $LANG['plugin_fusioninventory']['menu'][7]="Запущенные работы";
 
 $LANG['plugin_fusioninventory']['discovery'][5]="Количество импортированных устройств";
@@ -130,7 +129,6 @@ $LANG['plugin_fusioninventory']['agents'][37]="Заблокированный";
 $LANG['plugin_fusioninventory']['agents'][38]="Доступный";
 $LANG['plugin_fusioninventory']['agents'][39]="Запущенный";
 $LANG['plugin_fusioninventory']['agents'][40]="Компьютер с нейзвестным IP";
-$LANG['plugin_fusioninventory']['agents'][41] = "Service URL";
 
 $LANG['plugin_fusioninventory']['unknown'][2]="Подтверждённые устройства";
 $LANG['plugin_fusioninventory']['unknown'][4]="Сетевой хаб";
@@ -140,7 +138,7 @@ $LANG['plugin_fusioninventory']['task'][0]="Задача";
 $LANG['plugin_fusioninventory']['task'][1]="Менеджмент Задач";
 $LANG['plugin_fusioninventory']['task'][2]="Действие";
 $LANG['plugin_fusioninventory']['task'][14]="До даты";
-$LANG['plugin_fusioninventory']['task'][16]="Новое действие";
+$LANG['plugin_fusioninventory']['task'][44]="Новое действие";
 $LANG['plugin_fusioninventory']['task'][17]="Частота";
 $LANG['plugin_fusioninventory']['task'][18]="Задачи";
 $LANG['plugin_fusioninventory']['task'][19]="Запущеные задачи";
@@ -195,5 +193,4 @@ $LANG['plugin_fusioninventory']['iprange'][1]="End of IP range";
 $LANG['plugin_fusioninventory']['iprange'][2]="IP Ranges";
 $LANG['plugin_fusioninventory']['iprange'][3]="Query";
 $LANG['plugin_fusioninventory']['iprange'][7]="Bad IP";
-
 ?>

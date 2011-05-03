@@ -101,13 +101,13 @@ $LANG['plugin_fusioninventory']['choice'][3] = "et";
 $LANG['plugin_fusioninventory']['processes'][1]  = "PID";
 $LANG['plugin_fusioninventory']['processes'][38] = "Numéro de process";
 
-$LANG['plugin_fusioninventory']['menu'][1] = "Gestion des agents";
+$LANG['plugin_fusioninventory']['menu'][1] ="Gestion des agents";
 $LANG['plugin_fusioninventory']['menu'][2] = "Plages IP";
-$LANG['plugin_fusioninventory']['menu'][3] = "Menu";
-$LANG['plugin_fusioninventory']['menu'][4] = "Matériel inconnu";
+$LANG['plugin_fusioninventory']['menu'][3] ="Menu";
+$LANG['plugin_fusioninventory']['menu'][4] ="Matériel inconnu";
 $LANG['plugin_fusioninventory']['menu'][5] = "Comptes";
 $LANG['plugin_fusioninventory']['menu'][6] = "Matériels distants à inventorier";
-$LANG['plugin_fusioninventory']['menu'][7] = "Actions en cours d'exécution";
+$LANG['plugin_fusioninventory']['menu'][7] ="Actions en cours d'exécution";
 
 $LANG['plugin_fusioninventory']['discovery'][5] = "Nombre de matériels importés";
 $LANG['plugin_fusioninventory']['discovery'][9] = "Nombre de matériels non importés car type non défini";
@@ -143,7 +143,7 @@ $LANG['plugin_fusioninventory']['task'][0]="Tâche";
 $LANG['plugin_fusioninventory']['task'][1]="Gestion des tâches";
 $LANG['plugin_fusioninventory']['task'][2]="Action";
 $LANG['plugin_fusioninventory']['task'][14]="Date d'exécution";
-$LANG['plugin_fusioninventory']['task'][16]="Nouvelle action";
+$LANG['plugin_fusioninventory']['task'][44]="Nouvelle action";
 $LANG['plugin_fusioninventory']['task'][17]="Périodicité";
 $LANG['plugin_fusioninventory']['task'][18]="Tâches";
 $LANG['plugin_fusioninventory']['task'][19]="Tâches en cours";
@@ -169,6 +169,7 @@ $LANG['plugin_fusioninventory']['task'][39]="Impossible de lancer la tâche car 
 $LANG['plugin_fusioninventory']['task'][40]="Forcer l'exécution";
 $LANG['plugin_fusioninventory']['task'][41]="Le serveur initie le contact avec l'agent (push)";
 $LANG['plugin_fusioninventory']['task'][42]="L'agent initie le contact avec le serveur (pull)";
+$LANG['plugin_fusioninventory']['task'][43]="Mode de communication";
 
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1] = "Démarré";
@@ -195,5 +196,8 @@ $LANG['plugin_fusioninventory']['iprange'][1]="Fin de la plage IP";
 $LANG['plugin_fusioninventory']['iprange'][2]="Plage IP";
 $LANG['plugin_fusioninventory']['iprange'][3]="Activation";
 $LANG['plugin_fusioninventory']['iprange'][7]="IP incorrecte";
+
+$LANG['plugin_fusioninventory']['locks'][0]="Supprimer les verrous";
+$LANG['plugin_fusioninventory']['locks'][1]="Ajouter les verrous";
 
 ?>

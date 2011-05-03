@@ -80,7 +80,7 @@ function plugin_init_fusioninventory() {
 
       if (isset($_SESSION["glpiID"])) {
 
-         $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusinvsnmp_ipranges';
+         $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusioninventory_ipranges';
 
          if (haveRight("configuration", "r") || haveRight("profile", "w")) {// Config page
             $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/configuration.form.php?glpi_tab=1';

@@ -102,7 +102,7 @@ $LANG['plugin_fusioninventory']['processes'][1]="PID";
 $LANG['plugin_fusioninventory']['processes'][38]="Process number";
 
 $LANG['plugin_fusioninventory']['menu'][1]="Agents management";
-$LANG['plugin_fusioninventory']['menu'][2]="IP Range";
+$LANG['plugin_fusioninventory']['menu'][2]="IP range configuration";
 $LANG['plugin_fusioninventory']['menu'][3]="Menu";
 $LANG['plugin_fusioninventory']['menu'][4]="Unknown device";
 $LANG['plugin_fusioninventory']['menu'][5] = "Credentials";
@@ -143,7 +143,7 @@ $LANG['plugin_fusioninventory']['task'][0]="Task";
 $LANG['plugin_fusioninventory']['task'][1]="Task management";
 $LANG['plugin_fusioninventory']['task'][2]="Action";
 $LANG['plugin_fusioninventory']['task'][14]="Scheduled date";
-$LANG['plugin_fusioninventory']['task'][16]="New action";
+$LANG['plugin_fusioninventory']['task'][44]="New action";
 $LANG['plugin_fusioninventory']['task'][17]="Periodicity";
 $LANG['plugin_fusioninventory']['task'][18]="Tasks";
 $LANG['plugin_fusioninventory']['task'][19]="Running tasks";
@@ -192,7 +192,6 @@ $LANG['plugin_fusioninventory']['credential'][3] = "Credentials";
 
 $LANG['plugin_fusioninventory']['locks'][0]="Delete locks";
 $LANG['plugin_fusioninventory']['locks'][1]="Add locks";
-
 
 $LANG['plugin_fusioninventory']['iprange'][0]="Start of IP range";
 $LANG['plugin_fusioninventory']['iprange'][1]="End of IP range";

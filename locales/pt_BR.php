@@ -102,6 +102,7 @@ $LANG['plugin_fusioninventory']['processes'][1]="PID";
 $LANG['plugin_fusioninventory']['processes'][38]="Process number";
 
 $LANG['plugin_fusioninventory']['menu'][1]="Configuração do agente";
+$LANG['plugin_fusioninventory']['menu'][2]="IP range configuration";
 $LANG['plugin_fusioninventory']['menu'][3]="Menu";
 $LANG['plugin_fusioninventory']['menu'][4]="Dispositivo desconhecido";
 $LANG['plugin_fusioninventory']['menu'][5] = "Credentials";
@@ -142,7 +143,7 @@ $LANG['plugin_fusioninventory']['task'][0]="Tarefa";
 $LANG['plugin_fusioninventory']['task'][1]="Gerenciamento de tarefa";
 $LANG['plugin_fusioninventory']['task'][2]="Ação";
 $LANG['plugin_fusioninventory']['task'][14]="Data da cobrança";
-$LANG['plugin_fusioninventory']['task'][16]="Nova ação";
+$LANG['plugin_fusioninventory']['task'][44]="Nova ação";
 $LANG['plugin_fusioninventory']['task'][17]="Frequência";
 $LANG['plugin_fusioninventory']['task'][18]="Tarefas";
 $LANG['plugin_fusioninventory']['task'][19]="Tarefas em execução";

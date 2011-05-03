@@ -87,7 +87,6 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
             $fourth = (($state[3] * 100) / $total) / 4;
             $globalState = $first + $second + $third + $fourth;
          }
-
          if ($return == 'html') {
             if ($style == 'simple') {
                displayProgressBar($width,ceil($globalState), array('simple' => 1));
@@ -122,9 +121,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
    function stateTaskjobItem($items_id, $itemtype, $state='all') {
       global $DB,$LANG;
 
-      $PluginFusioninventoryTaskjoblog  = new PluginFusioninventoryTaskjoblog();
-      $PluginFusioninventoryTaskjob     = new PluginFusioninventoryTaskjob();
-      $PluginFusioninventoryTask        = new PluginFusioninventoryTask();
+      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $icon = "";
       $title = "";
 
