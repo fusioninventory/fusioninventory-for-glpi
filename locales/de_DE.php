@@ -80,7 +80,7 @@ $LANG['plugin_fusioninventory']['rules'][3]="Durchsuche GLPI nach Material mit d
 $LANG['plugin_fusioninventory']['rules'][4]="Ziel-Entität des Materials";
 $LANG['plugin_fusioninventory']['rules'][5]="FusionInventory-Verbindung";
 $LANG['plugin_fusioninventory']['rules'][6] = "Verbinde wenn möglich, andernfalls verbiete den Import";
-$LANG['plugin_fusioninventory']['rules'][7] = "Verbind wenn möglich";
+$LANG['plugin_fusioninventory']['rules'][7] = "Verbind wenn möglich, else create device";
 $LANG['plugin_fusioninventory']['rules'][8] = "Sende";
 $LANG['plugin_fusioninventory']['rules'][9] = "existiert";
 $LANG['plugin_fusioninventory']['rules'][10] = "existiert nicht";
@@ -90,6 +90,8 @@ $LANG['plugin_fusioninventory']['rules'][13] = "Seriennummer Festplatte";
 $LANG['plugin_fusioninventory']['rules'][14] = "Seriennummer Partition";
 $LANG['plugin_fusioninventory']['rules'][15] = "UUID";
 $LANG['plugin_fusioninventory']['rules'][16] = "FusionInventory Tag";
+$LANG['plugin_fusioninventory']['rules'][17] = "Import denied";
+$LANG['plugin_fusioninventory']['rules'][18] = "Device created";
 
 $LANG['plugin_fusioninventory']['rulesengine'][152] = "Material zum importieren";
 
@@ -184,7 +186,7 @@ $LANG['plugin_fusioninventory']['xml'][0]="XML";
 
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Falcher Token, kann den Agent nicht starten";
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Agent gestoppt/abgestürzt";
-$LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['ocsconfig'][11];
+$LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['plugin_fusioninventory']['rules'][17];
 
 $LANG['plugin_fusioninventory']['credential'][1] = "Credential for remote inventory";
 $LANG['plugin_fusioninventory']['credential'][2] = "Remote device inventory";

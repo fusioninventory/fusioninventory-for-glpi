@@ -44,6 +44,6 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
 
-include (GLPI_ROOT . "/plugins/fusioninventory/front/rule.common.form.php");
+include (GLPI_ROOT . "/front/rule.common.form.php");
 
 ?>
