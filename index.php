@@ -57,7 +57,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    
 //      glpi_header(getItemTypeSearchURL('PluginFusioninventoryMenu'));
 
-      glpi_header(GLPI_ROOT ."/plugins/fusioninventory/front/wizard_start.php");
+      glpi_header(GLPI_ROOT ."/plugins/fusioninventory/front/wizard.php");
       commonFooter();
 
       commonFooter();

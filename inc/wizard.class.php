@@ -67,7 +67,9 @@ class PluginFusioninventoryWizard {
    }
 
 
-   function displayButtons($a_buttons, $a_filariane) {
+   static function displayButtons($a_buttons, $a_filariane) {
+
+      $pluginFusioninventoryWizard = new PluginFusioninventoryWizard();
 
       echo "<style type='text/css'>
       .bgout {
@@ -101,7 +103,7 @@ class PluginFusioninventoryWizard {
 
       echo "<tr>";
       echo "<td valign='top'>";
-      $this->filAriane($a_filariane);
+      $pluginFusioninventoryWizard->filAriane($a_filariane);
       echo "</td>";
       echo "</tr>";
 
@@ -144,13 +146,89 @@ class PluginFusioninventoryWizard {
 
    function filInventoryComputer() {
       return array(
-      "choix de l'action"=>GLPI_ROOT."/plugins/fusioninventory/front/wizard_start.php",
-      "Type de matériel à inventorier"=>GLPI_ROOT."/plugins/fusioninventory/front/wizard_inventory.php",
-      "Options d'importation"=>GLPI_ROOT."/plugins/fusioninventory/front/wizard_inventorycomputeroptions.php",
-      "Règles d'import d'ordinateurs"=>"",
-      "Règles de sélection de l'entité"=>"",
-      "Configuration des agents"=>"");
+      "choix de l'action"              => "w_start",
+      "Type de matériel à inventorier" => GLPI_ROOT."/plugins/fusioninventory/front/wizard_inventory.php",
+      "Options d'importation"          => GLPI_ROOT."/plugins/fusioninventory/front/wizard_inventorycomputeroptions.php",
+      "Règles d'import d'ordinateurs"  => "",
+      "Règles de sélection de l'entité"=> "",
+      "Configuration des agents"       => "");
+   }
 
+
+
+   function filInventoryESX() {
+      return array(
+      "choix de l'action"                  => "w_start",
+      "Type de matériel à inventorier"     => GLPI_ROOT."/plugins/fusioninventory/front/wizard_inventory.php",
+      "Gestion des mots de passe"          => "",
+      "Gestion des serveur ESX"            => "",
+      "Règles d'import d'ordinateurs"      => "",
+      "Création de taches d'exécution"     => "",
+      "Affichage des inventaires réalisés" => "");
+   }
+
+
+   
+   function filInventorySNMP() {
+      return array(
+      "choix de l'action"                  => "w_start",
+      "Type de matériel à inventorier"     => GLPI_ROOT."/plugins/fusioninventory/front/wizard_inventory.php",
+      "Choix (decouverte ou inventaire)"   => "",
+      "Authentification SNMP"              => "",
+      "Règles d'import"                    => "",
+      "Création de taches d'exécution"     => "",
+      "Affichage des inventaires réalisés" => "");
+   }
+
+
+   function filNetDiscovery() {
+      $array = array(
+      "choix de l'action"                  => "w_start");
+      return array_merge($array, $this->fil_Part_NetDiscovery());
+   }
+
+
+   function filInventorySNMP_Netdiscovery() {
+      $array = array(
+      "choix de l'action"                  => "w_start",
+      "Type de matériel à inventorier"     => GLPI_ROOT."/plugins/fusioninventory/front/wizard_inventory.php",
+      "Choix (decouverte ou inventaire)"   => "");
+      return array_merge($array, $this->fil_Part_NetDiscovery());
+  }
+
+
+   function fil_Part_NetDiscovery() {
+      return array(
+      "Authentification SNMP"              => "",
+      "Règles d'import"                    => "",
+      "Création de taches d'exécution"     => "",
+      "Affichage des inventaires réalisés" => "");
+   }
+
+   
+
+  // ********************* All wizard display **********************//
+
+   /*
+    * First panel of wizard
+    */
+   static function w_start($ariane='') {
+      $a_buttons = array(array('Découvrir le matériel sur le réseau',
+                               'w_authsnmp',
+                               'networkscan.png'),
+                         array('Inventorier des matériels',
+                                'w_wiz_inventory',
+                                'general_inventory.png'));
+
+      echo "<center>Bienvenue dans FusionInventory. Commencer la configuration ?</center><br/>";
+
+      PluginFusioninventoryWizard::displayButtons($a_buttons, $ariane);
+   }
+
+
+   static function w_authsnmp($ariane='') {
+
+      
    }
 
 }

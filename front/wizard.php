@@ -42,19 +42,13 @@ commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"p
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-$PluginFusioninventoryWizard = new PluginFusioninventoryWizard();
-
-$a_buttons = array(array('Découvrir le matériel sur le réseau',
-                         GLPI_ROOT.'/plugins/fusioninventory/front/wizard_networkdiscover.php',
-                         'networkscan.png'),
-                   array('Inventorier des matériels',
-                          GLPI_ROOT.'/plugins/fusioninventory/front/wizard_inventory.php',
-                          'general_inventory.png'));
-$a_ariane = array();
-
-echo "<center>Bienvenue dans FusionInventory. Commencer la configuration ?</center><br/>";
-
-$PluginFusioninventoryWizard->displayButtons($a_buttons, $a_ariane);
+if (isset($_GET["wizz"])) {
+   if (method_exists('PluginFusioninventoryWizard',$_GET["wizz"])) {
+      PluginFusioninventoryWizard::$_GET["wizz"]();
+   }
+} else {
+   PluginFusioninventoryWizard::w_start();
+}
 
 commonFooter();
 
