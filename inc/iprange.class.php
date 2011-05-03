@@ -117,14 +117,9 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
       
       $ong = array();
-      /*
       if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
-         $ong[1] = $LANG['plugin_fusioninventory']['task'][41].
-            " (".$LANG['plugin_fusioninventory']['title'][6].")";
-         $ong[2] = $LANG['plugin_fusioninventory']['task'][16].
-            " (".$LANG['plugin_fusioninventory']['title'][6].")";
-         $ong[3] = $LANG['plugin_fusioninventory']['task'][44];
-      }*/
+         $ong[3] = $LANG['plugin_fusioninventory']['profile'][7];
+      }
       return $ong;
    }
 

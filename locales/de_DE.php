@@ -104,6 +104,8 @@ $LANG['plugin_fusioninventory']['processes'][38]="Prozessnummer";
 $LANG['plugin_fusioninventory']['menu'][1]="Agent-Verwaltung";
 $LANG['plugin_fusioninventory']['menu'][3]="Menü";
 $LANG['plugin_fusioninventory']['menu'][4]="Ubekanntes Gerät";
+$LANG['plugin_fusioninventory']['menu'][5] = "Credentials";
+$LANG['plugin_fusioninventory']['menu'][6]="Remote devices to inventory";
 $LANG['plugin_fusioninventory']['menu'][7]="Aktive / Laufende Aufgaben";
 
 $LANG['plugin_fusioninventory']['discovery'][5]="Anzahl importierter Geräte";
@@ -183,7 +185,17 @@ $LANG['plugin_fusioninventory']['codetasklog'][1]="Falcher Token, kann den Agent
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Agent gestoppt/abgestürzt";
 $LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['ocsconfig'][11];
 
+$LANG['plugin_fusioninventory']['credential'][1] = "Credential for remote inventory";
+$LANG['plugin_fusioninventory']['credential'][2] = "Remote device inventory";
+$LANG['plugin_fusioninventory']['credential'][3] = "Credentials";
+
 $LANG['plugin_fusioninventory']['locks'][0]="Delete locks";
 $LANG['plugin_fusioninventory']['locks'][1]="Add locks";
+
+$LANG['plugin_fusioninventory']['iprange'][0]="Start des IP-Adressbereichs";
+$LANG['plugin_fusioninventory']['iprange'][1]="Ende des IP-Adressbereichs";
+$LANG['plugin_fusioninventory']['iprange'][2]="IP-Adressbereich";
+$LANG['plugin_fusioninventory']['iprange'][3]="Abfrage";
+$LANG['plugin_fusioninventory']['iprange'][7]="IP-Adresse inkorrekt";
 
 ?>

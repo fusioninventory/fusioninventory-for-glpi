@@ -45,33 +45,23 @@ if(!isset($_POST["sort"])) $_POST["sort"] = "";
 if(!isset($_POST["order"])) $_POST["order"] = "";
 if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 
+$iprange = new PluginFusioninventoryIPRange();
+
 switch($_POST['glpi_tab']) {
    case -1:
-      $PluginFusinvsnmpIPRange = new PluginFusioninventoryIPRange();
-      $PluginFusinvsnmpIPRange->permanentTask($_POST["id"], "NETDISCOVERY", $_POST['allowcreate']);
-      $PluginFusinvsnmpIPRange->permanentTask($_POST["id"], "SNMPQUERY", $_POST['allowcreate']);
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $PluginFusioninventoryTaskjob->manageTasksByObject("PluginFusioninventoryIPRange", 
                                                          $_POST['id']);
       break;
 
    case 1:
-      $PluginFusinvsnmpIPRange = new PluginFusioninventoryIPRange();
-      $PluginFusinvsnmpIPRange->permanentTask($_POST["id"], "NETDISCOVERY", $_POST['allowcreate']);
-      break;
-
-   case 2:
-      $PluginFusinvsnmpIPRange = new PluginFusinvsnmpIPRange();
-      $PluginFusinvsnmpIPRange->permanentTask($_POST["id"], "SNMPQUERY", $_POST['allowcreate']);
-      break;
-
-   case 3:
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $PluginFusioninventoryTaskjob->manageTasksByObject("PluginFusioninventoryIPRange", 
                                                          $_POST['id']);
       break;
 
    default:
+      Plugin::displayAction($iprange, $_REQUEST['glpi_tab']);
 
       break;
 }

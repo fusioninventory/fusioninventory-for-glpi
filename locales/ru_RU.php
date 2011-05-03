@@ -102,6 +102,8 @@ $LANG['plugin_fusioninventory']['processes'][38]="Номер процесса";
 $LANG['plugin_fusioninventory']['menu'][1]="Управление агентами";
 $LANG['plugin_fusioninventory']['menu'][3]="Меню";
 $LANG['plugin_fusioninventory']['menu'][4]="Неизвестное устройство";
+$LANG['plugin_fusioninventory']['menu'][5] = "Credentials";
+$LANG['plugin_fusioninventory']['menu'][6]="Remote devices to inventory";
 $LANG['plugin_fusioninventory']['menu'][7]="Запущенные работы";
 
 $LANG['plugin_fusioninventory']['discovery'][5]="Количество импортированных устройств";
@@ -181,7 +183,17 @@ $LANG['plugin_fusioninventory']['codetasklog'][1]="Плохой маркер. н
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Агент остановлен/сломан";
 $LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['ocsconfig'][11];
 
+$LANG['plugin_fusioninventory']['credential'][1] = "Credential for remote inventory";
+$LANG['plugin_fusioninventory']['credential'][2] = "Remote device inventory";
+$LANG['plugin_fusioninventory']['credential'][3] = "Credentials";
+
 $LANG['plugin_fusioninventory']['locks'][0]="Delete locks";
 $LANG['plugin_fusioninventory']['locks'][1]="Add locks";
+
+$LANG['plugin_fusioninventory']['iprange'][0]="Start of IP range";
+$LANG['plugin_fusioninventory']['iprange'][1]="End of IP range";
+$LANG['plugin_fusioninventory']['iprange'][2]="IP Ranges";
+$LANG['plugin_fusioninventory']['iprange'][3]="Query";
+$LANG['plugin_fusioninventory']['iprange'][7]="Bad IP";
 
 ?>
