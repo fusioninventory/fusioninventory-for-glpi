@@ -32,34 +32,37 @@
    ----------------------------------------------------------------------
  */
 
-if(!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', '../..');
+define('GLPI_ROOT', '../../..');
+include (GLPI_ROOT . "/inc/includes.php");
+header("Content-Type: text/html; charset=UTF-8");
+header_nocache();
+
+if(!isset($_POST["id"])) {
+   exit();
 }
-include (GLPI_ROOT."/inc/includes.php");
-logDebug($_GET);
-//Agent communication using REST protocol
-if (isset($_GET['action']) && isset($_GET['machineid'])) {
-   $response = PluginFusioninventoryRestCommunication::communicate($_GET);
-   if ($response) {
-      echo json_encode($response);
-      logDebug($response);
-   } else {
-      PluginFusioninventoryRestCommunication::sendError();
-   }
 
-} else {
-   //Agent posting an inventory
-   if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
-      include(GLPI_ROOT ."/plugins/fusioninventory/front/communication.php");
+if(!isset($_POST["sort"])) $_POST["sort"] = "";
+if(!isset($_POST["order"])) $_POST["order"] = "";
+if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 
-   } else {
-      commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"], "plugins", 
-                   "fusioninventory");
-   
-      glpi_header(getItemTypeSearchURL('PluginFusioninventoryMenu'));
-      commonFooter();
-   }
+$iprange = new PluginFusioninventoryIPRange();
 
+switch($_POST['glpi_tab']) {
+   case -1:
+      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $PluginFusioninventoryTaskjob->manageTasksByObject("PluginFusioninventoryIPRange", $_POST['id']);
+      break;
+
+   case 1:
+      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $PluginFusioninventoryTaskjob->manageTasksByObject("PluginFusioninventoryIPRange", $_POST['id']);
+      break;
+
+   default :
+      Plugin::displayAction($iprange, $_REQUEST['glpi_tab']);
+      break;
 }
+
+ajaxFooter();
 
 ?>

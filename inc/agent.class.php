@@ -521,6 +521,20 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $this->update($this->fields);
    }
 
+   /**
+    * Return an agent by his deviceid
+    * @param device_id the device_id coming from the agent itself
+    * @return an array with the agent's attributes or an empty array if no agent found
+    */
+   static function getByDeviceID($device_id) {
+      $agents =  getAllDatasFromTable('glpi_plugin_fusioninventory_agents',
+                                      "`device_id`='$device_id' AND `lock`='0'");
+      if (!empty($agents)) {
+         return array_pop($agents);
+      } else {
+         return false;
+      }
+   }
 }
 
 ?>

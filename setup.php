@@ -53,6 +53,8 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryProfile');
       Plugin::registerClass('PluginFusioninventorySetup');
       Plugin::registerClass('PluginFusioninventoryAgentmodule');
+      Plugin::registerClass('PluginFusioninventoryIPRange');
+      Plugin::registerClass('PluginFusioninventoryCredential');
 
       // ##### 3. get informations of the plugin #####
 
@@ -75,29 +77,36 @@ function plugin_init_fusioninventory() {
 
       $PLUGIN_HOOKS['add_javascript']['fusioninventory']="script.js";
 
+
       if (isset($_SESSION["glpiID"])) {
+
+         $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusioninventory_ipranges';
 
          if (haveRight("configuration", "r") || haveRight("profile", "w")) {// Config page
             $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/configuration.form.php?glpi_tab=1';
          }
 
          $PLUGIN_HOOKS['use_massive_action']['fusioninventory']=1;
-         $PLUGIN_HOOKS['pre_item_update']['fusioninventory'] = array('Plugin' =>'plugin_pre_item_update_fusioninventory');
-   //      $PLUGIN_HOOKS['pre_item_delete']['fusioninventory'] = 'plugin_pre_item_delete_fusioninventory';
-         $PLUGIN_HOOKS['item_purge']['fusioninventory'] = array('NetworkPort_NetworkPort' =>'plugin_item_purge_fusioninventory',
-                                                                'PluginFusioninventoryTask'=>array('PluginFusioninventoryTask','purgeTask'),
-                                                                'PluginFusioninventoryTaskjob'=>array('PluginFusioninventoryTaskjob','purgeTaskjob'),
-                                                                'PluginFusioninventoryUnknownDevice' =>array('PluginFusioninventoryUnknownDevice','purgeUnknownDevice'));
+         $PLUGIN_HOOKS['pre_item_update']['fusioninventory'] = array('Plugin' => 'plugin_pre_item_update_fusioninventory');
+         
+         $p = array('NetworkPort_NetworkPort'            =>'plugin_item_purge_fusioninventory',
+                    'PluginFusioninventoryTask'          => array('PluginFusioninventoryTask',
+                                                                  'purgeTask'),
+                    'PluginFusioninventoryTaskjob'       => array('PluginFusioninventoryTaskjob',
+                                                                  'purgeTaskjob'),
+                    'PluginFusioninventoryUnknownDevice' => array('PluginFusioninventoryUnknownDevice',
+                                                                  'purgeUnknownDevice'));
+         $PLUGIN_HOOKS['item_purge']['fusioninventory'] = $p;
 
          
          $PLUGIN_HOOKS['item_update']['fusioninventory'] = 
-            array('Computer'         => 'plugin_item_update_fusioninventory',
-                  'NetworkEquipment' => 'plugin_item_update_fusioninventory',
-                  'Printer'          => 'plugin_item_update_fusioninventory',
-                  'Monitor'          => 'plugin_item_update_fusioninventory',
-                  'Peripheral'       => 'plugin_item_update_fusioninventory',
-                  'Phone'            => 'plugin_item_update_fusioninventory',
-                  'NetworkPort'      => 'plugin_item_update_fusioninventory');
+                                 array('Computer'         => 'plugin_item_update_fusioninventory',
+                                       'NetworkEquipment' => 'plugin_item_update_fusioninventory',
+                                       'Printer'          => 'plugin_item_update_fusioninventory',
+                                       'Monitor'          => 'plugin_item_update_fusioninventory',
+                                       'Peripheral'       => 'plugin_item_update_fusioninventory',
+                                       'Phone'            => 'plugin_item_update_fusioninventory',
+                                       'NetworkPort'      => 'plugin_item_update_fusioninventory');
 
 
          $PLUGIN_HOOKS['item_transfer']['fusioninventory'] = 'plugin_item_transfer_fusioninventory';
@@ -173,6 +182,37 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['ruleimportequipment']['title'] = $LANG['plugin_fusioninventory']['rules'][2];
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['ruleimportequipment']['page']  = '/plugins/fusioninventory/front/ruleimportequipment.php';
 
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['iprange']['title'] = 
+            $LANG['plugin_fusioninventory']['menu'][2];
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['iprange']['page']  = 
+            '/plugins/fusioninventory/front/iprange.php';
+
+         if (PluginFusioninventoryProfile::haveRight("fusioninventory", "iprange","w")) {
+            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['iprange'] = 
+               '../fusioninventory/front/iprange.form.php?add=1';
+            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['iprange'] = 
+               '../fusioninventory/front/iprange.php';
+         }
+
+         if (PluginFusioninventoryCredential::hasAlLeastOneType()) {
+            if (PluginFusioninventoryProfile::haveRight("fusioninventory", "credential","w")) {
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['PluginFusioninventoryCredential'] = 
+                  '../fusioninventory/front/credential.form.php?add=1';
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['PluginFusioninventoryCredential'] = 
+                  '../fusioninventory/front/credential.php';
+
+            }
+
+            if (PluginFusioninventoryProfile::haveRight("fusioninventory", "credential","w")) {
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['PluginFusioninventoryCredentialIp'] = 
+                  '../fusioninventory/front/credentialip.form.php?add=1';
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['PluginFusioninventoryCredentialIp'] = 
+                  '../fusioninventory/front/credentialip.php';
+   
+            }
+
+         }
+
       }
    } else { // plugin not active, need $moduleId for uninstall check
       include_once(GLPI_ROOT.'/plugins/fusioninventory/inc/module.class.php');
@@ -192,10 +232,13 @@ function plugin_init_fusioninventory() {
    }
 
 
+   // Add unknown devices in list of devices with networport
+   $CFG_GLPI["netport_types"][] = "PluginFusioninventoryUnknownDevice";
+
    $plugin = new Plugin();
    if ($plugin->isInstalled('fusioninventory') 
       && $plugin->isActivated('fusioninventory') 
-         && isset($_SERVER['HTTP_USER_AGENT']) 
+         && isset($_SERVER['HTTP_USER_AGENT'])
             && isFusioninventoryUserAgent($_SERVER['HTTP_USER_AGENT'])) {
 
       // Init other fusinv* plugins
@@ -203,9 +246,7 @@ function plugin_init_fusioninventory() {
       foreach ($a_fusinv as $data) {
          Plugin::load($data['directory']);
       }
-
       include(GLPI_ROOT ."/plugins/fusioninventory/front/communication.php");
-      exit;
    }
 
 }
@@ -234,7 +275,6 @@ function plugin_fusioninventory_check_prerequisites() {
    }
 }
 
-
 /**
  * Check if HTTP request comes from an inventory agent (Fusion or legacy OCS)
  * @param useragent the user agent coming from $_SERVER
@@ -245,19 +285,11 @@ function isFusioninventoryUserAgent($useragent = '') {
    return (preg_match("/(fusioninventory|ocsinventory|ocs-ng)/i",$useragent));
 }
 
-
 function plugin_fusioninventory_check_config() {
    return true;
 }
 
-
-
 function plugin_fusioninventory_haveTypeRight($type,$right) {
-//   switch ($type) {
-//      case 'PluginFusioninventoryConfigSNMPSecurity' :
-//         return PluginFusioninventoryProfile::haveRight("snmp_authentication",$right);
-//         break;
-//   }
    return true;
 }
 

@@ -104,8 +104,11 @@ $LANG['plugin_fusioninventory']['processes'][1]="PID";
 $LANG['plugin_fusioninventory']['processes'][38]="Process number";
 
 $LANG['plugin_fusioninventory']['menu'][1]="Configuração do agente";
+$LANG['plugin_fusioninventory']['menu'][2]="IP range configuration";
 $LANG['plugin_fusioninventory']['menu'][3]="Menu";
 $LANG['plugin_fusioninventory']['menu'][4]="Dispositivo desconhecido";
+$LANG['plugin_fusioninventory']['menu'][5] = "Credentials";
+$LANG['plugin_fusioninventory']['menu'][6]="Remote devices to inventory";
 $LANG['plugin_fusioninventory']['menu'][7]="Trabalhos em execução";
 
 $LANG['plugin_fusioninventory']['discovery'][5]="Número de dispositivos importados";
@@ -132,6 +135,7 @@ $LANG['plugin_fusioninventory']['agents'][37]="locked";
 $LANG['plugin_fusioninventory']['agents'][38]="Available";
 $LANG['plugin_fusioninventory']['agents'][39]="Running";
 $LANG['plugin_fusioninventory']['agents'][40]="Computer without known IP";
+$LANG['plugin_fusioninventory']['agents'][41] = "Service URL";
 
 $LANG['plugin_fusioninventory']['unknown'][2]="Dispositivos aprovados";
 $LANG['plugin_fusioninventory']['unknown'][4]="Hub de rede";
@@ -141,7 +145,7 @@ $LANG['plugin_fusioninventory']['task'][0]="Tarefa";
 $LANG['plugin_fusioninventory']['task'][1]="Gerenciamento de tarefa";
 $LANG['plugin_fusioninventory']['task'][2]="Ação";
 $LANG['plugin_fusioninventory']['task'][14]="Data da cobrança";
-$LANG['plugin_fusioninventory']['task'][16]="Nova ação";
+$LANG['plugin_fusioninventory']['task'][44]="Nova ação";
 $LANG['plugin_fusioninventory']['task'][17]="Frequência";
 $LANG['plugin_fusioninventory']['task'][18]="Tarefas";
 $LANG['plugin_fusioninventory']['task'][19]="Tarefas em execução";
@@ -184,7 +188,16 @@ $LANG['plugin_fusioninventory']['codetasklog'][1]="Bad token, impossible to star
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Agent stopped/crashed";
 $LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['plugin_fusioninventory']['rules'][17];
 
+$LANG['plugin_fusioninventory']['credential'][1] = "Credential for remote inventory";
+$LANG['plugin_fusioninventory']['credential'][2] = "Remote device inventory";
+$LANG['plugin_fusioninventory']['credential'][3] = "Credentials";
+
 $LANG['plugin_fusioninventory']['locks'][0]="Delete locks";
 $LANG['plugin_fusioninventory']['locks'][1]="Add locks";
 
+$LANG['plugin_fusioninventory']['iprange'][0]="Start of IP range";
+$LANG['plugin_fusioninventory']['iprange'][1]="End of IP range";
+$LANG['plugin_fusioninventory']['iprange'][2]="IP Ranges";
+$LANG['plugin_fusioninventory']['iprange'][3]="Query";
+$LANG['plugin_fusioninventory']['iprange'][7]="Bad IP";
 ?>

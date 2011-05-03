@@ -51,8 +51,8 @@ class PluginFusioninventoryStaticmisc {
       $a_tasks = array();
       $a_tasks[] = array('module'               => 'fusioninventory',
                          'method'               => 'wakeonlan',
-                         'name'                 => $LANG['plugin_fusioninventory']['profile'][5]);
-
+                         'name'                 => $LANG['plugin_fusioninventory']['profile'][5],
+                         'use_rest'             => false);
       return $a_tasks;
    }
 
@@ -110,9 +110,10 @@ class PluginFusioninventoryStaticmisc {
       $a_methods = call_user_func(array('PluginFusioninventoryStaticmisc', 'task_methods'));
       $a_modules = PluginFusioninventoryModule::getAll();
       foreach ($a_modules as $data) {
-         if (is_callable(array('Plugin'.ucfirst($data['directory']).'Staticmisc', 'task_methods'))) {
+         $class = $class= PluginFusioninventoryStaticmisc::getStaticmiscClass($data['directory']);
+         if (is_callable(array($class, 'task_methods'))) {
             $a_methods = array_merge($a_methods, 
-               call_user_func(array('Plugin'.ucfirst($data['directory']).'Staticmisc', 'task_methods')));
+               call_user_func(array($class, 'task_methods')));
          }
       }
       return $a_methods;
@@ -131,23 +132,33 @@ class PluginFusioninventoryStaticmisc {
    static function profiles() {
       global $LANG;
 
-      $a_profil = array();
-      $a_profil[] = array('profil'  => 'agent',
-                          'name'    => $LANG['plugin_fusioninventory']['profile'][2]);
-      $a_profil[] = array('profil'  => 'remotecontrol',
-                          'name'    => $LANG['plugin_fusioninventory']['profile'][3]);
-      $a_profil[] = array('profil'  => 'configuration',
-                          'name'    => $LANG['plugin_fusioninventory']['profile'][4]);
-      $a_profil[] = array('profil'  => 'wol',
-                          'name'    => $LANG['plugin_fusioninventory']['profile'][5]);
-      $a_profil[] = array('profil'  => 'unknowndevice',
-                          'name'    => $LANG['plugin_fusioninventory']['profile'][6]);
-      $a_profil[] = array('profil'  => 'task',
-                          'name'    => $LANG['plugin_fusioninventory']['profile'][7]);
-
-      return $a_profil;
+      return array(array('profil'  => 'agent',
+                         'name'    => $LANG['plugin_fusioninventory']['profile'][2]),
+                   array('profil'  => 'remotecontrol',
+                         'name'    => $LANG['plugin_fusioninventory']['profile'][3]),
+                   array('profil'  => 'configuration',
+                         'name'    => $LANG['plugin_fusioninventory']['profile'][4]),
+                   array('profil'  => 'wol',
+                         'name'    => $LANG['plugin_fusioninventory']['profile'][5]),
+                   array('profil'  => 'unknowndevice',
+                         'name'    => $LANG['plugin_fusioninventory']['profile'][6]),
+                   array('profil'  => 'task',
+                         'name'    => $LANG['plugin_fusioninventory']['profile'][7]),
+                   array('profil'  => 'iprange',
+                         'name'    => $LANG['plugin_fusioninventory']['menu'][2]),
+                   array('profil'  => 'credential',
+                         'name'    => $LANG['plugin_fusioninventory']['menu'][5]));
    }
-
+   
+   /**
+    * Get name of the staticmisc class for a module
+    * @param module the module name
+    * 
+    * @return the name of the staticmisc class associated with it
+    */
+   static function getStaticMiscClass($module) {
+      return "Plugin".ucfirst($module)."Staticmisc";
+   }
 }
 
 ?>
