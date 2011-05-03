@@ -150,13 +150,39 @@ class PluginFusioninventoryWizard {
 
       echo "<tr>";
       echo "<td align='right'>";
-      echo "<input class='submit' type='submit' name='next' value='".$a_button['name']." >'/>";
+
+      // 
+      echo "<input class='submit' type='submit' name='next' value='".$a_button['name']."'
+            onclick='window.location.href=\"".GLPI_ROOT."/plugins/fusioninventory/front/wizard.php?wizz=".$a_button['link']."\"'/>";
+      echo "</form>";
       echo "</td>";
       echo "<td></td>";
       echo "</tr>";
 
       echo "</table></center>";
    }
+
+
+   static function getNextStep($ariane) {
+      if (method_exists("PluginFusioninventoryWizard", $ariane)) {
+         $pluginFusioninventoryWizard = new PluginFusioninventoryWizard();
+         $a_list = $pluginFusioninventoryWizard->$ariane();
+
+         $find = 0;
+         foreach ($a_list as $link) {
+            if (strstr($link, $_GET['wizz'])) {
+               $find = 1;
+            } else {
+               if ($find == '1') {
+                  return "&ariane=".$link;
+               }
+            }
+         }
+      } else {
+         return;
+      }
+   }
+
 
 
 
@@ -216,7 +242,7 @@ class PluginFusioninventoryWizard {
    function fil_Part_NetDiscovery() {
       return array(
       "Authentification SNMP"              => "w_authsnmp",
-      "Règles d'import"                    => "",
+      "Règles d'import"                    => "w_importrules",
       "Création de taches d'exécution"     => "",
       "Affichage des inventaires réalisés" => "");
    }
@@ -246,11 +272,11 @@ class PluginFusioninventoryWizard {
 
    static function w_authsnmp($ariane='') {
       $a_button = array('name' => 'Suivant',
-                  'link' => 'w_rangeip');
+                  'link' => 'w_rangeip'.PluginFusioninventoryWizard::getNextStep($ariane));
+
+         //GLPI_ROOT."/plugins/fusioninventory/front/wizard.php?wizz=w_start") {
 
       PluginFusioninventoryWizard::displayShowForm($a_button, $ariane, "PluginFusinvsnmpConfigSecurity");
-
-      
    }
 
 }
