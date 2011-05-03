@@ -46,7 +46,6 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    } else {
       PluginFusioninventoryRestCommunication::sendError();
    }
-
 } else {
    //Agent posting an inventory
    if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
@@ -56,12 +55,13 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"], "plugins", 
                    "fusioninventory");
    
-      glpi_header(getItemTypeSearchURL('PluginFusioninventoryMenu'));
+//      glpi_header(getItemTypeSearchURL('PluginFusioninventoryMenu'));
+
+      glpi_header(GLPI_ROOT ."/plugins/fusioninventory/front/wizard_start.php");
+      commonFooter();
+
       commonFooter();
    }
-
-   glpi_header(GLPI_ROOT ."/plugins/fusioninventory/front/wizard_start.php");
-   commonFooter();
 }
 
 ?>
