@@ -40,11 +40,11 @@ function pluginFusinvsnmpInstall() {
    // Get informations of plugin
    $a_plugin = plugin_version_fusinvsnmp();
 
-   include_once (GLPI_ROOT . "/plugins/fusinvsnmp/install/update.php");
+   include (GLPI_ROOT . "/plugins/fusinvsnmp/install/update.php");
    $version_detected = pluginfusinvsnmpGetCurrentVersion($a_plugin['version']);
    if ((isset($version_detected)) AND ($version_detected != $a_plugin['version'])) {
       // Update
-      pluginFusinvsnmpUpdate();
+      pluginFusinvsnmpUpdate($version_detected);
    } else {
       // Installation
 
@@ -70,37 +70,16 @@ function pluginFusinvsnmpInstall() {
       $configLogField->initConfig();
 
       // Import models
-      $importexport = new PluginFusinvsnmpImportExport();
-      
-      $nb = 0;
-      foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) {
-         $nb++;
-      }
-      $i = 0;
-      echo "<table class='tab_cadre_fixe'>";
-      echo "<tr class='tab_bg_1'>";
-      echo "<th align='center'>";
-      echo "Importing SNMP models, please wait...";
-      echo "</th>";
-      echo "</tr>";
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>";
-      createProgressBar("Importing SNMP models, please wait...");
-      foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) {
-         $importexport->import($file,0,1);
-         $i++;
-         changeProgressBarPosition($i,$nb,"$i / $nb");
-      }
-      echo "</td>";
-      echo "</table>";
+      PluginFusinvsnmpModel::importAllModels();
 
+      include_once (GLPI_ROOT . "/plugins/fusioninventory/inc/staticmisc.class.php");
       $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
       PluginFusioninventoryProfile::initProfile($a_plugin['shortname'], $plugins_id);
 
       $configSNMP = new PluginFusinvSNMPConfig;
       $configSNMP->initConfigModule();
       // Creation config values
-//      PluginFusioninventoryConfig::add($modules_id, type, value);
+   //      PluginFusioninventoryConfig::add($modules_id, type, value);
 
       PluginFusioninventoryProfile::changeProfile($plugins_id);
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
@@ -110,7 +89,7 @@ function pluginFusinvsnmpInstall() {
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());
       $PluginFusioninventoryAgentmodule->add($input);
-      
+
       $input = array();
       $input['plugins_id'] = $plugins_id;
       $input['modulename'] = "NETDISCOVERY";
@@ -118,9 +97,8 @@ function pluginFusinvsnmpInstall() {
       $input['exceptions'] = exportArrayToDB(array());
       $PluginFusioninventoryAgentmodule->add($input);
 
+      Crontask::Register('PluginFusinvsnmpNetworkPortLog', 'cleannetworkportlogs', (3600 * 24), array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
    }
-   Crontask::Register('PluginFusinvsnmpNetworkPortLog', 'cleannetworkportlogs', (3600 * 24), array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
-
 }
 
 

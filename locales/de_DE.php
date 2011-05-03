@@ -384,6 +384,11 @@ $LANG['plugin_fusinvsnmp']['agents'][25]="Agent(s)";
 $LANG['plugin_fusinvsnmp']['agents'][26]="Version des Moduls Netdiscovery";
 $LANG['plugin_fusinvsnmp']['agents'][27]="Version des Moduls SNMPQuery";
 
+$LANG['plugin_fusinvsnmp']['task'][15]="Dauerhafte Aufgabe - Entdeckung";
+$LANG['plugin_fusinvsnmp']['task'][16]="Dauerhafte Aufgaber - Inventarisierung";
+$LANG['plugin_fusinvsnmp']['task'][17]="Kommunikationsmodus";
+$LANG['plugin_fusinvsnmp']['task'][18]="Task automatisch erstellen (einfacher)";
+
 $LANG['plugin_fusinvsnmp']['constructdevice'][0]="Geräte-MIBs verwalten";
 $LANG['plugin_fusinvsnmp']['constructdevice'][1]="Modell automatisch erstellen";
 $LANG['plugin_fusinvsnmp']['constructdevice'][2]="Entdeckungsdatei generieren";

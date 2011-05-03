@@ -86,6 +86,10 @@ function pluginFusinvsnmpGetCurrentVersion($version) {
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
       $versionconfig = $PluginFusioninventoryConfig->getValue($plugins_id, "version");
       if ((isset($versionconfig)) AND (!empty($versionconfig))) {
+         if ($versionconfig == '2.2.1'
+                 AND TableExists("glpi_plugin_fusinvsnmp_configlogfields")) {
+            return "2.3.0-1";
+         }
          return $versionconfig;
       }
    }
@@ -129,7 +133,14 @@ function pluginFusinvsnmpUpdate($current_version) {
       case "2.2.1":
 			include("update_221_230.php");
 			update221to230();
-
+      case "2.3.0-1":
+      case "2.3.1-1":
+			include("update_231_232.php");
+			update231to232();
    }
+
+   $config = new PluginFusioninventoryConfig();
+   $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
+   $config->updateConfigType($plugins_id, 'version', "2.4.0-1");
 }
 ?>

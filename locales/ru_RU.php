@@ -33,7 +33,7 @@
  */
 
 $title="FusionInventory SNMP";
-$version="2.3.1-1";
+$version="2.4.0-1";
 
 $LANG['plugin_fusinvsnmp']['title'][0]="$title";
 $LANG['plugin_fusinvsnmp']['title'][1]="SNMP information";
@@ -383,6 +383,11 @@ $LANG['plugin_fusinvsnmp']['agents'][24]="Threads number";
 $LANG['plugin_fusinvsnmp']['agents'][25]="Agent(s)";
 $LANG['plugin_fusinvsnmp']['agents'][26]="Netdiscovery module version";
 $LANG['plugin_fusinvsnmp']['agents'][27]="Snmpquery module version";
+
+$LANG['plugin_fusinvsnmp']['task'][15]="Permanent task - Discovery";
+$LANG['plugin_fusinvsnmp']['task'][16]="Permanent task - Inventory";
+$LANG['plugin_fusinvsnmp']['task'][17]="Communication type";
+$LANG['plugin_fusinvsnmp']['task'][18]="Create task easily";
 
 $LANG['plugin_fusinvsnmp']['constructdevice'][0]="Gestion des mib de matériel";
 $LANG['plugin_fusinvsnmp']['constructdevice'][1]="Automatic creation of models";
