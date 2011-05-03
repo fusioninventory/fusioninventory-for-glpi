@@ -47,7 +47,7 @@ function update232to240() {
 
    plugin_fusioninventory_displayMigrationMessage("240"); // Start
    
-   if (TableExists("`glpi_plugin_fusinvsnmp_ipranges`")) {
+   if (TableExists("glpi_plugin_fusinvsnmp_ipranges")) {
       //Rename table
       $query = "RENAME TABLE  `glpi_plugin_fusinvsnmp_ipranges` " .
                "TO `glpi_plugin_fusioninventory_ipranges` ;";
@@ -63,6 +63,12 @@ function update232to240() {
       $DB->query($query) or die ("Rename itemtype in glpi_displaypreferences".
                                  $LANG['update'][90] . $DB->error());
 
+      $plugins_id = PluginFusioninventoryModule::getModuleId("fusioninventory");
+      $query = "UPDATE `glpi_plugin_fusioninventory_profiles` SET `plugins_id` = '$plugins_id' " .
+               "WHERE `glpi_plugin_fusioninventory_profiles`.`type`='iprange'";
+      $DB->query($query) or die ("Update iprange profile values ".
+                                 $LANG['update'][90] . $DB->error());
+      
       $query = "UPDATE `glpi_plugin_fusioninventory_taskjobstatus` " .
                "SET `itemtype`='PluginFusioninventoryIPRange' " .
                "WHERE `itemtype`='PluginFusinvsnmpIPRange'";
@@ -71,8 +77,8 @@ function update232to240() {
       
       $query = "CREATE TABLE  `glpi_plugin_fusioninventory_credentials` (
                   `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
-                  `entities_id` INT( 11 ) NOT NULL AUTO_INCREMENT DEFAULT '0',
-                  `is_recursive` TINYINT( 1 ) NOT NULL AUTO_INCREMENT DEFAULT '0' ,
+                  `entities_id` INT( 11 ) NOT NULL DEFAULT '0',
+                  `is_recursive` TINYINT( 1 ) NOT NULL DEFAULT '0' ,
                   `name` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
                   `username` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
                   `password` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
@@ -99,7 +105,7 @@ function update232to240() {
       if (!TableExists("glpi_plugin_fusioninventory_credentialips")) {
          $query = "CREATE TABLE  `glpi_plugin_fusioninventory_credentialips` (
                      `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
-                     `entities_id` INT( 11 ) NOT NULL AUTO_INCREMENT DEFAULT '0',
+                     `entities_id` INT( 11 ) NOT NULL DEFAULT '0',
                      `plugin_fusioninventory_credentials_id` INT( 11 ) NOT NULL DEFAULT  '0',
                      `name` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
                      `ip` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
