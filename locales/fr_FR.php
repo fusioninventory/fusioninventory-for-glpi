@@ -80,7 +80,7 @@ $LANG['plugin_fusioninventory']['rules'][3]  = "Chercher les matériels GLPI aya
 $LANG['plugin_fusioninventory']['rules'][4]  = "Entité de destination de la machine";
 $LANG['plugin_fusioninventory']['rules'][5]  = "Liaison FusionInventory";
 $LANG['plugin_fusioninventory']['rules'][6]  = "Liaison si possible, sinon import refusé";
-$LANG['plugin_fusioninventory']['rules'][7]  = "Liaison si possible";
+$LANG['plugin_fusioninventory']['rules'][7]  = "Liaison si possible, sinon création du matériel";
 $LANG['plugin_fusioninventory']['rules'][8]  = "Envoyer";
 $LANG['plugin_fusioninventory']['rules'][9]  = "existe";
 $LANG['plugin_fusioninventory']['rules'][10] = "n'existe pas";
@@ -90,6 +90,8 @@ $LANG['plugin_fusioninventory']['rules'][13] = "Numéro de série du disque dur"
 $LANG['plugin_fusioninventory']['rules'][14] = "Numéro de série de partition disque";
 $LANG['plugin_fusioninventory']['rules'][15] = "uuid";
 $LANG['plugin_fusioninventory']['rules'][16] = "Etiquette FusionInventory";
+$LANG['plugin_fusioninventory']['rules'][17] = "Import refusé";
+$LANG['plugin_fusioninventory']['rules'][18] = "Equipement créé";
 
 $LANG['plugin_fusioninventory']['rulesengine'][152] = "Matériel à importer";
 
@@ -180,7 +182,7 @@ $LANG['plugin_fusioninventory']['xml'][0]="XML";
 
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Mauvais jeton, impossible d'agir sur l'agent";
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Agent arrêté ou crashé";
-$LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['ocsconfig'][11];
+$LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['plugin_fusioninventory']['rules'][17];
 
 $LANG['plugin_fusioninventory']['locks'][0]="Supprimer les verrous";
 $LANG['plugin_fusioninventory']['locks'][1]="Ajouter les verrous";

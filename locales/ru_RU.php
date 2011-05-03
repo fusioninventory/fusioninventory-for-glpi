@@ -78,7 +78,7 @@ $LANG['plugin_fusioninventory']['rules'][3]="Поиск GLPI оборудова�
 $LANG['plugin_fusioninventory']['rules'][4]="Назначение оборудования организации";
 $LANG['plugin_fusioninventory']['rules'][5]="Ссылка FusionInventory";
 $LANG['plugin_fusioninventory']['rules'][6] = "Ссылка если возмжно, иначе отказано в импорте";
-$LANG['plugin_fusioninventory']['rules'][7] = "Ссылка если возможно";
+$LANG['plugin_fusioninventory']['rules'][7] = "Ссылка если возможно, else create device";
 $LANG['plugin_fusioninventory']['rules'][8] = "Отправить";
 $LANG['plugin_fusioninventory']['rules'][9]  = "существует";
 $LANG['plugin_fusioninventory']['rules'][10]  = "не существует";
@@ -88,6 +88,8 @@ $LANG['plugin_fusioninventory']['rules'][13] = "Серийный номер HDD"
 $LANG['plugin_fusioninventory']['rules'][14] = "Серийный номер раздела";
 $LANG['plugin_fusioninventory']['rules'][15] = "uuid";
 $LANG['plugin_fusioninventory']['rules'][16] = "FusionInventory tag";
+$LANG['plugin_fusioninventory']['rules'][17] = "Import denied";
+$LANG['plugin_fusioninventory']['rules'][18] = "Device created";
 
 $LANG['plugin_fusioninventory']['rulesengine'][152] = "Оборудование для импорта";
 
@@ -178,7 +180,7 @@ $LANG['plugin_fusioninventory']['xml'][0]="XML";
 
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Плохой маркер. не возможно запустить агент";
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Агент остановлен/сломан";
-$LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['ocsconfig'][11];
+$LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['plugin_fusioninventory']['rules'][17];
 
 $LANG['plugin_fusioninventory']['locks'][0]="Delete locks";
 $LANG['plugin_fusioninventory']['locks'][1]="Add locks";

@@ -44,5 +44,5 @@ header_nocache();
 checkRight('rule_ocs','r');
 
 $rule = new PluginFusioninventoryRuleImportEquipment();
-include ("rule.common.tabs.php");
+include (GLPI_ROOT."/ajax/rule.common.tabs.php");
 ?>
