@@ -52,11 +52,13 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       if (is_null($p_profiles_id)) {
          $p_profiles_id = $_SESSION['glpiactiveprofile']['id'];
       }
-      $pfp = new PluginFusioninventoryProfile();
-      return $pfp->add(array('type'       => $p_type,
-                             'right'      => $p_right,
-                             'plugins_id' => $p_plugins_id,
-                             'profiles_id'=> $p_profiles_id));
+      if (!self::profileExists($p_plugins_id, $p_profiles_id, $p_type)) {
+         $pfp = new PluginFusioninventoryProfile();
+         return $pfp->add(array('type'       => $p_type,
+                                'right'      => $p_right,
+                                'plugins_id' => $p_plugins_id,
+                                'profiles_id'=> $p_profiles_id));
+      }
    }
 
 
@@ -76,11 +78,13 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       if (is_null($p_profiles_id)) {
          $p_profiles_id = $_SESSION['glpiactiveprofile']['id'];
       }
-      return $this->update(array('id'         => $p_id,
-                                 'type'       => $p_type,
-                                 'right'      => $p_right,
-                                 'plugins_id' => $p_plugins_id,
-                                 'profiles_id'=> $p_profiles_id));
+      if (self::profileExists($p_plugins_id, $p_profiles_id, $p_type)) {
+         return $this->update(array('id'         => $p_id,
+                                    'type'       => $p_type,
+                                    'right'      => $p_right,
+                                    'plugins_id' => $p_plugins_id,
+                                    'profiles_id'=> $p_profiles_id));
+      }
    }
 
 
@@ -105,7 +109,18 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       }
    }
 
-
+   static function profileExists($plugins_id, $profiles_id, $type) {
+      global $DB;
+      $query = "SELECT `id` AS cpt FROM ".getTableForItemType('PluginFusioninventoryProfile');
+      $query.= " WHERE `plugins_id`='$plugins_id' AND `type`='$type'";
+      $query.= " AND `profiles_id`='$profiles_id'";
+      $results = $DB->query($query);
+      if ($DB->numrows($results) > 0) {
+         return true;
+      } else {
+         return false;
+      }
+   }
 
    /**
     * Change profile (for used connected)
