@@ -169,9 +169,15 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     *@return integer the new id of the added item (or false if fail)
     **/
    function addConfig($p_plugins_id, $p_type, $p_value) {
-      return $this->add(array('plugins_id'=>$p_plugins_id, 
-                              'type'=>$p_type,
-                              'value'=>$p_value));
+      $existing_value = self::getValue($p_plugins_id, $p_type); 
+      if ($existing_value) {
+         return $existing_value;
+
+      } else {
+         return $this->add(array('plugins_id' => $p_plugins_id, 
+                                 'type'       => $p_type,
+                                 'value'      => $p_value));
+      }
    }
 
 
