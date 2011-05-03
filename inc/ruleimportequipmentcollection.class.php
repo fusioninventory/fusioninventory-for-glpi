@@ -36,9 +36,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-include_once(GLPI_ROOT."/plugins/fusioninventory/inc/rulecollection.class.php");
-
-class PluginFusioninventoryRuleImportEquipmentCollection extends PluginFusioninventoryRuleCollection {
+class PluginFusioninventoryRuleImportEquipmentCollection extends RuleCollection {
 
    // From RuleCollection
    public $stop_on_first_match = true;
@@ -96,18 +94,18 @@ class PluginFusioninventoryRuleImportEquipmentCollection extends PluginFusioninv
                echo $LANG['setup'][620];
                break;
 
-            case PluginFusioninventoryRuleImportEquipment::LINK_RESULT_NO_IMPORT:
-               echo $LANG['ocsconfig'][11];
+            case PluginFusioninventoryRuleImportEquipment::LINK_RESULT_CREATE:
+               echo $LANG['plugin_fusioninventory']['rules'][18];
                break;
 
-            case PluginFusioninventoryRuleImportEquipment::LINK_RESULT_IMPORT:
-               echo $LANG['buttons'][37];
+            case PluginFusioninventoryRuleImportEquipment::LINK_RESULT_DENIED:
+               echo $LANG['plugin_fusioninventory']['rules'][17];
                break;
          }
 
          echo "</td>";
          echo "</tr>";
-         if ($output["action"] != PluginFusioninventoryRuleImportEquipment::LINK_RESULT_NO_IMPORT
+         if ($output["action"] != PluginFusioninventoryRuleImportEquipment::LINK_RESULT_DENIED
              && isset($output["found_equipment"])) {
             echo "<tr class='tab_bg_2'>";
             $className = $output["found_equipment"][1];

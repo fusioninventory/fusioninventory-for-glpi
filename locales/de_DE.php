@@ -80,7 +80,7 @@ $LANG['plugin_fusioninventory']['rules'][3]="Durchsuche GLPI nach Material mit d
 $LANG['plugin_fusioninventory']['rules'][4]="Ziel-Entität des Materials";
 $LANG['plugin_fusioninventory']['rules'][5]="FusionInventory-Verbindung";
 $LANG['plugin_fusioninventory']['rules'][6] = "Verbinde wenn möglich, andernfalls verbiete den Import";
-$LANG['plugin_fusioninventory']['rules'][7] = "Verbind wenn möglich";
+$LANG['plugin_fusioninventory']['rules'][7] = "Verbind wenn möglich, else create device";
 $LANG['plugin_fusioninventory']['rules'][8] = "Sende";
 $LANG['plugin_fusioninventory']['rules'][9] = "existiert";
 $LANG['plugin_fusioninventory']['rules'][10] = "existiert nicht";
@@ -90,6 +90,8 @@ $LANG['plugin_fusioninventory']['rules'][13] = "Seriennummer Festplatte";
 $LANG['plugin_fusioninventory']['rules'][14] = "Seriennummer Partition";
 $LANG['plugin_fusioninventory']['rules'][15] = "UUID";
 $LANG['plugin_fusioninventory']['rules'][16] = "FusionInventory Tag";
+$LANG['plugin_fusioninventory']['rules'][17] = "Import denied";
+$LANG['plugin_fusioninventory']['rules'][18] = "Device created";
 
 $LANG['plugin_fusioninventory']['rulesengine'][152] = "Material zum importieren";
 
@@ -102,8 +104,11 @@ $LANG['plugin_fusioninventory']['processes'][1]="PID";
 $LANG['plugin_fusioninventory']['processes'][38]="Prozessnummer";
 
 $LANG['plugin_fusioninventory']['menu'][1]="Agent-Verwaltung";
+$LANG['plugin_fusioninventory']['menu'][2]="IP-Adressbereich Konfiguration";
 $LANG['plugin_fusioninventory']['menu'][3]="Menü";
 $LANG['plugin_fusioninventory']['menu'][4]="Ubekanntes Gerät";
+$LANG['plugin_fusioninventory']['menu'][5] = "Credentials";
+$LANG['plugin_fusioninventory']['menu'][6]="Remote devices to inventory";
 $LANG['plugin_fusioninventory']['menu'][7]="Aktive / Laufende Aufgaben";
 
 $LANG['plugin_fusioninventory']['discovery'][5]="Anzahl importierter Geräte";
@@ -130,6 +135,7 @@ $LANG['plugin_fusioninventory']['agents'][37]="gesperrt";
 $LANG['plugin_fusioninventory']['agents'][38]="Available";
 $LANG['plugin_fusioninventory']['agents'][39]="Running";
 $LANG['plugin_fusioninventory']['agents'][40]="Computer without known IP";
+$LANG['plugin_fusioninventory']['agents'][41] = "Service URL";
 
 $LANG['plugin_fusioninventory']['unknown'][2]="Genehmigte Geräte";
 $LANG['plugin_fusioninventory']['unknown'][4]="Netzwerk-Hub";
@@ -139,7 +145,7 @@ $LANG['plugin_fusioninventory']['task'][0]="Aufgabe";
 $LANG['plugin_fusioninventory']['task'][1]="Aufgabenverwaltung";
 $LANG['plugin_fusioninventory']['task'][2]="Aufgabe / Befehl";
 $LANG['plugin_fusioninventory']['task'][14]="Geplanter Zeitpunkt";
-$LANG['plugin_fusioninventory']['task'][16]="Neue Aufgabe";
+$LANG['plugin_fusioninventory']['task'][44]="Neue Aufgabe";
 $LANG['plugin_fusioninventory']['task'][17]="Regelmässigkeit";
 $LANG['plugin_fusioninventory']['task'][18]="Aufgaben";
 $LANG['plugin_fusioninventory']['task'][19]="Laufende Augfaben";
@@ -163,6 +169,8 @@ $LANG['plugin_fusioninventory']['task'][37]="Tage";
 $LANG['plugin_fusioninventory']['task'][38]="Monate";
 $LANG['plugin_fusioninventory']['task'][39]="Unable to run task because some jobs is running yet!";
 $LANG['plugin_fusioninventory']['task'][40]="Force running";
+$LANG['plugin_fusioninventory']['task'][41]="Server contacts the agent (push)";
+$LANG['plugin_fusioninventory']['task'][42]="Agent contacts the server (pull)";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="gestartet";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="OK";
@@ -178,5 +186,18 @@ $LANG['plugin_fusioninventory']['xml'][0]="XML";
 
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Falcher Token, kann den Agent nicht starten";
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Agent gestoppt/abgestürzt";
-$LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['ocsconfig'][11];
+$LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['plugin_fusioninventory']['rules'][17];
+
+$LANG['plugin_fusioninventory']['credential'][1] = "Credential for remote inventory";
+$LANG['plugin_fusioninventory']['credential'][2] = "Remote device inventory";
+$LANG['plugin_fusioninventory']['credential'][3] = "Credentials";
+
+$LANG['plugin_fusioninventory']['iprange'][0]="Start des IP-Adressbereichs";
+$LANG['plugin_fusioninventory']['iprange'][1]="Ende des IP-Adressbereichs";
+$LANG['plugin_fusioninventory']['iprange'][2]="IP-Adressbereich";
+$LANG['plugin_fusioninventory']['iprange'][3]="Abfrage";
+$LANG['plugin_fusioninventory']['iprange'][7]="IP-Adresse inkorrekt";
+
+$LANG['plugin_fusioninventory']['locks'][0]="Delete locks";
+$LANG['plugin_fusioninventory']['locks'][1]="Add locks";
 ?>

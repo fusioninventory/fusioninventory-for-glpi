@@ -1,6 +1,6 @@
 <?php
 /*
- * @version $Id: ruleactionvalue.php 12457 2010-09-20 09:21:06Z yllen $
+ * @version $Id: fieldunicity.form.php 14033 2011-03-06 16:14:51Z yllen $
  -------------------------------------------------------------------------
  GLPI - Gestionnaire Libre de Parc Informatique
  Copyright (C) 2003-2010 by the INDEPNET Development Team.
@@ -29,29 +29,14 @@
  */
 
 // ----------------------------------------------------------------------
-// Original Author of file: Julien Dombre
+// Original Author of file:
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-// Direct access to file
-if (strpos($_SERVER['PHP_SELF'],"ruleactionvalue.php")) {
-   if (!defined('GLPI_ROOT')) {
-      define('GLPI_ROOT', '../../..');
-   }
 
-   include (GLPI_ROOT."/inc/includes.php");
-   header("Content-Type: text/html; charset=UTF-8");
-   header_nocache();
-}
+define('GLPI_ROOT', '../../..');
+include (GLPI_ROOT . "/inc/includes.php");
 
-if (!defined('GLPI_ROOT')) {
-   die("Can not acces directly to this file");
-}
-
-checkLoginUser();
-$display = false;
-
-$ra = new PluginFusioninventoryRuleAction();
-$ra->displayActionSelectPattern($_POST);
-
+$dropdown = new PluginFusioninventoryCredential();
+include (GLPI_ROOT . "/front/dropdown.common.form.php");
 ?>

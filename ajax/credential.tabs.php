@@ -1,6 +1,6 @@
 <?php
 /*
- * @version $Id: rule.common.tabs.php 12457 2010-09-20 09:21:06Z yllen $
+ * @version $Id: fieldunicity.tabs.php 13503 2011-01-04 16:12:46Z moyo $
  -------------------------------------------------------------------------
  GLPI - Gestionnaire Libre de Parc Informatique
  Copyright (C) 2003-2010 by the INDEPNET Development Team.
@@ -29,42 +29,13 @@
  */
 
 // ----------------------------------------------------------------------
-// Original Author of file: Julien Dombre
+// Original Author of file:
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!isset($_POST['id'])) {
-   exit();
-}
-if (!isset($_REQUEST['glpi_tab'])) {
-   exit();
-}
+define('GLPI_ROOT', '../../..');
+include (GLPI_ROOT . "/inc/includes.php");
 
-if ($_POST['id'] >0 && $rule->can($_POST['id'],'r')) {
-
-   switch($_REQUEST['glpi_tab']) {
-      case -1 :
-         $rule->getRuleWithCriteriasAndActions($_POST['id'], 1, 1);
-         $rule->showCriteriasList($_POST["id"]);
-         $rule->showActionsList($_POST["id"]);
-         break;
-
-      case 1 :
-         $rule->getRuleWithCriteriasAndActions($_POST['id'], 1, 1);
-         $rule->showCriteriasList($_POST["id"]);
-         $rule->showActionsList($_POST["id"]);
-         break;
-
-      case 12 :
-            Log::showForItem($rule);
-         break;
-
-      default :
-         if (!Plugin::displayAction($rule, $_REQUEST['glpi_tab'])) {
-         }
-   }
-}
-
-ajaxFooter();
-
+$dropdown = new PluginFusioninventoryCredential();
+include (GLPI_ROOT . "/ajax/dropdown.common.tabs.php");
 ?>

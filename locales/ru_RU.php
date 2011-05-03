@@ -78,7 +78,7 @@ $LANG['plugin_fusioninventory']['rules'][3]="Поиск GLPI оборудова�
 $LANG['plugin_fusioninventory']['rules'][4]="Назначение оборудования организации";
 $LANG['plugin_fusioninventory']['rules'][5]="Ссылка FusionInventory";
 $LANG['plugin_fusioninventory']['rules'][6] = "Ссылка если возмжно, иначе отказано в импорте";
-$LANG['plugin_fusioninventory']['rules'][7] = "Ссылка если возможно";
+$LANG['plugin_fusioninventory']['rules'][7] = "Ссылка если возможно, else create device";
 $LANG['plugin_fusioninventory']['rules'][8] = "Отправить";
 $LANG['plugin_fusioninventory']['rules'][9]  = "существует";
 $LANG['plugin_fusioninventory']['rules'][10]  = "не существует";
@@ -88,6 +88,8 @@ $LANG['plugin_fusioninventory']['rules'][13] = "Серийный номер HDD"
 $LANG['plugin_fusioninventory']['rules'][14] = "Серийный номер раздела";
 $LANG['plugin_fusioninventory']['rules'][15] = "uuid";
 $LANG['plugin_fusioninventory']['rules'][16] = "FusionInventory tag";
+$LANG['plugin_fusioninventory']['rules'][17] = "Import denied";
+$LANG['plugin_fusioninventory']['rules'][18] = "Device created";
 
 $LANG['plugin_fusioninventory']['rulesengine'][152] = "Оборудование для импорта";
 
@@ -161,6 +163,8 @@ $LANG['plugin_fusioninventory']['task'][37]="дни";
 $LANG['plugin_fusioninventory']['task'][38]="месяцы";
 $LANG['plugin_fusioninventory']['task'][39]="Не возможно запустить задачу потому что некоторые задачи все еще запущены!";
 $LANG['plugin_fusioninventory']['task'][40]="Принудительный запуск";
+$LANG['plugin_fusioninventory']['task'][41]="Server contacts the agent (push)";
+$LANG['plugin_fusioninventory']['task'][42]="Agent contacts the server (pull)";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Начато";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";
@@ -176,5 +180,18 @@ $LANG['plugin_fusioninventory']['xml'][0]="XML";
 
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Плохой маркер. не возможно запустить агент";
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Агент остановлен/сломан";
-$LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['ocsconfig'][11];
+$LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['plugin_fusioninventory']['rules'][17];
+
+$LANG['plugin_fusioninventory']['credential'][1] = "Credential for remote inventory";
+$LANG['plugin_fusioninventory']['credential'][2] = "Remote device inventory";
+$LANG['plugin_fusioninventory']['credential'][3] = "Credentials";
+
+$LANG['plugin_fusioninventory']['locks'][0]="Delete locks";
+$LANG['plugin_fusioninventory']['locks'][1]="Add locks";
+
+$LANG['plugin_fusioninventory']['iprange'][0]="Start of IP range";
+$LANG['plugin_fusioninventory']['iprange'][1]="End of IP range";
+$LANG['plugin_fusioninventory']['iprange'][2]="IP Ranges";
+$LANG['plugin_fusioninventory']['iprange'][3]="Query";
+$LANG['plugin_fusioninventory']['iprange'][7]="Bad IP";
 ?>

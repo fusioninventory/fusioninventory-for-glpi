@@ -60,6 +60,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
       if (!count($locked)){
          $locked = array();
       }
+      $colspan = '2';
+      if ($p_items_id != '0') {
+         $colspan = '3';
+      }
 
       $item = new $p_itemtype;
       if ($p_items_id == "0") {
@@ -75,7 +79,9 @@ class PluginFusioninventoryLock extends CommonDBTM{
       echo "<input type='hidden' name='type' value='$p_itemtype'>";
       echo "<table class='tab_cadre'>";
       echo "<tr><th>&nbsp;".$LANG['plugin_fusioninventory']['functionalities'][73]."&nbsp;</th>";
-      echo "<th>&nbsp;".$LANG['plugin_fusioninventory']['functionalities'][74]."&nbsp;</th>";
+      if ($p_items_id != '0') {
+         echo "<th>&nbsp;".$LANG['plugin_fusioninventory']['functionalities'][74]."&nbsp;</th>";
+      }
       echo "<th>&nbsp;".$LANG['plugin_fusioninventory']['functionalities'][75]."&nbsp;</th></tr>";
 
       $checked = '';
@@ -146,11 +152,31 @@ class PluginFusioninventoryLock extends CommonDBTM{
                }
             }
 
-         echo "<tr class='tab_bg_1'><td>" . $key."</td>
-                  <td>".$val."</td><td align='center'><input type='checkbox' name='lockfield_fusioninventory[" . $key_source . "]' $checked></td></tr>";
+         echo "<tr class='tab_bg_1'><td>" . $key."</td>";
+         if ($p_items_id != '0') {
+            echo "<td>".$val."</td>";
+         }
+            echo "<td align='center'><input type='checkbox' name='lockfield_fusioninventory[" . $key_source . "]' $checked></td></tr>";
          }
       }
-      echo "<tr class='tab_bg_2'><td align='center' colspan='3'>
+      if ($p_items_id == '0') {
+         // add option selection for add theses lock filed or remove them
+         echo "<tr>";
+         echo "<th colspan='2'>".$LANG['plugin_fusioninventory']['task'][2]."</th>";
+         echo "<tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>".$LANG['plugin_fusioninventory']['locks'][1]."</td>";
+         echo "<td align='center'><input type='radio' name='actionlock' value='addLock' checked/></td>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>".$LANG['plugin_fusioninventory']['locks'][0]."</td>";
+         echo "<td align='center'><input type='radio' name='actionlock' value='deleteLock' /></td>";
+         echo "</tr>";
+
+      }
+      echo "<tr class='tab_bg_2'><td align='center' colspan='".$colspan."'>
                <input class='submit' type='submit' name='unlock_field_fusioninventory'
                       value='" . $LANG['buttons'][7] . "'></td></tr>";
 
@@ -237,7 +263,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
     *
     *@return nothing
     **/
-   static function setLockArray($p_itemtype, $p_items_id, $p_fieldsToLock) {
+   static function setLockArray($p_itemtype, $p_items_id, $p_fieldsToLock, $massiveaction='') {
       global $DB;
 
       $pfl = new PluginFusioninventoryLock();
@@ -245,17 +271,35 @@ class PluginFusioninventoryLock extends CommonDBTM{
       $tableName = getTableForItemType($p_itemtype);
       $result = PluginFusioninventoryLock::getLock($tableName, $p_items_id);
       if ($DB->numrows($result)){
-         if (count($p_fieldsToLock)) {       // old locks --> new locks
-            $a_lines = $pfl->find("`tablename`='".$tableName."' AND `items_id`='".$p_items_id."'");
-            $a_line = current($a_lines);
-            $pfl->getFromDB($a_line['id']);
-            $pfl->fields['tablefields'] = exportArrayToDB($p_fieldsToLock);
+         $a_lines = $pfl->find("`tablename`='".$tableName."' AND `items_id`='".$p_items_id."'");
+         $a_line = current($a_lines);
+         $pfl->getFromDB($a_line['id']);
+         if ($massiveaction == 'addLock') {
+            $a_lockfieldsDB = importArrayFromDB($pfl->fields['tablefields']);
+            foreach ($p_fieldsToLock as $fieldtoadd) {
+               if (!in_array($fieldtoadd, $a_lockfieldsDB)) {
+                  $a_lockfieldsDB[] = $fieldtoadd;
+               }
+            }
+            $pfl->fields['tablefields'] = exportArrayToDB($a_lockfieldsDB);
             $pfl->update($pfl->fields);
-         } else {                            // old locks --> no locks any more
-            $a_lines = $pfl->find("`tablename`='".$tableName."' AND `items_id`='".$p_items_id."'");
-            $a_line = current($a_lines);
-            $pfl->getFromDB($a_line['id']);
-            $pfl->delete($pfl->fields);
+         } else if ($massiveaction == 'deleteLock') {
+            $a_lockfieldsDB = importArrayFromDB($pfl->fields['tablefields']);
+            foreach ($p_fieldsToLock as $fieldtoadd) {
+               if (in_array($fieldtoadd, $a_lockfieldsDB)) {
+                  $key = array_search($fieldtoadd, $a_lockfieldsDB);
+                  unset($a_lockfieldsDB[$key]);
+               }
+            }
+            $pfl->fields['tablefields'] = exportArrayToDB($a_lockfieldsDB);
+            $pfl->update($pfl->fields);
+         } else {
+            if (count($p_fieldsToLock)) {       // old locks --> new locks
+               $pfl->fields['tablefields'] = exportArrayToDB($p_fieldsToLock);
+               $pfl->update($pfl->fields);
+            } else {                            // old locks --> no locks any more
+               $pfl->delete($pfl->fields);
+            }
          }
       } elseif (count($p_fieldsToLock)) {    // no locks --> new locks
          $input = array();

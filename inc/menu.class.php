@@ -60,36 +60,55 @@ class PluginFusioninventoryMenu {
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agent", "r")) {
          $a_menu[0]['name'] = $LANG['plugin_fusioninventory']['menu'][1];
          $a_menu[0]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_agents.png";
-         $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/agent.php";
+         $a_menu[0]['link'] = getItemTypeSearchURL('PluginFusioninventoryAgent');
       }
 
       if(PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","r")) {
          $a_menu[2]['name'] = $LANG['plugin_fusioninventory']['task'][1];
          $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_task.png";
-         $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/task.php";
+         $a_menu[2]['link'] = getItemTypeSearchURL('PluginFusioninventoryTask');
       }
 
       if(PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
          $a_menu[3]['name'] = $LANG['plugin_fusioninventory']['menu'][7];
          $a_menu[3]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_runningjob.png";
-         $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/taskjob.php";
+         $a_menu[3]['link'] = getItemTypeSearchURL('PluginFusioninventoryTaskJob');
       }
 
       //if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice", "r")) {
          $a_menu[4]['name'] = $LANG['plugin_fusioninventory']['rules'][2];
          $a_menu[4]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_rules.png";
-         $a_menu[4]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/ruleimportequipment.php";
+         $a_menu[4]['link'] = getItemTypeSearchURL('PluginFusioninventoryRuleImportEquipment');
       //}
 
 
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice", "r")) {
          $a_menu[5]['name'] = $LANG['plugin_fusioninventory']['menu'][4];
          $a_menu[5]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_unknown_device.png";
-         $a_menu[5]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/unknowndevice.php";
+         $a_menu[5]['link'] = getItemTypeSearchURL('PluginFusioninventoryUnknownDevice');
+      }
+
+      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "iprange", "r")) {
+         $a_menu[6]['name'] = $LANG['plugin_fusioninventory']['menu'][2];
+         $a_menu[6]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_rangeip.png";
+         $a_menu[6]['link'] = getItemTypeSearchURL('PluginFusioninventoryIPRange');
+      }
+
+      if (PluginFusioninventoryCredential::hasAlLeastOneType() 
+            && PluginFusioninventoryProfile::haveRight("fusioninventory", "credential", "r")) {
+         $a_menu[7]['name'] = $LANG['plugin_fusioninventory']['menu'][5];
+         $a_menu[7]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_credentials.png";
+         $a_menu[7]['link'] = getItemTypeSearchURL('PluginFusioninventoryCredential');
+
+         $a_menu[8]['name'] = $LANG['plugin_fusioninventory']['menu'][6];
+         $a_menu[8]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_credentials.png";
+         $a_menu[8]['link'] = getItemTypeSearchURL('PluginFusioninventoryCredentialip');
+
       }
 
       echo "<div align='center' style='z-index: 1;position:absolute;width: 100%; margin: 0 auto;'>";
       echo "<table width='100%'>";
+
       echo "<tr>";
       echo "<td align='center'>";
 
@@ -104,7 +123,7 @@ class PluginFusioninventoryMenu {
       // Get menu from plugins fusinv...
       $a_modules = PluginFusioninventoryModule::getAll();
       foreach ($a_modules as $datas) {
-         $class = "Plugin".ucfirst($datas['directory'])."Staticmisc";
+         $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($datas['directory']);
          if (is_callable(array($class, "displayMenu"))) {
             $a_menu = call_user_func(array($class, "displayMenu"));
             if (!empty($a_menu)) {

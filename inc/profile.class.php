@@ -52,11 +52,13 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       if (is_null($p_profiles_id)) {
          $p_profiles_id = $_SESSION['glpiactiveprofile']['id'];
       }
-      $pfp = new PluginFusioninventoryProfile();
-      return $pfp->add(array('type'=>$p_type,
-                             'right'=>$p_right,
-                             'plugins_id'=>$p_plugins_id,
-                             'profiles_id'=>$p_profiles_id));
+      if (!self::profileExists($p_plugins_id, $p_profiles_id, $p_type)) {
+         $pfp = new PluginFusioninventoryProfile();
+         return $pfp->add(array('type'       => $p_type,
+                                'right'      => $p_right,
+                                'plugins_id' => $p_plugins_id,
+                                'profiles_id'=> $p_profiles_id));
+      }
    }
 
 
@@ -76,11 +78,13 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       if (is_null($p_profiles_id)) {
          $p_profiles_id = $_SESSION['glpiactiveprofile']['id'];
       }
-      return $this->update(array('id'=>$p_id,
-                                 'type'=>$p_type,
-                                 'right'=>$p_right,
-                                 'plugins_id'=>$p_plugins_id,
-                                 'profiles_id'=>$p_profiles_id));
+      if (self::profileExists($p_plugins_id, $p_profiles_id, $p_type)) {
+         return $this->update(array('id'         => $p_id,
+                                    'type'       => $p_type,
+                                    'right'      => $p_right,
+                                    'plugins_id' => $p_plugins_id,
+                                    'profiles_id'=> $p_profiles_id));
+      }
    }
 
 
@@ -95,9 +99,9 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       global $DB;
 
       if (isset($pluginname)) {
-         if (is_callable(array("Plugin".ucfirst($pluginname)."Staticmisc", "profiles"))) {
-            $a_profile = call_user_func(array("Plugin".ucfirst($pluginname)."Staticmisc", "profiles"));
-
+         $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($pluginname);
+         if (is_callable(array($class, "profiles"))) {
+            $a_profile = call_user_func(array($class, "profiles"));
             foreach ($a_profile as $data) {
                PluginFusioninventoryProfile::addProfile($plugins_id, $data['profil'], 'w');
             }
@@ -105,7 +109,18 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       }
    }
 
-
+   static function profileExists($plugins_id, $profiles_id, $type) {
+      global $DB;
+      $query = "SELECT `id` AS cpt FROM ".getTableForItemType('PluginFusioninventoryProfile');
+      $query.= " WHERE `plugins_id`='$plugins_id' AND `type`='$type'";
+      $query.= " AND `profiles_id`='$profiles_id'";
+      $results = $DB->query($query);
+      if ($DB->numrows($results) > 0) {
+         return true;
+      } else {
+         return false;
+      }
+   }
 
    /**
     * Change profile (for used connected)
@@ -149,7 +164,8 @@ class PluginFusioninventoryProfile extends CommonDBTM {
             "w" => array("w"),
                );
       if (isset($_SESSION["glpi_plugin_".$p_moduleName."_profile"][$p_type])
-                &&in_array($_SESSION["glpi_plugin_".$p_moduleName."_profile"][$p_type],$matches[$p_right])) {
+                && in_array($_SESSION["glpi_plugin_".$p_moduleName."_profile"][$p_type], 
+                            $matches[$p_right])) {
          return true;
       } else {
          return false;
@@ -255,11 +271,14 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       }
 
       foreach ($a_module as $pluginname) {
-         if (is_callable(array("Plugin".ucfirst($pluginname)."Staticmisc", "profiles"))) {
-            $a_profil = call_user_func(array("Plugin".ucfirst($pluginname)."Staticmisc", "profiles"));
+         $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($pluginname);
+         
+         if (is_callable(array($class, "profiles"))) {
+            $a_profil = call_user_func(array($class, "profiles"));
 
             echo "<tr>";
-            echo "<th colspan='4'>".$LANG['plugin_fusioninventory']['profile'][0]." ".$LANG['plugin_'.$pluginname]['title'][0]." :</th>";
+            echo "<th colspan='4'>".$LANG['plugin_fusioninventory']['profile'][0]." ";
+            echo $LANG['plugin_'.$pluginname]['title'][0]." :</th>";
             echo "</tr>";
 
             $i = 0;
@@ -272,7 +291,8 @@ class PluginFusioninventoryProfile extends CommonDBTM {
                echo "</td>";
                echo "<td>";
                echo Profile::dropdownNoneReadWrite($pluginname."-".$data['profil'],
-                              $this->getRightDB($pluginname, $data['profil'], $items_id),1,1,1);
+                                                   $this->getRightDB($pluginname, $data['profil'], 
+                                                   $items_id), 1, 1, 1);
                echo "</td>";
                $i++;
                if ($i == '2') {
@@ -307,9 +327,10 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       foreach($profiles as $key => $value) {
          if (strstr($key, "-")) {
             $profilName = explode("-", $key);
-            $a_profile = $this->find("`plugins_id`='".PluginFusioninventoryModule::getModuleId($profilName[0])."'
-                        AND `profiles_id`='".$profiles['profile_id']."'
-                        AND `type`='".$profilName[1]."' ");
+            $a_profile = $this->find("`plugins_id`='".
+                                      PluginFusioninventoryModule::getModuleId($profilName[0])."'
+                                      AND `profiles_id`='".$profiles['profile_id']."'
+                                      AND `type`='".$profilName[1]."' ");
             if (count($a_profile) > 0) {
                foreach ($a_profile as $data) {
                   $this->updateProfile($data['id'],

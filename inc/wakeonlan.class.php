@@ -236,7 +236,6 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
    }
 
 
-   
    function getAgentsSubnet($nb_computers, $communication, $subnet='') {
       global $DB;
 

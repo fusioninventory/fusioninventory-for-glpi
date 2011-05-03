@@ -120,7 +120,9 @@ if (isset($_POST["agent_add"])) {
       $a_agentList = array();
       $input['exceptions'] = exportArrayToDB($a_agentList);
    }
-   $input['id'] = $_POST['id'];
+   $input['id']  = $_POST['id'];
+   $input['url'] = $_POST['url'];
+   
    $PluginFusioninventoryAgentmodule->update($input);
    glpi_header($_SERVER['HTTP_REFERER']);
 }

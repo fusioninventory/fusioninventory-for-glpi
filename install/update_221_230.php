@@ -1525,18 +1525,6 @@ function update221to230() {
    if (!class_exists('PluginFusioninventoryRuleImportEquipment')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/ruleimportequipment.class.php");
    }
-   if (!class_exists('PluginFusioninventoryRuleCollection')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusioninventory/inc/rulecollection.class.php");
-   }
-   if (!class_exists('PluginFusioninventoryRule')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusioninventory/inc/rule.class.php");
-   }
-   if (!class_exists('PluginFusioninventoryRuleCriteria')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusioninventory/inc/rulecriteria.class.php");
-   }
-   if (!class_exists('PluginFusioninventoryRuleAction')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusioninventory/inc/ruleaction.class.php");
-   }
 
    $PluginFusioninventorySetup = new PluginFusioninventorySetup();
    $PluginFusioninventorySetup->initRules();

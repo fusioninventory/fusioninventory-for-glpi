@@ -1,6 +1,6 @@
 <?php
 /*
- * @version $Id: ruleaction.php 13301 2010-12-14 13:12:29Z moyo $
+ * @version $Id $
  -------------------------------------------------------------------------
  GLPI - Gestionnaire Libre de Parc Informatique
  Copyright (C) 2003-2010 by the INDEPNET Development Team.
@@ -33,45 +33,13 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-// Direct access to file
-if (strpos($_SERVER['PHP_SELF'],"ruleaction.php")) {
-   if (!defined('GLPI_ROOT')) {
-      define('GLPI_ROOT', '../../..');
-   }
-
+if (strpos($_SERVER['PHP_SELF'],"dropdownCredentials.php")) {
+   define('GLPI_ROOT','../../..');
    include (GLPI_ROOT."/inc/includes.php");
    header("Content-Type: text/html; charset=UTF-8");
    header_nocache();
 }
 
-if (!defined('GLPI_ROOT')) {
-   die("Can not acces directly to this file");
-}
-
-checkLoginUser();
-
-// Non define case
-if (isset($_POST["sub_type"]) && class_exists($_POST["sub_type"])) {
-   if (!isset($_POST["field"])) {
-      $_POST["field"] = key(PluginFusioninventoryRule::getActionsByType($_POST["sub_type"]));
-   }
-
-   $randaction = PluginFusioninventoryRuleAction::dropdownActions($_POST["sub_type"], "action_type", $_POST["field"]);
-
-   echo "&nbsp;&nbsp;";
-   echo "<span id='action_type_span$randaction'>\n";
-   echo "</span>\n";
-
-   $paramsaction = array('action_type' => '__VALUE__',
-                         'field'       => $_POST["field"],
-                         'sub_type'    => $_POST["sub_type"]);
-
-   ajaxUpdateItemOnSelectEvent("dropdown_action_type$randaction", "action_type_span$randaction",
-                               $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/ruleactionvalue.php", $paramsaction,
-                               false);
-
-   ajaxUpdateItem("action_type_span$randaction", $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/ruleactionvalue.php",
-                  $paramsaction, false, "dropdown_action_type$randaction");
-}
-
+PluginFusioninventoryProfile::checkRight('fusioninventory', 'credential', 'r');
+PluginFusioninventoryCredential::dropdownCredentialsForItemtype($_POST);
 ?>

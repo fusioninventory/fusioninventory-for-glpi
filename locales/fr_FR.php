@@ -80,7 +80,7 @@ $LANG['plugin_fusioninventory']['rules'][3]  = "Chercher les matériels GLPI aya
 $LANG['plugin_fusioninventory']['rules'][4]  = "Entité de destination de la machine";
 $LANG['plugin_fusioninventory']['rules'][5]  = "Liaison FusionInventory";
 $LANG['plugin_fusioninventory']['rules'][6]  = "Liaison si possible, sinon import refusé";
-$LANG['plugin_fusioninventory']['rules'][7]  = "Liaison si possible";
+$LANG['plugin_fusioninventory']['rules'][7]  = "Liaison si possible, sinon création du matériel";
 $LANG['plugin_fusioninventory']['rules'][8]  = "Envoyer";
 $LANG['plugin_fusioninventory']['rules'][9]  = "existe";
 $LANG['plugin_fusioninventory']['rules'][10] = "n'existe pas";
@@ -90,6 +90,8 @@ $LANG['plugin_fusioninventory']['rules'][13] = "Numéro de série du disque dur"
 $LANG['plugin_fusioninventory']['rules'][14] = "Numéro de série de partition disque";
 $LANG['plugin_fusioninventory']['rules'][15] = "uuid";
 $LANG['plugin_fusioninventory']['rules'][16] = "Etiquette FusionInventory";
+$LANG['plugin_fusioninventory']['rules'][17] = "Import refusé";
+$LANG['plugin_fusioninventory']['rules'][18] = "Equipement créé";
 
 $LANG['plugin_fusioninventory']['rulesengine'][152] = "Matériel à importer";
 
@@ -98,16 +100,19 @@ $LANG['plugin_fusioninventory']['choice'][1] = "Oui";
 $LANG['plugin_fusioninventory']['choice'][2] = "ou";
 $LANG['plugin_fusioninventory']['choice'][3] = "et";
 
-$LANG['plugin_fusioninventory']['processes'][1]="PID";
-$LANG['plugin_fusioninventory']['processes'][38]="Numéro de process";
+$LANG['plugin_fusioninventory']['processes'][1]  = "PID";
+$LANG['plugin_fusioninventory']['processes'][38] = "Numéro de process";
 
-$LANG['plugin_fusioninventory']['menu'][1]="Gestion des agents";
-$LANG['plugin_fusioninventory']['menu'][3]="Menu";
-$LANG['plugin_fusioninventory']['menu'][4]="Matériel inconnu";
-$LANG['plugin_fusioninventory']['menu'][7]="Actions en cours d'exécution";
+$LANG['plugin_fusioninventory']['menu'][1] ="Gestion des agents";
+$LANG['plugin_fusioninventory']['menu'][2] = "Plages IP";
+$LANG['plugin_fusioninventory']['menu'][3] ="Menu";
+$LANG['plugin_fusioninventory']['menu'][4] ="Matériel inconnu";
+$LANG['plugin_fusioninventory']['menu'][5] = "Comptes";
+$LANG['plugin_fusioninventory']['menu'][6] = "Matériels distants à inventorier";
+$LANG['plugin_fusioninventory']['menu'][7] ="Actions en cours d'exécution";
 
-$LANG['plugin_fusioninventory']['discovery'][5]="Nombre de matériels importés";
-$LANG['plugin_fusioninventory']['discovery'][9]="Nombre de matériels non importés car type non défini";
+$LANG['plugin_fusioninventory']['discovery'][5] = "Nombre de matériels importés";
+$LANG['plugin_fusioninventory']['discovery'][9] = "Nombre de matériels non importés car type non défini";
 
 $LANG['plugin_fusioninventory']['agents'][4]="Dernier contact de l'agent";
 $LANG['plugin_fusioninventory']['agents'][6]="Désactivé";
@@ -121,8 +126,8 @@ $LANG['plugin_fusioninventory']['agents'][27]="Modules des agents";
 $LANG['plugin_fusioninventory']['agents'][28]="Agent";
 $LANG['plugin_fusioninventory']['agents'][30]="Impossible de joindre l'agent!";
 $LANG['plugin_fusioninventory']['agents'][31]="Forcer l'inventaire";
-$LANG['plugin_fusioninventory']['agents'][32]="Auto gestion dynamique des agents";
-$LANG['plugin_fusioninventory']['agents'][33]="Auto gestion dynamique des agents (même Sous-réseau)";
+$LANG['plugin_fusioninventory']['agents'][32]="Gestion dynamique des agents";
+$LANG['plugin_fusioninventory']['agents'][33]="Gestion dynamique des agents (même sous-réseau)";
 $LANG['plugin_fusioninventory']['agents'][34]="Activation (par défaut)";
 $LANG['plugin_fusioninventory']['agents'][35]="Identifiant";
 $LANG['plugin_fusioninventory']['agents'][36]="Modules de l'agent";
@@ -130,16 +135,17 @@ $LANG['plugin_fusioninventory']['agents'][37]="Verrouillé";
 $LANG['plugin_fusioninventory']['agents'][38]="Disponible";
 $LANG['plugin_fusioninventory']['agents'][39]="En cours d'éxécution";
 $LANG['plugin_fusioninventory']['agents'][40]="Ordinateur sans IP connue";
+$LANG['plugin_fusioninventory']['agents'][41] = "URL d'accès au service";
 
-$LANG['plugin_fusioninventory']['unknown'][2]="Matériel approuvé";
-$LANG['plugin_fusioninventory']['unknown'][4]="Hub réseau";
-$LANG['plugin_fusioninventory']['unknown'][5]="Matériel inconnu à importer dans l'inventaire";
+$LANG['plugin_fusioninventory']['unknown'][2] = "Matériel approuvé";
+$LANG['plugin_fusioninventory']['unknown'][4] = "Hub réseau";
+$LANG['plugin_fusioninventory']['unknown'][5] = "Matériel inconnu à importer dans l'inventaire";
 
 $LANG['plugin_fusioninventory']['task'][0]="Tâche";
 $LANG['plugin_fusioninventory']['task'][1]="Gestion des tâches";
 $LANG['plugin_fusioninventory']['task'][2]="Action";
 $LANG['plugin_fusioninventory']['task'][14]="Date d'exécution";
-$LANG['plugin_fusioninventory']['task'][16]="Nouvelle action";
+$LANG['plugin_fusioninventory']['task'][44]="Nouvelle action";
 $LANG['plugin_fusioninventory']['task'][17]="Périodicité";
 $LANG['plugin_fusioninventory']['task'][18]="Tâches";
 $LANG['plugin_fusioninventory']['task'][19]="Tâches en cours";
@@ -163,21 +169,36 @@ $LANG['plugin_fusioninventory']['task'][37]="jours";
 $LANG['plugin_fusioninventory']['task'][38]="mois";
 $LANG['plugin_fusioninventory']['task'][39]="Impossible de lancer la tâche car il reste des actions en cours!";
 $LANG['plugin_fusioninventory']['task'][40]="Forcer l'exécution";
+$LANG['plugin_fusioninventory']['task'][41]="Le serveur initie le contact avec l'agent (push)";
+$LANG['plugin_fusioninventory']['task'][42]="L'agent initie le contact avec le serveur (pull)";
+$LANG['plugin_fusioninventory']['task'][43]="Mode de communication";
 
-$LANG['plugin_fusioninventory']['taskjoblog'][1]="Démarré";
-$LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";
-$LANG['plugin_fusioninventory']['taskjoblog'][3]="Erreur / replannifié";
-$LANG['plugin_fusioninventory']['taskjoblog'][4]="Erreur";
-$LANG['plugin_fusioninventory']['taskjoblog'][5]="Inconnu";
-$LANG['plugin_fusioninventory']['taskjoblog'][6]="En cours";
-$LANG['plugin_fusioninventory']['taskjoblog'][7]="Préparé";
 
-$LANG['plugin_fusioninventory']['update'][0]="Votre historique fait plus de 300 000 lignes, il faut lancer la commande suivante en ligne de commande pour finir la mise à jour : ";
+$LANG['plugin_fusioninventory']['taskjoblog'][1] = "Démarré";
+$LANG['plugin_fusioninventory']['taskjoblog'][2] = "Ok";
+$LANG['plugin_fusioninventory']['taskjoblog'][3] = "Erreur / replannifié";
+$LANG['plugin_fusioninventory']['taskjoblog'][4] = "Erreur";
+$LANG['plugin_fusioninventory']['taskjoblog'][5] = "Inconnu";
+$LANG['plugin_fusioninventory']['taskjoblog'][6] = "En cours";
+$LANG['plugin_fusioninventory']['taskjoblog'][7] = "Préparé";
 
-$LANG['plugin_fusioninventory']['xml'][0]="XML";
+$LANG['plugin_fusioninventory']['xml'][0] = "XML";
 
-$LANG['plugin_fusioninventory']['codetasklog'][1]="Mauvais jeton, impossible d'agir sur l'agent";
-$LANG['plugin_fusioninventory']['codetasklog'][2]="Agent arrêté ou crashé";
-$LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['ocsconfig'][11];
+$LANG['plugin_fusioninventory']['codetasklog'][1] = "Mauvais jeton, impossible d'agir sur l'agent";
+$LANG['plugin_fusioninventory']['codetasklog'][2] = "Agent arrêté ou crashé";
+$LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['plugin_fusioninventory']['rules'][17];
+
+$LANG['plugin_fusioninventory']['credential'][1] = "Compte d'inventaire distant";
+$LANG['plugin_fusioninventory']['credential'][2] = "Matériel distant à inventorier";
+$LANG['plugin_fusioninventory']['credential'][3] = "Compte";
+
+$LANG['plugin_fusioninventory']['iprange'][0]="Début de la plage IP";
+$LANG['plugin_fusioninventory']['iprange'][1]="Fin de la plage IP";
+$LANG['plugin_fusioninventory']['iprange'][2]="Plage IP";
+$LANG['plugin_fusioninventory']['iprange'][3]="Activation";
+$LANG['plugin_fusioninventory']['iprange'][7]="IP incorrecte";
+
+$LANG['plugin_fusioninventory']['locks'][0]="Supprimer les verrous";
+$LANG['plugin_fusioninventory']['locks'][1]="Ajouter les verrous";
 
 ?>

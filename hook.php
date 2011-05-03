@@ -62,6 +62,12 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
          return $input;
          break;
         
+      case "glpi_plugin_fusioninventory_credentials.itemtype":
+        if ($label = PluginFusioninventoryCredential::getLabelByItemtype($data['ITEM_'.$num])) {
+           return $label;
+        } else {
+           return '';
+        }
    }
    
    if ($table == "glpi_plugin_fusioninventory_agentmodules") {
@@ -109,7 +115,7 @@ function cron_plugin_fusioninventory() {
 function plugin_fusioninventory_install() {
    global $DB, $LANG, $CFG_GLPI;
 
-   $version = "2.3.1";
+   $version = "2.4.0";
    include (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
    $version_detected = pluginFusioninventoryGetCurrentVersion($version);
    if ((isset($version_detected)) AND ($version_detected != $version)) {
@@ -264,8 +270,13 @@ function plugin_headings_fusioninventory_locks($item) {
    $type = get_Class($item);
    $id = $item->getField('id');
    $fusioninventory_locks = new PluginFusioninventoryLock();
-   $fusioninventory_locks->showForm(getItemTypeFormURL('PluginFusioninventoryLock').'?id='.$id,
+   if ($id == '') {
+      $fusioninventory_locks->showForm(getItemTypeFormURL('PluginFusioninventoryLock'),
+                                                       $type);
+   } else {
+      $fusioninventory_locks->showForm(getItemTypeFormURL('PluginFusioninventoryLock').'?id='.$id,
                                                        $type, $id);
+   }
 }
 
 function plugin_headings_fusioninventory_tasks($item, $itemtype='', $items_id=0) {
@@ -281,6 +292,7 @@ function plugin_headings_fusioninventory_tasks($item, $itemtype='', $items_id=0)
          $PluginFusioninventoryAgent->forceRemoteAgent();
       }
    }
+
    $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
    $PluginFusioninventoryTaskjob->manageTasksByObject($itemtype, $items_id);
 
@@ -471,9 +483,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
                if ($val == 1) {
                   if (isset($data["lockfield_fusioninventory"])&&count($data["lockfield_fusioninventory"])){
                      $tab=PluginFusioninventoryLock::exportChecksToArray($data["lockfield_fusioninventory"]);
-                        PluginFusioninventoryLock::setLockArray($data['type'], $key, $tab);
-                  } else {
-                     PluginFusioninventoryLock::setLockArray($data['type'], $key, array());
+                        PluginFusioninventoryLock::setLockArray($data['type'], $key, $tab, $data['actionlock']);
                   }
                }
             }
@@ -803,10 +813,10 @@ function plugin_item_purge_fusioninventory($parm) {
             $PluginFusioninventoryUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
             if ($PluginFusioninventoryUnknownDevice->fields['hub'] == '1') {
                $a_vlans = $NetworkPort_Vlan->getVlansForNetworkPort($NetworkPort->fields['id']);
-               foreach ($a_vlans as $vlan_id) {
-                  $a_hubs[$NetworkPort->fields['items_id']] = 1;
+               foreach ($a_vlans as $vlan_id) {                  
                   $NetworkPort_Vlan->unassignVlan($NetworkPort->fields['id'], $vlan_id);
                }
+               $a_hubs[$NetworkPort->fields['items_id']] = 1;
                $NetworkPort->delete($NetworkPort->fields);
             }
          }
@@ -823,6 +833,25 @@ function plugin_item_purge_fusioninventory($parm) {
 
    }
    return $parm;
+}
+
+
+function plugin_item_transfer_fusioninventory($parm) {
+   switch ($parm['type']) {
+
+      case 'Computer':
+         $pluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+
+         if ($agent_id = $pluginFusioninventoryAgent->getAgentWithComputerid($parm['id'])) {
+            $input = array();
+            $input['id'] = $agent_id;
+            $input['entities_id'] = $_POST['to_entity'];
+            $pluginFusioninventoryAgent->update($input);
+         }
+
+         break;
+   }
+   return false;
 }
 
 

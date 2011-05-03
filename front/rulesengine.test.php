@@ -44,7 +44,7 @@ if (isset($_POST["sub_type"])) {
    $sub_type = $_GET["sub_type"];
 }
 
-$rulecollection = PluginFusioninventoryRuleCollection::getClassByType($sub_type);
+$rulecollection = RuleCollection::getClassByType($sub_type);
 if ($rulecollection->isRuleRecursive()) {
    $rulecollection->setEntity($_SESSION['glpiactive_entity']);
 }

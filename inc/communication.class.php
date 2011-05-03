@@ -128,20 +128,24 @@ class PluginFusioninventoryCommunication {
       if (!isset($agent['id'])) {
          return true;
       }
+
       if (isset($this->sxml->CONTENT->MODULEVERSION)) {
+
+
          $PluginFusioninventoryAgent->setAgentVersions($agent['id'], $xmltag, (string)$this->sxml->CONTENT->MODULEVERSION);
       } else if (isset($this->sxml->CONTENT->VERSIONCLIENT)) {
          $version = str_replace("FusionInventory-Agent_", "", (string)$this->sxml->CONTENT->VERSIONCLIENT);
          $PluginFusioninventoryAgent->setAgentVersions($agent['id'], $xmltag, $version);
       }
 
+
       if (!$PluginFusioninventoryAgentmodule->getAgentsCanDo($xmltag, $agent['id'])) {
          return true;
+
       }
-      
+
       if (isset($_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"])) {
          $moduleClass = $_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"];
-
          $moduleCommunication = new $moduleClass();
          $errors.=$moduleCommunication->import($this->sxml->DEVICEID, $this->sxml->CONTENT, $p_xml);
       } else {
@@ -192,6 +196,7 @@ class PluginFusioninventoryCommunication {
          $result .= $line . "\n";
          $token   = strtok("\n");
          $pad    += $indent;
+         $indent = 0;
       }
       $this->setXML($result);
       return $this->sxml->asXML();
@@ -254,8 +259,8 @@ class PluginFusioninventoryCommunication {
       $moduleRun = $PluginFusioninventoryTaskjobstatus->getTaskjobsAgent($agent_id);
       foreach ($moduleRun as $className => $array) {
          $class = new $className();
-         $this->sxml_temp = $class->Run($array);
-         $this->append_simplexml($this->sxml, $this->sxml_temp);
+         $sxml_temp = $class->run($array);
+         $this->append_simplexml($this->sxml, $sxml_temp);
       }
    }
 

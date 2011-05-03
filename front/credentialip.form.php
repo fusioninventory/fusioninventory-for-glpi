@@ -1,6 +1,6 @@
 <?php
 /*
- * @version $Id: rulecriteriavalue.php 13494 2011-01-04 13:38:01Z walid $
+ * @version $Id: fieldunicity.form.php 14033 2011-03-06 16:14:51Z yllen $
  -------------------------------------------------------------------------
  GLPI - Gestionnaire Libre de Parc Informatique
  Copyright (C) 2003-2010 by the INDEPNET Development Team.
@@ -29,32 +29,14 @@
  */
 
 // ----------------------------------------------------------------------
-// Original Author of file: Julien Dombre
+// Original Author of file:
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-// Direct access to file
-if (strstr($_SERVER['PHP_SELF'],"rulecriteriavalue.php")) {
-   if (!defined('GLPI_ROOT')) {
-      define('GLPI_ROOT', '../../..');
-   }
 
-   include (GLPI_ROOT."/inc/includes.php");
-   header("Content-Type: text/html; charset=UTF-8");
-   header_nocache();
-}
+define('GLPI_ROOT', '../../..');
+include (GLPI_ROOT . "/inc/includes.php");
 
-if (!defined('GLPI_ROOT')) {
-   die("Can not acces directly to this file");
-}
-
-checkLoginUser();
-
-// Non define case
-if (isset($_POST["sub_type"])) {
-   $type      = $_POST["sub_type"];
-   $rule      = new $type();
-   $rule->displayCriteriaSelectPattern("pattern", $_POST["criteria"], $_POST['condition']);
-}
-
+$dropdown = new PluginFusioninventoryCredentialIp();
+include (GLPI_ROOT . "/front/dropdown.common.form.php");
 ?>

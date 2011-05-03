@@ -1,6 +1,6 @@
 <?php
 /*
- * @version $Id: rules.tabs.php 12457 2010-09-20 09:21:06Z yllen $
+ * @version $Id: fieldunicity.tabs.php 13503 2011-01-04 16:12:46Z moyo $
  -------------------------------------------------------------------------
  GLPI - Gestionnaire Libre de Parc Informatique
  Copyright (C) 2003-2010 by the INDEPNET Development Team.
@@ -29,29 +29,13 @@
  */
 
 // ----------------------------------------------------------------------
-// Original Author of file: Julien Dombre
+// Original Author of file:
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', '../../..');
-}
+define('GLPI_ROOT', '../../..');
+include (GLPI_ROOT . "/inc/includes.php");
 
-include (GLPI_ROOT."/inc/includes.php");
-
-header("Content-Type: text/html; charset=UTF-8");
-header_nocache();
-
-$rulecollection = new $_POST['itemtype'] ();
-
-if ($rulecollection->isRuleEntityAssigned()) {
-   $rulecollection->setEntity($_SESSION['glpiactive_entity']);
-}
-
-$rulecollection->title();
-$rulecollection->showEngineSummary();
-$rulecollection->showListRules($_POST['target'], $_REQUEST['glpi_tab'], $_POST);
-
-ajaxFooter();
-
+$dropdown = new PluginFusioninventoryCredentialIp();
+include (GLPI_ROOT . "/ajax/dropdown.common.tabs.php");
 ?>
