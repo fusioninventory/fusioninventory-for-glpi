@@ -789,13 +789,19 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                AND `status` = '0' ";
          $result = $DB->query($query);
          while ($data=$DB->fetch_array($result)) {
-            // Get module name
-            $PluginFusioninventoryTaskjob->verifyDefinitionActions($data['id']);
-            $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
-            $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
-            $class = new $className;
-            $class->prepareRun($data['id']);
+            $plugin = new Plugin();
+            $plugin->getFromDB($data['plugins_id']);
+            if ($plugin->fields['state'] == Plugin::ACTIVATED) {
+               // Get module name
+               $PluginFusioninventoryTaskjob->verifyDefinitionActions($data['id']);
+               $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
+               $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
+               $class = new $className;
+               $class->prepareRun($data['id']);
+            
+            }
          }
+         
          foreach($_SESSION['glpi_plugin_fusioninventory']['agents'] as $agents_id=>$num) {
             $a_ips = $PluginFusioninventoryAgent->getIPs($agents_id);
             foreach ($a_ips as $ip) {
