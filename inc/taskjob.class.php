@@ -559,17 +559,19 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             $rand = call_user_func(array($class, $definitionselection_method));
          }
       }
-      echo "&nbsp;<input type='button' name='addAObject' id='addAObject' value='".$LANG['buttons'][8]."' class='submit'/>";
+      echo "&nbsp;<input type='button' name='addAObject' id='addAObject' value='".
+         $LANG['buttons'][8]."' class='submit'/>";
 
-            $params=array('selection'=>'__VALUE__',
-                     'entity_restrict'=>$entity_restrict,
-                     'myname'=>$myname,
-                     'actionselectadd' => 'dropdown_actionselectiontoadd'.$rand,
-                     'actiontypeid'=>$actiontypeid
-                     );
+      $params=array('selection'        => '__VALUE__',
+                    'entity_restrict'  => $entity_restrict,
+                    'myname'           => $myname,
+                    'actionselectadd'  => 'dropdown_actionselectiontoadd'.$rand,
+                    'actiontypeid'     => $actiontypeid);
 
 
-      ajaxUpdateItemOnEvent('addAObject','show_ActionListEmpty',$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactionselection.php",$params,array("click"));
+      ajaxUpdateItemOnEvent('addAObject', 'show_ActionListEmpty',
+                            $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactionselection.php", 
+                            $params, array("click"));
 
    }
    
@@ -609,17 +611,17 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    static function cronTaskscheduler() {
       global $DB;
 
-      $PluginFusioninventoryTask = new PluginFusioninventoryTask();
+      $PluginFusioninventoryTask    = new PluginFusioninventoryTask();
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
 
       $_SESSION['glpi_plugin_fusioninventory']['agents'] = array();
 
       // Search for task with periodicity and must be ok (so reinit state of job to 0)
-      $query = "SELECT *, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp FROM `".$PluginFusioninventoryTask->getTable()."`
-         WHERE `is_active`='1'
-            AND `periodicity_count` != '0'
-            AND `periodicity_type` IS NOT NULL
-            AND `periodicity_type` != '0'";
+      $query = "SELECT *, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp 
+                FROM `".$PluginFusioninventoryTask->getTable()."`
+                WHERE `is_active`='1'AND `periodicity_count` != '0'
+                   AND `periodicity_type` IS NOT NULL
+                      AND `periodicity_type` != '0'";
       
       $result = $DB->query($query);
       while ($data=$DB->fetch_array($result)) {
@@ -628,24 +630,32 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       // *** Search task ready
       $dateNow = date("Y-m-d H:i:s");
-      $query = "SELECT `".$PluginFusioninventoryTaskjob->getTable()."`.*,`glpi_plugin_fusioninventory_tasks`.`communication`, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp
-         FROM ".$PluginFusioninventoryTaskjob->getTable()."
-         LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
-         WHERE `is_active`='1'
-            AND `status` = '0'
-            AND `date_scheduled` <= '".$dateNow."' ";
+      $query = "SELECT `glpi_plugin_fusioninventory_taskjobs`.*,
+                       `glpi_plugin_fusioninventory_tasks`.`communication`,
+                       UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp
+                FROM ".$PluginFusioninventoryTaskjob->getTable()."
+                LEFT JOIN `glpi_plugin_fusioninventory_tasks`
+                   ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
+                WHERE `is_active`='1' AND `status` = '0' AND `date_scheduled` <= '".$dateNow."' ";
       $result = $DB->query($query);
       $return = 0;
       while ($data=$DB->fetch_array($result)) {
-         $PluginFusioninventoryTaskjob->verifyDefinitionActions($data['id']);
-         $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp($data['periodicity_type'], $data['periodicity_count']);
-         if (($data['date_scheduled_timestamp'] + $period) <= date('U')) {
-            // Get module name
-            $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
-            $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
-            $class = new $className;
-            $class->prepareRun($data['id']);
-            $return = 1;
+         $plugin = new Plugin();
+         $plugin->getFromDB($data['plugins_id']);
+         if ($plugin->fields['state'] == Plugin::ACTIVATED) {
+            $PluginFusioninventoryTaskjob->verifyDefinitionActions($data['id']);
+            $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp($data['periodicity_type'], 
+                                                                            $data['periodicity_count']);
+            if (($data['date_scheduled_timestamp'] + $period) <= date('U')) {
+               // Get module name
+               $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
+               $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
+               $class = new $className();
+               $class->prepareRun($data['id']);
+               $return = 1;
+               
+            }
+            
          }
       }
       // Start agents must start in push mode
@@ -654,7 +664,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $a_ips = $PluginFusioninventoryAgent->getIPs($agents_id);
          foreach ($a_ips as $ip) {
             $PluginFusioninventoryAgent->getFromDB($agents_id);
-            $PluginFusioninventoryTaskjob->remoteStartAgent($ip, $PluginFusioninventoryAgent->fields['token']);
+            $PluginFusioninventoryTaskjob->remoteStartAgent($ip, 
+                                                            $PluginFusioninventoryAgent->fields['token']);
          }
       }
       unset($_SESSION['glpi_plugin_fusioninventory']['agents']);
@@ -662,11 +673,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       // Detect if running task have a problem
       $PluginFusioninventoryTaskjob->CronCheckRunnningJobs();
 
-
-      if ($return == '1') {
-         return 1;
-      }
-      return 0;
+      return $return;
    }
 
 
