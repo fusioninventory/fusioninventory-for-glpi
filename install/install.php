@@ -48,51 +48,31 @@ function pluginFusinvinventoryInstall() {
       // Add new module in plugin_fusioninventory (core)
 
       // Create database
-      $DB_file = GLPI_ROOT ."/plugins/fusinvinventory/install/mysql/plugin_fusinvinventory-".$a_plugin['version']."-empty.sql";
-      $DBf_handle = fopen($DB_file, "rt");
-      $sql_query = fread($DBf_handle, filesize($DB_file));
-      fclose($DBf_handle);
-      foreach ( explode(";\n", "$sql_query") as $sql_line) {
-         if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
-         if (!empty($sql_line)) $DB->query($sql_line)/* or die($DB->error())*/;
+      $empty_sql = "plugin_fusinvinventory-".$a_plugin['version']."-empty.sql";
+      foreach (array($empty_sql, 'usbid.sql', 'pciid.sql') as $sql) {
+         //Add tables for pciids
+         $DB_file = GLPI_ROOT ."/plugins/fusinvinventory/install/mysql/$sql";
+         $DBf_handle = fopen($DB_file, "rt");
+         $sql_query = fread($DBf_handle, filesize($DB_file));
+         fclose($DBf_handle);
+         foreach ( explode(";\n", "$sql_query") as $sql_line) {
+            if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
+            if (!empty($sql_line)) {
+               $DB->query($sql_line)/* or die($DB->error())*/;
+            }
+         }
       }
-
-      //Add tables for pciids
-      $DB_file = GLPI_ROOT ."/plugins/fusinvinventory/install/mysql/pciid.sql";
-      $DBf_handle = fopen($DB_file, "rt");
-      $sql_query = fread($DBf_handle, filesize($DB_file));
-      fclose($DBf_handle);
-      foreach ( explode(";\n", "$sql_query") as $sql_line) {
-         if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
-         if (!empty($sql_line)) $DB->query($sql_line)/* or die($DB->error())*/;
-      }
-
-      //Add tables for usbids
-      $DB_file = GLPI_ROOT ."/plugins/fusinvinventory/install/mysql/usbid.sql";
-      $DBf_handle = fopen($DB_file, "rt");
-      $sql_query = fread($DBf_handle, filesize($DB_file));
-      fclose($DBf_handle);
-      foreach ( explode(";\n", "$sql_query") as $sql_line) {
-         if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
-         if (!empty($sql_line)) $DB->query($sql_line)/* or die($DB->error())*/;
-      }
-
 
       // Create folder in GLPI_PLUGIN_DOC_DIR
       if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'])) {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
       }
+
       include_once (GLPI_ROOT . "/plugins/fusioninventory/inc/staticmisc.class.php");
       $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
       PluginFusioninventoryProfile::initProfile($a_plugin['shortname'], $plugins_id);
-      // Creation of profile
-//      PluginFusioninventoryProfile::initSession($modules_id, array(type, right));
-
-      // Creation config values
-//      PluginFusioninventoryConfig::add($modules_id, type, value);
-
-
       PluginFusioninventoryProfile::changeProfile($plugins_id);
+
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
       $input = array();
       $input['plugins_id'] = $plugins_id;
@@ -101,6 +81,10 @@ function pluginFusinvinventoryInstall() {
       $input['exceptions'] = exportArrayToDB(array());
       $PluginFusioninventoryAgentmodule->add($input);
 
+      $input['modulename'] = "ESX";
+      $PluginFusioninventoryAgentmodule->add($input);
+
+       include(GLPI_ROOT . "/plugins/fusinvinventory/inc/config.class.php");
       // Create configuration
       $PluginFusinvinventoryConfig = new PluginFusinvinventoryConfig();
       $PluginFusinvinventoryConfig->initConfigModule();
@@ -178,6 +162,7 @@ function pluginFusinvinventoryInstall() {
             $ruleaction->add($input);
          }
       }
+
       // Import OCS locks
       include_once GLPI_ROOT . "/plugins/fusinvinventory/inc/lock.class.php";
       $PluginFusinvinventoryLock = new PluginFusinvinventoryLock();

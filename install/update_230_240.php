@@ -40,12 +40,12 @@ function update230to240() {
    global $DB;
 
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
-   $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+   $config = new PluginFusioninventoryConfig();
    if (!PluginFusioninventoryConfig::getValue($plugins_id, "import_vm")) {
-       $PluginFusioninventoryConfig->initConfig($plugins_id, array("import_vm" => "1"));
+       $config->initConfig($plugins_id, array("import_vm" => "1"));
    }
    if (!PluginFusioninventoryConfig::getValue($plugins_id, "location")) {
-       $PluginFusioninventoryConfig->initConfig($plugins_id, array("location" => "0"));
+       $config->initConfig($plugins_id, array("location" => "0"));
    }
 
    $Computer = new Computer();
@@ -60,6 +60,16 @@ function update230to240() {
    $sql = "DROP TABLE `glpi_plugin_fusinvinventory_computers`";
    $DB->query($sql);
 
-   
+   $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` WHERE `modulename`='ESX'";
+   $result = $DB->query($query);
+   if (!$DB->numrows($result)) {
+      $agentmodule = new PluginFusioninventoryAgentmodule;
+      $input = array();
+      $input['plugins_id'] = $plugins_id;
+      $input['modulename'] = "ESX";
+      $input['is_active']  = 1;
+      $input['exceptions'] = exportArrayToDB(array());
+      $agentmodule->add($input);
+   }
 }
 ?>
