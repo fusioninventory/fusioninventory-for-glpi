@@ -379,12 +379,6 @@ $LANG['plugin_fusinvsnmp']['menu'][10]="Network inventory status";
 $LANG['plugin_fusinvsnmp']['discovery'][5]="Number of imported devices";
 $LANG['plugin_fusinvsnmp']['discovery'][9]="Number of devices not imported because type non defined";
 
-$LANG['plugin_fusinvsnmp']['iprange'][0]="Start of IP range";
-$LANG['plugin_fusinvsnmp']['iprange'][1]="End of IP range";
-$LANG['plugin_fusinvsnmp']['iprange'][2]="IP Ranges";
-$LANG['plugin_fusinvsnmp']['iprange'][3]="Query";
-$LANG['plugin_fusinvsnmp']['iprange'][7]="Bad IP";
-
 $LANG['plugin_fusinvsnmp']['agents'][24]="Threads number";
 $LANG['plugin_fusinvsnmp']['agents'][25]="Agent(s)";
 $LANG['plugin_fusinvsnmp']['agents'][26]="Netdiscovery module version";
