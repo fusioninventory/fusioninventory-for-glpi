@@ -36,7 +36,7 @@
 
 
 // Update from 2.3.0 to 2.4.0
-function update230to240() {
+function update232to240() {
    global $DB;
 
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
