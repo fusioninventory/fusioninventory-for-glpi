@@ -79,10 +79,11 @@ function pluginFusioninventoryGetCurrentVersion($version) {
          }
       }
    } else if (TableExists("glpi_plugin_fusioninventory_configs")) {
-      $query = "SELECT value FROM glpi_plugin_fusioninventory_configs
+      $query = "SELECT `value` FROM `glpi_plugin_fusioninventory_configs`
          WHERE `type`='version'
             AND `plugins_id`='".PluginFusioninventoryModule::getModuleId('fusioninventory')."'
          LIMIT 1";
+
       $data = array();
       if ($result=$DB->query($query)) {
          if ($DB->numrows($result) == "1") {
@@ -104,7 +105,7 @@ function pluginFusioninventoryUpdate($current_version) {
 
    echo "<tr class='tab_bg_1'>";
    echo "<td align='center'>";
-
+   logDebug($current_version);
    // update from current_version to last case version + 1
    switch ($current_version){
       case "1.0.0":

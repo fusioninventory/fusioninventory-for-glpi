@@ -46,7 +46,7 @@ function update232to240() {
    echo "<td align='center'>";
 
    plugin_fusioninventory_displayMigrationMessage("240"); // Start
-   
+   logDebug("mgre");
    if (TableExists("glpi_plugin_fusinvsnmp_ipranges")) {
       //Rename table
       $query = "RENAME TABLE  `glpi_plugin_fusinvsnmp_ipranges` " .
@@ -68,23 +68,29 @@ function update232to240() {
                "WHERE `glpi_plugin_fusioninventory_profiles`.`type`='iprange'";
       $DB->query($query) or die ("Update iprange profile values ".
                                  $LANG['update'][90] . $DB->error());
-      
-      $query = "UPDATE `glpi_plugin_fusioninventory_taskjobstatus` " .
-               "SET `itemtype`='PluginFusioninventoryIPRange' " .
-               "WHERE `itemtype`='PluginFusinvsnmpIPRange'";
-      $DB->query($query) or die ("Rename itemtype in glpi_plugin_fusioninventory_taskjobstatus".
-                                 $LANG['update'][90] . $DB->error());
+
+      foreach (array('glpi_plugin_fusioninventory_taskjobstatus', 
+                     'glpi_plugin_fusioninventory_taskjoblogs') as $table) {
+         $query = "UPDATE `$table` " .
+                  "SET `itemtype`='PluginFusioninventoryIPRange' " .
+                  "WHERE `itemtype`='PluginFusinvsnmpIPRange'";
+         $DB->query($query) or die ("Rename itemtype in $table".
+                                    $LANG['update'][90] . $DB->error());
+      }
 
       //Now taskjob
+      include_once(GLPI_ROOT."/plugins/fusioninventory/inc/taskjob.class.php");
       $job = new PluginFusioninventoryTaskjob();
       foreach (getAllDatasFromTable('glpi_plugin_fusioninventory_taskjobs') as $taskjob) {
-         $definition = json_decode($taskjob['definition']);
-         if (isset($definition['PluginFusinvsnmpIPRange'])) {
-            $definition['PluginFusioninventoryIPRange'] = $definition['PluginFusinvsnmpIPRange'];
-            unset($definition['PluginFusinvsnmpIPRange']);
-            $taskjob['definition'] = $definition;
-            $job->update($taskjob);
+         $definition = json_decode($taskjob['definition'], true);
+         foreach ($definition as $id => $content) {
+            if ($content['PluginFusinvsnmpIPRange']) {
+               $definition[$id]['PluginFusioninventoryIPRange'] = $content['PluginFusinvsnmpIPRange'];
+               unset($definition[$id]['PluginFusinvsnmpIPRange']);
+            }
          }
+         $taskjob['definition'] = json_encode($definition);
+         $job->update($taskjob);
       }
 
    }
@@ -120,6 +126,8 @@ function update232to240() {
                                  $LANG['update'][90] . $DB->error());
    }
 
+   include_once(GLPI_ROOT."/plugins/fusioninventory/inc/profile.class.php");
+   include_once(GLPI_ROOT."/plugins/fusioninventory/inc/staticmisc.class.php");
    PluginFusioninventoryProfile::initProfile("FUSIONINVENTORY", $plugins_id);
 
    
