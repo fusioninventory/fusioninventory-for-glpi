@@ -147,7 +147,9 @@ class PluginFusioninventoryStaticmisc {
                    array('profil'  => 'iprange',
                          'name'    => $LANG['plugin_fusioninventory']['menu'][2]),
                    array('profil'  => 'credential',
-                         'name'    => $LANG['plugin_fusioninventory']['menu'][5]));
+                         'name'    => $LANG['plugin_fusioninventory']['menu'][5]),
+                   array('profil'  => 'credentialip',
+                         'name'    => $LANG['plugin_fusioninventory']['menu'][6]));
    }
    
    /**

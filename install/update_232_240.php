@@ -74,22 +74,7 @@ function update232to240() {
                "WHERE `itemtype`='PluginFusinvsnmpIPRange'";
       $DB->query($query) or die ("Rename itemtype in glpi_plugin_fusioninventory_taskjobstatus".
                                  $LANG['update'][90] . $DB->error());
-      
-      $query = "CREATE TABLE  `glpi_plugin_fusioninventory_credentials` (
-                  `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
-                  `entities_id` INT( 11 ) NOT NULL DEFAULT '0',
-                  `is_recursive` TINYINT( 1 ) NOT NULL DEFAULT '0' ,
-                  `name` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
-                  `username` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
-                  `password` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
-                  `comment` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ,
-                  `date_mod` DATETIME NOT NULL ,
-                  `itemtype` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
-                  PRIMARY KEY (  `id` )
-                  ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
-      $DB->query($query) or die ("Create table glpi_plugin_fusioninventory_credentials".
-                                 $LANG['update'][90] . $DB->error());
-                  
+
       //Now taskjob
       $job = new PluginFusioninventoryTaskjob();
       foreach (getAllDatasFromTable('glpi_plugin_fusioninventory_taskjobs') as $taskjob) {
@@ -101,22 +86,42 @@ function update232to240() {
             $job->update($taskjob);
          }
       }
-      
-      if (!TableExists("glpi_plugin_fusioninventory_credentialips")) {
-         $query = "CREATE TABLE  `glpi_plugin_fusioninventory_credentialips` (
-                     `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
-                     `entities_id` INT( 11 ) NOT NULL DEFAULT '0',
-                     `plugin_fusioninventory_credentials_id` INT( 11 ) NOT NULL DEFAULT  '0',
-                     `name` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
-                     `ip` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
-                     `comment` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ,
-                     `date_mod` DATETIME NOT NULL ,
-                     PRIMARY KEY (  `id` )
-                     ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
-         $DB->query($query) or die ("Create table glpi_plugin_fusioninventory_credentialips".
-                                    $LANG['update'][90] . $DB->error());
-      }
+
    }
+      
+   $query = "CREATE TABLE  `glpi_plugin_fusioninventory_credentials` (
+               `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+               `entities_id` INT( 11 ) NOT NULL DEFAULT '0',
+               `is_recursive` TINYINT( 1 ) NOT NULL DEFAULT '0' ,
+               `name` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
+               `username` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
+               `password` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
+               `comment` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ,
+               `date_mod` DATETIME NOT NULL ,
+               `itemtype` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
+               PRIMARY KEY (  `id` )
+               ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
+   $DB->query($query) or die ("Create table glpi_plugin_fusioninventory_credentials".
+                              $LANG['update'][90] . $DB->error());
+                  
+      
+   if (!TableExists("glpi_plugin_fusioninventory_credentialips")) {
+      $query = "CREATE TABLE  `glpi_plugin_fusioninventory_credentialips` (
+                  `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+                  `entities_id` INT( 11 ) NOT NULL DEFAULT '0',
+                  `plugin_fusioninventory_credentials_id` INT( 11 ) NOT NULL DEFAULT  '0',
+                  `name` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
+                  `ip` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
+                  `comment` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ,
+                  `date_mod` DATETIME NOT NULL ,
+                  PRIMARY KEY (  `id` )
+                  ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
+      $DB->query($query) or die ("Create table glpi_plugin_fusioninventory_credentialips".
+                                 $LANG['update'][90] . $DB->error());
+   }
+
+   PluginFusioninventoryProfile::initProfile("FUSIONINVENTORY", $plugins_id);
+
    
    if (!FieldExists('glpi_plugin_fusioninventory_agentmodules', 'url')) {
       $query = "ALTER TABLE `glpi_plugin_fusioninventory_agentmodules` 
