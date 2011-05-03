@@ -447,19 +447,11 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                $this->releaseHub($this->fields['id'], $p_oPort);
                $hub_id = $this->fields['id'];
             } else {
-//               plugin_fusioninventory_addLogConnection("remove",$ID);
-               if ($nn->delete(array('id' => $ID))) {
-//                  $PluginFusionInventoryAgentsProcesses->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
-//                              array('query_nb_connections_deleted' => '1'));
-               }
+               $this->disconnectDB($ID);
                $hub_id = $this->createHub($p_oPort, $agent_id);
             }
          } else {
-//            plugin_fusioninventory_addLogConnection("remove",$ID);
-            if ($nn->delete(array('id' => $ID))) {
-//               $PluginFusionInventoryAgentsProcesses->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
-//                           array('query_nb_connections_deleted' => '1'));
-            }
+            $this->disconnectDB($ID);
             $hub_id = $this->createHub($p_oPort, $agent_id);
          }
       } else {
@@ -539,7 +531,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       foreach ($a_ports as $data) {
          if (!isset($a_portUsed[$data['id']])) {
             //plugin_fusioninventory_addLogConnection("remove",$port_id);
-            $nn->delete(array('id' => $data['id']));
+            $this->disconnectDB($data['id']);
             $Netport->deleteFromDB($data['id']);
          }
       }
@@ -564,7 +556,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
       $data = current($a_port);
        //plugin_fusioninventory_addLogConnection("remove",$port_id);
-      $nn->delete(array('id' => $data['id']));
+      $this->disconnectDB($data['id']);
       // Search free port
       $query = "SELECT `glpi_networkports`.`id` FROM `glpi_networkports`
          LEFT JOIN `glpi_networkports_networkports`
@@ -585,10 +577,31 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          $input["itemtype"] = $this->getType();
          $freeport_id = $Netport->add($input);
       }
+      $this->disconnectDB($freeport_id);
       $nn->add(array('networkports_id_1'=> $data['id'], 'networkports_id_2' => $freeport_id));
 
       //plugin_fusioninventory_addLogConnection("make",$port_id);
       return $freeport_id;
+   }
+
+
+	function disconnectDB($p_port) {
+      $nn = new NetworkPort_NetworkPort();
+
+      if ($nn->getOppositeContact($p_port)) {
+         PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$nn->getOppositeContact($p_port));
+      }
+      PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$p_port);
+      if ($nn->getOppositeContact($p_port) AND $nn->getFromDBForNetworkPort($nn->getOppositeContact($p_port))) {
+         if ($nn->delete($nn->fields)) {
+            plugin_item_purge_fusioninventory($nn);
+         }
+      }
+      if ($nn->getFromDBForNetworkPort($p_port)) {
+         if ($nn->delete($nn->fields)) {
+            plugin_item_purge_fusioninventory($nn);
+         }
+      }
    }
 
 
@@ -680,6 +693,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $input["itemtype"] = $this->getType();
       $input["name"] = "Link";
       $port_id = $Netport->add($input);
+      $this->disconnectDB($p_oPort->getValue('id'));
+      $this->disconnectDB($port_id);
       if ($nn->add(array('networkports_id_1'=> $p_oPort->getValue('id'), 'networkports_id_2' => $port_id))) {
 //         $PluginFusionInventoryAgentsProcesses->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
 //                     array('query_nb_connections_created' => '1'));
@@ -722,7 +737,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       }
       foreach ($releasePorts as $port_id=>$data) {
          //plugin_fusioninventory_addLogConnection("remove",$port_id);
-         $nn->delete(array('id' => $port_id));
+         $this->disconnectDB($port_id);
       }
    }
 
@@ -751,7 +766,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             if ($result_port=$DB->query($query_port)) {
                while ($data_port=$DB->fetch_array($result_port)) {
                   //plugin_fusioninventory_addLogConnection("remove",$data_port['ID']);
-                  $nn->delete(array('id' => $data_port['id']));
+                  $this->disconnectDB($data_port['id']);
                   $np = new NetworkPort();
                   $np->deleteFromDB($data_port['id']);
                }

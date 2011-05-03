@@ -192,6 +192,7 @@ class PluginFusioninventoryCommunication {
          $result .= $line . "\n";
          $token   = strtok("\n");
          $pad    += $indent;
+         $indent = 0;
       }
       $this->setXML($result);
       return $this->sxml->asXML();
@@ -254,7 +255,8 @@ class PluginFusioninventoryCommunication {
       $moduleRun = $PluginFusioninventoryTaskjobstatus->getTaskjobsAgent($agent_id);
       foreach ($moduleRun as $className => $array) {
          $class = new $className();
-         $this->sxml = $class->Run($array);
+         $sxml_temp = $class->run($array);
+         $this->append_simplexml($this->sxml, $sxml_temp);
       }
    }
 
@@ -283,6 +285,30 @@ class PluginFusioninventoryCommunication {
       if ($PluginFusioninventoryAgentmodule->getAgentsCanDo('INVENTORY', $items_id)) {
          $this->sxml->addChild('RESPONSE', "SEND");
       }
+   }
+
+
+   function append_simplexml(&$simplexml_to, &$simplexml_from) {
+      static $firstLoop=true;
+
+      //Here adding attributes to parent
+      if ($firstLoop) {
+         foreach($simplexml_from->attributes() as $attr_key => $attr_value) {
+            $simplexml_to->addAttribute($attr_key, $attr_value);
+         }
+      }
+
+      foreach ($simplexml_from->children() as $simplexml_child) {
+         $simplexml_temp = $simplexml_to->addChild($simplexml_child->getName(), (string) $simplexml_child);
+         foreach ($simplexml_child->attributes() as $attr_key => $attr_value) {
+            $simplexml_temp->addAttribute($attr_key, $attr_value);
+         }
+
+         $firstLoop=false;
+
+         $this->append_simplexml($simplexml_temp, $simplexml_child);
+      }
+      unset($firstLoop);
    }
 }
 

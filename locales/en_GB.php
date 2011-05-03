@@ -72,6 +72,8 @@ $LANG['plugin_fusioninventory']['functionalities'][76]="Extra-debug";
 
 $LANG['plugin_fusioninventory']['errors'][22]="Unattended element in";
 $LANG['plugin_fusioninventory']['errors'][50]="Your GLPI version not compatible, require 0.78";
+$LANG['plugin_fusioninventory']['errors'][1] = "PHP allow_url_fopen is off, can't wake agent to do inventory";
+$LANG['plugin_fusioninventory']['errors'][2] = "PHP allow_url_fopen is off, push mode can't work";
 
 $LANG['plugin_fusioninventory']['rules'][2]="Equipment import and link rules";
 $LANG['plugin_fusioninventory']['rules'][3]="Search GLPI equipment with the status";
@@ -100,9 +102,10 @@ $LANG['plugin_fusioninventory']['processes'][1]="PID";
 $LANG['plugin_fusioninventory']['processes'][38]="Process number";
 
 $LANG['plugin_fusioninventory']['menu'][1]="Agents management";
-$LANG['plugin_fusioninventory']['menu'][2]="IP range configuration";
+$LANG['plugin_fusioninventory']['menu'][2]="IP Range";
 $LANG['plugin_fusioninventory']['menu'][3]="Menu";
 $LANG['plugin_fusioninventory']['menu'][4]="Unknown device";
+$LANG['plugin_fusioninventory']['menu'][6]="Remote devices to inventory";
 $LANG['plugin_fusioninventory']['menu'][7]="Running jobs";
 
 $LANG['plugin_fusioninventory']['discovery'][5]="Number of imported devices";
@@ -129,6 +132,7 @@ $LANG['plugin_fusioninventory']['agents'][37]="locked";
 $LANG['plugin_fusioninventory']['agents'][38]="Available";
 $LANG['plugin_fusioninventory']['agents'][39]="Running";
 $LANG['plugin_fusioninventory']['agents'][40]="Computer without known IP";
+$LANG['plugin_fusioninventory']['agents'][41] = "Service URL";
 
 $LANG['plugin_fusioninventory']['unknown'][2]="Approved devices";
 $LANG['plugin_fusioninventory']['unknown'][4]="Network hub";
@@ -162,10 +166,8 @@ $LANG['plugin_fusioninventory']['task'][37]="days";
 $LANG['plugin_fusioninventory']['task'][38]="months";
 $LANG['plugin_fusioninventory']['task'][39]="Unable to run task because some jobs is running yet!";
 $LANG['plugin_fusioninventory']['task'][40]="Force running";
-$LANG['plugin_fusioninventory']['task'][41]="Permanent task - Discovery";
-$LANG['plugin_fusioninventory']['task'][42]="Permanent task - Inventory";
-$LANG['plugin_fusioninventory']['task'][43]="Communication type";
-$LANG['plugin_fusioninventory']['task'][44]="Create task easily";
+$LANG['plugin_fusioninventory']['task'][41]="Server contacts the agent (push)";
+$LANG['plugin_fusioninventory']['task'][42]="Agent contacts the server (pull)";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Started";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";
@@ -181,11 +183,9 @@ $LANG['plugin_fusioninventory']['xml'][0]="XML";
 
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Bad token, impossible to start agent";
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Agent stopped/crashed";
+$LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['ocsconfig'][11];
 
-$LANG['plugin_fusioninventory']['iprange'][0]="Start of IP range";
-$LANG['plugin_fusioninventory']['iprange'][1]="End of IP range";
-$LANG['plugin_fusioninventory']['iprange'][2]="IP Ranges";
-$LANG['plugin_fusioninventory']['iprange'][3]="Query";
-$LANG['plugin_fusioninventory']['iprange'][7]="Bad IP";
+$LANG['plugin_fusioninventory']['locks'][0]="Delete locks";
+$LANG['plugin_fusioninventory']['locks'][1]="Add locks";
 
 ?>

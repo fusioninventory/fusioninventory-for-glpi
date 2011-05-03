@@ -38,7 +38,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
    $searchopt = &Search::getOptions($type);
    $table = $searchopt[$id]["table"];
    $field = $searchopt[$id]["field"];
-
+         
    switch ($table.'.'.$field) {
 
       case "glpi_plugin_fusioninventory_tasks.id" :
@@ -270,8 +270,13 @@ function plugin_headings_fusioninventory_locks($item) {
    $type = get_Class($item);
    $id = $item->getField('id');
    $fusioninventory_locks = new PluginFusioninventoryLock();
-   $fusioninventory_locks->showForm(getItemTypeFormURL('PluginFusioninventoryLock').'?id='.$id,
+   if ($id == '') {
+      $fusioninventory_locks->showForm(getItemTypeFormURL('PluginFusioninventoryLock'),
+                                                       $type);
+   } else {
+      $fusioninventory_locks->showForm(getItemTypeFormURL('PluginFusioninventoryLock').'?id='.$id,
                                                        $type, $id);
+   }
 }
 
 function plugin_headings_fusioninventory_tasks($item, $itemtype='', $items_id=0) {
@@ -281,8 +286,11 @@ function plugin_headings_fusioninventory_tasks($item, $itemtype='', $items_id=0)
    }
    if ($itemtype == 'Computer') {
       // Possibility to remote agent
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-      $PluginFusioninventoryAgent->forceRemoteAgent();
+      $allowed = PluginFusioninventoryTaskjob::getAllowurlfopen(1);
+      if (!isset($allowed)) {
+         $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+         $PluginFusioninventoryAgent->forceRemoteAgent();
+      }
    }
 
    $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
@@ -475,9 +483,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
                if ($val == 1) {
                   if (isset($data["lockfield_fusioninventory"])&&count($data["lockfield_fusioninventory"])){
                      $tab=PluginFusioninventoryLock::exportChecksToArray($data["lockfield_fusioninventory"]);
-                        PluginFusioninventoryLock::setLockArray($data['type'], $key, $tab);
-                  } else {
-                     PluginFusioninventoryLock::setLockArray($data['type'], $key, array());
+                        PluginFusioninventoryLock::setLockArray($data['type'], $key, $tab, $data['actionlock']);
                   }
                }
             }
@@ -661,6 +667,15 @@ function plugin_fusioninventory_addOrderBy($type,$id,$order,$key=0) {
 }
 
 
+function plugin_fusioninventory_addDefaultWhere($type) {
+   if ($type == 'PluginFusioninventoryTaskjob') {
+      return " ( select count(*) FROM `glpi_plugin_fusioninventory_taskjobstatus`
+			WHERE plugin_fusioninventory_taskjobs_id= `glpi_plugin_fusioninventory_taskjobs`.`id`
+         AND `state`!='3' )";
+   }
+}
+
+
 function plugin_fusioninventory_addWhere($link,$nott,$type,$id,$val) {
 	global $SEARCH_OPTION;
 
@@ -781,13 +796,15 @@ function plugin_item_purge_fusioninventory($parm) {
          // If remove connection of a hub port (unknown device), we must delete this port too
          $NetworkPort = new NetworkPort();
          $NetworkPort_Vlan = new NetworkPort_Vlan();
-
          $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+
+         $a_hubs = array();
 
          $NetworkPort->getFromDB($parm->getField('networkports_id_1'));
         if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
             $PluginFusioninventoryUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
             if ($PluginFusioninventoryUnknownDevice->fields['hub'] == '1') {
+               $a_hubs[$NetworkPort->fields['items_id']] = 1;
                $NetworkPort->delete($NetworkPort->fields);
             }
          }
@@ -796,10 +813,19 @@ function plugin_item_purge_fusioninventory($parm) {
             $PluginFusioninventoryUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
             if ($PluginFusioninventoryUnknownDevice->fields['hub'] == '1') {
                $a_vlans = $NetworkPort_Vlan->getVlansForNetworkPort($NetworkPort->fields['id']);
-               foreach ($a_vlans as $vlan_id) {
+               foreach ($a_vlans as $vlan_id) {                  
                   $NetworkPort_Vlan->unassignVlan($NetworkPort->fields['id'], $vlan_id);
                }
+               $a_hubs[$NetworkPort->fields['items_id']] = 1;
                $NetworkPort->delete($NetworkPort->fields);
+            }
+         }
+         // If hub have no port, delete it
+         foreach ($a_hubs as $unkowndevice_id=>$num) {
+            $a_networkports = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
+               AND `items_id`='".$unkowndevice_id."' ");
+            if (count($a_networkports) < 2) {
+               $PluginFusioninventoryUnknownDevice->delete(array('id'=>$unkowndevice_id), 1);
             }
          }
 
@@ -807,6 +833,25 @@ function plugin_item_purge_fusioninventory($parm) {
 
    }
    return $parm;
+}
+
+
+function plugin_item_transfer_fusioninventory($parm) {
+   switch ($parm['type']) {
+
+      case 'Computer':
+         $pluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+
+         if ($agent_id = $pluginFusioninventoryAgent->getAgentWithComputerid($parm['id'])) {
+            $input = array();
+            $input['id'] = $agent_id;
+            $input['entities_id'] = $_POST['to_entity'];
+            $pluginFusioninventoryAgent->update($input);
+         }
+
+         break;
+   }
+   return false;
 }
 
 

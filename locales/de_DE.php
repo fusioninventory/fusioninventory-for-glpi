@@ -72,6 +72,8 @@ $LANG['plugin_fusioninventory']['functionalities'][76]="Extra-debug";
 
 $LANG['plugin_fusioninventory']['errors'][22]="Nicht erkannte Elemente in";
 $LANG['plugin_fusioninventory']['errors'][50]="Ihre GLPI-Version ist nicht kompatibel, Voraussetzung ist Version 0.78";
+$LANG['plugin_fusioninventory']['errors'][1] = "PHP allow_url_fopen is off, can't wake agent to do inventory";
+$LANG['plugin_fusioninventory']['errors'][2] = "PHP allow_url_fopen is off, push mode can't work";
 
 $LANG['plugin_fusioninventory']['rules'][2]="Importregeln für Geräte";
 $LANG['plugin_fusioninventory']['rules'][3]="Durchsuche GLPI nach Material mit dem Status";
@@ -100,7 +102,6 @@ $LANG['plugin_fusioninventory']['processes'][1]="PID";
 $LANG['plugin_fusioninventory']['processes'][38]="Prozessnummer";
 
 $LANG['plugin_fusioninventory']['menu'][1]="Agent-Verwaltung";
-$LANG['plugin_fusioninventory']['menu'][2]="IP-Adressbereich Konfiguration";
 $LANG['plugin_fusioninventory']['menu'][3]="Menü";
 $LANG['plugin_fusioninventory']['menu'][4]="Ubekanntes Gerät";
 $LANG['plugin_fusioninventory']['menu'][7]="Aktive / Laufende Aufgaben";
@@ -129,6 +130,7 @@ $LANG['plugin_fusioninventory']['agents'][37]="gesperrt";
 $LANG['plugin_fusioninventory']['agents'][38]="Available";
 $LANG['plugin_fusioninventory']['agents'][39]="Running";
 $LANG['plugin_fusioninventory']['agents'][40]="Computer without known IP";
+$LANG['plugin_fusioninventory']['agents'][41] = "Service URL";
 
 $LANG['plugin_fusioninventory']['unknown'][2]="Genehmigte Geräte";
 $LANG['plugin_fusioninventory']['unknown'][4]="Netzwerk-Hub";
@@ -162,10 +164,8 @@ $LANG['plugin_fusioninventory']['task'][37]="Tage";
 $LANG['plugin_fusioninventory']['task'][38]="Monate";
 $LANG['plugin_fusioninventory']['task'][39]="Unable to run task because some jobs is running yet!";
 $LANG['plugin_fusioninventory']['task'][40]="Force running";
-$LANG['plugin_fusioninventory']['task'][41]="Dauerhafte Aufgabe - Entdeckung";
-$LANG['plugin_fusioninventory']['task'][42]="Dauerhafte Aufgaber - Inventarisierung";
-$LANG['plugin_fusioninventory']['task'][43]="Kommunikationsmodus";
-$LANG['plugin_fusioninventory']['task'][44]="Task automatisch erstellen (einfacher)";
+$LANG['plugin_fusioninventory']['task'][41]="Server contacts the agent (push)";
+$LANG['plugin_fusioninventory']['task'][42]="Agent contacts the server (pull)";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="gestartet";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="OK";
@@ -181,10 +181,9 @@ $LANG['plugin_fusioninventory']['xml'][0]="XML";
 
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Falcher Token, kann den Agent nicht starten";
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Agent gestoppt/abgestürzt";
+$LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['ocsconfig'][11];
 
-$LANG['plugin_fusioninventory']['iprange'][0]="Start des IP-Adressbereichs";
-$LANG['plugin_fusioninventory']['iprange'][1]="Ende des IP-Adressbereichs";
-$LANG['plugin_fusioninventory']['iprange'][2]="IP-Adressbereich";
-$LANG['plugin_fusioninventory']['iprange'][3]="Abfrage";
-$LANG['plugin_fusioninventory']['iprange'][7]="IP-Adresse inkorrekt";
+$LANG['plugin_fusioninventory']['locks'][0]="Delete locks";
+$LANG['plugin_fusioninventory']['locks'][1]="Add locks";
+
 ?>

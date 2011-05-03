@@ -119,7 +119,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          if ($use_rest) {
             echo "<tr>";
             echo "<td class='tab_bg_2 center'>";
-            echo $LANG['plugin_fusioninventory']['agents'][38];
+            echo $LANG['plugin_fusioninventory']['agents'][41];
             echo "</td><td colspan='2'>";
             echo "<input type='text' name='url' value='".$data['url']."' size='70'>";
             echo "</td>";

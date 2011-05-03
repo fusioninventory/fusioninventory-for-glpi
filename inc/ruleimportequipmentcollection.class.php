@@ -80,6 +80,49 @@ class PluginFusioninventoryRuleImportEquipmentCollection extends PluginFusioninv
       }
    }
 
+
+   
+   function preProcessPreviewResults($output) {
+      global $LANG;
+
+      //If ticket is assign to an object, display this information first
+      if (isset($output["action"])) {
+         echo "<tr class='tab_bg_2'>";
+         echo "<td>".$LANG['rulesengine'][11]."</td>";
+         echo "<td>";
+
+         switch ($output["action"]) {
+            case PluginFusioninventoryRuleImportEquipment::LINK_RESULT_LINK :
+               echo $LANG['setup'][620];
+               break;
+
+            case PluginFusioninventoryRuleImportEquipment::LINK_RESULT_NO_IMPORT:
+               echo $LANG['ocsconfig'][11];
+               break;
+
+            case PluginFusioninventoryRuleImportEquipment::LINK_RESULT_IMPORT:
+               echo $LANG['buttons'][37];
+               break;
+         }
+
+         echo "</td>";
+         echo "</tr>";
+         if ($output["action"] != PluginFusioninventoryRuleImportEquipment::LINK_RESULT_NO_IMPORT
+             && isset($output["found_equipment"])) {
+            echo "<tr class='tab_bg_2'>";
+            $className = $output["found_equipment"][1];
+            $class = new $className;
+            if ($class->getFromDB($output["found_equipment"][0])) {
+               echo "<td>".$LANG['setup'][620]."</td>";
+               echo "<td>".$class->getLink(true)."</td>";
+            }
+            echo "</tr>";
+         }
+      }
+      return $output;
+   }
+
+
 }
 
 ?>

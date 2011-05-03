@@ -67,6 +67,49 @@ function pluginFusioninventoryInstall($version) {
    }
    // Get informations of plugin
 
+   // Clean if FUsion / Tracker has been installed and uninstalled (not clean correctly)
+   $sql = "DELETE FROM `glpi_displaypreferences`
+      WHERE `itemtype`='5150'";
+   $DB->query($sql);
+   $sql = "DELETE FROM `glpi_displaypreferences`
+      WHERE `itemtype`='5151'";
+   $DB->query($sql);
+   $sql = "DELETE FROM `glpi_displaypreferences`
+      WHERE `itemtype`='5152'";
+   $DB->query($sql);
+   $sql = "DELETE FROM `glpi_displaypreferences`
+      WHERE `itemtype`='5153'";
+   $DB->query($sql);
+   $sql = "DELETE FROM `glpi_displaypreferences`
+      WHERE `itemtype`='5156'";
+   $DB->query($sql);
+   $sql = "DELETE FROM `glpi_displaypreferences`
+      WHERE `itemtype`='5157'";
+   $DB->query($sql);
+   $sql = "DELETE FROM `glpi_displaypreferences`
+      WHERE `itemtype`='5158'";
+   $DB->query($sql);
+   $sql = "DELETE FROM `glpi_displaypreferences`
+      WHERE `itemtype`='5159'";
+   $DB->query($sql);
+   $sql = "DELETE FROM `glpi_displaypreferences`
+      WHERE `itemtype`='5161'";
+   $DB->query($sql);
+   $sql = "DELETE FROM `glpi_displaypreferences`
+      WHERE `itemtype`='5165'";
+   $DB->query($sql);
+   $sql = "DELETE FROM `glpi_displaypreferences`
+      WHERE `itemtype`='5166'";
+   $DB->query($sql);
+   $sql = "DELETE FROM `glpi_displaypreferences`
+      WHERE `itemtype`='5167'";
+   $DB->query($sql);
+   $sql = "DELETE FROM `glpi_displaypreferences`
+      WHERE `itemtype`='5168'";
+   $DB->query($sql);
+
+
+   // Insert in DB
    $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-"
               .$version."-empty.sql";
    $DBf_handle = fopen($DB_file, "rt");

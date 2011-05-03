@@ -64,7 +64,7 @@ if (isset($_POST['forcestart'])) {
       $pftj->delete($datas);
    }
    $pft->delete($_POST);
-   glpi_header(GLPI_ROOT."/plugins/fusioninventory/front/task.php");
+   glpi_header(getItemTypeSearchURL('PluginFusioninventoryTask'));
 } else if (isset($_POST["update"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task","w");
 
@@ -72,6 +72,8 @@ if (isset($_POST['forcestart'])) {
 
    glpi_header($_SERVER['HTTP_REFERER']);
 }
+
+PluginFusioninventoryTaskjob::getAllowurlfopen();
 
 if (isset($_GET["id"])) {
    $pft->showForm($_GET["id"]);

@@ -109,10 +109,12 @@ function plugin_init_fusioninventory() {
                                        'NetworkPort'      => 'plugin_item_update_fusioninventory');
 
 
-         
+         $PLUGIN_HOOKS['item_transfer']['fusioninventory'] = 'plugin_item_transfer_fusioninventory';
    //      $PLUGIN_HOOKS['item_add']['fusioninventory'] = 'plugin_item_add_fusioninventory';
-
-         $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
+         $Plugin = new Plugin();
+         if ($Plugin->isActivated('fusioninventory')) {
+            $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
+         }
 
          // Tabs for each type
          $PLUGIN_HOOKS['headings']['fusioninventory'] = 'plugin_get_headings_fusioninventory';
@@ -264,7 +266,7 @@ function plugin_fusioninventory_check_prerequisites() {
  * @return bool : true if request comes from an agent, false otherwise
  */
 function isFusioninventoryUserAgent($useragent = '') {
-   return (preg_match("/[fusioninventory|ocsinventory]/i",$useragent));
+   return (preg_match("/(fusioninventory|ocsinventory|ocs-ng)/i",$useragent));
 }
 
 function plugin_fusioninventory_check_config() {
