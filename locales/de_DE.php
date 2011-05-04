@@ -379,12 +379,6 @@ $LANG['plugin_fusinvsnmp']['menu'][10]="Status Netzwerkinventar";
 $LANG['plugin_fusinvsnmp']['discovery'][5]="Anzahl importierter Geräte";
 $LANG['plugin_fusinvsnmp']['discovery'][9]="Number of devices not imported because type non defined";
 
-$LANG['plugin_fusinvsnmp']['iprange'][0]="Start des IP-Adressbereichs";
-$LANG['plugin_fusinvsnmp']['iprange'][1]="Ende des IP-Adressbereichs";
-$LANG['plugin_fusinvsnmp']['iprange'][2]="IP-Adressbereich";
-$LANG['plugin_fusinvsnmp']['iprange'][3]="Abfrage";
-$LANG['plugin_fusinvsnmp']['iprange'][7]="IP-Adresse inkorrekt";
-
 $LANG['plugin_fusinvsnmp']['agents'][24]="SNMP-Threads";
 $LANG['plugin_fusinvsnmp']['agents'][25]="Agent(s)";
 $LANG['plugin_fusinvsnmp']['agents'][26]="Version des Moduls Netdiscovery";

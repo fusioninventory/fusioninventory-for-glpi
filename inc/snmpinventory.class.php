@@ -48,7 +48,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
-      $PluginFusinvsnmpIPRange = new PluginFusinvsnmpIPRange();
+      $PluginFusinvsnmpIPRange = new PluginFusioninventoryIPRange();
 
       $uniqid = uniqid();
 
@@ -79,7 +79,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
 
          switch($itemtype) {
 
-            case 'PluginFusinvsnmpIPRange':
+            case 'PluginFusioninventoryIPRange':
                $a_iprange[] = $items_id;
                break;
 

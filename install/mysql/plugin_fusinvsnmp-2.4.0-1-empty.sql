@@ -304,21 +304,6 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_printercartridges` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-
-DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_ipranges`;
-
-CREATE TABLE `glpi_plugin_fusinvsnmp_ipranges` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `name` varchar(255) DEFAULT NULL,
-   `entities_id` int(11) NOT NULL DEFAULT '0',
-   `ip_start` varchar(255) DEFAULT NULL,
-   `ip_end` varchar(255) DEFAULT NULL,
-   PRIMARY KEY (`id`),
-   KEY `entities_id` (`entities_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
-
 DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_configsecurities`;
 
 CREATE TABLE `glpi_plugin_fusinvsnmp_configsecurities` (
@@ -450,10 +435,6 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
           (NULL,'PluginFusinvsnmpAgent', '12', '5', '0'),
           (NULL,'PluginFusinvsnmpAgent', '13', '6', '0'),
           (NULL,'PluginFusinvsnmpAgent', '14', '7', '0'),
-
-          (NULL,'PluginFusinvsnmpIPRange', '2', '1', '0'),
-          (NULL,'PluginFusinvsnmpIPRange', '3', '2', '0'),
-          (NULL,'PluginFusinvsnmpIPRange', '4', '3', '0'),
 
           (NULL,'PluginFusinvsnmpAgentProcess', '2', '1', '0'),
           (NULL,'PluginFusinvsnmpAgentProcess', '3', '2', '0'),
