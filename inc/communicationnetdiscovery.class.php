@@ -176,7 +176,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       }
       if (isset($data['action'])
               AND ($data['action'] == PluginFusioninventoryRuleImportEquipment::LINK_RESULT_NO_IMPORT)) {
-         
+
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==fusioninventory::3== '.implode(",", $input);
          $this->addtaskjoblog();
       }
@@ -322,15 +322,15 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                switch ((string)$xml->TYPE) {
 
                   case '1':
-                     $input['itemtype'] = 'Computer';
+                     $input['item_type'] = 'Computer';
                      break;
 
                   case '2':
-                     $input['itemtype'] = 'NetworkEquipment';
+                     $input['item_type'] = 'NetworkEquipment';
                      break;
 
                   case '3':
-                     $input['itemtype'] = 'Printer';
+                     $input['item_type'] = 'Printer';
                      break;
                   
                }
