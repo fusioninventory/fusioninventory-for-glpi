@@ -141,20 +141,26 @@ class PluginFusioninventoryWizard {
       echo "<tr>";
       echo "<td>";
 
-      echo "<table class='tab_cadre'>";
-      echo "<tr>";
-      echo "<th>";
-      echo "<a href='".$_SERVER["REQUEST_URI"]."&id=0'>Add an item</a>";
-      echo "</th>";
-      echo "</tr>";
-      echo "</table>";
-
       if (isset($_GET['id'])) {
-         $class = new $classname;
          $target = $_SERVER["REQUEST_URI"];
          $target = str_replace("&id=0", "", $target);
+         echo "<table class='tab_cadre'>";
+         echo "<tr>";
+         echo "<th>";
+         echo "<a href='".$target."'>See list</a>";
+         echo "</th>";
+         echo "</tr>";
+         echo "</table>";
+         $class = new $classname;
          $class->showForm(0, array('target'=>$target));
       } else {
+         echo "<table class='tab_cadre'>";
+         echo "<tr>";
+         echo "<th>";
+         echo "<a href='".$_SERVER["REQUEST_URI"]."&id=0'>Add an item</a>";
+         echo "</th>";
+         echo "</tr>";
+         echo "</table>";
          Search::showList('PluginFusinvsnmpConfigSecurity', $_GET);
       }
 
