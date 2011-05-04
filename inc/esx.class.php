@@ -145,11 +145,9 @@ class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
    
    static function getJobs($device_id) {
       $response      = array();
-      $taskjoblog    = new PluginFusioninventoryTaskjoblog();
       $taskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $credential    = new PluginFusioninventoryCredential();
       $credentialip  = new PluginFusioninventoryCredentialIp();
-      $uuid          = '';
       
       //Get the agent ID by his deviceid
       if ($agents = PluginFusioninventoryAgent::getByDeviceID($device_id)) {

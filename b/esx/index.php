@@ -54,6 +54,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    
    if ($response) {
       echo json_encode($response);
+      logDebug($response);
    } else {
       PluginFusioninventoryRestCommunication::sendError();
     }
