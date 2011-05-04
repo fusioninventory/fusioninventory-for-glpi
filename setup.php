@@ -242,8 +242,7 @@ function plugin_init_fusioninventory() {
             && isFusioninventoryUserAgent($_SERVER['HTTP_USER_AGENT'])) {
 
       // Init other fusinv* plugins
-      $a_fusinv = PluginFusioninventoryModule::getAll();
-      foreach ($a_fusinv as $data) {
+      foreach (PluginFusioninventoryModule::getAll() as $data) {
          Plugin::load($data['directory']);
       }
       include(GLPI_ROOT ."/plugins/fusioninventory/front/communication.php");

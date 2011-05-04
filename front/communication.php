@@ -47,102 +47,113 @@ include_once(GLPI_ROOT."/inc/includes.php");
 if (!isset($_SESSION['glpilanguage'])) {
    $_SESSION['glpilanguage'] = 'fr_FR';
 }
-
+   
 ini_set('display_errors','On');
 error_reporting(E_ALL | E_STRICT);
 set_error_handler('userErrorHandlerDebug');
 $_SESSION['glpi_use_mode'] = 2;
 
-$PluginFusioninventoryCommunication  = new PluginFusioninventoryCommunication();
-$pta  = new PluginFusioninventoryAgent();
-
-$errors='';
-
-// ***** For debug only ***** //
-//$GLOBALS["HTTP_RAW_POST_DATA"] = gzcompress('');
-// ********** End ********** //
-
-if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
-   // Get conf tu know if SSL is only
-
-   $fusioninventory_config = new PluginFusioninventoryConfig();
-   $PluginFusioninventoryModule = new PluginFusioninventoryModule();
-   $fusioninventoryModule_id = $PluginFusioninventoryModule->getModuleId("fusioninventory");
-
-   $ssl = $fusioninventory_config->getValue($fusioninventoryModule_id, 'ssl_only');
-   if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"))
-       OR ($ssl == "0")) {
-      // echo "On continue";
+//Agent communication using REST protocol
+if (isset($_GET['action']) && isset($_GET['machineid'])) {
+   $response = PluginFusioninventoryRestCommunication::communicate($_GET);
+   if ($response) {
+      echo json_encode($response);
    } else {
-      $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
-<REPLY>
-</REPLY>");
-      $PluginFusioninventoryCommunication->noSSL();
-      exit();
+      PluginFusioninventoryRestCommunication::sendError();
    }
-
-   // Check XML integrity
-   $xml = '';
-   $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-   $PluginFusioninventoryTaskjob->disableDebug();
-   $comp = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
-   $PluginFusioninventoryTaskjob->reenableusemode();
-   if ($comp) {
-      $xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
-   } else if (gzinflate (substr($GLOBALS["HTTP_RAW_POST_DATA"], 2))) {
-      // ** OCS agent 2.0 Compatibility
-      $xml = gzinflate (substr($GLOBALS["HTTP_RAW_POST_DATA"], 2));
-   } else {
-      $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
-   }
-   if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
-      file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".uniqid(), $xml);
-   }
-   if (@simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA)) {
-      $pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA);
-   } else {
-      $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
-<REPLY>
-   <ERROR>XML not well formed!</ERROR>
-</REPLY>");
-      $PluginFusioninventoryCommunication->emptyAnswer();
-   }
-
-   //
-
-
-   $pta->importToken($xml);
-
-   $top0 = 0;
-   $top0 = gettimeofday();
-   if (!$PluginFusioninventoryCommunication->import($xml)) {
-
-      if (isset($pxml->DEVICEID)) {
-
+   exit();
+} else {
+   
+   $PluginFusioninventoryCommunication  = new PluginFusioninventoryCommunication();
+   $pta  = new PluginFusioninventoryAgent();
+   
+   $errors='';
+   
+   // ***** For debug only ***** //
+   //$GLOBALS["HTTP_RAW_POST_DATA"] = gzcompress('');
+   // ********** End ********** //
+   
+   if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
+      // Get conf tu know if SSL is only
+   
+      $fusioninventory_config = new PluginFusioninventoryConfig();
+      $PluginFusioninventoryModule = new PluginFusioninventoryModule();
+      $fusioninventoryModule_id = $PluginFusioninventoryModule->getModuleId("fusioninventory");
+   
+      $ssl = $fusioninventory_config->getValue($fusioninventoryModule_id, 'ssl_only');
+      if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"))
+          OR ($ssl == "0")) {
+         // echo "On continue";
+      } else {
          $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
-<REPLY>
-</REPLY>");
-
-         $a_agent = $pta->InfosByKey($pxml->DEVICEID);
-
-         // Get taskjob in waiting
-         $PluginFusioninventoryCommunication->getTaskAgent($a_agent['id']);
-         // ******** Send XML
-
-         $PluginFusioninventoryCommunication->addInventory($a_agent['id']);
-         $PluginFusioninventoryCommunication->addProlog();
-         $PluginFusioninventoryCommunication->setXML($PluginFusioninventoryCommunication->getXML());
-
-         echo $PluginFusioninventoryCommunication->getSend();
+   <REPLY>
+   </REPLY>");
+         $PluginFusioninventoryCommunication->noSSL();
+         exit();
       }
-   } else {
-      $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
-<REPLY>
-</REPLY>");
-      $PluginFusioninventoryCommunication->emptyAnswer();
+   
+      // Check XML integrity
+      $xml = '';
+      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $PluginFusioninventoryTaskjob->disableDebug();
+      $comp = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
+      $PluginFusioninventoryTaskjob->reenableusemode();
+      if ($comp) {
+         $xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
+      } else if (gzinflate (substr($GLOBALS["HTTP_RAW_POST_DATA"], 2))) {
+         // ** OCS agent 2.0 Compatibility
+         $xml = gzinflate (substr($GLOBALS["HTTP_RAW_POST_DATA"], 2));
+      } else {
+         $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
+      }
+      if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+         file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".uniqid(), $xml);
+      }
+      if (@simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA)) {
+         $pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA);
+      } else {
+         $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
+   <REPLY>
+      <ERROR>XML not well formed!</ERROR>
+   </REPLY>");
+         $PluginFusioninventoryCommunication->emptyAnswer();
+      }
+   
+      //
+   
+   
+      $pta->importToken($xml);
+   
+      $top0 = 0;
+      $top0 = gettimeofday();
+      if (!$PluginFusioninventoryCommunication->import($xml)) {
+   
+         if (isset($pxml->DEVICEID)) {
+   
+            $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
+   <REPLY>
+   </REPLY>");
+   
+            $a_agent = $pta->InfosByKey($pxml->DEVICEID);
+   
+            // Get taskjob in waiting
+            $PluginFusioninventoryCommunication->getTaskAgent($a_agent['id']);
+            // ******** Send XML
+   
+            $PluginFusioninventoryCommunication->addInventory($a_agent['id']);
+            $PluginFusioninventoryCommunication->addProlog();
+            $PluginFusioninventoryCommunication->setXML($PluginFusioninventoryCommunication->getXML());
+   
+            echo $PluginFusioninventoryCommunication->getSend();
+         }
+      } else {
+         $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
+   <REPLY>
+   </REPLY>");
+         $PluginFusioninventoryCommunication->emptyAnswer();
+      }
    }
+   
 }
-
 session_destroy();
-
 ?>
