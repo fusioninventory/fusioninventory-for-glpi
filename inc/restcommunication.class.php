@@ -153,5 +153,14 @@ class PluginFusioninventoryRestCommunication {
       self::sendOk();
    }
  
+   static function getDefaultRestURL($url, $plugin, $task) {
+      $task = strtolower($task);
+      if (preg_match("/(.*)\/(plugins|front)/",$url,$values)) {
+         return $values[1].'/plugins/fusinvinventory/b/'.$task;
+      } else {
+         return "";
+      }
+   }
+
 }
 ?>
