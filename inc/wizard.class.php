@@ -161,7 +161,7 @@ class PluginFusioninventoryWizard {
          echo "</th>";
          echo "</tr>";
          echo "</table>";
-         Search::showList('PluginFusinvsnmpConfigSecurity', $_GET);
+         Search::showList($classname, $_GET);
       }
 
       echo "</td>";
@@ -196,7 +196,7 @@ class PluginFusioninventoryWizard {
                $find = 1;
             } else {
                if ($find == '1') {
-                  return "&ariane=".$link;
+                  return $link."&ariane=".$ariane;
                }
             }
          }
@@ -211,9 +211,9 @@ class PluginFusioninventoryWizard {
    function filInventoryComputer() {
       return array(
       "choix de l'action"              => "w_start",
-      "Type de matériel à inventorier" => GLPI_ROOT."/plugins/fusioninventory/front/wizard_inventory.php",
-      "Options d'importation"          => GLPI_ROOT."/plugins/fusioninventory/front/wizard_inventorycomputeroptions.php",
-      "Règles d'import d'ordinateurs"  => "",
+      "Type de matériel à inventorier" => "w_inventorychoice",
+      "Options d'importation"          => "w_importcomputeroptions",
+      "Règles d'import d'ordinateurs"  => "w_importrules",
       "Règles de sélection de l'entité"=> "",
       "Configuration des agents"       => "");
    }
@@ -223,10 +223,10 @@ class PluginFusioninventoryWizard {
    function filInventoryESX() {
       return array(
       "choix de l'action"                  => "w_start",
-      "Type de matériel à inventorier"     => GLPI_ROOT."/plugins/fusioninventory/front/wizard_inventory.php",
-      "Gestion des mots de passe"          => "",
-      "Gestion des serveur ESX"            => "",
-      "Règles d'import d'ordinateurs"      => "",
+      "Type de matériel à inventorier"     => "w_inventorychoice",
+      "Gestion des mots de passe"          => "w_credential",
+      "Gestion des serveur ESX"            => "w_remotedevices",
+      "Règles d'import d'ordinateurs"      => "w_importrules",
       "Création de taches d'exécution"     => "",
       "Affichage des inventaires réalisés" => "");
    }
@@ -236,10 +236,10 @@ class PluginFusioninventoryWizard {
    function filInventorySNMP() {
       return array(
       "choix de l'action"                  => "w_start",
-      "Type de matériel à inventorier"     => GLPI_ROOT."/plugins/fusioninventory/front/wizard_inventory.php",
+      "Type de matériel à inventorier"     => "w_inventorychoice",
       "Choix (decouverte ou inventaire)"   => "",
       "Authentification SNMP"              => "w_authsnmp",
-      "Règles d'import"                    => "",
+      "Règles d'import"                    => "w_importrules",
       "Création de taches d'exécution"     => "",
       "Affichage des inventaires réalisés" => "");
    }
@@ -255,7 +255,7 @@ class PluginFusioninventoryWizard {
    function filInventorySNMP_Netdiscovery() {
       $array = array(
       "choix de l'action"                  => "w_start",
-      "Type de matériel à inventorier"     => GLPI_ROOT."/plugins/fusioninventory/front/wizard_inventory.php",
+      "Type de matériel à inventorier"     => "w_snmpdeviceschoice",
       "Choix (decouverte ou inventaire)"   => "");
       return array_merge($array, $this->fil_Part_NetDiscovery());
   }
@@ -282,7 +282,7 @@ class PluginFusioninventoryWizard {
                                'networkscan.png',
                                'filNetDiscovery'),
                          array('Inventorier des matériels',
-                                'w_wiz_inventory',
+                                'w_inventorychoice',
                                 'general_inventory.png',
                                 ''));
 
@@ -292,13 +292,59 @@ class PluginFusioninventoryWizard {
    }
 
 
+   
+   static function w_inventorychoice($ariane='') {
+      $a_buttons = array(array('Des ordinateurs et leur périphériques',
+                               'w_importcomputeroptions',
+                               '',
+                               'filInventoryComputer'),
+                         array('Serveurs ESX',
+                               'w_credential',
+                               '',
+                               'filInventoryESX'),
+                         array('Des imprimantes réseaux ou des matériels réseaux',
+                                'w_snmpdeviceschoice',
+                                'general_inventory.png',
+                                ''));
+
+      echo "<center>Bienvenue dans FusionInventory. Commencer la configuration ?</center><br/>";
+
+      PluginFusioninventoryWizard::displayButtons($a_buttons, $ariane);
+   }
+   
+
+
    static function w_authsnmp($ariane='') {
       $a_button = array('name' => 'Suivant',
-                  'link' => 'w_rangeip'.PluginFusioninventoryWizard::getNextStep($ariane));
-
-         //GLPI_ROOT."/plugins/fusioninventory/front/wizard.php?wizz=w_start") {
+                  'link' => PluginFusioninventoryWizard::getNextStep($ariane));
 
       PluginFusioninventoryWizard::displayShowForm($a_button, $ariane, "PluginFusinvsnmpConfigSecurity");
+   }
+
+
+   static function w_importrules($ariane='') {
+      $a_button = array('name' => 'Suivant',
+                  'link' => PluginFusioninventoryWizard::getNextStep($ariane));
+
+      PluginFusioninventoryWizard::displayShowForm($a_button, $ariane, "PluginFusioninventoryRuleImportEquipmentCollection");
+   }
+
+
+   
+   static function w_credential($ariane='') {
+      $a_button = array('name' => 'Suivant',
+                  'link' => PluginFusioninventoryWizard::getNextStep($ariane));
+
+      PluginFusioninventoryWizard::displayShowForm($a_button, $ariane, "PluginFusioninventoryCredential");
+   }
+
+
+
+   static function w_remotedevices($ariane='') {
+      $a_button = array('name' => 'Suivant',
+                  'link' => PluginFusioninventoryWizard::getNextStep($ariane));
+
+      PluginFusioninventoryWizard::displayShowForm($a_button, $ariane, "PluginFusioninventoryCredentialIp");
    }
 
 }
