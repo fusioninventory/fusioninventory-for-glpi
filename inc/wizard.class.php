@@ -140,8 +140,24 @@ class PluginFusioninventoryWizard {
       echo "<center><table width='950'>";
       echo "<tr>";
       echo "<td>";
-      $class = new $classname;
-      $class->showForm(array('target'=>$_SERVER["PHP_SELF"]));
+
+      echo "<table class='tab_cadre'>";
+      echo "<tr>";
+      echo "<th>";
+      echo "<a href='".$_SERVER["REQUEST_URI"]."&id=0'>Add an item</a>";
+      echo "</th>";
+      echo "</tr>";
+      echo "</table>";
+
+      if (isset($_GET['id'])) {
+         $class = new $classname;
+         $target = $_SERVER["REQUEST_URI"];
+         $target = str_replace("&id=0", "", $target);
+         $class->showForm(0, array('target'=>$target));
+      } else {
+         Search::showList('PluginFusinvsnmpConfigSecurity', $_GET);
+      }
+
       echo "</td>";
       echo "<td valign='top'>";
       $pluginFusioninventoryWizard->filAriane($a_filariane);
