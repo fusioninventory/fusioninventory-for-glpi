@@ -236,16 +236,28 @@ function plugin_init_fusioninventory() {
    $CFG_GLPI["netport_types"][] = "PluginFusioninventoryUnknownDevice";
 
    $plugin = new Plugin();
-   if ($plugin->isInstalled('fusioninventory') 
-      && $plugin->isActivated('fusioninventory') 
+   if ($plugin->isInstalled('fusioninventory')
+      && $plugin->isActivated('fusioninventory')
          && isset($_SERVER['HTTP_USER_AGENT'])
             && isFusioninventoryUserAgent($_SERVER['HTTP_USER_AGENT'])) {
 
-      // Init other fusinv* plugins
-      $a_fusinv = PluginFusioninventoryModule::getAll();
-      foreach ($a_fusinv as $data) {
-         Plugin::load($data['directory']);
+      $plugin = new Plugin();
+      if (!isset($_SESSION["glpi_plugins"])) {
+         $plugin->init();
       }
+      if (isset($_SESSION["glpi_plugins"]) && is_array($_SESSION["glpi_plugins"])) {
+         //doHook("config");
+         if (count($_SESSION["glpi_plugins"])) {
+            foreach ($_SESSION["glpi_plugins"] as $name) {
+               if ($name != 'fusioninventory') {
+                  Plugin::load($name);
+               }
+            }
+         }
+         // For plugins which require action after all plugin init
+         doHook("post_init");
+      }
+      
       include(GLPI_ROOT ."/plugins/fusioninventory/front/communication.php");
    }
 
