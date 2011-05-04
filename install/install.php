@@ -79,9 +79,14 @@ function pluginFusinvinventoryInstall() {
       $input['modulename'] = "INVENTORY";
       $input['is_active']  = 1;
       $input['exceptions'] = exportArrayToDB(array());
+      $input['url']        = '';
       $PluginFusioninventoryAgentmodule->add($input);
 
       $input['modulename'] = "ESX";
+      $input['url'] = PluginFusioninventoryRestCommunication:: getDefaultRestURL($_SERVER['HTTP_REFERER'], 
+                                                                                 'fusinvinventory', 
+                                                                                 'esx');
+      logDebug($input);
       $PluginFusioninventoryAgentmodule->add($input);
 
        include(GLPI_ROOT . "/plugins/fusinvinventory/inc/config.class.php");

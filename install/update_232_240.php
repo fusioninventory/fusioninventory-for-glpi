@@ -70,7 +70,9 @@ function update232to240() {
       $input['modulename'] = "ESX";
       $input['is_active']  = 1;
       $input['exceptions'] = exportArrayToDB(array());
-      $input['url']        = "";
+      $input['url'] = PluginFusioninventoryRestCommunication:: getDefaultRestURL($_SERVER['HTTP_REFERER'], 
+                                                                                 'fusinvinventory', 
+                                                                                 'esx');
       $agentmodule->add($input);
    }
 }
