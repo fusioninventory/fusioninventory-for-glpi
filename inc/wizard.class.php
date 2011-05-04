@@ -161,6 +161,7 @@ class PluginFusioninventoryWizard {
          echo "</th>";
          echo "</tr>";
          echo "</table>";
+         Search::manageGetValues($classname);
          Search::showList($classname, $_GET);
       }
 
