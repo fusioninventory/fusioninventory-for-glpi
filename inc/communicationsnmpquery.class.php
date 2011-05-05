@@ -41,7 +41,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    private $sxml, $ptd, $logFile, $agent, $unknownDeviceCDP;
 
    function __construct() {
-      if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+      if (PluginFusioninventoryConfig::isExtradebugActive()) {
          $this->logFile = GLPI_LOG_DIR.'/fusioninventorycommunication.log';
       }
    }
@@ -1246,9 +1246,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          $this->addtaskjoblog();
       }
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
-         if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
-            logInFile("pluginFusioninventory-rules", "norulematch = 1");
-         }
+         PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
+                                                      "norulematch = 1");
          if (isset($input['itemtype'])
               AND isset($data['action'])
               AND ($data['action'] == PluginFusioninventoryRuleImportEquipment::LINK_RESULT_CREATE)) {

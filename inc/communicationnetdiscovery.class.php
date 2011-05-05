@@ -171,9 +171,9 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       $rule = new PluginFusioninventoryRuleImportEquipmentCollection();
       $data = array ();
       $data = $rule->processAllRules($input, array());
-      if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
-         logInFile("pluginFusioninventory-rules", print_r($data, true));
-      }
+      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
+                                                   print_r($data, true));
+
       if (isset($data['action'])
               AND ($data['action'] == PluginFusioninventoryRuleImportEquipment::LINK_RESULT_DENIED)) {
          
@@ -181,9 +181,9 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
          $this->addtaskjoblog();
       }
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
-         if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
-            logInFile("pluginFusioninventory-rules", "norulematch = 1");
-         }
+         PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
+                                                      "norulematch = 1");
+
          if (isset($input['itemtype'])
               AND isset($data['action'])
               AND ($data['action'] == PluginFusioninventoryRuleImportEquipment::LINK_RESULT_CREATE)) {
