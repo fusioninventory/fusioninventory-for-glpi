@@ -69,7 +69,8 @@ class PluginFusioninventoryCommunication {
     *@return nothing
     **/
    function setXML($p_xml) {
-      $this->sxml = @simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA); // @ to avoid xml warnings
+      $this->sxml = @simplexml_load_string($p_xml,'SimpleXMLElement', 
+                                           LIBXML_NOCDATA); // @ to avoid xml warnings
    }
 
 
@@ -132,9 +133,11 @@ class PluginFusioninventoryCommunication {
       if (isset($this->sxml->CONTENT->MODULEVERSION)) {
 
 
-         $PluginFusioninventoryAgent->setAgentVersions($agent['id'], $xmltag, (string)$this->sxml->CONTENT->MODULEVERSION);
+         $PluginFusioninventoryAgent->setAgentVersions($agent['id'], $xmltag, 
+                                                       (string)$this->sxml->CONTENT->MODULEVERSION);
       } else if (isset($this->sxml->CONTENT->VERSIONCLIENT)) {
-         $version = str_replace("FusionInventory-Agent_", "", (string)$this->sxml->CONTENT->VERSIONCLIENT);
+         $version = str_replace("FusionInventory-Agent_", "", 
+                                (string)$this->sxml->CONTENT->VERSIONCLIENT);
          $PluginFusioninventoryAgent->setAgentVersions($agent['id'], $xmltag, $version);
       }
 
@@ -237,7 +240,7 @@ class PluginFusioninventoryCommunication {
    static function addLog($p_logs) {
       global $CFG_GLPI;
       if ($_SESSION['glpi_use_mode']==DEBUG_MODE) {
-         if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
+         if (PluginFusioninventoryConfig::isExtradebugActive()) {
             file_put_contents(GLPI_LOG_DIR.'/pluginFusioninventory-communication.log',
                               "\n".time().' : '.$p_logs,
                               FILE_APPEND);

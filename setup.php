@@ -220,9 +220,11 @@ function plugin_init_fusioninventory() {
    }
 
    // Check for uninstall
-   if (isset($_GET['id']) AND ($_GET['id'] == $moduleId)
-            AND (isset($_GET['action']) AND $_GET['action'] == 'uninstall')
-            AND (strstr($_SERVER['HTTP_REFERER'], "front/plugin.php"))) {
+   if (isset($_GET['id']) 
+      && ($_GET['id'] == $moduleId)
+         && (isset($_GET['action']) 
+            && $_GET['action'] == 'uninstall')
+               && (strstr($_SERVER['HTTP_REFERER'], "front/plugin.php"))) {
 
       if (PluginFusioninventoryModule::getAll(true)) {
          addMessageAfterRedirect($LANG['plugin_fusioninventory']['setup'][17]);
