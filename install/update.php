@@ -143,6 +143,6 @@ function pluginFusinvsnmpUpdate($current_version) {
 
    $config = new PluginFusioninventoryConfig();
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
-   $config->updateConfigType($plugins_id, 'version', "2.4.0-1");
+   $config->updateConfigType($plugins_id, 'version', PLUGIN_FUSINVSNMP_VERSION);
 }
 ?>

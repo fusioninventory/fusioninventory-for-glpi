@@ -31,6 +31,7 @@
    Purpose of file:
    ----------------------------------------------------------------------
  */
+define ("PLUGIN_FUSINVSNMP_VERSION","2.4.0-1");
 
 include_once ("includes.php");
 
@@ -205,7 +206,7 @@ function plugin_init_fusinvsnmp() {
 function plugin_version_fusinvsnmp() {
 	return array('name'           => 'FusionInventory SNMP',
                 'shortname'      => 'fusinvsnmp',
-                'version'        => '2.4.0-1',
+                'version'        => PLUGIN_FUSINVSNMP_VERSION,
                 'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
                                     & <a href="mailto:v.mazzoni@siprossii.com">Vincent MAZZONI</a>',
                 'homepage'       =>'http://forge.fusioninventory.org/projects/pluginfusinvsnmp',

@@ -33,37 +33,38 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 
 class PluginFusinvSNMPConfig extends CommonDBTM {
 
-	function initConfigModule() {
-		global $DB;
+   function initConfigModule() {
+      global $DB;
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
-      $insert = array('storagesnmpauth'=>'DB',
-                      'version'=>'2.4.0-1');
+      $insert = array('storagesnmpauth' => 'DB',
+                      'version'         => PLUGIN_FUSINVSNMP_VERSION);
       $PluginFusioninventoryConfig->initConfig($plugins_id, $insert);
    }
 
 
    
-	function putForm($p_post) {
+   function putForm($p_post) {
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
-      $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'storagesnmpauth', $p_post['storagesnmpauth']);
+      $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'storagesnmpauth', 
+                                                     $p_post['storagesnmpauth']);
    }
 
    
 
-	function showForm($options=array()) {
-		global $LANG,$CFG_GLPI;
+   function showForm($options=array()) {
+      global $LANG,$CFG_GLPI;
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
 
@@ -73,15 +74,15 @@ class PluginFusinvSNMPConfig extends CommonDBTM {
       echo "<div class='center' id='tabsbody'>";
       echo "<table class='tab_cadre_fixe'>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][16]."&nbsp;:</td>";
-		echo "<td>";
-		$ArrayValues = array();
-		$ArrayValues['DB']= $LANG['plugin_fusioninventory']['functionalities'][17];
-		$ArrayValues['file']= $LANG['plugin_fusioninventory']['functionalities'][18];
-		Dropdown::showFromArray('storagesnmpauth', $ArrayValues,
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][16]."&nbsp;:</td>";
+      echo "<td>";
+      $ArrayValues = array();
+      $ArrayValues['DB']= $LANG['plugin_fusioninventory']['functionalities'][17];
+      $ArrayValues['file']= $LANG['plugin_fusioninventory']['functionalities'][18];
+      Dropdown::showFromArray('storagesnmpauth', $ArrayValues,
                               array('value'=>$PluginFusioninventoryConfig->getValue($plugins_id, 'storagesnmpauth')));
-		echo "</td>";
+      echo "</td>";
       echo "<td colspan='2'></td>";
       echo "</tr>";
 
@@ -97,7 +98,7 @@ class PluginFusinvSNMPConfig extends CommonDBTM {
       $PluginFusinvsnmpConfigLogField->showForm(array('target'=>GLPI_ROOT."/plugins/fusinvsnmp/front/functionalities.form.php"));
 
       return true;
-	}
+   }
 }
 
 ?>
