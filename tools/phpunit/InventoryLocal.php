@@ -667,13 +667,22 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
                  AND ((string)$child->MACADDR != "50:50:54:50:30:30")
                  AND ((string)$child->DESCRIPTION != "Miniport d'ordonnancement de paquets")) {
 
+            $andip = " AND `ip`='".(string)$child->IPADDRESS."'";
+            if(!isset($child->IPADDRESS)) {
+               $andip = " AND (`ip`='' OR `ip` IS NULL)";
+            }
+            if (isset($child->IPADDRESS) AND (string)$child->IPADDRESS == '') {
+               $andip = " AND (`ip`='' OR `ip` IS NULL)";
+            }
+
             $query = "SELECT * FROM `glpi_networkports`
             WHERE `items_id`='".$items_id."'
                AND `itemtype`='".$itemtype."'
-               AND `mac`='".(string)$child->MACADDR."'";
+               AND `mac`='".(string)$child->MACADDR."'
+               ".$andip;
             $result=$DB->query($query);
             $data = $DB->fetch_array($result);
-            $this->assertEquals($data['mac'], (string)$child->MACADDR , 'Network port macaddress not right inserted, have '.$data['mac'].' instead '.(string)$child->MACADDR.' ['.$xmlFile.']');
+            $this->assertEquals($data['mac'], (string)$child->MACADDR , 'Network port macaddress not right inserted, have '.$data['mac'].' instead '.(string)$child->MACADDR.' ['.$xmlFile.']'.$query);
          }
       }
 
@@ -845,11 +854,11 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
          $child->IPADDRESS = $ip.rand(0,254);
          $child->IPSUBNET = $ip."0";
       }
-      $array = $this->testSendinventory("tmp.xml", $xml);
+      //$array = $this->testSendinventory("tmp.xml", $xml);
       $items_id = $array[0];
       $unknown  = $array[1];
 
-      $this->testNetwork($xml, $items_id, $unknown, $xmlFile);
+      //$this->testNetwork($xml, $items_id, $unknown, $xmlFile);
 
 
    }
