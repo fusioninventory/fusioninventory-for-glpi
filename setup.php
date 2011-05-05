@@ -32,6 +32,8 @@
    ----------------------------------------------------------------------
  */
 
+define ("PLUGIN_FUSINVINVENTORY_VERSION","2.4.0-1");
+
 // Init the hooks of fusinvdeploy
 function plugin_init_fusinvinventory() {
    global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
@@ -140,7 +142,7 @@ function plugin_init_fusinvinventory() {
 function plugin_version_fusinvinventory() {
    return array('name'           => 'FusionInventory INVENTORY',
                 'shortname'      => 'fusinvinventory',
-                'version'        => '2.4.0-1',
+                'version'        => PLUGIN_FUSINVINVENTORY_VERSION,
                 'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
                                     & <a href="mailto:v.mazzoni@siprossii.com">Vincent MAZZONI</a>',
                 'homepage'       =>'http://forge.fusioninventory.org/projects/pluginfusinvinventory',

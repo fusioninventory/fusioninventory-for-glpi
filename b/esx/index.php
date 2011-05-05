@@ -38,7 +38,6 @@ if(!defined('GLPI_ROOT')) {
 include (GLPI_ROOT."/inc/includes.php");
 
 $response = false;
-logDebug($_GET, $_POST);
 //Agent communication using REST protocol
 if (isset($_GET['action']) && isset($_GET['machineid'])) {
    switch ($_GET['action']) {
@@ -54,7 +53,6 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    
    if ($response) {
       echo json_encode($response);
-      logDebug($response);
    } else {
       PluginFusioninventoryRestCommunication::sendError();
     }

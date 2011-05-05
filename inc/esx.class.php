@@ -172,16 +172,6 @@ class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
       }
       return $response;
    }
-
-   /**
-    * Check if the ip give is the one of the remote management ESX
-    * @param ip the ip to check
-    * 
-    * @return true if it's the right IP, false otherwise
-    */
-   static function testIP($ip) {
-      return (@fopen("http://".$ip['ip']."/sdk/vimService",'r'));
-   }
 }
 
 ?>

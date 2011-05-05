@@ -72,31 +72,7 @@ function plugin_fusinvinventory_getAddSearchOptions($itemtype) {
    return $sopt;
 }
 
-
-
-function plugin_fusinvinventory_giveItem($type,$id,$data,$num) {
-	return "";
-}
-
-
-
-// Define Dropdown tables to be manage in GLPI :
-function plugin_fusinvinventory_getDropdown() {
-   return array ();
-}
-
-
-
-/* Cron */
-function cron_plugin_fusinvinventory() {
-
-   return 1;
-}
-
-
-
 function plugin_fusinvinventory_install() {
-	global $DB, $LANG, $CFG_GLPI;
 
    include (GLPI_ROOT . "/plugins/fusinvinventory/install/install.php");
    pluginFusinvinventoryInstall();
@@ -122,10 +98,9 @@ function plugin_fusinvinventory_uninstall() {
 * @return 0 (no need update) OR 1 (need update)
 **/
 function plugin_fusinvinventory_needUpdate() {
-   $version = "2.4.0-1";
    include (GLPI_ROOT . "/plugins/fusinvinventory/install/update.php");
-   $version_detected = pluginFusinvinventoryGetCurrentVersion($version);
-   if ((isset($version_detected)) AND ($version_detected != $version)) {
+   $version_detected = pluginFusinvinventoryGetCurrentVersion(PLUGIN_FUSINVINVENTORY_VERSION);
+   if ((isset($version_detected)) AND ($version_detected != PLUGIN_FUSINVINVENTORY_VERSION)) {
       return 1;
    } else {
       return 0;
@@ -159,12 +134,14 @@ function plugin_get_headings_fusinvinventory($item,$withtemplate) {
 function plugin_headings_actions_fusinvinventory($item) {
 
    switch (get_class($item)) {
-   case 'Computer' :
-      $array = array ();
-      $array[1] = "plugin_headings_fusinvinventory_xml";
-      $array[2] = "plugin_headings_fusinvinventory_antivirus";
-      return $array;
-      break;
+      case 'Computer' :
+         $array = array ();
+         $array[1] = "plugin_headings_fusinvinventory_xml";
+         $array[2] = "plugin_headings_fusinvinventory_antivirus";
+         return $array;
+         break;
+      case 'PluginFusioninventoryCredentialIp':
+         return array(1 => "plugin_headings_fusinvinventory_credentialip");
    }
 
 }
@@ -175,7 +152,7 @@ function plugin_headings_fusinvinventory_xml($item) {
 
    $id = $item->getField('id');
 
-   $folder = substr($id,0,-1);
+   $folder = substr($id, 0, -1);
    if (empty($folder)) {
       $folder = '0';
    }
@@ -186,8 +163,11 @@ function plugin_headings_fusinvinventory_xml($item) {
       $xml = str_replace("\n", "<br/>", $xml);
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
       echo "<tr>";
-      echo "<th>".$LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['xml'][0];
-      echo " (".$LANG['common'][26]."&nbsp;: " . convDateTime(date("Y-m-d H:i:s", filemtime(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id))).")";
+      echo "<th>".$LANG['plugin_fusioninventory']['title'][1]." ".
+         $LANG['plugin_fusioninventory']['xml'][0];
+      echo " (".$LANG['common'][26]."&nbsp;: " . 
+         convDateTime(date("Y-m-d H:i:s", 
+                      filemtime(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id))).")";
       echo "</th>";
       echo "</tr>";
 
@@ -203,88 +183,23 @@ function plugin_headings_fusinvinventory_xml($item) {
 
 
 function plugin_headings_fusinvinventory_antivirus($item) {
-   global $LANG;
-
-   $items_id = $item->getField('id');
-
-   $PluginFusinvinventoryAntivirus = new PluginFusinvinventoryAntivirus();
-   $PluginFusinvinventoryAntivirus->showForm($items_id);
+   $antirivus = new PluginFusinvinventoryAntivirus();
+   $antirivus->showForm($item->getField('id'));
 }
-
-
 
 function plugin_headings_fusinvinventory($type,$id,$withtemplate=0) {
-	global $CFG_GLPI;
 
 }
 
-
-
-function plugin_fusinvinventory_MassiveActions($type) {
-	global $LANG;
-
-}
-
-
-
-function plugin_fusinvinventory_MassiveActionsDisplay($type, $action) {
-	global $LANG, $CFG_GLPI, $DB;
-
-
-}
-
-
-
-function plugin_fusinvinventory_MassiveActionsProcess($data) {
-	global $LANG;
-
-}
-
-
-
-// Massive Action functions
-function plugin_fusinvinventory_MassiveActionsFieldsDisplay($type,$table,$field,$linkfield) {
-	global $LINK_ID_TABLE,$LANG;
-
-
-}
-
-
-
-function plugin_fusinvinventory_addSelect($type,$id,$num) {
-	return "";
-}
-
-
-
-function plugin_fusinvinventory_forceGroupBy($type) {
-    return false;
-}
-
-
-
-function plugin_fusinvinventory_addLeftJoin($itemtype,$ref_table,$new_table,$linkfield,&$already_link_tables) {
+function plugin_fusinvinventory_addLeftJoin($itemtype, $ref_table, $new_table, $linkfield, 
+                                            &$already_link_tables) {
    
    if ($itemtype == 'Computer') {
       return " LEFT JOIN `$new_table` ON (`$ref_table`.`id` = `$new_table`.`computers_id`) ";
    }
 
-	return "";
+   return "";
 }
-
-
-
-function plugin_fusinvinventory_addOrderBy($type,$id,$order,$key=0) {
-	return "";
-}
-
-
-
-function plugin_fusinvinventory_addWhere($link,$nott,$type,$id,$val) {
-	return "";
-}
-
-
 
 function plugin_pre_item_purge_fusinvinventory($item) {
    
@@ -301,36 +216,11 @@ function plugin_pre_item_purge_fusinvinventory($item) {
 
 }
 
-
-
-function plugin_pre_item_delete_fusinvinventory($parm) {
-	return $parm;
-}
-
-
-
-/**
- * Hook after updates
- *
- * @param $parm
- * @return nothing
- *
-**/
-function plugin_item_update_fusinvinventory($parm) {
-
-
-
-}
-
-
-
-function plugin_item_add_fusinvinventory($parm) {
-}
-
 function plugin_fusinvinventory_registerMethods() {
    global $WEBSERVICES_METHOD;
    
-   $WEBSERVICES_METHOD['fusioninventory.test'] = array('PluginfusioninventoryWebservice','methodTest');
+   $WEBSERVICES_METHOD['fusioninventory.test'] = array('PluginfusioninventoryWebservice', 
+                                                       'methodTest');
 }
 
 ?>
