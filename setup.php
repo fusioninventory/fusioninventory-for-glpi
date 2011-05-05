@@ -32,8 +32,6 @@
    ----------------------------------------------------------------------
  */
 
-include_once ("includes.php");
-
 // Init the hooks of fusinvdeploy
 function plugin_init_fusinvinventory() {
    global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;

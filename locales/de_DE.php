@@ -36,6 +36,8 @@ $title="FusionInventory INVENTORY";
 $version="2.4.0-1";
 
 $LANG['plugin_fusinvinventory']['title'][0]="$title";
+$LANG['plugin_fusinvinventory']['title'][1]="Local inventory";
+$LANG['plugin_fusinvinventory']['title'][2]="Vmware ESX/ESXi/vCenter remote inventory";
 
 $LANG['plugin_fusinvinventory']['setup'][17]="Das Plugin ".$title." benötigt ein aktiviertes FusionInventory Plugin um selber aktiviert zu werden.";
 $LANG['plugin_fusinvinventory']['setup'][18]="Das Plugin ".$title." benötigt ein aktiviertes FusionInventory Plugin um selber deinstalliert werden zu können.";
@@ -89,4 +91,6 @@ $LANG['plugin_fusinvinventory']['antivirus'][2]="Version";
 $LANG['plugin_fusinvinventory']['antivirus'][3]="Aktuell";
 
 $LANG['plugin_fusinvinventory']['computer'][0]="Letzte Inventarisierung";
+
+$LANG['plugin_fusinvinventory']['vmwareesx'][0]="Vmware ESX/ESXi/vCenter";
 ?>

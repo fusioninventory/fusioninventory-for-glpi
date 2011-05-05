@@ -36,30 +36,44 @@
 
 
 // Update from 2.3.0 to 2.4.0
-function update230to240() {
+function update232to240() {
    global $DB;
 
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
-   $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+   $config = new PluginFusioninventoryConfig();
    if (!PluginFusioninventoryConfig::getValue($plugins_id, "import_vm")) {
-       $PluginFusioninventoryConfig->initConfig($plugins_id, array("import_vm" => "1"));
-   }
-   if (!PluginFusioninventoryConfig::getValue($plugins_id, "location")) {
-       $PluginFusioninventoryConfig->initConfig($plugins_id, array("location" => "0"));
+       $config->initConfig($plugins_id, array("import_vm" => "1"));
    }
 
-   $Computer = new Computer();
-   $sql = "SELECT * FROM `glpi_plugin_fusinvinventory_computers`";
-   $result=$DB->query($sql);
-   while ($data = $DB->fetch_array($result)) {
-      if ($Computer->getFromDB($data['items_id'])) {
-         $Computer->fields['uuid'] = $data['uuid'];
-         $Computer->update($Computer->fields);
+   if (TableExists("glpi_plugin_fusinvinventory_computers")) {
+      $Computer = new Computer();
+      $sql = "SELECT * FROM `glpi_plugin_fusinvinventory_computers`";
+      $result=$DB->query($sql);
+      while ($data = $DB->fetch_array($result)) {
+         if ($Computer->getFromDB($data['items_id'])) {
+            $Computer->fields['uuid'] = $data['uuid'];
+            $Computer->update($Computer->fields);
+
+         }
       }
+      $sql = "DROP TABLE `glpi_plugin_fusinvinventory_computers`";
+      $DB->query($sql);
+   	
    }
-   $sql = "DROP TABLE `glpi_plugin_fusinvinventory_computers`";
-   $DB->query($sql);
 
-   
+   $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` WHERE `modulename`='ESX'";
+   $result = $DB->query($query);
+   if (!$DB->numrows($result)) {
+      $agentmodule = new PluginFusioninventoryAgentmodule;
+      $input = array();
+      $input['plugins_id'] = $plugins_id;
+      $input['modulename'] = "ESX";
+      $input['is_active']  = 1;
+      $input['exceptions'] = exportArrayToDB(array());
+      $input['url'] = PluginFusioninventoryRestCommunication:: getDefaultRestURL($_SERVER['HTTP_REFERER'], 
+                                                                                 'fusinvinventory', 
+                                                                                 'esx');
+      $agentmodule->add($input);
+   }
 }
 ?>

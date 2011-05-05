@@ -26,21 +26,39 @@
    along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
+   Original Author of file: Walid Nouh
    Co-authors of file:
-   Purpose of file:
+   Purpose of file: REST communication
    ----------------------------------------------------------------------
  */
 
-define('GLPI_ROOT', '../../..');
-include (GLPI_ROOT . "/inc/includes.php");
+if(!defined('GLPI_ROOT')) {
+   define('GLPI_ROOT', '../../../..');
+}
+include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","fusinvinventory-ruleentity");
+$response = false;
 
-PluginFusioninventoryMenu::displayMenu("mini");
+//Agent communication using REST protocol
+if (isset($_GET['action']) && isset($_GET['machineid'])) {
+   switch ($_GET['action']) {
+      case 'getJobs':
+         //Specific to ESX
+         $response = PluginFusinvinventoryESX::getJobs($_GET['machineid']);
+         break;
+      case 'setLog':
+         //Generic method to update logs
+         PluginFusioninventoryRestCommunication::updateLog($_GET);
+         break;
+   }
+   
+   if ($response) {
+      echo json_encode($response);
+      logDebug($response);
+   } else {
+      PluginFusioninventoryRestCommunication::sendError();
+    }
 
-$rulecollection = new PluginFusinvinventoryRuleEntityCollection();
-
-include (GLPI_ROOT . "/front/rule.common.form.php");
+}
 
 ?>

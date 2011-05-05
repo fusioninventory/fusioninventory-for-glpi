@@ -26,21 +26,17 @@
    along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
+   Original Author of file: Walid Nouh
    Co-authors of file:
    Purpose of file:
    ----------------------------------------------------------------------
  */
 
-define('GLPI_ROOT', '../../..');
-include (GLPI_ROOT . "/inc/includes.php");
+if (!defined('GLPI_ROOT')) {
+   die("Sorry. You can't access directly to this file");
+}
 
-commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","fusinvinventory-ruleentity");
-
-PluginFusioninventoryMenu::displayMenu("mini");
-
-$rulecollection = new PluginFusinvinventoryRuleEntityCollection();
-
-include (GLPI_ROOT . "/front/rule.common.form.php");
+class PluginFusinvinventoryVmwareESX {
+}
 
 ?>

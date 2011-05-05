@@ -36,10 +36,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-include_once(GLPI_ROOT."/plugins/fusioninventory/inc/rule.class.php");
-
-
-class PluginFusinvinventoryRuleEntity extends PluginFusioninventoryRule {
+class PluginFusinvinventoryRuleEntity extends Rule {
 
    // From Rule
    public $right='rule_ocs';
@@ -156,7 +153,7 @@ class PluginFusinvinventoryRuleEntity extends PluginFusioninventoryRule {
       }
 
       switch ($condition) {
-         case PluginFusioninventoryRule::PATTERN_FIND:
+         case Rule::PATTERN_FIND:
             return false;
             break;
 
@@ -164,11 +161,11 @@ class PluginFusinvinventoryRuleEntity extends PluginFusioninventoryRule {
             Dropdown::showYesNo($name, 0, 0);
             return true;
 
-         case PluginFusioninventoryRule::PATTERN_EXISTS:
+         case Rule::PATTERN_EXISTS:
             echo Dropdown::showYesNo($name, 1, 0);
             return true;
 
-         case PluginFusioninventoryRule::PATTERN_DOES_NOT_EXISTS:
+         case Rule::PATTERN_DOES_NOT_EXISTS:
             echo Dropdown::showYesNo($name, 1, 0);
             return true;
       }

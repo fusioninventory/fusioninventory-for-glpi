@@ -41,6 +41,6 @@ header_nocache();
 checkRight('rule_ocs', 'r');
 
 $rule = new PluginFusinvinventoryRuleEntity();
-include (GLPI_ROOT."/plugins/fusioninventory/ajax/rule.common.tabs.php");
+include (GLPI_ROOT."/ajax/rule.common.tabs.php");
 
 ?>

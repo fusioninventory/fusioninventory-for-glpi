@@ -40,8 +40,9 @@ function plugin_fusinvinventory_getAddSearchOptions($itemtype) {
 
          $sopt[5150]['table']     = 'glpi_plugin_fusinvinventory_libserialization';
          $sopt[5150]['field']     = 'last_fusioninventory_update';
-         $sopt[5150]['linkfield'] = '';
-         $sopt[5150]['name']      = $LANG['plugin_fusioninventory']['title'][1]." - ".$LANG['plugin_fusinvinventory']['computer'][0];
+         $sopt[5150]['linkfield'] = 'last_fusioninventory_update';
+         $sopt[5150]['name']      = $LANG['plugin_fusioninventory']['title'][1]." - ".
+            $LANG['plugin_fusinvinventory']['computer'][0];
          $sopt[5150]['datatype']  = 'datetime';
 
          $sopt[5151]['table']     = 'glpi_plugin_fusinvinventory_antivirus';
@@ -141,7 +142,8 @@ function plugin_get_headings_fusinvinventory($item,$withtemplate) {
       case 'Computer' :
          $array = array ();
          if ($_GET['id'] > 0) {
-            $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['xml'][0];
+            $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".
+               $LANG['plugin_fusioninventory']['xml'][0];
             $array[2] = $LANG['plugin_fusinvinventory']['antivirus'][0];
          }
          return $array;
