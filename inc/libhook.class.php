@@ -186,8 +186,10 @@ class PluginFusinvinventoryLibhook {
                }
                if (isset($dataSection['OSNAME'])) {
                   if (!in_array('operatingsystems_id', $a_lockable)) {
+                     $rulecollection = new RuleDictionnaryOperatingSystemCollection();
                      $OperatingSystem = new OperatingSystem();
-                     $inputC['operatingsystems_id'] = $OperatingSystem->import(array('name'=>$dataSection['OSNAME']));
+                     $res_rule = $rulecollection->processAllRules(array("name"=>$dataSection['OSNAME']));
+                     $inputC['operatingsystems_id'] = $OperatingSystem->import(array('name'=>$res_rule["name"]));
                   }
                }
                if (!in_array('operatingsystemversions_id', $a_lockable)) {
