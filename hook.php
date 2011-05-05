@@ -794,14 +794,15 @@ function plugin_item_purge_fusioninventory($parm) {
          }
          $NetworkPort->getFromDB($parm->getField('networkports_id_2'));
          if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
-            $PluginFusioninventoryUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
-            if ($PluginFusioninventoryUnknownDevice->fields['hub'] == '1') {
-               $a_vlans = $NetworkPort_Vlan->getVlansForNetworkPort($NetworkPort->fields['id']);
-               foreach ($a_vlans as $vlan_id) {                  
-                  $NetworkPort_Vlan->unassignVlan($NetworkPort->fields['id'], $vlan_id);
+            if ($PluginFusioninventoryUnknownDevice->getFromDB($NetworkPort->fields['items_id'])) {
+               if ($PluginFusioninventoryUnknownDevice->fields['hub'] == '1') {
+                  $a_vlans = $NetworkPort_Vlan->getVlansForNetworkPort($NetworkPort->fields['id']);
+                  foreach ($a_vlans as $vlan_id) {
+                     $NetworkPort_Vlan->unassignVlan($NetworkPort->fields['id'], $vlan_id);
+                  }
+                  $a_hubs[$NetworkPort->fields['items_id']] = 1;
+                  $NetworkPort->delete($NetworkPort->fields);
                }
-               $a_hubs[$NetworkPort->fields['items_id']] = 1;
-               $NetworkPort->delete($NetworkPort->fields);
             }
          }
          // If hub have no port, delete it
