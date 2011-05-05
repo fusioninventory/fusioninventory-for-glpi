@@ -109,7 +109,7 @@ function cron_plugin_fusioninventory() {
 function plugin_fusioninventory_install() {
    global $DB, $LANG, $CFG_GLPI;
 
-   $version = "2.3.2";
+   $version = "2.3.3";
    include (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
    $version_detected = pluginFusioninventoryGetCurrentVersion($version);
    if ((isset($version_detected)) AND ($version_detected != $version)) {
