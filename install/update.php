@@ -137,6 +137,8 @@ function pluginFusinvsnmpUpdate($current_version) {
       case "2.3.1-1":
 			include("update_231_232.php");
 			update231to232();
+      case "2.3.2-1":
+      case "2.3.3-1":
    }
 
    $config = new PluginFusioninventoryConfig();
