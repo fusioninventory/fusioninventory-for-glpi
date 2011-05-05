@@ -33,7 +33,7 @@
  */
 
 $title="FusionInventory SNMP";
-$version="2.3.2-1";
+$version="2.3.3-1";
 
 $LANG['plugin_fusinvsnmp']['title'][0]="$title";
 $LANG['plugin_fusinvsnmp']['title'][1]="SNMP-Information";
