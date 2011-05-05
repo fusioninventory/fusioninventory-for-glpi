@@ -140,10 +140,8 @@ class PluginFusinvinventoryInventory {
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
          $this->rulepassed(0, "Computer");
       }
-      if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 
-                                                'extradebug')) {
-         logInFile("pluginFusioninventory-rules",print_r($data, true));
-      }
+      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
+                                                   print_r($data, true));
    }
    
 
@@ -158,10 +156,8 @@ class PluginFusinvinventoryInventory {
    *
    **/
    function rulepassed($items_id, $itemtype) {
-      if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 
-                                                'extradebug')) {
-         logInFile("pluginFusioninventory-rules", "Rule passed : ".$items_id.", ".$itemtype."\n");
-      }
+      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
+                                                   "Rule passed : ".$items_id.", ".$itemtype."\n");
       $xml = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
 
       if ($itemtype == 'Computer') {
@@ -208,10 +204,8 @@ class PluginFusinvinventoryInventory {
                $_SESSION["plugin_fusinvinventory_entity"] = "N/A";
             }
 
-            if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 
-                                                      'extradebug')) {
-               logInFile("pluginFusinvinventory-entityrules", print_r($dataEntity, true));
-            }
+      PluginFusioninventoryConfig::logIfExtradebug("pluginFusinvinventory-entityrules", 
+                                                   print_r($dataEntity, true));
 
          if ($items_id == '0') {
             if ($_SESSION["plugin_fusinvinventory_entity"] == NOT_AVAILABLE) {

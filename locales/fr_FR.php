@@ -93,5 +93,5 @@ $LANG['plugin_fusinvinventory']['antivirus'][3]="A jour";
 
 $LANG['plugin_fusinvinventory']['computer'][0]="Dernier inventaire";
 
-$LANG['plugin_fusinvinventory']['vmwareesx'][0]="Vmware ESX/ESXi/vCenter";
+$LANG['plugin_fusinvinventory']['vmwareesx'][0]="Hôte Vmware";
 ?>
