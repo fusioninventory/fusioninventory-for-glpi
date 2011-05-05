@@ -237,18 +237,22 @@ function plugin_init_fusioninventory() {
    // Add unknown devices in list of devices with networport
    $CFG_GLPI["netport_types"][] = "PluginFusioninventoryUnknownDevice";
 
+   //Redect to FusionInventort communication.php only if user agent is ocs or fusion and if
+   //agent url is http://ip/glpi/
    $plugin = new Plugin();
    if ($plugin->isInstalled('fusioninventory')
       && $plugin->isActivated('fusioninventory')
          && isset($_SERVER['HTTP_USER_AGENT'])
-            && isFusioninventoryUserAgent($_SERVER['HTTP_USER_AGENT'])) {
+            && isFusioninventoryUserAgent($_SERVER['HTTP_USER_AGENT'])
+               && !preg_match("/fus(ion|inv).*/",$_SERVER['PHP_SELF'])) {
 
+      //Load all plugins
       $plugin = new Plugin();
       if (!isset($_SESSION["glpi_plugins"])) {
          $plugin->init();
       }
+      
       if (isset($_SESSION["glpi_plugins"]) && is_array($_SESSION["glpi_plugins"])) {
-         //doHook("config");
          if (count($_SESSION["glpi_plugins"])) {
             foreach ($_SESSION["glpi_plugins"] as $name) {
                if ($name != 'fusioninventory') {
