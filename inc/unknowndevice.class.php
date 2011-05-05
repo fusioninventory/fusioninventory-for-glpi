@@ -1045,6 +1045,17 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       }
       return array($Import, $NoImport);
    }
+
+   
+
+   function cleanDBonPurge() {
+      global $DB;
+
+      $networkPort= new NetworkPort();
+      $networkPort->cleanDBonItemDelete($this->getType(), $this->fields['id']);
+
+   }
+
 }
 
 ?>
