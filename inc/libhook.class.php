@@ -146,7 +146,7 @@ class PluginFusinvinventoryLibhook {
                }
                if (isset($dataSection['SMODEL'])) {
                   $ComputerModel = new ComputerModel();
-                  $inputC['computermodels_id'] = $ComputerModel->import(array('name'=>$dataSection['SMODEL']));
+                  $inputC['computermodels_id'] = $ComputerModel->importExternal($dataSection['SMODEL']);
                }
                if (isset($dataSection['SSN']))
                   $inputC['serial'] = $dataSection['SSN'];
@@ -186,17 +186,15 @@ class PluginFusinvinventoryLibhook {
                }
                if (isset($dataSection['OSNAME'])) {
                   if (!in_array('operatingsystems_id', $a_lockable)) {
-                     $rulecollection = new RuleDictionnaryOperatingSystemCollection();
                      $OperatingSystem = new OperatingSystem();
-                     $res_rule = $rulecollection->processAllRules(array("name"=>$dataSection['OSNAME']));
-                     $inputC['operatingsystems_id'] = $OperatingSystem->import(array('name'=>$res_rule["name"]));
+                     $inputC['operatingsystems_id'] = $OperatingSystem->importExternal($dataSection['OSNAME']);
                   }
                }
                if (!in_array('operatingsystemversions_id', $a_lockable)) {
                   $addfield = 0;
                   if (isset($dataSection['OSVERSION'])) {
                      $OperatingSystemVersion = new OperatingSystemVersion();
-                     $inputC['operatingsystemversions_id'] = $OperatingSystemVersion->import(array('name'=>$dataSection['OSVERSION']));
+                     $inputC['operatingsystemversions_id'] = $OperatingSystemVersion->importExternal($dataSection['OSVERSION']);
                      $addfield = 1;
                   }
                   if ($addfield == '0') {
@@ -239,7 +237,7 @@ class PluginFusinvinventoryLibhook {
                   if (isset($dataSection['OSCOMMENTS'])) {
                      if (strstr($dataSection['OSCOMMENTS'], 'Service Pack')) {
                         $OperatingSystemServicePack = new OperatingSystemServicePack();
-                        $inputC['operatingsystemservicepacks_id'] = $OperatingSystemServicePack->import(array('name'=>$dataSection['OSCOMMENTS']));
+                        $inputC['operatingsystemservicepacks_id'] = $OperatingSystemServicePack->importExternal($dataSection['OSCOMMENTS']);
                         $addfield = 1;
                      }
                   }
@@ -709,7 +707,7 @@ class PluginFusinvinventoryLibhook {
                   }
                   if (isset($dataSection['SMODEL'])) {
                      $ComputerModel = new ComputerModel();
-                     $inputC['computermodels_id'] = $ComputerModel->import(array('name'=>$dataSection['SMODEL']));
+                     $inputC['computermodels_id'] = $ComputerModel->importExternal($dataSection['SMODEL']);
                   }
                   if (isset($dataSection['SSN']))
                      $inputC['serial'] = $dataSection['SSN'];
@@ -751,13 +749,13 @@ class PluginFusinvinventoryLibhook {
                   if (isset($dataSection['OSNAME'])) {
                      if (!in_array('operatingsystems_id', $a_lockable)) {
                         $OperatingSystem = new OperatingSystem();
-                        $inputC['operatingsystems_id'] = $OperatingSystem->import(array('name'=>$dataSection['OSNAME']));
+                        $inputC['operatingsystems_id'] = $OperatingSystem->importExternal($dataSection['OSNAME']);
                      }
                   }
                   if (isset($dataSection['OSVERSION'])) {
                      if (!in_array('operatingsystemversions_id', $a_lockable)) {
                         $OperatingSystemVersion = new OperatingSystemVersion();
-                        $inputC['operatingsystemversions_id'] = $OperatingSystemVersion->import(array('name'=>$dataSection['OSVERSION']));
+                        $inputC['operatingsystemversions_id'] = $OperatingSystemVersion->importExternal($dataSection['OSVERSION']);
                      }
                   }
                   if (isset($dataSection['WINPRODID'])) {
@@ -780,7 +778,7 @@ class PluginFusinvinventoryLibhook {
                      if (!in_array('operatingsystemservicepacks_id', $a_lockable)) {
                         if (strstr($dataSection['OSCOMMENTS'], 'Service Pack')) {
                            $OperatingSystemServicePack = new OperatingSystemServicePack();
-                           $inputC['operatingsystemservicepacks_id'] = $OperatingSystemServicePack->import(array('name'=>$dataSection['OSCOMMENTS']));
+                           $inputC['operatingsystemservicepacks_id'] = $OperatingSystemServicePack->importExternal($dataSection['OSCOMMENTS']);
                         }
                      }
                   }
