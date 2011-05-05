@@ -36,30 +36,19 @@ if(!defined('GLPI_ROOT')) {
    define('GLPI_ROOT', '../..');
 }
 include (GLPI_ROOT."/inc/includes.php");
-logDebug($_GET);
-//Agent communication using REST protocol
-if (isset($_GET['action']) && isset($_GET['machineid'])) {
-   $response = PluginFusioninventoryRestCommunication::communicate($_GET);
-   if ($response) {
-      echo json_encode($response);
-      logDebug($response);
-   } else {
-      PluginFusioninventoryRestCommunication::sendError();
-   }
 
+//Agent posting an inventory or asking for orders using REST
+if ((isset($_GET['action']) 
+   && isset($_GET['machineid'])) 
+      || isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
+   include(GLPI_ROOT ."/plugins/fusioninventory/front/communication.php");
+
+//Fusioninventory plugin pages
 } else {
-   //Agent posting an inventory
-   if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
-      include(GLPI_ROOT ."/plugins/fusioninventory/front/communication.php");
+   commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"], "plugins", 
+                "fusioninventory");
 
-   } else {
-      commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"], "plugins", 
-                   "fusioninventory");
-   
-      glpi_header(getItemTypeSearchURL('PluginFusioninventoryMenu'));
-      commonFooter();
-   }
-
+   glpi_header(getItemTypeSearchURL('PluginFusioninventoryMenu'));
+   commonFooter();
 }
-
 ?>
