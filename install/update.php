@@ -168,7 +168,7 @@ function pluginFusioninventoryUpdate($current_version) {
 
    include_once(GLPI_ROOT."/plugins/fusioninventory/inc/config.class.php");
    $config = new PluginFusioninventoryConfig();
-   $config->updateConfigType($plugins_id, 'version', "2.4.0");
+   $config->updateConfigType($plugins_id, 'version', PLUGIN_FUSIONINVENTORY_VERSION);
 
 }
 

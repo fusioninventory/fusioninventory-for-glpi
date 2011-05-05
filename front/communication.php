@@ -55,7 +55,6 @@ $_SESSION['glpi_use_mode'] = 2;
 
 //Agent communication using REST protocol
 if (isset($_GET['action']) && isset($_GET['machineid'])) {
-   logDebug("communication.php",$_GET);
    $response = PluginFusioninventoryRestCommunication::communicate($_GET);
    if ($response) {
       echo json_encode($response);
