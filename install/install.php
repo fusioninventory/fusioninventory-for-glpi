@@ -67,7 +67,7 @@ function pluginFusioninventoryInstall($version) {
    }
    // Get informations of plugin
 
-   // Clean if FUsion / Tracker has been installed and uninstalled (not clean correctly)
+   // ** Clean if FUsion / Tracker has been installed and uninstalled (not clean correctly)
    $sql = "DELETE FROM `glpi_displaypreferences`
       WHERE `itemtype`='5150'";
    $DB->query($sql);
@@ -107,9 +107,30 @@ function pluginFusioninventoryInstall($version) {
    $sql = "DELETE FROM `glpi_displaypreferences`
       WHERE `itemtype`='5168'";
    $DB->query($sql);
+      // bug of purge network port when purge unknown devices
+      $networkPort = new NetworkPort();
+      $sql = "SELECT `glpi_networkports`.`id` as nid FROM `glpi_networkports`
+         LEFT JOIN `glpi_plugin_fusioninventory_unknowndevices`
+            ON `glpi_plugin_fusioninventory_unknowndevices`.`id` = `glpi_networkports`.`items_id`
+         WHERE `itemtype`='PluginFusioninventoryUnknownDevice'
+            AND `glpi_plugin_fusioninventory_unknowndevices`.`id` IS NULL ";
+      $result=$DB->query($sql);
+      while ($data=$DB->fetch_array($result)) {
+         $networkPort->delete(array('id'=>$data['nid']), 1);
+      }
+      // Purge network ports have itemtype tp 5153
+      $sql = "SELECT * FROM `glpi_networkports`
+         WHERE `itemtype`='5153'";
+      $result=$DB->query($sql);
+      while ($data=$DB->fetch_array($result)) {
+         $networkPort->delete(array('id'=>$data['id']), 1);
+      }
 
 
-   // Insert in DB
+
+
+
+   // ** Insert in DB
    $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-"
               .$version."-empty.sql";
    $DBf_handle = fopen($DB_file, "rt");
