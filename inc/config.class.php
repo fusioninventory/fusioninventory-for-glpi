@@ -246,10 +246,19 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    }
    
    /**
-    * Check if 
+    * Check if extradebug mode is activate
     */
-   static function isExtradebugActive($module = 'fusioninventory') {
-      return self::getValue($_SESSION["plugin_".$module."_moduleid"], 'extradebug');
+   static function isExtradebugActive() {
+      return self::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug');
+   }
+   
+   /**
+    * 
+    */
+   static function logIfExtradebug($file, $message) {
+      if (self::isExtradebugActive()) {
+         logInFile($file, $message);
+      }
    }
 }
 
