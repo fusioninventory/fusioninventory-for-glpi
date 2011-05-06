@@ -102,13 +102,13 @@ $LANG['plugin_fusioninventory']['choice'][3] = "et";
 $LANG['plugin_fusioninventory']['processes'][1]  = "PID";
 $LANG['plugin_fusioninventory']['processes'][38] = "Numéro de process";
 
-$LANG['plugin_fusioninventory']['menu'][1] ="Gestion des agents";
+$LANG['plugin_fusioninventory']['menu'][1] = "Gestion des agents";
 $LANG['plugin_fusioninventory']['menu'][2] = "Plages IP";
-$LANG['plugin_fusioninventory']['menu'][3] ="Menu";
-$LANG['plugin_fusioninventory']['menu'][4] ="Matériel inconnu";
-$LANG['plugin_fusioninventory']['menu'][5] = "Comptes";
+$LANG['plugin_fusioninventory']['menu'][3] = "Menu";
+$LANG['plugin_fusioninventory']['menu'][4] = "Matériel inconnu";
+$LANG['plugin_fusioninventory']['menu'][5] = "Comptes pour les matériels distants";
 $LANG['plugin_fusioninventory']['menu'][6] = "Matériels distants à inventorier";
-$LANG['plugin_fusioninventory']['menu'][7] ="Actions en cours d'exécution";
+$LANG['plugin_fusioninventory']['menu'][7] = "Actions en cours d'exécution";
 
 $LANG['plugin_fusioninventory']['discovery'][5] = "Nombre de matériels importés";
 $LANG['plugin_fusioninventory']['discovery'][9] = "Nombre de matériels non importés car type non défini";

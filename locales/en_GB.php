@@ -170,6 +170,7 @@ $LANG['plugin_fusioninventory']['task'][39]="Unable to run task because some job
 $LANG['plugin_fusioninventory']['task'][40]="Force running";
 $LANG['plugin_fusioninventory']['task'][41]="Server contacts the agent (push)";
 $LANG['plugin_fusioninventory']['task'][42]="Agent contacts the server (pull)";
+$LANG['plugin_fusioninventory']['task'][43]="Communication mode";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Started";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";

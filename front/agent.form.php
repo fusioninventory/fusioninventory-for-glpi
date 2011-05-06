@@ -36,7 +36,7 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-$agents = new PluginFusioninventoryAgent();
+$agent = new PluginFusioninventoryAgent();
 
 commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"], "plugins", 
              "fusioninventory", "agents");
@@ -48,7 +48,7 @@ PluginFusioninventoryMenu::displayMenu("mini");
 if (isset($_POST['startagent'])) {
    $taskjob = new PluginFusioninventoryTaskjob();
    $agent->getFromDB($_POST['agent_id']);
-   if ($taskjob->RemoteStartAgent($_POST['ip'], $agent->fields['token'])) {
+   if ($taskjob->startAgentRemotly($_POST['ip'], $agent->fields['token'])) {
       addMessageAfterRedirect($LANG['plugin_fusioninventory']['agents'][17]);
    } else {
       addMessageAfterRedirect($LANG['plugin_fusioninventory']['agents'][30]);

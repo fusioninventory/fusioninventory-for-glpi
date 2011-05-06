@@ -301,7 +301,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       
    }
    static function dropdownCredentialsForItemtype($params = array()) {
-      global $LANG;
+      global $LANG, $CFG_GLPI;
 
       if ($params['itemtype'] != '') {
 
@@ -323,8 +323,18 @@ class PluginFusioninventoryCredential extends CommonDropdown {
          foreach ($results as $result) {
             $types[$result['id']] = $result['name'];
          }
-         Dropdown::showFromArray('plugin_fusioninventory_credentials_id', $types, 
-                                 array('value' => $value));
+         $rand = Dropdown::showFromArray('plugin_fusioninventory_credentials_id', $types, 
+                                         array('value' => $value));
+
+         if (PluginFusioninventoryProfile::haveRight('fusioninventory', 'credential', 'w')) {
+            echo "<img alt='' title=\"".$LANG['buttons'][8]."\" src='".$CFG_GLPI["root_doc"].
+               "/pics/add_dropdown.png' style='cursor:pointer; margin-left:2px;'
+               onClick=\"var w = window.open('".
+               getItemTypeFormURL('PluginFusioninventoryCredential')."?popup=1&amp;rand=".
+               $rand."' ,'glpipopup', 'height=400, ".
+               "width=1000, top=100, left=100, scrollbars=yes' );w.focus();\">";
+         }
+
       }
    }
    
@@ -339,7 +349,15 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    }
 
    function title() {
-      //Leave empty !
+      global $CFG_GLPI, $LANG;
+
+      $buttons = array();
+      if (PluginFusioninventoryProfile::haveRight('fusioninventory', 'credential', 'r')) {
+         $buttons["credentialip.php"] = $LANG['plugin_fusioninventory']['menu'][6];
+      }
+      displayTitle($CFG_GLPI["root_doc"] . "/pics/users.png", 
+                   $LANG['plugin_fusioninventory']['menu'][6], "", $buttons);
+
    }
    
    function displayHeader () {
