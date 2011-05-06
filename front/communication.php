@@ -58,12 +58,9 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    $response = PluginFusioninventoryRestCommunication::communicate($_GET);
    if ($response) {
       echo json_encode($response);
-      PluginFusioninventoryConfig::logIfExtradebug("php-errors",print_r($response));
    } else {
       PluginFusioninventoryRestCommunication::sendError();
-      PluginFusioninventoryConfig::logIfExtradebug("php-errors","Send HTTP error");
    }
-   exit();
 } else {
    
    $communication  = new PluginFusioninventoryCommunication();
