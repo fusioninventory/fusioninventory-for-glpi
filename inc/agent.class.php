@@ -535,6 +535,22 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          return false;
       }
    }
+   
+   static function getAgentBaseURL($plugins_id, $ip) {
+      $config = new PluginFusioninventoryConfig();
+      return "http://".$ip.":".$config->getValue($plugins_id, 'agent_port');
+   }
+   
+   static function getAgentStatusURL($plugins_id, $ip) {
+      return self::getAgentBaseURL($plugins_id, $ip)."/status";
+      
+   }
+
+   static function getAgentRunURL($plugins_id, $ip) {
+      return self::getAgentBaseURL($plugins_id, $ip)."/now";
+      
+   }
+
 }
 
 ?>

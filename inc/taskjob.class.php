@@ -664,8 +664,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $a_ips = $PluginFusioninventoryAgent->getIPs($agents_id);
          foreach ($a_ips as $ip) {
             $PluginFusioninventoryAgent->getFromDB($agents_id);
-            $PluginFusioninventoryTaskjob->remoteStartAgent($ip, 
-                                                            $PluginFusioninventoryAgent->fields['token']);
+            $PluginFusioninventoryTaskjob->startAgentRemotly($ip, 
+                                                             $PluginFusioninventoryAgent->fields['token']);
          }
       }
       unset($_SESSION['glpi_plugin_fusioninventory']['agents']);
@@ -806,7 +806,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             $a_ips = $PluginFusioninventoryAgent->getIPs($agents_id);
             foreach ($a_ips as $ip) {
                $PluginFusioninventoryAgent->getFromDB($agents_id);
-               $PluginFusioninventoryTaskjob->remoteStartAgent($ip, $PluginFusioninventoryAgent->fields['token']);
+               $PluginFusioninventoryTaskjob->startAgentRemotly($ip, 
+                                                                $PluginFusioninventoryAgent->fields['token']);
             }
          }
          unset($_SESSION['glpi_plugin_fusioninventory']['agents']);         
@@ -883,9 +884,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
           )
       );
 
-      $url = "http://".$ip.":".$PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port')."/status";
-
-      $str = @file_get_contents($url, 0, $ctx);
+      $str = @file_get_contents(PluginFusioninventoryAgent::getAgentStatusURL($plugins_id, $ip), 0, 
+                                $ctx);
       $this->reenableusemode();
       if (strstr($str, "waiting")) {
          return true;
@@ -916,9 +916,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          );
 
          foreach ($a_ip as $ip) {
-            $url = "http://".$ip.":".$PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port')."/status";
-
-            $str = @file_get_contents($url, 0, $ctx);
+            $str = @file_get_contents(PluginFusioninventoryAgent::getAgentStatusURL($plugins_id, $ip), 
+                                      0, $ctx);
             $this->reenableusemode();
             if (strstr($str, "waiting")) {
                return "waiting";
@@ -943,22 +942,19 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    * @return bool true if agent wake up
    *
    **/
-   function RemoteStartAgent($ip, $token) {
+   function startAgentRemotly($ip, $token) {
 
       $this->disableDebug();
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
       $input = '';
-      $ctx = stream_context_create(array(
-          'http' => array(
-              'timeout' => 2
-              )
-          )
-      );
-      $data = @file_get_contents("http://".$ip.":".$PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port')."/status", 0, $ctx);
+      $ctx = stream_context_create(array('http' => array('timeout' => 2)));
+      $data = @file_get_contents(PluginFusioninventoryAgent::getAgentStatusURL($plugins_id, $ip), 
+                                 0, $ctx);
       if (isset($data) && !empty($data)) {
-         @file_get_contents("http://".$ip.":".$PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port')."/now/".$token, 0, $ctx);
+         @file_get_contents(PluginFusioninventoryAgent::getAgentRunURL($plugins_id, $ip).$token, 0, 
+                            $ctx);
          //Agent run Now
          $this->reenableusemode();
          return true;
@@ -977,7 +973,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    **/
    function disableDebug() {
       error_reporting(0);
-      set_error_handler(array(new PluginFusioninventoryTaskjob(),'errorempty'));
+      set_error_handler(array(new PluginFusioninventoryTaskjob(), 'errorempty'));
    }
 
 
@@ -987,8 +983,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    *
    **/
    function reenableusemode() {
-      if ($_SESSION['glpi_use_mode']==DEBUG_MODE){
-         ini_set('display_errors','On');
+      if ($_SESSION['glpi_use_mode'] == DEBUG_MODE){
+         ini_set('display_errors', 'On');
          error_reporting(E_ALL | E_STRICT);
          set_error_handler("userErrorHandler");
       }

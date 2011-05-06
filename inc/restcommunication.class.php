@@ -138,17 +138,14 @@ class PluginFusioninventoryRestCommunication {
          
          $taskjoblog = new PluginFusioninventoryTaskjoblog();
          
-         $tmp['plugin_fusioninventory_taskjobstatus_id'] = $taskjobstatus->fields['id'];
-         $tmp['itemtype']  = $taskjobstatus->fields['itemtype'];
-         $tmp['items_id']  = $taskjobstatus->fields['items_id'];
-         $tmp['comment']   = $p['msg'];
-         $tmp['date']      = date("Y-m-d H:i:s");
          if ($p['code'] == 'ok') {
-            $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_OK;
+            $state = PluginFusioninventoryTaskjoblog::TASK_OK;
          } else {
-            $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_ERROR;
+            $state = PluginFusioninventoryTaskjoblog::TASK_ERROR;
          }
-         $taskjoblog->add($tmp);
+         $taskjobstatus->changeStatusFinish($taskjobstatus->fields['id'], 
+                                            $taskjobstatus->fields['items_id'], 
+                                            $taskjobstatus->fields['itemtype'], $state, $p['msg']);
       }
       self::sendOk();
    }
