@@ -60,7 +60,7 @@ class PluginFusinvsnmpStaticmisc {
    static function task_definitiontype_netdiscovery($a_itemtype) {
       global $LANG;
 
-      $a_itemtype['PluginFusioninventoryIPRange'] = $LANG['plugin_fusinvsnmp']['iprange'][2];
+      $a_itemtype['PluginFusioninventoryIPRange'] = $LANG['plugin_fusioninventory']['iprange'][2];
 
       return $a_itemtype;
    }
