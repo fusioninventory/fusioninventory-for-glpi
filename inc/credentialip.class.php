@@ -48,11 +48,11 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
    }
 
    function canCreate() {
-      return PluginFusioninventoryProfile::haveRight('fusioninventory', 'credential', 'w');
+      return PluginFusioninventoryProfile::haveRight('fusioninventory', 'credentialip', 'w');
    }
 
    function canView() {
-      return PluginFusioninventoryProfile::haveRight('fusioninventory', 'credential', 'r');
+      return PluginFusioninventoryProfile::haveRight('fusioninventory', 'credentialip', 'r');
    }
    
    function getAdditionalFields() {
@@ -119,7 +119,15 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
    }
 
    function title() {
+      global $CFG_GLPI, $LANG;
       //Leave empty !
+      $buttons = array();
+      if (PluginFusioninventoryProfile::haveRight('fusioninventory', 'credential', 'r')) {
+         $buttons["credential.php"] = $LANG['plugin_fusioninventory']['menu'][5];
+      }
+      displayTitle($CFG_GLPI["root_doc"] . "/pics/users.png", 
+                   $LANG['plugin_fusioninventory']['menu'][5], "", $buttons);
+      
    }
    
    function displayHeader () {
