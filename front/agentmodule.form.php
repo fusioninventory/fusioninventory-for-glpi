@@ -36,22 +36,23 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","agentmodules");
+commonHeader($LANG['plugin_fusioninventory']['title'][0], $_SERVER["PHP_SELF"], "plugins", 
+             "fusioninventory", "agentmodules");
 
-$PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+$agentmodule = new PluginFusioninventoryAgentmodule();
 
 if (isset($_POST["agent_add"])) {
-   $PluginFusioninventoryAgentmodule->getFromDB($_POST['id']);
-   $a_agentList = importArrayFromDB($PluginFusioninventoryAgentmodule->fields['exceptions']);
-   $a_agentList[] = $_POST['agent_to_add'][0];
-   $input = array();
+   $agentmodule->getFromDB($_POST['id']);
+   $a_agentList         = importArrayFromDB($agentmodule->fields['exceptions']);
+   $a_agentList[]       = $_POST['agent_to_add'][0];
+   $input               = array();
    $input['exceptions'] = exportArrayToDB($a_agentList);
-   $input['id'] = $_POST['id'];
-   $PluginFusioninventoryAgentmodule->update($input);
+   $input['id']         = $_POST['id'];
+   $agentmodule->update($input);
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset($_POST["agent_delete"])) {
-   $PluginFusioninventoryAgentmodule->getFromDB($_POST['id']);
-   $a_agentList = importArrayFromDB($PluginFusioninventoryAgentmodule->fields['exceptions']);
+   $agentmodule->getFromDB($_POST['id']);
+   $a_agentList         = importArrayFromDB($agentmodule->fields['exceptions']);
    foreach ($a_agentList as $key=>$value) {
       if ($value == $_POST['agent_to_delete'][0]) {
          unset($a_agentList[$key]);
@@ -60,10 +61,10 @@ if (isset($_POST["agent_add"])) {
    $input = array();
    $input['exceptions'] = exportArrayToDB($a_agentList);
    $input['id'] = $_POST['id'];
-   $PluginFusioninventoryAgentmodule->update($input);
+   $agentmodule->update($input);
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["updateexceptions"])) {
-   $a_modules = $PluginFusioninventoryAgentmodule->find();
+   $a_modules = $agentmodule->find();
    foreach ($a_modules as $module_id=>$data) {
       $a_agentList = importArrayFromDB($data['exceptions']);
       $agentModule = 0;
@@ -104,26 +105,26 @@ if (isset($_POST["agent_add"])) {
          }
       }
       $data['exceptions'] = exportArrayToDB($a_agentList);
-      $PluginFusioninventoryAgentmodule->update($data);
+      $agentmodule->update($data);
    }
 
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["update"])) {
-   $PluginFusioninventoryAgentmodule->getFromDB($_POST['id']);
+   $agentmodule->getFromDB($_POST['id']);
    $input = array();
    if (isset($_POST['activation'])) {
       $input['is_active'] = 1;
    } else {
       $input['is_active'] = 0;
    }
-   if ($PluginFusioninventoryAgentmodule->fields['is_active'] != $input['is_active']) {
+   if ($agentmodule->fields['is_active'] != $input['is_active']) {
       $a_agentList = array();
       $input['exceptions'] = exportArrayToDB($a_agentList);
    }
    $input['id']  = $_POST['id'];
    $input['url'] = $_POST['url'];
    
-   $PluginFusioninventoryAgentmodule->update($input);
+   $agentmodule->update($input);
    glpi_header($_SERVER['HTTP_REFERER']);
 }
 

@@ -58,14 +58,15 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    $response = PluginFusioninventoryRestCommunication::communicate($_GET);
    if ($response) {
       echo json_encode($response);
-      logDebug($response);
+      PluginFusioninventoryConfig::logIfExtradebug("php-errors",print_r($response));
    } else {
       PluginFusioninventoryRestCommunication::sendError();
+      PluginFusioninventoryConfig::logIfExtradebug("php-errors","Send HTTP error");
    }
    exit();
 } else {
    
-   $PluginFusioninventoryCommunication  = new PluginFusioninventoryCommunication();
+   $communication  = new PluginFusioninventoryCommunication();
    $pta  = new PluginFusioninventoryAgent();
    
    $errors='';
@@ -86,10 +87,10 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
           OR ($ssl == "0")) {
          // echo "On continue";
       } else {
-         $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
+         $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
    <REPLY>
    </REPLY>");
-         $PluginFusioninventoryCommunication->noSSL();
+         $communication->noSSL();
          exit();
       }
    
@@ -114,11 +115,11 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       if (@simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA)) {
          $pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA);
       } else {
-         $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
+         $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
    <REPLY>
       <ERROR>XML not well formed!</ERROR>
    </REPLY>");
-         $PluginFusioninventoryCommunication->emptyAnswer();
+         $communication->emptyAnswer();
       }
    
       //
@@ -128,31 +129,31 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    
       $top0 = 0;
       $top0 = gettimeofday();
-      if (!$PluginFusioninventoryCommunication->import($xml)) {
+      if (!$communication->import($xml)) {
    
          if (isset($pxml->DEVICEID)) {
    
-            $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
+            $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
    <REPLY>
    </REPLY>");
    
             $a_agent = $pta->InfosByKey($pxml->DEVICEID);
    
             // Get taskjob in waiting
-            $PluginFusioninventoryCommunication->getTaskAgent($a_agent['id']);
+            $communication->getTaskAgent($a_agent['id']);
             // ******** Send XML
    
-            $PluginFusioninventoryCommunication->addInventory($a_agent['id']);
-            $PluginFusioninventoryCommunication->addProlog();
-            $PluginFusioninventoryCommunication->setXML($PluginFusioninventoryCommunication->getXML());
+            $communication->addInventory($a_agent['id']);
+            $communication->addProlog();
+            $communication->setXML($communication->getXML());
    
-            echo $PluginFusioninventoryCommunication->getSend();
+            echo $communication->getSend();
          }
       } else {
-         $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
+         $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
    <REPLY>
    </REPLY>");
-         $PluginFusioninventoryCommunication->emptyAnswer();
+         $communication->emptyAnswer();
       }
    }
    
