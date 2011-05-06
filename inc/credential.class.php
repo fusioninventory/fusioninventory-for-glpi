@@ -337,8 +337,16 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       $types = self::getCredentialsItemTypes();
       return (!empty($types));
    }
-   
+
    function title() {
+      //Leave empty !
+   }
+   
+   function displayHeader () {
+      //Common dropdown header
+      parent::displayHeader();
+      
+      //Fusioninventory menu
       PluginFusioninventoryMenu::displayMenu("mini");
    }
 

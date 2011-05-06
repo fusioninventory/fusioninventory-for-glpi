@@ -118,15 +118,18 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
       return $tab;
    }
 
-   /**
-    * Display the functioninventory menu
-    * 
-    * @return nothing
-    */
    function title() {
-      PluginFusioninventoryMenu::displayMenu("mini");
+      //Leave empty !
    }
    
+   function displayHeader () {
+      //Common dropdown header
+      parent::displayHeader();
+      
+      //Fusioninventory menu
+      PluginFusioninventoryMenu::displayMenu("mini");
+   }
+
    /**
     * Get all ip to inventory by credential type
     * @param credential_type the type of asset to remotly inventory

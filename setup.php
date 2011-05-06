@@ -31,6 +31,7 @@
    Purpose of file:
    ----------------------------------------------------------------------
  */
+define ("PLUGIN_FUSIONINVENTORY_VERSION","2.4.0");
 
 include_once(GLPI_ROOT."/inc/includes.php");
 
@@ -220,9 +221,11 @@ function plugin_init_fusioninventory() {
    }
 
    // Check for uninstall
-   if (isset($_GET['id']) AND ($_GET['id'] == $moduleId)
-            AND (isset($_GET['action']) AND $_GET['action'] == 'uninstall')
-            AND (strstr($_SERVER['HTTP_REFERER'], "front/plugin.php"))) {
+   if (isset($_GET['id']) 
+      && ($_GET['id'] == $moduleId)
+         && (isset($_GET['action']) 
+            && $_GET['action'] == 'uninstall')
+               && (strstr($_SERVER['HTTP_REFERER'], "front/plugin.php"))) {
 
       if (PluginFusioninventoryModule::getAll(true)) {
          addMessageAfterRedirect($LANG['plugin_fusioninventory']['setup'][17]);
@@ -235,17 +238,33 @@ function plugin_init_fusioninventory() {
    // Add unknown devices in list of devices with networport
    $CFG_GLPI["netport_types"][] = "PluginFusioninventoryUnknownDevice";
 
+   //Redect to FusionInventort communication.php only if user agent is ocs or fusion and if
+   //agent url is http://ip/glpi/
    $plugin = new Plugin();
-   if ($plugin->isInstalled('fusioninventory') 
-      && $plugin->isActivated('fusioninventory') 
+   if ($plugin->isInstalled('fusioninventory')
+      && $plugin->isActivated('fusioninventory')
          && isset($_SERVER['HTTP_USER_AGENT'])
-            && isFusioninventoryUserAgent($_SERVER['HTTP_USER_AGENT'])) {
+            && isFusioninventoryUserAgent($_SERVER['HTTP_USER_AGENT'])
+               && !preg_match("/fus(ion|inv).*/",$_SERVER['PHP_SELF'])) {
 
-      // Init other fusinv* plugins
-      $a_fusinv = PluginFusioninventoryModule::getAll();
-      foreach ($a_fusinv as $data) {
-         Plugin::load($data['directory']);
+      //Load all plugins
+      $plugin = new Plugin();
+      if (!isset($_SESSION["glpi_plugins"])) {
+         $plugin->init();
       }
+      
+      if (isset($_SESSION["glpi_plugins"]) && is_array($_SESSION["glpi_plugins"])) {
+         if (count($_SESSION["glpi_plugins"])) {
+            foreach ($_SESSION["glpi_plugins"] as $name) {
+               if ($name != 'fusioninventory') {
+                  Plugin::load($name);
+               }
+            }
+         }
+         // For plugins which require action after all plugin init
+         doHook("post_init");
+      }
+      
       include(GLPI_ROOT ."/plugins/fusioninventory/front/communication.php");
    }
 
@@ -255,7 +274,7 @@ function plugin_init_fusioninventory() {
 function plugin_version_fusioninventory() {
    return array('name'           => 'FusionInventory',
                 'shortname'      => 'fusioninventory',
-                'version'        => '2.4.0',
+                'version'        => PLUGIN_FUSIONINVENTORY_VERSION,
                 'oldname'        => 'tracker',
                 'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
                                     & <a href="mailto:v.mazzoni@siprossii.com">Vincent MAZZONI</a>',

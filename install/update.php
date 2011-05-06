@@ -79,10 +79,11 @@ function pluginFusioninventoryGetCurrentVersion($version) {
          }
       }
    } else if (TableExists("glpi_plugin_fusioninventory_configs")) {
-      $query = "SELECT value FROM glpi_plugin_fusioninventory_configs
+      $query = "SELECT `value` FROM `glpi_plugin_fusioninventory_configs`
          WHERE `type`='version'
             AND `plugins_id`='".PluginFusioninventoryModule::getModuleId('fusioninventory')."'
          LIMIT 1";
+
       $data = array();
       if ($result=$DB->query($query)) {
          if ($DB->numrows($result) == "1") {
@@ -104,7 +105,7 @@ function pluginFusioninventoryUpdate($current_version) {
 
    echo "<tr class='tab_bg_1'>";
    echo "<td align='center'>";
-
+   logDebug($current_version);
    // update from current_version to last case version + 1
    switch ($current_version){
       case "1.0.0":
@@ -147,9 +148,14 @@ function pluginFusioninventoryUpdate($current_version) {
       case "2.3.0":
          include("update_231_232.php");
          update231to232();
+      case "2.3.1":
       case "2.3.2":
+         include("update_232_233.php");
+         update232to233();
+      case "2.3.3":
          include("update_232_240.php");
          update232to240();
+
    }
 
    $plugins_id = PluginFusioninventoryModule::getModuleId("fusioninventory");
@@ -162,7 +168,7 @@ function pluginFusioninventoryUpdate($current_version) {
 
    include_once(GLPI_ROOT."/plugins/fusioninventory/inc/config.class.php");
    $config = new PluginFusioninventoryConfig();
-   $config->updateConfigType($plugins_id, 'version', "2.4.0");
+   $config->updateConfigType($plugins_id, 'version', PLUGIN_FUSIONINVENTORY_VERSION);
 
 }
 
