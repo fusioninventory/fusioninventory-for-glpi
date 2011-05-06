@@ -642,20 +642,24 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       while ($data=$DB->fetch_array($result)) {
          $plugin = new Plugin();
          $plugin->getFromDB($data['plugins_id']);
-         if ($plugin->fields['state'] == Plugin::ACTIVATED) {
-            $PluginFusioninventoryTaskjob->verifyDefinitionActions($data['id']);
-            $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp($data['periodicity_type'], 
-                                                                            $data['periodicity_count']);
-            if (($data['date_scheduled_timestamp'] + $period) <= date('U')) {
-               // Get module name
-               $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
-               $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
-               $class = new $className();
-               $class->prepareRun($data['id']);
-               $return = 1;
-               
+         if (isset($plugin->fields['directory'])
+                 AND (strstr($plugin->fields['directory'], "fusioninventory")
+                    OR strstr($plugin->fields['directory'], "fusinv"))) {
+
+            if ($plugin->fields['state'] == Plugin::ACTIVATED) {
+               $PluginFusioninventoryTaskjob->verifyDefinitionActions($data['id']);
+               $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp($data['periodicity_type'],
+                                                                               $data['periodicity_count']);
+               if (($data['date_scheduled_timestamp'] + $period) <= date('U')) {
+                  // Get module name
+                  $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
+                  $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
+                  $class = new $className();
+                  $class->prepareRun($data['id']);
+                  $return = 1;
+
+               }
             }
-            
          }
       }
       // Start agents must start in push mode
