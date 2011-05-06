@@ -630,13 +630,17 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       // *** Search task ready
       $dateNow = date("Y-m-d H:i:s");
-      $query = "SELECT `glpi_plugin_fusioninventory_taskjobs`.*,
-                       `glpi_plugin_fusioninventory_tasks`.`communication`,
-                       UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp
-                FROM ".$PluginFusioninventoryTaskjob->getTable()."
-                LEFT JOIN `glpi_plugin_fusioninventory_tasks`
-                   ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
-                WHERE `is_active`='1' AND `status` = '0' AND `date_scheduled` <= '".$dateNow."' ";
+      $query = "SELECT `".$PluginFusioninventoryTaskjob->getTable()."`.*,
+         `glpi_plugin_fusioninventory_tasks`.`communication`,
+         UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp,
+         `glpi_plugin_fusioninventory_tasks`.`periodicity_type` as ptype,
+         `glpi_plugin_fusioninventory_tasks`.`periodicity_count` as pcount
+         FROM ".$PluginFusioninventoryTaskjob->getTable()."
+         LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
+         WHERE `is_active`='1'
+            AND `status` = '0'
+            AND `date_scheduled` <= '".$dateNow."'
+            AND `glpi_plugin_fusioninventory_tasks`.`periodicity_type`>0";
       $result = $DB->query($query);
       $return = 0;
       while ($data=$DB->fetch_array($result)) {
@@ -648,8 +652,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
             if ($plugin->fields['state'] == Plugin::ACTIVATED) {
                $PluginFusioninventoryTaskjob->verifyDefinitionActions($data['id']);
-               $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp($data['periodicity_type'],
-                                                                               $data['periodicity_count']);
+               $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp($data['ptype'],
+                                                                               $data['pcount']);
                if (($data['date_scheduled_timestamp'] + $period) <= date('U')) {
                   // Get module name
                   $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
