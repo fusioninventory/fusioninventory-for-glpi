@@ -38,13 +38,12 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","agents");
+commonHeader($LANG['plugin_fusioninventory']['title'][0], $_SERVER["PHP_SELF"], "plugins", 
+             "fusioninventory", "agents");
 
-PluginFusioninventoryProfile::checkRight("fusioninventory", "agent","r");
+PluginFusioninventoryProfile::checkRight("fusioninventory", "agent", "r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
-
-$_GET['target']="agent.php";
 
 Search::show('PluginFusioninventoryAgent');
 

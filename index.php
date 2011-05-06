@@ -41,7 +41,8 @@ include (GLPI_ROOT."/inc/includes.php");
 if ((isset($_GET['action']) 
    && isset($_GET['machineid'])) 
       || isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
-   include(GLPI_ROOT ."/plugins/fusioninventory/front/communication.php");
+
+   include_once(GLPI_ROOT ."/index.php");
 
 //Fusioninventory plugin pages
 } else {

@@ -33,7 +33,6 @@
  */
 
 define('GLPI_ROOT', '../../..');
-
 include (GLPI_ROOT . "/inc/includes.php");
 
 $iprange = new PluginFusioninventoryIPRange();
@@ -41,7 +40,7 @@ $iprange = new PluginFusioninventoryIPRange();
 commonHeader($LANG['plugin_fusioninventory']['title'][0], $_SERVER["PHP_SELF"], "plugins", 
              "fusioninventory", "iprange");
 
-PluginFusioninventoryProfile::checkRight("fusioninventory", "iprange","r");
+PluginFusioninventoryProfile::checkRight("fusioninventory", "iprange", "r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
@@ -60,21 +59,21 @@ if (isset ($_POST["add"])) {
 } else if (isset ($_POST["update"])) {
    if (isset($_POST['communication'])) {
       //task permanent update
-      $PluginFusioninventoryTask = new PluginFusioninventoryTask();
-      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-      $PluginFusioninventoryTask->getFromDB($_POST['task_id']);
+      $task = new PluginFusioninventoryTask();
+      $taskjob = new PluginFusioninventoryTaskjob();
+      $task->getFromDB($_POST['task_id']);
       $input_task = array();
-      $input_task['id'] = $PluginFusioninventoryTask->fields['id'];
-      $PluginFusioninventoryTaskjob->getFromDB($_POST['taskjob_id']);
-      $input_taskjob = array();
-      $input_taskjob['id'] = $PluginFusioninventoryTaskjob->fields['id'];
-      $input_task["is_active"] = $_POST['is_active'];
+      $input_task['id'] = $task->fields['id'];
+      $taskjob->getFromDB($_POST['taskjob_id']);
+      $input_taskjob                   = array();
+      $input_taskjob['id']             = $taskjob->fields['id'];
+      $input_task["is_active"]         = $_POST['is_active'];
       $input_task["periodicity_count"] = $_POST['periodicity_count'];
-      $input_task["periodicity_type"] = $_POST['periodicity_type'];
+      $input_task["periodicity_type"]  = $_POST['periodicity_type'];
       if (!empty($_POST['action'])) {
-         $a_actionDB = array();
+         $a_actionDB                                 = array();
          $a_actionDB[]['PluginFusioninventoryAgent'] = $_POST['action'];
-         $input_taskjob["action"] = exportArrayToDB($a_actionDB);
+         $input_taskjob["action"]                    = exportArrayToDB($a_actionDB);
       } else {
          $input_taskjob["action"] = '';
       }
@@ -83,8 +82,8 @@ if (isset ($_POST["add"])) {
       $input_taskjob['definition'] = exportArrayToDB($a_definition);
       $input_task["communication"] = $_POST['communication'];
 
-      $PluginFusioninventoryTask->update($input_task);
-      $PluginFusioninventoryTaskjob->update($input_taskjob);
+      $task->update($input_task);
+      $taskjob->update($input_taskjob);
    } else {
       PluginFusioninventoryProfile::checkRight("fusioninventory", "iprange","w");
       if ($iprange->checkip($_POST)) {
@@ -98,8 +97,8 @@ if (isset ($_POST["add"])) {
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["delete"])) {
    if (isset($_POST['communication'])) {
-      $PluginFusioninventoryTask = new PluginFusioninventoryTask();
-      $PluginFusioninventoryTask->delete(array('id' => $_POST['task_id']), 1);
+      $task = new PluginFusioninventoryTask();
+      $task->delete(array('id' => $_POST['task_id']), 1);
       $_SERVER['HTTP_REFERER'] = str_replace("&allowcreate=1", "", $_SERVER['HTTP_REFERER']);
       glpi_header($_SERVER['HTTP_REFERER']);
    } else {
@@ -119,7 +118,7 @@ if (isset($_GET['allowcreate'])) {
    $allowcreate = $_GET['allowcreate'];
 }
 
-$iprange->showForm($id, array( "allowcreate"=> $allowcreate));
+$iprange->showForm($id, array( "allowcreate" => $allowcreate));
 
 commonFooter();
 

@@ -244,6 +244,22 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                  WHERE `plugins_id`='".$p_plugins_id."';";
       return $DB->query($delete);
    }
+   
+   /**
+    * Check if extradebug mode is activate
+    */
+   static function isExtradebugActive() {
+      return self::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug');
+   }
+   
+   /**
+    * 
+    */
+   static function logIfExtradebug($file, $message) {
+      if (self::isExtradebugActive()) {
+         logInFile($file, $message);
+      }
+   }
 }
 
 ?>

@@ -38,17 +38,17 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 $agents = new PluginFusioninventoryAgent();
 
-commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","agents");
+commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"], "plugins", 
+             "fusioninventory", "agents");
 
 PluginFusioninventoryProfile::checkRight("fusioninventory", "agent","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
 if (isset($_POST['startagent'])) {
-   $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-   $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-   $PluginFusioninventoryAgent->getFromDB($_POST['agent_id']);
-   if ($PluginFusioninventoryTaskjob->RemoteStartAgent($_POST['ip'], $PluginFusioninventoryAgent->fields['token'])) {
+   $taskjob = new PluginFusioninventoryTaskjob();
+   $agent->getFromDB($_POST['agent_id']);
+   if ($taskjob->RemoteStartAgent($_POST['ip'], $agent->fields['token'])) {
       addMessageAfterRedirect($LANG['plugin_fusioninventory']['agents'][17]);
    } else {
       addMessageAfterRedirect($LANG['plugin_fusioninventory']['agents'][30]);
@@ -59,7 +59,7 @@ if (isset($_POST['startagent'])) {
    if (($_POST['items_id'] != "0") AND ($_POST['items_id'] != "")) {
       $_POST['itemtype'] = '1';
    }
-   $agents->add($_POST);
+   $agent->add($_POST);
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["update"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "agent","w");
@@ -68,12 +68,12 @@ if (isset($_POST['startagent'])) {
          $_POST['itemtype'] = '1';
       }
    }
-   $agents->update($_POST);
+   $agent->update($_POST);
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["delete"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "agent","w");
-   $agents->delete($_POST);
-   glpi_header("agent.php");
+   $agent->delete($_POST);
+   glpi_header(getItemTypeSearchURL('PluginFusioninventoryAgent'));
 } else if (isset ($_POST["startagent"])) {
 
    glpi_header($_SERVER['HTTP_REFERER']);
@@ -82,9 +82,9 @@ if (isset($_POST['startagent'])) {
 
 
 if (isset($_GET["id"])) {
-   $agents->showForm($_GET["id"]);
+   $agent->showForm($_GET["id"]);
 } else {
-   $agents->showForm("");
+   $agent->showForm("");
 }
 
 commonFooter();
