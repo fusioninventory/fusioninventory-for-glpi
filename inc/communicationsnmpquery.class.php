@@ -972,6 +972,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   $portLink_id = $NetworkPort->add($input);
                }
                $NetworkPort_NetworkPort = new NetworkPort_NetworkPort();
+               $opposite_id = false;
                if ($opposite_id == $NetworkPort_NetworkPort->getOppositeContact($portLink_id)) {
                   if ($opposite_id != $macNotPhone_id) {
                      $p_oPort->disconnectDB($portLink_id); // disconnect this port
