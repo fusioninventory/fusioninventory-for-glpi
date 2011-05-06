@@ -638,10 +638,14 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          if (($data['date_scheduled_timestamp'] + $period) <= date('U')) {
             // Get module name
             $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
-            $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
-            $class = new $className;
-            $class->prepareRun($data['id']);
-            $return = 1;
+            if (strstr($pluginName, "fusioninventory")
+                    OR strstr($pluginName, "fusinv")) {
+               
+               $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
+               $class = new $className;
+               $class->prepareRun($data['id']);
+               $return = 1;
+            }
          }
       }
       // Start agents must start in push mode
