@@ -125,7 +125,7 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
       if (PluginFusioninventoryProfile::haveRight('fusioninventory', 'credential', 'r')) {
          $buttons["credential.php"] = $LANG['plugin_fusioninventory']['menu'][5];
       }
-      displayTitle($CFG_GLPI["root_doc"] . "/pics/users.png", 
+      displayTitle(GLPI_ROOT."/plugins/fusioninventory/pics/menu_mini_credentials.png", 
                    $LANG['plugin_fusioninventory']['menu'][5], "", $buttons);
       
    }

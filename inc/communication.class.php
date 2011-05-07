@@ -317,6 +317,38 @@ class PluginFusioninventoryCommunication {
       }
       unset($firstLoop);
    }
+   
+   /**
+    * Tells if fopen is allowed or not on this server
+    * 
+    * @return true if allowed, false if not
+    */
+   static function isFopenAllowed() {
+      return ini_get('allow_url_fopen');
+   }
+   
+   static function getAllowurlfopen($wakecomputer=0) {
+      global $LANG;
+
+      if (!self::isFopenAllowed()) {
+         echo "<center>";
+         echo "<table class='tab_cadre' height='30' width='700'>";
+         echo "<tr class='tab_bg_1'>";
+         echo "<td align='center'><strong>";
+         if ($wakecomputer == '0') {
+            echo $LANG['plugin_fusioninventory']['errors'][2]." !";
+         } else {
+            echo $LANG['plugin_fusioninventory']['errors'][1]." !";
+         }
+         echo "</strong></td>";
+         echo "</tr>";
+         echo "</table>";
+         echo "</center>";
+         return false;
+      }
+      return true;
+   }
+
 }
 
 ?>

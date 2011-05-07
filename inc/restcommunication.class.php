@@ -150,14 +150,45 @@ class PluginFusioninventoryRestCommunication {
       self::sendOk();
    }
  
+   /**
+    * Get default URL for a REST servie
+    * 
+    * @param url REFERER url
+    * @param plugin the plugin hosts the service
+    * @param task the task to access
+    * 
+    * @return the url of the REST service
+    */
    static function getDefaultRestURL($url, $plugin, $task) {
       $task = strtolower($task);
       if (preg_match("/(.*)\/(plugins|front)/",$url,$values)) {
-         return $values[1].'/plugins/fusinvinventory/b/'.$task;
+         return $values[1].'/plugins/'.$plugin.'/b/'.$task;
       } else {
          return "";
       }
    }
 
+   /**
+    * Test a given url
+    * 
+    * @param url the url to test
+    * 
+    * @return true if url is valid, false otherwise
+    */
+   static function testRestURL($url) {
+      
+      //If fopen is not allowed, we cannot check and then return true...
+      if (!PluginFusioninventoryCommunication::isFopenAllowed()) {
+         return true;
+      }
+      
+      $handle = fopen($url,'rb');
+      if (!$handle) {
+         return false;
+      } else {
+         fclose($handle);
+         return true;
+      }
+   }
 }
 ?>

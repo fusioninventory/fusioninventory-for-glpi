@@ -536,21 +536,110 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       }
    }
    
+   /**
+    * Get base URL to communicate with an agent
+    * 
+    * @param plugins_id ID of the fusioninventory plugin
+    * @param ip agent's IP
+    * 
+    * @return an http url to contact the agent
+    */
    static function getAgentBaseURL($plugins_id, $ip) {
       $config = new PluginFusioninventoryConfig();
       return "http://".$ip.":".$config->getValue($plugins_id, 'agent_port');
    }
    
+   /**
+    * URL to get agent's state
+    * 
+    * @param plugins_id ID of the fusioninventory plugin
+    * @param ip agent's IP
+    * 
+    * @return an http url to get the agent's state
+    */
    static function getAgentStatusURL($plugins_id, $ip) {
       return self::getAgentBaseURL($plugins_id, $ip)."/status";
       
    }
 
+   /**
+    * URL to ask the agent to wake up
+    * 
+    * @param plugins_id ID of the fusioninventory plugin
+    * @param ip agent's IP
+    * 
+    * @return an http url to ask the agent to wake up
+    */
    static function getAgentRunURL($plugins_id, $ip) {
       return self::getAgentBaseURL($plugins_id, $ip)."/now";
       
    }
 
+   function getAgentsSubnet($nb_computers, $communication, $subnet='', $ipstart='', $ipend='') {
+      global $DB;
+
+      $taksjob     = new PluginFusioninventoryTaskjob();
+      $agentmodule = new PluginFusioninventoryAgentmodule();
+
+      // Number of computers min by agent
+      $nb_computerByAgentMin = 20;
+      $nb_agentsMax          = ceil($nb_computers / $nb_computerByAgentMin);
+
+
+      $a_agentList = array();
+
+      if ($subnet != '') {
+         $subnet = " AND `ip` LIKE '".$subnet."%' ";
+      } else if ($ipstart != '' AND $ipend != '') {
+         $subnet = " AND ( INET_ATON(`ip`) > INET_ATON('".$ipstart."')
+                        AND  INET_ATON(`ip`) < INET_ATON('".$ipend."') ) ";
+      }
+      $a_agents = $agentmodule->getAgentsCanDo('SNMPQUERY');
+      $a_agentsid = array();
+      foreach($a_agents as $a_agent) {
+         $a_agentsid[] = $a_agent['id'];
+      }
+      if (count($a_agentsid) == '0') {
+         return $a_agentList;
+      }
+
+      $where = " AND `glpi_plugin_fusioninventory_agents`.`ID` IN (";
+      $where .= implode(',', $a_agentsid);
+      $where .= ")
+         AND `ip` != '127.0.0.1' ";
+
+      $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, ip, subnet, token 
+                FROM `glpi_plugin_fusioninventory_agents`
+                LEFT JOIN `glpi_networkports` ON `glpi_networkports`.`items_id` = `glpi_plugin_fusioninventory_agents`.`items_id`
+                LEFT JOIN `glpi_computers` ON `glpi_computers`.`id` = `glpi_plugin_fusioninventory_agents`.`items_id`
+                WHERE `glpi_networkports`.`itemtype`='Computer'
+               ".$subnet."
+               ".$where." ";
+               
+      if ($result = $DB->query($query)) {
+         while ($data=$DB->fetch_array($result)) {
+            if ($communication == 'push') {
+               $agentStatus = $taksjob->getStateAgent($data['ip'],0);
+               if ($agentStatus ==  true) {
+                  if (!in_array($a_agentList,$data['a_id'])) {
+                     $a_agentList[] = $data['a_id'];
+                     if (count($a_agentList) >= $nb_agentsMax) {
+                        return $a_agentList;
+                     }
+                  }
+               }
+            } else if ($communication == 'pull') {
+               if (!in_array($data['a_id'],$a_agentList)) {
+                  $a_agentList[] = $data['a_id'];
+                  if (count($a_agentList) > $nb_agentsMax) {
+                     return $a_agentList;
+                  }
+               }
+            }
+         }
+      }
+      return $a_agentList;
+   }
 }
 
 ?>
