@@ -769,11 +769,13 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    **/
    function reinitializeTaskjobs($tasks_id, $disableTimeVerification = 0) {
       global $DB;
+      
       $PluginFusioninventoryTask = new PluginFusioninventoryTask();
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      $query = "SELECT *, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp FROM `".$PluginFusioninventoryTask->getTable()."`
+      $query = "SELECT *, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp
+            FROM `".$PluginFusioninventoryTask->getTable()."`
          WHERE `id`='".$tasks_id."' 
             LIMIT 1";
       $result = $DB->query($query);
@@ -812,11 +814,11 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                  AND ($finished != "0") ) {
 
             $finished = 1;
-         } else if ((count($a_taskjobstatus) == $taskjobstatusfinished)
-                 AND ($finished != "0")
-                 AND $disableTimeVerification == "1") {
-
-             $finished = 1;
+//         } else if ((count($a_taskjobstatus) == $taskjobstatusfinished)
+//                 AND ($finished != "0")
+//                 AND $disableTimeVerification == "1") {
+//
+//             $finished = 1;
          } else {
             $finished = 0;
          }
@@ -832,7 +834,14 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $DB->query($queryUpdate);
 
          if (($data['date_scheduled_timestamp'] + $period) <= date('U')) {
-            $data['date_scheduled'] = date("Y-m-d H:i:s", date('U'));
+            $periodtotal = $period;
+            for($i=2; ($data['date_scheduled_timestamp'] + $periodtotal) <= date('U'); $i++) {
+               $periodtotal = $period * $i;
+            }
+            $data['date_scheduled'] = date("Y-m-d H:i:s", $data['date_scheduled_timestamp'] + $periodtotal);
+         } else if ($data['date_scheduled_timestamp'] > date('U')) {
+            // Don't update date next execution
+
          } else {
             $data['date_scheduled'] = date("Y-m-d H:i:s", $data['date_scheduled_timestamp'] + $period);
          }
