@@ -769,21 +769,17 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    **/
    function reinitializeTaskjobs($tasks_id, $disableTimeVerification = 0) {
       global $DB;
-logInFile('pouet', "II");
       $PluginFusioninventoryTask = new PluginFusioninventoryTask();
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
-logInFile('pouet', "1\n");
       $query = "SELECT *, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp FROM `".$PluginFusioninventoryTask->getTable()."`
          WHERE `id`='".$tasks_id."' 
             LIMIT 1";
       $result = $DB->query($query);
       $data = $DB->fetch_assoc($result);
-logInFile('pouet', "2\n");
 
       $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp($data['periodicity_type'], $data['periodicity_count']);
-logInFile('pouet', "3\n");
 
       // Calculate next execution from last
       $queryJob = "SELECT * FROM `".$PluginFusioninventoryTaskjob->getTable()."`
@@ -811,7 +807,6 @@ logInFile('pouet', "3\n");
                }
             }
          }
-logInFile('pouet', count($a_taskjobstatus)." - ".$taskjobstatusfinished."\n");
 
          if ((count($a_taskjobstatus) == $taskjobstatusfinished)
                  AND ($finished != "0") ) {
@@ -827,18 +822,14 @@ logInFile('pouet', count($a_taskjobstatus)." - ".$taskjobstatusfinished."\n");
          }
       }
       // if all jobs are finished, we calculate if we reinitialize all jobs
-logInFile('pouet', "4\n");
 
       if ($finished == "1") {
          $data['execution_id']++;
-logInFile('pouet', "5\n");
 
          $queryUpdate = "UPDATE `".$PluginFusioninventoryTaskjob->getTable()."`
             SET `status`='0', `execution_id`='".$data['execution_id']."'
             WHERE `plugin_fusioninventory_tasks_id`='".$data['id']."'";
          $DB->query($queryUpdate);
-logInFile('pouet', "6\n");
-logInFile('pouet', $data['date_scheduled_timestamp']." + ".$period." => ".date('U'));
 
          if (($data['date_scheduled_timestamp'] + $period) <= date('U')) {
             $data['date_scheduled'] = date("Y-m-d H:i:s", date('U'));
