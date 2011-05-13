@@ -630,6 +630,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       // *** Search task ready
       $dateNow = date("Y-m-d H:i:s");
+<<<<<<< HEAD
       $query = "SELECT `glpi_plugin_fusioninventory_taskjobs`.*,
                        `glpi_plugin_fusioninventory_tasks`.`communication`,
                        UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp
@@ -659,6 +660,29 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                   $return = 1;
 
                }
+=======
+      $query = "SELECT `".$PluginFusioninventoryTaskjob->getTable()."`.*,`glpi_plugin_fusioninventory_tasks`.`communication`, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp
+         FROM ".$PluginFusioninventoryTaskjob->getTable()."
+         LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
+         WHERE `is_active`='1'
+            AND `status` = '0'
+            AND `date_scheduled` <= '".$dateNow."' ";
+      $result = $DB->query($query);
+      $return = 0;
+      while ($data=$DB->fetch_array($result)) {
+         $PluginFusioninventoryTaskjob->verifyDefinitionActions($data['id']);
+         $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp($data['periodicity_type'], $data['periodicity_count']);
+         if (($data['date_scheduled_timestamp'] + $period) <= date('U')) {
+            // Get module name
+            $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
+            if (strstr($pluginName, "fusioninventory")
+                    OR strstr($pluginName, "fusinv")) {
+               
+               $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
+               $class = new $className;
+               $class->prepareRun($data['id']);
+               $return = 1;
+>>>>>>> 2f897d7... Revert "Fix on cron task scheduler, it get periodicity_count and periodicity_type from taskjobs instead from tasks. closes #901"
             }
          }
       }
