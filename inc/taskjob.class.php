@@ -1322,7 +1322,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
    static function getAllowurlfopen($wakecomputer=0) {
       global $LANG;
-
+      
       if (!ini_get('allow_url_fopen')) {
          echo "<center>";
          echo "<table class='tab_cadre' height='30' width='700'>";
