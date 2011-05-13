@@ -616,6 +616,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       $_SESSION['glpi_plugin_fusioninventory']['agents'] = array();
 
+<<<<<<< HEAD
       // Search for task with periodicity and must be ok (so reinit state of job to 0)
       $query = "SELECT *, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp 
                 FROM `".$PluginFusioninventoryTask->getTable()."`
@@ -667,9 +668,35 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          WHERE `is_active`='1'
             AND `status` = '0'
             AND `date_scheduled` <= '".$dateNow."' ";
+=======
+      // *** Search task ready
+      $dateNow = date("U");
+
+      $query = "SELECT `".$PluginFusioninventoryTaskjob->getTable()."`.*,
+     `glpi_plugin_fusioninventory_tasks`.`communication`,
+      UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp,
+      CASE
+         WHEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_type` = 'minutes'
+            THEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_count` *60
+         WHEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_type` = 'hours'
+            THEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_count` *60 *60
+         WHEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_type` = 'days'
+            THEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_count` *60 *60 *24
+         WHEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_type` = 'months'
+            THEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_count` *60 *60 *24 *30
+         ELSE 0
+      END AS timing
+      FROM ".$PluginFusioninventoryTaskjob->getTable()."
+      LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
+      WHERE `is_active`='1'
+         AND `status` = '0'
+         AND UNIX_TIMESTAMP(date_scheduled) <= '".$dateNow."' ";
+>>>>>>> 54efd20... Fix on cron task scheduler, it get periodicity_count and periodicity_type from taskjobs instead from tasks. closes #901
       $result = $DB->query($query);
       $return = 0;
+      $a_tasktiming = array();
       while ($data=$DB->fetch_array($result)) {
+<<<<<<< HEAD
          $PluginFusioninventoryTaskjob->verifyDefinitionActions($data['id']);
          $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp($data['periodicity_type'], $data['periodicity_count']);
          if (($data['date_scheduled_timestamp'] + $period) <= date('U')) {
@@ -683,6 +710,32 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                $class->prepareRun($data['id']);
                $return = 1;
 >>>>>>> 2f897d7... Revert "Fix on cron task scheduler, it get periodicity_count and periodicity_type from taskjobs instead from tasks. closes #901"
+=======
+         // If time execution of task if this time to execute...
+         if (($data['date_scheduled_timestamp'] + $data['timing']) <= $dateNow) {
+            $pass = 0;
+            if (!isset($a_tasktiming[$data['plugin_fusioninventory_tasks_id']])) {
+               $a_tasktiming[$data['plugin_fusioninventory_tasks_id']] = $data['timing'];
+               $pass = 1;
+            } else {
+               if ($a_tasktiming[$data['plugin_fusioninventory_tasks_id']] == $data['timing']) {
+                  $pass = 1;
+               }
+            }
+
+            if ($pass == '1') {
+               $PluginFusioninventoryTaskjob->verifyDefinitionActions($data['id']);
+               // Get module name
+               $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
+               if (strstr($pluginName, "fusioninventory")
+                       OR strstr($pluginName, "fusinv")) {
+
+                  $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
+                  $class = new $className;
+                  $class->prepareRun($data['id']);
+                  $return = 1;
+               }
+>>>>>>> 54efd20... Fix on cron task scheduler, it get periodicity_count and periodicity_type from taskjobs instead from tasks. closes #901
             }
          }
       }
@@ -716,25 +769,26 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    **/
    function reinitializeTaskjobs($tasks_id, $disableTimeVerification = 0) {
       global $DB;
-
+logInFile('pouet', "II");
       $PluginFusioninventoryTask = new PluginFusioninventoryTask();
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
-
+logInFile('pouet', "1\n");
       $query = "SELECT *, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp FROM `".$PluginFusioninventoryTask->getTable()."`
          WHERE `id`='".$tasks_id."' 
             LIMIT 1";
       $result = $DB->query($query);
       $data = $DB->fetch_assoc($result);
+logInFile('pouet', "2\n");
 
       $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp($data['periodicity_type'], $data['periodicity_count']);
+logInFile('pouet', "3\n");
 
       // Calculate next execution from last
       $queryJob = "SELECT * FROM `".$PluginFusioninventoryTaskjob->getTable()."`
          WHERE `plugin_fusioninventory_tasks_id`='".$tasks_id."'
-         ORDER BY `id` DESC
-         LIMIT 1";
+         ORDER BY `id` DESC";
 
       $finished = 2;
       $resultJob = $DB->query($queryJob);
@@ -757,10 +811,10 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                }
             }
          }
+logInFile('pouet', count($a_taskjobstatus)." - ".$taskjobstatusfinished."\n");
 
          if ((count($a_taskjobstatus) == $taskjobstatusfinished)
-                 AND ($finished != "0")
-                 AND (($data['date_scheduled_timestamp'] + $period) < date('U')) ) {
+                 AND ($finished != "0") ) {
 
             $finished = 1;
          } else if ((count($a_taskjobstatus) == $taskjobstatusfinished)
@@ -773,12 +827,18 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          }
       }
       // if all jobs are finished, we calculate if we reinitialize all jobs
+logInFile('pouet', "4\n");
+
       if ($finished == "1") {
          $data['execution_id']++;
+logInFile('pouet', "5\n");
+
          $queryUpdate = "UPDATE `".$PluginFusioninventoryTaskjob->getTable()."`
             SET `status`='0', `execution_id`='".$data['execution_id']."'
             WHERE `plugin_fusioninventory_tasks_id`='".$data['id']."'";
          $DB->query($queryUpdate);
+logInFile('pouet', "6\n");
+logInFile('pouet', $data['date_scheduled_timestamp']." + ".$period." => ".date('U'));
 
          if (($data['date_scheduled_timestamp'] + $period) <= date('U')) {
             $data['date_scheduled'] = date("Y-m-d H:i:s", date('U'));
