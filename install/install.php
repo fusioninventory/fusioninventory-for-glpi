@@ -69,6 +69,7 @@ function pluginFusinvinventoryInstall() {
       }
 
       include_once (GLPI_ROOT . "/plugins/fusioninventory/inc/staticmisc.class.php");
+      include_once (GLPI_ROOT . "/plugins/fusinvinventory/inc/staticmisc.class.php");
       $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
       PluginFusioninventoryProfile::initProfile($a_plugin['shortname'], $plugins_id);
       PluginFusioninventoryProfile::changeProfile($plugins_id);
