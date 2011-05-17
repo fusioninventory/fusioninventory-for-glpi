@@ -260,6 +260,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
          logInFile($file, $message);
       }
    }
+
+   static function isSSLOnlyActive() {
+      $ssl = self::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'ssl_only');
+      
+   }
 }
 
 ?>

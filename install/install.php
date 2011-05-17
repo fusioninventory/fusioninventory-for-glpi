@@ -98,10 +98,7 @@ function pluginFusioninventoryInstall($version) {
       // bug of purge network port when purge unknown devices
       $networkPort = new NetworkPort();
       $sql = "SELECT `glpi_networkports`.`id` as nid FROM `glpi_networkports`
-         LEFT JOIN `glpi_plugin_fusioninventory_unknowndevices`
-            ON `glpi_plugin_fusioninventory_unknowndevices`.`id` = `glpi_networkports`.`items_id`
-         WHERE `itemtype`='PluginFusioninventoryUnknownDevice'
-            AND `glpi_plugin_fusioninventory_unknowndevices`.`id` IS NULL ";
+         WHERE `itemtype`='PluginFusioninventoryUnknownDevice' ";
       $result=$DB->query($sql);
       while ($data=$DB->fetch_array($result)) {
          $networkPort->delete(array('id'=>$data['nid']), 1);

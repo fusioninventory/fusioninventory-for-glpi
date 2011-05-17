@@ -61,12 +61,12 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    } else {
       PluginFusioninventoryRestCommunication::sendError();
    }
+//Only go there if agent is using the old XML protocol
 } else {
    
    $communication  = new PluginFusioninventoryCommunication();
-   $pta  = new PluginFusioninventoryAgent();
-   
-   $errors='';
+   $pta            = new PluginFusioninventoryAgent();
+   $errors         = '';
    
    // ***** For debug only ***** //
    //$GLOBALS["HTTP_RAW_POST_DATA"] = gzcompress('');
@@ -75,9 +75,9 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
       // Get conf tu know if SSL is only
    
-      $fusioninventory_config = new PluginFusioninventoryConfig();
+      $fusioninventory_config      = new PluginFusioninventoryConfig();
       $PluginFusioninventoryModule = new PluginFusioninventoryModule();
-      $fusioninventoryModule_id = $PluginFusioninventoryModule->getModuleId("fusioninventory");
+      $fusioninventoryModule_id    = $PluginFusioninventoryModule->getModuleId("fusioninventory");
    
       $ssl = $fusioninventory_config->getValue($fusioninventoryModule_id, 'ssl_only');
       if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"))

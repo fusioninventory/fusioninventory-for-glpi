@@ -66,12 +66,12 @@ if (isset($_POST["agent_add"])) {
 } else if (isset ($_POST["updateexceptions"])) {
    $a_modules = $agentmodule->find();
    foreach ($a_modules as $module_id=>$data) {
-      $a_agentList = importArrayFromDB($data['exceptions']);
-      $agentModule = 0;
+      $a_agentList        = importArrayFromDB($data['exceptions']);
+      $agentModule        = 0;
       if (isset($_POST['activation-'.$data['modulename']])) {
-         $agentModule = 1;
+         $agentModule     = 1;
       }
-      $agentModuleBase = 0;
+      $agentModuleBase    = 0;
       if (in_array($_POST['id'], $a_agentList)) {
          $agentModuleBase = 1;
       }
@@ -118,7 +118,7 @@ if (isset($_POST["agent_add"])) {
       $input['is_active'] = 0;
    }
    if ($agentmodule->fields['is_active'] != $input['is_active']) {
-      $a_agentList = array();
+      $a_agentList         = array();
       $input['exceptions'] = exportArrayToDB($a_agentList);
    }
    $input['id']  = $_POST['id'];

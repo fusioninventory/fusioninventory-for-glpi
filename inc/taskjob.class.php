@@ -616,52 +616,55 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       $_SESSION['glpi_plugin_fusioninventory']['agents'] = array();
 
-      // Search for task with periodicity and must be ok (so reinit state of job to 0)
-      $query = "SELECT *, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp 
-                FROM `".$PluginFusioninventoryTask->getTable()."`
-                WHERE `is_active`='1'AND `periodicity_count` != '0'
-                   AND `periodicity_type` IS NOT NULL
-                      AND `periodicity_type` != '0'";
-      
-      $result = $DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
-         $PluginFusioninventoryTaskjob->reinitializeTaskjobs($data['id']);
-      }
-
       // *** Search task ready
-      $dateNow = date("Y-m-d H:i:s");
+      $dateNow = date("U");
+
       $query = "SELECT `".$PluginFusioninventoryTaskjob->getTable()."`.*,
-         `glpi_plugin_fusioninventory_tasks`.`communication`,
-         UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp,
-         `glpi_plugin_fusioninventory_tasks`.`periodicity_type` as ptype,
-         `glpi_plugin_fusioninventory_tasks`.`periodicity_count` as pcount
-         FROM ".$PluginFusioninventoryTaskjob->getTable()."
-         LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
-         WHERE `is_active`='1'
-            AND `status` = '0'
-            AND `date_scheduled` <= '".$dateNow."'
-            AND `glpi_plugin_fusioninventory_tasks`.`periodicity_type`>0";
+     `glpi_plugin_fusioninventory_tasks`.`communication`,
+      UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp,
+      CASE
+         WHEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_type` = 'minutes'
+            THEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_count` *60
+         WHEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_type` = 'hours'
+            THEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_count` *60 *60
+         WHEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_type` = 'days'
+            THEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_count` *60 *60 *24
+         WHEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_type` = 'months'
+            THEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_count` *60 *60 *24 *30
+         ELSE 0
+      END AS timing
+      FROM ".$PluginFusioninventoryTaskjob->getTable()."
+      LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
+      WHERE `is_active`='1'
+         AND `status` = '0'
+         AND UNIX_TIMESTAMP(date_scheduled) <= '".$dateNow."' ";
       $result = $DB->query($query);
       $return = 0;
+      $a_tasktiming = array();
       while ($data=$DB->fetch_array($result)) {
-         $plugin = new Plugin();
-         $plugin->getFromDB($data['plugins_id']);
-         if (isset($plugin->fields['directory'])
-                 AND (strstr($plugin->fields['directory'], "fusioninventory")
-                    OR strstr($plugin->fields['directory'], "fusinv"))) {
+         // If time execution of task if this time to execute...
+         if (($data['date_scheduled_timestamp'] + $data['timing']) <= $dateNow) {
+            $pass = 0;
+            if (!isset($a_tasktiming[$data['plugin_fusioninventory_tasks_id']])) {
+               $a_tasktiming[$data['plugin_fusioninventory_tasks_id']] = $data['timing'];
+               $pass = 1;
+            } else {
+               if ($a_tasktiming[$data['plugin_fusioninventory_tasks_id']] == $data['timing']) {
+                  $pass = 1;
+               }
+            }
 
-            if ($plugin->fields['state'] == Plugin::ACTIVATED) {
+            if ($pass == '1') {
                $PluginFusioninventoryTaskjob->verifyDefinitionActions($data['id']);
-               $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp($data['ptype'],
-                                                                               $data['pcount']);
-               if (($data['date_scheduled_timestamp'] + $period) <= date('U')) {
-                  // Get module name
-                  $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
+               // Get module name
+               $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
+               if (strstr($pluginName, "fusioninventory")
+                       OR strstr($pluginName, "fusinv")) {
+
                   $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
-                  $class = new $className();
+                  $class = new $className;
                   $class->prepareRun($data['id']);
                   $return = 1;
-
                }
             }
          }
@@ -696,13 +699,13 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    **/
    function reinitializeTaskjobs($tasks_id, $disableTimeVerification = 0) {
       global $DB;
-
+      
       $PluginFusioninventoryTask = new PluginFusioninventoryTask();
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
-
-      $query = "SELECT *, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp FROM `".$PluginFusioninventoryTask->getTable()."`
+      $query = "SELECT *, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp
+            FROM `".$PluginFusioninventoryTask->getTable()."`
          WHERE `id`='".$tasks_id."' 
             LIMIT 1";
       $result = $DB->query($query);
@@ -713,8 +716,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       // Calculate next execution from last
       $queryJob = "SELECT * FROM `".$PluginFusioninventoryTaskjob->getTable()."`
          WHERE `plugin_fusioninventory_tasks_id`='".$tasks_id."'
-         ORDER BY `id` DESC
-         LIMIT 1";
+         ORDER BY `id` DESC";
 
       $finished = 2;
       $resultJob = $DB->query($queryJob);
@@ -739,29 +741,37 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          }
 
          if ((count($a_taskjobstatus) == $taskjobstatusfinished)
-                 AND ($finished != "0")
-                 AND (($data['date_scheduled_timestamp'] + $period) < date('U')) ) {
+                 AND ($finished != "0") ) {
 
             $finished = 1;
-         } else if ((count($a_taskjobstatus) == $taskjobstatusfinished)
-                 AND ($finished != "0")
-                 AND $disableTimeVerification == "1") {
-
-             $finished = 1;
+//         } else if ((count($a_taskjobstatus) == $taskjobstatusfinished)
+//                 AND ($finished != "0")
+//                 AND $disableTimeVerification == "1") {
+//
+//             $finished = 1;
          } else {
             $finished = 0;
          }
       }
       // if all jobs are finished, we calculate if we reinitialize all jobs
+
       if ($finished == "1") {
          $data['execution_id']++;
+
          $queryUpdate = "UPDATE `".$PluginFusioninventoryTaskjob->getTable()."`
             SET `status`='0', `execution_id`='".$data['execution_id']."'
             WHERE `plugin_fusioninventory_tasks_id`='".$data['id']."'";
          $DB->query($queryUpdate);
 
          if (($data['date_scheduled_timestamp'] + $period) <= date('U')) {
-            $data['date_scheduled'] = date("Y-m-d H:i:s", date('U'));
+            $periodtotal = $period;
+            for($i=2; ($data['date_scheduled_timestamp'] + $periodtotal) <= date('U'); $i++) {
+               $periodtotal = $period * $i;
+            }
+            $data['date_scheduled'] = date("Y-m-d H:i:s", $data['date_scheduled_timestamp'] + $periodtotal);
+         } else if ($data['date_scheduled_timestamp'] > date('U')) {
+            // Don't update date next execution
+
          } else {
             $data['date_scheduled'] = date("Y-m-d H:i:s", $data['date_scheduled_timestamp'] + $period);
          }
@@ -1313,6 +1323,29 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $PluginFusioninventoryTaskjobstatus->delete($a_taskjobstatus, 1);
       }
    }
+
+   static function getAllowurlfopen($wakecomputer=0) {
+      global $LANG;
+      
+      if (!ini_get('allow_url_fopen')) {
+         echo "<center>";
+         echo "<table class='tab_cadre' height='30' width='700'>";
+         echo "<tr class='tab_bg_1'>";
+         echo "<td align='center'><strong>";
+         if ($wakecomputer == '0') {
+            echo $LANG['plugin_fusioninventory']['errors'][2]." !";
+         } else {
+            echo $LANG['plugin_fusioninventory']['errors'][1]." !";
+         }
+         echo "</strong></td>";
+         echo "</tr>";
+         echo "</table>";
+         echo "</center>";
+         return false;
+      }
+      return true;
+   }
+
 }
 
 ?>

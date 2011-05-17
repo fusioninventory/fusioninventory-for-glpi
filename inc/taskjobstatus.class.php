@@ -357,6 +357,8 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       $a_input['comment'] = $message;
       $PluginFusioninventoryTaskjoblog->add($a_input);
 
+      $PluginFusioninventoryTaskjob->getFromDB($this->fields['plugin_fusioninventory_taskjobs_id']);
+      $PluginFusioninventoryTaskjob->reinitializeTaskjobs($PluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']);
    }
 
    
