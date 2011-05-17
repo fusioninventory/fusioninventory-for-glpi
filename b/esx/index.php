@@ -32,6 +32,11 @@
    ----------------------------------------------------------------------
  */
 
+//This call is to check that the ESX inventory service is up and running
+if ($_GET['status']) {
+   return 'ok';
+}
+
 if(!defined('GLPI_ROOT')) {
    define('GLPI_ROOT', '../../../..');
 }

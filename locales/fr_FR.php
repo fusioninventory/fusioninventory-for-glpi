@@ -36,7 +36,7 @@ $title="FusionInventory INVENTORY";
 
 $LANG['plugin_fusinvinventory']['title'][0]="$title";
 $LANG['plugin_fusinvinventory']['title'][1]="Inventaire local";
-$LANG['plugin_fusinvinventory']['title'][2]="Inventaire distant Vmware";
+$LANG['plugin_fusinvinventory']['title'][2]="Inventaire distant VMware";
 
 
 $LANG['plugin_fusinvinventory']['setup'][17]="Le plugin ".$title." a besoin que le plugin FusionInventory soit activé pour être lui-même activé.";
@@ -92,5 +92,5 @@ $LANG['plugin_fusinvinventory']['antivirus'][3]="A jour";
 
 $LANG['plugin_fusinvinventory']['computer'][0]="Dernier inventaire";
 
-$LANG['plugin_fusinvinventory']['vmwareesx'][0]="Hôte Vmware";
+$LANG['plugin_fusinvinventory']['vmwareesx'][0]="Hôte VMware";
 ?>
