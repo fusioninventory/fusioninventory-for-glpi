@@ -49,23 +49,34 @@ class PluginFusinvdeployInstall extends CommonDBTM {
    static function showForm($id){
       global $CFG_GLPI;
 
+      if(isset($_POST["glpi_tab"])) {
+         switch($_POST["glpi_tab"]){
+            case -1 :
+               $render = "allinstall";
+               break;
+            default:
+               $render = "install";
+               break;
+         }
+      }
+
       // Display front JS
       echo "<table class='deploy_extjs'>
             <thead>
                <tr>
                   <th colspan='2'>
                      ".PluginFusinvdeployCheck::getTypeName()."
-                     <a href=\"javascript:showHideDiv('installCheck','installcheckimg',
+                     <a href=\"javascript:showHideDiv('".$render."Check','".$render."checkimg',
                         '".$CFG_GLPI["root_doc"]."/pics/deplier_down.png',
                         '".$CFG_GLPI["root_doc"]."/pics/deplier_up.png')\">
-                     <img alt='' name='installcheckimg'
+                     <img alt='' name='".$render."checkimg'
                         src='".$CFG_GLPI["root_doc"]."/pics/deplier_up.png'>
                   </th>
                </tr>
             </thead>
             <tbody>
                <tr>
-                  <td id='installCheck'>
+                  <td id='".$render."Check'>
                   </td>
                </tr>
             </tbody>
@@ -77,17 +88,17 @@ class PluginFusinvdeployInstall extends CommonDBTM {
                <tr>
                   <th colspan='2'>
                      ".PluginFusinvdeployFile::getTypeName()."
-                     <a href=\"javascript:showHideDiv('installFile','installfileimg',
+                     <a href=\"javascript:showHideDiv('".$render."File','".$render."fileimg',
                         '".$CFG_GLPI["root_doc"]."/pics/deplier_down.png',
                         '".$CFG_GLPI["root_doc"]."/pics/deplier_up.png')\">
-                     <img alt='' name='installfileimg'
+                     <img alt='' name='".$render."fileimg'
                         src='".$CFG_GLPI["root_doc"]."/pics/deplier_up.png'>
                   </th>
                </tr>
             </thead>
             <tbody>
                <tr>
-                  <td id='installFile'></td></td>
+                  <td id='".$render."File'></td></td>
                </tr>
             </tbody>
          </table>";
@@ -98,10 +109,10 @@ class PluginFusinvdeployInstall extends CommonDBTM {
                <tr>
                   <th colspan='2'>
                      ".PluginFusinvdeployAction::getTypeName()."
-                     <a href=\"javascript:showHideDiv('installAction','installactionimg',
+                     <a href=\"javascript:showHideDiv('".$render."Action','".$render."actionimg',
                         '".$CFG_GLPI["root_doc"]."/pics/deplier_down.png',
                         '".$CFG_GLPI["root_doc"]."/pics/deplier_up.png')\">
-                     <img alt='' name='installactionimg'
+                     <img alt='' name='".$render."actionimg'
                         src='".$CFG_GLPI["root_doc"]."/pics/deplier_up.png'>
                      </a>
                   </th>
@@ -109,15 +120,15 @@ class PluginFusinvdeployInstall extends CommonDBTM {
             </thead>
             <tbody>
                <tr>
-                  <td id='installAction'></td>
+                  <td id='".$render."Action'></td>
                </tr>
             </tbody>
          </table>";
 
       // Include JS
-      require_once GLPI_ROOT."/plugins/fusinvdeploy/js/package_check.front.php";
-      require_once GLPI_ROOT."/plugins/fusinvdeploy/js/package_file.front.php";
-      require_once GLPI_ROOT."/plugins/fusinvdeploy/js/package_action.front.php";
+      require GLPI_ROOT."/plugins/fusinvdeploy/js/package_check.front.php";
+      require GLPI_ROOT."/plugins/fusinvdeploy/js/package_file.front.php";
+      require GLPI_ROOT."/plugins/fusinvdeploy/js/package_action.front.php";
    }
 
 }

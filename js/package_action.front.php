@@ -58,6 +58,16 @@ $field_height = 70;
 // Render div
 if(isset($_POST["glpi_tab"])) {
    switch($_POST["glpi_tab"]){
+      case -1 :
+         switch(get_class($this)) {
+            case "PluginFusinvdeployInstall":
+               $render = "allinstall";
+               break;
+            case "PluginFusinvdeployUninstall":
+               $render = "alluninstall";
+               break;
+         }
+         break;
       case 2 :
          $render = "install";
          break;

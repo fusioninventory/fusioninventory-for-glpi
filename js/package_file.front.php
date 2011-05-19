@@ -56,6 +56,16 @@ $label_width = 100;
 // Render div
 if(isset($_POST["glpi_tab"])) {
    switch($_POST["glpi_tab"]){
+      case -1 :
+         switch(get_class($this)) {
+            case "PluginFusinvdeployInstall":
+               $render = "allinstall";
+               break;
+            case "PluginFusinvdeployUninstall":
+               $render = "alluninstall";
+               break;
+         }
+         break;
       case 2 :
          $render = "install";
          break;
@@ -68,9 +78,7 @@ if(isset($_POST["glpi_tab"])) {
 
 $JS = <<<JS
 
-Ext.QuickTips.init();
-
-var msg = function(title, msg){
+var {$render}msg = function(title, msg){
    Ext.Msg.show({
       title          : title,
       msg               : msg,
@@ -347,7 +355,7 @@ var {$render}fileForm = new Ext.FormPanel({
             url : '../ajax/package_file.save.php?package_id={$id}&render={$render}',
             waitMsg: 'Chargement du fichier...',
             success: function({$render}fileForm, o){
-               msg('Traitement du fichier',o.result.msg);
+               {$render}msg('Traitement du fichier',o.result.msg);
                {$render}fileStore.reload();
                {$render}fileForm.reset();
                {$render}fileGrid.getSelectionModel().clearSelections();
@@ -388,7 +396,7 @@ var {$render}fileForm = new Ext.FormPanel({
             url : '../ajax/package_file.update.php?package_id={$id}&render={$render}',
             waitMsg: 'Chargement du fichier...',
             success: function({$render}fileForm, o){
-               msg('Traitement du fichier',o.result.msg);
+               {$render}msg('Traitement du fichier',o.result.msg);
                {$render}fileStore.reload();
                {$render}fileForm.reset();
                {$render}fileGrid.getSelectionModel().clearSelections();
