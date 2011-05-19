@@ -37,11 +37,11 @@ include (GLPI_ROOT."/inc/includes.php");
 $plugin = new Plugin();
 if ($plugin->isActivated('fusinvdeploy')) {
    //Only process response if GET HTTP request indicates an agent and an action
-   if (isset($_GET['d']) && isset($_GET['a'])) {
-      switch ($_GET['a']) {
+   if (isset($_GET['machineid']) && isset($_GET['action'])) {
+      switch ($_GET['action']) {
          //Get jobs to perform
          case 'getJobs':
-            echo json_encode(PluginFusinvdeployJob::get($_GET['d']));
+            echo json_encode(PluginFusinvdeployJob::get($_GET['machineid']));
             break;
          //Change job status
          case 'setStatus':

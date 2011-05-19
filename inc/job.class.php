@@ -86,18 +86,18 @@ class PluginFusinvdeployJob {
     * @return nothing
     */
    static function update($params = array(),$update_job = true) {
-      $p['d']         = ''; //DeviceId
-      $p['part']      = ''; //fragment downloaded
-      $p['uuid']      = ''; //Task uuid
-      $p['s']         = 'ok'; //status of the task
-      $p['c']         = ''; //current step of processing
-      $p['msg']       = ''; //Message to be logged
+      $p['machineid']      = ''; //DeviceId
+      $p['part']           = ''; //fragment downloaded
+      $p['uuid']           = ''; //Task uuid
+      $p['status']         = 'ok'; //status of the task
+      $p['currentStep']    = ''; //current step of processing
+      $p['msg']            = ''; //Message to be logged
       foreach ($params as $key => $value) {
          $p[$key] = $value;
       }
 
       //Get the agent ID by his deviceid
-      if ($agents_id = PluginFusinvdeployJob::getAgentByDeviceID($p['d'])) {
+      if ($agents_id = PluginFusinvdeployJob::getAgentByDeviceID($p['machineid'])) {
          
          $job = PluginFusioninventoryTaskjoblog::getByUniqID($p['uuid']);
          
@@ -111,10 +111,10 @@ class PluginFusinvdeployJob {
          $tmp['items_id']                                = $job['items_id'];
          $tmp['comment']                                 = $p['msg'];
          $tmp['date']                                    = date("Y-m-d H:i:s");
-         if ($p['s'] == 'ko') {
+         if ($p['status'] == 'ko') {
             $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_ERROR;
          } else {
-            if ($p['c'] == '') {
+            if ($p['currentStep'] == '') {
                $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_OK;
             } else {
                $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_RUNNING;
