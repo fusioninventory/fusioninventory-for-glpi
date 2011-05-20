@@ -174,7 +174,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
             if (!$testMode) { # NO SQL
                $PluginFusinvdeployFilepart->add(
                      array(
-                        'name'                          => $filename,
+                        'name'                          => $filename.'.gz',
                         'sha512'                        => $sha512,
                         'plugin_fusinvdeploy_orders_id' => $order_id,
                         'plugin_fusinvdeploy_files_id'  => $file_id)
