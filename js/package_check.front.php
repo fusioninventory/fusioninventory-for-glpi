@@ -103,12 +103,8 @@ var {$render}checkColumns =  [{
    id: '{$render}value',
    header: '{$LANG['plugin_fusinvdeploy']['form']['label'][2]}',
    width: {$column_width[3]},
-   dataIndex: '{$render}value'
-}, {
-   id: '{$render}unit',
-   header: '{$LANG['plugin_fusinvdeploy']['form']['label'][3]}',
-   width: {$column_width[4]},
-   dataIndex: '{$render}unit'
+   dataIndex: '{$render}value',
+   renderer: {$render}renderValue
 }];
 
 
@@ -136,6 +132,10 @@ function {$render}renderType(val) {
       case '{$chkConst['FREE_SPACE']}':
          return '{$LANG['plugin_fusinvdeploy']['form']['check'][7]}';
    }
+}
+
+function {$render}renderValue(val, meta, record) {
+   return val+' '+record.data.installunit;
 }
 
 
@@ -188,8 +188,7 @@ var {$render}checkGrid = new Ext.grid.GridPanel({
             {$render}id : '',
             {$render}type : '',
             {$render}path: '',
-            {$render}value: '',
-            {$render}unit: ''
+            {$render}value: ''
          });
          {$render}checkGridStore.insert(0,u);
          {$render}checkGrid.getSelectionModel().selectFirstRow();
@@ -276,10 +275,11 @@ var {$render}fieldset_item_FreespaceGreater = [{
       store: new Ext.data.ArrayStore({
          fields: ['name', 'value'],
          data: [
-            ['{$LANG['common'][82]}', 'Mio']
+            ['{$LANG['common'][82]}', 'Mio'],
+            ['Go', 'Go']
          ]
       }),
-      value: 'Mb',
+      value: 'Mio',
       mode: 'local',
       triggerAction: 'all'
    }
@@ -300,10 +300,11 @@ var {$render}fieldset_item_FileSize = [{
       store: new Ext.data.ArrayStore({
          fields: ['name', 'value'],
          data: [
-            ['{$LANG['common'][82]}', 'Mb']
+            ['{$LANG['common'][82]}', 'Mio'],
+            ['Go', 'Go']
          ]
       }),
-      value: 'Mb',
+      value: 'Mio',
       mode: 'local',
       triggerAction: 'all'
    }
