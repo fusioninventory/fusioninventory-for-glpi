@@ -276,7 +276,7 @@ var {$render}fieldset_item_FreespaceGreater = [{
       store: new Ext.data.ArrayStore({
          fields: ['name', 'value'],
          data: [
-            ['{$LANG['common'][82]}', 'Mb']
+            ['{$LANG['common'][82]}', 'Mio']
          ]
       }),
       value: 'Mb',

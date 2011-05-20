@@ -50,7 +50,11 @@ $sql           = "SELECT id as {$render}id,
                       type as {$render}type,
                       path as {$render}path,
                       value as {$render}value,
-                      IF (type = 'freespaceGreater' OR type = 'fileSize', '".$LANG['common'][82]."', '') as {$render}unit
+                      IF (
+                        type = 'freespaceGreater'
+                        OR type = 'fileSizeLower'
+                        OR type = 'fileSizeGreater'
+                        OR type = 'fileSizeEqual' , '".$LANG['common'][82]."', '') as {$render}unit
                    FROM `glpi_plugin_fusinvdeploy_checks`
                    WHERE `plugin_fusinvdeploy_orders_id` = '$order_id'";
 
