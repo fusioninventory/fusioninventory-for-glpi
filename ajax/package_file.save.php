@@ -73,7 +73,6 @@ logDebug($_POST);
 	   
 	   $sum 		= hash_file('sha512', $_FILES['file']['tmp_name']);
 	   $shortsum 	= substr($sum,0,6);
-	   $extension 	= $PluginFusinvdeployFile->getExtension($_POST['filename']);
 	   $filename   	= $_POST['filename'];
 	  
 	  
@@ -96,7 +95,6 @@ logDebug($_POST);
 	  $sum 			= hash_file('sha512', $_POST['url']);
 	  $shortsum 	= substr($sum,0,6);
       $filename     = $_POST['filename'];
-      $extension	= $PluginFusinvdeployFile->getExtension($_POST['filename']);
 	  
 	  $Sp_parts		= $PluginFusinvdeployFile->getNumberOfPartsFromFilesize(filesize($_POST['url']));
 	  $Sp_file 		= $_POST['url'];
@@ -113,7 +111,6 @@ logDebug($_POST);
                   'sha512'                        => $sum,
                   'shortsha512'                   => $shortsum,
                   'create_date'                   => date('Y-m-d H:i:s'), 
-                  'type'                          => $extension,
                   'plugin_fusinvdeploy_orders_id' => $order_id);
 
    $file_id	= $PluginFusinvdeployFile->add($data);

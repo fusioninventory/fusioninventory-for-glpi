@@ -110,13 +110,6 @@ class PluginFusinvdeployFile extends CommonDBTM {
    }
    
    
-   function getExtension($file){
-      $extension        = explode(".", $file);
-      $extension        = $extension[count($extension) - 1];
-   
-      return $extension;
-   }
-   
    /**
     * Split a file into fragments
     * @param file_name name of the file to split
