@@ -106,6 +106,8 @@ $LANG['plugin_fusinvdeploy']['form']['action'][0] = "Add";
 $LANG['plugin_fusinvdeploy']['form']['action'][1] = "Delete";
 $LANG['plugin_fusinvdeploy']['form']['action'][2] = "Save";
 $LANG['plugin_fusinvdeploy']['form']['action'][3] = "Select your file";
+$LANG['plugin_fusinvdeploy']['form']['action'][4] = "File saved!";
+$LANG['plugin_fusinvdeploy']['form']['action'][5] = "Or URL";
 
 $LANG['plugin_fusinvdeploy']['form']['title'][0] = "Edit a check";
 $LANG['plugin_fusinvdeploy']['form']['title'][1] = "Add a check";
