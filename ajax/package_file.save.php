@@ -59,62 +59,29 @@ $order_id = PluginFusinvdeployOrder::getIdForPackage($package_id,$render);
 
 if (isset ($_POST["id"]) and !$_POST['id']) {
 
-logDebug($_POST);
+#logDebug($_POST);
+#logDebug($_FILES);
 
   //file uploaded?
+   $filename = null;
    if (isset($_FILES['file']['tmp_name']) and !empty($_FILES['file']['tmp_name'])){
-       if (!isset($_POST['filename'])) {
-         $_POST['filename'] = $_FILES['file']['name'];
-      }
-	   
-	   
-	   // Data for table _files
-	   
-	   
-	   $sum 		= hash_file('sha512', $_FILES['file']['tmp_name']);
-	   $shortsum 	= substr($sum,0,6);
-	   $filename   	= $_POST['filename'];
-	  
-	  
-	   //Data for file spliting script
-	   $Sp_parts	= $PluginFusinvdeployFile->getNumberOfPartsFromFilesize($_FILES['file']['size']);
-	   $Sp_file		= $_FILES['file']['tmp_name'];
-	  
-       //copy($_FILES['file']['tmp_name'], GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/".$sum);
-     
-      
-      
-   //url?   
+      $filename = $_FILES['file']['tmp_name'];
+   } elseif(isset($_POST['filename']) and !empty($_POST['filename'])) {
+      $filename = $_POST['filename'];
    } elseif(isset($_POST['url']) and !empty($_POST['url'])) {
-      if (!isset($_POST['filename'])) {
-         $_POST['filename'] = basename($_POST['url']);
-      }
-      
-	  
-	  
-	  $sum 			= hash_file('sha512', $_POST['url']);
-	  $shortsum 	= substr($sum,0,6);
-      $filename     = $_POST['filename'];
-	  
-	  $Sp_parts		= $PluginFusinvdeployFile->getNumberOfPartsFromFilesize(filesize($_POST['url']));
-	  $Sp_file 		= $_POST['url'];
-	  
-   } else {
-      echo "{success:false, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][15]}\"}";
-      exit();
+      $filename = $_POST['filename'];
    }
-   
-   $data = array( 'name'                          => $_POST['filename'],
-                  'is_p2p'                        => (($_POST['p2p'] != 'false') ? 1 : 0), 
-                  'p2p_retention_days'            => (($_POST['p2p'] != 'false') ? 
-                                                         $_POST['validity'] : 0),
-                  'sha512'                        => $sum,
-                  'shortsha512'                   => $shortsum,
-                  'create_date'                   => date('Y-m-d H:i:s'), 
-                  'plugin_fusinvdeploy_orders_id' => $order_id);
-
-   $file_id	= $PluginFusinvdeployFile->add($data);
-   $PluginFusinvdeployFile->splitfile($Sp_file,$Sp_parts,$order_id,$file_id);
-   
-   echo "{success:true, file:'{$data['name']}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['action'][4]}\"}";
+   if ($filename && $PluginFusinvdeployFile->addFileInRepo(array(
+      'filename' => $filename,
+      'is_p2p' => isset($_POST['p2p']) && $_POST['p2p'] != 'false',
+      'p2p_retention_days' => (isset($_post['p2p']) && ($_post['p2p'] != 'false')) ? $_POST['validity'] : 0,
+      'order_id' => $order_id
+   ))) {
+      print "{success:true, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['action'][4]}\"}";
+exit;
+   } else {
+      print "{success:false, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][15]}\"}";
+exit;
+   }
 }
+print "{success:false, file:'none',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][15]}\"}";

@@ -39,9 +39,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusinvdeployFile extends CommonDBTM {
-   
-   private $split_size = 1000000;
-   
+
    static function getTypeName() {
       global $LANG;
 
@@ -102,57 +100,103 @@ class PluginFusinvdeployFile extends CommonDBTM {
       
       return $files;
    }
-   
-   function getNumberOfPartsFromFilesize($size){
-      
-     return ceil($size / $this->split_size);
-   
+
+
+
+
+   function getDirBySha512 ($sha512) {
+      $first = substr($sha512, 0, 1);
+      $second = substr($sha512, 0, 2);
+
+      return "$first/$second";
    }
-   
-   
-   /**
-    * Split a file into fragments
-    * @param file_name name of the file to split
-    * @param part_num number of fragments to do
-    * @param orders_id indicates the order for which the file is uploaded
-    * @param files_id  the ID of the file updated
-    * @return OK
-    */
-   function splitFile($file_name, $parts_num, $order_id, $file_id) {
-      global $DB;
-      
-      $PluginFusinvdeployFilepart = new PluginFusinvdeployFilepart;
-      
-      $handle = fopen($file_name, 'rb') or die("error opening file");
-      $file_size = filesize($file_name);
-      $parts_size = $this->split_size;
-      $modulus=$file_size % $parts_num;
-      for($i=0;$i<$parts_num;$i++) {
-         if($modulus!=0 & $i==$parts_num-1) {
-            $parts[$i] = fread($handle,$parts_size+$modulus) or die("error reading file");
-         }
-         else {
-            $parts[$i] = fread($handle,$parts_size) or die("error reading file");
-         }
+
+   function registerFile ($repoPath, $filePath) {
+      $sha512 = hash_file('sha512', $filePath);
+      $shortSha512 = substr($sha512, 0, 6);
+
+      $dir = $repoPath.'/'.$this->getDirBySha512($sha512);
+
+      if (!file_exists ($dir)) {
+         mkdir($dir, 0700, true);
+      }
+      copy ($filePath, $dir.'/'.$sha512.'.gz');
+
+
+
+
+      return $sha512;
+   }
+
+   function addFileInRepo ($params) {
+
+      $PluginFusinvdeployFilepart = new PluginFusinvdeployFilepart();
+
+      $filename = $params['filename'];
+      $is_p2p = $params['is_p2p'];
+      $p2p_retention_days = $params['p2p_retention_days'];
+      $order_id = $params['order_id'];
+      $testMode = isset($params['testMode']);
+
+      $maxPartSize = 1024;
+      $repoPath = GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/repository/";
+      $tmpFile = GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/part.tmp";
+
+      $sha512 = $this->registerFile($repoPath, $filename);
+
+      if (!$testMode) { # NO SQL
+         $file_id = $this->add(array(
+                  'name'                          => $filename,
+                  'is_p2p'                        => $is_p2p,
+                  'p2p_retention_days'            => $is_p2p_retention_days,
+                  'sha512'                        => $sha512,
+                  'shortsha512'                   => substr($sha512, 0, 6),
+                  'create_date'                   => date('Y-m-d H:i:s'),
+                  'plugin_fusinvdeploy_orders_id' => $order_id
+                  ));
       }
 
-      fclose($handle) or die("error closing file handle");
-      for($i=0;$i<$parts_num;$i++) {
-         $filename = "splited_".time()."_order_{$order_id}_file_{$file_id}_{$i}.gz";
-         $part_handle = fopen(GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/{$filename}", 'wb') 
-            or die("error opening file for writing");
-         fwrite($part_handle,gzencode($parts[$i])) or die("error writing splited file");
-            
-         $sum       = hash_file('sha512', GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/".$filename);
-         $part_data = array('name'                          => $filename,
-                            'sha512'                        => $sum,
-                            'order'                         => $i, 
-                            'plugin_fusinvdeploy_orders_id' => $order_id, 
-                            'plugin_fusinvdeploy_files_id'  => $file_id);  
-         
-         $PluginFusinvdeployFilepart->add($part_data);
-      }
-      return 'OK';
+
+
+
+      $fdIn = fopen ( $filename , 'rb' );
+
+      $partCpt = 0;
+      $currentPartSize = 0;
+      $fdPart = null;
+      do {
+         if (($currentPartSize > 0 && feof($fdIn)) || $currentPartSize>= $maxPartSize) {
+            gzclose ($fdPart);
+
+            $fdPart = null;
+            $sha512 = $this->registerFile ($repoPath, $tmpFile);
+
+            if (!$testMode) { # NO SQL
+               $PluginFusinvdeployFilepart->add(
+                     array(
+                        'name'                          => $filename,
+                        'sha512'                        => $sha512,
+                        'plugin_fusinvdeploy_orders_id' => $order_id,
+                        'plugin_fusinvdeploy_files_id'  => $file_id)
+                     );
+            }
+
+            $currentPartSize = 0;
+         }
+         if (!feof($fdIn)) {
+            if (!$fdPart) {
+               $fdPart = gzopen ($tmpFile, 'w9');
+            }
+
+            $data = fread ( $fdIn, 1024 );
+            gzwrite($fdPart, $data, strlen($data));
+            $currentPartSize++;
+         }
+      } while (!feof($fdIn) || $fdPart);
+
+      unlink($filename);
+      unlink($tmpFile);
+      return $file_id;
    }
 
 }
