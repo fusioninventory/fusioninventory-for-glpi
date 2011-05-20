@@ -255,7 +255,7 @@ class PluginFusinvdeployAction extends CommonDBTM {
 
       foreach($params as $param_key => $param_value) {
          $new_key         = preg_replace('#^'.$render.'#','',$param_key);
-         $params[$new_key] = $param_value;
+         $params[$new_key] = mysql_escape_string($param_value);
       }
 
       $render_type   = PluginFusinvdeployOrder::getRender($render);
@@ -293,6 +293,7 @@ class PluginFusinvdeployAction extends CommonDBTM {
             }
 
             $data['id'] = $items_id;
+
             $itemtype->update($data);
             $res = "{success:true}";
          } else {

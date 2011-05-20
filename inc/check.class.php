@@ -64,7 +64,7 @@ class PluginFusinvdeployCheck extends CommonDBTM {
     */
    static function cleanForPackage($orders_id) {
       global $DB;
-      $query = "DELETE FROM `glpi_plugin_fusinvdeploy_checks` 
+      $query = "DELETE FROM `glpi_plugin_fusinvdeploy_checks`
                 WHERE `plugin_fusinvdeploy_orders_id`='$orders_id'";
       $DB->query($query);
    }
@@ -77,18 +77,18 @@ class PluginFusinvdeployCheck extends CommonDBTM {
    static function getForOrder($orders_id) {
       $results = getAllDatasFromTable('glpi_plugin_fusinvdeploy_checks',
                                       "`plugin_fusinvdeploy_orders_id`='$orders_id'");
-      
+
       $checks = array();
       foreach ($results as $result) {
          $tmp['type'] = $result['type'];
          if (isset($result['match'])) {
             $tmp['match'] = $result['match'];
-         } 
+         }
          $tmp['path'] = $result['path'];
          $tmp['value'] = $result['value'];
          $checks[] = $tmp;
       }
-      
+
       return $checks;
    }
 }
