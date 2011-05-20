@@ -434,6 +434,7 @@ var {$render}Command_fieldset_item_PluginFusinvdeployAction_Message = [{
       xtype : 'combo',
       valueField: 'name',
       displayField: 'value',
+      width: 215,
       emptyText : '{$LANG['plugin_fusinvdeploy']['form']['label'][0]}',
       store: new Ext.data.ArrayStore({
          fields: ['name', 'value'],
