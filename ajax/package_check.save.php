@@ -53,8 +53,11 @@ $order_id = PluginFusinvdeployOrder::getIdForPackage($package_id,$render);
 
 $check = new PluginFusinvdeployCheck;
 
-if (($_POST['type'] == 'fileSize'
-      || $_POST['type'] == 'dreespaceGreater')
+if (($_POST['type'] == 'fileSizeGreater'
+      || $_POST['type'] == 'fileSizelower'
+      || $_POST['type'] == 'fileSizeEqual'
+      || $_POST['type'] == 'freespaceGreater'
+   )
          && $_POST['unit'] == 'Go') {
    $_POST['value'] *= 1024;
 }
