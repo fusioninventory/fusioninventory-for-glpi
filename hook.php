@@ -35,7 +35,7 @@
 // ----------------------------------------------------------------------
 
 function plugin_fusinvdeploy_install() {
-   include (GLPI_ROOT . "/plugins/fusinvdeploy/install/install.php");
+   include_once (GLPI_ROOT . "/plugins/fusinvdeploy/install/install.php");
    pluginFusinvdeployInstall();
 
    return true;
@@ -45,7 +45,7 @@ function plugin_fusinvdeploy_install() {
 
 // Uninstall process for plugin : need to return true if succeeded
 function plugin_fusinvdeploy_uninstall() {
-   include (GLPI_ROOT . "/plugins/fusinvdeploy/install/install.php");
+   include_once (GLPI_ROOT . "/plugins/fusinvdeploy/install/install.php");
    pluginFusinvdeployUninstall();
 }
 
@@ -60,7 +60,7 @@ function plugin_fusinvdeploy_uninstall() {
 **/
 function plugin_fusinvdeploy_needUpdate() {
    $version = "2.3.0";
-   include (GLPI_ROOT . "/plugins/fusinvdeploy/install/update.php");
+   include_once (GLPI_ROOT . "/plugins/fusinvdeploy/install/update.php");
    $version_detected = pluginFusinvdeployGetCurrentVersion($version);
    if ((isset($version_detected)) AND ($version_detected != $version)) {
       return 1;
