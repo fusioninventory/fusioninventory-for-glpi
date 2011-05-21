@@ -101,7 +101,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
 
          // Link computer to agent FusionInventory
          $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-         $PluginFusioninventoryAgent->setAgentWithComputerid($items_id, $xml->DEVICEID);
+         $PluginFusioninventoryAgent->setAgentWithComputerid($items_id, addslashes_deep($xml->DEVICEID));
 
          // Transfer agent entity
          $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
@@ -137,7 +137,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
 
             // Link computer to agent FusionInventory
             $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-            $PluginFusioninventoryAgent->setAgentWithComputerid($items_id, $xml->DEVICEID);
+            $PluginFusioninventoryAgent->setAgentWithComputerid($items_id, addslashes_deep($xml->DEVICEID));
 
             // Transfer agent entity
             $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
