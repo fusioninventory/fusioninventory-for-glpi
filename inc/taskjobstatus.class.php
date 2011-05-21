@@ -294,8 +294,10 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
 
       $this->getFromDB($taskjobstatus);
-      $this->fields['state'] = 3;
-      $this->update($this->fields);
+      $input = array();
+      $input['id'] = $this->fields['id'];
+      $input['state'] = 3;
+      $this->update($input);
             
       $a_input = array();
       if ($unknown ==  "1") {

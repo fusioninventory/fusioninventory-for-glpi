@@ -409,10 +409,12 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       if (count($a_ports) == '1') {
          // Put mac and ip to unknown
          $port = current($a_ports);
-         $this->fields['ip'] = $port['ip'];
-         $this->fields['mac'] = $port['mac'];
+         $input = array();
+         $input['id'] = $this->fields['id'];
+         $input['ip'] = $port['ip'];
+         $input['mac'] = $port['mac'];
 
-         $this->update($this->fields);
+         $this->update($input);
          $delete_port = $np->getFromDB($port['id']);
          $np->delete($delete_port, 1);
          return true;

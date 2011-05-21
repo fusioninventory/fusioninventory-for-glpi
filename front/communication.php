@@ -123,7 +123,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
 <REPLY>
 </REPLY>");
 
-         $a_agent = $pta->InfosByKey($pxml->DEVICEID);
+         $a_agent = $pta->InfosByKey(addslashes_deep($pxml->DEVICEID));
 
          // Get taskjob in waiting
          $PluginFusioninventoryCommunication->getTaskAgent($a_agent['id']);

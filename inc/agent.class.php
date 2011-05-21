@@ -293,14 +293,14 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       if (isset($sxml->DEVICEID)) {
          $pta = new PluginFusioninventoryAgent();
-         $a_agent = $pta->find("`device_id`='".$sxml->DEVICEID."'", "", "1");
+         $a_agent = $pta->find("`device_id`='".addslashes_deep($sxml->DEVICEID)."'", "", "1");
          if (empty($a_agent)) {
             $a_input = array();
             if (isset($sxml->TOKEN)) {
-               $a_input['token'] = $sxml->TOKEN;
+               $a_input['token'] = addslashes_deep($sxml->TOKEN);
             }
-            $a_input['name'] = $sxml->DEVICEID;
-            $a_input['device_id'] = $sxml->DEVICEID;
+            $a_input['name'] = addslashes_deep($sxml->DEVICEID);
+            $a_input['device_id'] = addslashes_deep($sxml->DEVICEID);
             $a_input['last_contact'] = date("Y-m-d H:i:s");
             $pta->add($a_input);
             return;
@@ -512,8 +512,10 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $a_version["INVENTORY"] = $versionTmp;
       }
       $a_version[$module] = $version;
-      $this->fields['version'] = exportArrayToDB($a_version);
-      $this->update($this->fields);
+      $input = array();
+      $input['id'] = $this->fields['id'];
+      $input['version'] = exportArrayToDB($a_version);
+      $this->update($input);
    }
 
 }

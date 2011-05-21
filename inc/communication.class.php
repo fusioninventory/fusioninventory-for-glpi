@@ -121,7 +121,7 @@ class PluginFusioninventoryCommunication {
       $errors = '';
 
       $xmltag = (string)$this->sxml->QUERY;
-      $agent = $PluginFusioninventoryAgent->InfosByKey($this->sxml->DEVICEID);
+      $agent = $PluginFusioninventoryAgent->InfosByKey(addslashes_deep($this->sxml->DEVICEID));
       if ($xmltag == "PROLOG") {
          return false;
       }
@@ -129,9 +129,9 @@ class PluginFusioninventoryCommunication {
          return true;
       }
       if (isset($this->sxml->CONTENT->MODULEVERSION)) {
-         $PluginFusioninventoryAgent->setAgentVersions($agent['id'], $xmltag, (string)$this->sxml->CONTENT->MODULEVERSION);
+         $PluginFusioninventoryAgent->setAgentVersions($agent['id'], $xmltag, addslashes_deep((string)$this->sxml->CONTENT->MODULEVERSION));
       } else if (isset($this->sxml->CONTENT->VERSIONCLIENT)) {
-         $version = str_replace("FusionInventory-Agent_", "", (string)$this->sxml->CONTENT->VERSIONCLIENT);
+         $version = str_replace("FusionInventory-Agent_", "", addslashes_deep((string)$this->sxml->CONTENT->VERSIONCLIENT));
          $PluginFusioninventoryAgent->setAgentVersions($agent['id'], $xmltag, $version);
       }
 
