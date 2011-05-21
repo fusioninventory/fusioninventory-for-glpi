@@ -156,6 +156,7 @@ class PluginFusioninventoryCommunication {
       }
       $result=true;
       if ($errors != '') {
+         echo $errors;
          if (isset($_SESSION['glpi_plugin_fusioninventory_processnumber'])) {
             $result=true;
          } else {
