@@ -1275,6 +1275,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
     */
    function verifyDefinitionActions($items_id) {
       $this->getFromDB($items_id);
+      $input = array();
+      $input['id'] = $this->fields['id'];
       $a_definitions = importArrayFromDB($this->fields['definition']);
       foreach ($a_definitions as $num=>$data) {
          $classname = key($data);
@@ -1284,9 +1286,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          }
       }
       if (count($a_definitions) == '0') {
-         $this->fields['definition'] = '';
+         $input['definition'] = '';
       } else {
-         $this->fields['definition'] = exportArrayToDB($a_definitions);
+         $input['definition'] = exportArrayToDB($a_definitions);
       }
       $a_actions = importArrayFromDB($this->fields['action']);
       foreach ($a_actions as $num=>$data) {
@@ -1299,11 +1301,11 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          }
       }
       if (count($a_actions) == '0') {
-         $this->fields['action'] = '';
+         $input['action'] = '';
       } else {
-         $this->fields['action'] = exportArrayToDB($a_actions);
+         $input['action'] = exportArrayToDB($a_actions);
       }
-      $this->update($this->fields);      
+      $this->update($input);
    }
 
 

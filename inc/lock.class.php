@@ -214,8 +214,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
             $a_lines = $this->find("`tablename`='".$p_table."' AND `items_id`='".$p_items_id."'");
             $a_line = current($a_lines);
             $this->getFromDB($a_line['id']);
-            $this->fields['tablefields'] = exportArrayToDB($fieldsToLock);
-            $this->update($this->fields);
+            $input = array();
+            $input['id'] = $this->fields['id'];
+            $input['tablefields'] = exportArrayToDB($fieldsToLock);
+            $this->update($input);
          } else {                            // no locks any more
             $a_lines = $this->find("`tablename`='".$p_table."' AND `items_id`='".$p_items_id."'");
             $a_line = current($a_lines);
