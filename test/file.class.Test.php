@@ -4,7 +4,9 @@ define('GLPI_ROOT', dirname(__FILE__) . '/../..');
 define('GLPI_PLUGIN_DOC_DIR', '/tmp/test-suite');
 require_once(dirname(__FILE__) . '/../../../inc/commonglpi.class.php');
 require_once(dirname(__FILE__) . '/../../../inc/commondbtm.class.php');
-require_once(dirname(__FILE__) . '/file.class.php');
+require_once(dirname(__FILE__) . "/../inc/file.class.php");
+require_once(dirname(__FILE__) . "/../inc/filepart.class.php");
+
 class StackTest extends PHPUnit_Framework_TestCase
 {
    public function testPluginFusinvdeployFile()
