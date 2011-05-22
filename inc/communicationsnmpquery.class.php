@@ -74,48 +74,49 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $errors = '';
 
       $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $p_CONTENT->PROCESSNUMBER;
-      $PluginFusioninventoryTaskjobstatus->getFromDB($p_CONTENT->PROCESSNUMBER);
-      if ($PluginFusioninventoryTaskjobstatus->fields['state'] != "3") {
-         $PluginFusioninventoryTaskjobstatus->changeStatus($p_CONTENT->PROCESSNUMBER, 2);
-         if ((!isset($p_CONTENT->AGENT->START)) AND (!isset($p_CONTENT->AGENT->END))) {
-            $nb_devices = 0;
-            foreach($p_CONTENT->DEVICE as $child) {
-               $nb_devices++;
-            }
-            $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = $p_CONTENT->PROCESSNUMBER;
-            $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $this->agent['id'];
-            $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
-            $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
-            $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = $nb_devices.' ==fusinvsnmp::1==';
-            $this->addtaskjoblog();
+      if ($PluginFusioninventoryTaskjobstatus->getFromDB($p_CONTENT->PROCESSNUMBER)) {
+         if ($PluginFusioninventoryTaskjobstatus->fields['state'] != "3") {
+            $PluginFusioninventoryTaskjobstatus->changeStatus($p_CONTENT->PROCESSNUMBER, 2);
+            if ((!isset($p_CONTENT->AGENT->START)) AND (!isset($p_CONTENT->AGENT->END))) {
+               $nb_devices = 0;
+               foreach($p_CONTENT->DEVICE as $child) {
+                  $nb_devices++;
+               }
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = $p_CONTENT->PROCESSNUMBER;
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $this->agent['id'];
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = $nb_devices.' ==fusinvsnmp::1==';
+               $this->addtaskjoblog();
 
-         }
-         $errors.=$this->importContent($p_CONTENT);
-         $result=true;
-         if ($errors != '') {
-            if (isset($_SESSION['glpi_plugin_fusioninventory_processnumber'])) {
-               $result=true;
-   //            $PluginFusioninventoryAgentp = new PluginFusioninventoryAgentProcess();
-   //            $PluginFusioninventoryAgentp->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
-   //                                 array('comment' => $errors));
-
-            } else {
-               // It's PROLOG
-               $result=false;
             }
-         }
-         if (isset($p_CONTENT->AGENT->END)) {
-            $PluginFusioninventoryTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
-                                                      $this->agent['id'],
-                                                      'PluginFusioninventoryAgent');
-         }
-         if (isset($p_CONTENT->AGENT->START)) {
-            $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = $p_CONTENT->PROCESSNUMBER;
-            $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $this->agent['id'];
-            $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
-            $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
-            $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==fusinvsnmp::6==';
-            $this->addtaskjoblog();
+            $errors.=$this->importContent($p_CONTENT);
+            $result=true;
+            if ($errors != '') {
+               if (isset($_SESSION['glpi_plugin_fusioninventory_processnumber'])) {
+                  $result=true;
+      //            $PluginFusioninventoryAgentp = new PluginFusioninventoryAgentProcess();
+      //            $PluginFusioninventoryAgentp->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
+      //                                 array('comment' => $errors));
+
+               } else {
+                  // It's PROLOG
+                  $result=false;
+               }
+            }
+            if (isset($p_CONTENT->AGENT->END)) {
+               $PluginFusioninventoryTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
+                                                         $this->agent['id'],
+                                                         'PluginFusioninventoryAgent');
+            }
+            if (isset($p_CONTENT->AGENT->START)) {
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = $p_CONTENT->PROCESSNUMBER;
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $this->agent['id'];
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==fusinvsnmp::6==';
+               $this->addtaskjoblog();
+            }
          }
       }
       return $result;
