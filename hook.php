@@ -140,7 +140,8 @@ function plugin_get_headings_fusinvinventory($item,$withtemplate) {
    switch (get_class($item)) {
       case 'Computer' :
          $array = array ();
-         if ($_GET['id'] > 0) {
+         if ($_GET['id'] > 0
+                AND $withtemplate!='1') {
             $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['xml'][0];
             $array[2] = $LANG['plugin_fusinvinventory']['antivirus'][0];
          }
