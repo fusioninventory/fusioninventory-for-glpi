@@ -480,6 +480,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       $query = "INSERT INTO glpi_networkports_vlans (networkports_id,vlans_id)
                 VALUES ('$p_port','$p_vlan')";
       $DB->query($query);
+      $array = Dropdown::getDropdownName("glpi_vlans", $p_vlan, 1);
+      PluginFusinvsnmpNetworkPortLog::networkport_addLog($p_port, $array['name']." [".$array['comment']."]", 'vmvlan');
    }
 
 
@@ -508,6 +510,7 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
          $query="DELETE FROM `glpi_networkports_vlans`
                  WHERE `networkports_id`='$p_port';";
       }
+      PluginFusinvsnmpNetworkPortLog::networkport_addLog($p_port, '', 'vmvlan');
       $DB->query($query);
 	}
 
