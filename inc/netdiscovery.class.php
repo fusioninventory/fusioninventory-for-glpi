@@ -70,8 +70,8 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
          $PluginFusinvsnmpIPRange->getFromDB($iprange_id);
          $s = $PluginFusinvsnmpIPRange->getIp2long($PluginFusinvsnmpIPRange->fields['ip_start']);
          $e = $PluginFusinvsnmpIPRange->getIp2long($PluginFusinvsnmpIPRange->fields['ip_end']);
-         $a_subnet_nbip[$iprange_id] = $e-$s+1;
-         $count_ip += $e-$s+1;
+         $a_subnet_nbip[$iprange_id] = $e-$s;
+         $count_ip += $e-$s;
       }
 
       //list all agents
@@ -164,7 +164,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
             } else {
                $s = $PluginFusinvsnmpIPRange->getIp2long($PluginFusinvsnmpIPRange->fields['ip_start']);
                $e = $PluginFusinvsnmpIPRange->getIp2long($PluginFusinvsnmpIPRange->fields['ip_end']);
-               $nbIpAgent = ceil(($e-$s+1) / count($a_agentListComplete));
+               $nbIpAgent = ceil(($e-$s) / count($a_agentListComplete));
                $iptimes = 0;
 
                foreach ($a_agentListComplete as $agent_id) {
@@ -179,7 +179,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
                   $a_input['uniqid'] = $uniqid;
 
                   $a_input['items_id'] = $iprange_id;
-                  if (($iptimes + $nbIpAgent) > ($e-$s+1)) {
+                  if (($iptimes + $nbIpAgent) > ($e-$s)) {
                      $a_input['specificity'] = $iptimes."-".($e-$s);
                   } else {
                      $a_input['specificity'] = $iptimes."-".($iptimes + $nbIpAgent);
@@ -259,14 +259,14 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
 
                   $a_input['items_id'] = $iprange_id;
                   $nbIpAgent = $numberIpByAgent - $nbIpadded;
-                  if (($iptimes + $nbIpAgent) > ($e-$s+1)) {
+                  if (($iptimes + $nbIpAgent) > ($e-$s)) {
                      $a_input['specificity'] = $iptimes."-".($e-$s);
                      $nbIpadded = ($e-$s) - $iptimes;
                      $ip_id = array_shift($a_iprangelistTmp);
                      $iptimes = 0;
                   } else {
                      $a_input['specificity'] = $iptimes."-".($iptimes + $nbIpAgent);
-                     $iptimes += $nbIpAgent;
+                     $iptimes += $nbIpAgent+1;
                      $nbIpadded = 0;
                      $break = 1;
                   }
@@ -277,64 +277,6 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
                      $a_input['date'] = date("Y-m-d H:i:s");
                      $PluginFusioninventoryTaskjoblog->add($a_input);
                      unset($a_input['state']);
-
-//                  if ($break == "1") {
-//                     $break = 0;
-//                     break;
-//                  }
-
-//                  if (($e-$s+1 - $nbIpRangeip) == $nbIpAgent) {
-//                     $a_input['items_id'] = $iprange_id;
-//                     $a_input['specificity'] = ($iptimes*$nbIpAgent)."-".($nbIpAgent*($iptimes+1));
-//                     $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
-//                        //Add log of taskjob
-//                        $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
-//                        $a_input['state'] = 7;
-//                        $a_input['date'] = date("Y-m-d H:i:s");
-//                        $PluginFusioninventoryTaskjoblog->add($a_input);
-//                        unset($a_input['state']);
-//                     if ($ip_id == current($a_iprangelist)) {
-//                        $ip_id = next($a_iprangelist);
-//                     } else {
-//                        $ip_id = current($a_iprangelist);
-//                     }
-//                     $iptimes = 0;
-//                     $nbIpRangeip = 0;
-//                     break;
-//                  } else if (($e-$s+1 - $nbIpRangeip) < $nbIpAgent) {
-//                     $a_input['items_id'] = $iprange_id;
-//                     $a_input['specificity'] = $iptimes."-".($e-$s+1 - $nbIpRangeip);
-//                     $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
-//                        //Add log of taskjob
-//                        $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
-//                        $a_input['state'] = 7;
-//                        $a_input['date'] = date("Y-m-d H:i:s");
-//                        $PluginFusioninventoryTaskjoblog->add($a_input);
-//                        unset($a_input['state']);
-//                     if ($ip_id == current($a_iprangelist)) {
-//                        $ip_id = next($a_iprangelist);
-//                     } else {
-//                        $ip_id = current($a_iprangelist);
-//                     }
-//                     $iptimes = 0;
-//                     $nbIpAgent -= ($e-$s+1 - $nbIpRangeip);
-//                     $nbIpRangeip = 0;
-//                  } else if (($e-$s+1 - $nbIpRangeip) > $nbIpAgent) {
-//                     $a_input['items_id'] = $iprange_id;
-//                     $a_input['specificity'] = ($iptimes*$nbIpAgent)."-".($nbIpAgent*($iptimes+1));
-//                     $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
-//                        //Add log of taskjob
-//                        $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
-//                        $a_input['state'] = 7;
-//                        $a_input['date'] = date("Y-m-d H:i:s");
-//                        $PluginFusioninventoryTaskjoblog->add($a_input);
-//                        unset($a_input['state']);
-//                     $ip_id = $iprange_id;
-//                     $iptimes++;
-//                     $nbIpRangeip = ($nbIpRangeip + $nbIpAgent);
-//                     $nbIpAgent = 0;
-//                     break;
-//                  }
                }
             }
             $input_taskjob = array();
