@@ -608,6 +608,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $PluginFusioninventoryTask = new PluginFusioninventoryTask();
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
 
+      // Detect if running task have a problem
+      $PluginFusioninventoryTaskjob->CronCheckRunnningJobs();
+
       $_SESSION['glpi_plugin_fusioninventory']['agents'] = array();
 
       // *** Search task ready
@@ -673,10 +676,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          }
       }
       unset($_SESSION['glpi_plugin_fusioninventory']['agents']);
-
-      // Detect if running task have a problem
-      $PluginFusioninventoryTaskjob->CronCheckRunnningJobs();
-
 
       if ($return == '1') {
          return 1;
@@ -1258,6 +1257,22 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             }
          }         
       }
+
+
+      // If taskjob.status = 1 and all taskjobstatus are finished, so reinitializeTaskjobs()
+      $sql = "SELECT *
+      FROM `glpi_plugin_fusioninventory_taskjobs`
+      WHERE (
+         SELECT count( * )
+         FROM glpi_plugin_fusioninventory_taskjobstatus
+         WHERE plugin_fusioninventory_taskjobs_id = `glpi_plugin_fusioninventory_taskjobs`.id
+         AND glpi_plugin_fusioninventory_taskjobstatus.state <3) = 0
+       AND `glpi_plugin_fusioninventory_taskjobs`.`status`=1";
+     if ($result=$DB->query($sql)) {
+			while ($data=$DB->fetch_array($result)) {
+            $this->reinitializeTaskjobs($data['plugin_fusioninventory_tasks_id'], '1');
+         }
+     }
    }
 
 
