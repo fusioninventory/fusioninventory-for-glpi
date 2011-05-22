@@ -216,7 +216,9 @@ function appear_array(id){
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
 
       $displayforceend = 0;
-      $a_history = $this->find('`plugin_fusioninventory_taskjobstatus_id` = "'.$PluginFusioninventoryTaskjobstatus->fields['id'].'"', 'id');
+      $a_history = $this->find('`plugin_fusioninventory_taskjobstatus_id` = "'.$PluginFusioninventoryTaskjobstatus->fields['id'].'"', 
+                               'id DESC',
+                               '1');
 
       echo "<tr class='tab_bg_1'>";
       echo "<td id='plusmoins".$PluginFusioninventoryTaskjobstatus->fields["id"]."'><img src='".GLPI_ROOT.
@@ -251,9 +253,14 @@ function appear_array(id){
       echo "</td>";
       echo "</tr>";
 
-      echo "<tr style='display: none;' id='viewfollowup".$PluginFusioninventoryTaskjobstatus->fields["id"]."' class='tab_bg_4'>
-         <td colspan='8'>".$this->showHistoryInDetail($PluginFusioninventoryTaskjobstatus->fields['plugin_fusioninventory_agents_id'], $PluginFusioninventoryTaskjobstatus->fields['uniqid'], "900")."</td>
-      </tr>";      
+      echo "<tr style='display: none;' id='viewfollowup".$PluginFusioninventoryTaskjobstatus->fields["id"]."' class='tab_bg_4'>";
+      ajaxUpdateItemOnEvent('plusmoins'.$PluginFusioninventoryTaskjobstatus->fields["id"],
+                      'viewfollowup'.$PluginFusioninventoryTaskjobstatus->fields["id"],
+                      GLPI_ROOT."/plugins/fusioninventory/ajax/showtaskjoblogdetail.php",
+                      array('agents_id' => $PluginFusioninventoryTaskjobstatus->fields['plugin_fusioninventory_agents_id'],
+                          'uniqid' => $PluginFusioninventoryTaskjobstatus->fields['uniqid']),
+                      array("click"));
+      echo "</tr>";
    }
 
 
