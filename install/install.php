@@ -107,17 +107,6 @@ function pluginFusioninventoryInstall($version) {
    $sql = "DELETE FROM `glpi_displaypreferences`
       WHERE `itemtype`='5168'";
    $DB->query($sql);
-      // bug of purge network port when purge unknown devices
-      $networkPort = new NetworkPort();
-      $sql = "SELECT `glpi_networkports`.`id` as nid FROM `glpi_networkports`
-         LEFT JOIN `glpi_plugin_fusioninventory_unknowndevices`
-            ON `glpi_plugin_fusioninventory_unknowndevices`.`id` = `glpi_networkports`.`items_id`
-         WHERE `itemtype`='PluginFusioninventoryUnknownDevice'
-            AND `glpi_plugin_fusioninventory_unknowndevices`.`id` IS NULL ";
-      $result=$DB->query($sql);
-      while ($data=$DB->fetch_array($result)) {
-         $networkPort->delete(array('id'=>$data['nid']), 1);
-      }
       // Purge network ports have itemtype tp 5153
       $sql = "SELECT * FROM `glpi_networkports`
          WHERE `itemtype`='5153'";
@@ -156,6 +145,18 @@ function pluginFusioninventoryInstall($version) {
    $fields = current($data);
    $plugins_id = $fields['id'];
    PluginFusioninventoryProfile::initProfile('fusioninventory', $plugins_id);
+
+   // bug of purge network port when purge unknown devices
+   $networkPort = new NetworkPort();
+   $sql = "SELECT `glpi_networkports`.`id` as nid FROM `glpi_networkports`
+      LEFT JOIN `glpi_plugin_fusioninventory_unknowndevices`
+         ON `glpi_plugin_fusioninventory_unknowndevices`.`id` = `glpi_networkports`.`items_id`
+      WHERE `itemtype`='PluginFusioninventoryUnknownDevice'
+         AND `glpi_plugin_fusioninventory_unknowndevices`.`id` IS NULL ";
+   $result=$DB->query($sql);
+   while ($data=$DB->fetch_array($result)) {
+      $networkPort->delete(array('id'=>$data['nid']), 1);
+   }
 
    // glpi_plugin_fusioninventory_configs
    $query = "INSERT INTO `glpi_plugin_fusioninventory_configs`
