@@ -70,7 +70,7 @@ $LANG['plugin_fusinvdeploy']['files'][5]="Folder in package";
 
 $LANG['plugin_fusinvdeploy']['packagefiles'][0]="Files linked with package";
 
-$LANG['plugin_fusinvdeploy']['deploystatus'][0]="Deployement state";
+$LANG['plugin_fusinvdeploy']['deploystatus'][0]="Deployment state";
 
 $LANG['plugin_fusinvdeploy']['config'][0]="Address of the GLPI server (without http://)";
 

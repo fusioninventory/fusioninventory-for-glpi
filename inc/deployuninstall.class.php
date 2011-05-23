@@ -2,7 +2,7 @@
 
 
 /*
- * @version $Id: deploymentinstall.class.php 78 2011-03-14 14:38:02Z wnouh $
+ * @version $Id: deployuninstall.class.php 78 2011-03-14 14:38:02Z wnouh $
  ----------------------------------------------------------------------
  FusionInventory
  Coded by the FusionInventory Development Team.
@@ -39,7 +39,7 @@ if(!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusinvdeployDeploymentinstall extends PluginFusinvdeployDeploymentCommon {
-   var $task = 'deploymentinstall';
+class PluginFusinvDeployDeployuninstall extends PluginFusinvdeployDeployCommon {
+   var $task = 'deployuninstall';
 }
 ?>

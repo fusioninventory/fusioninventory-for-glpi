@@ -2,7 +2,7 @@
 
 
 /*
- * @version $Id: deploymentcommon.class.php 116 2011-03-16 08:33:25Z wnouh $
+ * @version $Id: deploycommon.class.php 116 2011-03-16 08:33:25Z wnouh $
  ----------------------------------------------------------------------
  FusionInventory
  Coded by the FusionInventory Development Team.
@@ -42,7 +42,7 @@ if(!defined('GLPI_ROOT')) {
 
 require_once(GLPI_ROOT."/plugins/fusioninventory/inc/communication.class.php");
 
-class PluginFusinvdeployDeploymentCommon extends PluginFusioninventoryCommunication {
+class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication {
    
    // Get all devices and put in taskjobstatus each task for each device for each agent
    function prepareRun($taskjobs_id) {
