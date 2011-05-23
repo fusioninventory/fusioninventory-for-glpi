@@ -112,8 +112,12 @@ function plugin_fusioninventory_install() {
    $version = "2.3.3";
    include (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
    $version_detected = pluginFusioninventoryGetCurrentVersion($version);
-   if ((isset($version_detected)) AND ($version_detected != $version)) {
+   if ((isset($version_detected))
+        AND ($version_detected != $version)
+        AND $version_detected!='0') {
       pluginFusioninventoryUpdate($version_detected);
+   } else if ((isset($version_detected)) AND ($version_detected == $version)) {
+
    } else {
       include (GLPI_ROOT . "/plugins/fusioninventory/install/install.php");
       pluginFusioninventoryInstall($version);
