@@ -216,7 +216,6 @@ class PluginFusinvinventoryInventory {
             $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
 
             self::addDefaultStateIfNeeded($input, false);
-            logDebug($input);
             $items_id = $Computer->add($input);
             $PluginFusinvinventoryLib->startAction($xml, $items_id, '1');
          } else {
