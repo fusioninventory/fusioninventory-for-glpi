@@ -37,7 +37,7 @@ function pluginFusioninventoryGetCurrentVersion($version) {
    if ((!TableExists("glpi_plugin_tracker_config")) &&
       (!TableExists("glpi_plugin_fusioninventory_config")) &&
       (!TableExists("glpi_plugin_fusioninventory_configs"))) {
-      return $version;
+      return '0';
    } else if ((TableExists("glpi_plugin_tracker_config")) ||
          (TableExists("glpi_plugin_fusioninventory_config"))) {
 
