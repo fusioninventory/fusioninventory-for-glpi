@@ -121,7 +121,7 @@ function plugin_fusinvinventory_uninstall() {
 * @return 0 (no need update) OR 1 (need update)
 **/
 function plugin_fusinvinventory_needUpdate() {
-   $version = "2.3.3-1";
+   $version = "2.3.4-1";
    include (GLPI_ROOT . "/plugins/fusinvinventory/install/update.php");
    $version_detected = pluginFusinvinventoryGetCurrentVersion($version);
    if ((isset($version_detected)) 
