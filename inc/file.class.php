@@ -200,5 +200,42 @@ class PluginFusinvdeployFile extends CommonDBTM {
       return $file_id;
    }
 
+   function removeFileInRepo($id) {
+
+      $repoPath = GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/repository/";
+
+      $PluginFusinvdeployFilepart = new PluginFusinvdeployFilepart();
+
+      // Retrieve file informations
+      $this->getFromDB($id);
+
+      // Delete file in folder
+      $sha512 = $this->getField('sha512');
+      $filepart = $PluginFusinvdeployFilepart->getForFile($id);
+      $ids = $PluginFusinvdeployFilepart->getIdsForFile($id);
+
+      unlink($repoPath.$this->getDirBySha512($sha512).'/'.$sha512.'.gz');
+
+      foreach($filepart as $filename => $hash){
+         $dir = $repoPath.$this->getDirBySha512($hash).'/';
+
+         //delete file part
+         unlink($dir.$hash.'.gz');
+      }
+
+      // delete parts objects
+      foreach($ids as $id => $filename){
+         $PluginFusinvdeployFilepart->delete(array('id' =>$id));
+      }
+
+
+
+      // Delete file in DB
+      $this->delete($_POST);
+
+      // Reply to JS
+      echo "{success:true}";
+   }
+
 }
 ?>

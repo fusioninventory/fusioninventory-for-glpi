@@ -1,8 +1,8 @@
 <?php
 /*
  * @version $Id: plugin_callcenter.frontGrid.php 4635 2010-03-26 14:21:15Z SphynXz $
- ------------------------------------------------------------------------- 
- GLPI - Gestionnaire Libre de Parc Informatique 
+ -------------------------------------------------------------------------
+ GLPI - Gestionnaire Libre de Parc Informatique
  Copyright (C) 2003-2008 by the INDEPNET Development Team.
 
  http://indepnet.net/   http://glpi-project.org
@@ -48,34 +48,10 @@ foreach($_POST as $POST_key => $POST_value) {
    $_POST[$new_key] = $POST_value;
 }
 
-$PluginFusinvdeployFile = new PluginFusinvdeployFile();
-$PluginFusinvdeployFilepart = new PluginFusinvdeployFilepart();
-
 if (isset ($_POST["id"]) and $_POST['id']) {
-   // Retrieve file informations
-   $PluginFusinvdeployFile->getFromDB($_POST['id']);
-   
-   // Delete file in folder
-   $sha512 = $PluginFusinvdeployFile->getField('sha512');
-   $filepart = $PluginFusinvdeployFilepart->getForFile($_POST['id']);
-   $ids = $PluginFusinvdeployFilepart->getIdsForFile($_POST['id']);
-   
-   foreach($filepart as $filename => $hash){
-      unlink(GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/".$filename);
-   }
-   
-   foreach($ids as $id => $filename){
-      $PluginFusinvdeployFilepart->delete(array('id' =>$id));
-   }
-   
-   
-   
-   // Delete file in DB
-   $PluginFusinvdeployFile->delete($_POST);
-
-   // Reply to JS
-   echo "{success:true}";
-   exit();
+   $PluginFusinvdeployFile = new PluginFusinvdeployFile();
+   $PluginFusinvdeployFile->removeFileInRepo($_POST["id"]);
 }
+exit;
 
 ?>
