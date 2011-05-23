@@ -649,7 +649,10 @@ function plugin_fusinvsnmp_uninstall() {
 function plugin_fusinvsnmp_needUpdate() {
    include (GLPI_ROOT . "/plugins/fusinvsnmp/install/update.php");
    $version_detected = pluginFusinvsnmpGetCurrentVersion(PLUGIN_FUSIONINVENTORY_VERSION);
-   if ((isset($version_detected)) AND ($version_detected != PLUGIN_FUSIONINVENTORY_VERSION)) {
+   if ((isset($version_detected)) 
+      AND ($version_detected != PLUGIN_FUSIONINVENTORY_VERSION)
+      AND $version_detected!='0') {
+
       return 1;
    } else {
       return 0;
