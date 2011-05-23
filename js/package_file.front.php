@@ -197,8 +197,18 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
          });
          {$render}fileStore.insert(0, {$render}u);
          {$render}fileGrid.getSelectionModel().selectFirstRow();
+         var {$render}rec = {$render}fileGrid.getSelectionModel().getSelected();
+         {$render}fileForm.loadData({$render}rec);
          {$render}unlockForm();
          {$render}fileForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][4]}');
+
+         if({$render}rec.get('{$render}p2p') == 0){
+            Ext.getCmp('{$render}p2p_t').setValue(false);
+            Ext.getCmp('{$render}p2p_f').setValue(true);
+         }else{
+            Ext.getCmp('{$render}p2p_f').setValue(false);
+            Ext.getCmp('{$render}p2p_t').setValue(true);
+         }
       }
    }, '-', {
       text: '{$LANG['plugin_fusinvdeploy']['form']['action'][1]}',
@@ -232,6 +242,7 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
       singleSelect: true,
       listeners: {
          rowselect: function(g, index, ev) {
+            /*
             var {$render}rec = {$render}fileGrid.store.getAt(index);
             {$render}fileForm.loadData({$render}rec);
 
@@ -252,7 +263,7 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
             //Ext.getCmp('{$render}url').setValue('');
             Ext.getCmp('{$render}validity').setValue({$render}rec.get('{$render}validity'));
             {$render}fileForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][5]}');
-
+            */
          }
       }
    })
@@ -302,7 +313,7 @@ var {$render}fileForm = new Ext.FormPanel({
       id: '{$render}p2p',
       xtype: 'radiogroup',
       listeners: {change:{fn:function(){
-      var {$render}radioP2p = {$render}fileForm.getForm().findField('{$render}p2p').getValue();
+         var {$render}radioP2p = {$render}fileForm.getForm().findField('{$render}p2p').getValue();
          if({$render}radioP2p.getGroupValue() == 'false')
             {$render}fileForm.getForm().findField('{$render}validity').setDisabled(true);
          else
@@ -386,6 +397,7 @@ var {$render}fileForm = new Ext.FormPanel({
                {$render}fileStore.reload();
                {$render}fileForm.reset();
                {$render}fileGrid.getSelectionModel().clearSelections();
+               {$render}fileForm.toggleCollapse();
             },
             failure: function({$render}fileForm, action){
                switch (action.failureType) {
