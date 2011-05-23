@@ -62,12 +62,12 @@ class PluginFusinvdeployJob {
                      break;
                   
                   //Install a package
-                  case 'PluginFusinvdeployDeploymentinstall':
+                  case 'PluginFusinvdeployDeployinstall':
                      $ordertype = PluginFusinvdeployOrder::INSTALLATION_ORDER;
                      break;
                   
                   //Uninstall a package
-                  case 'PluginFusinvdeployDeploymentuninstall':
+                  case 'PluginFusinvdeployDeployuninstall':
                      $ordertype = PluginFusinvdeployOrder::UNINSTALLATION_ORDER;
                      break;
                }
