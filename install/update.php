@@ -39,7 +39,7 @@ function pluginFusinvsnmpGetCurrentVersion($version) {
       (!TableExists("glpi_plugin_fusioninventory_config")) &&
       (!TableExists("glpi_plugin_fusinvsnmp_agentconfigs")) &&
       (!TableExists("glpi_plugin_fusinvsnmp_tmp_configs"))) {
-      return $version;
+      return '0';
    } else if ((TableExists("glpi_plugin_tracker_config")) ||
          (TableExists("glpi_plugin_fusioninventory_config"))) {
 
