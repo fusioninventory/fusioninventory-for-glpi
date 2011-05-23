@@ -124,7 +124,9 @@ function plugin_fusinvinventory_needUpdate() {
    $version = "2.3.3-1";
    include (GLPI_ROOT . "/plugins/fusinvinventory/install/update.php");
    $version_detected = pluginFusinvinventoryGetCurrentVersion($version);
-   if ((isset($version_detected)) AND ($version_detected != $version)) {
+   if ((isset($version_detected)) 
+           AND ($version_detected != $version)
+           AND $version_detected!='0') {
       return 1;
    } else {
       return 0;

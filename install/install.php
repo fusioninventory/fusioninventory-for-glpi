@@ -40,9 +40,14 @@ function pluginFusinvinventoryInstall() {
 
    include (GLPI_ROOT . "/plugins/fusinvinventory/install/update.php");
    $version_detected = pluginfusinvinventoryGetCurrentVersion($a_plugin['version']);
-   if ((isset($version_detected)) AND ($version_detected != $a_plugin['version'])) {
+   if ((isset($version_detected))
+           AND ($version_detected != $a_plugin['version'])
+           AND $version_detected!='0') {
+
       // Update
       pluginFusinvinventoryUpdate($version_detected);
+   } else if ((isset($version_detected)) AND ($version_detected == $a_plugin['version'])) {
+      return;
    } else {
       // Installation
       // Add new module in plugin_fusioninventory (core)
