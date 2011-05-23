@@ -775,14 +775,13 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
             $this->assertEquals($Computer->fields['manufacturers_id'], Dropdown::importExternal('Manufacturer', (string)$child->SMANUFACTURER) , 'Difference of Hardware manufacturer, have '.$Computer->fields['manufacturers_id'].' instead '.Dropdown::importExternal('Manufacturer', (string)$child->SMANUFACTURER).' ['.$xmlFile.']');
          } else if ((isset($child->BMANUFACTURER))
-                      AND (!empty($dataSection['BMANUFACTURER']))) {
+                      AND (!empty($child->BMANUFACTURER))) {
 
             $this->assertEquals($Computer->fields['manufacturers_id'], Dropdown::importExternal('Manufacturer', (string)$child->BMANUFACTURER) , 'Difference of Hardware manufacturer, have '.$Computer->fields['manufacturers_id'].' instead '.Dropdown::importExternal('Manufacturer', (string)$child->BMANUFACTURER).' ['.$xmlFile.']');
          }
          if (isset($child->SMODEL)) {
             $ComputerModel = new ComputerModel;
-
-            $this->assertEquals($Computer->fields['computermodels_id'], $ComputerModel->import(array('name'=>(string)$child->SMODEL)) , 'Difference of Hardware model, have '.$Computer->fields['computermodels_id'].' instead '.$ComputerModel->import(array('name'=>(string)$child->SMODEL)).' ['.$xmlFile.']');
+            $this->assertEquals($Computer->fields['computermodels_id'], $ComputerModel->importExternal((string)$child->SMODEL) , 'Difference of Hardware model, have '.$Computer->fields['computermodels_id'].' instead '.$ComputerModel->importExternal((string)$child->SMODEL).' ['.$xmlFile.']');
          }
          if (isset($child->SSN)) {
             if (!empty($child->SSN)) {
@@ -799,12 +798,12 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
             $OperatingSystem = new OperatingSystem;
             if (!strstr((string)$child->OSNAME, "Debian GNU/Linux squeeze/sid ")
                     AND !strstr((string)$child->OSNAME, "Debian GNU/Linux 5.0 ")) {
-               $this->assertEquals($Computer->fields['operatingsystems_id'], $OperatingSystem->import(array('name'=>(string)$child->OSNAME)) , 'Difference of Hardware operatingsystems, have '.$Computer->fields['operatingsystems_id'].' instead '.$OperatingSystem->import(array('name'=>(string)$child->OSNAME)).' ['.$xmlFile.']');
+               $this->assertEquals($Computer->fields['operatingsystems_id'], $OperatingSystem->importExternal((string)$child->OSNAME) , 'Difference of Hardware operatingsystems, have '.$Computer->fields['operatingsystems_id'].' instead '.$OperatingSystem->importExternal((string)$child->OSNAME).' ['.$xmlFile.']');
             }
          }
          if (isset($child->OSVERSION)) {
             $OperatingSystemVersion = new OperatingSystemVersion;
-            $this->assertEquals($Computer->fields['operatingsystemversions_id'], $OperatingSystemVersion->import(array('name'=>(string)$child->OSVERSION)) , 'Difference of Hardware operatingsystemversions, have '.$Computer->fields['operatingsystemversions_id'].' instead '.$OperatingSystemVersion->import(array('name'=>(string)$child->OSVERSION)).' ['.$xmlFile.']');
+            $this->assertEquals($Computer->fields['operatingsystemversions_id'], $OperatingSystemVersion->importExternal((string)$child->OSVERSION) , 'Difference of Hardware operatingsystemversions, have '.$Computer->fields['operatingsystemversions_id'].' instead '.$OperatingSystemVersion->importExternal((string)$child->OSVERSION).' ['.$xmlFile.']');
          }
          if (isset($child->WINPRODID)) {
             $this->assertEquals($Computer->fields['os_licenseid'], (string)$child->WINPRODID , 'Difference of Hardware os_licenseid, have '.$Computer->fields['os_licenseid'].' instead '.(string)$child->WINPRODID.' ['.$xmlFile.']');
@@ -819,9 +818,9 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
          if (isset($child->OSCOMMENTS)) {
             if (strstr($child->OSCOMMENTS, 'Service Pack')) {
                $OperatingSystemServicePack = new OperatingSystemServicePack;
-               $this->assertEquals($Computer->fields['operatingsystemservicepacks_id'], $OperatingSystemServicePack->import(array('name'=>(string)$child->OSCOMMENTS)) , 'Difference of Hardware operatingsystemservicepacks_id, have '.$Computer->fields['operatingsystemservicepacks_id'].' instead '.$OperatingSystemServicePack->import(array('name'=>(string)$child->OSCOMMENTS)).' ['.$xmlFile.']');
+               $this->assertEquals($Computer->fields['operatingsystemservicepacks_id'], $OperatingSystemServicePack->importExternal((string)$child->OSCOMMENTS) , 'Difference of Hardware operatingsystemservicepacks_id, have '.$Computer->fields['operatingsystemservicepacks_id'].' instead '.$OperatingSystemServicePack->importExternal((string)$child->OSCOMMENTS).' ['.$xmlFile.']');
 
-               $Computer->fields['operatingsystemservicepacks_id'] = $OperatingSystemServicePack->import(array('name'=>(string)$child->OSCOMMENTS));
+               $Computer->fields['operatingsystemservicepacks_id'] = $OperatingSystemServicePack->importExternal((string)$child->OSCOMMENTS);
             }
          }
 
@@ -855,8 +854,8 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
          $child->IPSUBNET = $ip."0";
       }
       //$array = $this->testSendinventory("tmp.xml", $xml);
-      $items_id = $array[0];
-      $unknown  = $array[1];
+//      $items_id = $array[0];
+//      $unknown  = $array[1];
 
       //$this->testNetwork($xml, $items_id, $unknown, $xmlFile);
 
