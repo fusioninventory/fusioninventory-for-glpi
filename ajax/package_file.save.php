@@ -68,9 +68,9 @@ if (isset ($_POST["id"]) and !$_POST['id']) {
       $filename = $_FILES['file']['tmp_name'];
    } elseif(isset($_POST['filename']) and !empty($_POST['filename'])) {
       $filename = $_POST['filename'];
-   } elseif(isset($_POST['url']) and !empty($_POST['url'])) {
+   } /*elseif(isset($_POST['url']) and !empty($_POST['url'])) {
       $filename = $_POST['filename'];
-   }
+   }*/
    if ($filename && $PluginFusinvdeployFile->addFileInRepo(array(
       'filename' => $filename,
       'is_p2p' => isset($_POST['p2p']) && $_POST['p2p'] != 'false',

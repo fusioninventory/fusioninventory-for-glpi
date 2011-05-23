@@ -116,12 +116,6 @@ var {$render}fileColumns =  [{
    width: {$column_width[1]},
    dataIndex: '{$render}file'
 }, {
-   id: '{$render}type',
-   header: '{$LANG['plugin_fusinvdeploy']['form']['label'][0]}',
-   width: {$column_width[2]},
-   dataIndex: '{$render}type',
-   renderer: {$render}renderType
-}, {
    id: '{$render}p2p',
    header: '{$LANG['plugin_fusinvdeploy']['form']['label'][6]}',
    width: {$column_width[3]},
@@ -139,14 +133,6 @@ var {$render}fileColumns =  [{
    dataIndex: '{$render}validity'
 }];
 
-function {$render}renderType(val) {
-   return '<img src="../pics/ext/extensions/'+val+'.png" onError="{$render}badImage(this)" />';
-}
-
-function {$render}badImage(img) {
-   img.src='../pics/ext/extensions/documents.png';
-}
-
 function {$render}renderP2P(val) {
    if (val == 1) return '{$LANG['choice'][1]}';
    else return '{$LANG['choice'][0]}';
@@ -159,7 +145,6 @@ var {$render}fileGridStore = new Ext.data.ArrayStore({
    fields: [
       {name: '{$render}id'},
       {name: '{$render}file'},
-      {name: '{$render}type'},
       {name: '{$render}p2p'},
       {name: '{$render}dateadd'},
       {name: '{$render}validity'}
@@ -169,7 +154,7 @@ var {$render}fileGridStore = new Ext.data.ArrayStore({
 
 var {$render}fileReader = new Ext.data.JsonReader({
    root           : '{$render}files',
-   fields            : ['{$render}id', '{$render}file', '{$render}type', '{$render}p2p','{$render}dateadd', '{$render}validity']
+   fields            : ['{$render}id', '{$render}file', '{$render}p2p','{$render}dateadd', '{$render}validity']
 });
 
 var {$render}fileStore = new Ext.data.GroupingStore({
@@ -177,7 +162,7 @@ var {$render}fileStore = new Ext.data.GroupingStore({
    autoLoad       : true,
    reader            : {$render}fileReader,
    sortInfo       :{field: '{$render}id', direction: "ASC"},
-   groupField        :'{$render}type'
+   groupField        :'{$render}p2p'
 });
 
 
@@ -205,7 +190,6 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
       handler: function(btn, ev) {
          var {$render}u = new {$render}fileGridStore.recordType({
              {$render}file : '',
-             {$render}type: '',
              {$render}p2p: '',
              {$render}dateadd: '',
              {$render}id: '',
@@ -265,7 +249,7 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
 
 
             Ext.getCmp('{$render}file').setValue('');
-            Ext.getCmp('{$render}url').setValue('');
+            //Ext.getCmp('{$render}url').setValue('');
             Ext.getCmp('{$render}validity').setValue({$render}rec.get('{$render}validity'));
             {$render}fileForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][5]}');
 
@@ -306,12 +290,12 @@ var {$render}fileForm = new Ext.FormPanel({
       buttonCfg: {
          iconCls: 'exticon-file'
       }
-   }), new Ext.form.Field({
+   }), /*new Ext.form.Field({
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['action'][5]}',
       name: '{$render}url',
       id: '{$render}url',
       width: 50,
-   }),
+   }),*/
       {
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][6]}',
       name: '{$render}p2p',
@@ -343,11 +327,11 @@ var {$render}fileForm = new Ext.FormPanel({
       disabled: true,
       handler: function(btn, ev) {
          if ({$render}fileForm.record == null) {
-            Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
+            Ext.MessageBox.alert('Erreur 1', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
             return;
          }
          if (!{$render}fileForm.getForm().isValid()) {
-            Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
+            Ext.MessageBox.alert('Erreur 2', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
             return false;
          }
          {$render}fileForm.getForm().updateRecord({$render}fileForm.record);
@@ -370,6 +354,8 @@ var {$render}fileForm = new Ext.FormPanel({
                      break;
                   case Ext.form.Action.SERVER_INVALID:
                      Ext.Msg.alert('Failure', action.result.msg);
+                     console.log(action);
+                     break;
                }
 
             }
