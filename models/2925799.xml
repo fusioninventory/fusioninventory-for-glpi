@@ -4,6 +4,8 @@
 	<key>Networking0146</key>
 	<comments><![CDATA[DES-3526 Fast-Ethernet Switch
 
+DGS-3612G Gigabit Ethernet Switch
+
 ]]></comments>
 	<oidlist>
 		<oidobject>
