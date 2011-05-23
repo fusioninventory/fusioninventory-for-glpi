@@ -57,25 +57,25 @@ class PluginFusinvdeployFile extends CommonDBTM {
    function getEmpty() {
       $this->fields['retention'] = 0;
    }
-   
+
    function prepareInputForAdd($input) {
       if (isset($result['p2p-retention-duration'])) {
          $tmp['p2p-retention-duration'] = 0;
       }
       return $input;
    }
-   
+
    static function cleanForPackage($orders_id) {
       global $DB;
-      $query = "DELETE FROM `glpi_plugin_fusinvdeploy_files` 
+      $query = "DELETE FROM `glpi_plugin_fusinvdeploy_files`
                 WHERE `plugin_fusinvdeploy_orders_id`='$orders_id'";
       $DB->query($query);
    }
-   
+
    static function getForOrder($orders_id) {
       $results = getAllDatasFromTable('glpi_plugin_fusinvdeploy_files',
                                       "`plugin_fusinvdeploy_orders_id`='$orders_id'");
-      
+
       $files = array();
       foreach ($results as $result) {
          $tmp['uncompress']                = $result['uncompress'];
@@ -85,7 +85,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
          if (!empty($mirrors)) {
             $tmp['mirrors'] = $mirrors;
          }
-         
+
          $fileparts = PluginFusinvdeployFilepart::getForFile($result['id']);
          if (!empty($fileparts)) {
             $tmp['multiparts'] = $fileparts;
@@ -97,7 +97,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
          }
          $files[$result['sha512']]         = $tmp;
       }
-      
+
       return $files;
    }
 
@@ -147,14 +147,15 @@ class PluginFusinvdeployFile extends CommonDBTM {
       if (!$testMode) { # NO SQL
          $file_id = $this->add(array(
                   'name'                          => $filename,
-                  'is_p2p'                        => $is_p2p,
-                  'p2p_retention_days'            => $is_p2p_retention_days,
+                  'is_p2p'                        => $is_p2p? '1' : '0',
+                  'p2p_retention_days'            => $p2p_retention_days,
                   'sha512'                        => $sha512,
                   'shortsha512'                   => substr($sha512, 0, 6),
                   'create_date'                   => date('Y-m-d H:i:s'),
                   'plugin_fusinvdeploy_orders_id' => $order_id
                   ));
       }
+
 
 
 
