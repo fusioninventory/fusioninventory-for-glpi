@@ -41,7 +41,7 @@ function pluginFusinvinventoryGetCurrentVersion($version) {
    if ($version_installed) {
       return $version_installed;
    } else {
-      return $version;
+      return '0';
    }
 }
 

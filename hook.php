@@ -100,7 +100,9 @@ function plugin_fusinvinventory_uninstall() {
 function plugin_fusinvinventory_needUpdate() {
    include (GLPI_ROOT . "/plugins/fusinvinventory/install/update.php");
    $version_detected = pluginFusinvinventoryGetCurrentVersion(PLUGIN_FUSINVINVENTORY_VERSION);
-   if ((isset($version_detected)) AND ($version_detected != PLUGIN_FUSINVINVENTORY_VERSION)) {
+   if ((isset($version_detected)) 
+      AND ($version_detected != PLUGIN_FUSINVINVENTORY_VERSION)
+      AND $version_detected!='0') {
       return 1;
    } else {
       return 0;
