@@ -275,8 +275,7 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
 
 //define form
 var {$render}fileForm = new Ext.FormPanel({
-   collapsible: true,
-   collapsed: true,
+   hidden : true,
    region: 'east',
    labelWidth: {$label_width},
    fileUpload        : true,
@@ -345,15 +344,17 @@ var {$render}fileForm = new Ext.FormPanel({
             Ext.MessageBox.alert('Erreur 2', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
             return false;
          }
+
          {$render}fileForm.getForm().updateRecord({$render}fileForm.record);
          {$render}fileForm.getForm().submit({
             url : '../ajax/package_file.save.php?package_id={$id}&render={$render}',
             waitMsg: 'Chargement du fichier...',
-            success: function({$render}fileForm, o){
+            success: function(form, o){
                {$render}msg('Traitement du fichier',o.result.msg);
                {$render}fileStore.reload();
-               {$render}fileForm.reset();
+               form.reset();
                {$render}fileGrid.getSelectionModel().clearSelections();
+               {$render}fileForm.hide();
             },
             failure: function({$render}fileForm, action){
                switch (action.failureType) {
@@ -392,12 +393,12 @@ var {$render}fileForm = new Ext.FormPanel({
          {$render}fileForm.getForm().submit({
             url : '../ajax/package_file.update.php?package_id={$id}&render={$render}',
             waitMsg: 'Chargement du fichier...',
-            success: function({$render}fileForm, o){
+            success: function(form, o){
                {$render}msg('Traitement du fichier',o.result.msg);
                {$render}fileStore.reload();
-               {$render}fileForm.reset();
+               form.reset();
                {$render}fileGrid.getSelectionModel().clearSelections();
-               {$render}fileForm.toggleCollapse();
+               {$render}fileForm.hide();
             },
             failure: function({$render}fileForm, action){
                switch (action.failureType) {
@@ -423,7 +424,7 @@ var {$render}fileForm = new Ext.FormPanel({
 
 
 function {$render}unlockForm({$render}rec){
-   if ({$render}fileForm.collapsed) {$render}fileForm.toggleCollapse();
+   {$render}fileForm.show();
    {$render}fileForm.buttons[0].setDisabled(false);
 }
 
