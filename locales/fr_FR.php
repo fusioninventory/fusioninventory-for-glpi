@@ -155,5 +155,4 @@ $LANG['plugin_fusinvdeploy']['form']['action_message'][2] = "Contenu";
 $LANG['plugin_fusinvdeploy']['form']['action_message'][3] = "Type";
 $LANG['plugin_fusinvdeploy']['form']['action_message'][4] = "Informations";
 $LANG['plugin_fusinvdeploy']['form']['action_message'][5] = "Report de l\'installation";
-
 ?>

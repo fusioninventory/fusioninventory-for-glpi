@@ -49,9 +49,9 @@ $LANG['plugin_fusinvdeploy']['package'][7]="Package";
 $LANG['plugin_fusinvdeploy']['package'][8]="Package management";
 $LANG['plugin_fusinvdeploy']['package'][9]="Number of fragments";
 $LANG['plugin_fusinvdeploy']['package'][10]="Module";
-$LANG['plugin_fusinvdeploy']['package'][11]="This package has not been created yet";
-$LANG['plugin_fusinvdeploy']['package'][12]="Create package";
-$LANG['plugin_fusinvdeploy']['package'][13]="re-create package";
+$LANG['plugin_fusinvdeploy']['package'][11]="Audits";
+$LANG['plugin_fusinvdeploy']['package'][12]="Files";
+$LANG['plugin_fusinvdeploy']['package'][13]="Actions";
 $LANG['plugin_fusinvdeploy']['package'][14]="Installation";
 $LANG['plugin_fusinvdeploy']['package'][15]="Uninstallation";
 $LANG['plugin_fusinvdeploy']['package'][16]="Package install";
@@ -60,6 +60,7 @@ $LANG['plugin_fusinvdeploy']['package'][18]="Move a file";
 $LANG['plugin_fusinvdeploy']['package'][19]="pieces of files";
 $LANG['plugin_fusinvdeploy']['package'][20]="Delete a file";
 $LANG['plugin_fusinvdeploy']['package'][21]="Show dialog";
+$LANG['plugin_fusinvdeploy']['package'][22]="Return codes";
 
 $LANG['plugin_fusinvdeploy']['files'][0]="Files management";
 $LANG['plugin_fusinvdeploy']['files'][1]="File name";
@@ -96,11 +97,11 @@ $LANG['plugin_fusinvdeploy']['form']['label'][10] = "Id";
 $LANG['plugin_fusinvdeploy']['form']['label'][11] = "Command";
 $LANG['plugin_fusinvdeploy']['form']['label'][12] = "Disk or directory";
 $LANG['plugin_fusinvdeploy']['form']['label'][13] = "Key";
-$LANG['plugin_fusinvdeploy']['form']['label'][14] = "Key exist";
-$LANG['plugin_fusinvdeploy']['form']['label'][15] = "Key missing";
-$LANG['plugin_fusinvdeploy']['form']['label'][16] = "Key value";
-$LANG['plugin_fusinvdeploy']['form']['label'][17] = "Exist";
-$LANG['plugin_fusinvdeploy']['form']['label'][18] = "Missing";
+$LANG['plugin_fusinvdeploy']['form']['label'][14] = "Key value";
+$LANG['plugin_fusinvdeploy']['form']['label'][15] = "File missing";
+$LANG['plugin_fusinvdeploy']['form']['label'][16] = "From";
+$LANG['plugin_fusinvdeploy']['form']['label'][17] = "To";
+$LANG['plugin_fusinvdeploy']['form']['label'][18] = "Removal";
 
 $LANG['plugin_fusinvdeploy']['form']['action'][0] = "Add";
 $LANG['plugin_fusinvdeploy']['form']['action'][1] = "Delete";
@@ -132,4 +133,26 @@ $LANG['plugin_fusinvdeploy']['form']['check'][4] = "File missing";
 $LANG['plugin_fusinvdeploy']['form']['check'][5] = "File size";
 $LANG['plugin_fusinvdeploy']['form']['check'][6] = "Hash512 of file";
 $LANG['plugin_fusinvdeploy']['form']['check'][7] = "Free space";
+$LANG['plugin_fusinvdeploy']['form']['check'][8] = "Filesize equal";
+$LANG['plugin_fusinvdeploy']['form']['check'][9] = "Filesize lower";
+
+$LANG['plugin_fusinvdeploy']['form']['mirror'][1] = "Mirror";
+$LANG['plugin_fusinvdeploy']['form']['mirror'][2] = "Mirrors";
+$LANG['plugin_fusinvdeploy']['form']['mirror'][3] = "Address of the mirror";
+
+$LANG['plugin_fusinvdeploy']['form']['command_status'][0] = "Make your choice...";
+$LANG['plugin_fusinvdeploy']['form']['command_status'][1] = "Type";
+$LANG['plugin_fusinvdeploy']['form']['command_status'][2] = "Value";
+$LANG['plugin_fusinvdeploy']['form']['command_status'][3] = "RETURNCODE_OK";
+$LANG['plugin_fusinvdeploy']['form']['command_status'][4] = "RETURNCODE_KO";
+$LANG['plugin_fusinvdeploy']['form']['command_status'][5] = "REGEX_OK";
+$LANG['plugin_fusinvdeploy']['form']['command_status'][6] = "REGEX_KO";
+
+$LANG['plugin_fusinvdeploy']['form']['command_envvariable'][1] = "Environment variable";
+
+$LANG['plugin_fusinvdeploy']['form']['action_message'][1] = "Title";
+$LANG['plugin_fusinvdeploy']['form']['action_message'][2] = "Content";
+$LANG['plugin_fusinvdeploy']['form']['action_message'][3] = "Type";
+$LANG['plugin_fusinvdeploy']['form']['action_message'][4] = "Informations";
+$LANG['plugin_fusinvdeploy']['form']['action_message'][5] = "report of the install";
 ?>
