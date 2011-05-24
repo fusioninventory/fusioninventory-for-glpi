@@ -4,8 +4,8 @@
     Author      : Sergei Chentsov aka Ivan Ekker
     email       : sergchentsov@gmail.com
     Description:
-        ExtJS 3.3 theme fusinvdeploy 
-    Ext Theme Builder form parameters - 
+        ExtJS 3.3 theme fusinvdeploy
+    Ext Theme Builder form parameters -
     Template:'blue',
     Base color:'F2F2F2',
     Header color:'DDDDC8',
@@ -21,7 +21,7 @@
     Font Size:'11',
     Window Transparency:'255',
     Toolset:'default',
-    ExtJS version:'3.3' 
+    ExtJS version:'3.3'
     License    : Dual Licensed
                  1.- GNU GPL Licensed, Free of charge for any non-commercial products.
                  2.- Contact me if you are using the theme in a commercial project.
@@ -1229,7 +1229,7 @@ background-color:#E4E4E2;
 border-color:#cbd1d8;
 }
  .x-layout-collapsed-over{
-background-color:#ecf2f7;
+background-color:#F2F2F2;
 }
  .x-layout-split-west .x-layout-mini{
 background-image:url(../images/fusinvdeploy/layout/mini-left.gif);
