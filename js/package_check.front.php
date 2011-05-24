@@ -225,7 +225,7 @@ var {$render}checkGrid = new Ext.grid.GridPanel({
             var {$render}rec = {$render}checkGrid.store.getAt(index);
             {$render}checkForm.loadData({$render}rec);
             {$render}checkForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][0]}');
-            if ({$render}checkForm.collapsed) {$render}checkForm.expand();
+            {$render}checkForm.expand();
             {$render}checkForm.buttons[0].setDisabled(false);
          }
       }

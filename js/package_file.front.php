@@ -275,6 +275,8 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
 
 //define form
 var {$render}fileForm = new Ext.FormPanel({
+   collapsible: true,
+   collapsed: true,
    hidden : true,
    region: 'east',
    labelWidth: {$label_width},
@@ -354,6 +356,7 @@ var {$render}fileForm = new Ext.FormPanel({
                {$render}fileStore.reload();
                form.reset();
                {$render}fileGrid.getSelectionModel().clearSelections();
+               {$render}fileForm.collapse();
                {$render}fileForm.hide();
             },
             failure: function({$render}fileForm, action){
@@ -398,6 +401,7 @@ var {$render}fileForm = new Ext.FormPanel({
                {$render}fileStore.reload();
                form.reset();
                {$render}fileGrid.getSelectionModel().clearSelections();
+               {$render}fileForm.collapse();
                {$render}fileForm.hide();
             },
             failure: function({$render}fileForm, action){
@@ -425,6 +429,7 @@ var {$render}fileForm = new Ext.FormPanel({
 
 function {$render}unlockForm({$render}rec){
    {$render}fileForm.show();
+   {$render}fileForm.expand();
    {$render}fileForm.buttons[0].setDisabled(false);
 }
 

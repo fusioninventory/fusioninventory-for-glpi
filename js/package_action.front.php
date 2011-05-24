@@ -250,7 +250,7 @@ var {$render}actionGrid = new Ext.grid.GridPanel({
             var rec = {$render}actionGrid.store.getAt(index);
             {$render}actionForm.loadData(rec);
             {$render}actionForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][7]}');
-            if ({$render}actionForm.collapsed) {$render}actionForm.expand();
+            {$render}actionForm.expand();
             {$render}actionForm.buttons[0].setDisabled(false);
          }
       }
