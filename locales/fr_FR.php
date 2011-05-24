@@ -123,6 +123,7 @@ $LANG['plugin_fusinvdeploy']['form']['title'][8] = "Liste des actions";
 $LANG['plugin_fusinvdeploy']['form']['message'][0] = "Formulaire vide";
 $LANG['plugin_fusinvdeploy']['form']['message'][1] = "Formulaire invalide";
 $LANG['plugin_fusinvdeploy']['form']['message'][2] = "Chargement...";
+$LANG['plugin_fusinvdeploy']['form']['message'][3] = "Fichier déjà existant";
 
 $LANG['plugin_fusinvdeploy']['form']['check'][0] = "Clef de registre existe";
 $LANG['plugin_fusinvdeploy']['form']['check'][1] = "Clef de registre n\'existe pas";

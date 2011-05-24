@@ -122,13 +122,11 @@ class PluginFusinvdeployFile extends CommonDBTM {
       }
       copy ($filePath, $dir.'/'.$sha512.'.gz');
 
-
-
-
       return $sha512;
    }
 
-   function addFileInRepo ($params) {
+   function addFileInRepo ($params, &$message = '') {
+      global $LANG;
 
       $PluginFusinvdeployFilepart = new PluginFusinvdeployFilepart();
 
@@ -143,6 +141,13 @@ class PluginFusinvdeployFile extends CommonDBTM {
       $tmpFile = GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/part.tmp";
 
       $sha512 = $this->registerFile($repoPath, $filename);
+
+      //check if file is not already present
+      if ($this->checkPresenceFile($sha512)) {
+         $message = $LANG['plugin_fusinvdeploy']['form']['message'][3];
+         return false;
+      }
+
 
       if (!$testMode) { # NO SQL
          $file_id = $this->add(array(
@@ -197,7 +202,18 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
       unlink($filename);
       unlink($tmpFile);
+      if ($file_id == -1) $message = $LANG['plugin_fusinvdeploy']['form']['label'][15];
       return $file_id;
+   }
+
+   function checkPresenceFile($hash) {
+      global $DB;
+
+      $query = "SELECT * FROM ".$this->getTable()." WHERE sha512 = '".$hash."'";
+      $res = $DB->query($query);
+      if ($DB->numrows($res) > 0) return true;
+
+      return false;
    }
 
    function removeFileInRepo($id) {

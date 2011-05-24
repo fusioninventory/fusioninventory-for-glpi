@@ -122,6 +122,7 @@ $LANG['plugin_fusinvdeploy']['form']['title'][8] = "Command list";
 $LANG['plugin_fusinvdeploy']['form']['message'][0] = "Empty form";
 $LANG['plugin_fusinvdeploy']['form']['message'][1] = "Invalid form";
 $LANG['plugin_fusinvdeploy']['form']['message'][2] = "Loading...";
+$LANG['plugin_fusinvdeploy']['form']['message'][3] = "File already exist";
 
 $LANG['plugin_fusinvdeploy']['form']['check'][0] = "Register key exist";
 $LANG['plugin_fusinvdeploy']['form']['check'][1] = "Register key missing";
