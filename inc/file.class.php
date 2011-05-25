@@ -131,6 +131,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
       $PluginFusinvdeployFilepart = new PluginFusinvdeployFilepart();
 
       $filename = $params['filename'];
+      $file_tmp_name = $params['file_tmp_name'];
       $is_p2p = $params['is_p2p'];
       $p2p_retention_days = $params['p2p_retention_days'];
       $order_id = $params['order_id'];
@@ -142,12 +143,12 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
 
       //check if file is not already present
-      if ($this->checkPresenceFile(hash_file('sha512', $filename))) {
+      if ($this->checkPresenceFile(hash_file('sha512', $file_tmp_name))) {
          $message = $LANG['plugin_fusinvdeploy']['form']['message'][3];
          return false;
       }
 
-      $sha512 = $this->registerFile($repoPath, $filename);
+      $sha512 = $this->registerFile($repoPath, $file_tmp_name);
 
 
       if (!$testMode) { # NO SQL
@@ -166,7 +167,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
 
 
-      $fdIn = fopen ( $filename , 'rb' );
+      $fdIn = fopen ( $file_tmp_name , 'rb' );
 
       $partCpt = 0;
       $currentPartSize = 0;
@@ -181,7 +182,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
             if (!$testMode) { # NO SQL
                $PluginFusinvdeployFilepart->add(
                      array(
-                        'name'                          => $filename.'.gz',
+                        'name'                          => $filename,
                         'sha512'                        => $sha512,
                         'plugin_fusinvdeploy_orders_id' => $order_id,
                         'plugin_fusinvdeploy_files_id'  => $file_id)
@@ -201,7 +202,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
          }
       } while (!feof($fdIn) || $fdPart);
 
-      unlink($filename);
+      unlink($file_tmp_name);
       unlink($tmpFile);
       if ($file_id == -1) $message = $LANG['plugin_fusinvdeploy']['form']['label'][15];
       return $file_id;

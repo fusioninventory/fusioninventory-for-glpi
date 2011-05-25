@@ -65,13 +65,15 @@ if (isset ($_POST["id"]) and !$_POST['id']) {
   //file uploaded?
    $filename = null;
    if (isset($_FILES['file']['tmp_name']) and !empty($_FILES['file']['tmp_name'])){
-      $filename = $_FILES['file']['tmp_name'];
-   } elseif(isset($_POST['filename']) and !empty($_POST['filename'])) {
-      $filename = $_POST['filename'];
+      $file_tmp_name = $_FILES['file']['tmp_name'];
    } /*elseif(isset($_POST['url']) and !empty($_POST['url'])) {
       $filename = $_POST['filename'];
    }*/
+   if (isset($_FILES['file']['name']) and !empty($_FILES['file']['name']))
+      $filename = $_FILES['file']['name'];
+
    if ($filename && $PluginFusinvdeployFile->addFileInRepo(array(
+      'file_tmp_name' => $file_tmp_name,
       'filename' => $filename,
       'is_p2p' => isset($_POST['p2p']) && $_POST['p2p'] != 'false',
       'p2p_retention_days' => (isset($_post['p2p']) && ($_post['p2p'] != 'false')) ? $_POST['validity'] : 0,
