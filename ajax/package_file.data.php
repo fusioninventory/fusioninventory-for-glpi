@@ -1,8 +1,8 @@
 <?php
 /*
  * @version $Id: plugin_callcenter.frontGrid.php 4635 2010-03-26 14:21:15Z SphynXz $
- ------------------------------------------------------------------------- 
- GLPI - Gestionnaire Libre de Parc Informatique 
+ -------------------------------------------------------------------------
+ GLPI - Gestionnaire Libre de Parc Informatique
  Copyright (C) 2003-2008 by the INDEPNET Development Team.
 
  http://indepnet.net/   http://glpi-project.org
@@ -49,14 +49,14 @@ if(isset($_GET['package_id'])){
 $render_type   = PluginFusinvdeployOrder::getRender($render);
 $order_id      = PluginFusinvdeployOrder::getIdForPackage($package_id,$render_type);
 
-$sql = "SELECT id as {$render}id, name as {$render}file, type as {$render}type, 
-               is_p2p as {$render}p2p, p2p_retention_days as {$render}validity, 
-               DATE_FORMAT(create_date,'%d/%m/%Y') as {$render}dateadd 
+$sql = "SELECT id as {$render}id, name as {$render}file, mimetype as {$render}mimetype,
+               is_p2p as {$render}p2p, p2p_retention_days as {$render}validity,
+               DATE_FORMAT(create_date,'%d/%m/%Y') as {$render}dateadd
         FROM `glpi_plugin_fusinvdeploy_files`
         WHERE `plugin_fusinvdeploy_orders_id` = '$order_id'";
 
 $qry = $DB->query($sql);
-$nb = $DB->numrows($qry);  
+$nb = $DB->numrows($qry);
 $res = array();
 
 while($row = $DB->fetch_assoc($qry)){

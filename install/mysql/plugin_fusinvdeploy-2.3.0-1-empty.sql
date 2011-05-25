@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `is_p2p` tinyint(1) NOT NULL DEFAULT '0',
-  `type` char(4) NOT NULL DEFAULT 'na',
+  `mimetype` char(255) NOT NULL DEFAULT 'na',
   `create_date` datetime NOT NULL,
   `p2p_retention_days` int(11) NOT NULL DEFAULT '0',
   `uncompress` tinyint(1) NOT NULL DEFAULT '0',

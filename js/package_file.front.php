@@ -120,11 +120,11 @@ var {$render}fileColumns =  [{
    width: {$column_width[1]},
    dataIndex: '{$render}file'
 }, {
-   id: '{$render}type',
+   id: '{$render}mimetype',
    header: '{$LANG['plugin_fusinvdeploy']['form']['label'][0]}',
    width: {$column_width[2]},
-   dataIndex: '{$render}type',
-   renderer: {$render}renderType
+   dataIndex: '{$render}mimetype',
+   renderer: {$render}renderMimetype
 }, {
    id: '{$render}p2p',
    header: '{$LANG['plugin_fusinvdeploy']['form']['label'][6]}',
@@ -143,7 +143,8 @@ var {$render}fileColumns =  [{
    dataIndex: '{$render}validity'
 }];
 
-function {$render}renderType(val) {
+function {$render}renderMimetype(val) {
+   val = val.replace(/\//g, '-');
    return '<img src="../pics/ext/extensions/'+val+'.png" onError="{$render}badImage(this)" />';
 }
 
@@ -163,7 +164,7 @@ var {$render}fileGridStore = new Ext.data.ArrayStore({
    fields: [
       {name: '{$render}id'},
       {name: '{$render}file'},
-      {name: '{$render}type'},
+      {name: '{$render}mimetype'},
       {name: '{$render}p2p'},
       {name: '{$render}dateadd'},
       {name: '{$render}validity'}
@@ -173,7 +174,7 @@ var {$render}fileGridStore = new Ext.data.ArrayStore({
 
 var {$render}fileReader = new Ext.data.JsonReader({
    root           : '{$render}files',
-   fields            : ['{$render}id', '{$render}file', '{$render}type', '{$render}p2p','{$render}dateadd', '{$render}validity']
+   fields            : ['{$render}id', '{$render}file', '{$render}mimetype', '{$render}p2p','{$render}dateadd', '{$render}validity']
 });
 
 var {$render}fileStore = new Ext.data.GroupingStore({
@@ -209,7 +210,7 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
       handler: function(btn, ev) {
          var {$render}u = new {$render}fileGridStore.recordType({
              {$render}file : '',
-             {$render}type: '',
+             {$render}mimetype: '',
              {$render}p2p: '',
              {$render}dateadd: '',
              {$render}id: '',

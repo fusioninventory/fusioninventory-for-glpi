@@ -136,7 +136,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
       $p2p_retention_days = $params['p2p_retention_days'];
       $order_id = $params['order_id'];
       $testMode = isset($params['testMode']);
-      $extension  = self::getExtension($filename);
+      $extension  = $params['mime_type'];
 
       $maxPartSize = 1024;
       $repoPath = GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/repository/";
@@ -155,7 +155,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
       if (!$testMode) { # NO SQL
          $file_id = $this->add(array(
                   'name'                          => $filename,
-                  'type'                          => $extension,
+                  'mimetype'                          => $extension,
                   'is_p2p'                        => $is_p2p? '1' : '0',
                   'p2p_retention_days'            => $p2p_retention_days,
                   'sha512'                        => $sha512,
@@ -219,12 +219,6 @@ class PluginFusinvdeployFile extends CommonDBTM {
       return false;
    }
 
-   function getExtension($filename){
-      $extension        = explode(".", $filename);
-      $extension        = $extension[count($extension) - 1];
-
-      return $extension;
-   }
 
    function removeFileInRepo($id) {
 
