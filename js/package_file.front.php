@@ -53,6 +53,10 @@ $column_width = array(100,160,40,100,80,95);
 $label_width = 100;
 // END - Size of div/form/label...
 
+//get max upload file size
+$maxUpload = PluginFusinvdeployFile::getMaxUploadSize();
+
+
 // Render div
 if(isset($_POST["glpi_tab"])) {
    switch($_POST["glpi_tab"]){
@@ -302,7 +306,12 @@ var {$render}fileForm = new Ext.FormPanel({
       buttonCfg: {
          iconCls: 'exticon-file'
       }
-   }), /*new Ext.form.Field({
+   }), {
+      name: '{$render}file_info_maxfilesize',
+      value: '{$maxUpload}',
+      xtype: 'displayfield',
+      style: 'font-size:8px'
+   }, /*new Ext.form.Field({
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['action'][5]}',
       name: '{$render}url',
       id: '{$render}url',
