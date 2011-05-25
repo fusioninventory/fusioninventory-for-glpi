@@ -181,7 +181,7 @@ var {$render}fileStore = new Ext.data.GroupingStore({
    autoLoad       : true,
    reader            : {$render}fileReader,
    sortInfo       :{field: '{$render}id', direction: "ASC"},
-   groupField        :'{$render}type'
+   groupField        :'{$render}p2p'
 });
 
 
@@ -280,7 +280,7 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
 
 
             Ext.getCmp('{$render}file').setValue('');
-            Ext.getCmp('{$render}url').setValue('');
+            //Ext.getCmp('{$render}url').setValue('');
             Ext.getCmp('{$render}validity').setValue({$render}rec.get('{$render}validity'));
             {$render}fileForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][5]}');
             */
