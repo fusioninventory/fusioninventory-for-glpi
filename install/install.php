@@ -96,6 +96,7 @@ function pluginFusioninventoryInstall($version) {
       WHERE `itemtype`='5168'";
    $DB->query($sql);
       // Purge network ports have itemtype tp 5153
+      $networkPort = new NetworkPort();
       $sql = "SELECT * FROM `glpi_networkports`
          WHERE `itemtype`='5153'";
       $result=$DB->query($sql);
@@ -135,7 +136,6 @@ function pluginFusioninventoryInstall($version) {
    PluginFusioninventoryProfile::initProfile('fusioninventory', $plugins_id);
 
    // bug of purge network port when purge unknown devices
-   $networkPort = new NetworkPort();
    $sql = "SELECT `glpi_networkports`.`id` as nid FROM `glpi_networkports`
       LEFT JOIN `glpi_plugin_fusioninventory_unknowndevices`
          ON `glpi_plugin_fusioninventory_unknowndevices`.`id` = `glpi_networkports`.`items_id`
