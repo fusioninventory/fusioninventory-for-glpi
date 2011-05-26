@@ -144,7 +144,7 @@ var {$render}fileColumns =  [{
 }];
 
 function {$render}renderMimetype(val) {
-   val = val.replace(/\//g, '-');
+   val = val.replace(/\//g, '__');
    return '<img src="../pics/ext/extensions/'+val+'.png" onError="{$render}badImage(this)" />';
 }
 
