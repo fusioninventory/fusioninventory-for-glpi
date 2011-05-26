@@ -125,7 +125,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
       return $sha512;
    }
 
-   function addFileInRepo ($params, &$message = '') {
+   function addFileInRepo ($params) {
       global $LANG;
 
       $PluginFusinvdeployFilepart = new PluginFusinvdeployFilepart();
@@ -205,7 +205,6 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
       unlink($file_tmp_name);
       unlink($tmpFile);
-      if ($file_id == -1) $message = $LANG['plugin_fusinvdeploy']['form']['label'][15];
       return $file_id;
    }
 

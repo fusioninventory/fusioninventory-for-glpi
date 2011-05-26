@@ -79,11 +79,11 @@ if (isset ($_POST["id"]) and !$_POST['id']) {
       'is_p2p' => isset($_POST['p2p']) && $_POST['p2p'] != 'false',
       'p2p_retention_days' => (isset($_post['p2p']) && ($_post['p2p'] != 'false')) ? $_POST['validity'] : 0,
       'order_id' => $order_id
-   ), $message)) {
+   ))) {
       print "{success:true, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['action'][4]}\"}";
       exit;
    } else {
-      print "{success:false, file:'{$filename}',msg:\"{$message}\"}";
+      print "{success:false, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][15]}\"}";
       exit;
    }
 }
