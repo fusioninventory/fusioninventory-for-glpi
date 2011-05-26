@@ -51,7 +51,7 @@ $order_id      = PluginFusinvdeployOrder::getIdForPackage($package_id,$render_ty
 
 $sql = "SELECT id as {$render}id, name as {$render}file, mimetype as {$render}mimetype,
                is_p2p as {$render}p2p, p2p_retention_days as {$render}validity,
-               DATE_FORMAT(create_date,'%d/%m/%Y') as {$render}dateadd
+               uncompress as {$render}uncompress, DATE_FORMAT(create_date,'%d/%m/%Y') as {$render}dateadd
         FROM `glpi_plugin_fusinvdeploy_files`
         WHERE `plugin_fusinvdeploy_orders_id` = '$order_id'";
 

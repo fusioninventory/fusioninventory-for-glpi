@@ -133,6 +133,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
       $filename = addslashes($params['filename']);
       $file_tmp_name = $params['file_tmp_name'];
       $is_p2p = $params['is_p2p'];
+      $uncompress = $params['uncompress'];
       $p2p_retention_days = $params['p2p_retention_days'];
       $order_id = $params['order_id'];
       $testMode = isset($params['testMode']);
@@ -155,7 +156,8 @@ class PluginFusinvdeployFile extends CommonDBTM {
       if (!$testMode) { # NO SQL
          $file_id = $this->add(array(
                   'name'                          => $filename,
-                  'mimetype'                          => $extension,
+                  'mimetype'                      => $extension,
+                  'uncompress'                    => $uncompress? '1' : '0',
                   'is_p2p'                        => $is_p2p? '1' : '0',
                   'p2p_retention_days'            => $p2p_retention_days,
                   'sha512'                        => $sha512,

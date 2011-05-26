@@ -48,7 +48,7 @@ $width_left_fieldset_default  = $width_left-125;
 $width_layout = $width_left + $width_right;
 $height_layout = ($height_left>$height_right)?$height_left:$height_right;
 
-$column_width = array(100,160,40,100,80,95);
+$column_width = array(100,160,40,100,80,95,80);
 
 $label_width = 100;
 // END - Size of div/form/label...
@@ -93,20 +93,6 @@ var {$render}msg = function(title, msg){
    });
 };
 
-function printObject(o) {
-   var out = '';
-   for (var p in o) {
-      out += p + ': ' + o[p] + '\\n';
-   }
-   alert(out);
-}
-
-
-var {$render}myData = [
-   [1,'Formation_teclib_Mars.pdf', 'pdf', true,  '21/03/2010', 100],
-   [2,'Formation_teclib_Avril.pdf', 'pdf', true,  '21/03/2010', 100]
-];
-
 //define colums for grid
 var {$render}fileColumns =  [{
    id: '{$render}id',
@@ -130,7 +116,7 @@ var {$render}fileColumns =  [{
    header: '{$LANG['plugin_fusinvdeploy']['form']['label'][6]}',
    width: {$column_width[3]},
    dataIndex: '{$render}p2p',
-   renderer: {$render}renderP2P
+   renderer: {$render}renderBool
 }, {
    id: '{$render}dateadd',
    header: '{$LANG['plugin_fusinvdeploy']['form']['label'][7]}',
@@ -141,6 +127,12 @@ var {$render}fileColumns =  [{
    header: '{$LANG['plugin_fusinvdeploy']['form']['label'][8]}',
    width: {$column_width[5]},
    dataIndex: '{$render}validity'
+}, {
+   id: '{$render}uncompress',
+   header: '{$LANG['plugin_fusinvdeploy']['form']['label'][19]}',
+   width: {$column_width[6]},
+   dataIndex: '{$render}uncompress',
+   renderer: {$render}renderBool
 }];
 
 function {$render}renderMimetype(val) {
@@ -152,7 +144,7 @@ function {$render}badImage(img) {
    img.src='../pics/ext/extensions/documents.png';
 }
 
-function {$render}renderP2P(val) {
+function {$render}renderBool(val) {
    if (val == 1) return '{$LANG['choice'][1]}';
    else return '{$LANG['choice'][0]}';
 }
@@ -167,14 +159,14 @@ var {$render}fileGridStore = new Ext.data.ArrayStore({
       {name: '{$render}mimetype'},
       {name: '{$render}p2p'},
       {name: '{$render}dateadd'},
-      {name: '{$render}validity'}
+      {name: '{$render}validity'},
+      {name: '{$render}uncompress'}
    ]
 });
-{$render}fileGridStore.loadData({$render}myData);
 
 var {$render}fileReader = new Ext.data.JsonReader({
    root           : '{$render}files',
-   fields            : ['{$render}id', '{$render}file', '{$render}mimetype', '{$render}p2p','{$render}dateadd', '{$render}validity']
+   fields            : ['{$render}id', '{$render}file', '{$render}mimetype', '{$render}p2p','{$render}dateadd', '{$render}validity', '{$render}uncompress']
 });
 
 var {$render}fileStore = new Ext.data.GroupingStore({
@@ -214,7 +206,8 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
              {$render}p2p: '',
              {$render}dateadd: '',
              {$render}id: '',
-             {$render}validity: ''
+             {$render}validity: '',
+             {$render}uncompress: ''
          });
          {$render}fileStore.insert(0, {$render}u);
          {$render}fileGrid.getSelectionModel().selectFirstRow();
@@ -223,13 +216,10 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
          {$render}unlockForm();
          {$render}fileForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][4]}');
 
-         if({$render}rec.get('{$render}p2p') == 0){
-            Ext.getCmp('{$render}p2p_t').setValue(false);
-            Ext.getCmp('{$render}p2p_f').setValue(true);
-         }else{
-            Ext.getCmp('{$render}p2p_f').setValue(false);
-            Ext.getCmp('{$render}p2p_t').setValue(true);
-         }
+         Ext.getCmp('{$render}p2p_t').setValue(false);
+         Ext.getCmp('{$render}p2p_f').setValue(true);
+         Ext.getCmp('{$render}uncompress_t').setValue(false);
+         Ext.getCmp('{$render}uncompress_f').setValue(true);
       }
    }, '-', {
       text: '{$LANG['plugin_fusinvdeploy']['form']['action'][1]}',
@@ -267,10 +257,8 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
 
             if({$render}rec.get('{$render}p2p') == 0){
                Ext.getCmp('{$render}p2p_t').setValue(false);
-               Ext.getCmp('{$render}p2p_f').setValue(false);
                Ext.getCmp('{$render}p2p_f').setValue(true);
             }else{
-               Ext.getCmp('{$render}p2p_t').setValue(false);
                Ext.getCmp('{$render}p2p_f').setValue(false);
                Ext.getCmp('{$render}p2p_t').setValue(true);
             }
@@ -352,7 +340,17 @@ var {$render}fileForm = new Ext.FormPanel({
       name: '{$render}validity',
       id: '{$render}validity',
       width: 50,
-   })],
+   }), {
+      fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][19]}',
+      name: '{$render}uncompress',
+      id: '{$render}uncompress',
+      xtype: 'radiogroup',
+      items: [
+         {boxLabel: '{$LANG['choice'][1]}', name: '{$render}uncompress', inputValue: 'true', checked: true, id : '{$render}uncompress_t'},
+         {boxLabel: '{$LANG['choice'][0]}', name: '{$render}uncompress', inputValue: 'false',id : '{$render}uncompress_f'}
+      ]
+   }
+   ],
    buttons: [{
       text: '{$LANG['plugin_fusinvdeploy']['form']['action'][2]}',
       iconCls: 'exticon-save',
