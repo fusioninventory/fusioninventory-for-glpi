@@ -806,9 +806,11 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             // Get module name
             $PluginFusioninventoryTaskjob->verifyDefinitionActions($data['id']);
             $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
-            $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
-            $class = new $className;
-            $class->prepareRun($data['id']);
+            if ($pluginName) {
+               $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
+               $class = new $className;
+               $class->prepareRun($data['id']);
+            }
          }
          foreach($_SESSION['glpi_plugin_fusioninventory']['agents'] as $agents_id=>$num) {
             $a_ips = $PluginFusioninventoryAgent->getIPs($agents_id);
