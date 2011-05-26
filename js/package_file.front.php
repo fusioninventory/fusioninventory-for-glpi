@@ -250,13 +250,9 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
                   {$render}fileStore.reload();
                }
             });
-            if({$render}fileStore.data.length == 0) {
-               if (!{$render}fileForm.collapsed) {$render}fileForm.toggleCollapse();
-               {$render}fileForm.buttons[0].setDisabled(true);
-            } else {
-               {$render}fileGrid.getSelectionModel().selectFirstRow();
-            }
          }
+         {$render}fileForm.hide();
+         {$render}fileForm.collapse();
       }
    }, '-'],
    sm: new Ext.grid.RowSelectionModel({
@@ -382,8 +378,8 @@ var {$render}fileForm = new Ext.FormPanel({
                {$render}fileStore.reload();
                form.reset();
                {$render}fileGrid.getSelectionModel().clearSelections();
-               {$render}fileForm.collapse();
                {$render}fileForm.hide();
+               {$render}fileForm.collapse();
             },
             failure: function({$render}fileForm, action){
                switch (action.failureType) {
@@ -425,8 +421,8 @@ var {$render}fileForm = new Ext.FormPanel({
                {$render}fileStore.reload();
                form.reset();
                {$render}fileGrid.getSelectionModel().clearSelections();
-               {$render}fileForm.collapse();
                {$render}fileForm.hide();
+               {$render}fileForm.collapse();
             },
             failure: function({$render}fileForm, action){
                switch (action.failureType) {

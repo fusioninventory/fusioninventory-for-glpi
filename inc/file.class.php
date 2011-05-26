@@ -130,7 +130,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
       $PluginFusinvdeployFilepart = new PluginFusinvdeployFilepart();
 
-      $filename = $params['filename'];
+      $filename = addslashes($params['filename']);
       $file_tmp_name = $params['file_tmp_name'];
       $is_p2p = $params['is_p2p'];
       $p2p_retention_days = $params['p2p_retention_days'];
