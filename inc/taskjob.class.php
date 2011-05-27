@@ -311,7 +311,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       } else  {
          $this->showFormButtons($options);
       }
-
+ 
       return true;
    }
 

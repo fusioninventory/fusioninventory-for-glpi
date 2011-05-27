@@ -367,6 +367,13 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
+      echo "</td>";
+      echo "<td colspan='4' align='center'>";
+      echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/front/taskjob.form.php?id=".$taskjob_id."'>".
+         $LANG['plugin_fusioninventory']['task'][44]."</a>";
+      echo "</td>";
+      echo "</tr>";
+
       echo "<input name='task_id' type='hidden' value='".$task_id."' />";
       echo "<input name='taskjob_id' type='hidden' value='".$taskjob_id."' />";
       echo "<input name='iprange' type='hidden' value='".$_POST['id']."' />";

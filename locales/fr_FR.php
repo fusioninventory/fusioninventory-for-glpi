@@ -171,7 +171,7 @@ $LANG['plugin_fusioninventory']['task'][40]="Forcer l'exécution";
 $LANG['plugin_fusioninventory']['task'][41]="Le serveur initie le contact avec l'agent (push)";
 $LANG['plugin_fusioninventory']['task'][42]="L'agent initie le contact avec le serveur (pull)";
 $LANG['plugin_fusioninventory']['task'][43]="Mode de communication";
-
+$LANG['plugin_fusioninventory']['task'][44]="Voir les informations complètes de la tâche";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1] = "Démarré";
 $LANG['plugin_fusioninventory']['taskjoblog'][2] = "Ok";
