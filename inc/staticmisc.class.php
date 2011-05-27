@@ -84,7 +84,7 @@ class PluginFusinvsnmpStaticmisc {
    static function task_definitiontype_snmpinventory($a_itemtype) {
       global $LANG;
 
-      $a_itemtype['PluginFusioninventoryIPRange'] = $LANG['plugin_fusinvsnmp']['iprange'][2];
+      $a_itemtype['PluginFusioninventoryIPRange'] = $LANG['plugin_fusioninventory']['iprange'][2];
       $a_itemtype['NetworkEquipment'] = NetworkEquipment::getTypeName();
       $a_itemtype['Printer'] = Printer::getTypeName();
 
