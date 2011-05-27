@@ -126,6 +126,7 @@ class PluginFusioninventoryWizard {
 
 
    static function displayShowForm($a_button, $a_filariane, $classname) {
+      global $LANG,$CFG_GLPI;
 
       $pluginFusioninventoryWizard = new PluginFusioninventoryWizard();
 
@@ -153,6 +154,11 @@ class PluginFusioninventoryWizard {
          echo "</table>";
          $class = new $classname;
          $class->showForm(0, array('target'=>$target));
+      } else if (isset($_GET['wizz']) AND (strstr($_GET['wizz'], "rules"))) {
+  
+         $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+         include (GLPI_ROOT . "/plugins/fusioninventory/front/wizzrule.common.php");
+
       } else {
          echo "<table class='tab_cadre'>";
          echo "<tr>";
@@ -166,20 +172,18 @@ class PluginFusioninventoryWizard {
       }
 
       echo "</td>";
-      echo "<td valign='top'>";
+      echo "<td valign='top' style='background-color: #e1cc7b;'>";
       $pluginFusioninventoryWizard->filAriane($a_filariane);
       echo "</td>";
       echo "</tr>";
 
       echo "<tr>";
-      echo "<td align='right'>";
-
-      // 
+      echo "<td align='right' style='background-color: #e1cc7b;' height='30'>";
       echo "<input class='submit' type='submit' name='next' value='".$a_button['name']."'
             onclick='window.location.href=\"".GLPI_ROOT."/plugins/fusioninventory/front/wizard.php?wizz=".$a_button['link']."\"'/>";
-      echo "</form>";
+      echo "</form>&nbsp;&nbsp;";
       echo "</td>";
-      echo "<td></td>";
+      echo "<td style='background-color: #e1cc7b;'></td>";
       echo "</tr>";
 
       echo "</table></center>";
