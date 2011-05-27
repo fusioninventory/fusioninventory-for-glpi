@@ -164,11 +164,9 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
    if ($itemtype == 'NetworkEquipment') {
       $sopt[5190]['table']='glpi_plugin_fusinvsnmp_models';
       $sopt[5190]['field']='name';
-      $sopt[5190]['linkfield']='';
+      $sopt[5190]['linkfield']='plugin_fusinvsnmp_models_id';
       $sopt[5190]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".
          $LANG['plugin_fusinvsnmp']['model_info'][4];
-      $sopt[5190]['datatype'] = 'itemlink';
-      $sopt[5190]['itemlink_type'] = 'PluginFusinvsnmpModel';
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
 
@@ -177,17 +175,15 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
       if ($PluginFusioninventoryConfig->getValue($plugins_id, "storagesnmpauth") == "file") {
          $sopt[5191]['table'] = 'glpi_plugin_fusinvsnmp_networkequipments';
          $sopt[5191]['field'] = 'plugin_fusinvsnmp_configsecurities_id';
-         $sopt[5191]['linkfield'] = 'id';
+         $sopt[5191]['linkfield'] = '';
          $sopt[5191]['name'] = $LANG['plugin_fusioninventory']['title'][1]." - ".
             $LANG['plugin_fusinvsnmp']['functionalities'][43];
       } else {
          $sopt[5191]['table']='glpi_plugin_fusinvsnmp_configsecurities';
          $sopt[5191]['field']='name';
-         $sopt[5191]['linkfield']='id';
+         $sopt[5191]['linkfield']='plugin_fusinvsnmp_configsecurities_id';
          $sopt[5191]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".
             $LANG['plugin_fusinvsnmp']['functionalities'][43];
-         $sopt[5191]['datatype'] = 'itemlink';
-         $sopt[5191]['itemlink_type'] = 'PluginFusinvsnmpConfigSecurity';
       }
 
       $sopt[5194]['table']='glpi_plugin_fusinvsnmp_networkequipments';
@@ -1450,11 +1446,9 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
          array_pop($already_link_tables_tmp);
 
          $leftjoin_fusinvsnmp_networkequipments = 1;
-         if ((in_array('glpi_plugin_fusinvsnmp_networkequipments.cpu', $already_link_tables_tmp))
-            OR (in_array('glpi_plugin_fusinvsnmp_networkequipments.', $already_link_tables_tmp))
-            OR (in_array('glpi_plugin_fusinvsnmp_models.plugin_fusinvsnmp_models_id', $already_link_tables_tmp))
-            OR (in_array('glpi_plugin_fusinvsnmp_configsecurities.id', $already_link_tables_tmp))
-            OR (in_array('glpi_plugin_fusinvsnmp_networkequipments.sysdescr', $already_link_tables_tmp))) {
+         if ((in_array('glpi_plugin_fusinvsnmp_networkequipments', $already_link_tables_tmp))
+            OR (in_array('glpi_plugin_fusinvsnmp_models', $already_link_tables_tmp))
+            OR (in_array('glpi_plugin_fusinvsnmp_configsecurities', $already_link_tables_tmp))) {
 
             $leftjoin_fusinvsnmp_networkequipments = 0;
          }
@@ -1470,7 +1464,7 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
                break;
 
             // ** FusionInventory - cpu
-            case "glpi_plugin_fusinvsnmp_networkequipments.cpu" :
+            case "glpi_plugin_fusinvsnmp_networkequipments.plugin_fusinvsnmp_networkequipments_id" :
                if ($leftjoin_fusinvsnmp_networkequipments == "1") {
                      return " LEFT JOIN glpi_plugin_fusinvsnmp_networkequipments ON (glpi_networkequipments.id = glpi_plugin_fusinvsnmp_networkequipments.networkequipments_id) ";
                }
@@ -1488,7 +1482,7 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
                break;
 
             // ** FusionInventory - SNMP authentification
-            case "glpi_plugin_fusinvsnmp_configsecurities.id":
+            case "glpi_plugin_fusinvsnmp_configsecurities.plugin_fusinvsnmp_configsecurities_id":
                $return = "";
                if ($leftjoin_fusinvsnmp_networkequipments == "1") {
                   $return = " LEFT JOIN glpi_plugin_fusinvsnmp_networkequipments ON glpi_networkequipments.id = glpi_plugin_fusinvsnmp_networkequipments.networkequipments_id ";
