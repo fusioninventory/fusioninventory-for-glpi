@@ -308,7 +308,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
          $input['plugins_id'] = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
          $input['method'] = $method;
          $input['action'] = '[{"PluginFusioninventoryAgent":".2"}]';
-         $input['definition'] = '[{"PluginFusinvsnmpIPRange":"'.$_POST['id'].'"}]';
+         $input['definition'] = '[{"PluginFusioninventoryIPRange":"'.$_POST['id'].'"}]';
          $input["entities_id"] = $this->getEntityID();
 
          $taskjob_id = $PluginFusioninventoryTaskjob->add($input);
