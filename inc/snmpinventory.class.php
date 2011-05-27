@@ -48,7 +48,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
-      $PluginFusinvsnmpIPRange = new PluginFusioninventoryIPRange();
+      $PluginFusioninventoryIPRange = new PluginFusioninventoryIPRange();
 
       $uniqid = uniqid();
 
@@ -136,7 +136,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
 
       // Get all devices on each iprange
       foreach ($a_iprange as $items_id) {
-         $PluginFusinvsnmpIPRange->getFromDB($items_id);
+         $PluginFusioninventoryIPRange->getFromDB($items_id);
       // Search NetworkEquipment
          $query = "SELECT `glpi_networkequipments`.`id` AS `gID`,
                             `glpi_networkequipments`.`ip` AS `gnifaddr`,
@@ -150,12 +150,12 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                           AND `plugin_fusinvsnmp_models_id`!='0'
                           AND `plugin_fusinvsnmp_configsecurities_id`!='0'
                           AND `glpi_plugin_fusinvsnmp_models`.`itemtype`='NetworkEquipment'";
-         if ($PluginFusinvsnmpIPRange->fields['entities_id'] != '-1') {
-           $query .= "AND `glpi_networkequipments`.`entities_id`='".$PluginFusinvsnmpIPRange->fields['entities_id']."' ";
+         if ($PluginFusioninventoryIPRange->fields['entities_id'] != '-1') {
+           $query .= "AND `glpi_networkequipments`.`entities_id`='".$PluginFusioninventoryIPRange->fields['entities_id']."' ";
          }
          $query .= " AND inet_aton(`ip`)
-                         BETWEEN inet_aton('".$PluginFusinvsnmpIPRange->fields['ip_start']."')
-                         AND inet_aton('".$PluginFusinvsnmpIPRange->fields['ip_end']."') ";
+                         BETWEEN inet_aton('".$PluginFusioninventoryIPRange->fields['ip_start']."')
+                         AND inet_aton('".$PluginFusioninventoryIPRange->fields['ip_end']."') ";
 
         $result=$DB->query($query);
         while ($data=$DB->fetch_array($result)) {
@@ -179,12 +179,12 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                         AND `plugin_fusinvsnmp_models_id`!='0'
                         AND `plugin_fusinvsnmp_configsecurities_id`!='0'
                         AND `glpi_plugin_fusinvsnmp_models`.`itemtype`='Printer'";
-         if ($PluginFusinvsnmpIPRange->fields['entities_id'] != '-1') {
-            $query .= "AND `glpi_printers`.`entities_id`='".$PluginFusinvsnmpIPRange->fields['entities_id']."' ";
+         if ($PluginFusioninventoryIPRange->fields['entities_id'] != '-1') {
+            $query .= "AND `glpi_printers`.`entities_id`='".$PluginFusioninventoryIPRange->fields['entities_id']."' ";
          }
          $query .= " AND inet_aton(`ip`)
-                      BETWEEN inet_aton('".$PluginFusinvsnmpIPRange->fields['ip_start']."')
-                      AND inet_aton('".$PluginFusinvsnmpIPRange->fields['ip_end']."') ";
+                      BETWEEN inet_aton('".$PluginFusioninventoryIPRange->fields['ip_start']."')
+                      AND inet_aton('".$PluginFusioninventoryIPRange->fields['ip_end']."') ";
          $result=$DB->query($query);
          while ($data=$DB->fetch_array($result)) {
             $a_Printer[] = $data['gID'];

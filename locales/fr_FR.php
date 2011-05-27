@@ -378,12 +378,6 @@ $LANG['plugin_fusinvsnmp']['menu'][10]="Etat des inventaires réseaux";
 $LANG['plugin_fusinvsnmp']['discovery'][5]="Nombre de matériels importés";
 $LANG['plugin_fusinvsnmp']['discovery'][9]="Nombre de matériels non importés car type non défini";
 
-$LANG['plugin_fusinvsnmp']['iprange'][0]="Début de la plage IP";
-$LANG['plugin_fusinvsnmp']['iprange'][1]="Fin de la plage IP";
-$LANG['plugin_fusinvsnmp']['iprange'][2]="Plage IP";
-$LANG['plugin_fusinvsnmp']['iprange'][3]="Activation";
-$LANG['plugin_fusinvsnmp']['iprange'][7]="IP incorrecte";
-
 $LANG['plugin_fusinvsnmp']['agents'][24]="Nombre de threads";
 $LANG['plugin_fusinvsnmp']['agents'][25]="Agent(s)";
 $LANG['plugin_fusinvsnmp']['agents'][26]="Version du module netdiscovery";

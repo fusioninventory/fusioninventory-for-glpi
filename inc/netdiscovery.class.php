@@ -49,7 +49,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
-      $PluginFusinvsnmpIPRange = new PluginFusioninventoryIPRange();
+      $PluginFusioninventoryIPRange = new PluginFusioninventoryIPRange();
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
 
       $uniqid = uniqid();
@@ -67,9 +67,9 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
       foreach ($a_iprange as $iprange) {
          $iprange_id = current($iprange);
          $a_iprangelist[] = $iprange_id;
-         $PluginFusinvsnmpIPRange->getFromDB($iprange_id);
-         $s = $PluginFusinvsnmpIPRange->getIp2long($PluginFusinvsnmpIPRange->fields['ip_start']);
-         $e = $PluginFusinvsnmpIPRange->getIp2long($PluginFusinvsnmpIPRange->fields['ip_end']);
+         $PluginFusioninventoryIPRange->getFromDB($iprange_id);
+         $s = $PluginFusioninventoryIPRange->getIp2long($PluginFusioninventoryIPRange->fields['ip_start']);
+         $e = $PluginFusioninventoryIPRange->getIp2long($PluginFusioninventoryIPRange->fields['ip_end']);
          $a_subnet_nbip[$iprange_id] = $e-$s;
          $count_ip += $e-$s;
       }
@@ -128,11 +128,11 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
          $PluginFusinvsnmpSnmpinventory = new PluginFusinvsnmpSnmpinventory();
          foreach($a_subnet_nbip as $iprange_id=>$nbips) {
             //$maxagentpossible = $nbips/10;
-            $PluginFusinvsnmpIPRange->getFromDB($iprange_id);
+            $PluginFusioninventoryIPRange->getFromDB($iprange_id);
             $a_agentListComplete = array();
             $a_agentList = $PluginFusinvsnmpSnmpinventory->getAgentsSubnet($nbips, "push", "",
-                                                      $PluginFusinvsnmpIPRange->fields['ip_start'],
-                                                      $PluginFusinvsnmpIPRange->fields['ip_end']);
+                                                      $PluginFusioninventoryIPRange->fields['ip_start'],
+                                                      $PluginFusioninventoryIPRange->fields['ip_end']);
             if (isset($a_agentList)) {
                $a_agentListComplete = array_merge($a_agentListComplete, $a_agentList);
             }
@@ -162,8 +162,8 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
                $input_taskjob['status'] = 1;
                $PluginFusioninventoryTaskjob->update($input_taskjob);
             } else {
-               $s = $PluginFusinvsnmpIPRange->getIp2long($PluginFusinvsnmpIPRange->fields['ip_start']);
-               $e = $PluginFusinvsnmpIPRange->getIp2long($PluginFusinvsnmpIPRange->fields['ip_end']);
+               $s = $PluginFusioninventoryIPRange->getIp2long($PluginFusioninventoryIPRange->fields['ip_start']);
+               $e = $PluginFusioninventoryIPRange->getIp2long($PluginFusioninventoryIPRange->fields['ip_end']);
                $nbIpAgent = ceil(($e-$s) / count($a_agentListComplete));
                $iptimes = 0;
 
@@ -250,9 +250,9 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
             $nbIpadded = 0;
             foreach($a_iprangelist as $iprange_id) {
                if ($ip_id == $iprange_id) {
-                  $PluginFusinvsnmpIPRange->getFromDB($iprange_id);
-                  $s = $PluginFusinvsnmpIPRange->getIp2long($PluginFusinvsnmpIPRange->fields['ip_start']);
-                  $e = $PluginFusinvsnmpIPRange->getIp2long($PluginFusinvsnmpIPRange->fields['ip_end']);
+                  $PluginFusioninventoryIPRange->getFromDB($iprange_id);
+                  $s = $PluginFusioninventoryIPRange->getIp2long($PluginFusioninventoryIPRange->fields['ip_start']);
+                  $e = $PluginFusioninventoryIPRange->getIp2long($PluginFusioninventoryIPRange->fields['ip_end']);
                   if ($communication == "push") {
                      $_SESSION['glpi_plugin_fusioninventory']['agents'][$agent_id] = 1;
                   }
@@ -302,7 +302,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      $PluginFusinvsnmpIPRange = new PluginFusioninventoryIPRange;
+      $PluginFusioninventoryIPRange = new PluginFusioninventoryIPRange;
       $PluginFusinvsnmpConfigSecurity = new PluginFusinvsnmpConfigSecurity;
       $PluginFusinvsnmpCommunicationSNMP = new PluginFusinvsnmpCommunicationSNMP;
 
@@ -342,24 +342,24 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
          $sxml_rangeip = $sxml_option->addChild('RANGEIP');
             $PluginFusioninventoryTaskjob->getFromDB($taskjobstatusdatas['plugin_fusioninventory_taskjobs_id']);
             $PluginFusioninventoryTaskjobstatus->getFromDB($taskjobstatusdatas['id']);
-            $PluginFusinvsnmpIPRange->getFromDB($taskjobstatusdatas['items_id']);
+            $PluginFusioninventoryIPRange->getFromDB($taskjobstatusdatas['items_id']);
 
-            $sxml_rangeip->addAttribute('ID', $PluginFusinvsnmpIPRange->fields['id']);
+            $sxml_rangeip->addAttribute('ID', $PluginFusioninventoryIPRange->fields['id']);
 
             if (!is_null($PluginFusioninventoryTaskjobstatus->fields['specificity'])) {
                $a_split = explode("-", $PluginFusioninventoryTaskjobstatus->fields['specificity']);
 
-               $first_ip = $PluginFusinvsnmpIPRange->getIp2long($PluginFusinvsnmpIPRange->fields["ip_start"]);
+               $first_ip = $PluginFusioninventoryIPRange->getIp2long($PluginFusioninventoryIPRange->fields["ip_start"]);
 
                $last_ip = long2ip($first_ip + $a_split[1]);
                $first_ip = long2ip($first_ip + $a_split[0]);
                $sxml_rangeip->addAttribute('IPSTART', $first_ip);
                $sxml_rangeip->addAttribute('IPEND', $last_ip);
             } else {
-               $sxml_rangeip->addAttribute('IPSTART', $PluginFusinvsnmpIPRange->fields["ip_start"]);
-               $sxml_rangeip->addAttribute('IPEND', $PluginFusinvsnmpIPRange->fields["ip_end"]);
+               $sxml_rangeip->addAttribute('IPSTART', $PluginFusioninventoryIPRange->fields["ip_start"]);
+               $sxml_rangeip->addAttribute('IPEND', $PluginFusioninventoryIPRange->fields["ip_end"]);
             }
-            $sxml_rangeip->addAttribute('ENTITY', $PluginFusinvsnmpIPRange->fields["entities_id"]);
+            $sxml_rangeip->addAttribute('ENTITY', $PluginFusioninventoryIPRange->fields["entities_id"]);
 
             if ($changestatus == '0') {
                $PluginFusioninventoryTaskjobstatus->changeStatus($PluginFusioninventoryTaskjobstatus->fields['id'], 1);

@@ -65,7 +65,6 @@ function plugin_init_fusinvsnmp() {
    Plugin::registerClass('PluginFusinvsnmpNetworkEquipment');
    Plugin::registerClass('PluginFusinvsnmpPrinter');
    Plugin::registerClass('PluginFusinvsnmpPrinterCartridge');
-   //Plugin::registerClass('PluginFusinvsnmpIPRange');
    Plugin::registerClass('PluginFusinvsnmpConfigSecurity');
    Plugin::registerClass('PluginFusinvsnmpNetworkPortLog');
    Plugin::registerClass('PluginFusinvsnmpAgentconfig');
