@@ -311,7 +311,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       } else  {
          $this->showFormButtons($options);
       }
-
+ 
       return true;
    }
 
@@ -614,48 +614,62 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $PluginFusioninventoryTask    = new PluginFusioninventoryTask();
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
 
+      // Detect if running task have a problem
+      $PluginFusioninventoryTaskjob->CronCheckRunnningJobs();
+
       $_SESSION['glpi_plugin_fusioninventory']['agents'] = array();
 
-      // Search for task with periodicity and must be ok (so reinit state of job to 0)
-      $query = "SELECT *, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp 
-                FROM `".$PluginFusioninventoryTask->getTable()."`
-                WHERE `is_active`='1'AND `periodicity_count` != '0'
-                   AND `periodicity_type` IS NOT NULL
-                      AND `periodicity_type` != '0'";
-      
-      $result = $DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
-         $PluginFusioninventoryTaskjob->reinitializeTaskjobs($data['id']);
-      }
-
       // *** Search task ready
-      $dateNow = date("Y-m-d H:i:s");
-      $query = "SELECT `glpi_plugin_fusioninventory_taskjobs`.*,
-                       `glpi_plugin_fusioninventory_tasks`.`communication`,
-                       UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp
-                FROM ".$PluginFusioninventoryTaskjob->getTable()."
-                LEFT JOIN `glpi_plugin_fusioninventory_tasks`
-                   ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
-                WHERE `is_active`='1' AND `status` = '0' AND `date_scheduled` <= '".$dateNow."' ";
+      $dateNow = date("U");
+
+      $query = "SELECT `".$PluginFusioninventoryTaskjob->getTable()."`.*,
+     `glpi_plugin_fusioninventory_tasks`.`communication`,
+      UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp,
+      CASE
+         WHEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_type` = 'minutes'
+            THEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_count` *60
+         WHEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_type` = 'hours'
+            THEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_count` *60 *60
+         WHEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_type` = 'days'
+            THEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_count` *60 *60 *24
+         WHEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_type` = 'months'
+            THEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_count` *60 *60 *24 *30
+         ELSE 0
+      END AS timing
+      FROM ".$PluginFusioninventoryTaskjob->getTable()."
+      LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
+      WHERE `is_active`='1'
+         AND `status` = '0'
+         AND UNIX_TIMESTAMP(date_scheduled) <= '".$dateNow."' ";
       $result = $DB->query($query);
       $return = 0;
+      $a_tasktiming = array();
       while ($data=$DB->fetch_array($result)) {
-         $plugin = new Plugin();
-         $plugin->getFromDB($data['plugins_id']);
-         if ($plugin->fields['state'] == Plugin::ACTIVATED) {
-            $PluginFusioninventoryTaskjob->verifyDefinitionActions($data['id']);
-            $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp($data['periodicity_type'], 
-                                                                            $data['periodicity_count']);
-            if (($data['date_scheduled_timestamp'] + $period) <= date('U')) {
+         // If time execution of task if this time to execute...
+         if (($data['date_scheduled_timestamp'] + $data['timing']) <= $dateNow) {
+            $pass = 0;
+            if (!isset($a_tasktiming[$data['plugin_fusioninventory_tasks_id']])) {
+               $a_tasktiming[$data['plugin_fusioninventory_tasks_id']] = $data['timing'];
+               $pass = 1;
+            } else {
+               if ($a_tasktiming[$data['plugin_fusioninventory_tasks_id']] == $data['timing']) {
+                  $pass = 1;
+               }
+            }
+
+            if ($pass == '1') {
+               $PluginFusioninventoryTaskjob->verifyDefinitionActions($data['id']);
                // Get module name
                $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
-               $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
-               $class = new $className();
-               $class->prepareRun($data['id']);
-               $return = 1;
-               
+               if (strstr($pluginName, "fusioninventory")
+                       OR strstr($pluginName, "fusinv")) {
+
+                  $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
+                  $class = new $className;
+                  $class->prepareRun($data['id']);
+                  $return = 1;
+               }
             }
-            
          }
       }
       // Start agents must start in push mode
@@ -664,8 +678,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $a_ips = $PluginFusioninventoryAgent->getIPs($agents_id);
          foreach ($a_ips as $ip) {
             $PluginFusioninventoryAgent->getFromDB($agents_id);
-            $PluginFusioninventoryTaskjob->remoteStartAgent($ip, 
-                                                            $PluginFusioninventoryAgent->fields['token']);
+            $PluginFusioninventoryTaskjob->startAgentRemotly($ip, 
+                                                             $PluginFusioninventoryAgent->fields['token']);
          }
       }
       unset($_SESSION['glpi_plugin_fusioninventory']['agents']);
@@ -688,13 +702,13 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    **/
    function reinitializeTaskjobs($tasks_id, $disableTimeVerification = 0) {
       global $DB;
-
+      
       $PluginFusioninventoryTask = new PluginFusioninventoryTask();
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
-
-      $query = "SELECT *, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp FROM `".$PluginFusioninventoryTask->getTable()."`
+      $query = "SELECT *, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp
+            FROM `".$PluginFusioninventoryTask->getTable()."`
          WHERE `id`='".$tasks_id."' 
             LIMIT 1";
       $result = $DB->query($query);
@@ -705,8 +719,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       // Calculate next execution from last
       $queryJob = "SELECT * FROM `".$PluginFusioninventoryTaskjob->getTable()."`
          WHERE `plugin_fusioninventory_tasks_id`='".$tasks_id."'
-         ORDER BY `id` DESC
-         LIMIT 1";
+         ORDER BY `id` DESC";
 
       $finished = 2;
       $resultJob = $DB->query($queryJob);
@@ -731,29 +744,37 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          }
 
          if ((count($a_taskjobstatus) == $taskjobstatusfinished)
-                 AND ($finished != "0")
-                 AND (($data['date_scheduled_timestamp'] + $period) < date('U')) ) {
+                 AND ($finished != "0") ) {
 
             $finished = 1;
-         } else if ((count($a_taskjobstatus) == $taskjobstatusfinished)
-                 AND ($finished != "0")
-                 AND $disableTimeVerification == "1") {
-
-             $finished = 1;
+//         } else if ((count($a_taskjobstatus) == $taskjobstatusfinished)
+//                 AND ($finished != "0")
+//                 AND $disableTimeVerification == "1") {
+//
+//             $finished = 1;
          } else {
             $finished = 0;
          }
       }
       // if all jobs are finished, we calculate if we reinitialize all jobs
+
       if ($finished == "1") {
          $data['execution_id']++;
+
          $queryUpdate = "UPDATE `".$PluginFusioninventoryTaskjob->getTable()."`
             SET `status`='0', `execution_id`='".$data['execution_id']."'
             WHERE `plugin_fusioninventory_tasks_id`='".$data['id']."'";
          $DB->query($queryUpdate);
 
          if (($data['date_scheduled_timestamp'] + $period) <= date('U')) {
-            $data['date_scheduled'] = date("Y-m-d H:i:s", date('U'));
+            $periodtotal = $period;
+            for($i=2; ($data['date_scheduled_timestamp'] + $periodtotal) <= date('U'); $i++) {
+               $periodtotal = $period * $i;
+            }
+            $data['date_scheduled'] = date("Y-m-d H:i:s", $data['date_scheduled_timestamp'] + $periodtotal);
+         } else if ($data['date_scheduled_timestamp'] > date('U')) {
+            // Don't update date next execution
+
          } else {
             $data['date_scheduled'] = date("Y-m-d H:i:s", $data['date_scheduled_timestamp'] + $period);
          }
@@ -806,7 +827,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             $a_ips = $PluginFusioninventoryAgent->getIPs($agents_id);
             foreach ($a_ips as $ip) {
                $PluginFusioninventoryAgent->getFromDB($agents_id);
-               $PluginFusioninventoryTaskjob->remoteStartAgent($ip, $PluginFusioninventoryAgent->fields['token']);
+               $PluginFusioninventoryTaskjob->startAgentRemotly($ip, 
+                                                                $PluginFusioninventoryAgent->fields['token']);
             }
          }
          unset($_SESSION['glpi_plugin_fusioninventory']['agents']);         
@@ -883,9 +905,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
           )
       );
 
-      $url = "http://".$ip.":".$PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port')."/status";
-
-      $str = @file_get_contents($url, 0, $ctx);
+      $str = @file_get_contents(PluginFusioninventoryAgent::getAgentStatusURL($plugins_id, $ip), 0, 
+                                $ctx);
       $this->reenableusemode();
       if (strstr($str, "waiting")) {
          return true;
@@ -916,9 +937,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          );
 
          foreach ($a_ip as $ip) {
-            $url = "http://".$ip.":".$PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port')."/status";
-
-            $str = @file_get_contents($url, 0, $ctx);
+            $str = @file_get_contents(PluginFusioninventoryAgent::getAgentStatusURL($plugins_id, $ip), 
+                                      0, $ctx);
             $this->reenableusemode();
             if (strstr($str, "waiting")) {
                return "waiting";
@@ -943,22 +963,19 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    * @return bool true if agent wake up
    *
    **/
-   function RemoteStartAgent($ip, $token) {
+   function startAgentRemotly($ip, $token) {
 
       $this->disableDebug();
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
       $input = '';
-      $ctx = stream_context_create(array(
-          'http' => array(
-              'timeout' => 2
-              )
-          )
-      );
-      $data = @file_get_contents("http://".$ip.":".$PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port')."/status", 0, $ctx);
+      $ctx = stream_context_create(array('http' => array('timeout' => 2)));
+      $data = @file_get_contents(PluginFusioninventoryAgent::getAgentStatusURL($plugins_id, $ip), 
+                                 0, $ctx);
       if (isset($data) && !empty($data)) {
-         @file_get_contents("http://".$ip.":".$PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port')."/now/".$token, 0, $ctx);
+         @file_get_contents(PluginFusioninventoryAgent::getAgentRunURL($plugins_id, $ip).$token, 0, 
+                            $ctx);
          //Agent run Now
          $this->reenableusemode();
          return true;
@@ -977,7 +994,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    **/
    function disableDebug() {
       error_reporting(0);
-      set_error_handler(array(new PluginFusioninventoryTaskjob(),'errorempty'));
+      set_error_handler(array(new PluginFusioninventoryTaskjob(), 'errorempty'));
    }
 
 
@@ -987,8 +1004,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    *
    **/
    function reenableusemode() {
-      if ($_SESSION['glpi_use_mode']==DEBUG_MODE){
-         ini_set('display_errors','On');
+      if ($_SESSION['glpi_use_mode'] == DEBUG_MODE){
+         ini_set('display_errors', 'On');
          error_reporting(E_ALL | E_STRICT);
          set_error_handler("userErrorHandler");
       }
@@ -1250,6 +1267,22 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             }
          }         
       }
+
+
+      // If taskjob.status = 1 and all taskjobstatus are finished, so reinitializeTaskjobs()
+      $sql = "SELECT *
+      FROM `glpi_plugin_fusioninventory_taskjobs`
+      WHERE (
+         SELECT count( * )
+         FROM glpi_plugin_fusioninventory_taskjobstatus
+         WHERE plugin_fusioninventory_taskjobs_id = `glpi_plugin_fusioninventory_taskjobs`.id
+         AND glpi_plugin_fusioninventory_taskjobstatus.state <3) = 0
+       AND `glpi_plugin_fusioninventory_taskjobs`.`status`=1";
+     if ($result=$DB->query($sql)) {
+			while ($data=$DB->fetch_array($result)) {
+            $this->reinitializeTaskjobs($data['plugin_fusioninventory_tasks_id'], '1');
+         }
+     }
    }
 
 
@@ -1261,6 +1294,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
     */
    function verifyDefinitionActions($items_id) {
       $this->getFromDB($items_id);
+      $input = array();
+      $input['id'] = $this->fields['id'];
       $a_definitions = importArrayFromDB($this->fields['definition']);
       foreach ($a_definitions as $num=>$data) {
          $classname = key($data);
@@ -1270,9 +1305,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          }
       }
       if (count($a_definitions) == '0') {
-         $this->fields['definition'] = '';
+         $input['definition'] = '';
       } else {
-         $this->fields['definition'] = exportArrayToDB($a_definitions);
+         $input['definition'] = exportArrayToDB($a_definitions);
       }
       $a_actions = importArrayFromDB($this->fields['action']);
       foreach ($a_actions as $num=>$data) {
@@ -1285,11 +1320,11 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          }
       }
       if (count($a_actions) == '0') {
-         $this->fields['action'] = '';
+         $input['action'] = '';
       } else {
-         $this->fields['action'] = exportArrayToDB($a_actions);
+         $input['action'] = exportArrayToDB($a_actions);
       }
-      $this->update($this->fields);      
+      $this->update($input);
    }
 
 
@@ -1310,10 +1345,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       }
    }
 
-
    static function getAllowurlfopen($wakecomputer=0) {
       global $LANG;
-
+      
       if (!ini_get('allow_url_fopen')) {
          echo "<center>";
          echo "<table class='tab_cadre' height='30' width='700'>";

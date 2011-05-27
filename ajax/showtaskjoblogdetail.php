@@ -26,31 +26,25 @@
    along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David Durieux
+   Original Author of file: David DURIEUX
    Co-authors of file:
    Purpose of file:
    ----------------------------------------------------------------------
  */
 
+if (strpos($_SERVER['PHP_SELF'],"showtaskjoblogdetail.php")) {
+   define('GLPI_ROOT','../../..');
+   include (GLPI_ROOT."/inc/includes.php");
+   header("Content-Type: text/html; charset=UTF-8");
+   header_nocache();
+}
 if (!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', '../../..');
+   die("Can not acces directly to this file");
 }
 
-include (GLPI_ROOT."/inc/includes.php");
-
-commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","tasks");
-
-PluginFusioninventoryProfile::checkRight("fusioninventory", "task","r");
-
-PluginFusioninventoryMenu::displayMenu("mini");
-
-PluginFusioninventoryCommunication::getAllowurlfopen();
-echo "<br/>";
-
-$_GET['target']="task.php";
-
-Search::show('PluginFusioninventoryTask');
-
-commonFooter();
-
+checkCentralAccess();
+echo "<td colspan='8'>";
+$pluginfusioninventorytaskjoblog = new PluginFusioninventoryTaskjoblog();
+echo $pluginfusioninventorytaskjoblog->showHistoryInDetail($_POST["agents_id"], $_POST["uniqid"], "900")."</td>";
+echo "</td>";
 ?>

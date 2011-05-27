@@ -50,8 +50,10 @@ class PluginFusioninventoryMenu {
       global $LANG;
 
       // FOR THE BETA
-      echo "<center><a href='http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/wiki/Beta_test'>
-         <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/beta.png'/></a></center><br/>";
+      echo "<center>"; 
+      echo "<a href='http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/wiki/Beta_test'>";
+      echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/beta.png'/></a>"; 
+      echo "</center><br/>";
       // END FOR THE BETA
 
       $width_status = 0;
@@ -95,14 +97,10 @@ class PluginFusioninventoryMenu {
       }
 
       if (PluginFusioninventoryCredential::hasAlLeastOneType() 
-            && PluginFusioninventoryProfile::haveRight("fusioninventory", "credential", "r")) {
-         $a_menu[7]['name'] = $LANG['plugin_fusioninventory']['menu'][5];
-         $a_menu[7]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_credentials.png";
-         $a_menu[7]['link'] = getItemTypeSearchURL('PluginFusioninventoryCredential');
-
-         $a_menu[8]['name'] = $LANG['plugin_fusioninventory']['menu'][6];
-         $a_menu[8]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_credentials.png";
-         $a_menu[8]['link'] = getItemTypeSearchURL('PluginFusioninventoryCredentialip');
+            && PluginFusioninventoryProfile::haveRight("fusioninventory", "credentialip", "r")) {
+         $a_menu[7]['name'] = $LANG['plugin_fusioninventory']['menu'][6];
+         $a_menu[7]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_credentialips.png";
+         $a_menu[7]['link'] = getItemTypeSearchURL('PluginFusioninventoryCredentialip');
 
       }
 

@@ -323,8 +323,10 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
 
       $this->getFromDB($taskjobstatus);
-      $this->fields['state'] = 3;
-      $this->update($this->fields);
+      $input = array();
+      $input['id'] = $this->fields['id'];
+      $input['state'] = 3;
+      $this->update($input);
             
       $a_input = array();
       if ($unknown ==  "1") {
@@ -357,6 +359,8 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       $a_input['comment'] = $message;
       $PluginFusioninventoryTaskjoblog->add($a_input);
 
+      $PluginFusioninventoryTaskjob->getFromDB($this->fields['plugin_fusioninventory_taskjobs_id']);
+      $PluginFusioninventoryTaskjob->reinitializeTaskjobs($PluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']);
    }
 
    

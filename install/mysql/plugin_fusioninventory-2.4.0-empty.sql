@@ -314,9 +314,9 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
           (NULL, 'PluginFusioninventoryTask', '7', '6', '0'),
           (NULL, 'PluginFusioninventoryTask', '30', '7', '0'),
 
-          (NULL,'PluginFusinvsnmpIPRange', '2', '1', '0'),
-          (NULL,'PluginFusinvsnmpIPRange', '3', '2', '0'),
--         (NULL,'PluginFusinvsnmpIPRange', '4', '3', '0'),
+          (NULL,'PluginFusioninventoryIPRange', '2', '1', '0'),
+          (NULL,'PluginFusioninventoryIPRange', '3', '2', '0'),
+          (NULL,'PluginFusioninventoryIPRange', '4', '3', '0'),
 
           (NULL,'PluginFusioninventoryTaskjob', '1', '1', '0'),
           (NULL,'PluginFusioninventoryTaskjob', '2', '2', '0'),

@@ -265,7 +265,8 @@ function plugin_init_fusioninventory() {
          doHook("post_init");
       }
       
-      include(GLPI_ROOT ."/plugins/fusioninventory/front/communication.php");
+      include_once(GLPI_ROOT ."/plugins/fusioninventory/front/communication.php");
+      exit();
    }
 
 }

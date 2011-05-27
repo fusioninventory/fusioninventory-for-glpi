@@ -58,18 +58,15 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    $response = PluginFusioninventoryRestCommunication::communicate($_GET);
    if ($response) {
       echo json_encode($response);
-      PluginFusioninventoryConfig::logIfExtradebug("php-errors",print_r($response));
    } else {
       PluginFusioninventoryRestCommunication::sendError();
-      PluginFusioninventoryConfig::logIfExtradebug("php-errors","Send HTTP error");
    }
-   exit();
+//Only go there if agent is using the old XML protocol
 } else {
    
    $communication  = new PluginFusioninventoryCommunication();
-   $pta  = new PluginFusioninventoryAgent();
-   
-   $errors='';
+   $pta            = new PluginFusioninventoryAgent();
+   $errors         = '';
    
    // ***** For debug only ***** //
    //$GLOBALS["HTTP_RAW_POST_DATA"] = gzcompress('');
@@ -78,9 +75,9 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
       // Get conf tu know if SSL is only
    
-      $fusioninventory_config = new PluginFusioninventoryConfig();
+      $fusioninventory_config      = new PluginFusioninventoryConfig();
       $PluginFusioninventoryModule = new PluginFusioninventoryModule();
-      $fusioninventoryModule_id = $PluginFusioninventoryModule->getModuleId("fusioninventory");
+      $fusioninventoryModule_id    = $PluginFusioninventoryModule->getModuleId("fusioninventory");
    
       $ssl = $fusioninventory_config->getValue($fusioninventoryModule_id, 'ssl_only');
       if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"))
@@ -137,7 +134,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    <REPLY>
    </REPLY>");
    
-            $a_agent = $pta->InfosByKey($pxml->DEVICEID);
+            $a_agent = $pta->InfosByKey(addslashes_deep($pxml->DEVICEID));
    
             // Get taskjob in waiting
             $communication->getTaskAgent($a_agent['id']);

@@ -138,29 +138,57 @@ class PluginFusioninventoryRestCommunication {
          
          $taskjoblog = new PluginFusioninventoryTaskjoblog();
          
-         $tmp['plugin_fusioninventory_taskjobstatus_id'] = $taskjobstatus->fields['id'];
-         $tmp['itemtype']  = $taskjobstatus->fields['itemtype'];
-         $tmp['items_id']  = $taskjobstatus->fields['items_id'];
-         $tmp['comment']   = $p['msg'];
-         $tmp['date']      = date("Y-m-d H:i:s");
          if ($p['code'] == 'ok') {
-            $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_OK;
+            $state = PluginFusioninventoryTaskjoblog::TASK_OK;
          } else {
-            $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_ERROR;
+            $state = PluginFusioninventoryTaskjoblog::TASK_ERROR;
          }
-         $taskjoblog->add($tmp);
+         $taskjobstatus->changeStatusFinish($taskjobstatus->fields['id'], 
+                                            $taskjobstatus->fields['items_id'], 
+                                            $taskjobstatus->fields['itemtype'], $state, $p['msg']);
       }
       self::sendOk();
    }
  
+   /**
+    * Get default URL for a REST servie
+    * 
+    * @param url REFERER url
+    * @param plugin the plugin hosts the service
+    * @param task the task to access
+    * 
+    * @return the url of the REST service
+    */
    static function getDefaultRestURL($url, $plugin, $task) {
       $task = strtolower($task);
       if (preg_match("/(.*)\/(plugins|front)/",$url,$values)) {
-         return $values[1].'/plugins/fusinvinventory/b/'.$task;
+         return $values[1].'/plugins/'.$plugin.'/b/'.$task;
       } else {
          return "";
       }
    }
 
+   /**
+    * Test a given url
+    * 
+    * @param url the url to test
+    * 
+    * @return true if url is valid, false otherwise
+    */
+   static function testRestURL($url) {
+      
+      //If fopen is not allowed, we cannot check and then return true...
+      if (!PluginFusioninventoryCommunication::isFopenAllowed()) {
+         return true;
+      }
+      
+      $handle = fopen($url,'rb');
+      if (!$handle) {
+         return false;
+      } else {
+         fclose($handle);
+         return true;
+      }
+   }
 }
 ?>
