@@ -31,7 +31,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-define('GLPI_ROOT', '../../..');
+define('GLPI_ROOT', '../../../..');
 include (GLPI_ROOT."/inc/includes.php");
 
 $plugin = new Plugin();
