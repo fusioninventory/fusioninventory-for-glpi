@@ -121,7 +121,7 @@ function plugin_fusioninventory_install() {
       AND ($version_detected != PLUGIN_FUSIONINVENTORY_VERSION)
         AND $version_detected!='0') {
       pluginFusioninventoryUpdate($version_detected);
-   } else if ((isset($version_detected)) AND ($version_detected == $version)) {
+   } else if ((isset($version_detected)) AND ($version_detected == PLUGIN_FUSIONINVENTORY_VERSION)) {
 
    } else {
       include (GLPI_ROOT . "/plugins/fusioninventory/install/install.php");

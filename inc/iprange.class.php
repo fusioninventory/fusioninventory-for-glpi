@@ -308,7 +308,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
          $input['plugins_id'] = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
          $input['method'] = $method;
          $input['action'] = '[{"PluginFusioninventoryAgent":".2"}]';
-         $input['definition'] = '[{"PluginFusinvsnmpIPRange":"'.$_POST['id'].'"}]';
+         $input['definition'] = '[{"PluginFusioninventoryIPRange":"'.$_POST['id'].'"}]';
          $input["entities_id"] = $this->getEntityID();
 
          $taskjob_id = $PluginFusioninventoryTaskjob->add($input);
@@ -364,6 +364,13 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       $com['push'] = $LANG['plugin_fusioninventory']['task'][41];
       $com['pull'] = $LANG['plugin_fusioninventory']['task'][42];
       Dropdown::showFromArray("communication", $com, array('value'=>$PluginFusioninventoryTask->fields["communication"]));
+      echo "</td>";
+      echo "</tr>";
+
+      echo "</td>";
+      echo "<td colspan='4' align='center'>";
+      echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/front/taskjob.form.php?id=".$taskjob_id."'>".
+         $LANG['plugin_fusioninventory']['task'][44]."</a>";
       echo "</td>";
       echo "</tr>";
 

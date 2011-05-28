@@ -100,7 +100,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
 
       if (isset($pluginname)) {
          $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($pluginname);
-         if (is_callable(array($class, "profiles"))) {
+         if (method_exists($class, "profiles")) {
             $a_profile = call_user_func(array($class, "profiles"));
             foreach ($a_profile as $data) {
                PluginFusioninventoryProfile::addProfile($plugins_id, $data['profil'], 'w');
