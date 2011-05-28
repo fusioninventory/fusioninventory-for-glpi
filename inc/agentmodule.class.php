@@ -67,7 +67,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          $use_rest = false;
          
          foreach ($a_methods as $datamod) {
-            logDebug($data["modulename"], $datamod['method']);
             
             if ((strtolower($data["modulename"]) == strtolower($datamod['method'])) ||
                 isset($datamod['task']) 

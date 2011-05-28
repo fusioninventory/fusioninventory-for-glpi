@@ -245,7 +245,8 @@ function plugin_init_fusioninventory() {
       && $plugin->isActivated('fusioninventory')
          && isset($_SERVER['HTTP_USER_AGENT'])
             && isFusioninventoryUserAgent($_SERVER['HTTP_USER_AGENT'])
-               && !preg_match("/fus(ion|inv).*/",$_SERVER['PHP_SELF'])) {
+               && ((preg_match("/plugins\/fusioninventory\/index.php/", $_SERVER['PHP_SELF']))
+               || !preg_match("/fus(ion|inv).*/", $_SERVER['PHP_SELF']))) {
 
       //Load all plugins
       $plugin = new Plugin();
