@@ -83,8 +83,8 @@ class PluginFusioninventoryRestCommunication {
                $class= PluginFusioninventoryStaticmisc::getStaticmiscClass($method['module']);
                if (isset($method['use_rest']) 
                      && $method['use_rest'] 
-                        && method_exists($class, "task_".$task."_getParameters")) {
-                  $schedule[] = call_user_func(array($class, "task_".$task."_getParameters"));
+                        && method_exists($class, self::getMethodForParameters($task))) {
+                  $schedule[] = call_user_func(array($class, self::getMethodForParameters($task)));
 
                }
                
@@ -110,7 +110,10 @@ class PluginFusioninventoryRestCommunication {
       header("HTTP/1.1 400", true, 400);
    }
 
-
+   static function getMethodForParameters($task) {
+      return "task_".strtolower($task)."_getParameters";
+      
+   }
    /**
     * Update agent status for a task
     * @param params parameters from the GET HTTP request
