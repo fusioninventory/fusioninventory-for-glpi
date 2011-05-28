@@ -150,7 +150,6 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
     *
     */
    function run($itemtype) {
-      logDebug('run',$itemtype,$this);
       return $this->sxml;
    }
 }

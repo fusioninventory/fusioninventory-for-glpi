@@ -153,21 +153,12 @@ class PluginFusinvdeployStaticmisc {
                          'name'    => $LANG['plugin_fusinvdeploy']['profile'][3]));
    }
 
-   static function task_deploycommon_getParameters($task) {
+   static function task_deploy_getParameters() {
       global $CFG_GLPI;
 
-      return array ('periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'ESX', 
-                    'remote' => PluginFusioninventoryAgentmodule::getUrlForModule('ESX'));
+      return array ('periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'deploy', 
+                    'remote' => PluginFusioninventoryAgentmodule::getUrlForModule('deploy'));
    }
-
-   static function task_deployinstall_getParameters() {
-      return self::task_deploycommon_getParameters(self::DEPLOYMETHOD_INSTALL);
-   }
-
-   static function task_deployuninstall_getParameters() {
-      return self::task_deploycommon_getParameters(self::DEPLOYMETHOD_UNINSTALL);
-   }
-
 }
 
 ?>
