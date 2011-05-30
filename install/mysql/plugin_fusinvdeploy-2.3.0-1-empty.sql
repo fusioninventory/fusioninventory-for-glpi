@@ -136,3 +136,36 @@ CREATE TABLE  `glpi_plugin_fusinvdeploy_actions_messages` (
 `type` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '' COMMENT  'info, postpone',
 PRIMARY KEY (  `id` )
 ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_tasks`;
+CREATE TABLE  `glpi_plugin_fusinvdeploy_tasks` (
+`id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+`name` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
+`comment` text COLLATE utf8_unicode_ci NOT NULL,
+PRIMARY KEY (  `id` )
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_groups`;
+CREATE TABLE  `glpi_plugin_fusinvdeploy_groups` (
+`id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+`name` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
+`comment` text COLLATE utf8_unicode_ci NOT NULL,
+`type` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'STATIC, DYNAMIC',
+PRIMARY KEY (  `id` )
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_groups_staticdatas`;
+CREATE TABLE  `glpi_plugin_fusinvdeploy_groups_staticdatas` (
+`id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+`groups_id` int(11) NOT NULL DEFAULT '0',
+`itemtype` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '0',
+`items_id` INT( 11 ) NOT NULL DEFAULT  '0',
+PRIMARY KEY (  `id` )
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_groups_dynamicdatas`;
+CREATE TABLE  `glpi_plugin_fusinvdeploy_groups_dynamicdatas` (
+`id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+`groups_id` int(11) NOT NULL DEFAULT '0',
+PRIMARY KEY (  `id` )
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;

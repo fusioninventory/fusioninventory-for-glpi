@@ -157,4 +157,16 @@ $LANG['plugin_fusinvdeploy']['form']['action_message'][2] = "Content";
 $LANG['plugin_fusinvdeploy']['form']['action_message'][3] = "Type";
 $LANG['plugin_fusinvdeploy']['form']['action_message'][4] = "Informations";
 $LANG['plugin_fusinvdeploy']['form']['action_message'][5] = "report of the install";
+
+$LANG['plugin_fusinvdeploy']['task'][0] = "Deployement task";
+$LANG['plugin_fusinvdeploy']['task'][1] = "Task";
+$LANG['plugin_fusinvdeploy']['task'][2] = "Groups";
+$LANG['plugin_fusinvdeploy']['task'][3] = "Add task";
+$LANG['plugin_fusinvdeploy']['task'][4] = "Add group";
+$LANG['plugin_fusinvdeploy']['task'][5] = "Task";
+$LANG['plugin_fusinvdeploy']['task'][6] = "Group";
+$LANG['plugin_fusinvdeploy']['task'][7] = "Actions";
+$LANG['plugin_fusinvdeploy']['task'][8] = "Actions list";
+$LANG['plugin_fusinvdeploy']['task'][9] = "Static group";
+$LANG['plugin_fusinvdeploy']['task'][10] = "Dynamic group";
 ?>

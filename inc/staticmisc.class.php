@@ -140,6 +140,10 @@ class PluginFusinvdeployStaticmisc {
          $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/deploystate.php";
       }
 
+      $a_menu[3]['name'] = $LANG['plugin_fusinvdeploy']['task'][0];
+      $a_menu[3]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_task.png";
+      $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/task.php";
+
       return $a_menu;
    }
 
@@ -156,7 +160,7 @@ class PluginFusinvdeployStaticmisc {
    static function task_deploy_getParameters() {
       global $CFG_GLPI;
 
-      return array ('periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'deploy', 
+      return array ('periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'deploy',
                     'remote' => PluginFusioninventoryAgentmodule::getUrlForModule('deploy'));
    }
 }
