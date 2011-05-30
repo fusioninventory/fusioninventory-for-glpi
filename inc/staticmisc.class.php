@@ -38,8 +38,8 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvdeployStaticmisc {
 
-   const DEPLOYMETHOD_INSTALL   = 'deploy_install';
-   const DEPLOYMETHOD_UNINSTALL = 'deploy_uninstall';
+   const DEPLOYMETHOD_INSTALL   = 'deployinstall';
+   const DEPLOYMETHOD_UNINSTALL = 'deployuninstall';
 
    static function task_methods() {
       global $LANG;
@@ -47,13 +47,13 @@ class PluginFusinvdeployStaticmisc {
       return array(array('module'         => 'fusinvdeploy',
                          'method'         => self::DEPLOYMETHOD_INSTALL,
                          'name'           => $LANG['plugin_fusinvdeploy']['package'][16],
-                         'use_rest'       => true
-                         ),
+                         'task'           => "DEPLOY",
+                         'use_rest'       => true),
                    array('module'         => 'fusinvdeploy',
                          'method'         => self::DEPLOYMETHOD_UNINSTALL,
                          'name'           => $LANG['plugin_fusinvdeploy']['package'][17],
-                         'use_rest'       => true
-                         ));
+                         'task'           => "DEPLOY",
+                         'use_rest'       => true));
    }
 
    static function getItemtypeActions() {
@@ -76,11 +76,11 @@ class PluginFusinvdeployStaticmisc {
                    'PluginFusinvdeployPackage' => $LANG['plugin_fusinvdeploy']['package'][7]);
    }
 
-   static function task_definitiontype_deploy_install($a_itemtype) {
+   static function task_definitiontype_deployinstall($a_itemtype) {
       return self::getDefinitionType();
    }
 
-   static function task_definitiontype_deploy_uninstall($a_itemtype) {
+   static function task_definitiontype_deployuninstall($a_itemtype) {
       return self::getDefinitionType();
    }
 
@@ -103,19 +103,19 @@ class PluginFusinvdeployStaticmisc {
 
    }
 
-   static function task_definitionselection_PluginFusinvdeployPackage_deploy_install() {
+   static function task_definitionselection_PluginFusinvdeployPackage_deployinstall() {
       return self::getDeploySelections();
    }
 
-   static function task_definitionselection_PluginFusinvdeployPackage_deploy_uninstall() {
+   static function task_definitionselection_PluginFusinvdeployPackage_deployuninstall() {
       return self::getDeploySelections();
    }
 
-   static function task_actionselection_PluginFusioninventoryAgent_deploy_install() {
+   static function task_actionselection_PluginFusioninventoryAgent_deployinstall() {
       return self::getDeployActions();
    }
 
-   static function task_actionselection_PluginFusioninventoryAgent_deploy_uninstall() {
+   static function task_actionselection_PluginFusioninventoryAgent_deployuninstall() {
       return self::getDeployActions();
    }
 
@@ -153,6 +153,12 @@ class PluginFusinvdeployStaticmisc {
                          'name'    => $LANG['plugin_fusinvdeploy']['profile'][3]));
    }
 
+   static function task_deploy_getParameters() {
+      global $CFG_GLPI;
+
+      return array ('periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'deploy', 
+                    'remote' => PluginFusioninventoryAgentmodule::getUrlForModule('deploy'));
+   }
 }
 
 ?>
