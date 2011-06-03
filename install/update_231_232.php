@@ -50,6 +50,12 @@ function update231to232() {
    plugin_fusioninventory_displayMigrationMessage("232", $LANG['update'][141]." - import locks");
 
    // Import OCS locks
+   if (!class_exists("PluginFusinvinventoryLock")) {
+      include_once(GLPI_ROOT."/plugins/fusinvinventory/inc/lock.class.php");
+   }
+   if (!class_exists("PluginFusioninventoryLock")) {
+      include_once(GLPI_ROOT."/plugins/fusioninventory/inc/lock.class.php");
+   }
    $PluginFusinvinventoryLock = new PluginFusinvinventoryLock();
    $PluginFusinvinventoryLock->importFromOcs();
 
