@@ -270,7 +270,7 @@ class PluginFusioninventoryWizard {
       return array(
       "Authentification SNMP"              => "w_authsnmp",
       "Règles d'import"                    => "w_importrules",
-      "Création de taches d'exécution"     => "",
+      "Gestion des taches d'exécution"     => "w_tasks",
       "Affichage des inventaires réalisés" => "");
    }
 
@@ -350,6 +350,20 @@ class PluginFusioninventoryWizard {
                   'link' => PluginFusioninventoryWizard::getNextStep($ariane));
 
       PluginFusioninventoryWizard::displayShowForm($a_button, $ariane, "PluginFusioninventoryCredentialIp");
+   }
+
+
+   static function w_tasks($ariane='') {
+      $a_button = array('name' => 'Suivant',
+                  'link' => PluginFusioninventoryWizard::getNextStep($ariane));
+
+      if (!isset($_GET['sort'])) {
+         $_GET['sort'] = 6;
+         $_GET['order'] = 'DESC';
+      }
+      $_GET['target']="task.php";
+
+      PluginFusioninventoryWizard::displayShowForm($a_button, $ariane, "PluginFusioninventoryTaskjob");
    }
 
 }

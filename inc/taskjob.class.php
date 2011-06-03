@@ -1367,6 +1367,74 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       return true;
    }
 
+
+
+   /*
+    * This form is used to create a task quickly
+    *
+    */
+   function showQuickForm($id, $options) {
+
+      $this->showFormHeader($options);
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['common'][16]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
+      echo "</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][26]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      $this->dropdownMethod("method", $this->fields['method']);
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][33]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      $com = array();
+      $com['push'] = $LANG['plugin_fusioninventory']['task'][41];
+      $com['pull'] = $LANG['plugin_fusioninventory']['task'][42];
+      Dropdown::showFromArray("communication", $com, array('value'=>$this->fields["communication"]));
+      echo "</td>";
+      echo "<td>Definition</td>";
+      echo "<td align='center'>";
+
+      echo "</td>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][14]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      if ($id) {
+         showDateTimeFormItem("date_scheduled",$this->fields["date_scheduled"],1,false);
+      } else {
+         showDateTimeFormItem("date_scheduled",date("Y-m-d H:i:s"),1);
+      }
+      echo "</td>";
+      echo "<td>Action</td>";
+      echo "<td align='center'>";
+
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][17]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showInteger("periodicity_count", $this->fields['periodicity_count'], 0, 300);
+      $a_time = array();
+      $a_time[] = "------";
+      $a_time['minutes'] = "minutes";
+      $a_time['hours'] = "heures";
+      $a_time['days'] = "jours";
+      $a_time['months'] = "mois";
+      Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$this->fields['periodicity_type']));
+      echo "</td>";
+      echo "<td colspan='2'></td>";
+      echo "</tr>";
+
+      $this->showFormButtons($options);
+   }
+
 }
 
 ?>
