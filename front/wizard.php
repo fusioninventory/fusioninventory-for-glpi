@@ -40,8 +40,9 @@ include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","wizard-start");
 
-PluginFusioninventoryMenu::displayMenu("mini");
-
+if (!strstr($_SERVER['HTTP_REFERER'], "wizard.php")) {
+   PluginFusioninventoryMenu::displayMenu("mini");
+}
 if (isset($_GET["wizz"])) {
    if (method_exists('PluginFusioninventoryWizard',$_GET["wizz"])) {
       $ariane = '';
