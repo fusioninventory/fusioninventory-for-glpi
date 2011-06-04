@@ -71,6 +71,10 @@ if (isset($_GET["id"])) {
 	$id = $_GET["id"];
 }
 
+if (strstr($_SERVER['HTTP_REFERER'], "wizard.php")) {
+   glpi_header($_SERVER['HTTP_REFERER']."&id=".$id);
+}
+
 $PluginFusinvsnmpConfigSecurity->showForm($id);
 
 commonFooter();
