@@ -143,17 +143,8 @@ class PluginFusioninventoryWizard {
       echo "<td>";
 
       if (isset($_GET['id'])) {
-         $target = $_SERVER["REQUEST_URI"];
-         $target = str_replace("&id=0", "", $target);
-         echo "<table class='tab_cadre'>";
-         echo "<tr>";
-         echo "<th>";
-         echo "<a href='".$target."'>See list</a>";
-         echo "</th>";
-         echo "</tr>";
-         echo "</table>";
          $class = new $classname;
-         $class->showForm(0, array('target'=>$target));
+         $class->showForm($_GET['id']);
       } else if (isset($_GET['wizz']) AND (strstr($_GET['wizz'], "rules"))) {
   
          $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
