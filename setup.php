@@ -243,9 +243,17 @@ function plugin_init_fusioninventory() {
    $plugin = new Plugin();
    if ($plugin->isInstalled('fusioninventory')
       && $plugin->isActivated('fusioninventory')
-         && isset($_SERVER['HTTP_USER_AGENT'])
-            && isFusioninventoryUserAgent($_SERVER['HTTP_USER_AGENT'])
-               && !preg_match("/fus(ion|inv).*/",$_SERVER['PHP_SELF'])) {
+         //If getConfig is called on /plugins/fusioninventory/index.php, do not check user agent 
+         //(need for debug and dev)
+         && ((isset($_GET['action']) 
+            && $_GET['action'] == 'getConfig') 
+               && preg_match("/plugins\/fusioninventory\/index.php/", $_SERVER['PHP_SELF']))
+                  //For production : if useraget is fusioninventory or ocs, 
+                  //then redirect to the right communication page
+                  || (isset($_SERVER['HTTP_USER_AGENT'])
+                     && isFusioninventoryUserAgent($_SERVER['HTTP_USER_AGENT'])
+                        && ((preg_match("/plugins\/fusioninventory\/index.php/", $_SERVER['PHP_SELF']))
+                           || !preg_match("/fus(ion|inv).*/", $_SERVER['PHP_SELF'])))) {
 
       //Load all plugins
       $plugin = new Plugin();

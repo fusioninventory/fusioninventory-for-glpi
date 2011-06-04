@@ -67,8 +67,11 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          $use_rest = false;
          
          foreach ($a_methods as $datamod) {
-            if (strtolower($data["modulename"]) == strtolower($datamod['method'])) {
-               if (isset($datamod['use_rest']) && $datamod['use_rest'] != '') {
+            
+            if ((strtolower($data["modulename"]) == strtolower($datamod['method'])) ||
+                isset($datamod['task']) 
+                  && (strtolower($data["modulename"]) == strtolower($datamod['task']))) {
+               if (isset($datamod['use_rest']) && $datamod['use_rest'] == true) {
                   $use_rest = true;
                }
                if (isset($datamod['name'])) {
@@ -94,7 +97,8 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             foreach ($a_agentList as $agent_id) {
                $a_used[] = $agent_id;
             }
-            Dropdown::show("PluginFusioninventoryAgent", array("name" => "agent_to_add[]", "used" => $a_used));
+            Dropdown::show("PluginFusioninventoryAgent", array("name" => "agent_to_add[]", 
+                                                               "used" => $a_used));
             echo "</td>";
             echo "<td align='center'>";
             echo "<input type='submit' class='submit' name='agent_add' value='" .
