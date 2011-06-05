@@ -1435,6 +1435,103 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $this->showFormButtons($options);
    }
 
+
+
+   function quickList($method) {
+      global $LANG;
+
+      $pluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $pluginFusioninventoryTask = new PluginFusioninventoryTask();
+
+      $a_list = $pluginFusioninventoryTaskjob->find("`method`='".$method."'");
+
+      echo "<table class='tab_cadrehov' style='width:950px'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<th>".$LANG['common'][16]."</th>";
+      echo "<th>".$LANG['common'][60]."</th>";
+      echo "<th>".$LANG['plugin_fusioninventory']['task'][14]."</th>";
+      echo "<th>".$LANG['plugin_fusioninventory']['task'][17]."</th>";
+      echo "<th>".$LANG['plugin_fusioninventory']['task'][27]."</td>";
+      echo "<th>".$LANG['plugin_fusioninventory']['task'][28]."</th>";
+      echo "</tr>";
+
+      foreach ($a_list as $data) {
+         $pluginFusioninventoryTaskjob->getFromDB($data['id']);
+         $pluginFusioninventoryTask->getFromDB($data['plugin_fusioninventory_tasks_id']);
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>".$pluginFusioninventoryTaskjob->getLink(1)."</td>";
+         echo "<td>".Dropdown::getYesNo($pluginFusioninventoryTask->fields['is_active'])."</td>";
+         echo "<td>".$pluginFusioninventoryTask->fields['date_scheduled']."</td>";
+         $a_time = '';
+         switch ($pluginFusioninventoryTask->fields['periodicity_type']) {
+
+            case 'minutes':
+               $a_time = $pluginFusioninventoryTask->fields['periodicity_count']." ".
+                    $LANG['plugin_fusioninventory']['task'][35];
+               break;
+
+            case 'hours':
+               $a_time = $pluginFusioninventoryTask->fields['periodicity_count']." ".
+                    $LANG['plugin_fusioninventory']['task'][36];
+               break;
+
+            case 'days':
+               $a_time = $pluginFusioninventoryTask->fields['periodicity_count']." ".
+                    $LANG['plugin_fusioninventory']['task'][37];
+               break;
+
+            case 'months':
+               $a_time = $pluginFusioninventoryTask->fields['periodicity_count']." ".
+                    $LANG['plugin_fusioninventory']['task'][38];
+               break;
+         }
+
+         echo "<td>".$a_time."</td>";
+         $a_defs = importArrayFromDB($data['definition']);
+         echo "<td>";
+         foreach ($a_defs as $datadef) {
+            foreach ($datadef as $itemtype=>$items_id) {
+               $class = new $itemtype;
+               $class->getFromDB($items_id);
+               echo $class->getLink(1)." (".$class->getTypeName().")<br/>";
+            }
+         }
+         echo "</td>";
+         echo "<td>";
+         $a_acts = importArrayFromDB($data['action']);
+         foreach ($a_acts as $dataact) {
+            foreach ($dataact as $itemtype=>$items_id) {
+               $class = new $itemtype();
+               $itemname = $class->getTypeName();
+               $class->getFromDB($items_id);
+               $name = '';
+               $idTmp = 0;
+               if ($items_id == '.1') {
+                  $name = $LANG['plugin_fusioninventory']['agents'][32];
+               } else if ($items_id == '.2') {
+                  $name = $LANG['plugin_fusioninventory']['agents'][33];
+               } else {
+                  $name = $class->getLink(1);
+               }         
+               echo $name.' ('.$itemname.')<br/>';
+            }
+         }
+         echo "</td>";
+         echo "</tr>";
+      }
+      echo "</table>";
+   }
+
+
+   function quickEdition($id, $method) {
+      global $LANG;
+
+      echo "<table class='tab_cadre_fixe'>";
+
+
+      echo "</table>";
+   }
+
 }
 
 ?>

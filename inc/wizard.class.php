@@ -125,7 +125,7 @@ class PluginFusioninventoryWizard {
    }
 
 
-   static function displayShowForm($a_button, $a_filariane, $classname) {
+   static function displayShowForm($a_button, $a_filariane, $classname, $options = array()) {
       global $LANG,$CFG_GLPI;
 
       $pluginFusioninventoryWizard = new PluginFusioninventoryWizard();
@@ -149,6 +149,9 @@ class PluginFusioninventoryWizard {
   
          $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
          include (GLPI_ROOT . "/plugins/fusioninventory/front/wizzrule.common.php");
+
+      } else if (!empty($options)) {
+         call_user_func(array($classname, $options['f']), $options['arg1']);
 
       } else {
          echo "<table class='tab_cadre'>";
@@ -259,10 +262,11 @@ class PluginFusioninventoryWizard {
 
    function fil_Part_NetDiscovery() {
       return array(
-      "Authentification SNMP"              => "w_authsnmp",
-      "Règles d'import"                    => "w_importrules",
-      "Gestion des taches d'exécution"     => "w_tasks",
-      "Affichage des inventaires réalisés" => "");
+      "Authentification SNMP"               => "w_authsnmp",
+      "Règles d'import"                     => "w_importrules",
+      "Gestion des tâches d'exécution"      => "w_tasks",
+      "Execution des tâches"                => "w_tasksforcerun",
+      "Affichage de la découverte"          => "");
    }
 
    
@@ -354,7 +358,20 @@ class PluginFusioninventoryWizard {
       }
       $_GET['target']="task.php";
 
-      PluginFusioninventoryWizard::displayShowForm($a_button, $ariane, "PluginFusioninventoryTaskjob");
+      $func = '';
+      if ($ariane == "filNetDiscovery") {
+         $func = 'netdiscovery';
+      }
+      PluginFusioninventoryWizard::displayShowForm($a_button,
+               $ariane,
+               "PluginFusioninventoryTaskjob",
+               array("f"=>quickList,
+                     "arg1"=>$func));
+   }
+
+
+   static function w_tasksforcerun($ariane='') {
+      
    }
 
 }
