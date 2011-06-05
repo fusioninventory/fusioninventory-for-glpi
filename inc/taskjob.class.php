@@ -146,6 +146,38 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "<td align='center'>";
       echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
       echo "</td>";
+      echo "<td rowspan='2'>".$LANG['common'][25]."&nbsp;:</td>";
+      echo "<td align='center' rowspan='2'>";
+      echo "<textarea cols='40' rows='2' name='comment' >".$this->fields["comment"]."</textarea>";
+      echo "<input type='hidden' name='plugin_fusioninventory_tasks_id' value='".$_POST['id']."' />";
+      $a_methods = array();
+      $a_methods = PluginFusioninventoryStaticmisc::getmethods();
+      foreach ($a_methods as $datas) {
+         echo "<input type='hidden' name='method-".$datas['method']."' value='".PluginFusioninventoryModule::getModuleId($datas['module'])."' />";
+      }
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][26]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      $this->dropdownMethod("method", $this->fields['method']);
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='4'>".$LANG['plugin_fusioninventory']['task'][45];
+      echo " <img src='".GLPI_ROOT."/pics/deplier_down.png'
+            onclick='document.getElementById(\"advancedoptions1\").style.visibility=\"visible\";
+            document.getElementById(\"advancedoptions2\").style.visibility=\"visible\"'/>";
+      echo "</th>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1' id='advancedoptions1' style='visibility:collapse'>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][24]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showInteger("retry_nb", $this->fields["retry_nb"], 0, 30);
+      echo "</td>";
       echo "<td>".$LANG['plugin_fusioninventory']['task'][31]."&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::showInteger("periodicity_count", $this->fields['periodicity_count'], 0, 300);
@@ -159,33 +191,12 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['task'][26]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      $this->dropdownMethod("method", $this->fields['method']);
-      echo "</td>";
-      echo "<td>".$LANG['plugin_fusioninventory']['task'][24]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      Dropdown::showInteger("retry_nb", $this->fields["retry_nb"], 0, 30);
-      echo "</td>";      
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['common'][25]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      echo "<textarea cols='40' rows='2' name='comment' >".$this->fields["comment"]."</textarea>";
-      echo "<input type='hidden' name='plugin_fusioninventory_tasks_id' value='".$_POST['id']."' />";
-      $a_methods = array();
-      $a_methods = PluginFusioninventoryStaticmisc::getmethods();
-      foreach ($a_methods as $datas) {
-         echo "<input type='hidden' name='method-".$datas['method']."' value='".PluginFusioninventoryModule::getModuleId($datas['module'])."' />";
-      }
-      echo "</td>";
+      echo "<tr class='tab_bg_1' id='advancedoptions2' style='visibility:collapse'>";
+      echo "<td colspan='2'></td>";
       echo "<td>".$LANG['plugin_fusioninventory']['task'][25]."&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::showInteger("retry_time", $this->fields["retry_time"], 0, 360);
       echo "</td>";
-
       echo "</tr>";
 
       // Definition   *   Action
