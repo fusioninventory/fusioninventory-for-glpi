@@ -196,7 +196,11 @@ if (isset($_POST['definition_add'])) {
    glpi_header($_SERVER['HTTP_REFERER']);
 }
 
-$mytaskjob->redirectTask($_GET['id']);
+if (strstr($_SERVER['HTTP_REFERER'], "wizard.php")) {
+   glpi_header($_SERVER['HTTP_REFERER']."&id=".$_GET['id']);
+} else {
+   $mytaskjob->redirectTask($_GET['id']);
+}
 
 commonFooter();
 

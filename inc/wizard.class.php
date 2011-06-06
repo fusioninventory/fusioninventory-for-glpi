@@ -144,7 +144,12 @@ class PluginFusioninventoryWizard {
 
       if (isset($_GET['id'])) {
          $class = new $classname;
-         $class->showForm($_GET['id']);
+         if ($_GET['wizz'] == 'w_tasks') {
+            $class->showQuickForm($_GET['id'], $options['arg1']);
+         } else {
+            $class->showForm($_GET['id']);
+         }
+
       } else if (isset($_GET['wizz']) AND (strstr($_GET['wizz'], "rules"))) {
   
          $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();

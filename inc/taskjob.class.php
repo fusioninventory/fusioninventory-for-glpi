@@ -454,6 +454,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             }
          }
       }
+
       $rand = Dropdown::showFromArray($myname, $a_methods2, array('value'=>$value));
 
       // ** List methods available
@@ -1450,6 +1451,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       }
    }
 
+
+   
    static function getAllowurlfopen($wakecomputer=0) {
       global $LANG;
       
@@ -1473,75 +1476,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    }
 
 
-
-   /*
-    * This form is used to create a task quickly
-    *
-    */
-   function showQuickForm($id, $options) {
-
-      $this->showFormHeader($options);
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['common'][16]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
-      echo "</td>";
-      echo "<td>".$LANG['plugin_fusioninventory']['task'][26]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      $this->dropdownMethod("method", $this->fields['method']);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['task'][33]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      $com = array();
-      $com['push'] = $LANG['plugin_fusioninventory']['task'][41];
-      $com['pull'] = $LANG['plugin_fusioninventory']['task'][42];
-      Dropdown::showFromArray("communication", $com, array('value'=>$this->fields["communication"]));
-      echo "</td>";
-      echo "<td>Definition</td>";
-      echo "<td align='center'>";
-
-      echo "</td>";
-      echo "</tr>";
-      
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['task'][14]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      if ($id) {
-         showDateTimeFormItem("date_scheduled",$this->fields["date_scheduled"],1,false);
-      } else {
-         showDateTimeFormItem("date_scheduled",date("Y-m-d H:i:s"),1);
-      }
-      echo "</td>";
-      echo "<td>Action</td>";
-      echo "<td align='center'>";
-
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['task'][17]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      Dropdown::showInteger("periodicity_count", $this->fields['periodicity_count'], 0, 300);
-      $a_time = array();
-      $a_time[] = "------";
-      $a_time['minutes'] = "minutes";
-      $a_time['hours'] = "heures";
-      $a_time['days'] = "jours";
-      $a_time['months'] = "mois";
-      Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$this->fields['periodicity_type']));
-      echo "</td>";
-      echo "<td colspan='2'></td>";
-      echo "</tr>";
-
-      $this->showFormButtons($options);
-   }
-
-
-
+   
    function quickList($method) {
       global $LANG;
 
@@ -1628,45 +1563,86 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    }
 
 
-   function quickEdition($id, $method) {
-      global $LANG;
 
-      echo "<table class='tab_cadre_fixe'>";
+   /*
+    * Quick add or update taskjob
+    *
+    * @param $id integer id of taskjobs
+    * @param $method value method name
+    *
+    */
+   function showQuickForm($id, $method) {
+      global $LANG, $CFG_GLPI;
+
+      $pluginFusioninventoryTask = new PluginFusioninventoryTask();
+      if ($id!='') {
+         $this->getFromDB($id);
+         $pluginFusioninventoryTask->getFromDB($this->fields['plugin_fusioninventory_tasks_id']);
+      } else {
+         $this->getEmpty();
+         $pluginFusioninventoryTask->getEmpty();
+      }
+
+
+      $this->showFormHeader(array());
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['common'][16]."&nbsp;:</td>";
-      echo "<td><input type='text' name='name' value='' /></td>";
+      echo "<td><input type='text' name='name' value='".$pluginFusioninventoryTask->fields['name']."' /></td>";
       echo "<td>".$LANG['common'][60]."&nbsp;:</td>";
-      echo "<td>".Dropdown::showYesNo("is_actibe", $value)."</td>";
+      echo "<td>";
+      Dropdown::showYesNo("is_active", $pluginFusioninventoryTask->fields['is_active']);
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>"; //  style='display:none'
+      echo "<td colspan='4'>";
+      $rand = $this->dropdownMethod("method", $method);
+      echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusioninventory']['task'][33]."&nbsp;:</td>";
-      echo "<td align='center'>";
+      echo "<td>";
       $com = array();
       $com['push'] = $LANG['plugin_fusioninventory']['task'][41];
       $com['pull'] = $LANG['plugin_fusioninventory']['task'][42];
-      Dropdown::showFromArray("communication", $com, array('value'=>$this->fields["communication"]));
+      Dropdown::showFromArray("communication", $com, array('value'=>$pluginFusioninventoryTask->fields["communication"]));
       echo "</td>";
       echo "<td>".$LANG['plugin_fusioninventory']['task'][17]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      Dropdown::showInteger("periodicity_count", $this->fields['periodicity_count'], 0, 300);
+      echo "<td>";
+      Dropdown::showInteger("periodicity_count", $pluginFusioninventoryTask->fields['periodicity_count'], 0, 300);
       $a_time = array();
       $a_time[] = "------";
       $a_time['minutes'] = "minutes";
       $a_time['hours'] = "heures";
       $a_time['days'] = "jours";
       $a_time['months'] = "mois";
-      Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$this->fields['periodicity_type']));
+      Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$pluginFusioninventoryTask->fields['periodicity_type']));
       echo "</td>";
       echo "</tr>";
 
-      
-      //def - actions
+      if ($id) {
+         $this->showFormButtons(array());
 
+         $this->manageDefinitionsActions($id, "definition");
+         $this->manageDefinitionsActions($id, "action");
 
+         $params=array('method_id'=>'__VALUE__',
+               'entity_restrict'=>'',
+               'rand'=>$rand,
+               'myname'=>"method"
+               );
+         echo "<script type='text/javascript'>";
+         ajaxUpdateItemJsCode("show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params,true,"dropdown_method".$rand);
+         echo "</script>";
+         echo "<script type='text/javascript'>";
+         ajaxUpdateItemJsCode("show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params,true,"dropdown_method".$rand);
+         echo "</script>";
+      } else  {
+         $this->showFormButtons(array());
+      }
 
-      echo "</table>";
    }
 
 }
