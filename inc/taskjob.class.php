@@ -161,7 +161,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusioninventory']['task'][26]."&nbsp;:</td>";
       echo "<td align='center'>";
-      $this->dropdownMethod("method", $this->fields['method']);
+      $rand = $this->dropdownMethod("method", $this->fields['method']);
       echo "</td>";
       echo "</tr>";
 
@@ -206,6 +206,17 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
          $this->manageDefinitionsActions($id, "definition");
          $this->manageDefinitionsActions($id, "action");
+         $params=array('method_id'=>'__VALUE__',
+               'entity_restrict'=>'',
+               'rand'=>$rand,
+               'myname'=>"method"
+               );
+         echo "<script type='text/javascript'>";
+         ajaxUpdateItemJsCode("show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params,true,"dropdown_method".$rand);
+         echo "</script>";
+         echo "<script type='text/javascript'>";
+         ajaxUpdateItemJsCode("show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params,true,"dropdown_method".$rand);
+         echo "</script>";
 
          if (count($PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$id."'")) > 0) {
 
