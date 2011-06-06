@@ -121,16 +121,20 @@ if (isset($_POST['definition_add'])) {
 } else if (isset($_POST['quickform'])) {
    $pluginFusioninventoryTask = new PluginFusioninventoryTask();
 
-   $mytaskjob->getFromDB($_POST['id']);
-   $pluginFusioninventoryTask->getFromDB($mytaskjob->fields['plugin_fusioninventory_tasks_id']);
-
+   if (isset($_POST['update'])) {
+      $mytaskjob->getFromDB($_POST['id']);
+      $pluginFusioninventoryTask->getFromDB($mytaskjob->fields['plugin_fusioninventory_tasks_id']);
+   }
+   
    $inputtaskjob = array();
    $inputtask = array();
-   $inputtaskjob['id'] = $_POST['id'];
-   $inputtask['id'] = $mytaskjob->fields['plugin_fusioninventory_tasks_id'];
+   if (isset($_POST['update'])) {
+      $inputtaskjob['id'] = $_POST['id'];
+      $inputtask['id'] = $mytaskjob->fields['plugin_fusioninventory_tasks_id'];
+   }
 
    $inputtaskjob['name'] = $_POST['name'];
-   if ($pluginFusioninventoryTask->fields['name'] == '') {
+   if (isset($_POST['add']) OR $pluginFusioninventoryTask->fields['name'] == '') {
       $inputtask['name'] = $_POST['name'];
    }
    $inputtask['is_active'] = $_POST['is_active'];
@@ -139,21 +143,20 @@ if (isset($_POST['definition_add'])) {
    $inputtask['periodicity_count'] = $_POST['periodicity_count'];
    $inputtask['periodicity_type'] = $_POST['periodicity_type'];
 
-   $mytaskjob->update($inputtaskjob);
-   $pluginFusioninventoryTask->update($inputtask);
-// Array ( [entities_id] => 0
-// [name] => Découverte réseau
-// [is_active] => 1
-// [quickform] => 1
-// [method] => netdiscovery
-// [communication] => pull
-// 
-// [periodicity_count] => 15
-// [periodicity_type] => days
-// [update] => Update
-// [id] => 238 )
+   if (isset($_POST['update'])) {
+      $mytaskjob->update($inputtaskjob);
+      $pluginFusioninventoryTask->update($inputtask);
+      glpi_header($_SERVER['HTTP_REFERER']);
+   } else if (isset($_POST['add'])) {
+      $inputtask['date_scheduled'] = date("Y-m-d H:i:s");
+      $task_id = $pluginFusioninventoryTask->add($inputtask);
+      $inputtaskjob['plugin_fusioninventory_tasks_id'] = $task_id;
+      $taskjobs_id = $mytaskjob->add($inputtaskjob);
 
-   glpi_header($_SERVER['HTTP_REFERER']);
+      $redirect = $_SERVER['HTTP_REFERER'];
+      $redirect = str_replace('&id=0', '&id='.$taskjobs_id, $redirect);
+      glpi_header($redirect);
+   }
 } else if (isset($_POST['add']) || isset($_POST['update'])) {
    // * Add and update taskjob
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task", "w");
