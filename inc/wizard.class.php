@@ -260,7 +260,6 @@ class PluginFusioninventoryWizard {
       return array(
       "choix de l'action"                  => "w_start",
       "Type de matériel à inventorier"     => "w_inventorychoice",
-      "Choix (decouverte ou inventaire)"   => "",
       "Authentification SNMP"              => "w_authsnmp",
       "Règles d'import"                    => "w_importrules",
       "Gestion des tâches d'exécution"     => "w_tasks",
@@ -328,9 +327,9 @@ class PluginFusioninventoryWizard {
                                '',
                                'filInventoryESX'),
                          array('Des imprimantes réseaux ou des matériels réseaux',
-                                'w_snmpdeviceschoice',
+                                'w_authsnmp',
                                 'general_inventory.png',
-                                ''));
+                                'filInventorySNMP'));
 
       echo "<center>Bienvenue dans FusionInventory. Commencer la configuration ?</center><br/>";
 
@@ -370,9 +369,22 @@ class PluginFusioninventoryWizard {
       $_GET['target']="task.php";
 
       $func = '';
-      if ($ariane == "filNetDiscovery") {
-         $func = 'netdiscovery';
+      switch ($ariane) {
+
+         case 'filNetDiscovery':
+            $func = 'netdiscovery';
+            break;
+
+         case 'filInventorySNMP':
+            $func = 'snmpquery';
+            break;
+
+         case 'filInventoryESX':
+            $func = 'ESX';
+            break;
+
       }
+
       PluginFusioninventoryWizard::displayShowForm($ariane,
                "PluginFusioninventoryTaskjob",
                array("f"=>quickList,
