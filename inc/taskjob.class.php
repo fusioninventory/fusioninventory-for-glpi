@@ -1594,20 +1594,20 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $pluginFusioninventoryTask->getEmpty();
       }
 
-
       $this->showFormHeader(array());
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['common'][16]."&nbsp;:</td>";
-      echo "<td><input type='text' name='name' value='".$pluginFusioninventoryTask->fields['name']."' /></td>";
+      echo "<td><input type='text' name='name' value='".$this->fields['name']."' /></td>";
       echo "<td>".$LANG['common'][60]."&nbsp;:</td>";
       echo "<td>";
       Dropdown::showYesNo("is_active", $pluginFusioninventoryTask->fields['is_active']);
       echo "</td>";
       echo "</tr>";
 
-      echo "<tr class='tab_bg_1'>"; //  style='display:none'
+      echo "<tr class='tab_bg_1' style='display:none'>";
       echo "<td colspan='4'>";
+      echo "<input type='hidden' name='quickform' value='1' />";
       $rand = $this->dropdownMethod("method", $method);
       echo "</td>";
       echo "</tr>";

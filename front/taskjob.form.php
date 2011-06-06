@@ -118,6 +118,42 @@ if (isset($_POST['definition_add'])) {
    $input['action'] = exportArrayToDB($a_listact);
    $mytaskjob->update($input);
    glpi_header($_SERVER['HTTP_REFERER']);
+} else if (isset($_POST['quickform'])) {
+   $pluginFusioninventoryTask = new PluginFusioninventoryTask();
+
+   $mytaskjob->getFromDB($_POST['id']);
+   $pluginFusioninventoryTask->getFromDB($mytaskjob->fields['plugin_fusioninventory_tasks_id']);
+
+   $inputtaskjob = array();
+   $inputtask = array();
+   $inputtaskjob['id'] = $_POST['id'];
+   $inputtask['id'] = $mytaskjob->fields['plugin_fusioninventory_tasks_id'];
+
+   $inputtaskjob['name'] = $_POST['name'];
+   if ($pluginFusioninventoryTask->fields['name'] == '') {
+      $inputtask['name'] = $_POST['name'];
+   }
+   $inputtask['is_active'] = $_POST['is_active'];
+   $inputtaskjob['method'] = $_POST['method'];
+   $inputtask['communication'] = $_POST['communication'];
+   $inputtask['periodicity_count'] = $_POST['periodicity_count'];
+   $inputtask['periodicity_type'] = $_POST['periodicity_type'];
+
+   $mytaskjob->update($inputtaskjob);
+   $pluginFusioninventoryTask->update($inputtask);
+// Array ( [entities_id] => 0
+// [name] => Découverte réseau
+// [is_active] => 1
+// [quickform] => 1
+// [method] => netdiscovery
+// [communication] => pull
+// 
+// [periodicity_count] => 15
+// [periodicity_type] => days
+// [update] => Update
+// [id] => 238 )
+
+   glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset($_POST['add']) || isset($_POST['update'])) {
    // * Add and update taskjob
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task", "w");
