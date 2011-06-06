@@ -1490,7 +1490,13 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    }
 
 
-   
+
+   /*
+    * Display static list of taskjob
+    *
+    * @param $method value method name of taskjob to display
+    * 
+    */
    function quickList($method) {
       global $LANG;
 
@@ -1513,7 +1519,10 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $pluginFusioninventoryTaskjob->getFromDB($data['id']);
          $pluginFusioninventoryTask->getFromDB($data['plugin_fusioninventory_tasks_id']);
          echo "<tr class='tab_bg_1'>";
-         echo "<td>".$pluginFusioninventoryTaskjob->getLink(1)."</td>";
+         $link_item = $pluginFusioninventoryTaskjob->getFormURL();
+         $link  = $link_item;
+         $link .= (strpos($link,'?') ? '&amp;':'?').'id=' . $pluginFusioninventoryTaskjob->fields['id'];
+         echo "<td><a href='".$link."'>".$pluginFusioninventoryTaskjob->getNameID(1)."</a></td>";
          echo "<td>".Dropdown::getYesNo($pluginFusioninventoryTask->fields['is_active'])."</td>";
          echo "<td>".$pluginFusioninventoryTask->fields['date_scheduled']."</td>";
          $a_time = '';
