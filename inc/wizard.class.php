@@ -125,7 +125,7 @@ class PluginFusioninventoryWizard {
    }
 
 
-   static function displayShowForm($a_button, $a_filariane, $classname, $options = array()) {
+   static function displayShowForm($a_filariane, $classname, $options = array()) {
       global $LANG,$CFG_GLPI;
 
       $pluginFusioninventoryWizard = new PluginFusioninventoryWizard();
@@ -140,7 +140,7 @@ class PluginFusioninventoryWizard {
       </style>";
       echo "<center><table width='950'>";
       echo "<tr>";
-      echo "<td valign='top'>";
+      echo "<td valign='top' width='950'>";
 
       if (isset($_GET['id'])) {
          $class = new $classname;
@@ -189,12 +189,13 @@ class PluginFusioninventoryWizard {
       echo "<tr>";
       echo "<td align='right' style='background-color: #e1cc7b;' height='30'>";
       if (isset($options['finish'])) {
-         echo "<input class='submit' type='submit' name='next' value='".$a_button['name']."'
-               onclick='window.location.href=\"".$a_button['link']."\"'/>";
+         echo "<input class='submit' type='submit' name='next' value='".$LANG['plugin_fusioninventory']['buttons'][0]."'
+               onclick='window.location.href=\"".GLPI_ROOT."/plugins/fusioninventory/\"'/>";
 
       } else {
-         echo "<input class='submit' type='submit' name='next' value='".$a_button['name']."'
-               onclick='window.location.href=\"".GLPI_ROOT."/plugins/fusioninventory/front/wizard.php?wizz=".$a_button['link']."\"'/>";
+         echo "<input class='submit' type='submit' name='next' value='".$LANG['buttons'][11]."'
+               onclick='window.location.href=\"".GLPI_ROOT.
+         "/plugins/fusioninventory/front/wizard.php?wizz=".PluginFusioninventoryWizard::getNextStep($a_filariane)."\"'/>";
       }
       echo "</form>&nbsp;&nbsp;";
       echo "</td>";
@@ -226,6 +227,7 @@ class PluginFusioninventoryWizard {
    }
 
 
+  // ********************* Define fil ariane **********************//
 
 
    function filInventoryComputer() {
@@ -247,8 +249,9 @@ class PluginFusioninventoryWizard {
       "Gestion des mots de passe"          => "w_credential",
       "Gestion des serveur ESX"            => "w_remotedevices",
       "Règles d'import d'ordinateurs"      => "w_importrules",
-      "Création de taches d'exécution"     => "",
-      "Affichage des inventaires réalisés" => "");
+      "Gestion des tâches d'exécution"     => "w_tasks",
+      "Execution des tâches"               => "w_tasksforcerun",
+      "Affichage de la découverte"         => "w_taskslog");
    }
 
 
@@ -260,8 +263,9 @@ class PluginFusioninventoryWizard {
       "Choix (decouverte ou inventaire)"   => "",
       "Authentification SNMP"              => "w_authsnmp",
       "Règles d'import"                    => "w_importrules",
-      "Création de taches d'exécution"     => "",
-      "Affichage des inventaires réalisés" => "");
+      "Gestion des tâches d'exécution"     => "w_tasks",
+      "Execution des tâches"               => "w_tasksforcerun",
+      "Affichage de la découverte"         => "w_taskslog");
    }
 
 
@@ -283,11 +287,11 @@ class PluginFusioninventoryWizard {
 
    function fil_Part_NetDiscovery() {
       return array(
-      "Authentification SNMP"               => "w_authsnmp",
-      "Règles d'import"                     => "w_importrules",
-      "Gestion des tâches d'exécution"      => "w_tasks",
-      "Execution des tâches"                => "w_tasksforcerun",
-      "Affichage de la découverte"          => "w_taskslog");
+      "Authentification SNMP"              => "w_authsnmp",
+      "Règles d'import"                    => "w_importrules",
+      "Gestion des tâches d'exécution"     => "w_tasks",
+      "Execution des tâches"               => "w_tasksforcerun",
+      "Affichage de la découverte"         => "w_taskslog");
    }
 
    
@@ -336,44 +340,29 @@ class PluginFusioninventoryWizard {
 
 
    static function w_authsnmp($ariane='') {
-      $a_button = array('name' => 'Suivant',
-                  'link' => PluginFusioninventoryWizard::getNextStep($ariane));
-
-      PluginFusioninventoryWizard::displayShowForm($a_button, $ariane, "PluginFusinvsnmpConfigSecurity");
+      PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusinvsnmpConfigSecurity");
    }
 
 
    static function w_importrules($ariane='') {
-      $a_button = array('name' => 'Suivant',
-                  'link' => PluginFusioninventoryWizard::getNextStep($ariane));
-
-      PluginFusioninventoryWizard::displayShowForm($a_button, $ariane, "PluginFusioninventoryRuleImportEquipmentCollection");
+      PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusioninventoryRuleImportEquipmentCollection");
    }
 
 
    
    static function w_credential($ariane='') {
-      $a_button = array('name' => 'Suivant',
-                  'link' => PluginFusioninventoryWizard::getNextStep($ariane));
-
-      PluginFusioninventoryWizard::displayShowForm($a_button, $ariane, "PluginFusioninventoryCredential");
+      PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusioninventoryCredential");
    }
 
 
 
    static function w_remotedevices($ariane='') {
-      $a_button = array('name' => 'Suivant',
-                  'link' => PluginFusioninventoryWizard::getNextStep($ariane));
-
-      PluginFusioninventoryWizard::displayShowForm($a_button, $ariane, "PluginFusioninventoryCredentialIp");
+      PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusioninventoryCredentialIp");
    }
 
 
    static function w_tasks($ariane='') {
       unset($_SESSION["plugin_fusioninventory_forcerun"]);
-      $a_button = array('name' => 'Suivant',
-                  'link' => PluginFusioninventoryWizard::getNextStep($ariane));
-
       if (!isset($_GET['sort'])) {
          $_GET['sort'] = 6;
          $_GET['order'] = 'DESC';
@@ -384,8 +373,7 @@ class PluginFusioninventoryWizard {
       if ($ariane == "filNetDiscovery") {
          $func = 'netdiscovery';
       }
-      PluginFusioninventoryWizard::displayShowForm($a_button,
-               $ariane,
+      PluginFusioninventoryWizard::displayShowForm($ariane,
                "PluginFusioninventoryTaskjob",
                array("f"=>quickList,
                      "arg1"=>$func));
@@ -398,9 +386,6 @@ class PluginFusioninventoryWizard {
          exit;
       }
 
-      $a_button = array('name' => 'Suivant',
-                  'link' => PluginFusioninventoryWizard::getNextStep($ariane));
-
       if (!isset($_GET['sort'])) {
          $_GET['sort'] = 6;
          $_GET['order'] = 'DESC';
@@ -411,8 +396,7 @@ class PluginFusioninventoryWizard {
       if ($ariane == "filNetDiscovery") {
          $func = 'netdiscovery';
       }
-      PluginFusioninventoryWizard::displayShowForm($a_button,
-               $ariane,
+      PluginFusioninventoryWizard::displayShowForm($ariane,
                "PluginFusioninventoryTaskjob",
                array("f"=>listToForcerun,
                      "arg1"=>$func,
@@ -423,10 +407,6 @@ class PluginFusioninventoryWizard {
 
    
    static function w_taskslog($ariane='') {
-
-      $a_button = array('name' => 'Finish',
-                  'link' => GLPI_ROOT."/plugins/fusioninventory/");
-
       if (!isset($_GET['sort'])) {
          $_GET['sort'] = 6;
          $_GET['order'] = 'DESC';
@@ -437,21 +417,12 @@ class PluginFusioninventoryWizard {
       if ($ariane == "filNetDiscovery") {
          $func = 'netdiscovery';
       }
-      PluginFusioninventoryWizard::displayShowForm($a_button,
-               $ariane,
+      PluginFusioninventoryWizard::displayShowForm($ariane,
                "PluginFusioninventoryTaskjob",
                array("f"=>quickListLogs,
                      "arg1"=>'',
                      "noadditem"=>1,
                      "finish"=>1));
-
-
-
-
-//      $p = new PluginFusioninventoryTaskjob();
-//      $p->quickListLogs();
-      
-
 
    }
 }

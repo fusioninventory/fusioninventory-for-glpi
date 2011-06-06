@@ -201,4 +201,6 @@ $LANG['plugin_fusioninventory']['iprange'][7]="IP incorrecte";
 $LANG['plugin_fusioninventory']['locks'][0]="Supprimer les verrous";
 $LANG['plugin_fusioninventory']['locks'][1]="Ajouter les verrous";
 
+$LANG['plugin_fusioninventory']['buttons'][0]="Fin";
+
 ?>

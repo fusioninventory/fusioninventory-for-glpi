@@ -202,4 +202,7 @@ $LANG['plugin_fusioninventory']['iprange'][7]="IP-Adresse inkorrekt";
 
 $LANG['plugin_fusioninventory']['locks'][0]="Delete locks";
 $LANG['plugin_fusioninventory']['locks'][1]="Add locks";
+
+$LANG['plugin_fusioninventory']['buttons'][0]="Finish";
+
 ?>

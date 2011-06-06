@@ -196,4 +196,7 @@ $LANG['plugin_fusioninventory']['iprange'][1]="End of IP range";
 $LANG['plugin_fusioninventory']['iprange'][2]="IP Ranges";
 $LANG['plugin_fusioninventory']['iprange'][3]="Query";
 $LANG['plugin_fusioninventory']['iprange'][7]="Bad IP";
+
+$LANG['plugin_fusioninventory']['buttons'][0]="Finish";
+
 ?>
