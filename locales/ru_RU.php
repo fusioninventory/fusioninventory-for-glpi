@@ -165,7 +165,7 @@ $LANG['plugin_fusioninventory']['task'][40]="Принудительный зап
 $LANG['plugin_fusioninventory']['task'][41]="Server contacts the agent (push)";
 $LANG['plugin_fusioninventory']['task'][42]="Agent contacts the server (pull)";
 $LANG['plugin_fusioninventory']['task'][43]="Communication mode";
-$LANG['plugin_fusioninventory']['task'][44]="See all informations of task";
+$LANG['plugin_fusioninventory']['task'][15]="See all informations of task";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Начато";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";
