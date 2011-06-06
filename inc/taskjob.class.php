@@ -915,6 +915,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    function forceRunningTask($tasks_id) {
       global $LANG,$DB;
       
+      $uniqid = '';
+      
       if ($this->reinitializeTaskjobs($tasks_id, 1)) {
          $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
          $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
@@ -935,7 +937,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
                $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
                $class = new $className;
-               $class->prepareRun($data['id']);
+               $uniqid = $class->prepareRun($data['id']);
             
             }
          }
@@ -952,6 +954,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       } else {
          $_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusioninventory']['task'][39];
       }
+      return $uniqid;
    }
    
 
@@ -1666,7 +1669,73 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       } else  {
          $this->showFormButtons(array());
       }
+   }
 
+
+
+   /*
+    * Liste of taskjob to forcerun
+    */
+   static function listToForcerun($method) {
+      global $LANG;
+
+      $pluginFusioninventoryTaskjob = new self();
+      $a_list = $pluginFusioninventoryTaskjob->find("`method`='".$method."'");
+
+      echo "<form name='form_ic' method='post' action='".getItemTypeFormURL(__CLASS__)."'>";
+      echo "<table class='tab_cadre_fixe' style='width:500px'>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='2' align='center'>".$LANG['plugin_fusioninventory']['task'][40]."</th>";
+      echo "</tr>";
+      
+      foreach ($a_list as $data) {
+         $pluginFusioninventoryTaskjob->getFromDB($data['id']);
+         echo "<tr class='tab_bg_1'>";
+         echo "<td><input type='checkbox' name='taskjobstoforcerun[]' value='".$data['id']."' /></td>";
+         $link_item = $pluginFusioninventoryTaskjob->getFormURL();
+         $link  = $link_item;
+         $link .= (strpos($link,'?') ? '&amp;':'?').'id=' . $pluginFusioninventoryTaskjob->fields['id'];
+         echo "<td><a href='".$link."'>".$pluginFusioninventoryTaskjob->getNameID(1)."</a></td>";
+         echo "<tr class='tab_bg_1'>";
+      }
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td colspan='2' align='center'>";
+      echo '<input name="forcestart" value="'.$LANG['plugin_fusioninventory']['task'][40].'"
+          class="submit" type="submit">';
+      echo "</td>";
+      echo "</tr>";
+
+      echo "</table>";
+      echo "</form>";
+   }
+
+
+
+   /*
+    * List of last logs (uniqid) of taskjob
+    */
+   static function quickListLogs() {
+
+      $pluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+
+      foreach ($_SESSION["plugin_fusioninventory_forcerun"] as $taskjobs_id=>$uniqid) {
+         $pluginFusioninventoryTaskjob->getFromDB($taskjobs_id);
+
+         echo "<table class='tab_cadrehov' style='width:950px'>";
+         echo "<tr class='tab_bg_1'>";
+         echo "<th>".$pluginFusioninventoryTaskjob->getLink(1)."</th>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>";
+         $pluginFusioninventoryTaskjoblog->showHistory($taskjobs_id, 950, array('uniqid'=>$uniqid));
+         echo "</td>";
+
+         echo "</table><br/>";
+      }
    }
 
 }

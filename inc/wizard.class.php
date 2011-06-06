@@ -140,7 +140,7 @@ class PluginFusioninventoryWizard {
       </style>";
       echo "<center><table width='950'>";
       echo "<tr>";
-      echo "<td>";
+      echo "<td valign='top'>";
 
       if (isset($_GET['id'])) {
          $class = new $classname;
@@ -157,13 +157,15 @@ class PluginFusioninventoryWizard {
          include (GLPI_ROOT . "/plugins/fusioninventory/front/wizzrule.common.php");
 
       } else if (!empty($options)) {
-         echo "<table class='tab_cadre'>";
-         echo "<tr>";
-         echo "<th>";
-         echo "<a href='".$_SERVER["REQUEST_URI"]."&id=0'>Add an item</a>";
-         echo "</th>";
-         echo "</tr>";
-         echo "</table>";
+         if (!isset($options['noadditem'])) {
+            echo "<table class='tab_cadre'>";
+            echo "<tr>";
+            echo "<th>";
+            echo "<a href='".$_SERVER["REQUEST_URI"]."&id=0'>Add an item</a>";
+            echo "</th>";
+            echo "</tr>";
+            echo "</table>";
+         }
          call_user_func(array($classname, $options['f']), $options['arg1']);
 
       } else {
@@ -186,8 +188,14 @@ class PluginFusioninventoryWizard {
 
       echo "<tr>";
       echo "<td align='right' style='background-color: #e1cc7b;' height='30'>";
-      echo "<input class='submit' type='submit' name='next' value='".$a_button['name']."'
-            onclick='window.location.href=\"".GLPI_ROOT."/plugins/fusioninventory/front/wizard.php?wizz=".$a_button['link']."\"'/>";
+      if (isset($options['finish'])) {
+         echo "<input class='submit' type='submit' name='next' value='".$a_button['name']."'
+               onclick='window.location.href=\"".$a_button['link']."\"'/>";
+
+      } else {
+         echo "<input class='submit' type='submit' name='next' value='".$a_button['name']."'
+               onclick='window.location.href=\"".GLPI_ROOT."/plugins/fusioninventory/front/wizard.php?wizz=".$a_button['link']."\"'/>";
+      }
       echo "</form>&nbsp;&nbsp;";
       echo "</td>";
       echo "<td style='background-color: #e1cc7b;'></td>";
@@ -279,7 +287,7 @@ class PluginFusioninventoryWizard {
       "Règles d'import"                     => "w_importrules",
       "Gestion des tâches d'exécution"      => "w_tasks",
       "Execution des tâches"                => "w_tasksforcerun",
-      "Affichage de la découverte"          => "");
+      "Affichage de la découverte"          => "w_taskslog");
    }
 
    
@@ -362,6 +370,7 @@ class PluginFusioninventoryWizard {
 
 
    static function w_tasks($ariane='') {
+      unset($_SESSION["plugin_fusioninventory_forcerun"]);
       $a_button = array('name' => 'Suivant',
                   'link' => PluginFusioninventoryWizard::getNextStep($ariane));
 
@@ -384,9 +393,67 @@ class PluginFusioninventoryWizard {
 
 
    static function w_tasksforcerun($ariane='') {
+      if (isset($_SESSION["plugin_fusioninventory_forcerun"])) {
+         glpi_header($_SERVER["PHP_SELF"]."?wizz=".PluginFusioninventoryWizard::getNextStep($ariane));
+         exit;
+      }
+
+      $a_button = array('name' => 'Suivant',
+                  'link' => PluginFusioninventoryWizard::getNextStep($ariane));
+
+      if (!isset($_GET['sort'])) {
+         $_GET['sort'] = 6;
+         $_GET['order'] = 'DESC';
+      }
+      $_GET['target']="task.php";
+
+      $func = '';
+      if ($ariane == "filNetDiscovery") {
+         $func = 'netdiscovery';
+      }
+      PluginFusioninventoryWizard::displayShowForm($a_button,
+               $ariane,
+               "PluginFusioninventoryTaskjob",
+               array("f"=>listToForcerun,
+                     "arg1"=>$func,
+                     "noadditem"=>1));
       
    }
 
+
+   
+   static function w_taskslog($ariane='') {
+
+      $a_button = array('name' => 'Finish',
+                  'link' => GLPI_ROOT."/plugins/fusioninventory/");
+
+      if (!isset($_GET['sort'])) {
+         $_GET['sort'] = 6;
+         $_GET['order'] = 'DESC';
+      }
+      $_GET['target']="task.php";
+
+      $func = '';
+      if ($ariane == "filNetDiscovery") {
+         $func = 'netdiscovery';
+      }
+      PluginFusioninventoryWizard::displayShowForm($a_button,
+               $ariane,
+               "PluginFusioninventoryTaskjob",
+               array("f"=>quickListLogs,
+                     "arg1"=>'',
+                     "noadditem"=>1,
+                     "finish"=>1));
+
+
+
+
+//      $p = new PluginFusioninventoryTaskjob();
+//      $p->quickListLogs();
+      
+
+
+   }
 }
 
 ?>

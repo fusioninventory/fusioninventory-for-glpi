@@ -157,6 +157,18 @@ if (isset($_POST['definition_add'])) {
       $redirect = str_replace('&id=0', '&id='.$taskjobs_id, $redirect);
       glpi_header($redirect);
    }
+} else if (isset($_POST['taskjobstoforcerun'])) {
+   // * Force running many tasks (wizard)
+   PluginFusioninventoryProfile::checkRight("fusioninventory", "task","w");
+   $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+   $_SESSION["plugin_fusioninventory_forcerun"] = array();
+   foreach ($_POST['taskjobstoforcerun'] as $taskjobs_id) {
+      $PluginFusioninventoryTaskjob->getFromDB($taskjobs_id);
+      $uniqid = $PluginFusioninventoryTaskjob->forceRunningTask($PluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']);
+      $_SESSION["plugin_fusioninventory_forcerun"][$taskjobs_id] = $uniqid;
+   }
+   unset($_SESSION["MESSAGE_AFTER_REDIRECT"]);
+   glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset($_POST['add']) || isset($_POST['update'])) {
    // * Add and update taskjob
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task", "w");
