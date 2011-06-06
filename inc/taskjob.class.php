@@ -1497,7 +1497,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
     * @param $method value method name of taskjob to display
     * 
     */
-   function quickList($method) {
+   static function quickList($method) {
       global $LANG;
 
       $pluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();

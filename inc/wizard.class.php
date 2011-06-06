@@ -504,7 +504,7 @@ class PluginFusioninventoryWizard {
 
       PluginFusioninventoryWizard::displayShowForm($ariane,
                "PluginFusioninventoryTaskjob",
-               array("f"=>quickList,
+               array("f"=>'quickList',
                      "arg1"=>$func));
    }
 
@@ -533,7 +533,7 @@ class PluginFusioninventoryWizard {
 
       PluginFusioninventoryWizard::displayShowForm($ariane,
                "PluginFusioninventoryTaskjob",
-               array("f"=>listToForcerun,
+               array("f"=>'listToForcerun',
                      "arg1"=>$func,
                      "noadditem"=>1));
       
@@ -559,7 +559,7 @@ class PluginFusioninventoryWizard {
 
       PluginFusioninventoryWizard::displayShowForm($ariane,
                "PluginFusioninventoryTaskjob",
-               array("f"=>quickListLogs,
+               array("f"=>'quickListLogs',
                      "arg1"=>'',
                      "noadditem"=>1,
                      "finish"=>1));
