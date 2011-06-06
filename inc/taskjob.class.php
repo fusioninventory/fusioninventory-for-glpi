@@ -1594,6 +1594,19 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $pluginFusioninventoryTask->getEmpty();
       }
 
+      if (strstr($_SERVER['PHP_SELF'], 'wizard')) {
+         echo "<a href=\"javascript:showHideDiv('tabsbody','tabsbodyimg','".$CFG_GLPI["root_doc"].
+                    "/pics/deplier_down.png','".$CFG_GLPI["root_doc"]."/pics/deplier_up.png')\">";
+         echo "<img alt='' name='tabsbodyimg' src=\"".$CFG_GLPI["root_doc"]."/pics/deplier_up.png\">";
+         echo "</a>&nbsp;&nbsp;";
+
+         echo "<a href=\"".$_SERVER['PHP_SELF']."?wizz=".$_GET['wizz']."&ariane=".$_GET['ariane']."\">";
+         echo $LANG['common'][53];
+         echo "</a>";
+
+      } else {
+         $this->showTabs();
+      }
       $this->showFormHeader(array());
 
       echo "<tr class='tab_bg_1'>";
