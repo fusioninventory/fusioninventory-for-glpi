@@ -135,6 +135,7 @@ class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
          $job->fields['status']= 1;
          $job->update($job->fields);
       }
+      return $uniqid;
    }
    
 
