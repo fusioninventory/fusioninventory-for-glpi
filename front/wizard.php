@@ -40,7 +40,8 @@ include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","wizard-start");
 
-if (!strstr($_SERVER['HTTP_REFERER'], "wizard.php")) {
+if (!strstr($_SERVER['HTTP_REFERER'], "wizard.php")
+        AND !isset($_GET['wizz'])) {
    PluginFusioninventoryMenu::displayMenu("mini");
 }
 if (isset($_GET["wizz"])) {
