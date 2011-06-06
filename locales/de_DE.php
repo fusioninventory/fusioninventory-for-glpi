@@ -144,7 +144,7 @@ $LANG['plugin_fusioninventory']['task'][0]="Aufgabe";
 $LANG['plugin_fusioninventory']['task'][1]="Aufgabenverwaltung";
 $LANG['plugin_fusioninventory']['task'][2]="Aufgabe / Befehl";
 $LANG['plugin_fusioninventory']['task'][14]="Geplanter Zeitpunkt";
-$LANG['plugin_fusioninventory']['task'][44]="Neue Aufgabe";
+$LANG['plugin_fusioninventory']['task'][15]="Neue Aufgabe";
 $LANG['plugin_fusioninventory']['task'][17]="Regelmässigkeit";
 $LANG['plugin_fusioninventory']['task'][18]="Aufgaben";
 $LANG['plugin_fusioninventory']['task'][19]="Laufende Augfaben";
@@ -172,6 +172,7 @@ $LANG['plugin_fusioninventory']['task'][41]="Server contacts the agent (push)";
 $LANG['plugin_fusioninventory']['task'][42]="Agent contacts the server (pull)";
 $LANG['plugin_fusioninventory']['task'][43]="Communication mode";
 $LANG['plugin_fusioninventory']['task'][44]="See all informations of task";
+$LANG['plugin_fusioninventory']['task'][45]="Advanced options";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="gestartet";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="OK";

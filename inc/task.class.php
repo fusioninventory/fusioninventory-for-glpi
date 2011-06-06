@@ -147,7 +147,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
          }
 
          $i++;
-         $ong[$i] = $LANG['plugin_fusioninventory']['task'][44];
+         $ong[$i] = $LANG['plugin_fusioninventory']['task'][15];
       }
       return $ong;
    }

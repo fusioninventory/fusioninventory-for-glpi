@@ -144,7 +144,7 @@ $LANG['plugin_fusioninventory']['task'][0]="Tarefa";
 $LANG['plugin_fusioninventory']['task'][1]="Gerenciamento de tarefa";
 $LANG['plugin_fusioninventory']['task'][2]="Ação";
 $LANG['plugin_fusioninventory']['task'][14]="Data da cobrança";
-$LANG['plugin_fusioninventory']['task'][44]="Nova ação";
+$LANG['plugin_fusioninventory']['task'][15]="Nova ação";
 $LANG['plugin_fusioninventory']['task'][17]="Frequência";
 $LANG['plugin_fusioninventory']['task'][18]="Tarefas";
 $LANG['plugin_fusioninventory']['task'][19]="Tarefas em execução";
@@ -172,6 +172,7 @@ $LANG['plugin_fusioninventory']['task'][41]="Server contacts the agent (push)";
 $LANG['plugin_fusioninventory']['task'][42]="Agent contacts the server (pull)";
 $LANG['plugin_fusioninventory']['task'][43]="Communication mode";
 $LANG['plugin_fusioninventory']['task'][44]="See all informations of task";
+$LANG['plugin_fusioninventory']['task'][45]="Advanced options";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Iniciado";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";

@@ -42,28 +42,90 @@ commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"p
 
 PluginFusioninventoryProfile::checkRight("fusioninventory", "task", "r");
 
-if (isset($_POST['add']) || isset($_POST['update'])) {
+if (isset($_POST['definition_add'])) {
+   // * Add a definition
+   $mytaskjob->getFromDB($_POST['id']);
+   $a_listdef = importArrayFromDB($mytaskjob->fields['definition']);
+   $add = 1;
+   foreach ($a_listdef as $num=>$dataDB) {
+      if (isset($dataDB[$_POST['DefinitionType']]) 
+              AND $dataDB[$_POST['DefinitionType']] == $_POST['definitionselectiontoadd']) {
+         $add = 0;
+         break;
+      }
+   }
+   if ($add == '1') {
+      $a_listdef[] = array($_POST['DefinitionType']=>$_POST['definitionselectiontoadd']);
+   }
+   $input = array();
+   $input['id'] = $_POST['id'];
+   $input['definition'] = exportArrayToDB($a_listdef);
+   $mytaskjob->update($input);
+   glpi_header($_SERVER['HTTP_REFERER']);
+} else if (isset($_POST['action_add'])) {
+   // * Add an action
+   $mytaskjob->getFromDB($_POST['id']);
+   $a_listact = importArrayFromDB($mytaskjob->fields['action']);
+   $add = 1;
+   foreach ($a_listact as $num=>$dataDB) {
+      if (isset($dataDB[$_POST['ActionType']])
+              AND $dataDB[$_POST['ActionType']] == $_POST['actionselectiontoadd']) {
+         $add = 0;
+         break;
+      }
+   }
+   if ($add == '1') {
+      $a_listact[] = array($_POST['ActionType']=>$_POST['actionselectiontoadd']);
+   }
+   $input = array();
+   $input['id'] = $_POST['id'];
+   $input['action'] = exportArrayToDB($a_listact);
+   $mytaskjob->update($input);
+   glpi_header($_SERVER['HTTP_REFERER']);
+} else if (isset($_POST['definition_delete'])) {
+   // * Delete definition
+   $mytaskjob->getFromDB($_POST['id']);
+   $a_listdef = importArrayFromDB($mytaskjob->fields['definition']);
+
+   foreach ($_POST['definition_to_delete'] as $itemdelete) {
+      $datadel = explode('-', $itemdelete);
+      foreach ($a_listdef as $num=>$dataDB) {
+         if (isset($dataDB[$datadel[0]]) AND $dataDB[$datadel[0]] == $datadel[1]) {
+            unset($a_listdef[$num]);
+         }
+      }
+   }
+   $input = array();
+   $input['id'] = $_POST['id'];
+   $input['definition'] = exportArrayToDB($a_listdef);
+   $mytaskjob->update($input);
+   glpi_header($_SERVER['HTTP_REFERER']);
+} else if (isset($_POST['action_delete'])) {
+   // * Delete action
+   $mytaskjob->getFromDB($_POST['id']);
+   $a_listact = importArrayFromDB($mytaskjob->fields['action']);
+
+   foreach ($_POST['action_to_delete'] as $itemdelete) {
+      $datadel = explode('-', $itemdelete);
+      foreach ($a_listact as $num=>$dataDB) {
+         if (isset($dataDB[$datadel[0]]) AND $dataDB[$datadel[0]] == $datadel[1]) {
+            unset($a_listact[$num]);
+         }
+      }
+   }
+   $input = array();
+   $input['id'] = $_POST['id'];
+   $input['action'] = exportArrayToDB($a_listact);
+   $mytaskjob->update($input);
+   glpi_header($_SERVER['HTTP_REFERER']);
+} else if (isset($_POST['add']) || isset($_POST['update'])) {
+   // * Add and update taskjob
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task", "w");
 
    if (isset($_POST['method_id'])) {
       $_POST['method']  = $_POST['method_id'];
    }
    $_POST['plugins_id'] = $_POST['method-'.$_POST['method']];
-
-   foreach (array('definitionlist' => 'definition', 'actionlist' => 'action') as $list => $tosave) {
-      if (!empty($_POST[$list])) {
-         $a_definitionlist   = explode(',', $_POST[$list]);
-         $a_definitionlistDB = array();
-         foreach ($a_definitionlist as $data) {
-            $dataDB          = explode('-&gt;', $data);
-            if (isset($dataDB[1]) AND $dataDB > 0) {
-               $a_definitionlistDB[][$dataDB[0]] = $dataDB[1];
-            }
-         }
-         $_POST[$tosave] = exportArrayToDB($a_definitionlistDB);
-
-      }
-   }
 
    if (isset($_POST['add'])) {
       $mytaskjob->add($_POST);
@@ -74,6 +136,7 @@ if (isset($_POST['add']) || isset($_POST['update'])) {
    
 
 } else if (isset($_POST["delete"])) {
+   // * delete taskjob
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task", "w");
 
    $mytaskjob->delete($_POST);

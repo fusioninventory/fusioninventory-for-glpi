@@ -144,7 +144,7 @@ $LANG['plugin_fusioninventory']['task'][0]="Task";
 $LANG['plugin_fusioninventory']['task'][1]="Task management";
 $LANG['plugin_fusioninventory']['task'][2]="Action";
 $LANG['plugin_fusioninventory']['task'][14]="Scheduled date";
-$LANG['plugin_fusioninventory']['task'][44]="New action";
+$LANG['plugin_fusioninventory']['task'][15]="New action";
 $LANG['plugin_fusioninventory']['task'][17]="Periodicity";
 $LANG['plugin_fusioninventory']['task'][18]="Tasks";
 $LANG['plugin_fusioninventory']['task'][19]="Running tasks";
@@ -172,6 +172,7 @@ $LANG['plugin_fusioninventory']['task'][41]="Server contacts the agent (push)";
 $LANG['plugin_fusioninventory']['task'][42]="Agent contacts the server (pull)";
 $LANG['plugin_fusioninventory']['task'][43]="Communication mode";
 $LANG['plugin_fusioninventory']['task'][44]="See all informations of task";
+$LANG['plugin_fusioninventory']['task'][45]="Advanced options";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Started";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";
