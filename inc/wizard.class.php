@@ -368,22 +368,7 @@ class PluginFusioninventoryWizard {
       }
       $_GET['target']="task.php";
 
-      $func = '';
-      switch ($ariane) {
-
-         case 'filNetDiscovery':
-            $func = 'netdiscovery';
-            break;
-
-         case 'filInventorySNMP':
-            $func = 'snmpquery';
-            break;
-
-         case 'filInventoryESX':
-            $func = 'ESX';
-            break;
-
-      }
+      $func = self::getMethod($ariane);
 
       PluginFusioninventoryWizard::displayShowForm($ariane,
                "PluginFusioninventoryTaskjob",
@@ -404,10 +389,8 @@ class PluginFusioninventoryWizard {
       }
       $_GET['target']="task.php";
 
-      $func = '';
-      if ($ariane == "filNetDiscovery") {
-         $func = 'netdiscovery';
-      }
+      $func = self::getMethod($ariane);
+
       PluginFusioninventoryWizard::displayShowForm($ariane,
                "PluginFusioninventoryTaskjob",
                array("f"=>listToForcerun,
@@ -425,10 +408,8 @@ class PluginFusioninventoryWizard {
       }
       $_GET['target']="task.php";
 
-      $func = '';
-      if ($ariane == "filNetDiscovery") {
-         $func = 'netdiscovery';
-      }
+      $func = self::getMethod($ariane);
+
       PluginFusioninventoryWizard::displayShowForm($ariane,
                "PluginFusioninventoryTaskjob",
                array("f"=>quickListLogs,
@@ -436,6 +417,31 @@ class PluginFusioninventoryWizard {
                      "noadditem"=>1,
                      "finish"=>1));
 
+   }
+
+
+
+   /*
+    * Get method for fil d'ariane (for taskjob)
+    */
+   static function getMethod($ariane) {
+      $method = '';
+      switch ($ariane) {
+
+         case 'filNetDiscovery':
+            $method = 'netdiscovery';
+            break;
+
+         case 'filInventorySNMP':
+            $method = 'snmpquery';
+            break;
+
+         case 'filInventoryESX':
+            $method = 'ESX';
+            break;
+
+      }
+      return $method;
    }
 }
 
