@@ -203,4 +203,23 @@ $LANG['plugin_fusioninventory']['locks'][1]="Ajouter les verrous";
 
 $LANG['plugin_fusioninventory']['buttons'][0]="Fin";
 
+$LANG['plugin_fusioninventory']['wizard'][0]="Choix de l'action";
+$LANG['plugin_fusioninventory']['wizard'][1]="Type de matériel à inventorier";
+$LANG['plugin_fusioninventory']['wizard'][2]="Options d'import";
+$LANG['plugin_fusioninventory']['wizard'][3]="Règles d'entités";
+$LANG['plugin_fusioninventory']['wizard'][4]="Configuration des agents";
+$LANG['plugin_fusioninventory']['wizard'][5]="Gestion des comptes";
+$LANG['plugin_fusioninventory']['wizard'][6]="Gestion des serveurs ESX";
+$LANG['plugin_fusioninventory']['wizard'][7]="Exécutions de tâches";
+$LANG['plugin_fusioninventory']['wizard'][8]="Résultats d'exécution des tâches";
+$LANG['plugin_fusioninventory']['wizard'][9]="Authentification SNMP";
+$LANG['plugin_fusioninventory']['wizard'][10]="Choix (Découverte réseau ou inventaire)";
+$LANG['plugin_fusioninventory']['wizard'][11]="Fil d'ariane";
+$LANG['plugin_fusioninventory']['wizard'][12]="Découvrir le réseau";
+$LANG['plugin_fusioninventory']['wizard'][13]="Inventorier le matériel";
+$LANG['plugin_fusioninventory']['wizard'][14]="Bienvenue dans FusionInventory. Commençons à configurer?";
+$LANG['plugin_fusioninventory']['wizard'][15]="Ordinateurs et périphériques";
+$LANG['plugin_fusioninventory']['wizard'][16]="Serveurs ESX";
+$LANG['plugin_fusioninventory']['wizard'][17]="Equipements et imprimantes réseau";
+
 ?>
