@@ -156,6 +156,13 @@ class PluginFusioninventoryWizard {
          include (GLPI_ROOT . "/plugins/fusioninventory/front/wizzrule.common.php");
 
       } else if (!empty($options)) {
+         echo "<table class='tab_cadre'>";
+         echo "<tr>";
+         echo "<th>";
+         echo "<a href='".$_SERVER["REQUEST_URI"]."&id=0'>Add an item</a>";
+         echo "</th>";
+         echo "</tr>";
+         echo "</table>";
          call_user_func(array($classname, $options['f']), $options['arg1']);
 
       } else {
