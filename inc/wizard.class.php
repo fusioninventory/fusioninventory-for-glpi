@@ -59,7 +59,7 @@ class PluginFusioninventoryWizard {
       foreach ($a_list as $name=>$link) {
          echo "<tr class='tab_bg_1'>";
          echo "<td>";
-         if (strstr($link, $_GET['wizz'])) {
+         if ($link == $_GET['wizz']) {
             echo "<img src='".GLPI_ROOT."/pics/right.png'/>";
          } else {
             echo "<img src='".GLPI_ROOT."/pics/right_off.png'/>";
@@ -204,7 +204,7 @@ class PluginFusioninventoryWizard {
 
          $find = 0;
          foreach ($a_list as $link) {
-            if (strstr($link, $_GET['wizz'])) {
+            if ($link == $_GET['wizz']) {
                $find = 1;
             } else {
                if ($find == '1') {
