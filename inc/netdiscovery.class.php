@@ -285,6 +285,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
             $PluginFusioninventoryTaskjob->update($input_taskjob);
          }
       }
+      return $uniqid;
    }
 
 

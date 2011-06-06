@@ -461,6 +461,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
             $PluginFusioninventoryTaskjob->update($input_taskjob);
          }
       }
+      return $uniqid;
    }
 
 
