@@ -143,6 +143,9 @@ if (isset($_POST['definition_add'])) {
    $inputtask['periodicity_count'] = $_POST['periodicity_count'];
    $inputtask['periodicity_type'] = $_POST['periodicity_type'];
 
+   $inputtask['entities_id'] = $_SESSION['glpiactive_entity'];
+   $inputtaskjob['entities_id'] = $_SESSION['glpiactive_entity'];
+
    if (isset($_POST['update'])) {
       $mytaskjob->update($inputtaskjob);
       $pluginFusioninventoryTask->update($inputtask);
