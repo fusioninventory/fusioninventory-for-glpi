@@ -70,7 +70,7 @@ $LANG['plugin_fusioninventory']['functionalities'][75] = "Verrous";
 $LANG['plugin_fusioninventory']['functionalities'][76] = "Extra-debug";
 
 $LANG['plugin_fusioninventory']['errors'][22] = "Elément inattendu dans";
-$LANG['plugin_fusioninventory']['errors'][50] = "La version de GLPI n'est pas compatible, vous avez besoin de la version 0.78";
+$LANG['plugin_fusioninventory']['errors'][50] = "La version de GLPI n'est pas compatible, vous avez besoin de la version 0.80";
 $LANG['plugin_fusioninventory']['errors'][1] = "PHP allow_url_fopen est désactivé, Réveil impossible de l'agent pour faire l'inventaire";
 $LANG['plugin_fusioninventory']['errors'][2] = "PHP allow_url_fopen est désactivé, Le mode push ne peut pas fonctionner";
 

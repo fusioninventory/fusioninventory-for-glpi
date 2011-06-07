@@ -70,7 +70,7 @@ $LANG['plugin_fusioninventory']['functionalities'][75]="Блокировки";
 $LANG['plugin_fusioninventory']['functionalities'][76]="Отладка";
 
 $LANG['plugin_fusioninventory']['errors'][22]="Не подключённый элемент в";
-$LANG['plugin_fusioninventory']['errors'][50]="GLPI версия не совместима, требуется версия 0.78";
+$LANG['plugin_fusioninventory']['errors'][50]="GLPI версия не совместима, требуется версия 0.80";
 
 $LANG['plugin_fusioninventory']['rules'][2]="Импорт оборудования и ссылок правил";
 $LANG['plugin_fusioninventory']['rules'][3]="Поиск GLPI оборудования со статусом";
