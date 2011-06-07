@@ -423,6 +423,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    }
 
 
+// ************************* Hub Management ************************ //
 
    /**
    * Manage a hub (many mac on a port mean you have a hub)
@@ -438,51 +439,52 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
       $nn = new NetworkPort_NetworkPort();
       $Netport = new NetworkPort();
-      //$PluginFusionInventoryAgentsProcesses = new PluginFusioninventoryAgentsProcesses;
       // Get port connected on switch port
       $hub_id = 0;
-      if ($ID = $nn->getOppositeContact($p_oPort->getValue('id'))) {
+      $ID = $nn->getOppositeContact($p_oPort->getValue('id'));
+      if ($ID) {
          $Netport->getFromDB($ID);
          if ($Netport->fields["itemtype"] == $this->getType()) {
             $this->getFromDB($Netport->fields["items_id"]);
             if ($this->fields["hub"] == "1") {
-               $this->releaseHub($this->fields['id'], $p_oPort);
+               // It's a hub connected, so will update connections
+               //$this->releaseHub($this->fields['id'], $p_oPort);
                $hub_id = $this->fields['id'];
             } else {
+               // It's a direct connection, so disconnect and create a hub
                $this->disconnectDB($ID);
                $hub_id = $this->createHub($p_oPort, $agent_id);
             }
          } else {
+            // It's a direct connection, so disconnect and create a hub
             $this->disconnectDB($ID);
             $hub_id = $this->createHub($p_oPort, $agent_id);
          }
       } else {
+         // No connections found and create a hub
          $hub_id = $this->createHub($p_oPort, $agent_id);
       }
-
+      // State : Now we have hub and it's id
 
       // Get all ports connected to this hub
       $a_portglpi = array();
       $a_ports = $Netport->find("`items_id`='".$hub_id."'
           AND `itemtype`='".$this->getType()."'");
       foreach ($a_ports as $data) {
-         if ($id = $nn->getOppositeContact($data['id'])) {
+         $id = $nn->getOppositeContact($data['id']);
+         if ($id) {
             $a_portglpi[$id] = $data['id'];
          }
       }
 
-      $a_portUsed = array();
-      $used_id = 0;
       foreach ($p_oPort->getMacsToConnect() as $ifmac) {
-         $a_ports = $Netport->find("`mac`='".$ifmac."'");
+         $a_ports = $Netport->find("`mac`='".$ifmac."'", "", 1);
          if (count($a_ports) == "1") {
-            if ($used_id = $this->searchIfmacOnHub($a_ports, $a_portglpi)) {
-            } else {
-               // Connect port
-               $used_id = $this->connectPortToHub($a_ports, $hub_id);
+            if (!$this->searchIfmacOnHub($a_ports, $a_portglpi)) {
+               // Connect port (port found in GLPI)
+               $this->connectPortToHub($a_ports, $hub_id);
             }
          } else if (count($a_ports) == "0") {
-
             // Port don't exist
             // Create unknown device
             $input = array();
@@ -490,25 +492,16 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
                $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
             }
-               // get source entity :
-//               $Netport->getDeviceData($p_oPort->getValue("items_id"),$p_oPort->getValue("itemtype"));
-//               if (isset($Netport->entities_id)) {
-//                  $input['entities_id'] = $Netport->entities_id;
-//               }
             $unknown_id = $this->add($input);
             $input = array();
             $input["items_id"] = $unknown_id;
             $input["itemtype"] = $this->getType();
             $input["mac"] = $ifmac;
             $id_port = $Netport->add($input);
-            $a_portcreate = array();
             $Netport->getFromDB($id_port);
-            $a_portcreate[$id_port] = $Netport->fields;
-            $used_id = $this->connectPortToHub($a_portcreate, $hub_id);
+            $this->connectPortToHub(array($id_port => $Netport->fields), $hub_id);
          }
-         $a_portUsed[$used_id] = 1;
       }
-      $this->deleteNonUsedPortHub($hub_id, $a_portUsed);
    }
 
 
@@ -675,7 +668,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             }
          }
       }
-      // Not founded, creation hub and link port
+      // Not found, creation hub and link port
       $input = array();
       $input['hub'] = "1";
       $input['name'] = "hub";
@@ -737,10 +730,6 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             }
          }
       }
-      foreach ($releasePorts as $port_id=>$data) {
-         //plugin_fusioninventory_addLogConnection("remove",$port_id);
-         $this->disconnectDB($port_id);
-      }
    }
 
 
@@ -778,7 +767,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       }
    }
 
-
+// *************************** end hub management ****************************** //
 
    /**
    * Write XML in a folder when unknown device is created from an inventory by agent
