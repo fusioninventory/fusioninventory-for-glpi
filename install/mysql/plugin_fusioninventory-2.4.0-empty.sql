@@ -37,6 +37,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_agents` (
    `items_id` int(11) NOT NULL DEFAULT '0',
    `itemtype` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
    `token` varchar(255) COLLATE utf8_unicode_ci NULL,
+   `useragent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    PRIMARY KEY (`id`),
    KEY `name` (`name`),
    KEY `device_id` (`device_id`),

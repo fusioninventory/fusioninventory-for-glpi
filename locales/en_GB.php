@@ -134,7 +134,8 @@ $LANG['plugin_fusioninventory']['agents'][37]="locked";
 $LANG['plugin_fusioninventory']['agents'][38]="Available";
 $LANG['plugin_fusioninventory']['agents'][39]="Running";
 $LANG['plugin_fusioninventory']['agents'][40]="Computer without known IP";
-$LANG['plugin_fusioninventory']['agents'][41] = "Service URL";
+$LANG['plugin_fusioninventory']['agents'][41]="Service URL";
+$LANG['plugin_fusioninventory']['agents'][42]="Useragent";
 
 $LANG['plugin_fusioninventory']['unknown'][2]="Approved devices";
 $LANG['plugin_fusioninventory']['unknown'][4]="Network hub";

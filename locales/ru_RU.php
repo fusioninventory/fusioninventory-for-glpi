@@ -129,6 +129,7 @@ $LANG['plugin_fusioninventory']['agents'][37]="Заблокированный";
 $LANG['plugin_fusioninventory']['agents'][38]="Доступный";
 $LANG['plugin_fusioninventory']['agents'][39]="Запущенный";
 $LANG['plugin_fusioninventory']['agents'][40]="Компьютер с нейзвестным IP";
+$LANG['plugin_fusioninventory']['agents'][42]="Useragent";
 
 $LANG['plugin_fusioninventory']['unknown'][2]="Подтверждённые устройства";
 $LANG['plugin_fusioninventory']['unknown'][4]="Сетевой хаб";
