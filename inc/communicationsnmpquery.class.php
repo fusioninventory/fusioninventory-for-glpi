@@ -397,8 +397,15 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                break;
             case 'FIRMWARE' :
                if (!in_array('networkequipmentfirmwares_id', $a_lockable)) {
+                  $firmware = (string)$p_info->FIRMWARE;
+                  if (strstr($firmware, "CW_VERSION")) {
+                     $explode = explode("$", $firmware);
+                     if (isset($explode[1])) {
+                        $firmware = $explode[1];
+                     }
+                  }
                   $NetworkEquipmentFirmware = new NetworkEquipmentFirmware();
-                  $this->ptd->setValue('networkequipmentfirmwares_id', $NetworkEquipmentFirmware->import(array('name' => (string)$p_info->FIRMWARE)));
+                  $this->ptd->setValue('networkequipmentfirmwares_id', $NetworkEquipmentFirmware->import(array('name' => $firmware)));
                }
                break;
             case 'MAC' :
