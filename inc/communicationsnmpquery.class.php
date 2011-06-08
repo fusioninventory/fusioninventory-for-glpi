@@ -1016,9 +1016,28 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             $p_oPort->setNoTrunk();
             $pfiud = new PluginFusioninventoryUnknownDevice;
             $pfiud->hubNetwork($p_oPort, $this->agent);
-         } else {
-            if (!$p_oPort->getNoTrunk()) {
-               $p_oPort->setValue('trunk', 0);
+         } else { // One mac on port
+            // If port connected to hub
+            $hub = 0;
+            $networkPort = new NetworkPort();
+            $id = $networkPort->getContact($p_oPort->getValue('id'));
+            if ($id) {
+               $networkPort->getFromDB($id);
+               $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+               if ($networkPort->fields["itemtype"] == $pluginFusioninventoryUnknownDevice->getType()) {
+                  $pluginFusioninventoryUnknownDevice->getFromDB($networkPort->fields["items_id"]);
+                  if ($this->fields["hub"] == "1") {
+                     $hub = 1;
+                  }
+               }
+            }
+            if ($hub == '1') {
+               $p_oPort->setNoTrunk();
+            } else {
+               // else manage it one port connected on switch port
+               if (!$p_oPort->getNoTrunk()) {
+                  $p_oPort->setValue('trunk', 0);
+               }
             }
          }
       }
@@ -1029,10 +1048,12 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
    /**
     * Import CONNECTION
-    *@param $p_connection CONNECTION code to import
-    *@param $p_oPort Port object to connect
-    *@param $p_cdp CDP value (1 or <>1)
-    *@return errors string to be alimented if import ko / '' if ok
+    *
+    * @param $p_connection CONNECTION code to import
+    * @param $p_oPort Port object to connect
+    * @param $p_cdp CDP value (1 or <>1)
+    *
+    * @return errors string to be alimented if import ko / '' if ok
     **/
    function  importConnection($p_connection, $p_oPort, $p_cdp) {
       global $LANG;
