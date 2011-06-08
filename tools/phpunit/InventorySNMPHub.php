@@ -305,13 +305,45 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
             AND `items_id`='".$networkPort->fields['items_id']."'");
          $this->assertEquals(count($a_portshub),
                            '3', '(3)Don\'t have the 3 ports connected to hub');
-         // TODO : verify port disconnected has been connected to port1 of switch 2
-         
+         // CHECK 3 : verify port disconnected has been connected to port1 of switch 2
+         $a_ports = $networkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
+               AND `mac`='00:23:18:cf:0d:93'");
+         $this->assertEquals(count($a_ports), 1, '(3)port with mac 00:23:18:cf:0d:93 is not in GLPI');
+         $a_port = current($a_ports);
+         $contactport_id = $networkPort->getContact($a_port['id']);
+         $networkPort->getFromDB($contactport_id);
+         if ($networkPort->fields['itemtype'] == 'NetworkEquipment') {
+            $this->assertEquals($networkPort->fields['items_id'],
+                              '2', '(3)port with mac 00:23:18:cf:0d:93 not connected with swith 2');
+         } else {
+            $t = 0;
+            $this->assertEquals($t, '1', '(3)port with mac 00:23:18:cf:0d:93 not connected to a switch');
+         }
 
 
-         $switch1 = str_replace("<CONNECTION>
+
+      $switch1 = str_replace("<CONNECTION>
               <MAC>f0:ad:4e:00:19:f7</MAC>
             </CONNECTION>", "", $switch1);
+
+      // * 4. Update switchs
+      $this->testSendinventory("toto", $switch1);
+      $this->testSendinventory("toto", $switch2);
+         // CHECK 1 : verify hub again here and connected to port 1 of switch 1
+         $a_ports = $networkPort->find("`itemtype`='NetworkEquipment'
+               AND `items_id`='".$a_switch['id']."'");
+         $this->assertEquals(count($a_ports), 1, '(4)switch 1 haven\'t port fa0/1 added in GLPI');
+         $a_port = current($a_ports);
+         $contactport_id = $networkPort->getContact($a_port['id']);
+         $networkPort->getFromDB($contactport_id);
+         if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+            $pluginFusioninventoryUnknownDevice->getFromDB($networkPort->fields['items_id']);
+            $this->assertEquals($pluginFusioninventoryUnknownDevice->fields['hub'],
+                              '0', '(4)Hub connected on port fa0/1 of switch 1');
+         }
+
+
+
 
       $switch2 = str_replace("</CONNECTIONS>
           <IFDESCR>FastEthernet0/2</IFDESCR>", "               <CONNECTION>
@@ -320,7 +352,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
             </CONNECTIONS>
           <IFDESCR>FastEthernet0/2</IFDESCR>", $switch2);
       
-      // * 4. Update switchs
+      // * 5. Update switchs
       $this->testSendinventory("toto", $switch1);
       $this->testSendinventory("toto", $switch2);
          // TODO : verify hub deleted
