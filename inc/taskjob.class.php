@@ -759,6 +759,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             WHERE `plugin_fusioninventory_tasks_id`='".$data['id']."'";
          $DB->query($queryUpdate);
 
+         if (is_null($data['date_scheduled_timestamp'])) {
+            $data['date_scheduled_timestamp'] = date('U');
+         }
          if (($data['date_scheduled_timestamp'] + $period) <= date('U')) {
             $periodtotal = $period;
             for($i=2; ($data['date_scheduled_timestamp'] + $periodtotal) <= date('U'); $i++) {
