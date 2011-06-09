@@ -540,7 +540,7 @@ function appear_array(id){
    *
    **/
    function graphFinish($taskjobs_id) {
-      global $LANG;
+      global $LANG,$DB;
 
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
 
@@ -550,18 +550,16 @@ function appear_array(id){
       $finishState[4] = 0;
       $finishState[5] = 0;
 
-      $a_jobstatus = $PluginFusioninventoryTaskjobstatus->find('`plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'" GROUP BY uniqid,plugin_fusioninventory_agents_id');
-
-      $search = '(';
-      foreach ($a_jobstatus as $data) {
-         $search .= $data['id'].",";
-      }
-      $search .= ')';
-      $search = str_replace(',)', ')', $search);
-
-      $a_joblogs = $this->find('`plugin_fusioninventory_taskjobstatus_id` IN '.$search.' AND `state` IN (2, 3, 4, 5)');
-      foreach($a_joblogs as $datajob) {
-         $finishState[$datajob['state']]++;
+      $query = "SELECT `glpi_plugin_fusioninventory_taskjoblogs`.`state`
+         FROM glpi_plugin_fusioninventory_taskjobstatus
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` on plugin_fusioninventory_taskjobstatus_id=`glpi_plugin_fusioninventory_taskjobstatus`.`id`
+         WHERE `plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
+         AND  `glpi_plugin_fusioninventory_taskjoblogs`.`state` IN (2, 3, 4, 5)
+         GROUP BY glpi_plugin_fusioninventory_taskjobstatus.uniqid,plugin_fusioninventory_agents_id";
+      if ($result=$DB->query($query)) {
+			while ($datajob=$DB->fetch_array($result)) {
+            $finishState[$datajob['state']]++;
+         }
       }
       $input = array();
       $input[$LANG['plugin_fusioninventory']['taskjoblog'][2]] = $finishState[2];
