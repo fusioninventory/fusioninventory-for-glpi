@@ -75,6 +75,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       $a_infos = plugin_version_fusinvinventory();
       $input['version']                = $a_infos['version'];
       $input['location']               = 0;
+      $input['group']                  = 0;
 
       foreach ($input as $key => $value) {
          $PluginFusioninventoryConfig->initConfig($plugins_id, array($key => $value));
@@ -322,7 +323,15 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td colspan='2'></td>";
+      echo "<td>";
+      echo $LANG['common'][35];
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showFromArray("group",
+                              array("0"=>"------",
+                                    "1"=>$LANG['plugin_fusinvinventory']['rule'][8]),
+                              array('value'=>$PluginFusioninventoryConfig->getValue($plugins_id, 'group')));
+
       echo "<td>" . $LANG['ocsconfig'][16] . " </td>\n<td>";
       Dropdown::show('State',
                      array('name'   => 'states_id_default',

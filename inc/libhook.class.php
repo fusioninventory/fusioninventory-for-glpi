@@ -172,6 +172,10 @@ class PluginFusinvinventoryLibhook {
                      $Computer->fields['locations_id'] = Dropdown::importExternal('Location',
                                                                           $dataSection['KEYVALUE']);
                   }
+                  if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusinvinventory_moduleid"], 'group') == '1') {
+                     $Computer->fields['groups_id'] = Dropdown::importExternal('Group',
+                                                                          $dataSection['KEYVALUE']);
+                  }
                }
                break;
 
@@ -736,6 +740,11 @@ class PluginFusinvinventoryLibhook {
                           
                      if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusinvinventory_moduleid"], 'location') == 1) {
                         $Computer->fields['locations_id'] = Dropdown::importExternal('Location',
+                                                                             $dataSection['KEYVALUE']);
+                        $Computer->update($Computer->fields);
+                     }
+                     if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusinvinventory_moduleid"], 'group') == 1) {
+                        $Computer->fields['groups_id'] = Dropdown::importExternal('Group',
                                                                              $dataSection['KEYVALUE']);
                         $Computer->update($Computer->fields);
                      }
