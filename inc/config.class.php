@@ -45,8 +45,10 @@ class PluginFusinvSNMPConfig extends CommonDBTM {
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
-      $insert = array('storagesnmpauth' => 'DB',
-                      'version'         => PLUGIN_FUSINVSNMP_VERSION);
+      $insert = array('storagesnmpauth'      => 'DB',
+                      'version'              => PLUGIN_FUSINVSNMP_VERSION,
+                      'threads_netdiscovery' => 1,
+                      'threads_snmpquery'    => 1);
       $PluginFusioninventoryConfig->initConfig($plugins_id, $insert);
    }
 
@@ -59,6 +61,10 @@ class PluginFusinvSNMPConfig extends CommonDBTM {
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
       $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'storagesnmpauth', 
                                                      $p_post['storagesnmpauth']);
+      $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'threads_netdiscovery',
+                                                     $p_post['threads_netdiscovery']);
+      $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'threads_snmpquery',
+                                                     $p_post['threads_snmpquery']);
    }
 
    
@@ -85,6 +91,18 @@ class PluginFusinvSNMPConfig extends CommonDBTM {
       echo "</td>";
       echo "<td colspan='2'></td>";
       echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusinvsnmp']['agents'][24]."&nbsp;(".strtolower($LANG['plugin_fusinvsnmp']['config'][4]).")&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showInteger("threads_netdiscovery", $PluginFusioninventoryConfig->getValue($plugins_id, 'threads_netdiscovery'),1,400);
+      echo "</td>";
+      echo "<td>".$LANG['plugin_fusinvsnmp']['agents'][24]."&nbsp;(".strtolower($LANG['plugin_fusinvsnmp']['config'][3]).")&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showInteger("threads_snmpquery", $PluginFusioninventoryConfig->getValue($plugins_id, 'threads_snmpquery'),1,400);
+      echo "</td>";
+      echo "</tr>";
+
 
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "w")) {
          echo "<tr class='tab_bg_2'><td align='center' colspan='4'>
