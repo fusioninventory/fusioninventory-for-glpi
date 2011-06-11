@@ -44,6 +44,9 @@ function update232to240() {
    if (!PluginFusioninventoryConfig::getValue($plugins_id, "import_vm")) {
        $config->initConfig($plugins_id, array("import_vm" => "1"));
    }
+   if (!PluginFusioninventoryConfig::getValue($plugins_id, "component_networkdrive")) {
+       $config->initConfig($plugins_id, array("component_networkdrive" => "1"));
+   }
 
    if (TableExists("glpi_plugin_fusinvinventory_computers")) {
       $Computer = new Computer();

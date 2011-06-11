@@ -51,6 +51,7 @@ $LANG['plugin_fusinvinventory']['setup'][26]="Processus";
 $LANG['plugin_fusinvinventory']['setup'][27]="Import unique sur numéro de série";
 $LANG['plugin_fusinvinventory']['setup'][28]="Transfert automatique d'ordinateurs";
 $LANG['plugin_fusinvinventory']['setup'][29]="Modèle pour le transfert automatique d'ordinateurs dans une autre entité";
+$LANG['plugin_fusinvinventory']['setup'][30]="Volumes réseau";
 
 $LANG['plugin_fusinvinventory']['menu'][0]="Importer un fichier XML de l'agent";
 $LANG['plugin_fusinvinventory']['menu'][1]="Règles de critères";

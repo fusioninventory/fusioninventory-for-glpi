@@ -50,6 +50,7 @@ $LANG['plugin_fusinvinventory']['setup'][26]="Processus";
 $LANG['plugin_fusinvinventory']['setup'][27]="Уникальный импорт серийных номеров";
 $LANG['plugin_fusinvinventory']['setup'][28]="Автоматическая передача компьютеров";
 $LANG['plugin_fusinvinventory']['setup'][29]="Автоматическая модель для передачи компьютеров в другую организацию";
+$LANG['plugin_fusinvinventory']['setup'][30]="Network drives";
 
 $LANG['plugin_fusinvinventory']['menu'][0]="Импорт XML файла агента";
 $LANG['plugin_fusinvinventory']['menu'][1]="Критерий привил";

@@ -68,6 +68,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       $input['component_graphiccard']  = 1;
       $input['component_soundcard']    = 1;
       $input['component_drive']        = 1;
+      $input['component_networkdrive'] = 1;
       $input['component_control']      = 1;
       $input['transfers_id_auto']      = 1;
       $input['states_id_default']      = 0;
@@ -291,12 +292,11 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
                           $PluginFusioninventoryConfig->getValue($plugins_id, 'import_vm'));
       echo "</td>";
       echo "<td>";
-      echo $LANG['devices'][20];
+      echo $LANG['plugin_fusinvinventory']['setup'][30];
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("component_control", 
-                          $PluginFusioninventoryConfig->getValue($plugins_id, 
-                                                                 'component_control'));
+      Dropdown::showYesNo("component_networkdrive",
+                          $PluginFusioninventoryConfig->getValue($plugins_id, 'component_networkdrive'));
       echo "</td>";
       echo "</tr>";
 
@@ -311,10 +311,22 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
                               array('value'=>$PluginFusioninventoryConfig->getValue($plugins_id, 'location')));
 
       echo "</td>";
+      echo "<td>";
+      echo $LANG['devices'][20];
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("component_control",
+                          $PluginFusioninventoryConfig->getValue($plugins_id,
+                                                                 'component_control'));
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td colspan='2'></td>";
       echo "<td>" . $LANG['ocsconfig'][16] . " </td>\n<td>";
       Dropdown::show('State',
                      array('name'   => 'states_id_default',
-                           'value'  => $PluginFusioninventoryConfig->getValue($plugins_id, 
+                           'value'  => $PluginFusioninventoryConfig->getValue($plugins_id,
                                                                               'states_id_default')));
       echo "</td>\n";
       echo "</tr>";

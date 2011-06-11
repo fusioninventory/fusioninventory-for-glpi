@@ -58,6 +58,16 @@ class PluginFusinvinventoryImport_Drive extends CommonDBTM {
               "component_drive") == '0') {
          return;
       }
+      if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+              "component_networkdrive") == '0') {
+         if (isset($dataSection['TYPE'])
+                 AND $dataSection['TYPE'] == 'Network Drive') {
+            return;
+         } else if (isset($dataSection['FILESYSTEM'])
+                 AND $dataSection['FILESYSTEM'] == 'nfs') {
+            return;
+         }
+      }
 
       if ((isset($dataSection['TYPE'])) AND
               (($dataSection['TYPE'] == "Removable Disk")
