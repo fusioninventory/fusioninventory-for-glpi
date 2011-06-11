@@ -249,6 +249,11 @@ class PluginFusinvinventoryLibhook {
                      $inputC['uuid'] = $dataSection['UUID'];
                   }
                }
+               if (isset($dataSection['DESCRIPTION'])) {
+                  if (!in_array('comment', $a_lockable)) {
+                     $inputC['comment'] = $dataSection['DESCRIPTION'];
+                  }
+               }
                break;
 
             case 'SOUNDS':
@@ -780,6 +785,11 @@ class PluginFusinvinventoryLibhook {
                         }
                      }
                   }
+                  if (isset($dataSection['DESCRIPTION'])) {
+                     if (!in_array('comment', $a_lockable)) {
+                        $inputC['comment'] = $dataSection['DESCRIPTION'];
+                     }
+                  }
                   $Computer->update($inputC);
                   break;
 
@@ -919,6 +929,12 @@ class PluginFusinvinventoryLibhook {
        $opt[$i]['xmlSectionChild']  = 'UUID';
        $opt[$i]['glpiItemtype']     = 'Computer';
        $opt[$i]['glpiField']        = 'uuid';
+
+       $i++;
+       $opt[$i]['xmlSection']       = 'HARDWARE';
+       $opt[$i]['xmlSectionChild']  = 'DESCRIPTION';
+       $opt[$i]['glpiItemtype']     = 'Computer';
+       $opt[$i]['glpiField']        = 'comment';
 
        
        // ** USERS

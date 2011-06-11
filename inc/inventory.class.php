@@ -317,6 +317,7 @@ class PluginFusinvinventoryInventory {
       if ($workgroup != "&nbsp;") {
          $xml_bios->addChild("WORKGROUP", $workgroup);
       }
+      $xml_hardware->addChild("DESCRIPTION", $datas['comment']);
 
       // ** CONTROLLERS
       $CompDeviceControl = new Computer_Device('DeviceControl');
