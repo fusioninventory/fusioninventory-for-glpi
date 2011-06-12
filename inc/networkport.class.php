@@ -310,12 +310,13 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       if ($p_port=='') $p_port=$this->getValue('id');
       $nn = new NetworkPort_NetworkPort();
 
-      if ($nn->getOppositeContact($p_port)) {
-         PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$nn->getOppositeContact($p_port));
-      }
-      PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$p_port);
+//      if ($nn->getOppositeContact($p_port)) {
+//         PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$nn->getOppositeContact($p_port));
+//      }
+//      PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$p_port);
       if ($nn->getOppositeContact($p_port) AND $nn->getFromDBForNetworkPort($nn->getOppositeContact($p_port))) {
-         if ($nn->delete($nn->fields)) {
+         $purge = $nn->delete($nn->fields,1);
+         if ($purge) {
             plugin_item_purge_fusioninventory($nn);
 //            $ptap = new PluginFusioninventoryAgentProcess;
 //            $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
@@ -323,7 +324,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
          }
       }
       if ($nn->getFromDBForNetworkPort($p_port)) {
-         if ($nn->delete($nn->fields)) {
+         $purge = $nn->delete($nn->fields,1);
+         if ($purge) {
             plugin_item_purge_fusioninventory($nn);
 //            $ptap = new PluginFusioninventoryAgentProcess;
 //            $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],

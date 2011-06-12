@@ -102,7 +102,7 @@ function plugin_init_fusinvsnmp() {
 	$PLUGIN_HOOKS['cron']['fusinvsnmp'] = 20*MINUTE_TIMESTAMP; // All 20 minutes
 
    $PLUGIN_HOOKS['add_javascript']['fusinvsnmp']="script.js";
-
+   
 	if (isset($_SESSION["glpiID"])) {
 
 		if (haveRight("configuration", "r") || haveRight("profile", "w")) {// Config page
@@ -121,7 +121,10 @@ function plugin_init_fusinvsnmp() {
 		if($plugin->isInstalled('fusinvsnmp')) {
 
 			$PLUGIN_HOOKS['use_massive_action']['fusinvsnmp']=1;
+                  
 //         $PLUGIN_HOOKS['pre_item_delete']['fusinvsnmp'] = 'plugin_pre_item_delete_fusinvsnmp';
+         $PLUGIN_HOOKS['pre_item_purge']['fusinvsnmp'] = array('NetworkPort_NetworkPort'=>'plugin_item_purge_fusinvsnmp');
+
          $PLUGIN_HOOKS['item_purge']['fusinvsnmp'] = array('NetworkEquipment' =>'plugin_item_purge_fusinvsnmp',
                                                            'Printer' =>'plugin_item_purge_fusinvsnmp',
                                                            'PluginFusioninventoryUnknownDevice' =>'plugin_item_purge_fusinvsnmp');

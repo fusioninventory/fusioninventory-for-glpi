@@ -2109,7 +2109,7 @@ function plugin_fusinvsnmp_addWhere($link,$nott,$type,$id,$val) {
 
 function plugin_item_purge_fusinvsnmp($parm) {
    global $DB;
-
+logInFile("pouetgg", print_r($parm, 1));
    switch (get_class($parm)) {
 
          case 'NetworkEquipment':
@@ -2157,6 +2157,19 @@ function plugin_item_purge_fusinvsnmp($parm) {
             $query_delete = "DELETE FROM `glpi_plugin_fusinvsnmp_unknowndevices`
                              WHERE `plugin_fusioninventory_unknowndevices_id`='".$parm->fields["id"]."';";
             $DB->query($query_delete);
+            break;
+
+         case 'NetworkPort_NetworkPort':
+            $networkPort = new NetworkPort();
+            $networkPort->getFromDB($parm->fields['networkports_id_1']);
+            if (($networkPort->fields['itemtype']) == 'NetworkEquipment') {
+               PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$parm->fields['networkports_id_1']);
+            } else {
+               $networkPort->getFromDB($parm->fields['networkports_id_2']);
+               if (($networkPort->fields['itemtype']) == 'NetworkEquipment') {
+                  PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$parm->fields['networkports_id_2']);
+               }
+            }
             break;
             
       }
