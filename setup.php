@@ -123,7 +123,7 @@ function plugin_init_fusinvsnmp() {
 			$PLUGIN_HOOKS['use_massive_action']['fusinvsnmp']=1;
                   
 //         $PLUGIN_HOOKS['pre_item_delete']['fusinvsnmp'] = 'plugin_pre_item_delete_fusinvsnmp';
-         $PLUGIN_HOOKS['pre_item_purge']['fusinvsnmp'] = array('NetworkPort_NetworkPort'=>'plugin_item_purge_fusinvsnmp');
+         $PLUGIN_HOOKS['pre_item_purge']['fusinvsnmp'] = array('NetworkPort_NetworkPort'=>'plugin_pre_item_purge_fusinvsnmp');
 
          $PLUGIN_HOOKS['item_purge']['fusinvsnmp'] = array('NetworkEquipment' =>'plugin_item_purge_fusinvsnmp',
                                                            'Printer' =>'plugin_item_purge_fusinvsnmp',
