@@ -77,8 +77,12 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    
       $fusioninventory_config      = new PluginFusioninventoryConfig();
       $PluginFusioninventoryModule = new PluginFusioninventoryModule();
+      
       $fusioninventoryModule_id    = $PluginFusioninventoryModule->getModuleId("fusioninventory");
    
+      $users_id = $fusioninventory_config->getValue($fusioninventoryModule_id, 'users_id');
+      $_SESSION['glpiID'] = $users_id;
+      
       $ssl = $fusioninventory_config->getValue($fusioninventoryModule_id, 'ssl_only');
       if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"))
           OR ($ssl == "0")) {

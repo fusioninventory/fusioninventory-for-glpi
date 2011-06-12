@@ -47,6 +47,15 @@ function update232to240() {
 
    plugin_fusioninventory_displayMigrationMessage("240"); // Start
    logDebug("mgre");
+   
+   $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
+   $config = new PluginFusioninventoryConfig();
+   $PluginFusioninventorySetup = new PluginFusioninventorySetup();
+   $users_id = $PluginFusioninventorySetup->createFusionInventoryUser();
+   if (!PluginFusioninventoryConfig::getValue($plugins_id, "users_id")) {
+       $config->initConfig($plugins_id, array("users_id" => $users_id));
+   }
+   
    if (TableExists("glpi_plugin_fusinvsnmp_ipranges")) {
       //Rename table
       $query = "RENAME TABLE  `glpi_plugin_fusinvsnmp_ipranges` " .

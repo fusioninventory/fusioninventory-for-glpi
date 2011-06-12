@@ -147,6 +147,8 @@ function pluginFusioninventoryInstall($version) {
    }
 
    // glpi_plugin_fusioninventory_configs
+   $PluginFusioninventorySetup = new PluginFusioninventorySetup();
+   $users_id = $PluginFusioninventorySetup->createFusionInventoryUser();
    $query = "INSERT INTO `glpi_plugin_fusioninventory_configs`
                          (`type`, `value`, `plugins_id`)
              VALUES ('version', '".$version."', '".$plugins_id."'),
@@ -154,7 +156,8 @@ function pluginFusioninventoryInstall($version) {
                     ('delete_task', '20', '".$plugins_id."'),
                     ('inventory_frequence', '24', '".$plugins_id."'),
                     ('agent_port', '62354', '".$plugins_id."'),
-                    ('extradebug', '0', '".$plugins_id."')";
+                    ('extradebug', '0', '".$plugins_id."'),
+                    ('users_id', '".$users_id."', '".$plugins_id."')";
    $DB->query($query);
 
    PluginFusioninventoryProfile::changeProfile($plugins_id);
