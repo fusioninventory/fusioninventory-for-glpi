@@ -583,10 +583,10 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 	function disconnectDB($p_port) {
       $nn = new NetworkPort_NetworkPort();
 
-      if ($nn->getOppositeContact($p_port)) {
-         PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$nn->getOppositeContact($p_port));
-      }
-      PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$p_port);
+//      if ($nn->getOppositeContact($p_port)) {
+//         PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$nn->getOppositeContact($p_port));
+//      }
+//      PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$p_port);
       if ($nn->getOppositeContact($p_port) AND $nn->getFromDBForNetworkPort($nn->getOppositeContact($p_port))) {
          if ($nn->delete($nn->fields)) {
             plugin_item_purge_fusioninventory($nn);
@@ -723,7 +723,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $releasePorts = array();
       $a_ports = $Netport->find("`items_id`='".$hub_id."' AND `itemtype`='".$this->getType()."' AND (`name` != 'Link' OR `name` IS NULL)");
       foreach ($a_ports as $port_id=>$data) {
-         if ($id = $nn->getOppositeContact($port_id)) {
+         $id = $nn->getOppositeContact($port_id);
+         if ($id) {
             $Netport->getFromDB($id);
             if (!isset($a_macOnSwitch[$Netport->fields["mac"]])) {
                $releasePorts[$port_id] = 1;

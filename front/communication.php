@@ -82,6 +82,19 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    
       $users_id = $fusioninventory_config->getValue($fusioninventoryModule_id, 'users_id');
       $_SESSION['glpiID'] = $users_id;
+         $plugin = new Plugin();
+         $plugin->init();
+         $LOADED_PLUGINS = array();
+         if (isset($_SESSION["glpi_plugins"]) && is_array($_SESSION["glpi_plugins"])) {
+            //doHook("config");
+            if (count($_SESSION["glpi_plugins"])) {
+               foreach ($_SESSION["glpi_plugins"] as $name) {
+                  Plugin::load($name);
+               }
+            }
+            // For plugins which require action after all plugin init
+            doHook("post_init");
+         }
       
       $ssl = $fusioninventory_config->getValue($fusioninventoryModule_id, 'ssl_only');
       if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"))
