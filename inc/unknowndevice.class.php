@@ -583,10 +583,6 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 	function disconnectDB($p_port) {
       $nn = new NetworkPort_NetworkPort();
 
-//      if ($nn->getOppositeContact($p_port)) {
-//         PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$nn->getOppositeContact($p_port));
-//      }
-//      PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$p_port);
       if ($nn->getOppositeContact($p_port) AND $nn->getFromDBForNetworkPort($nn->getOppositeContact($p_port))) {
          if ($nn->delete($nn->fields)) {
             plugin_item_purge_fusioninventory($nn);

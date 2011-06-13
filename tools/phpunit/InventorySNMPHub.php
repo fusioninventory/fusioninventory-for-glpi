@@ -218,6 +218,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
 </REQUEST>';
 
       $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $pluginFusinvsnmpNetworkPortConnectionLog = new PluginFusinvsnmpNetworkPortConnectionLog();
       $networkEquipment = new NetworkEquipment();
       $networkPort = new NetworkPort();
 
@@ -242,8 +243,9 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
             $t = 0;
             $this->assertEquals($t, '1', 'No hub port connected on port fa0/1 of switch 1');
          }
-         
-
+         // CHECK 2 : Verify number of networkportconnectionslog
+         $a_conn = $pluginFusinvsnmpNetworkPortConnectionLog->find("`creation` = '1'");
+         $this->assertEquals(count($a_conn), '1', '(1) Connections logs not equal to 1 ('.count($a_conn).')');
       
       $switch1 = str_replace("            <CONNECTION>
               <MAC>00:23:18:cf:0d:93</MAC>
@@ -272,7 +274,10 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
             AND `items_id`='".$networkPort->fields['items_id']."'");
          $this->assertEquals(count($a_portshub),
                            '4', '(2)Don\'t have the 4 ports connected to hub');
-         
+         // CHECK 3 : Verify number of networkportconnectionslog
+         $a_conn = $pluginFusinvsnmpNetworkPortConnectionLog->find("`creation` = '1'");
+         $this->assertEquals(count($a_conn), '1', '(2) Connections logs not equal to 1 ('.count($a_conn).')');
+ 
 
       
       $switch2 = str_replace("</CONNECTIONS>
@@ -319,9 +324,13 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
             $t = 0;
             $this->assertEquals($t, '1', '(3)port with mac 00:23:18:cf:0d:93 not connected to a switch');
          }
+         // CHECK 4 : Verify number of networkportconnectionslog
+         $a_conn = $pluginFusinvsnmpNetworkPortConnectionLog->find("`creation` = '1'");
+         $this->assertEquals(count($a_conn), '2', '(3) Connections logs not equal to 2 ('.count($a_conn).')');
+         
+         
 
-
-
+      $switch1bis = $switch1;
       $switch1 = str_replace("<CONNECTION>
               <MAC>f0:ad:4e:00:19:f7</MAC>
             </CONNECTION>", "", $switch1);
@@ -329,7 +338,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
       // * 4. Update switchs
       $this->testSendinventory("toto", $switch1);
       $this->testSendinventory("toto", $switch2);
-         // CHECK 1 : verify hub again here and connected to port 1 of switch 1
+         // CHECK 1 : verify hub deleted and port 1 of switch 1 connected directly to port
          $a_ports = $networkPort->find("`itemtype`='NetworkEquipment'
                AND `items_id`='".$a_switch['id']."'");
          $this->assertEquals(count($a_ports), 1, '(4)switch 1 haven\'t port fa0/1 added in GLPI');
@@ -341,7 +350,6 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
             $this->assertEquals($pluginFusioninventoryUnknownDevice->fields['hub'],
                               '0', '(4)Hub connected on port fa0/1 of switch 1');
          }
-
 
 
 
@@ -358,6 +366,33 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          // TODO : verify hub deleted
          // TODO : verify port 1 of switch 1 connected directly to port
          // TODO: Verify port connected to port 2 of switch 2
+         
+         // CHECK 4 : Verify number of networkportconnectionslog
+         $a_conn = $pluginFusinvsnmpNetworkPortConnectionLog->find("`creation` = '1'");
+         $this->assertEquals(count($a_conn), '4', '(5) Connections logs not equal to 4 ('.count($a_conn).')');
+         // CHECK 5 : Verify number of networkportconnectionslog
+         $a_conn = $pluginFusinvsnmpNetworkPortConnectionLog->find("`creation` = '0'");
+         $this->assertEquals(count($a_conn), '1', '(5) Connections logs not equal to 1 ('.count($a_conn).')');
+
+
+
+
+      // * 6. Update switchs
+      $this->testSendinventory("toto", $switch1bis);
+      $this->testSendinventory("toto", $switch2);
+         // CHECK 1 : Verify no hub on port 1 of switch 1
+         $a_ports = $networkPort->find("`itemtype`='NetworkEquipment'
+               AND `items_id`='".$a_switch['id']."'");
+         $this->assertEquals(count($a_ports), 1, '(6)switch 1 haven\'t port fa0/1 added in GLPI');
+         $a_port = current($a_ports);
+         $contactport_id = $networkPort->getContact($a_port['id']);
+         $networkPort->getFromDB($contactport_id);
+         if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+            $pluginFusioninventoryUnknownDevice->getFromDB($networkPort->fields['items_id']);
+            $this->assertEquals($pluginFusioninventoryUnknownDevice->fields['hub'],
+                              '0', '(6)Hub connected on port fa0/1 of switch 1');
+         }
+         
    }
 
 

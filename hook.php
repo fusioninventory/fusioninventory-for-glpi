@@ -863,12 +863,9 @@ function plugin_item_purge_fusioninventory($parm) {
 //               $this->disconnectDB($switchPorts_id); // disconnect this port
 //               $this->disconnectDB($otherPorts_id);     // disconnect destination port
                
-               if ($networkPort_NetworkPort->add(array('networkports_id_1'=> $switchPorts_id,
-                                                       'networkports_id_2' => $otherPorts_id))) {
-                  if (isset($_SESSION["plugin_fusinvsnmp_moduleid"])) {
-                     PluginFusinvsnmpNetworkPortLog::addLogConnection("make",$switchPorts_id);
-                  }
-               }
+               $networkPort_NetworkPort->add(array('networkports_id_1'=> $switchPorts_id,
+                                                       'networkports_id_2' => $otherPorts_id));
+
             }
          }
 
