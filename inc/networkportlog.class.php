@@ -411,8 +411,8 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
                   $text .= "<td align='center'><img src='".$imgfolder."/connection_notok.png'/></td>";
                }
                if ($ID_port == $data["networkports_id_source"]) {
-                  $np->getFromDB($data["networkports_id_destination"]);
-                  if (isset($np->fields["items_id"])) {
+                  if ($np->getFromDB($data["networkports_id_destination"])) {
+                  //if (isset($np->fields["items_id"])) {
                      $item = new $np->fields["itemtype"];
                      $item->getFromDB($np->fields["items_id"]);
                      $link1 = $item->getLink(1);
