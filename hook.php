@@ -2210,45 +2210,24 @@ function plugin_pre_item_delete_fusinvsnmp($parm) {
 
 function plugin_item_add_fusinvsnmp($parm) {
    global $DB;
+   
+   switch (get_class($parm)) {
 
-   if (isset($parm["type"])) {
-      switch ($parm["type"]) {
-
-         case NETWORKING_PORT_TYPE :
-            // Verify when add networking port on object (not unknown device) if port
-            // of an unknown device exist.
-            if ($parm["input"]["itemtype"] != 'PluginFusioninventoryUnknownDevice') {
-               // Search in DB
-               $np = new NetworkPort;
-               $nw = new NetworkPort_NetworkPort;
-               $pfiud = new PluginFusioninventoryUnknownDevice;
-               $a_ports = $np->find("`mac`='".$parm["input"]["mac"]."' AND `itemtype`='PluginFusioninventoryUnknownDevice' ");
-               if (count($a_ports) == "1") {
-                  $nn = new NetworkPort_NetworkPort();
-                  foreach ($a_ports as $port_infos) {
-                     // Get wire
-                     $opposite_ID = $nw->getOppositeContact($port_infos['id']);
-                     if (isset($opposite_ID)) {
-                        // Modify wire
-                        if ($nn->getFromDBForNetworkPort($port_infos['id'])) {
-                            $nn->delete($port_infos);
-                        }
-                        $nn->add(array('networkports_id_1'=> $parm['id'],
-                                       'networkports_id_2' => $opposite_ID));
-                     }
-                     // Delete port
-                     $np->deleteFromDB($port_infos['id']);
-                     // Delete unknown device (if it has no port)
-                     if (count($np->find("`items_id`='".$port_infos['items_id']."' AND `itemtype`='PluginFusioninventoryUnknownDevice' ")) == "0") {
-                        $pfiud->deleteFromDB($port_infos['items_id']);
-                     }
-                  }
-               }
-            }
-            break;
-
+      case 'NetworkPort_NetworkPort':
+      $networkPort = new NetworkPort();
+      $networkPort->getFromDB($parm->fields['networkports_id_1']);
+      if (($networkPort->fields['itemtype']) == 'NetworkEquipment') {
+         PluginFusinvsnmpNetworkPortLog::addLogConnection("make",$parm->fields['networkports_id_1']);
+      } else {
+         $networkPort->getFromDB($parm->fields['networkports_id_2']);
+         if (($networkPort->fields['itemtype']) == 'NetworkEquipment') {
+            PluginFusinvsnmpNetworkPortLog::addLogConnection("make",$parm->fields['networkports_id_2']);
+         }
       }
+      break;
+
    }
+   return $parm;
 }
 
 ?>

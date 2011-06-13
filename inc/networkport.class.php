@@ -288,12 +288,9 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
             $this->disconnectDB($this->getValue('id')); // disconnect this port
             $this->disconnectDB($destination_port);     // disconnect destination port
             $nn = new NetworkPort_NetworkPort();
-            if ($nn->add(array('networkports_id_1'=> $this->getValue('id'),
-                               'networkports_id_2' => $destination_port))) { //connect those 2 ports
-               //$ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
-               //                     array('query_nb_connections_created' => '1'));
-               PluginFusinvsnmpNetworkPortLog::addLogConnection("make",$this->getValue('id'));
-            }
+            $nn->add(array('networkports_id_1'=> $this->getValue('id'),
+                               'networkports_id_2' => $destination_port)); //connect those 2 ports
+
          }
       }
    }
@@ -310,26 +307,16 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       if ($p_port=='') $p_port=$this->getValue('id');
       $nn = new NetworkPort_NetworkPort();
 
-//      if ($nn->getOppositeContact($p_port)) {
-//         PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$nn->getOppositeContact($p_port));
-//      }
-//      PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$p_port);
       if ($nn->getOppositeContact($p_port) AND $nn->getFromDBForNetworkPort($nn->getOppositeContact($p_port))) {
          $purge = $nn->delete($nn->fields,1);
          if ($purge) {
             plugin_item_purge_fusioninventory($nn);
-//            $ptap = new PluginFusioninventoryAgentProcess;
-//            $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
-//                                 array('query_nb_connections_deleted' => '1'));
          }
       }
       if ($nn->getFromDBForNetworkPort($p_port)) {
          $purge = $nn->delete($nn->fields,1);
          if ($purge) {
             plugin_item_purge_fusioninventory($nn);
-//            $ptap = new PluginFusioninventoryAgentProcess;
-//            $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
-//                                 array('query_nb_connections_deleted' => '1'));
          }
       }
    }

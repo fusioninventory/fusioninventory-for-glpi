@@ -121,15 +121,13 @@ function plugin_init_fusinvsnmp() {
 		if($plugin->isInstalled('fusinvsnmp')) {
 
 			$PLUGIN_HOOKS['use_massive_action']['fusinvsnmp']=1;
-                  
-//         $PLUGIN_HOOKS['pre_item_delete']['fusinvsnmp'] = 'plugin_pre_item_delete_fusinvsnmp';
+
+         $PLUGIN_HOOKS['item_add']['fusinvsnmp'] = array('NetworkPort_NetworkPort'=>'plugin_item_add_fusinvsnmp');
          $PLUGIN_HOOKS['pre_item_purge']['fusinvsnmp'] = array('NetworkPort_NetworkPort'=>'plugin_pre_item_purge_fusinvsnmp');
 
          $PLUGIN_HOOKS['item_purge']['fusinvsnmp'] = array('NetworkEquipment' =>'plugin_item_purge_fusinvsnmp',
                                                            'Printer' =>'plugin_item_purge_fusinvsnmp',
                                                            'PluginFusioninventoryUnknownDevice' =>'plugin_item_purge_fusinvsnmp');
-//			$PLUGIN_HOOKS['item_update']['fusinvsnmp'] = 'plugin_item_update_fusinvsnmp';
-//         $PLUGIN_HOOKS['item_add']['fusinvsnmp'] = 'plugin_item_add_fusinvsnmp';
 
 			$report_list = array();
          if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "reportprinter","r")) {
