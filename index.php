@@ -35,17 +35,17 @@
 if(!defined('GLPI_ROOT')) {
    define('GLPI_ROOT', '../..');
 }
-include (GLPI_ROOT."/inc/includes.php");
 
 //Agent posting an inventory or asking for orders using REST
 if ((isset($_GET['action']) 
    && isset($_GET['machineid'])) 
       || isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
 
-   include_once(GLPI_ROOT ."/index.php");
+   include_once(GLPI_ROOT ."/plugins/fusioninventory/front/communication.php");
 
 //Fusioninventory plugin pages
 } else {
+   include (GLPI_ROOT."/inc/includes.php");
    commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"], "plugins", 
                 "fusioninventory");
 

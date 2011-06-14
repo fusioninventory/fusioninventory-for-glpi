@@ -42,6 +42,13 @@ if (!defined('GLPI_ROOT')) {
 if (session_id()=="") {
    session_start();
 }
+
+$loadplugins = 0;
+if (!isset($_SESSION["glpi_plugins"])) {
+   $loadplugins = 1;
+}
+$loadplugins = 1;
+
 $_SESSION['glpi_use_mode'] = 2;
 include_once(GLPI_ROOT."/inc/includes.php");
 if (!isset($_SESSION['glpilanguage'])) {
@@ -80,21 +87,23 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       
       $fusioninventoryModule_id    = $PluginFusioninventoryModule->getModuleId("fusioninventory");
    
-      $users_id = $fusioninventory_config->getValue($fusioninventoryModule_id, 'users_id');
-      $_SESSION['glpiID'] = $users_id;
-         $plugin = new Plugin();
-         $plugin->init();
-         $LOADED_PLUGINS = array();
-         if (isset($_SESSION["glpi_plugins"]) && is_array($_SESSION["glpi_plugins"])) {
-            //doHook("config");
-            if (count($_SESSION["glpi_plugins"])) {
-               foreach ($_SESSION["glpi_plugins"] as $name) {
-                  Plugin::load($name);
+      if ($loadplugins == '1') {
+         $users_id = $fusioninventory_config->getValue($fusioninventoryModule_id, 'users_id');
+         $_SESSION['glpiID'] = $users_id;
+            $plugin = new Plugin();
+            $plugin->init();
+            $LOADED_PLUGINS = array();
+            if (isset($_SESSION["glpi_plugins"]) && is_array($_SESSION["glpi_plugins"])) {
+               //doHook("config");
+               if (count($_SESSION["glpi_plugins"])) {
+                  foreach ($_SESSION["glpi_plugins"] as $name) {
+                     Plugin::load($name);
+                  }
                }
+               // For plugins which require action after all plugin init
+               doHook("post_init");
             }
-            // For plugins which require action after all plugin init
-            doHook("post_init");
-         }
+      }
       
       $ssl = $fusioninventory_config->getValue($fusioninventoryModule_id, 'ssl_only');
       if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"))
