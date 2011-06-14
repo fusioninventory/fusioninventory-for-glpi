@@ -71,17 +71,17 @@ class PluginFusioninventoryMenu {
          $a_menu[2]['link'] = getItemTypeSearchURL('PluginFusioninventoryTask');
       }
 
-      if(PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
+      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
          $a_menu[3]['name'] = $LANG['plugin_fusioninventory']['menu'][7];
          $a_menu[3]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_runningjob.png";
          $a_menu[3]['link'] = getItemTypeSearchURL('PluginFusioninventoryTaskJob');
       }
 
-      //if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice", "r")) {
+      if (haveRight("rule_ocs","r")) {
          $a_menu[4]['name'] = $LANG['plugin_fusioninventory']['rules'][2];
          $a_menu[4]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_rules.png";
          $a_menu[4]['link'] = getItemTypeSearchURL('PluginFusioninventoryRuleImportEquipment');
-      //}
+      }
 
 
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice", "r")) {
