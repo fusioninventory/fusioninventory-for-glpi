@@ -201,11 +201,11 @@ class PluginFusinvsnmpStaticmisc {
       global $LANG;
 
       $a_menu = array();
-      //if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model", "r")) {
+      if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model", "r")) {
          $a_menu[0]['name'] = $LANG['plugin_fusinvsnmp']['model_info'][4];
          $a_menu[0]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_models.png";
          $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/model.php";
-      //}
+      }
 
       if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity", "r")) {
          $a_menu[1]['name'] = $LANG['plugin_fusinvsnmp']['model_info'][3];
@@ -213,20 +213,27 @@ class PluginFusinvsnmpStaticmisc {
          $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/configsecurity.php";
       }
 
+
       if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "iprange", "r")) {
          $a_menu[2]['name'] = $LANG['plugin_fusinvsnmp']['menu'][2];
          $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_rangeip.png";
          $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/iprange.php";
       }
 
-      $a_menu[5]['name'] = $LANG['plugin_fusinvsnmp']['menu'][9];
-      $a_menu[5]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_discovery_status.png";
-      $a_menu[5]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/statediscovery.php";
+      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
+         $a_menu[5]['name'] = $LANG['plugin_fusinvsnmp']['menu'][9];
+         $a_menu[5]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_discovery_status.png";
+         $a_menu[5]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/statediscovery.php";
 
-      $a_menu[6]['name'] = $LANG['plugin_fusinvsnmp']['menu'][10];
-      $a_menu[6]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_inventory_status.png";
-      $a_menu[6]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/stateinventory.php";
+         $a_menu[6]['name'] = $LANG['plugin_fusinvsnmp']['menu'][10];
+         $a_menu[6]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_inventory_status.png";
+         $a_menu[6]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/stateinventory.php";
 
+         $a_menu[6]['name'] = $LANG['plugin_fusinvsnmp']['menu'][10];
+         $a_menu[6]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_inventory_status.png";
+         $a_menu[6]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/stateinventory.php";
+      }
+      
       return $a_menu;
    }
 
