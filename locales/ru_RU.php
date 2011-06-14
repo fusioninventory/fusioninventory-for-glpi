@@ -51,6 +51,7 @@ $LANG['plugin_fusinvinventory']['setup'][27]="Уникальный импорт 
 $LANG['plugin_fusinvinventory']['setup'][28]="Автоматическая передача компьютеров";
 $LANG['plugin_fusinvinventory']['setup'][29]="Автоматическая модель для передачи компьютеров в другую организацию";
 $LANG['plugin_fusinvinventory']['setup'][30]="Network drives";
+$LANG['plugin_fusinvinventory']['setup'][31]="Virtual network card";
 
 $LANG['plugin_fusinvinventory']['menu'][0]="Импорт XML файла агента";
 $LANG['plugin_fusinvinventory']['menu'][1]="Критерий привил";

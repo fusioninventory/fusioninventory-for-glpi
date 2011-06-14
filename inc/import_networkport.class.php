@@ -61,6 +61,15 @@ class PluginFusinvinventoryImport_Networkport extends CommonDBTM {
 
          return "";
       }
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+      if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+              "component_networkcardvirtual") == '0') {
+         if (isset($dataSection['VIRTUALDEV'])
+                 AND $dataSection['VIRTUALDEV']=='1') {
+            
+            return "";
+         }         
+      }
 
       $NetworkPort = new NetworkPort();
 

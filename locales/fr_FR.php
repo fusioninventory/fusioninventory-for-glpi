@@ -52,6 +52,7 @@ $LANG['plugin_fusinvinventory']['setup'][27]="Import unique sur numéro de séri
 $LANG['plugin_fusinvinventory']['setup'][28]="Transfert automatique d'ordinateurs";
 $LANG['plugin_fusinvinventory']['setup'][29]="Modèle pour le transfert automatique d'ordinateurs dans une autre entité";
 $LANG['plugin_fusinvinventory']['setup'][30]="Volumes réseau";
+$LANG['plugin_fusinvinventory']['setup'][31]="Carte réseau virtuelle";
 
 $LANG['plugin_fusinvinventory']['menu'][0]="Importer un fichier XML de l'agent";
 $LANG['plugin_fusinvinventory']['menu'][1]="Règles de critères";

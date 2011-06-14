@@ -76,6 +76,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       $input['version']                = $a_infos['version'];
       $input['location']               = 0;
       $input['group']                  = 0;
+      $input['component_networkcardvirtual'] = 1;
 
       foreach ($input as $key => $value) {
          $PluginFusioninventoryConfig->initConfig($plugins_id, array($key => $value));
@@ -131,7 +132,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo $LANG['Menu'][3];
+      echo $LANG['Menu'][3]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       $array = array();
@@ -151,7 +152,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo $LANG['Menu'][2];
+      echo $LANG['Menu'][2]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       $array = array();
@@ -165,7 +166,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
                                                                         'import_printer')));
       echo "</td>";
       echo "<td>";
-      echo $LANG['devices'][4];
+      echo $LANG['devices'][4]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_processor", 
@@ -176,7 +177,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo $LANG['Menu'][16];
+      echo $LANG['Menu'][16]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       $array = array();
@@ -190,7 +191,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
                                                                               'import_peripheral')));
       echo "</td>";
       echo "<td>";
-      echo $LANG['devices'][6];
+      echo $LANG['devices'][6]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_memory", 
@@ -200,14 +201,14 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo $LANG['Menu'][4];
+      echo $LANG['Menu'][4]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("import_software", 
                           $PluginFusioninventoryConfig->getValue($plugins_id, 'import_software'));
       echo "</td>";
       echo "<td>";
-      echo $LANG['devices'][1];
+      echo $LANG['devices'][1]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_harddrive", 
@@ -217,14 +218,14 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo $LANG['computers'][8];
+      echo $LANG['computers'][8]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("import_volume", 
                           $PluginFusioninventoryConfig->getValue($plugins_id, 'import_volume'));
       echo "</td>";
       echo "<td>";
-      echo $LANG['devices'][3];
+      echo $LANG['devices'][3]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_networkcard", 
@@ -234,31 +235,48 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo $LANG['plugin_fusinvinventory']['antivirus'][0];
+      echo $LANG['plugin_fusinvinventory']['antivirus'][0]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("import_antivirus", 
                           $PluginFusioninventoryConfig->getValue($plugins_id, 'import_antivirus'));
       echo "</td>";
       echo "<td>";
-      echo $LANG['devices'][2];
+      echo $LANG['plugin_fusinvinventory']['setup'][31]."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("component_graphiccard", 
-                          $PluginFusioninventoryConfig->getValue($plugins_id, 'component_graphiccard'));
+      Dropdown::showYesNo("component_networkcardvirtual", 
+                          $PluginFusioninventoryConfig->getValue($plugins_id, 'component_networkcardvirtual'));
       echo "</td>";
       echo "</tr>";
-
+      
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo $LANG['plugin_fusinvinventory']['setup'][25];
+      echo $LANG['plugin_fusinvinventory']['setup'][25]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("import_registry", 
                           $PluginFusioninventoryConfig->getValue($plugins_id, 'import_registry'));
       echo "</td>";
       echo "<td>";
-      echo $LANG['devices'][7];
+      echo $LANG['devices'][2]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("component_graphiccard", 
+                          $PluginFusioninventoryConfig->getValue($plugins_id, 'component_graphiccard'));
+      echo "</td>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>";
+      echo $LANG['plugin_fusinvinventory']['setup'][26]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("import_process", 
+                          $PluginFusioninventoryConfig->getValue($plugins_id, 'import_process'));
+      echo "</td>";
+      echo "<td>";
+      echo $LANG['devices'][7]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_soundcard", 
@@ -268,14 +286,14 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo $LANG['plugin_fusinvinventory']['setup'][26];
+      echo $LANG['computers'][57]."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("import_process", 
-                          $PluginFusioninventoryConfig->getValue($plugins_id, 'import_process'));
+      Dropdown::showYesNo("import_vm", 
+                          $PluginFusioninventoryConfig->getValue($plugins_id, 'import_vm'));
       echo "</td>";
       echo "<td>";
-      echo $LANG['devices'][19];
+      echo $LANG['devices'][19]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_drive", 
@@ -284,26 +302,8 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-
       echo "<td>";
-      echo $LANG['computers'][57];
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("import_vm", 
-                          $PluginFusioninventoryConfig->getValue($plugins_id, 'import_vm'));
-      echo "</td>";
-      echo "<td>";
-      echo $LANG['plugin_fusinvinventory']['setup'][30];
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_networkdrive",
-                          $PluginFusioninventoryConfig->getValue($plugins_id, 'component_networkdrive'));
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo $LANG['common'][15];
+      echo $LANG['common'][15]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showFromArray("location",
@@ -313,7 +313,26 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
 
       echo "</td>";
       echo "<td>";
-      echo $LANG['devices'][20];
+      echo $LANG['plugin_fusinvinventory']['setup'][30]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("component_networkdrive",
+                          $PluginFusioninventoryConfig->getValue($plugins_id, 'component_networkdrive'));
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>";
+      echo $LANG['common'][35]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showFromArray("group",
+                              array("0"=>"------",
+                                    "1"=>$LANG['plugin_fusinvinventory']['rule'][8]),
+                              array('value'=>$PluginFusioninventoryConfig->getValue($plugins_id, 'group')));
+      echo "</td>";
+      echo "<td>";
+      echo $LANG['devices'][20]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_control",
@@ -323,23 +342,17 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
+      echo "<td>" . $LANG['ocsconfig'][16]."&nbsp;:</td>";
       echo "<td>";
-      echo $LANG['common'][35];
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showFromArray("group",
-                              array("0"=>"------",
-                                    "1"=>$LANG['plugin_fusinvinventory']['rule'][8]),
-                              array('value'=>$PluginFusioninventoryConfig->getValue($plugins_id, 'group')));
-
-      echo "<td>" . $LANG['ocsconfig'][16] . " </td>\n<td>";
       Dropdown::show('State',
                      array('name'   => 'states_id_default',
                            'value'  => $PluginFusioninventoryConfig->getValue($plugins_id,
                                                                               'states_id_default')));
-      echo "</td>\n";
+      echo "</td>";
+      echo "<td colspan='2'></td>";
       echo "</tr>";
-
+      
+      
       echo "<tr>";
       echo "<th colspan='4'>".$LANG['plugin_fusinvinventory']['setup'][28];
       echo "</th>";
