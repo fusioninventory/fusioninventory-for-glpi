@@ -53,6 +53,12 @@ $LANG['plugin_fusinvinventory']['setup'][28]="Transfert automatique d'ordinateur
 $LANG['plugin_fusinvinventory']['setup'][29]="Modèle pour le transfert automatique d'ordinateurs dans une autre entité";
 $LANG['plugin_fusinvinventory']['setup'][30]="Volumes réseau";
 $LANG['plugin_fusinvinventory']['setup'][31]="Carte réseau virtuelle";
+$LANG['plugin_fusinvinventory']['setup'][32]="Cette option ne va pas importer l'élément";
+$LANG['plugin_fusinvinventory']['setup'][33]="Cette option va fusionner les éléments qui ont le même
+      nom et donc réduire le nombre d'élément si cette gestion n'est pas importante";
+$LANG['plugin_fusinvinventory']['setup'][34]="Cette option va créer un élément pour chaque élément trouvé";
+$LANG['plugin_fusinvinventory']['setup'][35]="Cette option va créer un élément pour chaque élément 
+      qui a un numéro de série";
 
 $LANG['plugin_fusinvinventory']['menu'][0]="Importer un fichier XML de l'agent";
 $LANG['plugin_fusinvinventory']['menu'][1]="Règles de critères";

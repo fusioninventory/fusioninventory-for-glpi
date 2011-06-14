@@ -52,6 +52,12 @@ $LANG['plugin_fusinvinventory']['setup'][28]="Автоматическая пе�
 $LANG['plugin_fusinvinventory']['setup'][29]="Автоматическая модель для передачи компьютеров в другую организацию";
 $LANG['plugin_fusinvinventory']['setup'][30]="Network drives";
 $LANG['plugin_fusinvinventory']['setup'][31]="Virtual network card";
+$LANG['plugin_fusinvinventory']['setup'][32]="This option will not import this item";
+$LANG['plugin_fusinvinventory']['setup'][33]="This option will merge items with same name to 
+      reduce number of items if this management isn't important";
+$LANG['plugin_fusinvinventory']['setup'][34]="This option will create one item for each item found";
+$LANG['plugin_fusinvinventory']['setup'][35]="This option will create one item for each item have 
+      serial number";
 
 $LANG['plugin_fusinvinventory']['menu'][0]="Импорт XML файла агента";
 $LANG['plugin_fusinvinventory']['menu'][1]="Критерий привил";
