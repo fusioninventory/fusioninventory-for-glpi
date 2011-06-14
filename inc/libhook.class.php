@@ -137,6 +137,12 @@ class PluginFusinvinventoryLibhook {
 
                   $inputC['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
                                                                           $dataSection['SMANUFACTURER']);
+               
+               } else if ((isset($dataSection['MMANUFACTURER']))
+                            AND (!empty($dataSection['MMANUFACTURER']))) {
+
+                  $inputC['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
+                                                                          $dataSection['MMANUFACTURER']);
                } else if ((isset($dataSection['BMANUFACTURER']))
                             AND (!empty($dataSection['BMANUFACTURER']))) {
 
@@ -146,6 +152,9 @@ class PluginFusinvinventoryLibhook {
                if (isset($dataSection['SMODEL'])) {
                   $ComputerModel = new ComputerModel();
                   $inputC['computermodels_id'] = $ComputerModel->importExternal($dataSection['SMODEL']);
+               } else if (isset($dataSection['MMODEL'])) {
+                  $ComputerModel = new ComputerModel();
+                  $inputC['computermodels_id'] = $ComputerModel->importExternal($dataSection['MMODEL']);
                }
                if (isset($dataSection['SSN']))
                   $inputC['serial'] = $dataSection['SSN'];
@@ -706,6 +715,11 @@ class PluginFusinvinventoryLibhook {
 
                      $inputC['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
                                                                              $dataSection['SMANUFACTURER']);
+                  } else if ((isset($dataSection['MMANUFACTURER']))
+                               AND (!empty($dataSection['MMANUFACTURER']))) {
+
+                     $inputC['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
+                                                                             $dataSection['MMANUFACTURER']);
                   } else if ((isset($dataSection['BMANUFACTURER']))
                                AND (!empty($dataSection['BMANUFACTURER']))) {
 
@@ -715,6 +729,9 @@ class PluginFusinvinventoryLibhook {
                   if (isset($dataSection['SMODEL'])) {
                      $ComputerModel = new ComputerModel();
                      $inputC['computermodels_id'] = $ComputerModel->importExternal($dataSection['SMODEL']);
+                  } else if (isset($dataSection['MMODEL'])) {
+                     $ComputerModel = new ComputerModel();
+                     $inputC['computermodels_id'] = $ComputerModel->importExternal($dataSection['MMODEL']);
                   }
                   if (isset($dataSection['SSN']))
                      $inputC['serial'] = $dataSection['SSN'];
