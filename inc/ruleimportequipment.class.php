@@ -199,15 +199,15 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
    static function addMoreCriteria($criterion='') {
       global $LANG;
 
-      return array(Rule::PATTERN_FIND                   => $LANG['plugin_fusioninventory']['rules'][11],
-                   PluginFusioninventoryRuleImportEquipment::PATTERN_IS_EMPTY => $LANG['plugin_fusioninventory']['rules'][12]);
+      return array(Rule::PATTERN_FIND     => $LANG['rulesengine'][151],
+                   self::PATTERN_IS_EMPTY => $LANG['rulesengine'][154]);
    }
 
 
    function getAdditionalCriteriaDisplayPattern($ID, $condition, $pattern) {
       global $LANG;
 
-      if ($condition == PluginFusioninventoryRuleImportEquipment::PATTERN_IS_EMPTY) {
+      if ($condition == self::PATTERN_IS_EMPTY) {
           return $LANG['choice'][1];
       }
       return false;
@@ -215,16 +215,14 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
 
 
    function displayAdditionalRuleCondition($condition, $criteria, $name, $value, $test=false) {
+      
       if ($test) {
          return false;
       }
 
       switch ($condition) {
          case Rule::PATTERN_FIND:
-            return false;
-            break;
-         
-         case PluginFusioninventoryRuleImportEquipment::PATTERN_IS_EMPTY :
+         case self::PATTERN_IS_EMPTY :
             Dropdown::showYesNo($name, 0, 0);
             return true;
 
