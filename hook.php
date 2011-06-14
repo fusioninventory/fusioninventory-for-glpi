@@ -126,6 +126,8 @@ function plugin_fusioninventory_install() {
    return true;
 }
 
+
+
 // Uninstall process for plugin : need to return true if succeeded
 function plugin_fusioninventory_uninstall() {
    if (!class_exists('PluginFusioninventorySetup')) { // if plugin is unactive
@@ -133,6 +135,8 @@ function plugin_fusioninventory_uninstall() {
    }
    return PluginFusioninventorySetup::uninstall();
 }
+
+
 
 // Define headings added by the plugin //
 function plugin_get_headings_fusioninventory($item,$withtemplate) {
@@ -144,10 +148,12 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             return array();
          } else { // Non template case / editing an existing object
             $array = array ();
-            if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
+            if (PluginFusioninventoryModule::getModuleId("fusioninventory")) {
                $array[2] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['title'][5];
             }
-            $array[3] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['task'][18];
+            if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
+               $array[3] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['task'][18];
+            }
             return $array;
          }
          break;
@@ -157,7 +163,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             return array();
          } else { // Non template case / editing an existing object
             $array = array ();
-            if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
+            if (PluginFusioninventoryModule::getModuleId("fusioninventory")) {
                $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['title'][5];
             }
             return $array;
@@ -169,10 +175,12 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             return array();
          } else { // Non template case / editing an existing object
             $array = array ();
-            if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
+            if (PluginFusioninventoryModule::getModuleId("fusioninventory")) {
                $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['title'][5];
             }
-            $array[2] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['task'][18];
+            if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
+               $array[2] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['task'][18];
+            }
             return $array;
          }
          break;
@@ -182,10 +190,12 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             return array();
          } else { // Non template case / editing an existing object
             $array = array ();
-            if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
+            if (PluginFusioninventoryModule::getModuleId("fusioninventory")) {
                $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['title'][5];
             }
-            $array[2] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['task'][18];
+            if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
+               $array[2] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['task'][18];
+            }
             return $array;
          }
          break;
@@ -195,7 +205,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             return array();
          } else { // Non template case / editing an existing object
             $array = array ();
-            if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
+            if (PluginFusioninventoryModule::getModuleId("fusioninventory")) {
                $array[1] = $LANG['plugin_fusioninventory']['title'][0];
             }
             return $array;
@@ -205,7 +215,9 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
       case 'PluginFusioninventoryUnknownDevice' :
          $array = array ();
          if ($_GET['id'] > 0) {
-            $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['xml'][0];
+            if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","r")) {
+               $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['xml'][0];
+            }
          }
          return $array;
          break;
@@ -220,36 +232,36 @@ function plugin_headings_actions_fusioninventory($item) {
 //   switch ($type) {
    switch (get_class($item)) {
       case 'Computer' :
-         $array = array ();
+         $array = array();
          $array[2] = "plugin_headings_fusioninventory_locks";
          $array[3] = "plugin_headings_fusioninventory_tasks";
          return $array;
          break;
 
       case 'Monitor' :
-         return array (
-            1 => "plugin_headings_fusioninventory_locks"
-         );
+         $array = array();
+         $array[1] = "plugin_headings_fusioninventory_locks";
+         return $array;
          break;
 
       case 'Printer' :
-         return array (
-            1 => "plugin_headings_fusioninventory_locks",
-            2 => "plugin_headings_fusioninventory_tasks"
-         );
+         $array = array();
+         $array[1] = "plugin_headings_fusioninventory_locks";
+         $array[2] = "plugin_headings_fusioninventory_tasks";
+         return $array;
          break;
 
       case 'NetworkEquipment' :
-         return array (
-            1 => "plugin_headings_fusioninventory_locks",
-            2 => "plugin_headings_fusioninventory_tasks"
-         );
+         $array = array();
+         $array[1] = "plugin_headings_fusioninventory_locks";
+         $array[2] = "plugin_headings_fusioninventory_tasks";
+         return $array;
          break;
 
       case 'Profile' :
-         return array(
-            1 => "plugin_headings_fusioninventory"
-            );
+         $array = array();
+         $array[1] = "plugin_headings_fusioninventory";
+         return $array;
          break;
 
       case 'PluginFusioninventoryUnknownDevice' :
