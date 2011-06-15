@@ -101,4 +101,8 @@ $LANG['plugin_fusinvinventory']['antivirus'][3]="A jour";
 $LANG['plugin_fusinvinventory']['computer'][0]="Dernier inventaire";
 
 $LANG['plugin_fusinvinventory']['vmwareesx'][0]="Hôte VMware";
+
+$LANG['plugin_fusinvinventory']['integrity'][0]="Seulement dans GLPI (cocher pour supprimer)";
+$LANG['plugin_fusinvinventory']['integrity'][1]="Seulement dans le dernier inventaire (cocher pour importer)";
+
 ?>
