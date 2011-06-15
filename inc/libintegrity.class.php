@@ -40,6 +40,25 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
 
    var $table = "glpi_plugin_fusinvinventory_libserialization";
 
+   
+   
+  function getSearchOptions() {
+      global $LANG;
+
+      $tab = array();
+      $tab['common'] = $LANG['common'][32];
+
+      $tab[1]['table']         = "glpi_computers";
+      $tab[1]['field']         = 'name';
+      $tab[1]['name']          = $LANG['common'][16];
+      $tab[1]['datatype']      = 'itemlink';
+      $tab[1]['itemlink_type'] = $this->getType();
+      $tab[1]['massiveaction'] = false; // implicit key==1
+
+      return $tab;
+   }
+   
+   
 
    function showForm() {
       global $DB,$LANG;
@@ -51,15 +70,32 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       if (isset($_REQUEST["start"])) {
          $start = $_REQUEST["start"];
       }
-
+      $_SESSION["glpisearchcount"]["PluginFusinvinventoryLibintegrity"] = 1;
+      Search::manageGetValues("PluginFusinvinventoryLibintegrity");
+      Search::showGenericSearch("PluginFusinvinventoryLibintegrity", $_GET);
+      
+      $where = "";
+      if ($_GET['contains'][0] != '') {
+         if (isset($_GET['searchtype'][0]) AND $_GET['searchtype'][0] == 'contains') {
+            $where = " WHERE `name` LIKE '%".$_GET['contains'][0]."%' ";
+         }
+         if (isset($_GET['searchtype'][0]) AND $_GET['searchtype'][0] == 'equals') {
+            $where = " WHERE `id`='".$_GET['contains'][0]."' ";
+         }
+      }
+      
       // Total Number of events
-      $number = countElementsInTable("glpi_plugin_fusinvinventory_libserialization",
-                                     "");
-
+      $query = "SELECT count(*) FROM `glpi_plugin_fusinvinventory_libserialization`
+          LEFT JOIN `glpi_computers` on `computers_id` = `glpi_computers`.`id`
+          ".$where." ";
+      $result = $DB->query($query);
+      $t = $DB->fetch_row($result);
+      $number = $t[0];
+      
       // Display the pager
-      printPager($start,$number,GLPI_ROOT."/plugins/fusinvinventory/front/libintegrity.form.php",'');
+      printPager($start,$number,GLPI_ROOT."/plugins/fusinvinventory/front/libintegrity.php",'');
 
-      echo "<form method='post' name='integritylist' id='integritylist'  action=\"".GLPI_ROOT . "/plugins/fusinvinventory/front/libintegrity.form.php\">";
+      echo "<form method='post' name='integritylist' id='integritylist'  action=\"".GLPI_ROOT . "/plugins/fusinvinventory/front/libintegrity.php\">";
       echo "<table class='tab_cadre' width='950'>";
       
       echo "<tr>";
@@ -83,7 +119,9 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       echo "</th>";
       echo "</tr>";
 
-      $query = "SELECT * FROM `glpi_plugin_fusinvinventory_libserialization`
+      $query = "SELECT `glpi_plugin_fusinvinventory_libserialization`.* FROM `glpi_plugin_fusinvinventory_libserialization`
+          LEFT JOIN `glpi_computers` on `computers_id` = `glpi_computers`.`id`
+          ".$where."
           LIMIT ".intval($start)."," . intval($_SESSION['glpilist_limit']);
       $result=$DB->query($query);
 		while ($a_computerlib=$DB->fetch_array($result)) {
@@ -627,7 +665,7 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       echo "</table>";
       echo "</form>";
 
-      printPager($start,$number,GLPI_ROOT."/plugins/fusinvinventory/front/libintegrity.form.php",'');
+      printPager($start,$number,GLPI_ROOT."/plugins/fusinvinventory/front/libintegrity.php",'');
 
    }
 
