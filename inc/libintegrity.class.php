@@ -60,7 +60,7 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
    
    
 
-   function showForm() {
+   function showForm($computers_id = 0) {
       global $DB,$LANG;
 
       $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
@@ -70,18 +70,22 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       if (isset($_REQUEST["start"])) {
          $start = $_REQUEST["start"];
       }
-      $_SESSION["glpisearchcount"]["PluginFusinvinventoryLibintegrity"] = 1;
-      Search::manageGetValues("PluginFusinvinventoryLibintegrity");
-      Search::showGenericSearch("PluginFusinvinventoryLibintegrity", $_GET);
-      
       $where = "";
-      if ($_GET['contains'][0] != '') {
-         if (isset($_GET['searchtype'][0]) AND $_GET['searchtype'][0] == 'contains') {
-            $where = " WHERE `name` LIKE '%".$_GET['contains'][0]."%' ";
+      if ($computers_id == '0') {
+         $_SESSION["glpisearchcount"]["PluginFusinvinventoryLibintegrity"] = 1;
+         Search::manageGetValues("PluginFusinvinventoryLibintegrity");
+         Search::showGenericSearch("PluginFusinvinventoryLibintegrity", $_GET);
+
+         if ($_GET['contains'][0] != '') {
+            if (isset($_GET['searchtype'][0]) AND $_GET['searchtype'][0] == 'contains') {
+               $where = " WHERE `name` LIKE '%".$_GET['contains'][0]."%' ";
+            }
+            if (isset($_GET['searchtype'][0]) AND $_GET['searchtype'][0] == 'equals') {
+               $where = " WHERE `id`='".$_GET['contains'][0]."' ";
+            }
          }
-         if (isset($_GET['searchtype'][0]) AND $_GET['searchtype'][0] == 'equals') {
-            $where = " WHERE `id`='".$_GET['contains'][0]."' ";
-         }
+      } else {
+          $where = " WHERE `id`='".$computers_id."' ";
       }
       
       // Total Number of events
@@ -93,8 +97,9 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       $number = $t[0];
       
       // Display the pager
-      printPager($start,$number,GLPI_ROOT."/plugins/fusinvinventory/front/libintegrity.php",'');
-
+      if ($computers_id == '0') {
+         printPager($start,$number,GLPI_ROOT."/plugins/fusinvinventory/front/libintegrity.php",'');
+      }
       echo "<form method='post' name='integritylist' id='integritylist'  action=\"".GLPI_ROOT . "/plugins/fusinvinventory/front/libintegrity.php\">";
       echo "<table class='tab_cadre' width='950'>";
       
@@ -665,8 +670,9 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       echo "</table>";
       echo "</form>";
 
-      printPager($start,$number,GLPI_ROOT."/plugins/fusinvinventory/front/libintegrity.php",'');
-
+      if ($computers_id == '0') {
+         printPager($start,$number,GLPI_ROOT."/plugins/fusinvinventory/front/libintegrity.php",'');
+      }
    }
 
 
