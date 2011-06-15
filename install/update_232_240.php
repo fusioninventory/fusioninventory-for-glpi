@@ -46,7 +46,13 @@ function update232to240() {
    echo "<td align='center'>";
 
    plugin_fusioninventory_displayMigrationMessage("240"); // Start
-   logDebug("mgre");
+   
+   if (!class_exists('PluginFusioninventoryConfig')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/config.class.php");
+   }
+   if (!class_exists('PluginFusioninventorySetup')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
+   }
    
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
    $config = new PluginFusioninventoryConfig();
