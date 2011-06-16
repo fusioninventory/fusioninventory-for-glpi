@@ -105,7 +105,7 @@ function pluginFusioninventoryUpdate($current_version) {
 
    echo "<tr class='tab_bg_1'>";
    echo "<td align='center'>";
-   logDebug($current_version);
+
    // update from current_version to last case version + 1
    switch ($current_version){
       case "1.0.0":
