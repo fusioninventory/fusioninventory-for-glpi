@@ -31,7 +31,7 @@
    Purpose of file:
    ----------------------------------------------------------------------
  */
-define ("PLUGIN_FUSINVSNMP_VERSION","2.4.0-1");
+define ("PLUGIN_FUSINVSNMP_VERSION","2.4.0");
 
 include_once ("includes.php");
 
