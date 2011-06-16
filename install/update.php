@@ -86,10 +86,10 @@ function pluginFusinvsnmpGetCurrentVersion($version) {
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
       $versionconfig = $PluginFusioninventoryConfig->getValue($plugins_id, "version");
       if ((isset($versionconfig)) AND (!empty($versionconfig))) {
-//         if ($versionconfig == '2.2.1'
-//                 AND TableExists("glpi_plugin_fusinvsnmp_configlogfields")) {
-//            return PLUGIN_FUSINVSNMP_VERSION;
-//         }
+         if ($versionconfig == '2.2.1'
+                 AND TableExists("glpi_plugin_fusinvsnmp_configlogfields")) {
+            return "2.3.0-1";
+         }
          return $versionconfig;
       }
    }
