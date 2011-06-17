@@ -32,7 +32,7 @@
    ----------------------------------------------------------------------
  */
 
-define ("PLUGIN_FUSINVINVENTORY_VERSION","2.4.0-1");
+define ("PLUGIN_FUSINVINVENTORY_VERSION","2.4.0");
 
 // Init the hooks of fusinvdeploy
 function plugin_init_fusinvinventory() {
@@ -113,7 +113,7 @@ function plugin_init_fusinvinventory() {
                   = '../fusinvinventory/front/blacklist.form.php';
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['fusinvinventory-blacklist']
                   = '../fusinvinventory/front/blacklist.php';
-
+   
    // Tabs for each type
    $PLUGIN_HOOKS['headings']['fusinvinventory'] = 'plugin_get_headings_fusinvinventory';
    $PLUGIN_HOOKS['headings_action']['fusinvinventory'] = 'plugin_headings_actions_fusinvinventory';

@@ -50,7 +50,10 @@ function update232to240() {
    if (!PluginFusioninventoryConfig::getValue($plugins_id, "group")) {
        $config->initConfig($plugins_id, array("group" => "0"));
    }
-
+   if (!PluginFusioninventoryConfig::getValue($plugins_id, "component_networkcardvirtual")) {
+       $config->initConfig($plugins_id, array("component_networkcardvirtual" => "1"));
+   }
+   
    if (TableExists("glpi_plugin_fusinvinventory_computers")) {
       $Computer = new Computer();
       $sql = "SELECT * FROM `glpi_plugin_fusinvinventory_computers`";

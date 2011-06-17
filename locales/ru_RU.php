@@ -51,6 +51,13 @@ $LANG['plugin_fusinvinventory']['setup'][27]="Уникальный импорт 
 $LANG['plugin_fusinvinventory']['setup'][28]="Автоматическая передача компьютеров";
 $LANG['plugin_fusinvinventory']['setup'][29]="Автоматическая модель для передачи компьютеров в другую организацию";
 $LANG['plugin_fusinvinventory']['setup'][30]="Network drives";
+$LANG['plugin_fusinvinventory']['setup'][31]="Virtual network card";
+$LANG['plugin_fusinvinventory']['setup'][32]="This option will not import this item";
+$LANG['plugin_fusinvinventory']['setup'][33]="This option will merge items with same name to 
+      reduce number of items if this management isn't important";
+$LANG['plugin_fusinvinventory']['setup'][34]="This option will create one item for each item found";
+$LANG['plugin_fusinvinventory']['setup'][35]="This option will create one item for each item have 
+      serial number";
 
 $LANG['plugin_fusinvinventory']['menu'][0]="Импорт XML файла агента";
 $LANG['plugin_fusinvinventory']['menu'][1]="Критерий привил";
@@ -93,4 +100,8 @@ $LANG['plugin_fusinvinventory']['antivirus'][3]="Обновление";
 $LANG['plugin_fusinvinventory']['computer'][0]="Последняя версия inventory";
 
 $LANG['plugin_fusinvinventory']['vmwareesx'][0]="Vmware host";
+
+$LANG['plugin_fusinvinventory']['integrity'][0]="Only in GLPI (check to delete)";
+$LANG['plugin_fusinvinventory']['integrity'][1]="Only in last inventory (check to import)";
+
 ?>

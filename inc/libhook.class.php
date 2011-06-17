@@ -76,11 +76,6 @@ class PluginFusinvinventoryLibhook {
 
       $PluginFusinvinventoryLibhook->writeXMLFusion($items_id);
        
-       $changes = array();
-       $changes[0]='0';
-       $changes[1]="";
-       $changes[2]='Create computer by FusionInventory';
-       Log::history($items_id,'Computer',$changes, 0, HISTORY_LOG_SIMPLE_MESSAGE);
     }
 
 

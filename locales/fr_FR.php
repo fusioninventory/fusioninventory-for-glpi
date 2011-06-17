@@ -52,6 +52,13 @@ $LANG['plugin_fusinvinventory']['setup'][27]="Import unique sur numéro de séri
 $LANG['plugin_fusinvinventory']['setup'][28]="Transfert automatique d'ordinateurs";
 $LANG['plugin_fusinvinventory']['setup'][29]="Modèle pour le transfert automatique d'ordinateurs dans une autre entité";
 $LANG['plugin_fusinvinventory']['setup'][30]="Volumes réseau";
+$LANG['plugin_fusinvinventory']['setup'][31]="Carte réseau virtuelle";
+$LANG['plugin_fusinvinventory']['setup'][32]="Cette option ne va pas importer l'élément";
+$LANG['plugin_fusinvinventory']['setup'][33]="Cette option va fusionner les éléments qui ont le même
+      nom et donc réduire le nombre d'élément si cette gestion n'est pas importante";
+$LANG['plugin_fusinvinventory']['setup'][34]="Cette option va créer un élément pour chaque élément trouvé";
+$LANG['plugin_fusinvinventory']['setup'][35]="Cette option va créer un élément pour chaque élément 
+      qui a un numéro de série";
 
 $LANG['plugin_fusinvinventory']['menu'][0]="Importer un fichier XML de l'agent";
 $LANG['plugin_fusinvinventory']['menu'][1]="Règles de critères";
@@ -94,4 +101,8 @@ $LANG['plugin_fusinvinventory']['antivirus'][3]="A jour";
 $LANG['plugin_fusinvinventory']['computer'][0]="Dernier inventaire";
 
 $LANG['plugin_fusinvinventory']['vmwareesx'][0]="Hôte VMware";
+
+$LANG['plugin_fusinvinventory']['integrity'][0]="Seulement dans GLPI (cocher pour supprimer)";
+$LANG['plugin_fusinvinventory']['integrity'][1]="Seulement dans le dernier inventaire (cocher pour importer)";
+
 ?>
