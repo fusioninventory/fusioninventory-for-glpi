@@ -132,39 +132,57 @@ class PluginFusinvinventoryLibhook {
          switch ($section['sectionName']) {
 
             case 'BIOS':
+               $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_computers', $idmachine);
+
                if ((isset($dataSection['SMANUFACTURER']))
                      AND (!empty($dataSection['SMANUFACTURER']))) {
 
-                  $inputC['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
+                  if (!in_array('manufacturers_id', $a_lockable)) {
+                     $inputC['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
                                                                           $dataSection['SMANUFACTURER']);
-               
+                  }
                } else if ((isset($dataSection['MMANUFACTURER']))
                             AND (!empty($dataSection['MMANUFACTURER']))) {
 
-                  $inputC['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
+                  if (!in_array('manufacturers_id', $a_lockable)) {
+                     $inputC['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
                                                                           $dataSection['MMANUFACTURER']);
+               
+                  }
                } else if ((isset($dataSection['BMANUFACTURER']))
                             AND (!empty($dataSection['BMANUFACTURER']))) {
 
-                  $inputC['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
+                  if (!in_array('manufacturers_id', $a_lockable)) {
+                     $inputC['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
                                                                           $dataSection['BMANUFACTURER']);
+               
+                  }
                }
                if (isset($dataSection['SMODEL'])) {
-                  $ComputerModel = new ComputerModel();
-                  $inputC['computermodels_id'] = $ComputerModel->importExternal($dataSection['SMODEL']);
+                  if (!in_array('computermodels_id', $a_lockable)) {
+                     $ComputerModel = new ComputerModel();
+                     $inputC['computermodels_id'] = $ComputerModel->importExternal($dataSection['SMODEL']);
+                  }
                } else if (isset($dataSection['MMODEL'])) {
-                  $ComputerModel = new ComputerModel();
-                  $inputC['computermodels_id'] = $ComputerModel->importExternal($dataSection['MMODEL']);
+                  if (!in_array('computermodels_id', $a_lockable)) {
+                     $ComputerModel = new ComputerModel();
+                     $inputC['computermodels_id'] = $ComputerModel->importExternal($dataSection['MMODEL']);
+                  }
                }
                if (isset($dataSection['SSN']))
-                  $inputC['serial'] = $dataSection['SSN'];
-
+                  if (!in_array('serial', $a_lockable)) {
+                     $inputC['serial'] = $dataSection['SSN'];
+                  }
                if (isset($dataSection['TYPE'])) {
-                  $inputC['computertypes_id'] = Dropdown::importExternal('ComputerType',
+                  if (!in_array('computertypes_id', $a_lockable)) {
+                     $inputC['computertypes_id'] = Dropdown::importExternal('ComputerType',
                                                                           $dataSection['TYPE']);
+                  }
                } else if (isset($dataSection['MMODEL'])) {
-                  $inputC['computertypes_id'] = Dropdown::importExternal('ComputerType',
+                  if (!in_array('computertypes_id', $a_lockable)) {
+                     $inputC['computertypes_id'] = Dropdown::importExternal('ComputerType',
                                                                           $dataSection['MMODEL']);
+                  }
                }
                if (isset($dataSection['SKUNUMBER'])) {
                   $PluginFusinvinventoryLibhook = new PluginFusinvinventoryLibhook();
@@ -710,38 +728,55 @@ class PluginFusinvinventoryLibhook {
                   break;
 
                case 'BIOS':
+                  $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_computers', $idmachine);
+
                   if ((isset($dataSection['SMANUFACTURER']))
                         AND (!empty($dataSection['SMANUFACTURER']))) {
 
-                     $inputC['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
+                     if (!in_array('manufacturers_id', $a_lockable)) {
+                        $inputC['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
                                                                              $dataSection['SMANUFACTURER']);
+                     }
                   } else if ((isset($dataSection['MMANUFACTURER']))
                                AND (!empty($dataSection['MMANUFACTURER']))) {
 
-                     $inputC['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
+                     if (!in_array('manufacturers_id', $a_lockable)) {
+                        $inputC['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
                                                                              $dataSection['MMANUFACTURER']);
+                     }
                   } else if ((isset($dataSection['BMANUFACTURER']))
                                AND (!empty($dataSection['BMANUFACTURER']))) {
 
-                     $inputC['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
+                     if (!in_array('manufacturers_id', $a_lockable)) {
+                        $inputC['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
                                                                              $dataSection['BMANUFACTURER']);
+                     }
                   }
                   if (isset($dataSection['SMODEL'])) {
-                     $ComputerModel = new ComputerModel();
-                     $inputC['computermodels_id'] = $ComputerModel->importExternal($dataSection['SMODEL']);
+                     if (!in_array('computermodels_id', $a_lockable)) {
+                        $ComputerModel = new ComputerModel();
+                        $inputC['computermodels_id'] = $ComputerModel->importExternal($dataSection['SMODEL']);
+                     }
                   } else if (isset($dataSection['MMODEL'])) {
-                     $ComputerModel = new ComputerModel();
-                     $inputC['computermodels_id'] = $ComputerModel->importExternal($dataSection['MMODEL']);
+                     if (!in_array('computermodels_id', $a_lockable)) {
+                        $ComputerModel = new ComputerModel();
+                        $inputC['computermodels_id'] = $ComputerModel->importExternal($dataSection['MMODEL']);
+                     }
                   }
                   if (isset($dataSection['SSN']))
-                     $inputC['serial'] = $dataSection['SSN'];
-
+                     if (!in_array('serial', $a_lockable)) {
+                        $inputC['serial'] = $dataSection['SSN'];
+                     }
                   if (isset($dataSection['TYPE'])) {
-                     $inputC['computertypes_id'] = Dropdown::importExternal('ComputerType',
+                     if (!in_array('computertypes_id', $a_lockable)) {
+                        $inputC['computertypes_id'] = Dropdown::importExternal('ComputerType',
                                                                           $dataSection['TYPE']);
+                     }
                   } else if (isset($dataSection['MMODEL'])) {
-                     $inputC['computertypes_id'] = Dropdown::importExternal('ComputerType',
+                     if (!in_array('computertypes_id', $a_lockable)) {
+                        $inputC['computertypes_id'] = Dropdown::importExternal('ComputerType',
                                                                              $dataSection['MMODEL']);
+                     }
                   }
                   if (isset($dataSection['SKUNUMBER'])) {
                      $PluginFusinvinventoryLibhook = new PluginFusinvinventoryLibhook();
