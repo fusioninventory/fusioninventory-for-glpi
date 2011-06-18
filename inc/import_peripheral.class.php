@@ -112,6 +112,7 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
          }
          if (count($a_Peripheral) == 0) {
             $a_Peripheral = array();
+            $a_Peripheral['is_global'] = 0;
          }
       }
 
