@@ -307,7 +307,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             // Write XML file
             if (isset($_SESSION['SOURCE_XMLDEVICE'])) {
                PluginFusioninventoryUnknownDevice::writeXML($items_id, $_SESSION['SOURCE_XMLDEVICE']);
-             }
+            }
              
 
             if (!in_array('contact', $a_lockable))
@@ -441,6 +441,14 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                $PluginFusinvsnmpNetworkEquipment->load();
                $PluginFusinvsnmpNetworkEquipment->setValue('networkequipments_id', $items_id);
             }
+            // Write XML file
+            if (isset($_SESSION['SOURCE_XMLDEVICE'])
+                    AND is_null($PluginFusinvsnmpNetworkEquipment->getValue('last_fusioninventory_update', $items_id))) {
+               PluginFusioninventoryUnknownDevice::writeXML($input['id'], 
+                                          $_SESSION['SOURCE_XMLDEVICE'],
+                                          "fusinvsnmp",
+                                          "NetworkEquipment");
+            }
             $PluginFusinvsnmpNetworkEquipment->setValue('sysdescr', $xml->DESCRIPTION);
             $PluginFusinvsnmpModel = new PluginFusinvsnmpModel();
             $model_id = $PluginFusinvsnmpModel->getModelByKey($xml->MODELSNMP);
@@ -452,7 +460,6 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             break;
 
          case 'Printer':
-
             $input['have_ethernet'] = '1';
             $class->update($input);
 
@@ -506,6 +513,14 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             } else {
                $PluginFusinvsnmpPrinter->load();
                $PluginFusinvsnmpPrinter->setValue('printers_id', $items_id);
+            }
+            // Write XML file
+            if (isset($_SESSION['SOURCE_XMLDEVICE'])
+                    AND is_null($PluginFusinvsnmpPrinter->getValue('last_fusioninventory_update', $items_id))) {
+               PluginFusioninventoryUnknownDevice::writeXML($input['id'], 
+                                          $_SESSION['SOURCE_XMLDEVICE'],
+                                          "fusinvsnmp",
+                                          "Printer");
             }
             $PluginFusinvsnmpPrinter->setValue('sysdescr', $xml->DESCRIPTION);
             $PluginFusinvsnmpModel = new PluginFusinvsnmpModel();
