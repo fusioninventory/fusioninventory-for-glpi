@@ -92,8 +92,9 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
       $query = "SELECT `id`
                 FROM `glpi_softwareversions`
                 WHERE `softwares_id` = '$software_id'
-                      AND `name` = '$modified_version'
-                      AND `entities_id` = '".$_SESSION["plugin_fusinvinventory_entity"]."' ";
+                   AND `name` = '$modified_version' ".
+                   getEntitiesRestrictRequest('AND', 'glpi_softwareversions', 'entities_id', $_SESSION["plugin_fusinvinventory_entity"],
+                                            true);
       $result = $DB->query($query);
       if ($DB->numrows($result) > 0) {
          $data = $DB->fetch_array($result);
