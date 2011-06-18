@@ -406,7 +406,7 @@ class PluginFusinvinventoryLibhook {
                                                                               'PUBLISHER'=>$dataSection['PUBLISHER']));
                } else {
                   $Computer_SoftwareVersion_id = $PluginFusinvinventoryImport_Software->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
-                                                                              'version'=>'0',
+                                                                              'version'=>NOT_AVAILABLE,
                                                                               'PUBLISHER'=>$dataSection['PUBLISHER']));
                }
                if (empty($Computer_SoftwareVersion_id)) {
