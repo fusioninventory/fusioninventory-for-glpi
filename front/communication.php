@@ -158,7 +158,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    
             $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
    <REPLY>
-   </REPLY>");
+</REPLY>");
    
             $a_agent = $pta->InfosByKey(addslashes_deep($pxml->DEVICEID));
    
@@ -175,7 +175,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       } else {
          $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
    <REPLY>
-   </REPLY>");
+</REPLY>");
          $communication->emptyAnswer();
       }
    }

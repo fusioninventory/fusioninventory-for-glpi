@@ -111,7 +111,7 @@ class PluginFusioninventoryCommunication {
     **/
    function import($p_xml, &$p_errors='') {
       global $LANG;
-
+      
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
 
