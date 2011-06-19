@@ -1601,7 +1601,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       global $LANG, $CFG_GLPI;
 
       $pluginFusioninventoryTask = new PluginFusioninventoryTask();
-      if ($id!='') {
+      if (($id!='') AND ($id != '0')) {
          $this->getFromDB($id);
          $pluginFusioninventoryTask->getFromDB($this->fields['plugin_fusioninventory_tasks_id']);
       } else {
