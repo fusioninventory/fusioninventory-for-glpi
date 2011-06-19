@@ -165,6 +165,8 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
       }
       $PluginFusioninventoryTaskjob->fields['status'] = 1;
       $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
+
+      return $uniqid;
    }
 
 

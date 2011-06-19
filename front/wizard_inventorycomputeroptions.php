@@ -26,34 +26,31 @@
    along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: Vincent Mazzoni
+   Original Author of file: David DURIEUX
    Co-authors of file:
    Purpose of file:
    ----------------------------------------------------------------------
  */
 
-define('GLPI_ROOT', '../../..');
-
-include (GLPI_ROOT . "/inc/includes.php");
-
-//todo
-//PluginFusioninventoryProfile::checkRight("snmp_networking","r");
-
-if(isset($_POST["unlock_field_fusioninventory"])){
-   $typeright = strtolower($_POST['type']);
-   if ($typeright == "networkequipment") {
-      $typeright = "networking";
-   }
-   if (haveRight($typeright,"w")) {
-      if (isset($_POST["lockfield_fusioninventory"]) && count($_POST["lockfield_fusioninventory"])){
-         $tab=PluginFusioninventoryLock::exportChecksToArray($_POST["lockfield_fusioninventory"]);
-            PluginFusioninventoryLock::setLockArray($_POST['type'], $_POST["id"], $tab);
-      } else {
-         PluginFusioninventoryLock::setLockArray($_POST['type'], $_POST["id"], array());
-      }
-   }
-   glpi_header($_SERVER['HTTP_REFERER']);
+if (!defined('GLPI_ROOT')) {
+   define('GLPI_ROOT', '../../..');
 }
+
+include (GLPI_ROOT."/inc/includes.php");
+
+commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","wizard-start");
+
+//PluginFusioninventoryMenu::displayMenu("mini");
+
+$PluginFusioninventoryWizard = new PluginFusioninventoryWizard();
+
+$a_button = array('name' => 'Suivant',
+                  'link' => GLPI_ROOT.'/plugins/fusioninventory/front/wizard_inventorycomputeroptions.php');
+
+
+$PluginFusioninventoryWizard->displayShowForm($a_button,
+                                             $PluginFusioninventoryWizard->filInventoryComputer(),
+                                             "PluginFusinvinventoryConfig");
 
 commonFooter();
 

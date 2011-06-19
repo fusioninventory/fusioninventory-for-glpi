@@ -46,7 +46,22 @@ function update232to240() {
    echo "<td align='center'>";
 
    plugin_fusioninventory_displayMigrationMessage("240"); // Start
-   logDebug("mgre");
+   
+   if (!class_exists('PluginFusioninventoryConfig')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/config.class.php");
+   }
+   if (!class_exists('PluginFusioninventorySetup')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
+   }
+   
+   $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
+   $config = new PluginFusioninventoryConfig();
+   $PluginFusioninventorySetup = new PluginFusioninventorySetup();
+   $users_id = $PluginFusioninventorySetup->createFusionInventoryUser();
+   if (!PluginFusioninventoryConfig::getValue($plugins_id, "users_id")) {
+       $config->initConfig($plugins_id, array("users_id" => $users_id));
+   }
+   
    if (TableExists("glpi_plugin_fusinvsnmp_ipranges")) {
       //Rename table
       $query = "RENAME TABLE  `glpi_plugin_fusinvsnmp_ipranges` " .
@@ -134,10 +149,14 @@ function update232to240() {
    if (!FieldExists('glpi_plugin_fusioninventory_agentmodules', 'url')) {
       $query = "ALTER TABLE `glpi_plugin_fusioninventory_agentmodules` 
                 ADD `url` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ";
-         $DB->query($query) or die ("Add url to  glpi_plugin_fusioninventory_agentmodules".
-                                    $LANG['update'][90] . $DB->error());
+      $DB->query($query) or die ("Add url to  glpi_plugin_fusioninventory_agentmodules".
+                                 $LANG['update'][90] . $DB->error());
    }
-   
+   if (!FieldExists('glpi_plugin_fusioninventory_agents', 'useragent')) {
+      $query = "ALTER TABLE `glpi_plugin_fusioninventory_agents` ADD `useragent` VARCHAR( 255 ) NULL";
+      $DB->query($query) or die ("Add useragent to glpi_plugin_fusioninventory_agents".
+                                 $LANG['update'][90] . $DB->error());
+   }
    plugin_fusioninventory_displayMigrationMessage("240"); // End
 }
 

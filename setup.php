@@ -163,7 +163,7 @@ function plugin_init_fusioninventory() {
 
          // Fil ariane
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['menu']['title'] = $LANG['plugin_fusioninventory']['menu'][3];
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['menu']['page']  = '/plugins/fusioninventory/front/menu.php';
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['menu']['page']  = '/plugins/fusioninventory/front/wizard.php';
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['tasks']['title'] = $LANG['plugin_fusioninventory']['task'][1];
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['tasks']['page']  = '/plugins/fusioninventory/front/task.php';
@@ -238,46 +238,51 @@ function plugin_init_fusioninventory() {
    // Add unknown devices in list of devices with networport
    $CFG_GLPI["netport_types"][] = "PluginFusioninventoryUnknownDevice";
 
-   //Redect to FusionInventort communication.php only if user agent is ocs or fusion and if
-   //agent url is http://ip/glpi/
-   $plugin = new Plugin();
-   if ($plugin->isInstalled('fusioninventory')
-      && $plugin->isActivated('fusioninventory')
-         //If getConfig is called on /plugins/fusioninventory/index.php, do not check user agent 
-         //(need for debug and dev)
-         && ((isset($_GET['action']) 
-            && $_GET['action'] == 'getConfig') 
-               && preg_match("/plugins\/fusioninventory\/index.php/", $_SERVER['PHP_SELF']))
-                  //For production : if useraget is fusioninventory or ocs, 
-                  //then redirect to the right communication page
-                  || (isset($_SERVER['HTTP_USER_AGENT'])
-                     && isFusioninventoryUserAgent($_SERVER['HTTP_USER_AGENT'])
-                        && ((preg_match("/plugins\/fusioninventory\/index.php/", $_SERVER['PHP_SELF']))
-                           || !preg_match("/fus(ion|inv).*/", $_SERVER['PHP_SELF'])))) {
-
-      //Load all plugins
-      $plugin = new Plugin();
-      if (!isset($_SESSION["glpi_plugins"])) {
-         $plugin->init();
-      }
-      
-      if (isset($_SESSION["glpi_plugins"]) && is_array($_SESSION["glpi_plugins"])) {
-         if (count($_SESSION["glpi_plugins"])) {
-            foreach ($_SESSION["glpi_plugins"] as $name) {
-               if ($name != 'fusioninventory') {
-                  Plugin::load($name);
-               }
-            }
-         }
-         // For plugins which require action after all plugin init
-         doHook("post_init");
-      }
-      
-      include_once(GLPI_ROOT ."/plugins/fusioninventory/front/communication.php");
-      exit();
-   }
+/*
+ * This not works
+ */
+//   //Redect to FusionInventort communication.php only if user agent is ocs or fusion and if
+//   //agent url is http://ip/glpi/
+//   $plugin = new Plugin();
+//   if ($plugin->isInstalled('fusioninventory')
+//      && $plugin->isActivated('fusioninventory')
+//         //If getConfig is called on /plugins/fusioninventory/index.php, do not check user agent 
+//         //(need for debug and dev)
+//         && ((isset($_GET['action']) 
+//            && $_GET['action'] == 'getConfig') 
+//               && preg_match("/plugins\/fusioninventory\/index.php/", $_SERVER['PHP_SELF']))
+//                  //For production : if useraget is fusioninventory or ocs, 
+//                  //then redirect to the right communication page
+//                  || (isset($_SERVER['HTTP_USER_AGENT'])
+//                     && isFusioninventoryUserAgent($_SERVER['HTTP_USER_AGENT'])
+//                        && ((preg_match("/plugins\/fusioninventory\/index.php/", $_SERVER['PHP_SELF']))
+//                           || !preg_match("/fus(ion|inv).*/", $_SERVER['PHP_SELF'])))) {
+//
+//      //Load all plugins
+//      $plugin = new Plugin();
+//      if (!isset($_SESSION["glpi_plugins"])) {
+//         $plugin->init();
+//      }
+//      
+//      if (isset($_SESSION["glpi_plugins"]) && is_array($_SESSION["glpi_plugins"])) {
+//         if (count($_SESSION["glpi_plugins"])) {
+//            foreach ($_SESSION["glpi_plugins"] as $name) {
+//               if ($name != 'fusioninventory') {
+//                  Plugin::load($name);
+//               }
+//            }
+//         }
+//         // For plugins which require action after all plugin init
+//         doHook("post_init");
+//      }
+//      
+//      include_once(GLPI_ROOT ."/plugins/fusioninventory/front/communication.php");
+//      exit();
+//   }
 
 }
+
+
 
 // Name and Version of the plugin
 function plugin_version_fusioninventory() {

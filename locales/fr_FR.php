@@ -70,7 +70,7 @@ $LANG['plugin_fusioninventory']['functionalities'][75] = "Verrous";
 $LANG['plugin_fusioninventory']['functionalities'][76] = "Extra-debug";
 
 $LANG['plugin_fusioninventory']['errors'][22] = "Elément inattendu dans";
-$LANG['plugin_fusioninventory']['errors'][50] = "La version de GLPI n'est pas compatible, vous avez besoin de la version 0.78";
+$LANG['plugin_fusioninventory']['errors'][50] = "La version de GLPI n'est pas compatible, vous avez besoin de la version 0.80";
 $LANG['plugin_fusioninventory']['errors'][1] = "PHP allow_url_fopen est désactivé, Réveil impossible de l'agent pour faire l'inventaire";
 $LANG['plugin_fusioninventory']['errors'][2] = "PHP allow_url_fopen est désactivé, Le mode push ne peut pas fonctionner";
 
@@ -83,8 +83,6 @@ $LANG['plugin_fusioninventory']['rules'][7]  = "Liaison si possible, sinon créa
 $LANG['plugin_fusioninventory']['rules'][8]  = "Envoyer";
 $LANG['plugin_fusioninventory']['rules'][9]  = "existe";
 $LANG['plugin_fusioninventory']['rules'][10] = "n'existe pas";
-$LANG['plugin_fusioninventory']['rules'][11] = "est déjà présent dans GLPI";
-$LANG['plugin_fusioninventory']['rules'][12] = "est vide";
 $LANG['plugin_fusioninventory']['rules'][13] = "Numéro de série du disque dur";
 $LANG['plugin_fusioninventory']['rules'][14] = "Numéro de série de partition disque";
 $LANG['plugin_fusioninventory']['rules'][15] = "uuid";
@@ -134,7 +132,8 @@ $LANG['plugin_fusioninventory']['agents'][37]="Verrouillé";
 $LANG['plugin_fusioninventory']['agents'][38]="Disponible";
 $LANG['plugin_fusioninventory']['agents'][39]="En cours d'éxécution";
 $LANG['plugin_fusioninventory']['agents'][40]="Ordinateur sans IP connue";
-$LANG['plugin_fusioninventory']['agents'][41] = "URL d'accès au service";
+$LANG['plugin_fusioninventory']['agents'][41]="URL d'accès au service";
+$LANG['plugin_fusioninventory']['agents'][42]="Useragent";
 
 $LANG['plugin_fusioninventory']['unknown'][2] = "Matériel approuvé";
 $LANG['plugin_fusioninventory']['unknown'][4] = "Hub réseau";
@@ -200,5 +199,26 @@ $LANG['plugin_fusioninventory']['iprange'][7]="IP incorrecte";
 
 $LANG['plugin_fusioninventory']['locks'][0]="Supprimer les verrous";
 $LANG['plugin_fusioninventory']['locks'][1]="Ajouter les verrous";
+
+$LANG['plugin_fusioninventory']['buttons'][0]="Fin";
+
+$LANG['plugin_fusioninventory']['wizard'][0]="Choix de l'action";
+$LANG['plugin_fusioninventory']['wizard'][1]="Type de matériel à inventorier";
+$LANG['plugin_fusioninventory']['wizard'][2]="Options d'import";
+$LANG['plugin_fusioninventory']['wizard'][3]="Règles d'entités";
+$LANG['plugin_fusioninventory']['wizard'][4]="Configuration des agents";
+$LANG['plugin_fusioninventory']['wizard'][5]="Gestion des comptes";
+$LANG['plugin_fusioninventory']['wizard'][6]="Gestion des serveurs ESX";
+$LANG['plugin_fusioninventory']['wizard'][7]="Exécutions de tâches";
+$LANG['plugin_fusioninventory']['wizard'][8]="Résultats d'exécution des tâches";
+$LANG['plugin_fusioninventory']['wizard'][9]="Authentification SNMP";
+$LANG['plugin_fusioninventory']['wizard'][10]="Choix (Découverte réseau ou inventaire)";
+$LANG['plugin_fusioninventory']['wizard'][11]="Fil d'ariane";
+$LANG['plugin_fusioninventory']['wizard'][12]="Découvrir le réseau";
+$LANG['plugin_fusioninventory']['wizard'][13]="Inventorier le matériel";
+$LANG['plugin_fusioninventory']['wizard'][14]="Bienvenue dans FusionInventory. Commençons à configurer?";
+$LANG['plugin_fusioninventory']['wizard'][15]="Ordinateurs et périphériques";
+$LANG['plugin_fusioninventory']['wizard'][16]="Serveurs ESX";
+$LANG['plugin_fusioninventory']['wizard'][17]="Equipements et imprimantes réseau";
 
 ?>

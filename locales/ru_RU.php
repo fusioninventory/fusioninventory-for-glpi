@@ -70,7 +70,7 @@ $LANG['plugin_fusioninventory']['functionalities'][75]="Блокировки";
 $LANG['plugin_fusioninventory']['functionalities'][76]="Отладка";
 
 $LANG['plugin_fusioninventory']['errors'][22]="Не подключённый элемент в";
-$LANG['plugin_fusioninventory']['errors'][50]="GLPI версия не совместима, требуется версия 0.78";
+$LANG['plugin_fusioninventory']['errors'][50]="GLPI версия не совместима, требуется версия 0.80";
 
 $LANG['plugin_fusioninventory']['rules'][2]="Импорт оборудования и ссылок правил";
 $LANG['plugin_fusioninventory']['rules'][3]="Поиск GLPI оборудования со статусом";
@@ -81,8 +81,6 @@ $LANG['plugin_fusioninventory']['rules'][7] = "Ссылка если возмо�
 $LANG['plugin_fusioninventory']['rules'][8] = "Отправить";
 $LANG['plugin_fusioninventory']['rules'][9]  = "существует";
 $LANG['plugin_fusioninventory']['rules'][10]  = "не существует";
-$LANG['plugin_fusioninventory']['rules'][11] = "сейчас в GLPI";
-$LANG['plugin_fusioninventory']['rules'][12] = "пусто";
 $LANG['plugin_fusioninventory']['rules'][13] = "Серийный номер HDD";
 $LANG['plugin_fusioninventory']['rules'][14] = "Серийный номер раздела";
 $LANG['plugin_fusioninventory']['rules'][15] = "uuid";
@@ -129,6 +127,7 @@ $LANG['plugin_fusioninventory']['agents'][37]="Заблокированный";
 $LANG['plugin_fusioninventory']['agents'][38]="Доступный";
 $LANG['plugin_fusioninventory']['agents'][39]="Запущенный";
 $LANG['plugin_fusioninventory']['agents'][40]="Компьютер с нейзвестным IP";
+$LANG['plugin_fusioninventory']['agents'][42]="Useragent";
 
 $LANG['plugin_fusioninventory']['unknown'][2]="Подтверждённые устройства";
 $LANG['plugin_fusioninventory']['unknown'][4]="Сетевой хаб";
@@ -196,4 +195,26 @@ $LANG['plugin_fusioninventory']['iprange'][1]="End of IP range";
 $LANG['plugin_fusioninventory']['iprange'][2]="IP Ranges";
 $LANG['plugin_fusioninventory']['iprange'][3]="Query";
 $LANG['plugin_fusioninventory']['iprange'][7]="Bad IP";
+
+$LANG['plugin_fusioninventory']['buttons'][0]="Finish";
+
+$LANG['plugin_fusioninventory']['wizard'][0]="Action choice";
+$LANG['plugin_fusioninventory']['wizard'][1]="Type of device to inventory";
+$LANG['plugin_fusioninventory']['wizard'][2]="Import options";
+$LANG['plugin_fusioninventory']['wizard'][3]="Entity rules";
+$LANG['plugin_fusioninventory']['wizard'][4]="Agent configuration";
+$LANG['plugin_fusioninventory']['wizard'][5]="Credential management";
+$LANG['plugin_fusioninventory']['wizard'][6]="ESX servers management";
+$LANG['plugin_fusioninventory']['wizard'][7]="Run tasks";
+$LANG['plugin_fusioninventory']['wizard'][8]="Tasks running result";
+$LANG['plugin_fusioninventory']['wizard'][9]="SNMP authentication";
+$LANG['plugin_fusioninventory']['wizard'][10]="Choice (netdiscovery or inventory)";
+$LANG['plugin_fusioninventory']['wizard'][11]="Breadcrumb";
+$LANG['plugin_fusioninventory']['wizard'][12]="Discover the network";
+$LANG['plugin_fusioninventory']['wizard'][13]="Inventory devices";
+$LANG['plugin_fusioninventory']['wizard'][14]="Welcome in FusionInventory. Begin configuration?";
+$LANG['plugin_fusioninventory']['wizard'][15]="Computers and peripherals";
+$LANG['plugin_fusioninventory']['wizard'][16]="ESX servers";
+$LANG['plugin_fusioninventory']['wizard'][17]="Network devices and printers";
+
 ?>

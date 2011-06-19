@@ -118,6 +118,60 @@ if (isset($_POST['definition_add'])) {
    $input['action'] = exportArrayToDB($a_listact);
    $mytaskjob->update($input);
    glpi_header($_SERVER['HTTP_REFERER']);
+} else if (isset($_POST['quickform'])) {
+   $pluginFusioninventoryTask = new PluginFusioninventoryTask();
+
+   if (isset($_POST['update'])) {
+      $mytaskjob->getFromDB($_POST['id']);
+      $pluginFusioninventoryTask->getFromDB($mytaskjob->fields['plugin_fusioninventory_tasks_id']);
+   }
+   
+   $inputtaskjob = array();
+   $inputtask = array();
+   if (isset($_POST['update'])) {
+      $inputtaskjob['id'] = $_POST['id'];
+      $inputtask['id'] = $mytaskjob->fields['plugin_fusioninventory_tasks_id'];
+   }
+
+   $inputtaskjob['name'] = $_POST['name'];
+   if (isset($_POST['add']) OR $pluginFusioninventoryTask->fields['name'] == '') {
+      $inputtask['name'] = $_POST['name'];
+   }
+   $inputtask['is_active'] = $_POST['is_active'];
+   $inputtaskjob['method'] = $_POST['method'];
+   $inputtask['communication'] = $_POST['communication'];
+   $inputtask['periodicity_count'] = $_POST['periodicity_count'];
+   $inputtask['periodicity_type'] = $_POST['periodicity_type'];
+
+   $inputtask['entities_id'] = $_SESSION['glpiactive_entity'];
+   $inputtaskjob['entities_id'] = $_SESSION['glpiactive_entity'];
+
+   if (isset($_POST['update'])) {
+      $mytaskjob->update($inputtaskjob);
+      $pluginFusioninventoryTask->update($inputtask);
+      glpi_header($_SERVER['HTTP_REFERER']);
+   } else if (isset($_POST['add'])) {
+      $inputtask['date_scheduled'] = date("Y-m-d H:i:s");
+      $task_id = $pluginFusioninventoryTask->add($inputtask);
+      $inputtaskjob['plugin_fusioninventory_tasks_id'] = $task_id;
+      $taskjobs_id = $mytaskjob->add($inputtaskjob);
+
+      $redirect = $_SERVER['HTTP_REFERER'];
+      $redirect = str_replace('&id=0', '&id='.$taskjobs_id, $redirect);
+      glpi_header($redirect);
+   }
+} else if (isset($_POST['taskjobstoforcerun'])) {
+   // * Force running many tasks (wizard)
+   PluginFusioninventoryProfile::checkRight("fusioninventory", "task","w");
+   $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+   $_SESSION["plugin_fusioninventory_forcerun"] = array();
+   foreach ($_POST['taskjobstoforcerun'] as $taskjobs_id) {
+      $PluginFusioninventoryTaskjob->getFromDB($taskjobs_id);
+      $uniqid = $PluginFusioninventoryTaskjob->forceRunningTask($PluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']);
+      $_SESSION["plugin_fusioninventory_forcerun"][$taskjobs_id] = $uniqid;
+   }
+   unset($_SESSION["MESSAGE_AFTER_REDIRECT"]);
+   glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset($_POST['add']) || isset($_POST['update'])) {
    // * Add and update taskjob
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task", "w");
@@ -196,7 +250,11 @@ if (isset($_POST['definition_add'])) {
    glpi_header($_SERVER['HTTP_REFERER']);
 }
 
-$mytaskjob->redirectTask($_GET['id']);
+if (strstr($_SERVER['HTTP_REFERER'], "wizard.php")) {
+   glpi_header($_SERVER['HTTP_REFERER']."&id=".$_GET['id']);
+} else {
+   $mytaskjob->redirectTask($_GET['id']);
+}
 
 commonFooter();
 

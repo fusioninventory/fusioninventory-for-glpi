@@ -1,0 +1,599 @@
+<?php
+
+/*
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
+
+   LICENSE
+
+   This file is part of FusionInventory.
+
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
+
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
+ */
+
+if (!defined('GLPI_ROOT')) {
+   die("Sorry. You can't access directly to this file");
+}
+
+
+class PluginFusioninventoryWizard {
+
+   /**
+    * Display breadcrumb
+    *
+    * @param $ariane value name of current breadcrumb
+    *
+    * @return Nothing (display)
+    **/
+   function filAriane($ariane) {
+      global $LANG;
+
+      $a_list = array();
+      if (method_exists("PluginFusioninventoryWizard", $ariane)) {
+         $pluginFusioninventoryWizard = new PluginFusioninventoryWizard();
+         $a_list = $pluginFusioninventoryWizard->$ariane();
+      } else {
+         return;
+      }
+
+      if (count($a_list) == '0') {
+         return;
+      }
+      echo "<table class='tab_cadre' width='250'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<th>";
+      echo "<strong>".$LANG['plugin_fusioninventory']['wizard'][11]."</strong>";
+      echo "</th>";
+      echo "</tr>";
+      foreach ($a_list as $name=>$link) {
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>";
+         if ($link == $_GET['wizz']) {
+            echo "<img src='".GLPI_ROOT."/pics/right.png'/>";
+         } else {
+            echo "<img src='".GLPI_ROOT."/pics/right_off.png'/>";
+         }
+         $getariane = "&ariane=".$ariane;
+         if ($link == "w_start") {
+            $getariane = "";
+         }
+         echo " <a href='".GLPI_ROOT."/plugins/fusioninventory/front/wizard.php?wizz=".
+            $link.$getariane."'>".$name."</a>";
+         echo "</td>";
+         echo "</tr>";
+      }
+      echo "</table>";
+   }
+
+
+
+   /**
+    * Display big button to select what path of wizard
+    *
+    * @param $a_buttons array with data of each button (name, pic, wizard name, breadcrumb)
+    * @param $filariane value current breadcrumb name
+    *
+    * @return Nothing (display)
+    **/
+   static function displayButtons($a_buttons, $filariane) {
+
+      $pluginFusioninventoryWizard = new PluginFusioninventoryWizard();
+
+      echo "<style type='text/css'>
+      .bgout {
+         background-image: url(".GLPI_ROOT."/plugins/fusioninventory/pics/wizard_button.png);
+      }
+      .bgover {
+         background-image: url(".GLPI_ROOT."/plugins/fusioninventory/pics/wizard_button_active.png);
+      }
+      </style>";
+      echo "<center><table width='950'>";
+      echo "<tr>";
+      echo "<td rowspan='2' align='center'>";
+         echo "<table cellspacing='10'>";
+         echo "<tr>";
+         foreach ($a_buttons as $array) {
+            $getariane = '';
+            if (isset($array[3]) AND $array[3] != '') {
+               $getariane = '&ariane='.$array[3];
+            }
+            echo "<td class='bgout'
+               onmouseover='this.className=\"bgover\"' onmouseout='this.className=\"bgout\"'
+               onClick='location.href=\"".GLPI_ROOT
+               ."/plugins/fusioninventory/front/wizard.php?wizz=".$array[1].$getariane."\"'
+               width='240' height='155' align='center'>";
+            echo "<strong>".$array[0]."</strong><br/><br/>";
+            if ($array[2] != '') {
+               echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/".$array[2]."'/>";
+            }
+            echo "</td>";
+         }
+         echo "</tr>";
+         echo "</table>";
+      echo "</td>";
+      echo "<td height='8'></td>";
+      echo "</tr>";
+
+      echo "<tr>";
+      echo "<td valign='top'>";
+      $pluginFusioninventoryWizard->filAriane($filariane);
+      echo "</td>";
+      echo "</tr>";
+
+      echo "</table></center>";
+   }
+
+
+
+   /**
+    * Display form of wizzard (showform + breadcrumb + button "next")
+    *
+    * @param $filariane value current breadcrumb name
+    * @param $classname value name of the class (itemtype)
+    * @param $options array
+    *
+    * @return Nothing (display)
+    **/
+   static function displayShowForm($filariane, $classname, $options = array()) {
+      global $LANG,$CFG_GLPI;
+
+      $pluginFusioninventoryWizard = new PluginFusioninventoryWizard();
+
+      echo "<style type='text/css'>
+      .bgout {
+         background-image: url(".GLPI_ROOT."/plugins/fusioninventory/pics/wizard_button.png);
+      }
+      .bgover {
+         background-image: url(".GLPI_ROOT."/plugins/fusioninventory/pics/wizard_button_active.png);
+      }
+      </style>";
+      echo "<center><table width='950'>";
+      echo "<tr>";
+      echo "<td valign='top' width='950'>";
+
+      if (isset($_GET['id'])) {
+         $class = new $classname;
+         if ($_GET['wizz'] == 'w_tasks') {
+            initNavigateListItems($classname);
+            $class->showQuickForm($_GET['id'], $options['arg1']);
+         } else {
+            $class->showForm($_GET['id']);
+         }
+
+      } else if (isset($_GET['wizz']) AND (strstr($_GET['wizz'], "rules"))) {
+  
+         $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+         include (GLPI_ROOT . "/plugins/fusioninventory/front/wizzrule.common.php");
+
+      } else if (!empty($options)) {
+         if (!isset($options['noadditem'])) {
+            echo "<table class='tab_cadre'>";
+            echo "<tr>";
+            echo "<th>";
+            echo "<a href='".$_SERVER["REQUEST_URI"]."&id=0'>".$LANG['log'][98]."</a>";
+            echo "</th>";
+            echo "</tr>";
+            echo "</table>";
+         }
+         call_user_func(array($classname, $options['f']), $options['arg1']);
+
+      } else {
+         echo "<table class='tab_cadre'>";
+         echo "<tr>";
+         echo "<th>";
+         echo "<a href='".$_SERVER["REQUEST_URI"]."&id=0'>".$LANG['log'][98]."</a>";
+         echo "</th>";
+         echo "</tr>";
+         echo "</table>";
+         Search::manageGetValues($classname);
+         Search::showList($classname, $_GET);
+      }
+
+      echo "</td>";
+      echo "<td valign='top' style='background-color: #e1cc7b;'>";
+      $pluginFusioninventoryWizard->filAriane($filariane);
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr>";
+      echo "<td align='right' style='background-color: #e1cc7b;' height='30'>";
+      if (isset($options['finish'])) {
+         echo "<input class='submit' type='submit' name='next' value='".$LANG['plugin_fusioninventory']['buttons'][0]."'
+               onclick='window.location.href=\"".GLPI_ROOT."/plugins/fusioninventory/\"'/>";
+
+      } else {
+         echo "<input class='submit' type='submit' name='next' value='".$LANG['buttons'][11]."'
+               onclick='window.location.href=\"".GLPI_ROOT.
+         "/plugins/fusioninventory/front/wizard.php?wizz=".PluginFusioninventoryWizard::getNextStep($filariane)."\"'/>";
+      }
+      echo "</form>&nbsp;&nbsp;";
+      echo "</td>";
+      echo "<td style='background-color: #e1cc7b;'></td>";
+      echo "</tr>";
+
+      echo "</table></center>";
+   }
+
+
+
+   /**
+    * Get next page name wizard with help of breadcrumb
+    *
+    * @param $ariane value current breadcrumb name
+    *
+    * @return nothing or wiz name + breadcrumb value for url
+    **/
+   static function getNextStep($ariane) {
+      if (method_exists("PluginFusioninventoryWizard", $ariane)) {
+         $pluginFusioninventoryWizard = new PluginFusioninventoryWizard();
+         $a_list = $pluginFusioninventoryWizard->$ariane();
+
+         $find = 0;
+         foreach ($a_list as $link) {
+            if ($link == $_GET['wizz']) {
+               $find = 1;
+            } else {
+               if ($find == '1') {
+                  return $link."&ariane=".$ariane;
+               }
+            }
+         }
+      } else {
+         return;
+      }
+   }
+
+
+  // ********************* Define fil ariane **********************//
+
+   /**
+    * Set breadcrumb / steps for configure computer inventory
+    *
+    * @return array with data of breadcrumb
+    **/
+   function filInventoryComputer() {
+      global $LANG;
+
+      return array(
+      $LANG['plugin_fusioninventory']['wizard'][0]   => "w_start",
+      $LANG['plugin_fusioninventory']['wizard'][1]   => "w_inventorychoice",
+      $LANG['plugin_fusioninventory']['wizard'][2]   => "w_importcomputeroptions",
+      $LANG['plugin_fusioninventory']['rules'][2]    => "w_importrules",
+      $LANG['plugin_fusioninventory']['wizard'][3]   => "",
+      $LANG['plugin_fusioninventory']['wizard'][4]   => "");
+   }
+
+
+
+   /**
+    * Set breadcrumb / steps for make an inventory of ESX Servers
+    *
+    * @return array with data of breadcrumb
+    **/
+   function filInventoryESX() {
+      global $LANG;
+
+      return array(
+      $LANG['plugin_fusioninventory']['wizard'][0]   => "w_start",
+      $LANG['plugin_fusioninventory']['wizard'][1]   => "w_inventorychoice",
+      $LANG['plugin_fusioninventory']['wizard'][5]   => "w_credential",
+      $LANG['plugin_fusioninventory']['wizard'][6]   => "w_remotedevices",
+      $LANG['plugin_fusioninventory']['rules'][2]    => "w_importrules",
+      $LANG['plugin_fusioninventory']['task'][1]     => "w_tasks",
+      $LANG['plugin_fusioninventory']['wizard'][7]   => "w_tasksforcerun",
+      $LANG['plugin_fusioninventory']['wizard'][8]   => "w_taskslog");
+   }
+
+
+
+   /**
+    * Set breadcrumb / steps for make a SNMP inventory (switch / printers)
+    *
+    * @return array with data of breadcrumb
+    **/
+   function filInventorySNMP() {
+      global $LANG;
+
+      return array(
+      $LANG['plugin_fusioninventory']['wizard'][0]   => "w_start",
+      $LANG['plugin_fusioninventory']['wizard'][1]   => "w_inventorychoice",
+      $LANG['plugin_fusioninventory']['wizard'][9]   => "w_authsnmp",
+      $LANG['plugin_fusioninventory']['rules'][2]    => "w_importrules",
+      $LANG['plugin_fusioninventory']['task'][1]     => "w_tasks",
+      $LANG['plugin_fusioninventory']['wizard'][7]   => "w_tasksforcerun",
+      $LANG['plugin_fusioninventory']['wizard'][8]   => "w_taskslog");
+   }
+
+
+
+   /**
+    * Set first breadcrumb / steps for make a network discovery
+    *
+    * @return array with data of breadcrumb
+    **/
+   function filNetDiscovery() {
+      global $LANG;
+
+      $array = array($LANG['plugin_fusioninventory']['wizard'][0]   => "w_start");
+      return array_merge($array, $this->fil_Part_NetDiscovery());
+   }
+
+
+
+
+   /**
+    * Set breadcrumb / steps for choice between SNMP inventory and network discovery
+    *
+    * @return array with data of breadcrumb
+    **/
+   function filInventorySNMP_Netdiscovery() {
+      global $LANG;
+
+      $array = array(
+      $LANG['plugin_fusioninventory']['wizard'][0]   => "w_start",
+      $LANG['plugin_fusioninventory']['wizard'][1]   => "w_snmpdeviceschoice",
+      $LANG['plugin_fusioninventory']['wizard'][10]  => "");
+      return array_merge($array, $this->fil_Part_NetDiscovery());
+  }
+
+
+
+   /**
+    * Set big part of breadcrumb / steps for make a network discovery
+    *
+    * @return array with data of breadcrumb
+    **/
+   function fil_Part_NetDiscovery() {
+      global $LANG;
+
+      return array(
+      $LANG['plugin_fusioninventory']['wizard'][9]   => "w_authsnmp",
+      $LANG['plugin_fusioninventory']['rules'][2]    => "w_importrules",
+      $LANG['plugin_fusioninventory']['task'][1]     => "w_tasks",
+      $LANG['plugin_fusioninventory']['wizard'][7]   => "w_tasksforcerun",
+      $LANG['plugin_fusioninventory']['wizard'][8]   => "w_taskslog");
+   }
+
+   
+
+  // ********************* All wizard display **********************//
+
+   /**
+    * First panel of wizard with choice
+    *
+    * @param $ariane value name of current breadcrumb
+    *
+    * @return Nothing (display)
+    **/
+   static function w_start($ariane='') {
+      global $LANG;
+
+      $a_buttons = array(array($LANG['plugin_fusioninventory']['wizard'][12],
+                               'w_authsnmp',
+                               'networkscan.png',
+                               'filNetDiscovery'),
+                         array($LANG['plugin_fusioninventory']['wizard'][13],
+                                'w_inventorychoice',
+                                'general_inventory.png',
+                                ''));
+
+      echo "<center>".$LANG['plugin_fusioninventory']['wizard'][14]."</center><br/>";
+
+      PluginFusioninventoryWizard::displayButtons($a_buttons, $ariane);
+   }
+
+
+
+   /**
+    * Panel of wizard for inventory choice
+    *
+    * @param $ariane value name of current breadcrumb
+    *
+    * @return Nothing (display)
+    **/
+   static function w_inventorychoice($ariane='') {
+      global $LANG;
+
+      $a_buttons = array(array($LANG['plugin_fusioninventory']['wizard'][15],
+                               'w_importcomputeroptions',
+                               '',
+                               'filInventoryComputer'),
+                         array($LANG['plugin_fusioninventory']['wizard'][16],
+                               'w_credential',
+                               '',
+                               'filInventoryESX'),
+                         array($LANG['plugin_fusioninventory']['wizard'][17],
+                                'w_authsnmp',
+                                'general_inventory.png',
+                                'filInventorySNMP'));
+
+      PluginFusioninventoryWizard::displayButtons($a_buttons, $ariane);
+   }
+   
+
+
+   /**
+    * Manage SNMP authentication
+    *
+    * @param $ariane value name of current breadcrumb
+    *
+    * @return Nothing (display)
+    **/
+   static function w_authsnmp($ariane='') {
+      PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusinvsnmpConfigSecurity");
+   }
+
+
+
+   /**
+    * Manage devices import rules
+    *
+    * @param $ariane value name of current breadcrumb
+    *
+    * @return Nothing (display)
+    **/
+   static function w_importrules($ariane='') {
+      PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusioninventoryRuleImportEquipmentCollection");
+   }
+
+
+
+   /**
+    * Manage credential for ESX servers
+    *
+    * @param $ariane value name of current breadcrumb
+    *
+    * @return Nothing (display)
+    **/
+   static function w_credential($ariane='') {
+      PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusioninventoryCredential");
+   }
+
+
+
+   /**
+    * Manage ESX servers informations
+    *
+    * @param $ariane value name of current breadcrumb
+    *
+    * @return Nothing (display)
+    **/
+   static function w_remotedevices($ariane='') {
+      PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusioninventoryCredentialIp");
+   }
+
+
+
+   /**
+    * Manage taskjobs
+    *
+    * @param $ariane value name of current breadcrumb
+    *
+    * @return Nothing (display)
+    **/
+   static function w_tasks($ariane='') {
+      unset($_SESSION["plugin_fusioninventory_forcerun"]);
+      if (!isset($_GET['sort'])) {
+         $_GET['sort'] = 6;
+         $_GET['order'] = 'DESC';
+      }
+      $_GET['target']="task.php";
+
+      $func = self::getMethod($ariane);
+
+      PluginFusioninventoryWizard::displayShowForm($ariane,
+               "PluginFusioninventoryTaskjob",
+               array("f"=>'quickList',
+                     "arg1"=>$func));
+   }
+
+
+
+   /**
+    * Manage force running taskjobs
+    *
+    * @param $ariane value name of current breadcrumb
+    *
+    * @return Nothing (display)
+    **/
+   static function w_tasksforcerun($ariane='') {
+      if (isset($_SESSION["plugin_fusioninventory_forcerun"])) {
+         glpi_header($_SERVER["PHP_SELF"]."?wizz=".PluginFusioninventoryWizard::getNextStep($ariane));
+         exit;
+      }
+
+      if (!isset($_GET['sort'])) {
+         $_GET['sort'] = 6;
+         $_GET['order'] = 'DESC';
+      }
+      $_GET['target']="task.php";
+
+      $func = self::getMethod($ariane);
+
+      PluginFusioninventoryWizard::displayShowForm($ariane,
+               "PluginFusioninventoryTaskjob",
+               array("f"=>'listToForcerun',
+                     "arg1"=>$func,
+                     "noadditem"=>1));
+      
+   }
+
+
+
+   /**
+    * Manage taskjobs logs/history
+    *
+    * @param $ariane value name of current breadcrumb
+    *
+    * @return Nothing (display)
+    **/
+   static function w_taskslog($ariane='') {
+      if (!isset($_GET['sort'])) {
+         $_GET['sort'] = 6;
+         $_GET['order'] = 'DESC';
+      }
+      $_GET['target']="task.php";
+
+      $func = self::getMethod($ariane);
+
+      PluginFusioninventoryWizard::displayShowForm($ariane,
+               "PluginFusioninventoryTaskjob",
+               array("f"=>'quickListLogs',
+                     "arg1"=>'',
+                     "noadditem"=>1,
+                     "finish"=>1));
+
+   }
+
+
+
+   /**
+    * Get task method for current breadcrumb
+    *
+    * @param $ariane value name of current breadcrumb
+    *
+    * @return method name
+    **/
+   static function getMethod($ariane) {
+      $method = '';
+      switch ($ariane) {
+
+         case 'filNetDiscovery':
+            $method = 'netdiscovery';
+            break;
+
+         case 'filInventorySNMP':
+            $method = 'snmpquery';
+            break;
+
+         case 'filInventoryESX':
+            $method = 'ESX';
+            break;
+
+      }
+      return $method;
+   }
+}
+
+?>

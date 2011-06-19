@@ -39,4 +39,9 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 $dropdown = new PluginFusioninventoryCredentialIp();
 include (GLPI_ROOT . "/front/dropdown.common.form.php");
+
+if (strstr($_SERVER['HTTP_REFERER'], "wizard.php")) {
+   glpi_header($_SERVER['HTTP_REFERER']."&id=".$_GET['id']);
+}
+
 ?>

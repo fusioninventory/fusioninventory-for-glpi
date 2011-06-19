@@ -202,6 +202,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       if ($id) {
          if (count($PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$id."' AND `state` < 3")) == 0) {
             $this->showFormButtons($options);
+         } else {
+            $this->showFormButtons(array('candel'=>false,
+                                         'canedit'=>false));
          }
 
          $this->manageDefinitionsActions($id, "definition");
@@ -228,115 +231,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       } else  {
          $this->showFormButtons($options);
       }
-
-/*
-      // Definition   *   Action
-      echo "<tr>";
-      echo "<th colspan='2'>".$LANG['plugin_fusioninventory']['task'][27]."&nbsp;:</th>";
-      echo "<th colspan='2'>".$LANG['plugin_fusioninventory']['task'][28]."&nbsp;:</th>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['task'][29]."&nbsp;:</td>";
-      echo "<td align='center' height='10'>";
-      echo "<span id='show_DefinitionType_id'>";
-      echo "</span>";
-      echo "</td>";
-      echo "<td>".$LANG['plugin_fusioninventory']['task'][29]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      echo "<span id='show_ActionType_id'>";
-      echo "</span>";
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td rowspan='2'>".$LANG['plugin_fusioninventory']['task'][30]."&nbsp;:</td>";
-      echo "<td align='center' height='10'>";
-      echo "<span id='show_DefinitionList'>";
-      echo "</span>";
-      echo "</td>";
-      echo "<td rowspan='2'>".$LANG['plugin_fusioninventory']['task'][30]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      echo "<span id='show_ActionList'>";
-      echo "</span>";
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>";
-      $a_list = importArrayFromDB($this->fields['definition']);
-      $deflist = "";
-      $deflisthidden = "";
-      foreach ($a_list as $data) {
-         $item_type = key($data);
-         $class = new $item_type();
-         $itemname = $class->getTypeName();
-         $class->getFromDB(current($data));
-         $name = $class->fields['name'];
-         $deflist .= '<br>'.$itemname.' -> '.$name.' <img src="'.GLPI_ROOT.'/pics/delete2.png" onclick=\'deldef("'.$itemname.'->'.$name.'->'.$class->getType().'->'.$class->fields['id'].'")\'>';
-         $deflisthidden .= ','.key($data).'->'.current($data);
-      }
-      echo "<span id='definitionselection'>";
-      echo $deflist;
-      echo "</span>";
-      echo "<div style='visibility:hidden'>";
-      echo "<textarea name='definitionlist' id='definitionlist'>".$deflisthidden."</textarea>";
-      echo "<span id='show_DefinitionListEmpty'>";
-      echo "</span>";
-      echo "</div>";
-      echo "</td>";
-      echo "<td align='center'>";
-      $a_list = importArrayFromDB($this->fields['action']);
-      $actionlist = "";
-      $actionlisthidden = "";
-      foreach ($a_list as $data) {
-         $item_type = key($data);
-         $class = new $item_type();
-         $itemname = $class->getTypeName();
-         $class->getFromDB(current($data));
-         $name = '';
-         $idTmp = 0;
-         if (current($data) == '.1') {
-            $name = $LANG['plugin_fusioninventory']['agents'][32];
-            $idTmp = '.1';
-         } else if (current($data) == '.2') {
-            $name = $LANG['plugin_fusioninventory']['agents'][33];
-            $idTmp = '.2';
-         } else {
-            $class->getFromDB(current($data));
-            $name = $class->fields['name'];
-            $idTmp = $class->fields['id'];
-         }         
-         $actionlist .= '<br>'.$itemname.' -> '.$name.' <img src="'.GLPI_ROOT.'/pics/delete2.png" onclick=\'delaction("'.$itemname.'->'.$name.'->'.$class->getType().'->'.$idTmp.'")\'>';
-         $actionlisthidden .= ','.key($data).'->'.current($data);
-      }
-      echo "<span id='actionselection'>";
-      echo $actionlist;
-      echo "</span>";
-      echo "<div style='visibility:hidden'>";
-      echo "<textarea name='actionlist' id='actionlist'>".$actionlisthidden."</textarea>";
-      echo "<span id='show_ActionListEmpty'>";
-      echo "</span>";
-      echo "</div>";
-      echo "</td>";
-      echo "</tr>";
-      
-      echo "<script type='text/javascript'>
-         function deldef(data) {
-            var elem = data.split('->');
-            document.getElementById('definitionlist').value = document.getElementById('definitionlist').value.replace(',' + elem[2] + '->' + elem[3], '');
-            document.getElementById('definitionselection').innerHTML = document.getElementById('definitionselection').innerHTML.replace('<br>' + elem[0] + ' -&gt; ' + elem[1] +
-            ' <img src=\"".GLPI_ROOT."/pics/delete2.png\" onclick=\'deldef(\"' + elem[0] + '->' + elem[1] + '->' + elem[2] + '->' + elem[3] + '\")\'>', '');
-         }
-
-         function delaction(data) {
-            var elem = data.split('->');
-            document.getElementById('actionlist').value = document.getElementById('actionlist').value.replace(',' + elem[2] + '->' + elem[3], '');
-            document.getElementById('actionselection').innerHTML = document.getElementById('actionselection').innerHTML.replace('<br>' + elem[0] + ' -&gt; ' + elem[1] +
-            ' <img src=\"".GLPI_ROOT."/pics/delete2.png\" onclick=\'delaction(\"' + elem[0] + '->' + elem[1] + '->' + elem[2] + '->' + elem[3] + '\")\'>', '');
-         }
-      </script>";
-*/
 
       return true;
    }
@@ -465,6 +359,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             }
          }
       }
+
       $rand = Dropdown::showFromArray($myname, $a_methods2, array('value'=>$value));
 
       // ** List methods available
@@ -882,6 +777,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             WHERE `plugin_fusioninventory_tasks_id`='".$data['id']."'";
          $DB->query($queryUpdate);
 
+         if (is_null($data['date_scheduled_timestamp'])) {
+            $data['date_scheduled_timestamp'] = date('U');
+         }
          if (($data['date_scheduled_timestamp'] + $period) <= date('U')) {
             $periodtotal = $period;
             for($i=2; ($data['date_scheduled_timestamp'] + $periodtotal) <= date('U'); $i++) {
@@ -914,6 +812,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    function forceRunningTask($tasks_id) {
       global $LANG,$DB;
       
+      $uniqid = '';
+      
       if ($this->reinitializeTaskjobs($tasks_id, 1)) {
          $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
          $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
@@ -934,7 +834,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
                $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
                $class = new $className;
-               $class->prepareRun($data['id']);
+               $uniqid = $class->prepareRun($data['id']);
             
             }
          }
@@ -951,6 +851,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       } else {
          $_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusioninventory']['task'][39];
       }
+      return $uniqid;
    }
    
 
@@ -1461,6 +1362,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       }
    }
 
+
+   
    static function getAllowurlfopen($wakecomputer=0) {
       global $LANG;
       
@@ -1481,6 +1384,264 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          return false;
       }
       return true;
+   }
+
+
+
+   /*
+    * Display static list of taskjob
+    *
+    * @param $method value method name of taskjob to display
+    * 
+    */
+   static function quickList($method) {
+      global $LANG;
+
+      $pluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $pluginFusioninventoryTask = new PluginFusioninventoryTask();
+
+      $a_list = $pluginFusioninventoryTaskjob->find("`method`='".$method."'");
+
+      echo "<table class='tab_cadrehov' style='width:950px'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<th>".$LANG['common'][16]."</th>";
+      echo "<th>".$LANG['common'][60]."</th>";
+      echo "<th>".$LANG['plugin_fusioninventory']['task'][14]."</th>";
+      echo "<th>".$LANG['plugin_fusioninventory']['task'][17]."</th>";
+      echo "<th>".$LANG['plugin_fusioninventory']['task'][27]."</td>";
+      echo "<th>".$LANG['plugin_fusioninventory']['task'][28]."</th>";
+      echo "</tr>";
+
+      foreach ($a_list as $data) {
+         $pluginFusioninventoryTaskjob->getFromDB($data['id']);
+         $pluginFusioninventoryTask->getFromDB($data['plugin_fusioninventory_tasks_id']);
+         echo "<tr class='tab_bg_1'>";
+         $link_item = $pluginFusioninventoryTaskjob->getFormURL();
+         $link  = $link_item;
+         $link .= (strpos($link,'?') ? '&amp;':'?').'id=' . $pluginFusioninventoryTaskjob->fields['id'];
+         echo "<td><a href='".$link."'>".$pluginFusioninventoryTaskjob->getNameID(1)."</a></td>";
+         echo "<td>".Dropdown::getYesNo($pluginFusioninventoryTask->fields['is_active'])."</td>";
+         echo "<td>".$pluginFusioninventoryTask->fields['date_scheduled']."</td>";
+         $a_time = '';
+         switch ($pluginFusioninventoryTask->fields['periodicity_type']) {
+
+            case 'minutes':
+               $a_time = $pluginFusioninventoryTask->fields['periodicity_count']." ".
+                    $LANG['plugin_fusioninventory']['task'][35];
+               break;
+
+            case 'hours':
+               $a_time = $pluginFusioninventoryTask->fields['periodicity_count']." ".
+                    $LANG['plugin_fusioninventory']['task'][36];
+               break;
+
+            case 'days':
+               $a_time = $pluginFusioninventoryTask->fields['periodicity_count']." ".
+                    $LANG['plugin_fusioninventory']['task'][37];
+               break;
+
+            case 'months':
+               $a_time = $pluginFusioninventoryTask->fields['periodicity_count']." ".
+                    $LANG['plugin_fusioninventory']['task'][38];
+               break;
+         }
+
+         echo "<td>".$a_time."</td>";
+         $a_defs = importArrayFromDB($data['definition']);
+         echo "<td>";
+         foreach ($a_defs as $datadef) {
+            foreach ($datadef as $itemtype=>$items_id) {
+               $class = new $itemtype;
+               $class->getFromDB($items_id);
+               echo $class->getLink(1)." (".$class->getTypeName().")<br/>";
+            }
+         }
+         echo "</td>";
+         echo "<td>";
+         $a_acts = importArrayFromDB($data['action']);
+         foreach ($a_acts as $dataact) {
+            foreach ($dataact as $itemtype=>$items_id) {
+               $class = new $itemtype();
+               $itemname = $class->getTypeName();
+               $class->getFromDB($items_id);
+               $name = '';
+               $idTmp = 0;
+               if ($items_id == '.1') {
+                  $name = $LANG['plugin_fusioninventory']['agents'][32];
+               } else if ($items_id == '.2') {
+                  $name = $LANG['plugin_fusioninventory']['agents'][33];
+               } else {
+                  $name = $class->getLink(1);
+               }         
+               echo $name.' ('.$itemname.')<br/>';
+            }
+         }
+         echo "</td>";
+         echo "</tr>";
+      }
+      echo "</table>";
+   }
+
+
+
+   /*
+    * Quick add or update taskjob
+    *
+    * @param $id integer id of taskjobs
+    * @param $method value method name
+    *
+    */
+   function showQuickForm($id, $method) {
+      global $LANG, $CFG_GLPI;
+
+      $pluginFusioninventoryTask = new PluginFusioninventoryTask();
+      if (($id!='') AND ($id != '0')) {
+         $this->getFromDB($id);
+         $pluginFusioninventoryTask->getFromDB($this->fields['plugin_fusioninventory_tasks_id']);
+      } else {
+         $this->getEmpty();
+         $pluginFusioninventoryTask->getEmpty();
+      }
+
+      if (strstr($_SERVER['PHP_SELF'], 'wizard')) {
+         echo "<a href=\"javascript:showHideDiv('tabsbody','tabsbodyimg','".$CFG_GLPI["root_doc"].
+                    "/pics/deplier_down.png','".$CFG_GLPI["root_doc"]."/pics/deplier_up.png')\">";
+         echo "<img alt='' name='tabsbodyimg' src=\"".$CFG_GLPI["root_doc"]."/pics/deplier_up.png\">";
+         echo "</a>&nbsp;&nbsp;";
+
+         echo "<a href=\"".$_SERVER['PHP_SELF']."?wizz=".$_GET['wizz']."&ariane=".$_GET['ariane']."\">";
+         echo $LANG['common'][53];
+         echo "</a>";
+
+      } else {
+         $this->showTabs();
+      }
+      $this->showFormHeader(array());
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['common'][16]."&nbsp;:</td>";
+      echo "<td><input type='text' name='name' value='".$this->fields['name']."' /></td>";
+      echo "<td>".$LANG['common'][60]."&nbsp;:</td>";
+      echo "<td>";
+      Dropdown::showYesNo("is_active", $pluginFusioninventoryTask->fields['is_active']);
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1' style='display:none'>";
+      echo "<td colspan='4'>";
+      echo "<input type='hidden' name='quickform' value='1' />";
+      $rand = $this->dropdownMethod("method", $method);
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][33]."&nbsp;:</td>";
+      echo "<td>";
+      $com = array();
+      $com['push'] = $LANG['plugin_fusioninventory']['task'][41];
+      $com['pull'] = $LANG['plugin_fusioninventory']['task'][42];
+      Dropdown::showFromArray("communication", $com, array('value'=>$pluginFusioninventoryTask->fields["communication"]));
+      echo "</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][17]."&nbsp;:</td>";
+      echo "<td>";
+      Dropdown::showInteger("periodicity_count", $pluginFusioninventoryTask->fields['periodicity_count'], 0, 300);
+      $a_time = array();
+      $a_time[] = "------";
+      $a_time['minutes'] = "minutes";
+      $a_time['hours'] = "heures";
+      $a_time['days'] = "jours";
+      $a_time['months'] = "mois";
+      Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$pluginFusioninventoryTask->fields['periodicity_type']));
+      echo "</td>";
+      echo "</tr>";
+
+      if ($id) {
+         $this->showFormButtons(array());
+
+         $this->manageDefinitionsActions($id, "definition");
+         $this->manageDefinitionsActions($id, "action");
+
+         $params=array('method_id'=>'__VALUE__',
+               'entity_restrict'=>'',
+               'rand'=>$rand,
+               'myname'=>"method"
+               );
+         echo "<script type='text/javascript'>";
+         ajaxUpdateItemJsCode("show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params,true,"dropdown_method".$rand);
+         echo "</script>";
+         echo "<script type='text/javascript'>";
+         ajaxUpdateItemJsCode("show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params,true,"dropdown_method".$rand);
+         echo "</script>";
+      } else  {
+         $this->showFormButtons(array());
+      }
+   }
+
+
+
+   /*
+    * Liste of taskjob to forcerun
+    */
+   static function listToForcerun($method) {
+      global $LANG;
+
+      $pluginFusioninventoryTaskjob = new self();
+      $a_list = $pluginFusioninventoryTaskjob->find("`method`='".$method."'");
+
+      echo "<form name='form_ic' method='post' action='".getItemTypeFormURL(__CLASS__)."'>";
+      echo "<table class='tab_cadre_fixe' style='width:500px'>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='2' align='center'>".$LANG['plugin_fusioninventory']['task'][40]."</th>";
+      echo "</tr>";
+      
+      foreach ($a_list as $data) {
+         $pluginFusioninventoryTaskjob->getFromDB($data['id']);
+         echo "<tr class='tab_bg_1'>";
+         echo "<td><input type='checkbox' name='taskjobstoforcerun[]' value='".$data['id']."' /></td>";
+         $link_item = $pluginFusioninventoryTaskjob->getFormURL();
+         $link  = $link_item;
+         $link .= (strpos($link,'?') ? '&amp;':'?').'id=' . $pluginFusioninventoryTaskjob->fields['id'];
+         echo "<td><a href='".$link."'>".$pluginFusioninventoryTaskjob->getNameID(1)."</a></td>";
+         echo "<tr class='tab_bg_1'>";
+      }
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td colspan='2' align='center'>";
+      echo '<input name="forcestart" value="'.$LANG['plugin_fusioninventory']['task'][40].'"
+          class="submit" type="submit">';
+      echo "</td>";
+      echo "</tr>";
+
+      echo "</table>";
+      echo "</form>";
+   }
+
+
+
+   /*
+    * List of last logs (uniqid) of taskjob
+    */
+   static function quickListLogs() {
+
+      $pluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+
+      foreach ($_SESSION["plugin_fusioninventory_forcerun"] as $taskjobs_id=>$uniqid) {
+         $pluginFusioninventoryTaskjob->getFromDB($taskjobs_id);
+
+         echo "<table class='tab_cadrehov' style='width:950px'>";
+         echo "<tr class='tab_bg_1'>";
+         echo "<th>".$pluginFusioninventoryTaskjob->getLink(1)."</th>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>";
+         $pluginFusioninventoryTaskjoblog->showHistory($taskjobs_id, 950, array('uniqid'=>$uniqid));
+         echo "</td>";
+
+         echo "</table><br/>";
+      }
    }
 
 }

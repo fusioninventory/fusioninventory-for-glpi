@@ -43,8 +43,15 @@ class PluginFusioninventorySetup {
       global $DB;
 
       CronTask::Unregister('fusioninventory');
-
-      $PluginFusioninventorySetup = new PluginFusioninventorySetup();
+      
+      $PluginFusioninventorySetup  = new PluginFusioninventorySetup();
+      $fusioninventory_config      = new PluginFusioninventoryConfig();
+      $PluginFusioninventoryModule = new PluginFusioninventoryModule();
+      $user = new User();
+      $plugins_id = $PluginFusioninventoryModule->getModuleId("fusioninventory");
+   
+      $users_id = $fusioninventory_config->getValue($plugins_id, 'users_id');
+      $user->delete(array('id'=>$users_id), 1);
 
       if (file_exists(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
          $PluginFusioninventorySetup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
@@ -726,6 +733,37 @@ class PluginFusioninventorySetup {
          $input['value'] = '0';
          $ruleaction->add($input);
          
+   }
+   
+   
+   
+   /**
+    * Creation of FusionInventory user
+    * 
+    * 
+    * @return int id of the user "plugin FusionInventory"
+    */
+   function createFusionInventoryUser() {
+      $user = new User();
+      $a_users = $user->find("`name`='Plugin_FusionInventory'");
+      if (count($a_users) == '0') {
+         $input = array();
+         $input['name'] = 'Plugin_FusionInventory';
+         $input['password'] = mt_rand(30, 39);
+         $input['firstname'] = "Plugin FusionInventory";
+         return $user->add($input);
+      } else {
+         for ($i = 0; $i < 1000; $i++) {
+            $a_users = $user->find("`name`='Plugin_FusionInventory".$i."'");
+            if (count($a_users) == '0') {
+               $input = array();
+               $input['name'] = 'Plugin_FusionInventory'.$i;
+               $input['password'] = mt_rand(30, 39);
+               $input['firstname'] = "Plugin FusionInventory";
+               return $user->add($input);
+            }
+         }         
+      }
    }
 
 }

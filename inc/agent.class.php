@@ -144,7 +144,13 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 		$tab[9]['name'] = $LANG['plugin_fusioninventory']['agents'][24];
 		$tab[9]['datatype'] = 'text';
 
-      $i = 10;
+		$tab[10]['table'] = $this->getTable();
+		$tab[10]['field'] = 'useragent';
+		$tab[10]['linkfield'] = 'useragent';
+		$tab[10]['name'] = $LANG['plugin_fusioninventory']['agents'][42];
+		$tab[10]['datatype'] = 'text';
+
+      $i = 20;
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
       $a_modules = $PluginFusioninventoryAgentmodule->find();
       foreach ($a_modules as $data) {
@@ -208,7 +214,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['agents'][23]." :</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['agents'][23]."&nbsp:</td>";
       echo "<td align='center'>";
       if (($this->fields["items_id"] != "0") AND ($this->fields["items_id"] != "")) {
          $oComputer = new Computer();
@@ -220,18 +226,18 @@ class PluginFusioninventoryAgent extends CommonDBTM {
                                         $_SESSION['glpiactive_entity']);
       }
       echo "</td>";
-      echo "<td>".$LANG['plugin_fusioninventory']['agents'][24]." :</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['agents'][24]."&nbsp:</td>";
       echo "<td align='center'>";
       echo $this->fields["token"];
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['agents'][37]." :</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['agents'][37]."&nbsp:</td>";
       echo "<td align='center'>";
       Dropdown::showYesNo('lock', $this->fields["lock"]);
       echo "</td>";
-      echo "<td>".$LANG['plugin_fusioninventory']['agents'][25]." :</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['agents'][25]."&nbsp:</td>";
       echo "<td align='center'>";
       $a_versions = importArrayFromDB($this->fields["version"]);
       foreach ($a_versions as $module => $version) {
@@ -241,10 +247,11 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td></td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['agents'][42]."&nbsp:</td>";
       echo "<td align='center'>";
+      echo $this->fields["useragent"];
       echo "</td>";
-      echo "<td>".$LANG['plugin_fusioninventory']['agents'][4]." :</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['agents'][4]."&nbsp:</td>";
       echo "<td align='center'>";
       echo convDateTime($this->fields["last_contact"]);
       echo "</td>";
@@ -304,6 +311,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             $a_input['device_id']    = addslashes_deep($sxml->DEVICEID);
             $a_input['entities_id']  = 0;
             $a_input['last_contact'] = date("Y-m-d H:i:s");
+            $a_input['useragent']    = $_SERVER['HTTP_USER_AGENT'];
             $pta->add($a_input);
             return;
          } else {
@@ -314,6 +322,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
                   $input['token'] = $sxml->TOKEN;
                }
                $input['last_contact'] = date("Y-m-d H:i:s");
+               $input['useragent']    = $_SERVER['HTTP_USER_AGENT'];
                $pta->update($input);
             }
          }

@@ -83,10 +83,11 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          $where = " AND `items_id`='".$options['items_id']."'
                     AND `itemtype`='".$options['itemtype']."' ";
       }
+      if (isset($options['uniqid'])) {
+         $where .= " AND `uniqid`='".$options['uniqid']."' ";
+      }
 
       echo "<center>";
-      echo "<table class='tab_cadre' style='width: ".$width."px'>";
-
       $query = 'SELECT * FROM `glpi_plugin_fusioninventory_taskjobstatus`
          WHERE `plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"
             AND `state`!="3"
@@ -95,90 +96,101 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          ORDER BY `id` DESC';
       $result = $DB->query($query);
       // ***** Display for all status running / prepared
-      echo "<tr class='tab_bg_1'>";
-      echo "<th width='32'>";
-      echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_running.png'/>";
-      echo "</th>";
-      echo "<td>";
-      if ($DB->numrows($result) > 0) {
-         echo "<table class='tab_cadre'>";
-         echo "<tr>";
-         echo "<th></th>";
-         echo "<th>Uniqid</th>";
-         echo "<th>".$LANG['plugin_fusioninventory']['processes'][38]."</th>";
-         echo "<th>".$LANG['plugin_fusioninventory']['agents'][28]."</th>";
-         echo "<th>";
-         echo $LANG['common'][27];
+      if (isset($options['uniqid']) AND $DB->numrows($result) == '0') {
+
+      } else {
+         // Display
+
+         echo "<table class='tab_cadre' style='width: ".$width."px'>";
+         echo "<tr class='tab_bg_1'>";
+         echo "<th width='32'>";
+         echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_running.png'/>";
          echo "</th>";
-         echo "<th>";
-         echo $LANG['joblist'][0];
-         echo "</th>";
-         echo "<th>";
-         echo $LANG['common'][25];
-         echo "</th>";
-         echo "</tr>";
-         while ($data=$DB->fetch_array($result)) {
-            $this->showHistoryLines($data['id']);
+         echo "<td>";
+         if ($DB->numrows($result) > 0) {
+            echo "<table class='tab_cadre'>";
+            echo "<tr>";
+            echo "<th></th>";
+            echo "<th>Uniqid</th>";
+            echo "<th>".$LANG['plugin_fusioninventory']['processes'][38]."</th>";
+            echo "<th>".$LANG['plugin_fusioninventory']['agents'][28]."</th>";
+            echo "<th>";
+            echo $LANG['common'][27];
+            echo "</th>";
+            echo "<th>";
+            echo $LANG['joblist'][0];
+            echo "</th>";
+            echo "<th>";
+            echo $LANG['common'][25];
+            echo "</th>";
+            echo "</tr>";
+            while ($data=$DB->fetch_array($result)) {
+               $this->showHistoryLines($data['id']);
+            }
+            echo "</table>";
          }
-         echo "</table>";
+         echo "</td>";
+         echo "</tr>";
+         echo "</table><br/>";
       }
-      echo "</td>";
-      echo "</tr>";
-      echo "</table><br/>";
 
 
       // ***** Display for statusjob OK
-      echo "<table class='tab_cadre' width='".$width."'>";
-      echo "<tr class='tab_bg_1'>";
-      echo "<th width='32'>";
-      echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_finished.png'/>";
-      echo "</td>";
-      echo "<td>";
-         echo "<table class='tab_cadre' >";
-         echo "<tr>";
-         echo "<td colspan='5'>";
-         $querycount = 'SELECT count(*) AS cpt FROM `glpi_plugin_fusioninventory_taskjobstatus`
+      $querycount = 'SELECT count(*) AS cpt FROM `glpi_plugin_fusioninventory_taskjobstatus`
             WHERE `plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"
                AND `state`="3"
                '.$where.'
             GROUP BY uniqid,plugin_fusioninventory_agents_id';
          $resultcount = $DB->query($querycount);
          $number = $DB->numrows($resultcount);
+      if (isset($options['uniqid']) AND $number == '0') {
 
-         printAjaxPager('',$start,$number);
+      } else {
+         // display
+         echo "<table class='tab_cadre' width='".$width."'>";
+         echo "<tr class='tab_bg_1'>";
+         echo "<th width='32'>";
+         echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_finished.png'/>";
          echo "</td>";
-         echo "</tr>";
+         echo "<td>";
+            echo "<table class='tab_cadre' >";
+            echo "<tr>";
+            echo "<td colspan='5'>";
+            printAjaxPager('',$start,$number);
+            echo "</td>";
+            echo "</tr>";
 
-         $query = str_replace('`state`!="3"', '`state`="3"', $query);
-         $query .= ' LIMIT '.intval($start).','.intval($_SESSION['glpilist_limit']);
-         $result = $DB->query($query);
-         echo "<tr>";
-         echo "<th></th>";
-         echo "<th>Uniqid</th>";
-         echo "<th>".$LANG['plugin_fusioninventory']['agents'][28]."</th>";
-         echo "<th>";
-         echo $LANG['common'][27];
-         echo "</th>";
-         echo "<th>";
-         echo $LANG['joblist'][0];
-         echo "</th>";
-         echo "</tr>";
+            $query = str_replace('`state`!="3"', '`state`="3"', $query);
+            $query .= ' LIMIT '.intval($start).','.intval($_SESSION['glpilist_limit']);
+            $result = $DB->query($query);
+            echo "<tr>";
+            echo "<th></th>";
+            echo "<th>Uniqid</th>";
+            echo "<th>".$LANG['plugin_fusioninventory']['agents'][28]."</th>";
+            echo "<th>";
+            echo $LANG['common'][27];
+            echo "</th>";
+            echo "<th>";
+            echo $LANG['joblist'][0];
+            echo "</th>";
+            echo "</tr>";
 
-         while ($data=$DB->fetch_array($result)) {
-            $this->showHistoryLines($data['id'], 0);
-         }
+            while ($data=$DB->fetch_array($result)) {
+               $this->showHistoryLines($data['id'], 0);
+            }
 
-         echo "<tr>";
-         echo "<td colspan='5'>";
-         printAjaxPager('',$start,$number);
+            echo "<tr>";
+            echo "<td colspan='5'>";
+            printAjaxPager('',$start,$number);
+            echo "</td>";
+            echo "</tr>";
+            echo "</table>";
+
          echo "</td>";
          echo "</tr>";
          echo "</table>";
-
-      echo "</td>";
-      echo "</tr>";
-      echo "</table></center>";
-
+      }
+      echo "</center>";
       return true;
    }
 
@@ -559,9 +571,7 @@ function appear_array(id){
    *
    **/
    function graphFinish($taskjobs_id) {
-      global $LANG;
-
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      global $LANG,$DB;
 
       $finishState = array();
       $finishState[2] = 0;
@@ -569,18 +579,16 @@ function appear_array(id){
       $finishState[4] = 0;
       $finishState[5] = 0;
 
-      $a_jobstatus = $PluginFusioninventoryTaskjobstatus->find('`plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'" GROUP BY uniqid,plugin_fusioninventory_agents_id');
-
-      $search = '(';
-      foreach ($a_jobstatus as $data) {
-         $search .= $data['id'].",";
-      }
-      $search .= ')';
-      $search = str_replace(',)', ')', $search);
-
-      $a_joblogs = $this->find('`plugin_fusioninventory_taskjobstatus_id` IN '.$search.' AND `state` IN (2, 3, 4, 5)');
-      foreach($a_joblogs as $datajob) {
-         $finishState[$datajob['state']]++;
+      $query = "SELECT `glpi_plugin_fusioninventory_taskjoblogs`.`state`
+         FROM glpi_plugin_fusioninventory_taskjobstatus
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` on plugin_fusioninventory_taskjobstatus_id=`glpi_plugin_fusioninventory_taskjobstatus`.`id`
+         WHERE `plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
+         AND  `glpi_plugin_fusioninventory_taskjoblogs`.`state` IN (2, 3, 4, 5)
+         GROUP BY glpi_plugin_fusioninventory_taskjobstatus.uniqid,plugin_fusioninventory_agents_id";
+      if ($result=$DB->query($query)) {
+			while ($datajob=$DB->fetch_array($result)) {
+            $finishState[$datajob['state']]++;
+         }
       }
       $input = array();
       $input[$LANG['plugin_fusioninventory']['taskjoblog'][2]] = $finishState[2];
@@ -596,6 +604,8 @@ function appear_array(id){
 
    }
 
+   
+   
    static function getByUniqID($uuid) {
       $results = getAllDatasFromTable('glpi_plugin_fusioninventory_taskjobstatus',
                                       "`uniqid`='$uuid'");

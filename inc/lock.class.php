@@ -53,6 +53,15 @@ class PluginFusioninventoryLock extends CommonDBTM{
    function showForm($p_target, $p_itemtype, $p_items_id=0) {
       global $DB, $LANG, $SEARCH_OPTION;
 
+      $can = 0;
+      $typeright = strtolower($p_itemtype);
+      if ($typeright == "networkequipment") {
+         $typeright = "networking";
+      }
+      if (haveRight($typeright,"w")) {
+        $can = 1;
+      }
+      
       $tableName = getTableForItemType($p_itemtype);
       echo "<div width='50%'>";
       $locked = PluginFusioninventoryLock::getLockFields($tableName, $p_items_id);
@@ -176,10 +185,14 @@ class PluginFusioninventoryLock extends CommonDBTM{
          echo "</tr>";
 
       }
-      echo "<tr class='tab_bg_2'><td align='center' colspan='".$colspan."'>
-               <input class='submit' type='submit' name='unlock_field_fusioninventory'
-                      value='" . $LANG['buttons'][7] . "'></td></tr>";
-
+      if ($can == '1') {
+         echo "<tr class='tab_bg_2'>";
+         echo "<td align='center' colspan='".$colspan."'>";
+         echo "<input class='submit' type='submit' name='unlock_field_fusioninventory'
+                         value='" . $LANG['buttons'][7] . "'>";
+         echo "</td>";
+         echo "</tr>";
+      }
       echo "</table>";
       if (!strstr($p_target, "ajax/dropdownMassiveAction.php")) {
          echo "</form>";
