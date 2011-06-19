@@ -142,10 +142,11 @@ class PluginFusioninventoryRestCommunication {
          $taskjoblog = new PluginFusioninventoryTaskjoblog();
          
          if ($p['code'] == 'ok') {
-            $state = PluginFusioninventoryTaskjoblog::TASK_OK;
+            $state = 0;
          } else {
-            $state = PluginFusioninventoryTaskjoblog::TASK_ERROR;
+            $state = 1;
          }
+
          $taskjobstatus->changeStatusFinish($taskjobstatus->fields['id'], 
                                             $taskjobstatus->fields['items_id'], 
                                             $taskjobstatus->fields['itemtype'], $state, $p['msg']);
