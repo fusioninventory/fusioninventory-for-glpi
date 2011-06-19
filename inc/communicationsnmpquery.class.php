@@ -119,7 +119,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             }
          }
       }
-      return $result;
+      return $errors;
    }
 
 
