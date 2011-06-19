@@ -360,8 +360,7 @@ function appear_array(id){
             while (count($a_history) != 0) {
                if (count($a_devices_merged) > 0) {
                   $text .= "<tr class='tab_bg_1'>";
-                  $text .= "<th></th>";
-                  $text .= "<td>";
+                  $text .= "<td colspan='2'>";
                   $text .= array_pop($a_devices_merged);
                   $text .= "</td>";
                   $a_return = $this->displayHistoryDetail(array_shift($a_history));
@@ -392,17 +391,15 @@ function appear_array(id){
             $display = 1;
             while (count($a_devices_merged) != 0) {
                $text .= "<tr class='tab_bg_1'>";
-               $text .= "<th></th>";
-               $text .= "<th>";
+               $text .= "<td colspan='2'>";
                $text .= array_pop($a_devices_merged);
-               $text .= "</th>";
+               $text .= "</td>";
                if ($display == "1") {
                   $text .= "<td colspan='3' rowspan='".(count($a_devices_merged) + 1)."'></td>";
                   $display = 0;
                }
                $text .= "</tr>";
             }
-
 
             $text .= "<tr class='tab_bg_4'>";
             $text .= "<td colspan='5' height='4'>";
