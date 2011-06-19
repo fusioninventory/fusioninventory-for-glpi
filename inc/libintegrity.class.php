@@ -288,6 +288,7 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
                   case 'HARDWARE':
                   case 'ANTIVIRUS':
                   case 'USERS':
+                  case 'VIRTUALMACHINES':
                      break;
 
                   default:
