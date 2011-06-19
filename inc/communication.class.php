@@ -255,9 +255,11 @@ class PluginFusioninventoryCommunication {
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $moduleRun = $PluginFusioninventoryTaskjobstatus->getTaskjobsAgent($agent_id);
       foreach ($moduleRun as $className => $array) {
-         $class = new $className();
-         $sxml_temp = $class->run($array);
-         $this->append_simplexml($this->sxml, $sxml_temp);
+         if (class_exists($className)) {
+            $class = new $className();
+            $sxml_temp = $class->run($array);
+            $this->append_simplexml($this->sxml, $sxml_temp);
+         }
       }
    }
 
