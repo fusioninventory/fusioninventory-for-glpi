@@ -84,6 +84,7 @@ class PluginFusinvinventoryImport_Storage extends CommonDBTM {
 
       $devID = 0;
       if ($type == "update") {
+         $items_id = str_replace("d", "", $items_id);
          $devID = $items_id;
          $CompDevice->getFromDB($items_id);
       } else if ($type == "add") {
@@ -135,6 +136,9 @@ class PluginFusinvinventoryImport_Storage extends CommonDBTM {
                $array['specificity'] =  $specificity;
             }
             $devID = $CompDevice->add($array);
+            if ($type_tmp == "Drive") {
+               $devID = 'd'.$devID;
+            }
          }
          return $devID;
       }
@@ -163,6 +167,7 @@ class PluginFusinvinventoryImport_Storage extends CommonDBTM {
       $CompHardDevice = new Computer_Device('DeviceHardDrive');
       
       if ($typeDevice == "Drive") {
+         $items_id = str_replace("d", "", $items_id);
          $CompDevice->getFromDB($items_id);
          if ($CompDevice->fields['computers_id'] == $idmachine) {
             $CompDevice->delete(array("id" => $items_id,
