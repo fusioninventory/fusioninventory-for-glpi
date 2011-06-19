@@ -202,6 +202,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       if ($id) {
          if (count($PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$id."' AND `state` < 3")) == 0) {
             $this->showFormButtons($options);
+         } else {
+            $this->showFormButtons(array('candel'=>false,
+                                         'canedit'=>false));
          }
 
          $this->manageDefinitionsActions($id, "definition");
