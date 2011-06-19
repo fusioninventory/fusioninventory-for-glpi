@@ -359,7 +359,7 @@ class PluginFusinvinventoryInventory {
       $DeviceDrive = new DeviceDrive();
       $a_deviceDrive = $CompDeviceDrive->find("`computers_id`='".$items_id."' ");
       foreach ($a_deviceDrive as $deviceDrive_id => $deviceDrive_data) {
-         $a_sectionsinfos[] = "STORAGES/".$deviceDrive_id;
+         $a_sectionsinfos[] = "STORAGES/d".$deviceDrive_id;
          $xml_storage = $xml_content->addChild("STORAGES");
          $DeviceDrive->getFromDB($deviceDrive_data['devicedrives_id']);
          $xml_storage->addChild("NAME", $DeviceDrive->fields['designation']);

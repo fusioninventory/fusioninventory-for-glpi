@@ -561,7 +561,7 @@ class PluginFusinvinventoryLibhook {
             $split = explode("/", $section);
             $sectionName = $split[0];
             $items_id = $split[1];
-            if ($items_id > 0) { // Object managed into GLPI only!
+            if (($items_id > 0) OR (strstr($items_id, 'd'))) { // Object managed into GLPI only!
                switch ($sectionName) {
 
                   case 'CPUS':
@@ -679,7 +679,7 @@ class PluginFusinvinventoryLibhook {
          $items_id = $array[1];
          $sectionName = $array[0];
 
-         if ($items_id > 0) { // Object managed into GLPI only!
+         if (($items_id > 0) OR (strstr($items_id, 'd'))) { // Object managed into GLPI only!
             switch ($sectionName) {
 
                case 'CPUS':

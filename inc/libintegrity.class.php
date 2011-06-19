@@ -138,7 +138,7 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
          foreach($a_sections['sections'] as $name=>$section) {
             //echo $name."<br/>";
             $split = explode("/", $name);
-            if ($split[1] > 0) {
+            if (($split[1] > 0) OR (strstr($split[1], 'd'))) {
                $a_sectiontmp = unserialize($section);
                switch ($split[0]) {
 
@@ -220,6 +220,7 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
                      $type_tmp = $PluginFusinvinventoryImport_Storage->getTypeDrive($array_section);
                      if ($type_tmp == "Drive") {
                         $DeviceDrive = new Computer_Device('DeviceDrive');
+                        $split[1] = str_replace("d", "", $split[1]);
                         if (!$a_lists = $DeviceDrive->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
                            $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['devices'][19], $a_sectiontmp['NAME']);
                         } else {
