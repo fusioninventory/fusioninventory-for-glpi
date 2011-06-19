@@ -573,8 +573,6 @@ function appear_array(id){
    function graphFinish($taskjobs_id) {
       global $LANG,$DB;
 
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
-
       $finishState = array();
       $finishState[2] = 0;
       $finishState[3] = 0;
@@ -606,6 +604,8 @@ function appear_array(id){
 
    }
 
+   
+   
    static function getByUniqID($uuid) {
       $results = getAllDatasFromTable('glpi_plugin_fusioninventory_taskjobstatus',
                                       "`uniqid`='$uuid'");

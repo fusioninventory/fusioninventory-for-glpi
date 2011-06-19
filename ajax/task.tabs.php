@@ -84,6 +84,7 @@ if ($_POST['glpi_tab'] > 1) {
       $i++;
       if ($_POST['glpi_tab'] == $i) {
          $pftj->showForm($taskjob_id);
+         echo "<br/>";
          $PluginFusioninventoryTaskjoblog->showHistory($taskjob_id);
          $taskjob_id_next = $taskjob_id;
          for ($j=2 ; $j > 1; $j++) {
