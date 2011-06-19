@@ -49,6 +49,7 @@ class PluginFusioninventoryMenu {
    static function displayMenu($type = "big") {
       global $LANG;
 
+
       // FOR THE BETA
       echo "<center>"; 
       echo "<a href='http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/wiki/Beta_test'>";
