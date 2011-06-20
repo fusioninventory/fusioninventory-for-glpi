@@ -221,6 +221,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
       $pluginFusinvsnmpNetworkPortConnectionLog = new PluginFusinvsnmpNetworkPortConnectionLog();
       $networkEquipment = new NetworkEquipment();
       $networkPort = new NetworkPort();
+      $networkPort_NetworkPort = new NetworkPort_NetworkPort();
 
       // * 1. Create switchs
       $this->testSendinventory("toto", $switch1, 1);
@@ -350,9 +351,13 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
             $this->assertEquals($pluginFusioninventoryUnknownDevice->fields['hub'],
                               '0', '(4)Hub connected on port fa0/1 of switch 1');
          }
+         // CHECK 2 : verify port 1 of the switch don't have 2 connections
+         $a_list_connections = $networkPort_NetworkPort->find("`networkports_id_1`='1'");
+         $this->assertEquals(count($a_list_connections),
+                              '1', '(4) Port fa0/1 of switch 1 not connected to 1 port ('.
+                                    count($a_list_connections).')');
 
-
-
+      $switch2bis = $switch2;
       $switch2 = str_replace("</CONNECTIONS>
           <IFDESCR>FastEthernet0/2</IFDESCR>", "               <CONNECTION>
                <MAC>f0:ad:4e:00:19:f7</MAC>
@@ -363,8 +368,22 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
       // * 5. Update switchs
       $this->testSendinventory("toto", $switch1);
       $this->testSendinventory("toto", $switch2);
-         // TODO : verify hub deleted
-         // TODO : verify port 1 of switch 1 connected directly to port
+         // CHECK 1 : verify hub deleted
+         $a_list_hub = $pluginFusioninventoryUnknownDevice->find("`hub`='1'");
+         $this->assertEquals(count($a_list_hub),
+                              '0', '(5) Hub not deleted');
+         // CHECK 2 : verify port 1 of the switch don't have 2 connections
+         $a_list_connections = $networkPort_NetworkPort->find("`networkports_id_1`='1'");
+         $this->assertEquals(count($a_list_connections),
+                              '1', '(5) Port fa0/1 of switch 1 not connected to 1 port ('.
+                                    count($a_list_connections).')');
+         // CHECK 3 : verify port 1 of switch 1 connected directly to port
+         $a_connection = current($a_list_connections);
+         $networkPort->getFromDB($a_connection['networkports_id_2']);
+         $this->assertEquals($networkPort->fields['mac'],
+                              'f0:ad:4e:10:39:f9', '(5) Port 1 of switch 1 not connected to port with mac f0:ad:4e:10:39:f9');
+         
+         
          // TODO: Verify port connected to port 2 of switch 2
          
          // CHECK 4 : Verify number of networkportconnectionslog
@@ -378,9 +397,10 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
 
 
       // * 6. Update switchs
+      // $switch1bis have 2 mac
       $this->testSendinventory("toto", $switch1bis);
-      $this->testSendinventory("toto", $switch2);
-         // CHECK 1 : Verify no hub on port 1 of switch 1
+      $this->testSendinventory("toto", $switch2bis);
+         // CHECK 1 : Verify have hub on port 1 of switch 1
          $a_ports = $networkPort->find("`itemtype`='NetworkEquipment'
                AND `items_id`='".$a_switch['id']."'");
          $this->assertEquals(count($a_ports), 1, '(6)switch 1 haven\'t port fa0/1 added in GLPI');
@@ -390,8 +410,16 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
             $pluginFusioninventoryUnknownDevice->getFromDB($networkPort->fields['items_id']);
             $this->assertEquals($pluginFusioninventoryUnknownDevice->fields['hub'],
-                              '0', '(6)Hub connected on port fa0/1 of switch 1');
+                              '1', '(6) Hub not connected on port fa0/1 of switch 1');
+         } else {
+            $t = 0;
+            $this->assertEquals($t, '1', '(6) Hub not connected on port fa0/1 of switch 1');
          }
+         // CHECK 2 : verify port 1 of the switch don't have 2 connections
+         $a_list_connections = $networkPort_NetworkPort->find("`networkports_id_1`='1'");
+         $this->assertEquals(count($a_list_connections),
+                              '1', '(6) Port fa0/1 of switch 1 not connected to 1 port ('.
+                                    count($a_list_connections).')');
          
    }
 
