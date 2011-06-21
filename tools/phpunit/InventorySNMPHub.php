@@ -254,7 +254,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
 
       // * 2. Update switchs
       $this->testSendinventory("toto", $switch1);
-      $this->testSendinventory("toto", $switch2);
+      //$this->testSendinventory("toto", $switch2);
          // CHECK 1 : verify hub always here and connected
          $a_ports = $networkPort->find("`itemtype`='NetworkEquipment'
                AND `items_id`='".$a_switch['id']."'");
@@ -289,7 +289,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
           <IFDESCR>FastEthernet0/1</IFDESCR>", $switch2);
 
       // * 3. Update switchs
-      $this->testSendinventory("toto", $switch1);
+      //$this->testSendinventory("toto", $switch1);
       $this->testSendinventory("toto", $switch2);
          // CHECK 1 : verify hub always here and connected
          $a_ports = $networkPort->find("`itemtype`='NetworkEquipment'
@@ -338,7 +338,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
 
       // * 4. Update switchs
       $this->testSendinventory("toto", $switch1);
-      $this->testSendinventory("toto", $switch2);
+      //$this->testSendinventory("toto", $switch2);
          // CHECK 1 : verify hub deleted and port 1 of switch 1 connected directly to port
          $a_ports = $networkPort->find("`itemtype`='NetworkEquipment'
                AND `items_id`='".$a_switch['id']."'");
@@ -366,7 +366,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
           <IFDESCR>FastEthernet0/2</IFDESCR>", $switch2);
       
       // * 5. Update switchs
-      $this->testSendinventory("toto", $switch1);
+      //$this->testSendinventory("toto", $switch1);
       $this->testSendinventory("toto", $switch2);
          // CHECK 1 : verify hub deleted
          $a_list_hub = $pluginFusioninventoryUnknownDevice->find("`hub`='1'");
