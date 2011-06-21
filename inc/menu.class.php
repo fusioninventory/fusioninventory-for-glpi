@@ -53,7 +53,7 @@ class PluginFusioninventoryMenu {
       // FOR THE BETA
       echo "<center>"; 
       echo "<a href='http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/wiki/Beta_test'>";
-      echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/beta.png'/></a>"; 
+      echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/betaII.png'/></a>"; 
       echo "</center><br/>";
       // END FOR THE BETA
 
