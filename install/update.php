@@ -146,13 +146,19 @@ function pluginFusioninventoryUpdate($current_version) {
          include("update_221_230.php");
          update221to230();
       case "2.3.0":
+      case "2.3.1":
          include("update_231_232.php");
          update231to232();
-      case "2.3.1":
       case "2.3.2":
          include("update_232_233.php");
          update232to233();
       case "2.3.3":
+      case "2.3.4":
+      case "2.3.5":
+      case "2.3.6":
+      case "2.3.7":
+      case "2.3.8":
+      case "2.3.9":
          include("update_232_240.php");
          update232to240();
 
