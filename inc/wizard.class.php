@@ -389,14 +389,22 @@ class PluginFusioninventoryWizard {
    static function w_start($ariane='') {
       global $LANG;
 
-      $a_buttons = array(array($LANG['plugin_fusioninventory']['wizard'][12],
+      $plugin = new Plugin();
+      
+      $a_buttons = array();
+      if ($plugin->isInstalled('fusinvsnmp')
+         && $plugin->isActivated('fusinvsnmp')) {
+         
+         $a_buttons[] = array($LANG['plugin_fusioninventory']['wizard'][12],
                                'w_authsnmp',
                                'networkscan.png',
-                               'filNetDiscovery'),
-                         array($LANG['plugin_fusioninventory']['wizard'][13],
+                               'filNetDiscovery');         
+      }
+
+      $a_buttons[] = array($LANG['plugin_fusioninventory']['wizard'][13],
                                 'w_inventorychoice',
                                 'general_inventory.png',
-                                ''));
+                                '');
 
       echo "<center>".$LANG['plugin_fusioninventory']['wizard'][14]."</center><br/>";
 
@@ -415,18 +423,31 @@ class PluginFusioninventoryWizard {
    static function w_inventorychoice($ariane='') {
       global $LANG;
 
-      $a_buttons = array(array($LANG['plugin_fusioninventory']['wizard'][15],
+      $plugin = new Plugin();
+      
+      $a_buttons = array();
+      if ($plugin->isInstalled('fusinvinventory')
+         && $plugin->isActivated('fusinvinventory')) {
+         
+         $a_buttons[] = array($LANG['plugin_fusioninventory']['wizard'][15],
                                'w_importcomputeroptions',
                                '',
-                               'filInventoryComputer'),
-                         array($LANG['plugin_fusioninventory']['wizard'][16],
-                               'w_credential',
-                               '',
-                               'filInventoryESX'),
-                         array($LANG['plugin_fusioninventory']['wizard'][17],
+                               'filInventoryComputer');
+      }
+      
+      $a_buttons[] = array($LANG['plugin_fusioninventory']['wizard'][16],
+                            'w_credential',
+                            '',
+                            'filInventoryESX');
+     
+      if ($plugin->isInstalled('fusinvsnmp')
+         && $plugin->isActivated('fusinvsnmp')) {
+         
+         $a_buttons[] = array($LANG['plugin_fusioninventory']['wizard'][17],
                                 'w_authsnmp',
                                 'general_inventory.png',
-                                'filInventorySNMP'));
+                                'filInventorySNMP');
+      }
 
       PluginFusioninventoryWizard::displayButtons($a_buttons, $ariane);
    }
