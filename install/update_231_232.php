@@ -62,8 +62,8 @@ function update231to232() {
    if (!class_exists("PluginFusioninventoryLock")) {
       include_once(GLPI_ROOT."/plugins/fusioninventory/inc/lock.class.php");
    }
-   $PluginFusinvinventoryLock = new PluginFusinvinventoryLock();
-   $PluginFusinvinventoryLock->importFromOcs();
+//   $PluginFusinvinventoryLock = new PluginFusinvinventoryLock();
+//   $PluginFusinvinventoryLock->importFromOcs();
 
    $config = new PluginFusioninventoryConfig();
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
