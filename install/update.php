@@ -110,6 +110,11 @@ function pluginFusinvsnmpUpdate($current_version) {
       case "2.3.2-1":
       case "2.3.3-1":
       case "2.3.4-1":
+      case "2.3.5-1":
+      case "2.3.6-1":
+      case "2.3.7-1":
+      case "2.3.8-1":
+      case "2.3.9-1":
          include("update_232_240.php");
          update232to240();
    }
