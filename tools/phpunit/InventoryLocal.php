@@ -160,7 +160,7 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
                   $this->testSoftware("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
 
                   $this->testHardware("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
-                  $this->testHardwareModifications("xml/inventory_local/".$Entry."/".$xmlFilename);
+                  $this->testHardwareModifications("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id);
                }
             }
          }
@@ -186,7 +186,7 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
          return;
       }
       $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi078/plugins/fusioninventory/front/communication.php";
+      $emulatorAgent->server_urlpath = "/glpi080/plugins/fusioninventory/";
       $prologXML = $emulatorAgent->sendProlog($inputXML);
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
       $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".$deviceID."'");
@@ -203,7 +203,7 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
       }
 
       $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi078/plugins/fusioninventory/front/communication.php";
+      $emulatorAgent->server_urlpath = "/glpi080/plugins/fusioninventory/";
       $input_xml = $xml->asXML();
       $returnAgent = $emulatorAgent->sendProlog($input_xml);
       echo "====================\n";
@@ -660,9 +660,14 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
       }
       $result=$DB->query($query);
 
-      $this->assertEquals($DB->numrows($result), count($a_networkXML) , 'Difference of Networks, created '.$DB->numrows($result).' times instead '.count($a_networkXML).' ['.$xmlFile.']');
+      $this->assertEquals($DB->numrows($result), count($a_networkXML) , 'Difference of Networks, created '.$DB->numrows($result).' times instead '.count($a_networkXML).' ['.$xmlFile.'], '.$query);
 
       foreach ($xml->CONTENT->NETWORKS as $child) {
+         $regs = array();
+         preg_match("/([0-9a-fA-F]{1,2}([:-]|$)){6}$/",(string)$child->MACADDR,$regs);
+         if (empty($regs)) {
+            unset($child->MACADDR);
+         }
          if ((isset($child->MACADDR)) AND (!empty($child->MACADDR))
                  AND ((string)$child->MACADDR != "50:50:54:50:30:30")
                  AND ((string)$child->DESCRIPTION != "Miniport d'ordonnancement de paquets")) {
@@ -700,24 +705,43 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
       $a_softwareXML = array();
       $i = 0;
+      $soft = array();
       foreach ($xml->CONTENT->SOFTWARES as $child) {
          if (isset($child->NAME)) {
-            $a_softwareXML["'".$i."-".$child->NAME."'"] = 1;
-            $i++;
+            if (!isset($soft[$child->NAME])) {
+               $a_softwareXML["'".$i."-".$child->NAME."'"] = 1;
+               $i++;
+               $soft[$child->NAME] = 1;
+            }
+         } else if (isset($child->GUID)) {
+            if (!isset($soft[$child->GUID])) {
+               $a_softwareXML["'".$i."-".$child->GUID."'"] = 1;
+               $i++;
+               $soft[$child->GUID] = 1;
+            }
          }
       }
 
       $Computer = new Computer();
-      $query = "SELECT * FROM `glpi_computers_softwareversions`
+      $query = "SELECT glpi_softwares.name as softname FROM `glpi_computers_softwareversions`
+         LEFT JOIN `glpi_softwareversions` on softwareversions_id = `glpi_softwareversions`.`id`
+         LEFT JOIN `glpi_softwares` on `glpi_softwareversions`.`softwares_id` = `glpi_softwares`.`id`
          WHERE `computers_id`='".$items_id."' ";
       $result=$DB->query($query);
-
-      $this->assertEquals($DB->numrows($result), count($a_softwareXML) , 'Difference of Softwares, created '.$DB->numrows($result).' times instead '.count($a_softwareXML).' ['.$xmlFile.']');
+      $dbsofts = array();
+      if ($result = $DB->query($query)) {
+         while ($data=$DB->fetch_array($result)) {
+            $dbsofts[$data['softname']] = 1;
+         }
+      }
+      $a_diff = array_diff($soft, $dbsofts);
+      $diff = print_r($a_diff, 1);
+      $this->assertEquals($DB->numrows($result), count($a_softwareXML) , 'Difference of Softwares, created '.$DB->numrows($result).' times instead '.count($a_softwareXML).' ['.$xmlFile.']'.$diff);
 
       // Verify fields in GLPI
       foreach($xml->CONTENT->SOFTWARES as $child) {
          if (!isset($child->VERSION)) {
-            $child->VERSION = '0';
+            $child->VERSION = 'N/A';
          }
          // Search in GLPI if it's ok
          $query = "SELECT * FROM `glpi_computers_softwareversions`
@@ -820,7 +844,7 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
   }
 
-   function testHardwareModifications($xmlFile='') {
+   function testHardwareModifications($xmlFile='', $items_id=0) {
       global $DB;
 
       if (empty($xmlFile)) {
