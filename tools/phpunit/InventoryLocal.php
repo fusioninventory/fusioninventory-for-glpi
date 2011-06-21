@@ -707,23 +707,27 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
       $i = 0;
       $soft = array();
       foreach ($xml->CONTENT->SOFTWARES as $child) {
+         if (!isset($child->VERSION)) {
+            $child->VERSION = "N/A";
+         }         
          if (isset($child->NAME)) {
-            if (!isset($soft[$child->NAME])) {
-               $a_softwareXML["'".$i."-".$child->NAME."'"] = 1;
+            if (!isset($soft[(string)$child->NAME."-".(string)$child->VERSION])) {
+               $a_softwareXML["'".$i."-".(string)$child->NAME."'"] = 1;
                $i++;
-               $soft[$child->NAME] = 1;
+               $soft[(string)$child->NAME."-".(string)$child->VERSION] = 1;
             }
          } else if (isset($child->GUID)) {
-            if (!isset($soft[$child->GUID])) {
-               $a_softwareXML["'".$i."-".$child->GUID."'"] = 1;
+            if (!isset($soft[(string)$child->GUID."-".(string)$child->VERSION])) {
+               $a_softwareXML["'".$i."-".(string)$child->GUID."'"] = 1;
                $i++;
-               $soft[$child->GUID] = 1;
+               $soft[(string)$child->GUID."-".(string)$child->VERSION] = 1;
             }
          }
       }
 
       $Computer = new Computer();
-      $query = "SELECT glpi_softwares.name as softname FROM `glpi_computers_softwareversions`
+      $query = "SELECT glpi_softwares.name as softname, glpi_softwareversions.name as versname
+         FROM `glpi_computers_softwareversions`
          LEFT JOIN `glpi_softwareversions` on softwareversions_id = `glpi_softwareversions`.`id`
          LEFT JOIN `glpi_softwares` on `glpi_softwareversions`.`softwares_id` = `glpi_softwares`.`id`
          WHERE `computers_id`='".$items_id."' ";
@@ -731,10 +735,10 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
       $dbsofts = array();
       if ($result = $DB->query($query)) {
          while ($data=$DB->fetch_array($result)) {
-            $dbsofts[$data['softname']] = 1;
+            $dbsofts[$data['softname']."-".$data['versname']] = 1;
          }
       }
-      $a_diff = array_diff($soft, $dbsofts);
+      $a_diff = array_diff_key($soft, $dbsofts);
       $diff = print_r($a_diff, 1);
       $this->assertEquals($DB->numrows($result), count($a_softwareXML) , 'Difference of Softwares, created '.$DB->numrows($result).' times instead '.count($a_softwareXML).' ['.$xmlFile.']'.$diff);
 
