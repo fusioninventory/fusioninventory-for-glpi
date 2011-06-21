@@ -117,6 +117,8 @@ class PluginFusioninventoryCommunication {
       PluginFusioninventoryCommunication::addLog('Function import().');
       // TODO : gérer l'encodage, la version
       // Do not manage <REQUEST> element (always the same)
+      
+      $_SESSION["plugin_fusioninventory_disablelocks"] = 1;
       $this->setXML($p_xml);
       $errors = '';
 
