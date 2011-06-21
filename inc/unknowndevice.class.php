@@ -775,19 +775,19 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    * @return nothing
    *
    **/
-   static function writeXML($items_id, $xml) {
+   static function writeXML($items_id, $xml, $pluginname='fusioninventory/xml', $itemtype='PluginFusioninventoryUnknownDevice') {
 
       $folder = substr($items_id,0,-1);
       if (empty($folder)) {
          $folder = '0';
       }
-      if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice")) {
-         mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice");
+      if (!file_exists(GLPI_PLUGIN_DOC_DIR."/".$pluginname."/".$itemtype)) {
+         mkdir(GLPI_PLUGIN_DOC_DIR."/".$pluginname."/".$itemtype);
       }
-      if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder)) {
-         mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder);
+      if (!file_exists(GLPI_PLUGIN_DOC_DIR."/".$pluginname."/".$itemtype."/".$folder)) {
+         mkdir(GLPI_PLUGIN_DOC_DIR."/".$pluginname."/".$itemtype."/".$folder);
       }
-      $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".$items_id, 'w');
+      $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/".$pluginname."/".$itemtype."/".$folder."/".$items_id, 'w');
       fwrite($fileopen, $xml);
       fclose($fileopen);
    }
