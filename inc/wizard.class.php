@@ -170,7 +170,7 @@ class PluginFusioninventoryWizard {
       </style>";
       echo "<center><table width='950'>";
       echo "<tr>";
-      echo "<td valign='top' width='950'>";
+      echo "<td colspan='2' valign='top' width='950'>";
 
       if (isset($_GET['id'])) {
          $class = new $classname;
@@ -217,6 +217,11 @@ class PluginFusioninventoryWizard {
       echo "</tr>";
 
       echo "<tr>";
+      echo "<td width='475' align='left' style='background-color: #e1cc7b;' height='30'>";
+      echo "&nbsp;<input class='submit' type='submit' name='previous' value='".$LANG['buttons'][12]."'
+               onclick='window.location.href=\"".GLPI_ROOT.
+         "/plugins/fusioninventory/front/wizard.php?wizz=".PluginFusioninventoryWizard::getPreviousStep($filariane)."\"'/>";
+      echo "</td>";
       echo "<td align='right' style='background-color: #e1cc7b;' height='30'>";
       if (isset($options['finish'])) {
          echo "<input class='submit' type='submit' name='next' value='".$LANG['plugin_fusioninventory']['buttons'][0]."'
@@ -265,6 +270,36 @@ class PluginFusioninventoryWizard {
    }
 
 
+   
+   /**
+    * Get previous page name wizard with help of breadcrumb
+    *
+    * @param $ariane value current breadcrumb name
+    *
+    * @return nothing or wiz name + breadcrumb value for url
+    **/
+   static function getPreviousStep($ariane) {
+      if (method_exists("PluginFusioninventoryWizard", $ariane)) {
+         $pluginFusioninventoryWizard = new PluginFusioninventoryWizard();
+         $a_list = $pluginFusioninventoryWizard->$ariane();
+
+         $find = 0;
+         $p_link = '';
+         foreach ($a_list as $link) {
+            if ($link == $_GET['wizz']) {
+               $find = 1;
+            }
+            if ($find == '1') {
+               return $p_link."&ariane=".$ariane;
+            }
+            $p_link = $link;
+         }
+      } else {
+         return;
+      }
+   }
+
+   
   // ********************* Define fil ariane **********************//
 
    /**
