@@ -230,6 +230,20 @@ class PluginFusinvinventoryStaticmisc {
       }
       return Dropdown::showFromArray('actionselectiontoadd',$credentialips);
    }
+   
+   
+   static function task_actionselection_PluginFusioninventoryAgent_ESX() {
+      global $LANG;
+      
+      $array = array();
+      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+      $array1 = $PluginFusioninventoryAgentmodule->getAgentsCanDo(strtoupper("ESX"));
+      foreach ($array1 as $id => $data) {
+         $array[$id] = $data['name'];
+      }
+      asort($array);
+      return Dropdown::showFromArray('actionselectiontoadd', $array);
+   }
 
    //------------------------------------------ ---------------------------------------------//
    //------------------------------------------ REST PARAMS---------------------------------//
