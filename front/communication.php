@@ -132,17 +132,21 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
       }
 
+
       if (PluginFusioninventoryConfig::isExtradebugActive()) {
          file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".uniqid(), $xml);
       }
       if (@simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA)) {
          $pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA);
+      } else if (@simplexml_load_string(utf8_encode($xml),'SimpleXMLElement', LIBXML_NOCDATA)) {
+         $pxml = @simplexml_load_string(utf8_encode($xml),'SimpleXMLElement', LIBXML_NOCDATA);
+         $xml = utf8_encode($xml);
       } else {
-         $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
-   <REPLY>
-      <ERROR>XML not well formed!</ERROR>
-   </REPLY>");
-         $communication->emptyAnswer();
+         $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
+<REPLY>
+   <ERROR>XML not well formed!</ERROR>
+</REPLY>");
+         $PluginFusioninventoryCommunication->emptyAnswer();
       }
    
       //
@@ -157,7 +161,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          if (isset($pxml->DEVICEID)) {
    
             $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
-   <REPLY>
+<REPLY>
 </REPLY>");
    
             $a_agent = $pta->InfosByKey(addslashes_deep($pxml->DEVICEID));
@@ -174,7 +178,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          }
       } else {
          $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
-   <REPLY>
+<REPLY>
 </REPLY>");
          $communication->emptyAnswer();
       }
