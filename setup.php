@@ -106,8 +106,8 @@ function plugin_init_fusinvdeploy() {
 function plugin_version_fusinvdeploy() {
    return array('name'           => 'FusionInventory Deployment',
                 'shortname'      => 'fusinvdeploy',
-                'version'        => '2.3.0-1',
-                'author'         => "<a href='http://www.teclib.com'>Teclib'</a>",
+                'version'        => '0.0.1',
+                'author'         => "<a href='http://www.teclib.com'>TECLIB'</a>",
                 'homepage'       => 'http://forge.fusioninventory.org/projects/pluginfusinvdeploy',
                 'minGlpiVersion' => '0.78' // For compatibility / no install in version < 0.78
    );
