@@ -227,6 +227,14 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          return $array;
          break;
 
+      case 'PluginFusioninventoryCredentialIp':
+         $array = array();
+         if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
+            $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['task'][18];
+         }
+         return $array;
+         break;
+         
    }
    return false;
 }
@@ -275,6 +283,11 @@ function plugin_headings_actions_fusioninventory($item) {
          return $array;
          break;
 
+      case 'PluginFusioninventoryCredentialIp':
+         $array = array();
+         $array[1] = "plugin_headings_fusioninventory_tasks";
+         return $array;         
+         break;
    }
    return false;
 }
