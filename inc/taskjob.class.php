@@ -706,7 +706,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             LIMIT 1";
       $result = $DB->query($query);
       $data = $DB->fetch_assoc($result);
-
+      
       $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp($data['periodicity_type'], $data['periodicity_count']);
 
       // Calculate next execution from last
@@ -762,7 +762,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          if (is_null($data['date_scheduled_timestamp'])) {
             $data['date_scheduled_timestamp'] = date('U');
          }
-         if (($data['date_scheduled_timestamp'] + $period) <= date('U')) {
+         if (($data['date_scheduled_timestamp'] + $period) <= date('U')
+                 AND $period =! '0') {
             $periodtotal = $period;
             for($i=2; ($data['date_scheduled_timestamp'] + $periodtotal) <= date('U'); $i++) {
                $periodtotal = $period * $i;
