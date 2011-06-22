@@ -91,16 +91,17 @@ class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
                $a_input['itemtype'] = $task_itemtype;
                $a_input['items_id'] = $task_items_id;
                $jobstatus_id= $jobstatus->add($a_input);
+               //Add log of taskjob
+               $a_input['plugin_fusioninventory_taskjobstatus_id']= $jobstatus_id;
+               $a_input['state'] = PluginFusioninventoryTaskjoblog::TASK_PREPARED;
+               $a_input['date']  = date("Y-m-d H:i:s");
+               $joblog->add($a_input);
+
+               $jobstatus->changeStatusFinish($jobstatus_id, 0, 'PluginFusinvinventoryESX', 1, 
+                                              "Unable to find agent to run this job");
+
             }
          }
-         //Add log of taskjob
-         $a_input['plugin_fusioninventory_taskjobstatus_id']= $jobstatus_id;
-         $a_input['state'] = PluginFusioninventoryTaskjoblog::TASK_PREPARED;
-         $a_input['date']  = date("Y-m-d H:i:s");
-         $joblog->add($a_input);
-   
-         $jobstatus->changeStatusFinish($jobstatus_id, 0, 'PluginFusinvinventoryESX', 1, 
-                                        "Unable to find agent to run this job");
          $job->fields['status']= 1;
          $job->update($job->fields);
       } else {
