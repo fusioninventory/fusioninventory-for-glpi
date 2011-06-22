@@ -1,11 +1,13 @@
 <?
 
-define('GLPI_ROOT', dirname(__FILE__) . '/../..');
+define('GLPI_ROOT', dirname(__FILE__) . '/../../..');
 define('GLPI_PLUGIN_DOC_DIR', '/tmp/test-suite');
 require_once(dirname(__FILE__) . '/../../../inc/commonglpi.class.php');
 require_once(dirname(__FILE__) . '/../../../inc/commondbtm.class.php');
 require_once(dirname(__FILE__) . "/../inc/file.class.php");
 require_once(dirname(__FILE__) . "/../inc/filepart.class.php");
+
+include (GLPI_ROOT."/inc/includes.php");
 
 class StackTest extends PHPUnit_Framework_TestCase
 {
@@ -22,9 +24,12 @@ class StackTest extends PHPUnit_Framework_TestCase
       touch(GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/tmp-file");
       $PluginFusinvdeployFile->addFileInRepo(array(
                'filename' => GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/tmp-file",
+               'file_tmp_name' => GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/tmp-file",
+               'mime_type' => "text/plain",
                'is_p2p' => 1,
                'p2p_retention_days' => 1,
                'order_id' => 1,
+               'uncompress' => 1,
                'testMode' => 1
       ));
       $this->assertFileNotExists(GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/part.tmp");
