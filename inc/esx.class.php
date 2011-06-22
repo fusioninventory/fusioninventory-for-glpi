@@ -106,7 +106,7 @@ class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
          $job->update($job->fields);
       } else {
          foreach($agent_actions as $targets) {
-            foreach ($targets as $itemtype => $items_id) {
+            foreach ($targets as $items_id) {
 
                if ($communication == "push") {
                   $_SESSION['glpi_plugin_fusioninventory']['agents'][$items_id] = 1;
@@ -114,6 +114,7 @@ class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
                
                foreach ($task_definitions as $task_definition) {
                   foreach ($task_definition as $task_itemtype => $task_items_id) {
+                     $a_input = array();
                      $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
                      $a_input['state']                              = 0;
                      $a_input['plugin_fusioninventory_agents_id']   = $items_id;
@@ -140,10 +141,13 @@ class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
    }
    
 
+   
    function run($itemtype) {
       //Nothing to send in XML
       return $this->sxml;
    }
+   
+   
    
    static function getJobs($device_id) {
       $response      = array();
@@ -152,22 +156,23 @@ class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
       $credentialip  = new PluginFusioninventoryCredentialIp();
       
       //Get the agent ID by his deviceid
-      if ($agents = PluginFusioninventoryAgent::getByDeviceID($device_id)) {
+      $agents = PluginFusioninventoryAgent::getByDeviceID($device_id);
+      if ($agents) {
          
          //Get tasks associated with the agent
          $tasks_list = $taskjobstatus->getTaskjobsAgent($agents['id']);
-         foreach ($tasks_list as $itemtype => $tasks) {
+         foreach ($tasks_list as $tasks) {
             //Foreach task for this agent build the response array
             foreach ($tasks as $task) {
                if ($task['state'] == PluginFusioninventoryTaskjobstatus::PREPARED) {
                   $credentialip->getFromDB($task['items_id']);
                   $credential->getFromDB($credentialip->fields['plugin_fusioninventory_credentials_id']);
+                  $tmp = array();
                   $tmp['uuid']        = $task['id'];
                   $tmp['host']        = $credentialip->fields['ip'];
                   $tmp['user']        = $credential->fields['username'];
                   $tmp['password']    = $credential->fields['password'];
                   $response['jobs'][] = $tmp;
-
                }
             }
          }
