@@ -192,7 +192,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       echo "</th>";
       echo "<td>";
       if (count($a_taskjobs) > 0) {
-         echo "<table class='tab_cadre'>";
+         echo "<table class='tab_cadre' width='950'>";
          echo "<tr>";
          echo "<th></th>";
          echo "<th>Uniqid</th>";
