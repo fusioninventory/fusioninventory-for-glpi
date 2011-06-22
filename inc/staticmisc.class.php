@@ -211,10 +211,9 @@ class PluginFusinvinventoryStaticmisc {
       $agent = new PluginFusioninventoryAgent();
       $exceptions = json_decode($module_infos['exceptions'],true);
 
+      $in = "";
       if (!empty($exceptions)) {
          $in = " AND `a`.`id` NOT IN (".implode($exceptions,',').")";
-      } else {
-         $in = "";
       }
 
       $query = "SELECT `a`.`id`, `a`.`name` 
