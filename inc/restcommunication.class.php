@@ -64,9 +64,10 @@ class PluginFusioninventoryRestCommunication {
       } else {
          $response = false;
       }
-      
       return $response;
    }
+ 
+   
    
    /**
     * Get configuration for an agent
@@ -112,14 +113,17 @@ class PluginFusioninventoryRestCommunication {
 
    static function getMethodForParameters($task) {
       return "task_".strtolower($task)."_getParameters";
-      
    }
+   
+   
+   
    /**
     * Update agent status for a task
     * @param params parameters from the GET HTTP request
     * @return nothing
     */
    static function updateLog($params = array()) {
+      $p = array();
       $p['machineid'] = ''; //DeviceId
       $p['uuid']      = ''; //Task uuid
       $p['msg']       = 'ok'; //status of the task
@@ -138,13 +142,10 @@ class PluginFusioninventoryRestCommunication {
          //Get taskjoblog associated
          $taskjob = new PluginFusioninventoryTaskjob();
          $taskjob->getFromDB($taskjobstatus->fields['plugin_fusioninventory_taskjobs_id']);
-         
-         $taskjoblog = new PluginFusioninventoryTaskjoblog();
-         
+
+         $state = 1;
          if ($p['code'] == 'ok') {
             $state = 0;
-         } else {
-            $state = 1;
          }
 
          $taskjobstatus->changeStatusFinish($taskjobstatus->fields['id'], 
@@ -154,6 +155,8 @@ class PluginFusioninventoryRestCommunication {
       self::sendOk();
    }
  
+   
+   
    /**
     * Get default URL for a REST servie
     * 
@@ -172,6 +175,8 @@ class PluginFusioninventoryRestCommunication {
       }
    }
 
+   
+   
    /**
     * Test a given url
     * 
@@ -194,5 +199,7 @@ class PluginFusioninventoryRestCommunication {
          return true;
       }
    }
+   
 }
+
 ?>
