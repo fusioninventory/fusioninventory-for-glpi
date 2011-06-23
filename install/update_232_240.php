@@ -60,8 +60,10 @@ function update232to240() {
       $result=$DB->query($sql);
       while ($data = $DB->fetch_array($result)) {
          if ($Computer->getFromDB($data['items_id'])) {
-            $Computer->fields['uuid'] = $data['uuid'];
-            $Computer->update($Computer->fields);
+            $input = array();
+            $input['id'] = $data['items_id'];
+            $input['uuid'] = $data['uuid'];
+            $Computer->update($input);
 
          }
       }
