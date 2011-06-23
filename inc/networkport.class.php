@@ -278,6 +278,11 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
 	function connectDB($destination_port='') {
 		global $DB;
 
+      // Clean ports connected on themself
+      $queryd = "DELETE FROM `glpi_networkports_networkports`
+         WHERE `networkports_id_1` = `networkports_id_2`";
+      $DB->query($queryd);
+      
       $queryVerif = "SELECT *
                      FROM `glpi_networkports_networkports`
                      WHERE `networkports_id_1` IN ('".$this->getValue('id')."', '".$destination_port."')
