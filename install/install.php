@@ -54,7 +54,8 @@ function pluginFusinvsnmpInstall() {
       // Installation
 
       // Create database
-      $DB_file = GLPI_ROOT ."/plugins/fusinvsnmp/install/mysql/plugin_fusinvsnmp-".$a_plugin['version']."-empty.sql";
+      $versionsql= "2.3.4-1";
+      $DB_file = GLPI_ROOT ."/plugins/fusinvsnmp/install/mysql/plugin_fusinvsnmp-".$versionsql."-empty.sql";
       $DBf_handle = fopen($DB_file, "rt");
       $sql_query = fread($DBf_handle, filesize($DB_file));
       fclose($DBf_handle);
