@@ -121,8 +121,9 @@ function pluginFusioninventoryInstall($version) {
 
 
    // ** Insert in DB
+   $versionsql= "2.3.4";
    $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-"
-              .$version."-empty.sql";
+              .$versionsql."-empty.sql";
    $DBf_handle = fopen($DB_file, "rt");
    $sql_query = fread($DBf_handle, filesize($DB_file));
    fclose($DBf_handle);
