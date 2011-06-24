@@ -512,16 +512,17 @@ function appear_array(id){
          preg_match_all("/\[\[(.*)\:\:(.*)\]\]/", $datas['comment'], $matches);
          foreach($matches[0] as $num=>$commentvalue) {
             $classname = $matches[1][$num];
-            $Class = new $classname;
-            $Class->getFromDB($matches[2][$num]);
-            $datas['comment'] = str_replace($commentvalue, $Class->getLink(), $datas['comment']);
+            if ($classname != '') {
+               $Class = new $classname;
+               $Class->getFromDB($matches[2][$num]);
+               $datas['comment'] = str_replace($commentvalue, $Class->getLink(), $datas['comment']);
+            }
          }
          // Search for code to display lang traduction ==pluginname::9876==
          preg_match_all("/==(.*)\:\:([0-9]*)==/", $datas['comment'], $matches);
          foreach($matches[0] as $num=>$commentvalue) {
             $datas['comment'] = str_replace($commentvalue, $LANG['plugin_'.$matches[1][$num]]["codetasklog"][$matches[2][$num]], $datas['comment']);
          }
-
 
          $text .= $datas['comment'];
          $text .= "</td>";
