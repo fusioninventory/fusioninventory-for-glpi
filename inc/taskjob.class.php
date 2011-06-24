@@ -1629,20 +1629,22 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $pluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $pluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
 
-      foreach ($_SESSION["plugin_fusioninventory_forcerun"] as $taskjobs_id=>$uniqid) {
-         $pluginFusioninventoryTaskjob->getFromDB($taskjobs_id);
+      if (isset($_SESSION["plugin_fusioninventory_forcerun"])) {
+         foreach ($_SESSION["plugin_fusioninventory_forcerun"] as $taskjobs_id=>$uniqid) {
+            $pluginFusioninventoryTaskjob->getFromDB($taskjobs_id);
 
-         echo "<table class='tab_cadrehov' style='width:950px'>";
-         echo "<tr class='tab_bg_1'>";
-         echo "<th>".$pluginFusioninventoryTaskjob->getLink(1)."</th>";
-         echo "</tr>";
+            echo "<table class='tab_cadrehov' style='width:950px'>";
+            echo "<tr class='tab_bg_1'>";
+            echo "<th>".$pluginFusioninventoryTaskjob->getLink(1)."</th>";
+            echo "</tr>";
 
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         $pluginFusioninventoryTaskjoblog->showHistory($taskjobs_id, 950, array('uniqid'=>$uniqid));
-         echo "</td>";
+            echo "<tr class='tab_bg_1'>";
+            echo "<td>";
+            $pluginFusioninventoryTaskjoblog->showHistory($taskjobs_id, 950, array('uniqid'=>$uniqid));
+            echo "</td>";
 
-         echo "</table><br/>";
+            echo "</table><br/>";
+         }
       }
    }
 
