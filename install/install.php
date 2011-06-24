@@ -53,7 +53,8 @@ function pluginFusinvinventoryInstall() {
       // Add new module in plugin_fusioninventory (core)
 
       // Create database
-      $DB_file = GLPI_ROOT ."/plugins/fusinvinventory/install/mysql/plugin_fusinvinventory-".$a_plugin['version']."-empty.sql";
+      $versionsql= "2.3.4-1";
+      $DB_file = GLPI_ROOT ."/plugins/fusinvinventory/install/mysql/plugin_fusinvinventory-".$versionsql."-empty.sql";
       $DBf_handle = fopen($DB_file, "rt");
       $sql_query = fread($DBf_handle, filesize($DB_file));
       fclose($DBf_handle);

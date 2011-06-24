@@ -75,7 +75,7 @@ function pluginFusinvinventoryUpdate($current_version) {
 
    $config = new PluginFusioninventoryConfig();
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
-   $config->updateConfigType($plugins_id, 'version', "2.3.4-1");
+   $config->updateConfigType($plugins_id, 'version', "2.3.5-1");
 }
 
 ?>
