@@ -178,6 +178,11 @@ class PluginFusioninventoryWizard {
             initNavigateListItems($classname);
             $class->showQuickForm($_GET['id'], $options['arg1']);
          } else {
+            if (!isset($_GET['id'])) {
+               $_GET['id'] = '';
+            } else if ($_GET['id'] == '0') {
+               $_GET['id'] = '';
+            }
             $class->showForm($_GET['id']);
          }
 
@@ -299,9 +304,10 @@ class PluginFusioninventoryWizard {
       }
    }
 
-   
+  // **************************************************************//
   // ********************* Define fil ariane **********************//
-
+  // **************************************************************//
+   
    /**
     * Set breadcrumb / steps for configure computer inventory
     *
@@ -354,6 +360,7 @@ class PluginFusioninventoryWizard {
       $LANG['plugin_fusioninventory']['wizard'][0]   => "w_start",
       $LANG['plugin_fusioninventory']['wizard'][1]   => "w_inventorychoice",
       $LANG['plugin_fusioninventory']['wizard'][9]   => "w_authsnmp",
+      $LANG['plugin_fusioninventory']['iprange'][2]  => "w_iprange",
       $LANG['plugin_fusioninventory']['rules'][2]    => "w_importrules",
       $LANG['plugin_fusioninventory']['task'][1]     => "w_tasks",
       $LANG['plugin_fusioninventory']['wizard'][7]   => "w_tasksforcerun",
@@ -404,6 +411,7 @@ class PluginFusioninventoryWizard {
 
       return array(
       $LANG['plugin_fusioninventory']['wizard'][9]   => "w_authsnmp",
+      $LANG['plugin_fusioninventory']['iprange'][2]  => "w_iprange",
       $LANG['plugin_fusioninventory']['rules'][2]    => "w_importrules",
       $LANG['plugin_fusioninventory']['task'][1]     => "w_tasks",
       $LANG['plugin_fusioninventory']['wizard'][7]   => "w_tasksforcerun",
@@ -411,9 +419,10 @@ class PluginFusioninventoryWizard {
    }
 
    
-
+  // **************************************************************//
   // ********************* All wizard display **********************//
-
+  // **************************************************************//
+   
    /**
     * First panel of wizard with choice
     *
@@ -500,6 +509,19 @@ class PluginFusioninventoryWizard {
       PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusinvsnmpConfigSecurity");
    }
 
+   
+   
+   /**
+    * Manage ip ranges
+    *
+    * @param $ariane value name of current breadcrumb
+    *
+    * @return Nothing (display)
+    **/
+   static function w_iprange($ariane='') {
+      PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusioninventoryIprange");
+   }
+   
 
 
    /**

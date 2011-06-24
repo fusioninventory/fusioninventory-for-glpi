@@ -118,6 +118,10 @@ if (isset($_GET['allowcreate'])) {
    $allowcreate = $_GET['allowcreate'];
 }
 
+if (strstr($_SERVER['HTTP_REFERER'], "wizard.php")) {
+   glpi_header($_SERVER['HTTP_REFERER']."&id=".$id);
+}
+
 $iprange->showForm($id, array( "allowcreate" => $allowcreate));
 
 commonFooter();
