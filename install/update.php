@@ -117,6 +117,7 @@ function pluginFusinvsnmpUpdate($current_version) {
       case "2.3.9-1":
          include("update_232_240.php");
          update232to240();
+         PluginFusinvsnmpModel::importAllModels();
    }
 
    $config = new PluginFusioninventoryConfig();
