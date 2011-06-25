@@ -116,7 +116,15 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
           * MAC: .1.3.6.1.2.1.17.1.1.0
           *
           */
-
+      // Procurve for Vlan 
+         $mapping_pre[2]['.1.3.6.1.2.1.47.1.2.1.1.2']                = 'vtpVlanName';
+         $mapping_pre[2]['.1.3.6.1.4.1.11.2.14.11.5.1.7.1.15.3.1.1'] = 'vmvlan';
+      // Netgear
+         $mapping_pre[2]['.1.0.8802.1.1.2.1.5.4795.1.2.5.0'] = 'serial';
+         $mapping_pre[2]['.1.0.8802.1.1.2.1.5.4795.1.2.6.0'] = 'enterprise';
+         $mapping_pre[2]['.1.0.8802.1.1.2.1.5.4795.1.2.7.0'] = 'entPhysicalModelName';
+         $mapping_pre[2]['.1.0.8802.1.1.2.1.5.4795.1.2.4.0'] = 'firmware';
+         
 
       $mapping_pre[3]['.1.3.6.1.4.1.641.2.1.2.1.2.1']                = 'model';
       $mapping_pre[3]['.1.3.6.1.4.1.641.2.1.2.1.6.1']                = 'serial';
@@ -172,7 +180,15 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
          // Total color printed page not present in mib
          // Total black and white printed page not present in mib
          $mapping_pre[3]['.1.3.6.1.4.1.1602.1.11.1.4.1.4.501']          = 'pagecounterscannedpages';
-         
+      // Mapping for HP
+         $mapping_pre[3]['.1.3.6.1.4.1.11.2.3.9.4.2.1.4.1.2.7.0'] = 'pagecountercolorpages';
+         $mapping_pre[3]['.1.3.6.1.4.1.11.2.3.9.4.2.1.4.1.2.6.0'] = 'pagecounterblackpages';
+         $mapping_pre[3]['.1.3.6.1.4.1.11.2.3.9.4.2.1.4.1.2.22.0'] = 'pagecounterrectoversopages';
+      // Mapping for Kyocera
+         $mapping_pre[3]['.1.3.6.1.4.1.1347.42.2.2.1.1.3.1.1'] = 'pagecounterblackpages';
+         $mapping_pre[3]['.1.3.6.1.4.1.1347.42.2.2.1.1.3.1.2'] = 'pagecountercolorpages';
+
+
          
 // To delete
       $mapping_pre[3]['.1.3.6.1.2.1.1.3.0']       = 'serial';
@@ -1703,7 +1719,12 @@ echo "Number of devices non exist : ".$i;
       echo "The following SNMP models are compatible with FusionInventory for GLPI :<br/>";
       echo "* 2.2.x for GLPI 0.72<br/>";
       echo "* 2.3.x for GLPI 0.78<br/>";
-      echo "* 2.4.x for GLPI 0.80<br/><br/><br/>";
+      echo "* 2.4.x for GLPI 0.80<br/><br/>
+         h2. Your device not in this list?<br/><br/>
+         Help us to add it this these \"instructions\":http://forge.fusioninventory.org/projects/fusioninventory/wiki/Sending_snmpwalk!!<br/>
+         <br/>
+         h2. Cisco and Hewlett-Packard : <br/>
+         <br/>{{child_pages}}<br/><br/>";
 
       $ok = "=.!full.png!";
       $notok = "=.!none.png!";
@@ -1723,7 +1744,7 @@ echo "Number of devices non exist : ".$i;
             echo "h2. ".$manufacturer."<br/>";
             echo "<br/>";
             $count = 0;
-            echo "|_.Model |_.Firmware |_.Some informations |_.Serial Number |_.Ports |_.Ports connections |_.Vlans |_.Trunk/tagged |_.SNMP model |<br/>";
+            echo "|_.Model |_.Firmware |_.Some informations |_.Serial Number |_.Ports |_.Ports connections |_.Vlans |_.Trunk/tagged |_.SNMP model |_.Available in stable release |<br/>";
             $a_devices = $this->find("`FK_glpi_enterprise`='".$a_list['FK_glpi_enterprise']."'
                            AND `type`='2'");
             $sql = "SELECT `glpi_dropdown_model_networking`.`name` as modelname,
@@ -1767,6 +1788,7 @@ echo "Number of devices non exist : ".$i;
                   $have_portsconnections = $notok;
                   $have_vlan = $notok;
                   $have_trunk = $notok;
+                  $inrelease = $notok;
                   $add = 0;
                   if ($data['have_someinformations'] == '1') {
                      $have_someinfo = $ok;
@@ -1792,13 +1814,16 @@ echo "Number of devices non exist : ".$i;
                      $have_trunk = $ok;
                      $add = 1;
                   }
+                  if ($data['released'] == '1') {
+                     $inrelease = $ok;
+                  }
                   if ($add == '1') {
                      $count++;
                      if ($count > 10) {
-                        echo "|_.Model |_.Firmware |_.Some informations |_.Serial Number |_.Ports |_.Ports connections |_.Vlans |_.Trunk/tagged |_.SNMP model |<br/>";
+                        echo "|_.Model |_.Firmware |_.Some informations |_.Serial Number |_.Ports |_.Ports connections |_.Vlans |_.Trunk/tagged |_.SNMP model |_.Available in stable release |<br/>";
                         $count = 0;
                      }
-                     echo "| ".$displaymodel." | ".$displayfirmware." |".$have_someinfo." |".$have_importantinfo." |".$have_ports." |".$have_portsconnections." |".$have_vlan." |".$have_trunk." |=.".$snmpmodelname." |<br/>";
+                     echo "| ".$displaymodel." | ".$displayfirmware." |".$have_someinfo." |".$have_importantinfo." |".$have_ports." |".$have_portsconnections." |".$have_vlan." |".$have_trunk." |=.".$snmpmodelname." |".$inrelease." |<br/>";
                   }
                }
             }
