@@ -66,7 +66,7 @@ function pluginFusinvinventoryUpdate($current_version) {
          update231to232();
       case "2.3.2-1":
       case "2.3.3-1":
-
+      case "2.3.4-1":
    }
 
    echo "</td>";
