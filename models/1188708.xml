@@ -4,7 +4,11 @@
 	<key>Networking1316</key>
 	<comments><![CDATA[Ethernet Routing Switch 4550T         HW:04       FW:5.3.0.3   SW:v5.3.1.001 BN:01 (c) Nortel Networks
 
+Ethernet Routing Switch 4550T-PWR     HW:09       FW:5.1.0.8   SW:v5.4.0.008 BN:08 (c) Nortel Networks
+
 Ethernet Routing Switch 5510-24T      HW:05       FW:6.0.0.8   SW:v6.1.1.017 BN:17 (c) Nortel Networks
+
+Ethernet Routing Switch 5520-24T-PWR  HW:36       FW:6.0.0.6   SW:v6.1.0.006 BN:06 (c) Nortel Networks
 
 Ethernet Switch 470-48T      HW:33       FW:3.6.0.7   SW:v3.7.4.15  BN:00 ISVN:2 (c) Nortel Networks
 
