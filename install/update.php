@@ -152,7 +152,7 @@ function pluginFusioninventoryUpdate($current_version) {
          include("update_232_233.php");
          update232to233();
       case "2.3.3":
-         
+      case "2.3.4":
    }
 
    $plugins_id = PluginFusioninventoryModule::getModuleId("fusioninventory");
