@@ -137,6 +137,7 @@ function pluginFusinvsnmpUpdate($current_version) {
       case "2.3.1-1":
       case "2.3.2-1":
       case "2.3.3-1":
+      case "2.3.4-1":
          PluginFusinvsnmpModel::importAllModels();
    }
 
