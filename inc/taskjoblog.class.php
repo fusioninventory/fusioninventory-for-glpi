@@ -200,7 +200,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       		echo "<script  type='text/javascript'>
 function close_array(id){
 	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/plugins/fusioninventory/pics/collapse.png\''+
-      'onClick=\'Effect.Fade(\"viewfollowup'+id+'\");appear_array('+id+');\' />&nbsp;<img src=\'".GLPI_ROOT."/pics/actualiser.png\' />';
+      'onClick=\'Effect.Fade(\"viewfollowup'+id+'\");appear_array('+id+');\' />&nbsp;<img src=\'".GLPI_ROOT."/plugins/fusioninventory/pics/refresh.png\' />';
    document.getElementById('plusmoins'+id).style.backgroundColor = '#e4e4e2';
 }
 function appear_array(id){
