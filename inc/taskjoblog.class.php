@@ -200,7 +200,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       		echo "<script  type='text/javascript'>
 function close_array(id){
 	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/plugins/fusioninventory/pics/collapse.png\''+
-      'onClick=\'Effect.Fade(\"viewfollowup'+id+'\");appear_array('+id+');\' />';
+      'onClick=\'Effect.Fade(\"viewfollowup'+id+'\");appear_array('+id+');\' />&nbsp;<img src=\'".GLPI_ROOT."/pics/actualiser.png\' />';
    document.getElementById('plusmoins'+id).style.backgroundColor = '#e4e4e2';
 }
 function appear_array(id){
@@ -239,7 +239,7 @@ function appear_array(id){
                                '1');
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td id='plusmoins".$PluginFusioninventoryTaskjobstatus->fields["id"]."'><img src='".GLPI_ROOT.
+      echo "<td width='40' id='plusmoins".$PluginFusioninventoryTaskjobstatus->fields["id"]."'><img src='".GLPI_ROOT.
                "/plugins/fusioninventory/pics/expand.png' onClick='Effect.Appear(\"viewfollowup".$PluginFusioninventoryTaskjobstatus->fields["id"].
                "\");close_array(".$PluginFusioninventoryTaskjobstatus->fields["id"].");' /></td>";
 
