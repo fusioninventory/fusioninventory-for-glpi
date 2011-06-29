@@ -1380,6 +1380,20 @@ function plugin_fusinvsnmp_addSelect($type,$id,$num) {
          }
          break;
 
+      case 'PluginFusinvsnmpPrinterLogReport':
+         if ($table == 'glpi_plugin_fusinvsnmp_printerlogs') {
+            if (strstr($field, 'pages_') OR $field == 'scanned') {
+               return " (
+                  (SELECT pages_total from glpi_plugin_fusinvsnmp_printerlogs where printers_id = glpi_printers.id
+                  AND date <= '".$_SESSION['glpi_plugin_fusioninventory_date_end']." 23:59:59' ORDER BY date DESC LIMIT 1) 
+                  -
+                  (SELECT pages_total from glpi_plugin_fusinvsnmp_printerlogs where printers_id = glpi_printers.id
+                  AND date >= '".$_SESSION['glpi_plugin_fusioninventory_date_start']." 00:00:00'  ORDER BY date  LIMIT 1)
+                  )  AS ITEM_$num, ";
+            }
+         }
+         break;
+         
    }
    return "";
 }
