@@ -1350,11 +1350,42 @@ function plugin_fusinvsnmp_addSelect($type,$id,$num) {
          break;
 
       case "PluginFusinvsnmpPrinterLog":
+/*
+
+SELECT `glpi_plugin_fusinvsnmp_printers`.`id` AS ITEM_0, `glpi_printers`.`name` AS ITEM_2, `glpi_printers`.`id` AS ITEM_2_2, `glpi_printers`.`serial` AS ITEM_3, 
+(
+(SELECT pages_total from glpi_plugin_fusinvsnmp_printerlogs where printers_id = glpi_printers.id
+AND date < '2010-04-01 00:00:00' ORDER BY date DESC LIMIT 1) 
+-
+(SELECT pages_total from glpi_plugin_fusinvsnmp_printerlogs where printers_id = glpi_printers.id
+AND date > '2010-01-01 00:00:00'  ORDER BY date  LIMIT 1) )
+
+ AS ITEM_4, `glpi_plugin_fusinvsnmp_printers`.`id` AS id
+FROM `glpi_plugin_fusinvsnmp_printers`
+LEFT JOIN `glpi_printers` ON (`glpi_plugin_fusinvsnmp_printers`.`printers_id` = `glpi_printers`.`id`)
+LEFT JOIN `glpi_plugin_fusinvsnmp_printerlogs` ON (`glpi_plugin_fusinvsnmp_printers`.`id` = `glpi_plugin_fusinvsnmp_printerlogs`.`id`)
+ORDER BY ITEM_0 ASC LIMIT 40, 40
+
+*/
          if ($table.".".$field == "glpi_users.name") {
             return " `glpi_users`.`name` AS ITEM_$num, `glpi_users`.`realname` AS ITEM_".$num."_2, `glpi_users`.`id` AS ITEM_".$num."_3, `glpi_users`.`firstname` AS ITEM_".$num."_4,";
          }
          break;
 
+      case 'PluginFusinvsnmpPrinterLogReport':
+         if ($table == 'glpi_plugin_fusinvsnmp_printerlogs') {
+            if (strstr($field, 'pages_') OR $field == 'scanned') {
+               return " (
+                  (SELECT pages_total from glpi_plugin_fusinvsnmp_printerlogs where printers_id = glpi_printers.id
+                  AND date <= '".$_SESSION['glpi_plugin_fusioninventory_date_end']." 23:59:59' ORDER BY date DESC LIMIT 1) 
+                  -
+                  (SELECT pages_total from glpi_plugin_fusinvsnmp_printerlogs where printers_id = glpi_printers.id
+                  AND date >= '".$_SESSION['glpi_plugin_fusioninventory_date_start']." 00:00:00'  ORDER BY date  LIMIT 1)
+                  )  AS ITEM_$num, ";
+            }
+         }
+         break;
+      
    }
    return "";
 }

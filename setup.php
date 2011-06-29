@@ -130,7 +130,7 @@ function plugin_init_fusinvsnmp() {
 
 			$report_list = array();
          if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "reportprinter","r")) {
-            $report_list["front/printerlog.php"] = $LANG['plugin_fusinvsnmp']["report"][1];
+            $report_list["front/printerlogreport.php"] = $LANG['plugin_fusinvsnmp']["report"][1];
          }
          if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "reportnetworkequipment","r")) {
             $report_list["report/switch_ports.history.php"] = $LANG['plugin_fusinvsnmp']['menu'][5];
