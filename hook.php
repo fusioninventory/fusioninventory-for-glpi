@@ -119,13 +119,19 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
       $sopt[5193]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".$LANG["reports"][46];
       $sopt[5193]['forcegroupby']='1';
 
+//      $sopt[5190]['table']='glpi_plugin_fusinvsnmp_models';
+//      $sopt[5190]['field']='name';
+//      $sopt[5190]['linkfield']='id';
+//      $sopt[5190]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".
+//         $LANG['plugin_fusinvsnmp']['model_info'][4];
+//      $sopt[5190]['datatype'] = 'itemlink';
+//      $sopt[5190]['itemlink_type'] = 'PluginFusinvsnmpModel';
       $sopt[5190]['table']='glpi_plugin_fusinvsnmp_models';
       $sopt[5190]['field']='name';
-      $sopt[5190]['linkfield']='id';
+      $sopt[5190]['linkfield']='plugin_fusinvsnmp_models_id';
       $sopt[5190]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".
          $LANG['plugin_fusinvsnmp']['model_info'][4];
-      $sopt[5190]['datatype'] = 'itemlink';
-      $sopt[5190]['itemlink_type'] = 'PluginFusinvsnmpModel';
+
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
 
@@ -1508,20 +1514,15 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
       case 'Printer':
          $already_link_tables_tmp = $already_link_tables;
          array_pop($already_link_tables_tmp);
-
          $leftjoin_fusinvsnmp_printers = 1;
-         if ((in_array('glpi_plugin_fusinvsnmp_printers.', $already_link_tables_tmp))
-            OR (in_array('glpi_plugin_fusinvsnmp_models.id', $already_link_tables_tmp))
-            OR (in_array('glpi_plugin_fusinvsnmp_configsecurities.id', $already_link_tables_tmp))
-            OR (in_array('glpi_plugin_fusinvsnmp_printers.', $already_link_tables_tmp))) {
+         if ((in_array('glpi_plugin_fusinvsnmp_printers', $already_link_tables_tmp))) {
 
             $leftjoin_fusinvsnmp_printers = 0;
          }
-
          switch ($new_table.".".$linkfield) {
 
             // ** FusionInventory - last inventory
-            case "glpi_plugin_fusinvsnmp_printers." :
+            case "glpi_plugin_fusinvsnmp_printers.plugin_fusinvsnmp_printers_id" :
                if ($leftjoin_fusinvsnmp_printers == "1") {
                   return " LEFT JOIN glpi_plugin_fusinvsnmp_printers ON (glpi_printers.id = glpi_plugin_fusinvsnmp_printers.printers_id) ";
                }
@@ -1529,14 +1530,14 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
                break;
 
             // ** FusionInventory - SNMP models
-            case "glpi_plugin_fusinvsnmp_models.id" :
+            case "glpi_plugin_fusinvsnmp_models.plugin_fusinvsnmp_models_id" :
                $return = "";
                if ($leftjoin_fusinvsnmp_printers == "1") {
                   $return = " LEFT JOIN glpi_plugin_fusinvsnmp_printers ON (glpi_printers.id = glpi_plugin_fusinvsnmp_printers.printers_id) ";
                }
                return $return." LEFT JOIN glpi_plugin_fusinvsnmp_models ON (glpi_plugin_fusinvsnmp_printers.plugin_fusinvsnmp_models_id = glpi_plugin_fusinvsnmp_models.id) ";
                break;
-
+               
             // ** FusionInventory - SNMP authentification
             case "glpi_plugin_fusinvsnmp_configsecurities.id":
                $return = "";
