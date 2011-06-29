@@ -1366,6 +1366,9 @@ function plugin_fusinvsnmp_addSelect($type,$id,$num) {
          break;
 
       case "PluginFusinvsnmpPrinterLog":
+//         if ($table.".".$field == "$table.".".$field") {
+//            return " `glpi_printers`.`name` AS ITEM_".$num.", DISTINCT `glpi_printers`.`id` AS ITEM_".$num."_2,";
+//         }
          if ($table.".".$field == "glpi_users.name") {
             return " `glpi_users`.`name` AS ITEM_$num, `glpi_users`.`realname` AS ITEM_".$num."_2, `glpi_users`.`id` AS ITEM_".$num."_3, `glpi_users`.`firstname` AS ITEM_".$num."_4,";
          }
@@ -1657,7 +1660,6 @@ function plugin_fusinvsnmp_addOrderBy($type,$id,$order,$key=0) {
    $searchopt = &Search::getOptions($type);
    $table = $searchopt[$id]["table"];
    $field = $searchopt[$id]["field"];
-
 // echo "ORDER BY :".$type." ".$table.".".$field;
 
    switch ($type) {
@@ -1803,8 +1805,8 @@ function plugin_fusinvsnmp_addOrderBy($type,$id,$order,$key=0) {
          break;
 
       case "PluginFusinvsnmpPrinterLog":
-         return " GROUP BY ITEM_0_2
-            ORDER BY ITEM_".$key." $order ";
+//         return " GROUP BY ITEM_0_2
+//            ORDER BY ITEM_".$key." $order ";
          break;
 
    }
@@ -1815,7 +1817,7 @@ function plugin_fusinvsnmp_addOrderBy($type,$id,$order,$key=0) {
 
 function plugin_fusinvsnmp_addWhere($link,$nott,$type,$id,$val) {
    global $SEARCH_OPTION;
-
+   
    $searchopt = &Search::getOptions($type);
    $table = $searchopt[$id]["table"];
    $field = $searchopt[$id]["field"];

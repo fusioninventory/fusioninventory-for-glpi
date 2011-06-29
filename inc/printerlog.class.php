@@ -45,13 +45,27 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
     
       $tab['common'] = $LANG['plugin_fusinvsnmp']['prt_history'][20];
 
-      $tab[1]['table'] = "glpi_printers";
-      $tab[1]['field'] = 'name';
-      $tab[1]['linkfield'] = 'printers_id';
-      $tab[1]['name'] = $LANG['common'][16];
-      $tab[1]['datatype'] = 'itemlink';
-      $tab[1]['itemlink_type']  = 'Printer';
-
+      $tab[1]['table'] = $this->getTable();
+      $tab[1]['field'] = 'id';
+      $tab[1]['name'] = 'id';
+      
+      $tab[2]['table'] = "glpi_printers";
+      $tab[2]['field'] = 'name';
+      $tab[2]['linkfield'] = 'printers_id';
+      $tab[2]['name'] = $LANG['common'][16];
+      $tab[2]['datatype'] = 'itemlink';
+      $tab[2]['itemlink_type']  = 'Printer';
+//      $tab[2]['forcegroupby'] = true;
+      
+      
+//      $tab[1]['table'] = "glpi_printers";
+//      $tab[1]['field'] = 'name';
+//      $tab[1]['linkfield'] = 'printers_id';
+//      $tab[1]['name'] = $LANG['common'][16];
+//      $tab[1]['datatype'] = 'itemlink';
+//      $tab[1]['itemlink_type']  = 'Printer';
+//      $tab[1]['forcegroupby'] = true;
+      
       $tab[24]['table'] = 'glpi_locations';
       $tab[24]['field'] = 'name';
       $tab[24]['linkfield'] = 'locations_id';
@@ -66,12 +80,12 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       $tab[19]['datatype'] = 'itemlink';
       $tab[19]['itemlink_type'] = 'PrinterType';
 
-      $tab[2]['table'] = 'glpi_printermodels';
-      $tab[2]['field'] = 'name';
-      $tab[2]['linkfield'] = 'printermodels_id';
-      $tab[2]['name'] = $LANG['common'][22];
-      $tab[2]['datatype']='itemptype';
-
+//      $tab[2]['table'] = 'glpi_printermodels';
+//      $tab[2]['field'] = 'name';
+//      $tab[2]['linkfield'] = 'printermodels_id';
+//      $tab[2]['name'] = $LANG['common'][22];
+//      $tab[2]['datatype']='itemptype';
+//
       $tab[18]['table'] = 'glpi_states';
       $tab[18]['field'] = 'name';
       $tab[18]['linkfield'] = 'states_id';
@@ -100,7 +114,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 
       $tab[5]['table'] = 'glpi_networkports';
       $tab[5]['field'] = 'ip';
-      $tab[5]['linkfield'] = 'id';
+      $tab[5]['linkfield'] = 'printers_id';
       $tab[5]['name'] = $LANG['networking'][14];
 
 //      $tab[4]['table'] = 'glpi_infocoms';
