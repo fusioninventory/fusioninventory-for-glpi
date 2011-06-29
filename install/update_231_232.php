@@ -36,11 +36,5 @@
 function update231to232() {
    global $DB;
 
-   /*
-    * Manage models migration
-    */
-   PluginFusinvsnmpModel::importAllModels();
-
-
 }
 ?>
