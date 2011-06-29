@@ -165,7 +165,17 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
                   case 'DRIVES':
                      $ComputerDisk = new ComputerDisk();
                      if (!$a_lists = $ComputerDisk->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
-                        $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['devices'][19], $a_sectiontmp['TYPE']." (".$a_sectiontmp['VOLUMN'].")");
+                        $name = '';
+                        if ((isset($a_sectiontmp['LABEL'])) AND (!empty($a_sectiontmp['LABEL']))) {
+                           $name=$a_sectiontmp['LABEL'];
+                        } else if (((!isset($a_sectiontmp['VOLUMN'])) OR (empty($a_sectiontmp['VOLUMN']))) AND (isset($a_sectiontmp['LETTER']))) {
+                           $name=$a_sectiontmp['LETTER'];
+                        } else if (isset($a_sectiontmp['TYPE'])) {
+                           $name=$a_sectiontmp['TYPE'];
+                        } else if (isset($a_sectiontmp['VOLUMN'])) {
+                           $name=$a_sectiontmp['VOLUMN'];
+                        }
+                        $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['devices'][19], $a_sectiontmp['TYPE']." (".$name.")");
                      } else {
                         $a_list = current($a_lists);
                         $a_sections_lib['DRIVES'][$a_list['id']] = 1;
@@ -175,7 +185,7 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
                   case 'MEMORIES':
                      $DeviceMemory = new Computer_Device('DeviceMemory');
                      if (!$a_lists = $DeviceMemory->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
-                        $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['devices'][6], $a_sectiontmp['NAME']);
+                        $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['devices'][6], $a_sectiontmp['DESCRIPTION']);
                      } else {
                         $a_list = current($a_lists);
                         $a_sections_lib['MEMORIES'][$a_list['id']] = 1;
