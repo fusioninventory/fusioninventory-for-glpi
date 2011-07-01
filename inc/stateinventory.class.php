@@ -79,10 +79,10 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
 
 		echo "<tr class='tab_bg_1'>";
       echo "<th>uniqid</th>";
-      echo "<th>agent</th>";
-      echo "<th>state</th>";
-      echo "<th>startdate</th>";
-      echo "<th>enddate</th>";
+      echo "<th>".$LANG['plugin_fusioninventory']['agents'][28]."</th>";
+      echo "<th>".$LANG['joblist'][0]."</th>";
+      echo "<th>".$LANG['plugin_fusinvsnmp']['state'][4]."</th>";
+      echo "<th>".$LANG['plugin_fusinvsnmp']['state'][5]."</th>";
       echo "<th>totaltime execution</th>";
       echo "<th>ratio nb/s</th>";
       echo "<th>nbthreads</th>";
@@ -118,10 +118,8 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
                   $nb_errors++;
                } else if ($taskjoblog['state'] == "1") {
                   $nb_threads = str_replace(" threads", "", $taskjoblog['comment']);
-               } else if (strstr($taskjoblog['comment'], "==fusinvsnmp::6==")) {
                   $start_date = $taskjoblog['date'];
                }
-
 
                if (($taskjoblog['state'] == "2")
                   OR ($taskjoblog['state'] == "3")
@@ -168,7 +166,13 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
                $date1 = new DateTime($start_date);
                $date2 = new DateTime($end_date);
                $interval = $date1->diff($date2);
-               echo "<td>".$interval->h."h ".$interval->i."min ".$interval->s."s</td>";
+               $display_date = '';
+               if ($interval->h > 0) {
+                  $display_date .= $interval->h."h ";
+               } else if ($interval->i > 0) {
+                  $display_date .= $interval->i."min ";
+               }
+               echo "<td>".$display_date.$interval->s."s</td>";
             } else {
                $interval = $this->date_diff($start_date, $end_date);
             }
@@ -196,7 +200,14 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
       $nb_hour = floor($nb_min / 60);
       $interval['i'] = $nb_min - ($nb_hour * 60);
 
-      echo "<td>".$nb_hour."h ".$interval['i']."min ".$interval['s']."s</td>";
+      $display_date = '';
+      if ($nb_hour > 0) {
+         $display_date .= $nb_hour."h ";
+      } else if ($interval['i'] > 0) {
+         $display_date .= $interval['i']."min ";
+      }
+
+      echo "<td>".$display_date.$interval['s']."s</td>";
 
    }
 }
