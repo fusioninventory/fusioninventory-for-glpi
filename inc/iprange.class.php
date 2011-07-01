@@ -320,6 +320,14 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       $options = array();
       $options['target'] = getItemTypeFormURL('PluginFusioninventoryIPRange');
       $PluginFusioninventoryTaskjob->showFormHeader($options);
+      
+      echo "</td>";
+      echo "<td colspan='4' align='center'>";
+      echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/front/taskjob.form.php?id=".$taskjob_id."'>".
+         $LANG['plugin_fusioninventory']['task'][44]."</a>";
+      echo "</td>";
+      echo "</tr>";
+      
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['common'][60]."&nbsp;:</td>";
       echo "<td align='center'>";
@@ -364,13 +372,6 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       $com['push'] = $LANG['plugin_fusioninventory']['task'][41];
       $com['pull'] = $LANG['plugin_fusioninventory']['task'][42];
       Dropdown::showFromArray("communication", $com, array('value'=>$PluginFusioninventoryTask->fields["communication"]));
-      echo "</td>";
-      echo "</tr>";
-
-      echo "</td>";
-      echo "<td colspan='4' align='center'>";
-      echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/front/taskjob.form.php?id=".$taskjob_id."'>".
-         $LANG['plugin_fusioninventory']['task'][44]."</a>";
       echo "</td>";
       echo "</tr>";
 
