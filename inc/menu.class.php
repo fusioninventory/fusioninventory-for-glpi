@@ -98,10 +98,18 @@ class PluginFusioninventoryMenu {
       }
 
       if (PluginFusioninventoryCredential::hasAlLeastOneType() 
+            && PluginFusioninventoryProfile::haveRight("fusioninventory", "credential", "r")) {
+         $a_menu[7]['name'] = $LANG['plugin_fusioninventory']['menu'][5];
+         $a_menu[7]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_authentification.png";
+         $a_menu[7]['link'] = getItemTypeSearchURL('PluginFusioninventoryCredential');
+
+      }
+      
+      if (PluginFusioninventoryCredential::hasAlLeastOneType() 
             && PluginFusioninventoryProfile::haveRight("fusioninventory", "credentialip", "r")) {
-         $a_menu[7]['name'] = $LANG['plugin_fusioninventory']['menu'][6];
-         $a_menu[7]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_credentialips.png";
-         $a_menu[7]['link'] = getItemTypeSearchURL('PluginFusioninventoryCredentialip');
+         $a_menu[8]['name'] = $LANG['plugin_fusioninventory']['menu'][6];
+         $a_menu[8]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_credentialips.png";
+         $a_menu[8]['link'] = getItemTypeSearchURL('PluginFusioninventoryCredentialip');
 
       }
 
