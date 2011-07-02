@@ -820,7 +820,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
          $_SESSION['glpi_plugin_fusioninventory']['agents'] = array();
 
-         $query = "SELECT `".$PluginFusioninventoryTaskjob->getTable()."`.*,`glpi_plugin_fusioninventory_tasks`.`communication`, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp
+         $query = "SELECT `".$PluginFusioninventoryTaskjob->getTable()."`.*,
+               `glpi_plugin_fusioninventory_tasks`.`communication`, 
+               UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp
             FROM ".$PluginFusioninventoryTaskjob->getTable()."
             LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
             WHERE `is_active`='1'
@@ -1520,6 +1522,12 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       }
       $this->showFormHeader(array());
 
+      $a_methods = array();
+      $a_methods = PluginFusioninventoryStaticmisc::getmethods();
+      foreach ($a_methods as $datas) {
+         echo "<input type='hidden' name='method-".$datas['method']."' value='".PluginFusioninventoryModule::getModuleId($datas['module'])."' />";
+      }
+      
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['common'][16]."&nbsp;:</td>";
       echo "<td><input type='text' name='name' value='".$this->fields['name']."' /></td>";

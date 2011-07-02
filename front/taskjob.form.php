@@ -154,6 +154,10 @@ if (isset($_POST['definition_add'])) {
       $inputtask['date_scheduled'] = date("Y-m-d H:i:s");
       $task_id = $pluginFusioninventoryTask->add($inputtask);
       $inputtaskjob['plugin_fusioninventory_tasks_id'] = $task_id;
+      if (isset($_POST['method_id'])) {
+         $_POST['method']  = $_POST['method_id'];
+      }
+      $inputtaskjob['plugins_id'] = $_POST['method-'.$_POST['method']];
       $taskjobs_id = $mytaskjob->add($inputtaskjob);
 
       $redirect = $_SERVER['HTTP_REFERER'];
