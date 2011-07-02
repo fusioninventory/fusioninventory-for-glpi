@@ -148,6 +148,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $tab[14]['name']      = $LANG['common'][26];
       $tab[14]['datatype']  = 'datetime';
 
+      $tab += NetworkPort::getSearchOptionsToAdd("PluginFusioninventoryUnknownDevice");
+      
       return $tab;
    }
 
