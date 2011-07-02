@@ -148,6 +148,88 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $tab[14]['name']      = $LANG['common'][26];
       $tab[14]['datatype']  = 'datetime';
 
+      $itemtype = "PluginFusioninventoryUnknownDevice";
+      $tab['network'] = $LANG['setup'][88];
+
+      $joinparams = array('jointype' => 'itemtype_item');
+      if ($itemtype=='Computer') {
+         $joinparams['beforejoin'] = array('table'      => 'glpi_computers_devicenetworkcards',
+                                           'joinparams' => array('jointype' => 'child',
+                                                                 'nolink'   => true));
+      }
+
+      $tab[20]['table']         = 'glpi_networkports';
+      $tab[20]['field']         = 'ip';
+      $tab[20]['linkfield']     = '';
+      $tab[20]['name']          = $LANG['networking'][14];
+      $tab[20]['forcegroupby']  = true;
+      $tab[20]['massiveaction'] = false;
+      $tab[20]['joinparams']    = $joinparams;
+
+      $tab[21]['table']         = 'glpi_networkports';
+      $tab[21]['field']         = 'mac';
+      $tab[21]['linkfield']     = '';
+      $tab[21]['name']          = $LANG['networking'][15];
+      $tab[21]['forcegroupby']  = true;
+      $tab[21]['massiveaction'] = false;
+      $tab[21]['joinparams']    = $joinparams;
+
+      $tab[83]['table']         = 'glpi_networkports';
+      $tab[83]['field']         = 'netmask';
+      $tab[83]['linkfield']     = '';
+      $tab[83]['name']          = $LANG['networking'][60];
+      $tab[83]['forcegroupby']  = true;
+      $tab[83]['massiveaction'] = false;
+      $tab[83]['joinparams']    = $joinparams;
+
+      $tab[84]['table']         = 'glpi_networkports';
+      $tab[84]['field']         = 'subnet';
+      $tab[84]['linkfield']     = '';
+      $tab[84]['name']          = $LANG['networking'][61];
+      $tab[84]['forcegroupby']  = true;
+      $tab[84]['massiveaction'] = false;
+      $tab[84]['joinparams']    = $joinparams;
+
+      $tab[85]['table']         = 'glpi_networkports';
+      $tab[85]['field']         = 'gateway';
+      $tab[85]['linkfield']     = '';
+      $tab[85]['name']          = $LANG['networking'][59];
+      $tab[85]['forcegroupby']  = true;
+      $tab[85]['massiveaction'] = false;
+      $tab[85]['joinparams']    = $joinparams;
+
+      $tab[22]['table']         = 'glpi_netpoints';
+      $tab[22]['field']         = 'name';
+      $tab[22]['linkfield']     = '';
+      $tab[22]['name']          = $LANG['networking'][51];
+      $tab[22]['forcegroupby']  = true;
+      $tab[22]['massiveaction'] = false;
+      $tab[22]['joinparams']    = array('beforejoin' => array('table'      => 'glpi_networkports',
+                                                              'joinparams' => $joinparams));
+
+      $tab[87]['table']         = 'glpi_networkinterfaces';
+      $tab[87]['field']         = 'name';
+      $tab[87]['linkfield']     = '';
+      $tab[87]['name']          = $LANG['common'][65];
+      $tab[87]['forcegroupby']  = true;
+      $tab[87]['massiveaction'] = false;
+      $tab[87]['joinparams']    = array('beforejoin' => array('table'      => 'glpi_networkports',
+                                                              'joinparams' => $joinparams));
+
+      $netportjoin = array(array('table'      => 'glpi_networkports',
+                                 'joinparams' => array('jointype' => 'itemtype_item')),
+                           array('table'      => 'glpi_networkports_vlans',
+                                 'joinparams' => array('jointype' => 'child')));
+
+      $tab[88]['table']         = 'glpi_vlans';
+      $tab[88]['field']         = 'name';
+      $tab[88]['linkfield']     = '';
+      $tab[88]['name']          = $LANG['networking'][56];
+      $tab[88]['forcegroupby']  = true;
+      $tab[88]['massiveaction'] = false;
+      $tab[88]['joinparams']    = array('beforejoin' => $netportjoin);
+
+            
       return $tab;
    }
 
