@@ -120,8 +120,15 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
       if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
          $array['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
       }
-      $Computer_SoftwareVersion_id = $Computer_SoftwareVersion->add($array);
-      return $Computer_SoftwareVersion_id;
+      // Check if this software yet exist (See ticket http://forge.fusioninventory.org/issues/999)
+      $a_soft = $Computer_SoftwareVersion->find("`computers_id`='".$array['computers_id']."'
+               AND `softwareversions_id`='".$array['softwareversions_id']."' ", 
+            "",
+            1);
+      if (count($a_soft) == 0) {      
+         $Computer_SoftwareVersion_id = $Computer_SoftwareVersion->add($array);
+         return $Computer_SoftwareVersion_id;
+      }
    }
 
 
