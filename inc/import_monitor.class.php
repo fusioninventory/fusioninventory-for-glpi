@@ -120,6 +120,8 @@ class PluginFusinvinventoryImport_Monitor extends CommonDBTM {
 
       if (isset($dataSection['CAPTION'])) {
          $a_monitor['name'] = $dataSection['CAPTION'];
+         $monitorModel = new MonitorModel();
+         $a_monitor['monitormodels_id'] = $monitorModel->importExternal($dataSection['CAPTION']);
       }
       if ((isset($dataSection['MANUFACTURER']))
               AND (!empty($dataSection['MANUFACTURER']))) {
