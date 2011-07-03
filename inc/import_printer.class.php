@@ -64,7 +64,7 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
       $printer = new Printer();
 
       $a_printer = array();
-
+      
       if ($type == 'update') {
          $Computer_Item->getFromDB($items_id);
          $a_printer = $printer->getFromDB($Computer_Item->fields['items_id']);
@@ -130,6 +130,15 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
       }
       $a_printer['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
 
+      $rulecollection = new RuleDictionnaryPrinterCollection();
+      $res_rule = $rulecollection->processAllRules(array("name"=>$a_printer['name']));
+
+      if (isset($res_rule['_ignore_ocs_import']) AND $res_rule['_ignore_ocs_import'] == "1") {
+         // Ignrore import printer
+         return;
+      }
+      
+      
       $printer_id = 0;
       if (!isset($a_printer['id'])) {
          if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
