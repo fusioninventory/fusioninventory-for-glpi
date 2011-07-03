@@ -132,10 +132,10 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       $array = array();
-      $array[0] = $LANG['plugin_fusinvinventory']['setup'][23];
-      $array[1] = $LANG['plugin_fusinvinventory']['setup'][22];
-      $array[2] = $LANG['plugin_fusinvinventory']['setup'][24];
-      $array[3] = $LANG['plugin_fusinvinventory']['setup'][27];
+      $array[0] = $LANG['plugin_fusinvinventory']['setup'][23]; // no import
+      $array[1] = $LANG['plugin_fusinvinventory']['setup'][22]; // global Import
+      $array[2] = $LANG['plugin_fusinvinventory']['setup'][24]; // uniq import
+      $array[3] = $LANG['plugin_fusinvinventory']['setup'][27]; // Import serial
       Dropdown::showFromArray("import_monitor", $array, 
                               array('value' => $PluginFusioninventoryConfig->getValue($plugins_id, 
                                                                                       'import_monitor')));

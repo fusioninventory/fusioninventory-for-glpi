@@ -98,8 +98,8 @@ class PluginFusinvinventoryImport_Monitor extends CommonDBTM {
          } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                  "import_monitor") == '1') {
             // GLOBAL
-            if ((isset($dataSection['NAME'])) AND (!empty($dataSection['NAME']))) {
-               $a_monitors = $monitor->find("`name`='".$dataSection['NAME']."'
+            if ((isset($dataSection['CAPTION'])) AND (!empty($dataSection['CAPTION']))) {
+               $a_monitors = $monitor->find("`name`='".$dataSection['CAPTION']."'
                               AND `is_global`='1'","", 1);
                if (count($a_monitors) > 0) {
                   foreach($a_monitors as $data) {
