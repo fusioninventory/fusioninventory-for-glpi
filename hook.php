@@ -382,6 +382,13 @@ function plugin_fusioninventory_MassiveActions($type) {
    global $LANG;
    
    switch ($type) {
+      
+      case "Computer":
+         return array (
+            "plugin_fusioninventory_manage_locks" => $LANG['plugin_fusioninventory']['functionalities'][75]
+         );
+         break;
+      
       case "NetworkEquipment":
          return array (
             "plugin_fusioninventory_manage_locks" => $LANG['plugin_fusioninventory']['functionalities'][75]
@@ -459,6 +466,15 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
    global $LANG, $CFG_GLPI, $DB;
 
    switch ($options['itemtype']) {
+      case "Computer":
+         switch ($options['action']) {
+            case "plugin_fusioninventory_manage_locks" :
+               $pfil = new PluginFusioninventoryLock;
+               $pfil->showForm($_SERVER["PHP_SELF"], "Computer");
+               break;
+         }
+         break;
+      
       case "NetworkEquipment":
          switch ($options['action']) {
             case "plugin_fusioninventory_manage_locks" :
@@ -506,7 +522,10 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
 
    switch ($data['action']) {
       case "plugin_fusioninventory_manage_locks" :
-         if (($data['itemtype'] == "NetworkEquipment") OR ($data['itemtype'] == "Printer")) {
+         if (($data['itemtype'] == "NetworkEquipment") 
+                 OR ($data['itemtype'] == "Printer")
+                 OR ($data['itemtype'] == "Computer")) {
+            
             foreach ($data['item'] as $key => $val) {
                if ($val == 1) {
                   if (isset($data["lockfield_fusioninventory"])&&count($data["lockfield_fusioninventory"])){
