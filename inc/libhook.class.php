@@ -133,6 +133,20 @@ class PluginFusinvinventoryLibhook {
       $ignore_USB = array();
 
       $i = -1;
+      // Pre-get HARDWARE/CHASSIS_TYPE (type of computer
+      $computer_type = '';
+      foreach($data as $section) {
+         if ($section['sectionName'] == 'HARDWARE') {
+            $dataSection = unserialize($section['dataSection']);
+            foreach($dataSection as $key=>$value) {
+               $dataSection[$key] = addslashes_deep($value);
+            }
+            if (isset($dataSection['CHASSIS_TYPE'])) {
+               $computer_type = $dataSection['CHASSIS_TYPE'];
+            }
+         }
+      }
+      
       foreach($data as $section) {
          $i++;
          $dataSection = unserialize($section['dataSection']);
@@ -183,17 +197,22 @@ class PluginFusinvinventoryLibhook {
                   if (!in_array('serial', $a_lockable)) {
                      $inputC['serial'] = $dataSection['SSN'];
                   }
-               if (isset($dataSection['TYPE'])) {
+               // * Type of computer
+               $computerType = new ComputerType();
+               if ($computer_type != '') {
                   if (!in_array('computertypes_id', $a_lockable)) {
-                     $inputC['computertypes_id'] = Dropdown::importExternal('ComputerType',
-                                                                          $dataSection['TYPE']);
+                     $inputC['computertypes_id'] = $computerType->importExternal($computer_type);
+                  } 
+               } else  if (isset($dataSection['TYPE'])) {
+                  if (!in_array('computertypes_id', $a_lockable)) {
+                     $inputC['computertypes_id'] = $computerType->importExternal($dataSection['TYPE']);
                   }
                } else if (isset($dataSection['MMODEL'])) {
                   if (!in_array('computertypes_id', $a_lockable)) {
-                     $inputC['computertypes_id'] = Dropdown::importExternal('ComputerType',
-                                                                          $dataSection['MMODEL']);
+                     $inputC['computertypes_id'] = $computerType->importExternal($dataSection['MMODEL']);
                   }
                }
+               
                if (isset($dataSection['SKUNUMBER'])) {
                   $PluginFusinvinventoryLibhook = new PluginFusinvinventoryLibhook();
                   $PluginFusinvinventoryLibhook->Suppliertag($idmachine, $dataSection['SKUNUMBER']);
@@ -651,6 +670,23 @@ class PluginFusinvinventoryLibhook {
       $_SESSION["plugin_fusinvinventory_history_add"] = true;
       $_SESSION["plugin_fusinvinventory_no_history_add"] = false;
 
+      // Pre-get HARDWARE/CHASSIS_TYPE (type of computer
+      $computer_type = '';
+      foreach($data as $section) {
+         $array = explode("/", $section['sectionId']);
+         $items_id = $array[1];
+         $sectionName = $array[0];
+         if ($sectionName == 'HARDWARE') {
+            $dataSection = unserialize($section['dataSection']);
+            foreach($dataSection as $key=>$value) {
+               $dataSection[$key] = addslashes_deep($value);
+            }
+            if (isset($dataSection['CHASSIS_TYPE'])) {
+               $computer_type = $dataSection['CHASSIS_TYPE'];
+            }
+         }
+      }
+      
       foreach($data as $section) {
          $dataSection = unserialize($section['dataSection']);
          foreach($dataSection as $key=>$value) {
@@ -743,15 +779,19 @@ class PluginFusinvinventoryLibhook {
                      if (!in_array('serial', $a_lockable)) {
                         $inputC['serial'] = $dataSection['SSN'];
                      }
-                  if (isset($dataSection['TYPE'])) {
+                  // Update type of computer
+                  $computerType = new ComputerType();
+                  if ($computer_type != '') {
                      if (!in_array('computertypes_id', $a_lockable)) {
-                        $inputC['computertypes_id'] = Dropdown::importExternal('ComputerType',
-                                                                          $dataSection['TYPE']);
+                        $inputC['computertypes_id'] = $computerType->importExternal($computer_type);
+                     }
+                  } else if (isset($dataSection['TYPE'])) {
+                     if (!in_array('computertypes_id', $a_lockable)) {
+                        $inputC['computertypes_id'] = $computerType->importExternal($dataSection['TYPE']);
                      }
                   } else if (isset($dataSection['MMODEL'])) {
                      if (!in_array('computertypes_id', $a_lockable)) {
-                        $inputC['computertypes_id'] = Dropdown::importExternal('ComputerType',
-                                                                             $dataSection['MMODEL']);
+                        $inputC['computertypes_id'] = $computerType->importExternal($dataSection['MMODEL']);
                      }
                   }
                   if (isset($dataSection['SKUNUMBER'])) {
