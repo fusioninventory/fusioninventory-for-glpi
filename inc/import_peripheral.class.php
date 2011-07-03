@@ -96,7 +96,6 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
          } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                  "import_peripheral") == '1') {
             // GLOBAL
-            logInFile("TOTO", print_r($dataSection, true));
             $name = '';
             if ((isset($dataSection['PRODUCTNAME']))
                     AND (!empty($dataSection['PRODUCTNAME']))) {
@@ -111,7 +110,6 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
                if (count($a_peripherals) > 0) {
                   foreach($a_peripherals as $data) {
                      $a_Peripheral = $data;
-                     logInFile("TOTO", print_r($a_Peripheral, true));
                   }
                } else {
                   $a_Peripheral = array();
