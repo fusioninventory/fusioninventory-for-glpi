@@ -96,12 +96,22 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
          } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                  "import_peripheral") == '1') {
             // GLOBAL
-            if ((isset($dataSection['NAME'])) AND (!empty($dataSection['NAME']))) {
-               $a_peripherals = $Peripheral->find("`name`='".$dataSection['NAME']."'
+            logInFile("TOTO", print_r($dataSection, true));
+            $name = '';
+            if ((isset($dataSection['PRODUCTNAME']))
+                    AND (!empty($dataSection['PRODUCTNAME']))) {
+
+               $name = $dataSection['PRODUCTNAME'];
+            } else if (isset($dataSection['NAME'])) {
+               $name = $dataSection['NAME'];
+            }
+            if ($name != '') {
+               $a_peripherals = $Peripheral->find("`name`='".$name."'
                               AND `is_global`='1'","", 1);
                if (count($a_peripherals) > 0) {
                   foreach($a_peripherals as $data) {
                      $a_Peripheral = $data;
+                     logInFile("TOTO", print_r($a_Peripheral, true));
                   }
                } else {
                   $a_Peripheral = array();
@@ -144,8 +154,12 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
 
          PluginFusinvinventoryInventory::addDefaultStateIfNeeded($a_Peripheral, true, 
                                                                  $a_Peripheral['is_global']);
-         
-         $peripheral_id = $Peripheral->add($a_Peripheral);
+         if (isset($a_Peripheral['id'])) {
+            $Peripheral->update($a_Peripheral);
+            $peripheral_id = $a_Peripheral['id'];
+         } else {
+            $peripheral_id = $Peripheral->add($a_Peripheral);
+         }
       }
 
       $array = array();
