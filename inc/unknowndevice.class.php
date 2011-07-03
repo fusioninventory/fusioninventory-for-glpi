@@ -982,7 +982,9 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             $NetworkEquipment_id = $NetworkEquipment->add($data);
 
             foreach ($a_NetworkPorts as $data_Port) {
-               $NetworkPort->delete($data_Port);
+               $data_Port['items_id'] = $NetworkEquipment_id;
+               $data_Port['itemtype'] = $NetworkEquipment->getType();
+               $NetworkPort->update($data_Port);
             }
 
             // Import SNMP if enable
