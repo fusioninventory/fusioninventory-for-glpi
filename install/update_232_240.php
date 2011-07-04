@@ -70,6 +70,7 @@ function update232to240() {
                                  "to glpi_plugin_fusioninventory_ipranges".
                                  $LANG['update'][90] . $DB->error());
       
+      
       //Migrate itemtype in all tables
       //First taskjobstatus
       $query = "UPDATE `glpi_displaypreferences` " .
@@ -132,8 +133,8 @@ function update232to240() {
                   `entities_id` INT( 11 ) NOT NULL DEFAULT '0',
                   `plugin_fusioninventory_credentials_id` INT( 11 ) NOT NULL DEFAULT  '0',
                   `name` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
-                  `ip` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
                   `comment` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ,
+                  `ip` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
                   `date_mod` DATETIME NOT NULL ,
                   PRIMARY KEY (  `id` )
                   ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
@@ -157,6 +158,22 @@ function update232to240() {
       $DB->query($query) or die ("Add useragent to glpi_plugin_fusioninventory_agents".
                                  $LANG['update'][90] . $DB->error());
    }
+   
+   if (TableExists("glpi_plugin_fusioninventory_agents_errors")) {
+      $sql = "DROP TABLE `glpi_plugin_fusioninventory_agents_errors`";
+      $DB->query($sql);
+   }
+   
+   if (TableExists("glpi_plugin_fusioninventory_agents_processes")) {
+      $sql = "DROP TABLE `glpi_plugin_fusioninventory_agents_processes`";
+      $DB->query($sql);
+   }
+
+   if (TableExists("glpi_plugin_fusioninventory_computers")) {
+      $sql = "DROP TABLE `glpi_plugin_fusioninventory_computers`";
+      $DB->query($sql);
+   }
+   
    plugin_fusioninventory_displayMigrationMessage("240"); // End
 }
 
