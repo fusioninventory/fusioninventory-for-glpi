@@ -2,7 +2,12 @@
 	<name><![CDATA[2342464]]></name>
 	<type>2</type>
 	<key>Networking0373</key>
-	<comments><![CDATA[Cisco IOS Software, 2800 Software (C2800NM-IPBASE-M), Version 12.4(3g), RELEASE SOFTWARE (fc2)^M
+	<comments><![CDATA[Cisco IOS Software, 2800 Software (C2800NM-ADVIPSERVICESK9-M), Version 12.4(13a), RELEASE SOFTWARE (fc1)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2007 by Cisco Systems, Inc.^M
+Compiled Tue 06-Mar-07 17:01 by prod_rel_team
+
+Cisco IOS Software, 2800 Software (C2800NM-IPBASE-M), Version 12.4(3g), RELEASE SOFTWARE (fc2)^M
 Technical Support: http://www.cisco.com/techsupport^M
 Copyright (c) 1986-2006 by Cisco Systems, Inc.^M
 Compiled Mon 06-Nov-06 02:36 by alnguyen

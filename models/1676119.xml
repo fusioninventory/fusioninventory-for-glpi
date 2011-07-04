@@ -2,7 +2,11 @@
 	<name><![CDATA[1676119]]></name>
 	<type>2</type>
 	<key>Networking0332</key>
-	<comments><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(44)SE1, RELEASE SOFTWARE (fc1)^M
+	<comments><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(25)SEE3, RELEASE SOFTWARE (fc2)
+Copyright (c) 1986-2007 by Cisco Systems, Inc.
+Compiled Thu 22-Feb-07 13:57 by myl
+
+Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(44)SE1, RELEASE SOFTWARE (fc1)^M
 Copyright (c) 1986-2008 by Cisco Systems, Inc.^M
 Compiled Fri 07-Mar-08 00:38 by weiliu
 
