@@ -421,6 +421,66 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
                               '1', '(6) Port fa0/1 of switch 1 not connected to 1 port ('.
                                     count($a_list_connections).')');
          
+      /* 
+       * 7. When have hub on port and next inventory have a CDP device
+       *    hub must be deconnected 
+       */
+      $switch1biscdp = str_replace("<CONNECTION>
+              <MAC>f0:ad:4e:00:19:f7</MAC>
+            </CONNECTION>
+            <CONNECTION>
+              <MAC>f0:ad:4e:10:39:f9</MAC>
+            </CONNECTION>", "<CDP>1</CDP>
+            <CONNECTION>
+              <IFDESCR>fa0/2</IFDESCR>
+              <IP>192.168.30.51</IP>
+            </CONNECTION>", $switch1bis);
+      $this->testSendinventory("toto", $switch1biscdp);
+        // CHECK 1 : Verify have no hub on port 1 of switch 1
+         $a_ports = $networkPort->find("`itemtype`='NetworkEquipment'
+               AND `items_id`='".$a_switch['id']."'");
+         $this->assertEquals(count($a_ports), 1, '(7)switch 1 haven\'t port fa0/1 added in GLPI');
+         $a_port = current($a_ports);
+         $contactport_id = $networkPort->getContact($a_port['id']);
+         $networkPort->getFromDB($contactport_id);
+         if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+            $pluginFusioninventoryUnknownDevice->getFromDB($networkPort->fields['items_id']);
+            $this->assertEquals($pluginFusioninventoryUnknownDevice->fields['hub'],
+                              '0', '(7) Hub connected on port fa0/1 of switch 1');
+         }
+
+         
+      /* 
+       * 8. When have hub on port and next inventory have a CDP device
+       *    hub must be deconnected (but CDP device is your switch 2
+       */
+      $this->testSendinventory("toto", $switch1bis);
+      $switch1biscdp = str_replace("<CONNECTION>
+              <MAC>f0:ad:4e:00:19:f7</MAC>
+            </CONNECTION>
+            <CONNECTION>
+              <MAC>f0:ad:4e:10:39:f9</MAC>
+            </CONNECTION>", "<CDP>1</CDP>
+            <CONNECTION>
+              <IFDESCR>Fa0/3</IFDESCR>
+              <IP>192.168.20.81</IP>
+            </CONNECTION>", $switch1bis);
+      $this->testSendinventory("toto", $switch1biscdp);
+         // CHECK 1 : Verify have no hub on port 1 of switch 1
+         $a_ports = $networkPort->find("`itemtype`='NetworkEquipment'
+               AND `items_id`='".$a_switch['id']."'");
+         $this->assertEquals(count($a_ports), 1, '(8)switch 1 haven\'t port fa0/1 added in GLPI');
+         $a_port = current($a_ports);
+         $contactport_id = $networkPort->getContact($a_port['id']);
+         $networkPort->getFromDB($contactport_id);
+         if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+            $pluginFusioninventoryUnknownDevice->getFromDB($networkPort->fields['items_id']);
+            $this->assertEquals($pluginFusioninventoryUnknownDevice->fields['hub'],
+                              '0', '(8) Hub connected on port fa0/1 of switch 1');
+         }
+
+         
+         
    }
 
 
