@@ -205,7 +205,7 @@ function plugin_init_fusinvsnmp() {
 function plugin_version_fusinvsnmp() {
 	return array('name'           => 'FusionInventory SNMP',
                 'shortname'      => 'fusinvsnmp',
-                'version'        => '2.3.5-1',
+                'version'        => '2.3.6-1',
                 'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
                                     & <a href="mailto:v.mazzoni@siprossii.com">Vincent MAZZONI</a>',
                 'homepage'       =>'http://forge.fusioninventory.org/projects/pluginfusinvsnmp',

@@ -59,10 +59,11 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       if ($status == "field") {
 
 			$query = "INSERT INTO `glpi_plugin_fusinvsnmp_networkportlogs` (
-                               `networkports_id`,`plugin_fusioninventory_mappings_id`,`value_old`,`value_new`,`date_mod`)
+                               `networkports_id`,`plugin_fusioninventory_mappings_id`,`value_old`,`value_new`,`date_mod`,
+                               `plugin_fusioninventory_agentprocesses_id`)
                    VALUES('".$array["networkports_id"]."','".$array["plugin_fusioninventory_mappings_id"]."',
                           '".$array["value_old"]."','".$array["value_new"]."',
-                          '".date("Y-m-d H:i:s")."');";
+                          '".date("Y-m-d H:i:s")."', '0');";
          $DB->query($query);
 		}
  	}
