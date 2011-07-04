@@ -33,7 +33,7 @@
  */
 
 $title="FusionInventory INVENTORY";
-$version="2.3.5-1";
+$version="2.3.6-1";
 
 $LANG['plugin_fusinvinventory']['title'][0]="$title";
 

@@ -67,6 +67,7 @@ function pluginFusinvinventoryUpdate($current_version) {
       case "2.3.2-1":
       case "2.3.3-1":
       case "2.3.4-1":
+      case "2.3.5-1":
    }
 
    echo "</td>";
@@ -75,7 +76,7 @@ function pluginFusinvinventoryUpdate($current_version) {
 
    $config = new PluginFusioninventoryConfig();
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
-   $config->updateConfigType($plugins_id, 'version', "2.3.5-1");
+   $config->updateConfigType($plugins_id, 'version', "2.3.6-1");
 }
 
 ?>
