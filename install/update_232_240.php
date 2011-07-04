@@ -39,6 +39,81 @@
 function update232to240() {
    global $DB;
 
+   if (!FieldExists("glpi_plugin_fusinvsnmp_constructdevices","networkmodel_id")) {
+      $query = "ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevices` 
+         ADD `networkmodel_id` INT( 11 ) NOT NULL DEFAULT '0'";
+      $DB->query($query);
+   }
+   if (!FieldExists("glpi_plugin_fusinvsnmp_constructdevices","printermodel_id")) {
+      $query = "ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevices` 
+         ADD `printermodel_id` INT( 11 ) NOT NULL DEFAULT '0'";
+      $DB->query($query);
+   }
+   if (!FieldExists("glpi_plugin_fusinvsnmp_constructdevices","have_someinformations")) {
+      $query = "ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevices` 
+         ADD `have_someinformations` INT( 1 ) NOT NULL DEFAULT '0'";
+      $DB->query($query);
+   }   
+   if (!FieldExists("glpi_plugin_fusinvsnmp_constructdevices","have_importantinformations")) {
+      $query = "ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevices` 
+         ADD `have_importantinformations` INT( 1 ) NOT NULL DEFAULT '0'";
+      $DB->query($query);
+   }
+   if (!FieldExists("glpi_plugin_fusinvsnmp_constructdevices","have_ports")) {
+      $query = "ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevices` 
+         ADD `have_ports` INT( 1 ) NOT NULL DEFAULT '0'";
+      $DB->query($query);
+   }
+   if (!FieldExists("glpi_plugin_fusinvsnmp_constructdevices","have_portsconnections")) {
+      $query = "ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevices` 
+         ADD `have_portsconnections` INT( 1 ) NOT NULL DEFAULT '0'";
+      $DB->query($query);
+   }   
+   if (!FieldExists("glpi_plugin_fusinvsnmp_constructdevices","have_vlan")) {
+      $query = "ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevices` 
+         ADD `have_vlan` INT( 1 ) NOT NULL DEFAULT '0'";
+      $DB->query($query);
+   }
+   if (!FieldExists("glpi_plugin_fusinvsnmp_constructdevices","have_trunk")) {
+      $query = "ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevices` 
+         ADD `have_trunk` INT( 1 ) NOT NULL DEFAULT '0'";
+      $DB->query($query);
+   }   
+   if (!FieldExists("glpi_plugin_fusinvsnmp_constructdevices","released")) {
+      $query = "ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevices` 
+         ADD `released` INT( 1 ) NOT NULL DEFAULT '0'";
+      $DB->query($query);
+   }   
+   if (!FieldExists("glpi_plugin_fusinvsnmp_constructdevices","releasedsnmpmodel_id")) {
+      $query = "ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevices` 
+         ADD `releasedsnmpmodel_id` INT( 11 ) NOT NULL DEFAULT '0'";
+      $DB->query($query);
+   }      
+   
+   $query = "ALTER TABLE `glpi_plugin_fusinvsnmp_networkportconnectionlogs` 
+      CHANGE `plugin_fusioninventory_agentprocesses_id` `plugin_fusioninventory_agentprocesses_id` INT( 11 ) NOT NULL DEFAULT '0'";
+   $DB->query($query);
+   
+   if (!isIndex("glpi_plugin_fusinvsnmp_printers","printers_id")) {
+      $query = "ALTER TABLE `glpi_plugin_fusinvsnmp_printers` 
+         ADD INDEX ( `printers_id` )";
+      $DB->query($query);      
+   }
+
+   if (!TableExists("glpi_plugin_fusioninventory_config_snmp_history")) {
+      $sql = "DROP TABLE `glpi_plugin_fusioninventory_config_snmp_history`";
+      $DB->query($sql);
+   }
+
+   if (!TableExists("glpi_plugin_fusioninventory_config_snmp_networking")) {
+      $sql = "DROP TABLE `glpi_plugin_fusioninventory_config_snmp_networking`";
+      $DB->query($sql);
+   }
+
+   
+   
+   
+   
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
    $insert = array('threads_netdiscovery' => 1,
                    'threads_snmpquery'    => 1);
