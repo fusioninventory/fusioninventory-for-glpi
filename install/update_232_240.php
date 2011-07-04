@@ -72,6 +72,12 @@ function update232to240() {
    	
    }
 
+   if (TableExists("glpi_plugin_fusinvinventory_tmp_agents")) {
+      $sql = "DROP TABLE `glpi_plugin_fusinvinventory_tmp_agents`";
+      $DB->query($sql);
+   }
+   
+   
    $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` WHERE `modulename`='ESX'";
    $result = $DB->query($query);
    if (!$DB->numrows($result)) {
@@ -99,6 +105,6 @@ function update232to240() {
             $DB->query($sql_line)/* or die($DB->error())*/;
          }
       }
-   }
+   }   
 }
 ?>
