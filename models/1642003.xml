@@ -2,7 +2,12 @@
 	<name><![CDATA[1642003]]></name>
 	<type>2</type>
 	<key>Networking0389</key>
-	<comments><![CDATA[Cisco IOS Software, C3550 Software (C3550-IPBASEK9-M), Version 12.2(44)SE6, RELEASE SOFTWARE (fc1)^M
+	<comments><![CDATA[Cisco Internetwork Operating System Software ^M
+IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(22)EA4a, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2005 by cisco Systems, Inc.^M
+Compiled Fri 16-Sep-05 10:46 by yenanh
+
+Cisco IOS Software, C3550 Software (C3550-IPBASEK9-M), Version 12.2(44)SE6, RELEASE SOFTWARE (fc1)^M
 Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
 Compiled Mon 09-Mar-09 20:26 by gereddy
 
