@@ -3,6 +3,11 @@
 	<type>2</type>
 	<key>Networking0307</key>
 	<comments><![CDATA[Cisco Internetwork Operating System Software ^M
+IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(6)EA2c, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2002 by cisco Systems, Inc.^M
+Compiled Thu 28-Feb-02 14:44 by antonino
+
+Cisco Internetwork Operating System Software ^M
 IOS (tm) C3500XL Software (C3500XL-C3H2S-M), Version 12.0(5)WC3b, RELEASE SOFTWARE (fc1)^M
 Copyright (c) 1986-2002 by cisco Systems, Inc.^M
 Compiled Fri 15-Feb-02 10:51 by antonino

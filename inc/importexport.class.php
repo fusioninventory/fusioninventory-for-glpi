@@ -248,6 +248,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
             if (isset($child->activation)) {
                $input["is_active"] = $child->activation;
             }
+            unset($mapping_type);
             if (isset($child->mapping_type)) {
                switch($child->mapping_type) {
 
