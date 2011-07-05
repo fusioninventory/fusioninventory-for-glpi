@@ -116,8 +116,9 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
    *@return bool true if form is ok
    *
    **/
-   function showForm($options=array()) {
+   static function showForm($options=array()) {
       global $LANG;
+
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
