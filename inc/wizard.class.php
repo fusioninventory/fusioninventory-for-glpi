@@ -321,8 +321,8 @@ class PluginFusioninventoryWizard {
       $LANG['plugin_fusioninventory']['wizard'][1]   => "w_inventorychoice",
       $LANG['plugin_fusioninventory']['wizard'][2]   => "w_importcomputeroptions",
       $LANG['plugin_fusioninventory']['rules'][2]    => "w_importrules",
-      $LANG['plugin_fusioninventory']['wizard'][3]   => "",
-      $LANG['plugin_fusioninventory']['wizard'][4]   => "");
+      $LANG['plugin_fusioninventory']['wizard'][3]   => "w_entityrules",
+      $LANG['plugin_fusioninventory']['wizard'][4]   => "w_agentconfig");
    }
 
 
@@ -534,6 +534,21 @@ class PluginFusioninventoryWizard {
    static function w_importrules($ariane='') {
       PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusioninventoryRuleImportEquipmentCollection");
    }
+   
+   
+   
+   /**
+    * Manage entity rules for computers
+    *
+    * @param $ariane value name of current breadcrumb
+    *
+    * @return Nothing (display)
+    **/
+   static function w_entityrules($ariane='') {
+      PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusinvinventoryRuleEntityCollection");
+   }
+
+   
 
 
 
@@ -644,7 +659,24 @@ class PluginFusioninventoryWizard {
 
    }
 
-
+   
+   
+   /**
+    * Computer options
+    *
+    * @param $ariane value name of current breadcrumb
+    *
+    * @return Nothing (display)
+    **/
+   static function w_importcomputeroptions($ariane='') {
+      PluginFusioninventoryWizard::displayShowForm($ariane, 
+              "PluginFusinvinventoryConfig",
+              array('f'=>'showForm',
+                    'arg1'=>array('target'=> GLPI_ROOT."/plugins/fusioninventory/front/configuration.form.php")));
+      
+   }
+   
+   
 
    /**
     * Get task method for current breadcrumb
