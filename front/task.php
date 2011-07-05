@@ -44,7 +44,7 @@ PluginFusioninventoryProfile::checkRight("fusioninventory", "task","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-PluginFusioninventoryCommunication::getAllowurlfopen();
+PluginFusioninventoryTaskjob::getAllowurlfopen();
 echo "<br/>";
 
 $_GET['target']="task.php";

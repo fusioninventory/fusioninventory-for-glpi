@@ -73,7 +73,7 @@ if (isset($_POST['forcestart'])) {
    glpi_header($_SERVER['HTTP_REFERER']);
 }
 
-PluginFusioninventoryCommunication::getAllowurlfopen();
+PluginFusioninventoryTaskjob::getAllowurlfopen();
 
 if (isset($_GET["id"])) {
    $pft->showForm($_GET["id"]);
