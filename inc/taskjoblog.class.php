@@ -196,6 +196,9 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
 
 
+   /**
+    * Display javascript functions for history
+    */
    function javascriptHistory() {
       		echo "<script  type='text/javascript'>
 function close_array(id){
@@ -218,6 +221,7 @@ function appear_array(id){
    }
 
 
+   
    /**
    * Display each history line
    *
@@ -583,7 +587,8 @@ function appear_array(id){
          WHERE `plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
          AND  `glpi_plugin_fusioninventory_taskjoblogs`.`state` IN (2, 3, 4, 5)
          GROUP BY glpi_plugin_fusioninventory_taskjobstatus.uniqid,plugin_fusioninventory_agents_id";
-      if ($result=$DB->query($query)) {
+      $result=$DB->query($query);
+      if ($result) {
 			while ($datajob=$DB->fetch_array($result)) {
             $finishState[$datajob['state']]++;
          }
@@ -604,6 +609,13 @@ function appear_array(id){
 
    
    
+   /**
+    * Get taskjobstatus by uniqid
+    * 
+    * @param type $uuid value uniqid
+    * 
+    * @return array
+    */
    static function getByUniqID($uuid) {
       $results = getAllDatasFromTable('glpi_plugin_fusioninventory_taskjobstatus',
                                       "`uniqid`='$uuid'");

@@ -77,13 +77,20 @@ class PluginFusioninventorySetup {
       // Delete rules
       $Rule = new Rule();
       $a_rules = $Rule->find("`sub_type`='PluginFusioninventoryRuleImportEquipment'");
-      foreach ($a_rules as $id => $data) {
+      foreach ($a_rules as $data) {
          $Rule->delete($data);
       }
 
       return true;
    }
 
+   
+   
+   /**
+    * Remove a directory and sub-directory
+    * 
+    * @param type $dir name of the directory
+    */
    function rrmdir($dir) {
       $PluginFusioninventorySetup = new PluginFusioninventorySetup();
 
@@ -104,6 +111,10 @@ class PluginFusioninventorySetup {
    }
 
 
+   
+   /**
+    * Create rules (initialisation)
+    */
    function initRules() {
 
       $ranking = 0;
@@ -739,7 +750,6 @@ class PluginFusioninventorySetup {
    
    /**
     * Creation of FusionInventory user
-    * 
     * 
     * @return int id of the user "plugin FusionInventory"
     */

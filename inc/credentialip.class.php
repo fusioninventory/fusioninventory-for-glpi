@@ -54,6 +54,8 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
    function canView() {
       return PluginFusioninventoryProfile::haveRight('fusioninventory', 'credentialip', 'r');
    }
+
+   
    
    function getAdditionalFields() {
       global $LANG;
@@ -66,6 +68,8 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
                          'type'  => 'text'));
    }
 
+   
+   
    /**
     * Display specific fields for FieldUnicity
     *
@@ -88,6 +92,7 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
    }
 
 
+   
    function getSearchOptions() {
       global $LANG;
 
@@ -118,6 +123,8 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
       return $tab;
    }
 
+   
+   
    function title() {
       global $CFG_GLPI, $LANG;
       //Leave empty !
@@ -125,41 +132,18 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
       if (PluginFusioninventoryProfile::haveRight('fusioninventory', 'credential', 'r')) {
          $buttons["credential.php"] = $LANG['plugin_fusioninventory']['menu'][5];
       }
-//      displayTitle(GLPI_ROOT."/plugins/fusioninventory/pics/menu_mini_credentials.png", 
-//                   $LANG['plugin_fusioninventory']['menu'][5], "", $buttons);
-      
    }
+
    
-   function displayHeader () {
+   
+   function displayHeader() {
       //Common dropdown header
       parent::displayHeader();
       
       //Fusioninventory menu
       PluginFusioninventoryMenu::displayMenu("mini");
    }
-
-   /**
-    * Get all ip to inventory by credential type
-    * @param credential_type the type of asset to remotly inventory
-    * 
-    * @return an array of credentials and ip, empty if nothing
-    */
-   static function getByType($credential_type = '') {
-      global $DB;
-      $query = "SELECT `a`.* 
-                FROM `glpi_plugin_fusioninventory_credentialips` as `a` 
-                LEFT JOIN `glpi_plugin_fusioninventory_credentials` as `c` 
-                   ON `c`.`id` = `a`.`plugin_fusioninventory_credentials_id` 
-                WHERE `c`.`itemtype`='$credential_type'";
-      $query.= getEntitiesRestrictRequest(' AND','glpi_plugin_fusioninventory_credentialips');
-      $results = $DB->query($query);
-      $response = array();
-      while ($data = $DB->query($query)) {
-         $response[] = $data;
-      }
-      
-      return $response;
-   }
+   
 }
 
 ?>

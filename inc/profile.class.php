@@ -41,12 +41,12 @@ class PluginFusioninventoryProfile extends CommonDBTM {
    /**
     * Add profile
     *
-    *@param $p_plugins_id Module plugin id
-    *@param $p_type Right type ('wol', 'agents'...)
-    *@param $p_right Right (NULL, r, w)
-    *@param $p_profiles_id Profile id
+    * @param $p_plugins_id Module plugin id
+    * @param $p_type Right type ('wol', 'agents'...)
+    * @param $p_right Right (NULL, r, w)
+    * @param $p_profiles_id Profile id
     * 
-    *@return integer the new id of the added item (or false if fail)
+    * @return integer the new id of the added item (or false if fail)
     **/
     static function addProfile($p_plugins_id, $p_type, $p_right, $p_profiles_id=NULL) {
       if (is_null($p_profiles_id)) {
@@ -66,13 +66,13 @@ class PluginFusioninventoryProfile extends CommonDBTM {
    /**
     * Update profile
     *
-    *@param $p_id Profile id
-    *@param $p_plugins_id Module plugin id
-    *@param $p_type Right type ('wol', 'agents'...)
-    *@param $p_right Right (NULL, r, w)
-    *@param $p_profiles_id Profile id
+    * @param $p_id Profile id
+    * @param $p_plugins_id Module plugin id
+    * @param $p_type Right type ('wol', 'agents'...)
+    * @param $p_right Right (NULL, r, w)
+    * @param $p_profiles_id Profile id
     * 
-    *@return boolean : true on success
+    * @return boolean : true on success
     **/
    function updateProfile($p_id, $p_plugins_id, $p_type, $p_right, $p_profiles_id=NULL) {
       if (is_null($p_profiles_id)) {
@@ -92,8 +92,8 @@ class PluginFusioninventoryProfile extends CommonDBTM {
    /**
     * Create full profile (used on install plugin)
     *
-    *@param $p_plugins_id Module plugin id
-    *@param $a_profile array with Right type ('wol', 'agents'...) and Right (NULL, r, w)
+    * @param $p_plugins_id Module plugin id
+    * @param $a_profile array with Right type ('wol', 'agents'...) and Right (NULL, r, w)
     **/
    static function initProfile($pluginname, $plugins_id) {
       global $DB;
@@ -109,6 +109,17 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       }
    }
 
+   
+   
+   /**
+    * Get info if profile exist
+    * 
+    * @param type $plugins_id id of the plugin
+    * @param type $profiles_id id of the profile
+    * @param type $type value type of right (example : agent, remotecontrol, configuration...)
+    * 
+    * @return true or false
+    */
    static function profileExists($plugins_id, $profiles_id, $type) {
       global $DB;
       $query = "SELECT `id` AS cpt FROM ".getTableForItemType('PluginFusioninventoryProfile');
@@ -122,10 +133,12 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       }
    }
 
+   
+   
    /**
     * Change profile (for used connected)
     *
-    *@param $p_plugins_id Module plugin id
+    * @param $p_plugins_id Module plugin id
     **/
    static function changeprofile($p_plugins_id) {
       $moduleName = PluginFusioninventoryModule::getModuleName($p_plugins_id);
@@ -151,11 +164,11 @@ class PluginFusioninventoryProfile extends CommonDBTM {
    /**
     * test if user have right
     *
-    *@param $p_moduleName Module name (directory)
-    *@param $p_type Right type ('wol', 'agents'...)
-    *@param $p_right Right (NULL, r, w)
+    * @param $p_moduleName Module name (directory)
+    * @param $p_type Right type ('wol', 'agents'...)
+    * @param $p_right Right (NULL, r, w)
     * 
-    *@return boolean : true if right is ok
+    * @return boolean : true if right is ok
     **/
    static function haveRight($p_moduleName, $p_type, $p_right) {
       $matches=array(
@@ -177,9 +190,9 @@ class PluginFusioninventoryProfile extends CommonDBTM {
    /**
     * Check right and display error if right not ok
     *
-    *@param $p_moduleName Module name (directory)
-    *@param $p_type Right type ('wol', 'agents'...)
-    *@param $p_right Right (NULL, r, w)
+    * @param $p_moduleName Module name (directory)
+    * @param $p_type Right type ('wol', 'agents'...)
+    * @param $p_right Right (NULL, r, w)
     **/
    static function checkRight($p_moduleName, $p_type, $p_right) {
       global $CFG_GLPI;
@@ -200,11 +213,11 @@ class PluginFusioninventoryProfile extends CommonDBTM {
    /**
     * Get right
     *
-    *@param $p_moduleName Module name (directory)
-    *@param $p_type Right type ('wol', 'agents'...)
-    *@param $p_profiles_id Profile id
+    * @param $p_moduleName Module name (directory)
+    * @param $p_type Right type ('wol', 'agents'...)
+    * @param $p_profiles_id Profile id
     *
-    *@return value right "NULL", "r" or "w"
+    * @return value right "NULL", "r" or "w"
     **/
    static function getRightDB($p_moduleName, $p_type, $profiles_id='') {
 
@@ -228,9 +241,9 @@ class PluginFusioninventoryProfile extends CommonDBTM {
    /**
     * Clean profile
     *
-    *@param $p_moduleName Module name
+    * @param $p_moduleName Module name
     * 
-    *@return boolean : true on success
+    * @return boolean : true on success
     **/
    static function cleanProfile($p_moduleName) {
       global $DB;
@@ -249,10 +262,10 @@ class PluginFusioninventoryProfile extends CommonDBTM {
     /**
     * Show profile form
     *
-    *@param $items_id integer id of the profile
-    *@param $target value url of target
+    * @param $items_id integer id of the profile
+    * @param $target value url of target
     *
-    *@return nothing
+    * @return nothing
     **/
    function showProfileForm($items_id, $target) {
       global $LANG,$CFG_GLPI;
@@ -322,7 +335,9 @@ class PluginFusioninventoryProfile extends CommonDBTM {
 
 
    
-   // Udpate profiles from Profil management
+   /**
+    * Udpate profiles from Profil management
+    */
    function updateProfiles($profiles) {
       foreach($profiles as $key => $value) {
          if (strstr($key, "-")) {
@@ -346,7 +361,6 @@ class PluginFusioninventoryProfile extends CommonDBTM {
                                  $profiles['profile_id']);
             }
          }
-
       }
    }
 }

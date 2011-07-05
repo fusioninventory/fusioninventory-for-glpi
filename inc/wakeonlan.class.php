@@ -71,7 +71,8 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                   LEFT JOIN `glpi_computers` ON `glpi_computers`.`id` = `glpi_plugin_fusioninventory_agents`.`items_id`
                   WHERE `glpi_networkports`.`itemtype`='Computer'
                      AND  `glpi_plugin_fusioninventory_agents`.`id`='".current($a_action)."'";
-               if ($result = $DB->query($query)) {
+               $result = $DB->query($query);
+               if ($result) {
                   while ($data=$DB->fetch_array($result)) {
                      if ($communication == 'push') {
                         $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($data['ip'],0);
@@ -96,16 +97,15 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
        * Case 4 : dynamic agent same subnet
        */
       else if (in_array('.2', $a_actions)) {
-         $a_subnet = array();
          $subnet = '';
          foreach($a_definitions as $items_id) {
             $sql = "SELECT * FROM `glpi_networkports`
                WHERE `items_id`='".$items_id."'
                   AND `itemtype`='Computer'
                   AND `mac`!='' ";
-            if ($result = $DB->query($sql)) {
+            $result = $DB->query($sql);
+            if ($result) {
                while ($data=$DB->fetch_array($result)) {
-                  //$a_subnet[$data_subnet['subnet']]++;
                   $subnet = $data['subnet'];
                }
             }
@@ -114,7 +114,6 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
             $a_agentList = $this->getAgentsSubnet(count($a_definitions), $communication, $subnet);
          }
       }
-
       
       if (count($a_agentList) == '0') {
          $a_input = array();
@@ -171,7 +170,9 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
 
 
 
-   // When agent contact server, this function send datas to agent
+   /**
+    *  When agent contact server, this function send datas to agent
+    */
    function run($a_Taskjobstatus) {
       global $DB;
 

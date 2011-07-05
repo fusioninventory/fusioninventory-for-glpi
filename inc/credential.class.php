@@ -55,6 +55,8 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       return PluginFusioninventoryProfile::haveRight('fusioninventory', 'credential', 'r');
    }
    
+   
+   
    function getAdditionalFields() {
       global $LANG;
 
@@ -69,6 +71,8 @@ class PluginFusioninventoryCredential extends CommonDropdown {
                          'type'  => 'password'));
    }
 
+   
+   
    /**
     * Display specific fields for FieldUnicity
     *
@@ -84,26 +88,35 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       }
    }
 
+   
+   
+   /**
+    * Show itemtype
+    * 
+    * @param type $ID
+    * @param type $value 
+    */
    function showItemtype($ID, $value=0) {
       global $CFG_GLPI;
 
       //Criteria already added : only display the selected itemtype
       if ($ID > 0) {
-         if ($label = self::getLabelByItemtype($this->fields['itemtype'])) {
+         $label = self::getLabelByItemtype($this->fields['itemtype']);
+         if ($label) {
             echo $label;
             echo "<input type='hidden' name='itemtype' value='".$this->fields['itemtype']."'";
          }
-
       } else {
          //Add criteria : display dropdown
          $options = self::getCredentialsItemTypes();
          $options[''] = DROPDOWN_EMPTY_VALUE;
          asort($options);
-         $rand = Dropdown::showFromArray('itemtype', $options);
-         
+         Dropdown::showFromArray('itemtype', $options);
       }
-
    }
+   
+   
+   
    /**
     * Add more tabs to display
     *
@@ -115,6 +128,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    }
 
 
+   
    /**
     * Display more tabs
     *
@@ -124,6 +138,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    }
 
 
+   
    function getSearchOptions() {
       global $LANG;
 
@@ -152,6 +167,8 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       return $tab;
    }
 
+   
+   
    /**
     * Perform checks to be sure that an itemtype and at least a field are selected
     *
@@ -175,48 +192,40 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    }
 
 
+   
    function prepareInputForAdd($input) {
       return self::checkBeforeInsert($input);
    }
 
 
+   
    function prepareInputForUpdate($input) {
       return $input;
    }
 
+   
+   
    /**
     * Get an itemtype label by his credential itemtype
+    * 
     * @param $credential_itemtype for example PluginFusinvinventoryVmwareESX
+    * 
     * @return the label associated with the itemtype, or false if no credential found
     */
    static function getLabelByItemtype($credential_itemtype) {
       $credentialtypes = self::findItemtypeType($credential_itemtype);
       if (!empty($credentialtypes)) {
          return $credentialtypes['name'];
-
-      } else {
-         return false;
-      }
-   } 
-   
-   static function hasCredentialsForItemtype($itemtype) {
-      foreach (PluginFusioninventoryModule::getAll() as $data) {
-        $class= PluginFusioninventoryStaticmisc::getStaticmiscClass($data['directory']);
-
-         if (is_callable(array($class, 'credential_types'))) {
-            $res = call_user_func(array($class, 'credential_types'));
-            foreach ($res as $credential) {
-               if (in_array($itemtype,$credential['targets'])) {
-                  return true;
-               }
-            }
-         }
       }
       return false;
-   }
+   } 
+
+   
    
    /**
     * Find a credential by his itemtype
+    * 
+    * @param $credential_itemtype for example PluginFusinvinventoryVmwareESX 
     */
    static function findItemtypeType($credential_itemtype) {
       foreach (PluginFusioninventoryModule::getAll() as $data) {
@@ -233,6 +242,8 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       }
       return array();
    }
+   
+   
    
    /**
     * Get all modules that can declare credentials
@@ -252,6 +263,8 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       return $itemtypes;
    }
 
+   
+   
    static function getForItemtype($itemtype) {
       $itemtypes = array();
       foreach (PluginFusioninventoryModule::getAll() as $data) {
@@ -268,9 +281,16 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    }
    
    
+   
+   /**
+    * See dropdown credentials
+    * 
+    * @param type $params 
+    */
    static function dropdownCredentials($params = array()) {
       global $CFG_GLPI;
 
+      $p = array();
       if ($params['id'] == -1) {
          $p['value']    = '';
          $p['itemtype'] = '';
@@ -286,7 +306,6 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       $types[''] = DROPDOWN_EMPTY_VALUE;
       $rand      = Dropdown::showFromArray('plugin_fusioninventory_credentials_id', $types, 
                                            array('value' => $p['itemtype']));
-
       $params    = array('itemtype' => '__VALUE__',
                          'id'       => $p['id']);
       $url       = $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownCredentials.php";
@@ -298,20 +317,21 @@ class PluginFusioninventoryCredential extends CommonDropdown {
          self::dropdownCredentialsForItemtype($p);
       }
       echo "</span>";
-      
    }
+   
+   
+   
    static function dropdownCredentialsForItemtype($params = array()) {
       global $LANG, $CFG_GLPI;
 
+      $p = array();
       if ($params['itemtype'] != '') {
-
          $p['value']    = '';
          $p['itemtype'] = '';
          $p['id']       = 0;
          foreach ($params as $key => $value) {
             $p[$key] = $value;
          }
-
          $condition = "`itemtype`='".$p['itemtype']."'";
          $condition.= getEntitiesRestrictRequest(" AND","glpi_plugin_fusioninventory_credentials",
                                                  "entities_id", $_SESSION['glpiactiveentities'], 
@@ -319,7 +339,6 @@ class PluginFusioninventoryCredential extends CommonDropdown {
          $results   = getAllDatasFromTable('glpi_plugin_fusioninventory_credentials',
                                            $condition);
          $types = array();
-
          foreach ($results as $result) {
             $types[$result['id']] = $result['name'];
          }
@@ -334,9 +353,10 @@ class PluginFusioninventoryCredential extends CommonDropdown {
                $rand."' ,'glpipopup', 'height=400, ".
                "width=1000, top=100, left=100, scrollbars=yes' );w.focus();\">";
          }
-
       }
    }
+
+   
    
    /**
     * Check if there's at least one credential itemetype
@@ -348,6 +368,8 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       return (!empty($types));
    }
 
+   
+   
    function title() {
       global $CFG_GLPI, $LANG;
 
@@ -355,12 +377,11 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       if (PluginFusioninventoryProfile::haveRight('fusioninventory', 'credential', 'r')) {
          $buttons["credentialip.php"] = $LANG['plugin_fusioninventory']['menu'][6];
       }
-//      displayTitle(GLPI_ROOT."/plugins/fusioninventory/pics/menu_mini_credentialips.png", 
-//                   $LANG['plugin_fusioninventory']['menu'][6], "", $buttons);
-
    }
+
    
-   function displayHeader () {
+   
+   function displayHeader() {
       //Common dropdown header
       parent::displayHeader();
       

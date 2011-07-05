@@ -39,7 +39,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    /**
    * Get name of this type
    *
-   *@return text name of this type by language of the user connected
+   * @return text name of this type by language of the user connected
    *
    **/
    static function getTypeName() {
@@ -375,7 +375,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                      WHERE `itemtype`='PluginFusioninventoryUnknownDevice'
                            AND `glpi_plugin_fusioninventory_unknowndevices`.`id` IS NULL;";
       $unknown_infos = array();
-      if ($result=$DB->query($query)) {
+      $result=$DB->query($query);
+      if ($result) {
 			while ($data=$DB->fetch_array($result)) {
             $unknown_infos["name"] = '';
             $newID=$this->add($unknown_infos);
@@ -520,7 +521,6 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    function deleteNonUsedPortHub($hub_id, $a_portUsed) {
 
       $Netport = new NetworkPort();
-      $nn = new NetworkPort_NetworkPort();
 
       $a_ports = $Netport->find("`items_id`='".$hub_id."'
           AND `itemtype`='".$this->getType()."'
@@ -582,6 +582,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    }
 
 
+   
 	function disconnectDB($p_port) {
       $nn = new NetworkPort_NetworkPort();
 
@@ -640,7 +641,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       foreach ($p_oPort->getMacsToConnect() as $ifmac) {
          $a_ports = $Netport->find("`mac`='".$ifmac."'");
          foreach ($a_ports as $data) {
-            if ($ID = $nn->getOppositeContact($p_oPort->getValue('id'))) {
+            $ID = $nn->getOppositeContact($p_oPort->getValue('id'));
+            if ($ID) {
                $Netport->getFromDB($ID);
                if ($Netport->fields["itemtype"] == $this->getType()) {
                   if ($this->fields["hub"] == "1") {
@@ -742,18 +744,18 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    function cleanUnknownSwitch() {
       global $DB;
 
-      $nn = new NetworkPort_NetworkPort();
-
       $query = "SELECT `glpi_plugin_fusioninventory_unknowndevices`.* FROM `glpi_plugin_fusioninventory_unknowndevices`
          INNER JOIN `glpi_plugin_fusinvsnmp_networkequipmentips` ON `glpi_plugin_fusioninventory_unknowndevices`.`ip` = `glpi_plugin_fusinvsnmp_networkequipmentips`.`ip`
          WHERE `glpi_plugin_fusioninventory_unknowndevices`.`ip` IS NOT NULL
             AND `glpi_plugin_fusioninventory_unknowndevices`.`ip` != '' ";
-      if ($result=$DB->query($query)) {
+      $result=$DB->query($query);
+      if ($result) {
          while ($data=$DB->fetch_array($result)) {
             $query_port = "SELECT * FROM `glpi_networkports`
                WHERE items_id='".$data['id']."'
                   AND itemtype='".$this->getType()."' ";
-            if ($result_port=$DB->query($query_port)) {
+            $result_port=$DB->query($query_port);
+            if ($result_port) {
                while ($data_port=$DB->fetch_array($result_port)) {
                   //plugin_fusioninventory_addLogConnection("remove",$data_port['ID']);
                   $this->disconnectDB($data_port['id']);
@@ -766,6 +768,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       }
    }
 
+   
 // *************************** end hub management ****************************** //
 
    /**

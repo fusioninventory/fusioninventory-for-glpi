@@ -37,7 +37,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
    /**
    * Get name of this type
    *
-   *@return text name of this type by language of the user connected
+   * @return text name of this type by language of the user connected
    *
    **/
    static function getTypeName() {
@@ -156,7 +156,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
    * @param $items_id integer ID of the task
    * @param $options array
    *
-   *@return bool true if form is ok
+   * @return bool true if form is ok
    *
    **/
    function showForm($id, $options=array()) {

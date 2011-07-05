@@ -39,16 +39,15 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryLock extends CommonDBTM{
 
-
    /**
     * Show locks form.
     *
-    *@param $p_target Target file.
-    *@param $p_itemtype Class name.
-    *@param $p_items_id Line id.
+    * @param $p_target Target file.
+    * @param $p_itemtype Class name.
+    * @param $p_items_id Line id.
     *TODO:  check rights and entity
     *
-    *@return nothing (print the form)
+    * @return nothing (print the form)
     **/
    function showForm($p_target, $p_itemtype, $p_items_id=0) {
       global $DB, $LANG, $SEARCH_OPTION;
@@ -205,12 +204,12 @@ class PluginFusioninventoryLock extends CommonDBTM{
    /**
     * Unlock a field for a record.
     *
-     *@param $p_table Table name.
-     *@param $p_items_id Line id.
-     *@param $p_fieldToDel field to unlock.
+     * @param $p_table Table name.
+     * @param $p_items_id Line id.
+     * @param $p_fieldToDel field to unlock.
     *TODO:  check rights and entity
     *
-    *@return nothing
+    * @return nothing
     **/
    static function deleteInLockArray($p_table, $p_items_id, $p_fieldToDel) {
       global $DB;
@@ -245,12 +244,12 @@ class PluginFusioninventoryLock extends CommonDBTM{
    /**
     * Unlock a field for all records.
     *
-     *@param $p_table Table name.
-     *@param $p_items_id Line id.
-     *@param $p_fieldToDel field to unlock.
+     * @param $p_table Table name.
+     * @param $p_items_id Line id.
+     * @param $p_fieldToDel field to unlock.
     *TODO:  check rights and entity
     *
-    *@return nothing
+    * @return nothing
     **/
    static function deleteInAllLockArray($p_table, $p_fieldToDel) {
       global $DB;
@@ -271,12 +270,12 @@ class PluginFusioninventoryLock extends CommonDBTM{
    /**
     * Set lock fields for a record.
     *
-     *@param $p_itemtype Table id.
-     *@param $p_items_id Line id.
-     *@param $p_fieldsToLock Array of fields to lock.
+     * @param $p_itemtype Table id.
+     * @param $p_items_id Line id.
+     * @param $p_fieldsToLock Array of fields to lock.
     *TODO:  check rights and entity
     *
-    *@return nothing
+    * @return nothing
     **/
    static function setLockArray($p_itemtype, $p_items_id, $p_fieldsToLock, $massiveaction='') {
       global $DB;
@@ -330,12 +329,12 @@ class PluginFusioninventoryLock extends CommonDBTM{
    /**
     * Add lock fields for a record.
     *
-     *@param $p_itemtype Table id.
-     *@param $p_items_id Line id.
-     *@param $p_fieldsToLock Array of fields to lock.
+     * @param $p_itemtype Table id.
+     * @param $p_items_id Line id.
+     * @param $p_fieldsToLock Array of fields to lock.
     *TODO:  check rights and entity
     *
-    *@return nothing
+    * @return nothing
     **/
    static function addLocks($p_itemtype, $p_items_id, $p_fieldsToLock) {
       global $DB;
@@ -378,7 +377,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
     * @param $p_items_id Line id.
     * TODO:  check rights and entity
     *
-    *@return result of the query
+    * @return result of the query
     **/
    static function getLock($p_table, $p_items_id) {
       global $DB;
@@ -400,7 +399,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
     * @param $p_items_id Line id.
     * TODO:  check rights
     *
-    *@return array of locked fields
+    * @return array of locked fields
     **/
    static function getLockFields($p_table, $p_items_id) {
       global $DB;
@@ -434,7 +433,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
     /**
     * Manage list of fields to exclude for lock
     *
-    *@return array list of fields to exclude
+    * @return array list of fields to exclude
     **/
    function excludeFields() {
       $exclude = array();
@@ -447,7 +446,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
       $exclude[] = "template_name";
       return $exclude;      
    }
-
 }
 
 ?>

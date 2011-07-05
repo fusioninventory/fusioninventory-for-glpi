@@ -42,7 +42,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    /**
    * Get name of this type
    *
-   *@return text name of this type by language of the user connected
+   * @return text name of this type by language of the user connected
    *
    **/
    static function getTypeName() {
@@ -187,7 +187,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    * @param $items_id integer ID of the agent
    * @param $options array
    *
-   *@return bool true if form is ok
+   * @return bool true if form is ok
    *
    **/
    function showForm($items_id, $options=array()) {
@@ -270,7 +270,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    *
    * @param $device_id value device_id unique of agent (key)
    *
-   *@return array all DB fields of this agent
+   * @return array all DB fields of this agent
    *
    **/
    function InfosByKey($device_id) {
@@ -280,7 +280,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       WHERE `device_id`='".$device_id."' LIMIT 1";
 
       $agent = array();
-      if ($result = $DB->query($query)) {
+      $result = $DB->query($query);
+      if ($result) {
          if ($DB->numrows($result) != 0) {
             $agent = $DB->fetch_assoc($result);
          }
@@ -338,7 +339,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    * @param $items_id integer ID of the agent
    * @param $type 'Agent' by default to get IP of agent or of a computer if set other text
    *
-   *@return Array with all IP of this agent or computer
+   * @return Array with all IP of this agent or computer
    *
    **/
    function getIPs($items_id, $type = 'Agent') {
@@ -374,14 +375,14 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    *
    * @param $items_id integer ID of the computer
    *
-   *@return agent id or False
+   * @return agent id or False
    *
    **/
    function getAgentWithComputerid($items_id) {
 
-      $agent = $this->find("`items_id`='".$items_id."'");
+      $agent = $this->find("`items_id`='".$items_id."'", "", 1);
 
-      if ($agent) {
+      if (count($agent) == '1') {
          $data = current($agent);
          return $data['id'];
       }
@@ -396,7 +397,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    * @param $items_id integer ID of the computer
    * @param $device_id value of device_id from XML to identify agent
    *
-   *@return Nothing
+   * @return Nothing
    *
    **/
    function setAgentWithComputerid($items_id, $device_id) {
@@ -422,7 +423,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    /**
    * Display if agent is online
    *
-   *@return Nothing (display)
+   * @return Nothing (display)
    *
    **/
    function forceRemoteAgent() {
@@ -513,7 +514,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    * @param $module value Module name (WAKEONLAN, NETDISCOVERY, INVENTORY, SNMPQUERY...)
    * @param $version value version of the module
    *
-   *@return nothing
+   * @return nothing
    *
    **/
    function setAgentVersions($agent_id, $module, $version) {
@@ -531,9 +532,13 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $this->update($input);
    }
 
+   
+   
    /**
-    * Return an agent by his deviceid
+    * Return an agent by it deviceid
+    * 
     * @param device_id the device_id coming from the agent itself
+    * 
     * @return an array with the agent's attributes or an empty array if no agent found
     */
    static function getByDeviceID($device_id) {
@@ -545,6 +550,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          return false;
       }
    }
+   
+   
    
    /**
     * Get base URL to communicate with an agent
@@ -558,6 +565,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $config = new PluginFusioninventoryConfig();
       return "http://".$ip.":".$config->getValue($plugins_id, 'agent_port');
    }
+
+   
    
    /**
     * URL to get agent's state
@@ -572,6 +581,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       
    }
 
+   
+   
    /**
     * URL to ask the agent to wake up
     * 
@@ -582,87 +593,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     */
    static function getAgentRunURL($plugins_id, $ip) {
       return self::getAgentBaseURL($plugins_id, $ip)."/now";
-      
    }
 
-   function getAgentsSubnet($params = array()) {
-      global $DB;
-
-      $p['items_number']        = 20;
-      $p['max_agents_involved'] = 20;
-      $p['communication_type']  = 'push';
-      $p['subnet']              = '';
-      $p['ipstart']             = '';
-      $p['ipend']               = '';
-      $p['restrictions']        = '';
-      $p['task']                = '';
-      foreach ($params as $key => $value) {
-         $p[$key] = $value;
-      }
-      
-      $taksjob     = new PluginFusioninventoryTaskjob();
-      $agentmodule = new PluginFusioninventoryAgentmodule();
-
-      //Computer the number of items to be processed by a single agent 
-      $nb_agentsMax          = ceil($p['items_number'] / $p['max_agents_involved']);
-
-
-      //Find agents on a network
-      $a_agentList = array();
-
-      if ($p['subnet'] != '') {
-         $subnet = " AND `ip` LIKE '".$subnet."%' ";
-      } else if ($p['ipstart'] != '' AND $p['ipend'] != '') {
-         $subnet = " AND ( INET_ATON(`ip`) > INET_ATON('".$p['ipstart']."')
-                        AND  INET_ATON(`ip`) < INET_ATON('".$p['ipend']."') ) ";
-      }
-      $a_agents        = $agentmodule->getAgentsCanDo($p['task']);
-      $a_agentsid      = array();
-      foreach($a_agents as $a_agent) {
-         $a_agentsid[] = $a_agent['id'];
-      }
-      if (count($a_agentsid) == '0') {
-         return $a_agentList;
-      }
-
-      //Filter request on the only available agents on the subnet
-      $where  = " AND `glpi_plugin_fusioninventory_agents`.`ID` IN (";
-      $where .= implode(',', $a_agentsid);
-      $where .= ")
-         AND `ip` != '127.0.0.1' ";
-
-      $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, `ip`, `subnet`, `token` 
-                FROM `glpi_plugin_fusioninventory_agents`
-                LEFT JOIN `glpi_networkports` 
-                   ON `glpi_networkports`.`items_id` = `glpi_plugin_fusioninventory_agents`.`items_id`
-                LEFT JOIN `glpi_computers` 
-                   ON `glpi_computers`.`id` = `glpi_plugin_fusioninventory_agents`.`items_id`
-                WHERE `glpi_networkports`.`itemtype`='Computer' $subnet $where ";
-               
-      if ($result = $DB->query($query)) {
-         while ($data=$DB->fetch_array($result)) {
-            if ($p['communication_type'] == 'push') {
-               $agentStatus = $taksjob->getStateAgent($data['ip'],0);
-               if ($agentStatus ==  true) {
-                  if (!in_array($a_agentList,$data['a_id'])) {
-                     $a_agentList[] = $data['a_id'];
-                     if (count($a_agentList) >= $nb_agentsMax) {
-                        return $a_agentList;
-                     }
-                  }
-               }
-            } else if ($p['communication_type'] == 'pull') {
-               if (!in_array($data['a_id'],$a_agentList)) {
-                  $a_agentList[] = $data['a_id'];
-                  if (count($a_agentList) > $nb_agentsMax) {
-                     return $a_agentList;
-                  }
-               }
-            }
-         }
-      }
-      return $a_agentList;
-   }
 }
 
 ?>

@@ -49,8 +49,7 @@ class PluginFusioninventoryMenu {
    static function displayMenu($type = "big") {
       global $LANG;
 
-
-      // FOR THE BETA
+      // FOR THE BETA/RC
       echo "<center>"; 
       echo "<a href='http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/wiki/Beta_test'>";
       echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/RCI.png'/></a>"; 
@@ -150,6 +149,7 @@ class PluginFusioninventoryMenu {
    }
 
 
+   
    /**
     * htmlMenu
     *
@@ -209,7 +209,6 @@ class PluginFusioninventoryMenu {
       echo "</td>";
       echo "</tr>";
       echo "</table>";
-
 
       return $width_status;
    }

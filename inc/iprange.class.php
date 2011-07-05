@@ -58,6 +58,8 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       }
    }
 
+   
+   
    function canCreate() {
       return true;
    }
@@ -79,6 +81,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    }
 
 
+   
    function getSearchOptions() {
       global $LANG;
 
@@ -216,6 +219,13 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
 
 
+   /**
+    * Check if IP is valid
+    *
+    * @param $a_input array of IPs 
+    * 
+    * @return true or false 
+    */
    function checkip($a_input) {
       global $LANG;
 
@@ -246,6 +256,15 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
 
 
+   /**
+    * Manage permanent task
+    * 
+    * @param type $items_id
+    * @param type $module_name value name of module
+    * @param type $allowcreate integer allow or not to create the task
+    * 
+    * @return nothing
+    */
    function permanentTask($items_id, $module_name, $allowcreate=0) {
       global $LANG;
 
@@ -259,7 +278,6 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       $PluginFusioninventoryTask = new PluginFusioninventoryTask();
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
-
 
       $permanent = exportArrayToDB(array($this->getType()=>$items_id, 'module'=>$module_name));
 
@@ -385,6 +403,14 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    }
 
 
+   
+   /**
+    * Get ip in long format
+    * 
+    * @param $ip ip in format ipv4
+    * 
+    * @return $int integer 
+    */
    function getIp2long($ip) {
       $int = ip2long($ip);
       if ($int < 0) {

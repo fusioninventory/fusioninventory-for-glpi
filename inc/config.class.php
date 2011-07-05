@@ -41,10 +41,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    /**
     * Init config
     *
-    *@param $p_plugins_id Plugin id
-    *@param $p_insert Array('type'=>'value')
+    * @param $p_plugins_id Plugin id
+    * @param $p_insert Array('type'=>'value')
     * 
-    *@return nothing
+    * @return nothing
     **/
    function initConfig($plugins_id, $p_insert) {
       global $DB;
@@ -55,13 +55,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    }
 
 
+   
    /**
    * Get value of a config field for a fusioninventory plugin
    *
-   *@param $p_plugins_id integer id of the plugin
-   *@param $p_type value name of the config field to retrieve
+   * @param $p_plugins_id integer id of the plugin
+   * @param $p_type value name of the config field to retrieve
    * 
-   *@return value or this field or false
+   * @return value or this field or false
    **/
    static function getValue($p_plugins_id, $p_type) {
       global $DB;
@@ -81,10 +82,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    /**
    * give state of a config field for a fusioninventory plugin
    *
-   *@param $p_plugins_id integer id of the plugin
-   *@param $p_type value name of the config field to retrieve
+   * @param $p_plugins_id integer id of the plugin
+   * @param $p_type value name of the config field to retrieve
    *
-   *@return bool true if field is active or false
+   * @return bool true if field is active or false
    **/
    function is_active($p_plugins_id, $p_type) {
       if (!($this->getValue($p_plugins_id, $p_type))) {
@@ -99,7 +100,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    /**
    * Display form for config
    *
-   *@return bool true if form is ok
+   * @return bool true if form is ok
    *
    **/
    function showForm($options=array()) {
@@ -142,7 +143,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::showYesNo("extradebug", $this->is_active($plugins_id, 'extradebug'));
       echo "</td>";
-
       echo "<td colspan='2'></td>";
       echo "</tr>";
 
@@ -162,17 +162,16 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    /**
     * Add config
     *
-    *@param $p_plugins_id Plugin id
-    *@param $p_type Config type ('ssl_only', 'URL_agent_conf'...)
-    *@param $p_value Value value of the type
+    * @param $p_plugins_id Plugin id
+    * @param $p_type Config type ('ssl_only', 'URL_agent_conf'...)
+    * @param $p_value Value value of the type
     * 
-    *@return integer the new id of the added item (or false if fail)
+    * @return integer the new id of the added item (or false if fail)
     **/
    function addConfig($p_plugins_id, $p_type, $p_value) {
       $existing_value = self::getValue($p_plugins_id, $p_type); 
       if ($existing_value) {
          return $existing_value;
-
       } else {
          return $this->add(array('plugins_id' => $p_plugins_id, 
                                  'type'       => $p_type,
@@ -185,10 +184,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    /**
     * Update config
     *
-    *@param $p_id Config id
-    *@param $p_value Value
+    * @param $p_id Config id
+    * @param $p_value Value
     * 
-    *@return boolean : true on success
+    * @return boolean : true on success
     **/
    function updateConfig($p_id, $p_value) {
       return $this->update(array('id'=>$p_id, 'value'=>$p_value));
@@ -199,11 +198,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    /**
     * Update config type
     *
-    *@param $p_plugins_id Plugin id
-    *@param $p_type Config type ('ssl_only', 'URL_agent_conf'...)
-    *@param $p_value Value
+    * @param $p_plugins_id Plugin id
+    * @param $p_type Config type ('ssl_only', 'URL_agent_conf'...)
+    * @param $p_value Value
     * 
-    *@return boolean : true on success
+    * @return boolean : true on success
     **/
    function updateConfigType($p_plugins_id, $p_type, $p_value) {
       $data = $this->find("`plugins_id`='".$p_plugins_id."'
@@ -220,9 +219,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    /**
     * Delete config
     *
-    *@param $p_id Config id
+    * @param $p_id Config id
     * 
-    *@return boolean : true on success
+    * @return boolean : true on success
     **/
    function deleteConfig($p_id) {
       return $this->delete(array('id'=>$p_id));
@@ -233,9 +232,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    /**
     * Clean config
     *
-    *@param $p_plugins_id Plugin id
+    * @param $p_plugins_id Plugin id
     * 
-    *@return boolean : true on success
+    * @return boolean : true on success
     **/
    function cleanConfig($p_plugins_id) {
       global $DB;
@@ -244,6 +243,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                  WHERE `plugins_id`='".$p_plugins_id."';";
       return $DB->query($delete);
    }
+
+   
    
    /**
     * Check if extradebug mode is activate
@@ -252,8 +253,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       return self::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug');
    }
    
+   
+   
    /**
-    * 
+    * Log when extra-debug is activated
     */
    static function logIfExtradebug($file, $message) {
       if (self::isExtradebugActive()) {
@@ -261,10 +264,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       }
    }
 
-   static function isSSLOnlyActive() {
-      $ssl = self::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'ssl_only');
-      
-   }
 }
 
 ?>

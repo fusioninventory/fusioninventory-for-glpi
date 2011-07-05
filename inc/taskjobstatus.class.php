@@ -48,6 +48,8 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
    const AGENT_HAS_SENT_DATA  = 2;
    const FINISHED             = 3;
 
+   
+   
    /**
    * Display state of taskjob
    *
@@ -141,24 +143,6 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
             $icon = "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_finished.png'/>";
             break;
 
-//         case 'nostarted';
-//            $query = "SELECT *, `glpi_plugin_fusioninventory_taskjobs`.`id` as tjid
-//                      FROM `glpi_plugin_fusioninventory_taskjobs`
-//                      LEFT JOIN ".$this->getTable()." ON `plugin_fusioninventory_taskjobs_id` =
-//                        `glpi_plugin_fusioninventory_taskjobs`.`id`
-//                      WHERE `definition` LIKE '%\"".$itemtype."\":\"".$items_id."\"%'
-//                        AND `plugin_fusioninventory_taskjobs_id` is null";
-//            echo $query;
-//            $a_taskjobs = array();
-//            if ($result = $DB->query($query)) {
-//               while ($data=$DB->fetch_array($result)) {
-//                  $a_taskjobs[] = $data;
-//               }
-//            }
-//            $title = $LANG['plugin_fusioninventory']['task'][22];
-//            $icon = "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_scheduled.png'/>";
-//            break;
-
          case 'all':
             $search = "";
             $title = $LANG['plugin_fusioninventory']['task'][18];
@@ -176,7 +160,8 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
                    WHERE `items_id`='".$items_id."' AND `itemtype`='".$itemtype."'".$search."
                    ORDER BY `".$this->getTable()."`.`id` DESC";
          $a_taskjobs = array();
-         if ($result = $DB->query($query)) {
+         $result = $DB->query($query);
+         if ($result) {
             while ($data=$DB->fetch_array($result)) {
                $a_taskjobs[] = $data;
             }
@@ -221,36 +206,6 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       echo "</table>";
       echo "<br/>";
 
-//      foreach ($a_taskjobs as $data) {
-//         echo "<table  class='tab_cadre_fixe' style='width: 900px'>";
-//         echo "<tr>";
-//         echo "<th>";
-//         $PluginFusioninventoryTask->getFromDB($data['plugin_fusioninventory_tasks_id']);
-//
-//         echo $LANG['plugin_fusioninventory']['task'][2]." : ".$data['name']." (".
-//            $LANG['plugin_fusioninventory']['task'][0]." : ".$PluginFusioninventoryTask->getLink().")";
-//         echo "</th>";
-//         echo "</tr>";
-//
-//         echo "<tr class='tab_bg_4'>";
-//         echo "<td>";
-//         echo "<br/>";
-//         if ($state == 'nostarted') {
-//            $PluginFusioninventoryTaskjob->showMiniAction($data['tjid'], '750');
-//         } else {
-//            if ($state != 'finished') {
-//               $this->stateTaskjob($data['plugin_fusioninventory_taskjobs_id'], '730');
-//               echo "<br/>";
-//            }
-//            $PluginFusioninventoryTaskjoblog->showHistory($data['plugin_fusioninventory_taskjobs_id'],
-//                                                          '750', array('items_id' => $items_id,
-//                                                                       'itemtype' => $itemtype));
-//         }
-//         echo "<br/>";
-//         echo "</td>";
-//         echo "</tr>";
-//         echo "</table><br/>";
-//      }
       echo "</div>";
    }
 
@@ -365,6 +320,11 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
 
    
 
+   /**
+    * Cron for clean taskjob
+    * 
+    * @return nothing
+    */
    static function cronCleantaskjob() {
       global $DB;
 
@@ -373,7 +333,8 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       $sql = "SELECT * FROM `glpi_plugin_fusioninventory_taskjoblogs`
          WHERE  `date` < date_add(now(),interval -".$retentiontime." day)
          GROUP BY `plugin_fusioninventory_taskjobstatus_id`";
-      if ($result=$DB->query($sql)) {
+      $result=$DB->query($sql);
+      if ($result) {
 			while ($data=$DB->fetch_array($result)) {
             $PluginFusioninventoryTaskjobstatus->getFromDB($data['plugin_fusioninventory_taskjobstatus_id']);
             $PluginFusioninventoryTaskjobstatus->delete($PluginFusioninventoryTaskjobstatus->fields, 1);

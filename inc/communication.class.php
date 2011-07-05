@@ -46,7 +46,7 @@ class PluginFusioninventoryCommunication {
    
    function __construct() {
       $this->sxml = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><REPLY></REPLY>");
-         PluginFusioninventoryCommunication::addLog('New PluginFusioninventoryCommunication object.');
+      PluginFusioninventoryCommunication::addLog('New PluginFusioninventoryCommunication object.');
    }
 
 
@@ -54,7 +54,7 @@ class PluginFusioninventoryCommunication {
    /**
     * Get readable XML code (add carriage returns)
     *
-    *@return readable XML code
+    * @return readable XML code
     **/
    function getXML() {
       return $this->formatXmlString();
@@ -65,8 +65,9 @@ class PluginFusioninventoryCommunication {
    /**
     * Set XML code
     *
-    *@param $p_xml XML code
-    *@return nothing
+    * @param $p_xml XML code
+    * 
+    * @return nothing
     **/
    function setXML($p_xml) {
       $this->sxml = @simplexml_load_string($p_xml,'SimpleXMLElement', 
@@ -78,7 +79,7 @@ class PluginFusioninventoryCommunication {
    /**
     * Get XML code
     *
-    *@return XML code
+    * @return XML code
     **/
    function get() {
       if ($GLOBALS["HTTP_RAW_POST_DATA"] == '') {
@@ -93,7 +94,7 @@ class PluginFusioninventoryCommunication {
    /**
     * Get data ready to be send (gzcompressed)
     * 
-    *@return data ready to be send
+    * @return data ready to be send
     **/
    function getSend() {
       return gzcompress($this->sxml->asXML());
@@ -104,10 +105,10 @@ class PluginFusioninventoryCommunication {
    /**
     * Import data
     *
-    *@param $p_xml XML code to import
-    *@param &$p_errors errors string to be alimented if import ko
+    * @param $p_xml XML code to import
+    * @param &$p_errors errors string to be alimented if import ko
     * 
-    *@return true (import ok) / false (import ko)
+    * @return true (import ok) / false (import ko)
     **/
    function import($p_xml, &$p_errors='') {
       global $LANG;
@@ -174,7 +175,7 @@ class PluginFusioninventoryCommunication {
    /**
     * Add indent in XML to have nice XML format
     *
-    *@return XML
+    * @return XML
     **/
    function formatXmlString() {
       $xml = str_replace("><", ">\n<", $this->sxml->asXML());
@@ -236,9 +237,9 @@ class PluginFusioninventoryCommunication {
    /**
     * Add logs
     *
-    *@param $p_logs logs to write
+    * @param $p_logs logs to write
     * 
-    *@return nothing (write text in log file)
+    * @return nothing (write text in log file)
     **/
    static function addLog($p_logs) {
       global $CFG_GLPI;
@@ -256,7 +257,7 @@ class PluginFusioninventoryCommunication {
    /**
     * Get all tasks prepared for this agent
     *
-    *@param $agent_id interger id of agent
+    * @param $agent_id interger id of agent
     *
     **/
    function getTaskAgent($agent_id) {
@@ -268,7 +269,6 @@ class PluginFusioninventoryCommunication {
             $class = new $className();
             $sxml_temp = $class->run($array);
             $this->append_simplexml($this->sxml, $sxml_temp);
-         	
          }
       }
    }
@@ -290,7 +290,7 @@ class PluginFusioninventoryCommunication {
    /**
     * order to agent to do inventory if module inventory is activated for this agent
     *
-    *@param $items_id interger Id of this agent
+    * @param $items_id interger Id of this agent
     *
     **/
    function addInventory($items_id) {
@@ -301,6 +301,14 @@ class PluginFusioninventoryCommunication {
    }
 
 
+   
+   /**
+    * Function used to merge 2 simpleXML
+    *
+    * @param $simplexml_to simplexml object source
+    * @param $simplexml_from simplexml object destination
+    *
+    **/
    function append_simplexml(&$simplexml_to, &$simplexml_from) {
       static $firstLoop=true;
 
@@ -310,19 +318,18 @@ class PluginFusioninventoryCommunication {
             $simplexml_to->addAttribute($attr_key, $attr_value);
          }
       }
-
       foreach ($simplexml_from->children() as $simplexml_child) {
          $simplexml_temp = $simplexml_to->addChild($simplexml_child->getName(), (string) $simplexml_child);
          foreach ($simplexml_child->attributes() as $attr_key => $attr_value) {
             $simplexml_temp->addAttribute($attr_key, $attr_value);
          }
-
          $firstLoop=false;
-
          $this->append_simplexml($simplexml_temp, $simplexml_child);
       }
       unset($firstLoop);
    }
+
+   
    
    /**
     * Tells if fopen is allowed or not on this server
@@ -331,28 +338,6 @@ class PluginFusioninventoryCommunication {
     */
    static function isFopenAllowed() {
       return ini_get('allow_url_fopen');
-   }
-   
-   static function getAllowurlfopen($wakecomputer=0) {
-      global $LANG;
-
-      if (!self::isFopenAllowed()) {
-         echo "<center>";
-         echo "<table class='tab_cadre' height='30' width='700'>";
-         echo "<tr class='tab_bg_1'>";
-         echo "<td align='center'><strong>";
-         if ($wakecomputer == '0') {
-            echo $LANG['plugin_fusioninventory']['errors'][2]." !";
-         } else {
-            echo $LANG['plugin_fusioninventory']['errors'][1]." !";
-         }
-         echo "</strong></td>";
-         echo "</tr>";
-         echo "</table>";
-         echo "</center>";
-         return false;
-      }
-      return true;
    }
 
 }

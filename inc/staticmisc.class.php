@@ -152,6 +152,8 @@ class PluginFusioninventoryStaticmisc {
                          'name'    => $LANG['plugin_fusioninventory']['menu'][6]));
    }
    
+   
+   
    /**
     * Get name of the staticmisc class for a module
     * @param module the module name

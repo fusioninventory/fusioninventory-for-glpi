@@ -37,7 +37,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    /**
    * Get name of this type
    *
-   *@return text name of this type by language of the user connected
+   * @return text name of this type by language of the user connected
    *
    **/
    static function getTypeName() {
@@ -295,7 +295,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             } else if ($item_id == '.2') {
                $name = $LANG['plugin_fusioninventory']['agents'][33];
             } else {
-               $itemname = $class->getTypeName();
                $class->getFromDB($item_id);
                $name = $class->getName();
             }
@@ -332,6 +331,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       
    }
 
+   
    
    /**
    * Display methods availables
@@ -622,7 +622,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    static function cronTaskscheduler() {
       global $DB;
 
-      $PluginFusioninventoryTask    = new PluginFusioninventoryTask();
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
 
       // Detect if running task have a problem
@@ -911,8 +910,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       $this->disableDebug();
 
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
-
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
       if (empty($ip)) {
@@ -936,6 +933,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    }
 
 
+   
    // $items_id = agent id
    function getRealStateAgent($items_id) {
       global $LANG;
@@ -945,8 +943,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       if (count($a_ip) > 0) {
 
          $this->disableDebug();
-
-         $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
 
          $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
@@ -987,10 +983,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    function startAgentRemotly($ip, $token) {
 
       $this->disableDebug();
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
-      $input = '';
       $ctx = stream_context_create(array('http' => array('timeout' => 2)));
       $data = @file_get_contents(PluginFusioninventoryAgent::getAgentStatusURL($plugins_id, $ip), 
                                  0, $ctx);
@@ -1231,7 +1225,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                on `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
             WHERE `glpi_plugin_fusioninventory_taskjobs`.`id`='".$data['plugin_fusioninventory_taskjobs_id']."'
             LIMIT 1 ";
-         if ($result = $DB->query($sql)) {
+         $result = $DB->query($sql);
+         if ($result) {
             if ($DB->numrows($result) != 0) {
                $task = $DB->fetch_assoc($result);
                if ($task['communication'] == 'push') {
@@ -1299,7 +1294,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          WHERE plugin_fusioninventory_taskjobs_id = `glpi_plugin_fusioninventory_taskjobs`.id
          AND glpi_plugin_fusioninventory_taskjobstatus.state <3) = 0
        AND `glpi_plugin_fusioninventory_taskjobs`.`status`=1";
-     if ($result=$DB->query($sql)) {
+     $result=$DB->query($sql);
+     if ($result) {
 			while ($data=$DB->fetch_array($result)) {
             $this->reinitializeTaskjobs($data['plugin_fusioninventory_tasks_id'], '1');
          }
@@ -1469,7 +1465,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                $itemname = $class->getTypeName();
                $class->getFromDB($items_id);
                $name = '';
-               $idTmp = 0;
                if ($items_id == '.1') {
                   $name = $LANG['plugin_fusioninventory']['agents'][32];
                } else if ($items_id == '.2') {

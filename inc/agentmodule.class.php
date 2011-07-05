@@ -42,7 +42,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    /**
    * Display form forconfiguration of agent modules
    *
-   *@return bool true if form is ok
+   * @return bool true if form is ok
    *
    **/
    function showForm() {
@@ -153,7 +153,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    * @param $items_id integer ID of the agent
    * @param $options array
    *
-   *@return bool true if form is ok
+   * @return bool true if form is ok
    *
    **/
    function showFormAgentException($items_id, $options=array()) {
@@ -233,7 +233,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    *
    * @param $module_name value Name of the module 
    *
-   *@return array all DB fields for this module
+   * @return array all DB fields for this module
    *
    **/
    function getActivationExceptions($module_name) {
@@ -249,7 +249,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    * @param $module_name value Name of the module
    * @param $items_id integer id of the agent or if 0, search in all agents
    *
-   *@return bool or array if have many agents
+   * @return bool or array if have many agents
    *
    **/
    function getAgentsCanDo($module_name, $items_id=0) {
@@ -321,7 +321,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    *
    * @param $plugins_id integer id of the plugin (with modules it manage)
    *
-   *@return nothing
+   * @return nothing
    *
    **/
    function deleteModule($plugins_id) {
@@ -333,15 +333,24 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       }
    }
 
+   
+
+   /**
+   * Get URL for module (for REST)
+   *
+   * @param $module value name of module
+   *
+   * @return nothing
+   *
+   **/
    static function getUrlForModule($module) {
       $agentmodule = new PluginFusioninventoryAgentmodule();
-      $modules = $agentmodule->find("`modulename`='".strtoupper($module)."'");
+      $modules = $agentmodule->find("`modulename`='".strtoupper($module)."'", "", 1);
       if (!empty($modules)) {
          $tmp = array_pop($modules);
          return $tmp['url'];
-      } else {
-         return false;
       }
+      return false;
    }
 }
 

@@ -41,6 +41,7 @@ class PluginFusioninventoryRestCommunication {
 
    /**
     * Manage communication between agent and server
+    * 
     * @params an array of GET parameters given by the agent
     * 
     * @return an array of orders to send to the agent
@@ -50,17 +51,17 @@ class PluginFusioninventoryRestCommunication {
       if (isset ($params['action']) && isset($params['machineid'])) {
          if (PluginFusioninventoryAgent::getByDeviceID($params['machineid'])) {
             switch ($params['action']) {
+               
                case 'getConfig':
                   $response = self::getConfigByAgent($params);
                   break;
                case 'wait':
                   break;
+               
             }
-
          } else {
             $response = false;
          }
-         
       } else {
          $response = false;
       }
@@ -71,6 +72,7 @@ class PluginFusioninventoryRestCommunication {
    
    /**
     * Get configuration for an agent
+    * 
     * @params an array of GET parameters given by the agent
     * 
     * @return an array of orders to send to the agent
@@ -86,15 +88,14 @@ class PluginFusioninventoryRestCommunication {
                      && $method['use_rest'] 
                         && method_exists($class, self::getMethodForParameters($task))) {
                   $schedule[] = call_user_func(array($class, self::getMethodForParameters($task)));
-
                }
-               
             }
          }
-         
       }
       return array('configValidityPeriod' => 600, 'schedule' => $schedule);
    }
+
+   
    
    /**
     * Send to the agent an OK code
@@ -103,6 +104,8 @@ class PluginFusioninventoryRestCommunication {
       header("HTTP/1.1 200", true, 200);
    }
 
+   
+   
    /**
     * Send to the agent an error code
     * when the request sent by the agent is invalid
@@ -111,6 +114,8 @@ class PluginFusioninventoryRestCommunication {
       header("HTTP/1.1 400", true, 400);
    }
 
+   
+   
    static function getMethodForParameters($task) {
       return "task_".strtolower($task)."_getParameters";
    }
@@ -119,7 +124,9 @@ class PluginFusioninventoryRestCommunication {
    
    /**
     * Update agent status for a task
+    * 
     * @param params parameters from the GET HTTP request
+    * 
     * @return nothing
     */
    static function updateLog($params = array()) {
