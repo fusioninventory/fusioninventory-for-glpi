@@ -1,6 +1,5 @@
 <?php
 /*
- * @version $Id: computer.form.php 13703 2011-01-20 12:24:21Z remi $
  -------------------------------------------------------------------------
  GLPI - Gestionnaire Libre de Parc Informatique
  Copyright (C) 2003-2010 by the INDEPNET Development Team.
@@ -39,12 +38,16 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-if (!isset($_GET["id"])) {
-   $_GET["id"] = "";
+if (!isset($_REQUEST["id"])) {
+   $_REQUEST["id"] = "";
 }
 
 $group = new PluginFusinvdeployGroup();
-$staticdata = new PluginFusinvdeployGroup_Staticdata();
+
+if (isset($_REQUEST['type'])) {
+   if ($_REQUEST['type'] == 'static') $group_item = new PluginFusinvdeployGroup_Staticdata();
+   if ($_REQUEST['type'] == 'dynamic') $group_item = new PluginFusinvdeployGroup_Dynamicdata();
+}
 
 if (isset($_POST["add"])) {
    $group->check(-1, 'w', $_POST);
@@ -53,7 +56,7 @@ if (isset($_POST["add"])) {
 
 
 } else if (isset($_POST["delete"])) {
-   $group->check($_POST['id'], 'd');
+   $group->check($_REQUEST['id'], 'd');
    $ok = $group->delete($_POST);
 
    $group->redirectToList();
@@ -65,24 +68,54 @@ if (isset($_POST["add"])) {
    $group->redirectToList();
 
 } else if (isset($_POST["update"])) {
-   $group->check($_POST['id'], 'w');
+   $group->check($_REQUEST['id'], 'w');
    $group->update($_POST);
 
    glpi_header($_SERVER['HTTP_REFERER']);
 
 } else if (isset($_POST["additem"])) {
-   $staticdata->check(-1,'w',$_POST);
-   $staticdata->add($_POST);
+   //$group_item->check(-1,'w',$_POST);
+
+   if ($_REQUEST['type'] == 'static') {
+      if (count($_REQUEST["item"])) {
+         foreach ($_REQUEST["item"] as $key => $val) {
+            $group_item->add(array(
+               'groups_id' => $_REQUEST['id'],
+               'itemtype' => $_REQUEST['itemtype'],
+               'items_id' => $val
+            ));
+         }
+      }
+   } elseif ($_REQUEST['type'] == 'dynamic') {
+      $fields_array = array(
+         'itemtype'  => $_REQUEST['itemtype'],
+         'start'  => $_REQUEST['start'],
+         'limit'  => $_REQUEST['limit'],
+         'serial'  => $_REQUEST['serial'],
+         'otherserial'  => $_REQUEST['otherserial'],
+         'locations'  => $_REQUEST['locations'],
+         'room'  => $_REQUEST['room'],
+         'building'  => $_REQUEST['building'],
+      );
+      $group_item->add(array(
+         'groups_id' => $_REQUEST['id'],
+         'fields_array' => serialize($fields_array)
+      ));
+   }
 
    glpi_header($_SERVER['HTTP_REFERER']);
 
 } else if (isset($_REQUEST["deleteitem"])) {
-   if (count($_REQUEST["item"])) {
-      foreach ($_REQUEST["item"] as $key => $val) {
-         if ($staticdata->can($key,'w')) {
-            $staticdata->delete(array('id' => $key));
+   if ($_REQUEST['type'] == 'static') {
+      if (count($_REQUEST["item"])) {
+         foreach ($_REQUEST["item"] as $key => $val) {
+            if ($group_item->can($key,'w')) {
+               $group_item->delete(array('id' => $key));
+            }
          }
       }
+   } elseif ($_REQUEST['type'] == 'dynamic') {
+
    }
 
    glpi_header($_SERVER['HTTP_REFERER']);

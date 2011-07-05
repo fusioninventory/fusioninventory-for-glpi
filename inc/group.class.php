@@ -230,47 +230,34 @@ class PluginFusinvdeployGroup extends CommonDBTM {
                $result_linked = $DB->query($query);
                $nb = $DB->numrows($result_linked);
 
-               if ($nb>$_SESSION['glpilist_limit']) {
+
+               for ($prem=true ; $data=$DB->fetch_assoc($result_linked) ; $prem=false) {
+                  $ID = "";
+                  if ($_SESSION["glpiis_ids_visible"] || empty($data["name"])) {
+                     $ID = " (".$data["id"].")";
+                  }
+                  $link = getItemTypeFormURL($itemtype);
+                  $name = "<a href=\"".$link."?id=".$data["id"]."\">".$data["name"]."$ID</a>";
+
                   echo "<tr class='tab_bg_1'>";
                   if ($canedit) {
-                     echo "<td>&nbsp;</td>";
+                     $sel = "";
+                     if (isset($_GET["select"]) && $_GET["select"]=="all") {
+                        $sel = "checked";
+                     }
+                     echo "<td width='10'>";
+                     echo "<input type='checkbox' name='item[".$data["IDD"]."]' value='1' $sel></td>";
                   }
-                  echo "<td class='center'>".$item->getTypeName()."&nbsp;:&nbsp;$nb</td>";
-                  echo "<td class='center' colspan='2'>";
-                  echo "<a href='". getItemTypeSearchURL($itemtype) . "?" .
-                        rawurlencode("contains[0]") . "=" . rawurlencode('$$$$'.$instID) . "&amp;" .
-                        rawurlencode("field[0]") . "=29&amp;sort=80&amp;order=ASC&amp;is_deleted=0".
-                        "&amp;start=0". "'>" . $LANG['reports'][57]."</a></td>";
-                  echo "<td class='center'>-</td><td class='center'>-</td></tr>";
-
-               } else if ($nb>0) {
-                  for ($prem=true ; $data=$DB->fetch_assoc($result_linked) ; $prem=false) {
-                     $ID = "";
-                     if ($_SESSION["glpiis_ids_visible"] || empty($data["name"])) {
-                        $ID = " (".$data["id"].")";
-                     }
-                     $link = getItemTypeFormURL($itemtype);
-                     $name = "<a href=\"".$link."?id=".$data["id"]."\">".$data["name"]."$ID</a>";
-
-                     echo "<tr class='tab_bg_1'>";
-                     if ($canedit) {
-                        $sel = "";
-                        if (isset($_GET["select"]) && $_GET["select"]=="all") {
-                           $sel = "checked";
-                        }
-                        echo "<td width='10'>";
-                        echo "<input type='checkbox' name='item[".$data["IDD"]."]' value='1' $sel></td>";
-                     }
-                     if ($prem) {
-                        echo "<td class='center top' rowspan='$nb'>".$item->getTypeName().
-                              ($nb>1?"&nbsp;:&nbsp;$nb</td>":"</td>");
-                     }
-                     echo "<td class='center".
-                            (isset($data['is_deleted']) && $data['is_deleted'] ? " tab_bg_2_2'" : "'");
-                     echo ">".$name."</td>";
-                     echo "</tr>";
+                  if ($prem) {
+                     echo "<td class='center top' rowspan='$nb'>".$item->getTypeName().
+                           ($nb>1?"&nbsp;:&nbsp;$nb</td>":"</td>");
                   }
+                  echo "<td class='center".
+                         (isset($data['is_deleted']) && $data['is_deleted'] ? " tab_bg_2_2'" : "'");
+                  echo ">".$name."</td>";
+                  echo "</tr>";
                }
+
                $totalnb += $nb;
             }
          }
@@ -281,18 +268,12 @@ class PluginFusinvdeployGroup extends CommonDBTM {
 
 
 
-      /*echo "<tr class='tab_bg_2'>";
+      echo "<tr class='tab_bg_2'>";
       echo "<td class='center' colspan='2'>".($totalnb>0? $LANG['common'][33].
              "&nbsp;=&nbsp;$totalnb</td>" : "&nbsp;</td>");
       echo "<td colspan='4'>&nbsp;</td></tr> ";
 
-      if ($canedit) {
-         echo "<tr class='tab_bg_1'><td colspan='4' class='right'>";
-         Dropdown::showAllItems("items_id", 0, 0, -1, $this->static_group_types);
-         echo "</td><td class='center'>";
-         echo "<input type='submit' name='additem' value=\"".$LANG['buttons'][8]."\"
-                class='submit'>";
-         echo "</td><td>&nbsp;</td></tr>";
+      if ($canedit && $totalnb > 0) {
          echo "</table>";
 
          openArrowMassive("contract_form$rand", true);
@@ -301,102 +282,129 @@ class PluginFusinvdeployGroup extends CommonDBTM {
 
       } else {
          echo "</table>";
-      }*/
-      echo "</table>";
+      }
 
 
       echo "</div></form>";
 
+      echo "<form name='group_search' method='POST' action='"
+         .$CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/front/group.form.php'>";
+      echo "<input type='hidden' name='id' value='$groupID' />";
+      echo "<input type='hidden' name='type' value='static' />";
       echo "<div class='center'>";
       echo "<table class='tab_cadre_fixe'>";
-      echo "<tr><th colspan='7'>".$LANG['buttons'][0]."</th></tr>";
-      echo "<tr>";
 
-      echo "<td class='left'>".'itemtype '." : </td>";
-      echo "<td class='left'><select name='itemtype' id='group_search_itemtype'>
-      <option>computer</option>
-      </select></td>";
+      $this->showSearchFields('static');
 
-      echo "<td class='left'>".'Start '." : </td>";
-      echo "<td class='left'><input type='text' name='start' id='group_search_start' value='0' size='3' /></td>";
-
-      echo "<td class='left'>".'Limit '." : </td>";
-      echo "<td class='left'><input type='text' name='limit' id='group_search_limit' size='3' /></td>";
-
-      echo "<td class='right'>";
-      echo "<input type='submit' value=\"".$LANG['buttons'][0]."\" class='submit' id='group_search_submit' >";
-      /*ajaxUpdateItemOnEvent(
-         'group_search_submit',
-         'group_results',
-         $CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/ajax/group_results.php",
-         $parameters=array(
-            'itemtype' => "\'+Ext.get(\"group_search_itemtype\").getValue()+\'",
-            'start' => "Ext.get(\"group_search_start\").getValue()",
-            'limit' => "Ext.get(\"group_search_limit\").getValue()"
-         ),
-         $events=array("click"),
-         $spinner=true
-      );*/
-
-      $this->ajaxLoad(
-         'group_search_submit',
-         'group_results',
-         $CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/ajax/group_results.php",
-         array(
-            'itemtype' => 'group_search_itemtype',
-            'start' => 'group_search_start',
-            'limit' => 'group_search_limit'
-         ),
-         'static'
-      );
-      echo "</td>";
-      echo "</tr>";
       echo "</table>";
       echo "</div>";
 
       echo "<div id='group_results'></div>";
+
+      echo "</form>";
    }
 
    public function showDynamicForm() {
       global $DB, $CFG_GLPI, $LANG;
 
+      $groupID = $this->fields['id'];
+      if (!$this->can($groupID,'r')) {
+         return false;
+      }
+      $canedit = $this->can($groupID,'w');
+
+      echo "<form name='group_search' method='POST' action='"
+         .$CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/front/group.form.php'>";
+      echo "<input type='hidden' name='id' value='$groupID' />";
+      echo "<input type='hidden' name='type' value='dynamic' />";
       echo "<div class='center'>";
       echo "<table class='tab_cadre_fixe'>";
-      echo "<tr><th colspan='7'>".$LANG['buttons'][0]."</th></tr>";
+
+      $this->showSearchFields('dynamic');
+
+      echo "</table>";
+      echo "</div>";
+      echo "</form>";
+
+      echo "<div id='group_results'></div>";
+
+   }
+
+   function showSearchFields($type = 'static')  {
+      global $DB, $CFG_GLPI, $LANG;
+
+      echo "<tr><th colspan='4'>".$LANG['buttons'][0]."</th></tr>";
       echo "<tr>";
 
-      echo "<td class='left'>".'itemtype '." : </td>";
+      echo "<td class='left'>".$LANG['common'][17]." : </td>";
       echo "<td class='left'><select name='itemtype' id='group_search_itemtype'>
       <option>computer</option>
       </select></td>";
 
-      echo "<td class='left'>".'Start '." : </td>";
-      echo "<td class='left'><input type='text' name='start' id='group_search_start' value='0' size='3' /></td>";
+      echo "<td>".$LANG['common'][15]."&nbsp;: </td>";
+      echo "<td>";
+      $rand_location = mt_rand();
+      Dropdown::show('Location', array(
+         'value'  => '',
+         'name'   => 'locations',
+         'rand'   => $rand_location
+      ));
+      echo "</td>";
 
-      echo "<td class='left'>".'Limit '." : </td>";
-      echo "<td class='left'><input type='text' name='limit' id='group_search_limit' size='3' /></td>";
+      echo "</tr><tr>";
 
-      echo "<td class='right'>";
-      echo "<input type='button' value=\"".$LANG['buttons'][50]."\" id='group_search_submit' >&nbsp;";
-      echo "<input type='submit' value=\"".$LANG['buttons'][8]."\" class='submit' >";
+      echo "<td class='left'>".$LANG['buttons'][33]." : ";
+      echo "<input type='text' name='start' id='group_search_start' value='0' size='3' /></td>";
+
+      echo "<td class='left'>".$LANG['pager'][4]."&nbsp;";
+      echo "<input type='text' name='limit' id='group_search_limit' size='3' />&nbsp;";
+      echo $LANG['pager'][5];
+      echo "</td>";
+
+      echo "<td class='left'>".'room '." : </td>";
+      echo "<td class='left'><input type='text' name='room' id='group_search_room' size='15' /></td>";
+
+      echo "</tr><tr>";
+
+      echo "<td class='left'>".$LANG['common'][19]." : </td>";
+      echo "<td class='left'><input type='text' name='serial' id='group_search_serial' size='15' /></td>";
+
+      echo "<td class='left'>".'building '." : </td>";
+      echo "<td class='left'><input type='text' name='building' id='group_search_building' size='15' /></td>";
+
+      echo "</tr><tr>";
+
+      echo "<td class='left'>".$LANG['common'][20]." : </td>";
+      echo "<td class='left'><input type='text' name='otherserial' id='group_search_otherserial' size='15' /></td>";
+
+      echo "</tr><tr>";
+
+      echo "<td class='center' colspan='4'>";
+      if ($type == 'dynamic') {
+         echo "<input type='button' value=\"".$LANG['buttons'][50]
+            ."\" id='group_search_submit' />&nbsp;";
+         echo "<input type='submit' value=\"".$LANG['buttons'][8]."\" class='submit' name='additem' />";
+      } else {
+         echo "<input type='button' value=\"".$LANG['buttons'][0]
+            ."\" id='group_search_submit' class='submit' name='add_item' />&nbsp;";
+      }
 
       $this->ajaxLoad(
          'group_search_submit',
          'group_results',
          $CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/ajax/group_results.php",
          array(
-            'itemtype' => 'group_search_itemtype',
-            'start' => 'group_search_start',
-            'limit' => 'group_search_limit'
+            'itemtype'     => 'group_search_itemtype',
+            'start'        => 'group_search_start',
+            'limit'        => 'group_search_limit',
+            'location_id'  => 'dropdown_locations'.$rand_location,
+            'serial'       => 'group_search_serial',
+            'otherserial'  => 'group_search_otherserial'
          ),
-         'dynamic'
+         $type
       );
       echo "</td>";
       echo "</tr>";
-      echo "</table>";
-      echo "</div>";
-
-      echo "<div id='group_results'></div>";
    }
 
    function ajaxLoad($to_observe, $toupdate, $url, $params_id, $type) {
@@ -423,26 +431,19 @@ class PluginFusinvdeployGroup extends CommonDBTM {
 
       if(isset($params['type'])) $type  = $params['type'];
       else exit;
-      if(isset($params['itemtype'])) $itemtype  = $params['itemtype'];
-      else exit;
-      if(isset($params['start'])) $start  = $params['start'];
-      else exit;
-      if(isset($params['limit'])) $limit  = $params['limit'];
-      else exit;
 
       $params = array(
-         'type' => $type,
-         'itemtype' => $itemtype,
-         'start' => $start,
-         'limit' => $limit,
+         'type'         => $type,
+         'itemtype'     => $params['itemtype'],
+         'start'        => $params['start'],
+         'limit'        => $params['limit'],
+         'location_id'  => $params['location_id'],
+         'serial'       => $params['serial'],
+         'otherserial'  => $params['otherserial']
       );
 
       $datas = PluginFusinvdeploySearch::methodListObjects($params, '');
 
-
-      if ($type == 'static')
-         echo "<form name='group_search' method='POST' action='"
-         .$CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/front/'>";
       echo "<div class='center'>";
       echo "<table class='tab_cadrehov'>";
       echo "<thead><tr>";
@@ -455,19 +456,19 @@ class PluginFusinvdeployGroup extends CommonDBTM {
          $stripe =! $stripe;
          echo "<tr class='tab_bg_".(((int)$stripe)+1)."'>";
          if ($type == 'static')
-            echo "<input type='checkbox' name='item[".$row["id"]."]' value='1'></td>";
+            echo "<td><input type='checkbox' name='item[".$row["id"]."]' value='1'></td>";
          echo "<td colspan='4'>".$row['name']."</td>";
          echo "</tr>";
       }
 
       if ($type == 'static') {
          openArrowMassive("group_search");
-         echo "<input type='submit' class='submit' value=".$LANG['buttons'][8]." />";
+         echo "<input type='submit' class='submit' value="
+            .$LANG['buttons'][8]." name='additem' />";
          closeArrowMassive();
       }
 
       echo "</table>";
       echo "</div>";
-      if ($type == 'static') echo "</form>";
    }
 }

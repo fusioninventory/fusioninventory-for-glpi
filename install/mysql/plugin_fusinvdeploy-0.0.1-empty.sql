@@ -158,7 +158,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_groups_staticdatas`;
 CREATE TABLE  `glpi_plugin_fusinvdeploy_groups_staticdatas` (
 `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
 `groups_id` int(11) NOT NULL DEFAULT '0',
-`itemtype` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '0',
+`itemtype` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
 `items_id` INT( 11 ) NOT NULL DEFAULT  '0',
 PRIMARY KEY (  `id` )
 ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;
@@ -167,5 +167,6 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_groups_dynamicdatas`;
 CREATE TABLE  `glpi_plugin_fusinvdeploy_groups_dynamicdatas` (
 `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
 `groups_id` int(11) NOT NULL DEFAULT '0',
+`fields_array` TEXT NOT NULL DEFAULT '',
 PRIMARY KEY (  `id` )
 ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;

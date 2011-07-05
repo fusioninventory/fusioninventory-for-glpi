@@ -1,12 +1,13 @@
 <?php
+
 /*
- * @version $Id: computer.tabs.php 8003 2009-02-26 11:03:19Z moyo $
- -------------------------------------------------------------------------
+ * @version $Id$
+ ----------------------------------------------------------------------
  FusionInventory
  Coded by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org/
- -------------------------------------------------------------------------
+ http://www.fusioninventory.org/   http://forge.fusioninventory.org//
+ ----------------------------------------------------------------------
 
  LICENSE
 
@@ -25,7 +26,7 @@
  You should have received a copy of the GNU General Public License
  along with FusionInventory; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- --------------------------------------------------------------------------
+ ------------------------------------------------------------------------
  */
 
 // ----------------------------------------------------------------------
@@ -33,31 +34,29 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-define('GLPI_ROOT', '../../..');
-include (GLPI_ROOT . "/inc/includes.php");
-header("Content-Type: text/html; charset=UTF-8");
-header_nocache();
-
-if(!isset($_POST["id"])) {
-   exit();
+if (!defined('GLPI_ROOT')) {
+   die("Sorry. You can't access directly to this file");
 }
 
-$group = new PluginFusinvdeployGroup();
+class PluginFusinvdeployGroup_Dynamicdata extends CommonDBRelation{
 
-switch($_POST['glpi_tab']) {
-   case 2;
-      $group->getFromDB($_POST['id']);
-      $group->showStaticForm();
-      break;
-   case 3;
-      $group->getFromDB($_POST['id']);
-      $group->showDynamicForm();
-      break;
-   default :
-      break;
+   // From CommonDBRelation
+   public $itemtype_1 = 'PluginFusinvdeployGroup';
+   public $items_id_1 = 'groups_id';
+
+   /*public $itemtype_2 = 'itemtype';
+   public $items_id_2 = 'items_id';*/
+
+   function can($ID, $right, &$input=NULL) {
+
+      if ($ID<0) {
+         // Ajout
+         $group = new PluginFusinvdeployGroup();
+
+         if (!$group->getFromDB($input['groups_id'])) {
+            return false;
+         }
+      }
+      return parent::can($ID,$right,$input);
+   }
 }
-
-
-ajaxFooter();
-
-?>
