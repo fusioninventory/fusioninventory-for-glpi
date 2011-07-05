@@ -213,7 +213,10 @@ class PluginFusinvinventoryInventory {
             $input = array();
             $input['date_mod'] = date("Y-m-d H:i:s");
             $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
-
+            if (isset($dataEntity['locations_id'])) {
+               $input["locations_id"] = $dataEntity['locations_id'];
+            }
+            
             self::addDefaultStateIfNeeded($input, false);
             $items_id = $Computer->add($input);
             $PluginFusinvinventoryLib->startAction($xml, $items_id, '1');
