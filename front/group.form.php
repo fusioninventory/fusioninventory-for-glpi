@@ -80,7 +80,7 @@ if (isset($_POST["add"])) {
       if (count($_REQUEST["item"])) {
          foreach ($_REQUEST["item"] as $key => $val) {
             $group_item->add(array(
-               'groups_id' => $_REQUEST['id'],
+               'groups_id' => $_REQUEST['groupID'],
                'itemtype' => $_REQUEST['itemtype'],
                'items_id' => $val
             ));
@@ -98,7 +98,27 @@ if (isset($_POST["add"])) {
          'building'  => $_REQUEST['building'],
       );
       $group_item->add(array(
-         'groups_id' => $_REQUEST['id'],
+         'groups_id' => $_REQUEST['groupID'],
+         'fields_array' => serialize($fields_array)
+      ));
+   }
+
+   glpi_header($_SERVER['HTTP_REFERER']);
+} else if (isset($_POST["updateitem"])) {
+   //$group_item->check(-1,'w',$_POST);
+   if ($_REQUEST['type'] == 'dynamic') {
+      $fields_array = array(
+         'itemtype'  => $_REQUEST['itemtype'],
+         'start'  => $_REQUEST['start'],
+         'limit'  => $_REQUEST['limit'],
+         'serial'  => $_REQUEST['serial'],
+         'otherserial'  => $_REQUEST['otherserial'],
+         'locations'  => $_REQUEST['locations'],
+         'room'  => $_REQUEST['room'],
+         'building'  => $_REQUEST['building'],
+      );
+      $group_item->update(array(
+         'id' => $_REQUEST['id'],
          'fields_array' => serialize($fields_array)
       ));
    }

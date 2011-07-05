@@ -146,7 +146,7 @@ class PluginFusinvdeployTask extends CommonDBTM {
       return true;
    }
 
-   function showActions() {
+   function showActions($id) {
       global $LANG, $CFG_GLPI;
 
        echo "<table class='deploy_extjs'>
@@ -164,14 +164,14 @@ class PluginFusinvdeployTask extends CommonDBTM {
          </thead>
          <tbody>
             <tr>
-               <td id='Task'>
+               <td id='TaskJob'>
                </td>
             </tr>
          </tbody>
       </table>";
 
       // Include JS
-      require GLPI_ROOT."/plugins/fusinvdeploy/js/task.front.php";
+      require GLPI_ROOT."/plugins/fusinvdeploy/js/task_job.front.php";
    }
 
 }

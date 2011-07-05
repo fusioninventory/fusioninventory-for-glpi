@@ -191,6 +191,8 @@ class PluginFusinvdeployGroup extends CommonDBTM {
 
             echo "<form method='post' name='group_form$rand' id='group_form$rand' action=\"".
                    $CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/front/group.form.php\">";
+            echo "<input type='hidden' name='type' value='static' />";
+
             echo "<div class='spaced'>";
             echo "<table class='tab_cadre_fixe'>";
             // massive action checkbox
@@ -289,7 +291,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
 
       echo "<form name='group_search' method='POST' action='"
          .$CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/front/group.form.php'>";
-      echo "<input type='hidden' name='id' value='$groupID' />";
+      echo "<input type='hidden' name='groupID' value='$groupID' />";
       echo "<input type='hidden' name='type' value='static' />";
       echo "<div class='center'>";
       echo "<table class='tab_cadre_fixe'>";
@@ -298,6 +300,9 @@ class PluginFusinvdeployGroup extends CommonDBTM {
 
       echo "</table>";
       echo "</div>";
+
+      echo "<input type='button' value=\"".$LANG['buttons'][0]
+            ."\" id='group_search_submit' class='submit' name='add_item' />&nbsp;";
 
       echo "<div id='group_results'></div>";
 
@@ -313,39 +318,83 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       }
       $canedit = $this->can($groupID,'w');
 
+      $fields = array();
+
+      //get datas
+      $dynamic_group = new PluginFusinvdeployGroup_Dynamicdata;
+      $query = "SELECT *
+         FROM glpi_plugin_fusinvdeploy_groups_dynamicdatas
+         WHERE groups_id = '$groupID'";
+      $res = $DB->query($query);
+      $num = $DB->numrows($res);
+      if ($num > 0) {
+         $data = $DB->fetch_array($res);
+         $dynamic_group->getFromDB($data['id']);
+         $fields = unserialize($dynamic_group->fields['fields_array']);
+      }
+
+      //show form
       echo "<form name='group_search' method='POST' action='"
          .$CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/front/group.form.php'>";
-      echo "<input type='hidden' name='id' value='$groupID' />";
+      echo "<input type='hidden' name='groupID' value='$groupID' />";
       echo "<input type='hidden' name='type' value='dynamic' />";
       echo "<div class='center'>";
       echo "<table class='tab_cadre_fixe'>";
 
-      $this->showSearchFields('dynamic');
+      $this->showSearchFields('dynamic', $fields);
 
       echo "</table>";
       echo "</div>";
+      echo "<input type='button' value=\"".$LANG['buttons'][50]
+         ."\" id='group_search_submit' />&nbsp;";
+      if ($num > 0) {
+         echo "<input type='hidden' name='id' value='".$data['id']."' />";
+         echo "<input type='submit' value=\"".$LANG['buttons'][7]."\" class='submit' name='updateitem' />";
+      }  else {
+         echo "<input type='submit' value=\"".$LANG['buttons'][8]."\" class='submit' name='additem' />";
+      }
       echo "</form>";
 
+
+      //prepare div for ajax results
       echo "<div id='group_results'></div>";
 
    }
 
-   function showSearchFields($type = 'static')  {
+   function showSearchFields($type = 'static', $fields = array())  {
       global $DB, $CFG_GLPI, $LANG;
+
+      if (count($fields) == 0) {
+         $fields = array(
+            'itemtype' => 'computer',
+            'start' => '0',
+            'limit' => '',
+            'serial' => '',
+            'otherserial' => '',
+            'locations' => '0',
+            'room' => '',
+            'building' => ''
+         );
+      }
 
       echo "<tr><th colspan='4'>".$LANG['buttons'][0]."</th></tr>";
       echo "<tr>";
 
       echo "<td class='left'>".$LANG['common'][17]." : </td>";
-      echo "<td class='left'><select name='itemtype' id='group_search_itemtype'>
+      echo "<td class='left'>";
+      $itemtype = array(
+         'computer'
+      );
+      echo "<select name='itemtype' id='group_search_itemtype'>
       <option>computer</option>
-      </select></td>";
+      </select>";
+      echo "</td>";
 
       echo "<td>".$LANG['common'][15]."&nbsp;: </td>";
       echo "<td>";
       $rand_location = mt_rand();
       Dropdown::show('Location', array(
-         'value'  => '',
+         'value'  => $fields['locations'],
          'name'   => 'locations',
          'rand'   => $rand_location
       ));
@@ -354,40 +403,38 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       echo "</tr><tr>";
 
       echo "<td class='left'>".$LANG['buttons'][33]." : ";
-      echo "<input type='text' name='start' id='group_search_start' value='0' size='3' /></td>";
+      echo "<input type='text' name='start' id='group_search_start' value='".$fields['start']
+         ."' value='0' size='3' /></td>";
 
       echo "<td class='left'>".$LANG['pager'][4]."&nbsp;";
-      echo "<input type='text' name='limit' id='group_search_limit' size='3' />&nbsp;";
+      echo "<input type='text' name='limit' id='group_search_limit' value='".$fields['limit']
+         ."' size='3' />&nbsp;";
       echo $LANG['pager'][5];
       echo "</td>";
 
       echo "<td class='left'>".'room '." : </td>";
-      echo "<td class='left'><input type='text' name='room' id='group_search_room' size='15' /></td>";
+      echo "<td class='left'><input type='text' name='room' id='group_search_room' value='"
+         .$fields['room']."' size='15' /></td>";
 
       echo "</tr><tr>";
 
       echo "<td class='left'>".$LANG['common'][19]." : </td>";
-      echo "<td class='left'><input type='text' name='serial' id='group_search_serial' size='15' /></td>";
+      echo "<td class='left'><input type='text' name='serial' id='group_search_serial' value='"
+         .$fields['serial']."' size='15' /></td>";
 
       echo "<td class='left'>".'building '." : </td>";
-      echo "<td class='left'><input type='text' name='building' id='group_search_building' size='15' /></td>";
+      echo "<td class='left'><input type='text' name='building' id='group_search_building' value='"
+         .$fields['building']."' size='15' /></td>";
 
       echo "</tr><tr>";
 
       echo "<td class='left'>".$LANG['common'][20]." : </td>";
-      echo "<td class='left'><input type='text' name='otherserial' id='group_search_otherserial' size='15' /></td>";
+      echo "<td class='left'><input type='text' name='otherserial' id='group_search_otherserial' value='"
+         .$fields['otherserial']."' size='15' /></td>";
 
       echo "</tr><tr>";
 
       echo "<td class='center' colspan='4'>";
-      if ($type == 'dynamic') {
-         echo "<input type='button' value=\"".$LANG['buttons'][50]
-            ."\" id='group_search_submit' />&nbsp;";
-         echo "<input type='submit' value=\"".$LANG['buttons'][8]."\" class='submit' name='additem' />";
-      } else {
-         echo "<input type='button' value=\"".$LANG['buttons'][0]
-            ."\" id='group_search_submit' class='submit' name='add_item' />&nbsp;";
-      }
 
       $this->ajaxLoad(
          'group_search_submit',

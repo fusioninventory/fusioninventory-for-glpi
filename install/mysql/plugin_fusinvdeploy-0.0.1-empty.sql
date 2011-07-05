@@ -137,13 +137,19 @@ CREATE TABLE  `glpi_plugin_fusinvdeploy_actions_messages` (
 PRIMARY KEY (  `id` )
 ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
-DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_tasks`;
-CREATE TABLE  `glpi_plugin_fusinvdeploy_tasks` (
-`id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
-`name` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
-`comment` text COLLATE utf8_unicode_ci NOT NULL,
-PRIMARY KEY (  `id` )
-) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+DROP VIEW IF EXISTS `glpi_plugin_fusinvdeploy_tasks`;
+CREATE VIEW glpi_plugin_fusinvdeploy_tasks AS SELECT * FROM glpi_plugin_fusioninventory_tasks;
+
+DROP VIEW IF EXISTS `glpi_plugin_fusinvdeploy_taskjobs`;
+CREATE VIEW glpi_plugin_fusinvdeploy_taskjobs
+AS SELECT `id`,
+`plugin_fusioninventory_tasks_id` AS `plugin_fusinvdeploy_tasks_id`,
+`entities_id`, `name`, `date_creation`, `retry_nb`,
+`retry_time`, `plugins_id`, `method`, `definition`,
+`action`, `comment`, `users_id`, `status`,
+`rescheduled_taskjob_id`, `statuscomments`,
+`periodicity_count`, `periodicity_type`, `execution_id`
+FROM glpi_plugin_fusioninventory_taskjobs;
 
 DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_groups`;
 CREATE TABLE  `glpi_plugin_fusinvdeploy_groups` (
@@ -167,6 +173,6 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_groups_dynamicdatas`;
 CREATE TABLE  `glpi_plugin_fusinvdeploy_groups_dynamicdatas` (
 `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
 `groups_id` int(11) NOT NULL DEFAULT '0',
-`fields_array` TEXT NOT NULL DEFAULT '',
+`fields_array` TEXT NOT NULL,
 PRIMARY KEY (  `id` )
 ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;

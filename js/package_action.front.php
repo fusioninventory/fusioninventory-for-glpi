@@ -1,7 +1,6 @@
 <?php
 
 /*
- * @version $Id$
  ----------------------------------------------------------------------
  FusionInventory
  Coded by the FusionInventory Development Team.
@@ -30,7 +29,7 @@
  */
 
 // ----------------------------------------------------------------------
-// Original Author of file: DURIEUX David
+// Original Author of file: Alexandre DELAUNAY
 // Purpose of file:
 // ----------------------------------------------------------------------
 global $LANG;
@@ -171,14 +170,6 @@ var {$render}actionGridStore = new Ext.data.GroupingStore({
    sortInfo: {field: '{$render}id', direction: "ASC"},
    groupField : '{$render}itemtype'
 });
-
-function printObject(o) {
-  var out = '';
-  for (var p in o) {
-    out += p + ': ' + o[p] + '\\n';
-  }
-  alert(out);
-}
 
 //define grid
 var {$render}actionGrid = new Ext.grid.GridPanel({
