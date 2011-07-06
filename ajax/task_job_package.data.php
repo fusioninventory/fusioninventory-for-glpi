@@ -35,10 +35,8 @@
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
 
-if(!isset($_GET['tasks_id'])) exit;
-
-$taskjob = new PluginFusinvdeployTaskjob;
-$res = $taskjob->getAllDatas($_REQUEST);
+$package = new PluginFusinvdeployPackage;
+$res = $package->getAllDatas($_REQUEST);
 
 echo $res;
 ?>

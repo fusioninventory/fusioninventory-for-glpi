@@ -45,24 +45,50 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
    function getAllDatas($params) {
       global $DB, $LANG;
 
-      $group_id = $params['group_id'];
+      $tasks_id = $params['tasks_id'];
 
       $sql = " SELECT id, name, date_creation, retry_nb,
-               retry_time, definition
+               retry_time, definition, action
                FROM `".$this->getTable()."`
-               WHERE `plugin_fusinvdeploy_tasks_id` = '$group_id'
+               WHERE `plugin_fusinvdeploy_tasks_id` = '$tasks_id'
                AND method = 'deployinstall' OR method = 'deployuninstall'";
 
       $res  = $DB->query($sql);
 
       $nb   = $DB->numrows($res);
       $json  = array();
-      while($row = $DB->fetch_array($res)) {
-         $definition = importArrayFromDB($row['definition']);
-         $row['package'] = $definition[0]['PluginFusinvdeployPackage'];
-         $row['group'] = $group_id;
-         $json['tasks'][] = $row;
+      while($row = $DB->fetch_assoc($res)) {
+         $row['packages'] = importArrayFromDB($row['definition']);
+         $row['groups'] = importArrayFromDB($row['action']);
+
+         $temp_tasks[] = $row;
       }
+
+      //printCleanArray($temp_tasks);
+
+      $i = 0;
+      foreach ($temp_tasks as $key => $task) {
+         foreach ($task['groups'] as $group) {
+            foreach ($task['packages'] as $package) {
+               $group_obj = new PluginFusinvdeployGroup;
+               $group_obj->getFromDB($group['PluginFusinvdeployGroup']);
+               $json['tasks'][$i]['group_id'] = $group['PluginFusinvdeployGroup'];
+               $json['tasks'][$i]['group_name'] = $group_obj->getName();
+
+               $package_obj = new PluginFusinvdeployPackage;
+               $package_obj->getFromDB($package['PluginFusinvdeployPackage']);
+               $json['tasks'][$i]['package_id'] = $package['PluginFusinvdeployPackage'];
+               $json['tasks'][$i]['package_name'] = $package_obj->getName();
+
+               $json['tasks'][$i]['date_creation'] = $task['date_creation'];
+               $json['tasks'][$i]['retry_nb'] = $task['retry_nb'];
+               $json['tasks'][$i]['retry_time'] = $task['retry_time'];
+               $i++;
+            }
+         }
+      }
+
+
 
       return json_encode($json);
    }

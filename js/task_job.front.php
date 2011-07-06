@@ -59,29 +59,48 @@ var taskJobColumns =  [{
    dataIndex: 'id',
    hidden: true
 }, {
-   id: 'group',
+   id: 'group_id',
+   dataIndex: 'group_id',
+   hidden: true
+}, {
+   id: 'group_name',
    header: 'Groupe',
-   dataIndex: 'group',
-   renderer: renderGroup
+   dataIndex: 'group_name',
+   groupRenderer: renderGroup,
+   renderer: renderGroup,
+   width:150
+}, {
+   id: 'package_id',
+   dataIndex: 'package_id',
+   hidden: true
+}, {
+   id: 'package_name',
+   header: 'Paquet',
+   dataIndex: 'package_name',
+   renderer: renderPackage,
+   groupable: false
 }];
 
 //define renderer for grid columns
 function renderGroup(val) {
-   return val
+   return '<img src="../pics/ext/group.png">&nbsp;'+val
+}
+function renderPackage(val) {
+   return '&nbsp;&nbsp;&nbsp;<img src="../pics/ext/package.png">&nbsp;'+val
 }
 
 //create store and load data
 var taskJobGridReader = new Ext.data.JsonReader({
    root: 'tasks',
-   fields: ['id', 'group', 'package']
+   fields: ['id', 'group_id', 'group_name', 'package_id', 'package_name']
 });
 
 var taskJobStore = new Ext.data.GroupingStore({
-   url: '../ajax/task_job.data.php?group_id={$id}',
+   url: '../ajax/task_job.data.php?tasks_id={$id}',
    autoLoad: true,
    reader: taskJobGridReader,
-   sortInfo: {field: 'id', direction: "ASC"},
-   groupField : 'group'
+   sortInfo: {field: 'group_name', direction: "ASC"},
+   groupField : 'group_name'
 });
 
 /**** DEFINE GRID ****/
@@ -93,10 +112,81 @@ var taskJobGrid = new Ext.grid.GridPanel({
    width: {$width_right},
    style:'margin-bottom:5px',
    columns: taskJobColumns,
-   store: taskJobStore
+   store: taskJobStore,
+   view: new Ext.grid.GroupingView({
+      forceFit:true,
+      groupTextTpl: '{text} ({[values.rs.length]})',
+      startCollapsed : true,
+      forceFit : true,
+      hideGroupedColumn: true,
+      showGroupName: false
+   }),
+   tbar: [{
+      text: '{$LANG['plugin_fusinvdeploy']['form']['action'][0]}',
+      iconCls: 'exticon-add',
+      handler: function(btn,ev) {
+
+      }
+   }, '-', {
+      text: '{$LANG['plugin_fusinvdeploy']['form']['action'][1]}',
+      iconCls: 'exticon-delete',
+      handler: function(btn,ev) {
+         var selection = taskJobGrid.getSelectionModel().getSelections();
+         if (!selection) return false;
+
+         for(var i = 0, r; r = selection[i]; i++){
+            taskJobStore.remove(r);
+         }
+
+         /*Ext.Ajax.request({
+            url: '../ajax/package_action.delete.php',
+            params: {
+
+            }
+         });*/
+
+         if(taskJobStore.data.length == 0) {
+            taskJobForm.collapse();
+            taskJobForm.buttons[0].setDisabled(true);
+         } else {
+            taskJobGrid.getSelectionModel().selectFirstRow();
+         }
+      }
+   }, '-'],
+   sm: new Ext.grid.RowSelectionModel({
+      singleSelect: true,
+      listeners: {
+         rowselect: function(g,index,ev) {
+
+         }
+      }
+   })
 });
 
 
+/**** DEFINE STORES AND JSON READER FOR FORM ****/
+
+var groupReader = new Ext.data.JsonReader({
+   root: 'groups',
+   fields: ['group_id', 'group_name']
+});
+
+var packageReader = new Ext.data.JsonReader({
+   root: 'packages',
+   fields: ['package_id', 'package_name']
+});
+
+var groupStore = new Ext.data.Store({
+   url: '../ajax/task_job_group.data.php',
+   autoLoad: true,
+   reader: groupReader
+});
+
+var packageStore = new Ext.data.Store({
+   url: '../ajax/task_job_package.data.php',
+   autoLoad: true,
+   reader: packageReader
+});
 
 /**** DEFINE FORM ****/
 var taskJobForm = new Ext.FormPanel({
@@ -107,7 +197,34 @@ var taskJobForm = new Ext.FormPanel({
    bodyStyle:'padding:5px 10px',
    style:'margin-left:5px;margin-bottom:5px',
    width: {$width_left},
-   height: {$height_left}
+   height: {$height_left},
+   title: '{$LANG['plugin_fusinvdeploy']['task'][11]}',
+   items: [
+      new Ext.form.ComboBox({
+         fieldLabel:'{$LANG['plugin_fusinvdeploy']['task'][6]}',
+         name: 'group_id',
+         valueField: 'group_name',
+         displayField: 'value',
+         hiddenName: 'group_id',
+         store: groupStore
+      }),
+      new Ext.form.ComboBox({
+         fieldLabel:'{$LANG['plugin_fusinvdeploy']['package'][7]}',
+         name: 'package_id',
+         valueField: 'package_name',
+         displayField: 'value',
+         hiddenName: 'package_id',
+         store: packageStore
+      })
+   ],
+   buttons: [{
+      text: '{$LANG['plugin_fusinvdeploy']['form']['action'][2]}',
+      iconCls: 'exticon-save',
+      disabled:true,
+      handler: function(btn,ev) {
+
+      }
+   }]
 });
 
 

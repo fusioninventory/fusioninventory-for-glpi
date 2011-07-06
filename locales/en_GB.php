@@ -169,4 +169,5 @@ $LANG['plugin_fusinvdeploy']['task'][7] = "Actions";
 $LANG['plugin_fusinvdeploy']['task'][8] = "Actions list";
 $LANG['plugin_fusinvdeploy']['task'][9] = "Static group";
 $LANG['plugin_fusinvdeploy']['task'][10] = "Dynamic group";
+$LANG['plugin_fusinvdeploy']['task'][11] = "Edit task";
 ?>

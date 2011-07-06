@@ -182,6 +182,27 @@ class PluginFusinvdeployPackage extends CommonDBTM {
 
       return true;
    }
+
+   function getAllDatas()  {
+      global $DB;
+
+      $sql = " SELECT id, name
+               FROM `".$this->getTable()."`
+               ORDER BY name";
+
+      $res  = $DB->query($sql);
+
+      $nb   = $DB->numrows($res);
+      $json  = array();
+      while($row = $DB->fetch_assoc($res)) {
+         $row['package_id'] = $row['id'];
+         $row['package_name'] = $row['name'];
+
+         $json['packages'][] = $row;
+      }
+
+      return json_encode($json);
+   }
 }
 
 ?>

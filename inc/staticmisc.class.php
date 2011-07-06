@@ -122,7 +122,6 @@ class PluginFusinvdeployStaticmisc {
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
       $options['name']        = 'actionselectiontoadd';
-      logDebug('getDeployActions');
       return Dropdown::show("PluginFusinvdeployGroup", $options);
 
    }
@@ -144,7 +143,6 @@ class PluginFusinvdeployStaticmisc {
    }
 
    static function task_actionselection_PluginFusioninventoryAgent_deployinstall() {
-      logDebug('task_actionselection_PluginFusioninventoryAgent_deployinstall');
       return self::getDeployActions();
    }
 
