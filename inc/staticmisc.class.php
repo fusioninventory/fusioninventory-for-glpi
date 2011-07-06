@@ -76,12 +76,26 @@ class PluginFusinvdeployStaticmisc {
                    'PluginFusinvdeployPackage' => $LANG['plugin_fusinvdeploy']['package'][7]);
    }
 
+   static function getActionType() {
+      global $LANG;
+      return array(0 => DROPDOWN_EMPTY_VALUE,
+                   'PluginFusinvdeployGroup' => $LANG['plugin_fusinvdeploy']['task'][6]);
+   }
+
    static function task_definitiontype_deployinstall($a_itemtype) {
       return self::getDefinitionType();
    }
 
    static function task_definitiontype_deployuninstall($a_itemtype) {
       return self::getDefinitionType();
+   }
+
+   static function task_actiontype_deployinstall($a_itemtype) {
+      return self::getActionType();
+   }
+
+   static function task_actiontype_deployuninstall($a_itemtype) {
+      return self::getActionType();
    }
 
    static function getDeploySelections() {
@@ -93,13 +107,23 @@ class PluginFusinvdeployStaticmisc {
       return Dropdown::show("PluginFusinvdeployPackage", $options);
    }
 
-   static function getDeployActions() {
+  /* static function getDeployActions() {
       global $LANG;
 
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = haveAccessToEntity($_SESSION['glpiactive_entity'],1);
       $options['name']        = 'actionselectiontoadd';
       return Dropdown::show("Computer", $options);
+   }*/
+
+   static function getDeployActions() {
+      global $LANG;
+
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name']        = 'actionselectiontoadd';
+      logDebug('getDeployActions');
+      return Dropdown::show("PluginFusinvdeployGroup", $options);
 
    }
 
@@ -111,7 +135,16 @@ class PluginFusinvdeployStaticmisc {
       return self::getDeploySelections();
    }
 
+   static function task_definitionselection_PluginFusinvdeployGroup_deployinstall() {
+      return self::getDeployActions();
+   }
+
+   static function task_definitionselection_PluginFusinvdeployGroup_deployuninstall() {
+      return self::getDeployActions();
+   }
+
    static function task_actionselection_PluginFusioninventoryAgent_deployinstall() {
+      logDebug('task_actionselection_PluginFusioninventoryAgent_deployinstall');
       return self::getDeployActions();
    }
 

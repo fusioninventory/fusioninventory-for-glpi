@@ -146,7 +146,7 @@ if (isset($_POST["add"])) {
 
    PluginFusioninventoryMenu::displayMenu("mini");
 
-   $group->showForm($_GET["id"]);
+   $group->showForm($_REQUEST["id"]);
    commonFooter();
 }
 
