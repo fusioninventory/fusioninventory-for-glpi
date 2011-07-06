@@ -530,12 +530,14 @@ class PluginFusinvdeployGroup extends CommonDBTM {
 
       $nb   = $DB->numrows($res);
       $json  = array();
+       $i = 0;
       while($row = $DB->fetch_assoc($res)) {
-         $row['group_id'] = $row['id'];
-         $row['group_name'] = $row['name'];
+         $json['groups'][$i]['group_id'] = $row['id'];
+         $json['groups'][$i]['group_name'] = $row['name'];
 
-         $json['groups'][] = $row;
+         $i++;
       }
+      $json['results'] = $nb;
 
       return json_encode($json);
    }

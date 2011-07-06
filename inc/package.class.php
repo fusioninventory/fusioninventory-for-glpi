@@ -194,12 +194,14 @@ class PluginFusinvdeployPackage extends CommonDBTM {
 
       $nb   = $DB->numrows($res);
       $json  = array();
+      $i = 0;
       while($row = $DB->fetch_assoc($res)) {
-         $row['package_id'] = $row['id'];
-         $row['package_name'] = $row['name'];
+         $json['packages'][$i]['package_id'] = $row['id'];
+         $json['packages'][$i]['package_name'] = $row['name'];
 
-         $json['packages'][] = $row;
+         $i++;
       }
+      $json['results'] = $nb;
 
       return json_encode($json);
    }

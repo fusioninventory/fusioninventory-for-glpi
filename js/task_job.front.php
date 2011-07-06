@@ -106,7 +106,6 @@ var taskJobStore = new Ext.data.GroupingStore({
 /**** DEFINE GRID ****/
 var taskJobGrid = new Ext.grid.GridPanel({
    region: 'center',
-   margins: '0 0 0 5',
    stripeRows: true,
    height: {$height_right},
    width: {$width_right},
@@ -168,11 +167,13 @@ var taskJobGrid = new Ext.grid.GridPanel({
 
 var groupReader = new Ext.data.JsonReader({
    root: 'groups',
+   totalProperty: 'results',
    fields: ['group_id', 'group_name']
 });
 
 var packageReader = new Ext.data.JsonReader({
    root: 'packages',
+   totalProperty: 'results',
    fields: ['package_id', 'package_name']
 });
 
@@ -192,7 +193,7 @@ var packageStore = new Ext.data.Store({
 var taskJobForm = new Ext.FormPanel({
    region: 'east',
    collapsible: true,
-   collapsed: true,
+   /*collapsed: true,*/
    labelWidth: {$label_width},
    bodyStyle:'padding:5px 10px',
    style:'margin-left:5px;margin-bottom:5px',
@@ -203,18 +204,30 @@ var taskJobForm = new Ext.FormPanel({
       new Ext.form.ComboBox({
          fieldLabel:'{$LANG['plugin_fusinvdeploy']['task'][6]}',
          name: 'group_id',
-         valueField: 'group_name',
-         displayField: 'value',
+         valueField: 'group_id',
+         displayField: 'group_name',
          hiddenName: 'group_id',
-         store: groupStore
+         triggerAction: 'all',
+         store: groupStore,
+         listeners: {
+            select: function() {
+               taskJobForm.store.reload();
+            }
+         }
       }),
       new Ext.form.ComboBox({
          fieldLabel:'{$LANG['plugin_fusinvdeploy']['package'][7]}',
          name: 'package_id',
-         valueField: 'package_name',
-         displayField: 'value',
+         valueField: 'package_id',
+         displayField: 'package_name',
          hiddenName: 'package_id',
-         store: packageStore
+         triggerAction: 'all',
+         store: packageStore,
+         listeners: {
+            select: function() {
+               taskJobForm.store.reload();
+            }
+         }
       })
    ],
    buttons: [{
