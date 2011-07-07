@@ -367,13 +367,12 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       } elseif (isset($_SESSION['glpi_plugin_fusioninventory_graph_printerCompRemove'])) {
          unset($_SESSION['glpi_plugin_fusioninventory_graph_printersComp'][$_SESSION['glpi_plugin_fusioninventory_graph_printerCompRemove']]);
       }
-
+      $oPrinter = new Printer();
       $printers = $_SESSION['glpi_plugin_fusioninventory_graph_printersComp'];
       $printersView = $printers; // printers without the current printer
       if (isset($printersView[$id])) {
          unset($printersView[$id]);
       } else {
-         $oPrinter = new Printer();
          if ($oPrinter->getFromDB($id)){
             $printers[$id] = $oPrinter->getField('name');
          }
