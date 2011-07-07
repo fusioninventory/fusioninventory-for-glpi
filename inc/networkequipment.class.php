@@ -496,41 +496,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 
 
       // ***** IP list ***** //
-      echo "<table class='tab_cadre' width='950'>";
-
-		echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='8'>";
-      echo $LANG['networking'][14];
-      echo "</th>";
-      echo "</tr>";
-
-      $count = 0;
-      $PluginFusinvsnmpNetworkEquipmentIP = new PluginFusinvsnmpNetworkEquipmentIP();
-
-      $a_ip = $PluginFusinvsnmpNetworkEquipmentIP->getIP($id);
-      asort($a_ip);
-      foreach ($a_ip as $ip) {
-         if ($count == '0') {
-            echo "<tr class='tab_bg_1'>";
-         }
-         echo "<td width='118' align='center'>";
-         echo $ip;
-         echo "</td>";
-         $count++;
-         if ($count == "8") {
-            $count = 0;
-            echo "</tr>";
-         }
-      }
-      if ($count != "9") {
-         for ($i=$count; $i < 8; $i++) {
-            echo "<td>";
-            echo "</td>";
-         }
-         echo "</tr>";
-      }
-      echo "</table>";
-
+      PluginFusinvsnmpNetworkEquipmentIP::showIP($id);
       echo "<br/>";
 
 // ********************************************************************************************** //
