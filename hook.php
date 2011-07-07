@@ -1359,10 +1359,10 @@ function plugin_fusinvsnmp_addSelect($type,$id,$num) {
          if ($table == 'glpi_plugin_fusinvsnmp_printerlogs') {
             if (strstr($field, 'pages_') OR $field == 'scanned') {
                return " (
-                  (SELECT pages_total from glpi_plugin_fusinvsnmp_printerlogs where printers_id = glpi_printers.id
+                  (SELECT ".$field." from glpi_plugin_fusinvsnmp_printerlogs where printers_id = glpi_printers.id
                   AND date <= '".$_SESSION['glpi_plugin_fusioninventory_date_end']." 23:59:59' ORDER BY date DESC LIMIT 1) 
                   -
-                  (SELECT pages_total from glpi_plugin_fusinvsnmp_printerlogs where printers_id = glpi_printers.id
+                  (SELECT ".$field." from glpi_plugin_fusinvsnmp_printerlogs where printers_id = glpi_printers.id
                   AND date >= '".$_SESSION['glpi_plugin_fusioninventory_date_start']." 00:00:00'  ORDER BY date  LIMIT 1)
                   )  AS ITEM_$num, ";
             }
@@ -1383,7 +1383,7 @@ function plugin_fusinvsnmp_forceGroupBy($type) {
 
 function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfield,&$already_link_tables) {
 
-//echo "Left Join : ".$new_table.".".$linkfield."<br/>";
+echo "Left Join : ".$new_table.".".$linkfield."<br/>";
    switch ($itemtype) {
       // * Computer List (front/computer.php)
       case 'Computer':
@@ -1715,6 +1715,40 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
 
          break;
 
+      case 'PluginFusinvsnmpPrinterLogReport':
+         
+         switch ($new_table.".".$linkfield) {
+
+            case 'glpi_locations.locations_id':
+               return " LEFT JOIN `glpi_locations` ON (`glpi_printers`.`locations_id` = `glpi_locations`.`id`) ";
+               break;
+            
+            case 'glpi_printertypes.printertypes_id':
+               return " LEFT JOIN `glpi_printertypes` ON (`glpi_printers`.`printertypes_id` = `glpi_printertypes`.`id`) ";
+               break;
+            
+            case 'glpi_states.states_id':
+               return " LEFT JOIN `glpi_states` ON (`glpi_printers`.`states_id` = `glpi_states`.`id`) ";
+               break;
+
+            case 'glpi_users.users_id':
+               return " LEFT JOIN `glpi_users` AS glpi_users_users_id ON (`glpi_printers`.`users_id` = `glpi_users_users_id`.`id`) ";
+               break;
+            
+            case 'glpi_manufacturers.manufacturers_id':
+               return " LEFT JOIN `glpi_manufacturers` ON (`glpi_printers`.`manufacturers_id` = `glpi_manufacturers`.`id`) ";
+               break;
+            
+            case 'glpi_networkports.printers_id':
+               return " LEFT JOIN `glpi_networkports` ON (`glpi_printers`.`id` = `glpi_networkports`.`items_id` AND `glpi_networkports`.`itemtype` = 'Printer') ";
+               break;
+
+            case 'glpi_plugin_fusinvsnmp_printerlogs.printers_id':
+               return " LEFT JOIN `glpi_plugin_fusinvsnmp_printerlogs` ON (`glpi_plugin_fusinvsnmp_printerlogs`.`printers_id` = `glpi_printers`.`id`) ";
+               break;
+               
+         }         
+         break;
    }
    return "";
 }
