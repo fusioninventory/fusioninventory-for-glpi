@@ -104,6 +104,7 @@ $LANG['plugin_fusinvsnmp']['prt_history'][34]="day";
 $LANG['plugin_fusinvsnmp']['prt_history'][35]="week";
 $LANG['plugin_fusinvsnmp']['prt_history'][36]="month";
 $LANG['plugin_fusinvsnmp']['prt_history'][37]="year";
+$LANG['plugin_fusinvsnmp']['prt_history'][38]="Printers to compare";
 
 $LANG['plugin_fusinvsnmp']['massiveaction'][1]="Assign SNMP model";
 $LANG['plugin_fusinvsnmp']['massiveaction'][2]="Assign SNMP authentication";

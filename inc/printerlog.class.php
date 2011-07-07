@@ -380,9 +380,14 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       }
 
       $printersList = '';
-      foreach ($printers as $printer) {
-         if ($printersList != '') $printersList .= '<BR>';
-         $printersList .= $printer;
+      foreach ($printers as $printers_id=>$printername) {
+         if ($printersList != '') $printersList .= '<br/>';
+         if ($printers_id == $id) {
+            $printersList .= $printername;
+         } else {
+            $oPrinter->getFromDB($printers_id);
+            $printersList .= $oPrinter->getLink(1);
+         }
       }
       $printersIds = "";
       foreach (array_keys($printers) as $printerId) {
@@ -409,14 +414,6 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
             break;
       }
 
-//      $query = "SELECT `printers_id`, DAY(`date`) AS `day`, WEEK(`date`) AS `week`,
-//                       MONTH(`date`) AS `month`, YEAR(`date`) AS `year`,
-//                       SUM(`$graphField`) AS `$graphField`
-//                FROM `glpi_plugin_fusinvsnmp_printerlogs`"
-//                .$where
-//                .$group."
-//                ORDER BY `year`, `month`, `day`, `printers_id`";
-
       echo "<form method='post' name='snmp_form' id='snmp_form' action='".GLPI_ROOT."/plugins/fusinvsnmp/front/printer_info.form.php'>";
       echo "<table class='tab_cadre' cellpadding='5' width='950'>";
       $mapping = new PluginFusioninventoryMapping();
@@ -429,28 +426,18 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       }
 
       echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='3'>";
+      echo "<th colspan='4'>";
       echo $LANG['plugin_fusinvsnmp']['report'][1];
       echo "</th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td class='left'>".$LANG['search'][8]."&nbsp;:</td>";
-      echo "<td class='left' colspan='2'>";
+      echo "<td class='left'>";
       showDateFormItem("graph_begin", $begin);
       echo "</td>";
-      echo "</tr>\n";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td class='left'>".$LANG['search'][9]."&nbsp;:</td>";
-      echo "<td class='left' colspan='2'>";
-      showDateFormItem("graph_end", $end);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
       echo "<td class='left'>".$LANG['plugin_fusinvsnmp']['prt_history'][31]."&nbsp;:</td>";
-      echo "<td class='left' colspan='2'>";
+      echo "<td class='left'>";
       $elementsTime=array('day'=>$LANG['plugin_fusinvsnmp']['prt_history'][34],
                           'week'=>$LANG['plugin_fusinvsnmp']['prt_history'][35],
                           'month'=>$LANG['plugin_fusinvsnmp']['prt_history'][36],
@@ -458,11 +445,15 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       Dropdown::showFromArray('graph_timeUnit', $elementsTime,
                               array('value'=>$timeUnit));
       echo "</td>";
-      echo "</tr>\n";
+      echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
+      echo "<td class='left'>".$LANG['search'][9]."&nbsp;:</td>";
+      echo "<td class='left'>";
+      showDateFormItem("graph_end", $end);
+      echo "</td>";
       echo "<td class='left'>".$LANG['plugin_fusinvsnmp']['stats'][2]."&nbsp;:</td>";
-      echo "<td class='left' colspan='2'>";
+      echo "<td class='left'>";
       $elements=array('total'=>$LANG['plugin_fusinvsnmp']['stats'][0],
                     'day'=>$LANG['plugin_fusinvsnmp']['stats'][1]);
       Dropdown::showFromArray('graph_type', $elements,
@@ -470,22 +461,22 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td class='left'>".$LANG['Menu'][2]."&nbsp;:</td>";
-      echo "<td class='left' colspan='2'>";
-      echo $printersList;
-      echo "</td>";
-      echo "</tr>\n";
-
       echo "<tr class='tab_bg_2'>";
-      echo "<td class='center' colspan='3'>
+      echo "<td class='center' colspan='4'>
                <input type='submit' class='submit' name='graph_plugin_fusioninventory_printer_period'
                       value='" . $LANG["buttons"][7] . "'/>";
       echo "</td>";
       echo "</tr>\n";
 
+      echo "<tr>";
+      echo "<th colspan='4'>".$LANG['plugin_fusinvsnmp']['prt_history'][38]."</th>";
+      echo "</tr>";
+      
       echo "<tr class='tab_bg_1'>";
+      echo "<td class='left' rowspan='3'>".$LANG['Menu'][2]."&nbsp;:</td>";
+      echo "<td class='left' rowspan='3'>";
+      echo $printersList;
+      echo "</td>";
       echo "<td class='left'>".$LANG['plugin_fusinvsnmp']['prt_history'][32]."&nbsp;:</td>";
       echo "<td class='left'>";
       $printersused = array();
@@ -495,9 +486,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       Dropdown::show('Printer', array('name'    =>'graph_printerCompAdd',
                                       'entiry'  => $_SESSION['glpiactive_entity'],
                                       'used'    => $printersused));
-      echo "</td>";
-      echo "<td class='left'>\n";
-      echo "<input type='submit' value=\"".$LANG['buttons'][8]."\" class='submit' name='graph_plugin_fusioninventory_printer_add'>";
+      echo "&nbsp;<input type='submit' value=\"".$LANG['buttons'][8]."\" class='submit' name='graph_plugin_fusioninventory_printer_add'>";
       echo "</td>";
       echo "</tr>\n";
 
@@ -508,11 +497,14 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       $printersTmp[0] = "-----";
       asort($printersTmp);
       Dropdown::showFromArray('graph_printerCompRemove', $printersTmp);
-      echo "</td>";
-      echo "<td class='left'>\n";
-      echo "<input type='submit' value=\"".$LANG['buttons'][6]."\" class='submit' name='graph_plugin_fusioninventory_printer_remove'>";
+      echo "&nbsp;<input type='submit' value=\"".$LANG['buttons'][6]."\" class='submit' name='graph_plugin_fusioninventory_printer_remove'>";
       echo "</td>";
       echo "</tr>\n";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td colspan='2'></td>";
+      echo "</tr>";
+      
       echo "</table>";
       echo "</form>";
 

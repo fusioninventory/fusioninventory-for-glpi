@@ -104,6 +104,7 @@ $LANG['plugin_fusinvsnmp']['prt_history'][34]="Tag";
 $LANG['plugin_fusinvsnmp']['prt_history'][35]="Woche";
 $LANG['plugin_fusinvsnmp']['prt_history'][36]="Monat";
 $LANG['plugin_fusinvsnmp']['prt_history'][37]="Jahr";
+$LANG['plugin_fusinvsnmp']['prt_history'][38]="Printers to compare";
 
 $LANG['plugin_fusinvsnmp']['massiveaction'][1]="SNMP-Modell zuordnen";
 $LANG['plugin_fusinvsnmp']['massiveaction'][2]="SNMP-Authentifizierung zuordnen";

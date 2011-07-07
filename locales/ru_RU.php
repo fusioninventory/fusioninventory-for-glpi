@@ -104,6 +104,7 @@ $LANG['plugin_fusinvsnmp']['prt_history'][34]="день";
 $LANG['plugin_fusinvsnmp']['prt_history'][35]="неделя";
 $LANG['plugin_fusinvsnmp']['prt_history'][36]="месяц";
 $LANG['plugin_fusinvsnmp']['prt_history'][37]="год";
+$LANG['plugin_fusinvsnmp']['prt_history'][38]="Printers to compare";
 
 $LANG['plugin_fusinvsnmp']['massiveaction'][1]="Назначить модель SNMP";
 $LANG['plugin_fusinvsnmp']['massiveaction'][2]="Назначить SNMP аунтификацию";
