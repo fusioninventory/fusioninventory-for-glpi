@@ -46,9 +46,9 @@ $width_left_fieldset_default  = $width_left-125;
 $width_layout = $width_left + $width_right;
 $height_layout = ($height_left>$height_right)?$height_left:$height_right;
 
-$label_width = 75;
+$label_width = 125;
 
-$field_width = 215;
+$field_width = 190;
 $field_height = 70;
 
 $JS = <<<JS
@@ -98,6 +98,22 @@ var taskJobColumns =  [{
    dataIndex: 'package_id',
    renderer: renderPackage,
    groupable: false
+}, {
+   id: 'retry_nb',
+   dataIndex: 'retry_nb',
+   hidden: true
+}, {
+   id: 'retry_time',
+   dataIndex: 'retry_time',
+   hidden: true
+}, {
+   id: 'periodicity_count',
+   dataIndex: 'periodicity_count',
+   hidden: true
+}, {
+   id: 'periodicity_type',
+   dataIndex: 'periodicity_type',
+   hidden: true
 }];
 
 //define renderer for grid columns
@@ -105,20 +121,29 @@ function renderGroupedGroup(val) {
    return '<img src="../pics/ext/group.png">&nbsp;'+val;
 }
 function renderGroup(val) {
-   var img = '<img src="../pics/ext/group.png">&nbsp;'
-   var record = groupStore.getAt(groupStore.findExact('group_id', val));
-   return img+record.get('group_name');
+   var img = '<img src="../pics/ext/group.png">&nbsp;';
+   var index = groupStore.findExact('group_id', val)
+   if (index != -1) {
+      var record = groupStore.getAt(index);
+      return img+record.get('group_name');
+   } else return '';
 }
 function renderPackage(val) {
-   var img = '&nbsp;&nbsp;&nbsp;<img src="../pics/ext/package.png">&nbsp;'
-   var record = packageStore.getAt(packageStore.findExact('package_id', val));
-   return img+record.get('package_name');
+   var img = '&nbsp;&nbsp;&nbsp;<img src="../pics/ext/package.png">&nbsp;';
+   var index = packageStore.findExact('package_id', val)
+   if (index != -1) {
+      var record = packageStore.getAt(index);
+      return img+record.get('package_name');
+   } else return '';
 }
 
 //create store and load data
 var taskJobGridReader = new Ext.data.JsonReader({
    root: 'tasks',
-   fields: ['id', 'group_id', 'package_id']
+   fields: [
+      'group_id', 'package_id', 'retry_nb',
+      'retry_time', 'periodicity_count', 'periodicity_type'
+   ]
 });
 
 var taskJobStore = new Ext.data.GroupingStore({
@@ -142,7 +167,6 @@ var taskJobGrid = new Ext.grid.GridPanel({
    view: new Ext.grid.GroupingView({
       forceFit:true,
       groupTextTpl: '{text} ({[values.rs.length]})',
-      /*startCollapsed : true,*/
       forceFit : true,
       hideGroupedColumn: true,
       showGroupName: false
@@ -151,7 +175,13 @@ var taskJobGrid = new Ext.grid.GridPanel({
       text: '{$LANG['plugin_fusinvdeploy']['form']['action'][0]}',
       iconCls: 'exticon-add',
       handler: function(btn,ev) {
-
+         var u = new taskJobStore.recordType({
+            group_id:      '',
+            package_id:    ''
+         });
+         taskJobStore.insert(0,u);
+         taskJobGrid.getSelectionModel().selectFirstRow();
+         taskJobForm.setTitle('{$LANG['plugin_fusinvdeploy']['task'][12]}');
       }
    }, '-', {
       text: '{$LANG['plugin_fusinvdeploy']['form']['action'][1]}',
@@ -185,7 +215,7 @@ var taskJobGrid = new Ext.grid.GridPanel({
          rowselect: function(g,index,ev) {
             var rec = taskJobGrid.store.getAt(index);
             taskJobForm.loadData(rec);
-            taskJobForm.setTitle('{$LANG['plugin_fusinvdeploy']['task'][12]}');
+            taskJobForm.setTitle('{$LANG['plugin_fusinvdeploy']['task'][11]}');
             taskJobForm.expand();
             taskJobForm.buttons[0].setDisabled(false);
          }
@@ -207,40 +237,78 @@ var taskJobForm = new Ext.FormPanel({
    title: '{$LANG['plugin_fusinvdeploy']['task'][11]}',
    items: [
       new Ext.form.ComboBox({
-         fieldLabel:'{$LANG['plugin_fusinvdeploy']['task'][6]}',
+         fieldLabel: '{$LANG['plugin_fusinvdeploy']['task'][6]}',
          name: 'group_id',
          valueField: 'group_id',
          displayField: 'group_name',
          hiddenName: 'group_id',
+         allowBlank: false,
          triggerAction: 'all',
          store: groupStore,
-         listeners: {
-            select: function() {
-               taskJobForm.store.reload();
-            }
-         }
+         width: {$field_width}
       }),
       new Ext.form.ComboBox({
-         fieldLabel:'{$LANG['plugin_fusinvdeploy']['package'][7]}',
+         fieldLabel: '{$LANG['plugin_fusinvdeploy']['package'][7]}',
          name: 'package_id',
          valueField: 'package_id',
          displayField: 'package_name',
          hiddenName: 'package_id',
+         allowBlank: false,
          triggerAction: 'all',
          store: packageStore,
-         listeners: {
-            select: function() {
-               taskJobForm.store.reload();
-            }
-         }
-      })
+         width: {$field_width}
+      }), {
+         fieldLabel:'{$LANG['plugin_fusioninventory']['task'][31]}',
+         layout: 'column',
+         items: [{
+            xtype: 'textfield',
+            name: 'periodicity_count',
+            hiddenName: 'periodicity_count',
+            allowBlank: false,
+            style: 'margin-right:5px;',
+            width: 30
+         },
+         new Ext.form.ComboBox({
+            name: 'periodicity_type',
+            valueField: 'name',
+            displayField: 'value',
+            hiddenName: 'periodicity_type',
+            allowBlank: false,
+            width: 100,
+            store: new Ext.data.ArrayStore({
+               fields: ['name', 'value'],
+               data: [
+                  ['minutes',  '{$LANG['plugin_fusioninventory']['task'][35]}'],
+                  ['hours',    '{$LANG['plugin_fusioninventory']['task'][36]}'],
+                  ['days',     '{$LANG['plugin_fusioninventory']['task'][37]}'],
+                  ['months',   '{$LANG['plugin_fusioninventory']['task'][38]}']
+               ]
+            }),
+            mode: 'local',
+            triggerAction: 'all'
+         })]
+      }, {
+         fieldLabel: "{$LANG['plugin_fusioninventory']['task'][24]}",
+         xtype: 'textfield',
+         name: 'retry_nb',
+         hiddenName: 'retry_nb',
+         allowBlank: false,
+         width:'30px'
+      }, {
+         fieldLabel: '{$LANG['plugin_fusioninventory']['task'][25]}',
+         xtype: 'textfield',
+         name: 'retry_time',
+         hiddenName: 'retry_time',
+         allowBlank: false,
+         width:'30px'
+      }
    ],
    buttons: [{
       text: '{$LANG['plugin_fusinvdeploy']['form']['action'][2]}',
       iconCls: 'exticon-save',
       disabled:true,
       handler: function(btn,ev) {
-
+         taskJobFormSave();
       }
    }],
    loadData : function(rec) {
@@ -248,6 +316,42 @@ var taskJobForm = new Ext.FormPanel({
       taskJobForm.getForm().loadRecord(rec);
    }
 });
+
+function taskJobFormSave() {
+   if (taskJobForm.record == null) {
+      Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
+      return;
+   }
+   if (!taskJobForm.getForm().isValid()) {
+      Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
+      return false;
+   }
+
+   taskJobForm.getForm().updateRecord(taskJobForm.record);
+   taskJobForm.getForm().submit({
+      url : '../ajax/task_job.save.php?task_id={$id}',
+      waitMsg: '{$LANG['plugin_fusinvdeploy']['form']['message'][2]}',
+      success: function(fileForm, o){
+         taskJobStore.reload({
+            callback: function() {
+               taskJobGrid.getSelectionModel().selectRow(index);
+            }
+         });
+      },
+      failure: function(fileForm, action){
+         switch (action.failureType) {
+            case Ext.form.Action.CLIENT_INVALID:
+               Ext.Msg.alert('Failure', 'Form fields may not be submitted with invalid values');
+               break;
+            case Ext.form.Action.CONNECT_FAILURE:
+               Ext.Msg.alert('Failure', 'Ajax communication failed');
+               break;
+            case Ext.form.Action.SERVER_INVALID:
+               Ext.Msg.alert('Failure', action.result.msg);
+         }
+      }
+   });
+}
 
 
 //render grid and form in a border layout

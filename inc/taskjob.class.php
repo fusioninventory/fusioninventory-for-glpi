@@ -47,8 +47,7 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
 
       $tasks_id = $params['tasks_id'];
 
-      $sql = " SELECT id, name, date_creation, retry_nb,
-               retry_time, definition, action
+      $sql = " SELECT *
                FROM `".$this->getTable()."`
                WHERE `plugin_fusinvdeploy_tasks_id` = '$tasks_id'
                AND method = 'deployinstall' OR method = 'deployuninstall'";
@@ -78,9 +77,10 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
                $package_obj->getFromDB($package['PluginFusinvdeployPackage']);
                $json['tasks'][$i]['package_id'] = $package['PluginFusinvdeployPackage'];
 
-               $json['tasks'][$i]['date_creation'] = $task['date_creation'];
                $json['tasks'][$i]['retry_nb'] = $task['retry_nb'];
                $json['tasks'][$i]['retry_time'] = $task['retry_time'];
+               $json['tasks'][$i]['periodicity_count'] = $task['periodicity_count'];
+               $json['tasks'][$i]['periodicity_type'] = $task['periodicity_type'];
                $i++;
             }
          }
