@@ -59,16 +59,6 @@ $label_width = 75;
 // Render div
 if(isset($_POST["glpi_tab"])) {
    switch($_POST["glpi_tab"]){
-      case -1 :
-         switch(get_class($this)) {
-            case "PluginFusinvdeployInstall":
-               $render = "allinstall";
-               break;
-            case "PluginFusinvdeployUninstall":
-               $render = "alluninstall";
-               break;
-         }
-         break;
       case 2 :
          $render = "install";
          break;
@@ -237,7 +227,8 @@ var {$render}checkGrid = new Ext.grid.GridPanel({
 //define group item
 var {$render}fieldset_item_default = [{
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][5]}',
-      name: '{$render}path'
+      name: '{$render}path',
+      allowBlank: false,
    }, {
       name: '{$render}value',
       xtype:'hidden'
@@ -249,11 +240,13 @@ var {$render}fieldset_item_default = [{
 
 var {$render}fieldset_item_FileSHA512 = [{
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][5]}',
-      name: '{$render}path'
+      name: '{$render}path',
+      allowBlank: false
    }, {
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][2]}',
       name: '{$render}value',
-      xtype: 'textarea'
+      xtype: 'textarea',
+      allowBlank: false
    }, {
       name: '{$render}unit',
       xtype:'hidden'
@@ -262,15 +255,18 @@ var {$render}fieldset_item_FileSHA512 = [{
 
 var {$render}fieldset_item_FreespaceGreater = [{
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][12]}',
-      name: '{$render}path'
+      name: '{$render}path',
+      allowBlank: false
    }, {
       fieldLabel:'{$LANG['plugin_fusinvdeploy']['form']['label'][2]}',
-      name: '{$render}value'
+      name: '{$render}value',
+      allowBlank: false
    }, {
       xtype: 'combo',
       fieldLabel:'{$LANG['plugin_fusinvdeploy']['form']['label'][3]}',
       name: '{$render}unit',
       valueField: 'value',
+      allowBlank: false,
       displayField: 'name',
       store: new Ext.data.ArrayStore({
          fields: ['name', 'value'],
@@ -287,16 +283,19 @@ var {$render}fieldset_item_FreespaceGreater = [{
 
 var {$render}fieldset_item_FileSize = [{
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][5]}',
-      name: '{$render}path'
+      name: '{$render}path',
+      allowBlank: false
    }, {
       fieldLabel:'{$LANG['plugin_fusinvdeploy']['form']['label'][2]}',
-      name: '{$render}value'
+      name: '{$render}value',
+      allowBlank: false
    }, {
       xtype: 'combo',
       fieldLabel:'{$LANG['plugin_fusinvdeploy']['form']['label'][3]}',
       name: '{$render}unit',
       valueField: 'value',
       displayField: 'name',
+      allowBlank: false,
       store: new Ext.data.ArrayStore({
          fields: ['name', 'value'],
          data: [
@@ -312,10 +311,12 @@ var {$render}fieldset_item_FileSize = [{
 
 var {$render}fieldset_item_Winkey_1 = [{
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][13]}',
-      name: '{$render}path'
+      name: '{$render}path',
+      allowBlank: false
    }, {
       fieldLabel:'{$LANG['plugin_fusinvdeploy']['form']['label'][14]}',
-      name: '{$render}value'
+      name: '{$render}value',
+      allowBlank: false
    }, {
       name: '{$render}unit',
       xtype:'hidden'
@@ -324,10 +325,12 @@ var {$render}fieldset_item_Winkey_1 = [{
 
 var {$render}fieldset_item_Winkey_2 = [{
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][13]}',
-      name: '{$render}path'
+      name: '{$render}path',
+      allowBlank: false
    }, {
       xtype:'hidden',
-      name: '{$render}value'
+      name: '{$render}value',
+      allowBlank: false
    }, {
       name: '{$render}unit',
       xtype:'hidden'
@@ -342,6 +345,7 @@ var {$render}dynFieldset =  new Ext.form.FieldSet({
    style : 'margin-top:10px',
    autoHeight: true,
    defaultType: 'textfield',
+    allowBlank: false,
    defaults: {width: {$width_left_fieldset_default}},
    width: {$width_left_fieldset},
    items: {$render}fieldset_item_default,
@@ -397,6 +401,7 @@ var {$render}checkForm = new Ext.FormPanel({
       fieldLabel:'{$LANG['plugin_fusinvdeploy']['form']['label'][0]}',
       name: 'type_name',
       valueField: 'name',
+      allowBlank: false,
       displayField: 'value',
       hiddenName: '{$render}type',
       store: new Ext.data.ArrayStore({

@@ -60,16 +60,6 @@ $maxUpload = PluginFusinvdeployFile::getMaxUploadSize();
 // Render div
 if(isset($_POST["glpi_tab"])) {
    switch($_POST["glpi_tab"]){
-      case -1 :
-         switch(get_class($this)) {
-            case "PluginFusinvdeployInstall":
-               $render = "allinstall";
-               break;
-            case "PluginFusinvdeployUninstall":
-               $render = "alluninstall";
-               break;
-         }
-         break;
       case 2 :
          $render = "install";
          break;
@@ -301,6 +291,7 @@ var {$render}fileForm = new Ext.FormPanel({
    new Ext.ux.form.FileUploadField({
       name: '{$render}file',
       id: '{$render}file',
+      allowBlank: false,
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][5]}',
       buttonText: '',
       emptyText: '{$LANG['plugin_fusinvdeploy']['form']['action'][3]}',
@@ -311,6 +302,7 @@ var {$render}fileForm = new Ext.FormPanel({
       name: '{$render}file_info_maxfilesize',
       value: '{$maxUpload}',
       xtype: 'displayfield',
+      allowBlank: false,
       style: 'font-size:8px'
    }, /*new Ext.form.Field({
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['action'][5]}',
@@ -322,6 +314,7 @@ var {$render}fileForm = new Ext.FormPanel({
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][6]}',
       name: '{$render}p2p',
       id: '{$render}p2p',
+      allowBlank: false,
       xtype: 'radiogroup',
       listeners: {change:{fn:function(){
          var {$render}radioP2p = {$render}fileForm.getForm().findField('{$render}p2p').getValue();
@@ -344,6 +337,7 @@ var {$render}fileForm = new Ext.FormPanel({
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][19]}',
       name: '{$render}uncompress',
       id: '{$render}uncompress',
+      allowBlank: false,
       xtype: 'radiogroup',
       items: [
          {boxLabel: '{$LANG['choice'][1]}', name: '{$render}uncompress', inputValue: 'true', checked: true, id : '{$render}uncompress_t'},

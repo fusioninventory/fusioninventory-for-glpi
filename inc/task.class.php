@@ -117,7 +117,7 @@ class PluginFusinvdeployTask extends CommonDBTM {
          $this->check(-1,'w');
       }
 
-      $options['colspan'] = 1;
+      $options['colspan'] = 2;
 
       $this->showTabs($options);
       $this->showFormHeader($options);
@@ -126,14 +126,73 @@ class PluginFusinvdeployTask extends CommonDBTM {
       echo "<td>".$LANG["common"][16]."&nbsp;:</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
-      echo "</td></tr>";
+      echo "</td>";
+
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][14]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      if ($ID) {
+         showDateTimeFormItem("date_scheduled",$this->fields["date_scheduled"],1,false);
+      } else {
+         showDateTimeFormItem("date_scheduled",date("Y-m-d H:i:s"),1);
+      }
+      echo "</td>";
+
+      echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['common'][25]."&nbsp;:</td>";
+      echo "<td>".$LANG['common'][60]."&nbsp;:</td>";
       echo "<td align='center'>";
-      echo "<textarea cols='40' rows='6' name='comment' >".$this->fields["comment"]."</textarea>";
+      Dropdown::showYesNo("is_active",$this->fields["is_active"]);
+      echo "</td>";
+
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][17]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showInteger("periodicity_count", $this->fields['periodicity_count'], 0, 300);
+      $a_time = array();
+      $a_time[] = "------";
+      $a_time['minutes'] = "minutes";
+      $a_time['hours'] = "heures";
+      $a_time['days'] = "jours";
+      $a_time['months'] = "mois";
+      Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$this->fields['periodicity_type']));
       echo "</td>";
       echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][33]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      $com = array();
+      $com['push'] = $LANG['plugin_fusioninventory']['task'][41];
+      $com['pull'] = $LANG['plugin_fusioninventory']['task'][42];
+      Dropdown::showFromArray("communication", $com, array('value'=>$this->fields["communication"]));
+      echo "</td>";
+
+      echo "<td rowspan='3'>".$LANG['common'][25]."&nbsp;:</td>";
+      echo "<td align='center' rowspan='3'>";
+      echo "<textarea cols='45' rows='3' name='comment' >".$this->fields["comment"]."</textarea>";
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][34]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      if ($this->fields['permanent'] != NULL) {
+         echo $LANG['choice'][1];
+      } else {
+         echo $LANG['choice'][0];
+      }
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_2'>";
+      echo "<td colspan='2'>";
+      if ($this->fields["is_active"]) {
+         echo '<input name="forcestart" value="'.$LANG['plugin_fusioninventory']['task'][40].'"
+                class="submit" type="submit">';
+      }
+      echo "&nbsp; </td>";
+      echo "</tr>";
+
 
       $this->showFormButtons($options);
       $this->addDivForTabs();

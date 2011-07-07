@@ -107,7 +107,7 @@ $LANG['plugin_fusinvdeploy']['form']['label'][19] = "Décompresser";
 
 $LANG['plugin_fusinvdeploy']['form']['action'][0] = "Ajouter";
 $LANG['plugin_fusinvdeploy']['form']['action'][1] = "Supprimer";
-$LANG['plugin_fusinvdeploy']['form']['action'][2] = "Sauvegarder";
+$LANG['plugin_fusinvdeploy']['form']['action'][2] = "Valider";
 $LANG['plugin_fusinvdeploy']['form']['action'][3] = "Selectionnez votre fichier";
 $LANG['plugin_fusinvdeploy']['form']['action'][4] = "Fichier bien enregistré!";
 $LANG['plugin_fusinvdeploy']['form']['action'][5] = "Ou URL";
@@ -115,7 +115,7 @@ $LANG['plugin_fusinvdeploy']['form']['action'][5] = "Ou URL";
 $LANG['plugin_fusinvdeploy']['form']['title'][0] = "Editer une vérification";
 $LANG['plugin_fusinvdeploy']['form']['title'][1] = "Ajouter une vérification";
 $LANG['plugin_fusinvdeploy']['form']['title'][2] = "Liste des vérifications";
-$LANG['plugin_fusinvdeploy']['form']['title'][3] = "Liste des fichiers";
+$LANG['plugin_fusinvdeploy']['form']['title'][3] = "Fichiers à copier sur la machine";
 $LANG['plugin_fusinvdeploy']['form']['title'][4] = "Ajouter un fichier";
 $LANG['plugin_fusinvdeploy']['form']['title'][5] = "Editer un fichier";
 $LANG['plugin_fusinvdeploy']['form']['title'][6] = "Ajouter une action";
@@ -170,4 +170,5 @@ $LANG['plugin_fusinvdeploy']['task'][8] = "Liste des actions";
 $LANG['plugin_fusinvdeploy']['task'][9] = "Groupe statique";
 $LANG['plugin_fusinvdeploy']['task'][10] = "Groupe dynamique";
 $LANG['plugin_fusinvdeploy']['task'][11] = "Editer une tâche";
+$LANG['plugin_fusinvdeploy']['task'][12] = "Ajouter une tâche";
 ?>

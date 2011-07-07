@@ -73,12 +73,10 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
                $group_obj = new PluginFusinvdeployGroup;
                $group_obj->getFromDB($group['PluginFusinvdeployGroup']);
                $json['tasks'][$i]['group_id'] = $group['PluginFusinvdeployGroup'];
-               $json['tasks'][$i]['group_name'] = $group_obj->getName();
 
                $package_obj = new PluginFusinvdeployPackage;
                $package_obj->getFromDB($package['PluginFusinvdeployPackage']);
                $json['tasks'][$i]['package_id'] = $package['PluginFusinvdeployPackage'];
-               $json['tasks'][$i]['package_name'] = $package_obj->getName();
 
                $json['tasks'][$i]['date_creation'] = $task['date_creation'];
                $json['tasks'][$i]['retry_nb'] = $task['retry_nb'];

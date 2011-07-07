@@ -57,16 +57,6 @@ $field_height = 70;
 // Render div
 if(isset($_POST["glpi_tab"])) {
    switch($_POST["glpi_tab"]){
-      case -1 :
-         switch(get_class($this)) {
-            case "PluginFusinvdeployInstall":
-               $render = "allinstall";
-               break;
-            case "PluginFusinvdeployUninstall":
-               $render = "alluninstall";
-               break;
-         }
-         break;
       case 2 :
          $render = "install";
          break;
@@ -314,6 +304,7 @@ var {$render}actionGridProxyRetChecks = {
                   hiddenName: 'type',
                   valueField: 'name',
                   displayField: 'value',
+                  allowBlank: false,
                   mode: 'local',
                   store: new Ext.data.ArrayStore({
                      fields: ['name', 'value'],
@@ -328,6 +319,7 @@ var {$render}actionGridProxyRetChecks = {
             }, {
                header: '{$LANG['plugin_fusinvdeploy']['form']['command_status'][2]}',
                dataIndex: 'value',
+               allowBlank: false,
                editor: new Ext.form.TextField()
             }]
          }),
@@ -385,6 +377,7 @@ var {$render}Command_fieldset_item_PluginFusinvdeployAction_Command = [{
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][11]}',
       name: '{$render}exec',
       xtype:  'textarea',
+      allowBlank: false,
       width: {$field_width},
       height : {$field_height}
    }
@@ -393,10 +386,12 @@ var {$render}Command_fieldset_item_PluginFusinvdeployAction_Command = [{
 var {$render}Command_fieldset_item_PluginFusinvdeployAction_Move = [{
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][16]}',
       name: '{$render}from',
+      allowBlank: false,
       xtype: 'textfield'
    } , {
       fieldLabel:'{$LANG['plugin_fusinvdeploy']['form']['label'][17]}',
       name: '{$render}to',
+      allowBlank: false,
       xtype: 'textfield'
    }
 ];
@@ -404,6 +399,7 @@ var {$render}Command_fieldset_item_PluginFusinvdeployAction_Move = [{
 var {$render}Command_fieldset_item_PluginFusinvdeployAction_Delete = [{
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][5]}',
       name: '{$render}path',
+      allowBlank: false,
       xtype: 'textfield'
    }
 ];
@@ -411,10 +407,12 @@ var {$render}Command_fieldset_item_PluginFusinvdeployAction_Delete = [{
 var {$render}Command_fieldset_item_PluginFusinvdeployAction_Message = [{
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['action_message'][1]}',
       name: '{$render}messagename',
+      allowBlank: false,
       xtype: 'textfield'
    } , {
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['action_message'][2]}',
       name: '{$render}messagevalue',
+      allowBlank: false,
       xtype:  'textarea',
       width: {$field_width},
       height : {$field_height}
@@ -423,6 +421,7 @@ var {$render}Command_fieldset_item_PluginFusinvdeployAction_Message = [{
       name: '{$render}messagetype',
       hiddenName : '{$render}messagetype',
       xtype : 'combo',
+      allowBlank: false,
       valueField: 'name',
       displayField: 'value',
       width: 215,
@@ -591,6 +590,7 @@ var {$render}actionForm = new Ext.FormPanel({
       name: 'type_name',
       valueField: 'name',
       displayField: 'value',
+      allowBlank: false,
       hiddenName: '{$render}itemtype',
       store: new Ext.data.ArrayStore({
          fields: ['name', 'value'],

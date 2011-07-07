@@ -53,7 +53,35 @@ $field_height = 70;
 
 $JS = <<<JS
 
-//define colums for grid
+/**** DEFINE STORES AND JSON READER FOR FORM ****/
+
+var groupReader = new Ext.data.JsonReader({
+   root: 'groups',
+   totalProperty: 'results',
+   fields: ['group_id', 'group_name']
+});
+
+var packageReader = new Ext.data.JsonReader({
+   root: 'packages',
+   totalProperty: 'results',
+   fields: ['package_id', 'package_name']
+});
+
+var groupStore = new Ext.data.Store({
+   url: '../ajax/task_job_group.data.php',
+   reader: groupReader
+});
+groupStore.load();
+
+var packageStore = new Ext.data.Store({
+   url: '../ajax/task_job_package.data.php',
+   reader: packageReader
+});
+packageStore.load();
+
+
+
+/**** DEFINE COLUMS FOR GRID ****/
 var taskJobColumns =  [{
    id: 'id',
    dataIndex: 'id',
@@ -61,46 +89,44 @@ var taskJobColumns =  [{
 }, {
    id: 'group_id',
    dataIndex: 'group_id',
-   hidden: true
-}, {
-   id: 'group_name',
    header: 'Groupe',
-   dataIndex: 'group_name',
-   groupRenderer: renderGroup,
    renderer: renderGroup,
    width:150
 }, {
    id: 'package_id',
-   dataIndex: 'package_id',
-   hidden: true
-}, {
-   id: 'package_name',
    header: 'Paquet',
-   dataIndex: 'package_name',
+   dataIndex: 'package_id',
    renderer: renderPackage,
    groupable: false
 }];
 
 //define renderer for grid columns
+function renderGroupedGroup(val) {
+   return '<img src="../pics/ext/group.png">&nbsp;'+val;
+}
 function renderGroup(val) {
-   return '<img src="../pics/ext/group.png">&nbsp;'+val
+   var img = '<img src="../pics/ext/group.png">&nbsp;'
+   var record = groupStore.getAt(groupStore.findExact('group_id', val));
+   return img+record.get('group_name');
 }
 function renderPackage(val) {
-   return '&nbsp;&nbsp;&nbsp;<img src="../pics/ext/package.png">&nbsp;'+val
+   var img = '&nbsp;&nbsp;&nbsp;<img src="../pics/ext/package.png">&nbsp;'
+   var record = packageStore.getAt(packageStore.findExact('package_id', val));
+   return img+record.get('package_name');
 }
 
 //create store and load data
 var taskJobGridReader = new Ext.data.JsonReader({
    root: 'tasks',
-   fields: ['id', 'group_id', 'group_name', 'package_id', 'package_name']
+   fields: ['id', 'group_id', 'package_id']
 });
 
 var taskJobStore = new Ext.data.GroupingStore({
    url: '../ajax/task_job.data.php?tasks_id={$id}',
    autoLoad: true,
    reader: taskJobGridReader,
-   sortInfo: {field: 'group_name', direction: "ASC"},
-   groupField : 'group_name'
+   sortInfo: {field: 'group_id', direction: "ASC"},
+   groupField : 'group_id'
 });
 
 /**** DEFINE GRID ****/
@@ -112,10 +138,11 @@ var taskJobGrid = new Ext.grid.GridPanel({
    style:'margin-bottom:5px',
    columns: taskJobColumns,
    store: taskJobStore,
+   title: 'test',
    view: new Ext.grid.GroupingView({
       forceFit:true,
       groupTextTpl: '{text} ({[values.rs.length]})',
-      startCollapsed : true,
+      /*startCollapsed : true,*/
       forceFit : true,
       hideGroupedColumn: true,
       showGroupName: false
@@ -156,38 +183,16 @@ var taskJobGrid = new Ext.grid.GridPanel({
       singleSelect: true,
       listeners: {
          rowselect: function(g,index,ev) {
-
+            var rec = taskJobGrid.store.getAt(index);
+            taskJobForm.loadData(rec);
+            taskJobForm.setTitle('{$LANG['plugin_fusinvdeploy']['task'][12]}');
+            taskJobForm.expand();
+            taskJobForm.buttons[0].setDisabled(false);
          }
       }
    })
 });
 
-
-/**** DEFINE STORES AND JSON READER FOR FORM ****/
-
-var groupReader = new Ext.data.JsonReader({
-   root: 'groups',
-   totalProperty: 'results',
-   fields: ['group_id', 'group_name']
-});
-
-var packageReader = new Ext.data.JsonReader({
-   root: 'packages',
-   totalProperty: 'results',
-   fields: ['package_id', 'package_name']
-});
-
-var groupStore = new Ext.data.Store({
-   url: '../ajax/task_job_group.data.php',
-   autoLoad: true,
-   reader: groupReader
-});
-
-var packageStore = new Ext.data.Store({
-   url: '../ajax/task_job_package.data.php',
-   autoLoad: true,
-   reader: packageReader
-});
 
 /**** DEFINE FORM ****/
 var taskJobForm = new Ext.FormPanel({
@@ -237,7 +242,11 @@ var taskJobForm = new Ext.FormPanel({
       handler: function(btn,ev) {
 
       }
-   }]
+   }],
+   loadData : function(rec) {
+      taskJobForm.record = rec;
+      taskJobForm.getForm().loadRecord(rec);
+   }
 });
 
 

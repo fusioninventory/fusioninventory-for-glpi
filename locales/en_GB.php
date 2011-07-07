@@ -107,7 +107,7 @@ $LANG['plugin_fusinvdeploy']['form']['label'][19] = "Uncompress";
 
 $LANG['plugin_fusinvdeploy']['form']['action'][0] = "Add";
 $LANG['plugin_fusinvdeploy']['form']['action'][1] = "Delete";
-$LANG['plugin_fusinvdeploy']['form']['action'][2] = "Save";
+$LANG['plugin_fusinvdeploy']['form']['action'][2] = "Valid";
 $LANG['plugin_fusinvdeploy']['form']['action'][3] = "Select your file";
 $LANG['plugin_fusinvdeploy']['form']['action'][4] = "File saved!";
 $LANG['plugin_fusinvdeploy']['form']['action'][5] = "Or URL";
@@ -170,4 +170,5 @@ $LANG['plugin_fusinvdeploy']['task'][8] = "Actions list";
 $LANG['plugin_fusinvdeploy']['task'][9] = "Static group";
 $LANG['plugin_fusinvdeploy']['task'][10] = "Dynamic group";
 $LANG['plugin_fusinvdeploy']['task'][11] = "Edit task";
+$LANG['plugin_fusinvdeploy']['task'][12] = "Add a task";
 ?>

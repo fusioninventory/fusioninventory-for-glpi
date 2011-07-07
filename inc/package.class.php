@@ -73,9 +73,10 @@ class PluginFusinvdeployPackage extends CommonDBTM {
 
       $ong = array();
       if ($this->fields['id'] > 0){
-         $ong[1]  = $LANG['plugin_fusinvdeploy']["package"][5];
+         //$ong[1]  = $LANG['plugin_fusinvdeploy']['package'][5];
          $ong[2]  = $LANG['plugin_fusinvdeploy']['package'][14];
          $ong[3]  = $LANG['plugin_fusinvdeploy']['package'][15];
+         $ong['no_all_tab'] = true;
 
       }
       return $ong;

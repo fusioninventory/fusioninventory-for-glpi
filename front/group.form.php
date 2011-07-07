@@ -52,8 +52,7 @@ if (isset($_REQUEST['type'])) {
 if (isset($_POST["add"])) {
    $group->check(-1, 'w', $_POST);
    $newID = $group->add($_POST);
-   glpi_header($_SERVER['HTTP_REFERER']);
-
+   glpi_header(GLPI_ROOT."/plugins/fusinvdeploy/front/group.form.php?id=".$newID);
 
 } else if (isset($_POST["delete"])) {
    $group->check($_REQUEST['id'], 'd');

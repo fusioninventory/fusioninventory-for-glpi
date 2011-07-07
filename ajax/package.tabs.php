@@ -58,12 +58,6 @@ $deployUninstall  = new PluginFusinvdeployUninstall();
 
 if ($package->can($_POST['id'],'r')) {
    switch($_POST['glpi_tab']) {
-      case -1 :
-         $deployInstall->showForm($_POST['id']);
-         $deployUninstall->showForm($_POST['id']);
-         Log::showForItem($package);
-         break;
-
       case 2 :
          $deployInstall->showForm($_POST['id']);
          break;
