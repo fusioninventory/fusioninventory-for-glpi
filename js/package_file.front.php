@@ -231,7 +231,7 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
                }
             });
          }
-         {$render}fileForm.hide();
+         //{$render}fileForm.hide();
          {$render}fileForm.collapse();
       }
    }, '-'],
@@ -272,7 +272,7 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
 var {$render}fileForm = new Ext.FormPanel({
    collapsible: true,
    collapsed: true,
-   hidden : true,
+   /*hidden : true,*/
    region: 'east',
    labelWidth: {$label_width},
    fileUpload        : true,
