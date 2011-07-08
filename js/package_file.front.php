@@ -38,10 +38,10 @@ global $LANG;
 
 // Size of div/form/label...
 $width_right                  = 590;
-$height_right                 = 300;
+$height_right                 = 250;
 
 $width_left                   = 340;
-$height_left                  = 300;
+$height_left                  = 250;
 $width_left_fieldset          = $width_left-19;
 $width_left_fieldset_default  = $width_left-125;
 

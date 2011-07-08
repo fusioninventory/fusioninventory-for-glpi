@@ -171,4 +171,6 @@ $LANG['plugin_fusinvdeploy']['task'][9] = "Static group";
 $LANG['plugin_fusinvdeploy']['task'][10] = "Dynamic group";
 $LANG['plugin_fusinvdeploy']['task'][11] = "Edit task";
 $LANG['plugin_fusinvdeploy']['task'][12] = "Add a task";
+$LANG['plugin_fusinvdeploy']['task'][13] = "Order list";
+$LANG['plugin_fusinvdeploy']['task'][14] = "Advanced options";
 ?>

@@ -62,65 +62,18 @@ class PluginFusinvdeployInstall extends CommonDBTM {
 
       // Display front JS
       echo "<table class='deploy_extjs'>
-            <thead>
-               <tr>
-                  <th colspan='2'>
-                     ".PluginFusinvdeployCheck::getTypeName()."
-                     <a href=\"javascript:showHideDiv('".$render."Check','".$render."checkimg',
-                        '".$CFG_GLPI["root_doc"]."/pics/deplier_down.png',
-                        '".$CFG_GLPI["root_doc"]."/pics/deplier_up.png')\">
-                     <img alt='' name='".$render."checkimg'
-                        src='".$CFG_GLPI["root_doc"]."/pics/deplier_up.png'>
-                  </th>
-               </tr>
-            </thead>
             <tbody>
                <tr>
                   <td id='".$render."Check'>
                   </td>
                </tr>
-            </tbody>
-         </table>";
-
-      // Display front JS
-      echo "<table class='deploy_extjs'>
-            <thead>
-               <tr>
-                  <th colspan='2'>
-                     ".PluginFusinvdeployFile::getTypeName()."
-                     <a href=\"javascript:showHideDiv('".$render."File','".$render."fileimg',
-                        '".$CFG_GLPI["root_doc"]."/pics/deplier_down.png',
-                        '".$CFG_GLPI["root_doc"]."/pics/deplier_up.png')\">
-                     <img alt='' name='".$render."fileimg'
-                        src='".$CFG_GLPI["root_doc"]."/pics/deplier_up.png'>
-                  </th>
-               </tr>
-            </thead>
-            <tbody>
-               <tr>
-                  <td id='".$render."File'></td></td>
-               </tr>
-            </tbody>
-         </table>";
-
-      // Display front JS
-      echo "<table class='deploy_extjs'>
-            <thead>
-               <tr>
-                  <th colspan='2'>
-                     ".PluginFusinvdeployAction::getTypeName()."
-                     <a href=\"javascript:showHideDiv('".$render."Action','".$render."actionimg',
-                        '".$CFG_GLPI["root_doc"]."/pics/deplier_down.png',
-                        '".$CFG_GLPI["root_doc"]."/pics/deplier_up.png')\">
-                     <img alt='' name='".$render."actionimg'
-                        src='".$CFG_GLPI["root_doc"]."/pics/deplier_up.png'>
-                     </a>
-                  </th>
-               </tr>
-            </thead>
-            <tbody>
+               <tr><td><br /></td></tr>
                <tr>
                   <td id='".$render."Action'></td>
+               </tr>
+               <tr><td><br /></td></tr>
+               <tr>
+                  <td id='".$render."File'></td></td>
                </tr>
             </tbody>
          </table>";
