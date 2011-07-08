@@ -377,7 +377,6 @@ var {$render}Command_fieldset_item_PluginFusinvdeployAction_Command = [{
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][11]}',
       name: '{$render}exec',
       xtype:  'textarea',
-      allowBlank: false,
       width: {$field_width},
       height : {$field_height}
    }
@@ -386,12 +385,10 @@ var {$render}Command_fieldset_item_PluginFusinvdeployAction_Command = [{
 var {$render}Command_fieldset_item_PluginFusinvdeployAction_Move = [{
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][16]}',
       name: '{$render}from',
-      allowBlank: false,
       xtype: 'textfield'
    } , {
       fieldLabel:'{$LANG['plugin_fusinvdeploy']['form']['label'][17]}',
       name: '{$render}to',
-      allowBlank: false,
       xtype: 'textfield'
    }
 ];
@@ -399,7 +396,6 @@ var {$render}Command_fieldset_item_PluginFusinvdeployAction_Move = [{
 var {$render}Command_fieldset_item_PluginFusinvdeployAction_Delete = [{
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][5]}',
       name: '{$render}path',
-      allowBlank: false,
       xtype: 'textfield'
    }
 ];
@@ -407,12 +403,10 @@ var {$render}Command_fieldset_item_PluginFusinvdeployAction_Delete = [{
 var {$render}Command_fieldset_item_PluginFusinvdeployAction_Message = [{
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['action_message'][1]}',
       name: '{$render}messagename',
-      allowBlank: false,
       xtype: 'textfield'
    } , {
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['action_message'][2]}',
       name: '{$render}messagevalue',
-      allowBlank: false,
       xtype:  'textarea',
       width: {$field_width},
       height : {$field_height}
@@ -421,7 +415,6 @@ var {$render}Command_fieldset_item_PluginFusinvdeployAction_Message = [{
       name: '{$render}messagetype',
       hiddenName : '{$render}messagetype',
       xtype : 'combo',
-      allowBlank: false,
       valueField: 'name',
       displayField: 'value',
       width: 215,
@@ -450,6 +443,8 @@ var {$render}Commands_values = new Ext.data.Store({
 var {$render}Command_dynFieldset =  new Ext.form.FieldSet({
    xtype: 'fieldset',
    width: {$width_left_fieldset},
+   style: 'margin:0;padding:0',
+   border: false,
    items: {$render}Command_fieldset_item_default
 });
 
