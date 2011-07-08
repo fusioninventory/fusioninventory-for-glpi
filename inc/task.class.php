@@ -199,7 +199,8 @@ class PluginFusinvdeployTask extends CommonDBTM {
 
       //load extjs plugins library
       echo "<script type='text/javascript'>";
-      //require_once GLPI_ROOT."/plugins/fusinvdeploy/lib/extjs/XmlTreeLoader.js";
+      require_once GLPI_ROOT."/plugins/fusinvdeploy/lib/extjs/Spinner.js";
+      require_once GLPI_ROOT."/plugins/fusinvdeploy/lib/extjs/SpinnerField.js";
       echo "</script>";
 
       return true;

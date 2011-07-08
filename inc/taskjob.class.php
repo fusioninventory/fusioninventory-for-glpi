@@ -43,7 +43,7 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
    }
 
    function getAllDatas($params) {
-      global $DB, $LANG;
+      global $DB;
 
       $tasks_id = $params['tasks_id'];
 
@@ -89,6 +89,15 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
 
 
       return json_encode($json);
+   }
+
+   function saveDatas($params)  {
+      global $DB;
+
+      $tasks_id = $params['tasks_id'];
+      $tasks = json_decode($params['tasks']);
+
+
    }
 }
 

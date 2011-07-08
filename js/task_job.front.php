@@ -46,10 +46,9 @@ $width_left_fieldset_default  = $width_left-125;
 $width_layout = $width_left + $width_right;
 $height_layout = ($height_left>$height_right)?$height_left:$height_right;
 
-$label_width = 125;
+$label_width = 150;
 
-$field_width = 190;
-$field_height = 70;
+$field_width = 160;
 
 $JS = <<<JS
 
@@ -114,6 +113,10 @@ var taskJobColumns =  [{
    id: 'periodicity_type',
    dataIndex: 'periodicity_type',
    hidden: true
+}, {
+   id: 'modified',
+   dataIndex: 'modified',
+   hidden: true
 }];
 
 //define renderer for grid columns
@@ -146,10 +149,28 @@ var taskJobGridReader = new Ext.data.JsonReader({
    ]
 });
 
+var taskJobGridWriter = new Ext.data.JsonWriter({
+    encode: true,
+    writeAllFields: true,
+    listful: true
+});
+
+var taskJobGridProxy = new Ext.data.HttpProxy({
+   method: 'POST',
+   api: {
+      read:     '../ajax/task_job.data.php?tasks_id={$id}',
+      create:   '../ajax/task_job.save.php?tasks_id={$id}',
+      update:   '../ajax/task_job.save.php?tasks_id={$id}',
+      destroy:  '../ajax/task_job.save.php?tasks_id={$id}'
+   }
+});
+
 var taskJobStore = new Ext.data.GroupingStore({
-   url: '../ajax/task_job.data.php?tasks_id={$id}',
    autoLoad: true,
    reader: taskJobGridReader,
+   writer: taskJobGridWriter,
+   proxy: taskJobGridProxy,
+   autoSave: false,
    sortInfo: {field: 'group_id', direction: "ASC"},
    groupField : 'group_id'
 });
@@ -176,8 +197,12 @@ var taskJobGrid = new Ext.grid.GridPanel({
       iconCls: 'exticon-add',
       handler: function(btn,ev) {
          var u = new taskJobStore.recordType({
-            group_id:      '',
-            package_id:    ''
+            group_id:            '',
+            package_id:          '',
+            retry_nb:            0,
+            retry_time:          0,
+            periodicity_count:   1,
+            periodicity_type:    'minutes'
          });
          taskJobStore.insert(0,u);
          taskJobGrid.getSelectionModel().selectFirstRow();
@@ -194,12 +219,7 @@ var taskJobGrid = new Ext.grid.GridPanel({
             taskJobStore.remove(r);
          }
 
-         /*Ext.Ajax.request({
-            url: '../ajax/package_action.delete.php',
-            params: {
-
-            }
-         });*/
+         taskJobStore.save();
 
          if(taskJobStore.data.length == 0) {
             taskJobForm.collapse();
@@ -228,12 +248,12 @@ var taskJobGrid = new Ext.grid.GridPanel({
 var taskJobForm = new Ext.FormPanel({
    region: 'east',
    collapsible: true,
-   /*collapsed: true,*/
+   collapsed: true,
    labelWidth: {$label_width},
    bodyStyle:'padding:5px 10px',
    style:'margin-left:5px;margin-bottom:5px',
    width: {$width_left},
-   height: {$height_left},
+   /*height: {$height_left},*/
    title: '{$LANG['plugin_fusinvdeploy']['task'][11]}',
    items: [
       new Ext.form.ComboBox({
@@ -260,48 +280,46 @@ var taskJobForm = new Ext.FormPanel({
       }), {
          fieldLabel:'{$LANG['plugin_fusioninventory']['task'][31]}',
          layout: 'column',
-         items: [{
-            xtype: 'textfield',
-            name: 'periodicity_count',
-            hiddenName: 'periodicity_count',
-            allowBlank: false,
-            style: 'margin-right:5px;',
-            width: 30
-         },
-         new Ext.form.ComboBox({
-            name: 'periodicity_type',
-            valueField: 'name',
-            displayField: 'value',
-            hiddenName: 'periodicity_type',
-            allowBlank: false,
-            width: 100,
-            store: new Ext.data.ArrayStore({
-               fields: ['name', 'value'],
-               data: [
-                  ['minutes',  '{$LANG['plugin_fusioninventory']['task'][35]}'],
-                  ['hours',    '{$LANG['plugin_fusioninventory']['task'][36]}'],
-                  ['days',     '{$LANG['plugin_fusioninventory']['task'][37]}'],
-                  ['months',   '{$LANG['plugin_fusioninventory']['task'][38]}']
-               ]
+         items: [
+            new Ext.ux.form.SpinnerField({
+               name: 'periodicity_count',
+               hiddenName: 'periodicity_count',
+               allowBlank: false,
+               width: 60
             }),
-            mode: 'local',
-            triggerAction: 'all'
-         })]
-      }, {
+            new Ext.form.ComboBox({
+               name: 'periodicity_type',
+               valueField: 'name',
+               displayField: 'value',
+               hiddenName: 'periodicity_type',
+               allowBlank: false,
+               width: 100,
+               store: new Ext.data.ArrayStore({
+                  fields: ['name', 'value'],
+                  data: [
+                     ['minutes',  '{$LANG['plugin_fusioninventory']['task'][35]}'],
+                     ['hours',    '{$LANG['plugin_fusioninventory']['task'][36]}'],
+                     ['days',     '{$LANG['plugin_fusioninventory']['task'][37]}'],
+                     ['months',   '{$LANG['plugin_fusioninventory']['task'][38]}']
+                  ]
+               }),
+               mode: 'local',
+               triggerAction: 'all'
+            })
+         ]
+      }, new Ext.ux.form.SpinnerField({
          fieldLabel: "{$LANG['plugin_fusioninventory']['task'][24]}",
-         xtype: 'textfield',
          name: 'retry_nb',
          hiddenName: 'retry_nb',
          allowBlank: false,
-         width:'30px'
-      }, {
+         width:60
+      }), new Ext.ux.form.SpinnerField({
          fieldLabel: '{$LANG['plugin_fusioninventory']['task'][25]}',
-         xtype: 'textfield',
          name: 'retry_time',
          hiddenName: 'retry_time',
          allowBlank: false,
-         width:'30px'
-      }
+         width:60
+      })
    ],
    buttons: [{
       text: '{$LANG['plugin_fusinvdeploy']['form']['action'][2]}',
@@ -328,30 +346,15 @@ function taskJobFormSave() {
    }
 
    taskJobForm.getForm().updateRecord(taskJobForm.record);
-   taskJobForm.getForm().submit({
-      url : '../ajax/task_job.save.php?task_id={$id}',
-      waitMsg: '{$LANG['plugin_fusinvdeploy']['form']['message'][2]}',
-      success: function(fileForm, o){
-         taskJobStore.reload({
-            callback: function() {
-               taskJobGrid.getSelectionModel().selectRow(index);
-            }
-         });
-      },
-      failure: function(fileForm, action){
-         switch (action.failureType) {
-            case Ext.form.Action.CLIENT_INVALID:
-               Ext.Msg.alert('Failure', 'Form fields may not be submitted with invalid values');
-               break;
-            case Ext.form.Action.CONNECT_FAILURE:
-               Ext.Msg.alert('Failure', 'Ajax communication failed');
-               break;
-            case Ext.form.Action.SERVER_INVALID:
-               Ext.Msg.alert('Failure', action.result.msg);
-         }
-      }
+
+   //mark all row a edited
+   taskJobGrid.getStore().getRange().forEach(function(r){
+      r.set('modified', 'true');
    });
+
+   taskJobStore.save();
 }
+
 
 
 //render grid and form in a border layout
