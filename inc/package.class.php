@@ -151,7 +151,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
          $this->getEmpty();
       }
 
-      $options['colspan'] = 1;
+      $options['colspan'] = 2;
       $this->showTabs($options);
       $this->showFormHeader($options);
 
@@ -159,12 +159,11 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       echo "<td>".$LANG["common"][16]."&nbsp;:</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
-      echo "</td></tr>";
+      echo "</td>";
 
-      echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['common'][25]."&nbsp;:</td>";
       echo "<td align='center'>";
-      echo "<textarea cols='40' rows='6' name='comment' >".$this->fields["comment"]."</textarea>";
+      echo "<textarea cols='40' rows='2' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "</td>";
       echo "</tr>";
 
