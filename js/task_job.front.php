@@ -181,13 +181,17 @@ var taskJobGridProxy = new Ext.data.HttpProxy({
 });
 
 var taskJobStore = new Ext.data.GroupingStore({
-   autoLoad: true,
    reader: taskJobGridReader,
    writer: taskJobGridWriter,
    proxy: taskJobGridProxy,
    autoSave: false,
    sortInfo: {field: 'group_id', direction: "ASC"},
-   groupField : 'group_id'
+   groupField : 'group_id',
+   listeners: {
+      save: function(store, batch, data) {
+         store.reload();
+      }
+   }
 });
 
 /**** DEFINE GRID ****/
@@ -255,7 +259,13 @@ var taskJobGrid = new Ext.grid.GridPanel({
             taskJobForm.buttons[0].setDisabled(false);
          }
       }
-   })
+   }),
+   listeners: {
+      viewready: function(component) {
+         taskJobStore.load.defer(200, taskJobStore);
+         //taskJobStore.load();
+      }
+   }
 });
 
 
@@ -268,19 +278,18 @@ var taskJobForm = new Ext.FormPanel({
    bodyStyle:'padding:5px 10px',
    style:'margin-left:5px;margin-bottom:5px',
    width: {$width_left},
-   /*height: {$height_left},*/
    title: '{$LANG['plugin_fusinvdeploy']['task'][11]}',
    items: [
       new Ext.form.ComboBox({
          fieldLabel: '{$LANG['plugin_fusioninventory']['task'][26]}',
          name: 'method',
-         valueField: 'method',
-         displayField: 'value',
          hiddenName: 'method',
+         valueField: 'value',
+         displayField: 'name',
          allowBlank: false,
          width: {$field_width},
          store: new Ext.data.ArrayStore({
-            fields: ['name', 'value'],
+            fields: ['value', 'name'],
             data: [
                ['{$task_methods[0]['method']}', "{$task_methods[0]['name']}"],
                ['{$task_methods[1]['method']}', "{$task_methods[1]['name']}"]

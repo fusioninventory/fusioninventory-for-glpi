@@ -96,7 +96,42 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
       $tasks_id = $params['tasks_id'];
       $tasks = json_decode($params['tasks']);
 
+      //remove old jobs from task
+      $query = "DELETE FROM ".$this->getTable()."
+      WHERE plugin_fusinvdeploy_tasks_id = '".$tasks_id."'";
+      $res = $DB->query($query);
 
+      //get plugin id
+      $plug = new Plugin;
+      $plug->getFromDBbyDir('fusinvdeploy');
+      $plugins_id = $plug->getField('id');
+
+      //insert new rows
+      $sql_tasks = array();
+      $i = 0;
+
+      foreach($tasks as $task) {
+         $task = get_object_vars($task);
+
+         //encode action and definition
+         $action = exportArrayToDB(array('PluginFusinvDeployGroup' => $task['group_id']));
+         $definition = exportArrayToDB(array('PluginFusinvDeployPackage' => $task['package_id']));
+
+         $sql_tasks[] = "INSERT INTO ".$this->getTable()."
+         (
+            plugin_fusinvdeploy_tasks_id, name, date_creation,
+            plugins_id, method, definition, action,
+            periodicity_count, periodicity_type
+         ) VALUES (
+            '$tasks_id', 'job_".$tasks_id."_$i', CURDATE(),
+            '$plugins_id', '".$task['method']."', '$definition', '$action',
+            '".$task['periodicity_count']."', '".$task['periodicity_type']."'
+         )";
+         $i++;
+      }
+      foreach($sql_tasks as $query) {
+         $res = $DB->query($query);
+      }
    }
 }
 
