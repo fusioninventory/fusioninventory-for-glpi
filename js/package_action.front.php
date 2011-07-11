@@ -59,9 +59,11 @@ if(isset($_POST["glpi_tab"])) {
    switch($_POST["glpi_tab"]){
       case 2 :
          $render = "install";
+         $title2 = $LANG['plugin_fusinvdeploy']['form']['title'][15];
          break;
       case 3 :
          $render = "uninstall";
+         $title2 = $LANG['plugin_fusinvdeploy']['form']['title'][16];
          break;
    }
 }
@@ -171,7 +173,7 @@ var {$render}actionGrid = new Ext.grid.GridPanel({
    height: {$height_right},
    width: {$width_right},
    style:'margin-bottom:5px',
-   title: '{$LANG['plugin_fusinvdeploy']['form']['title'][8]}',
+   title: '{$LANG['plugin_fusinvdeploy']['form']['title'][8]} ({$title2})',
    stateId: '{$render}actionGrid',
    view: new Ext.grid.GroupingView({
       forceFit:true,

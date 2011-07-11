@@ -127,6 +127,10 @@ $LANG['plugin_fusinvdeploy']['form']['title'][11] = "Delete order";
 $LANG['plugin_fusinvdeploy']['form']['title'][12] = "Edit order";
 $LANG['plugin_fusinvdeploy']['form']['title'][13] = "Delete file";
 $LANG['plugin_fusinvdeploy']['form']['title'][14] = "Delete command";
+$LANG['plugin_fusinvdeploy']['form']['title'][15] = "during installation";
+$LANG['plugin_fusinvdeploy']['form']['title'][16] = "during uninstallation";
+$LANG['plugin_fusinvdeploy']['form']['title'][17] = "before installation";
+$LANG['plugin_fusinvdeploy']['form']['title'][18] = "before uninstallation";
 
 
 $LANG['plugin_fusinvdeploy']['form']['message'][0] = "Empty form";
