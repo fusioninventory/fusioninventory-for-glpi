@@ -108,8 +108,8 @@ if (isset($_POST["add"])) {
    if ($_REQUEST['type'] == 'dynamic') {
       $fields_array = array(
          'itemtype'  => $_REQUEST['itemtype'],
-         'start'  => $_REQUEST['start'],
-         'limit'  => $_REQUEST['limit'],
+         /*'start'  => $_REQUEST['start'],
+         'limit'  => $_REQUEST['limit'],*/
          'serial'  => $_REQUEST['serial'],
          'otherserial'  => $_REQUEST['otherserial'],
          'locations'  => $_REQUEST['locations'],

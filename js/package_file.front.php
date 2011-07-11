@@ -72,6 +72,8 @@ if(isset($_POST["glpi_tab"])) {
 
 $JS = <<<JS
 
+Ext.QuickTips.init();
+
 var {$render}msg = function(title, msg){
    Ext.Msg.show({
       title          : title,
@@ -342,7 +344,11 @@ var {$render}fileForm = new Ext.FormPanel({
       items: [
          {boxLabel: '{$LANG['choice'][1]}', name: '{$render}uncompress', inputValue: 'true', checked: true, id : '{$render}uncompress_t'},
          {boxLabel: '{$LANG['choice'][0]}', name: '{$render}uncompress', inputValue: 'false',id : '{$render}uncompress_f'}
-      ]
+      ],
+      tooltip:{
+         tip:'Enter the customer\'s name',
+         width: 150
+      }
    }
    ],
    buttons: [{

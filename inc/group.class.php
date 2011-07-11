@@ -402,6 +402,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
 
       echo "</tr><tr>";
 
+/*
       echo "<td class='left'>".$LANG['buttons'][33]." : ";
       echo "<input type='text' name='start' id='group_search_start' value='".$fields['start']
          ."' value='0' size='3' /></td>";
@@ -411,6 +412,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
          ."' size='3' />&nbsp;";
       echo $LANG['pager'][5];
       echo "</td>";
+*/
 
       echo "<td class='left'>".'room '." : </td>";
       echo "<td class='left'><input type='text' name='room' id='group_search_room' value='"
@@ -442,8 +444,8 @@ class PluginFusinvdeployGroup extends CommonDBTM {
          $CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/ajax/group_results.php",
          array(
             'itemtype'     => 'group_search_itemtype',
-            'start'        => 'group_search_start',
-            'limit'        => 'group_search_limit',
+            /*'start'        => 'group_search_start',
+            'limit'        => 'group_search_limit',*/
             'location_id'  => 'dropdown_locations'.$rand_location,
             'serial'       => 'group_search_serial',
             'otherserial'  => 'group_search_otherserial'
@@ -482,8 +484,8 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       $params = array(
          'type'         => $type,
          'itemtype'     => $params['itemtype'],
-         'start'        => $params['start'],
-         'limit'        => $params['limit'],
+         /*'start'        => $params['start'],
+         'limit'        => $params['limit'],*/
          'location_id'  => $params['location_id'],
          'serial'       => $params['serial'],
          'otherserial'  => $params['otherserial']
