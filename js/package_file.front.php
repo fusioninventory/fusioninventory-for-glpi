@@ -187,7 +187,7 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
       forceFit : true,
    }),
    tbar: [{
-      text: '{$LANG['plugin_fusinvdeploy']['form']['action'][0]}',
+      text: '{$LANG['plugin_fusinvdeploy']['form']['title'][4]}',
       iconCls: 'exticon-add',
       handler: function(btn, ev) {
          var {$render}u = new {$render}fileGridStore.recordType({
@@ -212,7 +212,7 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
          Ext.getCmp('{$render}uncompress_f').setValue(true);
       }
    }, '-', {
-      text: '{$LANG['plugin_fusinvdeploy']['form']['action'][1]}',
+      text: '{$LANG['plugin_fusinvdeploy']['form']['title'][13]}',
       iconCls: 'exticon-delete',
       handler: function(btn, ev) {
          var selection = {$render}fileGrid.getSelectionModel().getSelected();

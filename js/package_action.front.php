@@ -180,7 +180,7 @@ var {$render}actionGrid = new Ext.grid.GridPanel({
       forceFit : true,
    }),
    tbar: [{
-      text: '{$LANG['plugin_fusinvdeploy']['form']['action'][0]}',
+      text: '{$LANG['plugin_fusinvdeploy']['form']['title'][6]}',
       iconCls: 'exticon-add',
       handler: function(btn,ev) {
 
@@ -201,7 +201,7 @@ var {$render}actionGrid = new Ext.grid.GridPanel({
          {$render}actionForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][6]}');
       }
    }, '-', {
-      text: '{$LANG['plugin_fusinvdeploy']['form']['action'][1]}',
+      text: '{$LANG['plugin_fusinvdeploy']['form']['title'][14]}',
       iconCls: 'exticon-delete',
       handler: function(btn,ev) {
          var selection = {$render}actionGrid.getSelectionModel().getSelections();

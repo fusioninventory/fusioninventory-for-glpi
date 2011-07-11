@@ -121,6 +121,12 @@ $LANG['plugin_fusinvdeploy']['form']['title'][5] = "Editer un fichier";
 $LANG['plugin_fusinvdeploy']['form']['title'][6] = "Ajouter une action";
 $LANG['plugin_fusinvdeploy']['form']['title'][7] = "Editer une action";
 $LANG['plugin_fusinvdeploy']['form']['title'][8] = "Liste des actions";
+$LANG['plugin_fusinvdeploy']['form']['title'][9] = "Supprimer vérification";
+$LANG['plugin_fusinvdeploy']['form']['title'][10] = "Ajouter un ordre";
+$LANG['plugin_fusinvdeploy']['form']['title'][11] = "Supprimer un ordre";
+$LANG['plugin_fusinvdeploy']['form']['title'][12] = "Editer un ordre";
+$LANG['plugin_fusinvdeploy']['form']['title'][13] = "Supprimer fichier";
+$LANG['plugin_fusinvdeploy']['form']['title'][14] = "Supprimer action";
 
 $LANG['plugin_fusinvdeploy']['form']['message'][0] = "Formulaire vide";
 $LANG['plugin_fusinvdeploy']['form']['message'][1] = "Formulaire invalide";

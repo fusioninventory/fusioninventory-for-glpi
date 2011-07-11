@@ -171,7 +171,7 @@ var {$render}checkGrid = new Ext.grid.GridPanel({
       forceFit : true,
    }),
    tbar: [{
-      text: '{$LANG['plugin_fusinvdeploy']['form']['action'][0]}',
+      text: '{$LANG['plugin_fusinvdeploy']['form']['title'][1]}',
       iconCls: 'exticon-add',
       handler: function(btn,ev) {
          var u = new {$render}checkGridStore.recordType({
@@ -185,7 +185,7 @@ var {$render}checkGrid = new Ext.grid.GridPanel({
          {$render}checkForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][1]}');
       }
    }, '-', {
-      text: '{$LANG['plugin_fusinvdeploy']['form']['action'][1]}',
+      text: '{$LANG['plugin_fusinvdeploy']['form']['title'][9]}',
       iconCls: 'exticon-delete',
       handler: function(btn,ev) {
          var selection = {$render}checkGrid.getSelectionModel().getSelections();

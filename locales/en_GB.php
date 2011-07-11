@@ -121,6 +121,13 @@ $LANG['plugin_fusinvdeploy']['form']['title'][5] = "Edit file";
 $LANG['plugin_fusinvdeploy']['form']['title'][6] = "Add command";
 $LANG['plugin_fusinvdeploy']['form']['title'][7] = "Edit command";
 $LANG['plugin_fusinvdeploy']['form']['title'][8] = "Command list";
+$LANG['plugin_fusinvdeploy']['form']['title'][9] = "Delete a check";
+$LANG['plugin_fusinvdeploy']['form']['title'][10] = "Add order";
+$LANG['plugin_fusinvdeploy']['form']['title'][11] = "Delete order";
+$LANG['plugin_fusinvdeploy']['form']['title'][12] = "Edit order";
+$LANG['plugin_fusinvdeploy']['form']['title'][13] = "Delete file";
+$LANG['plugin_fusinvdeploy']['form']['title'][14] = "Delete command";
+
 
 $LANG['plugin_fusinvdeploy']['form']['message'][0] = "Empty form";
 $LANG['plugin_fusinvdeploy']['form']['message'][1] = "Invalid form";
@@ -173,4 +180,7 @@ $LANG['plugin_fusinvdeploy']['task'][11] = "Edit task";
 $LANG['plugin_fusinvdeploy']['task'][12] = "Add a task";
 $LANG['plugin_fusinvdeploy']['task'][13] = "Order list";
 $LANG['plugin_fusinvdeploy']['task'][14] = "Advanced options";
+$LANG['plugin_fusinvdeploy']['task'][15] = "Add order";
+$LANG['plugin_fusinvdeploy']['task'][16] = "Delete order";
+$LANG['plugin_fusinvdeploy']['task'][17] = "Edit order";
 ?>
