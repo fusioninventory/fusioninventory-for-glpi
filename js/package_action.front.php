@@ -36,10 +36,10 @@ global $LANG;
 
 // Size of div/form/label...
 $width_right                  = 590;
-$height_right                 = 250;
+$height_right                 = 260;
 
 $width_left                   = 340;
-$height_left                  = 250;
+$height_left                  = 260;
 $width_left_fieldset          = $width_left-19;
 $width_left_fieldset_default  = $width_left-125;
 
@@ -51,7 +51,7 @@ $column_width = array(30,150,400,1,1,1,1,1,1,1,1,1,1);
 $label_width = 75;
 
 $field_width = 215;
-$field_height = 70;
+$field_height = 40;
 // END - Size of div/form/label...
 
 // Render div
@@ -281,10 +281,10 @@ var {$render}actionGridProxyRetChecks = {
 });
 
 {$render}actionGridRetChecksConfig = Ext.extend( Ext.grid.EditorGridPanel, {
-   width: {$width_left_fieldset},
-   height: 180,
-   title: '{$LANG['plugin_fusinvdeploy']['package'][22]}',
-   style : 'margin:10px 0 0',
+   width: 295,
+   height: 120,
+   /*title: '{$LANG['plugin_fusinvdeploy']['package'][22]}',*/
+   /*style : 'margin:10px 0 0',*/
    initComponent: function( config ) {
       Ext.apply( this, {
          store: new {$render}ActionStoreConfigRetChecks({}),
@@ -329,7 +329,7 @@ var {$render}actionGridProxyRetChecks = {
          }),
          tbar: new Ext.Toolbar({
             items: [{
-               text: '{$LANG['plugin_fusinvdeploy']['form']['action'][0]}',
+               text: '{$LANG['plugin_fusinvdeploy']['form']['action'][6]}',
                iconCls: 'exticon-add',
                handler: function(btn,ev) {
                   var u = new {$render}ActionGridRetChecks.store.recordType({
@@ -342,7 +342,7 @@ var {$render}actionGridProxyRetChecks = {
                   {$render}ActionGridRetChecks.getSelectionModel().selectFirstRow();
                }
             }, '-', {
-               text: '{$LANG['plugin_fusinvdeploy']['form']['action'][1]}',
+               text: '{$LANG['plugin_fusinvdeploy']['form']['action'][7]}',
                iconCls: 'exticon-delete',
                handler: function(btn,ev) {
                   var selection = {$render}ActionGridRetChecks.getSelectionModel().getSelections();
@@ -584,6 +584,7 @@ var {$render}actionForm = new Ext.FormPanel({
       fieldLabel:'{$LANG['plugin_fusinvdeploy']['form']['label'][0]}',
       name: 'type_name',
       valueField: 'name',
+      width: {$field_width},
       displayField: 'value',
       allowBlank: false,
       hiddenName: '{$render}itemtype',

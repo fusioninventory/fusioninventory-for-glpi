@@ -125,7 +125,9 @@ function {$render}renderType(val) {
 }
 
 function {$render}renderValue(val, meta, record) {
-   return val+' '+record.data.installunit;
+   var unit = '';
+   if (record.data.installunit) unit = record.data.installunit;
+   return val+' '+unit;
 }
 
 

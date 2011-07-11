@@ -111,6 +111,8 @@ $LANG['plugin_fusinvdeploy']['form']['action'][2] = "Valider";
 $LANG['plugin_fusinvdeploy']['form']['action'][3] = "Selectionnez votre fichier";
 $LANG['plugin_fusinvdeploy']['form']['action'][4] = "Fichier bien enregistré!";
 $LANG['plugin_fusinvdeploy']['form']['action'][5] = "Ou URL";
+$LANG['plugin_fusinvdeploy']['form']['action'][6] = "Ajouter un code retour";
+$LANG['plugin_fusinvdeploy']['form']['action'][7] = "Supprimer un code retour";
 
 $LANG['plugin_fusinvdeploy']['form']['title'][0] = "Editer une vérification";
 $LANG['plugin_fusinvdeploy']['form']['title'][1] = "Ajouter une vérification";
