@@ -53,7 +53,7 @@ $height_layout = ($height_left>$height_right)?$height_left:$height_right;
 
 $column_width = array(30,180,210,95,50);
 
-$label_width = 75;
+$label_width = 95;
 // END - Size of div/form/label...
 
 // Render div
@@ -346,7 +346,8 @@ var {$render}fieldset_item_Winkey_2 = [{
 var {$render}dynFieldset =  new Ext.form.FieldSet({
    layout: 'form',
    xtype: 'fieldset',
-   style : 'margin-top:10px',
+   style: 'margin:0;padding:0',
+   border: false,
    autoHeight: true,
    defaultType: 'textfield',
     allowBlank: false,

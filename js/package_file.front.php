@@ -50,7 +50,7 @@ $height_layout = ($height_left>$height_right)?$height_left:$height_right;
 
 $column_width = array(100,160,40,100,80,95,80);
 
-$label_width = 100;
+$label_width = 140;
 // END - Size of div/form/label...
 
 //get max upload file size
@@ -286,70 +286,73 @@ var {$render}fileForm = new Ext.FormPanel({
    style:'margin-left:5px;margin-bottom:5px',
    width: {$width_left},
    height: {$height_left},
-   defaults: {width: {$width_left_fieldset_default}},
    defaultType: 'textfield',
    items: [
-   {name: '{$render}id',xtype: 'hidden'},
-   new Ext.ux.form.FileUploadField({
-      name: '{$render}file',
-      id: '{$render}file',
-      allowBlank: false,
-      fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][5]}',
-      buttonText: '',
-      emptyText: '{$LANG['plugin_fusinvdeploy']['form']['action'][3]}',
-      buttonCfg: {
-         iconCls: 'exticon-file'
-      }
-   }), {
-      name: '{$render}file_info_maxfilesize',
-      value: '{$maxUpload}',
-      xtype: 'displayfield',
-      allowBlank: false,
-      style: 'font-size:8px'
-   }, /*new Ext.form.Field({
-      fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['action'][5]}',
-      name: '{$render}url',
-      id: '{$render}url',
-      width: 50,
-   }),*/
-      {
-      fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][6]}',
-      name: '{$render}p2p',
-      id: '{$render}p2p',
-      allowBlank: false,
-      xtype: 'radiogroup',
-      listeners: {change:{fn:function(){
-         var {$render}radioP2p = {$render}fileForm.getForm().findField('{$render}p2p').getValue();
-         if({$render}radioP2p.getGroupValue() == 'false')
-            {$render}fileForm.getForm().findField('{$render}validity').setDisabled(true);
-         else
-            {$render}fileForm.getForm().findField('{$render}validity').setDisabled(false);
+      {name: '{$render}id',xtype: 'hidden'},
+      new Ext.ux.form.FileUploadField({
+         name: '{$render}file',
+         id: '{$render}file',
+         allowBlank: false,
+         width:180,
+         fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][5]}',
+         buttonText: '',
+         emptyText: '{$LANG['plugin_fusinvdeploy']['form']['action'][3]}',
+         buttonCfg: {
+            iconCls: 'exticon-file'
          }
-      }},
-      items: [
-         {boxLabel: '{$LANG['choice'][1]}', name: '{$render}p2p', inputValue: 'true', checked: true, id : '{$render}p2p_t'},
-         {boxLabel: '{$LANG['choice'][0]}', name: '{$render}p2p', inputValue: 'false',id : '{$render}p2p_f'}
-      ]
-   }, new Ext.ux.form.SpinnerField({
-      fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][9]}',
-      name: '{$render}validity',
-      id: '{$render}validity',
-      width: 50,
-   }), {
-      fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][19]}',
-      name: '{$render}uncompress',
-      id: '{$render}uncompress',
-      allowBlank: false,
-      xtype: 'radiogroup',
-      items: [
-         {boxLabel: '{$LANG['choice'][1]}', name: '{$render}uncompress', inputValue: 'true', checked: true, id : '{$render}uncompress_t'},
-         {boxLabel: '{$LANG['choice'][0]}', name: '{$render}uncompress', inputValue: 'false',id : '{$render}uncompress_f'}
-      ],
-      tooltip:{
-         tip:'Enter the customer\'s name',
-         width: 150
+      }), {
+         name: '{$render}file_info_maxfilesize',
+         value: '{$maxUpload}',
+         xtype: 'displayfield',
+         allowBlank: false,
+         style: 'font-size:8px'
+      }, /*new Ext.form.Field({
+         fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['action'][5]}',
+         name: '{$render}url',
+         id: '{$render}url',
+         width: 50,
+      }),*/
+         {
+         fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][6]}',
+         name: '{$render}p2p',
+         id: '{$render}p2p',
+         allowBlank: false,
+         xtype: 'radiogroup',
+         width: 100,
+         listeners: {change:{fn:function(){
+            var {$render}radioP2p = {$render}fileForm.getForm().findField('{$render}p2p').getValue();
+            if({$render}radioP2p.getGroupValue() == 'false')
+               {$render}fileForm.getForm().findField('{$render}validity').hide();
+            else
+               {$render}fileForm.getForm().findField('{$render}validity').show();
+            }
+         }},
+         items: [
+            {boxLabel: '{$LANG['choice'][1]}', name: '{$render}p2p', inputValue: 'true', checked: true, id : '{$render}p2p_t'},
+            {boxLabel: '{$LANG['choice'][0]}', name: '{$render}p2p', inputValue: 'false',id : '{$render}p2p_f'}
+         ]
+      }, new Ext.ux.form.SpinnerField({
+         fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][9]}',
+         name: '{$render}validity',
+         id: '{$render}validity',
+         width: 50,
+         hidden: true
+      }), {
+         fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][19]}',
+         name: '{$render}uncompress',
+         id: '{$render}uncompress',
+         allowBlank: false,
+         xtype: 'radiogroup',
+         width: 100,
+         items: [
+            {boxLabel: '{$LANG['choice'][1]}', name: '{$render}uncompress', inputValue: 'true', checked: true, id : '{$render}uncompress_t'},
+            {boxLabel: '{$LANG['choice'][0]}', name: '{$render}uncompress', inputValue: 'false',id : '{$render}uncompress_f'}
+         ],
+         tooltip:{
+            tip:'Enter the customer\'s name',
+            width: 150
+         }
       }
-   }
    ],
    buttons: [{
       text: '{$LANG['plugin_fusinvdeploy']['form']['action'][2]}',
