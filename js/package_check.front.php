@@ -123,6 +123,8 @@ function {$render}renderType(val) {
          return '{$LANG['plugin_fusinvdeploy']['form']['check'][6]}';
       case '{$chkConst['FREE_SPACE']}':
          return '{$LANG['plugin_fusinvdeploy']['form']['check'][7]}';
+      default:
+         return '';
    }
 }
 
@@ -170,9 +172,12 @@ var {$render}checkGrid = new Ext.grid.GridPanel({
    stateId: '{$render}checkGrid',
    view: new Ext.grid.GroupingView({
       forceFit:true,
-      groupTextTpl: '{text} ({[values.rs.length]})',
+      groupTextTpl: '{text}',
       startCollapsed : true,
+      hideGroupedColumn: true,
       forceFit : true,
+      emptyText: '',
+      emptyGroupText: ''
    }),
    tbar: [{
       text: '{$LANG['plugin_fusinvdeploy']['form']['title'][1]}',

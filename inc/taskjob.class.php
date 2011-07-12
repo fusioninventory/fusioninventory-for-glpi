@@ -79,8 +79,6 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
                $json['tasks'][$i]['comment'] = $task['comment'];
                $json['tasks'][$i]['retry_nb'] = $task['retry_nb'];
                $json['tasks'][$i]['retry_time'] = $task['retry_time'];
-               $json['tasks'][$i]['periodicity_count'] = $task['periodicity_count'];
-               $json['tasks'][$i]['periodicity_type'] = $task['periodicity_type'];
                $i++;
             }
          }
@@ -96,6 +94,7 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
 
       $tasks_id = $params['tasks_id'];
       $tasks = json_decode($params['tasks']);
+      logDebug($tasks);
 
       //remove old jobs from task
       $query = "DELETE FROM ".$this->getTable()."
@@ -122,11 +121,11 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
          (
             plugin_fusinvdeploy_tasks_id, name, date_creation,
             plugins_id, method, definition, action,
-            periodicity_count, periodicity_type
+            retry_nb, retry_time
          ) VALUES (
             '$tasks_id', 'job_".$tasks_id."_$i', CURDATE(),
             '$plugins_id', '".$task['method']."', '$definition', '$action',
-            '".$task['periodicity_count']."', '".$task['periodicity_type']."'
+            '".$task['retry_nb']."', '".$task['retry_time']."'
          )";
          $i++;
       }

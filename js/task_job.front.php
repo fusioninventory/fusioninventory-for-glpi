@@ -118,14 +118,6 @@ var taskJobColumns =  [{
    dataIndex: 'retry_time',
    hidden: true
 }, {
-   id: 'periodicity_count',
-   dataIndex: 'periodicity_count',
-   hidden: true
-}, {
-   id: 'periodicity_type',
-   dataIndex: 'periodicity_type',
-   hidden: true
-}, {
    id: 'comment',
    dataIndex: 'comment',
    hidden: true
@@ -148,7 +140,7 @@ function renderGroup(val) {
    } else return '';
 }
 function renderPackage(val) {
-   var img = '&nbsp;&nbsp;&nbsp;<img src="../pics/ext/package.png">&nbsp;';
+   var img = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="../pics/ext/package.png">&nbsp;';
    var index = packageStore.findExact('package_id', val)
    if (index != -1) {
       var record = packageStore.getAt(index);
@@ -164,8 +156,7 @@ var taskJobGridReader = new Ext.data.JsonReader({
    root: 'tasks',
    fields: [
       'group_id', 'package_id', 'method', 'retry_nb',
-      'retry_time', 'periodicity_count', 'periodicity_type',
-      'comment'
+      'retry_time', 'comment'
    ]
 });
 
@@ -211,10 +202,12 @@ var taskJobGrid = new Ext.grid.GridPanel({
    title: '{$LANG['plugin_fusinvdeploy']['task'][13]}',
    view: new Ext.grid.GroupingView({
       forceFit:true,
-      groupTextTpl: '{text} ({[values.rs.length]})',
+      groupTextTpl: '<b>{text}</b>',
       forceFit : true,
       hideGroupedColumn: true,
-      showGroupName: false
+      showGroupName: false,
+      emptyText: '',
+      emptyGroupText: ''
    }),
    tbar: [{
       text: '{$LANG['plugin_fusinvdeploy']['form']['title'][10]}',
@@ -224,9 +217,7 @@ var taskJobGrid = new Ext.grid.GridPanel({
             group_id:            '',
             package_id:          '',
             retry_nb:            0,
-            retry_time:          0,
-            periodicity_count:   1,
-            periodicity_type:    'minutes'
+            retry_time:          0
          });
          taskJobStore.insert(0,u);
          taskJobGrid.getSelectionModel().selectFirstRow();
@@ -336,50 +327,23 @@ var taskJobForm = new Ext.FormPanel({
          collapsed: true,
          checkboxToggle:true,
          autoHeight:true,
-         items :[/*{
-            fieldLabel:'{$LANG['plugin_fusioninventory']['task'][31]}',
-            layout: 'column',
-            items: [
-               new Ext.ux.form.SpinnerField({
-                  name: 'periodicity_count',
-                  hiddenName: 'periodicity_count',
-                  allowBlank: false,
-                  width: 60
-               }),
-               new Ext.form.ComboBox({
-                  name: 'periodicity_type',
-                  valueField: 'name',
-                  displayField: 'value',
-                  hiddenName: 'periodicity_type',
-                  allowBlank: false,
-                  width: 90,
-                  store: new Ext.data.ArrayStore({
-                     fields: ['name', 'value'],
-                     data: [
-                        ['minutes',  '{$LANG['plugin_fusioninventory']['task'][35]}'],
-                        ['hours',    '{$LANG['plugin_fusioninventory']['task'][36]}'],
-                        ['days',     '{$LANG['plugin_fusioninventory']['task'][37]}'],
-                        ['months',   '{$LANG['plugin_fusioninventory']['task'][38]}']
-                     ]
-                  }),
-                  mode: 'local',
-                  triggerAction: 'all'
-               })
-            ]
-         },*/ new Ext.ux.form.SpinnerField({
-            fieldLabel: "{$LANG['plugin_fusioninventory']['task'][24]}",
-            name: 'retry_nb',
-            hiddenName: 'retry_nb',
-            allowBlank: false,
-            width:50
-         }), new Ext.ux.form.SpinnerField({
-            fieldLabel: '{$LANG['plugin_fusioninventory']['task'][25]}',
-            name: 'retry_time',
-            hiddenName: 'retry_time',
-            allowBlank: false,
-            width:50
-         })
-      ]}
+         style:'margin-top:10px',
+         items :[
+            new Ext.ux.form.SpinnerField({
+               fieldLabel: "{$LANG['plugin_fusioninventory']['task'][24]}",
+               name: 'retry_nb',
+               hiddenName: 'retry_nb',
+               allowBlank: false,
+               width:50
+            }), new Ext.ux.form.SpinnerField({
+               fieldLabel: '{$LANG['plugin_fusioninventory']['task'][25]}',
+               name: 'retry_time',
+               hiddenName: 'retry_time',
+               allowBlank: false,
+               width:50
+            })
+         ]
+      }
    ],
    buttons: [{
       text: '{$LANG['plugin_fusinvdeploy']['form']['action'][2]}',

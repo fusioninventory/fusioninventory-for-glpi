@@ -144,6 +144,8 @@ function {$render}renderType(val) {
          return '{$LANG['plugin_fusinvdeploy']['package'][20]}';
       case 'PluginFusinvdeployAction_Message':
          return '{$LANG['plugin_fusinvdeploy']['package'][21]}';
+      default:
+         return '';
    }
 }
 
@@ -177,9 +179,12 @@ var {$render}actionGrid = new Ext.grid.GridPanel({
    stateId: '{$render}actionGrid',
    view: new Ext.grid.GroupingView({
       forceFit:true,
-      groupTextTpl: '{text} ({[values.rs.length]})',
+      groupTextTpl: '{text}',
       startCollapsed : true,
+      hideGroupedColumn: true,
       forceFit : true,
+      emptyText: '',
+      emptyGroupText: ''
    }),
    tbar: [{
       text: '{$LANG['plugin_fusinvdeploy']['form']['title'][6]}',

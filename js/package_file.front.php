@@ -138,7 +138,8 @@ function {$render}badImage(img) {
 
 function {$render}renderBool(val) {
    if (val == 1) return '{$LANG['choice'][1]}';
-   else return '{$LANG['choice'][0]}';
+   else if (val == 0) return '{$LANG['choice'][1]}';
+   else return '';
 }
 
 
@@ -184,9 +185,12 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
    stateId: '{$render}fileGrid',
    view: new Ext.grid.GroupingView({
       forceFit:true,
-      groupTextTpl: '{text} ({[values.rs.length]})',
+      groupTextTpl: '{text}',
+      hideGroupedColumn: true,
       startCollapsed : true,
       forceFit : true,
+      emptyText: '',
+      emptyGroupText: ''
    }),
    tbar: [{
       text: '{$LANG['plugin_fusinvdeploy']['form']['title'][4]}',
@@ -241,7 +245,7 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
       singleSelect: true,
       listeners: {
          rowselect: function(g, index, ev) {
-            /*
+
             var {$render}rec = {$render}fileGrid.store.getAt(index);
             {$render}fileForm.loadData({$render}rec);
 
@@ -255,12 +259,20 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
                Ext.getCmp('{$render}p2p_t').setValue(true);
             }
 
+            if({$render}rec.get('{$render}uncompress') == 0){
+               Ext.getCmp('{$render}uncompress').setValue(false);
+               Ext.getCmp('{$render}uncompress').setValue(true);
+            }else{
+               Ext.getCmp('{$render}uncompress').setValue(false);
+               Ext.getCmp('{$render}uncompress').setValue(true);
+            }
+
 
             Ext.getCmp('{$render}file').setValue('');
             //Ext.getCmp('{$render}url').setValue('');
             Ext.getCmp('{$render}validity').setValue({$render}rec.get('{$render}validity'));
             {$render}fileForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][5]}');
-            */
+
          }
       }
    })
