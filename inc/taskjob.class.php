@@ -58,27 +58,32 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
       $json  = array();
       while($row = $DB->fetch_assoc($res)) {
          $row['packages'] = importArrayFromDB($row['definition']);
-         $row['groups'] = importArrayFromDB($row['action']);
+         $row['actions'] = importArrayFromDB($row['action']);
 
          $temp_tasks[] = $row;
       }
 
+
+
       $i = 0;
       foreach ($temp_tasks as $key => $task) {
-         foreach ($task['groups'] as $group) {
+         foreach ($task['actions'] as $action) {
             foreach ($task['packages'] as $package) {
-               $group_obj = new PluginFusinvdeployGroup;
-               $group_obj->getFromDB($group['PluginFusinvdeployGroup']);
-               $json['tasks'][$i]['group_id'] = $group['PluginFusinvdeployGroup'];
 
-               $package_obj = new PluginFusinvdeployPackage;
-               $package_obj->getFromDB($package['PluginFusinvdeployPackage']);
+               $tmp = array_keys($action);
+               $action_type = $tmp[0];
+
+
+               $json['tasks'][$i]['group_id'] = $action['PluginFusinvdeployGroup'];
                $json['tasks'][$i]['package_id'] = $package['PluginFusinvdeployPackage'];
 
                $json['tasks'][$i]['method'] = $task['method'];
                $json['tasks'][$i]['comment'] = $task['comment'];
                $json['tasks'][$i]['retry_nb'] = $task['retry_nb'];
                $json['tasks'][$i]['retry_time'] = $task['retry_time'];
+
+               $json['tasks'][$i]['action_type'] = $action_type;
+               $json['tasks'][$i]['action_selection'] = $action[$action_type];
                $i++;
             }
          }
@@ -114,7 +119,7 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
          $task = get_object_vars($task);
 
          //encode action and definition
-         $action = exportArrayToDB(array(array('PluginFusinvdeployGroup' => $task['group_id'])));
+         $action = exportArrayToDB(array(array($task['action_type'] => $task['action_selection'])));
          $definition = exportArrayToDB(array(array('PluginFusinvdeployPackage' => $task['package_id'])));
 
          $sql_tasks[] = "INSERT INTO ".$this->getTable()."

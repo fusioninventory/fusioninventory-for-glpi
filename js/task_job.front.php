@@ -95,12 +95,6 @@ var taskJobColumns =  [{
    dataIndex: 'id',
    hidden: true
 }, {
-   id: 'group_id',
-   dataIndex: 'group_id',
-   header: '{$LANG['plugin_fusinvdeploy']['task'][6]}',
-   renderer: renderGroup,
-   width:150
-}, {
    id: 'package_id',
    header: '{$LANG['plugin_fusinvdeploy']['package'][7]}',
    dataIndex: 'package_id',
@@ -129,9 +123,9 @@ var taskJobColumns =  [{
    dataIndex: 'action_type',
    hidden: true
 }, {
-   id: 'action_store',
-   dataIndex: 'action_store',
-   hidden: true
+   id: 'action_selection',
+   dataIndex: 'action_selection',
+   renderer: renderActionSelection
 }, {
    id: 'modified',
    dataIndex: 'modified',
@@ -139,10 +133,7 @@ var taskJobColumns =  [{
 }];
 
 //define renderer for grid columns
-function renderGroupedGroup(val) {
-   return '<img src="../pics/ext/group.png">&nbsp;'+val;
-}
-function renderGroup(val) {
+function renderActionSelection(val) {
    var img = '<img src="../pics/ext/group.png">&nbsp;';
    var index = groupStore.findExact('id', val)
    if (index != -1) {
@@ -166,8 +157,8 @@ function renderMethod(val) {
 var taskJobGridReader = new Ext.data.JsonReader({
    root: 'tasks',
    fields: [
-      'group_id', 'package_id', 'method', 'retry_nb',
-      'retry_time', 'comment'
+      'package_id', 'method', 'retry_nb',
+      'retry_time', 'comment', 'action_type', 'action_selection'
    ]
 });
 
@@ -192,8 +183,8 @@ var taskJobStore = new Ext.data.GroupingStore({
    writer: taskJobGridWriter,
    proxy: taskJobGridProxy,
    autoSave: false,
-   sortInfo: {field: 'group_id', direction: "ASC"},
-   groupField : 'group_id',
+   sortInfo: {field: 'action_selection', direction: "ASC"},
+   groupField : 'action_selection',
    listeners: {
       save: function(store, batch, data) {
          store.reload();
@@ -295,6 +286,7 @@ var taskJobForm = new Ext.FormPanel({
          displayField: 'name',
          allowBlank: false,
          width: {$field_width},
+         style: 'margin-bottom:10px',
          store: new Ext.data.ArrayStore({
             fields: ['value', 'name'],
             data: [
@@ -314,6 +306,7 @@ var taskJobForm = new Ext.FormPanel({
          allowBlank: false,
          triggerAction: 'all',
          store: new Ext.data.Store({
+            autoload: true,
             url: '../ajax/task_job_actions.data.php',
             baseParams: {
                'get': 'type'
@@ -334,6 +327,9 @@ var taskJobForm = new Ext.FormPanel({
                // force the reload on trigger
                action_selection.lastQuery = null;
                action_selection.setValue('');
+            },
+            show: function(component) {
+               component.getStore().load();
             }
          }
       }),
@@ -357,17 +353,6 @@ var taskJobForm = new Ext.FormPanel({
                fields: ['id', 'name']
             })
          }),
-         width: {$field_width}
-      }),
-      new Ext.form.ComboBox({
-         fieldLabel: '{$LANG['plugin_fusinvdeploy']['task'][6]}',
-         name: 'group_id',
-         valueField: 'id',
-         displayField: 'name',
-         hiddenName: 'group_id',
-         allowBlank: false,
-         triggerAction: 'all',
-         store: groupStore,
          width: {$field_width}
       }),
       new Ext.form.ComboBox({
