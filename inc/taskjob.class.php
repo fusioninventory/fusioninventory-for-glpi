@@ -76,6 +76,7 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
                $json['tasks'][$i]['package_id'] = $package['PluginFusinvdeployPackage'];
 
                $json['tasks'][$i]['method'] = $task['method'];
+               $json['tasks'][$i]['comment'] = $task['comment'];
                $json['tasks'][$i]['retry_nb'] = $task['retry_nb'];
                $json['tasks'][$i]['retry_time'] = $task['retry_time'];
                $json['tasks'][$i]['periodicity_count'] = $task['periodicity_count'];
@@ -114,8 +115,8 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
          $task = get_object_vars($task);
 
          //encode action and definition
-         $action = exportArrayToDB(array('PluginFusinvDeployGroup' => $task['group_id']));
-         $definition = exportArrayToDB(array('PluginFusinvDeployPackage' => $task['package_id']));
+         $action = exportArrayToDB(array(array('PluginFusinvdeployGroup' => $task['group_id'])));
+         $definition = exportArrayToDB(array(array('PluginFusinvdeployPackage' => $task['package_id'])));
 
          $sql_tasks[] = "INSERT INTO ".$this->getTable()."
          (

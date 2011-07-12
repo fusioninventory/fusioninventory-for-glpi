@@ -235,3 +235,7 @@ padding:       5px;
 #page form{
    margin-bottom : 0px;
 }
+
+
+#TaskJob .x-grid3-row {border:0px}
+.x-grid-group-hd {border-bottom:1px solid #CCCCCC; padding-top: 0}

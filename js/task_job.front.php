@@ -36,10 +36,10 @@
 global $LANG;
 
 $width_right                  = 590;
-$height_right                 = 300;
+$height_right                 = 350;
 
 $width_left                   = 340;
-$height_left                  = 300;
+$height_left                  = 350;
 $width_left_fieldset          = $width_left-19;
 $width_left_fieldset_default  = $width_left-125;
 
@@ -126,6 +126,10 @@ var taskJobColumns =  [{
    dataIndex: 'periodicity_type',
    hidden: true
 }, {
+   id: 'comment',
+   dataIndex: 'comment',
+   hidden: true
+}, {
    id: 'modified',
    dataIndex: 'modified',
    hidden: true
@@ -160,7 +164,8 @@ var taskJobGridReader = new Ext.data.JsonReader({
    root: 'tasks',
    fields: [
       'group_id', 'package_id', 'method', 'retry_nb',
-      'retry_time', 'periodicity_count', 'periodicity_type'
+      'retry_time', 'periodicity_count', 'periodicity_type',
+      'comment'
    ]
 });
 
@@ -320,6 +325,12 @@ var taskJobForm = new Ext.FormPanel({
          store: packageStore,
          width: {$field_width}
       }), {
+         fieldLabel: '{$LANG['common'][25]}',
+         xtype: 'textarea',
+         name: 'comment',
+         hiddenName: 'comment',
+         width: {$field_width}
+      }, {
          xtype:'fieldset',
          title: '{$LANG['plugin_fusinvdeploy']['task'][14]}',
          collapsed: true,

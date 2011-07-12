@@ -169,7 +169,7 @@ var {$render}actionGrid = new Ext.grid.GridPanel({
    margins: '0 0 0 5',
    store: {$render}actionGridStore,
    columns: {$render}actionColumns,
-   stripeRows: true,
+   stripeRows: false,
    height: {$height_right},
    width: {$width_right},
    style:'margin-bottom:5px',
