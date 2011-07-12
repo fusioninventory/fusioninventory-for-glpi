@@ -521,7 +521,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       echo "</div>";
    }
 
-   function getAllDatas()  {
+   function getAllDatas($root = 'groups')  {
       global $DB;
 
       $sql = " SELECT id, name
@@ -534,8 +534,8 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       $json  = array();
        $i = 0;
       while($row = $DB->fetch_assoc($res)) {
-         $json['groups'][$i]['group_id'] = $row['id'];
-         $json['groups'][$i]['group_name'] = $row['name'];
+         $json[$root][$i]['id'] = $row['id'];
+         $json[$root][$i]['name'] = $row['name'];
 
          $i++;
       }

@@ -63,7 +63,7 @@ $JS = <<<JS
 var groupReader = new Ext.data.JsonReader({
    root: 'groups',
    totalProperty: 'results',
-   fields: ['group_id', 'group_name']
+   fields: ['id', 'name']
 });
 
 var packageReader = new Ext.data.JsonReader({
@@ -83,6 +83,9 @@ var packageStore = new Ext.data.Store({
    reader: packageReader
 });
 packageStore.load();
+
+
+
 
 
 
@@ -122,6 +125,14 @@ var taskJobColumns =  [{
    dataIndex: 'comment',
    hidden: true
 }, {
+   id: 'action_type',
+   dataIndex: 'action_type',
+   hidden: true
+}, {
+   id: 'action_store',
+   dataIndex: 'action_store',
+   hidden: true
+}, {
    id: 'modified',
    dataIndex: 'modified',
    hidden: true
@@ -133,10 +144,10 @@ function renderGroupedGroup(val) {
 }
 function renderGroup(val) {
    var img = '<img src="../pics/ext/group.png">&nbsp;';
-   var index = groupStore.findExact('group_id', val)
+   var index = groupStore.findExact('id', val)
    if (index != -1) {
       var record = groupStore.getAt(index);
-      return img+record.get('group_name');
+      return img+record.get('name');
    } else return '';
 }
 function renderPackage(val) {
@@ -295,10 +306,64 @@ var taskJobForm = new Ext.FormPanel({
          triggerAction: 'all'
       }),
       new Ext.form.ComboBox({
+         fieldLabel: 'type',
+         name: 'action_type',
+         valueField: 'value',
+         displayField: 'name',
+         hiddenName: 'action_type',
+         allowBlank: false,
+         triggerAction: 'all',
+         store: new Ext.data.Store({
+            url: '../ajax/task_job_actions.data.php',
+            baseParams: {
+               'get': 'type'
+            },
+            reader: new Ext.data.JsonReader({
+               root: 'action_types',
+               totalProperty: 'results',
+               fields: ['name', 'value']
+            })
+         }),
+         width: {$field_width},
+         listeners: {
+            select: function(combo, record){
+               var action_selection = Ext.ComponentMgr.get('action_selection');
+               var action_selectionStore = action_selection.getStore();
+               action_selectionStore.setBaseParam('type', combo.getValue());
+               action_selectionStore.removeAll();
+               // force the reload on trigger
+               action_selection.lastQuery = null;
+               action_selection.setValue('');
+            }
+         }
+      }),
+      new Ext.form.ComboBox({
+         id: 'action_selection',
+         fieldLabel: 'selection',
+         name: 'action_selection',
+         valueField: 'id',
+         displayField: 'name',
+         hiddenName: 'action_selection',
+         allowBlank: false,
+         triggerAction: 'all',
+         store: new Ext.data.Store({
+            url: '../ajax/task_job_actions.data.php',
+            baseParams: {
+               'get': 'selection'
+            },
+            reader: new Ext.data.JsonReader({
+               root: 'action_selections',
+               totalProperty: 'results',
+               fields: ['id', 'name']
+            })
+         }),
+         width: {$field_width}
+      }),
+      new Ext.form.ComboBox({
          fieldLabel: '{$LANG['plugin_fusinvdeploy']['task'][6]}',
          name: 'group_id',
-         valueField: 'group_id',
-         displayField: 'group_name',
+         valueField: 'id',
+         displayField: 'name',
          hiddenName: 'group_id',
          allowBlank: false,
          triggerAction: 'all',
