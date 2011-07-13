@@ -38,7 +38,14 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
 
-   // Get all devices and put in taskjobstatus each task for each device for each agent
+   /**
+    * Get all devices and put in taskjobstatus each task for
+    * each device for each agent
+    * 
+    * @param type $taskjobs_id id of taskjob esx
+    * 
+    * @return uniqid value
+    */
    function prepareRun($taskjobs_id) {
       global $DB;
    
@@ -141,41 +148,37 @@ class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
    }
    
 
-   
-   function run($itemtype) {
-      //Nothing to send in XML
-      return $this->sxml;
-   }
-   
-   
-   
-   static function getJobs($device_id) {
+
+   /**
+    * Get ESX jobs for this agent
+    * 
+    * @param type $device_id deviceid of the agent runing and want job info to run
+    * 
+    * @return $response array
+    */
+   function run($a_Taskjobstatus, $response) {
       $response      = array();
-      $taskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $credential    = new PluginFusioninventoryCredential();
       $credentialip  = new PluginFusioninventoryCredentialIp();
       
-      //Get the agent ID by his deviceid
-      $agents = PluginFusioninventoryAgent::getByDeviceID($device_id);
-      if ($agents) {
+      foreach ($a_Taskjobstatus as $taskjobstatusdatas) {
+         $credentialip->getFromDB($taskjobstatusdatas['items_id']);
+         $credential->getFromDB($credentialip->fields['plugin_fusioninventory_credentials_id']);
+         $responsetmp = array();
+         $responsetmp['uuid']        = $taskjobstatusdatas['id'];
+         $responsetmp['host']        = $credentialip->fields['ip'];
+         $responsetmp['user']        = $credential->fields['username'];
+         $responsetmp['password']    = $credential->fields['password'];
+         $response['jobs'][] = $responsetmp;
          
-         //Get tasks associated with the agent
-         $tasks_list = $taskjobstatus->getTaskjobsAgent($agents['id']);
-         foreach ($tasks_list as $tasks) {
-            //Foreach task for this agent build the response array
-            foreach ($tasks as $task) {
-               if ($task['state'] == PluginFusioninventoryTaskjobstatus::PREPARED) {
-                  $credentialip->getFromDB($task['items_id']);
-                  $credential->getFromDB($credentialip->fields['plugin_fusioninventory_credentials_id']);
-                  $tmp = array();
-                  $tmp['uuid']        = $task['id'];
-                  $tmp['host']        = $credentialip->fields['ip'];
-                  $tmp['user']        = $credential->fields['username'];
-                  $tmp['password']    = $credential->fields['password'];
-                  $response['jobs'][] = $tmp;
-               }
-            }
-         }
+         $PluginFusioninventoryTaskjobstatus->changeStatus($taskjobstatusdatas['id'], 1);
+         $PluginFusioninventoryTaskjoblog->addTaskjoblog($taskjobstatusdatas['id'],
+                                 '0',
+                                 'PluginFusioninventoryAgent',
+                                 '1',
+                                 '');
       }
       return $response;
    }
