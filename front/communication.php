@@ -73,7 +73,6 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    
    $communication  = new PluginFusioninventoryCommunication();
    $pta            = new PluginFusioninventoryAgent();
-   $errors         = '';
    
    // ***** For debug only ***** //
    //$GLOBALS["HTTP_RAW_POST_DATA"] = gzcompress('');
@@ -132,10 +131,11 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
       }
 
-
+      $PluginFusioninventoryCommunication = new PluginFusioninventoryCommunication();
       if (PluginFusioninventoryConfig::isExtradebugActive()) {
          file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".uniqid(), $xml);
       }
+      $pxml = '';
       if (@simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA)) {
          $pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA);
       } else if (@simplexml_load_string(utf8_encode($xml),'SimpleXMLElement', LIBXML_NOCDATA)) {
