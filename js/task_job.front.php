@@ -60,23 +60,11 @@ $JS = <<<JS
 
 /**** DEFINE STORES AND JSON READER FOR FORM ****/
 
-var groupReader = new Ext.data.JsonReader({
-   root: 'groups',
-   totalProperty: 'results',
-   fields: ['id', 'name']
-});
-
 var packageReader = new Ext.data.JsonReader({
    root: 'packages',
    totalProperty: 'results',
    fields: ['package_id', 'package_name']
 });
-
-var groupStore = new Ext.data.Store({
-   url: '../ajax/task_job_group.data.php',
-   reader: groupReader
-});
-groupStore.load();
 
 var packageStore = new Ext.data.Store({
    url: '../ajax/task_job_package.data.php',
@@ -123,6 +111,10 @@ var taskJobColumns =  [{
    dataIndex: 'action_type',
    hidden: true
 }, {
+   id: 'action_name',
+   dataIndex: 'action_name',
+   hidden: true
+}, {
    id: 'action_selection',
    dataIndex: 'action_selection',
    renderer: renderActionSelection
@@ -133,13 +125,18 @@ var taskJobColumns =  [{
 }];
 
 //define renderer for grid columns
-function renderActionSelection(val) {
-   var img = '<img src="../pics/ext/group.png">&nbsp;';
-   var index = groupStore.findExact('id', val)
-   if (index != -1) {
-      var record = groupStore.getAt(index);
-      return img+record.get('name');
-   } else return '';
+function renderActionSelection(val, metaData, record) {
+   switch (record.data.action_type) {
+      case 'Computer':
+         var img = '<img src="../pics/ext/computer.png">&nbsp;';
+         break;
+      case 'PluginFusinvdeployGroup':
+         var img = '<img src="../pics/ext/group.png">&nbsp;';
+         break;
+      default:
+         var img = '';
+   }
+   return img+record.get('action_name');
 }
 function renderPackage(val) {
    var img = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="../pics/ext/package.png">&nbsp;';
@@ -158,7 +155,8 @@ var taskJobGridReader = new Ext.data.JsonReader({
    root: 'tasks',
    fields: [
       'package_id', 'method', 'retry_nb',
-      'retry_time', 'comment', 'action_type', 'action_selection'
+      'retry_time', 'comment', 'action_type',
+      'action_selection', 'action_name'
    ]
 });
 
@@ -191,6 +189,19 @@ var taskJobStore = new Ext.data.GroupingStore({
       }
    }
 });
+
+var action_typeStore = new Ext.data.Store({
+   url: '../ajax/task_job_actions.data.php',
+   baseParams: {
+      'get': 'type'
+   },
+   reader: new Ext.data.JsonReader({
+      root: 'action_types',
+      totalProperty: 'results',
+      fields: ['name', 'value']
+   })
+});
+action_typeStore.load();
 
 /**** DEFINE GRID ****/
 var taskJobGrid = new Ext.grid.GridPanel({
@@ -286,7 +297,6 @@ var taskJobForm = new Ext.FormPanel({
          displayField: 'name',
          allowBlank: false,
          width: {$field_width},
-         style: 'margin-bottom:10px',
          store: new Ext.data.ArrayStore({
             fields: ['value', 'name'],
             data: [
@@ -298,6 +308,19 @@ var taskJobForm = new Ext.FormPanel({
          triggerAction: 'all'
       }),
       new Ext.form.ComboBox({
+         fieldLabel: '{$LANG['plugin_fusinvdeploy']['package'][7]}',
+         name: 'package_id',
+         valueField: 'package_id',
+         displayField: 'package_name',
+         hiddenName: 'package_id',
+         allowBlank: false,
+         triggerAction: 'all',
+         style: 'margin-bottom:10px',
+         store: packageStore,
+         width: {$field_width}
+      }),
+      new Ext.form.ComboBox({
+         id: 'action_type',
          fieldLabel: 'type',
          name: 'action_type',
          valueField: 'value',
@@ -305,28 +328,11 @@ var taskJobForm = new Ext.FormPanel({
          hiddenName: 'action_type',
          allowBlank: false,
          triggerAction: 'all',
-         store: new Ext.data.Store({
-            autoload: true,
-            url: '../ajax/task_job_actions.data.php',
-            baseParams: {
-               'get': 'type'
-            },
-            reader: new Ext.data.JsonReader({
-               root: 'action_types',
-               totalProperty: 'results',
-               fields: ['name', 'value']
-            })
-         }),
+         store: action_typeStore,
          width: {$field_width},
          listeners: {
             select: function(combo, record){
-               var action_selection = Ext.ComponentMgr.get('action_selection');
-               var action_selectionStore = action_selection.getStore();
-               action_selectionStore.setBaseParam('type', combo.getValue());
-               action_selectionStore.removeAll();
-               // force the reload on trigger
-               action_selection.lastQuery = null;
-               action_selection.setValue('');
+               loadActionSelection();
             },
             show: function(component) {
                component.getStore().load();
@@ -342,6 +348,9 @@ var taskJobForm = new Ext.FormPanel({
          hiddenName: 'action_selection',
          allowBlank: false,
          triggerAction: 'all',
+         editable: true,
+         forceSelection: false,
+         style: 'margin-bottom:10px',
          store: new Ext.data.Store({
             url: '../ajax/task_job_actions.data.php',
             baseParams: {
@@ -353,17 +362,6 @@ var taskJobForm = new Ext.FormPanel({
                fields: ['id', 'name']
             })
          }),
-         width: {$field_width}
-      }),
-      new Ext.form.ComboBox({
-         fieldLabel: '{$LANG['plugin_fusinvdeploy']['package'][7]}',
-         name: 'package_id',
-         valueField: 'package_id',
-         displayField: 'package_name',
-         hiddenName: 'package_id',
-         allowBlank: false,
-         triggerAction: 'all',
-         store: packageStore,
          width: {$field_width}
       }), {
          fieldLabel: '{$LANG['common'][25]}',
@@ -404,6 +402,8 @@ var taskJobForm = new Ext.FormPanel({
       }
    }],
    loadData : function(rec) {
+      loadActionSelection();
+
       taskJobForm.record = rec;
       taskJobForm.getForm().loadRecord(rec);
    }
@@ -427,6 +427,18 @@ function taskJobFormSave() {
    });
 
    taskJobStore.save();
+}
+
+//
+function loadActionSelection () {
+   var action_selection = Ext.ComponentMgr.get('action_selection');
+   var action_type = Ext.ComponentMgr.get('action_type');
+   var action_selectionStore = action_selection.getStore();
+   action_selectionStore.setBaseParam('type', action_type.getValue());
+   action_selectionStore.removeAll();
+   // force the reload on trigger
+   action_selection.lastQuery = null;
+   action_selection.setValue('');
 }
 
 

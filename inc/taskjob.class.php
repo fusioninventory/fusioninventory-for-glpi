@@ -73,8 +73,6 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
                $tmp = array_keys($action);
                $action_type = $tmp[0];
 
-
-               $json['tasks'][$i]['group_id'] = $action['PluginFusinvdeployGroup'];
                $json['tasks'][$i]['package_id'] = $package['PluginFusinvdeployPackage'];
 
                $json['tasks'][$i]['method'] = $task['method'];
@@ -84,6 +82,11 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
 
                $json['tasks'][$i]['action_type'] = $action_type;
                $json['tasks'][$i]['action_selection'] = $action[$action_type];
+
+               $obj_action = new $action_type;
+               $obj_action->getFromDB($action[$action_type]);
+               $json['tasks'][$i]['action_name'] = $obj_action->getField('name');
+
                $i++;
             }
          }
@@ -137,6 +140,69 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
       foreach($sql_tasks as $query) {
          $res = $DB->query($query);
       }
+   }
+
+   static function getActionTypes() {
+      global $LANG;
+
+      return array(
+         array(
+            'name' => $LANG['Menu'][0],
+            'value' => 'Computer',
+         ),
+         array(
+            'name' => $LANG['plugin_fusinvdeploy']['task'][2],
+            'value' => 'PluginFusinvdeployGroup',
+         )
+      );
+   }
+
+   static function getActions($params) {
+      global $DB;
+
+      $res = '';
+      if (!isset($params['get'])) exit;
+      switch($params['get']) {
+         case "type";
+            $res = array(
+               'action_types' =>self::getActionTypes()
+            );
+            $res = json_encode($res);
+            break;
+         case "selection";
+            switch ($params['type']) {
+               case 'Computer':
+                  $query = "SELECT id, name FROM glpi_computers";
+                  if (isset($params['query'])) {
+                     $like = mysql_escape_string($params['query']);
+                     $query .= " WHERE name LIKE '%$like'";
+                  }
+                  $query .= " ORDER BY name ASC";
+                  $query_res = $DB->query($query);
+                  $i = 0;
+                  while ($row = $DB->fetch_array($query_res)) {
+                     $res['action_selections'][$i]['id'] = $row['id'];
+                     $res['action_selections'][$i]['name'] = $row['name'];
+                     $i++;
+                  }
+
+                  $res = json_encode($res);
+                  break;
+               case 'PluginFusinvdeployGroup':
+                  $group = new PluginFusinvdeployGroup;
+                  $res = $group->getAllDatas('action_selections');
+                  break;
+            }
+
+            break;
+         case "oneSelection":
+
+            break;
+         default:
+            $res = '';
+      }
+
+      return $res;
    }
 }
 
