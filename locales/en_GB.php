@@ -58,6 +58,7 @@ $LANG['plugin_fusinvinventory']['setup'][33]="This option will merge items with 
 $LANG['plugin_fusinvinventory']['setup'][34]="This option will create one item for each item found";
 $LANG['plugin_fusinvinventory']['setup'][35]="This option will create one item for each item have 
       serial number";
+$LANG['plugin_fusinvinventory']['setup'][36]="Default status";
 
 $LANG['plugin_fusinvinventory']['menu'][0]="Import agent XML file";
 $LANG['plugin_fusinvinventory']['menu'][1]="Criteria rules";

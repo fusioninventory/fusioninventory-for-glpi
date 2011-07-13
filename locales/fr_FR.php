@@ -59,6 +59,7 @@ $LANG['plugin_fusinvinventory']['setup'][33]="Cette option va fusionner les él�
 $LANG['plugin_fusinvinventory']['setup'][34]="Cette option va créer un élément pour chaque élément trouvé";
 $LANG['plugin_fusinvinventory']['setup'][35]="Cette option va créer un élément pour chaque élément 
       qui a un numéro de série";
+$LANG['plugin_fusinvinventory']['setup'][36]="Statut par défaut";
 
 $LANG['plugin_fusinvinventory']['menu'][0]="Importer un fichier XML de l'agent";
 $LANG['plugin_fusinvinventory']['menu'][1]="Règles de critères";
