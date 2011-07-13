@@ -40,6 +40,10 @@ class StackTest extends PHPUnit_Framework_TestCase
    public function testPluginFusinvdeployGroup() {
       global $DB;
 
+      //remove old test group
+      $query = "DELETE FROM glpi_plugin_fusinvdeploy_groups WHERE comment = 'UNITTEST'";
+      $res = $DB->query($query);
+
       //test static group
       $static_group = new PluginFusinvdeployGroup();
       $static_groupID = $static_group->add(array(
@@ -47,7 +51,7 @@ class StackTest extends PHPUnit_Framework_TestCase
          'comment'   => "UNITTEST",
          'type'      => "STATIC"
       ));
-      $query = "SELECT * FROM .glpi_plugin_fusinvdeploy_groups WHERE name = 'UNITTEST_STATIC_GROUP'";
+      $query = "SELECT * FROM glpi_plugin_fusinvdeploy_groups WHERE name = 'UNITTEST_STATIC_GROUP'";
       $res = $DB->query($query);
       $this->assertEquals($DB->numrows($res), 1);
 
@@ -67,7 +71,7 @@ class StackTest extends PHPUnit_Framework_TestCase
          ));
       }
       $nb_datas = count($items);
-      $query = "SELECT * FROM .glpi_plugin_fusinvdeploy_groups_staticdatas WHERE groups_id = '$static_groupID'";
+      $query = "SELECT * FROM glpi_plugin_fusinvdeploy_groups_staticdatas WHERE groups_id = '$static_groupID'";
       $res = $DB->query($query);
       $this->assertEquals($DB->numrows($res), $nb_datas);
 
@@ -80,7 +84,7 @@ class StackTest extends PHPUnit_Framework_TestCase
          'comment'   => "UNITTEST",
          'type'      => "DYNAMIC"
       ));
-      $query = "SELECT * FROM .glpi_plugin_fusinvdeploy_groups WHERE name = 'UNITTEST_DYNAMIC_GROUP'";
+      $query = "SELECT * FROM glpi_plugin_fusinvdeploy_groups WHERE name = 'UNITTEST_DYNAMIC_GROUP'";
       $res = $DB->query($query);
       $this->assertEquals($DB->numrows($res), 1);
 
@@ -102,13 +106,19 @@ class StackTest extends PHPUnit_Framework_TestCase
          'groups_id' => $dynamic_groupID,
          'fields_array' => serialize($fields_array)
       ));
-      $query = "SELECT * FROM .glpi_plugin_fusinvdeploy_groups_dynamicdatas WHERE groups_id = '$dynamic_groupID'";
+      $query = "SELECT * FROM glpi_plugin_fusinvdeploy_groups_dynamicdatas WHERE groups_id = '$dynamic_groupID'";
       $res = $DB->query($query);
       $this->assertEquals($DB->numrows($res), 1);
 
 
       //test get json group
-      $res = json_decode(PluginFusinvdeployGroup::getAllDatas());
+
+      $json = PluginFusinvdeployGroup::getAllDatas();
+      $datas = get_object_vars(json_decode($json));
+      $this->assertArrayHasKey('groups', $datas);
+      $query = "SELECT * FROM glpi_plugin_fusinvdeploy_groups";
+      $res = $DB->query($query);
+      $this->assertEquals($DB->numrows($res), count($datas['groups']));
 
       //remove groups
       $query = "DELETE FROM glpi_plugin_fusinvdeploy_groups WHERE comment = 'UNITTEST'";
