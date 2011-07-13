@@ -101,8 +101,6 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
          $isNewVers = $data["id"];
       } else {
          $SoftwareVersion = new SoftwareVersion();
-         // TODO : define a default state ? Need a new option in config
-         // Use $cfg_ocs["states_id_default"] or create a specific one ?
          $input = array();
          $input["softwares_id"] = $software_id;
          $input["name"] = $modified_version;

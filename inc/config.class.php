@@ -42,7 +42,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
    /**
    * Initialize config values of fusinvinventory plugin
    *
-   *@return nothing
+   * @return nothing
    *
    **/
    function initConfigModule() {
@@ -113,7 +113,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
    *
    * @param $options array
    *
-   *@return bool true if form is ok
+   * @return bool true if form is ok
    *
    **/
    static function showForm($options=array()) {
@@ -357,7 +357,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>" . $LANG['ocsconfig'][16]."&nbsp;:</td>";
+      echo "<td>".$LANG['plugin_fusinvinventory']['setup'][36]."&nbsp;:</td>";
       echo "<td>";
       Dropdown::show('State',
                      array('name'   => 'states_id_default',

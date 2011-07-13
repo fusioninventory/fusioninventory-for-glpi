@@ -113,7 +113,7 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
    * @param $items_id integer id of the blacklist
    * @param $options array
    *
-   *@return bool true if form is ok
+   * @return bool true if form is ok
    *
    **/
    function showForm($items_id, $options=array()) {
@@ -151,7 +151,7 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
    *
    * @param $p_xml value XML from agent
    *
-   *@return value XML cleaned (without blacklisted fields)
+   * @return value XML cleaned (without blacklisted fields)
    *
    **/
    function cleanBlacklist($p_xml) {
