@@ -52,7 +52,8 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       $discovery_key = "";
       $comment = "";
 
-		if ($result=$DB->query($query)) {
+      $result=$DB->query($query);
+		if ($result) {
 			if ($DB->numrows($result) != 0) {
 				$model_name = $DB->result($result, 0, "name");
 				$type = $DB->result($result, 0, "itemtype");
@@ -75,7 +76,8 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
          FROM `glpi_plugin_fusinvsnmp_modelmibs`
          WHERE `plugin_fusinvsnmp_models_id`='".$ID_model."';";
 
-		if ($result=$DB->query($query)) {
+      $result=$DB->query($query);
+		if ($result) {
 			while ($data=$DB->fetch_array($result)) {
 				$xml .= "		<oidobject>\n";
 				$xml .= "			<object><![CDATA[".
@@ -209,9 +211,8 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
          $a_oids = $PluginFusinvsnmpModelMib->find("`plugin_fusinvsnmp_models_id`='".$models_data['id']."'");
          foreach ($a_oids as $data) {
             $oid = Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_miboids", $data['plugin_fusinvsnmp_miboids_id']);
-            if ($data['plugin_fusioninventory_mappings_id'] == 0) {
-               $oid_name = '';
-            } else {
+            $oid_name = '';
+            if ($data['plugin_fusioninventory_mappings_id'] != 0) {
                $PluginFusioninventoryMapping->getFromDB($data['plugin_fusioninventory_mappings_id']);
                $oid_name = $PluginFusioninventoryMapping->fields["name"];
             }
@@ -248,7 +249,9 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
             if (isset($child->activation)) {
                $input["is_active"] = $child->activation;
             }
-            unset($mapping_type);
+            if (isset($mapping_type)) {
+               unset($mapping_type);
+            }
             if (isset($child->mapping_type)) {
                switch($child->mapping_type) {
 
@@ -301,14 +304,14 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
 			$i = -1;
 			foreach($xml->oidlist->oidobject as $child) {
-            unset($plugin_fusinvsnmp_mibobjects_id);
-            unset($plugin_fusinvsnmp_miboids_id);
-            unset($oid_port_counter);
-            unset($oid_port_dyn);
-            unset($mapping_type);
-            unset($mapping_name);
-            unset($vlan);
-            unset($is_active);
+            $plugin_fusinvsnmp_mibobjects_id = 0;
+            $plugin_fusinvsnmp_miboids_id = 0;
+            $oid_port_counter = 0;
+            $oid_port_dyn = 0;
+            $mapping_type = '';
+            $mapping_name = '';
+            $vlan = 0;
+            $is_active = 1;
             $mappings_id = 0;
 
             if (isset($child->object)) {

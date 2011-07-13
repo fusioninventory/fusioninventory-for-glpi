@@ -194,8 +194,10 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       $query = "SELECT count(DISTINCT `id`)
                 FROM ".$this->getTable()."
                 WHERE `printers_id` = '".$id."';";
-      if ($result_num=$DB->query($query)) {
-         if ($field = $DB->result($result_num,0,0)) {
+      $result_num=$DB->query($query);
+      if ($result_num) {
+         $field = $DB->result($result_num,0,0);
+         if ($field) {
             $num += $field;
          }
       }
@@ -213,8 +215,8 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
                 FROM ".$this->getTable()."
                 WHERE `printers_id` = '".$id."'
                 LIMIT ".$begin.", ".$limit.";";
-
-      if ($result=$DB->query($query)) {
+      $result=$DB->query($query);
+      if ($result) {
          $i = 0;
          while ($data=$DB->fetch_assoc($result)) {
             $data['date'] = convDateTime($data['date']);
@@ -235,9 +237,10 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
                   "MAX(`date`) AS `max_date`, MAX(`pages`) AS `max_pages`
                 FROM ".$this->getTable()."
                 WHERE `printers_id` = '".$id."';";
-
-      if ($result = $DB->query($query)) {
-         if ($fields = $DB->fetch_assoc($result)) {
+      $result = $DB->query($query);
+      if ($result) {
+         $fields = $DB->fetch_assoc($result);
+         if ($fields) {
             $output = array();
             $output['num_days'] =
                ceil((strtotime($fields['max_date']) - strtotime($fields['min_date']))/(60*60*24));
@@ -259,8 +262,8 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       }
       
       // display stats
-      if ($stats = $this->stats($id)) {
-            
+      $stats = $this->stats($id);
+      if ($stats) {
          $this->showTabs($options);
          $this->showFormHeader($options);
          
@@ -292,7 +295,8 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
          $limit = $_SESSION["glpilist_limit"];
       }
       // Get history
-      if (!($data = $this->getEntries($id, $_GET['start'], $limit))) {
+      $data = $this->getEntries($id, $_GET['start'], $limit);
+      if (!($data)) {
          return false;
       }
 
@@ -396,8 +400,9 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 
       $where = " WHERE `printers_id` IN(".$printersIds.")";
       if ($begin!='' || $end!='') {
-            $where .= " AND " .getDateRequest("`date`",$begin,$end);
-         }
+         $where .= " AND " .getDateRequest("`date`",$begin,$end);
+      }
+      $group = '';
       switch ($timeUnit) {
          case 'day':
             $group = "GROUP BY `printers_id`, `year`, `month`, `day`";
@@ -531,10 +536,12 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
              ORDER BY `year`, `month`, `day`, `printers_id`";
 
          $input = array();
-         if ($result = $DB->query($query)) {
+         $result = $DB->query($query);
+         if ($result) {
             if ($DB->numrows($result) != 0) {
                $pages = array();
                $data = array();
+               $date = '';
                while ($data = $DB->fetch_assoc($result)) {
                   switch($timeUnit) {
 

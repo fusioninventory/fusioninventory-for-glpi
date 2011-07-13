@@ -86,7 +86,8 @@ class PluginFusinvsnmpNetworkPortConnectionLog extends CommonDBTM {
          $query .= " LIMIT 0,500";
       }
 
-		if ($result = $DB->query($query)) {
+      $result = $DB->query($query);
+		if ($result) {
 			while ($data=$DB->fetch_array($result)) {
             echo "<tr class='tab_bg_1 center'>";
 

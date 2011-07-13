@@ -95,8 +95,10 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
                 FROM ".$this->getTable()."
                 WHERE `plugin_fusioninventory_mappings_id`='".$field."'
                 LIMIT 1;";
-		if ($result = $DB->query($query)) {
-			if ($this->fields = $DB->fetch_row($result)) {
+		$result = $DB->query($query);
+      if ($result) {
+         $this->fields = $DB->fetch_row($result);
+			if ($this->fields) {
 				return $this->fields['0'];
          }
 		}
@@ -139,7 +141,8 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
                 WHERE `".$this->getTable()."`.`plugin_fusioninventory_mappings_id`=
                          `glpi_plugin_fusioninventory_mappings`.`id`
                 ORDER BY `itemtype`, `name`;";
-      if ($result=$DB->query($query)) {
+      $result=$DB->query($query);
+      if ($result) {
 			while ($data=$DB->fetch_array($result)) {
             echo "<tr class='tab_bg_1'>";
             echo "<td align='left'>";

@@ -64,7 +64,8 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
                         ON `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusioninventory_mappings_id`=
                            `glpi_plugin_fusioninventory_mappings`.`id`
                    WHERE `glpi_plugin_fusinvsnmp_models`.`id`='".$id."';";
-         if ($result = $DB->query($query)) {
+         $result = $DB->query($query);
+         if ($result) {
             $object_used = array();
             $mappings_used = array();
 

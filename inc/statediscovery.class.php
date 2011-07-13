@@ -89,7 +89,7 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
    function endState($p_number, $date_end, $agent_id) {
       $data = $this->find("`plugin_fusioninventory_taskjob_id`='".$p_number."'
                               AND `plugin_fusioninventory_agents_id`='".$agent_id."'");
-      foreach ($data as $process_id=>$input) {
+      foreach ($data as $input) {
          $input['end_time'] = $date_end;
          $this->update($input);
       }
@@ -155,7 +155,6 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
          echo "<td>".$data['uniqid']."</td>";
          $PluginFusioninventoryAgent->getFromDB($data['plugin_fusioninventory_agents_id']);
          echo "<td>".$PluginFusioninventoryAgent->getLink(1)."</td>";
-         $nb_query = 0;
          $nb_found = 0;
          $nb_threads = 0;
          $start_date = "";
@@ -167,8 +166,6 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
          foreach ($a_taskjobstatus as $datastatus) {
             $a_taskjoblog = $PluginFusioninventoryTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$datastatus['id']."'");
             foreach($a_taskjoblog as $taskjoblog) {
-//               if (strstr($taskjoblog['comment'], " ==fusinvsnmp::1==")) {
-//                  $nb_query += str_replace(" ==fusinvsnmp::1==", "", $taskjoblog['comment']);
                if (strstr($taskjoblog['comment'], " ==fusinvsnmp::2==")) {
                   $nb_found += str_replace(" ==fusinvsnmp::2==", "", $taskjoblog['comment']);
                } else if (strstr($taskjoblog['comment'], "==fusioninventory::3==")) {
@@ -177,15 +174,10 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
                   $updateddevices++;
                } else if (strstr($taskjoblog['comment'], "==fusinvsnmp::4==")) {
                   $createddevices++;
-               
-                  
-                  
-
                } else if ($taskjoblog['state'] == "1") {
                   $nb_threads = str_replace(" threads", "", $taskjoblog['comment']);
                   $start_date = $taskjoblog['date'];
                }
-
 
                if (($taskjoblog['state'] == "2")
                   OR ($taskjoblog['state'] == "3")
@@ -226,8 +218,8 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
          }
          if ($start_date == '') {
             echo "<td>-</td>";
-//            echo "<td>-</td>";
          } else {
+            $interval = '';
             if (phpversion() >= 5.3) {
                $date1 = new DateTime($start_date);
                $date2 = new DateTime($end_date);
@@ -242,18 +234,14 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
             } else {
                $interval = $PluginFusinvsnmpStateInventory->date_diff($start_date, $end_date);
             }
-//            echo "<td>".round(($nb_query) / (strtotime($end_date) - strtotime($start_date)), 2)."</td>";
          }
-//         echo "<td>".$nb_threads."</td>";
          echo "<td>".$nb_found."</td>";
          echo "<td>".$notimporteddevices."</td>";
          echo "<td>".$updateddevices."</td>";
          echo "<td>".$createddevices."</td>";
          echo "</tr>";      
       }
-
       echo "</table>";
-
    }
 
 }

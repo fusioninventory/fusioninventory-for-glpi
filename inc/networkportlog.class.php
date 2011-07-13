@@ -100,16 +100,17 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       // Get list of fields configured for history
       $query = "SELECT *
                 FROM `glpi_plugin_fusinvsnmp_configlogfields`;";
-      if ($result=$DB->query($query)) {
+      $result=$DB->query($query);
+      if ($result) {
 			while ($data=$DB->fetch_array($result)) {
+            $type = '';
+            $name= '';
             list($type,$name) = explode("-", $data['field']);
-//            if (!isset($FUSIONINVENTORY_MAPPING[$type][$name]["name"])) {
             if (!isset($listName[$type."-".$name])) {
                $query_del = "DELETE FROM `glpi_plugin_fusinvsnmp_configlogfields`
                   WHERE id='".$data['id']."' ";
                   $DB->query($query_del);
             } else {
-//               $options[$data['field']]=$FUSIONINVENTORY_MAPPING[$type][$name]["name"];
                $options[$data['field']]=$listName[$type."-".$name];
             }
             unset($listName[$data['field']]);
@@ -396,7 +397,8 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       $text .= "<th>".$LANG["common"][27]."</th>";
       $text .= "</tr>";
 
-      if ($result=$DB->query($query)) {
+      $result=$DB->query($query);
+      if ($result) {
          while ($data=$DB->fetch_array($result)) {
             $text .= "<tr class='tab_bg_1'>";
             if (!empty($data["networkports_id_destination"])) {

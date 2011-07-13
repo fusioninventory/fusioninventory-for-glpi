@@ -325,6 +325,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                if ((!in_array('.1', $a_action))
                   AND (!in_array('.2', $a_action))) {
 
+                  $query = '';
                   if ($communication == 'push') {
                      $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, ip, subnet, token FROM `glpi_plugin_fusioninventory_agents`
                         LEFT JOIN `glpi_networkports` ON `glpi_networkports`.`items_id` = `glpi_plugin_fusioninventory_agents`.`items_id`
@@ -337,7 +338,8 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                      $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, token FROM `glpi_plugin_fusioninventory_agents`
                         WHERE `glpi_plugin_fusioninventory_agents`.`id`='".current($a_action)."'";
                   }
-                  if ($result = $DB->query($query)) {
+                  $result = $DB->query($query);
+                  if ($result) {
                      while ($data=$DB->fetch_array($result)) {
                         if ($communication == 'push') {
                            $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($data['ip'],0);
@@ -616,7 +618,8 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
          WHERE `glpi_networkports`.`itemtype`='Computer'
             ".$subnet."
             ".$where." ";
-      if ($result = $DB->query($query)) {
+      $result = $DB->query($query);
+      if ($result) {
          while ($data=$DB->fetch_array($result)) {
             if ($communication == 'push') {
                $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($data['ip'],0);

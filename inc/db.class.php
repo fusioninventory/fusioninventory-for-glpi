@@ -40,6 +40,8 @@ class PluginFuvinvsnmpDb extends CommonDBTM {
 
    static function getDeviceFieldFromId($type, $id, $field, $return) {
       global $DB;
+      
+      $table = '';
       switch($type) {
          case COMPUTER_TYPE:
             $table = "`glpi_computers`";
@@ -62,12 +64,15 @@ class PluginFuvinvsnmpDb extends CommonDBTM {
             break;
       }
 
-      $query = "SELECT ".$field.
-               "FROM ".$table." ".
-               "WHERE `id` = '".$id."';";
-      if ($result = $DB->query($query)) {
-         if (($fields=$DB->fetch_row($result)) && ($fields['0'] != NULL)) {
-            return $fields['0'];
+      if ($table != '') {
+         $query = "SELECT ".$field.
+                  "FROM ".$table." ".
+                  "WHERE `id` = '".$id."';";
+         $result = $DB->query($query);
+         if ($result) {
+            if (($fields=$DB->fetch_row($result)) && ($fields['0'] != NULL)) {
+               return $fields['0'];
+            }
          }
       }
       return $return;

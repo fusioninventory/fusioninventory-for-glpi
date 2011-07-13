@@ -100,7 +100,8 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       $query = "SELECT `id`
                 FROM `glpi_plugin_fusinvsnmp_printers`
                 WHERE `printers_id` = '".$this->getValue('id')."';";
-      if ($result = $DB->query($query)) {
+      $result = $DB->query($query);
+      if ($result) {
          if ($DB->numrows($result) != 0) {
             $fusioninventory = $DB->fetch_assoc($result);
             $this->oFusionInventory_printer->load($fusioninventory['id']);
@@ -115,7 +116,8 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
                    FROM `glpi_plugin_fusinvsnmp_printerlogs`
                    WHERE `printers_id` = '".$this->getValue('id')."'
                          AND LEFT(`date`, 10)='".date("Y-m-d")."';";
-         if ($result = $DB->query($query)) {
+         $result = $DB->query($query);
+         if ($result) {
             if ($DB->numrows($result) != 0) {
                $history = $DB->fetch_assoc($result);
                $this->oFusionInventory_printer_history->load($history['id']);
@@ -169,7 +171,8 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
                 WHERE `items_id` = '".$this->getValue('id')."'
                       AND `itemtype` = '".PRINTER_TYPE."';";
       $portsIds = array();
-      if ($result = $DB->query($query)) {
+      $result = $DB->query($query);
+      if ($result) {
          if ($DB->numrows($result) != 0) {
             while ($port = $DB->fetch_assoc($result)) {
                $ptp->load($port['id']);
@@ -345,7 +348,8 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
                 FROM `glpi_plugin_fusinvsnmp_printercartridges`
                 WHERE `printers_id` = '".$this->getValue('id')."';";
       $cartridgesIds = array();
-      if ($result = $DB->query($query)) {
+      $result = $DB->query($query);
+      if ($result) {
          if ($DB->numrows($result) != 0) {
             while ($cartridge = $DB->fetch_assoc($result)) {
                $ptc->load($cartridge['id']);

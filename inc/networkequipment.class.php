@@ -71,7 +71,8 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       $query = "SELECT `id`
                 FROM `glpi_plugin_fusinvsnmp_networkequipments`
                 WHERE `networkequipments_id` = '".$this->getValue('id')."';";
-      if ($result = $DB->query($query)) {
+      $result = $DB->query($query);
+      if ($result) {
          if ($DB->numrows($result) != 0) {
             $fusioninventory = $DB->fetch_assoc($result);
             $this->oFusionInventory_networkequipment->load($fusioninventory['id']);
@@ -123,7 +124,8 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
                 WHERE `items_id` = '".$this->getValue('id')."'
                       AND `itemtype` = '".NETWORKING_TYPE."';";
       $portsIds = array();
-      if ($result = $DB->query($query)) {
+      $result = $DB->query($query);
+      if ($result) {
          if ($DB->numrows($result) != 0) {
             while ($port = $DB->fetch_assoc($result)) {
                $ptp->load($port['id']);
@@ -280,7 +282,8 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
                 FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
                 WHERE `networkequipments_id` = '".$this->getValue('id')."';";
       $ifaddrsIds = array();
-      if ($result = $DB->query($query)) {
+      $result = $DB->query($query);
+      if ($result) {
          if ($DB->numrows($result) != 0) {
             while ($ip = $DB->fetch_assoc($result)) {
                $pti->load($ip['id']);
@@ -355,6 +358,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
          }
       }
 
+      $PID = 0;
       $PID = $this->oFusionInventory_networkequipment->fields['last_PID_update'];
 
 		// Form networking informations
@@ -927,7 +931,8 @@ function appear_legend(id){
       echo "<table width='100%' class='tab_cadre' cellpadding='5'>";
       foreach ($a_ports as $a_port) {
          if ($a_port['name'] != "Link") {
-            if ($id = $NetworkPort->getContact($a_port['id'])) {
+            $id = $NetworkPort->getContact($a_port['id']);
+            if ($id) {
                $NetworkPort->getFromDB($id);
                if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
                   $classname = $NetworkPort->fields['itemtype'];

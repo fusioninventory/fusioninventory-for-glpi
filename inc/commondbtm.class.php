@@ -73,7 +73,8 @@ class PluginFusinvsnmpCommonDBTM extends CommonDBTM {
          }
       } else { // new item : initialize all fields to NULL
          $query = "SHOW COLUMNS FROM `".$this->table."`";
-         if ($result=$DB->query($query)) {
+         $result=$DB->query($query);
+         if ($result) {
             while ($data=$DB->fetch_array($result)) {
                $this->ptcdFields[$data[0]]=NULL;
             }

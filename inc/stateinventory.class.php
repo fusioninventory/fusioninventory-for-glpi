@@ -162,6 +162,7 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
             echo "<td>-</td>";
             echo "<td>-</td>";
          } else {
+            $interval = '';
             if (phpversion() >= 5.3) {
                $date1 = new DateTime($start_date);
                $date2 = new DateTime($end_date);
