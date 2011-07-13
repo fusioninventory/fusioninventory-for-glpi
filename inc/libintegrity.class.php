@@ -60,6 +60,14 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
    
    
 
+   /**
+    * Display fields to add or delete to have right integrity between
+    * XML from agent and GLPI
+    * 
+    * @param type $computers_id Set id of computer to check integrity 
+    * or keep to 0 for all computers
+    * 
+    */
    function showForm($computers_id = 0) {
       global $DB,$LANG;
 
@@ -328,7 +336,8 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
                               LEFT JOIN `glpi_monitors` on `glpi_monitors`.`id`=`items_id`
                               WHERE `computers_id`='".$computer_id."'
                                  AND `itemtype`='Monitor'";
-                           if ($result_monitor = $DB->query($query_monitor)) {
+                           $result_monitor = $DB->query($query_monitor);
+                           if ($result_monitor) {
                               if ($DB->numrows($result_monitor) == 0) {
                                  $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['help'][28], $a_sectiontmp['NAME']);
                               }
@@ -342,7 +351,8 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
                            LEFT JOIN `glpi_monitors` on `glpi_monitors`.`id`=`items_id`
                            WHERE `computers_id`='".$computer_id."'
                               AND `itemtype`='Monitor'";
-                        if ($result_monitor = $DB->query($query_monitor)) {
+                        $result_monitor = $DB->query($query_monitor);
+                        if ($result_monitor) {
                            if ($DB->numrows($result_monitor) == 0) {
                               $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['help'][28], $a_sectiontmp['NAME']);
                            }
@@ -366,7 +376,8 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
                               LEFT JOIN `glpi_printers` on `glpi_printers`.`id`=`items_id`
                               WHERE `computers_id`='".$computer_id."'
                                  AND `itemtype`='Printer'";
-                           if ($result_printer = $DB->query($query_printer)) {
+                           $result_printer = $DB->query($query_printer);
+                           if ($result_printer) {
                               if ($DB->numrows($result_printer) == 0) {
                                  $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['help'][28], $a_sectiontmp['NAME']);
                               }
@@ -380,7 +391,8 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
                            LEFT JOIN `glpi_printers` on `glpi_printers`.`id`=`items_id`
                            WHERE `computers_id`='".$computer_id."'
                               AND `itemtype`='Printer'";
-                        if ($result_printer = $DB->query($query_printer)) {
+                        $result_printer = $DB->query($query_printer);
+                        if ($result_printer) {
                            if ($DB->numrows($result_printer) == 0) {
                               $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['help'][28], $a_sectiontmp['NAME']);
                            }
@@ -404,7 +416,8 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
                               LEFT JOIN `glpi_peripherals` on `glpi_peripherals`.`id`=`items_id`
                               WHERE `computers_id`='".$computer_id."'
                                  AND `itemtype`='Peripherals'";
-                           if ($result_peripheral = $DB->query($query_peripheral)) {
+                           $result_peripheral = $DB->query($query_peripheral);
+                           if ($result_peripheral) {
                               if ($DB->numrows($result_peripheral) == 0) {
                                  $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['help'][28], $a_sectiontmp['NAME']);
                               }
@@ -418,7 +431,8 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
                            LEFT JOIN `glpi_peripherals` on `glpi_peripherals`.`id`=`items_id`
                            WHERE `computers_id`='".$computer_id."'
                               AND `itemtype`='Peripheral'";
-                        if ($result_peripheral = $DB->query($query_peripheral)) {
+                        $result_peripheral = $DB->query($query_peripheral);
+                        if ($result_peripheral) {
                            if ($DB->numrows($result_peripheral) == 0) {
                               $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['help'][28], $a_sectiontmp['NAME']);
                            }
@@ -469,6 +483,8 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
          $a_itemtypes[] = 'MONITORS';
          $a_itemtypes[] = 'PRINTERS';
          $a_itemtypes[] = 'USBDEVICES';
+         $a_sectionsGLPI = array();
+         $itemtype = '';
          
          foreach($a_itemtypes as $sectionName) {
             
@@ -688,6 +704,7 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
    }
 
 
+   
    function displaySectionNotValid($computers_id, $sectionname, $name, $value='',$onlyGLPI = 0) {
       $text = "<tr class='tab_bg_1'>";
       $text .= "<td>";
@@ -712,7 +729,14 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       return $text;
    }
 
+   
 
+   /**
+    * Import sections of XML of agent because not in GLPI 
+    * 
+    * @param type $import list of sections to import into GLPI
+    * 
+    */
    function Import($import) {
       global $DB;
 
@@ -752,10 +776,15 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
    }
 
 
+
+   /**
+    * Delete fields in GLPI because not present in XML of agent
+    * 
+    * @param type $import list of fields/items to delete in GLPI
+    * 
+    */
    function deleteGLPI($import) {
       global $DB;
-
-      $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
 
       $split = explode("/", $import);
       $items_id = $split[0];
@@ -768,8 +797,6 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
          $class = new $itemtype();
          $class->delete(array('id'=>$items_id), 1);
       }
-      
-
    }
    
 }

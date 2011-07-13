@@ -85,19 +85,21 @@ class PluginFusinvinventoryLib extends CommonDBTM {
 
       //if ($internalId = $this->isMachineExist()) {
          // Get internal ID with $items_id
+         $a_serialized = array();
          $query = "SELECT * FROM `glpi_plugin_fusinvinventory_libserialization`
                    WHERE `computers_id`='".$items_id."'
                    LIMIT 1";
-         if ($result = $DB->query($query)) {
+         $result = $DB->query($query);
+         if ($result) {
             if ($DB->numrows($result) == '1') {
                $a_serialized = $DB->fetch_assoc($result);
             }
          }
+         $internalId = uniqid();
          if (isset($a_serialized['internal_id'])) {
             $internalId = $a_serialized['internal_id'];
          } else {
             // Importer les donnes de GLPI dans le xml
-            $internalId = uniqid();
             $PluginFusinvinventoryInventory = new PluginFusinvinventoryInventory();
             $PluginFusinvinventoryInventory->createMachineInLib($items_id, $internalId);
          }
@@ -108,7 +110,8 @@ class PluginFusinvinventoryLib extends CommonDBTM {
 
          // Transfer agent entity
          $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-         if ($agent_id = $PluginFusioninventoryAgent->getAgentWithComputerid($items_id)) {
+         $agent_id = $PluginFusioninventoryAgent->getAgentWithComputerid($items_id);
+         if ($agent_id) {
             $PluginFusioninventoryAgent->getFromDB($agent_id);
             if ($PluginFusioninventoryAgent->getEntityID() != $_SESSION["plugin_fusinvinventory_entity"]) {
                $input = array();
@@ -148,7 +151,8 @@ class PluginFusinvinventoryLib extends CommonDBTM {
 
             // Transfer agent entity
             $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-            if ($agent_id = $PluginFusioninventoryAgent->getAgentWithComputerid($items_id)) {
+            $agent_id = $PluginFusioninventoryAgent->getAgentWithComputerid($items_id);
+            if ($agent_id) {
                $PluginFusioninventoryAgent->getFromDB($agent_id);
                if ($PluginFusioninventoryAgent->getEntityID() 
                      != $_SESSION["plugin_fusinvinventory_entity"]) {
@@ -235,7 +239,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       $queryInsert = "INSERT INTO `glpi_plugin_fusinvinventory_libserialization` 
                       ( `internal_id` , `computers_id`)
                       VALUES ('" . $internalId . "' , '".$externalId."')";
-      $resultInsert = mysql_query($queryInsert);
+      mysql_query($queryInsert);
   }
 
 
@@ -292,7 +296,6 @@ class PluginFusinvinventoryLib extends CommonDBTM {
 
       //updated section: process
       if($sectionsToRemove && $sectionsToAdd) {
-         $sectionsToAddTmp = array();
          $datasToUpdate = array();
          $existUpdate = 0;
          foreach($sectionsToRemove as $sectionId => $serializedSectionToRemove) {

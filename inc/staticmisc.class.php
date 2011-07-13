@@ -48,6 +48,7 @@ class PluginFusinvinventoryStaticmisc {
    static function task_methods() {
       global $LANG;
 
+      $methods = array();
       $methods[] =  array('module'         => 'fusinvinventory',
                           'method'         => 'inventory',
                           'selection_type' => 'devices',
@@ -65,6 +66,8 @@ class PluginFusinvinventoryStaticmisc {
         return $methods;
    }
 
+   
+   
    /**
    * Display menu of this plugin
    *
@@ -125,6 +128,8 @@ class PluginFusinvinventoryStaticmisc {
                          'name'    => $LANG['plugin_fusinvinventory']['vmwareesx'][0]));
    }
    
+   
+   
    static function credential_types() {
      global $LANG;
  
@@ -143,7 +148,7 @@ class PluginFusinvinventoryStaticmisc {
 
 
    /**
-   * Get types of datas available to select for taskjob definition for WakeOnLan method
+   * Get types of datas available to select for taskjob definition for ESX method
    *
    * @param $a_itemtype array types yet added for definitions
    *
@@ -156,6 +161,8 @@ class PluginFusinvinventoryStaticmisc {
                     'PluginFusioninventoryCredentialIp' => PluginFusioninventoryCredentialIp::getTypeName());
    }
 
+   
+   
    /**
    * Get all devices of definition type 'Computer' defined in task_definitiontype_wakeonlan
    *
@@ -194,6 +201,8 @@ class PluginFusinvinventoryStaticmisc {
                     'PluginFusioninventoryAgent' => $LANG['plugin_fusioninventory']['profile'][2]);
    }
 
+   
+   
    /**
    * Get all devices of definition type 'Computer' defined in task_definitiontype_wakeonlan
    *
@@ -208,7 +217,6 @@ class PluginFusinvinventoryStaticmisc {
 
       $module = new PluginFusioninventoryAgentmodule();
       $module_infos = $module->getActivationExceptions('esx');
-      $agent = new PluginFusioninventoryAgent();
       $exceptions = json_decode($module_infos['exceptions'],true);
 
       $in = "";
@@ -231,6 +239,7 @@ class PluginFusinvinventoryStaticmisc {
       return Dropdown::showFromArray('actionselectiontoadd',$credentialips);
    }
    
+
    
    static function task_actionselection_PluginFusioninventoryAgent_ESX() {
       global $LANG;

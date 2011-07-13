@@ -77,13 +77,15 @@ class PluginFusinvinventoryLock {
                $query = "SELECT * FROM `glpi_plugin_fusinvinventory_libserialization`
                   WHERE `computers_id`='".$item->fields['items_id']."'
                      LIMIT 1";
-               if ($result = $DB->query($query)) {
+               $result = $DB->query($query);
+               if ($result) {
                   if ($DB->numrows($result) == '1') {
                      $a_serialized = $DB->fetch_assoc($result);
                      $infoSections = $PluginFusinvinventoryLib->_getInfoSections($a_serialized['internal_id']);
 
                      // Modify fields
                      $table = getTableNameForForeignKeyField($datas['glpiField']);
+                     $itemtypeLink = "";
                      if ($table != "") {
                         $itemtypeLink = getItemTypeForTable($table);
                      }
@@ -118,6 +120,7 @@ class PluginFusinvinventoryLock {
                            }
                         }
                      } else if ($table != "") {
+                        $vallib = '';
                         $libunserialized = unserialize($infoSections["sections"][$datas['xmlSection']."/".$item->fields['items_id']]);
                         if ($datas['xmlSectionChild'] == "TYPE") {
                            if ($libunserialized[$datas['xmlSectionChild']] != "") {
@@ -174,7 +177,7 @@ class PluginFusinvinventoryLock {
       while ($data=$DB->fetch_array($result)) {
          $a_ocslocks = importArrayFromDB($data['computer_update']);
          $a_fields = array();
-         foreach ($a_ocslocks as $num=>$field) {
+         foreach ($a_ocslocks as $field) {
             if (!strstr($field, "_version")
                   AND $field != "date_mod") {
                

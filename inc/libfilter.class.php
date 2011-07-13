@@ -56,19 +56,6 @@ class PluginFusinvinventoryLibfilter extends CommonDBTM {
                 }
 
             break;
-//
-//            case 'NETWORKS':
-//                if(isset($section->MACADDR) AND $section->MACADDR != '') {
-//                    //Mac address is locally or universal ?
-//                    $msByte = substr($section->MACADDR, 0, 2);
-//                    $msBin = decbin(hexdec($msByte));
-//                    if (substr($msBin, -2, 1) != 1) {
-//                        //second bit isn't 1, the mac address isn't locally
-//                        $manufacturer = self::_getDataFromMACADDR($section->MACADDR);
-//                        $section->addChild('MANUFACTURER', $manufacturer);
-//                    }
-//                }
-//            break;
 
             case 'USBDEVICES':
                 if(isset($section->VENDORID) AND $section->VENDORID != ''
@@ -91,12 +78,14 @@ class PluginFusinvinventoryLibfilter extends CommonDBTM {
         return false;
     }
 
+    
+    
     /**
     * get manufacturer from pciid
     * 
     * @param $pciid value id of the PCI (vendor identifiant)
     *
-    * return manufacturer name or nothing
+    * @return manufacturer name or nothing
     *
     */
     private static function _getDataFromPCIID($pciid) {
@@ -118,27 +107,8 @@ class PluginFusinvinventoryLibfilter extends CommonDBTM {
       }
     }
 
-    /**
-    * get data from macaddr
-    * @access private
-    * @param string $macaddr
-    */
-//    private static function _getDataFromMACADDR($macaddr) {
-//
-//        $macOUI = substr($macaddr, 0, 8);
-//
-//        $dataPath = sprintf('%s/%s/%s/%s',
-//        LIBSERVERFUSIONINVENTORY_STORAGELOCATION,
-//        "DataFilter",
-//        "oui",
-//        strtoupper($macOUI));
-//
-//        if (is_dir($dataPath)) {
-//            $manufacturer = scandir($dataPath);
-//
-//            return $manufacturer[2];
-//        }
-//    }
+    
+    
 
    /**
    * get data from vendorid and productid USB

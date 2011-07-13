@@ -49,6 +49,8 @@ class PluginFusinvinventoryLibhook {
        $_SESSION["plugin_fusinvinventory_userdefined"] = 0;
     }
 
+    
+    
     /**
     * create a new computer in GLPI (computer create before but populate it here)
     *
@@ -693,7 +695,6 @@ class PluginFusinvinventoryLibhook {
       $computer_type = '';
       foreach($data as $section) {
          $array = explode("/", $section['sectionId']);
-         $items_id = $array[1];
          $sectionName = $array[0];
          if ($sectionName == 'HARDWARE') {
             $dataSection = unserialize($section['dataSection']);
