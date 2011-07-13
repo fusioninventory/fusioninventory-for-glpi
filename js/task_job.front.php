@@ -354,7 +354,7 @@ var taskJobForm = new Ext.FormPanel({
          triggerAction: 'all',
          editable: true,
          forceSelection: false,
-         style: 'margin-bottom:10px',
+         style: 'margin-bottom:5px',
          store: new Ext.data.Store({
             url: '../ajax/task_job_actions.data.php',
             baseParams: {
@@ -372,14 +372,15 @@ var taskJobForm = new Ext.FormPanel({
          xtype: 'textarea',
          name: 'comment',
          hiddenName: 'comment',
-         width: {$field_width}
+         width: {$field_width},
+         height:45
       }, {
          xtype:'fieldset',
          title: '{$LANG['plugin_fusinvdeploy']['task'][14]}',
          collapsed: true,
          checkboxToggle:true,
          autoHeight:true,
-         style:'margin-top:10px',
+         style:'margin-top:5px',
          items :[
             new Ext.ux.form.SpinnerField({
                fieldLabel: "{$LANG['plugin_fusioninventory']['task'][24]}",

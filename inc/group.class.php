@@ -233,7 +233,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
                $nb = $DB->numrows($result_linked);
 
 
-               for ($prem=true ; $data=$DB->fetch_assoc($result_linked) ; $prem=false) {
+               while ($data=$DB->fetch_assoc($result_linked)) {
                   $ID = "";
                   if ($_SESSION["glpiis_ids_visible"] || empty($data["name"])) {
                      $ID = " (".$data["id"].")";
@@ -250,10 +250,8 @@ class PluginFusinvdeployGroup extends CommonDBTM {
                      echo "<td width='10'>";
                      echo "<input type='checkbox' name='item[".$data["IDD"]."]' value='1' $sel></td>";
                   }
-                  if ($prem) {
-                     echo "<td class='center top' rowspan='$nb'>".$item->getTypeName().
-                           ($nb>1?"&nbsp;:&nbsp;$nb</td>":"</td>");
-                  }
+
+                  echo "<td class='center top'>".$item->getTypeName()."</td>";
                   echo "<td class='center".
                          (isset($data['is_deleted']) && $data['is_deleted'] ? " tab_bg_2_2'" : "'");
                   echo ">".$name."</td>";
@@ -271,14 +269,14 @@ class PluginFusinvdeployGroup extends CommonDBTM {
 
 
       echo "<tr class='tab_bg_2'>";
-      echo "<td class='center' colspan='2'>".($totalnb>0? $LANG['common'][33].
-             "&nbsp;=&nbsp;$totalnb</td>" : "&nbsp;</td>");
+      echo "<td class='center' colspan='2'><b>".($totalnb>0? $LANG['common'][33].
+             "&nbsp;=&nbsp;$totalnb</b></td>" : "&nbsp;</b></td>");
       echo "<td colspan='4'>&nbsp;</td></tr> ";
 
       if ($canedit && $totalnb > 0) {
          echo "</table>";
 
-         openArrowMassive("contract_form$rand", true);
+         openArrowMassive("group_form$rand", true);
          echo "<input type='hidden' name='groups_id' value='$groupID'>";
          closeArrowMassive('deleteitem', $LANG['buttons'][6]);
 
@@ -289,7 +287,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
 
       echo "</div></form>";
 
-      echo "<form name='group_search' method='POST' action='"
+      echo "<form name='group_search' id='group_search' method='POST' action='"
          .$CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/front/group.form.php'>";
       echo "<input type='hidden' name='groupID' value='$groupID' />";
       echo "<input type='hidden' name='type' value='static' />";
@@ -495,6 +493,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
 
       echo "<div class='center'>";
       echo "<table class='tab_cadrehov'>";
+
       echo "<thead><tr>";
       if ($type == 'static') echo "<th></th>";
       echo "<th>".$LANG['common'][16]."</th>";
