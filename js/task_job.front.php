@@ -402,10 +402,9 @@ var taskJobForm = new Ext.FormPanel({
       }
    }],
    loadData : function(rec) {
-      loadActionSelection();
-
       taskJobForm.record = rec;
       taskJobForm.getForm().loadRecord(rec);
+      loadActionSelection();
    }
 });
 
@@ -432,13 +431,22 @@ function taskJobFormSave() {
 //
 function loadActionSelection () {
    var action_selection = Ext.ComponentMgr.get('action_selection');
+   var action_selectionValue = action_selection.getValue();
    var action_type = Ext.ComponentMgr.get('action_type');
+
    var action_selectionStore = action_selection.getStore();
    action_selectionStore.setBaseParam('type', action_type.getValue());
    action_selectionStore.removeAll();
+
+   //reload store and set value on combobox
+   action_selectionStore.on("load", function() {
+      action_selection.setValue(action_selectionValue);
+   });
+   action_selectionStore.reload();
+
    // force the reload on trigger
    action_selection.lastQuery = null;
-   action_selection.setValue('');
+
 }
 
 
