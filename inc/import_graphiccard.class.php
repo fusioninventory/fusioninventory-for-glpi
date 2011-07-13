@@ -48,7 +48,7 @@ class PluginFusinvinventoryImport_Graphiccard extends CommonDBTM {
    *     - if update : id of the graphic card
    * @param $dataSection array all values of the section
    *
-   *@return id of the graphic card or false
+   * @return id of the graphic card or false
    *
    **/
    function AddUpdateItem($type, $items_id, $dataSection) {
@@ -116,7 +116,7 @@ class PluginFusinvinventoryImport_Graphiccard extends CommonDBTM {
    * @param $items_id integer id of the graphic card
    * @param $idmachine integer id of the computer
    *
-   *@return nothing
+   * @return nothing
    *
    **/
    function deleteItem($items_id, $idmachine) {

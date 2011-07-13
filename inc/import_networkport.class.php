@@ -49,7 +49,7 @@ class PluginFusinvinventoryImport_Networkport extends CommonDBTM {
    * @param $dataSection array all values of the section
    * @param $itemtype value name of the type of item
    *
-   *@return id of the network port or false
+   * @return id of the network port or false
    *
    **/
    function AddUpdateItem($type, $items_id, $dataSection, $itemtype='Computer') {
@@ -125,7 +125,7 @@ class PluginFusinvinventoryImport_Networkport extends CommonDBTM {
    * @param $items_id integer id of the network port
    * @param $idmachine integer id of the computer
    *
-   *@return nothing
+   * @return nothing
    *
    **/
    function deleteItem($items_id, $idmachine) {

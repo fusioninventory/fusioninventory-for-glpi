@@ -48,7 +48,7 @@ class PluginFusinvinventoryImport_Monitor extends CommonDBTM {
    *     - if update : id of the monitor
    * @param $dataSection array all values of the section
    *
-   *@return id of the monitor or false
+   * @return id of the monitor or false
    *
    **/
    function AddUpdateItem($type, $items_id, $dataSection) {
@@ -171,7 +171,7 @@ class PluginFusinvinventoryImport_Monitor extends CommonDBTM {
    * @param $items_id integer id of the monitor
    * @param $idmachine integer id of the computer
    *
-   *@return nothing
+   * @return nothing
    *
    **/
    function deleteItem($items_id, $idmachine) {

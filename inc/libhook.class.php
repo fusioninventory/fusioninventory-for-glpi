@@ -674,7 +674,7 @@ class PluginFusinvinventoryLibhook {
    * @param $data array of each sections
    * @param $idmachine integer id of the GLPI Computer
    *
-   *@return nothing
+   * @return nothing
    *
    **/
     public static function updateSections($data, $idmachine) {
@@ -946,7 +946,7 @@ class PluginFusinvinventoryLibhook {
    *
    * @param $items_id integer id of the computer
    *
-   *@return nothing
+   * @return nothing
    *
    **/
     function writeXMLFusion($items_id) {
@@ -970,7 +970,7 @@ class PluginFusinvinventoryLibhook {
    /**
    * Define Mapping for unlock fields
    *
-   *@return array of the mapping
+   * @return array of the mapping
    *
    **/
     static function getMapping() {

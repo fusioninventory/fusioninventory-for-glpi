@@ -67,7 +67,7 @@ class PluginFusinvinventoryInventory {
    * @param $p_CONTENT XML code of the Computer
    * @param $p_CONTENT XML code of all agent have sent
    *
-   *@return nothing
+   * @return nothing
    *
    **/
    function sendCriteria($p_DEVICEID, $p_CONTENT, $p_xml) {

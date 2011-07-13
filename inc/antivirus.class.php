@@ -73,7 +73,7 @@ class PluginFusinvinventoryAntivirus extends CommonDBTM {
    * @param $items_id integer ID of the antivirus
    * @param $options array
    *
-   *@return bool true if form is ok
+   * @return bool true if form is ok
    *
    **/
    function showForm($items_id, $options=array()) {
@@ -157,7 +157,7 @@ class PluginFusinvinventoryAntivirus extends CommonDBTM {
    *
    * @param $items_id integer id of the computer
    *
-   *@return nothing
+   * @return nothing
    *
    **/
    static function cleanComputer($items_id) {

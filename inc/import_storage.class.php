@@ -48,7 +48,7 @@ class PluginFusinvinventoryImport_Storage extends CommonDBTM {
    *     - if update : id of the storage
    * @param $dataSection array all values of the section
    *
-   *@return id of the storage or false
+   * @return id of the storage or false
    *
    **/
    function AddUpdateItem($type, $items_id, $dataSection) {
@@ -153,7 +153,7 @@ class PluginFusinvinventoryImport_Storage extends CommonDBTM {
    * @param $items_id integer id of the storage
    * @param $idmachine integer id of the computer
    *
-   *@return nothing
+   * @return nothing
    *
    **/
    function deleteItem($items_id, $idmachine, $sectiondetail) {
@@ -189,7 +189,7 @@ class PluginFusinvinventoryImport_Storage extends CommonDBTM {
    *
    * @param $data array of the storage
    *
-   *@return "Drive" or "HardDrive" 
+   * @return "Drive" or "HardDrive" 
    *
    **/
    function getTypeDrive($data) {

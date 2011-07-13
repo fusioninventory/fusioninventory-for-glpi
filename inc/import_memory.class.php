@@ -48,7 +48,7 @@ class PluginFusinvinventoryImport_Memory extends CommonDBTM {
    *     - if update : id of the memory
    * @param $dataSection array all values of the section
    *
-   *@return id of the memory or false
+   * @return id of the memory or false
    *
    **/
    function AddUpdateItem($type, $items_id, $dataSection) {
@@ -128,7 +128,7 @@ class PluginFusinvinventoryImport_Memory extends CommonDBTM {
    * @param $items_id integer id of the memory
    * @param $idmachine integer id of the computer
    *
-   *@return nothing
+   * @return nothing
    *
    **/
    function deleteItem($items_id, $idmachine) {

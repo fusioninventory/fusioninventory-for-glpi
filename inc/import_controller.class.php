@@ -48,7 +48,7 @@ class PluginFusinvinventoryImport_Controller extends CommonDBTM {
    *     - if update : id of the controller
    * @param $dataSection array all values of the section
    *
-   *@return id of the controller or false
+   * @return id of the controller or false
    *
    **/
    function AddUpdateItem($type, $items_id, $dataSection) {
@@ -111,7 +111,7 @@ class PluginFusinvinventoryImport_Controller extends CommonDBTM {
    * @param $items_id integer id of the controller
    * @param $idmachine integer id of the computer
    *
-   *@return nothing
+   * @return nothing
    *
    **/
    function deleteItem($items_id, $idmachine) {

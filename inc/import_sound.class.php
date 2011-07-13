@@ -48,7 +48,7 @@ class PluginFusinvinventoryImport_Sound extends CommonDBTM {
    *     - if update : id of the sound
    * @param $dataSection array all values of the section
    *
-   *@return id of the sound or false
+   * @return id of the sound or false
    *
    **/
    function AddUpdateItem($type, $items_id, $dataSection) {
@@ -114,7 +114,7 @@ class PluginFusinvinventoryImport_Sound extends CommonDBTM {
    * @param $items_id integer id of the sound
    * @param $idmachine integer id of the computer
    *
-   *@return nothing
+   * @return nothing
    *
    **/
    function deleteItem($items_id, $idmachine) {

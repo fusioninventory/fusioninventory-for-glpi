@@ -48,7 +48,7 @@ class PluginFusinvinventoryImport_Drive extends CommonDBTM {
    *     - if update : id of the drive
    * @param $dataSection array all values of the section
    *
-   *@return id of the drive or false
+   * @return id of the drive or false
    *
    **/
    function AddUpdateItem($type, $items_id, $dataSection) {
@@ -144,7 +144,7 @@ class PluginFusinvinventoryImport_Drive extends CommonDBTM {
    * @param $items_id integer id of the drive
    * @param $idmachine integer id of the computer
    *
-   *@return nothing
+   * @return nothing
    *
    **/
    function deleteItem($items_id, $idmachine) {

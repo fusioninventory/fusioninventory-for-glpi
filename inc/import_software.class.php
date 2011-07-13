@@ -45,7 +45,7 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
    * @param $idmachine integer id of the computer
    * @param $array array all values of the section
    *
-   *@return id of the software or false
+   * @return id of the software or false
    *
    **/
    function addSoftware($idmachine, $array) {
@@ -137,7 +137,7 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
    * @param $items_id integer id of the software
    * @param $idmachine integer id of the computer
    *
-   *@return nothing
+   * @return nothing
    *
    **/
    function deleteItem($items_id, $idmachine) {

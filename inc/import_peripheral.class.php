@@ -48,7 +48,7 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
    *     - if update : id of the peripheral
    * @param $dataSection array all values of the section
    *
-   *@return id of the peripheral or false
+   * @return id of the peripheral or false
    *
    **/
    function AddUpdateItem($type, $items_id, $dataSection) {
@@ -179,7 +179,7 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
    * @param $items_id integer id of the peripheral
    * @param $idmachine integer id of the computer
    *
-   *@return nothing
+   * @return nothing
    *
    **/
    function deleteItem($items_id, $idmachine) {

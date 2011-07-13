@@ -45,7 +45,7 @@ class PluginfusioninventoryWebservice {
    * @param $params array ID of the agent
    * @param $protocol value the communication protocol used
    *
-   *@return array or error value
+   * @return array or error value
    *
    **/
    static function methodTest($params, $protocol) {

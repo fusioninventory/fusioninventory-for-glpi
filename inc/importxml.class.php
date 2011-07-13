@@ -42,7 +42,7 @@ class PluginFusinvinventoryImportXML extends CommonDBTM  {
    /**
    * Display form for import XML
    *
-   *@return bool true if form is ok
+   * @return bool true if form is ok
    *
    **/
    function showForm() {
@@ -101,7 +101,7 @@ class PluginFusinvinventoryImportXML extends CommonDBTM  {
    *
    * @param $p_xml value XML of the agent inventory
    *
-   *@return nothing
+   * @return nothing
    *
    **/
    function importXMLContent($p_xml) {
