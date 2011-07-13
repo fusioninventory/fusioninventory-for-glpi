@@ -35,8 +35,7 @@
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
 
-$group = new PluginFusinvdeployGroup;
-$res = $group->getAllDatas();
+$res = PluginFusinvdeployGroup::getAllDatas();
 
 echo $res;
 ?>

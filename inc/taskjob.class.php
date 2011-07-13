@@ -56,6 +56,7 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
 
       $nb   = $DB->numrows($res);
       $json  = array();
+      $temp_tasks = array();
       while($row = $DB->fetch_assoc($res)) {
          $row['packages'] = importArrayFromDB($row['definition']);
          $row['actions'] = importArrayFromDB($row['action']);
@@ -189,8 +190,7 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
                   $res = json_encode($res);
                   break;
                case 'PluginFusinvdeployGroup':
-                  $group = new PluginFusinvdeployGroup;
-                  $res = $group->getAllDatas('action_selections');
+                  $res = PluginFusinvdeployGroup::getAllDatas('action_selections');
                   break;
             }
 

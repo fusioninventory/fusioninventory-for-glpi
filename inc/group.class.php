@@ -520,11 +520,11 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       echo "</div>";
    }
 
-   function getAllDatas($root = 'groups')  {
+   static function getAllDatas($root = 'groups')  {
       global $DB;
 
       $sql = " SELECT id, name
-               FROM `".$this->getTable()."`
+               FROM glpi_plugin_fusinvdeploy_groups
                ORDER BY name";
 
       $res  = $DB->query($sql);
