@@ -227,10 +227,14 @@ var taskJobGrid = new Ext.grid.GridPanel({
       iconCls: 'exticon-add',
       handler: function(btn,ev) {
          var u = new taskJobStore.recordType({
-            group_id:            '',
-            package_id:          '',
-            retry_nb:            0,
-            retry_time:          0
+            package_id:'',
+            retry_nb:0,
+            retry_time:0,
+            action_type:'',
+            action_selection:'',
+            comment: '',
+            action_name : '',
+            method: ''
          });
          taskJobStore.insert(0,u);
          taskJobGrid.getSelectionModel().selectFirstRow();
