@@ -36,8 +36,12 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusinvinventoryAntivirus extends CommonDBTM {
+class PluginFusinvinventoryAntivirus extends CommonDBChild {
    
+   // From CommonDBChild
+   public $itemtype  = 'Computer';
+   public $items_id  = 'computers_id';
+   public $dohistory = true;
    
    static function getTypeName() {
       global $LANG;
@@ -65,8 +69,26 @@ class PluginFusinvinventoryAntivirus extends CommonDBTM {
       return true;
    }
 
+   
+   
+   function getSearchOptions() {
+      global $LANG;
 
+      $tab = array();
+      $tab['common'] = $LANG['common'][32];
 
+      $computer = new Computer();
+      
+      $tab[1]['table']         = $this->getTable();
+      $tab[1]['field']         = 'version';
+      $tab[1]['name']          = $LANG["common"][16];
+      $tab[1]['type']          = 'text';
+      
+      return $tab;
+   }
+      
+      
+      
    /**
    * Display form for antivirus
    *
