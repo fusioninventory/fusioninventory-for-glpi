@@ -299,8 +299,8 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          $datasToUpdate = array();
          $existUpdate = 0;
          foreach($sectionsToRemove as $sectionId => $serializedSectionToRemove) {
-            $sectionName=substr($infoSections["sections"][$sectionId], 
-                                strpos($infoSections["sections"][$sectionId], '}')+1);
+            $sectionName=substr(strrchr($infoSections["sections"][$sectionId], "}"), 1 );
+            
             if (in_array($sectionName, $a_sections)) {
                foreach($sectionsToAdd as $arrayId => $serializedSectionToAdd) {
                   //check if we have the same section Name for an sectionToRemove and an sectionToAdd
@@ -310,7 +310,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                      if (!unserialize($serializedSectionToAdd)) {
                         //logInFile('serialise', $serializedSectionToAdd);
                      }
-                                          $arrSectionToAdd = unserialize($serializedSectionToAdd);
+                     $arrSectionToAdd = unserialize($serializedSectionToAdd);
                      if (!unserialize($serializedSectionToRemove)) {
                         //logInFile('serialise', $serializedSectionToRemove);
                      }
