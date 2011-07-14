@@ -267,6 +267,8 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       $a_sections[] = "VIDEOS";
       $a_sections[] = "USBDEVICES";
       $a_sections[] = "CPUS";
+      $a_sections[] = "ANTIVIRUS";
+      
       // Retrieve all sections stored in info file
       $infoSections = $this->_getInfoSections($internalId);
       // Retrieve all sections from xml file
@@ -275,7 +277,6 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       foreach($xmlSections as $xmlSection) {
          array_push($serializedSectionsFromXML, $xmlSection["sectionDatawName"]);
       }
-
       //Retrieve changes, sections to Add and sections to Remove
       $sectionsToAdd = array_diff($serializedSectionsFromXML, $infoSections["sections"]);
       $sectionsToRemove = array_diff($infoSections["sections"], $serializedSectionsFromXML);
@@ -495,6 +496,13 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                                  AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]
                                  AND isset($arrSectionToAdd['MANUFACTURER']) AND isset($arrSectionToRemove['MANUFACTURER'])
                                  AND isset($arrSectionToAdd['MANUFACTURER']) == isset($arrSectionToRemove['MANUFACTURER'])) {
+                              $boolUpdate = true;
+                           }
+                           break;
+                           
+                        case "ANTIVIRUS":
+                           $split = explode("/", $sectionId);
+                           if ($split[1] > 0) {
                               $boolUpdate = true;
                            }
                            break;
