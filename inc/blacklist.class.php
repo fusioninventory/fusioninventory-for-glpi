@@ -259,7 +259,17 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
                   }
                }
               break;
-            
+
+           case 'manufacturer':
+               $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
+
+               foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
+                  if ((isset($xml->CONTENT->BIOS->SMANUFACTURER)) AND ($xml->CONTENT->BIOS->SMANUFACTURER == $blacklist_data['value'])) {
+                     $xml->CONTENT->BIOS->SMANUFACTURER = "";
+                  }
+               }
+              break;
+              
          }
       }
       // Blacklist mac of "miniport*" for windows because have same mac as principal network ports

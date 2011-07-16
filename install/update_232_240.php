@@ -105,6 +105,20 @@ function update232to240() {
             $DB->query($sql_line)/* or die($DB->error())*/;
          }
       }
-   }   
+   }
+   
+   // Udpate criteria for blacklist
+   $sql = "SELECT * FROM `glpi_plugin_fusinvinventory_criterias`
+      WHERE `name`='Manufacturer'";
+   $result = $DB->query($query);
+   if ($DB->numrows($result) == '0') {
+      $query_ins = "INSERT INTO `glpi_plugin_fusinvinventory_criterias` (`name`, `comment`) VALUES
+         ('Manufacturer', 'manufacturer')";
+      $id = $DB->query($query_ins);
+      $query_ins = "INSERT INTO `glpi_plugin_fusinvinventory_blacklists` (`plugin_fusioninventory_criterium_id`, `value`) VALUES
+         ('".$id."', 'System manufacturer')";
+   }
+   
+   
 }
 ?>

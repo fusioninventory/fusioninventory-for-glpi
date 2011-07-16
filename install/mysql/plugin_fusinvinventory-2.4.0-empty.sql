@@ -63,8 +63,8 @@ INSERT INTO `glpi_plugin_fusinvinventory_criterias` (`id`, `name`, `comment`) VA
 (6, 'storage serial', 'storagesSerial'),
 (7, 'drives serial', 'drivesSerial'),
 (8, 'Asset Tag', 'assetTag'),
-(9, 'Computer name', 'name');
-
+(9, 'Computer name', 'name'),
+(10, 'Manufacturer', 'manufacturer');
 
 INSERT INTO `glpi_plugin_fusinvinventory_blacklists` (`id`, `plugin_fusioninventory_criterium_id`, `value`) VALUES
 (1, 3, '50:50:54:50:30:30'),
@@ -109,7 +109,8 @@ INSERT INTO `glpi_plugin_fusinvinventory_blacklists` (`id`, `plugin_fusioninvent
 (40, 5, 'System Product Name'),
 (41, 5, 'Product Name'),
 (42, 5, 'System Name'),
-(43, 2, 'FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF');
+(43, 2, 'FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF'),
+(44, 10, 'System manufacturer');
 
 INSERT INTO `glpi_displaypreferences` (`itemtype`, `num`, `rank`, `users_id`) VALUES
 ('PluginFusinvinventoryBlacklist', 2, 1, 0);
