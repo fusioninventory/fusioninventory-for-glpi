@@ -36,12 +36,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusinvinventoryAntivirus extends CommonDBChild {
-   
-   // From CommonDBChild
-   public $itemtype  = 'Computer';
-   public $items_id  = 'computers_id';
-   public $dohistory = true;
+class PluginFusinvinventoryAntivirus extends CommonDBTM {
    
    static function getTypeName() {
       global $LANG;
@@ -76,18 +71,34 @@ class PluginFusinvinventoryAntivirus extends CommonDBChild {
 
       $tab = array();
       $tab['common'] = $LANG['common'][32];
-
-      $computer = new Computer();
       
       $tab[1]['table']         = $this->getTable();
       $tab[1]['field']         = 'version';
-      $tab[1]['name']          = $LANG["common"][16];
+      $tab[1]['name']          = "Version";
       $tab[1]['type']          = 'text';
       
       return $tab;
    }
       
+   
+   
+   function addHistory($item){
+      global $LANG;
       
+      foreach ($item->oldvalues as $field=>$old_value) {
+         $changes = array();
+         $changes[0] = 0;
+         $changes[1] = '';
+         $changes[2] = "Antivirus.".$field." : ".$old_value." --> ".$item->fields[$field];
+         Log::history($item->fields['computers_id'], 
+                     "Computer", 
+                     $changes, 
+                     'PluginFusinvinventoryAntivirus', 
+                     HISTORY_LOG_SIMPLE_MESSAGE);         
+      }
+   }
+   
+   
       
    /**
    * Display form for antivirus
