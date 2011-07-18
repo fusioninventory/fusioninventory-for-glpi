@@ -35,11 +35,11 @@
 // ----------------------------------------------------------------------
 global $LANG;
 
-$width_right                  = 590;
-$height_right                 = 350;
+$width_left                  = 590;
+$height_left                 = 350;
 
-$width_left                   = 340;
-$height_left                  = 350;
+$width_right                  = 340;
+$height_right                 = 350;
 $width_left_fieldset          = $width_left-19;
 $width_left_fieldset_default  = $width_left-125;
 
@@ -207,9 +207,9 @@ action_typeStore.load();
 var taskJobGrid = new Ext.grid.GridPanel({
    region: 'center',
    stripeRows: true,
-   height: {$height_right},
-   width: {$width_right},
-   style:'margin-bottom:5px',
+   height: {$height_left},
+   width: {$width_left},
+   style: 'margin-bottom:5px',
    columns: taskJobColumns,
    store: taskJobStore,
    title: '{$LANG['plugin_fusinvdeploy']['task'][13]}',
@@ -290,7 +290,7 @@ var taskJobForm = new Ext.FormPanel({
    labelWidth: {$label_width},
    bodyStyle:'padding:5px 10px',
    style:'margin-left:5px;margin-bottom:5px',
-   width: {$width_left},
+   width: {$width_right},
    title: '{$LANG['plugin_fusinvdeploy']['task'][11]}',
    items: [
       new Ext.form.ComboBox({

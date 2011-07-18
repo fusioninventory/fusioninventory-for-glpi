@@ -63,7 +63,7 @@ class PluginFusinvdeployTask extends CommonDBTM {
       $ong = array();
 
       if ($this->fields['id'] > 0) {
-         $ong[4] = $LANG['plugin_fusinvdeploy']['task'][7];
+         $ong[4] = $LANG['plugin_fusinvdeploy']['task'][13];
       } elseif ($this->fields['id'] == -1) {
          $ong[2] = $LANG['plugin_fusinvdeploy']['task'][1];
          $ong[3] = $LANG['plugin_fusinvdeploy']['task'][2];
@@ -124,12 +124,12 @@ class PluginFusinvdeployTask extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG["common"][16]."&nbsp;:</td>";
-      echo "<td align='center'>";
+      echo "<td>";
       echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
       echo "</td>";
 
       echo "<td>".$LANG['plugin_fusioninventory']['task'][14]."&nbsp;:</td>";
-      echo "<td align='center'>";
+      echo "<td>";
       if ($ID) {
          showDateTimeFormItem("date_scheduled",$this->fields["date_scheduled"],1,false);
       } else {
@@ -141,12 +141,12 @@ class PluginFusinvdeployTask extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['common'][60]."&nbsp;:</td>";
-      echo "<td align='center'>";
+      echo "<td>";
       Dropdown::showYesNo("is_active",$this->fields["is_active"]);
       echo "</td>";
 
       echo "<td>".$LANG['plugin_fusioninventory']['task'][17]."&nbsp;:</td>";
-      echo "<td align='center'>";
+      echo "<td>";
       Dropdown::showInteger("periodicity_count", $this->fields['periodicity_count'], 0, 300);
       $a_time = array();
       $a_time[] = "------";
@@ -160,7 +160,7 @@ class PluginFusinvdeployTask extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusioninventory']['task'][33]."&nbsp;:</td>";
-      echo "<td align='center'>";
+      echo "<td>";
       $com = array();
       $com['push'] = $LANG['plugin_fusioninventory']['task'][41];
       $com['pull'] = $LANG['plugin_fusioninventory']['task'][42];
@@ -168,7 +168,7 @@ class PluginFusinvdeployTask extends CommonDBTM {
       echo "</td>";
 
       echo "<td rowspan='3'>".$LANG['common'][25]."&nbsp;:</td>";
-      echo "<td align='center' rowspan='3'>";
+      echo "<td rowspan='3'>";
       echo "<textarea cols='45' rows='3' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "</td>";
       echo "</tr>";
@@ -210,18 +210,6 @@ class PluginFusinvdeployTask extends CommonDBTM {
       global $LANG, $CFG_GLPI;
 
        echo "<table class='deploy_extjs'>
-         <thead>
-            <tr>
-               <th colspan='2'>
-                  ".$LANG['plugin_fusinvdeploy']['task'][5]."
-                  <a href=\"javascript:showHideDiv('Task','taskimg',
-                     '".$CFG_GLPI["root_doc"]."/pics/deplier_down.png',
-                     '".$CFG_GLPI["root_doc"]."/pics/deplier_up.png')\">
-                  <img alt='' name='taskimg'
-                     src='".$CFG_GLPI["root_doc"]."/pics/deplier_up.png'>
-               </th>
-            </tr>
-         </thead>
          <tbody>
             <tr>
                <td id='TaskJob'>

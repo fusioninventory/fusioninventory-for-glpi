@@ -40,17 +40,18 @@ include (GLPI_ROOT."/inc/includes.php");
 commonHeader($LANG['plugin_fusinvdeploy']["title"][0],$_SERVER["PHP_SELF"],"plugins",
              "fusioninventory","deploy");
 
-//PluginFusioninventoryProfile::checkRight("fusinvdeploy", "files","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
-
+/*
 if (!isset($_GET['sort'])) {
    $_GET['sort'] = 6;
    $_GET['order'] = 'DESC';
 }
 $_GET['target']="task.php";
 
-Search::show('PluginFusinvdeployTaskjob');
+Search::show('PluginFusinvdeployTaskjob');*/
+PluginFusinvdeployState::showTasks();
+
 
 commonFooter();
 
