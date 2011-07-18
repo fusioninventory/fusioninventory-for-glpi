@@ -147,7 +147,27 @@ function pluginFusinvsnmpUninstall() {
 
    $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
    $PluginFusioninventoryAgentmodule->deleteModule($plugins_id);
-
+   
+  // Clean mapping
+   $query = "DELETE FROM `glpi_plugin_fusioninventory_mappings`
+      WHERE `itemtype` = 'NetworkEquipment'";
+   $DB->query($query);
+   $query = "DELETE FROM `glpi_plugin_fusioninventory_mappings`
+      WHERE `itemtype` = 'Printer'";
+   $DB->query($query);
+   $query = "DELETE FROM `glpi_plugin_fusioninventory_mappings`
+      WHERE `itemtype` = 'Computer'
+         AND `name`='serial'";
+   $DB->query($query);
+   $query = "DELETE FROM `glpi_plugin_fusioninventory_mappings`
+      WHERE `itemtype` = 'Computer'
+         AND `name`='ifPhysAddress'";
+   $DB->query($query);
+   $query = "DELETE FROM `glpi_plugin_fusioninventory_mappings`
+      WHERE `itemtype` = 'Computer'
+         AND `name`='ifaddr'";
+   $DB->query($query);
+   
 
    $config = new PluginFusioninventoryConfig;
    $config->cleanConfig($plugins_id);
