@@ -511,6 +511,9 @@ INSERT INTO `glpi_plugin_fusioninventory_mappings`
 ## Network CDP (Walk)
           ('NetworkEquipment','cdpCacheAddress','','',409,NULL),
           ('NetworkEquipment','cdpCacheDevicePort','','',410,NULL),
+          ('NetworkEquipment','cdpCacheVersion','','',435,NULL),
+          ('NetworkEquipment','cdpCacheDeviceId','','',436,NULL),
+          ('NetworkEquipment','cdpCachePlatform','','',437,NULL),
           ('NetworkEquipment','lldpRemChassisId','','',431,NULL),
           ('NetworkEquipment','lldpRemPortId','','',432,NULL),
           ('NetworkEquipment','lldpLocChassisId','','',432,NULL),

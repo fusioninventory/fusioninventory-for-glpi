@@ -168,7 +168,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                } else {
 //               $errors.=$this->importDevice($child);
                   if (count($child) > 0) {
-                     $this->sendCriteria($this->sxml->DEVICEID, $child);
+                     $errors .= $this->sendCriteria($this->sxml->DEVICEID, $child);
                      $nbDevices++;
                   }
                }
@@ -1062,6 +1062,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
               'Function PluginFusinvsnmpCommunicationSNMPQuery->importConnection().');
       $errors='';
       $portID=''; $mac=''; $ip=''; $sysmac=''; $ifnumber='';
+      $sysdescr = '';
+      $sysname = '';
+      $model = '';
       $PluginFusinvsnmpSNMP = new PluginFusinvsnmpSNMP();
       if ($p_cdp==1) {
          $ifdescr='';
@@ -1084,6 +1087,18 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                case 'IFNUMBER': // LLDP Nortel
                   $ifnumber=(string)$child;
                   break;
+
+               case 'SYSDESCR': // CDP or LLDP
+                  $sysdescr = (string)$child;
+                  break;
+               
+               case 'SYSNAME': // CDP or LLDP
+                  $sysname = (string)$child;
+                  break;
+               
+               case 'MODEL': // CDP or LLDP
+                  $model = (string)$child;
+                  break;
                
                default :
                   $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CONNECTION (CDP='.$p_cdp.') : '
@@ -1091,7 +1106,12 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             }
          }
          if ($ip != '' AND $ifdescr!='') {
-            $portID=$PluginFusinvsnmpSNMP->getPortIDfromDeviceIP($ip, $ifdescr);
+            $portID=$PluginFusinvsnmpSNMP->getPortIDfromDeviceIP(
+                    $ip, 
+                    $ifdescr,
+                    $sysdescr,
+                    $sysname,
+                    $model);
          } else if($sysmac != '' AND $ifnumber!='') {
             $portID=$PluginFusinvsnmpSNMP->getPortIDfromSysmacandPortnumber($sysmac, $ifnumber);
          }
@@ -1224,6 +1244,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->sendCriteria().');
 
+      $errors = '';
+      
       // Manual blacklist
        if ((isset($p_CONTENT->INFO->SERIAL)) AND ($p_CONTENT->INFO->SERIAL == 'null')) {
           unset($p_CONTENT->INFO->SERIAL);
@@ -1282,11 +1304,12 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
               AND isset($data['action'])
               AND ($data['action'] == PluginFusioninventoryRuleImportEquipment::LINK_RESULT_CREATE)) {
 
-            $this->rulepassed(0, $input['itemtype']);
+            $errors .= $this->rulepassed(0, $input['itemtype']);
          } else {
-            $this->rulepassed(0, "PluginFusioninventoryUnknownDevice");
+            $errors .= $this->rulepassed(0, "PluginFusioninventoryUnknownDevice");
          }
       }
+      return $errors;
    }
 
 
@@ -1299,6 +1322,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
       $xml = simplexml_load_string($_SESSION['SOURCE_XMLDEVICE'],'SimpleXMLElement', LIBXML_NOCDATA);
 
+      $errors = '';
       $class = new $itemtype();
       if ($items_id == "0") {
          $input = array();
@@ -1334,8 +1358,12 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
                '[detail] Update '.$class->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
          $this->addtaskjoblog();
-         $this->importDevice($itemtype, $items_id);
+         $errors .= $this->importDevice($itemtype, $items_id);
       }
+      if ($errors != '') {
+         echo $errors;
+      }
+      return $errors;
    }
 
 

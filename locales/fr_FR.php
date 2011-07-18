@@ -271,7 +271,9 @@ $LANG['plugin_fusinvsnmp']['mapping'][427]="imprimante > compteur > nombre de pa
 $LANG['plugin_fusinvsnmp']['mapping'][428]="imprimante > compteur > nombre de pages couleur imprimées (copie)";
 $LANG['plugin_fusinvsnmp']['mapping'][429]="imprimante > compteur > nombre total de pages imprimées (fax)";
 $LANG['plugin_fusinvsnmp']['mapping'][430]="réseaux > port > vlan";
-
+$LANG['plugin_fusinvsnmp']['mapping'][435]="réseaux > CDP sysdescr distant";
+$LANG['plugin_fusinvsnmp']['mapping'][436]="réseaux > CDP id distant";
+$LANG['plugin_fusinvsnmp']['mapping'][437]="réseaux > CDP modèle du matériel distant";
 
 $LANG['plugin_fusinvsnmp']['mapping'][101]="";
 $LANG['plugin_fusinvsnmp']['mapping'][102]="";

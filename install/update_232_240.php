@@ -119,5 +119,14 @@ function update232to240() {
                    'threads_snmpquery'    => 1);
    $pluginFusioninventoryConfig = new PluginFusioninventoryConfig();
    $pluginFusioninventoryConfig->initConfig($plugins_id, $insert);
+   
+   // Update mapping:
+   $query ="INSERT INTO `glpi_plugin_fusioninventory_mappings`
+      (`itemtype`, `name`, `table`, `tablefield`, `locale`, `shortlocale`)
+   VALUES ('NetworkEquipment','cdpCacheVersion','','',435,NULL),
+          ('NetworkEquipment','cdpCacheDeviceId','','',436,NULL),
+          ('NetworkEquipment','cdpCachePlatform','','',437,NULL)";
+   $DB->query($query);
+   
 }
 ?>

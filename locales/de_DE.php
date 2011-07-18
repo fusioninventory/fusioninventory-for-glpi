@@ -271,7 +271,9 @@ $LANG['plugin_fusinvsnmp']['mapping'][427]="Drucker > Zähler > Total gedruckte 
 $LANG['plugin_fusinvsnmp']['mapping'][428]="Drucker > Zähler > Total gedruckte Kopien (Farbe)";
 $LANG['plugin_fusinvsnmp']['mapping'][429]="Drucker > Zähler > Total gedruckte Faxe";
 $LANG['plugin_fusinvsnmp']['mapping'][430]="Netzwerk > Port > VLAN";
-
+$LANG['plugin_fusinvsnmp']['mapping'][435]="networking > CDP remote sysdescr";
+$LANG['plugin_fusinvsnmp']['mapping'][436]="networking > CDP remote id";
+$LANG['plugin_fusinvsnmp']['mapping'][437]="networking > CDP remote model device";
 
 $LANG['plugin_fusinvsnmp']['mapping'][101]="";
 $LANG['plugin_fusinvsnmp']['mapping'][102]="";

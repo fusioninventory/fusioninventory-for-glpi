@@ -271,7 +271,9 @@ $LANG['plugin_fusinvsnmp']['mapping'][427]="printer > meter > number of printed 
 $LANG['plugin_fusinvsnmp']['mapping'][428]="printer > meter > number of printed color pages (copy)";
 $LANG['plugin_fusinvsnmp']['mapping'][429]="printer > meter > total number of printed pages (fax)";
 $LANG['plugin_fusinvsnmp']['mapping'][430]="networking > port > vlan";
-
+$LANG['plugin_fusinvsnmp']['mapping'][435]="networking > CDP remote sysdescr";
+$LANG['plugin_fusinvsnmp']['mapping'][436]="networking > CDP remote id";
+$LANG['plugin_fusinvsnmp']['mapping'][437]="networking > CDP remote model device";
 
 $LANG['plugin_fusinvsnmp']['mapping'][101]="";
 $LANG['plugin_fusinvsnmp']['mapping'][102]="";
