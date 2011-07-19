@@ -125,6 +125,7 @@ function plugin_get_headings_fusinvinventory($item,$withtemplate) {
                $LANG['plugin_fusioninventory']['xml'][0];
             $array[2] = $LANG['plugin_fusinvinventory']['antivirus'][0];
             $array[3] = $LANG['plugin_fusinvinventory']['menu'][4];
+            $array[4] = $LANG['plugin_fusinvinventory']['bios'][0];
          }
          return $array;
          break;
@@ -144,6 +145,7 @@ function plugin_headings_actions_fusinvinventory($item) {
          $array[1] = "plugin_headings_fusinvinventory_xml";
          $array[2] = "plugin_headings_fusinvinventory_antivirus";
          $array[3] = "plugin_headings_fusinvinventory_integrity";
+         $array[4] = "plugin_headings_fusinvinventory_bios";
          return $array;
          break;
       case 'PluginFusioninventoryCredentialIp':
@@ -198,6 +200,61 @@ function plugin_headings_fusinvinventory_antivirus($item) {
 function plugin_headings_fusinvinventory_integrity($item) {
    $pluginFusinvinventoryLibintegrity = new PluginFusinvinventoryLibintegrity();
    $pluginFusinvinventoryLibintegrity->showForm($item->getField('id'));
+}
+
+
+function plugin_headings_fusinvinventory_bios($item) {
+   global $DB,$LANG;
+   
+   if (get_class($item) == 'Computer') {
+      $bios=array(
+         'BMANUFACTURER'=>'',
+         'BVERSION'=>'',
+         'BDATE'=>'');
+
+      $pluginFusinvinventoryLib = new PluginFusinvinventoryLib();
+      $query = "SELECT internal_id FROM ".$pluginFusinvinventoryLib->getTable()." 
+         WHERE computers_id='".$item->fields['id']."'";
+      $result = $DB->query($query);
+      if($result AND $DB->numrows($result) > 0) {
+         $intid = $DB->result($result,0,'internal_id');
+         $infosSections = $pluginFusinvinventoryLib->_getInfoSections($intid);
+         if($infosSections) {
+            foreach($infosSections['sections'] as $key => $val) {
+               if(preg_match('/^BIOS/',$key)) {
+                  foreach(unserialize($val) as $k => $info) {
+                     if(isset($bios[$k])) {
+                        $bios[$k] = $info;
+                     }
+                  }
+               }
+            }
+         }
+         // Display form
+         echo '<div align="center">';
+         echo '<table class="tab_cadre_fixe" style="margin: 0; margin-top: 5px;">';
+         echo '<tr>';
+         echo '<th colspan="2">'.$LANG['plugin_fusinvinventory']['bios'][0].'</th>';
+         echo '</tr>';
+
+         echo '<tr class="tab_bg_1">';
+         echo '<td>'.$LANG['common'][27].'&nbsp;:</td>';
+         echo '<td>'.$bios['BDATE'].'</td>';
+         echo '</tr>';
+
+         echo '<tr class="tab_bg_1">';
+         echo '<td>'.$LANG['rulesengine'][78].'&nbsp;:</td>';
+         echo '<td>'.$bios['BVERSION'].'</td>';
+         echo '</tr>';
+
+         echo '<tr class="tab_bg_1">';
+         echo '<td>'.$LANG['common'][5].'&nbsp;:</td>';
+         echo '<td>'.$bios['BMANUFACTURER'].'</td>';
+         echo '</tr>';
+         echo '</table>';
+         echo '</div>';
+      }
+   }
 }
 
 

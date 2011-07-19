@@ -105,4 +105,6 @@ $LANG['plugin_fusinvinventory']['vmwareesx'][0]="Vmware host";
 $LANG['plugin_fusinvinventory']['integrity'][0]="Only in GLPI (check to delete)";
 $LANG['plugin_fusinvinventory']['integrity'][1]="Only in last inventory (check to import)";
 
+$LANG['plugin_fusinvinventory']['bios'][0]="Bios";
+
 ?>
