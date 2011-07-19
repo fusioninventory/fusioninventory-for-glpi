@@ -398,7 +398,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             case 'FIRMWARE' :
                if (!in_array('networkequipmentfirmwares_id', $a_lockable)) {
                   $firmware = (string)$p_info->FIRMWARE;
-                  if (strstr($firmware, "CW_VERSION")) {
+                  if (strstr($firmware, "CW_VERSION")
+                          OR strstr($firmware, "CW_INTERIM_VERSION")) {
                      $explode = explode("$", $firmware);
                      if (isset($explode[1])) {
                         $firmware = $explode[1];
