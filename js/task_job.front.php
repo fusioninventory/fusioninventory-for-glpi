@@ -117,7 +117,9 @@ var taskJobColumns =  [{
 }, {
    id: 'action_selection',
    dataIndex: 'action_selection',
-   renderer: renderActionSelection
+   groupRenderer: renderActionSelection,
+   renderer: renderActionSelection,
+   header: 'group'
 }, {
    id: 'modified',
    dataIndex: 'modified',
@@ -126,6 +128,7 @@ var taskJobColumns =  [{
 
 //define renderer for grid columns
 function renderActionSelection(val, metaData, record) {
+  // return val;
    switch (record.data.action_type) {
       case 'Computer':
          var img = '<img src="../pics/ext/computer.png">&nbsp;';
@@ -136,6 +139,7 @@ function renderActionSelection(val, metaData, record) {
       default:
          var img = '';
    }
+   //console.log(img+record.get('action_name'));
    return img+record.get('action_name');
 }
 function renderPackage(val) {
@@ -216,7 +220,6 @@ var taskJobGrid = new Ext.grid.GridPanel({
    view: new Ext.grid.GroupingView({
       forceFit:true,
       groupTextTpl: '<b>{text}</b>',
-      forceFit : true,
       hideGroupedColumn: true,
       showGroupName: false,
       emptyText: '',

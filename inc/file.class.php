@@ -152,7 +152,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
       $sha512 = $this->registerFile($repoPath, $file_tmp_name);
 
-
+      $file_id = false;
       if (!$testMode) { # NO SQL
          $file_id = $this->add(array(
                   'name'                          => $filename,
