@@ -125,7 +125,10 @@ function update232to240() {
       (`itemtype`, `name`, `table`, `tablefield`, `locale`, `shortlocale`)
    VALUES ('NetworkEquipment','cdpCacheVersion','','',435,NULL),
           ('NetworkEquipment','cdpCacheDeviceId','','',436,NULL),
-          ('NetworkEquipment','cdpCachePlatform','','',437,NULL)";
+          ('NetworkEquipment','cdpCachePlatform','','',437,NULL),
+          ('NetworkEquipment','lldpRemSysDesc','','',438,NULL),
+          ('NetworkEquipment','lldpRemSysName','','',439,NULL),
+          ('NetworkEquipment','lldpRemPortDesc','','',440,NULL)";
    $DB->query($query);
    
    // Fix problem with mapping with many entries with same mapping

@@ -274,6 +274,9 @@ $LANG['plugin_fusinvsnmp']['mapping'][430]="networking > port > vlan";
 $LANG['plugin_fusinvsnmp']['mapping'][435]="networking > CDP remote sysdescr";
 $LANG['plugin_fusinvsnmp']['mapping'][436]="networking > CDP remote id";
 $LANG['plugin_fusinvsnmp']['mapping'][437]="networking > CDP remote model device";
+$LANG['plugin_fusinvsnmp']['mapping'][438]="networking > LLDP sremote sysdescr";
+$LANG['plugin_fusinvsnmp']['mapping'][439]="networking > LLDP remote id";
+$LANG['plugin_fusinvsnmp']['mapping'][440]="networking > LLDP remote port description";
 
 $LANG['plugin_fusinvsnmp']['mapping'][101]="";
 $LANG['plugin_fusinvsnmp']['mapping'][102]="";
