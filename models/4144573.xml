@@ -2,9 +2,11 @@
 	<name><![CDATA[4144573]]></name>
 	<type>2</type>
 	<key>Networking1636</key>
-	<comments><![CDATA[HP J4902A ProCurve Switch 6108, revision H.07.90, ROM H.07.40 (/sw/code/build/fish(ff03))
+	<comments><![CDATA[ProCurve J4819A Switch 5308xl, revision E.11.03, ROM E.05.05 (/sw/code/build/alpmo(alp11))
 
-ProCurve J9019B Switch 2510B-24, revision Q.11.17, ROM Q.10.02 (/sw/code/build/harp(bh2))
+ProCurve J4850A Switch 5304XL, revision E.11.03, ROM E.05.05 (/sw/code/build/alpmo(alp11))
+
+ProCurve J4899A Switch 2650, revision H.10.50, ROM H.08.02 (/sw/code/build/fish(mkfs))
 
 ]]></comments>
 	<oidlist>
