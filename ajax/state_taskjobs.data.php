@@ -35,5 +35,5 @@
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
 
-echo PluginFusinvdeployState::getTasksDatas($_REQUEST);
+echo PluginFusinvdeployState::getTaskjobsDatas($_REQUEST);
 ?>

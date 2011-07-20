@@ -55,12 +55,13 @@ class PluginFusinvdeployState extends CommonDBTM {
       require GLPI_ROOT."/plugins/fusinvdeploy/js/deploystate.front.php";
    }
 
-   static function getTasksDatas() {
+   static function getTaskjobsDatas() {
       global $DB;
 
-      $query = "SELECT taskjobs.id, taskjobs.name,
+      $query = "SELECT taskjobs.id as job_id, taskjobs.name,
          tasks.name as task_name, tasks.id as task_id,
-         taskjobstatus.state as status
+         taskjobstatus.id as status_id, taskjobstatus.state as status,
+         taskjobstatus.itemtype, taskjobstatus.items_id
       FROM glpi_plugin_fusinvdeploy_taskjobs taskjobs
       INNER JOIN glpi_plugin_fusinvdeploy_tasks tasks
          ON tasks.id = taskjobs.plugin_fusinvdeploy_tasks_id
@@ -69,13 +70,29 @@ class PluginFusinvdeployState extends CommonDBTM {
       ";
       $query_res = $DB->query($query);
       while ($row = $DB->fetch_assoc($query_res)) {
+         $computer = new Computer;
+         $computer->getFromDB($row['items_id']);
+         $row['computer_name'] = $computer->getField('name');
          $res['taskjobs'][] = $row;
       }
 
       return json_encode($res);
    }
 
-   static function getTaskJobLogsDatas() {
+   static function getTaskJobLogsDatas($params) {
+      global $DB;
 
+      if (!isset($params['status_id'])) exit;
+
+      $query = "SELECT *
+      FROM glpi_plugin_fusioninventory_taskjoblogs
+      WHERE plugin_fusioninventory_taskjobstatus_id = '".$params['status_id']."'";
+
+      $query_res = $DB->query($query);
+      while ($row = $DB->fetch_assoc($query_res)) {
+         $res['taskjoblogs'][] = $row;
+      }
+
+      return json_encode($res);
    }
 }

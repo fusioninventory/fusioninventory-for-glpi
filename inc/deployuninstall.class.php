@@ -41,5 +41,10 @@ if(!defined('GLPI_ROOT')) {
 
 class PluginFusinvDeployDeployuninstall extends PluginFusinvdeployDeployCommon {
    var $task = 'deployuninstall';
+
+   function prepareRun($taskjobs_id) {
+      $common = new PluginFusinvdeployDeployCommon;
+      $common->prepareRun($taskjobs_id);
+   }
 }
 ?>

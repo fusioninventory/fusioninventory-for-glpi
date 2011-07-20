@@ -52,10 +52,6 @@ $field_width = 170;
 $JS = <<<JS
 
 var taskJobsColumns =  [{
-   id: 'id',
-   dataIndex: 'id',
-   hidden: true
-}, {
    id: 'task_id',
    dataIndex: 'task_id',
    hidden: true
@@ -73,8 +69,21 @@ var taskJobsColumns =  [{
 }, {
    id: 'status',
    dataIndex: 'status',
-   header: 'status',
+   header: '{$LANG['joblist'][0]}',
    renderer: renderTaskJobStatus
+}, {
+   id: 'computer_name',
+   dataIndex: 'computer_name',
+   header: "{$LANG['rulesengine'][25]}",
+   renderer: renderComputer
+}, {
+   id: 'job_id',
+   dataIndex: 'job_id',
+   hidden: true
+}, {
+   id: 'status_id',
+   dataIndex: 'status_id',
+   hidden: true
 }]
 
 function renderTasks(val) {
@@ -87,17 +96,36 @@ function renderTaskJobName(val) {
    return img+val;
 }
 
+function renderComputer(val) {
+   var img = '<img src="../pics/ext/computer.png">&nbsp;';
+   return img+val;
+}
+
 function renderTaskJobStatus(val) {
    switch (val) {
-      case 'ok':
-         var img_name = 'bullet-green.png';
+      case '0':
+         var img_name = 'bullet-blue.png';
+         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][7]}';
          break
-      case 'ko':
+      case '1':
+         var img_name = 'bullet-yellow.png';
+         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][6]}';
+         break
+      case '2':
+         var img_name = 'bullet-yellow.png';
+         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][6]}';
+         break
+      case '3':
+         var img_name = 'bullet-green.png';
+         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][2]}';
+         break
+      case '4':
          var img_name = 'bullet-red.png';
+         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][4]}';
          break
       default:
          var img_name = 'bullet-grey.png';
-         val = '';
+         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][5]}';
    }
 
    var img = '<img src="../pics/ext/'+img_name+'">&nbsp;';
@@ -121,14 +149,14 @@ var tasksJobLogsColumns =  [{
 var taskJobsReader = new Ext.data.JsonReader({
    root: 'taskjobs',
    fields: [
-      'id', 'name', 'task_id', 'task_name'
+      'name', 'task_id', 'task_name', 'computer_name', 'status', 'job_id', 'status_id'
    ]
 });
 
 var taskJobLogsReader = new Ext.data.JsonReader({
-   root: 'task_logs',
+   root: 'taskjoblogs',
    fields: [
-      'id', 'name'
+      'id', 'date', 'comment'
    ]
 });
 
@@ -144,7 +172,7 @@ var taskJobLogsStore = new Ext.data.Store({
    url: '../ajax/state_taskjoblogs.data.php',
    autoLoad: false,
    reader: taskJobLogsReader,
-   sortInfo: {field: '', direction: "ASC"}
+   sortInfo: {field: 'id', direction: "ASC"}
 });
 
 var taskJobsGrid = new Ext.grid.GridPanel({
@@ -163,6 +191,20 @@ var taskJobsGrid = new Ext.grid.GridPanel({
       showGroupName: false,
       emptyText: '',
       emptyGroupText: ''
+   }),
+   sm: new Ext.grid.RowSelectionModel({
+      singleSelect: true,
+      listeners: {
+         rowselect: function(g,index,ev) {
+            var rec = taskJobsGrid.store.getAt(index);
+            var status_id = rec.data.status_id;
+
+            taskJobLogsStore.setBaseParam('status_id', status_id);
+            taskJobLogsStore.removeAll();
+            taskJobLogsStore.reload();
+            console.log(taskJobLogsGrid.getStore());
+         }
+      }
    })
 });
 

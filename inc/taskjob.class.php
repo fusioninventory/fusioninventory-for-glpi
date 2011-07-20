@@ -103,7 +103,6 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
 
       $tasks_id = $params['tasks_id'];
       $tasks = json_decode($params['tasks']);
-      logDebug($tasks);
 
       //remove old jobs from task
       $query = "DELETE FROM ".$this->getTable()."

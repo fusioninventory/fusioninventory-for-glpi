@@ -43,27 +43,90 @@ if(!defined('GLPI_ROOT')) {
 require_once(GLPI_ROOT."/plugins/fusioninventory/inc/communication.class.php");
 
 class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication {
-   
+
    // Get all devices and put in taskjobstatus each task for each device for each agent
    function prepareRun($taskjobs_id) {
       global $DB;
-   
+
       $task       = new PluginFusioninventoryTask();
       $job        = new PluginFusioninventoryTaskjob();
       $joblog     = new PluginFusioninventoryTaskjoblog();
       $jobstatus  = new PluginFusioninventoryTaskjobstatus();
-   
+
       $uniqid= uniqid();
-   
+
       $job->getFromDB($taskjobs_id);
       $task->getFromDB($job->fields['plugin_fusioninventory_tasks_id']);
-   
+
       $communication= $task->fields['communication'];
-   
-      //list all agents
-      $agent_actions     = importArrayFromDB($job->fields['action']);
-      $task_definitions   = importArrayFromDB($job->fields['definition']);
-      $agent_actionslist = array();
+
+      $actions     = importArrayFromDB($job->fields['action']);
+      $definitions   = importArrayFromDB($job->fields['definition']);
+
+      $computers = array();
+      foreach ($actions as $action) {
+         $itemtype = key($action);
+         $items_id = current($action);
+
+         switch($itemtype) {
+            case 'Computer':
+               $computers[] = $items_id;
+               break;
+            case 'PluginFusinvdeployGroup':
+               $group = new PluginFusinvdeployGroup;
+               $group->getFromDB($items_id);
+
+               switch ($group->getField('type')) {
+                  case 'STATIC':
+                     $query = "SELECT items_id
+                     FROM glpi_plugin_fusinvdeploy_groups_staticdatas
+                     WHERE groups_id = '$items_id'
+                     AND itemtype = 'Computer'";
+                     $res = $DB->query($query);
+                     while ($row = $DB->fetch_assoc($res)) {
+                        $computers[] = $row['items_id'];
+                     }
+                     break;
+                  case 'DYNAMIC':
+                     $query = "SELECT fields_array
+                     FROM glpi_plugin_fusinvdeploy_groups_dynamicdatas
+                     WHERE groups_id = '$items_id'";
+                     $res = $DB->query($query);
+                     $row = $DB->fetch_assoc($res);
+                     $fields_array = unserialize($row['fields_array']);
+                     $datas = PluginFusinvdeploySearch::methodListObjects($params, '');
+                     foreach($datas as $data) {
+                        $computers[] = $data['id'];
+                     }
+                     break;
+               }
+               break;
+         }
+      }
+
+      $c_input= array();
+      $c_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
+      $c_input['state']                              = 0;
+      $c_input['plugin_fusioninventory_agents_id']   = 0;
+      $c_input['uniqid']                             = $uniqid;
+
+      foreach($computers as $computer_id) {
+         $c_input['itemtype'] = 'Computer';
+         $c_input['items_id'] = $computer_id;
+         $jobstatus_id= $jobstatus->add($c_input);
+
+         //Add log of taskjob
+         $c_input['plugin_fusioninventory_taskjobstatus_id'] = $jobstatus_id;
+         $c_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
+
+         $joblog->add($c_input);
+         unset($c_input['state']);
+      }
+
+      $job->fields['status']= 1;
+      $job->update($job->fields);
+
+      /*$agent_actionslist = array();
       foreach($agent_actions as $targets) {
          foreach ($targets as $itemtype => $items_id) {
             $item = new $itemtype();
@@ -83,7 +146,7 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
             }
          }
       }
-   
+
       // *** Add jobstatus
       if(empty($agent_actionslist)) {
          $a_input= array();
@@ -104,8 +167,8 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
          $a_input['state'] = PluginFusioninventoryTaskjoblog::TASK_PREPARED;
          $a_input['date']  = date("Y-m-d H:i:s");
          $joblog->add($a_input);
-   
-         $jobstatus->changeStatusFinish($jobstatus_id, 0, 'PluginFusinvdeployPackage', 1, 
+
+         $jobstatus->changeStatusFinish($jobstatus_id, 0, 'PluginFusinvdeployPackage', 1,
                                         "Unable to find agent to run this job");
          $job->fields['status']= 1;
          $job->update($job->fields);
@@ -116,7 +179,7 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
                if ($communication == "push") {
                   $_SESSION['glpi_plugin_fusioninventory']['agents'][$items_id] = 1;
                }
-               
+
                foreach ($task_definitions as $task_definition) {
                   foreach ($task_definition as $task_itemtype => $task_items_id) {
                      $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
@@ -130,19 +193,19 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
                      //Add log of taskjob
                      $a_input['plugin_fusioninventory_taskjobstatus_id'] = $jobstatus_id;
                      $a_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
-      
+
                      $joblog->add($a_input);
                      unset($a_input['state']);
                   }
                }
             }
          }
-   
+
          $job->fields['status']= 1;
          $job->update($job->fields);
-      }
+      }*/
    }
-   
+
    // When agent contact server, this function send datas to agent
    /*
     * $itemtype = type of device in definition
