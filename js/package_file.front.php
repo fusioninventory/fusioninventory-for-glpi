@@ -37,11 +37,11 @@
 global $LANG;
 
 // Size of div/form/label...
-$width_right                  = 590;
-$height_right                 = 250;
+$width_left                  = 590;
+$height_left                 = 250;
 
-$width_left                   = 340;
-$height_left                  = 250;
+$width_right                   = 340;
+$height_right                  = 250;
 $width_left_fieldset          = $width_left-19;
 $width_left_fieldset_default  = $width_left-125;
 
@@ -178,8 +178,8 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
    store: {$render}fileStore,
    columns: {$render}fileColumns,
    stripeRows: true,
-   height: {$height_right},
-   width: {$width_right},
+   height: {$height_left},
+   width: {$width_left},
    style:'margin-bottom:5px',
    title: '{$LANG['plugin_fusinvdeploy']['form']['title'][3]}',
    stateId: '{$render}fileGrid',
@@ -296,8 +296,8 @@ var {$render}fileForm = new Ext.FormPanel({
    title: '{$LANG['plugin_fusinvdeploy']['form']['title'][5]}',
    bodyStyle:' padding:5px 5px 0',
    style:'margin-left:5px;margin-bottom:5px',
-   width: {$width_left},
-   height: {$height_left},
+   width: {$width_right},
+   height: {$height_right},
    defaultType: 'textfield',
    items: [
       {name: '{$render}id',xtype: 'hidden'},

@@ -35,11 +35,11 @@
 global $LANG;
 
 // Size of div/form/label...
-$width_right                  = 590;
-$height_right                 = 260;
+$width_left                  = 590;
+$height_left                 = 260;
 
-$width_left                   = 340;
-$height_left                  = 260;
+$width_right                   = 340;
+$height_right                  = 260;
 $width_left_fieldset          = $width_left-19;
 $width_left_fieldset_default  = $width_left-125;
 
@@ -172,8 +172,8 @@ var {$render}actionGrid = new Ext.grid.GridPanel({
    store: {$render}actionGridStore,
    columns: {$render}actionColumns,
    stripeRows: false,
-   height: {$height_right},
-   width: {$width_right},
+   height: {$height_left},
+   width: {$width_left},
    style:'margin-bottom:5px',
    title: '{$LANG['plugin_fusinvdeploy']['form']['title'][8]} ({$title2})',
    stateId: '{$render}actionGrid',
@@ -581,8 +581,8 @@ var {$render}actionForm = new Ext.FormPanel({
    title: '{$LANG['plugin_fusinvdeploy']['form']['title'][7]}',
    bodyStyle:'padding:5px 10px',
    style:'margin-left:5px;margin-bottom:5px',
-   width: {$width_left},
-   height: {$height_left},
+   width: {$width_right},
+   height: {$height_right},
    items: [{
       name: '{$render}id',
       xtype: 'hidden'

@@ -40,13 +40,13 @@ $refl = new ReflectionClass('PluginFusinvdeployCheck');
 $chkConst = $refl->getConstants();
 
 // Size of div/form/label...
-$width_right                  = 590;
-$height_right                 = 250;
+$width_left                  = 590;
+$height_left                 = 250;
 
-$width_left                   = 340;
-$height_left                  = 250;
-$width_left_fieldset          = $width_left-19;
-$width_left_fieldset_default  = $width_left-125;
+$width_right                   = 340;
+$height_right                  = 250;
+$width_right_fieldset          = $width_right-19;
+$width_right_fieldset_default  = $width_right-125;
 
 $width_layout = $width_left + $width_right;
 $height_layout = ($height_left>$height_right)?$height_left:$height_right;
@@ -165,8 +165,8 @@ var {$render}checkGrid = new Ext.grid.GridPanel({
    store: {$render}checkGridStore,
    columns: {$render}checkColumns,
    stripeRows: true,
-   height: {$height_right},
-   width: {$width_right},
+   height: {$height_left},
+   width: {$width_left},
    style:'margin-bottom:5px',
    title: '{$LANG['plugin_fusinvdeploy']['form']['title'][2]} ({$title2})',
    stateId: '{$render}checkGrid',
@@ -356,8 +356,8 @@ var {$render}dynFieldset =  new Ext.form.FieldSet({
    autoHeight: true,
    defaultType: 'textfield',
     allowBlank: false,
-   defaults: {width: {$width_left_fieldset_default}},
-   width: {$width_left_fieldset},
+   defaults: {width: {$width_right_fieldset_default}},
+   width: {$width_right_fieldset},
    items: {$render}fieldset_item_default,
    flex: 1
 });
@@ -400,8 +400,8 @@ var {$render}checkForm = new Ext.FormPanel({
    title: '{$LANG['plugin_fusinvdeploy']['form']['title'][0]}',
    bodyStyle:'padding:5px 5px',
    style:'margin-left:5px;margin-bottom:5px',
-   width: {$width_left},
-   height: {$height_left},
+   width: {$width_right},
+   height: {$height_right},
    defaultType: 'textfield',
    items: [{
       name: '{$render}id',
