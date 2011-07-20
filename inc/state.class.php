@@ -64,14 +64,8 @@ class PluginFusinvdeployState extends CommonDBTM {
       FROM glpi_plugin_fusinvdeploy_taskjobs taskjobs
       INNER JOIN glpi_plugin_fusinvdeploy_tasks tasks
          ON tasks.id = taskjobs.plugin_fusinvdeploy_tasks_id
-      INNER JOIN glpi_plugin_fusioninventory_taskjobstatus taskjobstatus
+      LEFT JOIN glpi_plugin_fusioninventory_taskjobstatus taskjobstatus
          ON taskjobs.id = taskjobstatus.plugin_fusioninventory_taskjobs_id
-      ";
-      $query = "SELECT taskjobs.id, taskjobs.name,
-         tasks.name as task_name, tasks.id as task_id
-      FROM glpi_plugin_fusinvdeploy_taskjobs taskjobs
-      INNER JOIN glpi_plugin_fusinvdeploy_tasks tasks
-         ON tasks.id = taskjobs.plugin_fusinvdeploy_tasks_id
       ";
       $query_res = $DB->query($query);
       while ($row = $DB->fetch_assoc($query_res)) {

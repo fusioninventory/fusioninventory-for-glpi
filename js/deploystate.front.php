@@ -88,7 +88,19 @@ function renderTaskJobName(val) {
 }
 
 function renderTaskJobStatus(val) {
-   var img = '<img src="../pics/ext/bullet-green.png">&nbsp;';
+   switch (val) {
+      case 'ok':
+         var img_name = 'bullet-green.png';
+         break
+      case 'ko':
+         var img_name = 'bullet-red.png';
+         break
+      default:
+         var img_name = 'bullet-grey.png';
+         val = '';
+   }
+
+   var img = '<img src="../pics/ext/'+img_name+'">&nbsp;';
    return img+val;
 }
 

@@ -237,5 +237,6 @@ padding:       5px;
 }
 
 
-#TaskJob .x-grid3-row {border:0px}
+#deployStates .x-grid3-row, #TaskJob .x-grid3-row {border:0px}
+#deployStates .x-grid3-cell-inner, #TaskJob .x-grid3-cell-inner {padding: 1px;}
 .x-grid-group-hd {border-bottom:1px solid #CCCCCC; padding-top: 0}
