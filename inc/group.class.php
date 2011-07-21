@@ -504,7 +504,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
          $stripe =! $stripe;
          echo "<tr class='tab_bg_".(((int)$stripe)+1)."'>";
          if ($type == 'static')
-            echo "<td><input type='checkbox' name='item[".$row["id"]."]' value='1'></td>";
+            echo "<td><input type='checkbox' name='item[".$row["id"]."]' value='".$row["id"]."'></td>";
          echo "<td colspan='4'>".$row['name']."</td>";
          echo "</tr>";
       }
