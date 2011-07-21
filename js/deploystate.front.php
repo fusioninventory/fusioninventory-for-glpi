@@ -97,6 +97,7 @@ function renderTaskJobName(val) {
 }
 
 function renderComputer(val) {
+   if (val == 'N/A') return '';
    var img = '<img src="../pics/ext/computer.png">&nbsp;';
    return img+val;
 }
@@ -109,23 +110,35 @@ function renderTaskJobStatus(val) {
          break
       case '1':
          var img_name = 'bullet-yellow.png';
-         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][6]}';
+         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][1]}';
          break
       case '2':
-         var img_name = 'bullet-yellow.png';
-         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][6]}';
-         break
-      case '3':
          var img_name = 'bullet-green.png';
          val = '{$LANG['plugin_fusioninventory']['taskjoblog'][2]}';
+         break
+      case '3':
+         var img_name = 'bullet-red.png';
+         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][3]}';
          break
       case '4':
          var img_name = 'bullet-red.png';
          val = '{$LANG['plugin_fusioninventory']['taskjoblog'][4]}';
          break
+      case '5':
+         var img_name = 'bullet-red.png';
+         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][5]}';
+         break
+      case '6':
+         var img_name = 'bullet-yellow.png';
+         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][6]}';
+         break
+      case '7':
+         var img_name = 'bullet-blue.png';
+         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][7]}';
+         break
       default:
          var img_name = 'bullet-grey.png';
-         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][5]}';
+         val = '';
    }
 
    var img = '<img src="../pics/ext/'+img_name+'">&nbsp;';
@@ -139,7 +152,8 @@ var tasksJobLogsColumns =  [{
 }, {
    id: 'date',
    dataIndex: 'date',
-   header: '{$LANG['common'][27]}'
+   header: '{$LANG['common'][27]}',
+   width: 130
 }, {
    id: 'comment',
    dataIndex: 'comment',
@@ -199,9 +213,9 @@ var taskJobsGrid = new Ext.grid.GridPanel({
             var rec = taskJobsGrid.store.getAt(index);
             var status_id = rec.data.status_id;
 
-            taskJobLogsStore.setBaseParam('status_id', status_id);
-            taskJobLogsStore.removeAll();
-            taskJobLogsStore.reload();
+            taskJobLogsGrid.getStore().setBaseParam('status_id', status_id);
+            taskJobLogsGrid.getStore().removeAll();
+            taskJobLogsGrid.getStore().reload();
             console.log(taskJobLogsGrid.getStore());
          }
       }

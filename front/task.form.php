@@ -48,8 +48,7 @@ $task = new PluginFusinvdeployTask();
 if (isset($_POST["add"])) {
    $task->check(-1, 'w', $_POST);
    $newID = $task->add($_POST);
-   glpi_header($_SERVER['HTTP_REFERER']);
-
+   glpi_header(GLPI_ROOT."/plugins/fusinvdeploy/front/task.form.php?id=".$newID);
 
 } else if (isset($_POST["delete"])) {
    $task->check($_POST['id'], 'd');

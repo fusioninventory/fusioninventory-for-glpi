@@ -50,7 +50,7 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
       $sql = " SELECT *
                FROM `".$this->getTable()."`
                WHERE `plugin_fusinvdeploy_tasks_id` = '$tasks_id'
-               AND method = 'deployinstall' OR method = 'deployuninstall'";
+               AND (method = 'deployinstall' OR method = 'deployuninstall')";
 
       $res  = $DB->query($sql);
 

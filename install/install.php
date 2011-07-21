@@ -82,8 +82,8 @@ function pluginFusinvdeployInstall() {
       $input['modulename'] = "DEPLOY";
       $input['is_active']  = 1;
       $input['exceptions'] = exportArrayToDB(array());
-      $input['url']        = PluginFusioninventoryRestCommunication:: getDefaultRestURL($_SERVER['HTTP_REFERER'], 
-                                                                                        'fusinvdeploy', 
+      $input['url']        = PluginFusioninventoryRestCommunication:: getDefaultRestURL($_SERVER['HTTP_REFERER'],
+                                                                                        'fusinvdeploy',
                                                                                         'deploy');
 
       $agentmodule->add($input);
@@ -105,11 +105,12 @@ function pluginFusinvdeployUninstall() {
 
    PluginFusioninventoryProfile::cleanProfile($a_plugin['shortname']);
 
-   $query = "SHOW TABLES;";
+   $query = "SHOW FULL TABLES;";
    $result=$DB->query($query);
    while ($data=$DB->fetch_array($result)) {
       if (strstr($data[0],"glpi_plugin_".$a_plugin['shortname']."_")){
-         $query_delete = "DROP TABLE `".$data[0]."`;";
+         if ($data['Table_type'] != "VIEW") $query_delete = "DROP TABLE `".$data[0]."`;";
+         else  $query_delete = "DROP VIEW `".$data[0]."`;";
          $DB->query($query_delete) or die($DB->error());
       }
    }

@@ -111,8 +111,10 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
       $c_input['uniqid']                             = $uniqid;
 
       foreach($computers as $computer_id) {
+         $c_input['state']                              = 0;
          $c_input['itemtype'] = 'Computer';
          $c_input['items_id'] = $computer_id;
+         $c_input['date'] = date("Y-m-d H:i:s");
          $jobstatus_id= $jobstatus->add($c_input);
 
          //Add log of taskjob
