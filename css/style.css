@@ -240,3 +240,24 @@ padding:       5px;
 #deployStates .x-grid3-row, #TaskJob .x-grid3-row {border:0px}
 #deployStates .x-grid3-cell-inner, #TaskJob .x-grid3-cell-inner {padding: 1px;}
 .x-grid-group-hd {border-bottom:1px solid #CCCCCC; padding-top: 0}
+
+
+/* PROGRESS BAR */
+.progress-container {
+  border: 1px solid #ccc;
+  width: 250px;
+  margin: 0;
+  padding: 1px;
+  float: right;
+  background: white;
+  height: 14px !important;
+  border-radius:4px;
+}
+
+.progress-container > div {
+  background-color: #D0D99D;
+  height: 14px;
+  text-align:center;
+  border-radius:4px;
+  font-size:0.95em;
+}

@@ -56,25 +56,31 @@ var taskJobsColumns =  [{
    dataIndex: 'task_id',
    hidden: true
 }, {
+   id: 'task_percent',
+   dataIndex: 'task_percent',
+   hidden: true
+}, {
    id: 'task_name',
    dataIndex: 'task_name',
-   header: 'task name',
+   /*header: 'task name',*/
    renderer: renderTasks,
    groupRenderer: renderTasks
 }, {
    id: 'name',
    dataIndex: 'name',
-   header: 'job name',
-   renderer: renderTaskJobName
+   /*header: 'job name',*/
+   renderer: renderTaskJobName,
+   width: 70
 }, {
    id: 'status',
    dataIndex: 'status',
-   header: '{$LANG['joblist'][0]}',
-   renderer: renderTaskJobStatus
+   /*header: '{$LANG['joblist'][0]}',*/
+   width: 70,
+   renderer: renderTaskJobStatus,
 }, {
    id: 'computer_name',
    dataIndex: 'computer_name',
-   header: "{$LANG['rulesengine'][25]}",
+   /*header: "{$LANG['rulesengine'][25]}",*/
    renderer: renderComputer
 }, {
    id: 'job_id',
@@ -86,9 +92,11 @@ var taskJobsColumns =  [{
    hidden: true
 }]
 
-function renderTasks(val) {
+function renderTasks(val, metaData, record) {
+   var task_percent = record.data.task_percent;
    var img = '<img src="../pics/ext/task.png">&nbsp;';
-   return img+val;
+   var progressbar = '<div style="float:right;">{$LANG['common'][47]} :&nbsp;<div class="progress-container"><div style="width: '+task_percent+'">'+task_percent+'</div></div></div>';
+   return img+"<b>"+val+"</b>"+progressbar;
 }
 
 function renderTaskJobName(val) {
@@ -157,13 +165,15 @@ var tasksJobLogsColumns =  [{
 }, {
    id: 'comment',
    dataIndex: 'comment',
-   header: '{$LANG['common'][25]}'
+   header: '{$LANG['common'][25]}',
+   width: 200
 }];
 
 var taskJobsReader = new Ext.data.JsonReader({
    root: 'taskjobs',
    fields: [
-      'name', 'task_id', 'task_name', 'computer_name', 'status', 'job_id', 'status_id'
+      'name', 'task_id', 'task_percent', 'task_name',
+      'computer_name', 'status', 'job_id', 'status_id'
    ]
 });
 
@@ -200,11 +210,12 @@ var taskJobsGrid = new Ext.grid.GridPanel({
    columns: taskJobsColumns,
    view: new Ext.grid.GroupingView({
       forceFit:true,
-      groupTextTpl: '<b>{text}</b>',
+      groupTextTpl: '{text}',
       hideGroupedColumn: true,
       showGroupName: false,
       emptyText: '',
-      emptyGroupText: ''
+      emptyGroupText: '',
+      startCollapsed: true
    }),
    sm: new Ext.grid.RowSelectionModel({
       singleSelect: true,

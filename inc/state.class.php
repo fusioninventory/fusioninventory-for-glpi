@@ -73,6 +73,7 @@ class PluginFusinvdeployState extends CommonDBTM {
          $computer = new Computer;
          $computer->getFromDB($row['items_id']);
          $row['computer_name'] = $computer->getField('name');
+         $row['task_percent'] = self::getTaskPercent($row['task_id']);
          $res['taskjobs'][] = $row;
       }
 
@@ -94,5 +95,40 @@ class PluginFusinvdeployState extends CommonDBTM {
       }
 
       return json_encode($res);
+   }
+
+   static function getTaskPercent($task_id) {
+      global $DB;
+
+      $taskjob = new PluginFusioninventoryTaskjob;
+      $taskjobstatus = new PluginFusioninventoryTaskjobstatus;
+
+      $a_taskjobs = $taskjob->find("`plugin_fusioninventory_tasks_id`='".$task_id."'");
+
+      $a_taskjobstatus = $taskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".
+            key($a_taskjobs)."' AND `state`!='".PluginFusioninventoryTaskjobstatus::FINISHED."'");
+
+      $state = array();
+      $state[0] = 0;
+      $state[1] = 0;
+      $state[2] = 0;
+      $state[3] = 0;
+      $total = 0;
+      $globalState = 0;
+
+      if (count($a_taskjobstatus) > 0) {
+         foreach ($a_taskjobstatus as $data) {
+            $total++;
+            $state[$data['state']]++;
+         }
+
+         $first = 25;
+         $second = ((($state[1]+$state[2]+$state[3]) * 100) / $total) / 4;
+         $third = ((($state[2]+$state[3]) * 100) / $total) / 4;
+         $fourth = (($state[3] * 100) / $total) / 4;
+         $globalState = $first + $second + $third + $fourth;
+      }
+
+      return ceil($globalState)."%";
    }
 }
