@@ -9,8 +9,10 @@ require_once (GLPI_ROOT."/inc/includes.php");
 class DeploystateTest extends PHPUnit_Framework_TestCase
 {
    public function testPluginFusinvdeployState() {
+      global $DB;
+
       //create fake agent
-      $agent = new PluginFusioninventoryAgent;
+      /*$agent = new PluginFusioninventoryAgent;
       $agent->add(array(
          'entities_id' => 0,
          'is_recursive' => 0,
@@ -18,15 +20,17 @@ class DeploystateTest extends PHPUnit_Framework_TestCase
          'lock' => 0,
          'items_id' => 1,
          'itemtype' => "computer"
-      ));
+      ));*/
 
       //create tmp package
       $package = new PluginFusinvdeployPackage;
-      $package_id = $package->add(array(
-         'name' => "testunit_package",
-         'entities_id' => 0,
-         'is_recursive' => 0
-      ));
+      if (!$package->getFromDB(1)) {
+         $package_id = $package->add(array(
+            'name' => "testunit_package",
+            'entities_id' => 0,
+            'is_recursive' => 0
+         ));
+      } else $package_id = 1;
 
       //create tmp task
       $task = new PluginFusinvdeployTask;
@@ -35,12 +39,13 @@ class DeploystateTest extends PHPUnit_Framework_TestCase
          'entities_id' => 0,
          'is_recursive' => 0,
          'is_active' => 1,
-         'communication' => "push"
+         'communication' => "pull",
+         'date_scheduled' => date("Y-m-d 00:00:00", time()+7*86400)
       ));
 
       //create a job for previous task
       $taskjob = new PluginFusinvdeployTaskjob;
-      $taskjob->add(array(
+      $taskjob_id = $taskjob->add(array(
          'plugin_fusinvdeploy_tasks_id' => $task_id,
          'entities_id' => 0,
          'name' => "testunit_taskjob",
@@ -49,11 +54,30 @@ class DeploystateTest extends PHPUnit_Framework_TestCase
          'action' => '[{"Computer":"1"}]'
       ));
 
-      //delete tmp objects
-      $agent->deleteFromDB();
+      //initialise status for taskjobs
+      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $PluginFusioninventoryTaskjob->forceRunningTask($task_id);
+
+
+      /*//delete tmp objects
+      //$agent->deleteFromDB();
       $package->deleteFromDB();
       $task->deleteFromDB();
       $taskjob->deleteFromDB();
 
+      //delete old taskjoblogs and taskjobstatus
+      $query = "SELECT id
+         FROM glpi_plugin_fusioninventory_taskjobstatus
+         WHERE plugin_fusioninventory_taskjobs_id = '$taskjob_id'";
+      $res = $DB->query($query);
+      while ($row = $DB->fetch_assoc($res)) {
+         $query_logs = "DELETE FROM glpi_plugin_fusioninventory_taskjoblogs
+            WHERE plugin_fusioninventory_taskjobstatus_id = '".$row['id']."'";
+         $res_logs = $DB->query($query_logs);
+      }
+
+      $query = "DELETE FROM glpi_plugin_fusioninventory_taskjobstatus
+         WHERE plugin_fusioninventory_taskjobs_id = '$taskjob_id'";
+      $res = $DB->query($query);*/
    }
 }
