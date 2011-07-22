@@ -222,4 +222,27 @@ class PluginFusinvdeployTask extends CommonDBTM {
       require GLPI_ROOT."/plugins/fusinvdeploy/js/task_job.front.php";
    }
 
+   function pre_deleteItem() {
+      $task_id = $this->getField('id');
+
+      $job = new PluginFusioninventoryTaskjob();
+      $status = new PluginFusioninventoryTaskjobstatus();
+      $log = new PluginFusioninventoryTaskjoblog();
+
+      $a_taskjobs = $job->find("`plugin_fusioninventory_tasks_id`='$task_id'");
+      foreach($a_taskjobs as $a_taskjob) {
+         $a_taskjobstatuss = $status->find("`plugin_fusioninventory_taskjobs_id`='".$a_taskjob['id']."'");
+         foreach($a_taskjobstatuss as $a_taskjobstatus) {
+            $a_taskjoblogs = $log->find("`plugin_fusioninventory_taskjobstatus_id`='".$a_taskjobstatus['id']."'");
+            foreach($a_taskjoblogs as $a_taskjoblog) {
+               $log->delete($a_taskjoblog, 1);
+            }
+            $status->delete($a_taskjobstatus, 1);
+         }
+         $job->delete($a_taskjob, 1);
+
+      }
+
+      return true;
+   }
 }
