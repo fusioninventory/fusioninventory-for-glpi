@@ -50,7 +50,7 @@ $label_width = 140;
 $field_width = 170;
 
 $JS = <<<JS
-
+/*
 var taskJobsColumns =  [{
    id: 'task_id',
    dataIndex: 'task_id',
@@ -62,25 +62,21 @@ var taskJobsColumns =  [{
 }, {
    id: 'task_name',
    dataIndex: 'task_name',
-   /*header: 'task name',*/
    renderer: renderTasks,
    groupRenderer: renderTasks
 }, {
    id: 'name',
    dataIndex: 'name',
-   /*header: 'job name',*/
    renderer: renderTaskJobName,
    width: 70
 }, {
    id: 'status',
    dataIndex: 'status',
-   /*header: '{$LANG['joblist'][0]}',*/
    width: 70,
    renderer: renderTaskJobStatus,
 }, {
    id: 'computer_name',
    dataIndex: 'computer_name',
-   /*header: "{$LANG['rulesengine'][25]}",*/
    renderer: renderComputer
 }, {
    id: 'job_id',
@@ -153,34 +149,11 @@ function renderTaskJobStatus(val) {
    return img+val;
 }
 
-var tasksJobLogsColumns =  [{
-   id: 'id',
-   dataIndex: 'id',
-   hidden: true
-}, {
-   id: 'date',
-   dataIndex: 'date',
-   header: '{$LANG['common'][27]}',
-   width: 130
-}, {
-   id: 'comment',
-   dataIndex: 'comment',
-   header: '{$LANG['common'][25]}',
-   width: 200
-}];
-
 var taskJobsReader = new Ext.data.JsonReader({
    root: 'taskjobs',
    fields: [
       'name', 'task_id', 'task_percent', 'task_name',
       'computer_name', 'status', 'job_id', 'status_id'
-   ]
-});
-
-var taskJobLogsReader = new Ext.data.JsonReader({
-   root: 'taskjoblogs',
-   fields: [
-      'id', 'date', 'comment'
    ]
 });
 
@@ -190,13 +163,6 @@ var taskJobsStore = new Ext.data.GroupingStore({
    reader: taskJobsReader,
    sortInfo: {field: 'task_name', direction: "ASC"},
    groupField : 'task_name'
-});
-
-var taskJobLogsStore = new Ext.data.Store({
-   url: '../ajax/state_taskjoblogs.data.php',
-   autoLoad: false,
-   reader: taskJobLogsReader,
-   sortInfo: {field: 'id', direction: "ASC"}
 });
 
 var taskJobsGrid = new Ext.grid.GridPanel({
@@ -231,6 +197,57 @@ var taskJobsGrid = new Ext.grid.GridPanel({
          }
       }
    })
+});*/
+
+var taskJobsTreeGrid = new Ext.ux.tree.TreeGrid({
+   region: 'center',
+   title: "{$LANG['plugin_fusioninventory']['menu'][7]}",
+   height: {$height_left},
+   width: {$width_left},
+   enableDD: false,
+   columns:[{
+      dataIndex: 'name'
+   },{
+      dataIndex: 'type'
+   },{
+      dataIndex: 'state'
+   },{
+      dataIndex: 'progress'
+   }, {
+      dataIndex: 'status_id',
+      hidden: true
+   }],
+   dataUrl: '../ajax/state_taskjobs.tree.data.php',
+});
+
+var tasksJobLogsColumns =  [{
+   id: 'id',
+   dataIndex: 'id',
+   hidden: true
+}, {
+   id: 'date',
+   dataIndex: 'date',
+   header: '{$LANG['common'][27]}',
+   width: 130
+}, {
+   id: 'comment',
+   dataIndex: 'comment',
+   header: '{$LANG['common'][25]}',
+   width: 200
+}];
+
+var taskJobLogsReader = new Ext.data.JsonReader({
+   root: 'taskjoblogs',
+   fields: [
+      'id', 'date', 'comment'
+   ]
+});
+
+var taskJobLogsStore = new Ext.data.Store({
+   url: '../ajax/state_taskjoblogs.data.php',
+   autoLoad: false,
+   reader: taskJobLogsReader,
+   sortInfo: {field: 'id', direction: "ASC"}
 });
 
 var taskJobLogsGrid = new Ext.grid.GridPanel({
@@ -255,7 +272,7 @@ var stateLayout = new Ext.Panel({
       split: true
    },
    items:[
-      taskJobsGrid, taskJobLogsGrid
+      /*taskJobsGrid,*/ taskJobsTreeGrid, taskJobLogsGrid
    ]
 });
 

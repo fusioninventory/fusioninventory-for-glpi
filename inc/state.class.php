@@ -40,8 +40,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvdeployState extends CommonDBTM {
    static function showTasks() {
-      global $LANG, $CFG_GLPI;
-
        echo "<table class='deploy_extjs'>
          <tbody>
             <tr>
@@ -51,7 +49,16 @@ class PluginFusinvdeployState extends CommonDBTM {
          </tbody>
       </table>";
 
-      // Include JS
+      //load extjs plugins library
+      echo "<link rel='stylesheet' type='text/css' href='".GLPI_ROOT."/plugins/fusinvdeploy/lib/extjs/treegrid/treegrid.css'>";
+      echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusinvdeploy/lib/extjs/treegrid/TreeGridSorter.js'></script>";
+      echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusinvdeploy/lib/extjs/treegrid/TreeGridColumnResizer.js'></script>";
+      echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusinvdeploy/lib/extjs/treegrid/TreeGridNodeUI.js'></script>";
+      echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusinvdeploy/lib/extjs/treegrid/TreeGridLoader.js'></script>";
+      echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusinvdeploy/lib/extjs/treegrid/TreeGridColumns.js'></script>";
+      echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusinvdeploy/lib/extjs/treegrid/TreeGrid.js'></script>";
+
+      //load js view
       require GLPI_ROOT."/plugins/fusinvdeploy/js/deploystate.front.php";
    }
 
@@ -83,6 +90,8 @@ class PluginFusinvdeployState extends CommonDBTM {
    static function getTaskJobLogsDatas($params) {
       global $DB;
 
+      $res = array();
+
       if (!isset($params['status_id'])) exit;
 
       $query = "SELECT *
@@ -92,6 +101,30 @@ class PluginFusinvdeployState extends CommonDBTM {
       $query_res = $DB->query($query);
       while ($row = $DB->fetch_assoc($query_res)) {
          $res['taskjoblogs'][] = $row;
+      }
+
+      return json_encode($res);
+   }
+
+   static function getTaskjobsDatasTree() {
+      global $DB;
+
+      $res = array();
+
+      $query = "SELECT tasks.*
+         FROM glpi_plugin_fusinvdeploy_tasks tasks
+         INNER JOIN glpi_plugin_fusinvdeploy_taskjobs jobs
+            ON jobs.plugin_fusinvdeploy_tasks_id = tasks.id
+         WHERE jobs.method = 'deployinstall' OR jobs.method = 'deployuninstall'";
+      $query_res = $DB->query($query);
+      $i = 0;
+      while ($row = $DB->fetch_assoc($query_res)) {
+         $res[$i]['name'] = $row['name'];
+         $res[$i]['type'] = "task";
+         $res[$i]['state'] = null;
+         $res[$i]['iconCls'] = "deployState_Group";
+         $res[$i]['progress'] = self::getTaskPercent($row['id']);
+         $i++;
       }
 
       return json_encode($res);
