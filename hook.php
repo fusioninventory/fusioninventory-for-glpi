@@ -333,7 +333,8 @@ function plugin_item_add_fusinvinventory($parm) {
 function plugin_fusinvinventory_registerMethods() {
    global $WEBSERVICES_METHOD;
    
-   $WEBSERVICES_METHOD['fusioninventory.test'] = array('PluginfusioninventoryWebservice','methodTest');
+   $WEBSERVICES_METHOD['fusioninventory.test'] = array('PluginFusinvinventoryWebservice', 
+                                                       'methodTest');
 }
 
 ?>
