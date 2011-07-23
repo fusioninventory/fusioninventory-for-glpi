@@ -527,7 +527,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 
       echo "<br/>";
       foreach($elementsField as $graphField=>$name) {
-         $query = "SELECT `printers_id`, DAY(`date`) AS `day`, WEEK(`date`) AS `week`,
+         $query = "SELECT `printers_id`, DAY(`date`)-1 AS `day`, WEEK(`date`) AS `week`,
                     MONTH(`date`) AS `month`, YEAR(`date`) AS `year`,
                     `$graphField`
              FROM `glpi_plugin_fusinvsnmp_printerlogs`"
