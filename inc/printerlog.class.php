@@ -592,7 +592,9 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 
          $continue = 1;
          foreach($input as $num=>$datas) {
-            if (count($datas) > 60) {
+            if (array_sum($datas) == '0') {
+               $continue = '-1';
+            } else if (count($datas) > 60) {
                $continue = 0;
             } else if (count($datas) == '1') {
                $input[$num] = array_merge(array('' => "0"),$input[$num]);
