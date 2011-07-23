@@ -1215,8 +1215,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
 
-      $a_taskjobstatus = $PluginFusioninventoryTaskjobstatus->find("`state`='0'
-                                                      OR `state`='1'
+      $a_taskjobstatus = $PluginFusioninventoryTaskjobstatus->find("`state`='1'
                                                       OR `state`='2'
                                                       GROUP BY uniqid, plugin_fusioninventory_agents_id");
       foreach($a_taskjobstatus as $data) {
@@ -1231,7 +1230,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                $task = $DB->fetch_assoc($result);
                if ($task['communication'] == 'push') {
                   $a_valid = $PluginFusioninventoryTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$data['id']."'
-                           AND (`date`+100) < (NOW() + 0)", "", "1");
+                           AND (`date`+240) < (NOW() + 0)", "", "1");
 
                   if (count($a_valid) == '1') {
                      // Get agent status
