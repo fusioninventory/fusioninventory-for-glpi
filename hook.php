@@ -1378,6 +1378,7 @@ function plugin_fusinvsnmp_addSelect($type,$id,$num) {
          break;
 
       case 'PluginFusinvsnmpPrinterLogReport':
+
          if ($table == 'glpi_plugin_fusinvsnmp_printerlogs') {
             if (strstr($field, 'pages_') OR $field == 'scanned') {
                return " (
@@ -1388,6 +1389,9 @@ function plugin_fusinvsnmp_addSelect($type,$id,$num) {
                   AND date >= '".$_SESSION['glpi_plugin_fusioninventory_date_start']." 00:00:00'  ORDER BY date  LIMIT 1)
                   )  AS ITEM_$num, ";
             }
+         }
+         if ($table.".".$field == "glpi_networkports.ip") {
+            return " `glpi_networkports`.`ip`  AS ITEM_$num, ";
          }
          break;
          
@@ -1676,7 +1680,7 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
                break;
 
             case 'glpi_users.users_id':
-               return " LEFT JOIN `glpi_users` AS glpi_users_users_id ON (`glpi_printers`.`users_id` = `glpi_users_users_id`.`id`) ";
+               return " LEFT JOIN `glpi_users` AS glpi_users ON (`glpi_printers`.`users_id` = `glpi_users`.`id`) ";
                break;
             
             case 'glpi_manufacturers.manufacturers_id':
