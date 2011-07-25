@@ -176,6 +176,8 @@ function pluginFusinvinventoryInstall() {
 
       // Import OCS locks
       include_once GLPI_ROOT . "/plugins/fusinvinventory/inc/lock.class.php";
+      include_once GLPI_ROOT . "/plugins/fusinvinventory/inc/lib.class.php";
+      include_once GLPI_ROOT . "/plugins/fusinvinventory/inc/libhook.class.php";
       $PluginFusinvinventoryLock = new PluginFusinvinventoryLock();
       $PluginFusinvinventoryLock->importFromOcs();
    }
