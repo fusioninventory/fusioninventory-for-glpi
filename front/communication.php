@@ -60,6 +60,14 @@ error_reporting(E_ALL | E_STRICT);
 set_error_handler('userErrorHandlerDebug');
 $_SESSION['glpi_use_mode'] = 2;
 
+if (!class_exists("PluginFusioninventoryConfig")) {
+   echo gzcompress("<?xml version='1.0' encoding='UTF-8'?>
+<REPLY>
+   <ERROR>Plugin FusionInventory not installed!</ERROR>
+</REPLY>");
+   exit;
+}
+
 //Agent communication using REST protocol
 if (isset($_GET['action']) && isset($_GET['machineid'])) {
    $response = PluginFusioninventoryRestCommunication::communicate($_GET);
