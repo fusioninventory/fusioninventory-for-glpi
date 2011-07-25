@@ -235,10 +235,18 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
    switch ($type) {
 
       case 'Computer':
-         if ($table.'.'.$field == 'glpi_plugin_fusinvsnmp_networkequipments.name') {
+         if ($table.'.'.$field == 'glpi_plugin_fusinvsnmp_networkports.id') {
             if (strstr($data["ITEM_$num"], "$")) {
                $split=explode("$$$$",$data["ITEM_$num"]);
-               $out = implode("<br/>", $split);
+               $ports = array();
+
+               foreach ($split as $portconcat) {
+                  $split2 = explode("....", $portconcat);
+                  if (isset($split2[1])) {
+                     $ports[] = $split2[1];
+                  }
+               }
+               $out = implode("<br/>", $ports);
                return $out;
             }
          }
@@ -1319,7 +1327,9 @@ function plugin_fusinvsnmp_addSelect($type,$id,$num) {
 
             // ** FusionInventory - switch port
             case "glpi_plugin_fusinvsnmp_networkports.id" :
-               return "GROUP_CONCAT( FUSIONINVENTORY_22.name SEPARATOR '$$$$') AS ITEM_$num, ";
+               return "GROUP_CONCAT( DISTINCT 
+                     CONCAT_WS('....', FUSIONINVENTORY_22.items_id,FUSIONINVENTORY_22.name)
+                  SEPARATOR '$$$$') AS ITEM_$num, ";
                break;
          }
          break;
