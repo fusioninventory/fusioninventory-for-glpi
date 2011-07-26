@@ -219,7 +219,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
 
    function getrightmodel($device_id, $type, $comment="") {
       global $DB;
-  
+      
       // Get description (sysdescr) of device
       // And search in device_serials base
       $sysdescr = '';
@@ -231,19 +231,35 @@ class PluginFusinvsnmpModel extends CommonDBTM {
             case 'NetworkEquipment':
                $PluginFusinvsnmpNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
                $NetworkEquipment = new NetworkEquipment();
-               $NetworkEquipment->check($device_id,'r');
-               $a_data = $PluginFusinvsnmpNetworkEquipment->find("`networkequipments_id`='".$device_id."'", "", "1");
-               $data = current($a_data);
-               $sysdescr = $data["sysdescr"];
+               if($NetworkEquipment->getFromDB($device_id)) {
+                  $NetworkEquipment->check($device_id,'r');
+                  $a_data = $PluginFusinvsnmpNetworkEquipment->find("`networkequipments_id`='".$device_id."'", "", "1");
+                  $data = current($a_data);
+                  $sysdescr = $data["sysdescr"];
+               } else {
+                  // Delete, device deleted
+                  $a_data = $PluginFusinvsnmpNetworkEquipment->find("`networkequipments_id`='".$device_id."'", "", "1");
+                  $data = current($a_data);
+                  $PluginFusinvsnmpNetworkEquipment->delete($data);
+                  $sysdescr = '';
+               }
                break;
 
             case 'Printer':
                $PluginFusinvsnmpPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
                $Printer = new Printer();
-               $Printer->check($device_id,'r');
-               $a_data = $PluginFusinvsnmpPrinter->find("`printers_id`='".$device_id."'", "", "1");
-               $data = current($a_data);
-               $sysdescr = $data["sysdescr"];
+               if($Printer->getFromDB($device_id)) {
+                  $Printer->check($device_id,'r');
+                  $a_data = $PluginFusinvsnmpPrinter->find("`printers_id`='".$device_id."'", "", "1");
+                  $data = current($a_data);
+                  $sysdescr = $data["sysdescr"];
+               } else {
+                  // Delete, device deleted
+                  $a_data = $PluginFusinvsnmpPrinter->find("`printers_id`='".$device_id."'", "", "1");
+                  $data = current($a_data);
+                  $PluginFusinvsnmpPrinter->delete($data);
+                  $sysdescr = ''; 
+               }
                break;
 
          }
@@ -370,9 +386,10 @@ class PluginFusinvsnmpModel extends CommonDBTM {
             changeProgressBarPosition($i,$nb,"$i / $nb");
          }
       }
+      changeProgressBarPosition($nb,$nb,"$nb / $nb");
       echo "</td>";
       echo "</table>";
-
+      
       // Reload model for networkequipment have sysdescr
       $networkequipmentext = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
       $a_networkequipments = $networkequipmentext->find("`sysdescr`!=''");
