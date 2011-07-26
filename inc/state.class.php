@@ -111,35 +111,108 @@ class PluginFusinvdeployState extends CommonDBTM {
 
       $res = array();
 
-      $query = "SELECT tasks.*
+      //get all tasks with job and status
+      $i = 0;
+      $query_tasks = "SELECT DISTINCT(tasks.name), tasks.id
          FROM glpi_plugin_fusinvdeploy_tasks tasks
          INNER JOIN glpi_plugin_fusinvdeploy_taskjobs jobs
             ON jobs.plugin_fusinvdeploy_tasks_id = tasks.id
-         WHERE jobs.method = 'deployinstall' OR jobs.method = 'deployuninstall'";
-      $query_res = $DB->query($query);
-      $i = 0;
-      while ($row = $DB->fetch_assoc($query_res)) {
-         $res[$i]['name'] = $row['name'];
+            AND jobs.method = 'deployinstall' OR jobs.method = 'deployuninstall'
+         INNER JOIN glpi_plugin_fusioninventory_taskjobstatus status
+            ON status.plugin_fusioninventory_taskjobs_id = jobs.id";
+      $res_tasks = $DB->query($query_tasks);
+      while ($row_tasks = $DB->fetch_assoc($res_tasks)) {
+         $res[$i]['name'] = $row_tasks['name'];
          $res[$i]['type'] = "task";
-         $res[$i]['state'] = null;
-         $res[$i]['iconCls'] = "deployState_Group";
-         $res[$i]['progress'] = self::getTaskPercent($row['id']);
+         $res[$i]['state'] = "null";
+         $res[$i]['icon'] = GLPI_ROOT."/plugins/fusinvdeploy/pics/ext/task.png";
+         $res[$i]['progress'] = self::getTaskPercent($row_tasks['id']);
+
+         //get all job for this task
+         $j = 0;
+         $query_jobs = "SELECT id, action
+            FROM glpi_plugin_fusinvdeploy_taskjobs
+            WHERE plugin_fusinvdeploy_tasks_id = '".$row_tasks['id']."'";
+         $res_jobs = $DB->query($query_jobs);
+         while ($row_jobs = $DB->fetch_assoc($res_jobs)) {
+            $actions = importArrayFromDB($row_jobs['action']);
+            foreach ($actions as $action) {
+               $action_type = key($action);
+               $obj_action = new $action_type;
+               $obj_action->getFromDB($action[$action_type]);
+
+               $res[$i]['children'][$j]['name'] = $obj_action->getField('name');
+               $res[$i]['children'][$j]['type'] = $action_type;
+
+               //get all status for this job
+               $query_status = "SELECT id, items_id, state
+                  FROM glpi_plugin_fusioninventory_taskjobstatus
+                  WHERE plugin_fusioninventory_taskjobs_id = '".$row_jobs['id']."'";
+               $res_status = $DB->query($query_status);
+
+               //no status for this job
+               if ($DB->numrows($res_status) <= 0) {
+                  unset ($res[$i]['children'][$j]);
+                  //$res[$i]['children'][$j]['leaf'] = true;
+                  continue;
+               }
+
+               switch ($action_type) {
+                  case 'Computer':
+                     $row_status = $DB->fetch_assoc($res_status);
+
+                     $res[$i]['children'][$j]['icon'] = GLPI_ROOT."/plugins/fusinvdeploy/pics/ext/computer.png";
+                     $res[$i]['children'][$j]['leaf'] = true; //final children
+                     $res[$i]['children'][$j]['progress'] = $row_status['state'];
+                     $res[$i]['children'][$j]['status_id'] = $row_status['id'];
+
+                     break;
+                  case 'PluginFusinvdeployGroup':
+                     $res[$i]['children'][$j]['icon'] = GLPI_ROOT."/plugins/fusinvdeploy/pics/ext/group.png";
+                     $res[$i]['children'][$j]['progress'] = self::getTaskPercent($row_jobs['id'], 'group');
+
+                     $k = 0;
+                     while ($row_status = $DB->fetch_assoc($res_status)) {
+                        $computer = new Computer;
+                        $computer->getFromDB($row_status['items_id']);
+
+                        $res[$i]['children'][$j]['children'][$k]['name'] = $computer->getField('name');
+                        $res[$i]['children'][$j]['children'][$k]['leaf'] = true;
+                        $res[$i]['children'][$j]['children'][$k]['type'] = "Computer";
+                        $res[$i]['children'][$j]['children'][$k]['progress'] = $row_status['state'];
+                        $res[$i]['children'][$j]['children'][$k]['icon'] = GLPI_ROOT."/plugins/fusinvdeploy/pics/ext/computer.png";
+                        $res[$i]['children'][$j]['children'][$k]['status_id'] = $row_status['id'];
+
+                        $k++;
+                     }
+                     break;
+               }
+
+               $j++;
+            }
+         }
+
          $i++;
       }
 
       return json_encode($res);
    }
 
-   static function getTaskPercent($task_id) {
+   static function getTaskPercent($id, $type = 'task') {
       global $DB;
 
       $taskjob = new PluginFusioninventoryTaskjob;
       $taskjobstatus = new PluginFusioninventoryTaskjobstatus;
 
-      $a_taskjobs = $taskjob->find("`plugin_fusioninventory_tasks_id`='".$task_id."'");
+      if ($type == 'task') {
+         $a_taskjobs = $taskjob->find("`plugin_fusioninventory_tasks_id`='".$id."'");
+         $taskjobs_id = key($a_taskjobs);
+      } elseif ($type == 'group') {
+         $taskjobs_id = $id;
+      }
 
       $a_taskjobstatus = $taskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".
-            key($a_taskjobs)."' AND `state`!='".PluginFusioninventoryTaskjobstatus::FINISHED."'");
+            $taskjobs_id."' AND `state`!='".PluginFusioninventoryTaskjobstatus::FINISHED."'");
 
       $state = array();
       $state[0] = 0;

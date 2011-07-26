@@ -246,10 +246,19 @@ padding:       5px;
 }
 
 
+.c_state, .c_progress {
+   width:240px;
+   margin-left:10px;
+   white-space: normal;
+}
+#deployStates .x-grid3-header {
+   display:none
+}
+
 /* PROGRESS BAR */
 .progress-container {
   border: 1px solid #ccc;
-  width: 250px;
+  width: 150px;
   margin: 0;
   padding: 1px;
   float: right;

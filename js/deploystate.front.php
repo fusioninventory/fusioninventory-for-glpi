@@ -50,174 +50,91 @@ $label_width = 140;
 $field_width = 170;
 
 $JS = <<<JS
-/*
-var taskJobsColumns =  [{
-   id: 'task_id',
-   dataIndex: 'task_id',
-   hidden: true
-}, {
-   id: 'task_percent',
-   dataIndex: 'task_percent',
-   hidden: true
-}, {
-   id: 'task_name',
-   dataIndex: 'task_name',
-   renderer: renderTasks,
-   groupRenderer: renderTasks
-}, {
-   id: 'name',
-   dataIndex: 'name',
-   renderer: renderTaskJobName,
-   width: 70
-}, {
-   id: 'status',
-   dataIndex: 'status',
-   width: 70,
-   renderer: renderTaskJobStatus,
-}, {
-   id: 'computer_name',
-   dataIndex: 'computer_name',
-   renderer: renderComputer
-}, {
-   id: 'job_id',
-   dataIndex: 'job_id',
-   hidden: true
-}, {
-   id: 'status_id',
-   dataIndex: 'status_id',
-   hidden: true
-}]
-
-function renderTasks(val, metaData, record) {
-   var task_percent = record.data.task_percent;
-   var img = '<img src="../pics/ext/task.png">&nbsp;';
-   var progressbar = '<div style="float:right;">{$LANG['common'][47]} :&nbsp;<div class="progress-container"><div style="width: '+task_percent+'">'+task_percent+'</div></div></div>';
-   return img+"<b>"+val+"</b>"+progressbar;
-}
-
-function renderTaskJobName(val) {
-   var img = '&nbsp;&nbsp;&nbsp;&nbsp;<img src="../pics/ext/taskjob.png">&nbsp;';
-   return img+val;
-}
-
-function renderComputer(val) {
-   if (val == 'N/A') return '';
-   var img = '<img src="../pics/ext/computer.png">&nbsp;';
-   return img+val;
-}
-
-function renderTaskJobStatus(val) {
-   switch (val) {
-      case '0':
-         var img_name = 'bullet-blue.png';
-         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][7]}';
-         break
-      case '1':
-         var img_name = 'bullet-yellow.png';
-         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][1]}';
-         break
-      case '2':
-         var img_name = 'bullet-green.png';
-         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][2]}';
-         break
-      case '3':
-         var img_name = 'bullet-red.png';
-         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][3]}';
-         break
-      case '4':
-         var img_name = 'bullet-red.png';
-         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][4]}';
-         break
-      case '5':
-         var img_name = 'bullet-red.png';
-         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][5]}';
-         break
-      case '6':
-         var img_name = 'bullet-yellow.png';
-         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][6]}';
-         break
-      case '7':
-         var img_name = 'bullet-blue.png';
-         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][7]}';
-         break
-      default:
-         var img_name = 'bullet-grey.png';
-         val = '';
-   }
-
-   var img = '<img src="../pics/ext/'+img_name+'">&nbsp;';
-   return img+val;
-}
-
-var taskJobsReader = new Ext.data.JsonReader({
-   root: 'taskjobs',
-   fields: [
-      'name', 'task_id', 'task_percent', 'task_name',
-      'computer_name', 'status', 'job_id', 'status_id'
-   ]
-});
-
-var taskJobsStore = new Ext.data.GroupingStore({
-   url: '../ajax/state_taskjobs.data.php',
-   autoLoad: true,
-   reader: taskJobsReader,
-   sortInfo: {field: 'task_name', direction: "ASC"},
-   groupField : 'task_name'
-});
-
-var taskJobsGrid = new Ext.grid.GridPanel({
-   region: 'center',
-   stripeRows: true,
-   height: {$height_left},
-   width: {$width_left},
-   style: 'margin-bottom:5px',
-   title: "{$LANG['plugin_fusioninventory']['menu'][7]}",
-   store: taskJobsStore,
-   columns: taskJobsColumns,
-   view: new Ext.grid.GroupingView({
-      forceFit:true,
-      groupTextTpl: '{text}',
-      hideGroupedColumn: true,
-      showGroupName: false,
-      emptyText: '',
-      emptyGroupText: '',
-      startCollapsed: true
-   }),
-   sm: new Ext.grid.RowSelectionModel({
-      singleSelect: true,
-      listeners: {
-         rowselect: function(g,index,ev) {
-            var rec = taskJobsGrid.store.getAt(index);
-            var status_id = rec.data.status_id;
-
-            taskJobLogsGrid.getStore().setBaseParam('status_id', status_id);
-            taskJobLogsGrid.getStore().removeAll();
-            taskJobLogsGrid.getStore().reload();
-            console.log(taskJobLogsGrid.getStore());
-         }
-      }
-   })
-});*/
 
 var taskJobsTreeGrid = new Ext.ux.tree.TreeGrid({
-   region: 'center',
-   title: "{$LANG['plugin_fusioninventory']['menu'][7]}",
+   title: "{$LANG['plugin_fusinvdeploy']['deploystatus'][0]}",
    height: {$height_left},
    width: {$width_left},
+   region: 'center',
+   style: 'margin-bottom:5px',
    enableDD: false,
+   enableHdMenu: false,
+   columnResize: false,
+   enableSort: false,
    columns:[{
-      dataIndex: 'name'
+      dataIndex: 'name',
+      width:250
    },{
-      dataIndex: 'type'
+      dataIndex: 'type',
+      hidden: true,
    },{
-      dataIndex: 'state'
-   },{
-      dataIndex: 'progress'
+      dataIndex: 'progress',
+      tpl: new Ext.XTemplate('{progress:this.renderProgressBar}', {
+         renderProgressBar: function(val) {
+            if (val == "null" || val == null) return '';
+            if (val.indexOf('%') != -1)
+               return '<div class="c_progress">{$LANG['common'][47]} :&nbsp;<div class="progress-container"><div style="width: '+val+'">'+val+'</div></div></div>';
+            else {
+               switch (val) {
+                  case '0':
+                     var img_name = 'bullet-blue.png';
+                     val = '{$LANG['plugin_fusioninventory']['taskjoblog'][7]}';
+                     break
+                  case '1':
+                     var img_name = 'bullet-yellow.png';
+                     val = '{$LANG['plugin_fusioninventory']['taskjoblog'][1]}';
+                     break
+                  case '2':
+                     var img_name = 'bullet-green.png';
+                     val = '{$LANG['plugin_fusioninventory']['taskjoblog'][2]}';
+                     break
+                  case '3':
+                     var img_name = 'bullet-red.png';
+                     val = '{$LANG['plugin_fusioninventory']['taskjoblog'][3]}';
+                     break
+                  case '4':
+                     var img_name = 'bullet-red.png';
+                     val = '{$LANG['plugin_fusioninventory']['taskjoblog'][4]}';
+                     break
+                  case '5':
+                     var img_name = 'bullet-red.png';
+                     val = '{$LANG['plugin_fusioninventory']['taskjoblog'][5]}';
+                     break
+                  case '6':
+                     var img_name = 'bullet-yellow.png';
+                     val = '{$LANG['plugin_fusioninventory']['taskjoblog'][6]}';
+                     break
+                  case '7':
+                     var img_name = 'bullet-blue.png';
+                     val = '{$LANG['plugin_fusioninventory']['taskjoblog'][7]}';
+                     break
+                  default:
+                     var img_name = 'bullet-grey.png';
+                     val = '';
+               }
+
+               return '<div class="c_progress"><img src="../pics/ext/'+img_name+'">&nbsp;'+val+'</div>';
+            }
+
+         }
+      })
    }, {
       dataIndex: 'status_id',
       hidden: true
    }],
    dataUrl: '../ajax/state_taskjobs.tree.data.php',
+    listeners: {
+        click: {
+            fn:function (node,event){
+               taskJobLogsGrid.getStore().removeAll();
+               if (node.attributes.status_id) {
+                  taskJobLogsGrid.getStore().setBaseParam('status_id', node.attributes.status_id);
+                  taskJobLogsGrid.getStore().reload();
+               }
+            }
+        }
+    }
+
 });
 
 var tasksJobLogsColumns =  [{
@@ -228,7 +145,7 @@ var tasksJobLogsColumns =  [{
    id: 'date',
    dataIndex: 'date',
    header: '{$LANG['common'][27]}',
-   width: 130
+   width: 140
 }, {
    id: 'comment',
    dataIndex: 'comment',
@@ -272,7 +189,7 @@ var stateLayout = new Ext.Panel({
       split: true
    },
    items:[
-      /*taskJobsGrid,*/ taskJobsTreeGrid, taskJobLogsGrid
+      taskJobsTreeGrid, taskJobLogsGrid
    ]
 });
 
