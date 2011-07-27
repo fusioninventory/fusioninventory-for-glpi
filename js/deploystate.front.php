@@ -60,10 +60,13 @@ var taskJobsTreeGrid = new Ext.ux.tree.TreeGrid({
    enableDD: false,
    enableHdMenu: false,
    columnResize: false,
-   enableSort: false,
+   enableSort: true,
    columns:[{
       dataIndex: 'name',
-      width:250
+      width:200
+   },{
+      dataIndex: 'date',
+      width:126
    },{
       dataIndex: 'type',
       hidden: true,
@@ -113,7 +116,7 @@ var taskJobsTreeGrid = new Ext.ux.tree.TreeGrid({
                      val = '';
                }
 
-               return '<div class="c_progress"><img src="../pics/ext/'+img_name+'">&nbsp;'+val+'</div>';
+               return '<div class="c_state"><img src="../pics/ext/'+img_name+'">&nbsp;'+val+'</div>';
             }
 
          }

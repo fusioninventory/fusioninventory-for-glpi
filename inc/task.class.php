@@ -245,4 +245,12 @@ class PluginFusinvdeployTask extends CommonDBTM {
 
       return true;
    }
+
+   function post_addItem() {
+      $options = array(
+         'id'              => $this->getField('id'),
+         'date_creation'   => date("Y-m-d H:i:s")
+      );
+      $this->update($options);
+   }
 }

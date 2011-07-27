@@ -730,10 +730,10 @@ background-color:#dddddd;
 border-color:#f1cfa2;
 }
  .x-tree-node .x-tree-node-over{
-background-color:#eeeeee;
+background-color:#F1F4E3;
 }
  .x-tree-node .x-tree-selected{
-background-color:#d9e8fb;
+background-color:#E0E5C5;
 }
  .x-tree-drop-ok-append .x-dd-drop-icon{
 background-image:url(../images/fusinvdeploy/tree/drop-add.gif);

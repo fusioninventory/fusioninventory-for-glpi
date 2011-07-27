@@ -131,7 +131,7 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
             plugins_id, method, definition, action,
             retry_nb, retry_time
          ) VALUES (
-            '$tasks_id', 'job_".$tasks_id."_$i', CURDATE(),
+            '$tasks_id', 'job_".$tasks_id."_$i', NOW(),
             '$plugins_id', '".$task['method']."', '$definition', '$action',
             '".$task['retry_nb']."', '".$task['retry_time']."'
          )";

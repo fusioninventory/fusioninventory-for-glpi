@@ -247,10 +247,14 @@ padding:       5px;
 
 
 .c_state, .c_progress {
-   width:240px;
+   width:225px;
    margin-left:10px;
    white-space: normal;
 }
+.c_state {margin-left:8px;}
+.x-treegrid-node-ct-table .x-treegrid-node-ct-table .c_state {margin-left:18px;}
+
+
 #deployStates .x-grid3-header {
    display:none
 }
@@ -258,7 +262,7 @@ padding:       5px;
 /* PROGRESS BAR */
 .progress-container {
   border: 1px solid #ccc;
-  width: 150px;
+  width: 140px;
   margin: 0;
   padding: 1px;
   float: right;

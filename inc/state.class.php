@@ -113,17 +113,19 @@ class PluginFusinvdeployState extends CommonDBTM {
 
       //get all tasks with job and status
       $i = 0;
-      $query_tasks = "SELECT DISTINCT(tasks.name), tasks.id
+      $query_tasks = "SELECT DISTINCT(tasks.name), tasks.id, tasks.date_scheduled as date
          FROM glpi_plugin_fusinvdeploy_tasks tasks
          INNER JOIN glpi_plugin_fusinvdeploy_taskjobs jobs
             ON jobs.plugin_fusinvdeploy_tasks_id = tasks.id
             AND jobs.method = 'deployinstall' OR jobs.method = 'deployuninstall'
          INNER JOIN glpi_plugin_fusioninventory_taskjobstatus status
-            ON status.plugin_fusioninventory_taskjobs_id = jobs.id";
+            ON status.plugin_fusioninventory_taskjobs_id = jobs.id
+         ORDER BY date DESC";
       $res_tasks = $DB->query($query_tasks);
       while ($row_tasks = $DB->fetch_assoc($res_tasks)) {
          $res[$i]['name'] = $row_tasks['name'];
          $res[$i]['type'] = "task";
+         $res[$i]['date'] = $row_tasks['date'];
          $res[$i]['state'] = "null";
          $res[$i]['icon'] = GLPI_ROOT."/plugins/fusinvdeploy/pics/ext/task.png";
          $res[$i]['progress'] = self::getTaskPercent($row_tasks['id']);
