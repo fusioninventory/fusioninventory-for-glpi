@@ -51,9 +51,6 @@ switch($_POST['glpi_tab']) {
       $task->showList();
       break;
    case 3 :
-      $group->showList();
-      break;
-   case 4 :
       $task->showActions($_POST["id"]);
       break;
    default :

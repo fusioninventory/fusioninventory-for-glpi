@@ -44,7 +44,7 @@ class PluginFusinvdeployTask extends CommonDBTM {
       global $LANG;
 
       if ($nb>1) {
-         return $LANG['plugin_fusinvdeploy']['task'][6];
+         return $LANG['plugin_fusinvdeploy']['group'][3];
       }
       return $LANG['plugin_fusinvdeploy']['task'][1];
    }
@@ -63,13 +63,12 @@ class PluginFusinvdeployTask extends CommonDBTM {
       $ong = array();
 
       if ($this->fields['id'] > 0) {
-         $ong[4] = $LANG['plugin_fusinvdeploy']['task'][13];
+         $ong[3] = $LANG['plugin_fusinvdeploy']['task'][13];
       } elseif ($this->fields['id'] == -1) {
          $ong[2] = $LANG['plugin_fusinvdeploy']['task'][1];
-         $ong[3] = $LANG['plugin_fusinvdeploy']['task'][2];
          $ong['no_all_tab']=true;
       } else { // New item
-         $ong[1] = $LANG['title'][26];
+         $ong[1] = $LANG['plugin_fusinvdeploy']['task'][3];
       }
 
       return $ong;

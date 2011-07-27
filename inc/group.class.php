@@ -48,7 +48,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       if ($nb>1) {
          return $LANG['plugin_fusinvdeploy']['task'][5];
       }
-      return $LANG['plugin_fusinvdeploy']['task'][2];
+      return $LANG['plugin_fusinvdeploy']['group'][0];
    }
 
    function canCreate() {
@@ -80,31 +80,44 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       if ($this->fields['id'] > 0) {
          switch($this->fields['type']) {
             case "STATIC":
-               $ong[2] = $LANG['plugin_fusinvdeploy']['task'][9];
+               $ong[2] = $LANG['plugin_fusinvdeploy']['group'][1];
                break;
             case "DYNAMIC":
-               $ong[3] = $LANG['plugin_fusinvdeploy']['task'][10];
+               $ong[3] = $LANG['plugin_fusinvdeploy']['group'][2];
                break;
          }
+      }
+      elseif ($this->fields['id'] == -1) {
+         $ong[4] = $LANG['plugin_fusinvdeploy']['group'][0];
+         $ong['no_all_tab']=true;
       } else { // New item
-         $ong[1] = $LANG['title'][26];
+         $ong[1] = $LANG['plugin_fusinvdeploy']['group'][4];
       }
 
       return $ong;
    }
 
+   function showMenu($options=array())  {
+
+      $this->displaylist = false;
+
+      $this->fields['id'] = -1;
+      $this->showTabs($options);
+      $this->addDivForTabs();
+   }
+
    function title() {
-      global $LANG, $CFG_GLPI;
+      global $LANG;
 
       $buttons = array();
-      $title = $LANG['plugin_fusinvdeploy']['task'][2];
+      $title = $LANG['plugin_fusinvdeploy']['group'][0];
 
       if ($this->canCreate()) {
-         $buttons["group.form.php?new=1"] = $LANG['plugin_fusinvdeploy']['task'][4];
+         $buttons["group.form.php?new=1"] = $LANG['plugin_fusinvdeploy']['group'][4];
          $title = "";
       }
 
-      displayTitle($CFG_GLPI["root_doc"] . "/pics/groupes.png", $title, $title, $buttons);
+      displayTitle(GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_group.png", $title, $title, $buttons);
    }
 
    function getSearchURL($full=true) {
@@ -143,8 +156,8 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       echo "<td>".$LANG['common'][17]."&nbsp;:</td>";
       echo "<td align='center'>";
       $types = array(
-         'STATIC' => $LANG['plugin_fusinvdeploy']['task'][9],
-         'DYNAMIC' => $LANG['plugin_fusinvdeploy']['task'][10]
+         'STATIC'    => $LANG['plugin_fusinvdeploy']['group'][1],
+         'DYNAMIC'   => $LANG['plugin_fusinvdeploy']['group'][2]
       );
       Dropdown::showFromArray("type", $types, array('value'=>$this->fields['type']));
       echo "</td>";

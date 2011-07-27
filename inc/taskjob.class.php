@@ -151,7 +151,7 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
             'value' => 'Computer',
          ),
          array(
-            'name' => $LANG['plugin_fusinvdeploy']['task'][2],
+            'name' => $LANG['plugin_fusinvdeploy']['group'][0],
             'value' => 'PluginFusinvdeployGroup',
          )
       );

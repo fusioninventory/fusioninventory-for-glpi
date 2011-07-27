@@ -173,15 +173,10 @@ $LANG['plugin_fusinvdeploy']['form']['action_message'][5] = "report of the insta
 
 $LANG['plugin_fusinvdeploy']['task'][0] = "Deployement task";
 $LANG['plugin_fusinvdeploy']['task'][1] = "Task";
-$LANG['plugin_fusinvdeploy']['task'][2] = "Groups";
 $LANG['plugin_fusinvdeploy']['task'][3] = "Add task";
-$LANG['plugin_fusinvdeploy']['task'][4] = "Add group";
 $LANG['plugin_fusinvdeploy']['task'][5] = "Task";
-$LANG['plugin_fusinvdeploy']['task'][6] = "Group";
 $LANG['plugin_fusinvdeploy']['task'][7] = "Actions";
 $LANG['plugin_fusinvdeploy']['task'][8] = "Actions list";
-$LANG['plugin_fusinvdeploy']['task'][9] = "Static group";
-$LANG['plugin_fusinvdeploy']['task'][10] = "Dynamic group";
 $LANG['plugin_fusinvdeploy']['task'][11] = "Edit task";
 $LANG['plugin_fusinvdeploy']['task'][12] = "Add a task";
 $LANG['plugin_fusinvdeploy']['task'][13] = "Order list";
@@ -189,4 +184,11 @@ $LANG['plugin_fusinvdeploy']['task'][14] = "Advanced options";
 $LANG['plugin_fusinvdeploy']['task'][15] = "Add order";
 $LANG['plugin_fusinvdeploy']['task'][16] = "Delete order";
 $LANG['plugin_fusinvdeploy']['task'][17] = "Edit order";
+
+$LANG['plugin_fusinvdeploy']['group'][0] = "Groups";
+$LANG['plugin_fusinvdeploy']['group'][1] = "Static group";
+$LANG['plugin_fusinvdeploy']['group'][2] = "dynamic group";
+$LANG['plugin_fusinvdeploy']['group'][3] = "Group";
+$LANG['plugin_fusinvdeploy']['group'][4] = "Add group";
+
 ?>

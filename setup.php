@@ -44,7 +44,7 @@ function plugin_init_fusinvdeploy() {
 
    $plugin = new Plugin;
    if (!$plugin->isActivated("fusioninventory")) {
-      if (isset($_GET['id']) 
+      if (isset($_GET['id'])
          && isset($_GET['action'])
             && strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
          switch ($_GET['action']) {
@@ -76,28 +76,36 @@ function plugin_init_fusinvdeploy() {
    $moduleId = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
 
    // ##### 4. Set in session module_id #####
-   
+
    $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = $moduleId;
 
 
    if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvdeploy'][$LANG['plugin_fusinvdeploy']["title"][0]])) {
-      $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvdeploy'][$LANG['plugin_fusinvdeploy']["title"][0]] = 
+      $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvdeploy'][$LANG['plugin_fusinvdeploy']["title"][0]] =
                                              array('class'        => 'PluginFusinvDeployConfig',
                                                    'submitbutton' => 'plugin_fusinvdeploy_config_set',
                                                    'submitmethod' => 'putForm');
    }
 
-   $PLUGIN_HOOKS['change_profile']['fusinvdeploy'] = 
+   $PLUGIN_HOOKS['change_profile']['fusinvdeploy'] =
       PluginFusioninventoryProfile::changeprofile($moduleId,$a_plugin['shortname']);
 
-   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['packages'] = 
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['packages'] =
       '../fusinvdeploy/front/package.form.php?add=1';
-   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['packages'] = 
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['packages'] =
       '../fusinvdeploy/front/package.php';
-   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['mirror'] = 
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['mirror'] =
       '../fusinvdeploy/front/mirror.form.php?add=1';
-   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['mirror'] = 
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['mirror'] =
       '../fusinvdeploy/front/mirror.php';
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['task'] =
+      '../fusinvdeploy/front/task.form.php?add=1';
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['task'] =
+      '../fusinvdeploy/front/task.php';
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['group'] =
+      '../fusinvdeploy/front/group.form.php?add=1';
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['group'] =
+      '../fusinvdeploy/front/group.php';
 
    $PLUGIN_HOOKS['add_css']['fusinvdeploy'] = "css/style.css";
 }

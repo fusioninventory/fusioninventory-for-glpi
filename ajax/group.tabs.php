@@ -53,6 +53,9 @@ switch($_POST['glpi_tab']) {
       $group->getFromDB($_POST['id']);
       $group->showDynamicForm();
       break;
+   case 4;
+      $group->showList();
+      break;
    default :
       break;
 }
