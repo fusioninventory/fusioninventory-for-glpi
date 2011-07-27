@@ -300,13 +300,16 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                } else if ($crit->fields["condition"] == PluginFusioninventoryRule::PATTERN_FIND) {
                   $complex_criterias[] = $crit;
                   $nb_crit_find++;
+               } else if ($crit->fields["condition"] == Rule::PATTERN_EXISTS) {
+                  $complex_criterias[] = $crit;
+                  $nb_crit_find++;
                } else if($crit->fields["criteria"] == 'itemtype') {
                   $complex_criterias[] = $crit;
                }
             }
          }
       }
-
+      
       foreach ($this->getCriteriaByID('states_id') as $crit) {
          $complex_criterias[] = $crit;
       }
