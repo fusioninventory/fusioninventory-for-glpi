@@ -68,11 +68,11 @@ class PluginFusinvdeployUninstall extends CommonDBTM {
                </tr>
                <tr><td><br /></td></tr>
                <tr>
-                  <td id='".$render."Action'></td>
+                  <td id='".$render."File'></td></td>
                </tr>
                <tr><td><br /></td></tr>
                <tr>
-                  <td id='".$render."File'></td></td>
+                  <td id='".$render."Action'></td>
                </tr>
             </tbody>
          </table>";
