@@ -94,7 +94,7 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
                      $res = $DB->query($query);
                      $row = $DB->fetch_assoc($res);
                      $fields_array = unserialize($row['fields_array']);
-                     $datas = PluginFusinvdeploySearch::methodListObjects($params, '');
+                     $datas = PluginFusinvdeploySearch::methodListObjects($fields_array, '');
                      foreach($datas as $data) {
                         $computers[] = $data['id'];
                      }
@@ -103,6 +103,7 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
                break;
          }
       }
+
 
       $c_input= array();
       $c_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;

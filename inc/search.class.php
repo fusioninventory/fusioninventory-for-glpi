@@ -41,22 +41,8 @@ class PluginFusinvdeploySearch extends CommonDBTM {
    static function methodListObjects($params, $protocol) {
       global $DB, $CFG_GLPI;
 
-      if (isset ($params['help'])) {
-         return array('start'        => 'integer,optional',
-                      'limit'        => 'integer,optional',
-                      'name'         => 'string,optional',
-                      'serial'       => 'string,optional',
-                      'otherserial'  => 'string,optional',
-                      'locations_id' => 'integer,optional',
-                      'room'         => 'string (Location only)',
-                      'building'     => 'string (Location only)',
-                      'itemtype'     => 'string or array, optional',
-                      'show_label'   => 'bool, optional (0 default)',
-                      'help'         => 'bool,optional');
-      }
-
       if (!isset ($_SESSION['glpiID'])) {
-         return false;
+         return self::Error($protocol, WEBSERVICES_ERROR_NOTAUTHENTICATED);
       }
 
       $resp = array();
@@ -74,7 +60,7 @@ class PluginFusinvdeploySearch extends CommonDBTM {
       }
 
       if (!class_exists($params['itemtype'])) {
-         return false;
+         return self::Error($protocol, WEBSERVICES_ERROR_BADPARAMETER. ": ".$params['itemtype']);
       }
 
       //Fields to return to the client when search search is performed
@@ -106,6 +92,7 @@ class PluginFusinvdeploySearch extends CommonDBTM {
       $query.= " ORDER BY `id`
                 LIMIT $start,$limit";
 
+
       foreach ($DB->request($query) as $data) {
          $tmp = array();
          $toformat = array('table' => $table, 'data'  => $data,
@@ -114,6 +101,7 @@ class PluginFusinvdeploySearch extends CommonDBTM {
          self::formatDataForOutput($toformat, $tmp);
          $output[] = $tmp;
       }
+
       return $output;
    }
 
@@ -134,20 +122,21 @@ class PluginFusinvdeploySearch extends CommonDBTM {
       foreach ($params as $key => $value) {
          //Key representing the FK associated with the _name value
          $key_transformed = preg_replace("/_name/", "s_id", $key);
-         $fk_table = getTableNameForForeignKeyField($key);
-         $option   = $item->getSearchOptionByField('field', $key_transformed);
 
-         if (!empty($option)) {
+         $option = $item->getSearchOptionByField('linkfield', $key_transformed);
+         if ($option != '') {
+            $option = $item->getSearchOptionByField('field', $key_transformed);
+         }
+
+         if ($option != '') {
             if (!in_array($key, $already_used)
                && (isset ($params[$key])
-                  && $item->getField($option['linkfield']) != NOT_AVAILABLE)) {
-
+                  && $item->getField($key_transformed) != NOT_AVAILABLE)) {
                if (getTableNameForForeignKeyField($key)) {
                   $where .= " AND `$table`.`$key`='" . $params[$key] . "'";
 
                } else {
-                  //
-                  if (($key != $key_transformed) || ($table != $option['table'])) {
+                  if ($key != $key_transformed) {
                      $where .= " AND `".$option['table']."`.`".$option['field'];
                      $where .= "` LIKE '%" . $params[$key] . "%'";
 
@@ -159,6 +148,15 @@ class PluginFusinvdeploySearch extends CommonDBTM {
 
             }
          }
+      }
+
+      if ($item->maybeTemplate()) {
+         $where .= " AND `$table`.`is_template`='0' ";
+
+      }
+      if ($item->maybeDeleted()) {
+         $where .= " AND `$table`.`is_deleted`='0' ";
+
       }
 
       return $where;
