@@ -1295,7 +1295,15 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       if (isset($data['action'])
               AND ($data['action'] == PluginFusioninventoryRuleImportEquipment::LINK_RESULT_DENIED)) {
 
-         $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==fusioninventory::3== '.implode(",", $input);
+         $a_text = '';
+         foreach ($input as $key=>$data) {
+            if (is_array($data)) {
+               $a_text[] = "[".$key."]:".implode(",", $data);
+            } else {
+               $a_text[] = "[".$key."]:".$data;
+            }
+         }
+         $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==fusioninventory::3== '.implode(",", $a_text);
          $this->addtaskjoblog();
       }
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
