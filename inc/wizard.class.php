@@ -171,7 +171,7 @@ class PluginFusioninventoryWizard {
       echo "<center><table width='950'>";
       echo "<tr>";
       echo "<td colspan='2' valign='top' width='950'>";
-
+      
       if (isset($_GET['id'])) {
          $class = new $classname;
          if ($_GET['wizz'] == 'w_tasks') {
@@ -672,7 +672,9 @@ class PluginFusioninventoryWizard {
       PluginFusioninventoryWizard::displayShowForm($ariane, 
               "PluginFusinvinventoryConfig",
               array('f'=>'showForm',
-                    'arg1'=>array('target'=> GLPI_ROOT."/plugins/fusioninventory/front/configuration.form.php")));
+                    'arg1'=>array('target'=> GLPI_ROOT."/plugins/fusioninventory/front/configuration.form.php"
+              ),
+              'noadditem'=>1));
       
    }
    
