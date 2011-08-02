@@ -134,6 +134,8 @@ $LANG['plugin_fusioninventory']['agents'][39]="En cours d'éxécution";
 $LANG['plugin_fusioninventory']['agents'][40]="Ordinateur sans IP connue";
 $LANG['plugin_fusioninventory']['agents'][41]="URL d'accès au service";
 $LANG['plugin_fusioninventory']['agents'][42]="Useragent";
+$LANG['plugin_fusioninventory']['agents'][43]="Informations pour la configuration de l'agent";
+$LANG['plugin_fusioninventory']['agents'][44]="Url de communication du serveur";
 
 $LANG['plugin_fusioninventory']['unknown'][2] = "Matériel approuvé";
 $LANG['plugin_fusioninventory']['unknown'][4] = "Hub réseau";

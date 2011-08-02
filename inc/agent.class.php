@@ -595,6 +595,32 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       return self::getAgentBaseURL($plugins_id, $ip)."/now";
    }
 
+   
+   
+   function showConfig() {
+      global $LANG;
+
+      echo "<table width='950' class='tab_cadre_fixe'>";
+      
+      echo "<tr>";
+      echo "<th colspan='2'>";
+      echo $LANG['plugin_fusioninventory']['agents'][43];
+      echo "</th>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td width='50%'>";
+      $array = explode("/", $_SERVER['HTTP_REFERER']);
+      $create_url = $array[0]."//".$array[2].  str_replace("front/wizard.php", "", $_SERVER['PHP_SELF']);
+      echo $LANG['plugin_fusioninventory']['agents'][44]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      echo "<strong>".$create_url."</strong>";
+      
+      echo "</td>";
+      echo "</tr>";
+      echo "</table>";
+   }   
 }
 
 ?>

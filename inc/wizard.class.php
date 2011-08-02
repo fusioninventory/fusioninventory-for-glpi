@@ -677,7 +677,26 @@ class PluginFusioninventoryWizard {
               'noadditem'=>1));
       
    }
+
    
+   
+
+   /**
+    * Manage configuration of agents
+    *
+    * @param $ariane value name of current breadcrumb
+    *
+    * @return Nothing (display)
+    **/
+   static function w_agentconfig($ariane='') {
+      PluginFusioninventoryWizard::displayShowForm($ariane, 
+               "PluginFusioninventoryAgent",
+               array("f"=>'showConfig',
+                     "arg1"=>'',
+                     "noadditem"=>1,
+                     "finish"=>1));
+   }
+
    
 
    /**

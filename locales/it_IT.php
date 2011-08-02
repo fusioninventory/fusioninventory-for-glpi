@@ -129,6 +129,8 @@ $LANG['plugin_fusioninventory']['agents'][38]="Disponibile";
 $LANG['plugin_fusioninventory']['agents'][39]="In corso di eseguzione";
 $LANG['plugin_fusioninventory']['agents'][40]="Computer senza IP conosciuto";
 $LANG['plugin_fusioninventory']['agents'][42]="Useragent";
+$LANG['plugin_fusioninventory']['agents'][43]="Informations for agent configuration";
+$LANG['plugin_fusioninventory']['agents'][44]="Communication url of the server";
 
 $LANG['plugin_fusioninventory']['unknown'][2]="materiale approvato";
 $LANG['plugin_fusioninventory']['unknown'][4]="Hub";
