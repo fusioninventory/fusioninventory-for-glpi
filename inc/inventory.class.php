@@ -205,7 +205,7 @@ class PluginFusinvinventoryInventory {
             }
             
 
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusinvinventory-entityrules", 
+          PluginFusioninventoryConfig::logIfExtradebug("pluginFusinvinventory-entityrules", 
                                                    print_r($dataEntity, true));
 
          if ($items_id == '0') {
@@ -224,6 +224,11 @@ class PluginFusinvinventoryInventory {
             $PluginFusinvinventoryLib->startAction($xml, $items_id, '1');
          } else {
             $PluginFusinvinventoryLib->startAction($xml, $items_id, '0');
+         }
+      } else if ($itemtype == 'PluginFusioninventoryUnknownDevice') {
+         // Write XML file
+         if (isset($_SESSION['SOURCEXML'])) {
+            PluginFusioninventoryUnknownDevice::writeXML($items_id, $_SESSION['SOURCEXML']);
          }
       }
    }
