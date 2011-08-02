@@ -226,10 +226,35 @@ class PluginFusinvinventoryInventory {
             $PluginFusinvinventoryLib->startAction($xml, $items_id, '0');
          }
       } else if ($itemtype == 'PluginFusioninventoryUnknownDevice') {
+         $class = new $itemtype();
+         if ($items_id == "0") {
+            $input = array();
+            $input['date_mod'] = date("Y-m-d H:i:s");
+            $items_id = $class->add($input);
+         }
+         $class->getFromDB($items_id);
+         $input = array();
+         $input['id'] = $class->fields['id'];
+         
          // Write XML file
          if (isset($_SESSION['SOURCEXML'])) {
             PluginFusioninventoryUnknownDevice::writeXML($items_id, $_SESSION['SOURCEXML']);
          }
+         
+         if (isset($xml->CONTENT->HARDWARE->NAME)) {
+            $input['name'] = (string)$xml->CONTENT->HARDWARE->NAME;
+         }
+         $input['item_type'] = "Computer";
+         if (isset($xml->CONTENT->HARDWARE->WORKGROUP)) {
+            $input['domain'] = Dropdown::importExternal("Domain",
+                                       (string)$xml->CONTENT->HARDWARE->WORKGROUP);
+         }
+         if (isset($xml->CONTENT->BIOS->SSN)) {
+            $input['serial'] = (string)$xml->CONTENT->BIOS->SSN;
+         } else if(isset($xml->CONTENT->BIOS->MSN)) {
+            $input['serial'] = (string)$xml->CONTENT->BIOS->MSN;
+         }
+         $class->update($input);
       }
    }
 
