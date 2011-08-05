@@ -221,7 +221,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->importDevice().');
-      //$PluginFusioninventoryAgente = new PluginFusioninventoryAgentProcessError;
 
       $p_xml = simplexml_load_string($_SESSION['SOURCE_XMLDEVICE'],'SimpleXMLElement', LIBXML_NOCDATA);
 
@@ -252,22 +251,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             $errors.=$LANG['plugin_fusioninventory']['errors'][22].' TYPE : '
                               .$p_xml->INFO->TYPE."\n";
       }
-      if (isset($p_xml->ERROR)) {
-//         $PluginFusioninventoryAgentp->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
-//                              array('query_nb_error' => '1'));
-         $a_input = array();
-         $a_input['id'] = $p_xml->ERROR->ID;
-         if ($p_xml->ERROR->TYPE=='NETWORKING') {
-            $a_input['TYPE'] = 'NetworkEquipment';
-         } elseif ($p_xml->ERROR->TYPE=='PRINTER') {
-            $a_input['TYPE'] = 'Printer';
-         }
-         $a_input['MESSAGE'] = $p_xml->ERROR->MESSAGE;
-         $a_input['agent_type'] = 'SNMPQUERY';
-         //$PluginFusioninventoryAgente->addError($a_input);
-      } else {
-//         $PluginFusioninventoryAgentp->updateProcess($this->sxml->CONTENT->PROCESSNUMBER, array('query_nb_query' => '1'));
-
+      if (!isset($p_xml->ERROR)) {
          $errors.=$this->importInfo($itemtype, $items_id);
          if ($this->deviceId!='') {
             foreach ($p_xml->children() as $child) {
@@ -294,33 +278,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             }
             if ($errors=='') {
                $this->ptd->updateDB();
-            } else {
-               //$PluginFusioninventoryAgentp->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
-               //      array('query_nb_error' => '1'));
-               $a_input = array();
-               $a_input['id'] = $p_xml->ERROR->ID;
-               if ($p_xml->ERROR->TYPE=='NETWORKING') {
-                  $a_input['TYPE'] = 'NetworkEquipment';
-               } elseif ($p_xml->ERROR->TYPE=='PRINTER') {
-                  $a_input['TYPE'] = 'Printer';
-               }
-               $a_input['MESSAGE'] = $errors;
-               $a_input['agent_type'] = 'SNMPQUERY';
-               //$PluginFusioninventoryAgente->addError($a_input);
             }
-         } else {
-            //$PluginFusioninventoryAgentp->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
-            //      array('query_nb_error' => '1'));
-            $a_input = array();
-            $a_input['id'] = $p_xml->ERROR->ID;
-            if ($p_xml->ERROR->TYPE=='NETWORKING') {
-               $a_input['TYPE'] = 'NetworkEquipment';
-            } elseif ($p_xml->ERROR->TYPE=='PRINTER') {
-               $a_input['TYPE'] = 'Printer';
-            }
-            $a_input['MESSAGE'] = $errors;
-            $a_input['agent_type'] = 'SNMPQUERY';
-            //$PluginFusioninventoryAgente->addError($a_input);
          }
       }
       return $errors;
@@ -1291,7 +1249,11 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusinvsnmpCommunicationSNMPQuery";
       $rule = new PluginFusioninventoryRuleImportEquipmentCollection();
       $data = array();
+      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
+                                                   "Input data : ".print_r($input, true));
       $data = $rule->processAllRules($input, array());
+      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
+                                                   print_r($data, true));
       if (isset($data['action'])
               AND ($data['action'] == PluginFusioninventoryRuleImportEquipment::LINK_RESULT_DENIED)) {
 
@@ -1307,13 +1269,21 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          $this->addtaskjoblog();
       }
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
-         PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
-                                                      "norulematch = 1");
          if (isset($input['itemtype'])
               AND isset($data['action'])
               AND ($data['action'] == PluginFusioninventoryRuleImportEquipment::LINK_RESULT_CREATE)) {
 
             $errors .= $this->rulepassed(0, $input['itemtype']);
+         } else if (isset($input['itemtype'])
+              AND !isset($data['action'])) {
+            $id_xml = (string)$p_CONTENT->INFO->ID;
+            $classname = $input['itemtype'];
+            $class = new $classname;
+            if ($class->getFromDB($id_xml)) {
+               $errors .= $this->rulepassed($id_xml, $input['itemtype']);
+            } else {
+               $errors .= $this->rulepassed(0, $input['itemtype']);
+            }            
          } else {
             $errors .= $this->rulepassed(0, "PluginFusioninventoryUnknownDevice");
          }
@@ -1325,14 +1295,16 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
    function rulepassed($items_id, $itemtype) {
       global $DB;
-
+      
+      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
+                                                   "Rule passed : ".$items_id.", ".$itemtype."\n");
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->rulepassed().');
 
       $xml = simplexml_load_string($_SESSION['SOURCE_XMLDEVICE'],'SimpleXMLElement', LIBXML_NOCDATA);
 
       $errors = '';
-      $class = new $itemtype();
+      $class = new $itemtype;
       if ($items_id == "0") {
          $input = array();
          $input['date_mod'] = date("Y-m-d H:i:s");
@@ -1397,9 +1369,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
        }
        return $string;
    }
-
-
-
 }
 
 ?>
