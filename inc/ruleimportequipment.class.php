@@ -218,15 +218,8 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
       if ($test) {
          return false;
       }
-
+      
       switch ($condition) {
-         case PluginFusioninventoryRule::PATTERN_FIND:
-            return false;
-            break;
-         
-         case PluginFusioninventoryRuleImportEquipment::PATTERN_IS_EMPTY :
-            Dropdown::showYesNo($name, 0, 0);
-            return true;
 
          case PluginFusioninventoryRule::PATTERN_EXISTS:
             echo Dropdown::showYesNo($name, 1, 0);
@@ -235,6 +228,7 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
          case PluginFusioninventoryRule::PATTERN_DOES_NOT_EXISTS:
             echo Dropdown::showYesNo($name, 1, 0);
             return true;
+           
       }
 
       return false;
@@ -269,9 +263,13 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
 
    function findWithGlobalCriteria($input) {
       global $DB, $CFG_GLPI;
-      if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
-         logInFile("pluginFusioninventory-rules", print_r($input, true));
-      }
+//      foreach($input as $key=>$value) {
+//         if (empty($value)) {
+//           unset($input[$key]);  
+//         }
+//      }
+      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
+                                                   print_r($input, true));
       $complex_criterias = array();
       $sql_where         = '';
       $sql_from          = '';
@@ -301,8 +299,12 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                   $complex_criterias[] = $crit;
                   $nb_crit_find++;
                } else if ($crit->fields["condition"] == Rule::PATTERN_EXISTS) {
-                  $complex_criterias[] = $crit;
-                  $nb_crit_find++;
+                  if (!isset($input[$crit->fields['criteria']])
+                          OR empty($input[$crit->fields['criteria']])) {
+                     return false;
+                  }
+//                  $complex_criterias[] = $crit;
+//                  $nb_crit_find++;
                } else if($crit->fields["criteria"] == 'itemtype') {
                   $complex_criterias[] = $crit;
                }
@@ -316,6 +318,7 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
 
       //If a value is missing, then there's a problem !
       if (!$continue) {
+
          return false;
       }
       
@@ -723,7 +726,7 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
          echo "<input type='hidden' name='entities_id' value='".$_SESSION["glpiactive_entity"]."'>";
       }
    }
-
+   
    function preProcessPreviewResults($output) {
       global $LANG;
 
