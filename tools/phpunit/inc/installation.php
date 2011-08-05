@@ -1,6 +1,6 @@
 <?php
 
-require_once GLPI_ROOT . "/install/update_078_0781.php";
+//require_once GLPI_ROOT . "/install/update_078_0781.php";
 
 function displayMigrationMessage ($id, $msg="") {
    // display nothing
@@ -17,9 +17,9 @@ function installGLPI() {
    if (!$DB->runFile(GLPI_ROOT ."/install/mysql/glpi-0.80.1-empty.sql")) {
       echo "Errors occurred inserting default database\n";
    }
-   update078to0781(false);
+   //update078to0781(false);
 
-   $query = "UPDATE `glpi_configs` SET `version` = ' 0.80.1', language='fr_FR',founded_new_version='' ;";
+   $query = "UPDATE `glpi_configs` SET `version` = ' 0.80.2', language='fr_FR',founded_new_version='' ;";
    $DB->query($query);
 
    // update default language

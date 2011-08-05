@@ -219,12 +219,8 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
       if ($test) {
          return false;
       }
-
+      
       switch ($condition) {
-         case Rule::PATTERN_FIND:
-         case self::PATTERN_IS_EMPTY :
-            Dropdown::showYesNo($name, 0, 0);
-            return true;
 
          case Rule::PATTERN_EXISTS:
             echo Dropdown::showYesNo($name, 1, 0);
@@ -233,6 +229,7 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
          case Rule::PATTERN_DOES_NOT_EXISTS:
             echo Dropdown::showYesNo($name, 1, 0);
             return true;
+           
       }
 
       return false;
@@ -268,6 +265,11 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
    function findWithGlobalCriteria($input) {
       global $DB, $CFG_GLPI;
 
+//      foreach($input as $key=>$value) {
+//         if (empty($value)) {
+//           unset($input[$key]);  
+//         }
+//      }
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
                                                    print_r($input, true));
       $complex_criterias = array();
@@ -294,13 +296,20 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
          if (!empty($criteria)) {
             foreach ($criteria as $crit) {
                if (!isset($input[$criterion]) || $input[$criterion] == '') {
-                  $continue = false;
+                  $definition_criteria = $this->getCriteria($crit->fields['criteria']);
+                  if (isset($definition_criteria['is_global']) AND $definition_criteria['is_global']) {
+                     $continue = false;
+                  }
                } else if ($crit->fields["condition"] == Rule::PATTERN_FIND) {
                   $complex_criterias[] = $crit;
                   $nb_crit_find++;
                } else if ($crit->fields["condition"] == Rule::PATTERN_EXISTS) {
-                  $complex_criterias[] = $crit;
-                  $nb_crit_find++;
+                  if (!isset($input[$crit->fields['criteria']])
+                          OR empty($input[$crit->fields['criteria']])) {
+                     return false;
+                  }
+//                  $complex_criterias[] = $crit;
+//                  $nb_crit_find++;
                } else if($crit->fields["criteria"] == 'itemtype') {
                   $complex_criterias[] = $crit;
                }
@@ -314,6 +323,7 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
 
       //If a value is missing, then there's a problem !
       if (!$continue) {
+
          return false;
       }
       
@@ -518,7 +528,7 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
       if (count($this->actions)) {
          foreach ($this->actions as $action) {
             if ($action->fields['field'] == '_fusion') {
-               if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_NO_CREATE) {
+               if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_CREATE) {
                   PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
                                                                "Return true because link or Import\n");
                   return true;
@@ -732,7 +742,7 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
          echo "<input type='hidden' name='entities_id' value='".$_SESSION["glpiactive_entity"]."'>";
       }
    }
-
+   
    function preProcessPreviewResults($output) {
       global $LANG;
 
