@@ -129,19 +129,22 @@ class PluginFusinvinventoryInventory {
                $input['tag'] = addslashes_deep((string)$xml->CONTENT->ACCOUNTINFO->KEYVALUE);
             }
          }
-         if ((isset($xml->CONTENT->HARDWARE->NAME)) AND (!empty($xml->CONTENT->HARDWARE->NAME))) {
+         if ((isset($xml->CONTENT->HARDWARE->NAME)) 
+                 AND ((string)$xml->CONTENT->HARDWARE->NAME != '')) {
             $input['name'] = addslashes_deep((string)$xml->CONTENT->HARDWARE->NAME);
+         } else {
+            $input['name'] = '';
          }
          $input['itemtype'] = "Computer";
       $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusinvinventoryInventory";
       $rule = new PluginFusioninventoryRuleImportEquipmentCollection();
       $data = array();
       $data = $rule->processAllRules($input, array());
+      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
+                                                   print_r($data, true));
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
          $this->rulepassed(0, "Computer");
       }
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
-                                                   print_r($data, true));
    }
    
 
@@ -257,6 +260,8 @@ class PluginFusinvinventoryInventory {
          $class->update($input);
       }
    }
+   
+   
 
    static function addDefaultStateIfNeeded(&$input, $check_management = false, $management_value = 0) {
       $config = new PluginFusioninventoryConfig();

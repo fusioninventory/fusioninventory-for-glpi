@@ -84,7 +84,7 @@ class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
             }
          }
       }
-   
+
       // *** Add jobstatus
       if(empty($agent_actionslist)) {
          $a_input= array();
