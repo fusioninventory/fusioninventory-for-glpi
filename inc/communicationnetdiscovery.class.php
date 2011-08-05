@@ -196,7 +196,10 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
               AND isset($data['action'])
               AND ($data['action'] == PluginFusioninventoryRuleImportEquipment::LINK_RESULT_IMPORT)) {
 
-            $this->rulepassed(0, $input['itemtype']);
+            $this->rulepassed(0, $input['itemtype'],$input['entities_id']);
+         } else if (isset($input['itemtype'])
+                AND !isset($data['action'])) {
+            $this->rulepassed(0, $input['itemtype'],$input['entities_id']);           
          } else {
             $this->rulepassed(0, "PluginFusioninventoryUnknownDevice");
          }
@@ -208,6 +211,8 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
    function rulepassed($items_id, $itemtype) {
       global $DB;
 
+      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
+                                                   "Rule passed : ".$items_id.", ".$itemtype."\n");
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->rulepassed().');
 
