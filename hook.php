@@ -501,7 +501,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
 
 function plugin_fusioninventory_MassiveActionsProcess($data) {
    global $LANG;
-
+   
    switch ($data['action']) {
       case "plugin_fusioninventory_manage_locks" :
          if (($data['itemtype'] == "NetworkEquipment") 
