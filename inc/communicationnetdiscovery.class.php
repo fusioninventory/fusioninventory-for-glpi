@@ -281,11 +281,13 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                   if (isset($xml->MAC) AND !empty($xml->MAC)) {
                      $xml->MAC = strtolower((string)$xml->MAC);
                      if ($a_computerport['mac'] == (string)$xml->MAC) {
-                        $a_computerport['mac'] = (string)$xml->MAC;
+                        $input = array();
+                        $input['id'] = $a_computerport['id'];
+                        $input['mac'] = (string)$xml->MAC;
                         if (isset($xml->IP)) {
-                           $a_computerport['ip'] = (string)$xml->IP;
+                           $input['ip'] = (string)$xml->IP;
                         }
-                        $NetworkPort->update($a_computerport);
+                        $NetworkPort->update($input);
                         unset($a_computerports[$a_computerport['id']]);
                         $update = 1;
                         break;
