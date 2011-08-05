@@ -416,6 +416,15 @@ function plugin_fusioninventory_MassiveActions($type) {
 			return array (
 				"plugin_fusioninventory_unknown_import" => $LANG["buttons"][37]
 			);
+         break;
+         
+      case "PluginFusioninventoryTask";
+			return array (
+				'plugin_fusioninventory_transfert' => $LANG['buttons'][48]
+			);
+         break;
+         
+         
 
    }
    return array ();
@@ -521,6 +530,15 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
             }
          }
 			break;
+         
+     case 'PluginFusioninventoryTask':
+         if ($options['action'] == "plugin_fusioninventory_transfert") {
+               Dropdown::show('Entity');
+               echo "&nbsp;<input type='submit' name='massiveaction' class='submit' ".
+                     "value='".$LANG['buttons'][2]."'>";
+               break;
+         }
+         break;
 
    }
    return "";
@@ -569,12 +587,33 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
                   $pluginFusioninventoryAgent = new PluginFusioninventoryAgent();
                   if ($pluginFusioninventoryAgent->getFromDB($key)) {
                      $input = array();
-                     $input['id'] = $pluginFusioninventoryAgent->fields['id'];
+                     $input['id'] = $key;
                      $input['entities_id'] = $data['entities_id'];
                      $pluginFusioninventoryAgent->update($input);
                   }
                }
             }
+         } else if ($data['itemtype'] == 'PluginFusioninventoryTask') {
+            $pluginFusioninventoryTask = new PluginFusioninventoryTask();
+            $pluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+            foreach ($data["item"] as $key => $val) {
+               if ($val == 1) {
+                  if ($pluginFusioninventoryTask->getFromDB($key)) {
+                     $a_taskjobs = $pluginFusioninventoryTaskjob->find("`plugin_fusioninventory_tasks_id`='".$key."'");
+                     foreach ($a_taskjobs as $data1) {
+                        $input = array();
+                        $input['id'] = $data1['id'];
+                        $input['entities_id'] = $data['entities_id'];
+                        $pluginFusioninventoryTaskjob->update($input); 
+                     }
+                     $input = array();
+                     $input['id'] = $key;
+                     $input['entities_id'] = $data['entities_id'];
+                     $pluginFusioninventoryTask->update($input);
+                  }
+               }
+            }
+            
          }
          break;
          
