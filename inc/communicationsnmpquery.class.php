@@ -1091,6 +1091,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
    function sendCriteria($p_DEVICEID, $p_CONTENT) {
 
+      $errors = '';
+      
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->sendCriteria().');
 
@@ -1138,11 +1140,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusinvsnmpCommunicationSNMPQuery";
       $rule = new PluginFusioninventoryRuleImportEquipmentCollection();
       $data = array();
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
-                                                   "Input data : ".print_r($input, true));
       $data = $rule->processAllRules($input, array());
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
-                                                   print_r($data, true));
       if (isset($data['action'])
               AND ($data['action'] == PluginFusioninventoryRuleImportEquipment::LINK_RESULT_NO_IMPORT)) {
 
@@ -1158,13 +1156,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          $this->addtaskjoblog();
       }
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
-         if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
-            logInFile("pluginFusioninventory-rules", "norulematch = 1");
-         }
          if (isset($input['itemtype'])
               AND isset($data['action'])
-              AND ($data['action'] == PluginFusioninventoryRuleImportEquipment::LINK_RESULT_IMPORT)) {
-            
+              AND ($data['action'] == PluginFusioninventoryRuleImportEquipment::LINK_RESULT_CREATE)) {
+
             $errors .= $this->rulepassed(0, $input['itemtype']);
          } else if (isset($input['itemtype'])
               AND !isset($data['action'])) {
@@ -1177,9 +1172,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $errors .= $this->rulepassed(0, $input['itemtype']);
             }            
          } else {
-            $this->rulepassed(0, "PluginFusioninventoryUnknownDevice");
+            $errors .= $this->rulepassed(0, "PluginFusioninventoryUnknownDevice");
          }
       }
+      return $errors;
    }
 
 
@@ -1187,8 +1183,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    function rulepassed($items_id, $itemtype) {
       global $DB;
       
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
-                                                   "Rule passed : ".$items_id.", ".$itemtype."\n");
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->rulepassed().');
 
