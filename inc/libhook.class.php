@@ -169,12 +169,12 @@ class PluginFusinvinventoryLibhook {
                
                   }
                }
-               if (isset($dataSection['SMODEL'])) {
+               if (isset($dataSection['SMODEL']) AND $dataSection['SMODEL'] != '') {
                   if (!in_array('computermodels_id', $a_lockable)) {
                      $ComputerModel = new ComputerModel();
                      $inputC['computermodels_id'] = $ComputerModel->importExternal($dataSection['SMODEL']);
                   }
-               } else if (isset($dataSection['MMODEL'])) {
+               } else if (isset($dataSection['MMODEL']) AND $dataSection['MMODEL'] != '') {
                   if (!in_array('computermodels_id', $a_lockable)) {
                      $ComputerModel = new ComputerModel();
                      $inputC['computermodels_id'] = $ComputerModel->importExternal($dataSection['MMODEL']);
@@ -784,12 +784,12 @@ class PluginFusinvinventoryLibhook {
                                                                              $dataSection['BMANUFACTURER']);
                      }
                   }
-                  if (isset($dataSection['SMODEL'])) {
+                  if (isset($dataSection['SMODEL']) AND $dataSection['SMODEL'] != '') {
                      if (!in_array('computermodels_id', $a_lockable)) {
                         $ComputerModel = new ComputerModel();
                         $inputC['computermodels_id'] = $ComputerModel->importExternal($dataSection['SMODEL']);
                      }
-                  } else if (isset($dataSection['MMODEL'])) {
+                  } else if (isset($dataSection['MMODEL']) AND $dataSection['MMODEL'] != '') {
                      if (!in_array('computermodels_id', $a_lockable)) {
                         $ComputerModel = new ComputerModel();
                         $inputC['computermodels_id'] = $ComputerModel->importExternal($dataSection['MMODEL']);
