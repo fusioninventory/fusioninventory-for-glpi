@@ -117,6 +117,7 @@ function plugin_fusioninventory_install() {
 
    include (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
    $version_detected = pluginFusioninventoryGetCurrentVersion(PLUGIN_FUSIONINVENTORY_VERSION);
+   
    if ((isset($version_detected)) 
       AND ($version_detected != PLUGIN_FUSIONINVENTORY_VERSION)
         AND $version_detected!='0') {

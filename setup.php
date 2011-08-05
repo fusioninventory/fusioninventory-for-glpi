@@ -56,7 +56,7 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryAgentmodule');
       Plugin::registerClass('PluginFusioninventoryIPRange');
       Plugin::registerClass('PluginFusioninventoryCredential');
-
+   
       // ##### 3. get informations of the plugin #####
 
       $a_plugin = plugin_version_fusioninventory();
