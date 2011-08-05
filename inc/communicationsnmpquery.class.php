@@ -670,6 +670,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          }
 
          foreach ($p_port->children() as $name=>$child) {
+            $ptp->setValue('entities_id', $this->ptd->fields['entities_id']);
             $trunk = 0;
             switch ($name) {
                case 'CONNECTIONS' :
@@ -761,6 +762,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             $ptp->addDB($this->deviceId, TRUE);
          }
          foreach ($p_port->children() as $name=>$child) {
+            $ptp->setValue('entities_id', $this->ptd->fields['entities_id']);
             switch ($name) {
                case 'IFNAME' :
                   PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
