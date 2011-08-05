@@ -408,6 +408,7 @@ function plugin_fusioninventory_MassiveActions($type) {
          foreach ($a_modules as $data) {
             $array["plugin_fusioninventory_agentmodule".$data["modulename"]] = $LANG['plugin_fusioninventory']['task'][26]." - ".$data['modulename'];
          }
+         $array['plugin_fusioninventory_transfert'] = $LANG['buttons'][48];
          return $array;
          break;
 
@@ -494,15 +495,23 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
          break;
 
       case 'PluginFusioninventoryAgent':
-         $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
-         $a_modules = $PluginFusioninventoryAgentmodule->find();
-         foreach ($a_modules as $data) {
-            if ($options['action'] == "plugin_fusioninventory_agentmodule".$data['modulename']) {
-               Dropdown::showYesNo($options['action']);
-               echo "&nbsp;<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
+         if (strstr($options['action'], 'plugin_fusioninventory_agentmodule')) {
+            $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+            $a_modules = $PluginFusioninventoryAgentmodule->find();
+            foreach ($a_modules as $data) {
+               if ($options['action'] == "plugin_fusioninventory_agentmodule".$data['modulename']) {
+                  Dropdown::showYesNo($options['action']);
+                  echo "&nbsp;<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
+               }
             }
+            break;
          }
-
+         if ($options['action'] == "plugin_fusioninventory_transfert") {
+               Dropdown::show('Entity');
+               echo "&nbsp;<input type='submit' name='massiveaction' class='submit' ".
+                     "value='".$LANG['buttons'][2]."'>";
+               break;
+         }
          break;
 
 		case "PluginFusioninventoryUnknownDevice";
@@ -551,6 +560,23 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
             addMessageAfterRedirect($LANG['plugin_fusioninventory']["discovery"][9]." : ".$NoImport);
          }
 			break;
+         
+      case "plugin_fusioninventory_transfert" :
+         if ($data['itemtype'] == 'PluginFusioninventoryAgent') {
+            foreach ($data["item"] as $key => $val) {
+               if ($val == 1) {
+                  
+                  $pluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+                  if ($pluginFusioninventoryAgent->getFromDB($key)) {
+                     $input = array();
+                     $input['id'] = $pluginFusioninventoryAgent->fields['id'];
+                     $input['entities_id'] = $data['entities_id'];
+                     $pluginFusioninventoryAgent->update($input);
+                  }
+               }
+            }
+         }
+         break;
          
    }
 
