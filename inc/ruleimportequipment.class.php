@@ -219,7 +219,7 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
       if ($test) {
          return false;
       }
-      
+
       switch ($condition) {
 
          case Rule::PATTERN_EXISTS:
@@ -654,7 +654,38 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
       $crit    = $this->getCriteria($ID);
       $display = false;
       $tested  = false;
+      
+      foreach ($this->criterias as $criteria) {
+         if ($criteria->fields['criteria'] == $name) {
 
+            if ($criteria->fields['condition'] == Rule::PATTERN_CONTAIN
+             || $criteria->fields['condition'] == Rule::PATTERN_NOT_CONTAIN
+             || $criteria->fields['condition'] == Rule::PATTERN_BEGIN
+             || $criteria->fields['condition'] == Rule::PATTERN_END
+             || $criteria->fields['condition'] == Rule::REGEX_MATCH
+             || $criteria->fields['condition'] == Rule::REGEX_NOT_MATCH) {
+
+               $rc = new $this->rulecriteriaclass();
+               autocompletionTextField($rc, "pattern", array('name'  => $name,
+                                                       'value' => $value,
+                                                       'size'  => 70));
+               return;
+            }
+ 
+            if (($criteria->fields['condition'] == Rule::PATTERN_IS
+             || $criteria->fields['condition'] == Rule::PATTERN_IS_NOT)
+                    AND ($name != "itemtype" AND $name != 'states_id')) {
+
+               $rc = new $this->rulecriteriaclass();
+               autocompletionTextField($rc, "pattern", array('name'  => $name,
+                                                       'value' => $value,
+                                                       'size'  => 70));
+               return;
+               
+            }
+         }         
+      }
+      
       if (isset($crit['type'])
                  && ($test
                      ||$condition == Rule::PATTERN_IS
