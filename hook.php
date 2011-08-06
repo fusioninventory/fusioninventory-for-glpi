@@ -1364,8 +1364,8 @@ function plugin_fusinvsnmp_addSelect($type,$id,$num) {
             case "glpi_networkports.NetworkPort" :
                return "GROUP_CONCAT( DISTINCT FUSIONINVENTORY_22.".$field." SEPARATOR '$$$$') AS ITEM_$num, ";
                break;
-
-         }
+  
+           }
          break;
 
       case 'PluginFusioninventoryIPRange' :
@@ -1631,11 +1631,43 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
          break;
 
 		case 'PluginFusioninventoryUnknownDevice' :
+         $already_link_tables_tmp = $already_link_tables;
+         array_pop($already_link_tables_tmp);
+         $leftjoin_fusinvsnmp_unknown = 1;
+         if ((in_array('glpi_plugin_fusinvsnmp_unknowndevices', $already_link_tables_tmp))
+              OR in_array('glpi_plugin_fusinvsnmp_models', $already_link_tables_tmp)
+              OR in_array('glpi_plugin_fusinvsnmp_configsecurities', $already_link_tables_tmp)) {
+
+            $leftjoin_fusinvsnmp_unknown = 0;
+         }
 
          switch ($new_table.".".$linkfield) {
 
             case "glpi_plugin_fusinvsnmp_unknowndevices.plugin_fusinvsnmp_unknowndevices_id":
-               return " LEFT JOIN glpi_plugin_fusinvsnmp_unknowndevices ON (glpi_plugin_fusioninventory_unknowndevices.id = glpi_plugin_fusinvsnmp_unknowndevices.plugin_fusioninventory_unknowndevices_id) ";
+               if ($leftjoin_fusinvsnmp_unknown == "1") {
+                  return " LEFT JOIN glpi_plugin_fusinvsnmp_unknowndevices ON (glpi_plugin_fusioninventory_unknowndevices.id = glpi_plugin_fusinvsnmp_unknowndevices.plugin_fusioninventory_unknowndevices_id) ";
+               } else {
+                  return " ";
+               }
+               break;
+            
+            // ** FusionInventory - SNMP models
+            case "glpi_plugin_fusinvsnmp_models.plugin_fusinvsnmp_models_id" :
+               $return = "";
+               if ($leftjoin_fusinvsnmp_unknown == "1") {
+                  $return .= " LEFT JOIN glpi_plugin_fusinvsnmp_unknowndevices ON (glpi_plugin_fusioninventory_unknowndevices.id = glpi_plugin_fusinvsnmp_unknowndevices.plugin_fusioninventory_unknowndevices_id) ";
+               }
+               $return .= " LEFT JOIN glpi_plugin_fusinvsnmp_models ON (glpi_plugin_fusinvsnmp_unknowndevices.plugin_fusinvsnmp_models_id = glpi_plugin_fusinvsnmp_models.id) ";
+               return $return;
+               break;
+               
+            case 'glpi_plugin_fusinvsnmp_configsecurities.plugin_fusinvsnmp_configsecurities_id':
+               $return = "";
+               if ($leftjoin_fusinvsnmp_unknown == "1") {
+                  $return .= " LEFT JOIN glpi_plugin_fusinvsnmp_unknowndevices ON (glpi_plugin_fusioninventory_unknowndevices.id = glpi_plugin_fusinvsnmp_unknowndevices.plugin_fusioninventory_unknowndevices_id) ";
+               }               
+               $return .= " LEFT JOIN `glpi_plugin_fusinvsnmp_configsecurities` ON (`glpi_plugin_fusinvsnmp_unknowndevices`.`plugin_fusinvsnmp_configsecurities_id` = `glpi_plugin_fusinvsnmp_configsecurities`.`id` ) ";
+               return $return;
                break;
 
 			}
