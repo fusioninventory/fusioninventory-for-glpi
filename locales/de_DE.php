@@ -40,8 +40,8 @@ $LANG['plugin_fusinvsnmp']['title'][2]="Verbindungs-Historie";
 $LANG['plugin_fusinvsnmp']['title'][5]="FusionInventory-Sperrungen";
 $LANG['plugin_fusinvsnmp']['title'][6]="SNMP";
 
-$LANG['plugin_fusinvsnmp']['config'][3] = "SNMP-Inventar";
-$LANG['plugin_fusinvsnmp']['config'][4] = "Verlauf Geräte";
+$LANG['plugin_fusinvsnmp']['config'][3] = "Network inventory (SNMP)";
+$LANG['plugin_fusinvsnmp']['config'][4] = "Network discovery";
 $LANG['plugin_fusinvsnmp']['config'][8] = "Nie";
 $LANG['plugin_fusinvsnmp']['config'][9] = "Immer";
 
@@ -389,8 +389,7 @@ $LANG['plugin_fusinvsnmp']['agents'][25]="Agent(s)";
 $LANG['plugin_fusinvsnmp']['agents'][26]="Version des Moduls Netdiscovery";
 $LANG['plugin_fusinvsnmp']['agents'][27]="Version des Moduls SNMPQuery";
 
-$LANG['plugin_fusinvsnmp']['task'][15]="Dauerhafte Aufgabe - Entdeckung";
-$LANG['plugin_fusinvsnmp']['task'][16]="Dauerhafte Aufgaber - Inventarisierung";
+$LANG['plugin_fusinvsnmp']['task'][15]="Dauerhafte Aufgaber";
 $LANG['plugin_fusinvsnmp']['task'][17]="Kommunikationsmodus";
 $LANG['plugin_fusinvsnmp']['task'][18]="Task automatisch erstellen (einfacher)";
 

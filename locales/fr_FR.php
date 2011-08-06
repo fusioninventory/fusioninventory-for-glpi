@@ -40,8 +40,8 @@ $LANG['plugin_fusinvsnmp']['title'][2]="Historique de connexion";
 $LANG['plugin_fusinvsnmp']['title'][5]="Historique SNMP";
 $LANG['plugin_fusinvsnmp']['title'][6]="SNMP";
 
-$LANG['plugin_fusinvsnmp']['config'][3] = "Inventaire SNMP";
-$LANG['plugin_fusinvsnmp']['config'][4] = "Découverte d'équipements";
+$LANG['plugin_fusinvsnmp']['config'][3] = "Inventaire réseau (SNMP)";
+$LANG['plugin_fusinvsnmp']['config'][4] = "Découverte réseau";
 $LANG['plugin_fusinvsnmp']['config'][8] = "Jamais";
 $LANG['plugin_fusinvsnmp']['config'][9] = "Toujours";
 
@@ -389,8 +389,7 @@ $LANG['plugin_fusinvsnmp']['agents'][25]="Agent(s)";
 $LANG['plugin_fusinvsnmp']['agents'][26]="Version du module netdiscovery";
 $LANG['plugin_fusinvsnmp']['agents'][27]="Version du module snmpquery";
 
-$LANG['plugin_fusinvsnmp']['task'][15]="Tâche permanente - Découverte";
-$LANG['plugin_fusinvsnmp']['task'][16]="Tâche permanente - Inventaire";
+$LANG['plugin_fusinvsnmp']['task'][15]="Tâche permanente";
 $LANG['plugin_fusinvsnmp']['task'][17]="Mode de communication";
 $LANG['plugin_fusinvsnmp']['task'][18]="Créer la tâche automatiquement";
 
@@ -414,11 +413,6 @@ $LANG['plugin_fusinvsnmp']['codetasklog'][3]="La base de définition des matéri
 $LANG['plugin_fusinvsnmp']['codetasklog'][4]=$LANG['log'][20];
 $LANG['plugin_fusinvsnmp']['codetasklog'][5]=$LANG['log'][21];
 $LANG['plugin_fusinvsnmp']['codetasklog'][6]="L'inventaire a démarré";
-
-$LANG['plugin_fusinvsnmp']['task'][15]="Tâche permanente - Découverte";
-$LANG['plugin_fusinvsnmp']['task'][16]="Tâche permanente - Inventaire";
-$LANG['plugin_fusinvsnmp']['task'][17]="Mode de communication";
-$LANG['plugin_fusinvsnmp']['task'][18]="Créer la tâche automatiquement";
 
 $LANG['plugin_fusinvsnmp']['legend'][0]="Connexion avec un switch or un serveur en mode trunk ou taggé";
 $LANG['plugin_fusinvsnmp']['legend'][1]="Connexion autre (avec un ordinateur, une imprimante...)";

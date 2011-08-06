@@ -673,9 +673,8 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
    $type = get_Class($item);
    switch ($type) {
       case 'PluginFusioninventoryIPRange':
-         $commonlabel = " (".$LANG['plugin_fusinvsnmp']['title'][6].")";
-         return array (1 => $LANG['plugin_fusinvsnmp']['task'][15].$commonlabel, 
-                       2 => $LANG['plugin_fusinvsnmp']['task'][16].$commonlabel);
+         return array (1 => $LANG['plugin_fusinvsnmp']['task'][15]." - ".$LANG['plugin_fusinvsnmp']['config'][4], 
+                       2 => $LANG['plugin_fusinvsnmp']['task'][15]." - ".$LANG['plugin_fusinvsnmp']['config'][3]);
                        
       case 'Computer':
          if ($withtemplate) { //?
