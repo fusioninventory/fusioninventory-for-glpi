@@ -35,9 +35,9 @@
 include_once ("hook.php");
 
 // inc files 
-
-foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/inc/*.php') as $file) {
-   include_once($file);
+if (file_exists(GLPI_ROOT."/plugins/fusioninventory/inc/communication.class.php")) {
+   foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/inc/*.php') as $file) {
+      include_once($file);
+   }
 }
-
 ?>
