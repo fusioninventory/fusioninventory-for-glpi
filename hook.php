@@ -969,9 +969,9 @@ function plugin_item_purge_fusioninventory($parm) {
                      $otherPorts_id = $NetworkPort->getContact($data['id']);
                   }
                }
-// TODO: must disconect ports before :
-//               $this->disconnectDB($switchPorts_id); // disconnect this port
-//               $this->disconnectDB($otherPorts_id);     // disconnect destination port
+
+               $PluginFusioninventoryUnknownDevice->disconnectDB($switchPorts_id); // disconnect this port
+               $PluginFusioninventoryUnknownDevice->disconnectDB($otherPorts_id);     // disconnect destination port
                
                $networkPort_NetworkPort->add(array('networkports_id_1'=> $switchPorts_id,
                                                        'networkports_id_2' => $otherPorts_id));
