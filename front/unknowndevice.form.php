@@ -51,7 +51,8 @@ if (isset($_GET["id"])) {
 }
 if (isset ($_POST["add"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "unknowndevice","w");
-   if (($_POST['items_id'] != "0") AND ($_POST['items_id'] != "")) {
+   if (isset($_POST['items_id']) 
+          AND ($_POST['items_id'] != "0") AND ($_POST['items_id'] != "")) {
       $_POST['itemtype'] = '1';
    }
    $PluginFusioninventoryUnknownDevice->add($_POST);
