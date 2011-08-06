@@ -80,6 +80,10 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
                break;
             }
          }
+         // Hack for snmpquery
+            if ($modulename == 'SNMPQUERY') {
+               $modulename = $LANG['plugin_fusinvsnmp']['config'][3];
+            }
          echo "<td align='center'><strong>".$modulename."</strong></td>";
          echo "<td align='center'>";
          $checked = $data['is_active'];
@@ -186,6 +190,10 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
                $modulename = $datamod['name'];
             }
          }
+         // Hack for snmpquery
+            if ($modulename == 'SNMPQUERY') {
+               $modulename = $LANG['plugin_fusinvsnmp']['config'][3];
+            }
          echo "<td width='50%'>".$modulename." :</td>";
          echo "<td align='center'>";
 
