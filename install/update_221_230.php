@@ -83,45 +83,47 @@ function update221to230() {
    $result=$DB->query($sql);
    $Profile = new Profile();
    while ($data=$DB->fetch_array($result)) {
-      $a_profiles = $Profile->find("`name`='".$data['name']."'");
-      $a_profile = current($a_profiles);
-      $profile_id = $a_profile['id'];
-      if ($profile_id != $_SESSION['glpiactiveprofile']['id']) {
-         if (!is_null($data['configuration'])) {
-            $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
-               (`type`, `right`, `plugins_id`, `profiles_id`)
-               VALUES('configuration', '".$data['configuration']."', '".$plugins_id."', '".$profile_id."')";
-            $DB->query($sql_ins);
-         }
-         if (!is_null($data['rangeip'])) {
-            $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
-               (`type`, `right`, `plugins_id`, `profiles_id`)
-               VALUES('iprange', '".$data['rangeip']."', '".$plugins_id."', '".$profile_id."')";
-            $DB->query($sql_ins);
-         }
-         if (!is_null($data['snmp_authentification'])) {
-            $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
-               (`type`, `right`, `plugins_id`, `profiles_id`)
-               VALUES('configsecurity', '".$data['snmp_authentification']."', '".$plugins_id."', '".$profile_id."')";
-            $DB->query($sql_ins);
-         }
-         if (!is_null($data['snmp_models'])) {
-            $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
-               (`type`, `right`, `plugins_id`, `profiles_id`)
-               VALUES('model', '".$data['snmp_models']."', '".$plugins_id."', '".$profile_id."')";
-            $DB->query($sql_ins);
-         }
-         if (!is_null($data['snmp_printers'])) {
-            $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
-               (`type`, `right`, `plugins_id`, `profiles_id`)
-               VALUES('printer', '".$data['snmp_printers']."', '".$plugins_id."', '".$profile_id."')";
-            $DB->query($sql_ins);
-         }
-         if (!is_null($data['snmp_networking'])) {
-            $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
-               (`type`, `right`, `plugins_id`, `profiles_id`)
-               VALUES('networkequipment', '".$data['snmp_networking']."', '".$plugins_id."', '".$profile_id."')";
-            $DB->query($sql_ins);
+      if ($data['name'] != '') {
+         $a_profiles = $Profile->find("`name`='".$data['name']."'");
+         $a_profile = current($a_profiles);
+         $profile_id = $a_profile['id'];
+         if ($profile_id != $_SESSION['glpiactiveprofile']['id']) {
+            if (!is_null($data['configuration'])) {
+               $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
+                  (`type`, `right`, `plugins_id`, `profiles_id`)
+                  VALUES('configuration', '".$data['configuration']."', '".$plugins_id."', '".$profile_id."')";
+               $DB->query($sql_ins);
+            }
+            if (!is_null($data['rangeip'])) {
+               $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
+                  (`type`, `right`, `plugins_id`, `profiles_id`)
+                  VALUES('iprange', '".$data['rangeip']."', '".$plugins_id."', '".$profile_id."')";
+               $DB->query($sql_ins);
+            }
+            if (!is_null($data['snmp_authentification'])) {
+               $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
+                  (`type`, `right`, `plugins_id`, `profiles_id`)
+                  VALUES('configsecurity', '".$data['snmp_authentification']."', '".$plugins_id."', '".$profile_id."')";
+               $DB->query($sql_ins);
+            }
+            if (!is_null($data['snmp_models'])) {
+               $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
+                  (`type`, `right`, `plugins_id`, `profiles_id`)
+                  VALUES('model', '".$data['snmp_models']."', '".$plugins_id."', '".$profile_id."')";
+               $DB->query($sql_ins);
+            }
+            if (!is_null($data['snmp_printers'])) {
+               $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
+                  (`type`, `right`, `plugins_id`, `profiles_id`)
+                  VALUES('printer', '".$data['snmp_printers']."', '".$plugins_id."', '".$profile_id."')";
+               $DB->query($sql_ins);
+            }
+            if (!is_null($data['snmp_networking'])) {
+               $sql_ins = "INSERT INTO glpi_plugin_fusioninventory_profiles
+                  (`type`, `right`, `plugins_id`, `profiles_id`)
+                  VALUES('networkequipment', '".$data['snmp_networking']."', '".$plugins_id."', '".$profile_id."')";
+               $DB->query($sql_ins);
+            }
          }
       }
    }
