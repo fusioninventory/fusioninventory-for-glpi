@@ -68,49 +68,51 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       $a_agent = $PluginFusioninventoryAgent->InfosByKey($p_DEVICEID);
       if (isset($p_CONTENT->PROCESSNUMBER)) {
          $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $p_CONTENT->PROCESSNUMBER;
-         $PluginFusioninventoryTaskjobstatus->getFromDB($p_CONTENT->PROCESSNUMBER);
-         if ($PluginFusioninventoryTaskjobstatus->fields['state'] != "3") {
-            $PluginFusioninventoryTaskjobstatus->changeStatus($p_CONTENT->PROCESSNUMBER, 2);
-            if ((!isset($p_CONTENT->AGENT->START)) AND (!isset($p_CONTENT->AGENT->END))) {
-               $nb_devices = 0;
-               foreach($p_CONTENT->DEVICE as $child) {
-                  $nb_devices++;
+         if ($PluginFusioninventoryTaskjobstatus->getFromDB($p_CONTENT->PROCESSNUMBER)) {
+            if ($PluginFusioninventoryTaskjobstatus->fields['state'] != "3") {
+               $PluginFusioninventoryTaskjobstatus->changeStatus($p_CONTENT->PROCESSNUMBER, 2);
+               if ((!isset($p_CONTENT->AGENT->START)) AND (!isset($p_CONTENT->AGENT->END))) {
+                  $nb_devices = 0;
+                  foreach($p_CONTENT->DEVICE as $child) {
+                     $nb_devices++;
+                  }
+                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = $p_CONTENT->PROCESSNUMBER;
+                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $a_agent['id'];
+                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
+                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
+                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = $nb_devices.' ==fusinvsnmp::2==';
+                  $this->addtaskjoblog();
                }
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = $p_CONTENT->PROCESSNUMBER;
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $a_agent['id'];
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = $nb_devices.' ==fusinvsnmp::2==';
-               $this->addtaskjoblog();
             }
          }
       }
 
-      $PluginFusioninventoryTaskjobstatus->getFromDB($p_CONTENT->PROCESSNUMBER);
-      if ($PluginFusioninventoryTaskjobstatus->fields['state'] != "3") {
-         $PluginFusinvsnmpImportExport = new PluginFusinvsnmpImportExport();
-         $errors.=$PluginFusinvsnmpImportExport->import_netdiscovery($p_CONTENT, $p_DEVICEID);
-         if (isset($p_CONTENT->AGENT->END)) {
-            if ((isset($p_CONTENT->DICO)) AND ($p_CONTENT->DICO == "REQUEST")) {
-               $PluginFusioninventoryAgent->getFromDB($PluginFusioninventoryTaskjobstatus->fields["plugin_fusioninventory_agents_id"]);
-               $PluginFusinvsnmpAgentconfig->loadAgentconfig($PluginFusioninventoryAgent->fields['id']);
-               $input = array();
-               $input['id'] = $PluginFusinvsnmpAgentconfig->fields['id'];
-               $input["senddico"] = "1";
-               $PluginFusinvsnmpAgentconfig->update($input);
+      if ($PluginFusioninventoryTaskjobstatus->getFromDB($p_CONTENT->PROCESSNUMBER)) {
+         if ($PluginFusioninventoryTaskjobstatus->fields['state'] != "3") {
+            $PluginFusinvsnmpImportExport = new PluginFusinvsnmpImportExport();
+            $errors.=$PluginFusinvsnmpImportExport->import_netdiscovery($p_CONTENT, $p_DEVICEID);
+            if (isset($p_CONTENT->AGENT->END)) {
+               if ((isset($p_CONTENT->DICO)) AND ($p_CONTENT->DICO == "REQUEST")) {
+                  $PluginFusioninventoryAgent->getFromDB($PluginFusioninventoryTaskjobstatus->fields["plugin_fusioninventory_agents_id"]);
+                  $PluginFusinvsnmpAgentconfig->loadAgentconfig($PluginFusioninventoryAgent->fields['id']);
+                  $input = array();
+                  $input['id'] = $PluginFusinvsnmpAgentconfig->fields['id'];
+                  $input["senddico"] = "1";
+                  $PluginFusinvsnmpAgentconfig->update($input);
 
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = $p_CONTENT->PROCESSNUMBER;
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $a_agent['id'];
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==fusinvsnmp::3==';
-               $this->addtaskjoblog();
+                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = $p_CONTENT->PROCESSNUMBER;
+                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $a_agent['id'];
+                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
+                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
+                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==fusinvsnmp::3==';
+                  $this->addtaskjoblog();
+               }
+
+               $PluginFusioninventoryTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
+                                                                       $a_agent['id'],
+                                                                       'PluginFusioninventoryAgent');
+
             }
-
-            $PluginFusioninventoryTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
-                                                                    $a_agent['id'],
-                                                                    'PluginFusioninventoryAgent');
-         
          }
       }
       return $errors;
