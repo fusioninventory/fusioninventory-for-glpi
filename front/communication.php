@@ -123,18 +123,17 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          $communication->noSSL();
          exit();
       }
-   
+
       // Check XML integrity
       $xml = '';
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $PluginFusioninventoryTaskjob->disableDebug();
-      $comp = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
+      $xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
       $PluginFusioninventoryTaskjob->reenableusemode();
-      if ($comp) {
-         $xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
-      } else if (gzinflate (substr($GLOBALS["HTTP_RAW_POST_DATA"], 2))) {
+      if ($xml) {
+
+      } else if ($xml = gzinflate (substr($GLOBALS["HTTP_RAW_POST_DATA"], 2))) {
          // ** OCS agent 2.0 Compatibility
-         $xml = gzinflate (substr($GLOBALS["HTTP_RAW_POST_DATA"], 2));
       } else {
          $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
       }
@@ -144,10 +143,9 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".uniqid(), $xml);
       }
       $pxml = '';
-      if (@simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA)) {
-         $pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA);
-      } else if (@simplexml_load_string(utf8_encode($xml),'SimpleXMLElement', LIBXML_NOCDATA)) {
-         $pxml = @simplexml_load_string(utf8_encode($xml),'SimpleXMLElement', LIBXML_NOCDATA);
+      if ($pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA)) {
+
+      } else if ($pxml = @simplexml_load_string(utf8_encode($xml),'SimpleXMLElement', LIBXML_NOCDATA)) {
          $xml = utf8_encode($xml);
       } else {
          $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
@@ -156,9 +154,6 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
 </REPLY>");
          $PluginFusioninventoryCommunication->emptyAnswer();
       }
-   
-      //
-   
    
       $pta->importToken($xml);
    
