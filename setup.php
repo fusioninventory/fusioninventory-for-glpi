@@ -301,11 +301,12 @@ function plugin_version_fusioninventory() {
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_fusioninventory_check_prerequisites() {
    global $LANG;
-   if (GLPI_VERSION >= '0.78') {
-      return true;
-   } else {
+   
+   if (version_compare(GLPI_VERSION,'0.80','lt') || version_compare(GLPI_VERSION,'0.81','ge')) {
       echo $LANG['plugin_fusioninventory']['errors'][50];
+      return false;
    }
+   return true;
 }
 
 /**
