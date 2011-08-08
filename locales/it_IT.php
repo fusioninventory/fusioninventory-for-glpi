@@ -1,36 +1,36 @@
 <?php
 
 /*
-----------------------------------------------------------------------
-FusionInventory
-Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
-http://www.fusioninventory.org/ http://forge.fusioninventory.org/
-----------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
-LICENSE
+   LICENSE
 
-This file is part of FusionInventory.
+   This file is part of FusionInventory.
 
-FusionInventory is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 2 of the License, or
-any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
-FusionInventory is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
 
-------------------------------------------------------------------------
-Original Author of file: David DURIEUX
-Co-authors of file:
-Purpose of file:
-Traduct by : Mattia VICARI
-----------------------------------------------------------------------
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   Traduct by : Mattia VICARI
+   ----------------------------------------------------------------------
 */
 
 $title="FusionInventory";
@@ -72,6 +72,8 @@ $LANG['plugin_fusioninventory']['functionalities'][76] = "Extra-debug";
 
 $LANG['plugin_fusioninventory']['errors'][22] = "Voce inaspettata in";
 $LANG['plugin_fusioninventory']['errors'][50] = "La versione di GLPI non � compatibile, � necessaria la versione 0.78";
+$LANG['plugin_fusioninventory']['errors'][1] = "PHP allow_url_fopen is off, can't wake agent to do inventory";
+$LANG['plugin_fusioninventory']['errors'][2] = "PHP allow_url_fopen is off, push mode can't work";
 
 $LANG['plugin_fusioninventory']['rules'][2] = "Regole d'importo e di associazione dei materiali";
 $LANG['plugin_fusioninventory']['rules'][3] = "Cerca hardware GLPI con lo stato";
@@ -100,8 +102,11 @@ $LANG['plugin_fusioninventory']['processes'][1]="PID";
 $LANG['plugin_fusioninventory']['processes'][38]="Numero di processo";
 
 $LANG['plugin_fusioninventory']['menu'][1]="Gestione dei agenti";
+$LANG['plugin_fusioninventory']['menu'][2]="IP range configuration";
 $LANG['plugin_fusioninventory']['menu'][3]="Menu";
 $LANG['plugin_fusioninventory']['menu'][4]="Materiale sconosciuto";
+$LANG['plugin_fusioninventory']['menu'][5]="Authentication for remote devices (VMware)";
+$LANG['plugin_fusioninventory']['menu'][6]="Remote devices to inventory (VMware)";
 $LANG['plugin_fusioninventory']['menu'][7]="Azioni in corso di esecuzione";
 
 $LANG['plugin_fusioninventory']['discovery'][5]="Numero di materiali importati";
@@ -128,6 +133,7 @@ $LANG['plugin_fusioninventory']['agents'][37]="bloccato";
 $LANG['plugin_fusioninventory']['agents'][38]="Disponibile";
 $LANG['plugin_fusioninventory']['agents'][39]="In corso di eseguzione";
 $LANG['plugin_fusioninventory']['agents'][40]="Computer senza IP conosciuto";
+$LANG['plugin_fusioninventory']['agents'][41]="Service URL";
 $LANG['plugin_fusioninventory']['agents'][42]="Useragent";
 $LANG['plugin_fusioninventory']['agents'][43]="Informations for agent configuration";
 $LANG['plugin_fusioninventory']['agents'][44]="Communication url of the server";
@@ -140,7 +146,7 @@ $LANG['plugin_fusioninventory']['task'][0]="Compito";
 $LANG['plugin_fusioninventory']['task'][1]="Gestion des t�ches";
 $LANG['plugin_fusioninventory']['task'][2]="Azione";
 $LANG['plugin_fusioninventory']['task'][14]="Data d'esecuzione";
-$LANG['plugin_fusioninventory']['task'][16]="Nuova azione";
+$LANG['plugin_fusioninventory']['task'][15]="Nuova azione";
 $LANG['plugin_fusioninventory']['task'][17]="periodicit�";
 $LANG['plugin_fusioninventory']['task'][18]="Compiti";
 $LANG['plugin_fusioninventory']['task'][19]="Compiti in corso";
@@ -182,7 +188,7 @@ $LANG['plugin_fusioninventory']['xml'][0]="XML";
 
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Gettone non corretto, non pu� agire sull'agente";
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Agente interrotto o schiantato";
-$LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['ocsconfig'][11];
+$LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['plugin_fusioninventory']['rules'][17];
 
 $LANG['plugin_fusioninventory']['credential'][1] = "Credential for remote inventory";
 $LANG['plugin_fusioninventory']['credential'][2] = "Remote device inventory";

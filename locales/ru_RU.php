@@ -71,6 +71,8 @@ $LANG['plugin_fusioninventory']['functionalities'][76]="Отладка";
 
 $LANG['plugin_fusioninventory']['errors'][22]="Не подключённый элемент в";
 $LANG['plugin_fusioninventory']['errors'][50]="GLPI версия не совместима, требуется версия 0.80";
+$LANG['plugin_fusioninventory']['errors'][1] = "PHP allow_url_fopen is off, can't wake agent to do inventory";
+$LANG['plugin_fusioninventory']['errors'][2] = "PHP allow_url_fopen is off, push mode can't work";
 
 $LANG['plugin_fusioninventory']['rules'][2]="Импорт оборудования и ссылок правил";
 $LANG['plugin_fusioninventory']['rules'][3]="Поиск GLPI оборудования со статусом";
@@ -99,8 +101,11 @@ $LANG['plugin_fusioninventory']['processes'][1]="PID";
 $LANG['plugin_fusioninventory']['processes'][38]="Номер процесса";
 
 $LANG['plugin_fusioninventory']['menu'][1]="Управление агентами";
+$LANG['plugin_fusioninventory']['menu'][2]="IP range configuration";
 $LANG['plugin_fusioninventory']['menu'][3]="Меню";
 $LANG['plugin_fusioninventory']['menu'][4]="Неизвестное устройство";
+$LANG['plugin_fusioninventory']['menu'][5]="Authentication for remote devices (VMware)";
+$LANG['plugin_fusioninventory']['menu'][6]="Remote devices to inventory (VMware)";
 $LANG['plugin_fusioninventory']['menu'][7]="Запущенные работы";
 
 $LANG['plugin_fusioninventory']['discovery'][5]="Количество импортированных устройств";
@@ -127,6 +132,7 @@ $LANG['plugin_fusioninventory']['agents'][37]="Заблокированный";
 $LANG['plugin_fusioninventory']['agents'][38]="Доступный";
 $LANG['plugin_fusioninventory']['agents'][39]="Запущенный";
 $LANG['plugin_fusioninventory']['agents'][40]="Компьютер с нейзвестным IP";
+$LANG['plugin_fusioninventory']['agents'][41]="Service URL";
 $LANG['plugin_fusioninventory']['agents'][42]="Useragent";
 $LANG['plugin_fusioninventory']['agents'][43]="Informations for agent configuration";
 $LANG['plugin_fusioninventory']['agents'][44]="Communication url of the server";
@@ -139,7 +145,7 @@ $LANG['plugin_fusioninventory']['task'][0]="Задача";
 $LANG['plugin_fusioninventory']['task'][1]="Менеджмент Задач";
 $LANG['plugin_fusioninventory']['task'][2]="Действие";
 $LANG['plugin_fusioninventory']['task'][14]="До даты";
-$LANG['plugin_fusioninventory']['task'][16]="Новое действие";
+$LANG['plugin_fusioninventory']['task'][15]="New action";
 $LANG['plugin_fusioninventory']['task'][17]="Частота";
 $LANG['plugin_fusioninventory']['task'][18]="Задачи";
 $LANG['plugin_fusioninventory']['task'][19]="Запущеные задачи";
