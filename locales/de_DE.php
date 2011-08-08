@@ -183,8 +183,6 @@ $LANG['plugin_fusioninventory']['taskjoblog'][5]="Unbekannt";
 $LANG['plugin_fusioninventory']['taskjoblog'][6]="Aktiv";
 $LANG['plugin_fusioninventory']['taskjoblog'][7]="Vorbereitet";
 
-$LANG['plugin_fusioninventory']['update'][0]="Ihre Verlaufstabelle hat mehr als 300'000 Einträge, Sie müssen dieses Kommando ausführen um das Update abzuschliessen: ";
-
 $LANG['plugin_fusioninventory']['xml'][0]="XML";
 
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Falcher Token, kann den Agent nicht starten";

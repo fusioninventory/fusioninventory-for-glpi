@@ -183,8 +183,6 @@ $LANG['plugin_fusioninventory']['taskjoblog'][5]="desconhecido";
 $LANG['plugin_fusioninventory']['taskjoblog'][6]="Running";
 $LANG['plugin_fusioninventory']['taskjoblog'][7]="Prepared";
 
-$LANG['plugin_fusioninventory']['update'][0]="sua tabela de histórico tem mais de 300.000 entradas, você deve executar este comando para finalizar a atualização : ";
-
 $LANG['plugin_fusioninventory']['xml'][0]="XML";
 
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Bad token, impossible to start agent";

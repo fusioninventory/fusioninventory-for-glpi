@@ -177,8 +177,6 @@ $LANG['plugin_fusioninventory']['taskjoblog'][5]="неизвестно";
 $LANG['plugin_fusioninventory']['taskjoblog'][6]="Запуск";
 $LANG['plugin_fusioninventory']['taskjoblog'][7]="Подготовлен";
 
-$LANG['plugin_fusioninventory']['update'][0]="ваша таблица истории содержит больше 300 000 записей, необходимо запустить эту команду для того что бы закончить обновление: ";
-
 $LANG['plugin_fusioninventory']['xml'][0]="XML";
 
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Плохой маркер. не возможно запустить агент";

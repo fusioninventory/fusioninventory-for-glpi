@@ -178,8 +178,6 @@ $LANG['plugin_fusioninventory']['taskjoblog'][5]="Sconosciuto";
 $LANG['plugin_fusioninventory']['taskjoblog'][6]="In corso";
 $LANG['plugin_fusioninventory']['taskjoblog'][7]="Preparato";
 
-$LANG['plugin_fusioninventory']['update'][0]="I log fanno piu di 300 000 line, bisogna effetuare in commando segente via lo shell : ";
-
 $LANG['plugin_fusioninventory']['xml'][0]="XML";
 
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Gettone non corretto, non pu� agire sull'agente";

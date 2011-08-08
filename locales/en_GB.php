@@ -183,8 +183,6 @@ $LANG['plugin_fusioninventory']['taskjoblog'][5]="unknown";
 $LANG['plugin_fusioninventory']['taskjoblog'][6]="Running";
 $LANG['plugin_fusioninventory']['taskjoblog'][7]="Prepared";
 
-$LANG['plugin_fusioninventory']['update'][0]="your history table has more than 300 000 entries, you must run this command to finish the update : ";
-
 $LANG['plugin_fusioninventory']['xml'][0]="XML";
 
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Bad token, impossible to start agent";
