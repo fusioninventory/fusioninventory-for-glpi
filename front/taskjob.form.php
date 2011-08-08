@@ -151,6 +151,16 @@ if (isset($_POST['definition_add'])) {
       $pluginFusioninventoryTask->update($inputtask);
       glpi_header($_SERVER['HTTP_REFERER']);
    } else if (isset($_POST['add'])) {
+      if (!isset($_POST['entities_id'])) {
+         $_POST['entities_id'] = $_SESSION['glpidefault_entity'];
+      }
+      // Get entity of task
+      $pluginFusioninventoryTask = new PluginFusioninventoryTask();
+      $pluginFusioninventoryTask->getFromDB($_POST['plugin_fusioninventory_tasks_id']);
+      $entities_list = getSonsOf('glpi_entities', $pluginFusioninventoryTask->fields['entities_id']);
+      if (!in_array($_POST['entities_id'], $entities_list)) {
+         $_POST['entities_id'] = $pluginFusioninventoryTask->fields['entities_id'];
+      }      
       $inputtask['date_scheduled'] = date("Y-m-d H:i:s");
       $task_id = $pluginFusioninventoryTask->add($inputtask);
       $inputtaskjob['plugin_fusioninventory_tasks_id'] = $task_id;
@@ -186,6 +196,16 @@ if (isset($_POST['definition_add'])) {
    $_POST['plugins_id'] = $_POST['method-'.$_POST['method']];
 
    if (isset($_POST['add'])) {
+      if (!isset($_POST['entities_id'])) {
+         $_POST['entities_id'] = $_SESSION['glpidefault_entity'];
+      }
+      // Get entity of task
+      $pluginFusioninventoryTask = new PluginFusioninventoryTask();
+      $pluginFusioninventoryTask->getFromDB($_POST['plugin_fusioninventory_tasks_id']);
+      $entities_list = getSonsOf('glpi_entities', $pluginFusioninventoryTask->fields['entities_id']);
+      if (!in_array($_POST['entities_id'], $entities_list)) {
+         $_POST['entities_id'] = $pluginFusioninventoryTask->fields['entities_id'];
+      }      
       $mytaskjob->add($_POST);
    } else {
       $mytaskjob->update($_POST);
