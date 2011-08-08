@@ -47,6 +47,17 @@ PluginFusioninventoryProfile::checkRight("fusioninventory", "task", "r");
 if (isset ($_POST["add"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task", "w");
 
+   if (!isset($_POST['entities_id'])) {
+      $_POST['entities_id'] = $_SESSION['glpidefault_entity'];
+   }
+   // Get entity of task
+   $pluginFusioninventoryTask = new PluginFusioninventoryTask();
+   $pluginFusioninventoryTask->getFromDB($_POST['plugin_fusioninventory_tasks_id']);
+   $entities_list = getSonsOf('glpi_entities', $pluginFusioninventoryTask->fields['entities_id']);
+   if (!in_array($_POST['entities_id'], $entities_list)) {
+      $_POST['entities_id'] = $pluginFusioninventoryTask->fields['entities_id'];
+   }   
+   
    if (isset($_POST['method_id'])) {
       $_POST['method']  = $_POST['method_id'];
    }
