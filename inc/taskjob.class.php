@@ -623,6 +623,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       global $DB;
 
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $PluginFusioninventoryTask = new PluginFusioninventoryTask();
 
       // Detect if running task have a problem
       $PluginFusioninventoryTaskjob->CronCheckRunnningJobs();
@@ -634,6 +635,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       $query = "SELECT `".$PluginFusioninventoryTaskjob->getTable()."`.*,
      `glpi_plugin_fusioninventory_tasks`.`communication`,
+     `glpi_plugin_fusioninventory_tasks`.`execution_id`,
       UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp,
       CASE
          WHEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_type` = 'minutes'
@@ -645,7 +647,18 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          WHEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_type` = 'months'
             THEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_count` *60 *60 *24 *30
          ELSE 0
-      END AS timing
+      END AS timing,
+      CASE
+         WHEN `".$PluginFusioninventoryTask->getTable()."`.`periodicity_type` = 'minutes'
+            THEN `".$PluginFusioninventoryTask->getTable()."`.`periodicity_count` *60
+         WHEN `".$PluginFusioninventoryTask->getTable()."`.`periodicity_type` = 'hours'
+            THEN `".$PluginFusioninventoryTask->getTable()."`.`periodicity_count` *60 *60
+         WHEN `".$PluginFusioninventoryTask->getTable()."`.`periodicity_type` = 'days'
+            THEN `".$PluginFusioninventoryTask->getTable()."`.`periodicity_count` *60 *60 *24
+         WHEN `".$PluginFusioninventoryTask->getTable()."`.`periodicity_type` = 'months'
+            THEN `".$PluginFusioninventoryTask->getTable()."`.`periodicity_count` *60 *60 *24 *30
+         ELSE 0
+      END AS timing_task
       FROM ".$PluginFusioninventoryTaskjob->getTable()."
       LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
       WHERE `is_active`='1'
@@ -658,7 +671,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          // If time execution of task if this time to execute...
          if (($data['date_scheduled_timestamp'] + $data['timing']) <= $dateNow) {
             $pass = 0;
-            if (!isset($a_tasktiming[$data['plugin_fusioninventory_tasks_id']])) {
+            if ($data['timing_task'] == '0' AND $data['execution_id'] > 0) {
+               $pass = 0;
+            } else if (!isset($a_tasktiming[$data['plugin_fusioninventory_tasks_id']])) {
                $a_tasktiming[$data['plugin_fusioninventory_tasks_id']] = $data['timing'];
                $pass = 1;
             } else {
@@ -776,21 +791,23 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             WHERE `plugin_fusioninventory_tasks_id`='".$data['id']."'";
          $DB->query($queryUpdate);
 
-         if (is_null($data['date_scheduled_timestamp'])) {
-            $data['date_scheduled_timestamp'] = date('U');
-         }
-         if (($data['date_scheduled_timestamp'] + $period) <= date('U')
-                 AND $period =! '0') {
-            $periodtotal = $period;
-            for($i=2; ($data['date_scheduled_timestamp'] + $periodtotal) <= date('U'); $i++) {
-               $periodtotal = $period * $i;
+         if ($period != '0') {
+            if (is_null($data['date_scheduled_timestamp'])) {
+               $data['date_scheduled_timestamp'] = date('U');
             }
-            $data['date_scheduled'] = date("Y-m-d H:i:s", $data['date_scheduled_timestamp'] + $periodtotal);
-         } else if ($data['date_scheduled_timestamp'] > date('U')) {
-            // Don't update date next execution
+            if (($data['date_scheduled_timestamp'] + $period) <= date('U')
+                    AND $period =! '0') {
+               $periodtotal = $period;
+               for($i=2; ($data['date_scheduled_timestamp'] + $periodtotal) <= date('U'); $i++) {
+                  $periodtotal = $period * $i;
+               }
+               $data['date_scheduled'] = date("Y-m-d H:i:s", $data['date_scheduled_timestamp'] + $periodtotal);
+            } else if ($data['date_scheduled_timestamp'] > date('U')) {
+               // Don't update date next execution
 
-         } else {
-            $data['date_scheduled'] = date("Y-m-d H:i:s", $data['date_scheduled_timestamp'] + $period);
+            } else {
+               $data['date_scheduled'] = date("Y-m-d H:i:s", $data['date_scheduled_timestamp'] + $period);
+            }
          }
          $PluginFusioninventoryTask->update($data);
          return true;

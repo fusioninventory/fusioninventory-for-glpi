@@ -68,7 +68,13 @@ if (isset($_POST['forcestart'])) {
 } else if (isset($_POST["update"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task","w");
 
-   $pft->update($_POST);
+  $pft->getFromDB($_POST['id']);
+  if (($_POST['date_scheduled'] != $pft->fields['date_scheduled'])
+          AND ($_POST['periodicity_count'] == '0')) {
+     $_POST['execution_id'] = 0;
+  }
+   
+  $pft->update($_POST);
 
    glpi_header($_SERVER['HTTP_REFERER']);
 }
