@@ -59,6 +59,22 @@ function plugin_init_fusinvdeploy() {
       }
       return false;
    }
+   if (!$plugin->isInstalled("webservices")) {
+      if (isset($_GET['id'])
+         && isset($_GET['action'])
+            && strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
+         switch ($_GET['action']) {
+            case 'activate':
+               addMessageAfterRedirect($LANG['plugin_fusinvdeploy']["setup"][19]);
+               break;
+            case 'uninstall':
+               addMessageAfterRedirect($LANG['plugin_fusinvdeploy']["setup"][20]);
+               glpi_header($CFG_GLPI["root_doc"]."/front/plugin.php");
+               break;
+         }
+      }
+      return false;
+   }
 
    // ##### 2. register classes #####
 
@@ -127,6 +143,11 @@ function plugin_fusinvdeploy_check_prerequisites() {
    if (version_compare('0.78',GLPI_VERSION) < 0) {
       $plugin = new Plugin;
       if (!$plugin->isActivated("fusioninventory")) {
+          print $LANG['plugin_fusinvdeploy']["setup"][17]."<br />\n";
+         return false;
+      }
+      if (!$plugin->isInstalled("webservices")) {
+          print $LANG['plugin_fusinvdeploy']["setup"][19]."<br />\n";
          return false;
       }
       return true;
