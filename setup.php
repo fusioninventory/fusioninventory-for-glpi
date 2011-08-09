@@ -293,7 +293,7 @@ function plugin_version_fusioninventory() {
                 'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
                                     & <a href="mailto:v.mazzoni@siprossii.com">Vincent MAZZONI</a>',
                 'homepage'       =>'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/',
-                'minGlpiVersion' => '0.80'// For compatibility / no install in version < 0.78
+                'minGlpiVersion' => '0.83'// For compatibility / no install in version < 0.78
    );
 }
 
@@ -302,7 +302,7 @@ function plugin_version_fusioninventory() {
 function plugin_fusioninventory_check_prerequisites() {
    global $LANG;
    
-   if (version_compare(GLPI_VERSION,'0.80','lt') || version_compare(GLPI_VERSION,'0.81','ge')) {
+   if (version_compare(GLPI_VERSION,'0.83','lt') || version_compare(GLPI_VERSION,'0.84','ge')) {
       echo $LANG['plugin_fusioninventory']['errors'][50];
       return false;
    }
