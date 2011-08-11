@@ -126,7 +126,7 @@ class PluginFusinvinventoryLibhook {
          if ($section['sectionName'] == 'HARDWARE') {
             $dataSection = unserialize($section['dataSection']);
             foreach($dataSection as $key=>$value) {
-               $dataSection[$key] = addslashes_deep($value);
+               $dataSection[$key] = Toolbox::addslashes_deep($value);
             }
             if (isset($dataSection['CHASSIS_TYPE'])) {
                $computer_type = $dataSection['CHASSIS_TYPE'];
@@ -138,7 +138,7 @@ class PluginFusinvinventoryLibhook {
          $i++;
          $dataSection = unserialize($section['dataSection']);
          foreach($dataSection as $key=>$value) {
-            $dataSection[$key] = addslashes_deep($value);
+            $dataSection[$key] = Toolbox::addslashes_deep($value);
          }
          switch ($section['sectionName']) {
 
@@ -331,7 +331,7 @@ class PluginFusinvinventoryLibhook {
       foreach($data as $section) {
          $dataSection = unserialize($section['dataSection']);
          foreach($dataSection as $key=>$value) {
-            $dataSection[$key] = addslashes_deep($value);
+            $dataSection[$key] = Toolbox::addslashes_deep($value);
          }
          switch ($section['sectionName']) {
 
@@ -699,7 +699,7 @@ class PluginFusinvinventoryLibhook {
          if ($sectionName == 'HARDWARE') {
             $dataSection = unserialize($section['dataSection']);
             foreach($dataSection as $key=>$value) {
-               $dataSection[$key] = addslashes_deep($value);
+               $dataSection[$key] = Toolbox::addslashes_deep($value);
             }
             if (isset($dataSection['CHASSIS_TYPE'])) {
                $computer_type = $dataSection['CHASSIS_TYPE'];
@@ -710,7 +710,7 @@ class PluginFusinvinventoryLibhook {
       foreach($data as $section) {
          $dataSection = unserialize($section['dataSection']);
          foreach($dataSection as $key=>$value) {
-            $dataSection[$key] = addslashes_deep($value);
+            $dataSection[$key] = Toolbox::addslashes_deep($value);
          }
          $array = explode("/", $section['sectionId']);
          $items_id = $array[1];

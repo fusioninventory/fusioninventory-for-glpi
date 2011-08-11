@@ -83,55 +83,55 @@ class PluginFusinvinventoryInventory {
       // Global criterias
 
          if ((isset($xml->CONTENT->BIOS->SSN)) AND (!empty($xml->CONTENT->BIOS->SSN))) {
-            $input['serial'] = addslashes_deep((string)$xml->CONTENT->BIOS->SSN);
+            $input['serial'] = Toolbox::addslashes_deep((string)$xml->CONTENT->BIOS->SSN);
          }
          if ((isset($xml->CONTENT->HARDWARE->UUID)) AND (!empty($xml->CONTENT->HARDWARE->UUID))) {
-            $input['uuid'] = addslashes_deep((string)$xml->CONTENT->HARDWARE->UUID);
+            $input['uuid'] = Toolbox::addslashes_deep((string)$xml->CONTENT->HARDWARE->UUID);
          }
          if (isset($xml->CONTENT->NETWORKS)) {
             foreach($xml->CONTENT->NETWORKS as $network) {
                if (((isset($network->VIRTUALDEV)) AND ($network->VIRTUALDEV != '1'))
                        OR (!isset($network->VIRTUALDEV))){
                   if ((isset($network->MACADDR)) AND (!empty($network->MACADDR))) {
-                     $input['mac'][] = addslashes_deep((string)$network->MACADDR);
+                     $input['mac'][] = Toolbox::addslashes_deep((string)$network->MACADDR);
                   }
                }
             }
          }
          if ((isset($xml->CONTENT->HARDWARE->WINPRODKEY)) 
                AND (!empty($xml->CONTENT->HARDWARE->WINPRODKEY))) {
-            $input['mskey'] = addslashes_deep((string)$xml->CONTENT->HARDWARE->WINPRODKEY);
+            $input['mskey'] = Toolbox::addslashes_deep((string)$xml->CONTENT->HARDWARE->WINPRODKEY);
          }
          if ((isset($xml->CONTENT->HARDWARE->OSNAME)) 
                AND (!empty($xml->CONTENT->HARDWARE->OSNAME))) {
-            $input['osname'] = addslashes_deep((string)$xml->CONTENT->HARDWARE->OSNAME);
+            $input['osname'] = Toolbox::addslashes_deep((string)$xml->CONTENT->HARDWARE->OSNAME);
 
          }
          if ((isset($xml->CONTENT->BIOS->SMODEL)) AND (!empty($xml->CONTENT->BIOS->SMODEL))) {
-            $input['model'] = addslashes_deep((string)$xml->CONTENT->BIOS->SMODEL);
+            $input['model'] = Toolbox::addslashes_deep((string)$xml->CONTENT->BIOS->SMODEL);
          }
          if (isset($xml->CONTENT->STORAGES)) {
             foreach($xml->CONTENT->STORAGES as $storage) {
                if ((isset($storage->SERIALNUMBER)) AND (!empty($storage->SERIALNUMBER))) {
-                  $input['partitionserial'][] = addslashes_deep((string)$storage->SERIALNUMBER);
+                  $input['partitionserial'][] = Toolbox::addslashes_deep((string)$storage->SERIALNUMBER);
                }
             }
          }
          if (isset($xml->CONTENT->DRIVES)) {
             foreach($xml->CONTENT->DRIVES as $drive) {
                if ((isset($drive->SERIAL)) AND (!empty($drive->SERIAL))) {
-                  $input['hdserial'][] = addslashes_deep((string)$drive->SERIAL);
+                  $input['hdserial'][] = Toolbox::addslashes_deep((string)$drive->SERIAL);
                }
             }
          }
          if ((isset($xml->CONTENT->ACCOUNTINFO->KEYNAME)) AND ($xml->CONTENT->ACCOUNTINFO->KEYNAME == 'TAG')) {
             if (isset($xml->CONTENT->ACCOUNTINFO->KEYVALUE)) {
-               $input['tag'] = addslashes_deep((string)$xml->CONTENT->ACCOUNTINFO->KEYVALUE);
+               $input['tag'] = Toolbox::addslashes_deep((string)$xml->CONTENT->ACCOUNTINFO->KEYVALUE);
             }
          }
          if ((isset($xml->CONTENT->HARDWARE->NAME)) 
                  AND ((string)$xml->CONTENT->HARDWARE->NAME != '')) {
-            $input['name'] = addslashes_deep((string)$xml->CONTENT->HARDWARE->NAME);
+            $input['name'] = Toolbox::addslashes_deep((string)$xml->CONTENT->HARDWARE->NAME);
          } else {
             $input['name'] = '';
          }
@@ -170,30 +170,30 @@ class PluginFusinvinventoryInventory {
          // ** Get entity with rules
             $input_rules = array();
             if ((isset($xml->CONTENT->BIOS->SSN)) AND (!empty($xml->CONTENT->BIOS->SSN))) {
-               $input_rules['serialnumber'] = addslashes_deep((string)$xml->CONTENT->BIOS->SSN);
+               $input_rules['serialnumber'] = Toolbox::addslashes_deep((string)$xml->CONTENT->BIOS->SSN);
             }
             if ((isset($xml->CONTENT->HARDWARE->NAME)) AND (!empty($xml->CONTENT->HARDWARE->NAME))) {
-               $input_rules['name'] = addslashes_deep((string)$xml->CONTENT->HARDWARE->NAME);
+               $input_rules['name'] = Toolbox::addslashes_deep((string)$xml->CONTENT->HARDWARE->NAME);
             }
             if (isset($xml->CONTENT->NETWORKS)) {
                foreach($xml->CONTENT->NETWORKS as $network) {
                   if ((isset($network->IPADDRESS)) AND (!empty($network->IPADDRESS))) {
                      if ((string)$network->IPADDRESS != '127.0.0.1') {
-                        $input_rules['ip'][] = addslashes_deep((string)$network->IPADDRESS);
+                        $input_rules['ip'][] = Toolbox::addslashes_deep((string)$network->IPADDRESS);
                      }
                   }
                   if ((isset($network->IPSUBNET)) AND (!empty($network->IPSUBNET))) {
-                     $input_rules['subnet'][] = addslashes_deep((string)$network->IPSUBNET);
+                     $input_rules['subnet'][] = Toolbox::addslashes_deep((string)$network->IPSUBNET);
                   }
                }
             }
             if ((isset($xml->CONTENT->HARDWARE->WORKGROUP)) AND (!empty($xml->CONTENT->HARDWARE->WORKGROUP))) {
-               $input_rules['domain'] = addslashes_deep((string)$xml->CONTENT->HARDWARE->WORKGROUP);
+               $input_rules['domain'] = Toolbox::addslashes_deep((string)$xml->CONTENT->HARDWARE->WORKGROUP);
             }
             if ((isset($xml->CONTENT->ACCOUNTINFO->KEYNAME)) 
                   AND ($xml->CONTENT->ACCOUNTINFO->KEYNAME == 'TAG')) {
                if (isset($xml->CONTENT->ACCOUNTINFO->KEYVALUE)) {
-                  $input_rules['tag'] = addslashes_deep((string)$xml->CONTENT->ACCOUNTINFO->KEYVALUE);
+                  $input_rules['tag'] = Toolbox::addslashes_deep((string)$xml->CONTENT->ACCOUNTINFO->KEYVALUE);
                }
             }
 
