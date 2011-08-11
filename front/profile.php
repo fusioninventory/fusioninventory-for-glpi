@@ -43,7 +43,7 @@ if (isset ($_POST)) {
    if (haveRight("profile", "w")) {
       $prof->updateProfiles($_POST);
    }
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 }
 
 ?>

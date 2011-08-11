@@ -229,7 +229,7 @@ function plugin_init_fusioninventory() {
 
       if (PluginFusioninventoryModule::getAll(true)) {
          addMessageAfterRedirect($LANG['plugin_fusioninventory']['setup'][17]);
-         glpi_header($CFG_GLPI["root_doc"]."/front/plugin.php");
+         Html::redirect($CFG_GLPI["root_doc"]."/front/plugin.php");
          exit;
       }
    }

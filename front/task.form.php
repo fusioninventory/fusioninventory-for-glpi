@@ -48,12 +48,12 @@ if (isset($_POST['forcestart'])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task","w");
    $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
    $PluginFusioninventoryTaskjob->forceRunningTask($_POST['id']);
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["add"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task","w");
    
    $itens_id = $pft->add($_POST);
-   glpi_header(str_replace("add=1", "", $_SERVER['HTTP_REFERER'])."id=".$itens_id);
+   Html::redirect(str_replace("add=1", "", $_SERVER['HTTP_REFERER'])."id=".$itens_id);
 } else if (isset($_POST["delete"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task","w");
 
@@ -64,7 +64,7 @@ if (isset($_POST['forcestart'])) {
       $pftj->delete($datas);
    }
    $pft->delete($_POST);
-   glpi_header(getItemTypeSearchURL('PluginFusioninventoryTask'));
+   Html::redirect(getItemTypeSearchURL('PluginFusioninventoryTask'));
 } else if (isset($_POST["update"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task","w");
 
@@ -76,7 +76,7 @@ if (isset($_POST['forcestart'])) {
    
   $pft->update($_POST);
 
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 }
 
 PluginFusioninventoryTaskjob::getAllowurlfopen();

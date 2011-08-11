@@ -49,7 +49,7 @@ if (isset($_POST['plugin_fusioninventory_config_set'])) {
    $config->updateConfigType($plugins_id, 'delete_task', $_POST['delete_task']);
    $config->updateConfigType($plugins_id, 'agent_port', $_POST['agent_port']);
    $config->updateConfigType($plugins_id, 'extradebug', $_POST['extradebug']);
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 }
 
 
@@ -60,7 +60,7 @@ if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration'])) {
          if (isset($_POST[$code['submitbutton']])) {
             $obj = new $code['class'];
             $obj->$code['submitmethod']($_POST);
-            glpi_header($_SERVER['HTTP_REFERER']);
+            Html::redirect($_SERVER['HTTP_REFERER']);
          }
       }
    }

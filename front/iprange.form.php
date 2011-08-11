@@ -52,9 +52,9 @@ if (isset ($_POST["add"])) {
       $_POST['ip_end']    = $_POST['ip_end0'].".".$_POST['ip_end1'].".";
       $_POST['ip_end']   .= $_POST['ip_end2'].".".$_POST['ip_end3'];
       $newID = $iprange->add($_POST);
-      glpi_header(getItemTypeFormURL('PluginFusioninventoryIPRange')."?id=$newID");
+      Html::redirect(getItemTypeFormURL('PluginFusioninventoryIPRange')."?id=$newID");
    } else {
-      glpi_header($_SERVER['HTTP_REFERER']);
+      Html::redirect($_SERVER['HTTP_REFERER']);
    }
 } else if (isset ($_POST["update"])) {
    if (isset($_POST['communication'])) {
@@ -94,18 +94,18 @@ if (isset ($_POST["add"])) {
          $iprange->update($_POST);
       }
    }
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["delete"])) {
    if (isset($_POST['communication'])) {
       $task = new PluginFusioninventoryTask();
       $task->delete(array('id' => $_POST['task_id']), 1);
       $_SERVER['HTTP_REFERER'] = str_replace("&allowcreate=1", "", $_SERVER['HTTP_REFERER']);
-      glpi_header($_SERVER['HTTP_REFERER']);
+      Html::redirect($_SERVER['HTTP_REFERER']);
    } else {
       PluginFusioninventoryProfile::checkRight("fusioninventory", "iprange","w");
 
       $iprange->delete($_POST);
-      glpi_header(getItemTypeSearchURL('PluginFusioninventoryIPRange'));
+      Html::redirect(getItemTypeSearchURL('PluginFusioninventoryIPRange'));
    }
 }
 
@@ -119,7 +119,7 @@ if (isset($_GET['allowcreate'])) {
 }
 
 if (strstr($_SERVER['HTTP_REFERER'], "wizard.php")) {
-   glpi_header($_SERVER['HTTP_REFERER']."&id=".$id);
+   Html::redirect($_SERVER['HTTP_REFERER']."&id=".$id);
 }
 
 $iprange->showForm($id, array( "allowcreate" => $allowcreate));

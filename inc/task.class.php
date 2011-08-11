@@ -306,7 +306,97 @@ class PluginFusioninventoryTask extends CommonDBTM {
          }
       }
    }
+   
+   
+   
+   function taskMenu() {
+      
+      if (!isset($_GET['see'])) {
+         $_GET['see'] = 'next';
+      }
+      
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<tr class='tab_bg_1'>";
+      
+      echo "<th><a href='".$_SERVER['php_self']."?see=next'>Next</a></th>";
+      echo "<th><a href='".$_SERVER['php_self']."?see=previous'>Previous</a></th>";
+      echo "<th><a href='".$_SERVER['php_self']."?see=running'>Running</a></th>";
+      echo "<th><a href='".$_SERVER['php_self']."?see=inactives'>Inactives</a></th>";
+      echo "<th><a href='".$_SERVER['php_self']."?see=inerror'>In error</a></th>";
+      echo "<th><a href='".$_SERVER['php_self']."?see=all'>All</a></th>";
+      
+      echo "</tr>";
+      echo "</table><br/>";
 
+   }
+
+   
+   
+   function displayTaks($condition) {
+
+      $pluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      
+      echo "<table class='tab_cadrehov'>";
+      
+      $where = "";
+      switch ($condition) {
+         
+         case 'next':
+            $where = "`is_active` = '1'";
+            break;
+         
+         case 'previous':
+            $where = "`is_active` = '1'";
+            break;
+         
+         case 'running':
+            $where = "`is_active` = '1'";
+            break;
+         
+         case 'inactives':
+            $where = "`is_active` = '0'";
+            break;
+         
+         case 'inerror':
+            $where = "`is_active` = '1'";
+            break;
+         
+         case 'all':
+            $where = "";
+            break;
+
+      }
+      
+      $a_tasks = $this->find($where, "date_scheduled ASC");
+      foreach ($a_tasks as $data_task) {
+         $this->getFromDB($data_task['id']);
+         echo "<tr class='tab_bg_1'>";
+         echo "<td width='32'><img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_running.png'/></td>";
+         echo "<td>
+            <a href='".$this->getFormURL()."?id=".$data_task['id']."' style='font-size: 16px; '>"
+                 .$this->getName()."</a> (".ucfirst($data_task['communication']).")<br/>&nbsp;";
+         $a_taskjobs = $pluginFusioninventoryTaskjob->find("`plugin_fusioninventory_tasks_id`='".$data_task['id']."'");
+         foreach ($a_taskjobs as $data_taskjob) {
+            $pluginFusioninventoryTaskjob->getFromDB($data_taskjob['id']);
+            echo "| ".$pluginFusioninventoryTaskjob->getLink(1)." ";
+         }
+         if (count($a_taskjobs) > 0) {
+            echo "|";
+         }
+         echo "</td>";
+         
+         echo "<td>Next : <br/>".$data_task['date_scheduled']."</td>";
+         echo "<td>Last run :<br/>
+            Not yet running</td>";
+         
+         echo "</tr>";
+      }
+      
+      echo "</table>";
+      
+   }
+   
+   
 }
 
 ?>

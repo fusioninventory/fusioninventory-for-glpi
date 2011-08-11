@@ -47,9 +47,13 @@ PluginFusioninventoryMenu::displayMenu("mini");
 PluginFusioninventoryTaskjob::getAllowurlfopen();
 echo "<br/>";
 
-$_GET['target']="task.php";
+$pluginFusioninventoryTask = new PluginFusioninventoryTask();
+$pluginFusioninventoryTask->taskMenu();
+$pluginFusioninventoryTask->displayTaks($_GET['see']);
 
-Search::show('PluginFusioninventoryTask');
+//$_GET['target']="task.php";
+//
+//Search::show('PluginFusioninventoryTask');
 
 commonFooter();
 

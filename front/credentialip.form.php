@@ -42,7 +42,7 @@ if (empty($_POST['plugin_fusioninventory_credentials_id'])) {
 include (GLPI_ROOT . "/front/dropdown.common.form.php");
 
 if (strstr($_SERVER['HTTP_REFERER'], "wizard.php")) {
-   glpi_header($_SERVER['HTTP_REFERER']."&id=".$_GET['id']);
+   Html::redirect($_SERVER['HTTP_REFERER']."&id=".$_GET['id']);
 }
 
 ?>

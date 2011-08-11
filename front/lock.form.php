@@ -52,7 +52,7 @@ if(isset($_POST["unlock_field_fusioninventory"])){
          PluginFusioninventoryLock::setLockArray($_POST['type'], $_POST["id"], array());
       }
    }
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 }
 
 commonFooter();

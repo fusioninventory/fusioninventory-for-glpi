@@ -612,7 +612,7 @@ class PluginFusioninventoryWizard {
     **/
    static function w_tasksforcerun($ariane='') {
       if (isset($_SESSION["plugin_fusioninventory_forcerun"])) {
-         glpi_header($_SERVER["PHP_SELF"]."?wizz=".PluginFusioninventoryWizard::getNextStep($ariane));
+         Html::redirect($_SERVER["PHP_SELF"]."?wizz=".PluginFusioninventoryWizard::getNextStep($ariane));
          exit;
       }
 

@@ -1195,7 +1195,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             $tab = $i;
          }
       }
-      glpi_header(getItemTypeFormURL('PluginFusioninventoryTask')
+      Html::redirect(getItemTypeFormURL('PluginFusioninventoryTask')
                                      ."?itemtype=PluginFusioninventoryTask&id=".
                                         $this->fields['plugin_fusioninventory_tasks_id'].
                                            "&glpi_tab=".$tab);

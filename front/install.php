@@ -75,7 +75,7 @@ if (haveRight("config","w") && haveRight("profile","w")) {
       }
    }
 
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 } else {
 
    commonHeader($LANG['login'][5],$_SERVER['PHP_SELF'],"plugins","fusioninventory");

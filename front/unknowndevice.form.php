@@ -56,7 +56,7 @@ if (isset ($_POST["add"])) {
       $_POST['itemtype'] = '1';
    }
    $PluginFusioninventoryUnknownDevice->add($_POST);
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 } else if (isset($_POST["delete"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "unknowndevice","w");
 
@@ -85,7 +85,7 @@ if (isset ($_POST["add"])) {
 } else if (isset($_POST["update"])) {
 	$PluginFusioninventoryUnknownDevice->check($_POST['id'],'w');
 	$PluginFusioninventoryUnknownDevice->update($_POST);
-	glpi_header($_SERVER['HTTP_REFERER']);
+	Html::redirect($_SERVER['HTTP_REFERER']);
 } else if (isset($_POST["import"])) {
    $Import = 0;
    $NoImport = 0;
@@ -93,9 +93,9 @@ if (isset ($_POST["add"])) {
    addMessageAfterRedirect($LANG['plugin_fusioninventory']['discovery'][5]." : ".$Import);
    addMessageAfterRedirect($LANG['plugin_fusioninventory']['discovery'][9]." : ".$NoImport);
    if ($Import == "0") {
-      glpi_header($_SERVER['HTTP_REFERER']);
+      Html::redirect($_SERVER['HTTP_REFERER']);
    } else {
-      glpi_header(GLPI_ROOT."/plugins/fusioninventory/front/unknowndevice.php");
+      Html::redirect(GLPI_ROOT."/plugins/fusioninventory/front/unknowndevice.php");
    }
 }
 

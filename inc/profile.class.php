@@ -201,7 +201,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       if (!$pfp->haveRight($p_moduleName, $p_type, $p_right)) {
          // Gestion timeout session
          if (!isset ($_SESSION["glpiID"])) {
-            glpi_header($CFG_GLPI["root_doc"] . "/index.php");
+            Html::redirect($CFG_GLPI["root_doc"] . "/index.php");
             exit ();
          }
          displayRightError();

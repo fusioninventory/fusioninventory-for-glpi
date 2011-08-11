@@ -61,7 +61,7 @@ if (isset($_POST['definition_add'])) {
    $input['id'] = $_POST['id'];
    $input['definition'] = exportArrayToDB($a_listdef);
    $mytaskjob->update($input);
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 } else if (isset($_POST['action_add'])) {
    // * Add an action
    $mytaskjob->getFromDB($_POST['id']);
@@ -81,7 +81,7 @@ if (isset($_POST['definition_add'])) {
    $input['id'] = $_POST['id'];
    $input['action'] = exportArrayToDB($a_listact);
    $mytaskjob->update($input);
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 } else if (isset($_POST['definition_delete'])) {
    // * Delete definition
    $mytaskjob->getFromDB($_POST['id']);
@@ -99,7 +99,7 @@ if (isset($_POST['definition_add'])) {
    $input['id'] = $_POST['id'];
    $input['definition'] = exportArrayToDB($a_listdef);
    $mytaskjob->update($input);
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 } else if (isset($_POST['action_delete'])) {
    // * Delete action
    $mytaskjob->getFromDB($_POST['id']);
@@ -117,7 +117,7 @@ if (isset($_POST['definition_add'])) {
    $input['id'] = $_POST['id'];
    $input['action'] = exportArrayToDB($a_listact);
    $mytaskjob->update($input);
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 } else if (isset($_POST['quickform'])) {
    $pluginFusioninventoryTask = new PluginFusioninventoryTask();
 
@@ -149,7 +149,7 @@ if (isset($_POST['definition_add'])) {
    if (isset($_POST['update'])) {
       $mytaskjob->update($inputtaskjob);
       $pluginFusioninventoryTask->update($inputtask);
-      glpi_header($_SERVER['HTTP_REFERER']);
+      Html::redirect($_SERVER['HTTP_REFERER']);
    } else if (isset($_POST['add'])) {
       if (!isset($_POST['entities_id'])) {
          $_POST['entities_id'] = $_SESSION['glpidefault_entity'];
@@ -172,7 +172,7 @@ if (isset($_POST['definition_add'])) {
 
       $redirect = $_SERVER['HTTP_REFERER'];
       $redirect = str_replace('&id=0', '&id='.$taskjobs_id, $redirect);
-      glpi_header($redirect);
+      Html::redirect($redirect);
    }
 } else if (isset($_POST['taskjobstoforcerun'])) {
    // * Force running many tasks (wizard)
@@ -185,7 +185,7 @@ if (isset($_POST['definition_add'])) {
       $_SESSION["plugin_fusioninventory_forcerun"][$taskjobs_id] = $uniqid;
    }
    unset($_SESSION["MESSAGE_AFTER_REDIRECT"]);
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 } else if (isset($_POST['add']) || isset($_POST['update'])) {
    // * Add and update taskjob
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task", "w");
@@ -210,7 +210,7 @@ if (isset($_POST['definition_add'])) {
    } else {
       $mytaskjob->update($_POST);
    }
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
    
 
 } else if (isset($_POST["delete"])) {
@@ -218,7 +218,7 @@ if (isset($_POST['definition_add'])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task", "w");
 
    $mytaskjob->delete($_POST);
-   glpi_header(getItemTypeFormURL('PluginFusioninventoryTask')."?id=".
+   Html::redirect(getItemTypeFormURL('PluginFusioninventoryTask')."?id=".
                                      $_POST['plugin_fusioninventory_tasks_id']);
                                      
 } elseif (isset($_POST['itemaddaction'])) {
@@ -255,7 +255,7 @@ if (isset($_POST['definition_add'])) {
    $mytask->update($mytask->fields);
    // force running this job (?)
 
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
    
 } elseif (isset($_POST['forceend'])) {
    $mytaskjobstatus = new PluginFusioninventoryTaskjobstatus();
@@ -271,11 +271,11 @@ if (isset($_POST['definition_add'])) {
    $mytaskjob->fields['status'] = 1;
    $mytaskjob->update($mytaskjob->fields);
 
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 }
 
 if (strstr($_SERVER['HTTP_REFERER'], "wizard.php")) {
-   glpi_header($_SERVER['HTTP_REFERER']."&id=".$_GET['id']);
+   Html::redirect($_SERVER['HTTP_REFERER']."&id=".$_GET['id']);
 } else {
    $mytaskjob->redirectTask($_GET['id']);
 }
