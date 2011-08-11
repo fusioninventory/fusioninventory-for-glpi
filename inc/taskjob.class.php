@@ -215,10 +215,10 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                'myname'=>"method"
                );
          echo "<script type='text/javascript'>";
-         ajaxUpdateItemJsCode("show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params,true,"dropdown_method".$rand);
+         Ajax::UpdateItemJsCode("show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params,true,"dropdown_method".$rand);
          echo "</script>";
          echo "<script type='text/javascript'>";
-         ajaxUpdateItemJsCode("show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params,true,"dropdown_method".$rand);
+         Ajax::UpdateItemJsCode("show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params,true,"dropdown_method".$rand);
          echo "</script>";
 
          if (count($PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$id."'")) > 0) {
@@ -368,11 +368,11 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                      'rand'=>$rand,
                      'myname'=>$myname
                      );
-      ajaxUpdateItemOnSelectEvent("dropdown_method".$rand,"show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params);
+      Ajax::UpdateItemOnSelectEvent("dropdown_method".$rand,"show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params);
 
       if ($value != "0") {
          echo "<script type='text/javascript'>";
-         ajaxUpdateItemJsCode("show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params,true,"dropdown_method".$rand);
+         Ajax::UpdateItemJsCode("show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params,true,"dropdown_method".$rand);
          echo "</script>";
       }
 
@@ -381,11 +381,11 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                      'rand'=>$rand,
                      'myname'=>$myname
                      );
-      ajaxUpdateItemOnSelectEvent("dropdown_method".$rand,"show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params);
+      Ajax::UpdateItemOnSelectEvent("dropdown_method".$rand,"show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params);
 
       if ($value != "0") {
          echo "<script type='text/javascript'>";
-         ajaxUpdateItemJsCode("show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params,true,"dropdown_method".$rand);
+         Ajax::UpdateItemJsCode("show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params,true,"dropdown_method".$rand);
          echo "</script>";
       }
 
@@ -431,7 +431,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             'method'=>$method,
             'deftypeid'=>'dropdown_'.$myname.$rand
             );
-      ajaxUpdateItemOnSelectEvent('dropdown_DefinitionType'.$rand,"show_DefinitionList",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitionlist.php",$params);
+      Ajax::UpdateItemOnSelectEvent('dropdown_DefinitionType'.$rand,"show_DefinitionList",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitionlist.php",$params);
 
       return $rand;
    }
@@ -478,7 +478,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                'deftypeid'=>$deftypeid
                );
 
-      ajaxUpdateItemOnEvent('addObject','show_DefinitionListEmpty',$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitionselection.php",$params,array("click"));
+      Ajax::UpdateItemOnEvent('addObject','show_DefinitionListEmpty',$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitionselection.php",$params,array("click"));
    }
 
 
@@ -523,7 +523,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             'method'=>$method,
             'actiontypeid'=>'dropdown_'.$myname.$rand
             );
-      ajaxUpdateItemOnSelectEvent('dropdown_ActionType'.$rand,"show_ActionList",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactionlist.php",$params);
+      Ajax::UpdateItemOnSelectEvent('dropdown_ActionType'.$rand,"show_ActionList",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactionlist.php",$params);
 
       return $rand;
    }
@@ -580,7 +580,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                     'actiontypeid'     => $actiontypeid);
 
 
-      ajaxUpdateItemOnEvent('addAObject', 'show_ActionListEmpty',
+      Ajax::UpdateItemOnEvent('addAObject', 'show_ActionListEmpty',
                             $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactionselection.php", 
                             $params, array("click"));
 
@@ -1588,10 +1588,10 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                'myname'=>"method"
                );
          echo "<script type='text/javascript'>";
-         ajaxUpdateItemJsCode("show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params,true,"dropdown_method".$rand);
+         Ajax::UpdateItemJsCode("show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params,true,"dropdown_method".$rand);
          echo "</script>";
          echo "<script type='text/javascript'>";
-         ajaxUpdateItemJsCode("show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params,true,"dropdown_method".$rand);
+         Ajax::UpdateItemJsCode("show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params,true,"dropdown_method".$rand);
          echo "</script>";
       } else  {
          $this->showFormButtons(array());

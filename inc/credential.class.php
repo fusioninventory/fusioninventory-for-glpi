@@ -309,7 +309,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       $params    = array('itemtype' => '__VALUE__',
                          'id'       => $p['id']);
       $url       = $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownCredentials.php";
-      ajaxUpdateItemOnSelectEvent("dropdown_plugin_fusioninventory_credentials_id$rand", 
+      Ajax::UpdateItemOnSelectEvent("dropdown_plugin_fusioninventory_credentials_id$rand", 
                                   "span_credentials", $url, $params);
 
       echo "&nbsp;<span name='span_credentials' id='span_credentials'>"; 

@@ -287,7 +287,7 @@ function appear_array(id){
       echo "</tr>";
 
       echo "<tr style='display: none;' id='viewfollowup".$PluginFusioninventoryTaskjobstatus->fields["id"]."' class='tab_bg_4'>";
-      ajaxUpdateItemOnEvent('plusmoins'.$PluginFusioninventoryTaskjobstatus->fields["id"],
+      Ajax::UpdateItemOnEvent('plusmoins'.$PluginFusioninventoryTaskjobstatus->fields["id"],
                       'viewfollowup'.$PluginFusioninventoryTaskjobstatus->fields["id"],
                       GLPI_ROOT."/plugins/fusioninventory/ajax/showtaskjoblogdetail.php",
                       array('agents_id' => $PluginFusioninventoryTaskjobstatus->fields['plugin_fusioninventory_agents_id'],
