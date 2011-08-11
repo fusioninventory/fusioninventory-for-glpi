@@ -42,7 +42,7 @@ if (!defined('GLPI_ROOT')) {
    die("Can not acces directly to this file");
 }
 
-checkCentralAccess();
+Session::checkCentralAccess();
 
 echo PluginFusinvsnmpNetworkPortLog::showHistory($_POST["ports_id"]);
 
