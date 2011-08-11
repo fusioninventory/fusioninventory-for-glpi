@@ -52,7 +52,7 @@ if (isset ($_POST["add"])) {
       $_POST['ip_end']    = $_POST['ip_end0'].".".$_POST['ip_end1'].".";
       $_POST['ip_end']   .= $_POST['ip_end2'].".".$_POST['ip_end3'];
       $newID = $iprange->add($_POST);
-      Html::redirect(getItemTypeFormURL::deleteDir('PluginFusioninventoryIPRange')."?id=$newID");
+      Html::redirect(Toolbox::deleteDir('PluginFusioninventoryIPRange')."?id=$newID");
    } else {
       Html::redirect($_SERVER['HTTP_REFERER']);
    }

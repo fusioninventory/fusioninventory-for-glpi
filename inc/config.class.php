@@ -260,7 +260,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     */
    static function logIfExtradebug($file, $message) {
       if (self::isExtradebugActive()) {
-         logInFile($file, $message);
+         Toolbox::logInFile($file, $message);
       }
    }
 

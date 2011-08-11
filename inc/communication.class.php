@@ -199,7 +199,7 @@ class PluginFusioninventoryCommunication {
             $indent = 0;
          endif;
 
-         $line    = str_pad($token, strlen($token)+$pad, '  ', STR_PAD_LEFT);
+         $line    = Toolbox::str_pad($token, strlen($token)+$pad, '  ', STR_PAD_LEFT);
          $result .= $line . "\n";
          $token   = strtok("\n");
          $pad    += $indent;

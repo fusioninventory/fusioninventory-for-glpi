@@ -218,7 +218,7 @@ if (isset($_POST['definition_add'])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task", "w");
 
    $mytaskjob->delete($_POST);
-   Html::redirect(getItemTypeFormURL::deleteDir('PluginFusioninventoryTask')."?id=".
+   Html::redirect(Toolbox::deleteDir('PluginFusioninventoryTask')."?id=".
                                      $_POST['plugin_fusioninventory_tasks_id']);
                                      
 } elseif (isset($_POST['itemaddaction'])) {
