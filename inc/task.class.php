@@ -318,12 +318,12 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
       
-      echo "<th><a href='".$_SERVER['php_self']."?see=next'>Next</a></th>";
-      echo "<th><a href='".$_SERVER['php_self']."?see=previous'>Previous</a></th>";
-      echo "<th><a href='".$_SERVER['php_self']."?see=running'>Running</a></th>";
-      echo "<th><a href='".$_SERVER['php_self']."?see=inactives'>Inactives</a></th>";
-      echo "<th><a href='".$_SERVER['php_self']."?see=inerror'>In error</a></th>";
-      echo "<th><a href='".$_SERVER['php_self']."?see=all'>All</a></th>";
+      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=next'>Next</a></th>";
+      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=previous'>Previous</a></th>";
+      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=running'>Running</a></th>";
+      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=inactives'>Inactives</a></th>";
+      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=inerror'>In error</a></th>";
+      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=all'>All</a></th>";
       
       echo "</tr>";
       echo "</table><br/>";
