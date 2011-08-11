@@ -42,7 +42,7 @@ if (!defined('GLPI_ROOT')) {
    die("Can not acces directly to this file");
 }
 
-checkCentralAccess();
+Session::checkCentralAccess();
 echo "<td colspan='8'>";
 $pluginfusioninventorytaskjoblog = new PluginFusioninventoryTaskjoblog();
 echo $pluginfusioninventorytaskjoblog->showHistoryInDetail($_POST["agents_id"], $_POST["uniqid"], "900")."</td>";

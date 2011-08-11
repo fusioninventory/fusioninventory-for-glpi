@@ -39,7 +39,7 @@ if (strpos($_SERVER['PHP_SELF'],"dropdowndefinitiontype.php")) {
    header_nocache();
 }
 
-checkCentralAccess();
+Session::checkCentralAccess();
 $value = 0;
 $title = 0;
 if (isset($_POST['value'])) {

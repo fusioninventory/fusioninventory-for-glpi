@@ -42,7 +42,7 @@ if (!defined('GLPI_ROOT')) {
    die("Can not acces directly to this file");
 }
 
-checkCentralAccess();
+Session::checkCentralAccess();
 $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
 $PluginFusioninventoryTaskjob->dropdownDefinition("DefinitionList", $_POST['DefinitionType'], $_POST['method'], $_POST['deftypeid']);
 
