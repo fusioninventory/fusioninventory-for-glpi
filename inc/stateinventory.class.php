@@ -152,8 +152,8 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
          }
          echo "</td>";
 
-         echo "<td>".convDateTime($start_date)."</td>";
-         echo "<td>".convDateTime($end_date)."</td>";
+         echo "<td>".Html::convDateTime($start_date)."</td>";
+         echo "<td>".Html::convDateTime($end_date)."</td>";
 
          if ($end_date == '') {
             $end_date = date("U");

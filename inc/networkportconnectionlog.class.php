@@ -97,7 +97,7 @@ class PluginFusinvsnmpNetworkPortConnectionLog extends CommonDBTM {
             echo "</td>";
 
             echo "<td>";
-            echo convDateTime($data['date']);
+            echo Html::convDateTime($data['date']);
             echo "</td>";
 
             echo "<td>";

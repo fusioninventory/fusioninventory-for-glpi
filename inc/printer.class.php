@@ -438,7 +438,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       echo $LANG['plugin_fusinvsnmp']['snmp'][53]."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      echo convDateTime($this->oFusionInventory_printer->fields['last_fusioninventory_update']);
+      echo Html::convDateTime($this->oFusionInventory_printer->fields['last_fusioninventory_update']);
       echo "</td>";
       echo "</tr>";
 

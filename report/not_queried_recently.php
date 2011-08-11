@@ -142,7 +142,7 @@ if ($result=$DB->query($query)) {
       }
       echo $class->getLink(1);
       echo "</td>";
-      echo "<td>".convDateTime($data['last_fusioninventory_update'])."</td>";
+      echo "<td>".Html::convDateTime($data['last_fusioninventory_update'])."</td>";
       echo "<td>";
       if ($data['network_id'] > 0) {
          echo $LANG['Menu'][1];

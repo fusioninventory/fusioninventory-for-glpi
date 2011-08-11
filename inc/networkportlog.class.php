@@ -447,7 +447,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
                   }
                }
                $text .= "<td align='center' colspan='4'></td>";
-               $text .= "<td align='center'>".convDateTime($data["date_mod"])."</td>";
+               $text .= "<td align='center'>".Html::convDateTime($data["date_mod"])."</td>";
 
             } else {
                // Changes values
@@ -464,7 +464,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
                $text .= "<td align='center'>".$data["value_old"]."</td>";
                $text .= "<td align='center'>-></td>";
                $text .= "<td align='center'>".$data["value_new"]."</td>";
-               $text .= "<td align='center'>".convDateTime($data["date_mod"])."</td>";
+               $text .= "<td align='center'>".Html::convDateTime($data["date_mod"])."</td>";
             }
             $text .= "</tr>";
          }

@@ -219,7 +219,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       if ($result) {
          $i = 0;
          while ($data=$DB->fetch_assoc($result)) {
-            $data['date'] = convDateTime($data['date']);
+            $data['date'] = Html::convDateTime($data['date']);
             $datas["$i"] = $data;
             $i++;
          }
