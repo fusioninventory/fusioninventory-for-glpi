@@ -59,7 +59,7 @@ switch($_POST['glpi_tab']) {
       break;
 
    default :
-      Plugin::displayAction($iprange, $_REQUEST['glpi_tab']);
+      CommonGLPI::displayStandardTab($iprange, $_REQUEST['glpi_tab']);
       break;
 }
 
