@@ -167,7 +167,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
 <REPLY>
 </REPLY>");
    
-            $a_agent = $pta->InfosByKey(addslashes_deep($pxml->DEVICEID));
+            $a_agent = $pta->InfosByKey(Toolbox::addslashes_deep($pxml->DEVICEID));
    
             // Get taskjob in waiting
             $communication->getTaskAgent($a_agent['id']);

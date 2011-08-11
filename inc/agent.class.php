@@ -302,14 +302,14 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       if (isset($sxml->DEVICEID)) {
          $pta = new PluginFusioninventoryAgent();
-         $a_agent = $pta->find("`device_id`='".addslashes_deep($sxml->DEVICEID)."'", "", "1");
+         $a_agent = $pta->find("`device_id`='".Toolbox::addslashes_deep($sxml->DEVICEID)."'", "", "1");
          if (empty($a_agent)) {
             $a_input = array();
             if (isset($sxml->TOKEN)) {
-               $a_input['token'] = addslashes_deep($sxml->TOKEN);
+               $a_input['token'] = Toolbox::addslashes_deep($sxml->TOKEN);
             }
-            $a_input['name']         = addslashes_deep($sxml->DEVICEID);
-            $a_input['device_id']    = addslashes_deep($sxml->DEVICEID);
+            $a_input['name']         = Toolbox::addslashes_deep($sxml->DEVICEID);
+            $a_input['device_id']    = Toolbox::addslashes_deep($sxml->DEVICEID);
             $a_input['entities_id']  = 0;
             $a_input['last_contact'] = date("Y-m-d H:i:s");
             $a_input['useragent']    = $_SERVER['HTTP_USER_AGENT'];
