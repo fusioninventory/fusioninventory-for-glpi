@@ -50,8 +50,8 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
        loadLanguage();
 
 
-         //deleteDir(GLPI_ROOT."/files/_plugins/fusioninventory/criterias");
-         //deleteDir(GLPI_ROOT."/files/_plugins/fusioninventory/machines");
+         //Toolbox::deleteDir(GLPI_ROOT."/files/_plugins/fusioninventory/criterias");
+         //Toolbox::deleteDir(GLPI_ROOT."/files/_plugins/fusioninventory/machines");
          system("rm -fr ".GLPI_ROOT."/files/_plugins/fusioninventory/criterias");
          system("rm -fr ".GLPI_ROOT."/files/_plugins/fusioninventory/machines");
 
