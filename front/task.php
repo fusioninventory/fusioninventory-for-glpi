@@ -48,7 +48,7 @@ PluginFusioninventoryTaskjob::getAllowurlfopen();
 echo "<br/>";
 
 $pluginFusioninventoryTask = new PluginFusioninventoryTask();
-$pluginFusioninventoryTask->taskMenu();
+//$pluginFusioninventoryTask->taskMenu();
 //$pluginFusioninventoryTask->displayTaks($_GET['see']);
 
 $_GET['target']="task.php";
