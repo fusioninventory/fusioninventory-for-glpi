@@ -77,7 +77,7 @@ class PluginFusioninventoryMenu {
          $a_menu[3]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryTaskJob');
       }
 
-      if (haveRight("rule_ocs","r")) {
+      if (Session::haveRight("rule_ocs","r")) {
          $a_menu[4]['name'] = $LANG['plugin_fusioninventory']['rules'][2];
          $a_menu[4]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_rules.png";
          $a_menu[4]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryRuleImportEquipment');

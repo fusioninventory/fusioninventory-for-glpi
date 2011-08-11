@@ -57,7 +57,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       if ($typeright == "networkequipment") {
          $typeright = "networking";
       }
-      if (haveRight($typeright,"w")) {
+      if (Session::haveRight($typeright,"w")) {
         $can = 1;
       }
       

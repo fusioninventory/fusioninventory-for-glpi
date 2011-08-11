@@ -83,7 +83,7 @@ function plugin_init_fusioninventory() {
 
          $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusioninventory_ipranges';
 
-         if (haveRight("configuration", "r") || haveRight("profile", "w")) {// Config page
+         if (Session::haveRight("configuration", "r") || Session::haveRight("profile", "w")) {// Config page
             $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/configuration.form.php?glpi_tab=1';
          }
 

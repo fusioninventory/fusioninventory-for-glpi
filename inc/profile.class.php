@@ -270,7 +270,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
    function showProfileForm($items_id, $target) {
       global $LANG,$CFG_GLPI;
 
-      if (!haveRight("profile","r")) return false;
+      if (!Session::haveRight("profile","r")) return false;
 
       echo "<form name='form' method='post' action=\"$target\">";
       echo "<div align='center'>";

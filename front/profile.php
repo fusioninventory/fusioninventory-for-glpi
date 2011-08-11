@@ -40,7 +40,7 @@ $prof=new PluginFusioninventoryProfile();
 
 //Save profile
 if (isset ($_POST)) {
-   if (haveRight("profile", "w")) {
+   if (Session::haveRight("profile", "w")) {
       $prof->updateProfiles($_POST);
    }
    Html::redirect($_SERVER['HTTP_REFERER']);

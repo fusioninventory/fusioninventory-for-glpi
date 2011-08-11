@@ -45,7 +45,7 @@ include (GLPI_ROOT . "/inc/includes.php");
  *    2.1.0 config version field 2.1.0
  **/
 
-if (haveRight("config","w") && haveRight("profile","w")) {
+if (Session::haveRight("config","w") && Session::haveRight("profile","w")) {
    $config = new PluginFusioninventoryConfig();
    if (!TableExists("glpi_plugin_fusioninventory_agents")) {
       PluginFusioninventorySetup::update("1.1.0");

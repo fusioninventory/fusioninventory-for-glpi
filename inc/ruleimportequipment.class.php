@@ -57,12 +57,12 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
 
 
    function canCreate() {
-      return haveRight('rule_ocs', 'w');
+      return Session::haveRight('rule_ocs', 'w');
    }
 
 
    function canView() {
-      return haveRight('rule_ocs', 'r');
+      return Session::haveRight('rule_ocs', 'r');
    }
 
 
