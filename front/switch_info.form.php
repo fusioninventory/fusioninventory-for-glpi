@@ -48,6 +48,6 @@ if ((isset($_POST['update'])) && (isset($_POST['id']))) {
    $PluginFusinvsnmpModel->getrightmodel($_POST['id'], NETWORKING_TYPE);
 }
 
-glpi_header($_SERVER['HTTP_REFERER']);
+Html::back();
 
 ?>

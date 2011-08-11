@@ -49,7 +49,7 @@ if (isset($_GET['vlan_update'])) {
       WHERE plugin_fusinvsnmp_constructdevices_id=".$_GET['id']."
          AND plugin_fusinvsnmp_miboids_id=".$_GET['vlan_update'];
    $DB->query($query_update);
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset ($_POST["add"])) {
    $query = "SELECT * FROM glpi_plugin_fusinvsnmp_constructdevices
       WHERE sysdescr='".$_POST['sysdescr']."' ";
@@ -59,7 +59,7 @@ if (isset($_GET['vlan_update'])) {
    } else {
       $_SESSION["MESSAGE_AFTER_REDIRECT"] = "Déjà existant";
    }
-	glpi_header($_SERVER['HTTP_REFERER']);
+	Html::back();
 } else if (isset($_POST['addWalk'])) {
    $i = 1;
    while ($i == '1') {
@@ -82,7 +82,7 @@ NULL , '".$_POST['id']."', '".$md5."'
 )";
    $id_ins = $DB->query($query_ins);
    move_uploaded_file($_FILES['walk']['tmp_name'], GLPI_PLUGIN_DOC_DIR."/fusioninventory/walks/".$md5);
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset($_POST['mib'])) { // Check MIBS
    foreach($_POST['oidsselected'] as $oid) {
       $a_mapping = explode('||', $_POST['links_oid_fields_'.$oid]);
@@ -101,10 +101,10 @@ NULL , '".$_POST['id']."', '".$md5."'
               '".$_POST['vlan_'.$oid]."' )";
       $DB->query($query_ins);     
    }
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset ($_POST["update"])) {
 	$PluginFusinvsnmpConstructDevice->update($_POST);
-	glpi_header($_SERVER['HTTP_REFERER']);
+	Html::back();
 } else if (isset ($_POST["delete"])) {
 	$PluginFusinvsnmpConstructDevice->delete($_POST);
 	glpi_header("construct_device.php");

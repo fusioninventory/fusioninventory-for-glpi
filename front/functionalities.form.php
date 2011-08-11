@@ -71,11 +71,11 @@ if (isset($_POST['update'])) {
 	if (isset($PluginFusioninventoryConfig)) {
 		$PluginFusioninventoryConfig->update($_POST);
    }
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if ((isset($_POST['Clean_history']))) {
    $PluginFusinvsnmpNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
    $PluginFusinvsnmpNetworkPortLog->cronCleannetworkportlogs();
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::back();
 }
 
 commonFooter();

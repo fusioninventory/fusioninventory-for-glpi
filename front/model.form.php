@@ -50,11 +50,11 @@ PluginFusioninventoryMenu::displayMenu("mini");
 if (isset ($_POST["add"])) {
 	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
 	$PluginFusinvsnmpModel->add($_POST);
-	glpi_header($_SERVER['HTTP_REFERER']);
+	Html::back();
 } else if (isset ($_POST["update"])) {
 	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
 	$PluginFusinvsnmpModel->update($_POST);
-	glpi_header($_SERVER['HTTP_REFERER']);
+	Html::back();
 } else if (isset ($_POST["delete"])) {
 	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
 	$PluginFusinvsnmpModel->delete($_POST);
@@ -62,25 +62,25 @@ if (isset ($_POST["add"])) {
 } else if (isset ($_FILES['importfile']['tmp_name']) && $_FILES['importfile']['tmp_name']!='') {
 	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
 	$PluginFusinvsnmpImportExport->import($_FILES['importfile']['tmp_name']);
-	glpi_header($_SERVER['HTTP_REFERER']);
+	Html::back();
 } else if (isset($_GET["is_active"])) {
 	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
 	$PluginFusinvsnmpModelMib->activation($_GET["is_active"]);
-	glpi_header($_SERVER['HTTP_REFERER']);
+	Html::back();
 } else if (isset($_POST['massimport'])) {
    PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
    $PluginFusinvsnmpImportExport->importMass();
-	glpi_header($_SERVER['HTTP_REFERER']);
+	Html::back();
 }
 if (isset ($_POST["add_oid"])) {
 	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
 	$PluginFusinvsnmpModelMib->add($_POST);
-	glpi_header($_SERVER['HTTP_REFERER']);
+	Html::back();
 }
 if(!empty($_POST["item_coche"])) {
 	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
 	$PluginFusinvsnmpModelMib->deleteMib($_POST["item_coche"]);
-	glpi_header($_SERVER['HTTP_REFERER']);
+	Html::back();
 }
 
 if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","r")) {

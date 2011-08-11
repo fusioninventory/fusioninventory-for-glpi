@@ -55,11 +55,11 @@ if (isset ($_POST["add"])) {
    } else if ($config->getValue($plugins_id, "storagesnmpauth") == "DB") {
 		$new_ID = $PluginFusinvsnmpConfigSecurity->add($_POST);
    }
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset ($_POST["update"])) {
 	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","w");
 	$PluginFusinvsnmpConfigSecurity->update($_POST);
-	glpi_header($_SERVER['HTTP_REFERER']);
+	Html::back();
 } else if (isset ($_POST["delete"])) {
    PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","w");
    $PluginFusinvsnmpConfigSecurity->delete($_POST);

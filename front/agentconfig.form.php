@@ -43,7 +43,7 @@ PluginFusioninventoryProfile::checkRight("fusioninventory", "agent","r");
 if (isset ($_POST["update"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "agent","w");
    $PluginFusinvsnmpAgentconfig->update($_POST);
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::back();
 }
 
 ?>

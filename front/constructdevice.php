@@ -48,19 +48,19 @@ $PluginFusinvsnmpConstructDevice = new PluginFusinvsnmpConstructDevice();
 
 if (isset($_GET['generatemodels']) AND $_GET['generatemodels'] == '1') {
    $PluginFusinvsnmpConstructDevice->generatemodels();
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset($_GET['generatediscover']) AND $_GET['generatediscover'] == '1') {
    $PluginFusinvsnmpConstructDevice->generateDiscovery();
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset($_GET['cleanmodels']) AND $_GET['cleanmodels'] == '1') {
    $PluginFusinvsnmpConstructDevice->cleanmodels();
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset($_GET['exportmodels']) AND $_GET['exportmodels'] == '1') {
    $PluginFusinvsnmpConstructDevice->exportmodels();
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset($_GET['generatecomments']) AND $_GET['generatecomments'] == '1') {
    $PluginFusinvsnmpConstructDevice->generatecomments();
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::back();
 }
 
 echo " | ";

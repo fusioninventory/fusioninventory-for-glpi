@@ -130,6 +130,6 @@ if (isset($_POST['graph_plugin_fusioninventory_printer_remove'])) {
    unset($_SESSION['glpi_plugin_fusioninventory_'.$field]);
 }
 
-glpi_header($_SERVER['HTTP_REFERER']);
+Html::back();
 
 ?>
