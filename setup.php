@@ -50,7 +50,7 @@ function plugin_init_fusinvinventory() {
                break;
             case 'uninstall':
                addMessageAfterRedirect($LANG['plugin_fusinvinventory']['setup'][18]);
-               glpi_header($CFG_GLPI["root_doc"]."/front/plugin.php");
+               Html::redirect($CFG_GLPI["root_doc"]."/front/plugin.php");
                break;
          }
       }

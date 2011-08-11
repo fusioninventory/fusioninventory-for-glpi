@@ -59,7 +59,7 @@ if (isset ($_POST["add"])) {
 } else if (isset ($_POST["delete"])) {
    PluginFusioninventoryProfile::checkRight("fusinvinventory", "blacklist","w");
    $PluginFusinvinventoryBlacklist->delete($_POST);
-   glpi_header("blacklist.php");
+   Html::redirect("blacklist.php");
 }
 
 if (isset($_GET["id"])) {
