@@ -201,7 +201,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 		echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      if (isMultiEntitiesMode()) {
+      if (Session::isMultiEntitiesMode()) {
          echo "<td align='center' colspan='2'>".$LANG['entity'][0]."</td>";
          echo "<td align='center' colspan='2'>";
          Dropdown::show('Entity',

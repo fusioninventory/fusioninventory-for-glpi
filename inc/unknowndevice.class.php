@@ -215,7 +215,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 		echo "<input type='text' name='name' value='" . $this->fields["name"] . "' size='35'/>";
 		echo "</td>";
 
-      if (isMultiEntitiesMode()) {
+      if (Session::isMultiEntitiesMode()) {
          echo "<td align='center'>" . $LANG['entity'][0] . "&nbsp;:</td>";
          echo "</td>";
          echo "<td align='center'>";

@@ -708,7 +708,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
 //         break;
 //
 //      case 'glpi_entities.name' :
-//         if (isMultiEntitiesMode()) {
+//         if (Session::isMultiEntitiesMode()) {
 //            Dropdown::show("Entities",
 //                           array('name' => "entities_id",
 //                           'value' => $_SESSION["glpiactive_entity"]));
