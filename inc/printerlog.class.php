@@ -301,7 +301,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       }
 
       echo "<div align='center'><form method='post' name='printer_history_form'
-                 id='printer_history_form'  action=\"".getItemTypeFormURL(__CLASS__)."\">";
+                 id='printer_history_form'  action=\"".Toolbox::getItemTypeFormURL(__CLASS__)."\">";
 
       echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='3'>";
       echo $LANG['plugin_fusinvsnmp']['prt_history'][20]." :</th></tr>";
