@@ -37,7 +37,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 header("Content-Type: text/html; charset=UTF-8");
 header_nocache();
 
-checkRight("config","w");
+Session::checkRight("config","w");
 
 if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "r")) {
    switch($_POST['glpi_tab']) {
