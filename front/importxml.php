@@ -58,7 +58,7 @@ if (isset($_FILES['importfile']['tmp_name'])) {
    } else {
       $_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusinvinventory']['importxml'][2];
    }
-	glpi_header($_SERVER['HTTP_REFERER']);
+	Html::back();
 }
 
 $PluginFusinvinventoryImportXML->showForm();

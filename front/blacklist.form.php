@@ -51,11 +51,11 @@ if (isset ($_POST["add"])) {
    } else {
       //TODO message
    }
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset ($_POST["update"])) {
    PluginFusioninventoryProfile::checkRight("fusinvinventory", "blacklist","w");
    $PluginFusinvinventoryBlacklist->update($_POST);
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset ($_POST["delete"])) {
    PluginFusioninventoryProfile::checkRight("fusinvinventory", "blacklist","w");
    $PluginFusinvinventoryBlacklist->delete($_POST);

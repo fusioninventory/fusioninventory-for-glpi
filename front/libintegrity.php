@@ -52,7 +52,7 @@ if (!empty($_POST)) {
          $PluginFusinvinventoryLibintegrity->deleteGLPI($infos);
       }
    }
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::back();
 }
 
 commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","libintegrity");
