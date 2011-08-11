@@ -45,7 +45,7 @@ function restoreMySQL() {
 
    if ($offset != 0) {
       if (fseek($fileHandle,$offset,SEEK_SET) != 0) { //erreur
-         echo $LANG['backup'][22]." ".formatNumber($offset,false,0)."<br>";
+         echo $LANG['backup'][22]." ".Html::formatNumber($offset,false,0)."<br>";
          return false;
       }
       glpi_flush();
