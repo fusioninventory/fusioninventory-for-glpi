@@ -36,7 +36,7 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT."/inc/includes.php");
 
-checkRight("networking","r");
+Session::checkRight("networking","r");
 PluginFusioninventoryProfile::checkRight("fusinvsnmp", "networkequipment","w");
 
 $PluginFusinvsnmpSNMP = new PluginFusinvsnmpSNMP();

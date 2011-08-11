@@ -36,7 +36,7 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT."/inc/includes.php");
 
-checkRight("printer","r");
+Session::checkRight("printer","r");
 PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printer","r");
 
 $PluginFusinvsnmpPrinterLog = new PluginFusinvsnmpPrinterLog();
