@@ -24,7 +24,7 @@ if (!defined('GLPI_ROOT')) {
    installGLPI();
    installFusionPlugins();
 
-   loadLanguage();
+   Session::loadLanguage();
 
    $CFG_GLPI["root_doc"] = GLPI_ROOT;
 }
@@ -47,7 +47,7 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
     public function testSetModuleInventoryOff() {
        global $DB,$LANG;
-       loadLanguage();
+       Session::loadLanguage();
 
 
          //Toolbox::deleteDir(GLPI_ROOT."/files/_plugins/fusioninventory/criterias");

@@ -24,7 +24,7 @@ if (!defined('GLPI_ROOT')) {
    installGLPI();
    installFusionPlugins();
 
-   loadLanguage();
+   Session::loadLanguage();
    include_once(GLPI_ROOT."/locales/fr_FR.php");
    include_once(GLPI_ROOT."/plugins/fusinvsnmp/locales/fr_FR.php");
    $CFG_GLPI["root_doc"] = GLPI_ROOT;

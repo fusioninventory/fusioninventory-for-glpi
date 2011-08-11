@@ -27,7 +27,7 @@ if (!defined('GLPI_ROOT')) {
    installGLPI();
    installFusionPlugins();
 
-   loadLanguage();
+   Session::loadLanguage();
 
    $CFG_GLPI["root_doc"] = GLPI_ROOT;
 
