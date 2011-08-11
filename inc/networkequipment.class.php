@@ -844,7 +844,7 @@ function appear_legend(id){
 						case 14 :
 							echo "<td>";
 
-                     $canedit = haveRight("networking", "w");
+                     $canedit = Session::haveRight("networking", "w");
 
                      $used = array();
 
