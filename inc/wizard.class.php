@@ -175,7 +175,7 @@ class PluginFusioninventoryWizard {
       if (isset($_GET['id'])) {
          $class = new $classname;
          if ($_GET['wizz'] == 'w_tasks') {
-            initNavigateListItems($classname);
+            Session::initNavigateListItems($classname);
             $class->showQuickForm($_GET['id'], $options['arg1']);
          } else {
             if (!isset($_GET['id'])) {
