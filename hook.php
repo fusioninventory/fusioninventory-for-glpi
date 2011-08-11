@@ -1913,7 +1913,7 @@ function plugin_fusinvsnmp_addWhere($link,$nott,$type,$id,$val) {
    $field = $searchopt[$id]["field"];
 
 //echo "add where : ".$table.".".$field."<br/>";
-   $SEARCH=makeTextSearch($val,$nott);
+   $SEARCH=Search::makeTextSearch($val,$nott);
 
    switch ($type) {
       // * Computer List (front/computer.php)
