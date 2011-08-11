@@ -143,9 +143,9 @@ $LANG['plugin_fusioninventory']['unknown'][5] = "Matériel inconnu à importer d
 
 $LANG['plugin_fusioninventory']['task'][0]="Tâche";
 $LANG['plugin_fusioninventory']['task'][1]="Gestion des tâches";
-$LANG['plugin_fusioninventory']['task'][2]="Action";
+$LANG['plugin_fusioninventory']['task'][2]="Job";
 $LANG['plugin_fusioninventory']['task'][14]="Date d'exécution";
-$LANG['plugin_fusioninventory']['task'][15]="Nouvelle action";
+$LANG['plugin_fusioninventory']['task'][15]="Nouveau job";
 $LANG['plugin_fusioninventory']['task'][17]="Périodicité";
 $LANG['plugin_fusioninventory']['task'][18]="Tâches";
 $LANG['plugin_fusioninventory']['task'][19]="Tâches en cours";
