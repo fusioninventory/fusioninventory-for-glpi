@@ -63,7 +63,7 @@ if (isset ($_POST["add"])) {
 } else if (isset ($_POST["delete"])) {
    PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","w");
    $PluginFusinvsnmpConfigSecurity->delete($_POST);
-   glpi_header("configsecurity.php");
+   Html::redirect("configsecurity.php");
 }
 
 $id = "";
@@ -72,7 +72,7 @@ if (isset($_GET["id"])) {
 }
 
 if (strstr($_SERVER['HTTP_REFERER'], "wizard.php")) {
-   glpi_header($_SERVER['HTTP_REFERER']."&id=".$id);
+   Html::redirect($_SERVER['HTTP_REFERER']."&id=".$id);
 }
 
 $PluginFusinvsnmpConfigSecurity->showForm($id);

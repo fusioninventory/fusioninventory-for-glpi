@@ -58,7 +58,7 @@ if (isset ($_POST["add"])) {
 } else if (isset ($_POST["delete"])) {
 	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
 	$PluginFusinvsnmpModel->delete($_POST);
-	glpi_header(GLPI_ROOT."/plugins/fusinvsnmp/front/model.php");
+	Html::redirect(GLPI_ROOT."/plugins/fusinvsnmp/front/model.php");
 } else if (isset ($_FILES['importfile']['tmp_name']) && $_FILES['importfile']['tmp_name']!='') {
 	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
 	$PluginFusinvsnmpImportExport->import($_FILES['importfile']['tmp_name']);

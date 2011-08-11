@@ -107,7 +107,7 @@ NULL , '".$_POST['id']."', '".$md5."'
 	Html::back();
 } else if (isset ($_POST["delete"])) {
 	$PluginFusinvsnmpConstructDevice->delete($_POST);
-	glpi_header("construct_device.php");
+	Html::redirect("construct_device.php");
 }
 
 $id = "";
