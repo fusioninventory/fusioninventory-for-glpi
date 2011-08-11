@@ -54,7 +54,7 @@ function update213to220() {
    $sql_query = fread($DBf_handle, filesize($DB_file));
    fclose($DBf_handle);
    foreach ( explode(";\n", "$sql_query") as $sql_line) {
-      if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
+      if (get_magic_quotes_runtime()) $sql_line=Toolbox::stripslashes_deep($sql_line);
       if (!empty($sql_line)) {
          plugin_fusioninventory_displayMigrationMessage("220", $LANG['update'][141]." - Update DB : ".$sql_line);
          $DB->query($sql_line);
