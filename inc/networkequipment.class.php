@@ -888,7 +888,7 @@ function appear_legend(id){
 				echo "
 				<tr style='display: none;' id='viewfollowup".$data["id"]."'>";
             echo "<td colspan='".(mysql_num_rows($result_array) + 2)."' id='viewfollowuphistory".$data["id"]."'></td>";
-            ajaxUpdateItemOnEvent('plusmoinsl'.$data["id"],
+            Ajax::UpdateItemOnEvent('plusmoinsl'.$data["id"],
                                   'viewfollowuphistory'.$data["id"],
                                   GLPI_ROOT."/plugins/fusinvsnmp/ajax/showporthistory.php",
                                   array('ports_id' => $data["id"]),
