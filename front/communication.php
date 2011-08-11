@@ -57,7 +57,7 @@ if (!isset($_SESSION['glpilanguage'])) {
    
 ini_set('display_errors','On');
 error_reporting(E_ALL | E_STRICT);
-set_error_handler('userErrorHandlerDebug');
+set_error_handler(array('Toolbox','userErrorHandlerDebug'));
 $_SESSION['glpi_use_mode'] = 2;
 
 if (!class_exists("PluginFusioninventoryConfig")) {
