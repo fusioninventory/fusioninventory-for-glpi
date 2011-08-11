@@ -174,7 +174,7 @@ function plugin_headings_fusinvinventory_xml($item) {
       echo "<th>".$LANG['plugin_fusioninventory']['title'][1]." ".
          $LANG['plugin_fusioninventory']['xml'][0];
       echo " (".$LANG['common'][26]."&nbsp;: " . 
-         convDateTime(date("Y-m-d H:i:s", 
+         Html::convDateTime(date("Y-m-d H:i:s", 
                       filemtime(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id))).")";
       echo "</th>";
       echo "</tr>";
