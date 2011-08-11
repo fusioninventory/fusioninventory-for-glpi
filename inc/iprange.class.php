@@ -299,7 +299,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
             echo "</tr>";
             echo "<tr class='tab_bg_1'>";
             echo "<td align='center'>";
-            echo "<a href='".getItemTypeFormURL('PluginFusioninventoryIPRange');
+            echo "<a href='".getItemTypeFormURL::deleteDir('PluginFusioninventoryIPRange');
             echo "?id=".$_POST['id']."&allowcreate=1'>";
             echo $LANG['plugin_fusioninventory']['task'][18]."</a>";
             echo "</td>";
@@ -336,7 +336,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       $PluginFusioninventoryTaskjob->getFromDB($taskjob_id);
 
       $options = array();
-      $options['target'] = getItemTypeFormURL('PluginFusioninventoryIPRange');
+      $options['target'] = getItemTypeFormURL::deleteDir('PluginFusioninventoryIPRange');
       $PluginFusioninventoryTaskjob->showFormHeader($options);
       
       echo "</td>";

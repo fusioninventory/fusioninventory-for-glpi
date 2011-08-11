@@ -248,7 +248,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $this->getFromDB($id);
 
       echo "<form name='".$type."s_form' id='".$type."s_form' method='post' action=' ";
-      echo getItemTypeFormURL(__CLASS__)."'>";
+      echo getItemTypeFormURL::deleteDir(__CLASS__)."'>";
       echo "<table class='tab_cadre_fixe'>";
       
       echo "<tr class='tab_bg_1'>";
@@ -1195,7 +1195,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             $tab = $i;
          }
       }
-      Html::redirect(getItemTypeFormURL('PluginFusioninventoryTask')
+      Html::redirect(getItemTypeFormURL::deleteDir('PluginFusioninventoryTask')
                                      ."?itemtype=PluginFusioninventoryTask&id=".
                                         $this->fields['plugin_fusioninventory_tasks_id'].
                                            "&glpi_tab=".$tab);
@@ -1609,7 +1609,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $pluginFusioninventoryTaskjob = new self();
       $a_list = $pluginFusioninventoryTaskjob->find("`method`='".$method."'");
 
-      echo "<form name='form_ic' method='post' action='".getItemTypeFormURL(__CLASS__)."'>";
+      echo "<form name='form_ic' method='post' action='".getItemTypeFormURL::deleteDir(__CLASS__)."'>";
       echo "<table class='tab_cadre_fixe' style='width:500px'>";
 
       echo "<tr class='tab_bg_1'>";

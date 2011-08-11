@@ -53,7 +53,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       $a_modules = $this->find();
       foreach ($a_modules as $data) {
          
-         echo "<form name='form_ic' method='post' action='".getItemTypeFormURL(__CLASS__)."'>";
+         echo "<form name='form_ic' method='post' action='".getItemTypeFormURL::deleteDir(__CLASS__)."'>";
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr>";
          echo "<th width='130'>".$LANG['plugin_fusioninventory']['task'][26]."</th>";
