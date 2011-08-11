@@ -253,7 +253,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "</td>";
       echo "<td>".$LANG['plugin_fusioninventory']['agents'][4]."&nbsp:</td>";
       echo "<td align='center'>";
-      echo convDateTime($this->fields["last_contact"]);
+      echo Html::convDateTime($this->fields["last_contact"]);
       echo "</td>";
       echo "</tr>";
 

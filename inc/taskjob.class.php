@@ -1160,7 +1160,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       foreach ($a_taskjob as $data) {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>";
-         echo convDateTime($data['date_scheduled']);
+         echo Html::convDateTime($data['date_scheduled']);
          echo "</td>";
          echo "<td align='center'>";
          echo $data['comment'];

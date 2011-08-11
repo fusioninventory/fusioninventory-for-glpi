@@ -198,7 +198,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $this->showFormHeader($options);
 
 		$datestring = $LANG['common'][26].": ";
-		$date = convDateTime($this->fields["date_mod"]);
+		$date = Html::convDateTime($this->fields["date_mod"]);
 		echo "<tr>";
 		echo "<th align='center' width='450' colspan='2'>";
 		echo $LANG['common'][2]." ".$this->fields["id"];

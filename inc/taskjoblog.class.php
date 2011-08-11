@@ -458,7 +458,7 @@ function appear_array(id){
       global $LANG;
 
       $text = "<td align='center'>";
-      $text .= convDateTime($datas['date']);
+      $text .= Html::convDateTime($datas['date']);
       $text .= "</td>";
       $finish = 0;
 
