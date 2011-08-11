@@ -189,14 +189,16 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
          echo "<th>";
          echo $LANG['joblist'][0];
          echo "</th>";
+         $nb_td = 6;
          if ($state == 'running') {
+            $nb_td++;
             echo "<th>";
             echo $LANG['common'][25];
             echo "</th>";
          }
          echo "</tr>";
          foreach ($a_taskjobs as $data) {
-            $PluginFusioninventoryTaskjoblog->showHistoryLines($data['id'], 0, 1);
+            $PluginFusioninventoryTaskjoblog->showHistoryLines($data['id'], 0, 1, $nb_td);
          }
          echo "</table>";
       }

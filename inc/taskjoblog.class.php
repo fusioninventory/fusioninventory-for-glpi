@@ -125,7 +125,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
             echo "</th>";
             echo "</tr>";
             while ($data=$DB->fetch_array($result)) {
-               $this->showHistoryLines($data['id']);
+               $this->showHistoryLines($data['id'], 1, 0, 7);
             }
             echo "</table>";
          }
@@ -176,7 +176,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
             echo "</tr>";
 
             while ($data=$DB->fetch_array($result)) {
-               $this->showHistoryLines($data['id'], 0);
+               $this->showHistoryLines($data['id'], 0, 0,5);
             }
 
             echo "<tr>";
@@ -203,21 +203,22 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       		echo "<script  type='text/javascript'>
 function close_array(id){
 	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/plugins/fusioninventory/pics/collapse.png\''+
-      'onClick=\'Effect.Fade(\"viewfollowup'+id+'\");appear_array('+id+');\' />&nbsp;<img src=\'".GLPI_ROOT."/plugins/fusioninventory/pics/refresh.png\' />';
+      'onClick=\'document.getElementById(\"viewfollowup'+id+'\").hide();appear_array('+id+');\' />&nbsp;<img src=\'".GLPI_ROOT."/plugins/fusioninventory/pics/refresh.png\' />';
    document.getElementById('plusmoins'+id).style.backgroundColor = '#e4e4e2';
 }
 function appear_array(id){
 	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/plugins/fusioninventory/pics/expand.png\''+
-      'onClick=\'Effect.Appear(\"viewfollowup'+id+'\");close_array('+id+');\' />';
+      'onClick=\'document.getElementById(\"viewfollowup'+id+'\").show();close_array('+id+');\' />';
    document.getElementById('plusmoins'+id).style.backgroundColor = '#f2f2f2';
 
 }
 
 		</script>";
-
+     
 		echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusioninventory/prototype.js'></script>";
       echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusioninventory/effects.js'></script>";
 
+      
    }
 
 
@@ -230,7 +231,7 @@ function appear_array(id){
    * @return nothing
    *
    **/
-   function showHistoryLines($taskjobstatus_id, $displayprocess = 1, $displaytaskjob=0) {
+   function showHistoryLines($taskjobstatus_id, $displayprocess = 1, $displaytaskjob=0, $nb_td='5') {
       global $LANG;
       
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
@@ -244,9 +245,9 @@ function appear_array(id){
 
       echo "<tr class='tab_bg_1'>";
       echo "<td width='40' id='plusmoins".$PluginFusioninventoryTaskjobstatus->fields["id"]."'><img src='".GLPI_ROOT.
-               "/plugins/fusioninventory/pics/expand.png' onClick='Effect.Appear(\"viewfollowup".$PluginFusioninventoryTaskjobstatus->fields["id"].
-               "\");close_array(".$PluginFusioninventoryTaskjobstatus->fields["id"].");' /></td>";
-
+               "/plugins/fusioninventory/pics/expand.png' onClick='document.getElementById(\"viewfollowup".$PluginFusioninventoryTaskjobstatus->fields["id"].
+               "\").show();close_array(".$PluginFusioninventoryTaskjobstatus->fields["id"].");' /></td>";
+      
       echo "<td>";
       echo $PluginFusioninventoryTaskjobstatus->fields['uniqid'];
       echo "</td>";
@@ -265,9 +266,16 @@ function appear_array(id){
          echo "</td>";
       }
       echo "<td>";
-
       $PluginFusioninventoryAgent->getFromDB($PluginFusioninventoryTaskjobstatus->fields['plugin_fusioninventory_agents_id']);
       echo $PluginFusioninventoryAgent->getLink(1);
+      
+      Ajax::UpdateItemOnEvent('plusmoins'.$PluginFusioninventoryTaskjobstatus->fields["id"],
+                      'viewfollowup'.$PluginFusioninventoryTaskjobstatus->fields["id"],
+                      GLPI_ROOT."/plugins/fusioninventory/ajax/showtaskjoblogdetail.php",
+                      array('agents_id' => $PluginFusioninventoryTaskjobstatus->fields['plugin_fusioninventory_agents_id'],
+                          'uniqid' => $PluginFusioninventoryTaskjobstatus->fields['uniqid']),
+                      array("click"));
+      
       echo "</td>";
       $a_return = $this->displayHistoryDetail(array_pop($a_history), 0);
       $count = $a_return[0];
@@ -286,14 +294,9 @@ function appear_array(id){
       }      
       echo "</tr>";
 
-      echo "<tr style='display: none;' id='viewfollowup".$PluginFusioninventoryTaskjobstatus->fields["id"]."' class='tab_bg_4'>";
-      Ajax::UpdateItemOnEvent('plusmoins'.$PluginFusioninventoryTaskjobstatus->fields["id"],
-                      'viewfollowup'.$PluginFusioninventoryTaskjobstatus->fields["id"],
-                      GLPI_ROOT."/plugins/fusioninventory/ajax/showtaskjoblogdetail.php",
-                      array('agents_id' => $PluginFusioninventoryTaskjobstatus->fields['plugin_fusioninventory_agents_id'],
-                          'uniqid' => $PluginFusioninventoryTaskjobstatus->fields['uniqid']),
-                      array("click"));
-      echo "</tr>";
+      echo "<tr><td colspan='".$nb_td."' style='display: none;' id='viewfollowup".$PluginFusioninventoryTaskjobstatus->fields["id"]."' class='tab_bg_4'>";
+
+      echo "</td></tr>";
    }
 
 
