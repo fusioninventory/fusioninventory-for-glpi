@@ -105,7 +105,7 @@ if (isset ($_POST["add"])) {
       PluginFusioninventoryProfile::checkRight("fusioninventory", "iprange","w");
 
       $iprange->delete($_POST);
-      Html::redirect(getItemTypeSearchURL('PluginFusioninventoryIPRange'));
+      Html::redirect(Toolbox::getItemTypeSearchURL('PluginFusioninventoryIPRange'));
    }
 }
 

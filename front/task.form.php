@@ -64,7 +64,7 @@ if (isset($_POST['forcestart'])) {
       $pftj->delete($datas);
    }
    $pft->delete($_POST);
-   Html::redirect(getItemTypeSearchURL('PluginFusioninventoryTask'));
+   Html::redirect(Toolbox::getItemTypeSearchURL('PluginFusioninventoryTask'));
 } else if (isset($_POST["update"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task","w");
 
