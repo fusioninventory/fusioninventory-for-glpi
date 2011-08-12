@@ -318,12 +318,20 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
       
-      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=next'>Next</a></th>";
+      $a_tasks = $this->find("`is_active` = '1'");
+      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=next'>Next<sup>(".
+              count($a_tasks).")</sup></a></th>";
+
+      
       echo "<th><a href='".$_SERVER['PHP_SELF']."?see=previous'>Previous</a></th>";
       echo "<th><a href='".$_SERVER['PHP_SELF']."?see=running'>Running</a></th>";
-      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=inactives'>Inactives</a></th>";
+      $a_tasks = $this->find("`is_active` = '0'");
+      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=inactives'>Inactives<sup>(".
+              count($a_tasks).")</sup></a></th>";
       echo "<th><a href='".$_SERVER['PHP_SELF']."?see=inerror'>In error</a></th>";
-      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=all'>All</a></th>";
+      $a_tasks = $this->find();
+      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=all'>All<sup>(".
+              count($a_tasks).")</sup></a></th>";
       
       echo "</tr>";
       echo "</table><br/>";
@@ -392,8 +400,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
          echo "</tr>";
       }
       
-      echo "</table>";
-      
+      echo "</table>";      
    }
    
    
