@@ -225,7 +225,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</td>";
       
       // ** Actions
-      echo "<td rowspan='4'>";
+      echo "<td rowspan='4' valign='top'>";
       echo "<div style='display:none' id='action$rand_linked_ticket'>";
       $rand = mt_rand();
       $params = array('method' => '__VALUE__',
