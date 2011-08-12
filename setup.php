@@ -151,7 +151,6 @@ function plugin_init_fusinvsnmp() {
 //         if (PluginFusinvsnmpAuth::haveRight("models","r")
          if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","r")
             OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity","r")
-            //OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "iprange","r")
             OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "agents","r")
             OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "agentsprocesses","r")
             OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "unknowndevices","r")
@@ -193,9 +192,6 @@ function plugin_init_fusinvsnmp() {
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configsecurity']['title'] = $LANG['plugin_fusinvsnmp']['model_info'][3];
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configsecurity']['page']  = '/plugins/fusinvsnmp/front/configsecurity.php';
-
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['iprange']['title'] = $LANG['plugin_fusinvsnmp']['menu'][2];
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['iprange']['page']  = '/plugins/fusinvsnmp/front/iprange.php';
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['statediscovery']['title'] = $LANG['plugin_fusinvsnmp']['menu'][9];
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['statediscovery']['page']  = '/plugins/fusinvsnmp/front/statediscovery.php';
