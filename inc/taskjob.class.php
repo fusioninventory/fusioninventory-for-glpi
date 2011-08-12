@@ -177,7 +177,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $rand_linked_ticket = mt_rand();
          echo "&nbsp;";
          echo "<img onClick=\"Ext.get('definition$rand_linked_ticket').setDisplayed('block')\"
-                    id=\"adddefinition\"
                     title=\"".$LANG['buttons'][8]."\" alt=\"".$LANG['buttons'][8]."\"
                     class='pointer'  src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png'>";
       //}
@@ -226,7 +225,30 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</td>";
       
       // ** Actions
-      echo "<td rowspan='4'></td>";
+      echo "<td rowspan='4'>";
+      echo "<div style='display:none' id='action$rand_linked_ticket'>";
+      $rand = mt_rand();
+      $params = array('method' => '__VALUE__',
+                      'rand'      => $randmethod,
+                      'myname'    => 'method');
+      Ajax::updateItemOnEvent("dropdown_method".$randmethod,
+                              "showactionType_$rand",
+                              $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownaction.php",
+                              $params,
+                              array("change", "load"));
+      if ($this->fields['method'] != "") {
+         echo "<script type='text/javascript'>";
+         Ajax::UpdateItemJsCode("showactionType_$rand",
+                                $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",
+                                $params,
+                                "dropdown_method".$randmethod);
+         echo "</script>";
+      }
+      echo "<span id='showactionType_$rand'>&nbsp;</span>";
+            echo "<span id='show_ActionList'>&nbsp;</span>";
+      echo "<hr>";
+      echo "</div>";
+      echo "</td>";
       echo "</tr>";
       echo "<td>".$LANG['common'][16]."&nbsp;:</td>";
       echo "<td align='center'>";
@@ -532,15 +554,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                                       "task_definitionselection_".$definitiontype."_".$method), 
                                 $title);
       }
-
-      $params=array('selection'=>'__VALUE__',
-               'entity_restrict'=>$entity_restrict,
-               'myname'=>$myname,
-               'defselectadd' => 'dropdown_definitionselectiontoadd'.$rand,
-               'deftypeid'=>$deftypeid
-               );
-
-      Ajax::UpdateItemOnEvent('addObject','show_DefinitionListEmpty',$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitionselection.php",$params,array("click"));
+      echo "<br/><center><input type='submit' name='add' value=\"".$LANG['buttons'][8]."\" class='submit'></center>";
    }
 
 
