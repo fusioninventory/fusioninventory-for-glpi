@@ -38,7 +38,7 @@ if (strpos($_SERVER['PHP_SELF'],"dropdowndefinitiontype.php")) {
    header("Content-Type: text/html; charset=UTF-8");
    header_nocache();
 }
-echo "ti";
+
 Session::checkCentralAccess();
 $value = 0;
 $title = 0;
@@ -47,6 +47,6 @@ if (isset($_POST['value'])) {
 }
 
 $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
-$PluginFusioninventoryTaskjob->dropdownDefinitionType("DefinitionType", $_POST['method_id'], $value, "");
+$PluginFusioninventoryTaskjob->dropdownDefinitionType("DefinitionType", $_POST['method'], $value, "");
 
 ?>

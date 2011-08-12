@@ -167,7 +167,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       } else {
          $this->getEmpty();
       }
-
+      
       $this->showTabs($options);
       $this->showFormHeader($options);
       

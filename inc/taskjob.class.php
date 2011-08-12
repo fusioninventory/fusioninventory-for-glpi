@@ -168,9 +168,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo '</tr>';
       
       echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='2' width='50%'>";
+      echo "<th colspan='2' width='500'>";
       echo $this->getTypeName();
-      $rand = $this->dropdownMethod("method", $this->fields['method']);
       echo "</th>";
       echo "<th width='25%'>";
       echo $LANG['plugin_fusioninventory']['task'][27];
@@ -178,8 +177,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $rand_linked_ticket = mt_rand();
          echo "&nbsp;";
          echo "<img onClick=\"Ext.get('definition$rand_linked_ticket').setDisplayed('block')\"
+                    id=\"adddefinition\"
                     title=\"".$LANG['buttons'][8]."\" alt=\"".$LANG['buttons'][8]."\"
-                    class='pointer' src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png'>";
+                    class='pointer'  src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png'>";
       //}
       echo "</th>";
       echo "<th width='25%'>";
@@ -194,56 +194,46 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</tr>";
             
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['common'][16]."&nbsp;:</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][26]."&nbsp;:</td>";
       echo "<td align='center'>";
-      echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
+      $randmethod = $this->dropdownMethod("method", $this->fields['method']);
       echo "</td>";
+      
       // ** Definitions
       echo "<td rowspan='4' valign='top'>";
-echo "<div style='display:none' id='definition$rand_linked_ticket'>";
-$typename = 'observer';
-$type = 1;
-$entities_id = 0;
-$types = array('' => DROPDOWN_EMPTY_VALUE,
-                  'user'  => $LANG['common'][34],
-                  'group' => $LANG['common'][35]);
-$rand   = Dropdown::showFromArray("_itil_".$typename."[_type]", $types);
-$params = array('type'            => '__VALUE__',
-                'actortype'       => $typename,
-                'allow_email'     => ($type==Ticket::OBSERVER || $type==Ticket::REQUESTER),
-                'entity_restrict' => $entities_id);
-
-Ajax::updateItemOnSelectEvent("dropdown__itil_".$typename."[_type]$rand",
-                              "showitilactor".$typename."_$rand",
-                              $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownjobdefinition.php",
-                              $params);
-echo "<span id='showitilactor".$typename."_$rand'>&nbsp;</span>";
-echo "<hr>";
-echo "</div>";
-//         echo "<div style='display:none' id='definition$rand_linked_ticket'>";
-//         echo "toto";
-//         //$this->dropdownDefinitionType("definitiontype", "netdiscovery");
-//         $params=array('method_id'=>'__VALUE__',
-//               'entity_restrict'=>'',
-//               'rand'=>$rand,
-//               'myname'=>"method"
-//               );
-////         echo "<script type='text/javascript'>";
-////         Ajax::UpdateItemJsCode("show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params,true,"dropdown_method".$rand);
-////         echo "</script>";
-//         echo "<span id='show_DefinitionType_id'>";
-//         echo "</span>";
-//         echo "&nbsp;";
-//         echo "</div>";
+      echo "<div style='display:none' id='definition$rand_linked_ticket'>";
+      $rand = mt_rand();
+      $params = array('method' => '__VALUE__',
+                      'rand'      => $randmethod,
+                      'myname'    => 'method');
+      Ajax::updateItemOnEvent("dropdown_method".$randmethod,
+                              "showdefinitionType_$rand",
+                              $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",
+                              $params,
+                              array("change", "load"));
+      if ($this->fields['method'] != "") {
+         echo "<script type='text/javascript'>";
+         Ajax::UpdateItemJsCode("showdefinitionType_$rand",
+                                $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",
+                                $params,
+                                "dropdown_method".$randmethod);
+         echo "</script>";
+      }
+      echo "<span id='showdefinitionType_$rand'>&nbsp;</span>";
+            echo "<span id='show_DefinitionList'>&nbsp;</span>";
+      echo "<hr>";
+      echo "</div>";
       echo "</td>";
+      
       // ** Actions
       echo "<td rowspan='4'></td>";
       echo "</tr>";
+      echo "<td>".$LANG['common'][16]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
       
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['task'][26]."&nbsp;:</td>";
-      echo "<td align='center'>";
-//      $rand = $this->dropdownMethod("method", $this->fields['method']);
+
       echo "</td>";
       echo "</tr>";
       
@@ -443,9 +433,9 @@ echo "</div>";
    * @return value rand of the dropdown
    *
    **/
-   function dropdownMethod($myname,$value=0,$entity_restrict='') {
+   function dropdownMethod($myname,$value=0) {
       global $DB,$CFG_GLPI;
-
+      
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
 
       $a_methods2 = array();
@@ -461,34 +451,6 @@ echo "</div>";
       }
 
       $rand = Dropdown::showFromArray($myname, $a_methods2, array('value'=>$value));
-
-      // ** List methods available
-      $params=array('method_id'=>'__VALUE__',
-                     'entity_restrict'=>$entity_restrict,
-                     'rand'=>$rand,
-                     'myname'=>$myname
-                     );
-      Ajax::UpdateItemOnSelectEvent("dropdown_method".$rand,"show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params);
-
-      if ($value != "0") {
-         echo "<script type='text/javascript'>";
-         Ajax::UpdateItemJsCode("show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params,true,"dropdown_method".$rand);
-         echo "</script>";
-      }
-
-      $params=array('method_id'=>'__VALUE__',
-                     'entity_restrict'=>$entity_restrict,
-                     'rand'=>$rand,
-                     'myname'=>$myname
-                     );
-      Ajax::UpdateItemOnSelectEvent("dropdown_method".$rand,"show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params);
-
-      if ($value != "0") {
-         echo "<script type='text/javascript'>";
-         Ajax::UpdateItemJsCode("show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params,true,"dropdown_method".$rand);
-         echo "</script>";
-      }
-
       return $rand;
    }
 
