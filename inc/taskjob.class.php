@@ -200,21 +200,41 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</td>";
       // ** Definitions
       echo "<td rowspan='4' valign='top'>";
-         echo "<div style='display:none' id='definition$rand_linked_ticket'>";
-         echo "toto";
-         //$this->dropdownDefinitionType("definitiontype", "netdiscovery");
-         $params=array('method_id'=>'__VALUE__',
-               'entity_restrict'=>'',
-               'rand'=>$rand,
-               'myname'=>"method"
-               );
-         echo "<script type='text/javascript'>";
-         Ajax::UpdateItemJsCode("show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params,true,"dropdown_method".$rand);
-         echo "</script>";
-         echo "<span id='show_DefinitionType_id'>";
-         echo "</span>";
-         echo "&nbsp;";
-         echo "</div>";
+echo "<div style='display:none' id='definition$rand_linked_ticket'>";
+$typename = 'observer';
+$type = 1;
+$entities_id = 0;
+$types = array('' => DROPDOWN_EMPTY_VALUE,
+                  'user'  => $LANG['common'][34],
+                  'group' => $LANG['common'][35]);
+$rand   = Dropdown::showFromArray("_itil_".$typename."[_type]", $types);
+$params = array('type'            => '__VALUE__',
+                'actortype'       => $typename,
+                'allow_email'     => ($type==Ticket::OBSERVER || $type==Ticket::REQUESTER),
+                'entity_restrict' => $entities_id);
+
+Ajax::updateItemOnSelectEvent("dropdown__itil_".$typename."[_type]$rand",
+                              "showitilactor".$typename."_$rand",
+                              $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownjobdefinition.php",
+                              $params);
+echo "<span id='showitilactor".$typename."_$rand'>&nbsp;</span>";
+echo "<hr>";
+echo "</div>";
+//         echo "<div style='display:none' id='definition$rand_linked_ticket'>";
+//         echo "toto";
+//         //$this->dropdownDefinitionType("definitiontype", "netdiscovery");
+//         $params=array('method_id'=>'__VALUE__',
+//               'entity_restrict'=>'',
+//               'rand'=>$rand,
+//               'myname'=>"method"
+//               );
+////         echo "<script type='text/javascript'>";
+////         Ajax::UpdateItemJsCode("show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params,true,"dropdown_method".$rand);
+////         echo "</script>";
+//         echo "<span id='show_DefinitionType_id'>";
+//         echo "</span>";
+//         echo "&nbsp;";
+//         echo "</div>";
       echo "</td>";
       // ** Actions
       echo "<td rowspan='4'></td>";
