@@ -139,15 +139,97 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $this->getEmpty();
       }
 
-      $this->showFormHeader($options);
+      //$this->showFormHeader($options);
+      echo "<form method='post' name='form_ticket' enctype='multipart/form-data' action='".
+            $CFG_GLPI["root_doc"]."/front/ticket.form.php'>";
+      echo "<div class='spaced' id='tabsbody'>";
+      echo "<table class='tab_cadre_fixe'>";
+
+      // Optional line
+      $ismultientities = Session::isMultiEntitiesMode();
+      echo '<tr>';
+      echo '<th colspan="4">';
+
+      if ($id) {
+         echo $this->getTypeName()." - ".$LANG['common'][2]." $id ";
+         if ($ismultientities) {
+            echo "(".Dropdown::getDropdownName('glpi_entities',$this->fields['entities_id']) . ")";
+         }
+
+      } else {
+         if ($ismultientities) {
+            echo $LANG['job'][46]."&nbsp;:&nbsp;".
+                 Dropdown::getDropdownName("glpi_entities", $this->fields['entities_id']);
+         } else {
+            echo $LANG['job'][13];
+         }
+      }
+      echo '</th>';
+      echo '</tr>';
       
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='2' width='50%'>";
+      echo $this->getTypeName();
+      $rand = $this->dropdownMethod("method", $this->fields['method']);
+      echo "</th>";
+      echo "<th width='25%'>";
+      echo $LANG['plugin_fusioninventory']['task'][27];
+      //if ($canupdate) {
+         $rand_linked_ticket = mt_rand();
+         echo "&nbsp;";
+         echo "<img onClick=\"Ext.get('definition$rand_linked_ticket').setDisplayed('block')\"
+                    title=\"".$LANG['buttons'][8]."\" alt=\"".$LANG['buttons'][8]."\"
+                    class='pointer' src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png'>";
+      //}
+      echo "</th>";
+      echo "<th width='25%'>";
+      echo $LANG['plugin_fusioninventory']['task'][28];
+      //if ($canupdate) {
+         echo "&nbsp;";
+         echo "<img onClick=\"Ext.get('action$rand_linked_ticket').setDisplayed('block')\"
+                    title=\"".$LANG['buttons'][8]."\" alt=\"".$LANG['buttons'][8]."\"
+                    class='pointer' src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png'>";
+      //}
+      echo "</th>";
+      echo "</tr>";
+            
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['common'][16]."&nbsp;:</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
       echo "</td>";
-      echo "<td rowspan='2'>".$LANG['common'][25]."&nbsp;:</td>";
-      echo "<td align='center' rowspan='2'>";
+      // ** Definitions
+      echo "<td rowspan='4' valign='top'>";
+         echo "<div style='display:none' id='definition$rand_linked_ticket'>";
+         echo "toto";
+         //$this->dropdownDefinitionType("definitiontype", "netdiscovery");
+         $params=array('method_id'=>'__VALUE__',
+               'entity_restrict'=>'',
+               'rand'=>$rand,
+               'myname'=>"method"
+               );
+         echo "<script type='text/javascript'>";
+         Ajax::UpdateItemJsCode("show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params,true,"dropdown_method".$rand);
+         echo "</script>";
+         echo "<span id='show_DefinitionType_id'>";
+         echo "</span>";
+         echo "&nbsp;";
+         echo "</div>";
+      echo "</td>";
+      // ** Actions
+      echo "<td rowspan='4'></td>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][26]."&nbsp;:</td>";
+      echo "<td align='center'>";
+//      $rand = $this->dropdownMethod("method", $this->fields['method']);
+      echo "</td>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['common'][25]."&nbsp;:</td>";
+      echo "<td align='center'>";
       echo "<textarea cols='40' rows='2' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "<input type='hidden' name='plugin_fusioninventory_tasks_id' value='".$_POST['id']."' />";
       $a_methods = array();
@@ -157,27 +239,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       }
       echo "</td>";
       echo "</tr>";
-
+      
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['task'][26]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      $rand = $this->dropdownMethod("method", $this->fields['method']);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td colspan='4' align='center'>".$LANG['plugin_fusioninventory']['task'][45];
-      echo " <img src='".GLPI_ROOT."/pics/deplier_down.png'
-            onclick='document.getElementById(\"advancedoptions1\").style.visibility=\"visible\";
-            document.getElementById(\"advancedoptions2\").style.visibility=\"visible\"'/>";
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1' id='advancedoptions1' style='visibility:collapse'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['task'][24]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      Dropdown::showInteger("retry_nb", $this->fields["retry_nb"], 0, 30);
-      echo "</td>";
       echo "<td>".$LANG['plugin_fusioninventory']['task'][31]."&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::showInteger("periodicity_count", $this->fields['periodicity_count'], 0, 300);
@@ -191,47 +254,64 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
-      echo "<tr class='tab_bg_1' id='advancedoptions2' style='visibility:collapse'>";
-      echo "<td colspan='2'></td>";
-      echo "<td>".$LANG['plugin_fusioninventory']['task'][25]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      Dropdown::showInteger("retry_time", $this->fields["retry_time"], 0, 360);
-      echo "</td>";
+//      echo "<tr class='tab_bg_1'>";
+//      echo "<td>".$LANG['plugin_fusioninventory']['task'][24]."&nbsp;:</td>";
+//      echo "<td align='center'>";
+//      Dropdown::showInteger("retry_nb", $this->fields["retry_nb"], 0, 30);
+//      echo "</td>";
+//      echo "</tr>";
+//      
+//      echo "<tr class='tab_bg_1'>";
+//      echo "<td>".$LANG['plugin_fusioninventory']['task'][25]."&nbsp;:</td>";
+//      echo "<td align='center'>";
+//      Dropdown::showInteger("retry_time", $this->fields["retry_time"], 0, 360);
+//      echo "</td>";
+//      echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='4' align='center'>See more";
+      echo " <img src='".GLPI_ROOT."/pics/deplier_down.png'
+            onclick='document.getElementById(\"advancedoptions1\").style.visibility=\"visible\";
+            document.getElementById(\"advancedoptions2\").style.visibility=\"visible\"'/>";
+      echo "</th>";
       echo "</tr>";
 
-      if ($id) {
-         if (count($PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$id."' AND `state` < 3")) == 0) {
-            $this->showFormButtons($options);
-         } else {
-            $this->showFormButtons(array('candel'=>false,
-                                         'canedit'=>false));
-         }
 
-         $this->manageDefinitionsActions($id, "definition");
-         $this->manageDefinitionsActions($id, "action");
-         $params=array('method_id'=>'__VALUE__',
-               'entity_restrict'=>'',
-               'rand'=>$rand,
-               'myname'=>"method"
-               );
-         echo "<script type='text/javascript'>";
-         Ajax::UpdateItemJsCode("show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params,true,"dropdown_method".$rand);
-         echo "</script>";
-         echo "<script type='text/javascript'>";
-         Ajax::UpdateItemJsCode("show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params,true,"dropdown_method".$rand);
-         echo "</script>";
+//
+//      if ($id) {
+//         if (count($PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$id."' AND `state` < 3")) == 0) {
+//            $this->showFormButtons($options);
+//         } else {
+//            $this->showFormButtons(array('candel'=>false,
+//                                         'canedit'=>false));
+//         }
+//
+//         $this->manageDefinitionsActions($id, "definition");
+//         $this->manageDefinitionsActions($id, "action");
+//         $params=array('method_id'=>'__VALUE__',
+//               'entity_restrict'=>'',
+//               'rand'=>$rand,
+//               'myname'=>"method"
+//               );
+//         echo "<script type='text/javascript'>";
+//         Ajax::UpdateItemJsCode("show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params,true,"dropdown_method".$rand);
+//         echo "</script>";
+//         echo "<script type='text/javascript'>";
+//         Ajax::UpdateItemJsCode("show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params,true,"dropdown_method".$rand);
+//         echo "</script>";
+//
+//         if (count($PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$id."'")) > 0) {
+//
+//            $PluginFusioninventoryTaskjobstatus->stateTaskjob($id);
+//
+//            // Display graph finish
+//            $PluginFusioninventoryTaskjoblog->graphFinish($id);
+//         }
+//      } else  {
+//         $this->showFormButtons($options);
+//      }
 
-         if (count($PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$id."'")) > 0) {
-
-            $PluginFusioninventoryTaskjobstatus->stateTaskjob($id);
-
-            // Display graph finish
-            $PluginFusioninventoryTaskjoblog->graphFinish($id);
-         }
-      } else  {
-         $this->showFormButtons($options);
-      }
-
+      echo "</table>";
       return true;
    }
 
