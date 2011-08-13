@@ -184,7 +184,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       }
       
       if (!$input['itemtype']) {
-         addMessageAfterRedirect($LANG['setup'][817], true, ERROR);
+          Session::addMessageAfterRedirect($LANG['setup'][817], true, ERROR);
          $input = array();
 
       }

@@ -242,7 +242,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       if ($count == '0') {
          return true;
       } else {
-         addMessageAfterRedirect("<font color='#ff0000'>".$LANG['plugin_fusioninventory']['iprange'][7].
+          Session::addMessageAfterRedirect("<font color='#ff0000'>".$LANG['plugin_fusioninventory']['iprange'][7].
             "</font><br/>".
             $LANG['plugin_fusioninventory']['iprange'][0]." : ".
             $a_input['ip_start0'].".".$a_input['ip_start1'].".".

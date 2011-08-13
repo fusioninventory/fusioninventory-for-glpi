@@ -228,7 +228,7 @@ function plugin_init_fusioninventory() {
                && (strstr($_SERVER['HTTP_REFERER'], "front/plugin.php"))) {
 
       if (PluginFusioninventoryModule::getAll(true)) {
-         addMessageAfterRedirect($LANG['plugin_fusioninventory']['setup'][17]);
+          Session::addMessageAfterRedirect($LANG['plugin_fusioninventory']['setup'][17]);
          Html::redirect($CFG_GLPI["root_doc"]."/front/plugin.php");
          exit;
       }
