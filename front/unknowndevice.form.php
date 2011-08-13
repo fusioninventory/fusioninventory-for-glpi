@@ -90,8 +90,8 @@ if (isset ($_POST["add"])) {
    $Import = 0;
    $NoImport = 0;
    list($Import, $NoImport) = $PluginFusioninventoryUnknownDevice->import($_POST['id'],$Import,$NoImport);
-   addMessageAfterRedirect($LANG['plugin_fusioninventory']['discovery'][5]." : ".$Import);
-   addMessageAfterRedirect($LANG['plugin_fusioninventory']['discovery'][9]." : ".$NoImport);
+    Session::addMessageAfterRedirect($LANG['plugin_fusioninventory']['discovery'][5]." : ".$Import);
+    Session::addMessageAfterRedirect($LANG['plugin_fusioninventory']['discovery'][9]." : ".$NoImport);
    if ($Import == "0") {
       Html::redirect($_SERVER['HTTP_REFERER']);
    } else {

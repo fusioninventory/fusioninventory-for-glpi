@@ -49,9 +49,9 @@ if (isset($_POST['startagent'])) {
    $taskjob = new PluginFusioninventoryTaskjob();
    $agent->getFromDB($_POST['agent_id']);
    if ($taskjob->startAgentRemotly($_POST['ip'], $agent->fields['token'])) {
-      addMessageAfterRedirect($LANG['plugin_fusioninventory']['agents'][17]);
+       Session::addMessageAfterRedirect($LANG['plugin_fusioninventory']['agents'][17]);
    } else {
-      addMessageAfterRedirect($LANG['plugin_fusioninventory']['agents'][30]);
+       Session::addMessageAfterRedirect($LANG['plugin_fusioninventory']['agents'][30]);
    }
    Html::redirect($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["add"])) {

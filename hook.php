@@ -575,8 +575,8 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
                   list($Import, $NoImport) = $PluginFusioninventoryUnknownDevice->import($key,$Import,$NoImport);
                }
             }
-            addMessageAfterRedirect($LANG['plugin_fusioninventory']["discovery"][5]." : ".$Import);
-            addMessageAfterRedirect($LANG['plugin_fusioninventory']["discovery"][9]." : ".$NoImport);
+             Session::addMessageAfterRedirect($LANG['plugin_fusioninventory']["discovery"][5]." : ".$Import);
+             Session::addMessageAfterRedirect($LANG['plugin_fusioninventory']["discovery"][9]." : ".$NoImport);
          }
 			break;
          
