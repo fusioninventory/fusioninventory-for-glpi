@@ -383,10 +383,10 @@ class PluginFusinvsnmpModel extends CommonDBTM {
          $importexport->import($file,0,1);
          $i++;
          if (substr($i, -1) == '0') {
-            changeProgressBarPosition($i,$nb,"$i / $nb");
+            Html::changeProgressBarPosition($i,$nb,"$i / $nb");
          }
       }
-      changeProgressBarPosition($nb,$nb,"$nb / $nb");
+      Html::changeProgressBarPosition($nb,$nb,"$nb / $nb");
       echo "</td>";
       echo "</table>";
       
