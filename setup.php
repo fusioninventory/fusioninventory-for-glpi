@@ -46,10 +46,10 @@ function plugin_init_fusinvinventory() {
             AND strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
          switch ($_GET['action']) {
             case 'activate':
-               addMessageAfterRedirect($LANG['plugin_fusinvinventory']['setup'][17]);
+                Session::addMessageAfterRedirect($LANG['plugin_fusinvinventory']['setup'][17]);
                break;
             case 'uninstall':
-               addMessageAfterRedirect($LANG['plugin_fusinvinventory']['setup'][18]);
+                Session::addMessageAfterRedirect($LANG['plugin_fusinvinventory']['setup'][18]);
                Html::redirect($CFG_GLPI["root_doc"]."/front/plugin.php");
                break;
          }
