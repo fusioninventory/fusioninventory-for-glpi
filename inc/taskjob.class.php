@@ -142,7 +142,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       //$this->showFormHeader($options);
       echo "<form method='post' name='form_ticket' enctype='multipart/form-data' action='".
             $CFG_GLPI["root_doc"]."/front/ticket.form.php'>";
-      echo "<div class='spaced' id='tabsbody'>";
+      echo "<div class='spaced' id='tabsbody'";
+      echo "<div style='height:250px;
+      overflow:hidden;'>";
       echo "<table class='tab_cadre_fixe'>";
 
       // Optional line
@@ -193,14 +195,14 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</tr>";
             
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['task'][26]."&nbsp;:</td>";
+      echo "<td height='18'>".$LANG['plugin_fusioninventory']['task'][26]."&nbsp;:</td>";
       echo "<td align='center'>";
       $randmethod = $this->dropdownMethod("method", $this->fields['method']);
       echo "</td>";
       
       // ** Definitions
       echo "<td rowspan='5' valign='top'>";
-      echo "<div style='display:none' id='definition$rand_linked_ticket'>";
+      echo "<div style='display:none' id='definition$rand_linked_ticket' >";
       $rand = mt_rand();
       $params = array('method' => '__VALUE__',
                       'rand'      => $randmethod,
@@ -260,17 +262,16 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</div>";
       echo "</td>";
       echo "</tr>";
-      echo "<td>".$LANG['common'][16]."&nbsp;:</td>";
+      
+      echo "<tr>";
+      echo "<td height='18'>".$LANG['common'][16]."&nbsp;:</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
-      
-      echo "<tr class='tab_bg_1'>";
-
       echo "</td>";
       echo "</tr>";
       
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['common'][25]."&nbsp;:</td>";
+      echo "<td height='18'>".$LANG['common'][25]."&nbsp;:</td>";
       echo "<td align='center'>";
       echo "<textarea cols='40' rows='2' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "<input type='hidden' name='plugin_fusioninventory_tasks_id' value='".$_POST['id']."' />";
@@ -283,7 +284,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</tr>";
       
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['task'][31]."&nbsp;:</td>";
+      echo "<td height='18'>".$LANG['plugin_fusioninventory']['task'][31]."&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::showInteger("periodicity_count", $this->fields['periodicity_count'], 0, 300);
       $a_time = array();
@@ -295,6 +296,10 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$this->fields['periodicity_type']));
       echo "</td>";
       echo "</tr>";
+      
+      echo "<tr>";
+      echo "<td colspan='2'></td>";
+      echo '</tr>';
 
 //      echo "<tr class='tab_bg_1'>";
 //      echo "<td>".$LANG['plugin_fusioninventory']['task'][24]."&nbsp;:</td>";
@@ -353,6 +358,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 //      }
 
       echo "</table>";
+      echo "</div>";
       return true;
    }
 
