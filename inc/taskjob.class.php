@@ -222,6 +222,15 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             echo "<span id='show_DefinitionList'>&nbsp;</span>";
       echo "<hr>";
       echo "</div>";
+      // Display definition list
+      echo "<script type='text/javascript'>";
+      $params['taskjobs_id'] = $id;
+      Ajax::UpdateItemJsCode("showdefinitionlist_$rand",
+                                $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitionlist.php",
+                                $params,
+                                "dropdown_method".$randmethod);
+      echo "</script>";
+      echo "<span id='showdefinitionlist_$rand'>&nbsp;</span>";
       echo "</td>";
       
       // ** Actions
@@ -307,7 +316,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             document.getElementById(\"advancedoptions2\").style.visibility=\"visible\"'/>";
       echo "</th>";
       echo "</tr>";
-
 
 //
 //      if ($id) {
@@ -515,7 +523,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             'method'=>$method,
             'deftypeid'=>'dropdown_'.$myname.$rand
             );
-      Ajax::UpdateItemOnSelectEvent('dropdown_DefinitionType'.$rand,"show_DefinitionList",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitionlist.php",$params);
+      Ajax::UpdateItemOnSelectEvent('dropdown_DefinitionType'.$rand,"show_DefinitionList",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontypelist.php",$params);
 
       return $rand;
    }
@@ -558,6 +566,35 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    }
 
 
+   
+   function showDefinitions($id) {
+      global $DB,$CFG_GLPI,$LANG;
+
+      $this->getFromDB($id);
+      echo "<form>";
+      echo "<table class='tab_cadre'>";
+      $a_definitions = importArrayFromDB($this->fields['definition']);
+      $i = 0;
+      foreach ($a_definitions as $a_definition) {
+         foreach ($a_definition as $itemtype=>$items_id) {
+            $i++;
+            $class = new $itemtype;
+            $class->getFromDB($items_id);
+            echo "<tr>";
+            echo "<td style='padding: 1px 2px;'>";
+            echo "<input name='item[".$i."]' value='".$itemtype.".".$items_id."' type='checkbox'>";
+            echo "</td>";
+            echo "<td style='padding: 1px 2px;'>";
+            echo $class->getLink(1);
+            echo "</td>";
+            echo "</tr>";
+         }
+      }
+      echo "</table>";
+      echo "</form>";
+   }
+   
+   
 
    /**
    * Display actions type (itemtypes)
