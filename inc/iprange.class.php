@@ -59,6 +59,11 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    }
 
    
+   function getComments() {
+      $comment = $this->fields['ip_start']." -> ".$this->fields['ip_end'];
+      return showToolTip($comment, array('display' => false));
+   }
+   
    
    function canCreate() {
       return true;
