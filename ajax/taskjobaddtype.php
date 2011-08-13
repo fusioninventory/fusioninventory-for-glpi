@@ -32,7 +32,7 @@
    ----------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'],"dropdowndefinitiontype.php")) {
+if (strpos($_SERVER['PHP_SELF'],"taskjobaddtype.php")) {
    define('GLPI_ROOT','../../..');
    include (GLPI_ROOT."/inc/includes.php");
    header("Content-Type: text/html; charset=UTF-8");
@@ -47,6 +47,9 @@ if (isset($_POST['value'])) {
 }
 
 $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
-$PluginFusioninventoryTaskjob->dropdownDefinitionType("DefinitionType", $_POST['method'], $value, $_POST['taskjobs_id'], "");
+$PluginFusioninventoryTaskjob->additemtodefatc($_POST['type'], 
+                                               $_POST['itemtype'], 
+                                               $_POST['items_id'], 
+                                               $_POST['taskjobs_id']);
 
 ?>

@@ -199,12 +199,13 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</td>";
       
       // ** Definitions
-      echo "<td rowspan='4' valign='top'>";
+      echo "<td rowspan='5' valign='top'>";
       echo "<div style='display:none' id='definition$rand_linked_ticket'>";
       $rand = mt_rand();
       $params = array('method' => '__VALUE__',
                       'rand'      => $randmethod,
-                      'myname'    => 'method');
+                      'myname'    => 'method',
+                      'taskjobs_id'=>$id );
       Ajax::updateItemOnEvent("dropdown_method".$randmethod,
                               "showdefinitionType_$rand",
                               $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",
@@ -219,22 +220,22 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          echo "</script>";
       }
       echo "<span id='showdefinitionType_$rand'>&nbsp;</span>";
-            echo "<span id='show_DefinitionList'>&nbsp;</span>";
+      echo "<span id='show_DefinitionList'>&nbsp;</span>";
       echo "<hr>";
       echo "</div>";
       // Display definition list
       echo "<script type='text/javascript'>";
       $params['taskjobs_id'] = $id;
-      Ajax::UpdateItemJsCode("showdefinitionlist_$rand",
+      Ajax::UpdateItemJsCode("showdefinitionlist_",
                                 $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitionlist.php",
                                 $params,
                                 "dropdown_method".$randmethod);
       echo "</script>";
-      echo "<span id='showdefinitionlist_$rand'>&nbsp;</span>";
+      echo "<span id='showdefinitionlist_'>&nbsp;</span>";
       echo "</td>";
       
       // ** Actions
-      echo "<td rowspan='4' valign='top'>";
+      echo "<td rowspan='5' valign='top'>";
       echo "<div style='display:none' id='action$rand_linked_ticket'>";
       $rand = mt_rand();
       $params = array('method' => '__VALUE__',
@@ -497,7 +498,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    * @return value rand of the dropdown
    *
    **/
-   function dropdownDefinitionType($myname,$method,$value=0,$entity_restrict='') {
+   function dropdownDefinitionType($myname,$method,$value=0, $taskjobs_id, $entity_restrict='') {
       global $DB,$CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
@@ -521,8 +522,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             'rand'=>$rand,
             'myname'=>$myname,
             'method'=>$method,
-            'deftypeid'=>'dropdown_'.$myname.$rand
-            );
+            'deftypeid'=>'dropdown_'.$myname.$rand,
+            'taskjobs_id'=>$taskjobs_id);
       Ajax::UpdateItemOnSelectEvent('dropdown_DefinitionType'.$rand,"show_DefinitionList",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontypelist.php",$params);
 
       return $rand;
@@ -543,7 +544,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    * @return value rand of the dropdown
    *
    **/
-   function dropdownDefinition($myname,$definitiontype,$method,$deftypeid,$value=0,$entity_restrict='', $title = 0) {
+   function dropdownDefinition($myname,$definitiontype,$method,$deftypeid,$taskjobs_id,$value=0,$entity_restrict='', $title = 0) {
       global $DB,$CFG_GLPI, $LANG;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
@@ -562,7 +563,21 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                                       "task_definitionselection_".$definitiontype."_".$method), 
                                 $title);
       }
-      echo "<br/><center><input type='submit' name='add' value=\"".$LANG['buttons'][8]."\" class='submit'></center>";
+      echo "<br/><center><input type='button' id='adddefinition' name='adddefinition' value=\"".$LANG['buttons'][8]."\" class='submit'></center>";
+      $params = array('items_id' => '__VALUE0__',
+                      'itemtype'  => $_POST['DefinitionType'],
+                      'rand'      => $rand,
+                      'myname'    => 'method',
+                      'type'      => 'definition',
+                      'taskjobs_id'=>$taskjobs_id);
+      Ajax::updateItemOnEvent(array("dropdown_definitionselectiontoadd".$rand, "adddefinition"),
+                              "Additem_$rand",
+                              $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/taskjobaddtype.php",
+                              $params,
+                              array("click"),
+                              "-1",
+                              array($LANG['buttons'][8]));
+      echo "<span id='Additem_$rand'>&nbsp;</span>";
    }
 
 
@@ -1778,6 +1793,38 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             echo "</table><br/>";
          }
       }
+   }
+   
+   
+   /**
+    * Function used to add item in definition or action of a taskjob
+    *    and hide add form 
+    *    and refresh type list
+    *
+    * @param $type value (definition or action) 
+    */
+   function additemtodefatc($type, $itemtype, $items_id, $taskjobs_id) {
+      global $CFG_GLPI;
+      
+      $this->getFromDB($taskjobs_id);
+      $a_type = importArrayFromDB($this->fields[$type]);
+      $a_type[] = array($itemtype => $items_id);
+      $input = array();
+      $input['id'] = $this->fields['id'];
+      $input[$type] = exportArrayToDB($a_type);
+      $this->update($input);
+
+      //TODO: Clean add form 
+
+      
+      // reload item list
+      $params = array();
+      $params['taskjobs_id'] = $taskjobs_id;
+      echo "<script type='text/javascript'>";
+      Ajax::UpdateItemJsCode("showdefinitionlist_",
+                                $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitionlist.php",
+                                $params);
+      echo "</script>";
    }
 
 }
