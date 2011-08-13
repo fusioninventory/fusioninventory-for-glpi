@@ -95,7 +95,7 @@ function update213to220() {
       createProgressBar("Move Connections history to another table");
 
       for ($i=0; $i < $nb; $i = $i + 500) {
-         changeProgressBarPosition($i, $nb, "$i / $nb");
+         Html::changeProgressBarPosition($i, $nb, "$i / $nb");
          $sql_connection = "SELECT * FROM `glpi_plugin_fusioninventory_snmp_history`
                            WHERE `Field`='0'
                            ORDER BY `FK_process` DESC, `date_mod` DESC
@@ -156,7 +156,7 @@ function update213to220() {
       WHERE `Field`='0'
       AND (`old_device_ID`!='0' OR `new_device_ID`!='0')";
    $DB->query($query_del);
-   changeProgressBarPosition($nb, $nb, "$nb / $nb");
+   Html::changeProgressBarPosition($nb, $nb, "$nb / $nb");
    echo "</td>";
    echo "</tr>";
    echo "<tr class='tab_bg_1'>";
@@ -887,7 +887,7 @@ function update213to220_ConvertField() {
          SET `Field`='".$mappingvalue."'
          WHERE `Field`=\"".$langvalue."\" ";
       $DB->query($query_update);
-      changeProgressBarPosition($i, $nb, "$i / $nb");
+      Html::changeProgressBarPosition($i, $nb, "$i / $nb");
    }
 
 //   $query = "SELECT *
@@ -913,10 +913,10 @@ function update213to220_ConvertField() {
 //               WHERE `ID`='".$data['ID']."' ";
 //            $DB->query($query_update);
 //         }
-//         changeProgressBarPosition($i, $nb, "$i / $nb");
+//         Html::changeProgressBarPosition($i, $nb, "$i / $nb");
 //      }
 //   }
-   changeProgressBarPosition($i, $nb, "$i / $nb");
+   Html::changeProgressBarPosition($i, $nb, "$i / $nb");
    echo "</td>";
    echo "</tr>";
    echo "</table></center>";
@@ -941,7 +941,7 @@ function update213to220_ConvertField() {
    if ($result=$DB->query($query)) {
       $nb = $DB->numrows($result);
       $i = 0;
-      changeProgressBarPosition($i, $nb, "$i / $nb");
+      Html::changeProgressBarPosition($i, $nb, "$i / $nb");
       while ($data=$DB->fetch_array($result)) {
          $i++;
 
@@ -982,10 +982,10 @@ function update213to220_ConvertField() {
                WHERE `ID`='".$data['ID']."' ";
          $DB->query($query_delete);
          if (preg_match("/000$/", $i)) {
-            changeProgressBarPosition($i, $nb, "$i / $nb");
+            Html::changeProgressBarPosition($i, $nb, "$i / $nb");
          }
       }
-      changeProgressBarPosition($i, $nb, "$i / $nb");
+      Html::changeProgressBarPosition($i, $nb, "$i / $nb");
    }
    echo "</td>";
    echo "</tr>";
@@ -1009,7 +1009,7 @@ function update213to220_ConvertField() {
    if ($result=$DB->query($query)) {
       $nb = $DB->numrows($result);
       $i = 0;
-      changeProgressBarPosition($i, $nb, "$i / $nb");
+      Html::changeProgressBarPosition($i, $nb, "$i / $nb");
       while ($data=$DB->fetch_array($result)) {
          $i++;
 
@@ -1052,10 +1052,10 @@ function update213to220_ConvertField() {
                WHERE `ID`='".$data['ID']."' ";
          $DB->query($query_delete);
          if (preg_match("/000$/", $i)) {
-            changeProgressBarPosition($i, $nb, "$i / $nb");
+            Html::changeProgressBarPosition($i, $nb, "$i / $nb");
          }
       }
-      changeProgressBarPosition($i, $nb, "$i / $nb");
+      Html::changeProgressBarPosition($i, $nb, "$i / $nb");
    }
    echo "</td>";
    echo "</tr>";
