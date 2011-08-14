@@ -143,8 +143,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "<form method='post' name='form_ticket' enctype='multipart/form-data' action='".
             $CFG_GLPI["root_doc"]."/front/ticket.form.php'>";
       echo "<div class='spaced' id='tabsbody'";
-      echo "<div style='height:250px;
-      overflow:hidden;'>";
+      $heightdiv = 220;
+      echo "<div id='taskjobdisplay' style='height:".$heightdiv."px; overflow:hidden;'>";
       echo "<table class='tab_cadre_fixe'>";
 
       // Optional line
@@ -314,51 +314,28 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 //      Dropdown::showInteger("retry_time", $this->fields["retry_time"], 0, 360);
 //      echo "</td>";
 //      echo "</tr>";
-      
-      echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='4' align='center'>See more";
-      echo " <img src='".GLPI_ROOT."/pics/deplier_down.png'
-            onclick='document.getElementById(\"advancedoptions1\").style.visibility=\"visible\";
-            document.getElementById(\"advancedoptions2\").style.visibility=\"visible\"'/>";
-      echo "</th>";
-      echo "</tr>";
-
-//
-//      if ($id) {
-//         if (count($PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$id."' AND `state` < 3")) == 0) {
-//            $this->showFormButtons($options);
-//         } else {
-//            $this->showFormButtons(array('candel'=>false,
-//                                         'canedit'=>false));
-//         }
-//
-//         $this->manageDefinitionsActions($id, "definition");
-//         $this->manageDefinitionsActions($id, "action");
-//         $params=array('method_id'=>'__VALUE__',
-//               'entity_restrict'=>'',
-//               'rand'=>$rand,
-//               'myname'=>"method"
-//               );
-//         echo "<script type='text/javascript'>";
-//         Ajax::UpdateItemJsCode("show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params,true,"dropdown_method".$rand);
-//         echo "</script>";
-//         echo "<script type='text/javascript'>";
-//         Ajax::UpdateItemJsCode("show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params,true,"dropdown_method".$rand);
-//         echo "</script>";
-//
-//         if (count($PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$id."'")) > 0) {
-//
-//            $PluginFusioninventoryTaskjobstatus->stateTaskjob($id);
-//
-//            // Display graph finish
-//            $PluginFusioninventoryTaskjoblog->graphFinish($id);
-//         }
-//      } else  {
-//         $this->showFormButtons($options);
-//      }
-
+  
       echo "</table>";
       echo "</div>";
+      
+      echo "<div id='seemore'>";
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='4' align='center' onclick='expandtaskjobform()'>See more";
+      echo " <img src='".GLPI_ROOT."/pics/deplier_down.png'/>";
+      echo "</th>";
+      echo "</tr>";
+      echo "</table>";
+      echo "</div>";
+      
+      echo "<script language='javascript'>
+         function expandtaskjobform() {
+            document.getElementById('taskjobdisplay').style.overflow='visible';
+            document.getElementById('taskjobdisplay').style.height='auto';
+            document.getElementById('seemore').style.display = 'none';
+         }
+      </script>";
+      
       return true;
    }
 
