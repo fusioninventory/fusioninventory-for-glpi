@@ -139,12 +139,11 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $this->getEmpty();
       }
 
-      //$this->showFormHeader($options);
-      echo "<form method='post' name='form_ticket' enctype='multipart/form-data' action='".
-            $CFG_GLPI["root_doc"]."/front/ticket.form.php'>";
-      echo "<div class='spaced' id='tabsbody'";
       $heightdiv = 220;
       echo "<div id='taskjobdisplay' style='height:".$heightdiv."px; overflow:hidden;'>";
+      echo "<form method='post' name='form_taskjob' action='".
+            $CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/taskjob.form.php''>";
+
       echo "<table class='tab_cadre_fixe'>";
 
       // Optional line
@@ -316,6 +315,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 //      echo "</tr>";
   
       echo "</table>";
+      echo "</form>";
       echo "</div>";
       
       echo "<div id='seemore'>";
@@ -569,18 +569,16 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       global $DB,$CFG_GLPI,$LANG;
 
       $this->getFromDB($id);
-      echo "<form>";
       echo "<table class='tab_cadre'>";
       $a_definitions = importArrayFromDB($this->fields['definition']);
       $i = 0;
-      foreach ($a_definitions as $a_definition) {
+      foreach ($a_definitions as $key=>$a_definition) {
          foreach ($a_definition as $itemtype=>$items_id) {
-            $i++;
             $class = new $itemtype;
             $class->getFromDB($items_id);
             echo "<tr>";
             echo "<td style='padding: 1px 2px;'>";
-            echo "<input name='item[".$i."]' value='".$itemtype.".".$items_id."' type='checkbox'>";
+            echo "<input type='checkbox' name='defitem' value='".$key."'>";
             echo "</td>";
             echo "<td style='padding: 1px 2px;'>";
             echo $class->getLink(1);
@@ -589,7 +587,103 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          }
       }
       echo "</table>";
-      echo "</form>";
+
+      echo "<center><input type='button' id='deletedefinition' name='deletedefinition' value=\"".$LANG['buttons'][6]."\" class='submit'></center>";
+      $params = array('defitem' => '__CHECKBOX__',
+                      'type'      => 'definition',
+                      'taskjobs_id'=>$id);
+
+      $toobserve = "deletedefinition";
+      $toupdate = "Deleteitem";
+      $url = $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/taskjobdeletetype.php";
+      $parameters=$params;
+      $events=array("click");
+      $minsize = -1;
+      $forceloadfor=array($LANG['buttons'][6]);
+      echo "<script type='text/javascript'>";
+     
+      echo "function checkboxvalues(item) {
+var inputs = document.getElementsByName(item);
+var namelist = '';
+for(var i = 0; i < inputs.length; i++){
+   if(inputs[i].checked) {
+      namelist += inputs[i].value + '-';
+   }
+}
+return namelist;
+
+}";
+      $zones = array($toobserve);
+      if (is_array($toobserve)) {
+         $zones = $toobserve;
+      }
+
+      foreach ($zones as $zone) {
+         foreach ($events as $event) {
+            echo "
+               Ext.get('$zone').on(
+                '$event',
+                function() {";
+                  $condition = '';
+                  if ($minsize >= 0) {
+                     $condition = " Ext.get('$zone').getValue().length >= $minsize ";
+                  }
+                  if (count($forceloadfor)) {
+                     foreach ($forceloadfor as $value) {
+                        if (!empty($condition)) {
+                           $condition .= " || ";
+                        }
+                        $condition .= "Ext.get('$zone').getValue() == '$value'";
+                     }
+                  }
+                  if (!empty($condition)) {
+                     echo "if ($condition) {";
+                  }
+                  //self::updateItemJsCode($toupdate, $url, $parameters, $toobserve);
+                  
+                  // Get it from a Ext.Element object
+                  $out = "Ext.get('$toupdate').load({
+                      url: '$url',
+                      scripts: true";
+
+                  if (count($parameters)) {
+                     $out .= ",
+                         params:'";
+                     $first = true;
+                     foreach ($parameters as $key => $val) {
+                        if ($first) {
+                           $first = false;
+                        } else {
+                           $out .= "&";
+                        }
+
+                        $out .= $key."=";
+
+                        if ($val==="__CHECKBOX__") {
+                           $out .=  "'+checkboxvalues('".$key."')+'";
+
+                        } else {
+                           if (preg_match("/'/",$val)) {
+                              $out .=  rawurlencode($val);
+                           } else {
+                              $out .=  $val;
+                           }
+                        }
+                     }
+                     echo $out."'\n";
+                  }
+                  echo "});";
+                  
+                  
+                  if (!empty($condition)) {
+                     echo "}";
+                  }
+
+          echo "});\n";
+         }
+      }
+      echo "</script>";
+      echo "<span id='Deleteitem'>&nbsp;</span>";
    }
    
    
@@ -1791,15 +1885,51 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       
       $this->getFromDB($taskjobs_id);
       $a_type = importArrayFromDB($this->fields[$type]);
-      $a_type[] = array($itemtype => $items_id);
-      $input = array();
-      $input['id'] = $this->fields['id'];
-      $input[$type] = exportArrayToDB($a_type);
-      $this->update($input);
+      $add = 1;
+      foreach ($a_type as $data) {
+         foreach ($data as $key=>$val) {
+            if ($itemtype == $key AND $items_id == $val) {
+               $add = 0;
+            }
+         }
+      }
+      if ($add == '1') {
+         $a_type[] = array($itemtype => $items_id);
+         $input = array();
+         $input['id'] = $this->fields['id'];
+         $input[$type] = exportArrayToDB($a_type);
+         $this->update($input);
+      }
 
       //TODO: Clean add form 
 
       
+      // reload item list
+      $params = array();
+      $params['taskjobs_id'] = $taskjobs_id;
+      echo "<script type='text/javascript'>";
+      Ajax::UpdateItemJsCode("showdefinitionlist_",
+                                $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitionlist.php",
+                                $params);
+      echo "</script>";
+   }
+   
+   
+   
+   function deleteitemtodefatc($type, $a_items_id, $taskjobs_id) {
+      global $CFG_GLPI;
+      
+      $this->getFromDB($taskjobs_id);
+      $a_type = importArrayFromDB($this->fields[$type]);
+      $split = explode("-", $a_items_id);
+      foreach ($split as $key) {
+         unset($a_type[$key]);
+      }
+      $input = array();
+      $input['id'] = $this->fields['id'];
+      $input[$type] = exportArrayToDB($a_type);
+      $this->update($input);
+    
       // reload item list
       $params = array();
       $params['taskjobs_id'] = $taskjobs_id;
