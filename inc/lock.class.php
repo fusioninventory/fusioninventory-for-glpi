@@ -92,13 +92,15 @@ class PluginFusinvinventoryLock {
                      $itemtype = $datas['glpiItemtype'];
                      $class = new $itemtype();
                      $class->getFromDB($item->fields['items_id']);
+                     $input = array();
+                     $input['id'] = $class->fields['id'];
                      if ($itemtypeLink == "User") {
                         $update_user = 0;
                         foreach($infoSections["sections"] as $sectionname=>$serializeddatas) {
                            if (strstr($sectionname, "USERS/")) {
                               if (!strstr($sectionname, "USERS/-")) {
                                  $users_id = str_replace("USERS/", "", $sectionname);
-                                 $class->fields[$datas['glpiField']] = $users_id;
+                                 $input[$datas['glpiField']] = addslashes_deep($users_id);
                                  $update_user = 1;
                               }
                            }
@@ -113,7 +115,7 @@ class PluginFusinvinventoryLock {
                                               WHERE `name` = '".$users_name."';";
                                     $result_user = $DB->query($query_user);
                                     if ($DB->numrows($result_user) == 1) {
-                                       $class->fields[$datas['glpiField']] = $DB->result($result_user, 0, 0);
+                                       $input[$datas['glpiField']] = $DB->result($result_user, 0, 0);
                                     }
                                  }
                               }
@@ -131,7 +133,7 @@ class PluginFusinvinventoryLock {
                         } else {
                            $vallib = Dropdown::importExternal($itemtypeLink,$libunserialized[$datas['xmlSectionChild']]);
                         }
-                        $class->fields[$datas['glpiField']] = $vallib;
+                        $input[$datas['glpiField']] = $vallib;
                      } else {
                         $libunserialized = unserialize($infoSections["sections"][$datas['xmlSection']."/".$item->fields['items_id']]);
                         
@@ -147,12 +149,12 @@ class PluginFusinvinventoryLock {
                                  }
                               }
                            }
-                           $class->fields[$datas['glpiField']] = $contact;
+                           $input[$datas['glpiField']] = addslashes_deep($contact);
                         } else {
-                           $class->fields[$datas['glpiField']] = $libunserialized[$datas['xmlSectionChild']];
+                           $input[$datas['glpiField']] = addslashes_deep($libunserialized[$datas['xmlSectionChild']]);
                         }
                      }
-                     $class->update($class->fields);
+                     $class->update($input);
                   }
                }               
             }
