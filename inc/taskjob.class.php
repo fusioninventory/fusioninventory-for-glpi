@@ -174,22 +174,22 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</th>";
       echo "<th width='25%'>";
       echo $LANG['plugin_fusioninventory']['task'][27];
-      //if ($canupdate) {
+      if ($this->canUpdate()) {
          $rand_linked_ticket = mt_rand();
          echo "&nbsp;";
          echo "<img onClick=\"Ext.get('definition').setDisplayed('block')\"
                     title=\"".$LANG['buttons'][8]."\" alt=\"".$LANG['buttons'][8]."\"
                     class='pointer'  src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png'>";
-      //}
+      }
       echo "</th>";
       echo "<th width='25%'>";
       echo $LANG['plugin_fusioninventory']['task'][28];
-      //if ($canupdate) {
+      if ($this->canUpdate()) {
          echo "&nbsp;";
          echo "<img onClick=\"Ext.get('action$rand_linked_ticket').setDisplayed('block')\"
                     title=\"".$LANG['buttons'][8]."\" alt=\"".$LANG['buttons'][8]."\"
                     class='pointer' src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png'>";
-      //}
+      }
       echo "</th>";
       echo "</tr>";
             
@@ -1412,7 +1412,7 @@ return namelist;
             $tab = $i;
          }
       }
-      Html::redirect(Toolbox::deleteDir('PluginFusioninventoryTask')
+      Html::redirect(Toolbox::getItemTypeFormURL('PluginFusioninventoryTask')
                                      ."?itemtype=PluginFusioninventoryTask&id=".
                                         $this->fields['plugin_fusioninventory_tasks_id'].
                                            "&glpi_tab=".$tab);
