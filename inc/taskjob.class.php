@@ -177,7 +177,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       //if ($canupdate) {
          $rand_linked_ticket = mt_rand();
          echo "&nbsp;";
-         echo "<img onClick=\"Ext.get('definition$rand_linked_ticket').setDisplayed('block')\"
+         echo "<img onClick=\"Ext.get('definition').setDisplayed('block')\"
                     title=\"".$LANG['buttons'][8]."\" alt=\"".$LANG['buttons'][8]."\"
                     class='pointer'  src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png'>";
       //}
@@ -201,26 +201,26 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       
       // ** Definitions
       echo "<td rowspan='5' valign='top'>";
-      echo "<div style='display:none' id='definition$rand_linked_ticket' >";
+      echo "<div style='display:none' id='definition' >";
       $rand = mt_rand();
       $params = array('method' => '__VALUE__',
                       'rand'      => $randmethod,
                       'myname'    => 'method',
                       'taskjobs_id'=>$id );
       Ajax::updateItemOnEvent("dropdown_method".$randmethod,
-                              "showdefinitionType_$rand",
+                              "showdefinitionType",
                               $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",
                               $params,
                               array("change", "load"));
       if ($this->fields['method'] != "") {
          echo "<script type='text/javascript'>";
-         Ajax::UpdateItemJsCode("showdefinitionType_$rand",
+         Ajax::UpdateItemJsCode("showdefinitionType",
                                 $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",
                                 $params,
                                 "dropdown_method".$randmethod);
          echo "</script>";
       }
-      echo "<span id='showdefinitionType_$rand'>&nbsp;</span>";
+      echo "<span id='showdefinitionType'>&nbsp;</span>";
       echo "<span id='show_DefinitionList'>&nbsp;</span>";
       echo "<hr>";
       echo "</div>";
@@ -1902,8 +1902,11 @@ return namelist;
       }
 
       //TODO: Clean add form 
+      echo "<script type='text/javascript'>
+      //document.getElementById('show_DefinitionList').innerHTML='&nbsp';
 
-      
+      Ext.get('definition').setDisplayed('none');
+      </script>";
       // reload item list
       $params = array();
       $params['taskjobs_id'] = $taskjobs_id;
