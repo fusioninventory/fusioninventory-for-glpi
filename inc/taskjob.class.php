@@ -130,20 +130,20 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $this->verifyDefinitionActions($id);
       }
 
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
-      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
-
       if ($id!='') {
          $this->getFromDB($id);
       } else {
          $this->getEmpty();
       }
 
-      $heightdiv = 220;
+      $heightdiv = 230;
       echo "<div id='taskjobdisplay' style='height:".$heightdiv."px; overflow:hidden;'>";
       echo "<form method='post' name='form_taskjob' action='".
             $CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/taskjob.form.php''>";
 
+      if ($id!='') {
+         echo "<input type='hidden' name='id' value='".$id."'/>";
+      }
       echo "<table class='tab_cadre_fixe'>";
 
       // Optional line
@@ -297,7 +297,19 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</tr>";
       
       echo "<tr>";
-      echo "<td colspan='2'></td>";
+      if ($id<=0) {
+         echo "<td colspan='2' valign='top' align='center'>";
+         echo "<input type='submit' name='add' value=\"".$LANG['buttons'][8]."\" class='submit'>";
+         echo "</td>";
+      } else {
+         echo "<td valign='top' align='center'>";
+         echo "<input type='submit' name='update' value=\"".$LANG['buttons'][7]."\" class='submit'>";
+         echo "</td>";
+         echo "<td valign='top' align='center'>";
+         echo "<input type='submit' name='delete' value=\"".$LANG['buttons'][22]."\"
+                         class='submit' ".Html::addConfirmationOnAction($LANG['common'][50]).">";
+         echo "</td>";
+      }
       echo '</tr>';
 
 //      echo "<tr class='tab_bg_1'>";
