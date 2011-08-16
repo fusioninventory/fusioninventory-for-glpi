@@ -38,19 +38,31 @@ $plugin = new Plugin();
 if ($plugin->isActivated('fusinvdeploy')) {
    //Only process response if GET HTTP request indicates an agent and an action
    if (isset($_GET['machineid']) && isset($_GET['action'])) {
+      $response = array();
       switch ($_GET['action']) {
          //Get jobs to perform
          case 'getJobs':
-            echo json_encode(PluginFusinvdeployJob::get($_GET['machineid']));
+            $response = PluginFusinvdeployJob::get($_GET['machineid']);
             break;
          //Change job status
          case 'setStatus':
-            echo PluginFusinvdeployJob::update($_GET, true);
+            $response = PluginFusinvdeployJob::update($_GET, true);
             break;
          //Add log to a job
          case 'setLog':
-            echo PluginFusinvdeployJob::update($_GET, false);
+            $response = PluginFusinvdeployJob::update($_GET, false);
             break;
+         default:
+            header("HTTP/1.1 500");
+            logInFile("unkown action");
+            return;
+      }
+
+
+      if ((count($response) === 0)) {
+          echo "{}\n"; # Empty answer
+      } else {
+          echo json_encode($response);
       }
    }
 } else {
