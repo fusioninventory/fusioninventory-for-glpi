@@ -332,7 +332,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $a_taskjobstatus = $pluginFusioninventoryTaskjobstatus->find("`state`='".pluginFusioninventoryTaskjobstatus::FINISHED."'");
       $a_tasks = array();
       foreach ($a_taskjobstatus as $data) {
-         $pluginFusioninventoryTaskjob->getfrom($data['plugin_fusioninventory_taskjobs_id']);
+         $pluginFusioninventoryTaskjob->getFromDB($data['plugin_fusioninventory_taskjobs_id']);
          $a_tasks[$pluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']] = 
                  $pluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id'];
       }
