@@ -91,9 +91,9 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
          }
          if ($return == 'html') {
             if ($style == 'simple') {
-               displayProgressBar($width,ceil($globalState), array('simple' => 1));
+               Html::displayProgressBar($width,ceil($globalState), array('simple' => 1));
             } else {
-               displayProgressBar($width,ceil($globalState));
+               Html::displayProgressBar($width,ceil($globalState));
             }
          } else if ($return == 'htmlvar') {
             if ($style == 'simple') {
