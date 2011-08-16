@@ -424,7 +424,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       echo $LANG['plugin_fusinvsnmp']['snmp'][13]."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      displayProgressBar(250, $this->oFusionInventory_networkequipment->fields['cpu'],
+      Html::displayProgressBar(250, $this->oFusionInventory_networkequipment->fields['cpu'],
                   array('simple' => true));
       echo "</td>";
 		echo "</tr>";
@@ -459,8 +459,8 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
          $day = 0;
       }
 
-      echo "<b>$day</b> ".$LANG["stats"][31]." ";
-      echo "<b>$hour</b> ".$LANG["job"][21]." ";
+      echo "<b>$day</b> ".$LANG['calendar'][12]." ";
+      echo "<b>$hour</b> ".$LANG['gmt'][1]." ";
       echo "<b>$minute</b> ".$LANG["job"][22]." ";
       echo " ".$LANG['choice'][3]." <b>$sec</b> ".$LANG["stats"][34]." ";
       echo "</td>";
@@ -481,7 +481,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
            OR (empty($this->oFusionInventory_networkequipment->fields['memory']))) {
          echo "<center><strong>".$LANG['plugin_fusinvsnmp']['snmp'][54]."</strong></center>";
       } else {
-         displayProgressBar(250, $ram_pourcentage,
+         Html::displayProgressBar(250, $ram_pourcentage,
                         array('title' => " (".($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory'])." Mo / ".
                          $data2["ram"]." Mo)"));
       }
