@@ -318,18 +318,37 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
       
+      // ** Get task in next execution
       $a_tasks = $this->find("`is_active` = '1'");
       echo "<th><a href='".$_SERVER['PHP_SELF']."?see=next'>Next<sup>(".
               count($a_tasks).")</sup></a></th>";
 
-      
+      // ** Get task previously executed
       echo "<th><a href='".$_SERVER['PHP_SELF']."?see=previous'>Previous</a></th>";
-      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=running'>Running</a></th>";
+      
+      // ** Get task running
+      $pluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $pluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $a_taskjobstatus = $pluginFusioninventoryTaskjobstatus->find("`state`=='".pluginFusioninventoryTaskjobstatus::FINISHED."'");
+      $a_tasks = array();
+      foreach ($a_taskjobstatus as $data) {
+         $pluginFusioninventoryTaskjob->getfrom($data['plugin_fusioninventory_taskjobs_id']);
+         $a_tasks[$pluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']] = 
+                 $pluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id'];
+      }
+      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=running'>Running<sup>(".
+              count($a_tasks).")</sup></a></th>";
+      
+      // ** Get task inactive
       $a_tasks = $this->find("`is_active` = '0'");
       echo "<th><a href='".$_SERVER['PHP_SELF']."?see=inactives'>Inactives<sup>(".
               count($a_tasks).")</sup></a></th>";
+      
+      // ** Get task in error
       echo "<th><a href='".$_SERVER['PHP_SELF']."?see=inerror'>In error</a></th>";
       $a_tasks = $this->find();
+      
+      // ** Get all task
       echo "<th><a href='".$_SERVER['PHP_SELF']."?see=all'>All<sup>(".
               count($a_tasks).")</sup></a></th>";
       
@@ -341,6 +360,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
    
    
    function displayTaks($condition) {
+      global $LANG;
 
       $pluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       
@@ -382,7 +402,13 @@ class PluginFusioninventoryTask extends CommonDBTM {
          echo "<td width='32'><img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_running.png'/></td>";
          echo "<td>
             <a href='".$this->getFormURL()."?id=".$data_task['id']."' style='font-size: 16px; '>"
-                 .$this->getName()."</a> (".ucfirst($data_task['communication']).")<br/>&nbsp;";
+                 .$this->getName()."</a> (".ucfirst($data_task['communication'])." ";
+         if ($data_task['communication'] == "push") {
+            showToolTip($LANG['plugin_fusioninventory']['task'][41]);
+         } else if ($data_task['communication'] == "pull") {
+            showToolTip($LANG['plugin_fusioninventory']['task'][42]);
+         }
+         echo ")<br/>&nbsp;";
          $a_taskjobs = $pluginFusioninventoryTaskjob->find("`plugin_fusioninventory_tasks_id`='".$data_task['id']."'");
          foreach ($a_taskjobs as $data_taskjob) {
             $pluginFusioninventoryTaskjob->getFromDB($data_taskjob['id']);
