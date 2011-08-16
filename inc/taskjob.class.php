@@ -905,6 +905,11 @@ return namelist;
                $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
                if (strstr($pluginName, "fusioninventory")
                        OR strstr($pluginName, "fusinv")) {
+                  
+                  $input = array();
+                  $input['id'] = $data['id'];
+                  $input['execution_id'] = $data['execution_id'] + 1;
+                  $PluginFusioninventoryTaskjob->update($input);
 
                   $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
                   $class = new $className;
@@ -962,49 +967,49 @@ return namelist;
       $queryJob = "SELECT * FROM `".$PluginFusioninventoryTaskjob->getTable()."`
          WHERE `plugin_fusioninventory_tasks_id`='".$tasks_id."'
          ORDER BY `id` DESC";
+      $resultJob = $DB->query($queryJob);
+      $nb_taskjobs = $DB->numrows($resultJob);
+      // get only with execution_id (same +1) as task 
+      $queryJob = "SELECT * FROM `".$PluginFusioninventoryTaskjob->getTable()."`
+         WHERE `plugin_fusioninventory_tasks_id`='".$tasks_id."'
+            AND `execution_id`='".($data['execution_id'] + 1)."'
+         ORDER BY `id` DESC";
 
       $finished = 2;
       $resultJob = $DB->query($queryJob);
+      $nb_finished = 0;
       while ($dataJob=$DB->fetch_array($resultJob)) {
-         $a_taskjobstatus = $PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$dataJob['id']."'", "id DESC", 1);
+         $a_taskjobstatusuniqs = $PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$dataJob['id']."'", 'id DESC', 1);
+         $a_taskjobstatusuniq = current($a_taskjobstatusuniqs);
+         $a_taskjobstatus = $PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$dataJob['id']."'
+            AND `uniqid`='".$a_taskjobstatusuniq['uniqid']."'");
          $taskjobstatusfinished = 0;
          foreach ($a_taskjobstatus as $statusdata) {
-            $a_joblog = $PluginFusioninventoryTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$statusdata['id']."'");
-            foreach($a_joblog as $joblogdata) {
-               switch ($joblogdata['state']) {
-
-                  case '2':
-                  case '3':
-                  case '4':
-                  case '5':
-                     // finished
-                     $taskjobstatusfinished++;
-                     break;
-
-               }
+            $a_joblog = $PluginFusioninventoryTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$statusdata['id']."'
+               AND `state` IN (2,3,4,5)");
+            if (count($a_joblog) > 0) {
+               $taskjobstatusfinished++;
             }
          }
-
          if ((count($a_taskjobstatus) == $taskjobstatusfinished)
-                 AND ($finished != "0") ) {
+                 AND (count($a_taskjobstatus) > 0 )) {
 
             $finished = 1;
-//         } else if ((count($a_taskjobstatus) == $taskjobstatusfinished)
-//                 AND ($finished != "0")
-//                 AND $disableTimeVerification == "1") {
-//
-//             $finished = 1;
+            $nb_finished++;
          } else {
             $finished = 0;
          }
       }
+      if ($nb_finished != $nb_taskjobs) {
+         $finished = 0;
+      }
       // if all jobs are finished, we calculate if we reinitialize all jobs
-
       if ($finished == "1") {
-         $data['execution_id']++;
+         $exe = $data['execution_id'];
+         unset($data['execution_id']);
 
          $queryUpdate = "UPDATE `".$PluginFusioninventoryTaskjob->getTable()."`
-            SET `status`='0', `execution_id`='".$data['execution_id']."'
+            SET `status`='0'
             WHERE `plugin_fusioninventory_tasks_id`='".$data['id']."'";
          $DB->query($queryUpdate);
 
@@ -1026,6 +1031,7 @@ return namelist;
                $data['date_scheduled'] = date("Y-m-d H:i:s", $data['date_scheduled_timestamp'] + $period);
             }
          }
+         $data['execution_id'] = $exe + 1;
          $PluginFusioninventoryTask->update($data);
          return true;
       } else {
