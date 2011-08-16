@@ -123,18 +123,35 @@ class PluginFusinvinventoryLock {
                         }
                      } else if ($table != "") {
                         $vallib = '';
+                        if ($table == 'glpi_computermodels') {
+                           $smodel = '';
+                           $mmodel = '';
+                           foreach($infoSections["sections"] as $sectionname=>$serializeddatas) {
+                              if (strstr($sectionname, "BIOS/")) {
+                                 $un = unserialize($serializeddatas);
+                                 $smodel = $un['SMODEL'];
+                                 $mmodel = $un['MMODEL'];
+                              }
+                           }
+                           if (isset($smodel) AND $smodel != '') {
+                              $ComputerModel = new ComputerModel();
+                              $input[$datas['glpiField']] = $ComputerModel->importExternal($smodel);
+                           } else if (isset($mmodel) AND $mmodel != '') {
+                              $ComputerModel = new ComputerModel();
+                              $input[$datas['glpiField']] = $ComputerModel->importExternal($mmodel);
+                           }
+                        } else {
                         $libunserialized = unserialize($infoSections["sections"][$datas['xmlSection']."/".$item->fields['items_id']]);
                         if ($datas['xmlSectionChild'] == "TYPE") {
                            if ($libunserialized[$datas['xmlSectionChild']] != "") {
                               $vallib = Dropdown::importExternal($itemtypeLink,$libunserialized[$datas['xmlSectionChild']]);
                            } else {
                               $vallib = Dropdown::importExternal($itemtypeLink,$libunserialized["MMODEL"]);
+                              }
                            }
-                        } else {
-                           $vallib = Dropdown::importExternal($itemtypeLink,$libunserialized[$datas['xmlSectionChild']]);
+                           $input[$datas['glpiField']] = $vallib;
                         }
-                        $input[$datas['glpiField']] = $vallib;
-                     } else {
+                    } else {
                         $libunserialized = unserialize($infoSections["sections"][$datas['xmlSection']."/".$item->fields['items_id']]);
                         
                         if ($datas['glpiField'] == 'contact') {
