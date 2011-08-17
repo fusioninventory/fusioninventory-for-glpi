@@ -45,7 +45,7 @@ if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agents", "r")
       OR PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","r")
       OR PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")
       ) {
-   commonHeader($LANG['plugin_fusioninventory']['title'][0], $_SERVER["PHP_SELF"], "plugins", 
+   Html::header($LANG['plugin_fusioninventory']['title'][0], $_SERVER["PHP_SELF"], "plugins", 
                 "fusioninventory", "menu");
 
    PluginFusioninventoryMenu::displayMenu();

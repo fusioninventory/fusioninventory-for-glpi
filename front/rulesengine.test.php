@@ -51,7 +51,7 @@ if ($rulecollection->isRuleRecursive()) {
 $rulecollection->checkGlobal('r');
 
 if (!strpos($_SERVER['PHP_SELF'],"popup")) {
-   commonHeader($LANG['common'][12],$_SERVER['PHP_SELF'],"config","display");
+   Html::header($LANG['common'][12],$_SERVER['PHP_SELF'],"config","display");
 }
 
 // Need for RuleEngines

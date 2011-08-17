@@ -114,7 +114,7 @@ if (isset($_POST["delete_criteria"])) {
    Html::redirect(str_replace('.form','',$_SERVER['PHP_SELF']));
 }
 
-commonHeader($LANG['common'][12], $_SERVER['PHP_SELF'], "admin",
+Html::header($LANG['common'][12], $_SERVER['PHP_SELF'], "admin",
              $rulecollection->menu_type, $rulecollection->menu_option);
 
 $rule->showForm($_GET["id"]);
