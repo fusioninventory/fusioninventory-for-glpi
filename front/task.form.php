@@ -45,7 +45,12 @@ if (!isset($_GET["id"])) {
 
 $task = new PluginFusinvdeployTask();
 
-if (isset($_POST["add"])) {
+if (isset($_POST['forcestart'])) {
+   $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+   $PluginFusioninventoryTaskjob->forceRunningTask($_POST['id']);
+   glpi_header($_SERVER['HTTP_REFERER']);
+
+} else if (isset($_POST["add"])) {
    $task->check(-1, 'w', $_POST);
    $newID = $task->add($_POST);
    glpi_header(GLPI_ROOT."/plugins/fusinvdeploy/front/task.form.php?id=".$newID);
