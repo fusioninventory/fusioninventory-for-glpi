@@ -57,6 +57,6 @@ foreach ($fields as $id=>$data) {
    }
 }
 
-ajaxFooter();
+Html::ajaxFooter();
 
 ?>
