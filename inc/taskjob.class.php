@@ -880,6 +880,7 @@ return namelist;
       LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
       WHERE `is_active`='1'
          AND `status` = '0'
+         AND `".$PluginFusioninventoryTaskjob->getTable()."`.`execution_id`=`glpi_plugin_fusioninventory_tasks`.`execution_id`
          AND UNIX_TIMESTAMP(date_scheduled) <= '".$dateNow."' ";
       $result = $DB->query($query);
       $return = 0;
@@ -1455,7 +1456,8 @@ return namelist;
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
 
-      $a_taskjobstatus = $PluginFusioninventoryTaskjobstatus->find("`state`='1'
+      $a_taskjobstatus = $PluginFusioninventoryTaskjobstatus->find("`state`='0'
+                                                      OR `state`='1'
                                                       OR `state`='2'
                                                       GROUP BY uniqid, plugin_fusioninventory_agents_id");
       foreach($a_taskjobstatus as $data) {

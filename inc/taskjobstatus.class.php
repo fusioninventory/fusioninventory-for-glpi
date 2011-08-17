@@ -317,6 +317,10 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       $PluginFusioninventoryTaskjoblog->add($a_input);
 
       $PluginFusioninventoryTaskjob->getFromDB($this->fields['plugin_fusioninventory_taskjobs_id']);
+      $input = array();
+      $input['id'] = $this->fields['plugin_fusioninventory_taskjobs_id'];
+      $input['status'] = 0;
+      $PluginFusioninventoryTaskjob->update($input);
       $PluginFusioninventoryTaskjob->reinitializeTaskjobs($PluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']);
    }
 

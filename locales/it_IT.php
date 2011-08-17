@@ -175,6 +175,7 @@ $LANG['plugin_fusioninventory']['task'][42]="L'agente inizia un contatto con il 
 $LANG['plugin_fusioninventory']['task'][43]="Communication mode";
 $LANG['plugin_fusioninventory']['task'][44]="See all informations of task";
 $LANG['plugin_fusioninventory']['task'][45]="Advanced options";
+$LANG['plugin_fusioninventory']['task'][46]="Reset";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="In esecuzione";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";
