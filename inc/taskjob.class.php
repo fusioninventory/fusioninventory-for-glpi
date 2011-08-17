@@ -531,14 +531,24 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $a_typenames = importArrayFromDB($this->fields[$name]);
       foreach ($a_typenames as $key=>$a_typename) {
          foreach ($a_typename as $itemtype=>$items_id) {
-            $class = new $itemtype;
-            $class->getFromDB($items_id);
+            $display = '';
+            if ($itemtype == "PluginFusioninventoryAgent"
+                    AND $items_id == ".1" ) {
+               $display = $LANG['plugin_fusioninventory']['agents'][32];
+            } else if ($itemtype == "PluginFusioninventoryAgent"
+                    AND $items_id == ".2" ) {
+               $display = $LANG['plugin_fusioninventory']['agents'][33];
+            } else {
+               $class = new $itemtype;
+               $class->getFromDB($items_id);
+               $display = $class->getLink(1);
+            }
             echo "<tr>";
             echo "<td style='padding: 1px 2px;'>";
             echo "<input type='checkbox' name='".$name."item' value='".$key."'>";
             echo "</td>";
             echo "<td style='padding: 1px 2px;'>";
-            echo $class->getLink(1);
+            echo $display;
             echo "</td>";
             echo "</tr>";
          }
