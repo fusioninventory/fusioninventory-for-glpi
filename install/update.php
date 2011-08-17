@@ -235,7 +235,7 @@ function plugin_fusioninventory_displayMigrationMessage ($id, $msg="") {
 		$tps = Html::timestampToString($fin-$deb);
 		echo "<script type='text/javascript'>document.getElementById('migration_message_$id').innerHTML = '<p class=\"center\">$msg ($tps)</p>';</script>\n";
 	}
-	glpi_flush();
+	Html::glpi_flush();
 }
 
 ?>
