@@ -190,9 +190,9 @@ function plugin_init_fusioninventory() {
 
          if (PluginFusioninventoryProfile::haveRight("fusioninventory", "iprange","w")) {
             $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['iprange'] = 
-               '/plugins/fusioninventory/front/iprange.form.php?add=1';
+               '../fusioninventory/front/iprange.form.php?add=1';
             $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['iprange'] = 
-               '/plugins/fusioninventory/front/iprange.php';
+               '../fusioninventory/front/iprange.php';
          }
 
          if (PluginFusioninventoryCredential::hasAlLeastOneType()) {
