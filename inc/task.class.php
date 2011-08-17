@@ -419,9 +419,9 @@ class PluginFusioninventoryTask extends CommonDBTM {
             <a href='".$this->getFormURL()."?id=".$data_task['id']."' style='font-size: 16px; '>"
                  .$this->getName()."</a> (".ucfirst($data_task['communication'])." ";
          if ($data_task['communication'] == "push") {
-            showToolTip($LANG['plugin_fusioninventory']['task'][41]);
+            Html::showToolTip($LANG['plugin_fusioninventory']['task'][41]);
          } else if ($data_task['communication'] == "pull") {
-            showToolTip($LANG['plugin_fusioninventory']['task'][42]);
+            Html::showToolTip($LANG['plugin_fusioninventory']['task'][42]);
          }
          echo ")<br/>&nbsp;";
          $a_taskjobs = $pluginFusioninventoryTaskjob->find("`plugin_fusioninventory_tasks_id`='".$data_task['id']."'");
