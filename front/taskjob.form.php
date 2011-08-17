@@ -267,9 +267,9 @@ if (isset($_POST['definition_add'])) {
          $mytaskjobstatus->changeStatusFinish($data['id'], 0, '', 1, "Action cancelled by user");
       }
    }
-   $mytaskjob->getFromDB($_POST['taskjobs_id']);
-   $mytaskjob->fields['status'] = 1;
-   $mytaskjob->update($mytaskjob->fields);
+//   $mytaskjob->getFromDB($_POST['taskjobs_id']);
+//   $mytaskjob->fields['status'] = 1;
+//   $mytaskjob->update($mytaskjob->fields);
 
    Html::redirect($_SERVER['HTTP_REFERER']);
 }
