@@ -30,7 +30,7 @@
 
 // ----------------------------------------------------------------------
 // Original Author of file: Walid Nouh
-// Purpose of file: 
+// Purpose of file:
 // ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
@@ -41,10 +41,10 @@ if (!defined('GLPI_ROOT')) {
  * Manage packages orders
  **/
 class PluginFusinvdeployOrder extends CommonDBTM {
-   
+
    const INSTALLATION_ORDER   = 0;
    const UNINSTALLATION_ORDER = 1;
-   
+
    static function getRender($render) {
       if ($render == 'install') {
          return PluginFusinvdeployOrder::INSTALLATION_ORDER;
@@ -52,7 +52,7 @@ class PluginFusinvdeployOrder extends CommonDBTM {
          return PluginFusinvdeployOrder::UNINSTALLATION_ORDER;
       }
    }
-   
+
    /**
     * Clean orders and related tables for a package
     * @param packages_id the package ID
@@ -60,14 +60,14 @@ class PluginFusinvdeployOrder extends CommonDBTM {
     */
    static function cleanForPackage($packages_id) {
       global $DB;
-      
+
       $orders = getAllDatasFromTable('glpi_plugin_fusinvdeploy_orders',
                                      "`plugin_fusinvdeploy_packages_id`='$packages_id'");
       foreach ($orders as $order) {
          PluginFusinvdeployCheck::cleanForPackage($order['id']);
       }
 
-      $query = "DELETE FROM `glpi_plugin_fusinvdeploy_orders` 
+      $query = "DELETE FROM `glpi_plugin_fusinvdeploy_orders`
                 WHERE `plugin_fusinvdeploy_packages_id`='$packages_id'";
       $DB->query($query);
    }
@@ -81,13 +81,13 @@ class PluginFusinvdeployOrder extends CommonDBTM {
       $order = new PluginFusinvdeployOrder();
       $tmp['create_date'] = date("Y-m-d H:i:s");
       $tmp['plugin_fusinvdeploy_packages_id'] = $packages_id;
-      foreach (array(PluginFusinvdeployOrder::INSTALLATION_ORDER, 
+      foreach (array(PluginFusinvdeployOrder::INSTALLATION_ORDER,
                      PluginFusinvdeployOrder::UNINSTALLATION_ORDER) as $type) {
          $tmp['type'] = $type;
          $order->add($tmp);
       }
-   } 
-   
+   }
+
    /**
     * Get order ID associated with a package, by type
     * @param packages_id the package ID
@@ -98,7 +98,7 @@ class PluginFusinvdeployOrder extends CommonDBTM {
       $orders = getAllDatasFromTable('glpi_plugin_fusinvdeploy_orders',
                                      "`plugin_fusinvdeploy_packages_id`='$packages_id'" .
                                      " AND `type`='$order_type'");
-      
+
       if (empty($orders)) {
          return 0;
       } else {
@@ -107,18 +107,38 @@ class PluginFusinvdeployOrder extends CommonDBTM {
          }
       }
    }
-   
+
    static function getOrderDetails($task = array(), $order_type = self::INSTALLATION_ORDER) {
       $linked_types = array('PluginFusinvdeployCheck');
-      
-      $results = getAllDatasFromTable('glpi_plugin_fusinvdeploy_orders',
-                                     "`plugin_fusinvdeploy_packages_id`='".$task['items_id']."'" .
-                                     " AND `type`='$order_type'");
+
+
+      $packages_id = array();
+      $results_jobs = getAllDatasFromTable('glpi_plugin_fusinvdeploy_taskjobs',
+                                     "`plugin_fusinvdeploy_tasks_id`='".$task['id']."'");
+      foreach ($results_jobs as $jobs) {
+         $definitions = importArrayFromDB($jobs['definition']);
+         foreach($definitions as $key => $definition)
+            foreach($definition as $value) {
+               $packages_id[] = $value;
+            }
+      }
+
+      $results = array();
+      foreach ($packages_id as $package_id) {
+         $tmp = getAllDatasFromTable('glpi_plugin_fusinvdeploy_orders',
+                                        "`plugin_fusinvdeploy_packages_id`='$package_id'" .
+                                        " AND `type`='$order_type'");
+
+         $results = array_merge($results, $tmp);
+      }
+
+
+      $orders =  array();
       if (!empty($results)) {
-         $related_classes = array('PluginFusinvdeployCheck'  => 'check', 
+         $related_classes = array('PluginFusinvdeployCheck'  => 'check',
                                   'PluginFusinvdeployFile'   => 'associatedFiles',
                                   'PluginFusinvdeployAction' => 'actions');
-         $orders =  array();
+
          foreach ($related_classes as $class => $key) {
             foreach ($results as $result) {
                $tmp            =  call_user_func(array($class,'getForOrder'),$result['id']);
@@ -127,7 +147,7 @@ class PluginFusinvdeployOrder extends CommonDBTM {
             }
          }
       }
-      
+
       return $orders;
    }
 }
