@@ -48,6 +48,6 @@ $_GET['target']="model.php";
 
 Search::show('PluginFusinvsnmpModel');
 
-commonFooter();
+Html::footer();
 
 ?>

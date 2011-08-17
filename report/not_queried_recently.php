@@ -169,6 +169,6 @@ if ($result=$DB->query($query)) {
 }
 echo "</table>";
 
-commonFooter();
+Html::footer();
 
 ?>

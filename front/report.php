@@ -67,6 +67,6 @@ echo "</td>";
 */
 echo "</table>";
 
-commonFooter();
+Html::footer();
 
 ?>

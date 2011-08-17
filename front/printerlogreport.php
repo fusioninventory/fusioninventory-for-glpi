@@ -102,6 +102,6 @@ function displaySearchForm() {
 	echo "</form>";
 }
 
-commonFooter(); 
+Html::footer(); 
 
 ?>

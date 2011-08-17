@@ -63,6 +63,6 @@ if ($PluginFusioninventoryConfig->getValue($plugins_id, "storagesnmpauth") == "f
 	echo $LANG['plugin_fusioninventory']['functionalities'][19];
 }
 
-commonFooter();
+Html::footer();
 
 ?>

@@ -77,6 +77,6 @@ if (strstr($_SERVER['HTTP_REFERER'], "wizard.php")) {
 
 $PluginFusinvsnmpConfigSecurity->showForm($id);
 
-commonFooter();
+Html::footer();
 
 ?>

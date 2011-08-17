@@ -81,6 +81,6 @@ echo " | ";
 
 Search::show('PluginFusinvsnmpConstructDevices');
 
-commonFooter();
+Html::footer();
 
 ?>

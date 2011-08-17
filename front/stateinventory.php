@@ -46,6 +46,6 @@ PluginFusioninventoryMenu::displayMenu("mini");
 $PluginFusinvsnmpStateInventory = new PluginFusinvsnmpStateInventory();
 $PluginFusinvsnmpStateInventory->display();
 
-commonFooter();
+Html::footer();
 
 ?>

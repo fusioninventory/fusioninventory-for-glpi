@@ -67,7 +67,7 @@ if(isset($_POST["dropdown_calendar"]) && isset($_POST["dropdown_sup_inf"])) {
 } else {
 //	showList('PluginFusioninventoryNetworkport2',$_GET);
 }
-commonFooter();
+Html::footer();
 
 
 

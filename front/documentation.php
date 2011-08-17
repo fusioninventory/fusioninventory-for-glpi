@@ -40,6 +40,6 @@ commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"p
 
 echo "<meta http-equiv='refresh' content='0;URL=http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/wiki/Wiki'>";
 
-commonFooter();
+Html::footer();
 
 ?>

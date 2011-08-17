@@ -97,6 +97,6 @@ if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","r")) {
    $PluginFusinvsnmpModelMib->showFormList($id, array('create'=>true));
 
 }
-commonFooter();
+Html::footer();
 
 ?>

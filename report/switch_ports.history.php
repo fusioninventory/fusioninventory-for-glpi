@@ -90,6 +90,6 @@ if(isset($_GET["networkports_id"])) {
 
 echo "</form>";
 
-commonFooter(); 
+Html::footer(); 
 
 ?>

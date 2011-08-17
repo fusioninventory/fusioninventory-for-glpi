@@ -118,6 +118,6 @@ if (isset($_GET["id"])) {
 $PluginFusinvsnmpConstructDevice->showForm($id);
 $PluginFusinvsnmpConstructDevice->manageWalks($_SERVER["PHP_SELF"], $id);
 
-commonFooter();
+Html::footer();
 
 ?>
