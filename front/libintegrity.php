@@ -55,7 +55,7 @@ if (!empty($_POST)) {
    Html::back();
 }
 
-commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","libintegrity");
+Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","libintegrity");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
