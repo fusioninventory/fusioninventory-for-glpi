@@ -42,7 +42,7 @@ $PluginFusinvsnmpModel = new PluginFusinvsnmpModel();
 $PluginFusinvsnmpModelMib = new PluginFusinvsnmpModelMib();
 $PluginFusinvsnmpImportExport = new PluginFusinvsnmpImportExport();
 
-commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","models");
+Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","models");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 

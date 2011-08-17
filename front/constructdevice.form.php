@@ -38,7 +38,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 $PluginFusinvsnmpConstructDevice = new PluginFusinvsnmpConstructDevice();
 
-commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","constructdevice");
+Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","constructdevice");
 
 
 PluginFusioninventoryMenu::displayMenu("mini");
