@@ -108,6 +108,6 @@ if ($_POST['glpi_tab'] == $i) {
    $pftj->showForm(0);
 }
 
-ajaxFooter();
+Html::ajaxFooter();
 
 ?>

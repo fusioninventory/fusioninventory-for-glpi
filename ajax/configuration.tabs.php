@@ -102,6 +102,6 @@ if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", 
 } else {
    echo $LANG['common'][83]."<br/>";
 }
-ajaxFooter();
+Html::ajaxFooter();
 
 ?>

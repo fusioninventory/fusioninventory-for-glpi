@@ -63,6 +63,6 @@ switch($_POST['glpi_tab']) {
       break;
 }
 
-ajaxFooter();
+Html::ajaxFooter();
 
 ?>
