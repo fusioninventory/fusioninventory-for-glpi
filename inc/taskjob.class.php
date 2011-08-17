@@ -1120,7 +1120,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo $LANG['plugin_fusioninventory']['task'][14]."&nbsp;:";
       echo "</td>";
       echo "<td align='center'>";
-      showDateTimeFormItem("date_scheduled",date("Y-m-d H:i:s"),1);
+      Html::showDateTimeFormItem("date_scheduled",date("Y-m-d H:i:s"),1);
       echo "</td>";
       echo "</tr>";
 
