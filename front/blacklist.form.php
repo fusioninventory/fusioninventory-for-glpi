@@ -68,6 +68,6 @@ if (isset($_GET["id"])) {
    $PluginFusinvinventoryBlacklist->showForm("");
 }
 
-commonFooter();
+Html::footer();
 
 ?>

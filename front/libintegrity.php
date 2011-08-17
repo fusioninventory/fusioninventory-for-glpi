@@ -61,6 +61,6 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 $PluginFusinvinventoryLibintegrity->showForm();
 
-commonFooter();
+Html::footer();
 
 ?>

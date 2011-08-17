@@ -63,6 +63,6 @@ if (isset($_FILES['importfile']['tmp_name'])) {
 
 $PluginFusinvinventoryImportXML->showForm();
 
-commonFooter();
+Html::footer();
 
 ?>

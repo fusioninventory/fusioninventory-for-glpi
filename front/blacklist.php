@@ -46,6 +46,6 @@ $_GET['target']="blacklist.php";
 
 Search::show('PluginFusinvinventoryBlacklist');
 
-commonFooter();
+Html::footer();
 
 ?>
