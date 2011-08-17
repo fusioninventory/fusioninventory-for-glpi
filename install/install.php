@@ -120,11 +120,15 @@ function pluginFusinvdeployUninstall() {
    $agentmodule = new PluginFusioninventoryAgentmodule;
    $agentmodule->deleteModule($plugins_id);
 
-
-
    $config = new PluginFusioninventoryConfig();
    $config->cleanConfig(
            PluginFusioninventoryModule::getModuleId($a_plugin['shortname']));
+
+   //clean tasks
+
+   $task       = new PluginFusioninventoryTask();
+   $job        = new PluginFusioninventoryTaskjob();
+   $a_taskjobstatus = $job->find("`method`='deployinstall' OR method`='deployuninstall'");
 
    return true;
 }

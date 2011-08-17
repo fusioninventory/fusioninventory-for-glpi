@@ -52,6 +52,7 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
       $job        = new PluginFusioninventoryTaskjob();
       $joblog     = new PluginFusioninventoryTaskjoblog();
       $jobstatus  = new PluginFusioninventoryTaskjobstatus();
+      $agent      = new PluginFusioninventoryAgent();
 
       $uniqid= uniqid();
 
@@ -112,10 +113,15 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
       $c_input['uniqid']                             = $uniqid;
 
       foreach($computers as $computer_id) {
-         $c_input['state']                              = 0;
+         $c_input['state'] = 0;
          $c_input['itemtype'] = 'Computer';
          $c_input['items_id'] = $computer_id;
          $c_input['date'] = date("Y-m-d H:i:s");
+
+         //get agent if for this computer
+         if(!$agents_id = $agent->getAgentWithComputerid($computer_id)) continue;
+         $c_input['plugin_fusioninventory_agents_id'] = $agents_id;
+
          $jobstatus_id= $jobstatus->add($c_input);
 
          //Add log of taskjob

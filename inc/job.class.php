@@ -30,7 +30,7 @@
 
 // ----------------------------------------------------------------------
 // Original Author of file: Walid Nouh
-// Purpose of file: 
+// Purpose of file:
 // ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
@@ -41,31 +41,31 @@ if (!defined('GLPI_ROOT')) {
  * Class to parse agent's requests and build responses
  **/
 class PluginFusinvdeployJob {
-   
+
    static function get($device_id) {
       $response      = array();
       $taskjoblog    = new PluginFusioninventoryTaskjoblog();
       $taskjobstatus = new PluginFusioninventoryTaskjobstatus();
-      
+
       //Get the agent ID by his deviceid
       if ($agents_id = PluginFusinvdeployJob::getAgentByDeviceID($device_id)) {
-         
+
          //Get tasks associated with the agent
          $tasks_list = $taskjobstatus->getTaskjobsAgent($agents_id);
          foreach ($tasks_list as $itemtype => $tasks) {
-            
+
             //Foreach task for this agent build the response array
             foreach ($tasks as $task) {
                switch ($itemtype) {
                   default:
                      $ordertype = -1;
                      break;
-                  
+
                   //Install a package
                   case 'PluginFusinvdeployDeployinstall':
                      $ordertype = PluginFusinvdeployOrder::INSTALLATION_ORDER;
                      break;
-                  
+
                   //Uninstall a package
                   case 'PluginFusinvdeployDeployuninstall':
                      $ordertype = PluginFusinvdeployOrder::UNINSTALLATION_ORDER;
@@ -98,9 +98,9 @@ class PluginFusinvdeployJob {
 
       //Get the agent ID by his deviceid
       if ($agents_id = PluginFusinvdeployJob::getAgentByDeviceID($p['machineid'])) {
-         
+
          $job = PluginFusioninventoryTaskjoblog::getByUniqID($p['uuid']);
-         
+
          if ($update_job) {
             $taskjob = new PluginFusioninventoryTaskjoblog();
             $taskjob->update($job);
@@ -121,11 +121,11 @@ class PluginFusinvdeployJob {
             }
          }
          $taskjoblog->add($tmp);
-         
+
       }
       self::sendOk();
    }
-   
+
    /**
     * Get an agent ID by his deviceid
     * @param device_id the agent's device_id
@@ -141,7 +141,7 @@ class PluginFusinvdeployJob {
          return false;
       }
    }
-   
+
    static function sendOk() {
       header("HTTP/1.1 200",true,200);
    }
