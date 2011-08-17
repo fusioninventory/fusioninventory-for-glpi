@@ -108,7 +108,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
                   }
                }
                // For plugins which require action after all plugin init
-               doHook("post_init");
+               Plugin::doHook("post_init");
             }
       }
       
