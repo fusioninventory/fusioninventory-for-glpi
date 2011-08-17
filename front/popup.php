@@ -61,7 +61,7 @@ if (isset($_SESSION["glpipopup"]["name"])) {
    }
    echo "<div class='center'><br><a href='javascript:window.close()'>".$LANG['buttons'][13]."</a>";
    echo "</div>";
-   popFooter();
+   Html::Html::popFooter();
 }
 
 ?>
