@@ -32,23 +32,18 @@
    ----------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'],"taskjobdeletetype.php")) {
+if (strpos($_SERVER['PHP_SELF'],"dropdownlist.php")) {
    define('GLPI_ROOT','../../..');
    include (GLPI_ROOT."/inc/includes.php");
    header("Content-Type: text/html; charset=UTF-8");
    Html::header_nocache();
 }
-
-Session::checkCentralAccess();
-$value = 0;
-$title = 0;
-if (isset($_POST['value'])) {
-   $value = $_POST['value'];
+if (!defined('GLPI_ROOT')) {
+   die("Can not acces directly to this file");
 }
 
+Session::checkCentralAccess();
 $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
-$PluginFusioninventoryTaskjob->deleteitemtodefatc($_POST['type'], 
-                                               $_POST[$_POST['type'].'item'], 
-                                               $_POST['taskjobs_id']);
+$PluginFusioninventoryTaskjob->showList($_POST['taskjobs_id'], $_POST['typename']);
 
 ?>
