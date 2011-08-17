@@ -154,7 +154,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       $LANG['plugin_fusinvinventory']['setup'][34]."<br/><br/>".
       "* ".$LANG['plugin_fusinvinventory']['setup'][27]."&nbsp;:&nbsp;".
       $LANG['plugin_fusinvinventory']['setup'][35];
-      showToolTip($text);
+      Html::showToolTip($text);
       echo "</td>";
       echo "<th colspan='2'>";
       echo $LANG['plugin_fusinvinventory']['setup'][21];
@@ -176,7 +176,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
                                  $PluginFusioninventoryConfig->getValue($plugins_id, 
                                                                         'import_printer')));
       echo "&nbsp;";
-      showToolTip($text);
+      Html::showToolTip($text);
       echo "</td>";
       echo "<td>";
       echo $LANG['devices'][4]."&nbsp;:";
@@ -203,7 +203,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
                                        $PluginFusioninventoryConfig->getValue($plugins_id, 
                                                                               'import_peripheral')));
       echo "&nbsp;";
-      showToolTip($text);
+      Html::showToolTip($text);
       echo "</td>";
       echo "<td>";
       echo $LANG['devices'][6]."&nbsp;:";
