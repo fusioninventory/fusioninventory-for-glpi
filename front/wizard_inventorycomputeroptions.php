@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","wizard-start");
+Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","wizard-start");
 
 //PluginFusioninventoryMenu::displayMenu("mini");
 
@@ -52,6 +52,6 @@ $PluginFusioninventoryWizard->displayShowForm($a_button,
                                              $PluginFusioninventoryWizard->filInventoryComputer(),
                                              "PluginFusinvinventoryConfig");
 
-commonFooter();
+Html::footer();
 
 ?>

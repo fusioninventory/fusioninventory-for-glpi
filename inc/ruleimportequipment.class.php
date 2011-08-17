@@ -666,7 +666,7 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
              || $criteria->fields['condition'] == Rule::REGEX_NOT_MATCH) {
 
                $rc = new $this->rulecriteriaclass();
-               autocompletionTextField($rc, "pattern", array('name'  => $name,
+               Html::autocompletionTextField($rc, "pattern", array('name'  => $name,
                                                        'value' => $value,
                                                        'size'  => 70));
                return;
@@ -677,7 +677,7 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
                     AND ($name != "itemtype" AND $name != 'states_id')) {
 
                $rc = new $this->rulecriteriaclass();
-               autocompletionTextField($rc, "pattern", array('name'  => $name,
+               Html::autocompletionTextField($rc, "pattern", array('name'  => $name,
                                                        'value' => $value,
                                                        'size'  => 70));
                return;
@@ -733,7 +733,7 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
 
       if (!$display) {
          $rc = new $this->rulecriteriaclass();
-         autocompletionTextField($rc, "pattern", array('name'  => $name,
+         Html::autocompletionTextField($rc, "pattern", array('name'  => $name,
                                                        'value' => $value,
                                                        'size'  => 70));
       }

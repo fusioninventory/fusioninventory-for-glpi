@@ -38,7 +38,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 $pft = new PluginFusioninventoryTask();
 
-commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","tasks");
+Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","tasks");
 
 PluginFusioninventoryProfile::checkRight("fusioninventory", "task","r");
 
@@ -102,6 +102,6 @@ if (isset($_GET["id"])) {
    $pft->showForm("");
 }
 
-commonFooter();
+Html::footer();
 
 ?>

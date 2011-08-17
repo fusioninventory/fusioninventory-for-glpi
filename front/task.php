@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","tasks");
+Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","tasks");
 
 PluginFusioninventoryProfile::checkRight("fusioninventory", "task","r");
 
@@ -55,6 +55,6 @@ $pluginFusioninventoryTask->displayTaks($_GET['see']);
 //
 //Search::show('PluginFusioninventoryTask');
 
-commonFooter();
+Html::footer();
 
 ?>

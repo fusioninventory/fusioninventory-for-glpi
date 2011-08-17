@@ -38,7 +38,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 Session::checkRight("config","w");
 
-commonHeader($LANG['plugin_fusioninventory']['functionalities'][0], $_SERVER["PHP_SELF"], 
+Html::header($LANG['plugin_fusioninventory']['functionalities'][0], $_SERVER["PHP_SELF"], 
              "plugins", "fusioninventory", "configuration");
 
 if (isset($_POST['plugin_fusioninventory_config_set'])) {
@@ -73,6 +73,6 @@ if (isset($_GET['glpi_tab'])) {
 $configuration->showForm();
 unset($_SESSION['glpi_tabs']['pluginfusioninventoryconfiguration']);
 
-commonFooter();
+Html::footer();
 
 ?>

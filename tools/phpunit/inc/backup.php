@@ -48,7 +48,7 @@ function restoreMySQL() {
          echo $LANG['backup'][22]." ".Html::formatNumber($offset,false,0)."<br>";
          return false;
       }
-      glpi_flush();
+      Html::glpi_flush();
    }
 
    $formattedQuery = "";

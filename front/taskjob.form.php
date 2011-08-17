@@ -37,7 +37,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 $mytaskjob = new PluginFusioninventoryTaskjob();
 
-commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins",
+Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins",
              "fusioninventory","tasks");
 
 PluginFusioninventoryProfile::checkRight("fusioninventory", "task", "r");
@@ -279,6 +279,6 @@ if (strstr($_SERVER['HTTP_REFERER'], "wizard.php")) {
    $mytaskjob->redirectTask($_GET['id']);
 }
 
-commonFooter();
+Html::footer();
 
 ?>

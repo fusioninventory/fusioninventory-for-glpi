@@ -78,11 +78,11 @@ if (Session::haveRight("config","w") && Session::haveRight("profile","w")) {
    Html::redirect($_SERVER['HTTP_REFERER']);
 } else {
 
-   commonHeader($LANG['login'][5],$_SERVER['PHP_SELF'],"plugins","fusioninventory");
+   Html::header($LANG['login'][5],$_SERVER['PHP_SELF'],"plugins","fusioninventory");
    echo "<div align='center'><br><br><img src=\"".GLPI_ROOT."/pics/warning.png\"
               alt=\"warning\"><br><br>";
    echo "<b>".$LANG['login'][5]."</b></div>";
-   commonFooter();
+   Html::footer();
 }
 
 ?>

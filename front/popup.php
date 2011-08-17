@@ -49,19 +49,19 @@ if (isset($_SESSION["glpipopup"]["name"])) {
 
 
       case "test_rule" :
-         popHeader($LANG['buttons'][50],$_SERVER['PHP_SELF']);
+         Html::popHeader($LANG['buttons'][50],$_SERVER['PHP_SELF']);
          include "rule.test.php";
          break;
 
       case "test_all_rules" :
-         popHeader($LANG['rulesengine'][84],$_SERVER['PHP_SELF']);
+         Html::popHeader($LANG['rulesengine'][84],$_SERVER['PHP_SELF']);
          include "rulesengine.test.php";
          break;
 
    }
    echo "<div class='center'><br><a href='javascript:window.close()'>".$LANG['buttons'][13]."</a>";
    echo "</div>";
-   popFooter();
+   Html::popFooter();
 }
 
 ?>

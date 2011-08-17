@@ -183,9 +183,9 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "<td>".$LANG['plugin_fusioninventory']['task'][14]."&nbsp;:</td>";
       echo "<td>";
       if ($id) {
-         showDateTimeFormItem("date_scheduled",$this->fields["date_scheduled"],1,false);
+         Html::showDateTimeFormItem("date_scheduled",$this->fields["date_scheduled"],1,false);
       } else {
-         showDateTimeFormItem("date_scheduled",date("Y-m-d H:i:s"),1);
+         Html::showDateTimeFormItem("date_scheduled",date("Y-m-d H:i:s"),1);
       }
       echo "</td>";
       echo "<th rowspan='2'>";

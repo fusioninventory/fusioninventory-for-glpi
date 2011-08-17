@@ -37,7 +37,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 $iprange = new PluginFusioninventoryIPRange();
 
-commonHeader($LANG['plugin_fusioninventory']['title'][0], $_SERVER["PHP_SELF"], "plugins", 
+Html::header($LANG['plugin_fusioninventory']['title'][0], $_SERVER["PHP_SELF"], "plugins", 
              "fusioninventory", "iprange");
 
 PluginFusioninventoryProfile::checkRight("fusioninventory", "iprange", "r");
@@ -124,6 +124,6 @@ if (strstr($_SERVER['HTTP_REFERER'], "wizard.php")) {
 
 $iprange->showForm($id, array( "allowcreate" => $allowcreate));
 
-commonFooter();
+Html::footer();
 
 ?>
