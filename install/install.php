@@ -105,6 +105,22 @@ function pluginFusinvdeployUninstall() {
 
    PluginFusioninventoryProfile::cleanProfile($a_plugin['shortname']);
 
+
+   //clean tasks
+   $task = new PluginFusinvdeployTask;
+   $query_tasks = "SELECT DISTINCT task.id
+   FROM glpi_plugin_fusioninventory_tasks as task
+   LEFT JOIN glpi_plugin_fusioninventory_taskjobs as job
+      ON job.plugin_fusioninventory_tasks_id = task.id
+   WHERE job.method='deployinstall' OR job.method='deployuninstall'
+   ";
+   $res_tasks = $DB->query($query_tasks);
+   while ($row_tasks = $DB->fetch_array($res_tasks)) {
+    //  $task->getFromDB($row_tasks['id']);
+      $task->delete(array('id' => $row_tasks['id']));
+   }
+
+   //delete tables
    $query = "SHOW FULL TABLES;";
    $result=$DB->query($query);
    while ($data=$DB->fetch_array($result)) {
@@ -123,12 +139,6 @@ function pluginFusinvdeployUninstall() {
    $config = new PluginFusioninventoryConfig();
    $config->cleanConfig(
            PluginFusioninventoryModule::getModuleId($a_plugin['shortname']));
-
-   //clean tasks
-
-   $task       = new PluginFusioninventoryTask();
-   $job        = new PluginFusioninventoryTaskjob();
-   $a_taskjobstatus = $job->find("`method`='deployinstall' OR method`='deployuninstall'");
 
    return true;
 }
