@@ -119,7 +119,7 @@ function displaySearchForm() {
                            array('value'=>(isset($_GET["dropdown_sup_inf"])?$_GET["dropdown_sup_inf"]:"sup")));
 	echo "</td>
 		<td width='120'>";
-	showDateFormItem("dropdown_calendar",(isset($_GET["dropdown_calendar"])?$_GET["dropdown_calendar"]:0));
+	Html::showDateFormItem("dropdown_calendar",(isset($_GET["dropdown_calendar"])?$_GET["dropdown_calendar"]:0));
 	echo "</td>";
 
 	echo "<td>".$LANG["common"][15]."</td>";

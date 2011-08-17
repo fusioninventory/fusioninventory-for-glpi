@@ -79,14 +79,14 @@ function displaySearchForm() {
 	echo $LANG['plugin_fusinvsnmp']['state'][4]." :";
 	echo "</td>";
    echo "<td width='120'>";
-	showDateFormItem("glpi_plugin_fusioninventory_date_start",$_SESSION['glpi_plugin_fusioninventory_date_start']);
+	Html::showDateFormItem("glpi_plugin_fusioninventory_date_start",$_SESSION['glpi_plugin_fusioninventory_date_start']);
 	echo "</td>";
 
 	echo "<td>";
 	echo $LANG['plugin_fusinvsnmp']['state'][5]." :";
 	echo "</td>";
    echo "<td width='120'>";
-	showDateFormItem("glpi_plugin_fusioninventory_date_end",$_SESSION['glpi_plugin_fusioninventory_date_end']);
+	Html::showDateFormItem("glpi_plugin_fusioninventory_date_end",$_SESSION['glpi_plugin_fusioninventory_date_end']);
 	echo "</td>";
 
    echo "<td>";

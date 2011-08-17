@@ -438,7 +438,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td class='left'>".$LANG['search'][8]."&nbsp;:</td>";
       echo "<td class='left'>";
-      showDateFormItem("graph_begin", $begin);
+      Html::showDateFormItem("graph_begin", $begin);
       echo "</td>";
       echo "<td class='left'>".$LANG['plugin_fusinvsnmp']['prt_history'][31]."&nbsp;:</td>";
       echo "<td class='left'>";
@@ -454,7 +454,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td class='left'>".$LANG['search'][9]."&nbsp;:</td>";
       echo "<td class='left'>";
-      showDateFormItem("graph_end", $end);
+      Html::showDateFormItem("graph_end", $end);
       echo "</td>";
       echo "<td class='left'>".$LANG['plugin_fusinvsnmp']['stats'][2]."&nbsp;:</td>";
       echo "<td class='left'>";
