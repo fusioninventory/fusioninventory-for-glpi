@@ -122,7 +122,7 @@ var taskJobsTreeGrid = new Ext.ux.tree.TreeGrid({
          }
       })
    }, {
-      dataIndex: 'status_id',
+      dataIndex: 'items_id',
       hidden: true
    }],
    dataUrl: '../ajax/state_taskjobs.tree.data.php',
@@ -130,8 +130,8 @@ var taskJobsTreeGrid = new Ext.ux.tree.TreeGrid({
         click: {
             fn:function (node,event){
                taskJobLogsGrid.getStore().removeAll();
-               if (node.attributes.status_id) {
-                  taskJobLogsGrid.getStore().setBaseParam('status_id', node.attributes.status_id);
+               if (node.attributes.items_id) {
+                  taskJobLogsGrid.getStore().setBaseParam('items_id', node.attributes.items_id);
                   taskJobLogsGrid.getStore().reload();
                }
             }

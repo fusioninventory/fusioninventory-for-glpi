@@ -92,11 +92,15 @@ class PluginFusinvdeployState extends CommonDBTM {
 
       $res = array();
 
-      if (!isset($params['status_id'])) exit;
+      if (!isset($params['items_id'])) exit;
 
-      $query = "SELECT *
-      FROM glpi_plugin_fusioninventory_taskjoblogs
-      WHERE plugin_fusioninventory_taskjobstatus_id = '".$params['status_id']."'";
+      $query = "SELECT logs.*
+      FROM glpi_plugin_fusioninventory_taskjoblogs as logs
+      LEFT JOIN glpi_plugin_fusioninventory_taskjobstatus as status
+         ON logs.plugin_fusioninventory_taskjobstatus_id = status.id
+      WHERE status.items_id = '".$params['items_id']."'
+         AND status.itemtype = 'Computer'
+      ORDER BY date DESC";
 
       $query_res = $DB->query($query);
       while ($row = $DB->fetch_assoc($query_res)) {
@@ -149,7 +153,9 @@ class PluginFusinvdeployState extends CommonDBTM {
                //get all status for this job
                $query_status = "SELECT id, items_id, state
                   FROM glpi_plugin_fusioninventory_taskjobstatus
-                  WHERE plugin_fusioninventory_taskjobs_id = '".$row_jobs['id']."'";
+                  WHERE plugin_fusioninventory_taskjobs_id = '".$row_jobs['id']."'
+                  GROUP BY itemtype, items_id
+                  ORDER BY id DESC";
                $res_status = $DB->query($query_status);
 
                //no status for this job
@@ -166,7 +172,7 @@ class PluginFusinvdeployState extends CommonDBTM {
                      $res[$i]['children'][$j]['icon'] = GLPI_ROOT."/plugins/fusinvdeploy/pics/ext/computer.png";
                      $res[$i]['children'][$j]['leaf'] = true; //final children
                      $res[$i]['children'][$j]['progress'] = $row_status['state'];
-                     $res[$i]['children'][$j]['status_id'] = $row_status['id'];
+                     $res[$i]['children'][$j]['items_id'] = $row_status['items_id'];
 
                      break;
                   case 'PluginFusinvdeployGroup':
@@ -183,7 +189,7 @@ class PluginFusinvdeployState extends CommonDBTM {
                         $res[$i]['children'][$j]['children'][$k]['type'] = "Computer";
                         $res[$i]['children'][$j]['children'][$k]['progress'] = $row_status['state'];
                         $res[$i]['children'][$j]['children'][$k]['icon'] = GLPI_ROOT."/plugins/fusinvdeploy/pics/ext/computer.png";
-                        $res[$i]['children'][$j]['children'][$k]['status_id'] = $row_status['id'];
+                        $res[$i]['children'][$j]['children'][$k]['items_id'] = $row_status['items_id'];
 
                         $k++;
                      }
