@@ -106,7 +106,7 @@ if (isset($_GET["action"])) {
 
    if (!(isset($_POST['replay_confirm']) || isset($_GET['offset']))
        && $rulecollection->warningBeforeReplayRulesOnExistingDB($_SERVER['PHP_SELF'])) {
-      commonFooter();
+      Html::footer();
       exit();
    }
 
@@ -146,7 +146,7 @@ if (isset($_GET["action"])) {
                   "$manufacturer");
    }
 
-   commonFooter(true);
+   Html::footer(true);
    exit();
 }
 
@@ -185,5 +185,5 @@ commonHeader($LANG['rulesengine'][17], $_SERVER['PHP_SELF'], "admin", $rulecolle
    createAjaxTabs('tabspanel','tabcontent',$tabs,$rulecollection->getRuleClassName());
    echo "<div id='tabcontent'>&nbsp;</div>";
    echo "<script type='text/javascript'>loadDefaultTab();</script>";
-commonFooter();
+Html::footer();
 ?>

@@ -87,6 +87,6 @@ if (isset($_GET["id"])) {
    $agent->showForm("");
 }
 
-commonFooter();
+Html::footer();
 
 ?>

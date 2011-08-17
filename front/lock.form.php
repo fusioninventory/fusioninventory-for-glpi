@@ -55,6 +55,6 @@ if(isset($_POST["unlock_field_fusioninventory"])){
    Html::redirect($_SERVER['HTTP_REFERER']);
 }
 
-commonFooter();
+Html::footer();
 
 ?>

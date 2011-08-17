@@ -101,6 +101,6 @@ if (isset ($_POST["add"])) {
 
 $PluginFusioninventoryUnknownDevice->showForm($id);
 
-commonFooter();
+Html::footer();
 
 ?>

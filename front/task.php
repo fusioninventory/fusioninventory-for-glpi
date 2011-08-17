@@ -55,6 +55,6 @@ $_GET['target']="task.php";
 
 Search::show('PluginFusioninventoryTask');
 
-commonFooter();
+Html::footer();
 
 ?>

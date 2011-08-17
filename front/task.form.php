@@ -102,6 +102,6 @@ if (isset($_GET["id"])) {
    $pft->showForm("");
 }
 
-commonFooter();
+Html::footer();
 
 ?>

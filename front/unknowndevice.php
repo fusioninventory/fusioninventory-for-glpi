@@ -48,6 +48,6 @@ $_GET['target']="unknowndevice.php";
 
 Search::show('PluginFusioninventoryUnknownDevice');
 
-commonFooter();
+Html::footer();
 
 ?>

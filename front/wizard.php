@@ -59,6 +59,6 @@ if (isset($_GET["wizz"])) {
    PluginFusioninventoryWizard::w_start();
 }
 
-commonFooter();
+Html::footer();
 
 ?>

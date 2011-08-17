@@ -82,7 +82,7 @@ if (Session::haveRight("config","w") && Session::haveRight("profile","w")) {
    echo "<div align='center'><br><br><img src=\"".GLPI_ROOT."/pics/warning.png\"
               alt=\"warning\"><br><br>";
    echo "<b>".$LANG['login'][5]."</b></div>";
-   commonFooter();
+   Html::footer();
 }
 
 ?>

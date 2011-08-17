@@ -70,7 +70,7 @@ if (isset($_POST["test_all_rules"])) {
 }
 
 if (!strpos($_SERVER['PHP_SELF'],"popup")) {
-   commonFooter();
+   Html::footer();
 }
 
 ?>

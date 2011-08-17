@@ -53,6 +53,6 @@ if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agents", "r")
    displayRightError();
 }
 
-commonFooter();
+Html::footer();
 
 ?>

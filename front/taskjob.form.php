@@ -280,6 +280,6 @@ if (strstr($_SERVER['HTTP_REFERER'], "wizard.php")) {
    $mytaskjob->redirectTask($_GET['id']);
 }
 
-commonFooter();
+Html::footer();
 
 ?>

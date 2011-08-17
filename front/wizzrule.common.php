@@ -106,7 +106,7 @@ if (isset($_GET["action"])) {
 
    if (!(isset($_POST['replay_confirm']) || isset($_GET['offset']))
        && $rulecollection->warningBeforeReplayRulesOnExistingDB($_SERVER['PHP_SELF'])) {
-      commonFooter();
+      Html::footer();
       exit();
    }
 
@@ -147,7 +147,7 @@ if (isset($_GET["action"])) {
                   "$manufacturer");
    }
 
-   commonFooter(true);
+   Html::footer(true);
    exit();
 }
 

@@ -73,6 +73,6 @@ if (isset($_GET['glpi_tab'])) {
 $configuration->showForm();
 unset($_SESSION['glpi_tabs']['pluginfusioninventoryconfiguration']);
 
-commonFooter();
+Html::footer();
 
 ?>

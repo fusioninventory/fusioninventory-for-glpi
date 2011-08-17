@@ -128,6 +128,6 @@ if (isset($_POST["agent_add"])) {
    Html::redirect($_SERVER['HTTP_REFERER']);
 }
 
-commonFooter();
+Html::footer();
 
 ?>

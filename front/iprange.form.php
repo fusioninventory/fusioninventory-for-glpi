@@ -124,6 +124,6 @@ if (strstr($_SERVER['HTTP_REFERER'], "wizard.php")) {
 
 $iprange->showForm($id, array( "allowcreate" => $allowcreate));
 
-commonFooter();
+Html::footer();
 
 ?>

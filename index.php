@@ -50,6 +50,6 @@ if ((isset($_GET['action'])
                 "fusioninventory");
 
    Html::redirect(GLPI_ROOT ."/plugins/fusioninventory/front/wizard.php");
-   commonFooter();
+   Html::footer();
 }
 ?>

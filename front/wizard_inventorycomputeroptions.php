@@ -52,6 +52,6 @@ $PluginFusioninventoryWizard->displayShowForm($a_button,
                                              $PluginFusioninventoryWizard->filInventoryComputer(),
                                              "PluginFusinvinventoryConfig");
 
-commonFooter();
+Html::footer();
 
 ?>

@@ -59,6 +59,6 @@ echo "<center>Quels types matériel voulez-vous inventorier  ?</center><br/>";
 
 $PluginFusioninventoryWizard->displayButtons($a_buttons, $a_ariane);
 
-commonFooter();
+Html::footer();
 
 ?>

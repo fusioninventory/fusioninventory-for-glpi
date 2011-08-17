@@ -47,6 +47,6 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 Search::show('PluginFusioninventoryIPRange');
 
-commonFooter();
+Html::footer();
 
 ?>
