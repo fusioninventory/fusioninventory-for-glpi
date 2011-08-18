@@ -382,7 +382,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                                                                     "Unable to find agent to run this job");
             $input_taskjob = array();
             $input_taskjob['id'] = $PluginFusioninventoryTaskjob->fields['id'];
-            $input_taskjob['status'] = 1;
+            $input_taskjob['status'] = 0;
             $PluginFusioninventoryTaskjob->update($input_taskjob);
          } elseif ($count_device == '0') {
             $a_input = array();
