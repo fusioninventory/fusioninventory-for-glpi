@@ -122,7 +122,7 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
       $number = $DB->numrows($resultcount);
 
       // Display the pager
-      printPager($start,$number,GLPI_ROOT."/plugins/fusinvsnmp/front/stateinventory.php",'');
+      Html::printPager($start,$number,GLPI_ROOT."/plugins/fusinvsnmp/front/stateinventory.php",'');
 
       echo "<table class='tab_cadre_fixe'>";
 

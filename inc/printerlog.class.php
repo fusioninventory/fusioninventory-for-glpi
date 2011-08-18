@@ -288,7 +288,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       $parameters = "id=".$_GET["id"]."&onglet=".$_SESSION["glpi_onglet"]; 
       
       echo "<br>";
-      printPager($_GET['start'], $numrows, $_SERVER['PHP_SELF'], $parameters);
+      Html::printPager($_GET['start'], $numrows, $_SERVER['PHP_SELF'], $parameters);
 
       $limit = $numrows;
       if ($_SESSION["glpilist_limit"] < $numrows) {
