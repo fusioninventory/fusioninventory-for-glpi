@@ -156,7 +156,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
             echo "<table class='tab_cadre' >";
             echo "<tr>";
             echo "<td colspan='5'>";
-            printAjaxPager('',$start,$number);
+            Html::printAjaxPager('',$start,$number);
             echo "</td>";
             echo "</tr>";
 
@@ -181,7 +181,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
             echo "<tr>";
             echo "<td colspan='5'>";
-            printAjaxPager('',$start,$number);
+            Html::printAjaxPager('',$start,$number);
             echo "</td>";
             echo "</tr>";
             echo "</table>";
