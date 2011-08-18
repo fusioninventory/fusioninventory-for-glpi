@@ -62,7 +62,8 @@ if ($plugin->isActivated('fusinvdeploy')) {
       if ((count($response) === 0)) {
           echo "{}\n"; # Empty answer
       } else {
-          echo json_encode($response);
+         logDebug($response);
+         echo json_encode($response);
       }
    }
 } else {

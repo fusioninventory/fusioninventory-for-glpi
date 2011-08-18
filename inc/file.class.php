@@ -88,7 +88,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
          $fileparts = PluginFusinvdeployFilepart::getForFile($result['id']);
          if (!empty($fileparts)) {
-            $tmp['multiparts'] = $fileparts;
+            $tmp['multiparts'][] = $fileparts;
          }
          if (isset($result['p2p-retention-duration'])) {
             $tmp['p2p-retention-duration'] = $result['p2p-retention-duration'];

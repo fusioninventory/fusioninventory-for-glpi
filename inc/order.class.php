@@ -143,7 +143,8 @@ class PluginFusinvdeployOrder extends CommonDBTM {
             foreach ($results as $result) {
                $tmp            = call_user_func(array($class,'getForOrder'),$result['id']);
                $tmp['uuid']    = $task['uniqid'];
-               $orders[$key][] = $tmp;
+               if ($key == 'associatedFiles') $orders[$key] = $tmp;
+               else $orders[$key][] = $tmp;
             }
          }
       }
