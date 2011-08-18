@@ -111,7 +111,7 @@ class PluginFusinvdeployOrder extends CommonDBTM {
    static function getOrderDetails($task = array(), $order_type = self::INSTALLATION_ORDER) {
       $linked_types = array('PluginFusinvdeployCheck');
 
-
+      //get all packages id for this task
       $packages_id = array();
       $results_jobs = getAllDatasFromTable('glpi_plugin_fusinvdeploy_taskjobs',
                                      "`plugin_fusinvdeploy_tasks_id`='".$task['id']."'");
@@ -141,7 +141,7 @@ class PluginFusinvdeployOrder extends CommonDBTM {
 
          foreach ($related_classes as $class => $key) {
             foreach ($results as $result) {
-               $tmp            =  call_user_func(array($class,'getForOrder'),$result['id']);
+               $tmp            = call_user_func(array($class,'getForOrder'),$result['id']);
                $tmp['uuid']    = $task['uniqid'];
                $orders[$key][] = $tmp;
             }

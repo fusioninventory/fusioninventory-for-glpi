@@ -72,7 +72,7 @@ class PluginFusinvdeployJob {
                      break;
                }
                if ($ordertype != -1) {
-                  $response[] = PluginFusinvdeployOrder::getOrderDetails($task, $ordertype);
+                  $response['jobs'] = (object)PluginFusinvdeployOrder::getOrderDetails($task, $ordertype);
                }
             }
          }

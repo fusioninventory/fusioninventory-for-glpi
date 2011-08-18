@@ -39,8 +39,8 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusinvdeployFilepart extends CommonDBTM {
-   
-   
+
+
    static function getTypeName() {
       global $LANG;
 
@@ -54,7 +54,7 @@ class PluginFusinvdeployFilepart extends CommonDBTM {
    function canView() {
       return true;
    }
-   
+
    static function getForFile($files_id) {
       $results = getAllDatasFromTable('glpi_plugin_fusinvdeploy_fileparts',
                                       "`plugin_fusinvdeploy_files_id`='$files_id'");
@@ -63,10 +63,10 @@ class PluginFusinvdeployFilepart extends CommonDBTM {
       foreach ($results as $result) {
          $fileparts[$result['name']] = $result['sha512'];
       }
-      
+
       return $fileparts;
    }
-   
+
    static function getIdsForFile($files_id) {
       $results = getAllDatasFromTable('glpi_plugin_fusinvdeploy_fileparts',
                                       "`plugin_fusinvdeploy_files_id`='$files_id'");
@@ -75,9 +75,9 @@ class PluginFusinvdeployFilepart extends CommonDBTM {
       foreach ($results as $result) {
          $fileparts[$result['id']] = $result['name'];
       }
-      
+
       return $fileparts;
    }
-   
+
 }
 ?>
