@@ -78,25 +78,72 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
       $files = array();
       foreach ($results as $result) {
-         $tmp['uncompress']                = $result['uncompress'];
-         $tmp['name']                      = $result['name'];
-         $tmp['is_p2p']                    = $result['is_p2p'];
-         $mirrors = PluginFusinvdeployFile_Mirror::getForFile($result['id']);
-         if (!empty($mirrors)) {
-            $tmp['mirrors'] = $mirrors;
-         }
-
-         $fileparts = PluginFusinvdeployFilepart::getForFile($result['id']);
-         if (!empty($fileparts)) {
-            $tmp['multiparts'][] = $fileparts;
-         }
-         if (isset($result['p2p-retention-duration'])) {
-            $tmp['p2p-retention-duration'] = $result['p2p-retention-duration'];
-         } else {
-            $tmp['p2p-retention-duration'] = 0;
-         }
-         $files[$result['sha512']]         = $tmp;
+         $files[] = $result['sha512'];
       }
+
+      return $files;
+   }
+
+   static function getAssociatedFiles($device_id) {
+      $files = array();
+      $taskjoblog    = new PluginFusioninventoryTaskjoblog();
+      $taskjobstatus = new PluginFusioninventoryTaskjobstatus();
+
+      //Get the agent ID by his deviceid
+      if ($agents_id = PluginFusinvdeployJob::getAgentByDeviceID($device_id)) {
+
+         //Get tasks associated with the agent
+         $tasks_list = $taskjobstatus->getTaskjobsAgent($agents_id);
+         foreach ($tasks_list as $itemtype => $tasks) {
+            foreach ($tasks as $task) {
+               $results_jobs = getAllDatasFromTable('glpi_plugin_fusinvdeploy_taskjobs',
+                                     "`plugin_fusinvdeploy_tasks_id`='".$task['id']."'");
+
+               foreach ($results_jobs as $jobs) {
+                  $definitions = importArrayFromDB($jobs['definition']);
+                  foreach($definitions as $key => $definition)
+                     foreach($definition as $value) {
+                        $packages_id[] = $value;
+                     }
+               }
+
+;
+               foreach ($packages_id as $package_id) {
+                  $orders = getAllDatasFromTable('glpi_plugin_fusinvdeploy_orders',
+                                                 "`plugin_fusinvdeploy_packages_id`='$package_id'");
+
+                  foreach ($orders as $order) {
+                     $results_files = getAllDatasFromTable('glpi_plugin_fusinvdeploy_files',
+                                         "`plugin_fusinvdeploy_orders_id`='".$order['id']."'");
+
+
+                     foreach ($results_files as $result_file) {
+                        $tmp['uncompress']                = $result_file['uncompress'];
+                        $tmp['name']                      = $result_file['name'];
+                        $tmp['is_p2p']                    = $result_file['is_p2p'];
+                        $mirrors = PluginFusinvdeployFile_Mirror::getForFile($result_file['id']);
+                        if (!empty($mirrors)) {
+                           $tmp['mirrors'] = $mirrors;
+                        }
+
+                        $fileparts = PluginFusinvdeployFilepart::getForFile($result_file['id']);
+                        if (!empty($fileparts)) {
+                           $tmp['multiparts'][] = $fileparts;
+                        }
+                        if (isset($result_file['p2p-retention-duration'])) {
+                           $tmp['p2p-retention-duration'] = $result_file['p2p-retention-duration'];
+                        } else {
+                           $tmp['p2p-retention-duration'] = 0;
+                        }
+                        $files[$result_file['sha512']]         = $tmp;
+                     }
+
+                  }
+               }
+            }
+         }
+       }
+
 
       return $files;
    }
