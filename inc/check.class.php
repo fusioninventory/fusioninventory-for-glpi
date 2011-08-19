@@ -80,12 +80,14 @@ class PluginFusinvdeployCheck extends CommonDBTM {
 
       $checks = array();
       foreach ($results as $result) {
-         $tmp['type'] = $result['type'];
          if (isset($result['match'])) {
             $tmp['match'] = $result['match'];
          }
-         $tmp['path'] = $result['path'];
-         $tmp['value'] = $result['value'];
+         if ($result['value'] != "")   $tmp['value'] = $result['value'];
+         if ($result['path'] != "")    $tmp['path'] = $result['path'];
+         if ($result['type'] != "")    $tmp['type'] = $result['type'];
+
+         $tmp['return'] = "error";
          $checks[] = $tmp;
       }
 

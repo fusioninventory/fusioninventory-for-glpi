@@ -58,12 +58,16 @@ if ($plugin->isActivated('fusinvdeploy')) {
             return;
       }
 
-
       if ((count($response) === 0)) {
           echo "{}\n"; # Empty answer
       } else {
-         $json_response = json_encode($response);
+         $options = 0;
+         if (version_compare(PHP_VERSION, '5.3.3') >= 0) $options = $options | JSON_NUMERIC_CHECK;
+         if (version_compare(PHP_VERSION, '5.4.0') >= 0) $options = $options | JSON_UNESCAPED_SLASHES;
+         $json_response = json_encode($response, $options);
+
          if (isset($_GET['debug'])) $json_response = PluginFusinvdeployStaticmisc::json_indent($json_response);
+
          echo $json_response;
       }
    }
