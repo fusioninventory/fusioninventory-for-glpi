@@ -122,14 +122,10 @@ class PluginFusinvdeployFile extends CommonDBTM {
                         $tmp['name']                      = $result_file['name'];
                         $tmp['is_p2p']                    = $result_file['is_p2p'];
                         $mirrors = PluginFusinvdeployFile_Mirror::getForFile($result_file['id']);
-                        //if (!empty($mirrors)) {
-                           $tmp['mirrors'] = $mirrors;
-                        //}
+                        $tmp['mirrors'] = $mirrors;
 
                         $fileparts = PluginFusinvdeployFilepart::getForFile($result_file['id']);
-                        if (!empty($fileparts)) {
-                           $tmp['multiparts'][] = $fileparts;
-                        }
+                        $tmp['multiparts'][] = $fileparts;
                         if (isset($result_file['p2p-retention-duration'])) {
                            $tmp['p2p-retention-duration'] = $result_file['p2p-retention-duration'];
                         } else {
