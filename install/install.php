@@ -70,6 +70,7 @@ function pluginFusinvdeployInstall() {
       include_once (GLPI_ROOT . "/plugins/fusinvdeploy/inc/staticmisc.class.php");
       $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
       PluginFusioninventoryProfile::initProfile($a_plugin['shortname'], $plugins_id);
+      PluginFusioninventoryProfile::changeProfile($plugins_id);
 
       $config = new PluginFusioninventoryConfig;
 
