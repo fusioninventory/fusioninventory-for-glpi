@@ -62,8 +62,9 @@ if ($plugin->isActivated('fusinvdeploy')) {
       if ((count($response) === 0)) {
           echo "{}\n"; # Empty answer
       } else {
-         logDebug($response);
-         echo json_encode($response);
+         $json_response = json_encode($response);
+         if (isset($_GET['debug'])) $json_response = PluginFusinvdeployStaticmisc::json_indent($json_response);
+         echo $json_response;
       }
    }
 } else {
