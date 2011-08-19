@@ -157,7 +157,7 @@ class PluginFusinvinventoryStaticmisc {
    *   value name of the itemtype
    **/
    static function task_definitiontype_ESX($a_itemtype) {
-      return array ('' => DROPDOWN_EMPTY_VALUE, 
+      return array ('' => Dropdown::EMPTY_VALUE , 
                     'PluginFusioninventoryCredentialIp' => PluginFusioninventoryCredentialIp::getTypeName());
    }
 
@@ -197,7 +197,7 @@ class PluginFusinvinventoryStaticmisc {
 
    static function task_actiontype_ESX($a_itemtype) {
       global $LANG;
-      return array ('' => DROPDOWN_EMPTY_VALUE, 
+      return array ('' => Dropdown::EMPTY_VALUE , 
                     'PluginFusioninventoryAgent' => $LANG['plugin_fusioninventory']['profile'][2]);
    }
 
