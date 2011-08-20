@@ -120,6 +120,10 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
 
    function sendCriteria($p_xml) {
+      
+      PluginFusioninventoryCommunication::addLog(
+              'Function PluginFusinvsnmpCommunicationNetDiscovery->sendCriteria().');
+      
       if ((isset($p_xml->MAC)) AND ($p_xml->MAC == "00:00:00:00:00:00")) {
          unset($p_xml->MAC);
       }
