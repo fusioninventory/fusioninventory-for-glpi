@@ -172,7 +172,17 @@ class PluginFusioninventoryWizard {
       echo "<tr>";
       echo "<td colspan='2' valign='top' width='950'>";
       
-      if (isset($_GET['id'])) {
+      if (isset($_GET['wizz']) AND (strstr($_GET['wizz'], "rules"))) {
+         
+         $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+         if (isset($_GET['id'])) {
+            include (GLPI_ROOT . "/front/rule.common.form.php");
+         } else {
+            self::addButton();
+            include (GLPI_ROOT . "/plugins/fusioninventory/front/wizzrule.common.php");
+         }
+
+      } else if (isset($_GET['id'])) {
          $class = new $classname;
          if ($_GET['wizz'] == 'w_tasks') {
             Session::initNavigateListItems($classname);
@@ -186,31 +196,14 @@ class PluginFusioninventoryWizard {
             $class->showForm($_GET['id']);
          }
 
-      } else if (isset($_GET['wizz']) AND (strstr($_GET['wizz'], "rules"))) {
-  
-         $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
-         include (GLPI_ROOT . "/plugins/fusioninventory/front/wizzrule.common.php");
-
       } else if (!empty($options)) {
          if (!isset($options['noadditem'])) {
-            echo "<table class='tab_cadre'>";
-            echo "<tr>";
-            echo "<th>";
-            echo "<a href='".$_SERVER["REQUEST_URI"]."&id=0'>".$LANG['log'][98]."</a>";
-            echo "</th>";
-            echo "</tr>";
-            echo "</table>";
+            self::addButton();
          }
          call_user_func(array($classname, $options['f']), $options['arg1']);
 
       } else {
-         echo "<table class='tab_cadre'>";
-         echo "<tr>";
-         echo "<th>";
-         echo "<a href='".$_SERVER["REQUEST_URI"]."&id=0'>".$LANG['log'][98]."</a>";
-         echo "</th>";
-         echo "</tr>";
-         echo "</table>";
+         self::addButton();
          Search::manageGetValues($classname);
          Search::showList($classname, $_GET);
       }
@@ -724,6 +717,19 @@ class PluginFusioninventoryWizard {
 
       }
       return $method;
+   }
+   
+   
+   static function addButton() {
+      global $LANG;
+      
+      echo "<table class='tab_cadre'>";
+      echo "<tr>";
+      echo "<th>";
+      echo "<a href='".$_SERVER["REQUEST_URI"]."&id=0'>".ucfirst($LANG['log'][98])."</a>";
+      echo "</th>";
+      echo "</tr>";
+      echo "</table>";
    }
 }
 
