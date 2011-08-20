@@ -26,7 +26,9 @@ if (!defined('GLPI_ROOT')) {
 
    Session::loadLanguage();
    include_once(GLPI_ROOT."/locales/fr_FR.php");
+   include_once(GLPI_ROOT."/plugins/fusioninventory/locales/fr_FR.php");
    include_once(GLPI_ROOT."/plugins/fusinvsnmp/locales/fr_FR.php");
+   include_once(GLPI_ROOT."/plugins/fusinvinventory/locales/fr_FR.php");
    $CFG_GLPI["root_doc"] = GLPI_ROOT;
 }
 include_once('emulatoragent.php');
@@ -532,6 +534,8 @@ $XML['Unknowndevice_Computer'] = '<?xml version="1.0" encoding="UTF-8"?>
       <SNMPHOSTNAME>Test2</SNMPHOSTNAME>
       <TYPE>1</TYPE>
     </DEVICE>
+    <MODULEVERSION>1.3</MODULEVERSION>
+    <PROCESSNUMBER>3</PROCESSNUMBER>
    </CONTENT>
   <DEVICEID>port004.bureau.siprossii.com-2010-12-30-12-24-14</DEVICEID>
   <QUERY>NETDISCOVERY</QUERY>
@@ -551,8 +555,10 @@ $XML['Unknowndevice_NetworkEquipment'] = '<?xml version="1.0" encoding="UTF-8"?>
       <SNMPHOSTNAME>Procurve 2524</SNMPHOSTNAME>
       <TYPE>2</TYPE>
     </DEVICE>
-    </CONTENT>
-    <DEVICEID>port004.bureau.siprossii.com-2010-12-30-12-24-14</DEVICEID>
+    <MODULEVERSION>1.3</MODULEVERSION>
+    <PROCESSNUMBER>3</PROCESSNUMBER>
+  </CONTENT>
+  <DEVICEID>port004.bureau.siprossii.com-2010-12-30-12-24-14</DEVICEID>
   <QUERY>NETDISCOVERY</QUERY>
 </REQUEST>';
 
@@ -572,6 +578,8 @@ $XML['Unknowndevice_Printer'] = '<?xml version="1.0" encoding="UTF-8"?>
       <TYPE>3</TYPE>
       <WORKGROUP>TGER</WORKGROUP>
     </DEVICE>
+    <MODULEVERSION>1.3</MODULEVERSION>
+    <PROCESSNUMBER>3</PROCESSNUMBER>
     </CONTENT>
      <DEVICEID>port004.bureau.siprossii.com-2010-12-30-12-24-14</DEVICEID>
   <QUERY>NETDISCOVERY</QUERY>
@@ -593,6 +601,8 @@ $XML['Unknowndevice_notype'] = '<?xml version="1.0" encoding="UTF-8"?>
       <TYPE>0</TYPE>
       <WORKGROUP>WORKGROUP</WORKGROUP>
     </DEVICE>
+    <MODULEVERSION>1.3</MODULEVERSION>
+    <PROCESSNUMBER>3</PROCESSNUMBER>
     </CONTENT>
      <DEVICEID>port004.bureau.siprossii.com-2010-12-30-12-24-14</DEVICEID>
   <QUERY>NETDISCOVERY</QUERY>

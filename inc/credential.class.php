@@ -109,7 +109,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       } else {
          //Add criteria : display dropdown
          $options = self::getCredentialsItemTypes();
-         $options[''] = DROPDOWN_EMPTY_VALUE;
+         $options[''] = Dropdown::EMPTY_VALUE ;
          asort($options);
          Dropdown::showFromArray('itemtype', $options);
       }
@@ -303,7 +303,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       }
       
       $types     = self::getCredentialsItemTypes();
-      $types[''] = DROPDOWN_EMPTY_VALUE;
+      $types[''] = Dropdown::EMPTY_VALUE ;
       $rand      = Dropdown::showFromArray('plugin_fusioninventory_credentials_id', $types, 
                                            array('value' => $p['itemtype']));
       $params    = array('itemtype' => '__VALUE__',
