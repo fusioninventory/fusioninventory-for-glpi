@@ -597,7 +597,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
    
    
-   function showConfig() {
+   static function showConfig() {
       global $LANG;
 
       echo "<table width='950' class='tab_cadre_fixe'>";
