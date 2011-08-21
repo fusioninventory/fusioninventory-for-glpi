@@ -16,6 +16,20 @@ my @enlines = $fh->getlines;
 $fh->close();
 
 my @href;
+
+$po = new Locale::PO(-msgid=>'', -msgstr=>
+         "Project-Id-Version: FusionInventory\\n" .
+         "Report-Msgid-Bugs-To: http://forge.fusioninventory.org\\n" .
+         "POT-Creation-Date: 2011-08-21 22:45+0200\\n" .
+         "PO-Revision-Date: 2011-08-21 22:45+0200\\n" . 
+         "Last-Translator: promotux <d.durieux@siprossii.com>\\n" .
+         "Language-Team: FusionInventory mailling list i18n <fusioninventory-i18n@lists.alioth.debian.org>\\n" .
+         "MIME-Version: 1.0\\n" .
+         "Content-Type: text/plain; charset=UTF-8\\n" .
+         "Content-Transfer-Encoding: 8bit\\n" .
+         "Language: ".$ARGV[0]."\\n");
+push @href, $po;
+
 foreach my $line (@enlines) {
    if ( $line =~ "LANG") {
       $line =~ s/\]( )+=( )+/\]=/;
@@ -32,7 +46,8 @@ foreach my $line (@enlines) {
       $number =~ s/\]//g;
       $number =~ s/\[//g;
       $po->reference(@splitref[3]."|".$number);
-      $po->msgstr(getTranslatedtext(@split[0]));
+      my $translated = getTranslatedtext(@split[0]);
+      $po->msgstr($translated);
       push @href, $po;
    }
 }
@@ -66,5 +81,5 @@ sub getTranslatedtext {
          return $text;
       }
    }
-   return "";
+   return " ";
 }
