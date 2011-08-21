@@ -116,16 +116,16 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
 
 		echo "<tr>";
 		echo "<th colspan='2'>";
-		echo $LANG['plugin_fusinvsnmp']["portlogs"][0];
+		echo $LANG['plugin_fusinvsnmp']['portlogs'][0];
 		echo "</th>";
 		echo "</tr>";
 
 		echo "<tr>";
 		echo "<th>";
-		echo $LANG['plugin_fusinvsnmp']["portlogs"][1];
+		echo $LANG['plugin_fusinvsnmp']['portlogs'][1];
 		echo "</th>";
 		echo "<th>";
-		echo $LANG['plugin_fusinvsnmp']["portlogs"][2];
+		echo $LANG['plugin_fusinvsnmp']['portlogs'][2];
 		echo "</th>";
 		echo "</tr>";
 

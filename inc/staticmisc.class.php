@@ -235,7 +235,7 @@ class PluginFusinvsnmpStaticmisc {
       $a_profil[] = array('profil'  => 'configuration',
                           'name'    => $LANG['plugin_fusinvsnmp']['profile'][2]);
       $a_profil[] = array('profil'  => 'configsecurity',
-                          'name'    => $LANG['plugin_fusinvsnmp']['profile'][3]);
+                          'name'    => $LANG['plugin_fusinvsnmp']['model_info'][3]);
       //$a_profil[] = array('profil'  => 'iprange',
       //                    'name'    => $LANG['plugin_fusinvsnmp']['profile'][4]);
       $a_profil[] = array('profil'  => 'networkequipment',

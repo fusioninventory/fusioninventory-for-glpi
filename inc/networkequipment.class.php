@@ -406,7 +406,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_fusinvsnmp']['functionalities'][43]."&nbsp;:</td>";
+		echo "<td align='center'>".$LANG['plugin_fusinvsnmp']['model_info'][3]."&nbsp;:</td>";
 		echo "<td align='center'>";
 		PluginFusinvsnmpSNMP::auth_dropdown($this->oFusionInventory_networkequipment->fields['plugin_fusinvsnmp_configsecurities_id']);
 		echo "</td>";
@@ -600,19 +600,19 @@ function appear_legend(id){
 			echo "<th>";
 			switch ($data_array['num']) {
 				case 2 :
-					echo $LANG['plugin_fusinvsnmp']['snmp'][42];
+					echo $LANG['plugin_fusinvsnmp']['mapping'][104];
 					break;
 
 				case 3 :
-					echo $LANG['plugin_fusinvsnmp']['snmp'][43];
+					echo $LANG['plugin_fusinvsnmp']['mapping'][105];
 					break;
 
 				case 4 :
-					echo $LANG['plugin_fusinvsnmp']['snmp'][44];
+					echo $LANG['plugin_fusinvsnmp']['mapping'][106];
 					break;
 
 				case 5 :
-					echo $LANG['plugin_fusinvsnmp']['snmp'][45];
+					echo $LANG['plugin_fusinvsnmp']['mapping'][107];
 					break;
 
 				case 6 :
@@ -620,7 +620,7 @@ function appear_legend(id){
 					break;
 
 				case 7 :
-					echo $LANG['plugin_fusinvsnmp']['snmp'][47];
+					echo $LANG['plugin_fusinvsnmp']['mapping'][110];
 					break;
 
 				case 8 :
@@ -644,7 +644,7 @@ function appear_legend(id){
 					break;
 
 				case 13 :
-					echo $LANG['plugin_fusinvsnmp']['snmp'][50];
+					echo $LANG['plugin_fusinvsnmp']['mapping'][114];
 					break;
 
 				case 14 :

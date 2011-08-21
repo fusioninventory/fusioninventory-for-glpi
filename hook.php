@@ -75,13 +75,13 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
          $sopt[102]['field'] = 'plugin_fusinvsnmp_configsecurities_id';
          $sopt[102]['linkfield'] = '';
          $sopt[102]['name'] = $LANG['plugin_fusioninventory']['title'][1]." - ".
-            $LANG['plugin_fusinvsnmp']['functionalities'][43];
+            $LANG['plugin_fusinvsnmp']['model_info'][3];
       } else {
          $sopt[102]['table']='glpi_plugin_fusinvsnmp_configsecurities';
          $sopt[102]['field']='name';
          $sopt[102]['linkfield']='';
          $sopt[102]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".
-            $LANG['plugin_fusinvsnmp']['functionalities'][43];
+            $LANG['plugin_fusinvsnmp']['model_info'][3];
 //         $sopt[102]['datatype'] = 'itemlink';
 //         $sopt[102]['itemlink_type'] = 'PluginFusinvsnmpConfigSecurity';
       }
@@ -135,13 +135,13 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
          $sopt[5191]['field'] = 'plugin_fusinvsnmp_configsecurities_id';
          $sopt[5191]['linkfield'] = 'id';
          $sopt[5191]['name'] = $LANG['plugin_fusioninventory']['title'][1]." - ".
-            $LANG['plugin_fusinvsnmp']['functionalities'][43];
+            $LANG['plugin_fusinvsnmp']['model_info'][3];
       } else {
          $sopt[5191]['table']='glpi_plugin_fusinvsnmp_configsecurities';
          $sopt[5191]['field']='name';
          $sopt[5191]['linkfield']='id';
          $sopt[5191]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".
-            $LANG['plugin_fusinvsnmp']['functionalities'][43];
+            $LANG['plugin_fusinvsnmp']['model_info'][3];
          $sopt[5191]['datatype'] = 'itemlink';
          $sopt[5191]['itemlink_type'] = 'PluginFusinvsnmpConfigSecurity';
       }
@@ -176,13 +176,13 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
          $sopt[5191]['field'] = 'plugin_fusinvsnmp_configsecurities_id';
          $sopt[5191]['linkfield'] = '';
          $sopt[5191]['name'] = $LANG['plugin_fusioninventory']['title'][1]." - ".
-            $LANG['plugin_fusinvsnmp']['functionalities'][43];
+            $LANG['plugin_fusinvsnmp']['model_info'][3];
       } else {
          $sopt[5191]['table']='glpi_plugin_fusinvsnmp_configsecurities';
          $sopt[5191]['field']='name';
          $sopt[5191]['linkfield']='plugin_fusinvsnmp_configsecurities_id';
          $sopt[5191]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".
-            $LANG['plugin_fusinvsnmp']['functionalities'][43];
+            $LANG['plugin_fusinvsnmp']['model_info'][3];
       }
 
       $sopt[5194]['table']='glpi_plugin_fusinvsnmp_networkequipments';

@@ -93,7 +93,7 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
             echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['mib'][7]."</th>";
             echo "<th align='center' width='250'>".$LANG['plugin_fusinvsnmp']['mib'][8]."</th>";
             if ($type_model == NETWORKING_TYPE) {
-               echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['mib'][9]."</th>";
+               echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['mapping'][119]."</th>";
             }
             echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['model_info'][11]."</th>";
 
