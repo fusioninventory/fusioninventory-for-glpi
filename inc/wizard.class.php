@@ -174,9 +174,9 @@ class PluginFusioninventoryWizard {
       
       if (isset($_GET['wizz']) AND (strstr($_GET['wizz'], "rules"))) {
          
-         $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+         $rulecollection = new $classname;
          if (isset($_GET['id'])) {
-            include (GLPI_ROOT . "/front/rule.common.form.php");
+            include (GLPI_ROOT . "/plugins/fusioninventory/front/wizzrule.common.form.php");
          } else {
             self::addButton();
             include (GLPI_ROOT . "/plugins/fusioninventory/front/wizzrule.common.php");
