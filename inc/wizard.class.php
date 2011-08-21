@@ -352,7 +352,7 @@ class PluginFusioninventoryWizard {
       return array(
       $LANG['plugin_fusioninventory']['wizard'][0]   => "w_start",
       $LANG['plugin_fusioninventory']['wizard'][1]   => "w_inventorychoice",
-      $LANG['plugin_fusioninventory']['wizard'][9]   => "w_authsnmp",
+      $LANG['plugin_fusioninventory']['functionalities'][16]   => "w_authsnmp",
       $LANG['plugin_fusioninventory']['iprange'][2]  => "w_iprange",
       $LANG['plugin_fusioninventory']['rules'][2]    => "w_importrules",
       $LANG['plugin_fusioninventory']['task'][1]     => "w_tasks",
@@ -403,7 +403,7 @@ class PluginFusioninventoryWizard {
       global $LANG;
 
       return array(
-      $LANG['plugin_fusioninventory']['wizard'][9]   => "w_authsnmp",
+      $LANG['plugin_fusioninventory']['functionalities'][16]   => "w_authsnmp",
       $LANG['plugin_fusioninventory']['iprange'][2]  => "w_iprange",
       $LANG['plugin_fusioninventory']['rules'][2]    => "w_importrules",
       $LANG['plugin_fusioninventory']['task'][1]     => "w_tasks",

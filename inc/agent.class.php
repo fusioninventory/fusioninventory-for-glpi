@@ -471,7 +471,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             switch($agentStatus) {
 
                case 'running':
-                  $waiting = $LANG['plugin_fusioninventory']['agents'][39];
+                  $waiting = $LANG['plugin_fusioninventory']['taskjoblog'][6];
                   break;
 
                case 'noanswer':
