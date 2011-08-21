@@ -110,7 +110,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 
 		echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2'></td>";
-		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']['snmpauth'][7] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']['snmpauth'][5] . "</td>";
 		echo "<td align='center'>";
 		echo "<input type='text' name='priv_passphrase'
                    value='" . $this->fields["priv_passphrase"] . "'/>";
