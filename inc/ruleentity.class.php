@@ -101,7 +101,7 @@ class PluginFusinvinventoryRuleEntity extends Rule {
       $criterias = array ();
 
       $criterias['tag']['field']     = 'name';
-      $criterias['tag']['name']      = $LANG['plugin_fusinvinventory']['rule'][101];
+      $criterias['tag']['name']      = $LANG['plugin_fusinvinventory']['rule'][8];
       
       $criterias['domain']['field']     = 'name';
       $criterias['domain']['name']      = $LANG['setup'][89];

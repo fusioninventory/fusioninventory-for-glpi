@@ -131,7 +131,7 @@ function plugin_init_fusinvinventory() {
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleinventory']['title'] = $LANG['plugin_fusinvinventory']['menu'][1];
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleinventory']['page']  = '/plugins/fusinvinventory/front/ruleinventory.php';
 
-   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleentity']['title'] = $LANG['plugin_fusinvinventory']['menu'][3];
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleentity']['title'] = $LANG['plugin_fusinvinventory']['rule'][100];
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleentity']['page']  = '/plugins/fusinvinventory/front/ruleentity.php';
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-importxmlfile']['title'] = $LANG['plugin_fusinvinventory']['menu'][0];
