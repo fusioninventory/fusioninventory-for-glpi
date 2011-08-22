@@ -147,7 +147,7 @@ class PluginFusinvdeployOrder extends CommonDBTM {
          }
       }
 
-      $orders['uuid']    = $task['uniqid'];
+      if (!empty($orders)) $orders['uuid'] = $task['uniqid'];
 
       return $orders;
    }

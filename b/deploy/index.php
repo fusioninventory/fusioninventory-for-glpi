@@ -42,7 +42,11 @@ if ($plugin->isActivated('fusinvdeploy')) {
       switch ($_GET['action']) {
          //Get jobs to perform
          case 'getJobs':
-            $response['jobs']             = PluginFusinvdeployJob::get($_GET['machineid']);
+            $response['jobs'] = PluginFusinvdeployJob::get($_GET['machineid']);
+            if (!$response['jobs']) {
+               echo "{}\n"; # Empty answer
+               exit;
+            }
             $response['associatedFiles']  = PluginFusinvdeployFile::getAssociatedFiles($_GET['machineid']);
             break;
          //Change job status
