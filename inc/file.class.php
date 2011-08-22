@@ -92,12 +92,16 @@ class PluginFusinvdeployFile extends CommonDBTM {
       //Get the agent ID by his deviceid
       if ($agents_id = PluginFusinvdeployJob::getAgentByDeviceID($device_id)) {
 
+
          //Get tasks associated with the agent
          $tasks_list = $taskjobstatus->getTaskjobsAgent($agents_id);
-         foreach ($tasks_list as $itemtype => $tasks) {
-            foreach ($tasks as $task) {
+         foreach ($tasks_list as $itemtype => $status_list) {
+            foreach ($status_list as $status) {
+               $taskjob = new PluginFusioninventoryTaskjob();
+               $taskjob->getFromDB($status['plugin_fusioninventory_taskjobs_id']);
+
                $results_jobs = getAllDatasFromTable('glpi_plugin_fusinvdeploy_taskjobs',
-                                     "`plugin_fusinvdeploy_tasks_id`='".$task['id']."'");
+                                     "`plugin_fusinvdeploy_tasks_id`='".$taskjob->fields['plugin_fusioninventory_tasks_id']."'");
 
                foreach ($results_jobs as $jobs) {
                   $definitions = importArrayFromDB($jobs['definition']);
@@ -107,7 +111,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
                      }
                }
 
-;
+
                foreach ($packages_id as $package_id) {
                   $orders = getAllDatasFromTable('glpi_plugin_fusinvdeploy_orders',
                                                  "`plugin_fusinvdeploy_packages_id`='$package_id'");
@@ -118,6 +122,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
 
                      foreach ($results_files as $result_file) {
+                        $tmp = array();
                         $tmp['uncompress']                = $result_file['uncompress'];
                         $tmp['name']                      = $result_file['name'];
                         $tmp['is_p2p']                    = $result_file['is_p2p'];
