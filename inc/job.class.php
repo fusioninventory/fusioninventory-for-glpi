@@ -51,11 +51,12 @@ class PluginFusinvdeployJob {
       if ($agents_id = PluginFusinvdeployJob::getAgentByDeviceID($device_id)) {
 
          //Get tasks associated with the agent
-         $tasks_list = $taskjobstatus->getTaskjobsAgent($agents_id);
-         foreach ($tasks_list as $itemtype => $tasks) {
+         $task_list = $taskjobstatus->getTaskjobsAgent($agents_id);
+         //printCleanArray($task_list);
+         foreach ($task_list as $itemtype => $status_list) {
 
             //Foreach task for this agent build the response array
-            foreach ($tasks as $task) {
+            foreach ($status_list as $status) {
                switch ($itemtype) {
                   default:
                      $ordertype = -1;
@@ -72,8 +73,8 @@ class PluginFusinvdeployJob {
                      break;
                }
                if ($ordertype != -1) {
-                  $orderDetails = PluginFusinvdeployOrder::getOrderDetails($task, $ordertype);
-                  if (empty($orderDetails)) return false;
+                  $orderDetails = PluginFusinvdeployOrder::getOrderDetails($status, $ordertype);
+                  if (count($orderDetails) == 0) return false;
                   $response[] = $orderDetails;
                }
             }
