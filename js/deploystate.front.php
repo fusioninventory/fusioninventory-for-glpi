@@ -51,6 +51,52 @@ $field_width = 170;
 
 $JS = <<<JS
 
+function displayState(val, full) {
+   if (full == null)
+      full = true;
+
+   switch (val) {
+      case '0':
+         var img_name = 'bullet-blue.png';
+         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][7]}';
+         break
+      case '1':
+         var img_name = 'bullet-yellow.png';
+         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][1]}';
+         break
+      case '2':
+         var img_name = 'bullet-green.png';
+         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][2]}';
+         break
+      case '3':
+         var img_name = 'bullet-red.png';
+         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][3]}';
+         break
+      case '4':
+         var img_name = 'bullet-red.png';
+         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][4]}';
+         break
+      case '5':
+         var img_name = 'bullet-red.png';
+         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][5]}';
+         break
+      case '6':
+         var img_name = 'bullet-yellow.png';
+         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][6]}';
+         break
+      case '7':
+         var img_name = 'bullet-blue.png';
+         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][7]}';
+         break
+      default:
+         var img_name = 'bullet-grey.png';
+         val = '';
+   }
+
+   if (full) return '<div class="c_state"><img src="../pics/ext/'+img_name+'">&nbsp;'+val+'</div>';
+   else return '<img src="../pics/ext/'+img_name+'" alt="'+val+'">';
+}
+
 var taskJobsTreeGrid = new Ext.ux.tree.TreeGrid({
    title: "{$LANG['plugin_fusinvdeploy']['deploystatus'][0]}",
    height: {$height_left},
@@ -78,45 +124,7 @@ var taskJobsTreeGrid = new Ext.ux.tree.TreeGrid({
             if (val.indexOf('%') != -1)
                return '<div class="c_progress">{$LANG['common'][47]} :&nbsp;<div class="progress-container"><div style="width: '+val+'">'+val+'</div></div></div>';
             else {
-               switch (val) {
-                  case '0':
-                     var img_name = 'bullet-blue.png';
-                     val = '{$LANG['plugin_fusioninventory']['taskjoblog'][7]}';
-                     break
-                  case '1':
-                     var img_name = 'bullet-yellow.png';
-                     val = '{$LANG['plugin_fusioninventory']['taskjoblog'][1]}';
-                     break
-                  case '2':
-                     var img_name = 'bullet-green.png';
-                     val = '{$LANG['plugin_fusioninventory']['taskjoblog'][2]}';
-                     break
-                  case '3':
-                     var img_name = 'bullet-red.png';
-                     val = '{$LANG['plugin_fusioninventory']['taskjoblog'][3]}';
-                     break
-                  case '4':
-                     var img_name = 'bullet-red.png';
-                     val = '{$LANG['plugin_fusioninventory']['taskjoblog'][4]}';
-                     break
-                  case '5':
-                     var img_name = 'bullet-red.png';
-                     val = '{$LANG['plugin_fusioninventory']['taskjoblog'][5]}';
-                     break
-                  case '6':
-                     var img_name = 'bullet-yellow.png';
-                     val = '{$LANG['plugin_fusioninventory']['taskjoblog'][6]}';
-                     break
-                  case '7':
-                     var img_name = 'bullet-blue.png';
-                     val = '{$LANG['plugin_fusioninventory']['taskjoblog'][7]}';
-                     break
-                  default:
-                     var img_name = 'bullet-grey.png';
-                     val = '';
-               }
-
-               return '<div class="c_state"><img src="../pics/ext/'+img_name+'">&nbsp;'+val+'</div>';
+               return displayState(val);
             }
 
          }
@@ -148,18 +156,28 @@ var tasksJobLogsColumns =  [{
    id: 'date',
    dataIndex: 'date',
    header: '{$LANG['common'][27]}',
-   width: 140
+   width: 115
+}, {
+   id: 'state',
+   dataIndex: 'state',
+   renderer: logStateRenderer,
+   header: '',
+   width: 20
 }, {
    id: 'comment',
    dataIndex: 'comment',
    header: '{$LANG['common'][25]}',
-   width: 200
+   width: 185
 }];
+
+function logStateRenderer(val) {
+   return displayState(val, false);
+}
 
 var taskJobLogsReader = new Ext.data.JsonReader({
    root: 'taskjoblogs',
    fields: [
-      'id', 'date', 'comment'
+      'id', 'date', 'state', 'comment'
    ]
 });
 
@@ -167,7 +185,7 @@ var taskJobLogsStore = new Ext.data.Store({
    url: '../ajax/state_taskjoblogs.data.php',
    autoLoad: false,
    reader: taskJobLogsReader,
-   sortInfo: {field: 'id', direction: "ASC"}
+   sortInfo: {field: 'date', direction: "DESC"}
 });
 
 var taskJobLogsGrid = new Ext.grid.GridPanel({
@@ -175,10 +193,15 @@ var taskJobLogsGrid = new Ext.grid.GridPanel({
    stripeRows: true,
    height: {$height_right},
    width: {$width_right},
-   style: 'margin-bottom:5px',
+   style: 'margin-bottom:5px;',
    title: 'logs associés',
    store: taskJobLogsStore,
-   columns: tasksJobLogsColumns
+   colModel: new Ext.grid.ColumnModel({
+      defaults: {
+         css: 'font-size:0.9em; vertical-align:middle;'
+      },
+      columns: tasksJobLogsColumns
+   })
 });
 
 
