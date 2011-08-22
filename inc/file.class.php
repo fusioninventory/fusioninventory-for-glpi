@@ -122,6 +122,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
 
                      foreach ($results_files as $result_file) {
+                        $tmp = array();
                         $tmp['uncompress']                = $result_file['uncompress'];
                         $tmp['name']                      = $result_file['name'];
                         $tmp['is_p2p']                    = $result_file['is_p2p'];
