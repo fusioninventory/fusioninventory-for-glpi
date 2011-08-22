@@ -212,7 +212,15 @@ class PluginFusinvdeployTask extends CommonDBTM {
       $disabled = "false";
       if ($this->getField('execution_id') > 0) {
          $disabled = "true";
+         echo "<div class='box' style='margin-bottom:20px;'>";
+         echo "<div class='box-tleft'><div class='box-tright'><div class='box-tcenter'>";
+         echo "</div></div></div>";
+         echo "<div class='box-mleft'><div class='box-mright'><div class='box-mcenter'>";
          echo $LANG['plugin_fusinvdeploy']['task'][19];
+         echo "</div></div></div>";
+         echo "<div class='box-bleft'><div class='box-bright'><div class='box-bcenter'>";
+         echo "</div></div></div>";
+         echo "</div>";
       }
 
 
