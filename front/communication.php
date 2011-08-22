@@ -32,6 +32,7 @@
    ----------------------------------------------------------------------
  */
 
+ob_start();
 ini_set("memory_limit", "-1");
 ini_set("max_execution_time", "0");
 
@@ -59,6 +60,8 @@ ini_set('display_errors','On');
 error_reporting(E_ALL | E_STRICT);
 set_error_handler(array('Toolbox','userErrorHandlerDebug'));
 $_SESSION['glpi_use_mode'] = 2;
+
+ob_end_clean();
 
 if (!class_exists("PluginFusioninventoryConfig")) {
    echo gzcompress("<?xml version='1.0' encoding='UTF-8'?>
@@ -93,7 +96,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       $PluginFusioninventoryModule = new PluginFusioninventoryModule();
       
       $fusioninventoryModule_id    = $PluginFusioninventoryModule->getModuleId("fusioninventory");
-   
+      ob_start();
       if ($loadplugins == '1') {
          $users_id = $fusioninventory_config->getValue($fusioninventoryModule_id, 'users_id');
          $_SESSION['glpiID'] = $users_id;
@@ -111,7 +114,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
                Plugin::doHook("post_init");
             }
       }
-      
+      ob_end_clean();
       $ssl = $fusioninventory_config->getValue($fusioninventoryModule_id, 'ssl_only');
       if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"))
           OR ($ssl == "0")) {
