@@ -186,6 +186,7 @@ $LANG['plugin_fusinvdeploy']['task'][15] = "Ajouter un ordre";
 $LANG['plugin_fusinvdeploy']['task'][16] = "Supprimer un ordre";
 $LANG['plugin_fusinvdeploy']['task'][17] = "Modifier un ordre";
 $LANG['plugin_fusinvdeploy']['task'][18] = "logs associés";
+$LANG['plugin_fusinvdeploy']['task'][19] = "Edition des ordres impossible, des actions sont en cours";
 
 $LANG['plugin_fusinvdeploy']['group'][0] = "Groupes";
 $LANG['plugin_fusinvdeploy']['group'][1] = "Groupe statique";

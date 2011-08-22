@@ -189,7 +189,7 @@ var taskJobStore = new Ext.data.GroupingStore({
    groupField : 'action_selection',
    listeners: {
       save: function(store, batch, data) {
-         store.reload();
+         taskJobStore.reload();
       }
    }
 });
@@ -209,6 +209,7 @@ action_typeStore.load();
 
 /**** DEFINE GRID ****/
 var taskJobGrid = new Ext.grid.GridPanel({
+   disabled: {$disabled},
    region: 'center',
    stripeRows: true,
    height: {$height_left},
@@ -287,6 +288,7 @@ var taskJobGrid = new Ext.grid.GridPanel({
 
 /**** DEFINE FORM ****/
 var taskJobForm = new Ext.FormPanel({
+   disabled: {$disabled},
    region: 'east',
    collapsible: true,
    collapsed: true,

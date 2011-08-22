@@ -208,6 +208,14 @@ class PluginFusinvdeployTask extends CommonDBTM {
    function showActions($id) {
       global $LANG, $CFG_GLPI;
 
+      $this->getFromDB($id);
+      $disabled = "false";
+      if ($this->getField('execution_id') > 0) {
+         $disabled = "true";
+         echo $LANG['plugin_fusinvdeploy']['task'][19];
+      }
+
+
        echo "<table class='deploy_extjs'>
          <tbody>
             <tr>
