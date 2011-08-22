@@ -134,7 +134,7 @@ class PluginFusinvdeployOrder extends CommonDBTM {
 
       $orders =  array();
       if (!empty($results)) {
-         $related_classes = array('PluginFusinvdeployCheck'  => 'check',
+         $related_classes = array('PluginFusinvdeployCheck'  => 'checks',
                                   'PluginFusinvdeployFile'   => 'associatedFiles',
                                   'PluginFusinvdeployAction' => 'actions');
 
