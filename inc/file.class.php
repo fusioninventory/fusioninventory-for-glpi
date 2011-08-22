@@ -149,7 +149,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
 
 
-   function getDirBySha512 ($sha512) {
+   static function getDirBySha512 ($sha512) {
       $first = substr($sha512, 0, 1);
       $second = substr($sha512, 0, 2);
 
@@ -160,7 +160,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
       $sha512 = hash_file('sha512', $filePath);
       $shortSha512 = substr($sha512, 0, 6);
 
-      $dir = $repoPath.'/'.$this->getDirBySha512($sha512);
+      $dir = $repoPath.'/'.self::getDirBySha512($sha512);
 
       if (!file_exists ($dir)) {
          mkdir($dir, 0700, true);
@@ -280,11 +280,11 @@ class PluginFusinvdeployFile extends CommonDBTM {
       $filepart = $PluginFusinvdeployFilepart->getForFile($id);
       $ids = $PluginFusinvdeployFilepart->getIdsForFile($id);
 
-      unlink($repoPath.$this->getDirBySha512($sha512).'/'.$sha512.'.gz');
+      unlink($repoPath.self::getDirBySha512($sha512).'/'.$sha512.'.gz');
 
       // Delete file parts in folder
       foreach($filepart as $filename => $hash){
-         $dir = $repoPath.$this->getDirBySha512($hash).'/';
+         $dir = $repoPath.self::getDirBySha512($hash).'/';
 
          //delete file part
          unlink($dir.$hash.'.gz');
@@ -314,6 +314,5 @@ class PluginFusinvdeployFile extends CommonDBTM {
       return $LANG['plugin_fusinvdeploy']['files'][6]
          ." : ".min($max_upload, $max_post, $memory_limit).$LANG['common'][82];
    }
-
 }
 ?>

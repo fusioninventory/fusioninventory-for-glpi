@@ -79,5 +79,41 @@ class PluginFusinvdeployFilepart extends CommonDBTM {
       return $fileparts;
    }
 
+   static function httpSendFile($params) {
+      if (!isset($params['filename'])) {
+         //send an error if filename not specified
+         header("HTTP/1.1 500");
+         exit;
+      }
+
+      $filename = mysql_real_escape_string($params['filename']);
+
+      $PluginFusinvdeployFilepart = new PluginFusinvdeployFilepart;
+      $files = $PluginFusinvdeployFilepart->find("name='".$filename."'");
+
+      if (count($files) == 1) {
+         $file = array_pop($files);
+
+         $repoPath = GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/repository/";
+         $sha512 = $file['sha512'];
+
+         $filedir = $repoPath.PluginFusinvdeployFile::getDirBySha512($sha512).'/'.$sha512.'.gz';
+
+         error_reporting(0);
+
+         header('Content-Description: File Transfer');
+         header('Content-Type: application/octet-stream');
+         header('Content-Disposition: attachment; filename='.$filename);
+         header('Content-Transfer-Encoding: binary');
+         header('Expires: 0');
+         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+         header('Pragma: public');
+         header('Content-Length: ' . filesize($filedir));
+         ob_clean();
+         flush();
+         readfile($filedir);
+      }
+      exit;
+   }
 }
 ?>

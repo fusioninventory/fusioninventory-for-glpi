@@ -72,6 +72,9 @@ if ($plugin->isActivated('fusinvdeploy')) {
          echo $json_response;
       }
    }
+   elseif (isset($_GET['action']) && $_GET['action'] == 'getFilePart') {
+      PluginFusinvdeployFilepart::httpSendFile($_GET);
+   }
 } else {
    //Send an error if Fusinvdeploy plugin is not activated !
    header("HTTP/1.1 500");

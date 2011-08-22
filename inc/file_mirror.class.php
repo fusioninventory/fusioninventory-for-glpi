@@ -39,18 +39,19 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusinvdeployFile_Mirror extends CommonDBTM {
-      
+
    static function cleanForFile($files_id) {
       global $DB;
-      $query = "DELETE FROM `glpi_plugin_fusinvdeploy_files_mirrors` 
+      $query = "DELETE FROM `glpi_plugin_fusinvdeploy_files_mirrors`
                 WHERE `plugin_fusinvdeploy_files_id`='$files_id'";
       $DB->query($query);
    }
-   
+
    static function getForFile($files_id) {
+      global $CFG_GLPI;
       $results = getAllDatasFromTable('glpi_plugin_fusinvdeploy_files_mirrors',
                                       "`plugin_fusinvdeploy_files_id`='$files_id'");
-      
+
       $mirrors = array();
       foreach ($results as $result) {
          $mirror = new PluginFusinvdeployMirror();
@@ -59,7 +60,11 @@ class PluginFusinvdeployFile_Mirror extends CommonDBTM {
             $mirrors[] = $mirror->fields['url'];
          }
       }
-      
+
+      //always add default mirror (this server)
+      $mirrors[] = $CFG_GLPI['url_base']
+               ."/plugins/fusinvdeploy/b/deploy/action=getFilePart&filename=";
+
       return $mirrors;
    }
 
