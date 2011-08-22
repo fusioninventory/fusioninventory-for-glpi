@@ -186,6 +186,7 @@ $LANG['plugin_fusinvdeploy']['task'][14] = "Advanced options";
 $LANG['plugin_fusinvdeploy']['task'][15] = "Add order";
 $LANG['plugin_fusinvdeploy']['task'][16] = "Delete order";
 $LANG['plugin_fusinvdeploy']['task'][17] = "Edit order";
+$LANG['plugin_fusinvdeploy']['task'][18] = "associated logs";
 
 $LANG['plugin_fusinvdeploy']['group'][0] = "Groups";
 $LANG['plugin_fusinvdeploy']['group'][1] = "Static group";

@@ -182,6 +182,10 @@ $LANG['plugin_fusinvdeploy']['task'][11] = "Editer une tâche";
 $LANG['plugin_fusinvdeploy']['task'][12] = "Ajouter une tâche";
 $LANG['plugin_fusinvdeploy']['task'][13] = "Liste des ordres";
 $LANG['plugin_fusinvdeploy']['task'][14] = "Options avancées";
+$LANG['plugin_fusinvdeploy']['task'][15] = "Ajouter un ordre";
+$LANG['plugin_fusinvdeploy']['task'][16] = "Supprimer un ordre";
+$LANG['plugin_fusinvdeploy']['task'][17] = "Modifier un ordre";
+$LANG['plugin_fusinvdeploy']['task'][18] = "logs associés";
 
 $LANG['plugin_fusinvdeploy']['group'][0] = "Groupes";
 $LANG['plugin_fusinvdeploy']['group'][1] = "Groupe statique";

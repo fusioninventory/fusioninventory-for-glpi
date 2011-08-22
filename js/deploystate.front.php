@@ -194,7 +194,7 @@ var taskJobLogsGrid = new Ext.grid.GridPanel({
    height: {$height_right},
    width: {$width_right},
    style: 'margin-bottom:5px;',
-   title: 'logs associés',
+   title: '{$LANG['plugin_fusinvdeploy']['task'][18]}',
    store: taskJobLogsStore,
    colModel: new Ext.grid.ColumnModel({
       defaults: {
