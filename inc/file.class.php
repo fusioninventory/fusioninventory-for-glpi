@@ -190,29 +190,14 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
 
       //check if file is not already present
-      if ($this->checkPresenceFile(hash_file('sha512', $file_tmp_name))) {
+      if ($id = $this->checkPresenceFile(hash_file('sha512', $file_tmp_name))) {
          $message = $LANG['plugin_fusinvdeploy']['form']['message'][3];
-         return false;
+         return $id;
       }
 
       $sha512 = $this->registerFile($repoPath, $file_tmp_name);
 
       $file_id = false;
-      if (!$testMode) { # NO SQL
-         $file_id = $this->add(array(
-                  'name'                          => $filename,
-                  'mimetype'                      => $extension,
-                  'uncompress'                    => $uncompress? '1' : '0',
-                  'is_p2p'                        => $is_p2p? '1' : '0',
-                  'p2p_retention_days'            => $p2p_retention_days,
-                  'sha512'                        => $sha512,
-                  'shortsha512'                   => substr($sha512, 0, 6),
-                  'create_date'                   => date('Y-m-d H:i:s'),
-                  'plugin_fusinvdeploy_orders_id' => $order_id
-                  ));
-      }
-
-
 
 
       $fdIn = fopen ( $file_tmp_name , 'rb' );
@@ -258,9 +243,12 @@ class PluginFusinvdeployFile extends CommonDBTM {
    function checkPresenceFile($hash) {
       global $DB;
 
-      $query = "SELECT * FROM ".$this->getTable()." WHERE sha512 = '".$hash."'";
+      $query = "SELECT id, sha512 FROM ".$this->getTable()." WHERE shortsha512 = '".substr($hash, 0, 6 )."'";
       $res = $DB->query($query);
-      if ($DB->numrows($res) > 0) return true;
+      $result = $DB->fetch_array($res);
+      if ($hash == $result["sha512"]) {
+        return $result["id"];
+      }
 
       return false;
    }
