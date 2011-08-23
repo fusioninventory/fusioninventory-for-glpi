@@ -47,7 +47,7 @@ class PluginFusioninventoryWizard {
     * @return Nothing (display)
     **/
    function filAriane($ariane) {
-      global $LANG;
+      global $LANG,$CFG_GLPI;
 
       $a_list = array();
       if (method_exists("PluginFusioninventoryWizard", $ariane)) {
@@ -70,15 +70,15 @@ class PluginFusioninventoryWizard {
          echo "<tr class='tab_bg_1'>";
          echo "<td>";
          if ($link == $_GET['wizz']) {
-            echo "<img src='".GLPI_ROOT."/pics/right.png'/>";
+            echo "<img src='".$CFG_GLPI['root_doc']."/pics/right.png'/>";
          } else {
-            echo "<img src='".GLPI_ROOT."/pics/right_off.png'/>";
+            echo "<img src='".$CFG_GLPI['root_doc']."/pics/right_off.png'/>";
          }
          $getariane = "&ariane=".$ariane;
          if ($link == "w_start") {
             $getariane = "";
          }
-         echo " <a href='".GLPI_ROOT."/plugins/fusioninventory/front/wizard.php?wizz=".
+         echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/wizard.php?wizz=".
             $link.$getariane."'>".$name."</a>";
          echo "</td>";
          echo "</tr>";
@@ -97,15 +97,16 @@ class PluginFusioninventoryWizard {
     * @return Nothing (display)
     **/
    static function displayButtons($a_buttons, $filariane) {
+      global $CFG_GLPI;
 
       $pluginFusioninventoryWizard = new PluginFusioninventoryWizard();
 
       echo "<style type='text/css'>
       .bgout {
-         background-image: url(".GLPI_ROOT."/plugins/fusioninventory/pics/wizard_button.png);
+         background-image: url(".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/wizard_button.png);
       }
       .bgover {
-         background-image: url(".GLPI_ROOT."/plugins/fusioninventory/pics/wizard_button_active.png);
+         background-image: url(".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/wizard_button_active.png);
       }
       </style>";
       echo "<center><table width='950'>";
@@ -120,12 +121,12 @@ class PluginFusioninventoryWizard {
             }
             echo "<td class='bgout'
                onmouseover='this.className=\"bgover\"' onmouseout='this.className=\"bgout\"'
-               onClick='location.href=\"".GLPI_ROOT
+               onClick='location.href=\"".$CFG_GLPI['root_doc']
                ."/plugins/fusioninventory/front/wizard.php?wizz=".$array[1].$getariane."\"'
                width='240' height='155' align='center'>";
             echo "<strong>".$array[0]."</strong><br/><br/>";
             if ($array[2] != '') {
-               echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/".$array[2]."'/>";
+               echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/".$array[2]."'/>";
             }
             echo "</td>";
          }
@@ -162,10 +163,10 @@ class PluginFusioninventoryWizard {
 
       echo "<style type='text/css'>
       .bgout {
-         background-image: url(".GLPI_ROOT."/plugins/fusioninventory/pics/wizard_button.png);
+         background-image: url(".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/wizard_button.png);
       }
       .bgover {
-         background-image: url(".GLPI_ROOT."/plugins/fusioninventory/pics/wizard_button_active.png);
+         background-image: url(".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/wizard_button_active.png);
       }
       </style>";
       echo "<center><table width='950'>";
@@ -176,10 +177,10 @@ class PluginFusioninventoryWizard {
          
          $rulecollection = new $classname;
          if (isset($_GET['id'])) {
-            include (GLPI_ROOT . "/plugins/fusioninventory/front/wizzrule.common.form.php");
+            include ($CFG_GLPI['root_doc'] . "/plugins/fusioninventory/front/wizzrule.common.form.php");
          } else {
             self::addButton();
-            include (GLPI_ROOT . "/plugins/fusioninventory/front/wizzrule.common.php");
+            include ($CFG_GLPI['root_doc'] . "/plugins/fusioninventory/front/wizzrule.common.php");
          }
 
       } else if (isset($_GET['id'])) {
@@ -217,17 +218,17 @@ class PluginFusioninventoryWizard {
       echo "<tr>";
       echo "<td width='475' align='left' style='background-color: #e1cc7b;' height='30'>";
       echo "&nbsp;<input class='submit' type='submit' name='previous' value='".$LANG['buttons'][12]."'
-               onclick='window.location.href=\"".GLPI_ROOT.
+               onclick='window.location.href=\"".$CFG_GLPI['root_doc'].
          "/plugins/fusioninventory/front/wizard.php?wizz=".PluginFusioninventoryWizard::getPreviousStep($filariane)."\"'/>";
       echo "</td>";
       echo "<td align='right' style='background-color: #e1cc7b;' height='30'>";
       if (isset($options['finish'])) {
          echo "<input class='submit' type='submit' name='next' value='".$LANG['plugin_fusioninventory']['buttons'][0]."'
-               onclick='window.location.href=\"".GLPI_ROOT."/plugins/fusioninventory/\"'/>";
+               onclick='window.location.href=\"".$CFG_GLPI['root_doc']."/plugins/fusioninventory/\"'/>";
 
       } else {
          echo "<input class='submit' type='submit' name='next' value='".$LANG['buttons'][11]."'
-               onclick='window.location.href=\"".GLPI_ROOT.
+               onclick='window.location.href=\"".$CFG_GLPI['root_doc'].
          "/plugins/fusioninventory/front/wizard.php?wizz=".PluginFusioninventoryWizard::getNextStep($filariane)."\"'/>";
       }
       echo "</form>&nbsp;&nbsp;";
@@ -662,10 +663,12 @@ class PluginFusioninventoryWizard {
     * @return Nothing (display)
     **/
    static function w_importcomputeroptions($ariane='') {
+      global $CFG_GLPI;
+      
       PluginFusioninventoryWizard::displayShowForm($ariane, 
               "PluginFusinvinventoryConfig",
               array('f'=>'showForm',
-                    'arg1'=>array('target'=> GLPI_ROOT."/plugins/fusioninventory/front/configuration.form.php"
+                    'arg1'=>array('target'=> $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/configuration.form.php"
               ),
               'noadditem'=>1));
       

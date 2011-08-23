@@ -79,7 +79,7 @@ if (haveRight("config","w") && haveRight("profile","w")) {
 } else {
 
    commonHeader($LANG['login'][5],$_SERVER['PHP_SELF'],"plugins","fusioninventory");
-   echo "<div align='center'><br><br><img src=\"".GLPI_ROOT."/pics/warning.png\"
+   echo "<div align='center'><br><br><img src=\"".$CFG_GLPI['root_doc']."/pics/warning.png\"
               alt=\"warning\"><br><br>";
    echo "<b>".$LANG['login'][5]."</b></div>";
    commonFooter();

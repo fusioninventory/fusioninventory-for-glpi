@@ -95,7 +95,7 @@ if (isset ($_POST["add"])) {
    if ($Import == "0") {
       glpi_header($_SERVER['HTTP_REFERER']);
    } else {
-      glpi_header(GLPI_ROOT."/plugins/fusioninventory/front/unknowndevice.php");
+      glpi_header($CFG_GLPI['root_doc']."/plugins/fusioninventory/front/unknowndevice.php");
    }
 }
 

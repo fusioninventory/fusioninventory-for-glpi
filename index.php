@@ -49,7 +49,7 @@ if ((isset($_GET['action'])
    commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"], "plugins", 
                 "fusioninventory");
 
-   glpi_header(GLPI_ROOT ."/plugins/fusioninventory/front/wizard.php");
+   glpi_header($CFG_GLPI['root_doc']."/plugins/fusioninventory/front/wizard.php");
    commonFooter();
 }
 ?>
