@@ -45,23 +45,12 @@ class PluginFusinvinventoryAntivirus extends CommonDBTM {
    }
 
    function canCreate() {
-      return true;
+      return haveRight('computer', 'w');
    }
+
 
    function canView() {
-      return true;
-   }
-
-   function canCancel() {
-      return true;
-   }
-
-   function canUndo() {
-      return true;
-   }
-
-   function canValidate() {
-      return true;
+      return haveRight('computer', 'r');
    }
 
    
