@@ -81,16 +81,16 @@ class PluginFusinvdeployFilepart extends CommonDBTM {
    }
 
    static function httpSendFile($params) {
-      if (!isset($params['filename'])) {
+      if (!isset($params['sha512'])) {
          //send an error if filename not specified
          header("HTTP/1.1 500");
          exit;
       }
 
-      $filename = mysql_real_escape_string($params['filename']);
+      $sha512 = mysql_real_escape_string($params['sha512']);
 
       $PluginFusinvdeployFilepart = new PluginFusinvdeployFilepart;
-      $files = $PluginFusinvdeployFilepart->find("name='".$filename."'");
+      $files = $PluginFusinvdeployFilepart->find("sha512='".$sha512."'");
 
       if (count($files) == 1) {
          $file = array_pop($files);

@@ -63,7 +63,7 @@ class PluginFusinvdeployFile_Mirror extends CommonDBTM {
 
       //always add default mirror (this server)
       $mirrors[] = $CFG_GLPI['url_base']
-               ."/plugins/fusinvdeploy/b/deploy/action=getFilePart&filename=";
+               ."/plugins/fusinvdeploy/b/deploy/?action=getFilePart&sha512=";
 
       return $mirrors;
    }
