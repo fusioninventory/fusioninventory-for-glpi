@@ -40,7 +40,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvdeployCheck extends CommonDBTM {
 
-   const WINKEY_PRESENT   = 'winkeyPresent';    //Registry key present
+   const WINKEY_EXIST   = 'winkeyExists';    //Registry key present
    const WINKEY_MISSING   = 'winkeyMissing';    //Registry key missing
    const WINKEY_EQUAL     = 'winkeyEqual';      //Registry equals a value
    const FILE_PRESENT     = 'filePresent';      //File is present
