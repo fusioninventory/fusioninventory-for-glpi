@@ -64,7 +64,7 @@ class PluginFusinvdeployAction_Command extends CommonDBTM {
                $tmp[$value] = $result;
             }
          }
-         $response['cmd'][] = $tmp;
+         $response['cmd'] = $tmp;
       }
       return $response;
    }

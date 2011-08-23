@@ -39,7 +39,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusinvdeployAction_Message extends CommonDBTM {
-   
+
    static function getTypeName() {
       global $LANG;
 
@@ -47,14 +47,15 @@ class PluginFusinvdeployAction_Message extends CommonDBTM {
    }
 
    static function getActions($commands_id, $response = array()) {
-      $commands = getAllDatasFromTable('glpi_plugin_fusinvdeploy_actions_messages', 
+      $commands = getAllDatasFromTable('glpi_plugin_fusinvdeploy_actions_messages',
                                        "`id`='$commands_id'");
       foreach ($commands as $command) {
          $tmp['msg']    = array('default' => $command['message']);
          $tmp['title']  = array('default' => $command['name']);
          $tmp['type']   = $command['type'];
-         $response['messageBox'][] = $tmp;
+         $response['messageBox'] = $tmp;
       }
+
       return $response;
    }
 }
