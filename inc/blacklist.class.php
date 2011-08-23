@@ -44,24 +44,14 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
       return $LANG['plugin_fusinvinventory']['menu'][2];
    }
 
+   
    function canCreate() {
-      return true;
+      return PluginFusioninventoryProfile::haveRight("fusinvinventory", "blacklist", "w");
    }
+
 
    function canView() {
-      return true;
-   }
-
-   function canCancel() {
-      return true;
-   }
-
-   function canUndo() {
-      return true;
-   }
-
-   function canValidate() {
-      return true;
+      return PluginFusioninventoryProfile::haveRight("fusinvinventory", "blacklist", "r");
    }
 
    
