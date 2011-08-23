@@ -210,7 +210,7 @@ class PluginFusinvdeployTask extends CommonDBTM {
 
       $this->getFromDB($id);
       $disabled = "false";
-      if ($this->getField('execution_id') > 0) {
+      if ($this->getField('is_active') == 1) {
          $disabled = "true";
          echo "<div class='box' style='margin-bottom:20px;'>";
          echo "<div class='box-tleft'><div class='box-tright'><div class='box-tcenter'>";
@@ -238,12 +238,22 @@ class PluginFusinvdeployTask extends CommonDBTM {
    }
 
    function pre_deleteItem() {
+      global $LANG;
+
+      //if task active, delete denied
+      if ($this->getField('is_active') == 1) {
+         addMessageAfterRedirect($LANG['plugin_fusinvdeploy']['task'][20]);
+         glpi_header(GLPI_ROOT."/plugins/fusinvdeploy/front/task.form.php?id=".$this->getField('id'));
+         return false;
+      }
+
       $task_id = $this->getField('id');
 
       $job = new PluginFusioninventoryTaskjob();
       $status = new PluginFusioninventoryTaskjobstatus();
       $log = new PluginFusioninventoryTaskjoblog();
 
+      // clean all sub-tables
       $a_taskjobs = $job->find("`plugin_fusioninventory_tasks_id`='$task_id'");
       foreach($a_taskjobs as $a_taskjob) {
          $a_taskjobstatuss = $status->find("`plugin_fusioninventory_taskjobs_id`='".$a_taskjob['id']."'");

@@ -160,6 +160,7 @@ function printObject(o) {
 
 //define grid
 var {$render}checkGrid = new Ext.grid.GridPanel({
+   disabled: {$disabled},
    region: 'center',
    margins: '0 0 0 5',
    store: {$render}checkGridStore,
@@ -392,6 +393,8 @@ function {$render}refreshDynFieldset(val) {
 
 //define form
 var {$render}checkForm = new Ext.FormPanel({
+   disabled: {$disabled},
+   hidden: {$disabled},
    region: 'east',
    collapsible: true,
    collapsed: true,

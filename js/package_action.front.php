@@ -167,6 +167,7 @@ var {$render}actionGridStore = new Ext.data.GroupingStore({
 
 //define grid
 var {$render}actionGrid = new Ext.grid.GridPanel({
+   disabled: {$disabled},
    region: 'center',
    margins: '0 0 0 5',
    store: {$render}actionGridStore,
@@ -573,6 +574,8 @@ function {$render}actionFormSave() {
 }
 
 var {$render}actionForm = new Ext.FormPanel({
+   disabled: {$disabled},
+   hidden: {$disabled},
    region: 'east',
    collapsible: true,
    collapsed: true,
