@@ -40,7 +40,7 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
    
 
    function canView() {
-      return true;
+      return PluginFusioninventoryProfile::haveRight("fusioninventory", "task", "r");
    }
 
 

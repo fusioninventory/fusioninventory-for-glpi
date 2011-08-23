@@ -38,6 +38,16 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
    
+   
+   function canCreate() {
+      return PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity", "w");
+   }
+
+
+   function canView() {
+      return PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity", "r");
+   }
+   
 
 	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
@@ -467,20 +477,6 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 		
 		return $selectbox;
 	}
-
-
-
-   function canCreate() {
-//      return plugin_fusioninventory_haveTypeRight('PluginFusinvsnmpConfigSecurity', 'w');
-//      return plugin_fusinvsnmp_haveTypeRight('PluginFusinvsnmpConfigSecurity', 'w');
-      return true;
-   }
-
-
-   
-   function canView() {
-      return true;
-   }
 }
 
 ?>

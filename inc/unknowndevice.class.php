@@ -47,12 +47,14 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
 
 
    function canCreate() {
-      return true;
+      return PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice", "w");
    }
 
+
    function canView() {
-      return true;
+      return PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice", "r");
    }
+      
 
    function canDelete() {
       return false;
