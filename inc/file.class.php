@@ -97,11 +97,8 @@ class PluginFusinvdeployFile extends CommonDBTM {
          $tasks_list = $taskjobstatus->getTaskjobsAgent($agents_id);
          foreach ($tasks_list as $itemtype => $status_list) {
             foreach ($status_list as $status) {
-               $taskjob = new PluginFusioninventoryTaskjob();
-               $taskjob->getFromDB($status['plugin_fusioninventory_taskjobs_id']);
-
                $results_jobs = getAllDatasFromTable('glpi_plugin_fusinvdeploy_taskjobs',
-                                     "`plugin_fusinvdeploy_tasks_id`='".$taskjob->fields['plugin_fusioninventory_tasks_id']."'");
+                                     "`id`='".$status['plugin_fusioninventory_taskjobs_id']."'");
 
                foreach ($results_jobs as $jobs) {
                   $definitions = importArrayFromDB($jobs['definition']);
