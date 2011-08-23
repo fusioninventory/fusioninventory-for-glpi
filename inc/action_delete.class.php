@@ -39,7 +39,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusinvdeployAction_Delete extends CommonDBTM {
-   
+
    static function getTypeName() {
       global $LANG;
 
@@ -49,7 +49,7 @@ class PluginFusinvdeployAction_Delete extends CommonDBTM {
    static function getActions($moves_id, $response = array()) {
       $deletes = getAllDatasFromTable('glpi_plugin_fusinvdeploy_actions_deletes', "`id`='$moves_id'");
       foreach ($deletes as $delete) {
-         $response['delete'][] = $delete['path'];
+         $response['delete']['list'][] = $delete['path'];
       }
       return $response;
    }

@@ -383,6 +383,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
             'serial' => '',
             'otherserial' => '',
             'locations' => '0',
+            'operatingsystems_id' => '0',
             'room' => '',
             'building' => ''
          );
@@ -445,6 +446,16 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       echo "<td class='left'><input type='text' name='otherserial' id='group_search_otherserial' value='"
          .$fields['otherserial']."' size='15' /></td>";
 
+      echo "<td class='left'>".$LANG['computers'][9]." : </td>";
+      echo "<td>";
+      $rand_os = mt_rand();
+      Dropdown::show('OperatingSystem', array(
+         'value'  => $fields['operatingsystems_id'],
+         'name'   => 'operatingsystems_id',
+         'rand'   => $rand_os
+      ));
+      echo "</td>";
+
       echo "</tr><tr>";
 
       echo "<td class='center' colspan='4'>";
@@ -454,12 +465,13 @@ class PluginFusinvdeployGroup extends CommonDBTM {
          'group_results',
          $CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/ajax/group_results.php",
          array(
-            'itemtype'     => 'group_search_itemtype',
-            /*'start'        => 'group_search_start',
-            'limit'        => 'group_search_limit',*/
-            'location_id'  => 'dropdown_locations'.$rand_location,
-            'serial'       => 'group_search_serial',
-            'otherserial'  => 'group_search_otherserial'
+            'itemtype'              => 'group_search_itemtype',
+            /*'start'               => 'group_search_start',
+            'limit'                 => 'group_search_limit',*/
+            'location_id'           => 'dropdown_locations'.$rand_location,
+            'operatingsystems_id'   => 'dropdown_operatingsystems_id'.$rand_os,
+            'serial'                => 'group_search_serial',
+            'otherserial'           => 'group_search_otherserial'
          ),
          $type
       );
@@ -493,13 +505,14 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       else exit;
 
       $params = array(
-         'type'         => $type,
-         'itemtype'     => $params['itemtype'],
-         /*'start'        => $params['start'],
-         'limit'        => $params['limit'],*/
-         'location_id'  => $params['location_id'],
-         'serial'       => $params['serial'],
-         'otherserial'  => $params['otherserial']
+         'type'               => $type,
+         'itemtype'           => $params['itemtype'],
+         /*'start'            => $params['start'],
+         'limit'              => $params['limit'],*/
+         'location_id'        => $params['location_id'],
+         'serial'             => $params['serial'],
+         'operatingsystems_id'=> $params['operatingsystems_id'],
+         'otherserial'         => $params['otherserial']
       );
 
       $datas = PluginFusinvdeploySearch::methodListObjects($params, '');
