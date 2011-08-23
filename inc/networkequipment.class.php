@@ -519,11 +519,11 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 
 		echo "<script  type='text/javascript'>
 function close_array(id){
-   document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/plugins/fusioninventory/pics/collapse.png\''+
+   document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/collapse.png\''+
       'onClick=\'Effect.Fade(\"viewfollowup'+id+'\");appear_array('+id+');\' />';
 }
 function appear_array(id){
-	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/plugins/fusioninventory/pics/expand.png\''+
+	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/expand.png\''+
       'onClick=\'Effect.Appear(\"viewfollowup'+id+'\");close_array('+id+');\' id=\'plusmoinsl'+id+'\' />';
 }
 
@@ -538,8 +538,8 @@ function appear_legend(id){
 
 
 		</script>";
-		echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusioninventory/prototype.js'></script>";
-      echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusioninventory/effects.js'></script>";
+		echo "<script type='text/javascript' src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/prototype.js'></script>";
+      echo "<script type='text/javascript' src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/effects.js'></script>";
       
 		echo "<table class='tab_cadre' cellpadding='5' width='1100'>";
 
@@ -570,11 +570,11 @@ function appear_legend(id){
          <ul>
             <li>".$LANG['plugin_fusinvsnmp']['legend'][0]."&nbsp;:</li>
          </ul>
-         <img src='".GLPI_ROOT."/plugins/fusinvsnmp/pics/port_trunk.png' width='750' />
+         <img src='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/pics/port_trunk.png' width='750' />
          <ul>
             <li>".$LANG['plugin_fusinvsnmp']['legend'][1]."&nbsp;:</li>
          </ul>
-         <img src='".GLPI_ROOT."/plugins/fusinvsnmp/pics/connected_trunk.png' width='750' />
+         <img src='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/pics/connected_trunk.png' width='750' />
          </td>
       </tr>";
 
@@ -584,8 +584,8 @@ function appear_legend(id){
 		echo '<th>';
 //      echo '<img alt="'.$LANG['setup'][252].'"
 //                     title="'.$LANG['setup'][252].'"
-//                     src="'.GLPI_ROOT.'/pics/options_search.png" class="pointer"
-//                     onclick="var w = window.open(\''.GLPI_ROOT.
+//                     src="'.$CFG_GLPI['root_doc'].'/pics/options_search.png" class="pointer"
+//                     onclick="var w = window.open(\''.$CFG_GLPI['root_doc'].
 //                        '/front/popup.php?popup=search_config&itemtype=PluginFusinvsnmpNetworkEquipment\' ,\'glpipopup\',
 //                        \'height=400, width=1000, top=100, left=100, scrollbars=yes\' ); w.focus();"></th>';
 		echo "<th>".$LANG["common"][16]."</th>";
@@ -666,18 +666,18 @@ function appear_legend(id){
 				$background_img = "";
 				if (($data["trunk"] == "1") AND (strstr($data["ifstatus"], "up")
                   OR strstr($data["ifstatus"], "1"))) {
-					$background_img = " style='background-image: url(\"".GLPI_ROOT.
+					$background_img = " style='background-image: url(\"".$CFG_GLPI['root_doc'].
                                     "/plugins/fusinvsnmp/pics/port_trunk.png\"); '";
             } else if (($data["trunk"] == "-1") AND (strstr($data["ifstatus"], "up")
                         OR strstr($data["ifstatus"], "1"))) {
-					$background_img = " style='background-image: url(\"".GLPI_ROOT.
+					$background_img = " style='background-image: url(\"".$CFG_GLPI['root_doc'].
                                     "/plugins/fusinvsnmp/pics/multiple_mac_addresses.png\"); '";
             } else if (strstr($data["ifstatus"], "up") OR strstr($data["ifstatus"], "1")) {
-					$background_img = " style='background-image: url(\"".GLPI_ROOT.
+					$background_img = " style='background-image: url(\"".$CFG_GLPI['root_doc'].
                                     "/plugins/fusinvsnmp/pics/connected_trunk.png\"); '";
             }
 				echo "<tr class='tab_bg_1 center' height='40'".$background_img.">";
-				echo "<td id='plusmoins".$data["id"]."'><img src='".GLPI_ROOT.
+				echo "<td id='plusmoins".$data["id"]."'><img src='".$CFG_GLPI['root_doc'].
                      "/plugins/fusioninventory/pics/expand.png' onClick='Effect.Appear(\"viewfollowup".$data["id"].
                      "\");close_array(".$data["id"].");' id='plusmoinsl".$data["id"]."'\'/>";
             echo "</td>";
@@ -704,13 +704,13 @@ function appear_legend(id){
 						case 4 :
 							echo "<td>";
 							if (strstr($data["ifstatus"], "up") OR strstr($data["ifinternalstatus"],"1")) {
-								echo "<img src='".GLPI_ROOT."/pics/greenbutton.png'/>";
+								echo "<img src='".$CFG_GLPI['root_doc']."/pics/greenbutton.png'/>";
                      } else if (strstr($data["ifstatus"],"down")
                                  OR strstr($data["ifinternalstatus"], "2")) {
-								echo "<img src='".GLPI_ROOT."/pics/redbutton.png'/>";
+								echo "<img src='".$CFG_GLPI['root_doc']."/pics/redbutton.png'/>";
                      } else if (strstr($data["ifstatus"], "testing")
                                  OR strstr($data["ifinternalstatus"], "3")) {
-								echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/yellowbutton.png'/>";
+								echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/yellowbutton.png'/>";
                      }
 							echo "</td>";
 							break;
@@ -827,16 +827,16 @@ function appear_legend(id){
 							// ** Connection status
 							echo "<td>";
 							if (strstr($data["ifstatus"], "up") OR strstr($data["ifstatus"], "1")) {
-								echo "<img src='".GLPI_ROOT."/plugins/fusinvsnmp/pics/wired_on.png'/>";
+								echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/pics/wired_on.png'/>";
                      } else if (strstr($data["ifstatus"], "down")
                                 OR strstr($data["ifstatus"], "2")) {
-								echo "<img src='".GLPI_ROOT."/plugins/fusinvsnmp/pics/wired_off.png'/>";
+								echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/pics/wired_off.png'/>";
                      } else if (strstr($data["ifstatus"], "testing")
                                 OR strstr($data["ifstatus"], "3")) {
-								echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/yellowbutton.png'/>";
+								echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/yellowbutton.png'/>";
                      } else if (strstr($data["ifstatus"], "dormant")
                                 OR strstr($data["ifstatus"], "5")) {
-								echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/orangebutton.png'/>";
+								echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/orangebutton.png'/>";
                      }
 							echo "</td>";
 							break;
@@ -890,7 +890,7 @@ function appear_legend(id){
             echo "<td colspan='".(mysql_num_rows($result_array) + 2)."' id='viewfollowuphistory".$data["id"]."'></td>";
             Ajax::UpdateItemOnEvent('plusmoinsl'.$data["id"],
                                   'viewfollowuphistory'.$data["id"],
-                                  GLPI_ROOT."/plugins/fusinvsnmp/ajax/showporthistory.php",
+                                  $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/ajax/showporthistory.php",
                                   array('ports_id' => $data["id"]),
                                   array("click"));
 				echo "</tr>

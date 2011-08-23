@@ -48,7 +48,7 @@ class PluginFusinvsnmpNetworkPortConnectionLog extends CommonDBTM {
 
       echo "<th>";
       echo $LANG['plugin_fusioninventory']['processes'][1];
-      echo " <a href='".GLPI_ROOT."/plugins/fusioninventory/front/agentprocess.form.php'>(".$LANG['common'][66].")</a>";
+      echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/agentprocess.form.php'>(".$LANG['common'][66].")</a>";
       echo "</th>";
 
       echo "<th>";
@@ -92,7 +92,7 @@ class PluginFusinvsnmpNetworkPortConnectionLog extends CommonDBTM {
             echo "<tr class='tab_bg_1 center'>";
 
             echo "<td>";
-            echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/front/agentprocess.form.php?h_process_number=".$data['plugin_fusioninventory_agentprocesses_id']."'>".
+            echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/agentprocess.form.php?h_process_number=".$data['plugin_fusioninventory_agentprocesses_id']."'>".
             $data['plugin_fusioninventory_agentprocesses_id']."</a>";
             echo "</td>";
 
@@ -117,9 +117,9 @@ class PluginFusinvsnmpNetworkPortConnectionLog extends CommonDBTM {
 
             echo "<td>";
             if ($data['creation'] == '1') {
-               echo "<img src='".GLPI_ROOT."/plugins/fusinvsnmp/pics/connection_ok.png'/>";
+               echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/pics/connection_ok.png'/>";
             } else {
-               echo "<img src='".GLPI_ROOT."/plugins/fusinvsnmp/pics/connection_notok.png'/>";
+               echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/pics/connection_notok.png'/>";
             }
             echo "</td>";
 

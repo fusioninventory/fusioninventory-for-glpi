@@ -73,7 +73,7 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
             $this->getFromDB($id);
 
             echo "<br>";
-            $target = GLPI_ROOT.'/plugins/fusinvsnmp/front/model.form.php';
+            $target = $CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/model.form.php';
             echo "<div align='center'><form method='post' name='oid_list' id='oid_list'
                        action=\"".$target."\">";
 
@@ -221,7 +221,7 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
       global $DB,$CFG_GLPI,$LANG,$IMPORT_TYPES;
 
       echo "<br>";
-      $target = GLPI_ROOT.'/plugins/fusinvsnmp/front/model.form.php';
+      $target = $CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/model.form.php';
       echo "<div align='center'><form method='post' name='oid_add' id='oid_add'
                  action=\"".$target."\">";
 

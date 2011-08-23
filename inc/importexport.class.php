@@ -107,7 +107,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
 		PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model", "r");
 
-      $target = GLPI_ROOT.'/plugins/fusinvsnmp/front/model.form.php';
+      $target = $CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/model.form.php';
 		echo "<form action='".$target."?add=1' method='post' enctype='multipart/form-data'>";
 
 		echo "<br>";

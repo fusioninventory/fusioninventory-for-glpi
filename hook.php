@@ -306,9 +306,9 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
             // ** Display pic / link for exporting model
             case "glpi_plugin_fusinvsnmp_models.id" :
                $out = "<div align='center'><form></form><form method='get' action='"; 
-               $out.=GLPI_ROOT . "/plugins/fusinvsnmp/front/models.export.php' target='_blank'>
+               $out.=$CFG_GLPI['root_doc'] . "/plugins/fusinvsnmp/front/models.export.php' target='_blank'>
                   <input type='hidden' name='model' value='" . $data["id"] . "' />
-                  <input name='export' src='" . GLPI_ROOT;
+                  <input name='export' src='" . $CFG_GLPI['root_doc'];
                $out.= "/pics/right.png' title='Exporter' value='Exporter' type='image'>
                   </form></div>";
                return "<center>".$out."</center>";
@@ -375,7 +375,7 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
                   $np = new NetworkPort;
                   foreach ($list as $numtmp=>$vartmp) {
                      $np->getFromDB($vartmp);
-                     $out .= "<a href='".GLPI_ROOT."/front/networkport.form.php?id=".$vartmp."'>";
+                     $out .= "<a href='".$CFG_GLPI['root_doc']."/front/networkport.form.php?id=".$vartmp."'>";
                      $out .= $np->fields["name"]."</a><br/>";
                   }
                }
@@ -429,7 +429,7 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
                          LIMIT 0,1;";
                $result = $DB->query($query);
                $data2 = $DB->fetch_assoc($result);
-               $out = "<a href='".GLPI_ROOT."/front/networking.form.php?id=".$data2["id"]."'>";
+               $out = "<a href='".$CFG_GLPI['root_doc']."/front/networking.form.php?id=".$data2["id"]."'>";
                $out.= $data2["name"]."</a>";
             return "<center>".$out."</center>";
             break;
@@ -442,7 +442,7 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
                if (isset($NetworkPort->fields["name"])) {
                   $name = $NetworkPort->fields["name"];
                }
-               $out = "<a href='".GLPI_ROOT."/front/networkport.form.php?id=".$data["ITEM_$num"];
+               $out = "<a href='".$CFG_GLPI['root_doc']."/front/networkport.form.php?id=".$data["ITEM_$num"];
                $out.= "'>".$name."</a>";
                return "<center>".$out."</center>";
                break;
@@ -490,7 +490,7 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
                $result = $DB->query($query);
 
                if ($DB->numrows($result) != "0") {
-                  $out .= "<br/><a href='".GLPI_ROOT."/front/networkport.form.php?id=";
+                  $out .= "<br/><a href='".$CFG_GLPI['root_doc']."/front/networkport.form.php?id=";
                   $out .= $data["ITEM_$num"]."'>".$DB->result($result, 0, "name")."</a>";
                }
                $out .= "</td>";
@@ -816,33 +816,38 @@ function plugin_headings_fusinvsnmp_task_snmpquery($type, $id) {
 }
 
 function plugin_headings_fusinvsnmp_printerInfo($type, $id) {
+   global $CFG_GLPI;
 
    $plugin_fusinvsnmp_printer = new PluginFusinvsnmpPrinter;
    $plugin_fusinvsnmp_printer->showForm($_POST['id'],
-               array('target'=>GLPI_ROOT.'/plugins/fusinvsnmp/front/printer_info.form.php'));
+               array('target'=>$CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/printer_info.form.php'));
    echo '<div id="overDivYFix" STYLE="visibility:hidden">fusinvsnmp_1</div>';
 
    $PluginFusinvsnmpPrinterCartridge = 
       new PluginFusinvsnmpPrinterCartridge('glpi_plugin_fusinvsnmp_printercartridges');
    $PluginFusinvsnmpPrinterCartridge->showForm($_POST['id'],
-               array('target'=>GLPI_ROOT.'/plugins/fusinvsnmp/front/printer_info.form.php'));
+               array('target'=>$CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/printer_info.form.php'));
 
    $PluginFusinvsnmpPrinterLog = new PluginFusinvsnmpPrinterLog;
    $PluginFusinvsnmpPrinterLog->showGraph($_POST['id'],
-               array('target'=>GLPI_ROOT . '/plugins/fusinvsnmp/front/printer_info.form.php'));
+               array('target'=>$CFG_GLPI['root_doc'] . '/plugins/fusinvsnmp/front/printer_info.form.php'));
 
 }
 
 function plugin_headings_fusinvsnmp_printerHistory($type, $id) {
+   global $CFG_GLPI;
+   
    $print_history = new PluginFusinvsnmpPrinterLog;
    $print_history->showForm($_GET["id"],
-               array('target'=>GLPI_ROOT.'/plugins/fusinvsnmp/front/printer_history.form.php'));
+               array('target'=>$CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/printer_history.form.php'));
 }
 
 function plugin_headings_fusinvsnmp_networkingInfo($type, $id) {
+   global $CFG_GLPI;
+   
    $snmp = new PluginFusinvsnmpNetworkEquipment;
    $snmp->showForm($_POST['id'],
-           array('target'=>GLPI_ROOT.'/plugins/fusinvsnmp/front/switch_info.form.php'));
+           array('target'=>$CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/switch_info.form.php'));
 }
 
 
@@ -2181,7 +2186,7 @@ function plugin_fusinvsnmp_addWhere($link,$nott,$type,$id,$val) {
                   $ADD=" OR $table.$field IS NOT NULL ";
                }
                if (!empty($val)) {
-//                  include (GLPI_ROOT . "/plugins/fusinvsnmp/inc_constants/snmp.mapping.constant.php");
+//                  include ($CFG_GLPI['root_doc'] . "/plugins/fusinvsnmp/inc_constants/snmp.mapping.constant.php");
 //                $val = $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$val]['field'];
                   $map = new PluginFusioninventoryMapping;
                   $mapfields = $map->get('NetworkEquipment', $val);

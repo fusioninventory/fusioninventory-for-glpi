@@ -403,7 +403,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
             $text .= "<tr class='tab_bg_1'>";
             if (!empty($data["networkports_id_destination"])) {
                // Connections and disconnections
-               $imgfolder = GLPI_ROOT."/plugins/fusinvsnmp/pics";
+               $imgfolder = $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/pics";
                if (strstr($_SERVER['PHP_SELF'], 'fusinvsnmp/ajax/showporthistory.php')) {
                   $imgfolder = "../plugins/fusinvsnmp/pics";
                }
@@ -472,7 +472,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
       $text .= "<tr class='tab_bg_1'>";
       $text .= "<th colspan='8'>";
-      $text .= "<a href='".GLPI_ROOT."/plugins/fusinvsnmp/report/switch_ports.history.php?networkports_id=".$ID_port."'>Voir l'historique complet</a>";
+      $text .= "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/report/switch_ports.history.php?networkports_id=".$ID_port."'>Voir l'historique complet</a>";
       $text .= "</th>";
       $text .= "</tr>";
       $text .= "</table>";
