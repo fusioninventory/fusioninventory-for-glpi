@@ -173,6 +173,7 @@ var {$render}fileStore = new Ext.data.GroupingStore({
 
 //define grid
 var {$render}fileGrid = new Ext.grid.GridPanel({
+   disabled: {$disabled},
    region: 'center',
    margins: '0 0 0 5',
    store: {$render}fileStore,
@@ -284,9 +285,10 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
 
 //define form
 var {$render}fileForm = new Ext.FormPanel({
+   disabled: {$disabled},
    collapsible: true,
    collapsed: true,
-   /*hidden : true,*/
+   hidden : {$disabled},
    region: 'east',
    labelWidth: {$label_width},
    fileUpload        : true,
@@ -461,9 +463,11 @@ var {$render}fileForm = new Ext.FormPanel({
 
 
 function {$render}unlockForm({$render}rec){
-   {$render}fileForm.show();
-   {$render}fileForm.expand();
-   {$render}fileForm.buttons[0].setDisabled(false);
+   if (!{$disabled}) {
+      {$render}fileForm.show();
+      {$render}fileForm.expand();
+      {$render}fileForm.buttons[0].setDisabled(false);
+   }
 }
 
 

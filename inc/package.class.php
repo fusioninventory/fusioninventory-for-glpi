@@ -205,6 +205,28 @@ class PluginFusinvdeployPackage extends CommonDBTM {
 
       return json_encode($json);
    }
+
+
+   static function canEdit($id) {
+      global $DB;
+
+      if (count(getAllDatasFromTable('glpi_plugin_fusinvdeploy_taskjobs',
+               "definition LIKE '%\"PluginFusinvdeployPackage\":\"".$id."%'")) > 0) return false;
+      return true;
+   }
+
+   function pre_deleteItem() {
+      global $LANG;
+
+      //if task use this package, delete denied
+      if (!self::canEdit($this->getField('id'))) {
+         addMessageAfterRedirect($LANG['plugin_fusinvdeploy']['package'][23]);
+         glpi_header(GLPI_ROOT."/plugins/fusinvdeploy/front/package.form.php?id=".$this->getField('id'));
+         return false;
+      }
+
+      return true;
+   }
 }
 
 ?>

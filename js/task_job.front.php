@@ -184,7 +184,8 @@ var taskJobStore = new Ext.data.GroupingStore({
    reader: taskJobGridReader,
    writer: taskJobGridWriter,
    proxy: taskJobGridProxy,
-   autoSave: false,
+   autoSave: true,
+   pruneModifiedRecords: true,
    sortInfo: {field: 'action_selection', direction: "ASC"},
    groupField : 'action_selection',
    listeners: {
@@ -252,10 +253,13 @@ var taskJobGrid = new Ext.grid.GridPanel({
          if (!selection) return false;
 
          for(var i = 0, r; r = selection[i]; i++){
-            taskJobStore.remove(r);
+            taskJobGrid.store.remove(r);
          }
 
-         taskJobStore.save();
+         /*//taskJobStore.save();
+         console.log(taskJobStore);
+         taskJobStore.fireEvent("destroy");
+         taskJobStore.proxy.fireEvent("destroy");*/
 
          if(taskJobStore.data.length == 0) {
             taskJobForm.collapse();
