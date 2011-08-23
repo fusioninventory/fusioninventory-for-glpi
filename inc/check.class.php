@@ -42,7 +42,7 @@ class PluginFusinvdeployCheck extends CommonDBTM {
 
    const WINKEY_EXIST   = 'winkeyExists';    //Registry key present
    const WINKEY_MISSING   = 'winkeyMissing';    //Registry key missing
-   const WINKEY_EQUAL     = 'winkeyEqual';      //Registry equals a value
+   const WINKEY_EQUAL     = 'winkeyEquals';      //Registry equals a value
    const FILE_PRESENT     = 'filePresent';      //File is present
    const FILE_MISSING     = 'fileMissing';      //File is missing
    const FILE_SIZEGREATER = 'fileSizeGreater';         //File size
