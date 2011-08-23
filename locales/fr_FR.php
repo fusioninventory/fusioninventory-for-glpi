@@ -61,7 +61,7 @@ $LANG['plugin_fusinvdeploy']['package'][19]="Fragments de fichiers";
 $LANG['plugin_fusinvdeploy']['package'][20]="Supprimer un fichier";
 $LANG['plugin_fusinvdeploy']['package'][21]="Afficher une boite de dialogue";
 $LANG['plugin_fusinvdeploy']['package'][22]="Codes retour";
-$LANG['plugin_fusinvdeploy']['package'][23]="Une tache utilise ce paquet, suppression impossible";
+$LANG['plugin_fusinvdeploy']['package'][23]="Une tâche utilise ce paquet, suppression impossible";
 
 $LANG['plugin_fusinvdeploy']['files'][0]="Gestion des fichiers";
 $LANG['plugin_fusinvdeploy']['files'][1]="Nom de fichier";

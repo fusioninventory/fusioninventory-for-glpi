@@ -93,6 +93,7 @@ if (isset($_POST["add"])) {
          'serial'  => $_REQUEST['serial'],
          'otherserial'  => $_REQUEST['otherserial'],
          'locations'  => $_REQUEST['locations'],
+         'operatingsystems_id'  => $_REQUEST['operatingsystems_id'],
          'room'  => $_REQUEST['room'],
          'building'  => $_REQUEST['building'],
       );
@@ -113,6 +114,7 @@ if (isset($_POST["add"])) {
          'serial'  => $_REQUEST['serial'],
          'otherserial'  => $_REQUEST['otherserial'],
          'locations'  => $_REQUEST['locations'],
+         'operatingsystems_id'  => $_REQUEST['operatingsystems_id'],
          'room'  => $_REQUEST['room'],
          'building'  => $_REQUEST['building'],
       );
