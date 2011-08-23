@@ -59,9 +59,13 @@ class PluginFusinvdeployAction extends CommonDBTM {
                                       "`plugin_fusinvdeploy_orders_id`='$orders_id'");
       $actions = array();
 
+     // printCleanArray($results);
+
       foreach ($results as $result) {
-         $actions[] = call_user_func(array($result['itemtype'], 'getActions'),$result['items_id'],
-                                   $actions);
+         $actions[] = call_user_func(array($result['itemtype'], 'getActions'),$result['items_id']/*,
+                                   $actions*/);
+
+
       }
       return $actions;
    }
