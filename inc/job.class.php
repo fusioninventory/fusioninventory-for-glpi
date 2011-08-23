@@ -52,7 +52,6 @@ class PluginFusinvdeployJob {
 
          //Get tasks associated with the agent
          $task_list = $taskjobstatus->getTaskjobsAgent($agents_id);
-         //printCleanArray($task_list);
          foreach ($task_list as $itemtype => $status_list) {
 
             //Foreach task for this agent build the response array

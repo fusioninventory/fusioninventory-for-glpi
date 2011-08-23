@@ -103,7 +103,7 @@ var {$render}checkColumns =  [{
 //define renderer for grid columns
 function {$render}renderType(val) {
    switch(val) {
-      case '{$chkConst['WINKEY_PRESENT']}':
+      case '{$chkConst['WINKEY_EXIST']}':
          return '{$LANG['plugin_fusinvdeploy']['form']['check'][0]}';
       case '{$chkConst['WINKEY_MISSING']}':
          return '{$LANG['plugin_fusinvdeploy']['form']['check'][1]}';
@@ -417,7 +417,7 @@ var {$render}checkForm = new Ext.FormPanel({
       store: new Ext.data.ArrayStore({
          fields: ['name', 'value'],
          data: [
-            ['{$chkConst['WINKEY_PRESENT']}',  '{$LANG['plugin_fusinvdeploy']['form']['check'][0]}'],
+            ['{$chkConst['WINKEY_EXIST']}',  '{$LANG['plugin_fusinvdeploy']['form']['check'][0]}'],
             ['{$chkConst['WINKEY_MISSING']}',  '{$LANG['plugin_fusinvdeploy']['form']['check'][1]}'],
             ['{$chkConst['WINKEY_EQUAL']}',    '{$LANG['plugin_fusinvdeploy']['form']['check'][2]}'],
             ['{$chkConst['FILE_PRESENT']}',    '{$LANG['plugin_fusinvdeploy']['form']['check'][3]}'],
