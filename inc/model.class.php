@@ -39,15 +39,12 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusinvsnmpModel extends CommonDBTM {
 
    function canCreate() {
-      return true;
+      return PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model", "w");
    }
+
 
    function canView() {
-      return true;
-   }
-
-   function canDelete() {
-      return false;
+      return PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model", "r");
    }
 
 

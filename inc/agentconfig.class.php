@@ -41,11 +41,11 @@ class PluginFusinvsnmpAgentconfig extends CommonDBTM {
 
 
    function canCreate() {
-      return true;
+      return PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configuration", "w");
    }
 
    function canView() {
-      return true;
+      return PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configuration", "r");
    }
 
    function canDelete() {
