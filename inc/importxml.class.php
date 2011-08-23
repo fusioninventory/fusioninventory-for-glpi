@@ -48,7 +48,7 @@ class PluginFusinvinventoryImportXML extends CommonDBTM  {
    function showForm() {
       global $DB,$CFG_GLPI,$LANG;
 
-      $target = GLPI_ROOT.'/plugins/fusinvinventory/front/importxml.php';
+      $target = $CFG_GLPI['root_doc'].'/plugins/fusinvinventory/front/importxml.php';
 		echo "<form action='".$target."' method='post' enctype='multipart/form-data'>";
 
 		echo "<br>";

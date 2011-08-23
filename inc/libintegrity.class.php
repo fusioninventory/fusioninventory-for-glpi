@@ -69,7 +69,7 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
     * 
     */
    function showForm($computers_id = 0) {
-      global $DB,$LANG;
+      global $DB,$LANG,$CFG_GLPI;
 
       $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
       $Computer = new Computer();
@@ -106,9 +106,9 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       
       // Display the pager
       if ($computers_id == '0') {
-         printPager($start,$number,GLPI_ROOT."/plugins/fusinvinventory/front/libintegrity.php",'');
+         printPager($start,$number,$CFG_GLPI['root_doc']."/plugins/fusinvinventory/front/libintegrity.php",'');
       }
-      echo "<form method='post' name='integritylist' id='integritylist'  action=\"".GLPI_ROOT . "/plugins/fusinvinventory/front/libintegrity.php\">";
+      echo "<form method='post' name='integritylist' id='integritylist'  action=\"".$CFG_GLPI['root_doc'] . "/plugins/fusinvinventory/front/libintegrity.php\">";
       echo "<table class='tab_cadre' width='950'>";
       
       echo "<tr>";
@@ -699,7 +699,7 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       echo "</form>";
 
       if ($computers_id == '0') {
-         printPager($start,$number,GLPI_ROOT."/plugins/fusinvinventory/front/libintegrity.php",'');
+         printPager($start,$number,$CFG_GLPI['root_doc']."/plugins/fusinvinventory/front/libintegrity.php",'');
       }
    }
 

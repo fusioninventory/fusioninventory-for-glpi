@@ -75,32 +75,32 @@ class PluginFusinvinventoryStaticmisc {
    *
    **/
    static function displayMenu() {
-      global $LANG;
+      global $LANG,$CFG_GLPI;
 
       $a_menu = array();
 
       if (PluginFusioninventoryProfile::haveRight("fusinvinventory", "importxml", "r")) {
          $a_menu[0]['name'] = $LANG['plugin_fusinvinventory']['menu'][0];
-         $a_menu[0]['pic']  = GLPI_ROOT."/plugins/fusinvinventory/pics/menu_importxml.png";
-         $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusinvinventory/front/importxml.php";
+         $a_menu[0]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusinvinventory/pics/menu_importxml.png";
+         $a_menu[0]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvinventory/front/importxml.php";
       }
 
       if (PluginFusioninventoryProfile::haveRight("fusinvinventory", "existantrule", "r")) {
          $a_menu[2]['name'] = $LANG['plugin_fusinvinventory']['rule'][100];
-         $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_rules.png";
-         $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusinvinventory/front/ruleentity.php";
+         $a_menu[2]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
+         $a_menu[2]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvinventory/front/ruleentity.php";
       }
 
       if (PluginFusioninventoryProfile::haveRight("fusinvinventory", "blacklist", "r")) {
          $a_menu[3]['name'] = $LANG['plugin_fusinvinventory']['menu'][2];
-         $a_menu[3]['pic']  = GLPI_ROOT."/plugins/fusinvinventory/pics/menu_blacklist.png";
-         $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusinvinventory/front/blacklist.php";
+         $a_menu[3]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusinvinventory/pics/menu_blacklist.png";
+         $a_menu[3]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvinventory/front/blacklist.php";
       }
 
       if (PluginFusioninventoryProfile::haveRight("fusinvinventory", "importxml","w")) {
          $a_menu[4]['name'] = $LANG['plugin_fusinvinventory']['menu'][4];
-         $a_menu[4]['pic']  = GLPI_ROOT."/plugins/fusinvinventory/pics/menu_checkintegrity.png";
-         $a_menu[4]['link'] = GLPI_ROOT."/plugins/fusinvinventory/front/libintegrity.php";
+         $a_menu[4]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusinvinventory/pics/menu_checkintegrity.png";
+         $a_menu[4]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvinventory/front/libintegrity.php";
       }
       return $a_menu;
    }
