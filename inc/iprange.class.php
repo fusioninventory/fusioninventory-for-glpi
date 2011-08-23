@@ -66,23 +66,12 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    
    
    function canCreate() {
-      return true;
+      return PluginFusioninventoryProfile::haveRight("fusioninventory", "iprange", "w");
    }
+
 
    function canView() {
-      return true;
-   }
-
-   function canCancel() {
-      return true;
-   }
-
-   function canUndo() {
-      return true;
-   }
-
-   function canValidate() {
-      return true;
+      return PluginFusioninventoryProfile::haveRight("fusioninventory", "iprange", "r");
    }
 
 

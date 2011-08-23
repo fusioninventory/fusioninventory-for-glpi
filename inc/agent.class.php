@@ -54,31 +54,12 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
 
    function canCreate() {
-      return true;
+      return PluginFusioninventoryProfile::haveRight("fusioninventory", "agent", "w");
    }
 
 
-   
    function canView() {
-      return true;
-   }
-
-
-   
-   function canCancel() {
-      return true;
-   }
-
-
-   
-   function canUndo() {
-      return true;
-   }
-
-
-   
-   function canValidate() {
-      return true;
+      return PluginFusioninventoryProfile::haveRight("fusioninventory", "agent", "r");
    }
 
    
