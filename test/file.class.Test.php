@@ -13,8 +13,10 @@ class FileTest extends PHPUnit_Framework_TestCase
    {
       global $DB;
 
-      $DB->query("DELETE FROM glpi_plugin_fusinvdeploy_files WHERE shortsha512 = 'cf83e1'");
+      $DB->query("DELETE FROM glpi_plugin_fusinvdeploy_files");
+      $DB->query("DELETE FROM glpi_plugin_fusinvdeploy_fileparts");
       system("rm -rf ".GLPI_PLUGIN_DOC_DIR."/fusinvdeploy");
+
    }
 
    public function testPluginFusinvdeployFile()
@@ -29,6 +31,8 @@ class FileTest extends PHPUnit_Framework_TestCase
       }
       $this->assertFileExists(GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/");
       touch(GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/tmp-file");
+
+
       $file_id = $PluginFusinvdeployFile->addFileInRepo(array(
                'filename' => GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/tmp-file",
                'file_tmp_name' => GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/tmp-file",
@@ -38,8 +42,10 @@ class FileTest extends PHPUnit_Framework_TestCase
                'order_id' => 1,
                'uncompress' => 1,
       ));
+      $this->assertGreaterThan(0, $file_id);
+
       $this->assertFileNotExists(GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/part.tmp");
-      $this->assertFileExists(GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/repository/c/cf/cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e.gz");
+      $this->assertFileExists(GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/repository/e/ed/ed4d36b9146786cdee148810b3d8f5f47cf9dc9f5c7036f998ce530a52f6847b09f4e406254cafedce830296a9b32ba81949e27cb0deef94dc857364d3ee9d56.gz");
 
       # Add the same file 2 time in a row
       touch(GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/tmp-file");
@@ -52,9 +58,29 @@ class FileTest extends PHPUnit_Framework_TestCase
                'order_id' => 1,
                'uncompress' => 1,
       ));
-      error_log("$file_if, $new_file_id");
-      $this->assertEquals($file_if, $new_file_id);
+      $this->assertEquals($file_id, $new_file_id);
 
-      $this->cleanUp();
+# Create a big file
+      $handle = fopen(GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/tmp-big-file", "wb");
+      for ($i = 0; $i < 1000000; $i++) {
+          fwrite($handle, sha1(rand()));
+      }
+      fclose($handle);
+
+
+
+      $file_id = $PluginFusinvdeployFile->addFileInRepo(array(
+               'filename' => GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/tmp-big-file",
+               'file_tmp_name' => GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/tmp-big-file",
+               'mime_type' => "text/plain",
+               'is_p2p' => 1,
+               'p2p_retention_days' => 1,
+               'order_id' => 1,
+               'uncompress' => 1,
+      ));
+
+      $dirs = glob(GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/repository/*");
+      $this->assertGreaterThan(5, count($dirs));
+      #$this->cleanUp();
    }
 }

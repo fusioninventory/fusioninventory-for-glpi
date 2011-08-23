@@ -63,7 +63,6 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_fileparts`;
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_fileparts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `sha512` varchar(128) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `plugin_fusinvdeploy_orders_id` int(11) NOT NULL DEFAULT '0',
   `plugin_fusinvdeploy_files_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)

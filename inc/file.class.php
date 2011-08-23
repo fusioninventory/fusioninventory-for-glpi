@@ -128,7 +128,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
                         $tmp['mirrors'] = $mirrors;
 
                         $fileparts = PluginFusinvdeployFilepart::getForFile($result_file['id']);
-                        $tmp['multiparts'][] = $fileparts;
+                        $tmp['multiparts'] = $fileparts;
 
                         if (isset($result_file['p2p-retention-duration'])) {
                            $tmp['p2p-retention-duration'] = $result_file['p2p-retention-duration'];
@@ -158,7 +158,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
       return "$first/$second";
    }
 
-   function registerFile ($repoPath, $filePath) {
+   function registerFilepart ($repoPath, $filePath) {
       $sha512 = hash_file('sha512', $filePath);
       $shortSha512 = substr($sha512, 0, 6);
 
@@ -183,23 +183,34 @@ class PluginFusinvdeployFile extends CommonDBTM {
       $uncompress = $params['uncompress'];
       $p2p_retention_days = $params['p2p_retention_days'];
       $order_id = $params['order_id'];
-      $testMode = isset($params['testMode']);
-      $extension  = $params['mime_type'];
+      $mime_type  = $params['mime_type'];
 
-      $maxPartSize = 1024;
+      $maxPartSize = 1024*1024;
       $repoPath = GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/repository/";
-      $tmpFile = GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/part.tmp";
+      $tmpFilepart = tempnam(GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/", "filestore");
 
 
       //check if file is not already present
-      if ($id = $this->checkPresenceFile(hash_file('sha512', $file_tmp_name))) {
+      if ($file_id = $this->checkPresenceFile(hash_file('sha512', $file_tmp_name))) {
          $message = $LANG['plugin_fusinvdeploy']['form']['message'][3];
-         return $id;
+         return $file_id;
       }
 
-      $sha512 = $this->registerFile($repoPath, $file_tmp_name);
-
-      $file_id = false;
+      $sha512 = hash_file('sha512', $file_tmp_name);
+      $short_sha512 = substr($sha512, 0, 6);
+      $file_id = $this->add(
+         array(
+            'name' => $filename,
+            'is_p2p' => $is_p2p,
+            'mimetype' => $mime_type,
+            'create_date' => date('Y-m-d H:i:s'),
+            'p2p_retention_days' => $p2p_retention_days,
+            'uncompress' => $uncompress,
+            'sha512' => $sha512,
+            'shortsha512' => $short_sha512,
+            'plugin_fusinvdeploy_orders_id' => $order_id,
+         )
+      );
 
 
       $fdIn = fopen ( $file_tmp_name , 'rb' );
@@ -208,37 +219,30 @@ class PluginFusinvdeployFile extends CommonDBTM {
       $currentPartSize = 0;
       $fdPart = null;
       do {
-         if (($currentPartSize > 0 && feof($fdIn)) || $currentPartSize>= $maxPartSize) {
-            gzclose ($fdPart);
-
-            $fdPart = null;
-            $sha512 = $this->registerFile ($repoPath, $tmpFile);
-
-            if (!$testMode) { # NO SQL
+         clearstatcache();
+         if (file_exists($tmpFilepart)) {
+            if (feof($fdIn) || filesize($tmpFilepart)>= $maxPartSize) {
+               $sha512 = $this->registerFilepart ($repoPath, $tmpFilepart);
                $PluginFusinvdeployFilepart->add(
-                     array(
-                        'name'                          => $filename,
-                        'sha512'                        => $sha512,
-                        'plugin_fusinvdeploy_orders_id' => $order_id,
-                        'plugin_fusinvdeploy_files_id'  => $file_id)
-                     );
+                  array(
+                     'sha512'                        => $sha512,
+                     'plugin_fusinvdeploy_orders_id' => $order_id,
+                     'plugin_fusinvdeploy_files_id'  => $file_id
+                  )
+               );
+               unlink($tmpFilepart);
             }
-
-            $currentPartSize = 0;
          }
-         if (!feof($fdIn)) {
-            if (!$fdPart) {
-               $fdPart = gzopen ($tmpFile, 'w9');
-            }
-
-            $data = fread ( $fdIn, 1024 );
-            gzwrite($fdPart, $data, strlen($data));
-            $currentPartSize++;
+         if (feof($fdIn)) {
+            break;
          }
-      } while (!feof($fdIn) || $fdPart);
 
-      unlink($file_tmp_name);
-      unlink($tmpFile);
+         $data = fread ( $fdIn, 1024*1024 );
+         $fdPart = gzopen ($tmpFilepart, 'a');
+         gzwrite($fdPart, $data, strlen($data));
+         gzclose($fdPart);
+
+      } while (1);
       return $file_id;
    }
 
