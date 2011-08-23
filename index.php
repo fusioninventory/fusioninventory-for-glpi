@@ -49,7 +49,7 @@ if ((isset($_GET['action'])
    Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"], "plugins", 
                 "fusioninventory");
 
-   Html::redirect(GLPI_ROOT ."/plugins/fusioninventory/front/wizard.php");
+   Html::redirect($CFG_GLPI['root_doc']."/plugins/fusioninventory/front/wizard.php");
    Html::footer();
 }
 ?>

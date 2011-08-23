@@ -161,12 +161,12 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    *
    **/
    function showFormAgentException($items_id, $options=array()) {
-      global $LANG;
+      global $LANG,$CFG_GLPI;
 
       $canedit = 1;
       echo "<br/>";
       if ($canedit) {
-         echo "<form name='form_ic' method='post' action='".GLPI_ROOT.
+         echo "<form name='form_ic' method='post' action='".$CFG_GLPI['root_doc'].
                "/plugins/fusioninventory/front/agentmodule.form.php'>";
       }
       echo "<table class='tab_cadre_fixe'>";

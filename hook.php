@@ -340,7 +340,7 @@ function plugin_headings_fusioninventory($item, $withtemplate=0) {
 //			if (!$prof->GetfromDB($id)) {
 //				PluginFusioninventoryDb::createaccess($id);
 //         }
-			$PluginFusioninventoryProfile->showProfileForm($item->getField('id'), GLPI_ROOT."/plugins/fusioninventory/front/profile.php");
+			$PluginFusioninventoryProfile->showProfileForm($item->getField('id'), $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/profile.php");
 		break;
 	}
 }

@@ -271,7 +271,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
     * @return nothing
     */
    function permanentTask($items_id, $module_name, $allowcreate=0) {
-      global $LANG;
+      global $LANG,$CFG_GLPI;
 
       $method = '';
       if ($module_name == "NETDISCOVERY") {
@@ -346,7 +346,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       
       echo "</td>";
       echo "<td colspan='4' align='center'>";
-      echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/front/taskjob.form.php?id=".$taskjob_id."'>".
+      echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjob.form.php?id=".$taskjob_id."'>".
          $LANG['plugin_fusioninventory']['task'][44]."</a>";
       echo "</td>";
       echo "</tr>";

@@ -156,7 +156,7 @@ function plugin_init_fusioninventory() {
    //         }
          }
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']
-            ["<img  src='".GLPI_ROOT."/plugins/fusioninventory/pics/books.png'
+            ["<img  src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/books.png'
                title='".$LANG['plugin_fusioninventory']['setup'][16]."'
                alt='".$LANG['plugin_fusioninventory']['setup'][16]."'>"] =
             'front/documentation.php';
