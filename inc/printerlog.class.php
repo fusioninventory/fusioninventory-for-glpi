@@ -344,7 +344,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
     * Show printer graph form
     **/
    function showGraph($id, $options=array()) {
-      global $LANG, $DB;
+      global $LANG, $DB,$CFG_GLPI;
 
       $where=''; $begin=''; $end=''; $timeUnit='day'; $graphField='pages_total'; $pagecounters = array();$graphType='day';
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_begin'])) {
@@ -418,7 +418,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
             break;
       }
 
-      echo "<form method='post' name='snmp_form' id='snmp_form' action='".GLPI_ROOT."/plugins/fusinvsnmp/front/printer_info.form.php'>";
+      echo "<form method='post' name='snmp_form' id='snmp_form' action='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/printer_info.form.php'>";
       echo "<table class='tab_cadre' cellpadding='5' width='950'>";
       $mapping = new PluginFusioninventoryMapping();
       $maps = $mapping->find("`itemtype`='Printer'");

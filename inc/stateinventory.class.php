@@ -52,7 +52,7 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
 
 
    function display() {
-      global $DB,$LANG;
+      global $DB,$LANG,$CFG_GLPI;
 
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
@@ -73,7 +73,7 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
       $number = $DB->numrows($resultcount);
 
       // Display the pager
-      printPager($start,$number,GLPI_ROOT."/plugins/fusinvsnmp/front/stateinventory.php",'');
+      printPager($start,$number,$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/stateinventory.php",'');
 
       echo "<table class='tab_cadre_fixe'>";
 
