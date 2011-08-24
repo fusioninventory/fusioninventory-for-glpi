@@ -83,7 +83,7 @@ class PluginFusinvinventoryAntivirus extends CommonDBTM {
                      "Computer", 
                      $changes, 
                      'PluginFusinvinventoryAntivirus', 
-                     HISTORY_LOG_SIMPLE_MESSAGE);         
+                     Log::HISTORY_LOG_SIMPLE_MESSAGE);         
       }
    }
    
