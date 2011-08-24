@@ -115,6 +115,12 @@ class PluginFusinvdeployJob {
          $tmp['items_id']                                = $job['items_id'];
          $tmp['comment']                                 = $p['msg'];
          $tmp['date']                                    = date("Y-m-d H:i:s");
+         if (is_array($p['log']) && $tmp['comment'] == "") {
+            $tmp['comment'] = "log:";
+            foreach($p['log'] as $log) {
+               $tmp['comment'] .= $log."\n";
+            }
+         }
          if ($p['status'] == 'ko') {
             $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_ERROR;
 

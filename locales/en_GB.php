@@ -75,6 +75,11 @@ $LANG['plugin_fusinvdeploy']['files'][6]="Maximum file size";
 $LANG['plugin_fusinvdeploy']['packagefiles'][0]="Files linked with package";
 
 $LANG['plugin_fusinvdeploy']['deploystatus'][0]="Deployment state";
+$LANG['plugin_fusinvdeploy']['deploystatus'][1]="associated logs";
+$LANG['plugin_fusinvdeploy']['deploystatus'][2]="The agent received the job request";
+$LANG['plugin_fusinvdeploy']['deploystatus'][3]="The agent started to check the mirror to download the file";
+$LANG['plugin_fusinvdeploy']['deploystatus'][4]="Preparing the working directory";
+$LANG['plugin_fusinvdeploy']['deploystatus'][5]="The agent is processing the job";
 
 $LANG['plugin_fusinvdeploy']['config'][0]="Address of the GLPI server (without http://)";
 
@@ -188,7 +193,7 @@ $LANG['plugin_fusinvdeploy']['task'][14] = "Advanced options";
 $LANG['plugin_fusinvdeploy']['task'][15] = "Add order";
 $LANG['plugin_fusinvdeploy']['task'][16] = "Delete order";
 $LANG['plugin_fusinvdeploy']['task'][17] = "Edit order";
-$LANG['plugin_fusinvdeploy']['task'][18] = "associated logs";
+$LANG['plugin_fusinvdeploy']['task'][18] = "---";
 $LANG['plugin_fusinvdeploy']['task'][19] = "Edit impossible, this task is active";
 $LANG['plugin_fusinvdeploy']['task'][20] = "This task is active. delete denied";
 

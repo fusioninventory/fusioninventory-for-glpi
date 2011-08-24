@@ -75,6 +75,11 @@ $LANG['plugin_fusinvdeploy']['files'][6]="Taille maximale des fichiers";
 $LANG['plugin_fusinvdeploy']['packagefiles'][0]="Fichiers liés aux paquets";
 
 $LANG['plugin_fusinvdeploy']['deploystatus'][0]="Etat des déploiements";
+$LANG['plugin_fusinvdeploy']['deploystatus'][1]="logs associés";
+$LANG['plugin_fusinvdeploy']['deploystatus'][2]="L'agent a reçu l'ordre";
+$LANG['plugin_fusinvdeploy']['deploystatus'][3]="L'agent a commencé à vérifier le miroir pour télécharger le fichier";
+$LANG['plugin_fusinvdeploy']['deploystatus'][4]="Preparation du répertoire de travail";
+$LANG['plugin_fusinvdeploy']['deploystatus'][5]="L'agent traite l'ordre";
 
 $LANG['plugin_fusinvdeploy']['config'][0]="Adresse du serveur GLPI (sans le http://)";
 
@@ -187,7 +192,7 @@ $LANG['plugin_fusinvdeploy']['task'][14] = "Options avancées";
 $LANG['plugin_fusinvdeploy']['task'][15] = "Ajouter un ordre";
 $LANG['plugin_fusinvdeploy']['task'][16] = "Supprimer un ordre";
 $LANG['plugin_fusinvdeploy']['task'][17] = "Modifier un ordre";
-$LANG['plugin_fusinvdeploy']['task'][18] = "logs associés";
+$LANG['plugin_fusinvdeploy']['task'][18] = "---";
 $LANG['plugin_fusinvdeploy']['task'][19] = "Edition impossible, cette tâche est active";
 $LANG['plugin_fusinvdeploy']['task'][20] = "Tâche active, suppression impossible";
 

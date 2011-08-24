@@ -306,6 +306,7 @@ var {$render}actionGridProxyRetChecks = {
             }, {
                header: '{$LANG['plugin_fusinvdeploy']['form']['command_status'][1]}',
                dataIndex: 'type',
+               width: 180,
                editor: new Ext.form.ComboBox({
                   triggerAction: 'all',
                   name: 'type',
@@ -328,6 +329,7 @@ var {$render}actionGridProxyRetChecks = {
                header: '{$LANG['plugin_fusinvdeploy']['form']['command_status'][2]}',
                dataIndex: 'value',
                allowBlank: false,
+               width: 100,
                editor: new Ext.form.TextField()
             }]
          }),

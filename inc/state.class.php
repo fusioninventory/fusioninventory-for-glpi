@@ -94,7 +94,7 @@ class PluginFusinvdeployState extends CommonDBTM {
    }
 
    static function getTaskJobLogsDatas($params) {
-      global $DB;
+      global $DB, $LANG;
 
       $res = array();
 
@@ -110,16 +110,11 @@ class PluginFusinvdeployState extends CommonDBTM {
 
       $query_res = $DB->query($query);
       while ($row = $DB->fetch_assoc($query_res)) {
-        /* switch($row['comment']) {
-            case RECEIVED:
-               break;
-            case DOWNLOADING:
-               break;
-            case EXTRACTING:
-               break;
-            case PROCESSING:
-               break;
-         }*/
+         if (substr($row['comment'], 0, 4) == "log:") {
+            $row['log'] = substr($row['comment'], 4);
+            $row['comment'] = "log";
+         }
+         if ($row['state'] == 7) $row['comment'] = $LANG['plugin_fusioninventory']['taskjoblog'][7];
 
          $res['taskjoblogs'][] = $row;
       }
