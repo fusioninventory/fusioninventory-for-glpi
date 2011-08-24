@@ -159,7 +159,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
                                                                        "Unable to find agent to run this job");
                $input_taskjob = array();
                $input_taskjob['id'] = $PluginFusioninventoryTaskjob->fields['id'];
-               $input_taskjob['status'] = 1;
+               //$input_taskjob['status'] = 1;
                $PluginFusioninventoryTaskjob->update($input_taskjob);
             } else {
                $s = $PluginFusioninventoryIPRange->getIp2long($PluginFusioninventoryIPRange->fields['ip_start']);
@@ -226,7 +226,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
                                                                  "Unable to find agent to run this job");
          $input_taskjob = array();
          $input_taskjob['id'] = $PluginFusioninventoryTaskjob->fields['id'];
-         $input_taskjob['status'] = 1;
+         //$input_taskjob['status'] = 1;
          $PluginFusioninventoryTaskjob->update($input_taskjob);
       } else {
          $iptimes = 0;
