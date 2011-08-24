@@ -115,10 +115,46 @@ function pluginFusinvdeployUninstall() {
       ON job.plugin_fusioninventory_tasks_id = task.id
    WHERE job.method='deployinstall' OR job.method='deployuninstall'
    ";
+
    $res_tasks = $DB->query($query_tasks);
    while ($row_tasks = $DB->fetch_array($res_tasks)) {
-    //  $task->getFromDB($row_tasks['id']);
-      $task->delete(array('id' => $row_tasks['id']));
+
+      //clean jobs
+      $datas_job =  getAllDatasFromTable('glpi_plugin_fusioninventory_taskjobs',
+               "plugin_fusioninventory_tasks_id = '".$row_tasks['id']."'");
+      foreach($datas_job as $job_id => $job) {
+
+         //clean jobstatus
+         $datas_status =  getAllDatasFromTable('glpi_plugin_fusioninventory_taskjobstatus',
+                  "plugin_fusioninventory_taskjobs_id = '$job_id'");
+         foreach($datas_status as $status_id => $status) {
+            //clean jobstatuslogs
+            $datas_logs =  getAllDatasFromTable('glpi_plugin_fusioninventory_taskjoblogs',
+                     "plugin_fusioninventory_taskjobstatus_id = '$status_id'");
+            foreach($datas_logs as $log_id => $log) {
+               //delete logs
+               $query_delete_jobstatuslog = "DELETE FROM glpi_plugin_fusioninventory_taskjoblogs
+                  WHERE id = '$log_id'";
+               $DB->query($query_delete_jobstatuslog);
+            }
+
+            //delete status
+            $query_delete_jobstatus = "DELETE FROM glpi_plugin_fusioninventory_taskjobstatus
+               WHERE id = '$status_id'";
+            $DB->query($query_delete_jobstatus);
+         }
+
+         //delete jobs
+         $query_delete_jobs = "DELETE FROM glpi_plugin_fusioninventory_taskjobs
+            WHERE id = '$job_id'";
+         $DB->query($query_delete_jobs);
+      }
+
+      //delete tasks
+      $query_delete_tasks = "DELETE FROM glpi_plugin_fusioninventory_tasks
+         WHERE id = '".$row_tasks['id']."'";
+      $DB->query($query_delete_tasks);
+
    }
 
    //delete tables
