@@ -156,13 +156,13 @@ var tasksJobLogsColumns =  [{
    id: 'date',
    dataIndex: 'date',
    header: '{$LANG['common'][27]}',
-   width: 115
+   width: 132
 }, {
    id: 'state',
    dataIndex: 'state',
    renderer: logStateRenderer,
    header: '',
-   width: 20
+   width: 15
 }, {
    id: 'comment',
    dataIndex: 'comment',
