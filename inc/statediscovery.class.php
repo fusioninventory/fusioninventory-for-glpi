@@ -214,7 +214,7 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
          echo "<td>".convDateTime($end_date)."</td>";
 
          if ($end_date == '') {
-            $end_date = date("U");
+            $end_date = date("Y-m-d H:i:s");
          }
          if ($start_date == '') {
             echo "<td>-</td>";
