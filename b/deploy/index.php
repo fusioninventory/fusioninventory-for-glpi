@@ -53,10 +53,6 @@ if ($plugin->isActivated('fusinvdeploy')) {
          case 'setStatus':
             $response = PluginFusinvdeployJob::update($_GET, true);
             break;
-         //Add log to a job
-         case 'setLog':
-            $response = PluginFusinvdeployJob::update($_GET, false);
-            break;
          default:
             header("HTTP/1.1 500");
             logInFile("unkown action");

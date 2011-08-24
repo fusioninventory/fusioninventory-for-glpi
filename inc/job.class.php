@@ -95,6 +95,7 @@ class PluginFusinvdeployJob {
       $p['status']         = 'ok'; //status of the task
       $p['currentStep']    = ''; //current step of processing
       $p['msg']            = ''; //Message to be logged
+      $p['log']            = '';
       foreach ($params as $key => $value) {
          $p[$key] = $value;
       }
@@ -116,11 +117,14 @@ class PluginFusinvdeployJob {
          $tmp['date']                                    = date("Y-m-d H:i:s");
          if ($p['status'] == 'ko') {
             $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_ERROR;
+
+            /*** TODO : add a log replanned when glpi_plugin_fusioninventory_taskjobs.nb_retry > 0 ***/
          } else {
             if ($p['currentStep'] == '') {
                $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_OK;
             } else {
                $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_RUNNING;
+               if ($tmp['comment'] == '') $tmp['comment'] = $p['currentStep'];
             }
          }
          $taskjoblog->add($tmp);

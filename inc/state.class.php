@@ -39,6 +39,12 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusinvdeployState extends CommonDBTM {
+
+   const RECEIVED       = 'received';
+   const DOWNLOADING    = 'downloading';
+   const EXTRACTING     = 'extracting';
+   const PROCESSING     = 'processing';
+
    static function showTasks() {
        echo "<table class='deploy_extjs'>
          <tbody>
@@ -100,10 +106,21 @@ class PluginFusinvdeployState extends CommonDBTM {
          ON logs.plugin_fusioninventory_taskjobstatus_id = status.id
       WHERE status.items_id = '".$params['items_id']."'
          AND status.itemtype = 'Computer'
-      ORDER BY date DESC";
+      ORDER BY id DESC";
 
       $query_res = $DB->query($query);
       while ($row = $DB->fetch_assoc($query_res)) {
+        /* switch($row['comment']) {
+            case RECEIVED:
+               break;
+            case DOWNLOADING:
+               break;
+            case EXTRACTING:
+               break;
+            case PROCESSING:
+               break;
+         }*/
+
          $res['taskjoblogs'][] = $row;
       }
 

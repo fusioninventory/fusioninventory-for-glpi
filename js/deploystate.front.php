@@ -184,8 +184,8 @@ var taskJobLogsReader = new Ext.data.JsonReader({
 var taskJobLogsStore = new Ext.data.Store({
    url: '../ajax/state_taskjoblogs.data.php',
    autoLoad: false,
-   reader: taskJobLogsReader,
-   sortInfo: {field: 'id', direction: "DESC"}
+   reader: taskJobLogsReader/*,
+   sortInfo: {field: 'id', direction: "DESC"}*/
 });
 
 var taskJobLogsGrid = new Ext.grid.GridPanel({
