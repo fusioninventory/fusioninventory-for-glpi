@@ -54,31 +54,12 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
 
    function canCreate() {
-      return true;
+      return PluginFusioninventoryProfile::haveRight("fusioninventory", "agent", "w");
    }
 
 
-   
    function canView() {
-      return true;
-   }
-
-
-   
-   function canCancel() {
-      return true;
-   }
-
-
-   
-   function canUndo() {
-      return true;
-   }
-
-
-   
-   function canValidate() {
-      return true;
+      return PluginFusioninventoryProfile::haveRight("fusioninventory", "agent", "r");
    }
 
    
@@ -427,7 +408,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    *
    **/
    function forceRemoteAgent() {
-      global $LANG;
+      global $LANG,$CFG_GLPI;
 
       $agent_id = $this->getAgentWithComputerid($_POST['id']);
 
@@ -437,7 +418,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
 
-      echo "<form method='post' name='' id=''  action=\"".GLPI_ROOT . 
+      echo "<form method='post' name='' id=''  action=\"".$CFG_GLPI['root_doc'] . 
          "/plugins/fusioninventory/front/agent.form.php\">";
       echo "<table class='tab_cadre' width='500'>";
       
@@ -471,7 +452,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             switch($agentStatus) {
 
                case 'running':
-                  $waiting = $LANG['plugin_fusioninventory']['agents'][39];
+                  $waiting = $LANG['plugin_fusioninventory']['taskjoblog'][6];
                   break;
 
                case 'noanswer':
@@ -597,7 +578,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
    
    
-   function showConfig() {
+   static function showConfig() {
       global $LANG;
 
       echo "<table width='950' class='tab_cadre_fixe'>";

@@ -49,27 +49,12 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
 
    function canCreate() {
-      return true;
+      return PluginFusioninventoryProfile::haveRight("fusioninventory", "task", "w");
    }
+
 
    function canView() {
-      return true;
-   }
-
-   function canCancel() {
-      return true;
-   }
-
-   function canUndo() {
-      return true;
-   }
-
-   function canValidate() {
-      return true;
-   }
-
-   function canUpdate() {
-      return true;
+      return PluginFusioninventoryProfile::haveRight("fusioninventory", "task", "r");
    }
 
    
@@ -856,20 +841,8 @@ return namelist;
             }
 
             if ($pass == '1') {
-               $PluginFusioninventoryTaskjob->verifyDefinitionActions($data['id']);
-               // Get module name
-               $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
-               if (strstr($pluginName, "fusioninventory")
-                       OR strstr($pluginName, "fusinv")) {
-                  
-                  $input = array();
-                  $input['id'] = $data['id'];
-                  $input['execution_id'] = $data['execution_id'] + 1;
-                  $PluginFusioninventoryTaskjob->update($input);
-
-                  $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
-                  $class = new $className;
-                  $class->prepareRun($data['id']);
+               $return = $PluginFusioninventoryTaskjob->prepareRunTaskjob($data);
+               if ($return > 0) {
                   $return = 1;
                }
             }
@@ -930,7 +903,6 @@ return namelist;
          WHERE `plugin_fusioninventory_tasks_id`='".$tasks_id."'
             AND `execution_id`='".($data['execution_id'] + 1)."'
          ORDER BY `id` DESC";
-
       $finished = 2;
       $resultJob = $DB->query($queryJob);
       $nb_finished = 0;
@@ -957,7 +929,21 @@ return namelist;
          }
       }
       if ($nb_finished != $nb_taskjobs) {
-         $finished = 0;
+         if ($disableTimeVerification == '1') { // Forcerun
+            $queryJob2 = "SELECT * FROM `".$PluginFusioninventoryTaskjob->getTable()."`
+            WHERE `plugin_fusioninventory_tasks_id`='".$tasks_id."'
+               AND `execution_id`='".$data['execution_id']."'
+            ORDER BY `id` DESC";
+            $resultJob2 = $DB->query($queryJob2);
+            if ($DB->numrows($resultJob2) == $nb_taskjobs) {
+               $finished = 1;
+               return true;
+            } else {
+               $finished = 0;
+            }
+         } else {
+            $finished = 0;
+         }
       }
       // if all jobs are finished, we calculate if we reinitialize all jobs
       if ($finished == "1") {
@@ -1009,7 +995,7 @@ return namelist;
       global $LANG,$DB;
      
       $uniqid = '';
-      
+
       if ($this->reinitializeTaskjobs($tasks_id, 1)) {
          $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
          $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
@@ -1028,13 +1014,7 @@ return namelist;
             $plugin = new Plugin();
             $plugin->getFromDB($data['plugins_id']);
             if ($plugin->fields['state'] == Plugin::ACTIVATED) {
-               // Get module name
-               $PluginFusioninventoryTaskjob->verifyDefinitionActions($data['id']);
-               $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
-               $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
-               $class = new $className;
-               $uniqid = $class->prepareRun($data['id']);
-            
+               $uniqid = $PluginFusioninventoryTaskjob->prepareRunTaskjob($data);
             }
          }
          
@@ -1242,7 +1222,7 @@ return namelist;
    *
    **/
    function showActions($items_id, $itemtype) {
-      global $LANG;
+      global $LANG,$CFG_GLPI;
 
       // load all plugin and get method possible
       /*
@@ -1255,7 +1235,7 @@ return namelist;
        */
 
       echo "<div align='center'>";
-      echo "<form method='post' name='' id=''  action=\"".GLPI_ROOT . "/plugins/fusioninventory/front/taskjob.form.php\">";
+      echo "<form method='post' name='' id=''  action=\"".$CFG_GLPI['root_doc'] . "/plugins/fusioninventory/front/taskjob.form.php\">";
 
       echo "<table  class='tab_cadre_fixe'>";
 
@@ -1969,6 +1949,30 @@ return namelist;
                                 "dropdown_method".$randmethod);
       echo "</script>";
       echo "<span id='show".$name."list_'>&nbsp;</span>";
+   }
+   
+   
+      
+   function prepareRunTaskjob($a_taskjob) {
+      $pFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      
+      $uniqid = 0;
+      $pFusioninventoryTaskjob->verifyDefinitionActions($a_taskjob['id']);
+      // Get module name
+      $pluginName = PluginFusioninventoryModule::getModuleName($a_taskjob['plugins_id']);
+      if (strstr($pluginName, "fusioninventory")
+              OR strstr($pluginName, "fusinv")) {
+
+         $input = array();
+         $input['id'] = $a_taskjob['id'];
+         $input['execution_id'] = $a_taskjob['execution_id'] + 1;
+         $pFusioninventoryTaskjob->update($input);
+
+         $itemtype = "Plugin".ucfirst($pluginName).ucfirst($a_taskjob['method']);
+         $item = new $itemtype;
+         $uniqid = $item->prepareRun($a_taskjob['id']);
+      }
+      return $uniqid;
    }
 }
 

@@ -95,7 +95,7 @@ if (isset ($_POST["add"])) {
    if ($Import == "0") {
       Html::redirect($_SERVER['HTTP_REFERER']);
    } else {
-      Html::redirect(GLPI_ROOT."/plugins/fusioninventory/front/unknowndevice.php");
+      Html::redirect($CFG_GLPI['root_doc']."/plugins/fusioninventory/front/unknowndevice.php");
    }
 }
 

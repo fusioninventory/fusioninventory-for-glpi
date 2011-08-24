@@ -53,7 +53,7 @@ $PluginFusioninventoryUnknownDevice->getFromDB($_POST['id']);
 switch($_POST['glpi_tab']) {
 	case -1 :
       NetworkPort::showForItem($PluginFusioninventoryUnknownDevice);
-      $PluginFusioninventoryUnknownDevice->importForm(GLPI_ROOT . '/plugins/fusioninventory/front/unknowndevice.form.php?id='.$_POST["id"],$_POST["id"]);
+      $PluginFusioninventoryUnknownDevice->importForm($CFG_GLPI['root_doc'] . '/plugins/fusioninventory/front/unknowndevice.form.php?id='.$_POST["id"],$_POST["id"]);
       Log::showForItem($PluginFusioninventoryUnknownDevice);
       CommonGLPI::displayStandardTab($PluginFusioninventoryUnknownDevice, $_REQUEST['glpi_tab']);
       break;
@@ -63,7 +63,7 @@ switch($_POST['glpi_tab']) {
 		break;
 
    case 2 :
-      $PluginFusioninventoryUnknownDevice->importForm(GLPI_ROOT . '/plugins/fusioninventory/front/unknowndevice.form.php?id='.$_POST["id"],$_POST["id"]);
+      $PluginFusioninventoryUnknownDevice->importForm($CFG_GLPI['root_doc'] . '/plugins/fusioninventory/front/unknowndevice.form.php?id='.$_POST["id"],$_POST["id"]);
       break;
 
    case 3 :

@@ -155,7 +155,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          } else { // Non template case / editing an existing object
             $array = array ();
             if (PluginFusioninventoryModule::getModuleId("fusioninventory")) {
-               $array[2] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['title'][5];
+               $array[2] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['functionalities'][75];
             }
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
                $array[3] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['task'][18];
@@ -170,7 +170,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          } else { // Non template case / editing an existing object
             $array = array ();
             if (PluginFusioninventoryModule::getModuleId("fusioninventory")) {
-               $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['title'][5];
+               $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['functionalities'][75];
             }
             return $array;
          }
@@ -182,7 +182,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          } else { // Non template case / editing an existing object
             $array = array ();
             if (PluginFusioninventoryModule::getModuleId("fusioninventory")) {
-               $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['title'][5];
+               $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['functionalities'][75];
             }
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
                $array[2] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['task'][18];
@@ -197,7 +197,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          } else { // Non template case / editing an existing object
             $array = array ();
             if (PluginFusioninventoryModule::getModuleId("fusioninventory")) {
-               $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['title'][5];
+               $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['functionalities'][75];
             }
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
                $array[2] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['task'][18];
@@ -340,7 +340,7 @@ function plugin_headings_fusioninventory($item, $withtemplate=0) {
 //			if (!$prof->GetfromDB($id)) {
 //				PluginFusioninventoryDb::createaccess($id);
 //         }
-			$PluginFusioninventoryProfile->showProfileForm($item->getField('id'), GLPI_ROOT."/plugins/fusioninventory/front/profile.php");
+			$PluginFusioninventoryProfile->showProfileForm($item->getField('id'), $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/profile.php");
 		break;
 	}
 }
