@@ -104,7 +104,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          echo "<table class='tab_cadre' style='width: ".$width."px'>";
          echo "<tr class='tab_bg_1'>";
          echo "<th width='32'>";
-         echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_running.png'/>";
+         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_running.png'/>";
          echo "</th>";
          echo "<td>";
          if ($DB->numrows($result) > 0) {
@@ -150,7 +150,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          echo "<table class='tab_cadre' width='".$width."'>";
          echo "<tr class='tab_bg_1'>";
          echo "<th width='32'>";
-         echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_finished.png'/>";
+         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_finished.png'/>";
          echo "</td>";
          echo "<td>";
             echo "<table class='tab_cadre' >";
@@ -200,14 +200,16 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
     * Display javascript functions for history
     */
    function javascriptHistory() {
+      global $CFG_GLPI;
+      
       		echo "<script  type='text/javascript'>
 function close_array(id){
-	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/plugins/fusioninventory/pics/collapse.png\''+
-      'onClick=\'document.getElementById(\"viewfollowup'+id+'\").hide();appear_array('+id+');\' />&nbsp;<img src=\'".GLPI_ROOT."/plugins/fusioninventory/pics/refresh.png\' />';
+	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/collapse.png\''+
+      'onClick=\'document.getElementById(\"viewfollowup'+id+'\").hide();appear_array('+id+');\' />&nbsp;<img src=\'".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/refresh.png\' />';
    document.getElementById('plusmoins'+id).style.backgroundColor = '#e4e4e2';
 }
 function appear_array(id){
-	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/plugins/fusioninventory/pics/expand.png\''+
+	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/expand.png\''+
       'onClick=\'document.getElementById(\"viewfollowup'+id+'\").show();close_array('+id+');\' />';
    document.getElementById('plusmoins'+id).style.backgroundColor = '#f2f2f2';
 
@@ -215,8 +217,8 @@ function appear_array(id){
 
 		</script>";
      
-		echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusioninventory/prototype.js'></script>";
-      echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusioninventory/effects.js'></script>";
+		echo "<script type='text/javascript' src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/prototype.js'></script>";
+      echo "<script type='text/javascript' src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/effects.js'></script>";
 
       
    }
@@ -232,7 +234,7 @@ function appear_array(id){
    *
    **/
    function showHistoryLines($taskjobstatus_id, $displayprocess = 1, $displaytaskjob=0, $nb_td='5') {
-      global $LANG;
+      global $LANG,$CFG_GLPI;
       
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryTaskjobstatus->getFromDB($taskjobstatus_id);
@@ -244,7 +246,7 @@ function appear_array(id){
                                '1');
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td width='40' id='plusmoins".$PluginFusioninventoryTaskjobstatus->fields["id"]."'><img src='".GLPI_ROOT.
+      echo "<td width='40' id='plusmoins".$PluginFusioninventoryTaskjobstatus->fields["id"]."'><img src='".$CFG_GLPI['root_doc'].
                "/plugins/fusioninventory/pics/expand.png' onClick='document.getElementById(\"viewfollowup".$PluginFusioninventoryTaskjobstatus->fields["id"].
                "\").show();close_array(".$PluginFusioninventoryTaskjobstatus->fields["id"].");' /></td>";
       
@@ -271,7 +273,7 @@ function appear_array(id){
       
       ajaxUpdateItemOnEvent('plusmoins'.$PluginFusioninventoryTaskjobstatus->fields["id"],
                       'viewfollowup'.$PluginFusioninventoryTaskjobstatus->fields["id"],
-                      GLPI_ROOT."/plugins/fusioninventory/ajax/showtaskjoblogdetail.php",
+                      $CFG_GLPI['root_doc']."/plugins/fusioninventory/ajax/showtaskjoblogdetail.php",
                       array('agents_id' => $PluginFusioninventoryTaskjobstatus->fields['plugin_fusioninventory_agents_id'],
                           'uniqid' => $PluginFusioninventoryTaskjobstatus->fields['uniqid']),
                       array("click"));
@@ -284,7 +286,7 @@ function appear_array(id){
 
       if ($displayforceend == "0") {
          echo "<td align='center'>";
-         echo "<form name='form' method='post' action='".GLPI_ROOT."/plugins/fusioninventory/front/taskjob.form.php'>";
+         echo "<form name='form' method='post' action='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjob.form.php'>";
          echo "<input type='hidden' name='taskjobstatus_id' value='".$PluginFusioninventoryTaskjobstatus->fields['id']."' />";
          echo "<input type='hidden' name='taskjobs_id' value='".$PluginFusioninventoryTaskjobstatus->fields['plugin_fusioninventory_taskjobs_id']."' />";
          echo '<input name="forceend" value="'.$LANG['plugin_fusioninventory']['task'][32].'"
@@ -334,7 +336,7 @@ function appear_array(id){
             $a_devices_merged[] = $Class->getLink(1)."&nbsp;(".$Class->getTypeName().")";
          } else {
             $text .= "<tr>";
-            $text .= "<th colspan='2'><img src='".GLPI_ROOT."/pics/puce.gif' />".$LANG['plugin_fusioninventory']['processes'][38]."&nbsp;: ".$data['id']."</th>";
+            $text .= "<th colspan='2'><img src='".$CFG_GLPI['root_doc']."/pics/puce.gif' />".$LANG['plugin_fusioninventory']['processes'][38]."&nbsp;: ".$data['id']."</th>";
             $text .= "<th>";
             $text .= $LANG['common'][27];
             $text .= "</th>";
