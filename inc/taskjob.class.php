@@ -848,6 +848,49 @@ return namelist;
             }
          }
       }
+      // Get taskjobs in retry mode
+      $query = "SELECT `".$PluginFusioninventoryTaskjob->getTable()."`.*,
+     `glpi_plugin_fusioninventory_tasks`.`communication`,
+     `glpi_plugin_fusioninventory_tasks`.`execution_id`,
+     `glpi_plugin_fusioninventory_tasks`.`date_scheduled`
+      FROM ".$PluginFusioninventoryTaskjob->getTable()."
+      LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
+      WHERE `is_active`='1'
+         AND `status` = '0'
+         AND `".$PluginFusioninventoryTaskjob->getTable()."`.`execution_id`=`glpi_plugin_fusioninventory_tasks`.`execution_id` + 1
+         ";
+      $result = $DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         $query2 = "SELECT * FROM `".getTableForItemType("PluginFusioninventoryTaskjobstatus")."`
+            LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` 
+               ON `plugin_fusioninventory_taskjobstatus_id` = `".getTableForItemType("PluginFusioninventoryTaskjobstatus")."`.`id`
+            WHERE `plugin_fusioninventory_taskjobs_id`='".$data['id']."'
+                  AND `glpi_plugin_fusioninventory_taskjoblogs`.`state`='3'
+                  AND `date`>='".$data['date_scheduled']."' 
+            ORDER BY `".getTableForItemType("PluginFusioninventoryTaskjobstatus")."`.`uniqid`";
+         $result2 = $DB->query($query2);
+         $nb_retry = 0;
+         $nb_retry = $DB->numrows($result2);
+         $date_last = 0;
+         while ($data2=$DB->fetch_array($result2)) {
+            $date_last = strtotime($data2['date']);         
+         }
+                  
+         $period = 0;
+         $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp(
+                 $data['periodicity_type'], 
+                 $data['periodicity_count']);
+
+         if (($date_last + ($data['retry_time'] * 60)) < date('U')) {
+            $return = $PluginFusioninventoryTaskjob->prepareRunTaskjob($data);
+            if ($return > 0) {
+               $return = 1;
+            }
+         }
+      }
+      
+      
+      
       // Start agents must start in push mode
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
       foreach($_SESSION['glpi_plugin_fusioninventory']['agents'] as $agents_id=>$num) {
@@ -889,7 +932,7 @@ return namelist;
             LIMIT 1";
       $result = $DB->query($query);
       $data = $DB->fetch_assoc($result);
-      
+
       $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp($data['periodicity_type'], $data['periodicity_count']);
 
       // Calculate next execution from last
@@ -914,7 +957,7 @@ return namelist;
          $taskjobstatusfinished = 0;
          foreach ($a_taskjobstatus as $statusdata) {
             $a_joblog = $PluginFusioninventoryTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$statusdata['id']."'
-               AND `state` IN (2,3,4,5)");
+               AND `state` IN (2,4,5)");
             if (count($a_joblog) > 0) {
                $taskjobstatusfinished++;
             }
