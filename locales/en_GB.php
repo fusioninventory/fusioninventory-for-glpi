@@ -61,7 +61,8 @@ $LANG['plugin_fusinvdeploy']['package'][19]="pieces of files";
 $LANG['plugin_fusinvdeploy']['package'][20]="Delete a file";
 $LANG['plugin_fusinvdeploy']['package'][21]="Show dialog";
 $LANG['plugin_fusinvdeploy']['package'][22]="Return codes";
-$LANG['plugin_fusinvdeploy']['package'][23]="A task uses this package, delete denied";
+$LANG['plugin_fusinvdeploy']['package'][23]="One or more task(s) (#task#) uses this package, delete denied";
+$LANG['plugin_fusinvdeploy']['package'][24]="One or more task(s) (#task#) uses this package, edit denied";
 
 $LANG['plugin_fusinvdeploy']['files'][0]="Files management";
 $LANG['plugin_fusinvdeploy']['files'][1]="File name";
@@ -188,7 +189,7 @@ $LANG['plugin_fusinvdeploy']['task'][15] = "Add order";
 $LANG['plugin_fusinvdeploy']['task'][16] = "Delete order";
 $LANG['plugin_fusinvdeploy']['task'][17] = "Edit order";
 $LANG['plugin_fusinvdeploy']['task'][18] = "associated logs";
-$LANG['plugin_fusinvdeploy']['task'][19] = "Edit impossible, actions are under execution";
+$LANG['plugin_fusinvdeploy']['task'][19] = "Edit impossible, this task is active";
 $LANG['plugin_fusinvdeploy']['task'][20] = "This task is active. delete denied";
 
 $LANG['plugin_fusinvdeploy']['group'][0] = "Groups";

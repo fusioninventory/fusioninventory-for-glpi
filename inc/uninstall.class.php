@@ -52,15 +52,8 @@ class PluginFusinvdeployUninstall extends CommonDBTM {
       $disabled = "false";
       if (!PluginFusinvdeployPackage::canEdit($id)) {
          $disabled = "true";
-         echo "<div class='box' style='margin-bottom:20px;'>";
-         echo "<div class='box-tleft'><div class='box-tright'><div class='box-tcenter'>";
-         echo "</div></div></div>";
-         echo "<div class='box-mleft'><div class='box-mright'><div class='box-mcenter'>";
-         echo $LANG['plugin_fusinvdeploy']['task'][19];
-         echo "</div></div></div>";
-         echo "<div class='box-bleft'><div class='box-bright'><div class='box-bcenter'>";
-         echo "</div></div></div>";
-         echo "</div>";
+         PluginFusinvdeployPackage::showEditDeniedMessage($id,
+               $LANG['plugin_fusinvdeploy']['package'][24]);
       }
 
       if(isset($_POST["glpi_tab"])) {
