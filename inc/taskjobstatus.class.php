@@ -275,9 +275,11 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
    *
    **/
    function changeStatusFinish($taskjobstatus, $items_id, $itemtype, $error=0, $message='', $unknown=0) {
-
+      global $DB;
+      
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $pFusioninventoryTask = new PluginFusioninventoryTask();
 
       $this->getFromDB($taskjobstatus);
       $input = array();
@@ -292,17 +294,31 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
          // Check if we have retry
          $PluginFusioninventoryTaskjob->getFromDB($this->fields['plugin_fusioninventory_taskjobs_id']);
          if($PluginFusioninventoryTaskjob->fields['retry_nb'] > 0) {
-            // Replanification
-            $a_input['state'] = 3;
-
-            $PluginFusioninventoryTaskjob->fields['retry_nb']--;
-            $PluginFusioninventoryTaskjob->fields['date_creation'] = date("Y-m-d H:i:s");
-            $PluginFusioninventoryTaskjob->fields['date_scheduled'] =
-                    date("Y-m-d H:i:s", time() + ($PluginFusioninventoryTaskjob->fields['retry_time'] * 60));
-            $PluginFusioninventoryTaskjob->fields['status'] = 0;
-            $PluginFusioninventoryTaskjob->fields['rescheduled_taskjob_id'] = $PluginFusioninventoryTaskjob->fields['id'];
-            unset($PluginFusioninventoryTaskjob->fields['id']);
-            $PluginFusioninventoryTaskjob->add($PluginFusioninventoryTaskjob->fields);
+            // 1. Calculate start timeof the task
+            $period = 0;
+            $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp(
+                    $PluginFusioninventoryTaskjob->fields['periodicity_type'], 
+                    $PluginFusioninventoryTaskjob->fields['periodicity_count']);
+            $query = "SELECT *, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp
+                  FROM `".$pFusioninventoryTask->getTable()."`
+               WHERE `id`='".$PluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']."' 
+                  LIMIT 1";
+            $result = $DB->query($query);
+            $data_task = $DB->fetch_assoc($result);
+            $start_taskjob = $data_task['date_scheduled_timestamp'] + $period;
+            // 2. See how errors in taskjobstatus
+            $query = "SELECT * FROM `".$this->getTable()."`
+               LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` on `plugin_fusioninventory_taskjobstatus_id` = `".$this->getTable()."`.`id`
+               WHERE `plugin_fusioninventory_taskjobs_id`='".$this->fields['plugin_fusioninventory_taskjobs_id']."'
+                     AND `glpi_plugin_fusioninventory_taskjoblogs`.`state`='3'
+                     AND `date`>='".date("Y-m-d H:i:s",$start_taskjob)."' ";
+            $result = $DB->query($query);
+            if ($DB->numrows($result) >= ($PluginFusioninventoryTaskjob->fields['retry_nb'] - 1)) {
+               $a_input['state'] = 4;
+            } else {
+               // Replanification
+               $a_input['state'] = 3;
+            }
          } else {
           $a_input['state'] = 4;
          }
