@@ -253,8 +253,10 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
          $PluginFusioninventoryTaskjob->getFromDB($data['plugin_fusioninventory_taskjobs_id']);
 
          $pluginName = PluginFusioninventoryModule::getModuleName($PluginFusioninventoryTaskjob->fields['plugins_id']);
-         $className = "Plugin".ucfirst($pluginName).ucfirst($PluginFusioninventoryTaskjob->fields['method']);
-         $moduleRun[$className][] = $data;
+         if ($pluginName) {
+            $className = "Plugin".ucfirst($pluginName).ucfirst($PluginFusioninventoryTaskjob->fields['method']);
+            $moduleRun[$className][] = $data;
+         }         
       }
       return $moduleRun;
    }
