@@ -100,18 +100,17 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                   $input["senddico"] = "1";
                   $PluginFusinvsnmpAgentconfig->update($input);
 
-                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = $p_CONTENT->PROCESSNUMBER;
-                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $a_agent['id'];
-                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
-                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
-                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==fusinvsnmp::3==';
-                  $this->addtaskjoblog();
-               }
+                  $PluginFusioninventoryTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
+                                                                          $a_agent['id'],
+                                                                          'PluginFusioninventoryAgent',
+                                                                          '1',
+                                                                          '==fusinvsnmp::3==');
+               } else {
 
-               $PluginFusioninventoryTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
+                  $PluginFusioninventoryTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
                                                                        $a_agent['id'],
                                                                        'PluginFusioninventoryAgent');
-
+               }
             }
          }
       }
