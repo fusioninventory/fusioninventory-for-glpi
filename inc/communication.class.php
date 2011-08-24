@@ -243,7 +243,7 @@ class PluginFusioninventoryCommunication {
     **/
    static function addLog($p_logs) {
       global $CFG_GLPI;
-      if ($_SESSION['glpi_use_mode']==DEBUG_MODE) {
+      if ($_SESSION['glpi_use_mode']==Session::DEBUG_MODE) {
          if (PluginFusioninventoryConfig::isExtradebugActive()) {
             file_put_contents(GLPI_LOG_DIR.'/pluginFusioninventory-communication.log',
                               "\n".time().' : '.$p_logs,
