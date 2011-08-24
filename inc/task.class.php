@@ -49,23 +49,12 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
    
    function canCreate() {
-      return true;
+      return PluginFusioninventoryProfile::haveRight("fusioninventory", "task", "w");
    }
+
 
    function canView() {
-      return true;
-   }
-
-   function canCancel() {
-      return true;
-   }
-
-   function canUndo() {
-      return true;
-   }
-
-   function canValidate() {
-      return true;
+      return PluginFusioninventoryProfile::haveRight("fusioninventory", "task", "r");
    }
 
 

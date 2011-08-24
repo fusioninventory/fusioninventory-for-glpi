@@ -121,7 +121,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
    *
    **/
    function stateTaskjobItem($items_id, $itemtype, $state='all') {
-      global $DB,$LANG;
+      global $DB,$LANG, $CFG_GLPI;
 
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $icon = "";
@@ -134,13 +134,13 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
          case 'running':
             $search = " AND `state`!='".self::FINISHED."'";
             $title = $LANG['plugin_fusioninventory']['task'][19];
-            $icon = "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_running.png'/>";
+            $icon = "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_running.png'/>";
             break;
 
          case 'finished':
             $search = " AND `state`='".self::FINISHED."'";
             $title = $LANG['plugin_fusioninventory']['task'][20];
-            $icon = "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_finished.png'/>";
+            $icon = "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_finished.png'/>";
             break;
 
          case 'all':
