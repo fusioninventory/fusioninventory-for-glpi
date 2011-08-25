@@ -263,11 +263,7 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
 
    function findWithGlobalCriteria($input) {
       global $DB, $CFG_GLPI;
-//      foreach($input as $key=>$value) {
-//         if (empty($value)) {
-//           unset($input[$key]);  
-//         }
-//      }
+      
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
                                                    print_r($input, true));
       $complex_criterias = array();
@@ -303,8 +299,6 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                           OR empty($input[$crit->fields['criteria']])) {
                      return false;
                   }
-//                  $complex_criterias[] = $crit;
-//                  $nb_crit_find++;
                } else if($crit->fields["criteria"] == 'itemtype') {
                   $complex_criterias[] = $crit;
                }
@@ -365,9 +359,6 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
          $itemtypeselected[] = "PluginFusioninventoryUnknownDevice";
       }
 
-
-//      $sql_where = " `[typetable]`.`entities_id` IN ($where_entity)
-//                    AND `[typetable]`.`is_template` = '0' ";
       $sql_where = " `[typetable]`.`is_template` = '0' ";
       $sql_where_networkequipment = $sql_where;
       $sql_from = "`[typetable]`";
@@ -523,19 +514,21 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
       }
       if ($found == "1") {
          return true;
+      } else {
+         return false;
       }
-      if (count($this->actions)) {
-         foreach ($this->actions as $action) {
-            if ($action->fields['field'] == '_fusion') {
-               if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_NO_IMPORT) {
-                  if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
-                     logInFile("pluginFusioninventory-rules", "Return true because link or Import\n");
-                  }
-                  return true;
-               }
-            }
-         }
-      }
+
+//      if (count($this->actions)) {
+//         foreach ($this->actions as $action) {
+//            if ($action->fields['field'] == '_fusion') {
+//               if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_CREATE) {
+//                  PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
+//                                                               "Return true because link or Import\n");
+//                  return true;
+//               }
+//            }
+//         }
+//      }
       return false;
    }
 
