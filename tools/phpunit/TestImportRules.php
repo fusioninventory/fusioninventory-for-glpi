@@ -1102,7 +1102,7 @@ class Plugins_Fusioninventory_TestImortRules extends PHPUnit_Framework_TestCase 
       // ** Import Computer XML (have name and exist in DB)
       $computer = new Computer();
       $computer->delete(array('id'=>3), 1);
-      $computer->delete(array('id'=>5), 1);  
+      $computer->delete(array('id'=>5), 1); 
       $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
       $pluginFusioninventoryUnknownDevice->delete(array('id'=>2), 1);
       $pluginFusioninventoryUnknownDevice->delete(array('id'=>3), 1);
@@ -1144,18 +1144,18 @@ class Plugins_Fusioninventory_TestImortRules extends PHPUnit_Framework_TestCase 
       $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
       $this->assertEquals(count($a_agent), 1 , 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
       $a_computer = $computer->find("`name`='port004'");
-      $this->assertEquals(count($a_computer), 1 , 'Problem import Computer ('.(string)$xml->DEVICEID.') not right created!');
+      $this->assertEquals(count($a_computer), 0 , 'Problem import Computer ('.(string)$xml->DEVICEID.') is created!');
       $a_unknown = $pluginFusioninventoryUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 0 , 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device created');
+      $this->assertEquals(count($a_unknown), 1 , 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device not created');
          
          
       // ** Import discovered Computer (have name but not exist in DB)
       $computer->delete(array('id'=>2), 1);
       $this->testSendinventory("toto", $XML['Unknowndevice_Computer'], 0);
       $a_computer = $computer->find("`name`='Test2'");
-      $this->assertEquals(count($a_computer), 1 , 'Problem import discovered Computer (Test2) not right created!');
-      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered Computer (Test2), unknown device created');
+      $this->assertEquals(count($a_computer), 0 , 'Problem import discovered Computer (Test2) created!');
+      $a_unknown = $pluginFusioninventoryUnknownDevice->find("`name`='Test2'");
+      $this->assertEquals(count($a_unknown), 1 , 'Problem import discovered Computer (Test2), unknown device not created');
 
          
       // ** Import Computer XML (not have name)
@@ -1174,8 +1174,8 @@ class Plugins_Fusioninventory_TestImortRules extends PHPUnit_Framework_TestCase 
       $computer = new Computer();
       $a_computer = $computer->find("`serial`='XA201220H'");
       $this->assertEquals(count($a_computer), 0 , 'Problem import Computer without name have been created into Computer instead unknown');
-      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 1 , 'Problem import Computer without name , unknown device not created');
+      $a_unknown = $pluginFusioninventoryUnknownDevice->find("`serial`='XA201220H'");
+      $this->assertEquals(count($a_unknown), 2 , 'Problem import Computer without name , unknown device not created');
          
                   
       $input = array();
@@ -1187,6 +1187,46 @@ class Plugins_Fusioninventory_TestImortRules extends PHPUnit_Framework_TestCase 
          
    }
 
+   
+   
+   public function testImportComputerCheckrulevalidationlocal_and_globalcriteria() {
+      global $DB, $XML;
+      
+      // Create computer only with serial and name;
+      $computer = new Computer();
+      $input = array();
+      $input['name'] = "port004";
+      $input['serial'] = "XA201220H";
+      $computer->add($input);
+      
+      // Activation of rules
+      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+         // Computer serial + uuid
+         $input = array();
+         $input['is_active']=1;
+         $input['id']=6; 
+         $rule_id = $rulecollection->update($input);
+         
+         // Computer serial
+         $input = array();
+         $input['is_active']=1;
+         $input['id']=7; 
+         $rule_id = $rulecollection->update($input);
+      
+         // Computer name
+         $input = array();
+         $input['is_active']=1;
+         $input['id']=10; 
+         $rule_id = $rulecollection->update($input);
+         
+      $emulatorAgent = new emulatorAgent;
+      $emulatorAgent->server_urlpath = "/glpi080/plugins/fusioninventory/";
+      $prologXML = $emulatorAgent->sendProlog($XML['Computer']);
+      $a_computers = $computer->find("`serial`='XA201220H'");
+      $this->assertEquals(count($a_computers), 1 , 'Problem on global criteria of rules, 
+         these criteria must be valided to valid the rule (Computer seria = UUID)!');
+         
+   }
     
      
      
@@ -1239,9 +1279,9 @@ class Plugins_Fusioninventory_TestImortRules extends PHPUnit_Framework_TestCase 
       $code = $emulatorAgent->sendProlog($input_xml);
       echo $code."\n";
    }
+   
 
-     
-
+   
 }
 
 // Call Plugins_Fusioninventory_Discovery_Newdevices::main() if this source file is executed directly.
