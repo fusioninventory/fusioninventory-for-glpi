@@ -57,12 +57,12 @@ class PluginFusinvdeployFilepart extends CommonDBTM {
 
    static function getForFile($files_id) {
       $results = getAllDatasFromTable('glpi_plugin_fusinvdeploy_fileparts',
-                                      "`plugin_fusinvdeploy_files_id`='$files_id'");
+                                      "`plugin_fusinvdeploy_files_id`='$files_id'", "glpi_plugin_fusinvdeploy_fileparts.id");
 
       $fileparts = array();
       # TODO, avoid the array push here.
       foreach ($results as $result) {
-         array_push($fileparts, $result['sha512']);
+         array_unshift($fileparts, $result['sha512']);
       }
 
       return $fileparts;
