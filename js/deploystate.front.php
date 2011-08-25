@@ -34,6 +34,10 @@
 // ----------------------------------------------------------------------
 global $LANG;
 
+//get const check class for use in heredoc
+$refl = new ReflectionClass('PluginFusinvdeployState');
+$stateConst = $refl->getConstants();
+
 $width_left                  = 590;
 $height_left                 = 350;
 
@@ -156,23 +160,66 @@ var tasksJobLogsColumns =  [{
    id: 'date',
    dataIndex: 'date',
    header: '{$LANG['common'][27]}',
-   width: 115
+   width: 132
 }, {
    id: 'state',
    dataIndex: 'state',
-   renderer: logStateRenderer,
+   renderer: stateRenderer,
    header: '',
-   width: 20
+   width: 15
 }, {
    id: 'comment',
    dataIndex: 'comment',
    header: '{$LANG['common'][25]}',
-   width: 185
+   width: 153,
+}, {
+   id: 'log',
+   dataIndex: 'log',
+   renderer: logRenderer,
+   width: 20
 }];
 
-function logStateRenderer(val) {
+function stateRenderer(val) {
    return displayState(val, false);
 }
+
+function logRenderer(val, metaData, record) {
+   var message = '';
+   switch(record.data.comment) {
+      case '{$stateConst['RECEIVED']}':
+         message = "{$LANG['plugin_fusinvdeploy']['deploystatus'][2]}"
+         break;
+      case '{$stateConst['DOWNLOADING']}':
+         message = "{$LANG['plugin_fusinvdeploy']['deploystatus'][3]}"
+         break;
+      case '{$stateConst['EXTRACTING']}':
+         message = "{$LANG['plugin_fusinvdeploy']['deploystatus'][4]}"
+         break;
+      case '{$stateConst['PROCESSING']}':
+         message = "{$LANG['plugin_fusinvdeploy']['deploystatus'][5]}"
+         break;
+      case 'log':
+         message = val;
+         break
+   }
+
+   if (message != "") {
+      var contentId = Ext.id();
+      createGridButton.defer(1, this, ['...', contentId, message]);
+      return('<div id="' + contentId + '"></div>');
+   }
+}
+
+function createGridButton(value, contentid, message) {
+   new Ext.Button({
+      text: value,
+      height: 6,
+      handler : function(btn, e) {
+         alert(message);
+      }
+   }).render(document.body, contentid);
+}
+
 
 var taskJobLogsReader = new Ext.data.JsonReader({
    root: 'taskjoblogs',
@@ -184,8 +231,8 @@ var taskJobLogsReader = new Ext.data.JsonReader({
 var taskJobLogsStore = new Ext.data.Store({
    url: '../ajax/state_taskjoblogs.data.php',
    autoLoad: false,
-   reader: taskJobLogsReader,
-   sortInfo: {field: 'id', direction: "DESC"}
+   reader: taskJobLogsReader/*,
+   sortInfo: {field: 'id', direction: "DESC"}*/
 });
 
 var taskJobLogsGrid = new Ext.grid.GridPanel({
@@ -194,7 +241,7 @@ var taskJobLogsGrid = new Ext.grid.GridPanel({
    height: {$height_right},
    width: {$width_right},
    style: 'margin-bottom:5px;',
-   title: '{$LANG['plugin_fusinvdeploy']['task'][18]}',
+   title: '{$LANG['plugin_fusinvdeploy']['deploystatus'][1]}',
    store: taskJobLogsStore,
    colModel: new Ext.grid.ColumnModel({
       defaults: {

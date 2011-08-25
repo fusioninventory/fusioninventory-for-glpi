@@ -39,6 +39,12 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusinvdeployState extends CommonDBTM {
+
+   const RECEIVED       = 'received';
+   const DOWNLOADING    = 'downloading';
+   const EXTRACTING     = 'extracting';
+   const PROCESSING     = 'processing';
+
    static function showTasks() {
        echo "<table class='deploy_extjs'>
          <tbody>
@@ -88,7 +94,7 @@ class PluginFusinvdeployState extends CommonDBTM {
    }
 
    static function getTaskJobLogsDatas($params) {
-      global $DB;
+      global $DB, $LANG;
 
       $res = array();
 
@@ -100,10 +106,27 @@ class PluginFusinvdeployState extends CommonDBTM {
          ON logs.plugin_fusioninventory_taskjobstatus_id = status.id
       WHERE status.items_id = '".$params['items_id']."'
          AND status.itemtype = 'Computer'
-      ORDER BY date DESC";
+      ORDER BY id DESC";
 
       $query_res = $DB->query($query);
       while ($row = $DB->fetch_assoc($query_res)) {
+         if (substr($row['comment'], 0, 4) == "log:") {
+            $row['log'] = substr($row['comment'], 4);
+            $row['comment'] = "log";
+         }
+         if ($row['comment'] == "") {
+            switch ($row['state']) {
+               case PluginFusioninventoryTaskjoblog::TASK_OK:
+                  $row['comment'] = $LANG['plugin_fusioninventory']['taskjoblog'][2];
+                  break;
+               case PluginFusioninventoryTaskjoblog::TASK_ERROR_OR_REPLANNED:
+                  $row['comment'] = $LANG['plugin_fusioninventory']['taskjoblog'][3];
+                  break;
+               case PluginFusioninventoryTaskjoblog::TASK_PREPARED:
+                  $row['comment'] = $LANG['plugin_fusioninventory']['taskjoblog'][7];
+                  break;
+            }
+         }
          $res['taskjoblogs'][] = $row;
       }
 

@@ -220,12 +220,51 @@ class PluginFusinvdeployPackage extends CommonDBTM {
 
       //if task use this package, delete denied
       if (!self::canEdit($this->getField('id'))) {
-         addMessageAfterRedirect($LANG['plugin_fusinvdeploy']['package'][23]);
-         glpi_header(GLPI_ROOT."/plugins/fusinvdeploy/front/package.form.php?id=".$this->getField('id'));
+         $task = new PluginFusinvdeployTask;
+         $tasks_url = "";
+         $taskjobs = getAllDatasFromTable('glpi_plugin_fusinvdeploy_taskjobs',
+                  "definition LIKE '%\"PluginFusinvdeployPackage\":\"".$this->getField('id')."%'");
+         foreach($taskjobs as $job) {
+            $task->getFromDB($job['plugin_fusinvdeploy_tasks_id']);
+            $tasks_url .= "<a href='".GLPI_ROOT."/plugins/fusinvdeploy/front/task.form.php?id="
+                  .$job['plugin_fusinvdeploy_tasks_id']."'>".$task->fields['name']."</a>, ";
+         }
+         $tasks_url = substr($tasks_url, 0, -2);
+
+
+         addMessageAfterRedirect(str_replace('#task#',
+               $tasks_url, $LANG['plugin_fusinvdeploy']['package'][23]));
+         glpi_header(GLPI_ROOT."/plugins/fusinvdeploy/front/package.form.php?id="
+               .$this->getField('id'));
          return false;
       }
 
       return true;
+   }
+
+   public static function showEditDeniedMessage($id, $message) {
+      global $CFG_GLPI;
+
+      $task = new PluginFusinvdeployTask;
+      $tasks_url = "";
+      $taskjobs = getAllDatasFromTable('glpi_plugin_fusinvdeploy_taskjobs',
+               "definition LIKE '%\"PluginFusinvdeployPackage\":\"".$id."%'");
+      foreach($taskjobs as $job) {
+         $task->getFromDB($job['plugin_fusinvdeploy_tasks_id']);
+         $tasks_url .= "<a href='".GLPI_ROOT."/plugins/fusinvdeploy/front/task.form.php?id="
+               .$job['plugin_fusinvdeploy_tasks_id']."'>".$task->fields['name']."</a>, ";
+      }
+      $tasks_url = substr($tasks_url, 0, -2);
+
+      echo "<div class='box' style='margin-bottom:20px;'>";
+      echo "<div class='box-tleft'><div class='box-tright'><div class='box-tcenter'>";
+      echo "</div></div></div>";
+      echo "<div class='box-mleft'><div class='box-mright'><div class='box-mcenter'>";
+      echo str_replace('#task#', $tasks_url, $message);
+      echo "</div></div></div>";
+      echo "<div class='box-bleft'><div class='box-bright'><div class='box-bcenter'>";
+      echo "</div></div></div>";
+      echo "</div>";
    }
 }
 

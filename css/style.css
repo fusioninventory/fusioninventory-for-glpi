@@ -258,6 +258,9 @@ padding:       5px;
 #deployStates .x-grid3-header {
    display:none
 }
+#deployStates .x-grid3-col-state, #deployStates .x-grid3-col-log {
+   padding:0 !important;
+}
 
 /* PROGRESS BAR */
 .progress-container {
