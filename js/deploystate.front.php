@@ -224,7 +224,7 @@ function createGridButton(value, contentid, message) {
 var taskJobLogsReader = new Ext.data.JsonReader({
    root: 'taskjoblogs',
    fields: [
-      'id', 'date', 'state', 'comment'
+      'id', 'date', 'state', 'comment', 'log'
    ]
 });
 
