@@ -216,7 +216,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
    }
 
    function pre_deleteItem() {
-      global $LANG;
+      global $LANG, $CFG_GLPI;
 
       //if task use this package, delete denied
       if (!self::canEdit($this->getField('id'))) {
@@ -226,7 +226,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
                   "definition LIKE '%\"PluginFusinvdeployPackage\":\"".$this->getField('id')."%'");
          foreach($taskjobs as $job) {
             $task->getFromDB($job['plugin_fusinvdeploy_tasks_id']);
-            $tasks_url .= "<a href='".GLPI_ROOT."/plugins/fusinvdeploy/front/task.form.php?id="
+            $tasks_url .= "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/front/task.form.php?id="
                   .$job['plugin_fusinvdeploy_tasks_id']."'>".$task->fields['name']."</a>, ";
          }
          $tasks_url = substr($tasks_url, 0, -2);
@@ -243,7 +243,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
    }
 
    public static function showEditDeniedMessage($id, $message) {
-      global $CFG_GLPI;
+      global $CFG_GLPI, $CFG_GLPI;
 
       $task = new PluginFusinvdeployTask;
       $tasks_url = "";
@@ -251,7 +251,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
                "definition LIKE '%\"PluginFusinvdeployPackage\":\"".$id."%'");
       foreach($taskjobs as $job) {
          $task->getFromDB($job['plugin_fusinvdeploy_tasks_id']);
-         $tasks_url .= "<a href='".GLPI_ROOT."/plugins/fusinvdeploy/front/task.form.php?id="
+         $tasks_url .= "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/front/task.form.php?id="
                .$job['plugin_fusinvdeploy_tasks_id']."'>".$task->fields['name']."</a>, ";
       }
       $tasks_url = substr($tasks_url, 0, -2);
