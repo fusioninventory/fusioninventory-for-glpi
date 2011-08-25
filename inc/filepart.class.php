@@ -90,6 +90,7 @@ class PluginFusinvdeployFilepart extends CommonDBTM {
       $sha512 = mysql_real_escape_string($params['sha512']);
 
       $PluginFusinvdeployFilepart = new PluginFusinvdeployFilepart;
+      # TODO, use sha512short here to find the filepart (See: #1106)
       $files = $PluginFusinvdeployFilepart->find("sha512='".$sha512."'");
 
       if (count($files) == 1) {
