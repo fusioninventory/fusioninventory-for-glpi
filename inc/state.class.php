@@ -114,8 +114,19 @@ class PluginFusinvdeployState extends CommonDBTM {
             $row['log'] = substr($row['comment'], 4);
             $row['comment'] = "log";
          }
-         if ($row['state'] == 7) $row['comment'] = $LANG['plugin_fusioninventory']['taskjoblog'][7];
-
+         if ($row['comment'] == "") {
+            switch ($row['state']) {
+               case PluginFusioninventoryTaskjoblog::TASK_OK:
+                  $row['comment'] = $LANG['plugin_fusioninventory']['taskjoblog'][2];
+                  break;
+               case PluginFusioninventoryTaskjoblog::TASK_ERROR_OR_REPLANNED:
+                  $row['comment'] = $LANG['plugin_fusioninventory']['taskjoblog'][3];
+                  break;
+               case PluginFusioninventoryTaskjoblog::TASK_PREPARED:
+                  $row['comment'] = $LANG['plugin_fusioninventory']['taskjoblog'][7];
+                  break;
+            }
+         }
          $res['taskjoblogs'][] = $row;
       }
 
