@@ -72,6 +72,17 @@ class PluginFusinvinventoryInventory {
    **/
    function sendCriteria($p_DEVICEID, $p_CONTENT, $p_xml) {
 
+      // Hack to put OS in software
+      $sxml = simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA);
+          
+      $sxml_soft = $sxml->CONTENT->addChild('SOFTWARES');
+      $sxml_soft->addChild('COMMENTS', (string)$sxml->CONTENT->HARDWARE->OSCOMMENTS);
+      $sxml_soft->addChild('NAME', (string)$sxml->CONTENT->HARDWARE->OSNAME);
+      $sxml_soft->addChild('VERSION', (string)$sxml->CONTENT->HARDWARE->OSVERSION);
+      logInFile(("toto"), print_r($sxml_soft, true));  
+      $p_xml = $sxml->asXML();
+      // End hack
+      
       $PluginFusinvinventoryBlacklist = new PluginFusinvinventoryBlacklist();
       $p_xml = $PluginFusinvinventoryBlacklist->cleanBlacklist($p_xml);
 
