@@ -63,6 +63,7 @@ $LANG['plugin_fusinvdeploy']['package'][21]="Show dialog";
 $LANG['plugin_fusinvdeploy']['package'][22]="Return codes";
 $LANG['plugin_fusinvdeploy']['package'][23]="One or more task(s) (#task#) uses this package, delete denied";
 $LANG['plugin_fusinvdeploy']['package'][24]="One or more task(s) (#task#) uses this package, edit denied";
+$LANG['plugin_fusinvdeploy']['package'][25]="New name";
 
 $LANG['plugin_fusinvdeploy']['files'][0]="Files management";
 $LANG['plugin_fusinvdeploy']['files'][1]="File name";

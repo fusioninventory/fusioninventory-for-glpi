@@ -124,6 +124,9 @@ function plugin_init_fusinvdeploy() {
       '../fusinvdeploy/front/group.php';
 
    $PLUGIN_HOOKS['add_css']['fusinvdeploy'] = "css/style.css";
+
+   // Massive Action definition (for duplicate packages)
+   $PLUGIN_HOOKS['use_massive_action']['fusinvdeploy'] = 1;
 }
 
 // Name and Version of the plugin

@@ -70,4 +70,54 @@ function plugin_fusinvdeploy_needUpdate() {
 }
 
 
+
+function plugin_fusinvdeploy_MassiveActions($type) {
+   global $LANG;
+
+   switch ($type) {
+      case 'PluginFusinvdeployPackage' :
+         return array("plugin_fusinvdeploy_duplicatePackage" => $LANG['buttons'][54]);
+         break;
+   }
+   return array();
+}
+
+function plugin_fusinvdeploy_MassiveActionsDisplay($options=array()) {
+   global $LANG;
+
+   switch ($options['itemtype']) {
+      case 'PluginFusinvdeployPackage' :
+         switch ($options['action']) {
+            case "plugin_fusinvdeploy_duplicatePackage" :
+               echo $LANG['plugin_fusinvdeploy']['package'][25].":&nbsp;<input type='text' name='newname' value=''>";
+               echo "&nbsp;<input type='submit' name='massiveaction' class='submit' value='".
+                     $LANG["buttons"][2]."'>&nbsp;";
+            break;
+         }
+         break;
+   }
+   return "";
+}
+
+function plugin_fusinvdeploy_MassiveActionsProcess($data) {
+   global $LANG;
+
+   switch ($data['action']) {
+      case 'plugin_fusinvdeploy_duplicatePackage' :
+         if ($data['itemtype'] == 'PluginFusinvdeployPackage') {
+            $package = new PluginFusinvdeployPackage;
+            foreach ($data['item'] as $key => $val) {
+               if ($val == 1) {
+                  if ($package->getFromDB($key)) {
+                     $package->package_clone($data['newname']);
+                  }
+               }
+            }
+
+         }
+         break;
+   }
+}
+
+
 ?>
