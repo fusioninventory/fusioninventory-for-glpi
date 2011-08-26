@@ -1209,6 +1209,7 @@ class Plugins_Fusioninventory_TestImortRules extends PHPUnit_Framework_TestCase 
       $input = array();
       $input['name'] = "port004";
       $input['serial'] = "XA201220H";
+      $input['entities_id'] = 0; 
       $computer->add($input);
       
       // Activation of rules
