@@ -1310,6 +1310,11 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       if ($items_id == "0") {
          $input = array();
          $input['date_mod'] = date("Y-m-d H:i:s");
+         if ($class->getFromDB((string)$xml->INFO->ID)) {
+            $input['entities_id'] = $class->fields['entities_id'];
+         } else {
+            $input['entities_id'] = 0;
+         }
          $items_id = $class->add($input);
       }
       if ($itemtype == "PluginFusioninventoryUnknownDevice") {
