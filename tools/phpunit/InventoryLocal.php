@@ -740,7 +740,7 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
       }
       $a_diff = array_diff_key($soft, $dbsofts);
       $diff = print_r($a_diff, 1);
-      $this->assertEquals($DB->numrows($result), count($a_softwareXML) , 'Difference of Softwares, created '.$DB->numrows($result).' times instead '.count($a_softwareXML).' ['.$xmlFile.']'.$diff);
+      $this->assertEquals($DB->numrows($result), (count($a_softwareXML) + 1), 'Difference of Softwares, created '.$DB->numrows($result).' times instead '.(count($a_softwareXML) + 1).' ['.$xmlFile.']'.$diff);
 
       // Verify fields in GLPI
       foreach($xml->CONTENT->SOFTWARES as $child) {
