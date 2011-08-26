@@ -666,6 +666,8 @@ class Plugins_Fusioninventory_TestImortRules extends PHPUnit_Framework_TestCase 
       $computer = new Computer();
       $a_computer = $computer->find("`name`='port004'");
       $this->assertEquals(count($a_computer), 1 , 'Problem import Computer ('.(string)$xml->DEVICEID.') not right created!');
+      $computerdata = current($a_computer);
+      $this->assertEquals($computerdata['entities_id'], 0 , 'Problem On computer entity, must be created in root entity instead '.$computerdata['entities_id']);
       $a_unknown = $pluginFusioninventoryUnknownDevice->find();
       $this->assertEquals(count($a_unknown), 0 , 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device created');
 //      $computer->delete(array('id'=>1), 1);      
@@ -702,6 +704,8 @@ class Plugins_Fusioninventory_TestImortRules extends PHPUnit_Framework_TestCase 
          $networkEquipment = new NetworkEquipment();
          $a_switch = $networkEquipment->find("`name`='switch2960-002'");
          $this->assertEquals(count($a_switch), 1 , 'Problem import switch (switch2960-002) not right created!');
+         $switchdata = current($a_switch);
+         $this->assertEquals($switchdata['entities_id'], 0 , 'Problem On switch entity, must be created in root entity instead '.$switchdata['entities_id']);
          $a_unknown = $pluginFusioninventoryUnknownDevice->find();
          $this->assertEquals(count($a_unknown), 0 , 'Problem import switch (switch2960-002), unknown device created');
 //         $networkEquipment->delete(array('id'=>1), 1);
@@ -735,6 +739,8 @@ class Plugins_Fusioninventory_TestImortRules extends PHPUnit_Framework_TestCase 
       $this->testSendinventory("toto", $XML['Unknowndevice_Computer'], 0);
       $a_computer = $computer->find("`name`='Test2'");
       $this->assertEquals(count($a_computer), 1 , 'Problem import discovered Computer (Test2) not right created!');
+      $computerdata = current($a_computer);
+      $this->assertEquals($computerdata['entities_id'], 0 , 'Problem On computer entity, must be created in root entity instead '.$computerdata['entities_id']);
       $a_unknown = $pluginFusioninventoryUnknownDevice->find();
       $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered Computer (Test2), unknown device created');
 //      $computer->delete(array('id'=>1), 1);
@@ -744,6 +750,8 @@ class Plugins_Fusioninventory_TestImortRules extends PHPUnit_Framework_TestCase 
       $this->testSendinventory("toto", $XML['Unknowndevice_NetworkEquipment'], 0);
       $a_networkequipment = $networkEquipment->find("`name`='Procurve 2524'");
       $this->assertEquals(count($a_networkequipment), 1 , 'Problem import discovered networkequipment (Procurve 2524) not right created!');
+      $switchdata = current($a_networkequipment);
+      $this->assertEquals($switchdata['entities_id'], 0 , 'Problem On switch entity, must be created in root entity instead '.$switchdata['entities_id']);
       $a_unknown = $pluginFusioninventoryUnknownDevice->find();
       $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered networkequipment (Procurve 2524), unknown device created');
 
@@ -753,6 +761,8 @@ class Plugins_Fusioninventory_TestImortRules extends PHPUnit_Framework_TestCase 
       $printer = new Printer();
       $a_printer = $printer->find("`name`='COPIEUR-1'");
       $this->assertEquals(count($a_printer), 1 , 'Problem import discovered printer (COPIEUR-1) not right created!');
+      $printerdata = current($a_printer);
+      $this->assertEquals($printerdata['entities_id'], 0 , 'Problem On printer entity, must be created in root entity instead '.$printerdata['entities_id']);
       $a_unknown = $pluginFusioninventoryUnknownDevice->find();
       $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered printer (COPIEUR-1), unknown device created');
 
@@ -761,6 +771,8 @@ class Plugins_Fusioninventory_TestImortRules extends PHPUnit_Framework_TestCase 
       $this->testSendinventory("toto", $XML['Unknowndevice_notype'], 0);
       $a_unknown = $pluginFusioninventoryUnknownDevice->find();
       $this->assertEquals(count($a_unknown), 1 , 'Problem import discovered device with no type not right created!');
+      $unknowndata = current($a_unknown);
+      $this->assertEquals($unknowndata['entities_id'], 0 , 'Problem On unknown entity, must be created in root entity instead '.$unknowndata['entities_id']);
       $unknown = current($a_unknown);
       $pluginFusioninventoryUnknownDevice->delete($unknown, 1);      
       
