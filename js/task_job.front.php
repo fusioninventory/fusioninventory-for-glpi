@@ -233,8 +233,8 @@ var taskJobGrid = new Ext.grid.GridPanel({
       handler: function(btn,ev) {
          var u = new taskJobStore.recordType({
             package_id:'',
-            retry_nb:0,
-            retry_time:3,
+            retry_nb:3,
+            retry_time:0,
             action_type:'',
             action_selection:'',
             comment: '',
