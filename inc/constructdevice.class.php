@@ -58,7 +58,11 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       // LLDP, try to see in SNMPv2-SMI::enterprises.9.9.23.1.2.1.1.6
       $mapping_pre[2]['.1.3.6.1.4.1.9.9.23.1.2.1.1.7']      = 'cdpCacheDevicePort';
       $mapping_pre[2]['.1.0.8802.1.1.2.1.4.1.1.7']          = 'lldpRemPortId';
-      $mapping_pre[2]['.1.0.8802.1.1.2.1.3.2.0']             = 'lldpLocChassisId';
+      $mapping_pre[2]['.1.0.8802.1.1.2.1.3.2.0']            = 'lldpLocChassisId';
+      $mapping_pre[2]['.1.0.8802.1.1.2.1.4.1.1.10']         = 'lldpRemSysDesc';
+      $mapping_pre[2]['.1.0.8802.1.1.2.1.4.1.1.9']          = 'lldpRemSysName';
+      $mapping_pre[2]['.1.0.8802.1.1.2.1.4.1.1.8']          = 'lldpRemPortDesc';
+      
       $mapping_pre[2]['.1.3.6.1.2.1.1.1.0']                 = 'comments';
       $mapping_pre[2]['.1.3.6.1.4.1.9.9.109.1.1.1.1.3.1']   = 'cpu';
       $mapping_pre[2]['.1.3.6.1.2.1.17.1.4.1.2']            = 'dot1dBasePortIfIndex';
@@ -68,6 +72,11 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.13.2']       = 'entPhysicalModelName';
       $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.9.1001']     = 'firmware';
       $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.9.1000']     = 'firmware';
+      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.9.3000']     = 'firmware';
+      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.9.5000']     = 'firmware';
+      $mapping_pre[2]['.1.3.6.1.4.1.9.9.25.1.1.1.2.5']      = 'firmware';
+      $mapping_pre[2]['.1.3.6.1.2.16.19.2.0']               = 'firmware';
+      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.9.22']       = 'firmware';
       $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.2']               = 'ifdescr';
       $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.1']               = 'ifIndex';
       $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.14']              = 'ifinerrors';
@@ -105,6 +114,9 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       $mapping_pre[2]['.1.3.6.1.4.1.171.10.37.20.1.9.0']    = 'firmware';
       $mapping_pre[2]['.1.3.6.1.2.1.2.1.0']                 = '';
       $mapping_pre[2]['.1.0.8802.1.1.2.1.5.32962.1.2.3.1.2']          = 'PortVlanIndex';
+      $mapping_pre[2]['.1.3.6.1.4.1.9.9.23.1.2.1.1.5']      = 'cdpCacheVersion';
+      $mapping_pre[2]['.1.3.6.1.4.1.9.9.23.1.2.1.1.6']      = 'cdpCacheDeviceId';
+      $mapping_pre[2]['.1.3.6.1.4.1.9.9.23.1.2.1.1.8']      = 'cdpCachePlatform';
       // Omnistack LS6200 :
          $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.11.67108992'] = 'serial';
       // 3Com
