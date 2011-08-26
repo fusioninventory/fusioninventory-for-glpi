@@ -74,7 +74,7 @@ class PluginFusinvdeployFilepart extends CommonDBTM {
 
       $fileparts = array();
       foreach ($results as $result) {
-         $fileparts[$result['id']] = $result['name'];
+         $fileparts[$result['id']] = $result['sha512'];
       }
 
       return $fileparts;
