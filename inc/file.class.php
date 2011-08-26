@@ -285,7 +285,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
       }
 
       // delete parts objects
-      foreach($ids as $id => $filename){
+      foreach($ids as $id => $sha512){
          $PluginFusinvdeployFilepart->delete(array('id' =>$id));
       }
 

@@ -134,8 +134,11 @@ class PluginFusinvdeployPackage extends CommonDBTM {
    }
 
    function post_addItem() {
-      //Create installation & uninstallation order
-      PluginFusinvdeployOrder::createOrders($this->fields['id']);
+      //check whether orders have not already been created
+      if (!isset($_SESSION['tmp_clone_package'])) {
+         //Create installation & uninstallation order
+         PluginFusinvdeployOrder::createOrders($this->fields['id']);
+      }
    }
 
    function cleanDBonPurge() {
@@ -240,6 +243,130 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       }
 
       return true;
+   }
+
+   public function package_clone($new_name = '') {
+      global $LANG;
+
+      if ($this->getField('id') < 0) return false;
+
+      $_SESSION['tmp_clone_package'] = true;
+
+      //duplicate package
+      $package_oldId = $this->getField('id');
+      if ($new_name == "") $new_name = $this->getField('name');
+      $params = $this->fields;
+      unset($params['id']);
+      $params['name'] = $new_name;
+      $new_package = new PluginFusinvdeployPackage;
+      $package_newId = $new_package->add($params);
+
+      //duplicate orders
+      $order_obj = new PluginFusinvdeployOrder;
+      $orders = $order_obj->find("plugin_fusinvdeploy_packages_id = '".$package_oldId."'");
+
+      foreach($orders as $order_oldId => $order) {
+         //create new order for this new package
+         $order_param = array(
+            'type' => $order['type'],
+            'create_date' => date("Y-m-d H:i:s"),
+            'plugin_fusinvdeploy_packages_id' => $package_newId
+         );
+         $order_newId = $order_obj->add($order_param);
+         unset($order_param);
+
+
+         //duplicate checks
+         $check_obj = new PluginFusinvdeployCheck;
+         $checks = $check_obj->find("plugin_fusinvdeploy_orders_id = '".$order_oldId."'");
+         foreach ($checks as $check_oldId => $check) {
+            //create new check for this new order
+            unset($check['id']);
+            $check['plugin_fusinvdeploy_orders_id'] = $order_newId;
+            $check_newId = $check_obj->add($check);
+         }
+
+         //duplicate files
+         $file_obj = new PluginFusinvdeployFile;
+         $files = $file_obj->find("plugin_fusinvdeploy_orders_id = '".$order_oldId."'");
+         foreach ($files as $file_oldId => $file) {
+            //create new file for this new order
+            unset($file['id']);
+            $file['plugin_fusinvdeploy_orders_id'] = $order_newId;
+            $file_newId = $file_obj->add($file);
+
+            //duplicate fileparts
+            $filepart_obj = new PluginFusinvdeployFilepart;
+            $fileparts = $filepart_obj->find("plugin_fusinvdeploy_files_id = '".$order_oldId."'");
+            foreach ($fileparts as $filepart_oldId => $filepart) {
+               //create new filepart for this new file
+               unset($filepart['id']);
+               $filepart['plugin_fusinvdeploy_orders_id'] = $order_newId;
+               $filepart['plugin_fusinvdeploy_files_id'] = $file_newId;
+               $filepart_newId = $filepart_obj->add($filepart);
+            }
+         }
+
+         //duplicate actions
+         $action_obj = new PluginFusinvdeployAction;
+         $actions = $action_obj->find("plugin_fusinvdeploy_orders_id = '".$order_oldId."'");
+         foreach ($actions as $action_oldId => $action) {
+            //duplicate actions subitem
+            $action_subitem_obj = new $action['itemtype'];
+            $action_subitem_oldId = $action['items_id'];
+            $action_subitem_obj->getFromDB($action_subitem_oldId);
+            $params_subitem = $action_subitem_obj->fields;
+            unset($params_subitem['id']);
+            $action_subitem_newId = $action_subitem_obj->add($params_subitem);
+
+            //special case for command, we need to duplicate commandstatus and commandenvvariables
+            if ($action['itemtype'] == 'PluginFusinvdeployAction_Command') {
+               $command_oldId = $action_subitem_oldId;
+               $command_newId = $action_subitem_newId;
+
+               //duplicate commandstatus
+               $commandstatus_obj = new PluginFusinvdeployAction_Commandstatus;
+               $commandstatus = $commandstatus_obj->find("plugin_fusinvdeploy_commands_id = '".$command_oldId."'");
+               foreach ($commandstatus as $commandstatus_oldId => $commandstate) {
+                  //create new commandstatus for this command
+                  unset($commandstate['id']);
+                  $commandstate['plugin_fusinvdeploy_commands_id'] = $command_newId;
+                  $commandstatus_newId = $commandstatus_obj->add($commandstate);
+               }
+
+               //duplicate commandenvvariables
+               $commandenvvariables_obj = new PluginFusinvdeployAction_Commandenvvariable;
+               $commandenvvariables = $commandenvvariables_obj->find("plugin_fusinvdeploy_commands_id = '".$command_oldId."'");
+               foreach ($commandenvvariables as $commandenvvariable_oldId => $commandenvvariable) {
+                  //create new commandenvvariable for this command
+                  unset($commandenvvariable['id']);
+                  $commandenvvariable['plugin_fusinvdeploy_commands_id'] = $command_newId;
+                  $commandenvvariable_newId = $commandenvvariables_obj->add($commandenvvariable);
+               }
+            }
+
+            //create new action for this new order
+            unset($action['id']);
+            $action['plugin_fusinvdeploy_orders_id'] = $order_newId;
+            $action['items_id'] = $action_subitem_newId;
+            $action_newId = $action_obj->add($action);
+         }
+      }
+
+      if (($name=$new_package->getName()) == NOT_AVAILABLE) {
+         $new_package->fields['name'] = $new_package->getTypeName()." : ".$LANG['common'][2]
+                                 ." ".$new_package->fields['id'];
+      }
+      $display = (isset($this->input['_no_message_link'])?$new_package->getNameID()
+                                                         :$new_package->getLink());
+
+      // Do not display quotes
+      addMessageAfterRedirect($LANG['common'][70]."&nbsp;: ".stripslashes($display));
+
+      unset($_SESSION['tmp_clone_package']);
+
+      //exit;
+
    }
 
    public static function showEditDeniedMessage($id, $message) {

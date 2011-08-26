@@ -58,6 +58,7 @@ $sql           = "SELECT id as {$render}id,
                    FROM `glpi_plugin_fusinvdeploy_checks`
                    WHERE `plugin_fusinvdeploy_orders_id` = '$order_id'";
 
+
 $qry  = $DB->query($sql);
 $nb   = $DB->numrows($qry);
 $res  = array();

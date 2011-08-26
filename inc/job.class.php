@@ -43,6 +43,8 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusinvdeployJob {
 
    static function get($device_id) {
+      global $DB;
+
       $response      = array();
       $taskjoblog    = new PluginFusioninventoryTaskjoblog();
       $taskjobstatus = new PluginFusioninventoryTaskjobstatus();
@@ -56,6 +58,16 @@ class PluginFusinvdeployJob {
 
             //Foreach task for this agent build the response array
             foreach ($status_list as $status) {
+               //verify whether task is active
+               $sql = "SELECT is_active
+                  FROM glpi_plugin_fusioninventory_tasks tasks
+               LEFT JOIN glpi_plugin_fusioninventory_taskjobs jobs
+                  ON jobs.plugin_fusioninventory_tasks_id = tasks.id
+               WHERE jobs.id = '".$status['plugin_fusioninventory_taskjobs_id']."'
+               AND is_active = '1'";
+               $res = $DB->query($sql);
+               if ($DB->numrows($res) == 0) break;
+
                switch ($itemtype) {
                   default:
                      $ordertype = -1;

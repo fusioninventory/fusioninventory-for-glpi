@@ -63,6 +63,7 @@ $LANG['plugin_fusinvdeploy']['package'][21]="Afficher une boite de dialogue";
 $LANG['plugin_fusinvdeploy']['package'][22]="Codes retour";
 $LANG['plugin_fusinvdeploy']['package'][23]="Une ou plusieurs tâche(s) (#task#) utilise ce paquet, suppression impossible";
 $LANG['plugin_fusinvdeploy']['package'][24]="Une ou plusieurs tâche(s) (#task#) utilise ce paquet, édition impossible";
+$LANG['plugin_fusinvdeploy']['package'][25]="Nouveau nom";
 
 $LANG['plugin_fusinvdeploy']['files'][0]="Gestion des fichiers";
 $LANG['plugin_fusinvdeploy']['files'][1]="Nom de fichier";
