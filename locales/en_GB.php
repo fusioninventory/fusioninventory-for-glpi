@@ -38,7 +38,7 @@ $version="2.3.0-1";
 
 $LANG['plugin_fusinvdeploy']['title'][0]="$title";
 
-$LANG['plugin_fusinvdeploy']['package'][0]="Action";
+$LANG['plugin_fusinvdeploy']['package'][0]="Actions";
 $LANG['plugin_fusinvdeploy']['package'][1]="Command";
 $LANG['plugin_fusinvdeploy']['package'][2]="Launch (running file in package)";
 $LANG['plugin_fusinvdeploy']['package'][3]="Exécuter (system executable)";
@@ -143,7 +143,6 @@ $LANG['plugin_fusinvdeploy']['form']['title'][15] = "during installation";
 $LANG['plugin_fusinvdeploy']['form']['title'][16] = "during uninstallation";
 $LANG['plugin_fusinvdeploy']['form']['title'][17] = "before installation";
 $LANG['plugin_fusinvdeploy']['form']['title'][18] = "before uninstallation";
-
 
 $LANG['plugin_fusinvdeploy']['form']['message'][0] = "Empty form";
 $LANG['plugin_fusinvdeploy']['form']['message'][1] = "Invalid form";
