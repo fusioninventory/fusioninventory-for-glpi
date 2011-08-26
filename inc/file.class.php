@@ -274,7 +274,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
       $filepart = $PluginFusinvdeployFilepart->getForFile($id);
       $ids = $PluginFusinvdeployFilepart->getIdsForFile($id);
 
-      unlink($repoPath.self::getDirBySha512($sha512).'/'.$sha512.'.gz');
+      //unlink($repoPath.self::getDirBySha512($sha512).'/'.$sha512.'.gz');
 
       // Delete file parts in folder
       foreach($filepart as $filename => $hash){
