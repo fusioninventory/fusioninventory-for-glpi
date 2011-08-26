@@ -261,6 +261,9 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
 
    function removeFileInRepo($id) {
+      global $DB;
+
+
 
       $repoPath = GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/repository/";
 
@@ -274,22 +277,29 @@ class PluginFusinvdeployFile extends CommonDBTM {
       $filepart = $PluginFusinvdeployFilepart->getForFile($id);
       $ids = $PluginFusinvdeployFilepart->getIdsForFile($id);
 
-      //unlink($repoPath.self::getDirBySha512($sha512).'/'.$sha512.'.gz');
+      //verify that the file is not used by another package, in this case ignore file suppression
+      $sql = "SELECT DISTINCT plugin_fusiondeploy_packages_id
+         FROM glpi_plugin_fusinvdeploy_orders orders
+      LEFT JOIN glpi_plugin_fusinvdeploy_files files
+         ON files.plugin_fusiondeploy_orders_id = orders.id
+      WHERE files.sha512 = '$sha512";
+      $res = $DB->query($sql);
+      if ($DB->numrows($res) == 1) {
+         //unlink($repoPath.self::getDirBySha512($sha512).'/'.$sha512.'.gz');
 
-      // Delete file parts in folder
-      foreach($filepart as $filename => $hash){
-         $dir = $repoPath.self::getDirBySha512($hash).'/';
+         // Delete file parts in folder
+         foreach($filepart as $filename => $hash){
+            $dir = $repoPath.self::getDirBySha512($hash).'/';
 
-         //delete file part
-         unlink($dir.$hash.'.gz');
+            //delete file part
+            unlink($dir.$hash.'.gz');
+         }
+
+         // delete parts objects
+         foreach($ids as $id => $sha512){
+            $PluginFusinvdeployFilepart->delete(array('id' =>$id));
+         }
       }
-
-      // delete parts objects
-      foreach($ids as $id => $sha512){
-         $PluginFusinvdeployFilepart->delete(array('id' =>$id));
-      }
-
-
 
       // Delete file in DB
       $this->delete($_POST);
