@@ -125,12 +125,12 @@ class PluginFusinvinventoryImport_Drive extends CommonDBTM {
       }
       if (isset($disk['name']) && !empty($disk["name"])) {
          if ($type == "update") {
-            $id_disk = $ComputerDisk->update($disk);
+            $id_disk = $ComputerDisk->update($disk, $_SESSION["plugin_fusinvinventory_history_add"]);
          } else if ($type == "add") {
             if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
                $disk['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
             }
-            $id_disk = $ComputerDisk->add($disk);
+            $id_disk = $ComputerDisk->add($disk, array(), $_SESSION["plugin_fusinvinventory_history_add"]);
          }
       }
       return $id_disk;
