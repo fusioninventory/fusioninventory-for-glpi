@@ -858,103 +858,449 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
       $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
 
-//      $xml->CONTENT->HARDWARE->NAME = rand();
-//      $xml->CONTENT->HARDWARE->OSNAME = "Microsoft blablabla".rand();
-//      $xml->CONTENT->HARDWARE->OSVERSION = rand();
-//      $xml->CONTENT->HARDWARE->WINPRODID = rand();
-//      $xml->CONTENT->HARDWARE->WINPRODKEY = rand();
-//      $xml->CONTENT->HARDWARE->WORKGROUP = "work".rand();
-//      $xml->CONTENT->HARDWARE->USERDOMAIN = rand();
-
       // Modification of networks ports
       foreach ($xml->CONTENT->NETWORKS as $child) {
          $ip = rand(0,254).".".rand(0,254).".".rand(0,254).".";
          $child->IPADDRESS = $ip.rand(0,254);
          $child->IPSUBNET = $ip."0";
       }
-      //$array = $this->testSendinventory("tmp.xml", $xml);
-//      $items_id = $array[0];
-//      $unknown  = $array[1];
-
       $this->testNetwork($xml, $items_id, $unknown, $xmlFile);
-
-
    }
 
-//
-//   function testNetwork($xmlFile='') {
-//
-//      if (empty($xmlFile)) {
-//         echo "testNetwork with no arguments...\n";
-//         return;
-//      }
-//
-//      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
-//
-//         //$xml->CONTENT->NETWORKS
-//
-//
-//   }
-
-
    
+   
+   function testHistoryCreateComputer() {
+      global $DB;
+      
+$XML = array();
+$XML['Computer'] = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<REQUEST>
+  <CONTENT>
+    <ACCESSLOG>
+      <LOGDATE>2011-07-03 23:23:21</LOGDATE>
+      <USERID>N/A</USERID>
+    </ACCESSLOG>
+    <BATTERIES>
+      <CHEMISTRY>Lithium </CHEMISTRY>
+      <DATE></DATE>
+      <MANUFACTURER>TOSHIBA</MANUFACTURER>
+      <SERIAL>0000000000</SERIAL>
+    </BATTERIES>
+    <BIOS>
+      <ASSETTAG>0000000000</ASSETTAG>
+      <BDATE>09/15/2010</BDATE>
+      <BMANUFACTURER>TOSHIBA</BMANUFACTURER>
+      <BVERSION>Version 1.60</BVERSION>
+      <MMANUFACTURER>TOSHIBA</MMANUFACTURER>
+      <MMODEL>Portable PC</MMODEL>
+      <MSN>0000000000</MSN>
+      <SKUNUMBER>0000000000</SKUNUMBER>
+      <SMANUFACTURER>TOSHIBA</SMANUFACTURER>
+      <SMODEL>Satellite R630</SMODEL>
+      <SSN>XA201220HHHHRT</SSN>
+    </BIOS>
+    <CONTROLLERS>
+      <CAPTION>Core Processor DRAM Controller</CAPTION>
+      <MANUFACTURER>Intel Corporation</MANUFACTURER>
+      <NAME>Core Processor DRAM Controller</NAME>
+      <PCICLASS>0600</PCICLASS>
+      <PCIID>8086:0044</PCIID>
+      <PCISLOT>00:00.0</PCISLOT>
+      <TYPE>Bridge</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Core Processor Integrated Graphics Controller</CAPTION>
+      <MANUFACTURER>Intel Corporation</MANUFACTURER>
+      <NAME>Core Processor Integrated Graphics Controller</NAME>
+      <PCICLASS>0300</PCICLASS>
+      <PCIID>8086:0046</PCIID>
+      <PCISLOT>00:02.0</PCISLOT>
+      <TYPE>Display controller</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>5 Series/3400 Series Chipset HECI Controller</CAPTION>
+      <MANUFACTURER>Intel Corporation</MANUFACTURER>
+      <NAME>5 Series/3400 Series Chipset HECI Controller</NAME>
+      <PCICLASS>0780</PCICLASS>
+      <PCIID>8086:3b64</PCIID>
+      <PCISLOT>00:16.0</PCISLOT>
+      <TYPE>Communication controller</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>82577LC Gigabit Network Connection</CAPTION>
+      <MANUFACTURER>Intel Corporation</MANUFACTURER>
+      <NAME>82577LC Gigabit Network Connection</NAME>
+      <PCICLASS>0200</PCICLASS>
+      <PCIID>8086:10eb</PCIID>
+      <PCISLOT>00:19.0</PCISLOT>
+      <TYPE>Network controller</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>5 Series/3400 Series Chipset USB2 Enhanced Host Controller</CAPTION>
+      <MANUFACTURER>Intel Corporation</MANUFACTURER>
+      <NAME>5 Series/3400 Series Chipset USB2 Enhanced Host Controller</NAME>
+      <PCICLASS>0c03</PCICLASS>
+      <PCIID>8086:3b3c</PCIID>
+      <PCISLOT>00:1a.0</PCISLOT>
+      <TYPE>Serial bus controller</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>5 Series/3400 Series Chipset High Definition Audio</CAPTION>
+      <MANUFACTURER>Intel Corporation</MANUFACTURER>
+      <NAME>5 Series/3400 Series Chipset High Definition Audio</NAME>
+      <PCICLASS>0403</PCICLASS>
+      <PCIID>8086:3b56</PCIID>
+      <PCISLOT>00:1b.0</PCISLOT>
+      <TYPE>Multimedia controller</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>5 Series/3400 Series Chipset PCI Express Root Port 1</CAPTION>
+      <MANUFACTURER>Intel Corporation</MANUFACTURER>
+      <NAME>5 Series/3400 Series Chipset PCI Express Root Port 1</NAME>
+      <PCICLASS>0604</PCICLASS>
+      <PCIID>8086:3b42</PCIID>
+      <PCISLOT>00:1c.0</PCISLOT>
+      <TYPE>Bridge</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>5 Series/3400 Series Chipset PCI Express Root Port 2</CAPTION>
+      <MANUFACTURER>Intel Corporation</MANUFACTURER>
+      <NAME>5 Series/3400 Series Chipset PCI Express Root Port 2</NAME>
+      <PCICLASS>0604</PCICLASS>
+      <PCIID>8086:3b44</PCIID>
+      <PCISLOT>00:1c.1</PCISLOT>
+      <TYPE>Bridge</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>5 Series/3400 Series Chipset PCI Express Root Port 3</CAPTION>
+      <MANUFACTURER>Intel Corporation</MANUFACTURER>
+      <NAME>5 Series/3400 Series Chipset PCI Express Root Port 3</NAME>
+      <PCICLASS>0604</PCICLASS>
+      <PCIID>8086:3b46</PCIID>
+      <PCISLOT>00:1c.2</PCISLOT>
+      <TYPE>Bridge</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>5 Series/3400 Series Chipset USB2 Enhanced Host Controller</CAPTION>
+      <MANUFACTURER>Intel Corporation</MANUFACTURER>
+      <NAME>5 Series/3400 Series Chipset USB2 Enhanced Host Controller</NAME>
+      <PCICLASS>0c03</PCICLASS>
+      <PCIID>8086:3b34</PCIID>
+      <PCISLOT>00:1d.0</PCISLOT>
+      <TYPE>Serial bus controller</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>82801 Mobile PCI Bridge</CAPTION>
+      <MANUFACTURER>Intel Corporation</MANUFACTURER>
+      <NAME>82801 Mobile PCI Bridge</NAME>
+      <PCICLASS>0604</PCICLASS>
+      <PCIID>8086:2448</PCIID>
+      <PCISLOT>00:1e.0</PCISLOT>
+      <TYPE>Bridge</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Mobile 5 Series Chipset LPC Interface Controller</CAPTION>
+      <MANUFACTURER>Intel Corporation</MANUFACTURER>
+      <NAME>Mobile 5 Series Chipset LPC Interface Controller</NAME>
+      <PCICLASS>0601</PCICLASS>
+      <PCIID>8086:3b09</PCIID>
+      <PCISLOT>00:1f.0</PCISLOT>
+      <TYPE>Bridge</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>5 Series/3400 Series Chipset 4 port SATA AHCI Controller</CAPTION>
+      <MANUFACTURER>Intel Corporation</MANUFACTURER>
+      <NAME>5 Series/3400 Series Chipset 4 port SATA AHCI Controller</NAME>
+      <PCICLASS>0106</PCICLASS>
+      <PCIID>8086:3b29</PCIID>
+      <PCISLOT>00:1f.2</PCISLOT>
+      <TYPE>Mass storage controller</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>5 Series/3400 Series Chipset Thermal Subsystem</CAPTION>
+      <MANUFACTURER>Intel Corporation</MANUFACTURER>
+      <NAME>5 Series/3400 Series Chipset Thermal Subsystem</NAME>
+      <PCICLASS>1180</PCICLASS>
+      <PCIID>8086:3b32</PCIID>
+      <PCISLOT>00:1f.6</PCISLOT>
+      <TYPE>Signal processing controller</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>MMC/SD Host Controller</CAPTION>
+      <MANUFACTURER>Ricoh Co Ltd</MANUFACTURER>
+      <NAME>MMC/SD Host Controller</NAME>
+      <PCICLASS>0805</PCICLASS>
+      <PCIID>1180:e822</PCIID>
+      <PCISLOT>01:00.0</PCISLOT>
+      <TYPE>Generic system peripheral</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>BCM4313 802.11b/g/n Wireless LAN Controller</CAPTION>
+      <MANUFACTURER>Broadcom Corporation</MANUFACTURER>
+      <NAME>BCM4313 802.11b/g/n Wireless LAN Controller</NAME>
+      <PCICLASS>0280</PCICLASS>
+      <PCIID>14e4:4727</PCIID>
+      <PCISLOT>02:00.0</PCISLOT>
+      <TYPE>Network controller</TYPE>
+    </CONTROLLERS>
+    <DRIVES>
+      <FILESYSTEM>ufs</FILESYSTEM>
+      <FREE>8529</FREE>
+      <TOTAL>9681</TOTAL>
+      <TYPE>/</TYPE>
+      <VOLUMN>/dev/ad4s1a</VOLUMN>
+    </DRIVES>
+    <DRIVES>
+      <FILESYSTEM>ufs</FILESYSTEM>
+      <FREE>194276</FREE>
+      <TOTAL>403402</TOTAL>
+      <TYPE>/Donnees</TYPE>
+      <VOLUMN>/dev/ad4s1g</VOLUMN>
+    </DRIVES>
+    <DRIVES>
+      <FILESYSTEM>ufs</FILESYSTEM>
+      <FREE>1213</FREE>
+      <TOTAL>1447</TOTAL>
+      <TYPE>/tmp</TYPE>
+      <VOLUMN>/dev/ad4s1e</VOLUMN>
+    </DRIVES>
+    <DRIVES>
+      <FILESYSTEM>ufs</FILESYSTEM>
+      <FREE>13983</FREE>
+      <TOTAL>38739</TOTAL>
+      <TYPE>/usr</TYPE>
+      <VOLUMN>/dev/ad4s1f</VOLUMN>
+    </DRIVES>
+    <DRIVES>
+      <FILESYSTEM>ufs</FILESYSTEM>
+      <FREE>20</FREE>
+      <TOTAL>4673</TOTAL>
+      <TYPE>/var</TYPE>
+      <VOLUMN>/dev/ad4s1d</VOLUMN>
+    </DRIVES>
+    <ENVS>
+      <KEY>HOST</KEY>
+      <VAL>port004.bureau.siprossii.com</VAL>
+    </ENVS>
+    <HARDWARE>
+      <ARCHNAME>amd64-freebsd-thread-multi</ARCHNAME>
+      <CHASSIS_TYPE>Notebook</CHASSIS_TYPE>
+      <CHECKSUM>262143</CHECKSUM>
+      <DESCRIPTION>amd64/00-00-01 04:36:54</DESCRIPTION>
+      <DNS>8.8.8.8</DNS>
+      <ETIME>22</ETIME>
+      <IPADDR>192.168.20.184/10.0.0.254/10.0.0.1</IPADDR>
+      <MEMORY>3810</MEMORY>
+      <NAME>port004HHT</NAME>
+      <OSCOMMENTS>GENERIC (Thu Feb 17 02:41:51 UTC 2011)root@mason.cse.buffalo.edu</OSCOMMENTS>
+      <OSNAME>freebsd</OSNAME>
+      <OSVERSION>8.2-RELEASE</OSVERSION>
+      <SWAP>4096</SWAP>
+      <USERDOMAIN></USERDOMAIN>
+      <USERID>ddurieux</USERID>
+      <UUID>68405E00-E5BE-11DF-801C-B05981201220HHTT</UUID>
+      <VMSYSTEM>Physical</VMSYSTEM>
+      <WORKGROUP>bureau.siprossii.com</WORKGROUP>
+    </HARDWARE>
+    <MEMORIES>
+      <CAPACITY>2048</CAPACITY>
+      <CAPTION>DIMM0</CAPTION>
+      <DESCRIPTION>SODIMM</DESCRIPTION>
+      <NUMSLOTS>1</NUMSLOTS>
+      <SERIALNUMBER>98F6FF18</SERIALNUMBER>
+      <SPEED>1067</SPEED>
+      <TYPE>DDR3</TYPE>
+    </MEMORIES>
+    <MEMORIES>
+      <CAPACITY>2048</CAPACITY>
+      <CAPTION>DIMM2</CAPTION>
+      <DESCRIPTION>SODIMM</DESCRIPTION>
+      <NUMSLOTS>2</NUMSLOTS>
+      <SERIALNUMBER>95F1833E</SERIALNUMBER>
+      <SPEED>1067</SPEED>
+      <TYPE>DDR3</TYPE>
+    </MEMORIES>
+    <NETWORKS>
+      <DESCRIPTION>em0</DESCRIPTION>
+      <IPADDRESS>192.168.20.184</IPADDRESS>
+      <IPGATEWAY>192.168.20.1</IPGATEWAY>
+      <IPMASK>255.255.255.0</IPMASK>
+      <IPSUBNET>192.168.20.0</IPSUBNET>
+      <MACADDR>78:23:18:cf:0d:93</MACADDR>
+      <MTU>1500</MTU>
+      <STATUS>Up</STATUS>
+      <TYPE>Ethernet</TYPE>
+    </NETWORKS>
+    <NETWORKS>
+      <DESCRIPTION>lo0</DESCRIPTION>
+      <IPADDRESS>127.0.0.1</IPADDRESS>
+      <IPGATEWAY>192.168.20.1</IPGATEWAY>
+      <IPMASK>255.0.0.0</IPMASK>
+      <IPSUBNET>127.0.0.0</IPSUBNET>
+      <MACADDR></MACADDR>
+      <MTU>16384</MTU>
+      <STATUS>Up</STATUS>
+      <TYPE></TYPE>
+      <VIRTUALDEV>1</VIRTUALDEV>
+    </NETWORKS>
+    <NETWORKS>
+      <DESCRIPTION>lo1</DESCRIPTION>
+      <IPADDRESS>10.0.0.1</IPADDRESS>
+      <IPGATEWAY>192.168.20.1</IPGATEWAY>
+      <IPMASK>255.255.255.0</IPMASK>
+      <IPSUBNET>10.0.0.0</IPSUBNET>
+      <MACADDR></MACADDR>
+      <MTU>16384</MTU>
+      <STATUS>Up</STATUS>
+      <TYPE></TYPE>
+      <VIRTUALDEV>1</VIRTUALDEV>
+    </NETWORKS>
+    <PORTS>
+      <CAPTION>DB-15 female</CAPTION>
+      <DESCRIPTION>None</DESCRIPTION>
+      <NAME> </NAME>
+      <TYPE>Other</TYPE>
+    </PORTS>
+    <PORTS>
+      <CAPTION>RJ-45</CAPTION>
+      <DESCRIPTION>None</DESCRIPTION>
+      <NAME> </NAME>
+      <TYPE>Network Port</TYPE>
+    </PORTS>
+    <PORTS>
+      <CAPTION>Access Bus (USB)</CAPTION>
+      <DESCRIPTION>None</DESCRIPTION>
+      <NAME> </NAME>
+      <TYPE>USB</TYPE>
+    </PORTS>
+    <PORTS>
+      <CAPTION>Access Bus (USB)</CAPTION>
+      <DESCRIPTION>None</DESCRIPTION>
+      <NAME> </NAME>
+      <TYPE>USB</TYPE>
+    </PORTS>
+    <PORTS>
+      <CAPTION>Access Bus (USB)</CAPTION>
+      <DESCRIPTION>None</DESCRIPTION>
+      <NAME> </NAME>
+      <TYPE>USB</TYPE>
+    </PORTS>
+    <PORTS>
+      <CAPTION>Mini Jack (headphones)</CAPTION>
+      <DESCRIPTION>None</DESCRIPTION>
+      <NAME> </NAME>
+      <TYPE>Other</TYPE>
+    </PORTS>
+    <PORTS>
+      <CAPTION>Other</CAPTION>
+      <DESCRIPTION>None</DESCRIPTION>
+      <NAME> </NAME>
+      <TYPE>Other</TYPE>
+    </PORTS>
+    <PORTS>
+      <CAPTION>Other</CAPTION>
+      <DESCRIPTION>None</DESCRIPTION>
+      <NAME> </NAME>
+      <TYPE>Other</TYPE>
+    </PORTS>
+    <PORTS>
+      <CAPTION>Other</CAPTION>
+      <DESCRIPTION>None</DESCRIPTION>
+      <NAME> </NAME>
+      <TYPE>Other</TYPE>
+    </PORTS>
+    <PORTS>
+      <CAPTION>Other</CAPTION>
+      <DESCRIPTION>None</DESCRIPTION>
+      <NAME> </NAME>
+      <TYPE>Other</TYPE>
+    </PORTS>
+    <PROCESSES>
+      <CMD>[idle]</CMD>
+      <CPUUSAGE>374.3</CPUUSAGE>
+      <MEM>0.0</MEM>
+      <PID>11</PID>
+      <TTY>??</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>0</VIRTUALMEMORY>
+    </PROCESSES>
+    <SLOTS>
+      <DESCRIPTION>Other</DESCRIPTION>
+      <NAME>SD CARD</NAME>
+      <STATUS>In Use</STATUS>
+    </SLOTS>
+    <SLOTS>
+      <DESCRIPTION>x1 PCI Express</DESCRIPTION>
+      <DESIGNATION>1</DESIGNATION>
+      <NAME>EXPRESS CARD</NAME>
+      <STATUS>In Use</STATUS>
+    </SLOTS>
+    <SOFTWARES>
+      <COMMENTS>Image processing tools</COMMENTS>
+      <NAME>ImageMagick</NAME>
+      <VERSION>6.7.0.2</VERSION>
+    </SOFTWARES>
+    <SOUNDS>
+      <DESCRIPTION>rev 06</DESCRIPTION>
+      <MANUFACTURER>Intel Corporation 5 Series/3400 Series Chipset High Definition Audio </MANUFACTURER>
+      <NAME>Audio device</NAME>
+    </SOUNDS>
+    <STORAGES>
+      <DESCRIPTION>ad4s1b</DESCRIPTION>
+      <TYPE></TYPE>
+    </STORAGES>
+    <STORAGES>
+      <DESCRIPTION>ad4s1a</DESCRIPTION>
+      <TYPE></TYPE>
+    </STORAGES>
+    <STORAGES>
+      <DESCRIPTION>ad4s1g</DESCRIPTION>
+      <TYPE></TYPE>
+    </STORAGES>
+    <STORAGES>
+      <DESCRIPTION>ad4s1e</DESCRIPTION>
+      <TYPE></TYPE>
+    </STORAGES>
+    <STORAGES>
+      <DESCRIPTION>ad4s1f</DESCRIPTION>
+      <TYPE></TYPE>
+    </STORAGES>
+    <STORAGES>
+      <DESCRIPTION>ad4s1d</DESCRIPTION>
+      <TYPE></TYPE>
+    </STORAGES>
+    <STORAGES>
+      <DESCRIPTION>acd0</DESCRIPTION>
+      <MODEL>MATSHITADVD-RAM UJ892ES/1.20</MODEL>
+      <TYPE></TYPE>
+    </STORAGES>
+    <USERS>
+      <LOGIN>ddurieux</LOGIN>
+    </USERS>
+    <VERSIONCLIENT>FusionInventory-Agent_v2.1.9-3</VERSIONCLIENT>
+    <VIDEOS>
+      <CHIPSET>VGA compatible controller</CHIPSET>
+      <NAME>Intel Corporation Core Processor Integrated Graphics Controller </NAME>
+    </VIDEOS>
+  </CONTENT>
+  <DEVICEID>port004.bureau.siprossii.com-2010-12-30-12-24-14</DEVICEID>
+  <QUERY>INVENTORY</QUERY>
+</REQUEST>";
+      
+      $log = new Log();
+      $countlog_start = countElementsInTable(getTableForItemType("Log"));
+      $xml = simplexml_load_string($XML['Computer'],'SimpleXMLElement', LIBXML_NOCDATA);
+      $this->testSendinventory("Nothing", $xml);
+      $countlog_end = countElementsInTable(getTableForItemType("Log"));
+      $a_logs = $log->find("", "id DESC", ($countlog_end - $countlog_start -1));
+      $this->assertEquals(($countlog_end - $countlog_start - 1), 0 , 'Problem on log, must be 0 : \n'.print_r($a_logs, true));
 
-//
-//
-//   public function testComputerCreation() {
-//
-//   }
-//
-//
-
-//   public function testComputerVolumes() {
-//      global $DB;
-//
-//      $emulatorAgent = new emulatorAgent;
-//      $emulatorAgent->server_urlpath = "/glpi078/plugins/fusioninventory/front/communication.php";
-//
-//      $input_xml = file_get_contents("xml/inventory_local/2.1.6/port003-2010-06-08-08-13-45.xml");
-//      $input_xml = str_replace("<DEVICEID></DEVICEID>", "<DEVICEID>agenttest-2010-03-09-09-41-28</DEVICEID>", $input_xml);
-//
-//      // modify space of a volume
-//      $input_xml = str_replace("<FREE>12779</FREE>", "<FREE>10000</FREE>", $input_xml);
-//
-//      // Return Inventory you want
-//      $return_xml = $emulatorAgent->sendProlog($input_xml);
-//      echo "========== Send local inventory ==========\n";
-//      print_r($return_xml);
-//
-//      $ComputerDisk = new ComputerDisk();
-//      $a_disk = $ComputerDisk->find();
-//      $this->assertEquals(count($a_disk), 5 , 'Problem on inventory, we have not good number of disks ('.count($a_disk).' instead of 5)!');
-//
-//      $size = 0;
-//      foreach ($a_disk as $id => $datas) {
-//         if ($datas['device'] == "/dev/ad4s1g") {
-//            $size = $datas['freesize'];
-//         }
-//      }
-//      $this->assertEquals($size, 10000 , 'Problem on inventory, freesize of a disk is not good ('.$size.' instead of 10000)!');
-//   }
-
-
-//   public function testSendinventoryByWebservice() {
-//
-//
-//      system('php ../../../webservices/scripts/testxmlrpc.php --method=glpi.doLogin --login_name=glpi login_password=glpi',$data);
-//
-//
-//      $a_data = explode("\n", $output);
-//      foreach($a_data as $num=>$value) {
-//         if (strstr($value, "[session] => ")) {
-//            $session_num = str_replace("[session] => ", $value);
-//         }
-//      }
-//
-//      system('php ../../../webservices/scripts/testxmlrpc.php method=fusioninventory.test --base64=plugins/fusioninventory/tools/phpunit/xml/inventory_local/2.1.6/port003-2010-06-08-08-13-45.xml --session='.$session_num, $data);
-//      print_r($data);
-//   }
-
+      
+      
+      
+      
+   }
+   
 
 }
 
