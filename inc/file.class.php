@@ -122,7 +122,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
                         $tmp = array();
                         $tmp['uncompress']                = $result_file['uncompress'];
                         $tmp['name']                      = $result_file['name'];
-                        $tmp['is_p2p']                    = $result_file['is_p2p'];
+                        $tmp['p2p']                    = $result_file['is_p2p'];
 
                         $mirrors = PluginFusinvdeployFile_Mirror::getForFile($result_file['id']);
                         $tmp['mirrors'] = $mirrors;
@@ -179,7 +179,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
       $filename = addslashes($params['filename']);
       $file_tmp_name = $params['file_tmp_name'];
-      $is_p2p = $params['is_p2p'];
+      $p2p = $params['is_p2p'];
       $uncompress = $params['uncompress'];
       $p2p_retention_days = $params['p2p_retention_days'];
       $order_id = $params['order_id'];
@@ -201,10 +201,10 @@ class PluginFusinvdeployFile extends CommonDBTM {
       $file_id = $this->add(
          array(
             'name' => $filename,
-            'is_p2p' => $is_p2p,
+            'p2p' => $p2p,
             'mimetype' => $mime_type,
             'create_date' => date('Y-m-d H:i:s'),
-            'p2p_retention_days' => $p2p_retention_days,
+            'p2p-retention-days' => $p2p_retention_days,
             'uncompress' => $uncompress,
             'sha512' => $sha512,
             'shortsha512' => $short_sha512,
