@@ -158,7 +158,6 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       } else if ($pxml = @simplexml_load_string(utf8_encode($xml),'SimpleXMLElement', LIBXML_NOCDATA)) {
          $xml = utf8_encode($xml);
       } else {
-         echo "toto!!\n";
          $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
    <ERROR>XML not well formed!</ERROR>
