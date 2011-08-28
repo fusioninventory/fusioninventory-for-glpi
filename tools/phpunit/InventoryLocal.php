@@ -1294,11 +1294,38 @@ $XML['Computer'] = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
       $countlog_end = countElementsInTable(getTableForItemType("Log"));
       $a_logs = $log->find("", "id DESC", ($countlog_end - $countlog_start -1));
       $this->assertEquals(($countlog_end - $countlog_start - 1), 0 , 'Problem on log, must be 0 : \n'.print_r($a_logs, true));
+   }
+   
+   
+   function testHistoryWhenOSChange() {
+      global $DB;
+      
+      $xml = simplexml_load_file("xml/inventory_local/2.1.6/David-PC-2010-08-09-20-52-54-imprimante.xml",'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml->CONTENT->HARDWARE->UUID = "68405E00-E5BE-11DF-801C-B05981201220HHTT";
+      $xml->CONTENT->HARDWARE->NAME = "port004HHT";
+      $xml->CONTENT->BIOS->SSN = "XA201220HHHHRT";
+   
+      $log = new Log();
+      $countlog_start = countElementsInTable(getTableForItemType("Log"));
+      $this->testSendinventory("Nothing", $xml);
+      $countlog_end = countElementsInTable(getTableForItemType("Log"));
+      $a_logs = $log->find("", "id DESC", ($countlog_end - $countlog_start));
+      // Disable logs for update user in monitor, printer, peripehral because unable to disable log history
+      foreach ($a_logs as $key=>$data) {
+         if (($data['itemtype'] == "Printer"
+                    OR $data['itemtype'] == "Monitor"
+                    OR $data['itemtype'] == "Peripheral")) {
+            unset($a_logs[$key]);
+            $countlog_end--;
+         }
+         if ($data['itemtype'] == "Computer"
+                 AND $data['itemtype_link'] != '0') {
+            unset($a_logs[$key]);
+            $countlog_end--;
+         }
 
-      
-      
-      
-      
+      }
+      $this->assertEquals(($countlog_end - $countlog_start), 0 , 'Problem on log, must be 0 on OS change : \n'.print_r($a_logs, true));
    }
    
 
