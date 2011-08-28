@@ -170,14 +170,24 @@ class PluginFusinvinventoryImport_Storage extends CommonDBTM {
          $items_id = str_replace("d", "", $items_id);
          $CompDevice->getFromDB($items_id);
          if ($CompDevice->fields['computers_id'] == $idmachine) {
-            $CompDevice->delete(array("id" => $items_id,
-                                          "_itemtype" => 'DeviceDrive'));
+            $input = array();
+            $input['id'] = $items_id;
+            $input['_itemtype'] = "DeviceDrive";
+            if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
+               $input['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
+            }
+            $CompDevice->delete($input, 0, $_SESSION["plugin_fusinvinventory_history_add"]);
          }
       } else if ($typeDevice == "HardDrive") {
          $CompHardDevice->getFromDB($items_id);
          if ($CompHardDevice->fields['computers_id'] == $idmachine) {
-            $CompHardDevice->delete(array("id" => $items_id,
-                                          "_itemtype" => 'DeviceHardDrive'));
+            $input = array();
+            $input['id'] = $items_id;
+            $input['_itemtype'] = "DeviceHardDrive";
+            if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
+               $input['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
+            }
+            $CompHardDevice->delete($input, 0, $_SESSION["plugin_fusinvinventory_history_add"]);
          }
       }
    }

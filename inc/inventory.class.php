@@ -79,7 +79,6 @@ class PluginFusinvinventoryInventory {
       $sxml_soft->addChild('COMMENTS', (string)$sxml->CONTENT->HARDWARE->OSCOMMENTS);
       $sxml_soft->addChild('NAME', (string)$sxml->CONTENT->HARDWARE->OSNAME);
       $sxml_soft->addChild('VERSION', (string)$sxml->CONTENT->HARDWARE->OSVERSION);
-      logInFile(("toto"), print_r($sxml_soft, true));  
       $p_xml = $sxml->asXML();
       // End hack
       
@@ -237,6 +236,15 @@ class PluginFusinvinventoryInventory {
             $items_id = $Computer->add($input);
             $PluginFusinvinventoryLib->startAction($xml, $items_id, '1');
          } else {
+            $computer = new Computer();
+            $operatingSystem = new OperatingSystem();
+            $computer->getFromDB($items_id);
+            if ((isset($xml->CONTENT->HARDWARE->OSNAME)) 
+                    AND ($computer->fields['operatingsystems_id'] 
+                            != $operatingSystem->importExternal((string)$xml->CONTENT->HARDWARE->OSNAME))) {
+               $_SESSION["plugin_fusinvinventory_history_add"] = false;
+               $_SESSION["plugin_fusinvinventory_no_history_add"] = true;
+            }
             $PluginFusinvinventoryLib->startAction($xml, $items_id, '0');
          }
       } else if ($itemtype == 'PluginFusioninventoryUnknownDevice') {

@@ -117,7 +117,7 @@ class PluginFusinvinventoryImport_Antivirus extends CommonDBTM {
       $PluginFusinvinventoryAntivirus = new PluginFusinvinventoryAntivirus();
       $PluginFusinvinventoryAntivirus->getFromDB($items_id);
       if ($PluginFusinvinventoryAntivirus->fields['computers_id'] == $idmachine) {
-         $PluginFusinvinventoryAntivirus->delete(array("id" => $items_id));
+         $PluginFusinvinventoryAntivirus->delete(array("id" => $items_id), 0, $_SESSION["plugin_fusinvinventory_history_add"]);
       }
    }
 }

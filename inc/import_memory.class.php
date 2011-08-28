@@ -135,8 +135,13 @@ class PluginFusinvinventoryImport_Memory extends CommonDBTM {
       $CompDevice = new Computer_Device('DeviceMemory');
       $CompDevice->getFromDB($items_id);
       if ($CompDevice->fields['computers_id'] == $idmachine) {
-         $CompDevice->delete(array("id" => $items_id,
-                                   "_itemtype" => 'DeviceMemory'));
+         $input = array();
+         $input['id'] = $items_id;
+         $input['_itemtype'] = 'DeviceMemory';
+         if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
+            $input['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
+         }
+         $CompDevice->delete($input, 0, $_SESSION["plugin_fusinvinventory_history_add"]);
       }
    }
 }

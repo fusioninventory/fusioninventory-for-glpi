@@ -117,7 +117,7 @@ class PluginFusinvinventoryImport_Virtualmachine extends CommonDBTM {
       $virtualmachine = new ComputerVirtualMachine();
       $virtualmachine->getFromDB($items_id);
       if ($virtualmachine->fields['computers_id'] == $idmachine) {
-         $virtualmachine->delete(array("id" => $items_id));
+         $virtualmachine->delete(array("id" => $items_id), 0, $_SESSION["plugin_fusinvinventory_history_add"]);
       }
    }
 
