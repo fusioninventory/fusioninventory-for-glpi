@@ -123,8 +123,13 @@ class PluginFusinvinventoryImport_Graphiccard extends CommonDBTM {
       $CompDevice = new Computer_Device('DeviceGraphicCard');
       $CompDevice->getFromDB($items_id);
       if ($CompDevice->fields['computers_id'] == $idmachine) {
-         $CompDevice->delete(array("id" => $items_id,
-                                   "_itemtype" => 'DeviceGraphicCard'));
+         $input = array();
+         $input['id'] = $items_id;
+         $input['_itemtype'] = 'DeviceGraphicCard';
+         if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
+            $input['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
+         }
+         $CompDevice->delete($input, 0, $_SESSION["plugin_fusinvinventory_history_add"]);
       }
    }
 }

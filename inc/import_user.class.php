@@ -130,7 +130,7 @@ class PluginFusinvinventoryImport_User extends CommonDBTM {
          $input['contact'] = str_replace($username, "", $Computer->fields['contact']);
       }
       $input['contact'] = preg_replace("/^\//", "", $input['contact']);
-      $Computer->update($input);
+      $Computer->update($input, $_SESSION["plugin_fusinvinventory_history_add"]);
    }
 }
 

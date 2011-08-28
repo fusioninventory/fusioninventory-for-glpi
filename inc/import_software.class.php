@@ -146,7 +146,12 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
       $Computer_SoftwareVersion = new Computer_SoftwareVersion();
       $Computer_SoftwareVersion->getFromDB($items_id);
       if ($Computer_SoftwareVersion->fields['computers_id'] == $idmachine) {
-         $Computer_SoftwareVersion->delete(array("id" => $items_id));
+         $input = array();
+         $input['id'] = $items_id;
+         if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
+            $input['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
+         }
+         $Computer_SoftwareVersion->delete($input, 0, $_SESSION["plugin_fusinvinventory_history_add"]);
       }
    }   
 }

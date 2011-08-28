@@ -151,7 +151,12 @@ class PluginFusinvinventoryImport_Drive extends CommonDBTM {
       $ComputerDisk = new ComputerDisk();
       $ComputerDisk->getFromDB($items_id);
       if ($ComputerDisk->fields['computers_id'] == $idmachine) {
-         $ComputerDisk->delete(array("id" => $items_id));
+         $input = array();
+         $input['id'] = $items_id;
+         if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
+            $input['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
+         }
+         $ComputerDisk->delete($input, 0, $_SESSION["plugin_fusinvinventory_history_add"]);
       }
    }
 }
