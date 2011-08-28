@@ -152,6 +152,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       global $DB,$CFG_GLPI,$LANG;
 
       $pFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $pFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       
       if ($id!='') {
          $this->getFromDB($id);
@@ -179,8 +180,20 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "</td>";
       echo "<th rowspan='2'>";
       if ($this->fields["is_active"]) {
-         echo '<input name="forcestart" value="'.$LANG['plugin_fusioninventory']['task'][40].'"
-                class="submit" type="submit">';
+         if ($id!='') {
+            $forcerundisplay = 1;
+            $a_taskjobs = $pFusioninventoryTaskjob->find("`plugin_fusioninventory_tasks_id`='".$id."'");
+            foreach ($a_taskjobs as $data) {
+               $statejob = $pFusioninventoryTaskjobstatus->stateTaskjob($data['id'], '930', 'value');
+               if ($statejob != '') {
+                  $forcerundisplay = 0;
+               }
+            }
+            if ($forcerundisplay == '1') {
+               echo '<input name="forcestart" value="'.$LANG['plugin_fusioninventory']['task'][40].'"
+                      class="submit" type="submit">';
+            }
+         }
       }
       echo "</th>";
       echo "</tr>";
@@ -222,8 +235,11 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $reset = 0;
          $a_taskjobs = $pFusioninventoryTaskjob->find("`plugin_fusioninventory_tasks_id`='".$id."'");
          foreach ($a_taskjobs as $data) {
-            if ($data['execution_id'] != $this->fields['execution_id']) {
-               $reset = 1;
+            $statejob = $pFusioninventoryTaskjobstatus->stateTaskjob($data['id'], '930', 'value');
+            if ($statejob == '') {
+               if ($data['execution_id'] != $this->fields['execution_id']) {
+                  $reset = 1;
+               }
             }
          }
          if ($reset == '1') {
