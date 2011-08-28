@@ -205,7 +205,8 @@ if (isset($_POST['definition_add'])) {
       $entities_list = getSonsOf('glpi_entities', $pluginFusioninventoryTask->fields['entities_id']);
       if (!in_array($_POST['entities_id'], $entities_list)) {
          $_POST['entities_id'] = $pluginFusioninventoryTask->fields['entities_id'];
-      }      
+      }
+      $_POST['execution_id'] = $pluginFusioninventoryTask->fields['execution_id'];
       $mytaskjob->add($_POST);
    } else {
       $mytaskjob->update($_POST);
