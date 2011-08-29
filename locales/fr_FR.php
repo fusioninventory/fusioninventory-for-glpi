@@ -143,6 +143,7 @@ $LANG['plugin_fusioninventory']['rules'][6]="Liaison si possible, sinon import r
 $LANG['plugin_fusioninventory']['rules'][7]="Liaison si possible, sinon création du matériel";
 $LANG['plugin_fusioninventory']['rules'][8]="Envoyer";
 $LANG['plugin_fusioninventory']['rules'][9]="existe";
+$LANG['plugin_fusioninventory']['rules'][19] = "Equipements ignorés à l'import";
 
 $LANG['plugin_fusioninventory']['rulesengine'][152]="Matériel à importer";
 

@@ -84,7 +84,12 @@ class PluginFusioninventoryMenu {
          $a_menu[4]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
          $a_menu[4]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryRuleImportEquipment');
       }
-
+      
+      if (Session::haveRight("rule_ocs","r")) {
+         $a_menu[9]['name'] = $LANG['plugin_fusioninventory']['rules'][19];
+         $a_menu[9]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
+         $a_menu[9]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryIgnoredimportdevice');
+      }
 
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice", "r")) {
          $a_menu[5]['name'] = $LANG['plugin_fusioninventory']['menu'][4];
