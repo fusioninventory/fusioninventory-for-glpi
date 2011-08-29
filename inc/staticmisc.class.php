@@ -49,11 +49,12 @@ class PluginFusinvdeployStaticmisc {
                          'name'           => $LANG['plugin_fusinvdeploy']['package'][16],
                          'task'           => "DEPLOY",
                          'use_rest'       => true),
-                   array('module'         => 'fusinvdeploy',
-                         'method'         => self::DEPLOYMETHOD_UNINSTALL,
-                         'name'           => $LANG['plugin_fusinvdeploy']['package'][17],
-                         'task'           => "DEPLOY",
-                         'use_rest'       => true));
+#                   array('module'         => 'fusinvdeploy',
+#                         'method'         => self::DEPLOYMETHOD_UNINSTALL,
+#                         'name'           => $LANG['plugin_fusinvdeploy']['package'][17],
+#                         'task'           => "DEPLOY",
+#                         'use_rest'       => true)
+                         );
    }
 
    static function getItemtypeActions() {

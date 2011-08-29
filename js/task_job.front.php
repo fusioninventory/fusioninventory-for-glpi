@@ -50,11 +50,9 @@ $label_width = 140;
 
 $field_width = 170;
 
-$task_methods = PluginFusinvdeployStaticmisc::task_methods();
-$JS_method = "var methods = new Array();";
-foreach($task_methods as $method) {
-   $JS_method.= "methods['".$method['method']."']= \"".$method['name']."\";";
-}
+$JS_method = "var methods = new Array();".
+   "methods['deployinstall']= \"".$LANG['plugin_fusinvdeploy']['package'][16]."\";".
+   "methods['deployuninstall']= \"".$LANG['plugin_fusinvdeploy']['package'][17]."\";";
 
 $JS = <<<JS
 
@@ -313,8 +311,8 @@ var taskJobForm = new Ext.FormPanel({
          store: new Ext.data.ArrayStore({
             fields: ['value', 'name'],
             data: [
-               ['{$task_methods[0]['method']}', "{$task_methods[0]['name']}"],
-               ['{$task_methods[1]['method']}', "{$task_methods[1]['name']}"]
+               ['deployinstall', "{$LANG['plugin_fusinvdeploy']['package'][14]}"],
+               ['deployuninstall', "{$LANG['plugin_fusinvdeploy']['package'][15]}"]
             ]
          }),
          mode: 'local',
