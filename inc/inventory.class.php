@@ -105,6 +105,14 @@ class PluginFusinvinventoryInventory {
                   if ((isset($network->MACADDR)) AND (!empty($network->MACADDR))) {
                      $input['mac'][] = Toolbox::addslashes_deep((string)$network->MACADDR);
                   }
+                  if ((isset($network->IPADDRESS)) AND (!empty($network->IPADDRESS))) {
+                     if ((string)$network->IPADDRESS != '127.0.0.1') {
+                        $input['ip'][] = Toolbox::addslashes_deep((string)$network->IPADDRESS);
+                     }
+                  }
+                  if ((isset($network->IPSUBNET)) AND (!empty($network->IPSUBNET))) {
+                     $input['subnet'][] = Toolbox::addslashes_deep((string)$network->IPSUBNET);
+                  }
                }
             }
          }
@@ -154,6 +162,34 @@ class PluginFusinvinventoryInventory {
                                                    print_r($data, true));
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
          $this->rulepassed(0, "Computer");
+      } else {
+         $pFusioninventoryIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
+         $inputdb = array();
+         $inputdb['name'] = $input['name'];
+         $inputdb['date'] = date("Y-m-d H:i:s");
+         $inputdb['itemtype'] = "Computer";
+         
+         if ((isset($xml->CONTENT->HARDWARE->WORKGROUP)) AND (!empty($xml->CONTENT->HARDWARE->WORKGROUP))) {
+            $input['domain'] = Toolbox::addslashes_deep((string)$xml->CONTENT->HARDWARE->WORKGROUP);
+         }
+         if (isset($input['serial'])) {
+            $input['serialnumber'] = $input['serial'];
+         }
+         $ruleEntity = new PluginFusinvinventoryRuleEntityCollection();
+         $dataEntity = array ();
+         $dataEntity = $ruleEntity->processAllRules($input, array());
+         if (isset($dataEntity['entities_id'])) {
+            $inputdb['entities_id'] = $dataEntity['entities_id'];
+         }
+         
+         if (isset($input['ip'])) {
+            $inputdb['ip'] = exportArrayToDB($input['ip']);
+         }
+         if (isset($input['mac'])) {
+            $inputdb['mac'] = exportArrayToDB($input['mac']);
+         }
+         $inputdb['rules_id'] = $data['_ruleid'];
+         $pFusioninventoryIgnoredimportdevice->add($inputdb);
       }
    }
    
