@@ -278,10 +278,10 @@ class PluginFusinvdeployFile extends CommonDBTM {
       $ids = $PluginFusinvdeployFilepart->getIdsForFile($id);
 
       //verify that the file is not used by another package, in this case ignore file suppression
-      $sql = "SELECT DISTINCT plugin_fusiondeploy_packages_id
+      $sql = "SELECT DISTINCT plugin_fusinvdeploy_packages_id
          FROM glpi_plugin_fusinvdeploy_orders orders
       LEFT JOIN glpi_plugin_fusinvdeploy_files files
-         ON files.plugin_fusiondeploy_orders_id = orders.id
+         ON files.plugin_fusinvdeploy_orders_id = orders.id
       WHERE files.sha512 = '$sha512";
       $res = $DB->query($sql);
       if ($DB->numrows($res) == 1) {
