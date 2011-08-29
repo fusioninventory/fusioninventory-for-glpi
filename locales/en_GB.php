@@ -34,7 +34,7 @@
 
 $title="FusionInventory";
 
-$LANG['plugin_fusioninventory']['title'][0]="$title";
+$LANG['plugin_fusioninventory']['title'][0]="FusionInventory";
 $LANG['plugin_fusioninventory']['title'][1]="FusInv";
 
 $LANG['plugin_fusioninventory']['config'][0] = "Inventory frequency (in hours)";
@@ -185,7 +185,7 @@ $LANG['plugin_fusioninventory']['xml'][0]="XML";
 
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Bad token, impossible to start agent";
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Agent stopped/crashed";
-$LANG['plugin_fusioninventory']['codetasklog'][3]=$LANG['plugin_fusioninventory']['rules'][17];
+$LANG['plugin_fusioninventory']['codetasklog'][3]="Import denied";
 
 $LANG['plugin_fusioninventory']['credential'][1] = "Credential for remote inventory";
 $LANG['plugin_fusioninventory']['credential'][2] = "Remote device inventory";
