@@ -27,16 +27,54 @@
 
    ------------------------------------------------------------------------
    Original Author of file: David DURIEUX
-   Co-authors of file:
+   Co-authors of file: 
    Purpose of file:
+   Not translate this file, use https://www.transifex.net/projects/p/FusionInventory/
    ----------------------------------------------------------------------
  */
 
-$title="FusionInventory INVENTORY";
+$LANG['plugin_fusinvinventory']['antivirus'][0]="Antivirüs";
+$LANG['plugin_fusinvinventory']['antivirus'][1]="No antivirus on this computer";
+$LANG['plugin_fusinvinventory']['antivirus'][2]="Versiyon";
+$LANG['plugin_fusinvinventory']['antivirus'][3]="Up to date";
 
-$LANG['plugin_fusinvinventory']['title'][0]="FusionInventory INVENTORY";
-$LANG['plugin_fusinvinventory']['title'][1]="Local inventory";
-$LANG['plugin_fusinvinventory']['title'][2]="Vmware host remote inventory";
+$LANG['plugin_fusinvinventory']['bios'][0]="Bios";
+
+$LANG['plugin_fusinvinventory']['blacklist'][0]="blacklisted value";
+$LANG['plugin_fusinvinventory']['blacklist'][1]="New value to blacklist";
+
+$LANG['plugin_fusinvinventory']['computer'][0]="Last inventory";
+
+$LANG['plugin_fusinvinventory']['importxml'][0]="Import XML file from an Agent";
+$LANG['plugin_fusinvinventory']['importxml'][1]="Computer injected into GLPI";
+$LANG['plugin_fusinvinventory']['importxml'][2]="No file to import!";
+$LANG['plugin_fusinvinventory']['importxml'][3]="XML file not valid!";
+
+$LANG['plugin_fusinvinventory']['integrity'][0]="Only in GLPI (check to delete)";
+$LANG['plugin_fusinvinventory']['integrity'][1]="Only in last inventory (check to import)";
+
+$LANG['plugin_fusinvinventory']['menu'][0]="Import agent XML file";
+$LANG['plugin_fusinvinventory']['menu'][1]="Criteria rules";
+$LANG['plugin_fusinvinventory']['menu'][2]="BlackList";
+$LANG['plugin_fusinvinventory']['menu'][4]="Data integrity check";
+
+$LANG['plugin_fusinvinventory']['profile'][2]="Existance criteria";
+$LANG['plugin_fusinvinventory']['profile'][3]="XML file manual import";
+$LANG['plugin_fusinvinventory']['profile'][4]="Fields blacklist";
+
+$LANG['plugin_fusinvinventory']['rule'][0]="Computer existent criteria rules";
+$LANG['plugin_fusinvinventory']['rule'][100]="Entity rules";
+$LANG['plugin_fusinvinventory']['rule'][102]="Ignore in FusionInventory import";
+$LANG['plugin_fusinvinventory']['rule'][1]="Existant criterium";
+$LANG['plugin_fusinvinventory']['rule'][2]="Serial Number";
+$LANG['plugin_fusinvinventory']['rule'][30]="Import in asset";
+$LANG['plugin_fusinvinventory']['rule'][31]="Import in unknown devices";
+$LANG['plugin_fusinvinventory']['rule'][3]="MAC address";
+$LANG['plugin_fusinvinventory']['rule'][4]="Microsoft product key";
+$LANG['plugin_fusinvinventory']['rule'][5]="Computer model";
+$LANG['plugin_fusinvinventory']['rule'][6]="Hard disk serial number";
+$LANG['plugin_fusinvinventory']['rule'][7]="Partitions serial number";
+$LANG['plugin_fusinvinventory']['rule'][8]="Tag";
 
 $LANG['plugin_fusinvinventory']['setup'][17]="Plugin FusionInventory INVENTORY need plugin FusionInventory activated before activation.";
 $LANG['plugin_fusinvinventory']['setup'][18]="Plugin FusionInventory INVENTORY need plugin FusionInventory activated before uninstall.";
@@ -58,49 +96,9 @@ $LANG['plugin_fusinvinventory']['setup'][34]="This option will create one item f
 $LANG['plugin_fusinvinventory']['setup'][35]="This option will create one item for each item have serial number";
 $LANG['plugin_fusinvinventory']['setup'][36]="Default status";
 
-$LANG['plugin_fusinvinventory']['menu'][0]="Import agent XML file";
-$LANG['plugin_fusinvinventory']['menu'][1]="Criteria rules";
-$LANG['plugin_fusinvinventory']['menu'][2]="BlackList";
-$LANG['plugin_fusinvinventory']['menu'][4]="Data integrity check";
-
-$LANG['plugin_fusinvinventory']['importxml'][0]="Import XML file from an Agent";
-$LANG['plugin_fusinvinventory']['importxml'][1]="Computer injected into GLPI";
-$LANG['plugin_fusinvinventory']['importxml'][2]="No file to import!";
-$LANG['plugin_fusinvinventory']['importxml'][3]="XML file not valid!";
-
-$LANG['plugin_fusinvinventory']['rule'][0]="Computer existent criteria rules";
-$LANG['plugin_fusinvinventory']['rule'][1]="Existant criterium";
-$LANG['plugin_fusinvinventory']['rule'][2]="Serial Number";
-$LANG['plugin_fusinvinventory']['rule'][3]="MAC address";
-$LANG['plugin_fusinvinventory']['rule'][4]="Microsoft product key";
-$LANG['plugin_fusinvinventory']['rule'][5]="Computer model";
-$LANG['plugin_fusinvinventory']['rule'][6]="Hard disk serial number";
-$LANG['plugin_fusinvinventory']['rule'][7]="Partitions serial number";
-$LANG['plugin_fusinvinventory']['rule'][8]="Tag";
-$LANG['plugin_fusinvinventory']['rule'][30]="Import in asset";
-$LANG['plugin_fusinvinventory']['rule'][31]="Import in unknown devices";
-$LANG['plugin_fusinvinventory']['rule'][100]="Entity rules";
-$LANG['plugin_fusinvinventory']['rule'][102]="Ignore in FusionInventory import";
-
-$LANG['plugin_fusinvinventory']['blacklist'][0]="blacklisted value";
-$LANG['plugin_fusinvinventory']['blacklist'][1]="New value to blacklist";
-
-$LANG['plugin_fusinvinventory']['profile'][2]="Existance criteria";
-$LANG['plugin_fusinvinventory']['profile'][3]="XML file manual import";
-$LANG['plugin_fusinvinventory']['profile'][4]="Fields blacklist";
-
-$LANG['plugin_fusinvinventory']['antivirus'][0]="Antivirus";
-$LANG['plugin_fusinvinventory']['antivirus'][1]="No antivirus on this computer";
-$LANG['plugin_fusinvinventory']['antivirus'][2]="Version";
-$LANG['plugin_fusinvinventory']['antivirus'][3]="Up to date";
-
-$LANG['plugin_fusinvinventory']['computer'][0]="Last inventory";
+$LANG['plugin_fusinvinventory']['title'][0]="FusionInventory INVENTORY";
+$LANG['plugin_fusinvinventory']['title'][1]="Local inventory";
+$LANG['plugin_fusinvinventory']['title'][2]="Vmware host remote inventory";
 
 $LANG['plugin_fusinvinventory']['vmwareesx'][0]="Vmware host";
-
-$LANG['plugin_fusinvinventory']['integrity'][0]="Only in GLPI (check to delete)";
-$LANG['plugin_fusinvinventory']['integrity'][1]="Only in last inventory (check to import)";
-
-$LANG['plugin_fusinvinventory']['bios'][0]="Bios";
-
 ?>
