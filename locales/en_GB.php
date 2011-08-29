@@ -34,7 +34,7 @@
 
 $title="FusionInventory SNMP";
 
-$LANG['plugin_fusinvsnmp']['title'][0]="$title";
+$LANG['plugin_fusinvsnmp']['title'][0]="FusionInventory SNMP";
 $LANG['plugin_fusinvsnmp']['title'][1]="SNMP information";
 $LANG['plugin_fusinvsnmp']['title'][2]="connections history";
 $LANG['plugin_fusinvsnmp']['title'][5]="FusionInventory's locks";
@@ -46,7 +46,6 @@ $LANG['plugin_fusinvsnmp']['config'][8] = "Never";
 $LANG['plugin_fusinvsnmp']['config'][9] = "Always";
 
 $LANG['plugin_fusinvsnmp']['profile'][2]="Configuration";
-$LANG['plugin_fusinvsnmp']['profile'][3]="SNMP authentication";
 $LANG['plugin_fusinvsnmp']['profile'][4]="IP Range";
 $LANG['plugin_fusinvsnmp']['profile'][5]="Network equipment SNMP";
 $LANG['plugin_fusinvsnmp']['profile'][6]="Printer SNMP";
@@ -54,14 +53,11 @@ $LANG['plugin_fusinvsnmp']['profile'][7]="SNMP model";
 $LANG['plugin_fusinvsnmp']['profile'][8]="Printers report";
 $LANG['plugin_fusinvsnmp']['profile'][9]="Network report";
 
-$LANG['plugin_fusinvsnmp']['setup'][17]="Plugin ".$title." needs FusionInventory plugin activated before activation.";
-$LANG['plugin_fusinvsnmp']['setup'][18]="Plugin ".$title." needs FusionInventory plugin activated before uninstall.";
+$LANG['plugin_fusinvsnmp']['setup'][17]="Plugin FusionInventory SNMP needs FusionInventory plugin activated before activation.";
+$LANG['plugin_fusinvsnmp']['setup'][18]="Plugin FusionInventory SNMP needs FusionInventory plugin activated before uninstall.";
 $LANG['plugin_fusinvsnmp']['setup'][19]="Converting history port";
 $LANG['plugin_fusinvsnmp']['setup'][20]="Moving creation connections history";
 $LANG['plugin_fusinvsnmp']['setup'][21]="Moving deleted connections history";
-
-$LANG['plugin_fusinvsnmp']['functionalities'][3]="SNMP";
-$LANG['plugin_fusinvsnmp']['functionalities'][43]="SNMP authentication";
 
 $LANG['plugin_fusinvsnmp']['snmp'][4]="Sysdescr";
 $LANG['plugin_fusinvsnmp']['snmp'][12]="Uptime";
@@ -69,15 +65,9 @@ $LANG['plugin_fusinvsnmp']['snmp'][13]="CPU usage (in %)";
 $LANG['plugin_fusinvsnmp']['snmp'][14]="Memory usage (in %)";
 $LANG['plugin_fusinvsnmp']['snmp'][40]="Ports array";
 $LANG['plugin_fusinvsnmp']['snmp'][41]="Port description";
-$LANG['plugin_fusinvsnmp']['snmp'][42]="MTU";
-$LANG['plugin_fusinvsnmp']['snmp'][43]="Speed";
-$LANG['plugin_fusinvsnmp']['snmp'][44]="Internal status";
-$LANG['plugin_fusinvsnmp']['snmp'][45]="Last Change";
 $LANG['plugin_fusinvsnmp']['snmp'][46]="Number of bytes received";
-$LANG['plugin_fusinvsnmp']['snmp'][47]="Number of input errors";
 $LANG['plugin_fusinvsnmp']['snmp'][48]="Number of bytes sent";
 $LANG['plugin_fusinvsnmp']['snmp'][49]="Number of errors in reception";
-$LANG['plugin_fusinvsnmp']['snmp'][50]="Connection";
 $LANG['plugin_fusinvsnmp']['snmp'][51]="Duplex";
 $LANG['plugin_fusinvsnmp']['snmp'][53]="Last inventory";
 $LANG['plugin_fusinvsnmp']['snmp'][54]="Datas not available";
@@ -87,7 +77,6 @@ $LANG['plugin_fusinvsnmp']['snmpauth'][2]="User";
 $LANG['plugin_fusinvsnmp']['snmpauth'][4]="Encryption protocol for authentication ";
 $LANG['plugin_fusinvsnmp']['snmpauth'][5]="Password";
 $LANG['plugin_fusinvsnmp']['snmpauth'][6]="Encryption protocol for data";
-$LANG['plugin_fusinvsnmp']['snmpauth'][7]="Password";
 
 $LANG['plugin_fusinvsnmp']['errors'][50]="GLPI version not compatible, require 0.78";
 
@@ -132,7 +121,6 @@ $LANG['plugin_fusinvsnmp']['mib'][5]="OID list";
 $LANG['plugin_fusinvsnmp']['mib'][6]="Port Counters";
 $LANG['plugin_fusinvsnmp']['mib'][7]="Dynamic port (.x)";
 $LANG['plugin_fusinvsnmp']['mib'][8]="Linked fields";
-$LANG['plugin_fusinvsnmp']['mib'][9]="VLAN";
 
 $LANG['plugin_fusinvsnmp']['processes'][37]="Total IPs";
 
@@ -172,7 +160,6 @@ $LANG['plugin_fusinvsnmp']['mapping'][28]="printer > meter > total number of pri
 $LANG['plugin_fusinvsnmp']['mapping'][29]="printer > meter > number of printed black and white pages";
 $LANG['plugin_fusinvsnmp']['mapping'][30]="printer > meter > number of printed color pages";
 $LANG['plugin_fusinvsnmp']['mapping'][31]="printer > meter > number of printed monochrome pages";
-$LANG['plugin_fusinvsnmp']['mapping'][32]="printer > meter > number of printed color pages";
 $LANG['plugin_fusinvsnmp']['mapping'][33]="networking > port > duplex type";
 $LANG['plugin_fusinvsnmp']['mapping'][34]="printer > consumables > black cartridge (%)";
 $LANG['plugin_fusinvsnmp']['mapping'][35]="printer > consumables > photo black cartridge (%)";
@@ -278,9 +265,6 @@ $LANG['plugin_fusinvsnmp']['mapping'][438]="networking > LLDP sremote sysdescr";
 $LANG['plugin_fusinvsnmp']['mapping'][439]="networking > LLDP remote id";
 $LANG['plugin_fusinvsnmp']['mapping'][440]="networking > LLDP remote port description";
 
-$LANG['plugin_fusinvsnmp']['mapping'][101]="";
-$LANG['plugin_fusinvsnmp']['mapping'][102]="";
-$LANG['plugin_fusinvsnmp']['mapping'][103]="";
 $LANG['plugin_fusinvsnmp']['mapping'][104]="MTU";
 $LANG['plugin_fusinvsnmp']['mapping'][105]="Speed";
 $LANG['plugin_fusinvsnmp']['mapping'][106]="Internal status";
@@ -290,7 +274,6 @@ $LANG['plugin_fusinvsnmp']['mapping'][109]="Number of outgoing bytes";
 $LANG['plugin_fusinvsnmp']['mapping'][110]="Number of input errors";
 $LANG['plugin_fusinvsnmp']['mapping'][111]="Number of output errors";
 $LANG['plugin_fusinvsnmp']['mapping'][112]="CPU usage";
-$LANG['plugin_fusinvsnmp']['mapping'][113]="";
 $LANG['plugin_fusinvsnmp']['mapping'][114]="Connection";
 $LANG['plugin_fusinvsnmp']['mapping'][115]="Internal MAC address";
 $LANG['plugin_fusinvsnmp']['mapping'][116]="Name";
@@ -301,7 +284,6 @@ $LANG['plugin_fusinvsnmp']['mapping'][128]="Total number of printed pages";
 $LANG['plugin_fusinvsnmp']['mapping'][129]="Number of printed black and white pages";
 $LANG['plugin_fusinvsnmp']['mapping'][130]="Number of printed color pages";
 $LANG['plugin_fusinvsnmp']['mapping'][131]="Number of printed monochrome pages";
-$LANG['plugin_fusinvsnmp']['mapping'][132]="Number of printed color pages";
 $LANG['plugin_fusinvsnmp']['mapping'][134]="Black cartridge";
 $LANG['plugin_fusinvsnmp']['mapping'][135]="Photo black cartridge";
 $LANG['plugin_fusinvsnmp']['mapping'][136]="Cyan cartridge";
@@ -410,8 +392,8 @@ $LANG['plugin_fusinvsnmp']['report'][1]="Printed page counter";
 $LANG['plugin_fusinvsnmp']['codetasklog'][1]="devices queried";
 $LANG['plugin_fusinvsnmp']['codetasklog'][2]="devices found";
 $LANG['plugin_fusinvsnmp']['codetasklog'][3]="SNMP equipment definition isn't up to date on agent. For the next run, it will get new version from server.";
-$LANG['plugin_fusinvsnmp']['codetasklog'][4]=$LANG['log'][20];
-$LANG['plugin_fusinvsnmp']['codetasklog'][5]=$LANG['log'][21];
+$LANG['plugin_fusinvsnmp']['codetasklog'][4]="add the item";
+$LANG['plugin_fusinvsnmp']['codetasklog'][5]="update the item";
 $LANG['plugin_fusinvsnmp']['codetasklog'][6]="Inventory started";
 
 $LANG['plugin_fusinvsnmp']['legend'][0]="Connection with a switch or a server in trunk or tagged mode";
@@ -419,8 +401,8 @@ $LANG['plugin_fusinvsnmp']['legend'][1]="Other connections (with a computer, a p
 
 $LANG['plugin_fusinvsnmp']['printhistory'][1]="Too datas to display";
 
-$LANG['plugin_fusinvsnmp']["portlogs"][0]="History configuration";
-$LANG['plugin_fusinvsnmp']["portlogs"][1]="List of fields for which to keep history";
-$LANG['plugin_fusinvsnmp']["portlogs"][2]="Retention in days";
+$LANG['plugin_fusinvsnmp']['portlogs'][0]="History configuration";
+$LANG['plugin_fusinvsnmp']['portlogs'][1]="List of fields for which to keep history";
+$LANG['plugin_fusinvsnmp']['portlogs'][2]="Retention in days";
 
 ?>
