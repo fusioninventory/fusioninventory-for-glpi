@@ -36,7 +36,6 @@ $title="FusionInventory";
 
 $LANG['plugin_fusioninventory']['title'][0]="$title";
 $LANG['plugin_fusioninventory']['title'][1]="FusInv";
-$LANG['plugin_fusioninventory']['title'][5]="Locks";
 
 $LANG['plugin_fusioninventory']['config'][0] = "Inventory frequency (in hours)";
 
@@ -46,7 +45,6 @@ $LANG['plugin_fusioninventory']['profile'][3]="Agent remote control";
 $LANG['plugin_fusioninventory']['profile'][4]="Configuration";
 $LANG['plugin_fusioninventory']['profile'][5]="Wake On LAN";
 $LANG['plugin_fusioninventory']['profile'][6]="Unknown devices";
-$LANG['plugin_fusioninventory']['profile'][7]="Tasks";
 
 $LANG['plugin_fusioninventory']['setup'][16]="Documentation";
 $LANG['plugin_fusioninventory']['setup'][17]="Other FusionInventory plugins (fusinv...) must be uninstalled before removing the FusionInventory plugin";
@@ -130,7 +128,6 @@ $LANG['plugin_fusioninventory']['agents'][35]="Device_id";
 $LANG['plugin_fusioninventory']['agents'][36]="Agent modules";
 $LANG['plugin_fusioninventory']['agents'][37]="locked";
 $LANG['plugin_fusioninventory']['agents'][38]="Available";
-$LANG['plugin_fusioninventory']['agents'][39]="Running";
 $LANG['plugin_fusioninventory']['agents'][40]="Computer without known IP";
 $LANG['plugin_fusioninventory']['agents'][41]="Service URL";
 $LANG['plugin_fusioninventory']['agents'][42]="Useragent";
@@ -143,7 +140,7 @@ $LANG['plugin_fusioninventory']['unknown'][5]="Import unknown device into asset"
 
 $LANG['plugin_fusioninventory']['task'][0]="Task";
 $LANG['plugin_fusioninventory']['task'][1]="Task management";
-$LANG['plugin_fusioninventory']['task'][2]="Action";
+$LANG['plugin_fusioninventory']['task'][2]="Job";
 $LANG['plugin_fusioninventory']['task'][14]="Scheduled date";
 $LANG['plugin_fusioninventory']['task'][15]="New action";
 $LANG['plugin_fusioninventory']['task'][17]="Periodicity";
@@ -214,7 +211,6 @@ $LANG['plugin_fusioninventory']['wizard'][5]="Authentication management";
 $LANG['plugin_fusioninventory']['wizard'][6]="ESX servers management";
 $LANG['plugin_fusioninventory']['wizard'][7]="Run tasks";
 $LANG['plugin_fusioninventory']['wizard'][8]="Tasks running result";
-$LANG['plugin_fusioninventory']['wizard'][9]="SNMP authentication";
 $LANG['plugin_fusioninventory']['wizard'][10]="Choice (netdiscovery or inventory)";
 $LANG['plugin_fusioninventory']['wizard'][11]="Breadcrumb";
 $LANG['plugin_fusioninventory']['wizard'][12]="Discover the network";
