@@ -3,38 +3,49 @@ use Data::Dumper;
 use IO::File;
 use Path::Class;
 
-if (not defined $ARGV[2]) {
+if (not defined $ARGV[1]) {
    print "Error !
-Use : perl create_glpilangfilefrompo.pl pluginname po.file 0/1
+Use : perl create_glpilangfilefrompo.pl pluginname 0/1
+pluginname => fusioninventory, fusinvsnmp, fusinvinventory
 O/1 => complete file with english(1) or keep empty (0) for word not translated
 exiting...\n";
-exit;
+   exit;
 }
+
 
 my $user = 'ddurieux';
 my $password = '';
 my $transifexhost = 'http://www.transifex.net/';
-my $remoteurltranslations = 'http://www.transifex.net/projects/p/FusionInventory/resource/Plugin_FusionInventory/';
+my $folder;
+if ($ARGV[0] eq "fusioninventory") {
+   $folder = "Plugin_FusionInventory";
+} elsif ($ARGV[0] eq "fusinvsnmp") {
+   $folder = "Plugin_FusinvSNMP";
+} elsif ($ARGV[0] eq "fusinvinventory") {
+   $folder = "Plugin_Fusinvinventory";
+}
+
+my $remoteurltranslations = 'http://www.transifex.net/projects/p/FusionInventory/resource/'.$folder.'/';
+
 
 `tx init --user=$user --pass=$password --host=$transifexhost`;
 `tx set --auto-remote $remoteurltranslations`;
 `tx pull -a`;
 
-my $dir  = dir('translations/FusionInventory.Plugin_FusionInventory');
+my $dir  = dir('translations/FusionInventory.'.$folder);
 my @filesdir = $dir->children;
 
 foreach my $filename (@filesdir) {
 
+   my $aref = Locale::PO->load_file_ashash($filename);
 
-my $aref = Locale::PO->load_file_ashash($filename);
-
-my $file = $filename.'.php';
-$file =~ s/.po//;
-$file =~ s/translations\/FusionInventory.Plugin_FusionInventory\///;
-my $fh = IO::File->new($file,'>')
-   or die "can't open file";
-$fh->print("<?php\n");
-$fh->print("
+   my $file = $filename.'.php';
+   $file =~ s/.po//;
+   $file =~ s/translations\/FusionInventory.$folder\///;
+   my $fh = IO::File->new($file,'>')
+      or die "can't open file";
+   $fh->print("<?php\n");
+   $fh->print("
 /*
    ----------------------------------------------------------------------
    FusionInventory
@@ -68,29 +79,29 @@ $fh->print("
    ----------------------------------------------------------------------
  */
 ");
-my @lines;
-while (my ($key, $po) = each %{$aref}) {
-   @split = split /\|/ , $po->reference;
-   if (@split > 1) {
-      if ($po->msgstr eq '""' && $ARGV[2] eq '1') {
-         push @lines, "\$LANG['plugin_".$ARGV[0]."']['".$split[0]."'][".$split[1]."]=".$po->msgid.";\n";
-      } else {
-         push @lines, "\$LANG['plugin_".$ARGV[0]."']['".$split[0]."'][".$split[1]."]=".$po->msgstr.";\n";
+   my @lines;
+   while (my ($key, $po) = each %{$aref}) {
+      @split = split /\|/ , $po->reference;
+      if (@split > 1) {
+         if ($po->msgstr eq '""' && $ARGV[1] eq '1') {
+            push @lines, "\$LANG['plugin_".$ARGV[0]."']['".$split[0]."'][".$split[1]."]=".$po->msgid.";\n";
+         } else {
+            push @lines, "\$LANG['plugin_".$ARGV[0]."']['".$split[0]."'][".$split[1]."]=".$po->msgstr.";\n";
+         }
       }
    }
-}
-my @out = sort @lines;
-my $before = '';
-foreach my $line (@out) {
-   my @split = split /'/, $line;
-   if ($split[3] ne $before) {
-      $fh->print("\n");
+   my @out = sort @lines;
+   my $before = '';
+   foreach my $line (@out) {
+      my @split = split /'/, $line;
+      if ($split[3] ne $before) {
+         $fh->print("\n");
+      }
+      $fh->print($line);
+      $before = $split[3];
    }
-   $fh->print($line);
-   $before = $split[3];
-}
-$fh->print("?>\n");
-$fh->close();
+   $fh->print("?>\n");
+   $fh->close();
 }
 `rm -fr .tx`;
 `rm -fr translations`;
