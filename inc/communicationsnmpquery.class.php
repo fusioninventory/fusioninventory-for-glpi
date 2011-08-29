@@ -1289,6 +1289,30 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          } else {
             $errors .= $this->rulepassed(0, "PluginFusioninventoryUnknownDevice");
          }
+      } else {
+         $pFusioninventoryIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
+         $inputdb = array();
+         if (isset($input['name'])) {
+            $inputdb['name'] = $input['name'];
+         }
+         $inputdb['date'] = date("Y-m-d H:i:s");
+         $inputdb['itemtype'] = $input['itemtype'];
+         
+         $id_xml = (string)$p_CONTENT->INFO->ID;
+         $itemtype = $input['itemtype'];
+         $item = new $itemtype;
+         if ($item->getFromDB($id_xml)) {
+            $inputdb['entities_id'] = $item->fields['entities_id'];
+         }
+         
+         if (isset($input['ip'])) {
+            $inputdb['ip'] = exportArrayToDB($input['ip']);
+         }
+         if (isset($input['mac'])) {
+            $inputdb['mac'] = exportArrayToDB($input['mac']);
+         }
+         $inputdb['rules_id'] = $data['_ruleid'];
+         $pFusioninventoryIgnoredimportdevice->add($inputdb);
       }
       return $errors;
    }

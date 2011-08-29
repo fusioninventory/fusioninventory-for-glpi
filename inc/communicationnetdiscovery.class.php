@@ -205,6 +205,27 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
          } else {
             $this->rulepassed(0, "PluginFusioninventoryUnknownDevice",$input['entities_id']);
          }
+      } else {
+         $pFusioninventoryIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
+         $inputdb = array();
+         if (isset($input['name'])) {
+            $inputdb['name'] = $input['name'];
+         }
+         $inputdb['date'] = date("Y-m-d H:i:s");
+         if (isset($input['itemtype'])) {
+            $inputdb['itemtype'] = $input['itemtype'];
+         }         
+         if (isset($input['entities_id'])) {
+            $inputdb['entities_id'] = $input['entities_id'];
+         }         
+         if (isset($input['ip'])) {
+            $inputdb['ip'] = exportArrayToDB($input['ip']);
+         }
+         if (isset($input['mac'])) {
+            $inputdb['mac'] = exportArrayToDB($input['mac']);
+         }
+         $inputdb['rules_id'] = $data['_ruleid'];
+         $pFusioninventoryIgnoredimportdevice->add($inputdb);         
       }
    }
 
