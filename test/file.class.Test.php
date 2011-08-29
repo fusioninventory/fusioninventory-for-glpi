@@ -81,6 +81,8 @@ class FileTest extends PHPUnit_Framework_TestCase
 
       $dirs = glob(GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/repository/*");
       $this->assertGreaterThan(5, count($dirs));
-      #$this->cleanUp();
+
+
+      $this->cleanUp();
    }
 }
