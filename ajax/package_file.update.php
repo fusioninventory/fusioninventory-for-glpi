@@ -40,61 +40,20 @@ $PluginFusinvdeployFile = new PluginFusinvdeployFile();
 if(isset($_GET['package_id'])){
    $package_id = $_GET['package_id'];
    $render     = $_GET['render'];
-} else {
-   exit;
 }
-
 foreach($_POST as $POST_key => $POST_value) {
    $new_key         = preg_replace('#^'.$render.'#','',$POST_key);
    $_POST[$new_key] = $POST_value;
 }
+error_log(print_r($_POST, 1));
 
 if (isset ($_POST["id"]) && $_POST['id']){
 
-   //file uploaded?
-   if (isset($_FILES['file']['tmp_name']) && !empty($_FILES['file']['tmp_name'])){
-      $sum = sha1_file($_FILES['file']['tmp_name']);
-      copy($_FILES['file']['tmp_name'], GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/".$sum);
-      if (!isset($_POST['filename'])) {
-         $_POST['filename'] = $_FILES['file']['name'];
-      }
-      
-      $_POST['sha1sum'] = $sum;
-      $filename         = $_POST['filename'];
-      $extension        = explode(".", $_POST['filename']);
-      $extension        = $extension[count($extension) - 1];
-      $file_unchanged   = 0;
-   //url?   
-   } elseif(isset($_POST['url']) && !empty($_POST['url'])) {
-      $sum = sha1_file($_POST['url']);
-      copy($_POST['url'], GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/".$sum);
-      if (!isset($_POST['filename'])) {
-         $_POST['filename'] = basename($_POST['url']);
-      }
-      
-      $_POST['sha1sum'] = $sum;
-      $filename         = $_POST['filename'];
-      $extension        = explode(".", $_POST['filename']);
-      $extension        = $extension[count($extension) - 1];
-      $file_unchanged   = 0;
-
-   //file unchanged
-   } else{
-      $file_unchanged = 1;
-   }
-
-   $data = ($file_unchanged) 
-            ? array( 'id'                 => $_POST['id'],
-                     'is_p2p'             => (($_POST['p2p'] != 'false') ? 1 : 0), 
-                     'p2p_retention_days' => (($_POST['p2p'] != 'false') ? $_POST['validity'] : 0),
-                     'create_date'        => date('Y-m-d H:i:s')) 
-            : array( 'id'                 => $_POST['id'],
-                     'name'               => $_POST['filename'],
-                     'is_p2p'             => (($_POST['p2p'] != 'false') ? 1 : 0), 
-                     'p2p_retention_days' => (($_POST['p2p'] != 'false') ? $_POST['validity'] : 0),
-                     'sha512'             => $sum,
-                     'create_date'        => date('Y-m-d H:i:s'),
-                     'type'               => $extension);
+   $data = array( 'id' => $_POST['id'],
+                  'is_p2p' => (($_POST['p2p'] != 'false') ? 1 : 0),
+                  'uncompress' => (($_POST['uncompress'] == 'true') ? 1 : 0),
+                  'p2p_retention_days' => is_int($_POST['validity']) ? $_POST['validity'] : 0); 
+error_log(print_r($data, 1));
 
    $PluginFusinvdeployFile->update($data);
    echo "{success:true, file:'N/A',msg:\"{$LANG['plugin_fusinvdeploy']['form']['action'][4]}\"}";

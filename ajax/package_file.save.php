@@ -76,9 +76,9 @@ if (isset ($_POST["id"]) and !$_POST['id']) {
       'file_tmp_name' => $file_tmp_name,
       'mime_type' => $_FILES['file']['type'],
       'filename' => $filename,
-      'uncompress' => isset($_POST['uncompress']) && $_POST['uncompress'] != 'false',
-      'is_p2p' => isset($_POST['p2p']) && $_POST['p2p'] != 'false',
-      'p2p_retention_days' => (isset($_POST['p2p']) && ($_POST['p2p'] != 'false')) ? $_POST['validity'] : 0,
+      'is_p2p' => (($_POST['p2p'] == 'true') ? 1 : 0),
+      'uncompress' => (($_POST['uncompress'] == 'true') ? 1 : 0),
+      'p2p_retention_days' => is_int($_POST['validity']) ? $_POST['validity'] : 0,
       'order_id' => $order_id
    ))) {
       print "{success:true, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['action'][4]}\"}";
