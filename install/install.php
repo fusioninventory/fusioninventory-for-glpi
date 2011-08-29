@@ -175,6 +175,24 @@ function pluginFusioninventoryInstall($version) {
                       array('mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30));
 
 
+   foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/inc/*.class.php') as $file) {
+      include_once ($file);
+      $filesplit = explode("/", $file);
+      $classname = $filesplit[(count($filesplit) - 1)];
+      $classname = str_replace(".class.php", "", $classname);
+      $split = explode("_", $classname);
+      foreach ($split as $key=>$value) {
+         $split[$key] = ucfirst($value);
+      }
+      $classname = 'PluginFusioninventory'.implode("_", $split);
+
+      if (method_exists($classname, 'install')) {
+         $class = new $classname;
+         $class->install();
+      }
+
+   }
+   
    $PluginFusioninventorySetup = new PluginFusioninventorySetup();
    $PluginFusioninventorySetup->initRules();
 }
