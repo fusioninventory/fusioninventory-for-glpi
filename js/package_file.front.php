@@ -475,21 +475,23 @@ var {$render}fileForm = new Ext.FormPanel({
 
    },
    newFileMode : function(s) {
-      if(s == true){
-         {$render}fileForm.getForm().findField('{$render}file').show();
-         {$render}fileForm.buttons[0].setVisible(true);
-         {$render}fileForm.buttons[1].setVisible(false);
-         {$render}fileForm.buttons[2].setVisible(true);
-         {$render}fileGrid.setDisabled(true);
-      } else {
-         {$render}fileForm.getForm().findField('{$render}file').hide();
-         {$render}fileForm.buttons[0].setVisible(false);
-         {$render}fileForm.buttons[1].setVisible(true);
-         {$render}fileForm.buttons[2].setVisible(false);
-         {$render}fileGrid.setDisabled(false);
+      if (!{$disabled}) {
+         if(s == true){
+            {$render}fileForm.getForm().findField('{$render}file').show();
+            {$render}fileForm.buttons[0].setVisible(true);
+            {$render}fileForm.buttons[1].setVisible(false);
+            {$render}fileForm.buttons[2].setVisible(true);
+            {$render}fileGrid.setDisabled(true);
+         } else {
+            {$render}fileForm.getForm().findField('{$render}file').hide();
+            {$render}fileForm.buttons[0].setVisible(false);
+            {$render}fileForm.buttons[1].setVisible(true);
+            {$render}fileForm.buttons[2].setVisible(false);
+            {$render}fileGrid.setDisabled(false);
+         }
+         {$render}fileForm.show();
+         {$render}fileForm.expand();
       }
-      {$render}fileForm.show();
-      {$render}fileForm.expand();
    }
 });
 
