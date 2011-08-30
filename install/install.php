@@ -108,7 +108,6 @@ function pluginFusinvdeployUninstall() {
 
 
    //clean tasks
-   $task = new PluginFusinvdeployTask;
    $query_tasks = "SELECT DISTINCT task.id
    FROM glpi_plugin_fusioninventory_tasks as task
    LEFT JOIN glpi_plugin_fusioninventory_taskjobs as job
