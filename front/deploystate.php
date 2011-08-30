@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG['plugin_fusinvdeploy']["title"][0],$_SERVER["PHP_SELF"],"plugins",
+commonHeader($LANG['plugin_fusinvdeploy']['deploystatus'][0],$_SERVER["PHP_SELF"],"plugins",
              "fusioninventory","deploy");
 
 
