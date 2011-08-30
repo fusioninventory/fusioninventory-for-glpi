@@ -72,15 +72,17 @@ if (isset ($_POST["id"]) and !$_POST['id']) {
    if (isset($_FILES['file']['name']) and !empty($_FILES['file']['name']))
       $filename = $_FILES['file']['name'];
 
-   if ($filename && $PluginFusinvdeployFile->addFileInRepo(array(
+   $data = array(
       'file_tmp_name' => $file_tmp_name,
       'mime_type' => $_FILES['file']['type'],
       'filename' => $filename,
       'is_p2p' => (($_POST['p2p'] == 'true') ? 1 : 0),
       'uncompress' => (($_POST['uncompress'] == 'true') ? 1 : 0),
-      'p2p_retention_days' => is_int($_POST['validity']) ? $_POST['validity'] : 0,
+      'p2p_retention_days' => is_numeric($_POST['validity']) ? $_POST['validity'] : 0,
       'order_id' => $order_id
-   ))) {
+   );
+
+   if ($filename && $PluginFusinvdeployFile->addFileInRepo($data)) {
       print "{success:true, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['action'][4]}\"}";
       exit;
    } else {

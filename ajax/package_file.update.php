@@ -45,18 +45,17 @@ foreach($_POST as $POST_key => $POST_value) {
    $new_key         = preg_replace('#^'.$render.'#','',$POST_key);
    $_POST[$new_key] = $POST_value;
 }
-error_log(print_r($_POST, 1));
 
 if (isset ($_POST["id"]) && $_POST['id']){
-
-   $data = array( 'id' => $_POST['id'],
-                  'is_p2p' => (($_POST['p2p'] != 'false') ? 1 : 0),
-                  'uncompress' => (($_POST['uncompress'] == 'true') ? 1 : 0),
-                  'p2p_retention_days' => is_int($_POST['validity']) ? $_POST['validity'] : 0); 
-error_log(print_r($data, 1));
-
-   $PluginFusinvdeployFile->update($data);
-   echo "{success:true, file:'N/A',msg:\"{$LANG['plugin_fusinvdeploy']['form']['action'][4]}\"}";
+   $data = array(
+      'id' => $_POST['id'],
+      'is_p2p' => (($_POST['p2p'] != 'false') ? 1 : 0),
+      'uncompress' => (($_POST['uncompress'] == 'true') ? 1 : 0),
+      'p2p_retention_days' => is_numeric($_POST['validity']) ? $_POST['validity'] : 0
+   );
+   if ($PluginFusinvdeployFile->update($data)) {
+      echo "{success:true, file:'N/A',msg:\"{$LANG['plugin_fusinvdeploy']['form']['action'][4]}\"}";
+   } else echo "{success:false, file:'N/A', msg:\"error\"}";
 }
 
 ?>

@@ -160,6 +160,10 @@ background-image:url("../pics/ext/accept.png");
 background-image:url("../pics/ext/folder.png");
 }
 
+.exticon-cancel {
+background-image:url("../pics/ext/cancel.png");
+}
+
 .x-form-file-btn button {
 padding-left:0!important;
 }

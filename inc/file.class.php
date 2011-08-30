@@ -179,7 +179,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
       $filename = addslashes($params['filename']);
       $file_tmp_name = $params['file_tmp_name'];
-      $p2p = $params['is_p2p'];
+      $is_p2p = $params['is_p2p'];
       $uncompress = $params['uncompress'];
       $p2p_retention_days = $params['p2p_retention_days'];
       $order_id = $params['order_id'];
@@ -198,19 +198,18 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
       $sha512 = hash_file('sha512', $file_tmp_name);
       $short_sha512 = substr($sha512, 0, 6);
-      $file_id = $this->add(
-         array(
-            'name' => $filename,
-            'p2p' => $p2p,
-            'mimetype' => $mime_type,
-            'create_date' => date('Y-m-d H:i:s'),
-            'p2p-retention-days' => $p2p_retention_days,
-            'uncompress' => $uncompress,
-            'sha512' => $sha512,
-            'shortsha512' => $short_sha512,
-            'plugin_fusinvdeploy_orders_id' => $order_id,
-         )
+      $data = array(
+         'name' => $filename,
+         'is_p2p' => $is_p2p,
+         'mimetype' => $mime_type,
+         'create_date' => date('Y-m-d H:i:s'),
+         'p2p_retention_days' => $p2p_retention_days,
+         'uncompress' => $uncompress,
+         'sha512' => $sha512,
+         'shortsha512' => $short_sha512,
+         'plugin_fusinvdeploy_orders_id' => $order_id,
       );
+      $file_id = $this->add($data);
 
 
       $fdIn = fopen ( $file_tmp_name , 'rb' );

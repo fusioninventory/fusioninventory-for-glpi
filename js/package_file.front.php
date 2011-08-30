@@ -138,7 +138,7 @@ function {$render}badImage(img) {
 
 function {$render}renderBool(val) {
    if (val == 1) return '{$LANG['choice'][1]}';
-   else if (val == 0) return '{$LANG['choice'][1]}';
+   else if (val == 0) return '{$LANG['choice'][0]}';
    else return '';
 }
 
@@ -212,7 +212,7 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
          {$render}fileGrid.getSelectionModel().selectFirstRow();
          var {$render}rec = {$render}fileGrid.getSelectionModel().getSelected();
          {$render}fileForm.loadData({$render}rec);
-         {$render}unlockForm();
+         //{$render}unlockForm();
          {$render}fileForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][4]}');
 
          Ext.getCmp('{$render}p2p_t').setValue(false);
@@ -247,12 +247,15 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
       listeners: {
          rowselect: function(g, index, ev) {
 
-            {$render}fileForm.newFileMode(false);
 
             var {$render}rec = {$render}fileGrid.store.getAt(index);
             {$render}fileForm.loadData({$render}rec);
 
-//            {$render}unlockForm({$render}rec);
+            console.log({$render}rec.get('{$render}file'));
+
+            if({$render}rec.get('{$render}file') == '') {$render}fileForm.newFileMode(true);
+            else {$render}fileForm.newFileMode(false);
+
 
             if({$render}rec.get('{$render}p2p') == 0){
                Ext.getCmp('{$render}p2p_t').setValue(false);
@@ -266,8 +269,8 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
                Ext.getCmp('{$render}uncompress_t').setValue(false);
                Ext.getCmp('{$render}uncompress_f').setValue(true);
             }else{
-               Ext.getCmp('{$render}uncompress_t').setValue(false);
-               Ext.getCmp('{$render}uncompress_f').setValue(true);
+               Ext.getCmp('{$render}uncompress_f').setValue(false);
+               Ext.getCmp('{$render}uncompress_t').setValue(true);
             }
 
             Ext.getCmp('{$render}file').setValue('');
@@ -361,7 +364,7 @@ var {$render}fileForm = new Ext.FormPanel({
          width: 100,
          items: [
             {boxLabel: '{$LANG['choice'][1]}', name: '{$render}uncompress', inputValue: 'true', id : '{$render}uncompress_t'},
-            {boxLabel: '{$LANG['choice'][0]}', name: '{$render}uncompress', inputValue: 'false',id : '{$render}uncompress_f'}
+            {boxLabel: '{$LANG['choice'][0]}', name: '{$render}uncompress', inputValue: 'false', id : '{$render}uncompress_f'}
          ],
          tooltip:{
             tip:'Enter the customer\'s name',
@@ -411,15 +414,14 @@ var {$render}fileForm = new Ext.FormPanel({
             }
          });
       }
-   },
-   {
+   }, {
       text: '{$LANG['buttons'][14]}',
       iconCls: 'exticon-save',
       name : '{$render}updatebtn',
       id : '{$render}updatebtn',
       hidden : true,
       handler: function(btn, ev) {
-              Ext.MessageBox.alert('Erreur', "update");
+         Ext.MessageBox.alert('Erreur', "update");
          if ({$render}fileForm.record == null) {
             Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
             return;
@@ -429,6 +431,7 @@ var {$render}fileForm = new Ext.FormPanel({
             return false;
          }
          {$render}fileForm.getForm().updateRecord({$render}fileForm.record);
+
          {$render}fileForm.getForm().submit({
             url : '../ajax/package_file.update.php?package_id={$id}&render={$render}',
             waitMsg: 'Chargement du fichier...',
@@ -438,6 +441,7 @@ var {$render}fileForm = new Ext.FormPanel({
                {$render}fileForm.newFileMode(false);
                form.reset();
                {$render}fileGrid.getSelectionModel().clearSelections();
+
             },
             failure: function({$render}fileForm, action){
                switch (action.failureType) {
@@ -453,7 +457,17 @@ var {$render}fileForm = new Ext.FormPanel({
 
             }
          });
-         {$render}fileGrid.getSelectionModel().selectFirstRow();
+      }
+   }, {
+      text: '{$LANG['buttons'][34]}',
+      iconCls: 'exticon-cancel',
+      name : '{$render}cancelbtn',
+      id : '{$render}cancelbtn',
+      iconCls: 'exticon-cancel',
+      hidden : true,
+      handler: function(btn, ev) {
+         {$render}fileForm.buttons[2].setVisible(false);
+         {$render}fileStore.reload();
       }
    }],
    loadData : function({$render}rec) {
@@ -467,8 +481,8 @@ var {$render}fileForm = new Ext.FormPanel({
          {$render}fileForm.getForm().findField('{$render}file').show();
          {$render}fileForm.buttons[0].setVisible(true);
          {$render}fileForm.buttons[1].setVisible(false);
+         {$render}fileForm.buttons[2].setVisible(true);
          {$render}fileGrid.setDisabled(true);
-         return;
       } else {
          {$render}fileForm.getForm().findField('{$render}file').hide();
          {$render}fileForm.buttons[0].setVisible(false);
