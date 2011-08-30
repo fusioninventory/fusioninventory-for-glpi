@@ -33,14 +33,14 @@
    ----------------------------------------------------------------------
  */
 
-$LANG['plugin_fusioninventory']['agents'][15]="Agent state";
-$LANG['plugin_fusioninventory']['agents'][17]="The agent is running";
-$LANG['plugin_fusioninventory']['agents'][22]="Waiting";
-$LANG['plugin_fusioninventory']['agents'][23]="Computer link";
+$LANG['plugin_fusioninventory']['agents'][15]="Estado do agente";
+$LANG['plugin_fusioninventory']['agents'][17]="Agente está executado";
+$LANG['plugin_fusioninventory']['agents'][22]="Espera";
+$LANG['plugin_fusioninventory']['agents'][23]="Ligação de computador";
 $LANG['plugin_fusioninventory']['agents'][24]="Token";
-$LANG['plugin_fusioninventory']['agents'][25]="Versiyon";
-$LANG['plugin_fusioninventory']['agents'][27]="Agents modules";
-$LANG['plugin_fusioninventory']['agents'][28]="Agent";
+$LANG['plugin_fusioninventory']['agents'][25]="Versão";
+$LANG['plugin_fusioninventory']['agents'][27]="Módulos dos agentes";
+$LANG['plugin_fusioninventory']['agents'][28]="Agente";
 $LANG['plugin_fusioninventory']['agents'][30]="Impossible to communicate with agent!";
 $LANG['plugin_fusioninventory']['agents'][31]="Force inventory";
 $LANG['plugin_fusioninventory']['agents'][32]="Auto managenement dynamic of agents";
@@ -56,50 +56,50 @@ $LANG['plugin_fusioninventory']['agents'][42]="Useragent";
 $LANG['plugin_fusioninventory']['agents'][43]="Informations for agent configuration";
 $LANG['plugin_fusioninventory']['agents'][44]="Communication url of the server";
 $LANG['plugin_fusioninventory']['agents'][4]="Last contact";
-$LANG['plugin_fusioninventory']['agents'][6]="disable";
+$LANG['plugin_fusioninventory']['agents'][6]="desabilitar";
 
 $LANG['plugin_fusioninventory']['buttons'][0]="Finish";
 
-$LANG['plugin_fusioninventory']['choice'][0]="Hayır";
-$LANG['plugin_fusioninventory']['choice'][1]="Evet";
-$LANG['plugin_fusioninventory']['choice'][2]="veya";
-$LANG['plugin_fusioninventory']['choice'][3]="ve";
+$LANG['plugin_fusioninventory']['choice'][0]="No";
+$LANG['plugin_fusioninventory']['choice'][1]="Yes";
+$LANG['plugin_fusioninventory']['choice'][2]="or";
+$LANG['plugin_fusioninventory']['choice'][3]="and";
 
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Bad token, impossible to start agent";
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Agent stopped/crashed";
 $LANG['plugin_fusioninventory']['codetasklog'][3]="Import denied ";
 
-$LANG['plugin_fusioninventory']['config'][0]="Inventory frequency (in hours)";
+$LANG['plugin_fusioninventory']['config'][0]="Frequência do inventário (em horas)";
 
 $LANG['plugin_fusioninventory']['credential'][1]="Credential for remote inventory";
 $LANG['plugin_fusioninventory']['credential'][2]="Remote device inventory";
 $LANG['plugin_fusioninventory']['credential'][3]="Credentials";
 
-$LANG['plugin_fusioninventory']['discovery'][5]="Number of imported devices";
-$LANG['plugin_fusioninventory']['discovery'][9]="Number of devices not imported because type not defined";
+$LANG['plugin_fusioninventory']['discovery'][5]="Número de dispositivos importados";
+$LANG['plugin_fusioninventory']['discovery'][9]="Número de dispositivos não importados devido ao tipo não definido";
 
 $LANG['plugin_fusioninventory']['errors'][1]="PHP allow_url_fopen is off, can't wake agent to do inventory";
-$LANG['plugin_fusioninventory']['errors'][22]="Unattended element in";
+$LANG['plugin_fusioninventory']['errors'][22]="Elemento autônomo em";
 $LANG['plugin_fusioninventory']['errors'][2]="PHP allow_url_fopen is off, push mode can't work";
-$LANG['plugin_fusioninventory']['errors'][50]="Your GLPI version not compatible, require 0.80";
+$LANG['plugin_fusioninventory']['errors'][50]="Versão do GLPI não compatível. Necessário versão 0.80";
 
-$LANG['plugin_fusioninventory']['functionalities'][0]="Features";
-$LANG['plugin_fusioninventory']['functionalities'][16]="SNMP authentication";
-$LANG['plugin_fusioninventory']['functionalities'][17]="Database";
-$LANG['plugin_fusioninventory']['functionalities'][18]="Dosyalar";
-$LANG['plugin_fusioninventory']['functionalities'][19]="Please configure the SNMP authentication in the setup of the plugin";
-$LANG['plugin_fusioninventory']['functionalities'][27]="SSL-only for agent";
-$LANG['plugin_fusioninventory']['functionalities'][29]="List of fields to history";
-$LANG['plugin_fusioninventory']['functionalities'][2]="General configuration";
-$LANG['plugin_fusioninventory']['functionalities'][32]="Delete tasks after";
-$LANG['plugin_fusioninventory']['functionalities'][60]="Clean history";
-$LANG['plugin_fusioninventory']['functionalities'][6]="Legend";
-$LANG['plugin_fusioninventory']['functionalities'][73]="Fields";
-$LANG['plugin_fusioninventory']['functionalities'][74]="Values";
-$LANG['plugin_fusioninventory']['functionalities'][75]="Locks";
+$LANG['plugin_fusioninventory']['functionalities'][0]="Funções";
+$LANG['plugin_fusioninventory']['functionalities'][16]="Autenticação SNMP";
+$LANG['plugin_fusioninventory']['functionalities'][17]="Banco de dados";
+$LANG['plugin_fusioninventory']['functionalities'][18]="Arquivos";
+$LANG['plugin_fusioninventory']['functionalities'][19]="Por favor, configure a autenticação SNMP na configuração do plugin";
+$LANG['plugin_fusioninventory']['functionalities'][27]="Somente SSL para o agente";
+$LANG['plugin_fusioninventory']['functionalities'][29]="Lista de campos para o histórico";
+$LANG['plugin_fusioninventory']['functionalities'][2]="Configuração geral";
+$LANG['plugin_fusioninventory']['functionalities'][32]="Apagar tarefas depois";
+$LANG['plugin_fusioninventory']['functionalities'][60]="Limpar histórico";
+$LANG['plugin_fusioninventory']['functionalities'][6]="Legenda";
+$LANG['plugin_fusioninventory']['functionalities'][73]="Campos";
+$LANG['plugin_fusioninventory']['functionalities'][74]="Valores";
+$LANG['plugin_fusioninventory']['functionalities'][75]="Bloqueios";
 $LANG['plugin_fusioninventory']['functionalities'][76]="Extra-debug";
 $LANG['plugin_fusioninventory']['functionalities'][8]="Agent port";
-$LANG['plugin_fusioninventory']['functionalities'][9]="Retention in days";
+$LANG['plugin_fusioninventory']['functionalities'][9]="Retenção em dias";
 
 $LANG['plugin_fusioninventory']['iprange'][0]="Start of IP range";
 $LANG['plugin_fusioninventory']['iprange'][1]="End of IP range";
@@ -110,28 +110,28 @@ $LANG['plugin_fusioninventory']['iprange'][7]="Bad IP";
 $LANG['plugin_fusioninventory']['locks'][0]="Delete locks";
 $LANG['plugin_fusioninventory']['locks'][1]="Add locks";
 
-$LANG['plugin_fusioninventory']['menu'][1]="Agents management";
+$LANG['plugin_fusioninventory']['menu'][1]="Configuração do agente";
 $LANG['plugin_fusioninventory']['menu'][2]="IP range configuration";
-$LANG['plugin_fusioninventory']['menu'][3]="Menü";
-$LANG['plugin_fusioninventory']['menu'][4]="Unknown device";
+$LANG['plugin_fusioninventory']['menu'][3]="Menu";
+$LANG['plugin_fusioninventory']['menu'][4]="Dispositivo desconhecido";
 $LANG['plugin_fusioninventory']['menu'][5]="Authentication for remote devices (VMware)";
 $LANG['plugin_fusioninventory']['menu'][6]="Remote devices to inventory (VMware)";
-$LANG['plugin_fusioninventory']['menu'][7]="Running jobs";
+$LANG['plugin_fusioninventory']['menu'][7]="Trabalhos em execução";
 
 $LANG['plugin_fusioninventory']['processes'][1]="PID";
 $LANG['plugin_fusioninventory']['processes'][38]="Process number";
 
-$LANG['plugin_fusioninventory']['profile'][0]="Rights management";
+$LANG['plugin_fusioninventory']['profile'][0]="Gerenciamento de permissões";
 $LANG['plugin_fusioninventory']['profile'][2]="Agents";
-$LANG['plugin_fusioninventory']['profile'][3]="Agent remote control";
+$LANG['plugin_fusioninventory']['profile'][3]="Agent remote controle";
 $LANG['plugin_fusioninventory']['profile'][4]="Configuration";
-$LANG['plugin_fusioninventory']['profile'][5]="Wake On LAN";
+$LANG['plugin_fusioninventory']['profile'][5]="WakeOnLan";
 $LANG['plugin_fusioninventory']['profile'][6]="Unknown devices";
 
 $LANG['plugin_fusioninventory']['rules'][10]="not exist";
 $LANG['plugin_fusioninventory']['rules'][13]="Hard disk serial number";
 $LANG['plugin_fusioninventory']['rules'][14]="Partition serial number";
-$LANG['plugin_fusioninventory']['rules'][15]="UUID";
+$LANG['plugin_fusioninventory']['rules'][15]="uuid";
 $LANG['plugin_fusioninventory']['rules'][16]="FusionInventory tag";
 $LANG['plugin_fusioninventory']['rules'][17]="Import denied";
 $LANG['plugin_fusioninventory']['rules'][18]="Device created";
@@ -146,35 +146,35 @@ $LANG['plugin_fusioninventory']['rules'][9]="exist";
 
 $LANG['plugin_fusioninventory']['rulesengine'][152]="Assets to import";
 
-$LANG['plugin_fusioninventory']['setup'][16]="Documentation";
-$LANG['plugin_fusioninventory']['setup'][17]="Other FusionInventory plugins (fusinv...) must be uninstalled before removing the FusionInventory plugin";
+$LANG['plugin_fusioninventory']['setup'][16]="Documentação";
+$LANG['plugin_fusioninventory']['setup'][17]="Outros plugins do FusionInventory (fusinv...) deve ser desinstalado antes de desinstalar o plugin FusionInventory";
 
-$LANG['plugin_fusioninventory']['task'][0]="Task";
-$LANG['plugin_fusioninventory']['task'][14]="Scheduled date";
-$LANG['plugin_fusioninventory']['task'][15]="Yeni eylem";
-$LANG['plugin_fusioninventory']['task'][17]="Periodicity";
-$LANG['plugin_fusioninventory']['task'][18]="Görevler";
-$LANG['plugin_fusioninventory']['task'][19]="Running tasks";
-$LANG['plugin_fusioninventory']['task'][1]="Task management";
-$LANG['plugin_fusioninventory']['task'][20]="Finished tasks";
-$LANG['plugin_fusioninventory']['task'][21]="Action on this device";
-$LANG['plugin_fusioninventory']['task'][22]="Only scheduled tasks";
+$LANG['plugin_fusioninventory']['task'][0]="Tarefa";
+$LANG['plugin_fusioninventory']['task'][14]="Data da cobrança";
+$LANG['plugin_fusioninventory']['task'][15]="Nova ação";
+$LANG['plugin_fusioninventory']['task'][17]="Frequência";
+$LANG['plugin_fusioninventory']['task'][18]="Tarefas";
+$LANG['plugin_fusioninventory']['task'][19]="Tarefas em execução";
+$LANG['plugin_fusioninventory']['task'][1]="Gerenciamento de tarefa";
+$LANG['plugin_fusioninventory']['task'][20]="Tarefas finalizadas";
+$LANG['plugin_fusioninventory']['task'][21]="Ação sobre este material";
+$LANG['plugin_fusioninventory']['task'][22]="Somente tarefas planejadas";
 $LANG['plugin_fusioninventory']['task'][24]="Number of trials";
 $LANG['plugin_fusioninventory']['task'][25]="Time between 2 trials (in minutes)";
-$LANG['plugin_fusioninventory']['task'][26]="Modül";
+$LANG['plugin_fusioninventory']['task'][26]="Module";
 $LANG['plugin_fusioninventory']['task'][27]="Definition";
-$LANG['plugin_fusioninventory']['task'][28]="Eylem";
-$LANG['plugin_fusioninventory']['task'][29]="Tip";
-$LANG['plugin_fusioninventory']['task'][2]="Job";
+$LANG['plugin_fusioninventory']['task'][28]="Action";
+$LANG['plugin_fusioninventory']['task'][29]="Type";
+$LANG['plugin_fusioninventory']['task'][2]="Ação";
 $LANG['plugin_fusioninventory']['task'][30]="Selection";
 $LANG['plugin_fusioninventory']['task'][31]="Time between task start and start this action";
 $LANG['plugin_fusioninventory']['task'][32]="Force the end";
 $LANG['plugin_fusioninventory']['task'][33]="Communication type";
 $LANG['plugin_fusioninventory']['task'][34]="Permanent";
-$LANG['plugin_fusioninventory']['task'][35]="dakika";
-$LANG['plugin_fusioninventory']['task'][36]="saat";
-$LANG['plugin_fusioninventory']['task'][37]="gün";
-$LANG['plugin_fusioninventory']['task'][38]="ay";
+$LANG['plugin_fusioninventory']['task'][35]="minutes";
+$LANG['plugin_fusioninventory']['task'][36]="hours";
+$LANG['plugin_fusioninventory']['task'][37]="days";
+$LANG['plugin_fusioninventory']['task'][38]="months";
 $LANG['plugin_fusioninventory']['task'][39]="Unable to run task because some jobs is running yet!";
 $LANG['plugin_fusioninventory']['task'][40]="Force running";
 $LANG['plugin_fusioninventory']['task'][41]="Server contacts the agent (push)";
@@ -184,19 +184,19 @@ $LANG['plugin_fusioninventory']['task'][44]="See all informations of task";
 $LANG['plugin_fusioninventory']['task'][45]="Advanced options";
 $LANG['plugin_fusioninventory']['task'][46]="Reset";
 
-$LANG['plugin_fusioninventory']['taskjoblog'][1]="Started";
-$LANG['plugin_fusioninventory']['taskjoblog'][2]="Tamam";
-$LANG['plugin_fusioninventory']['taskjoblog'][3]="Error / rescheduled";
-$LANG['plugin_fusioninventory']['taskjoblog'][4]="Hata";
-$LANG['plugin_fusioninventory']['taskjoblog'][5]="bilinmeyen";
+$LANG['plugin_fusioninventory']['taskjoblog'][1]="Iniciado";
+$LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";
+$LANG['plugin_fusioninventory']['taskjoblog'][3]="Erro / replanejado";
+$LANG['plugin_fusioninventory']['taskjoblog'][4]="Erro";
+$LANG['plugin_fusioninventory']['taskjoblog'][5]="desconhecido";
 $LANG['plugin_fusioninventory']['taskjoblog'][6]="Running";
 $LANG['plugin_fusioninventory']['taskjoblog'][7]="Prepared";
 
 $LANG['plugin_fusioninventory']['title'][0]="FusionInventory";
 $LANG['plugin_fusioninventory']['title'][1]="FusInv";
 
-$LANG['plugin_fusioninventory']['unknown'][2]="Approved devices";
-$LANG['plugin_fusioninventory']['unknown'][4]="Network hub";
+$LANG['plugin_fusioninventory']['unknown'][2]="Dispositivos aprovados";
+$LANG['plugin_fusioninventory']['unknown'][4]="Hub de rede";
 $LANG['plugin_fusioninventory']['unknown'][5]="Import unknown device into asset";
 
 $LANG['plugin_fusioninventory']['wizard'][0]="Action choice";
