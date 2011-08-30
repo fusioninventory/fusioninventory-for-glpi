@@ -7,6 +7,7 @@ if (not defined $ARGV[0]) {
 Use : perl create_pofile.pl lang
 lang is de_DE, fr_FR...
 exiting...\n";
+exit;
 }
 
 my $file = '../locales/en_GB.php';

@@ -52,7 +52,9 @@ class PluginFusioninventoryMenu {
       // FOR THE BETA/RC
       echo "<center>"; 
       echo "<a href='http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/wiki/Beta_test'>";
-      echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/beta.png'/></a>"; 
+      echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/beta.png'/></a>";
+      echo "&nbsp;<a href='https://www.transifex.net/projects/p/FusionInventory/'>";
+      echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/Translate.png'/></a>"; 
       echo "</center><br/>";
       // END FOR THE BETA
 
@@ -82,7 +84,12 @@ class PluginFusioninventoryMenu {
          $a_menu[4]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
          $a_menu[4]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryRuleImportEquipment');
       }
-
+      
+      if (Session::haveRight("rule_ocs","r")) {
+         $a_menu[9]['name'] = $LANG['plugin_fusioninventory']['rules'][19];
+         $a_menu[9]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
+         $a_menu[9]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryIgnoredimportdevice');
+      }
 
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice", "r")) {
          $a_menu[5]['name'] = $LANG['plugin_fusioninventory']['menu'][4];

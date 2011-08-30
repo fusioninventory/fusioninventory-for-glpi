@@ -64,10 +64,10 @@ $_SESSION['glpi_use_mode'] = 2;
 ob_end_clean();
 
 if (!class_exists("PluginFusioninventoryConfig")) {
-   echo gzcompress("<?xml version='1.0' encoding='UTF-8'?>
+   echo "<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
    <ERROR>Plugin FusionInventory not installed!</ERROR>
-</REPLY>");
+</REPLY>";
    exit;
 }
 
@@ -115,6 +115,26 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
             }
       }
       ob_end_clean();
+      
+      // Get compression of XML
+      $xml = '';
+      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $PluginFusioninventoryTaskjob->disableDebug();
+      $xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
+      $PluginFusioninventoryTaskjob->reenableusemode();
+      $compressmode = 'none';
+      if ($xml) {
+         $compressmode = "gzcompress";
+      } else if ($xml = $communication->gzdecode($GLOBALS["HTTP_RAW_POST_DATA"])) {
+         // ** If agent use gzip
+         $compressmode = "gzencode";
+      } else if ($xml = gzinflate (substr($GLOBALS["HTTP_RAW_POST_DATA"], 2))) {
+         // ** OCS agent 2.0 Compatibility
+         $compressmode = "gzdeflate";
+      } else {
+         $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
+      }      
+      
       $ssl = $fusioninventory_config->getValue($fusioninventoryModule_id, 'ssl_only');
       if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"))
           OR ($ssl == "0")) {
@@ -123,24 +143,11 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
    <REPLY>
    </REPLY>");
-         $communication->noSSL();
+         $communication->noSSL($compressmode);
          exit();
       }
 
       // Check XML integrity
-      $xml = '';
-      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-      $PluginFusioninventoryTaskjob->disableDebug();
-      $xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
-      $PluginFusioninventoryTaskjob->reenableusemode();
-      if ($xml) {
-
-      } else if ($xml = gzinflate (substr($GLOBALS["HTTP_RAW_POST_DATA"], 2))) {
-         // ** OCS agent 2.0 Compatibility
-      } else {
-         $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
-      }
-
       $PluginFusioninventoryCommunication = new PluginFusioninventoryCommunication();
       if (PluginFusioninventoryConfig::isExtradebugActive()) {
          file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".uniqid(), $xml);
@@ -155,7 +162,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
 <REPLY>
    <ERROR>XML not well formed!</ERROR>
 </REPLY>");
-         $PluginFusioninventoryCommunication->emptyAnswer();
+         $PluginFusioninventoryCommunication->emptyAnswer($compressmode);
       }
    
       $pta->importToken($xml);
@@ -180,13 +187,13 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
             $communication->addProlog();
             $communication->setXML($communication->getXML());
    
-            echo $communication->getSend();
+            echo $communication->getSend($compressmode);
          }
       } else {
          $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
 </REPLY>");
-         $communication->emptyAnswer();
+         $communication->emptyAnswer($compressmode);
       }
    }
    

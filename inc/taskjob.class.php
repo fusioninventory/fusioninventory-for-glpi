@@ -1529,6 +1529,8 @@ return namelist;
     *
     */
    function verifyDefinitionActions($items_id) {
+      
+      $return = true;
       $this->getFromDB($items_id);
       $input = array();
       $input['id'] = $this->fields['id'];
@@ -1542,6 +1544,7 @@ return namelist;
       }
       if (count($a_definitions) == '0') {
          $input['definition'] = '';
+         $return = false;
       } else {
          $input['definition'] = exportArrayToDB($a_definitions);
       }
@@ -1557,10 +1560,12 @@ return namelist;
       }
       if (count($a_actions) == '0') {
          $input['action'] = '';
+         $return = false;
       } else {
          $input['action'] = exportArrayToDB($a_actions);
       }
       $this->update($input);
+      return $return;
    }
 
 
@@ -2000,22 +2005,23 @@ return namelist;
       $pFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       
       $uniqid = 0;
-      $pFusioninventoryTaskjob->verifyDefinitionActions($a_taskjob['id']);
-      // Get module name
-      $pluginName = PluginFusioninventoryModule::getModuleName($a_taskjob['plugins_id']);
-      if (strstr($pluginName, "fusioninventory")
-              OR strstr($pluginName, "fusinv")) {
+      if ($pFusioninventoryTaskjob->verifyDefinitionActions($a_taskjob['id'])) {
+         // Get module name
+         $pluginName = PluginFusioninventoryModule::getModuleName($a_taskjob['plugins_id']);
+         if (strstr($pluginName, "fusioninventory")
+                 OR strstr($pluginName, "fusinv")) {
 
-         $input = array();
-         $input['id'] = $a_taskjob['id'];
-         $input['execution_id'] = $a_taskjob['execution_id'] + 1;
-         $pFusioninventoryTaskjob->update($input);
+            $input = array();
+            $input['id'] = $a_taskjob['id'];
+            $input['execution_id'] = $a_taskjob['execution_id'] + 1;
+            $pFusioninventoryTaskjob->update($input);
 
-         $itemtype = "Plugin".ucfirst($pluginName).ucfirst($a_taskjob['method']);
-         $item = new $itemtype;
-         $uniqid = $item->prepareRun($a_taskjob['id']);
+            $itemtype = "Plugin".ucfirst($pluginName).ucfirst($a_taskjob['method']);
+            $item = new $itemtype;
+            $uniqid = $item->prepareRun($a_taskjob['id']);
+         }
+         return $uniqid;
       }
-      return $uniqid;
    }
 }
 
