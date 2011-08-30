@@ -58,14 +58,14 @@ $LANG['plugin_fusioninventory']['agents'][44]="Link di communicazione con il ser
 $LANG['plugin_fusioninventory']['agents'][4]="Ultimo Contatto dell'agente";
 $LANG['plugin_fusioninventory']['agents'][6]="Off";
 
-$LANG['plugin_fusioninventory']['buttons'][0]="Finish";
+$LANG['plugin_fusioninventory']['buttons'][0]="Fine";
 
 $LANG['plugin_fusioninventory']['choice'][0]="No";
 $LANG['plugin_fusioninventory']['choice'][1]="Si";
 $LANG['plugin_fusioninventory']['choice'][2]="Dove";
 $LANG['plugin_fusioninventory']['choice'][3]="e";
 
-$LANG['plugin_fusioninventory']['codetasklog'][1]="Bad token, impossible to start agent";
+$LANG['plugin_fusioninventory']['codetasklog'][1]="Gettone sbagliato, non può agire sull'agente";
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Agente interrotto o schiantato";
 $LANG['plugin_fusioninventory']['codetasklog'][3]="Importo rifiutato";
 
@@ -78,9 +78,9 @@ $LANG['plugin_fusioninventory']['credential'][3]="Credentials";
 $LANG['plugin_fusioninventory']['discovery'][5]="Numero di materiali importati";
 $LANG['plugin_fusioninventory']['discovery'][9]="Numero di materiali non importati per causa di typo sconoscuto";
 
-$LANG['plugin_fusioninventory']['errors'][1]="PHP allow_url_fopen is off, can't wake agent to do inventory";
+$LANG['plugin_fusioninventory']['errors'][1]="PHP allow_url_fopen è disattivata, Sveglia dell'agente impossibile per fare l'inventario";
 $LANG['plugin_fusioninventory']['errors'][22]="Voce inaspettata in";
-$LANG['plugin_fusioninventory']['errors'][2]="PHP allow_url_fopen is off, push mode can't work";
+$LANG['plugin_fusioninventory']['errors'][2]="PHP allow_url_fopen è disattivata, il modulo push non può funzionare";
 $LANG['plugin_fusioninventory']['errors'][50]="La versione di GLPI non é compatible, avete bisogno della versione 0.80";
 
 $LANG['plugin_fusioninventory']['functionalities'][0]="Caratteristiche";
@@ -101,11 +101,11 @@ $LANG['plugin_fusioninventory']['functionalities'][76]="Extra-debug";
 $LANG['plugin_fusioninventory']['functionalities'][8]="Numero di porta dell'agente";
 $LANG['plugin_fusioninventory']['functionalities'][9]="Conservazione in giorni";
 
-$LANG['plugin_fusioninventory']['iprange'][0]="Start of IP range";
-$LANG['plugin_fusioninventory']['iprange'][1]="End of IP range";
-$LANG['plugin_fusioninventory']['iprange'][2]="IP Ranges";
+$LANG['plugin_fusioninventory']['iprange'][0]="Inizio del intervallo IP";
+$LANG['plugin_fusioninventory']['iprange'][1]="Fine del intervallo IP";
+$LANG['plugin_fusioninventory']['iprange'][2]="Intervallo IP";
 $LANG['plugin_fusioninventory']['iprange'][3]="Query";
-$LANG['plugin_fusioninventory']['iprange'][7]="Bad IP";
+$LANG['plugin_fusioninventory']['iprange'][7]="IP sbagliato";
 
 $LANG['plugin_fusioninventory']['locks'][0]="Rimuovere i luchetti";
 $LANG['plugin_fusioninventory']['locks'][1]="Aggungere i luchetti";
@@ -152,7 +152,7 @@ $LANG['plugin_fusioninventory']['setup'][17]="Gli altri plugin FusionInventory (
 $LANG['plugin_fusioninventory']['task'][0]="Compito";
 $LANG['plugin_fusioninventory']['task'][14]="Data d'esecuzione";
 $LANG['plugin_fusioninventory']['task'][15]="Nuova azione";
-$LANG['plugin_fusioninventory']['task'][17]="Periodicity";
+$LANG['plugin_fusioninventory']['task'][17]="Periodicità";
 $LANG['plugin_fusioninventory']['task'][18]="Compiti";
 $LANG['plugin_fusioninventory']['task'][19]="Compiti in corso";
 $LANG['plugin_fusioninventory']['task'][1]="Task management";
@@ -179,9 +179,9 @@ $LANG['plugin_fusioninventory']['task'][39]="Impossibile avviare il compito, per
 $LANG['plugin_fusioninventory']['task'][40]="Forzare l'esecuzione";
 $LANG['plugin_fusioninventory']['task'][41]="Il server inizia un contatto con l'agente (push)";
 $LANG['plugin_fusioninventory']['task'][42]="L'agente inizia un contatto con il server (pull)";
-$LANG['plugin_fusioninventory']['task'][43]="Communication mode";
-$LANG['plugin_fusioninventory']['task'][44]="See all informations of task";
-$LANG['plugin_fusioninventory']['task'][45]="Advanced options";
+$LANG['plugin_fusioninventory']['task'][43]="Modo di comunicazione";
+$LANG['plugin_fusioninventory']['task'][44]="Vedere le informazioni complete del compito";
+$LANG['plugin_fusioninventory']['task'][45]="Opzioni avanzate";
 $LANG['plugin_fusioninventory']['task'][46]="Reset";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="In esecuzione";
@@ -199,7 +199,7 @@ $LANG['plugin_fusioninventory']['unknown'][2]="materiale approvato";
 $LANG['plugin_fusioninventory']['unknown'][4]="Hub";
 $LANG['plugin_fusioninventory']['unknown'][5]="Materiale sconosciuto da importare nell'inventario";
 
-$LANG['plugin_fusioninventory']['wizard'][0]="Action choice";
+$LANG['plugin_fusioninventory']['wizard'][0]="Scelta del azione";
 $LANG['plugin_fusioninventory']['wizard'][10]="Choice (netdiscovery or inventory)";
 $LANG['plugin_fusioninventory']['wizard'][11]="Breadcrumb";
 $LANG['plugin_fusioninventory']['wizard'][12]="Discover the network";
@@ -208,12 +208,12 @@ $LANG['plugin_fusioninventory']['wizard'][14]="Welcome in FusionInventory. Begin
 $LANG['plugin_fusioninventory']['wizard'][15]="Computers and peripherals";
 $LANG['plugin_fusioninventory']['wizard'][16]="ESX servers";
 $LANG['plugin_fusioninventory']['wizard'][17]="Network devices and printers";
-$LANG['plugin_fusioninventory']['wizard'][1]="Type of device to inventory";
-$LANG['plugin_fusioninventory']['wizard'][2]="Import options";
+$LANG['plugin_fusioninventory']['wizard'][1]="Typo di materiale da inventoriare";
+$LANG['plugin_fusioninventory']['wizard'][2]="Opzioni d'importo";
 $LANG['plugin_fusioninventory']['wizard'][3]="Entity rules";
 $LANG['plugin_fusioninventory']['wizard'][4]="Agent configuration";
 $LANG['plugin_fusioninventory']['wizard'][5]="Authentication management";
-$LANG['plugin_fusioninventory']['wizard'][6]="ESX servers management";
+$LANG['plugin_fusioninventory']['wizard'][6]="Gestione dei servers ESX";
 $LANG['plugin_fusioninventory']['wizard'][7]="Run tasks";
 $LANG['plugin_fusioninventory']['wizard'][8]="Tasks running result";
 
