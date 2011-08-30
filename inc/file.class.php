@@ -281,7 +281,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
          FROM glpi_plugin_fusinvdeploy_orders orders
       LEFT JOIN glpi_plugin_fusinvdeploy_files files
          ON files.plugin_fusinvdeploy_orders_id = orders.id
-      WHERE files.sha512 = '$sha512";
+      WHERE files.sha512 = '$sha512'";
       $res = $DB->query($sql);
       if ($DB->numrows($res) == 1) {
          //unlink($repoPath.self::getDirBySha512($sha512).'/'.$sha512.'.gz');
