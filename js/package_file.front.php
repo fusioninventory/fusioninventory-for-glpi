@@ -251,8 +251,6 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
             var {$render}rec = {$render}fileGrid.store.getAt(index);
             {$render}fileForm.loadData({$render}rec);
 
-            console.log({$render}rec.get('{$render}file'));
-
             if({$render}rec.get('{$render}file') == '') {$render}fileForm.newFileMode(true);
             else {$render}fileForm.newFileMode(false);
 
@@ -487,6 +485,7 @@ var {$render}fileForm = new Ext.FormPanel({
          {$render}fileForm.getForm().findField('{$render}file').hide();
          {$render}fileForm.buttons[0].setVisible(false);
          {$render}fileForm.buttons[1].setVisible(true);
+         {$render}fileForm.buttons[2].setVisible(false);
          {$render}fileGrid.setDisabled(false);
       }
       {$render}fileForm.show();

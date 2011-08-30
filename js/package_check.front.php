@@ -192,6 +192,8 @@ var {$render}checkGrid = new Ext.grid.GridPanel({
          });
          {$render}checkGridStore.insert(0,u);
          {$render}checkGrid.getSelectionModel().selectFirstRow();
+         {$render}checkGrid.setDisabled(true);
+         {$render}checkForm.buttons[1].setVisible(true);
          {$render}checkForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][1]}');
       }
    }, '-', {
@@ -459,6 +461,8 @@ var {$render}checkForm = new Ext.FormPanel({
             waitMsg: '{$LANG['plugin_fusinvdeploy']['form']['message'][2]}',
             success: function(fileForm, o){
                {$render}checkGridStore.reload();
+               {$render}checkGrid.setDisabled(false);
+               {$render}checkForm.buttons[1].setVisible(false);
             },
             failure: function(fileForm, action){
                switch (action.failureType) {
@@ -474,6 +478,18 @@ var {$render}checkForm = new Ext.FormPanel({
 
             }
          });
+      }
+   }, {
+      text: '{$LANG['buttons'][34]}',
+      iconCls: 'exticon-cancel',
+      name : '{$render}cancelbtn',
+      id : '{$render}Checkcancelbtn',
+      iconCls: 'exticon-cancel',
+      hidden : true,
+      handler: function(btn, ev) {
+         btn.setVisible(false);
+         {$render}checkGrid.store.reload();
+         {$render}checkGrid.setDisabled(false);
       }
    }],
    loadData : function({$render}rec) {

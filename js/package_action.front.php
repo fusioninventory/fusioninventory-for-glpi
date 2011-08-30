@@ -206,6 +206,8 @@ var {$render}actionGrid = new Ext.grid.GridPanel({
          });
          {$render}actionGridStore.insert(0,u);
          {$render}actionGrid.getSelectionModel().selectFirstRow();
+         {$render}actionGrid.setDisabled(true);
+         {$render}actionForm.buttons[1].setVisible(true);
          {$render}actionForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][6]}');
       }
    }, '-', {
@@ -557,7 +559,6 @@ function {$render}actionFormSave() {
                }
             }
          });
-
       },
       failure: function(fileForm, action){
          switch (action.failureType) {
@@ -624,6 +625,20 @@ var {$render}actionForm = new Ext.FormPanel({
       disabled:true,
       handler: function(btn,ev) {
          {$render}actionFormSave()
+         {$render}actionGrid.setDisabled(false);
+         {$render}actionForm.buttons[1].setVisible(false);
+      }
+   }, {
+      text: '{$LANG['buttons'][34]}',
+      iconCls: 'exticon-cancel',
+      name : '{$render}cancelbtn',
+      id : '{$render}Actioncancelbtn',
+      iconCls: 'exticon-cancel',
+      hidden : true,
+      handler: function(btn, ev) {
+         btn.setVisible(false);
+         {$render}actionGrid.store.reload();
+         {$render}actionGrid.setDisabled(false);
       }
    }],
    loadData : function(rec) {
