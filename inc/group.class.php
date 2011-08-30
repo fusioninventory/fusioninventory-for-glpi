@@ -426,9 +426,13 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       echo "</td>";
 */
 
-      echo "<td class='left'>".'room '." : </td>";
+      echo "<td class='left'>".$LANG['setup'][100]." : </td>";
       echo "<td class='left'><input type='text' name='room' id='group_search_room' value='"
          .$fields['room']."' size='15' /></td>";
+
+      echo "<td class='left'>".$LANG['setup'][99]." : </td>";
+      echo "<td class='left'><input type='text' name='building' id='group_search_building' value='"
+         .$fields['building']."' size='15' /></td>";
 
       echo "</tr><tr>";
 
@@ -436,9 +440,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       echo "<td class='left'><input type='text' name='serial' id='group_search_serial' value='"
          .$fields['serial']."' size='15' /></td>";
 
-      echo "<td class='left'>".'building '." : </td>";
-      echo "<td class='left'><input type='text' name='building' id='group_search_building' value='"
-         .$fields['building']."' size='15' /></td>";
+
 
       echo "</tr><tr>";
 
