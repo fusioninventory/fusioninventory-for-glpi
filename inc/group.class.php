@@ -385,7 +385,8 @@ class PluginFusinvdeployGroup extends CommonDBTM {
             'locations' => '0',
             'operatingsystems_id' => '0',
             'room' => '',
-            'building' => ''
+            'building' => '',
+            'name' => ''
          );
       }
 
@@ -440,7 +441,9 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       echo "<td class='left'><input type='text' name='serial' id='group_search_serial' value='"
          .$fields['serial']."' size='15' /></td>";
 
-
+      echo "<td class='left'>".$LANG['rulesengine'][25]." : </td>";
+      echo "<td class='left'><input type='text' name='name' id='group_search_name' value='"
+         .$fields['name']."' size='15' /></td>";
 
       echo "</tr><tr>";
 
@@ -473,7 +476,8 @@ class PluginFusinvdeployGroup extends CommonDBTM {
             'location_id'           => 'dropdown_locations'.$rand_location,
             'operatingsystems_id'   => 'dropdown_operatingsystems_id'.$rand_os,
             'serial'                => 'group_search_serial',
-            'otherserial'           => 'group_search_otherserial'
+            'otherserial'           => 'group_search_otherserial',
+            'name'                  => 'group_search_name'
          ),
          $type
       );
@@ -514,7 +518,8 @@ class PluginFusinvdeployGroup extends CommonDBTM {
          'location_id'        => $params['location_id'],
          'serial'             => $params['serial'],
          'operatingsystems_id'=> $params['operatingsystems_id'],
-         'otherserial'         => $params['otherserial']
+         'otherserial'        => $params['otherserial'],
+         'name'               => $params['name']
       );
 
       $datas = PluginFusinvdeploySearch::methodListObjects($params, '');
