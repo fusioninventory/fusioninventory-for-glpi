@@ -254,7 +254,6 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
 
 //            {$render}unlockForm({$render}rec);
 
-Ext.MessageBox.alert('Erreur', {$render}rec.get('{$render}uncompress'));
             if({$render}rec.get('{$render}p2p') == 0){
                Ext.getCmp('{$render}p2p_t').setValue(false);
                Ext.getCmp('{$render}p2p_f').setValue(true);
@@ -377,7 +376,6 @@ var {$render}fileForm = new Ext.FormPanel({
       id : '{$render}savebtn',
       hidden: true,
       handler: function(btn, ev) {
-              Ext.MessageBox.alert('Erreur', "save");
          if ({$render}fileForm.record == null) {
             Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
             return;
