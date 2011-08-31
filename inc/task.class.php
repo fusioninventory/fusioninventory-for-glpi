@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusinvdeployTask extends CommonDBTM {
+class PluginFusinvdeployTask extends PluginFusioninventoryTask {
 
    static function getTypeName($nb=0) {
       global $LANG;
@@ -106,107 +106,15 @@ class PluginFusinvdeployTask extends CommonDBTM {
       displayTitle($CFG_GLPI["root_doc"] . "/plugins/fusinvdeploy/pics/task.png", $title, $title, $buttons);
    }
 
-   function showForm($ID, $options = array()) {
-      global $LANG;
 
-      if ($ID > 0) {
-         $this->check($ID,'r');
-      } else {
-         // Create item
-         $this->check(-1,'w');
-      }
-
-      $options['colspan'] = 2;
-
-      $this->showTabs($options);
-      $this->showFormHeader($options);
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG["common"][16]."&nbsp;:</td>";
-      echo "<td>";
-      echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
-      echo "</td>";
-
-      echo "<td>".$LANG['plugin_fusioninventory']['task'][14]."&nbsp;:</td>";
-      echo "<td>";
-      if ($ID) {
-         showDateTimeFormItem("date_scheduled",$this->fields["date_scheduled"],1,false);
-      } else {
-         showDateTimeFormItem("date_scheduled",date("Y-m-d H:i:s"),1);
-      }
-      echo "</td>";
-
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['common'][60]."&nbsp;:</td>";
-      echo "<td>";
-      Dropdown::showYesNo("is_active",$this->fields["is_active"]);
-      echo "</td>";
-
-      echo "<td>".$LANG['plugin_fusioninventory']['task'][17]."&nbsp;:</td>";
-      echo "<td>";
-      Dropdown::showInteger("periodicity_count", $this->fields['periodicity_count'], 0, 300);
-      $a_time = array();
-      $a_time[] = "------";
-      $a_time['minutes'] = "minutes";
-      $a_time['hours'] = "heures";
-      $a_time['days'] = "jours";
-      $a_time['months'] = "mois";
-      Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$this->fields['periodicity_type']));
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['task'][33]."&nbsp;:</td>";
-      echo "<td>";
-      $com = array();
-      $com['push'] = $LANG['plugin_fusioninventory']['task'][41];
-      $com['pull'] = $LANG['plugin_fusioninventory']['task'][42];
-      Dropdown::showFromArray("communication", $com, array('value'=>$this->fields["communication"]));
-      echo "</td>";
-
-      echo "<td rowspan='3'>".$LANG['common'][25]."&nbsp;:</td>";
-      echo "<td rowspan='3'>";
-      echo "<textarea cols='45' rows='3' name='comment' >".$this->fields["comment"]."</textarea>";
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['task'][34]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      if ($this->fields['permanent'] != NULL) {
-         echo $LANG['choice'][1];
-      } else {
-         echo $LANG['choice'][0];
-      }
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_2'>";
-      echo "<td colspan='2'>";
-      if ($this->fields["is_active"]) {
-         echo '<input name="forcestart" value="'.$LANG['plugin_fusioninventory']['task'][40].'"
-                class="submit" type="submit">';
-      }
-      echo "&nbsp; </td>";
-      echo "</tr>";
-
-
-      $this->showFormButtons($options);
-      $this->addDivForTabs();
+   function showActions($id) {
+      global $LANG, $CFG_GLPI;
 
       //load extjs plugins library
       echo "<script type='text/javascript'>";
       require_once GLPI_ROOT."/plugins/fusinvdeploy/lib/extjs/Spinner.js";
       require_once GLPI_ROOT."/plugins/fusinvdeploy/lib/extjs/SpinnerField.js";
       echo "</script>";
-
-      return true;
-   }
-
-   function showActions($id) {
-      global $LANG, $CFG_GLPI;
 
       $this->getFromDB($id);
       $disabled = "false";
