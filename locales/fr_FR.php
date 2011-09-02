@@ -202,4 +202,5 @@ $LANG['plugin_fusinvdeploy']['group'][1] = "Groupe statique";
 $LANG['plugin_fusinvdeploy']['group'][2] = "Groupe dynamique";
 $LANG['plugin_fusinvdeploy']['group'][3] = "Groupe";
 $LANG['plugin_fusinvdeploy']['group'][4] = "Ajouter groupe";
+$LANG['plugin_fusinvdeploy']['group'][5] = "Si aucune ligne de la liste n'est selectionné, le champ texte de gauche sera utilisé pour la recherche";
 ?>
