@@ -396,10 +396,10 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       echo "<td class='left'>".$LANG['common'][17]." : </td>";
       echo "<td class='left'>";
       $itemtype = array(
-         'computer'
+         'Computer'
       );
       echo "<select name='itemtype' id='group_search_itemtype'>
-      <option>computer</option>
+      <option>Computer</option>
       </select>";
       echo "</td>";
 
@@ -453,12 +453,34 @@ class PluginFusinvdeployGroup extends CommonDBTM {
 
       echo "<td class='left'>".$LANG['computers'][9]." : </td>";
       echo "<td>";
-      $rand_os = mt_rand();
+      /*$rand_os = mt_rand();
       Dropdown::show('OperatingSystem', array(
          'value'  => $fields['operatingsystems_id'],
          'name'   => 'operatingsystems_id',
          'rand'   => $rand_os
       ));
+      echo "<hr />";*/
+
+      self::ajaxDisplaySearchTextForDropdown("operatingsystems_id",8, $fields['operatingsystem_name']);
+      $params_os = array('searchText'     => '__VALUE__',
+                             'myname'     => 'operatingsystems_id',
+                             'table'      => 'glpi_operatingsystems',
+                             'value'      => $fields['operatingsystems_id']);
+
+      ajaxUpdateItemOnInputTextEvent("search_operatingsystems_id", "operatingsystems_dropdown",
+                                     $CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/ajax/dropdown_operatingsystems.php",
+                                     $params_os, false);
+
+      //load default operatingsystems_dropdown
+      ajaxUpdateItem("operatingsystems_dropdown",
+                                     $CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/ajax/dropdown_operatingsystems.php",
+                                     $params_os, false, "search_operatingsystems_id");
+
+      echo "<span id='operatingsystems_dropdown'>";
+      echo "<select name='operatingsystems_id' id='operatingsystems_id'><option value='0'>".DROPDOWN_EMPTY_VALUE."</option></select>";
+      echo "</span>\n";
+
+
       echo "</td>";
 
       echo "</tr><tr>";
@@ -474,7 +496,8 @@ class PluginFusinvdeployGroup extends CommonDBTM {
             /*'start'               => 'group_search_start',
             'limit'                 => 'group_search_limit',*/
             'location_id'           => 'dropdown_locations'.$rand_location,
-            'operatingsystems_id'   => 'dropdown_operatingsystems_id'.$rand_os,
+            'operatingsystem_name'  => 'search_operatingsystems_id',
+            'operatingsystems_id'   => 'operatingsystems_id',
             'serial'                => 'group_search_serial',
             'otherserial'           => 'group_search_otherserial',
             'name'                  => 'group_search_name'
@@ -511,18 +534,21 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       else exit;
 
       $params = array(
-         'type'               => $type,
-         'itemtype'           => $params['itemtype'],
-         /*'start'            => $params['start'],
-         'limit'              => $params['limit'],*/
-         'location_id'        => $params['location_id'],
-         'serial'             => $params['serial'],
-         'operatingsystems_id'=> $params['operatingsystems_id'],
-         'otherserial'        => $params['otherserial'],
-         'name'               => $params['name']
+         'type'                  => $type,
+         'itemtype'              => $params['itemtype'],
+         /*'start'               => $params['start'],
+         'limit'                 => $params['limit'],*/
+         'location_id'           => $params['location_id'],
+         'serial'                => $params['serial'],
+         'operatingsystems_id'   => $params['operatingsystems_id'],
+         'operatingsystem_name'  => $params['operatingsystem_name'],
+         'otherserial'           => $params['otherserial'],
+         'name'                  => $params['name']
       );
 
-      $datas = PluginFusinvdeploySearch::methodListObjects($params, '');
+      if ($params['operatingsystems_id'] != 0) unset($params['operatingsystem_name']);
+
+      $datas = PluginWebservicesMethodInventaire::methodListInventoryObjects($params, '');
 
       echo "<div class='center'>";
       echo "<table class='tab_cadrehov'>";
@@ -574,5 +600,14 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       $json['results'] = $nb;
 
       return json_encode($json);
+   }
+
+
+   static function ajaxDisplaySearchTextForDropdown($id, $size=4, $value) {
+   global $CFG_GLPI, $LANG;
+
+      echo "<input title=\"".$LANG['buttons'][0]." (".$CFG_GLPI['ajax_wildcard']." ".$LANG['search'][1].")\"
+            type='text' value='$value' ondblclick=\"this.value='".
+             $CFG_GLPI["ajax_wildcard"]."';\" id='search_$id' name='____data_$id' size='$size'>\n";
    }
 }
