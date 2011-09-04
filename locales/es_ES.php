@@ -41,7 +41,7 @@ $LANG['plugin_fusioninventory']['agents'][24]="Distintivo";
 $LANG['plugin_fusioninventory']['agents'][25]="Versión";
 $LANG['plugin_fusioninventory']['agents'][27]="Módulos de agentes";
 $LANG['plugin_fusioninventory']['agents'][28]="Agente";
-$LANG['plugin_fusioninventory']['agents'][30]="¡Imposible llegar al agente!";
+$LANG['plugin_fusioninventory']['agents'][30]="¡Imposible comunicar con el agente!";
 $LANG['plugin_fusioninventory']['agents'][31]="Forzar inventario";
 $LANG['plugin_fusioninventory']['agents'][32]="* Gestión automática y dinámica de agentes";
 $LANG['plugin_fusioninventory']['agents'][33]="* Gestión automática y dinámica de agentes (misma subred)";
@@ -55,7 +55,7 @@ $LANG['plugin_fusioninventory']['agents'][41]="Servicio URL";
 $LANG['plugin_fusioninventory']['agents'][42]="Agente de usuario";
 $LANG['plugin_fusioninventory']['agents'][43]="Información para la configuración del agente";
 $LANG['plugin_fusioninventory']['agents'][44]="URL del servidor";
-$LANG['plugin_fusioninventory']['agents'][4]="Último contacto del agente";
+$LANG['plugin_fusioninventory']['agents'][4]="Último contacto";
 $LANG['plugin_fusioninventory']['agents'][6]="desactivado";
 
 $LANG['plugin_fusioninventory']['buttons'][0]="Terminado";
@@ -69,7 +69,7 @@ $LANG['plugin_fusioninventory']['codetasklog'][1]="Distintivo inválido, imposib
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Agente parado o fallido";
 $LANG['plugin_fusioninventory']['codetasklog'][3]="Importación denegada";
 
-$LANG['plugin_fusioninventory']['config'][0]="Frecuencia de inventarios (en horas)";
+$LANG['plugin_fusioninventory']['config'][0]="Frecuencia de inventario (en horas)";
 
 $LANG['plugin_fusioninventory']['credential'][1]="Credencial para inventario remoto";
 $LANG['plugin_fusioninventory']['credential'][2]="Inventario de dispotivo remoto";
@@ -78,10 +78,10 @@ $LANG['plugin_fusioninventory']['credential'][3]="Credenciales";
 $LANG['plugin_fusioninventory']['discovery'][5]="Número de dispositivos importados";
 $LANG['plugin_fusioninventory']['discovery'][9]="Número de dispositivos no importados por no tener un tipo definido";
 
-$LANG['plugin_fusioninventory']['errors'][1]="PHP allow_url_fopen está desactivado. No es posible llamar al agente para hacer el inventario";
+$LANG['plugin_fusioninventory']['errors'][1]="La directiva 'allow_url_fopen' de PHP está desactivada. No es posible llamar al agente para hacer el inventario";
 $LANG['plugin_fusioninventory']['errors'][22]="Elemento desatentido en";
-$LANG['plugin_fusioninventory']['errors'][2]="PHP allow_url_fopen está desactivado. El modo 'push' no puede funcionar";
-$LANG['plugin_fusioninventory']['errors'][50]="Su versión de GLPI no es compatible, necesita la versión 0.78";
+$LANG['plugin_fusioninventory']['errors'][2]="La directiva 'allow_url_fopen' de PHP está desactivada. El modo 'push' no puede funcionar";
+$LANG['plugin_fusioninventory']['errors'][50]="Su versión de GLPI no es compatible, necesita la versión 0.80";
 
 $LANG['plugin_fusioninventory']['functionalities'][0]="Características";
 $LANG['plugin_fusioninventory']['functionalities'][16]="Autenticación SNMP";
@@ -97,13 +97,13 @@ $LANG['plugin_fusioninventory']['functionalities'][6]="Leyenda";
 $LANG['plugin_fusioninventory']['functionalities'][73]="Campos";
 $LANG['plugin_fusioninventory']['functionalities'][74]="Valores";
 $LANG['plugin_fusioninventory']['functionalities'][75]="Bloqueos";
-$LANG['plugin_fusioninventory']['functionalities'][76]="Depuración extendida";
+$LANG['plugin_fusioninventory']['functionalities'][76]="Depuración extra";
 $LANG['plugin_fusioninventory']['functionalities'][8]="Puerto del agente";
 $LANG['plugin_fusioninventory']['functionalities'][9]="Retención (en días)";
 
-$LANG['plugin_fusioninventory']['iprange'][0]="Inicio del rango de IP's";
-$LANG['plugin_fusioninventory']['iprange'][1]="Fin del rango de IP's";
-$LANG['plugin_fusioninventory']['iprange'][2]="Rango de IP's";
+$LANG['plugin_fusioninventory']['iprange'][0]="Inicio del rango de direcciones IP";
+$LANG['plugin_fusioninventory']['iprange'][1]="Fin del rango de direcciones IP";
+$LANG['plugin_fusioninventory']['iprange'][2]="Rango de direcciones IP";
 $LANG['plugin_fusioninventory']['iprange'][3]="Consulta";
 $LANG['plugin_fusioninventory']['iprange'][7]="IP Inválida";
 
@@ -111,7 +111,7 @@ $LANG['plugin_fusioninventory']['locks'][0]="Eliminar bloqueos";
 $LANG['plugin_fusioninventory']['locks'][1]="Añadir bloqueos";
 
 $LANG['plugin_fusioninventory']['menu'][1]="Gestión de agentes";
-$LANG['plugin_fusioninventory']['menu'][2]="Rango de IP's (configuración)";
+$LANG['plugin_fusioninventory']['menu'][2]="Rango de direcciones IP (configuración)";
 $LANG['plugin_fusioninventory']['menu'][3]="Menú";
 $LANG['plugin_fusioninventory']['menu'][4]="Dispositivo desconocido";
 $LANG['plugin_fusioninventory']['menu'][5]="Autenticación de dispositivos remotos (VMware)";
@@ -135,9 +135,9 @@ $LANG['plugin_fusioninventory']['rules'][15]="UUID";
 $LANG['plugin_fusioninventory']['rules'][16]="Etiqueta FusionInventory";
 $LANG['plugin_fusioninventory']['rules'][17]="Importación denegada";
 $LANG['plugin_fusioninventory']['rules'][18]="Dispositivo creado";
-$LANG['plugin_fusioninventory']['rules'][2]="Reglas de importación y enlace de los dispositivos";
-$LANG['plugin_fusioninventory']['rules'][3]="Buscar dispositivos GLPI con el estado";
-$LANG['plugin_fusioninventory']['rules'][4]="Entidad de destino de la maquina";
+$LANG['plugin_fusioninventory']['rules'][2]="Reglas de importación y enlace del equipo";
+$LANG['plugin_fusioninventory']['rules'][3]="Buscar equipo GLPI con estado";
+$LANG['plugin_fusioninventory']['rules'][4]="Entidad de destino del equipo";
 $LANG['plugin_fusioninventory']['rules'][5]="Enlace FusionInventory";
 $LANG['plugin_fusioninventory']['rules'][6]="Enlazar si es posible. Si no, denegar importación";
 $LANG['plugin_fusioninventory']['rules'][7]="Enlazar si es posible. Si no, crear dispositivo";
@@ -197,7 +197,7 @@ $LANG['plugin_fusioninventory']['title'][1]="FusionInventory";
 
 $LANG['plugin_fusioninventory']['unknown'][2]="Dispositivo aprobado";
 $LANG['plugin_fusioninventory']['unknown'][4]="Concentrador de red";
-$LANG['plugin_fusioninventory']['unknown'][5]="Matetiral desconocido a importar en el inventario";
+$LANG['plugin_fusioninventory']['unknown'][5]="Material desconocido a importar en el inventario";
 
 $LANG['plugin_fusioninventory']['wizard'][0]="Elija una acción";
 $LANG['plugin_fusioninventory']['wizard'][10]="Elija (descubrimiento de red o inventario)";
