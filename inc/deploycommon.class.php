@@ -95,6 +95,10 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
                      $res = $DB->query($query);
                      $row = $DB->fetch_assoc($res);
                      $fields_array = unserialize($row['fields_array']);
+                     if ($fields_array['operatingsystems_id'] != 0) unset($fields_array['operatingsystem_name']);
+                     foreach($fields_array as $key =>$field) {
+                        if (trim($field) == '') unset($fields_array[$key]);
+                     }
                      $datas = PluginWebservicesMethodInventaire::methodListInventoryObjects($fields_array, '');
                      foreach($datas as $data) {
                         $computers[] = $data['id'];

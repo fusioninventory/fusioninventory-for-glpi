@@ -377,16 +377,17 @@ class PluginFusinvdeployGroup extends CommonDBTM {
 
       if (count($fields) == 0) {
          $fields = array(
-            'itemtype' => 'computer',
-            'start' => '0',
-            'limit' => '',
-            'serial' => '',
-            'otherserial' => '',
-            'locations' => '0',
-            'operatingsystems_id' => '0',
-            'room' => '',
-            'building' => '',
-            'name' => ''
+            'itemtype'              => 'computer',
+            'start'                 => '0',
+            'limit'                 => '',
+            'serial'                => '',
+            'otherserial'           => '',
+            'locations'             => '',
+            'operatingsystems_id'   => '0',
+            'operatingsystem_name'  => '',
+            'room'                  => '',
+            'building'              => '',
+            'name'                  => ''
          );
       }
 

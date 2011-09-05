@@ -112,17 +112,17 @@ if (isset($_POST["add"])) {
    //$group_item->check(-1,'w',$_POST);
    if ($_REQUEST['type'] == 'dynamic') {
       $fields_array = array(
-         'itemtype'           => $_REQUEST['itemtype'],
-/*       'start'              => $_REQUEST['start'],
-         'limit'              => $_REQUEST['limit'],*/
-         'serial'             => $_REQUEST['serial'],
-         'otherserial'        => $_REQUEST['otherserial'],
-         'locations'          => $_REQUEST['locations'],
-         'operatingsystems_id'=> $_REQUEST['operatingsystems_id'],
+         'itemtype'              => $_REQUEST['itemtype'],
+/*       'start'                 => $_REQUEST['start'],
+         'limit'                 => $_REQUEST['limit'],*/
+         'serial'                => $_REQUEST['serial'],
+         'otherserial'           => $_REQUEST['otherserial'],
+         'locations'             => $_REQUEST['locations'],
+         'operatingsystems_id'   => $_REQUEST['operatingsystems_id'],
          'operatingsystem_name'  => $_REQUEST['____data_operatingsystems_id'],
-         'room'               => $_REQUEST['room'],
-         'building'           => $_REQUEST['building'],
-         'name'               => $_REQUEST['name']
+         'room'                  => $_REQUEST['room'],
+         'building'              => $_REQUEST['building'],
+         'name'                  => $_REQUEST['name']
       );
       $group_item->update(array(
          'id' => $_REQUEST['id'],
