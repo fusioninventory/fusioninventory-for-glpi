@@ -22,6 +22,13 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_deletes` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
 
+DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_actions_mkdirs`;
+CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_mkdirs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `path` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+
 DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_actions_moves`;
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_moves` (
   `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,

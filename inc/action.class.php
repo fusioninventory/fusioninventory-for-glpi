@@ -116,6 +116,11 @@ class PluginFusinvdeployAction extends CommonDBTM {
             $row[$render.'value'].= $action->getField('path');
             $row[$render.'path']  = $action->getField('path');
 
+         }  else if($action instanceof PluginFusinvdeployAction_Mkdir) {
+            $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['form']['label'][1]." : </b> ";
+            $row[$render.'value'].= $action->getField('path');
+            $row[$render.'path']  = $action->getField('path');
+
          }  else if($action instanceof PluginFusinvdeployAction_Message) {
             $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['form']['action_message'][1].
                " : </b> ";
@@ -181,6 +186,11 @@ class PluginFusinvdeployAction extends CommonDBTM {
          $row[$render.'value'].= $action->getField('path');
          $row[$render.'path']  = $action->getField('path');
 
+      }  else if($action instanceof PluginFusinvdeployAction_Mkdir) {
+         $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['form']['label'][1]." : </b> ";
+         $row[$render.'value'].= $action->getField('path');
+         $row[$render.'path']  = $action->getField('path');
+
       }  else if($action instanceof PluginFusinvdeployAction_Message) {
          $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['form']['action_message'][1].
             " : </b> ";
@@ -223,6 +233,9 @@ class PluginFusinvdeployAction extends CommonDBTM {
                         'to'     => $params['to']);
 
       } else if($itemtype instanceof PluginFusinvdeployAction_Delete) {
+         $data = array( 'path'   => $params['path']);
+
+      } else if($itemtype instanceof PluginFusinvdeployAction_Mkdir) {
          $data = array( 'path'   => $params['path']);
 
       } else if($itemtype instanceof PluginFusinvdeployAction_Message) {
@@ -288,6 +301,9 @@ class PluginFusinvdeployAction extends CommonDBTM {
                               'to'     => $params['to']);
 
             } else if($itemtype instanceof PluginFusinvdeployAction_Delete) {
+               $data = array( 'path'   => $params['path']);
+
+            } else if($itemtype instanceof PluginFusinvdeployAction_Mkdir) {
                $data = array( 'path'   => $params['path']);
 
             } else if($itemtype instanceof PluginFusinvdeployAction_Message) {

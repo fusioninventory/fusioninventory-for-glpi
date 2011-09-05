@@ -142,6 +142,8 @@ function {$render}renderType(val) {
          return '{$LANG['plugin_fusinvdeploy']['package'][18]}';
       case 'PluginFusinvdeployAction_Delete':
          return '{$LANG['plugin_fusinvdeploy']['package'][20]}';
+      case 'PluginFusinvdeployAction_Mkdir':
+         return '{$LANG['plugin_fusinvdeploy']['package'][27]}';
       case 'PluginFusinvdeployAction_Message':
          return '{$LANG['plugin_fusinvdeploy']['package'][21]}';
       default:
@@ -412,6 +414,13 @@ var {$render}Command_fieldset_item_PluginFusinvdeployAction_Delete = [{
    }
 ];
 
+var {$render}Command_fieldset_item_PluginFusinvdeployAction_Mkdir = [{
+      fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][1]}',
+      name: '{$render}path',
+      xtype: 'textfield'
+   }
+];
+
 var {$render}Command_fieldset_item_PluginFusinvdeployAction_Message = [{
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['action_message'][1]}',
       name: '{$render}messagename',
@@ -491,6 +500,9 @@ function {$render}Command_refreshDynFieldset(val) {
          break;
       case 'PluginFusinvdeployAction_Delete':
          {$render}Command_dynFieldset.add({$render}Command_fieldset_item_PluginFusinvdeployAction_Delete);
+         break;
+      case 'PluginFusinvdeployAction_Mkdir':
+         {$render}Command_dynFieldset.add({$render}Command_fieldset_item_PluginFusinvdeployAction_Mkdir);
          break;
       case 'PluginFusinvdeployAction_Message':
          {$render}Command_dynFieldset.add({$render}Command_fieldset_item_PluginFusinvdeployAction_Message);
@@ -607,7 +619,8 @@ var {$render}actionForm = new Ext.FormPanel({
             ['PluginFusinvdeployAction_Command', '{$LANG['plugin_fusinvdeploy']['package'][1]}'],
             ['PluginFusinvdeployAction_Move',    '{$LANG['plugin_fusinvdeploy']['package'][18]}'],
             ['PluginFusinvdeployAction_Delete',  '{$LANG['plugin_fusinvdeploy']['package'][20]}'],
-            ['PluginFusinvdeployAction_Message',  '{$LANG['plugin_fusinvdeploy']['package'][21]}']
+            ['PluginFusinvdeployAction_Mkdir',   '{$LANG['plugin_fusinvdeploy']['package'][27]}'],
+            ['PluginFusinvdeployAction_Message', '{$LANG['plugin_fusinvdeploy']['package'][21]}']
          ]
       }),
       mode: 'local',
