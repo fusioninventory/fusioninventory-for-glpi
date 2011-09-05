@@ -142,8 +142,9 @@ class PluginFusinvdeployFile extends CommonDBTM {
                }
             }
          }
-       }
+      }
 
+      if (count($files) == 0) $files = new stdClass;
 
       return $files;
    }
