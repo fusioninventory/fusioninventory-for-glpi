@@ -332,6 +332,9 @@ class PluginFusinvdeployAction extends CommonDBTM {
             } else if($itemtype instanceof PluginFusinvdeployAction_Delete) {
                $data = array( 'path'   => $params['path']);
 
+            } else if($itemtype instanceof PluginFusinvdeployAction_Mkdir) {
+               $data = array( 'path'   => $params['path']);
+
             } else if($itemtype instanceof PluginFusinvdeployAction_Message) {
                $data = array( 'name'      => $params['messagename'],
                               'message'   => $params['messagevalue'],
