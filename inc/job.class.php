@@ -137,16 +137,15 @@ class PluginFusinvdeployJob {
          }
          if ($p['status'] == 'ko') {
             $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_ERROR;
+         } elseif ($p['currentStep'] != '') {
+            $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_RUNNING;
+            if ($tmp['comment'] == '') $tmp['comment'] = $p['currentStep'];
          } elseif ($p['status'] == 'ok') {
             $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_OK;
          } else {
-            if ($p['currentStep'] == '') {
-               $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_STARTED;
-            } else {
-               $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_RUNNING;
-               if ($tmp['comment'] == '') $tmp['comment'] = $p['currentStep'];
-            }
+            $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_STARTED;
          }
+
          $taskjoblog->add($tmp);
 
          //change task to finish and replanned if retry available
