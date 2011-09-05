@@ -77,7 +77,11 @@ class PluginFusinvdeployPackage extends CommonDBTM {
          $ong[2]  = $LANG['plugin_fusinvdeploy']['package'][14];
          $ong[3]  = $LANG['plugin_fusinvdeploy']['package'][15];
          $ong['no_all_tab'] = true;
-
+      } elseif ($this->fields['id'] == -1) {
+         $ong[4] = $LANG['plugin_fusinvdeploy']['package'][5];
+         $ong['no_all_tab']=true;
+      } else { // New item
+         $ong[1] = $LANG['plugin_fusinvdeploy']['package'][26];
       }
       return $ong;
    }
@@ -143,6 +147,38 @@ class PluginFusinvdeployPackage extends CommonDBTM {
 
    function cleanDBonPurge() {
       PluginFusinvdeployOrder::cleanForPackage($this->fields['id']);
+   }
+
+   function title() {
+      global $LANG;
+
+      $buttons = array();
+      $title = $LANG['plugin_fusinvdeploy']['package'][5];
+
+      if ($this->canCreate()) {
+         $buttons["package.form.php?new=1"] = $LANG['plugin_fusinvdeploy']['package'][26];
+         $title = "";
+      }
+
+      displayTitle(GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_mini_package.png", $title, $title, $buttons);
+   }
+
+   function showMenu($options=array())  {
+
+      $this->displaylist = false;
+
+      $this->fields['id'] = -1;
+      $this->showTabs($options);
+      $this->addDivForTabs();
+   }
+
+   function showList() {
+      echo "<table class='tab_cadre_navigation'><tr><td>";
+
+      self::title();
+      Search::show('PluginFusinvdeployPackage');
+
+      echo "</td></tr></table>";
    }
 
    function showForm($id, $options=array()) {

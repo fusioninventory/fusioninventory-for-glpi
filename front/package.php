@@ -46,8 +46,9 @@ commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"p
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-$_GET['target'] = "package.php";
-Search::show('PluginFusinvdeployPackage');
+$package = new PluginFusinvdeployPackage();
+$package->showMenu();
+
 commonFooter();
 
 ?>

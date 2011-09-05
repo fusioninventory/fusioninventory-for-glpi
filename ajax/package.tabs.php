@@ -61,15 +61,15 @@ if ($package->can($_POST['id'],'r')) {
       case 2 :
          $deployInstall->showForm($_POST['id']);
          break;
-
       case 3 :
          $deployUninstall->showForm($_POST['id']);
          break;
-
+      case 4 :
+         $package->showList();
+         break;
       case 12 :
          Log::showForItem($package);
          break;
-
       default :
          break;
    }
