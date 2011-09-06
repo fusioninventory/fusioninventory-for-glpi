@@ -251,7 +251,7 @@ padding:       5px;
 
 
 .c_state, .c_progress {
-   width:225px;
+   width:205px;
    margin-left:10px;
    white-space: normal;
 }
@@ -269,7 +269,7 @@ padding:       5px;
 /* PROGRESS BAR */
 .progress-container {
   border: 1px solid #ccc;
-  width: 140px;
+  width: 120px;
   margin: 0;
   padding: 1px;
   float: right;
@@ -285,3 +285,34 @@ padding:       5px;
   border-radius:4px;
   font-size:0.95em;
 }
+
+.x-treegrid-text {
+   padding-left:0 !important;
+}
+
+.no-icon {
+   display : none;
+}
+
+
+
+
+#taskJobLogsTreeGrid .x-treegrid-col {
+    font-size:0.9em; vertical-align:middle;
+}
+
+#taskJobLogsTreeGrid .group {
+   background-color:#F0E5BD;
+   font-weight:bold;
+}
+
+#taskJobLogsTreeGrid a {
+   font-weight:normal;
+}
+.log-tooltip .x-tip-body {
+   padding:5px;
+   font-weight:bold;
+}
+
+
+

@@ -38,10 +38,10 @@ global $LANG;
 $refl = new ReflectionClass('PluginFusinvdeployState');
 $stateConst = $refl->getConstants();
 
-$width_left                  = 590;
+$width_left                  = 550;
 $height_left                 = 350;
 
-$width_right                  = 340;
+$width_right                  = 390;
 $height_right                 = 350;
 $width_left_fieldset          = $width_left-19;
 $width_left_fieldset_default  = $width_left-125;
@@ -54,6 +54,8 @@ $label_width = 140;
 $field_width = 170;
 
 $JS = <<<JS
+
+
 
 function displayState(val, full) {
    if (full == null)
@@ -101,6 +103,25 @@ function displayState(val, full) {
    else return '<img src="../pics/ext/'+img_name+'" alt="'+val+'">';
 }
 
+function createGridTooltip(value, contentid, message) {
+
+   var btn = new Ext.Button({
+      text: value,
+      icon: '../pics/ext/information.png',
+      height: 6
+   }).render(document.body, contentid);
+
+   new Ext.ToolTip({
+      target: btn.id,
+      anchor: 'right',
+      cls: 'log-tooltip',
+      showDelay: 100,
+      html: message
+   });
+
+   Ext.QuickTips.init();
+}
+
 var taskJobsTreeGrid = new Ext.ux.tree.TreeGrid({
    title: "{$LANG['plugin_fusinvdeploy']['deploystatus'][0]}",
    height: {$height_left},
@@ -137,119 +158,118 @@ var taskJobsTreeGrid = new Ext.ux.tree.TreeGrid({
       dataIndex: 'items_id',
       hidden: true
    }],
-   dataUrl: '../ajax/state_taskjobs.tree.data.php',
-    listeners: {
-        click: {
-            fn:function (node,event){
-               taskJobLogsGrid.getStore().removeAll();
-               if (node.attributes.items_id) {
-                  taskJobLogsGrid.getStore().setBaseParam('items_id', node.attributes.items_id);
-                  taskJobLogsGrid.getStore().reload();
-               }
-            }
-        }
-    }
-
-});
-
-var tasksJobLogsColumns =  [{
-   id: 'id',
-   dataIndex: 'id',
-   hidden: true
-}, {
-   id: 'date',
-   dataIndex: 'date',
-   header: '{$LANG['common'][27]}',
-   width: 132
-}, {
-   id: 'state',
-   dataIndex: 'state',
-   renderer: stateRenderer,
-   header: '',
-   width: 15
-}, {
-   id: 'comment',
-   dataIndex: 'comment',
-   header: '{$LANG['common'][25]}',
-   width: 153,
-}, {
-   id: 'log',
-   dataIndex: 'log',
-   renderer: logRenderer,
-   width: 20
-}];
-
-function stateRenderer(val) {
-   return displayState(val, false);
-}
-
-function logRenderer(val, metaData, record) {
-   var message = '';
-   switch(record.data.comment) {
-      case '{$stateConst['RECEIVED']}':
-         message = "{$LANG['plugin_fusinvdeploy']['deploystatus'][2]}"
-         break;
-      case '{$stateConst['DOWNLOADING']}':
-         message = "{$LANG['plugin_fusinvdeploy']['deploystatus'][3]}"
-         break;
-      case '{$stateConst['EXTRACTING']}':
-         message = "{$LANG['plugin_fusinvdeploy']['deploystatus'][4]}"
-         break;
-      case '{$stateConst['PROCESSING']}':
-         message = "{$LANG['plugin_fusinvdeploy']['deploystatus'][5]}"
-         break;
-      case 'log':
-         message = val;
-         break
-   }
-
-   if (message != "") {
-      var contentId = Ext.id();
-      createGridButton.defer(1, this, ['...', contentId, message]);
-      return('<div id="' + contentId + '"></div>');
-   }
-}
-
-function createGridButton(value, contentid, message) {
-   new Ext.Button({
-      text: value,
-      height: 6,
-      handler : function(btn, e) {
-         alert(message);
+   root : new Ext.tree.AsyncTreeNode(),
+   listeners: {
+      click: {
+         fn:function (node,event){
+            if (node.attributes.items_id) {
+               taskJobLogsTreeGrid.getLoader().baseParams.items_id = node.attributes.items_id;
+               taskJobLogsTreeGrid.getLoader().baseParams.status_id = '0';
+               taskJobLogsTreeGrid.getLoader().load(taskJobLogsTreeGrid.root);
+            } else node.toggle();
+         }
       }
-   }).render(document.body, contentid);
-}
-
-
-var taskJobLogsReader = new Ext.data.JsonReader({
-   root: 'taskjoblogs',
-   fields: [
-      'id', 'date', 'state', 'comment', 'log'
-   ]
-});
-
-var taskJobLogsStore = new Ext.data.Store({
-   url: '../ajax/state_taskjoblogs.data.php',
-   autoLoad: false,
-   reader: taskJobLogsReader/*,
-   sortInfo: {field: 'id', direction: "DESC"}*/
-});
-
-var taskJobLogsGrid = new Ext.grid.GridPanel({
-   region: 'east',
-   stripeRows: true,
-   height: {$height_right},
-   width: {$width_right},
-   style: 'margin-bottom:5px;',
-   title: '{$LANG['plugin_fusinvdeploy']['deploystatus'][1]}',
-   store: taskJobLogsStore,
-   colModel: new Ext.grid.ColumnModel({
-      defaults: {
-         css: 'font-size:0.9em; vertical-align:middle;'
-      },
-      columns: tasksJobLogsColumns
+   },
+   loader: new Ext.ux.tree.TreeGridLoader({
+      dataUrl: "../ajax/state_taskjobs.tree.data.php",
    })
 });
+
+
+var taskJobLogsTreeGrid = new Ext.ux.tree.TreeGrid({
+   title: "{$LANG['plugin_fusinvdeploy']['deploystatus'][1]}",
+   height: {$height_right},
+   width: {$width_right},
+   region: 'east',
+   style: 'margin-bottom:5px',
+   enableDD: false,
+   enableHdMenu: false,
+   columnResize: false,
+   enableSort: true,
+   id: 'taskJobLogsTreeGrid',
+   columns:[{
+      dataIndex: 'date',
+      width:158
+   },{
+      dataIndex: 'state',
+      width:15,
+      tpl: new Ext.XTemplate('{state:this.renderState}', {
+         renderState: function(val) {
+            //console.log(val);
+            if (val == "null" || val == null) return '';
+            return displayState(val, false);
+         }
+      })
+   },{
+      dataIndex: 'comment',
+      width:153
+   },{
+      dataIndex: 'log',
+      width:20,
+      tpl: new Ext.XTemplate('{log:this.logRenderer}', {
+         logRenderer: function(val, values) {
+            var message = '';
+            switch(values.comment) {
+               case '{$stateConst['RECEIVED']}':
+                  message = "{$LANG['plugin_fusinvdeploy']['deploystatus'][2]}"
+                  break;
+               case '{$stateConst['DOWNLOADING']}':
+                  message = "{$LANG['plugin_fusinvdeploy']['deploystatus'][3]}"
+                  break;
+               case '{$stateConst['EXTRACTING']}':
+                  message = "{$LANG['plugin_fusinvdeploy']['deploystatus'][4]}"
+                  break;
+               case '{$stateConst['PROCESSING']}':
+                  message = "{$LANG['plugin_fusinvdeploy']['deploystatus'][5]}"
+                  break;
+               case 'log':
+                  message = val;
+                  break
+            }
+
+            if (message != "") {
+               var contentId = Ext.id();
+               createGridTooltip.defer(1, this, ['', contentId, message]);
+               return('<div id="' + contentId + '"></div>');
+            }
+
+         }
+      })
+   },{
+      dataIndex: 'type',
+      hidden: true
+   },{
+      dataIndex: 'status_id',
+      hidden: true
+   }],
+   root : new Ext.tree.AsyncTreeNode({
+      iconCls :'no-icon',
+   }),
+   loader: new Ext.ux.tree.TreeGridLoader({
+      dataUrl: "../ajax/state_taskjoblogs.data.php",
+      baseParams: {
+         items_id: 0,
+         status_id: 0,
+      },
+      listeners: {
+         beforeload: {
+            fn:function (treeLoader,node) {
+               if (node.attributes.status_id) {
+                  treeLoader.baseParams.status_id = node.attributes.status_id;
+               }
+            }
+         }
+      }
+   }),
+   listeners: {
+      click: {
+         fn:function (node,event) {
+            node.toggle();
+         }
+      }
+   }
+});
+
 
 
 //render elements in a border layout
@@ -262,7 +282,7 @@ var stateLayout = new Ext.Panel({
       split: true
    },
    items:[
-      taskJobsTreeGrid, taskJobLogsGrid
+      taskJobsTreeGrid, taskJobLogsTreeGrid
    ]
 });
 

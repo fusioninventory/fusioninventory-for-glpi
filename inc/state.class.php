@@ -93,41 +93,92 @@ class PluginFusinvdeployState extends CommonDBTM {
       return json_encode($res);
    }
 
-   static function getTaskJobLogsDatas($params) {
-      global $DB, $LANG;
+   public static function processComment($state, $comment) {
+      global $LANG;
+      if ($comment == "") {
+         switch ($state) {
+            case PluginFusioninventoryTaskjoblog::TASK_OK:
+               $comment = $LANG['plugin_fusioninventory']['taskjoblog'][2];
+               break;
+            case PluginFusioninventoryTaskjoblog::TASK_ERROR_OR_REPLANNED:
+               $comment = $LANG['plugin_fusioninventory']['taskjoblog'][3];
+               break;
+            case PluginFusioninventoryTaskjoblog::TASK_PREPARED:
+               $comment = $LANG['plugin_fusioninventory']['taskjoblog'][7];
+               break;
+         }
+      }
+      return $comment;
+   }
+
+   static function getTaskJobLogsDatasTree($params) {
+      global $DB;
 
       $res = array();
 
       if (!isset($params['items_id'])) exit;
 
-      $query = "SELECT logs.*
-      FROM glpi_plugin_fusioninventory_taskjoblogs as logs
-      LEFT JOIN glpi_plugin_fusioninventory_taskjobstatus as status
-         ON logs.plugin_fusioninventory_taskjobstatus_id = status.id
-      WHERE status.items_id = '".$params['items_id']."'
-         AND status.itemtype = 'Computer'
-      ORDER BY id DESC";
-
+      $query = "SELECT DISTINCT plugin_fusioninventory_taskjobstatus_id, date, state, comment
+      FROM (
+         SELECT plugin_fusioninventory_taskjobstatus_id, date, state, comment
+         FROM glpi_plugin_fusioninventory_taskjoblogs
+         WHERE items_id = '".$params['items_id']."'
+            AND itemtype = 'Computer'
+         ORDER BY id DESC
+      ) as t1
+      GROUP BY plugin_fusioninventory_taskjobstatus_id
+      ORDER BY date ASC";
       $query_res = $DB->query($query);
+      $i = 0;
       while ($row = $DB->fetch_assoc($query_res)) {
+         $row['comment']= self::processComment($row['state'], $row['comment']);
+
+         $res[$i]['type']        = "group";
+         $res[$i]['log']         = "";
+         $res[$i]['comment']     = $row['comment'];
+         $res[$i]['state']       = $row['state'];
+         $res[$i]['date']        = $row['date'];
+         $res[$i]['status_id']   = $row['plugin_fusioninventory_taskjobstatus_id'];
+         $res[$i]['iconCls']     = "no-icon";
+         $res[$i]['cls']         = "group";
+         $i++;
+      }
+
+      return json_encode($res);
+   }
+
+   public static function getTaskJobLogsSubdatasTree($params) {
+      global $DB, $LANG;
+
+      $res = array();
+
+      if (!isset($params['status_id'])) exit;
+
+      $query = "SELECT state, comment, date
+      FROM glpi_plugin_fusioninventory_taskjoblogs
+      WHERE plugin_fusioninventory_taskjobstatus_id = '".$params['status_id']."'
+      ORDER BY id ASC";
+      $query_res = $DB->query($query);
+      $i = 0;
+      while ($row = $DB->fetch_assoc($query_res)) {
+         $row['log'] = '';
          if (substr($row['comment'], 0, 4) == "log:") {
             $row['log'] = substr($row['comment'], 4);
             $row['comment'] = "log";
          }
-         if ($row['comment'] == "") {
-            switch ($row['state']) {
-               case PluginFusioninventoryTaskjoblog::TASK_OK:
-                  $row['comment'] = $LANG['plugin_fusioninventory']['taskjoblog'][2];
-                  break;
-               case PluginFusioninventoryTaskjoblog::TASK_ERROR_OR_REPLANNED:
-                  $row['comment'] = $LANG['plugin_fusioninventory']['taskjoblog'][3];
-                  break;
-               case PluginFusioninventoryTaskjoblog::TASK_PREPARED:
-                  $row['comment'] = $LANG['plugin_fusioninventory']['taskjoblog'][7];
-                  break;
-            }
-         }
-         $res['taskjoblogs'][] = $row;
+         $row['comment']= self::processComment($row['state'], $row['comment']);
+
+
+         $res[$i]['type']        = "log";
+         $res[$i]['log']         = $row['log'];
+         $res[$i]['comment']     = $row['comment'];
+         $res[$i]['state']       = $row['state'];
+         $res[$i]['date']        = $row['date'];
+         $res[$i]['status_id']   = 0;
+         $res[$i]['leaf']        = true;
+         $res[$i]['iconCls']     = "no-icon";
+
+         $i++;
       }
 
       return json_encode($res);
