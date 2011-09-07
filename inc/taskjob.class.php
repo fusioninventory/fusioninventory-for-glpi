@@ -127,11 +127,11 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
 
          $sql_tasks[] = "INSERT INTO ".$this->getTable()."
          (
-            plugin_fusinvdeploy_tasks_id, name, date_creation,
+            plugin_fusinvdeploy_tasks_id, name, date_creation, entities_id,
             plugins_id, method, definition, action,
             retry_nb, retry_time, periodicity_type, periodicity_count
          ) VALUES (
-            '$tasks_id', 'job_".$tasks_id."_$i', NOW(),
+            '$tasks_id', 'job_".$tasks_id."_$i', NOW(), '0',
             '$plugins_id', '".$task['method']."', '$definition', '$action',
             '".$task['retry_nb']."', '".$task['retry_time']."', 'minutes', '0'
          )";
