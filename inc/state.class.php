@@ -129,14 +129,13 @@ class PluginFusinvdeployState extends CommonDBTM {
          INNER JOIN glpi_plugin_fusioninventory_taskjobstatus status
             ON status.id = logs.plugin_fusioninventory_taskjobstatus_id
             AND status.plugin_fusioninventory_taskjobs_id = '".$params['taskjobs_id']."'
-         WHERE logs.items_id = '".$params['items_id']."'
-            AND logs.itemtype = 'Computer'
+         WHERE status.items_id = '".$params['items_id']."'
+            AND status.itemtype = 'Computer'
          ORDER BY logs.id DESC
       ) as t1
       GROUP BY plugin_fusioninventory_taskjobstatus_id
       ORDER BY date ASC";
 
-      logDebug($query);
       $query_res = $DB->query($query);
       $i = 0;
       while ($row = $DB->fetch_assoc($query_res)) {
@@ -235,10 +234,13 @@ class PluginFusinvdeployState extends CommonDBTM {
 
                //get all status for this job
                $query_status = "SELECT id, items_id, state
-                  FROM glpi_plugin_fusioninventory_taskjobstatus
-                  WHERE plugin_fusioninventory_taskjobs_id = '".$row_jobs['id']."'
-                  GROUP BY itemtype, items_id
-                  ORDER BY id DESC";
+                  FROM (
+                     SELECT id, itemtype, items_id, state
+                     FROM glpi_plugin_fusioninventory_taskjobstatus
+                     WHERE plugin_fusioninventory_taskjobs_id = '".$row_jobs['id']."'
+                     ORDER BY id DESC
+                  ) as t1
+                  GROUP BY itemtype, items_id";
                $res_status = $DB->query($query_status);
 
                //no status for this job
@@ -304,7 +306,7 @@ class PluginFusinvdeployState extends CommonDBTM {
          $taskjobs_id = $id;
       }
 
-      $a_taskjobstatus = $taskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".
+      /*$a_taskjobstatus = $taskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".
             $taskjobs_id."' AND `state`!='".PluginFusioninventoryTaskjobstatus::FINISHED."'");
 
       $state = array();
@@ -328,6 +330,8 @@ class PluginFusinvdeployState extends CommonDBTM {
          $globalState = $first + $second + $third + $fourth;
       }
 
-      return ceil($globalState)."%";
+      return ceil($globalState)."%";*/
+      $percent = $taskjobstatus->stateTaskjob($taskjobs_id, 0, '');
+      return ceil($percent)."%";
    }
 }
