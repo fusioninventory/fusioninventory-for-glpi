@@ -176,6 +176,21 @@ var taskJobsTreeGrid = new Ext.ux.tree.TreeGrid({
    },
    loader: new Ext.ux.tree.TreeGridLoader({
       dataUrl: "../ajax/state_taskjobs.tree.data.php",
+      baseParams: {
+         items_id: 0,
+         parent_type: 'all',
+      },
+      listeners: {
+         beforeload: {
+            fn:function (treeLoader,node) {
+               console.log(node);
+               if (node.attributes.items_id) {
+                  treeLoader.baseParams.items_id = node.attributes.items_id;
+                  treeLoader.baseParams.parent_type = node.attributes.type;
+               }
+            }
+         }
+      }
    })
 });
 

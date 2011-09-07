@@ -44,13 +44,14 @@ if (!isset($_GET["id"])) {
 }
 
 $task = new PluginFusinvdeployTask();
-$PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+
 if (isset($_POST['forcestart'])) {
+   $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
    $PluginFusioninventoryTaskjob->forceRunningTask($_POST['id']);
    glpi_header($_SERVER['HTTP_REFERER']);
-} else if (isset($_POST['reset'])) {
-   $pFusioninventoryTask    = new PluginFusioninventoryTask();
 
+} else if (isset($_POST['reset'])) {
+   $pFusioninventoryTask = new PluginFusioninventoryTask();
    $pFusioninventoryTask->getFromDB($_POST['id']);
    $query = "UPDATE `glpi_plugin_fusioninventory_taskjobs`
          SET `execution_id`='".$pFusioninventoryTask->fields['execution_id']."',
@@ -58,6 +59,7 @@ if (isset($_POST['forcestart'])) {
       WHERE `plugin_fusioninventory_tasks_id`='".$_POST['id']."'";
    $DB->query($query);
    glpi_header($_SERVER['HTTP_REFERER']);
+
 } else if (isset($_POST["add"])) {
    $task->check(-1, 'w', $_POST);
    $newID = $task->add($_POST);

@@ -38,6 +38,6 @@ include (GLPI_ROOT."/inc/includes.php");
 if (!isset($_REQUEST['status_id'])) exit;
 if ($_REQUEST['status_id'] == 0)
    echo PluginFusinvdeployState::getTaskJobLogsDatasTree($_REQUEST);
-else echo PluginFusinvdeployState::getTaskJobLogsSubdatasTree($_REQUEST);
+else echo PluginFusinvdeployState::getTaskJobLogsDatasTreeNode($_REQUEST);
 
 ?>
