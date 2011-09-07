@@ -157,6 +157,9 @@ var taskJobsTreeGrid = new Ext.ux.tree.TreeGrid({
    }, {
       dataIndex: 'items_id',
       hidden: true
+   }, {
+      dataIndex: 'tasks_id',
+      hidden: true
    }],
    root : new Ext.tree.AsyncTreeNode(),
    listeners: {
@@ -164,6 +167,7 @@ var taskJobsTreeGrid = new Ext.ux.tree.TreeGrid({
          fn:function (node,event){
             if (node.attributes.items_id) {
                taskJobLogsTreeGrid.getLoader().baseParams.items_id = node.attributes.items_id;
+               taskJobLogsTreeGrid.getLoader().baseParams.taskjobs_id = node.attributes.taskjobs_id;
                taskJobLogsTreeGrid.getLoader().baseParams.status_id = '0';
                taskJobLogsTreeGrid.getLoader().load(taskJobLogsTreeGrid.root);
             } else node.toggle();
@@ -189,7 +193,7 @@ var taskJobLogsTreeGrid = new Ext.ux.tree.TreeGrid({
    id: 'taskJobLogsTreeGrid',
    columns:[{
       dataIndex: 'date',
-      width:158
+      width:106
    },{
       dataIndex: 'state',
       width:15,
@@ -202,10 +206,10 @@ var taskJobLogsTreeGrid = new Ext.ux.tree.TreeGrid({
       })
    },{
       dataIndex: 'comment',
-      width:153
+      width:123
    },{
       dataIndex: 'log',
-      width:20,
+      width:30,
       tpl: new Ext.XTemplate('{log:this.logRenderer}', {
          logRenderer: function(val, values) {
             var message = '';

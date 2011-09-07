@@ -314,5 +314,6 @@ padding:       5px;
    font-weight:bold;
 }
 
+#deployStates .x-tree-elbow-line {width :6px !important;}
 
 

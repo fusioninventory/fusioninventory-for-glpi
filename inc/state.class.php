@@ -103,6 +103,9 @@ class PluginFusinvdeployState extends CommonDBTM {
             case PluginFusioninventoryTaskjoblog::TASK_ERROR_OR_REPLANNED:
                $comment = $LANG['plugin_fusioninventory']['taskjoblog'][3];
                break;
+            case PluginFusioninventoryTaskjoblog::TASK_ERROR:
+               $comment = $LANG['plugin_fusioninventory']['taskjoblog'][4];
+               break;
             case PluginFusioninventoryTaskjoblog::TASK_PREPARED:
                $comment = $LANG['plugin_fusioninventory']['taskjoblog'][7];
                break;
@@ -117,17 +120,23 @@ class PluginFusinvdeployState extends CommonDBTM {
       $res = array();
 
       if (!isset($params['items_id'])) exit;
+      if (!isset($params['taskjobs_id'])) exit;
 
       $query = "SELECT DISTINCT plugin_fusioninventory_taskjobstatus_id, date, state, comment
       FROM (
-         SELECT plugin_fusioninventory_taskjobstatus_id, date, state, comment
-         FROM glpi_plugin_fusioninventory_taskjoblogs
-         WHERE items_id = '".$params['items_id']."'
-            AND itemtype = 'Computer'
-         ORDER BY id DESC
+         SELECT logs.plugin_fusioninventory_taskjobstatus_id, logs.date, logs.state, logs.comment
+         FROM glpi_plugin_fusioninventory_taskjoblogs logs
+         INNER JOIN glpi_plugin_fusioninventory_taskjobstatus status
+            ON status.id = logs.plugin_fusioninventory_taskjobstatus_id
+            AND status.plugin_fusioninventory_taskjobs_id = '".$params['taskjobs_id']."'
+         WHERE logs.items_id = '".$params['items_id']."'
+            AND logs.itemtype = 'Computer'
+         ORDER BY logs.id DESC
       ) as t1
       GROUP BY plugin_fusioninventory_taskjobstatus_id
       ORDER BY date ASC";
+
+      logDebug($query);
       $query_res = $DB->query($query);
       $i = 0;
       while ($row = $DB->fetch_assoc($query_res)) {
@@ -247,6 +256,7 @@ class PluginFusinvdeployState extends CommonDBTM {
                      $res[$i]['children'][$j]['leaf'] = true; //final children
                      $res[$i]['children'][$j]['progress'] = $row_status['state'];
                      $res[$i]['children'][$j]['items_id'] = $row_status['items_id'];
+                     $res[$i]['children'][$j]['taskjobs_id'] = $row_jobs['id'];
 
                      break;
                   case 'PluginFusinvdeployGroup':
@@ -264,6 +274,7 @@ class PluginFusinvdeployState extends CommonDBTM {
                         $res[$i]['children'][$j]['children'][$k]['progress'] = $row_status['state'];
                         $res[$i]['children'][$j]['children'][$k]['icon'] = GLPI_ROOT."/plugins/fusinvdeploy/pics/ext/computer.png";
                         $res[$i]['children'][$j]['children'][$k]['items_id'] = $row_status['items_id'];
+                        $res[$i]['children'][$j]['children'][$k]['taskjobs_id'] = $row_jobs['id'];
 
                         $k++;
                      }
