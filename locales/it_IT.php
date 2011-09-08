@@ -36,69 +36,69 @@
 $LANG['plugin_fusinvinventory']['antivirus'][0]="Antivirus";
 $LANG['plugin_fusinvinventory']['antivirus'][1]="Nessun antivirus nel computer";
 $LANG['plugin_fusinvinventory']['antivirus'][2]="Versione";
-$LANG['plugin_fusinvinventory']['antivirus'][3]="Agiornato";
+$LANG['plugin_fusinvinventory']['antivirus'][3]="Aggiornato";
 
 $LANG['plugin_fusinvinventory']['bios'][0]="Bios";
 
-$LANG['plugin_fusinvinventory']['blacklist'][0]="blacklisted value";
-$LANG['plugin_fusinvinventory']['blacklist'][1]="New value to blacklist";
+$LANG['plugin_fusinvinventory']['blacklist'][0]="Valori in blacklist";
+$LANG['plugin_fusinvinventory']['blacklist'][1]="Nuovo valori in blacklist";
 
 $LANG['plugin_fusinvinventory']['computer'][0]="Ultimo inventario";
 
-$LANG['plugin_fusinvinventory']['importxml'][0]="Import XML file from an Agent";
+$LANG['plugin_fusinvinventory']['importxml'][0]="Importa file XML da un agente";
 $LANG['plugin_fusinvinventory']['importxml'][1]="Computer importato in GLPI";
-$LANG['plugin_fusinvinventory']['importxml'][2]="No file to import!";
-$LANG['plugin_fusinvinventory']['importxml'][3]="XML file not valid!";
+$LANG['plugin_fusinvinventory']['importxml'][2]="Nessun file da importare!";
+$LANG['plugin_fusinvinventory']['importxml'][3]="File XML non valido!";
 
-$LANG['plugin_fusinvinventory']['integrity'][0]="Only in GLPI (check to delete)";
-$LANG['plugin_fusinvinventory']['integrity'][1]="Only in last inventory (check to import)";
+$LANG['plugin_fusinvinventory']['integrity'][0]="Solo in GLPI (selezionare per cancellare)";
+$LANG['plugin_fusinvinventory']['integrity'][1]="Solo nell'ultimo inventario (selezionare per importare)";
 
-$LANG['plugin_fusinvinventory']['menu'][0]="Import agent XML file";
-$LANG['plugin_fusinvinventory']['menu'][1]="Criteria rules";
+$LANG['plugin_fusinvinventory']['menu'][0]="Importa file XML dell'agente";
+$LANG['plugin_fusinvinventory']['menu'][1]="Regole dei criteri";
 $LANG['plugin_fusinvinventory']['menu'][2]="BlackList";
-$LANG['plugin_fusinvinventory']['menu'][4]="Data integrity check";
+$LANG['plugin_fusinvinventory']['menu'][4]="Controllo integrità dei dati";
 
-$LANG['plugin_fusinvinventory']['profile'][2]="Existance criteria";
-$LANG['plugin_fusinvinventory']['profile'][3]="XML file manual import";
-$LANG['plugin_fusinvinventory']['profile'][4]="Fields blacklist";
+$LANG['plugin_fusinvinventory']['profile'][2]="Criteri di esistenza";
+$LANG['plugin_fusinvinventory']['profile'][3]="Importazione manuale file XML";
+$LANG['plugin_fusinvinventory']['profile'][4]="Campi blaklist";
 
-$LANG['plugin_fusinvinventory']['rule'][0]="Computer existent criteria rules";
-$LANG['plugin_fusinvinventory']['rule'][100]="Entity rules";
-$LANG['plugin_fusinvinventory']['rule'][102]="Ignore in FusionInventory import";
-$LANG['plugin_fusinvinventory']['rule'][1]="Existant criterium";
+$LANG['plugin_fusinvinventory']['rule'][0]="Regole dei criteri computer esistenti";
+$LANG['plugin_fusinvinventory']['rule'][100]="Regole entità";
+$LANG['plugin_fusinvinventory']['rule'][102]="Ignora in importazione in FusionInventory";
+$LANG['plugin_fusinvinventory']['rule'][1]="Criteri esistenti";
 $LANG['plugin_fusinvinventory']['rule'][2]="Numero di serie";
-$LANG['plugin_fusinvinventory']['rule'][30]="Import in asset";
-$LANG['plugin_fusinvinventory']['rule'][31]="Import in unknown devices";
+$LANG['plugin_fusinvinventory']['rule'][30]="Importa in inventario";
+$LANG['plugin_fusinvinventory']['rule'][31]="Importa dispositivi sconosciuti";
 $LANG['plugin_fusinvinventory']['rule'][3]="Indirizo MAC";
 $LANG['plugin_fusinvinventory']['rule'][4]="Microsoft product key";
-$LANG['plugin_fusinvinventory']['rule'][5]="Computer model";
-$LANG['plugin_fusinvinventory']['rule'][6]="Hard disk serial number";
+$LANG['plugin_fusinvinventory']['rule'][5]="Modello computer";
+$LANG['plugin_fusinvinventory']['rule'][6]="Numero di serie disco rigido";
 $LANG['plugin_fusinvinventory']['rule'][7]="Numero di serie delle partizioni";
 $LANG['plugin_fusinvinventory']['rule'][8]="Ettichetta";
 
-$LANG['plugin_fusinvinventory']['setup'][17]="Plugin FusionInventory INVENTORY need plugin FusionInventory activated before activation.";
-$LANG['plugin_fusinvinventory']['setup'][18]="Plugin FusionInventory INVENTORY need plugin FusionInventory activated before uninstall.";
-$LANG['plugin_fusinvinventory']['setup'][20]="Import options";
+$LANG['plugin_fusinvinventory']['setup'][17]="L'attivazione del plugin FusionInventory Inventario richiede  che il plugin FusionInventory sia attivo";
+$LANG['plugin_fusinvinventory']['setup'][18]="La disinstallazione del plugin FusionInventory Inventario richiede l'attivazione del plugin FusionInventory";
+$LANG['plugin_fusinvinventory']['setup'][20]="Opzioni importazione";
 $LANG['plugin_fusinvinventory']['setup'][21]="Componenti";
 $LANG['plugin_fusinvinventory']['setup'][22]="Importo globale";
-$LANG['plugin_fusinvinventory']['setup'][23]="No import";
+$LANG['plugin_fusinvinventory']['setup'][23]="Nessun importo";
 $LANG['plugin_fusinvinventory']['setup'][24]="Importo unico";
-$LANG['plugin_fusinvinventory']['setup'][25]="Registry";
-$LANG['plugin_fusinvinventory']['setup'][26]="Processus";
-$LANG['plugin_fusinvinventory']['setup'][27]="Unique import on serial number";
-$LANG['plugin_fusinvinventory']['setup'][28]="Automatic computers transfer";
-$LANG['plugin_fusinvinventory']['setup'][29]="Model for automatic computers transfer in an other entity";
-$LANG['plugin_fusinvinventory']['setup'][30]="Network drives";
-$LANG['plugin_fusinvinventory']['setup'][31]="Virtual network card";
-$LANG['plugin_fusinvinventory']['setup'][32]="This option will not import this item";
-$LANG['plugin_fusinvinventory']['setup'][33]="This option will merge items with same name to reduce number of items if this management isn't important";
-$LANG['plugin_fusinvinventory']['setup'][34]="This option will create one item for each item found";
-$LANG['plugin_fusinvinventory']['setup'][35]="This option will create one item for each item have serial number";
-$LANG['plugin_fusinvinventory']['setup'][36]="Default status";
+$LANG['plugin_fusinvinventory']['setup'][25]="Registro";
+$LANG['plugin_fusinvinventory']['setup'][26]="Processo";
+$LANG['plugin_fusinvinventory']['setup'][27]="Importazione unica in base al numero seriale";
+$LANG['plugin_fusinvinventory']['setup'][28]="Trasferimento automatico computers";
+$LANG['plugin_fusinvinventory']['setup'][29]="Modello per trasferimento automatico computers";
+$LANG['plugin_fusinvinventory']['setup'][30]="Unità di rete";
+$LANG['plugin_fusinvinventory']['setup'][31]="Scheda di rete virtuale";
+$LANG['plugin_fusinvinventory']['setup'][32]="Questa opzione non importerà questo elemento";
+$LANG['plugin_fusinvinventory']['setup'][33]="Questa opzione riunirà gli elementi con lo stesso nome per ridurre il numero di elementi se la loro gestione non è rilevante";
+$LANG['plugin_fusinvinventory']['setup'][34]="Questa opzione creerà un elemento per ogni elemento trovato";
+$LANG['plugin_fusinvinventory']['setup'][35]="Questa opzione creerà un elemento per ogni elemento contenente un numero di serie";
+$LANG['plugin_fusinvinventory']['setup'][36]="Stato predefinito";
 
-$LANG['plugin_fusinvinventory']['title'][0]="FusionInventory INVENTORY";
+$LANG['plugin_fusinvinventory']['title'][0]="Inventario FusionInventory";
 $LANG['plugin_fusinvinventory']['title'][1]="Inventario locale";
-$LANG['plugin_fusinvinventory']['title'][2]="Inventario distante VMware";
+$LANG['plugin_fusinvinventory']['title'][2]="Inventario host remote VMware";
 
-$LANG['plugin_fusinvinventory']['vmwareesx'][0]="Vmware host";
+$LANG['plugin_fusinvinventory']['vmwareesx'][0]="Hosto Vmware";
 ?>
