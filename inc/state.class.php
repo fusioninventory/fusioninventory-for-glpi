@@ -440,39 +440,42 @@ class PluginFusinvdeployState extends CommonDBTM {
 
       if ($type == 'task') {
          $a_taskjobs = $taskjob->find("`plugin_fusioninventory_tasks_id`='".$id."'");
-         //end($a_taskjobs);
-         $tmp = array_pop($a_taskjobs);
 
+
+         //temporary fix for get a 100% progress when all the jobs for the task are done
+         $finished = false;
+         foreach ($a_taskjobs as $job) {
+            $finished = false;
+            $query_status = "SELECT id, items_id, state
+               FROM (
+                  SELECT id, itemtype, items_id, state
+                  FROM glpi_plugin_fusioninventory_taskjobstatus
+                  WHERE plugin_fusioninventory_taskjobs_id = '".$job['id']."'
+                  ORDER BY id DESC
+               ) as t1
+               GROUP BY itemtype, items_id";
+            $res_status = $DB->query($query_status);
+            $row_status = $DB->fetch_assoc($res_status);
+
+            $query_jobs_state = "SELECT state
+               FROM glpi_plugin_fusioninventory_taskjoblogs
+               WHERE plugin_fusioninventory_taskjobstatus_id = '".$row_status['id']."'
+               ORDER BY id DESC
+               LIMIT 1";
+            $res_jobs_state = $DB->query($query_jobs_state);
+            $row_jobs_state = $DB->fetch_assoc($res_jobs_state);
+            if ($row_jobs_state['state'] != PluginFusioninventoryTaskjoblog::TASK_OK) continue;
+
+            $finished = true;
+         }
+         if ($finished) return "100%";
+
+         $tmp = array_pop($a_taskjobs);
          $taskjobs_id = $tmp['id'];
       } elseif ($type == 'group') {
          $taskjobs_id = $id;
       }
 
-      /*$a_taskjobstatus = $taskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".
-            $taskjobs_id."' AND `state`!='".PluginFusioninventoryTaskjobstatus::FINISHED."'");
-
-      $state = array();
-      $state[0] = 0;
-      $state[1] = 0;
-      $state[2] = 0;
-      $state[3] = 0;
-      $total = 0;
-      $globalState = 0;
-
-      if (count($a_taskjobstatus) > 0) {
-         foreach ($a_taskjobstatus as $data) {
-            $total++;
-            $state[$data['state']]++;
-         }
-
-         $first = 25;
-         $second = ((($state[1]+$state[2]+$state[3]) * 100) / $total) / 4;
-         $third = ((($state[2]+$state[3]) * 100) / $total) / 4;
-         $fourth = (($state[3] * 100) / $total) / 4;
-         $globalState = $first + $second + $third + $fourth;
-      }
-
-      return ceil($globalState)."%";*/
       $percent = $taskjobstatus->stateTaskjob($taskjobs_id, 0, '');
       return ceil($percent)."%";
    }
