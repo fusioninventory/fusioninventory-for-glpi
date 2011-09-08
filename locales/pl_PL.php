@@ -41,7 +41,7 @@ $LANG['plugin_fusioninventory']['agents'][24]="Token";
 $LANG['plugin_fusioninventory']['agents'][25]="Wersja";
 $LANG['plugin_fusioninventory']['agents'][27]="Moduły Agentów";
 $LANG['plugin_fusioninventory']['agents'][28]="Agent";
-$LANG['plugin_fusioninventory']['agents'][30]="Impossible to communicate with agent!";
+$LANG['plugin_fusioninventory']['agents'][30]="Komunikacja z agentem niemożliwa";
 $LANG['plugin_fusioninventory']['agents'][31]="Zinwentaryzuj teraz";
 $LANG['plugin_fusioninventory']['agents'][32]="Automatyczne dynamiczne przydzielanie agentów";
 $LANG['plugin_fusioninventory']['agents'][33]="Automatyczne dynamiczne przydzielanie agentów (z tej samej podsieci)";
@@ -71,16 +71,16 @@ $LANG['plugin_fusioninventory']['codetasklog'][3]="Import niemożliwy";
 
 $LANG['plugin_fusioninventory']['config'][0]="Częstotliwość inwentaryzacji (w godz.)";
 
-$LANG['plugin_fusioninventory']['credential'][1]="Credential for remote inventory";
+$LANG['plugin_fusioninventory']['credential'][1]="Poświadczenia do zdalnej inwentaryzacji";
 $LANG['plugin_fusioninventory']['credential'][2]="Inwentaryzacja zdalnych urządzeń";
 $LANG['plugin_fusioninventory']['credential'][3]="Referencje";
 
 $LANG['plugin_fusioninventory']['discovery'][5]="Liczba zaimportowanych urządzeń";
 $LANG['plugin_fusioninventory']['discovery'][9]="Liczba niezaimportowanych urządzeń z powodu braku określenia typu urządzenia";
 
-$LANG['plugin_fusioninventory']['errors'][1]="PHP allow_url_fopen is off, can't wake agent to do inventory";
+$LANG['plugin_fusioninventory']['errors'][1]="Opcja PHP allow_url_fopen jest wyłączona, nie można";
 $LANG['plugin_fusioninventory']['errors'][22]="Element bez nadzoru w";
-$LANG['plugin_fusioninventory']['errors'][2]="PHP allow_url_fopen is off, push mode can't work";
+$LANG['plugin_fusioninventory']['errors'][2]="Opcja PHP allow_url_fopen jest wyłączona, tryb push jest niedostępny";
 $LANG['plugin_fusioninventory']['errors'][50]="Masz niekompatybilną wersję GLPI, wymagana jest wersja 0.80";
 
 $LANG['plugin_fusioninventory']['functionalities'][0]="Funkcje";
@@ -114,8 +114,8 @@ $LANG['plugin_fusioninventory']['menu'][1]="Zarządzanie agentami";
 $LANG['plugin_fusioninventory']['menu'][2]="Konfiguracja zakresów IP";
 $LANG['plugin_fusioninventory']['menu'][3]="Menu";
 $LANG['plugin_fusioninventory']['menu'][4]="Nieznane urządzenie";
-$LANG['plugin_fusioninventory']['menu'][5]="Authentication for remote devices (VMware)";
-$LANG['plugin_fusioninventory']['menu'][6]="Remote devices to inventory (VMware)";
+$LANG['plugin_fusioninventory']['menu'][5]="Uwierzytelnienie zdalnych urządzeń (VMware)";
+$LANG['plugin_fusioninventory']['menu'][6]="Zdalne urządzenia do inwentaryzacji (VMware)";
 $LANG['plugin_fusioninventory']['menu'][7]="Uruchomione zadania";
 
 $LANG['plugin_fusioninventory']['processes'][1]="PID";
@@ -135,12 +135,12 @@ $LANG['plugin_fusioninventory']['rules'][15]="UUID";
 $LANG['plugin_fusioninventory']['rules'][16]="Tag z Fusioninventory";
 $LANG['plugin_fusioninventory']['rules'][17]="Import niemożliwy";
 $LANG['plugin_fusioninventory']['rules'][18]="Urządzenie utworzono";
-$LANG['plugin_fusioninventory']['rules'][2]="Equipment import and link rules";
+$LANG['plugin_fusioninventory']['rules'][2]="Reguły importu sprzętu i kojarzenia";
 $LANG['plugin_fusioninventory']['rules'][3]="Znajdź zasoby GLPI ze statusem";
 $LANG['plugin_fusioninventory']['rules'][4]="Miejsce przeznaczenia sprzętu";
 $LANG['plugin_fusioninventory']['rules'][5]="FusionInventory link";
-$LANG['plugin_fusioninventory']['rules'][6]="Link if possible, else import denied";
-$LANG['plugin_fusioninventory']['rules'][7]="Link if possible, else create device";
+$LANG['plugin_fusioninventory']['rules'][6]="Powiązanie jeśli możliwe, import zabroniony jeśli brak";
+$LANG['plugin_fusioninventory']['rules'][7]="Powiązanie jeśli możliwe, jeśli brak utwórz";
 $LANG['plugin_fusioninventory']['rules'][8]="Wyślij";
 $LANG['plugin_fusioninventory']['rules'][9]="istnieje";
 

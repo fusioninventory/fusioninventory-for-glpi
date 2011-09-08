@@ -48,7 +48,7 @@ $LANG['plugin_fusioninventory']['agents'][33]="* Gestión automática y dinámic
 $LANG['plugin_fusioninventory']['agents'][34]="Activación (por defecto)";
 $LANG['plugin_fusioninventory']['agents'][35]="Identificador de dispositivo";
 $LANG['plugin_fusioninventory']['agents'][36]="Módulos del agente";
-$LANG['plugin_fusioninventory']['agents'][37]="bloqueado";
+$LANG['plugin_fusioninventory']['agents'][37]="Bloqueado";
 $LANG['plugin_fusioninventory']['agents'][38]="Disponible";
 $LANG['plugin_fusioninventory']['agents'][40]="Ordedandor sin IP conocida";
 $LANG['plugin_fusioninventory']['agents'][41]="Servicio URL";
@@ -79,7 +79,7 @@ $LANG['plugin_fusioninventory']['discovery'][5]="Número de dispositivos importa
 $LANG['plugin_fusioninventory']['discovery'][9]="Número de dispositivos no importados por no tener un tipo definido";
 
 $LANG['plugin_fusioninventory']['errors'][1]="La directiva 'allow_url_fopen' de PHP está desactivada. No es posible llamar al agente para hacer el inventario";
-$LANG['plugin_fusioninventory']['errors'][22]="Elemento desatentido en";
+$LANG['plugin_fusioninventory']['errors'][22]="Elemento desatendido en";
 $LANG['plugin_fusioninventory']['errors'][2]="La directiva 'allow_url_fopen' de PHP está desactivada. El modo 'push' no puede funcionar";
 $LANG['plugin_fusioninventory']['errors'][50]="Su versión de GLPI no es compatible, necesita la versión 0.80";
 
@@ -144,7 +144,7 @@ $LANG['plugin_fusioninventory']['rules'][7]="Enlazar si es posible. Si no, crear
 $LANG['plugin_fusioninventory']['rules'][8]="Enviar";
 $LANG['plugin_fusioninventory']['rules'][9]="existe";
 
-$LANG['plugin_fusioninventory']['rulesengine'][152]="Bienes a importar";
+$LANG['plugin_fusioninventory']['rulesengine'][152]="Bien a importar";
 
 $LANG['plugin_fusioninventory']['setup'][16]="Documentación";
 $LANG['plugin_fusioninventory']['setup'][17]="Los plugins FusionInventory INVENTORY y FusionInventory SNMP deben ser desinstalados antes de quitar el plugin FusionInventory.";
