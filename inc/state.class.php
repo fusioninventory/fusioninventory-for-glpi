@@ -141,7 +141,7 @@ class PluginFusinvdeployState extends CommonDBTM {
       while ($row = $DB->fetch_assoc($query_res)) {
          $row['comment']= self::processComment($row['state'], $row['comment']);
 
-         $res[$i]['id']          = $row['id'];
+         $res[$i]['logs_id']     = $row['id'];
          $res[$i]['type']        = "group";
          $res[$i]['log']         = "";
          $res[$i]['comment']     = $row['comment'];
@@ -178,7 +178,7 @@ class PluginFusinvdeployState extends CommonDBTM {
          $row['comment']= self::processComment($row['state'], $row['comment']);
 
 
-         $res[$i]['id']          = $row['id'];
+         $res[$i]['logs_id']     = $row['id'];
          $res[$i]['type']        = "log";
          $res[$i]['log']         = $row['log'];
          $res[$i]['comment']     = $row['comment'];
@@ -444,7 +444,6 @@ class PluginFusinvdeployState extends CommonDBTM {
          $tmp = array_pop($a_taskjobs);
 
          $taskjobs_id = $tmp['id'];
-         logDebug($id, $tmp);
       } elseif ($type == 'group') {
          $taskjobs_id = $id;
       }

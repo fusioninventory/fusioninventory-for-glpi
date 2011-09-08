@@ -204,13 +204,11 @@ var taskJobLogsTreeGrid = new Ext.ux.tree.TreeGrid({
    enableDD: false,
    enableHdMenu: false,
    columnResize: false,
-   enableSort: true,
+   enableSort: false,
+   defaultSortable: false,
+   columnResize: false,
    id: 'taskJobLogsTreeGrid',
    columns:[{
-      dataIndex: 'id',
-      hidden: true,
-      width:0
-   },{
       dataIndex: 'date',
       width:106
    },{
@@ -260,12 +258,13 @@ var taskJobLogsTreeGrid = new Ext.ux.tree.TreeGrid({
       })
    },{
       dataIndex: 'type',
-      hidden: true,
-      width:0
+      hidden: true
    },{
       dataIndex: 'status_id',
-      hidden: true,
-      width:0
+      hidden: true
+   },{
+      dataIndex: 'logs_id',
+      hidden: true
    }],
    root : new Ext.tree.AsyncTreeNode({
       iconCls :'no-icon',
