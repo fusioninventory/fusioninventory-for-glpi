@@ -184,7 +184,6 @@ var taskJobsTreeGrid = new Ext.ux.tree.TreeGrid({
       listeners: {
          beforeload: {
             fn:function (treeLoader,node) {
-               console.log(node);
                if (node.attributes.items_id) {
                   treeLoader.baseParams.items_id = node.attributes.items_id;
                   treeLoader.baseParams.parent_type = node.attributes.type;
@@ -208,6 +207,10 @@ var taskJobLogsTreeGrid = new Ext.ux.tree.TreeGrid({
    enableSort: true,
    id: 'taskJobLogsTreeGrid',
    columns:[{
+      dataIndex: 'id',
+      hidden: true,
+      width:0
+   },{
       dataIndex: 'date',
       width:106
    },{
@@ -257,10 +260,12 @@ var taskJobLogsTreeGrid = new Ext.ux.tree.TreeGrid({
       })
    },{
       dataIndex: 'type',
-      hidden: true
+      hidden: true,
+      width:0
    },{
       dataIndex: 'status_id',
-      hidden: true
+      hidden: true,
+      width:0
    }],
    root : new Ext.tree.AsyncTreeNode({
       iconCls :'no-icon',
@@ -283,7 +288,7 @@ var taskJobLogsTreeGrid = new Ext.ux.tree.TreeGrid({
    }),
    listeners: {
       click: {
-         fn:function (node,event) {
+         fn:function (node, event) {
             node.toggle();
          }
       }

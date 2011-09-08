@@ -129,11 +129,14 @@ class PluginFusinvdeployJob {
          $tmp['date']                                    = date("Y-m-d H:i:s");
 
          // add log message
-         if (is_array($p['log']) && $tmp['comment'] == "") {
+         if (is_array($p['log'])/* && $tmp['comment'] == ""*/) {
             $tmp['comment'] = "log:";
             foreach($p['log'] as $log) {
                $tmp['comment'] .= $log."\n";
             }
+         } elseif ($p['log'] != "") {
+            $tmp['comment'] = "log:";
+            $tmp['comment'] .= $p['log'];
          }
          if ($p['status'] == 'ko') {
             $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_ERROR;
@@ -150,8 +153,8 @@ class PluginFusinvdeployJob {
 
          //change task to finish and replanned if retry available
          if ($p['status'] != "") {
-            $error = 0;
-            if ($p['status'] == 'ko') $error = 1;
+            $error = "0";
+            if ($p['status'] == 'ko') $error = "1";
             //set status to finished and reinit job
             $taskjobstatus = new PluginFusioninventoryTaskjobstatus;
             $taskjobstatus->changeStatusFinish(
