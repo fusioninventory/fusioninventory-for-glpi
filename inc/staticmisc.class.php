@@ -196,10 +196,8 @@ class PluginFusinvdeployStaticmisc {
    static function task_deploy_getParameters() {
       global $CFG_GLPI;
 
-      /*return array ('periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'Deploy',
-                    'remote' => PluginFusioninventoryAgentmodule::getUrlForModule('Deploy'));*/
       return array ('periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'Deploy',
-                    'remote' => $CFG_GLPI['url_base']."/plugins/fusinvdeploy/b/deploy/");
+                    'remote' => PluginFusioninventoryAgentmodule::getUrlForModule('Deploy'));
    }
 
    static function json_indent($json) {
