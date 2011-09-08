@@ -170,7 +170,8 @@ var taskJobsTreeGrid = new Ext.ux.tree.TreeGrid({
                taskJobLogsTreeGrid.getLoader().baseParams.taskjobs_id = node.attributes.taskjobs_id;
                taskJobLogsTreeGrid.getLoader().baseParams.status_id = '0';
                taskJobLogsTreeGrid.getLoader().load(taskJobLogsTreeGrid.root);
-            } else node.toggle();
+            }
+            node.toggle();
          }
       }
    },
