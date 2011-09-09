@@ -126,6 +126,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
       if ($dynagent == '2') {
          // Dynamic with subnet
          $PluginFusinvsnmpSnmpinventory = new PluginFusinvsnmpSnmpinventory();
+         $taskvalid = 0;
          foreach($a_subnet_nbip as $iprange_id=>$nbips) {
             //$maxagentpossible = $nbips/10;
             $PluginFusioninventoryIPRange->getFromDB($iprange_id);
@@ -184,6 +185,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
                   } else {
                      $a_input['specificity'] = $iptimes."-".($iptimes + $nbIpAgent);
                   }
+                  $taskvalid++;
                   $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
                      //Add log of taskjob
                      $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
@@ -202,7 +204,9 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
                }               
             }
          }
-
+         if ($taskvalid == "0") {
+            $PluginFusioninventoryTaskjob->reinitializeTaskjobs($PluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']);
+         }
       // *** Add jobstatus
       } else if (count($a_agentlist) == 0) {
          $a_input = array();
