@@ -133,7 +133,6 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
                                                   "No agent found for this computer",
                                                   0,
                                                   0);
-            $error = 1;
          } else {         
             $c_input['plugin_fusioninventory_agents_id'] = $agents_id;
 
