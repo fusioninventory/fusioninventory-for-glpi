@@ -239,6 +239,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
          $a_input['itemtype'] = '';
          $a_input['items_id'] = 0;
          $a_input['uniqid'] = $uniqid;
+         $taskvalid = 0;
          foreach($a_agentsubnet as $subnet=>$a_agentList) {
             if (!isset($a_agentList)
                     OR (isset($a_agentList) AND is_array($a_agentList) AND count($a_agentList) == '0')
@@ -264,7 +265,9 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                                                                                 0,
                                                                                 '',
                                                                                 1,
-                                                                                "Unable to find agent to inventory this ".$itemtype);
+                                                                                "Unable to find agent to inventory this ".$itemtype,
+                                                                                0,
+                                                                                0);
                         $a_input['state'] = 1;
                      }
                   }
@@ -298,6 +301,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                         }
                         $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
                         $nbagent++;
+                        $taskvalid++;
                         $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
                         //Add log of taskjob
                            $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
@@ -314,6 +318,9 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                   }
                }
             }            
+         }
+         if ($taskvalid == "0") {
+            $PluginFusioninventoryTaskjob->reinitializeTaskjobs($PluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']);
          }
       } else {
          $a_agentList = array();
