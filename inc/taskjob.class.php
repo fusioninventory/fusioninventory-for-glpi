@@ -783,6 +783,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $a_taskjobstatus = $PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$dataJob['id']."'
             AND `uniqid`='".$a_taskjobstatusuniq['uniqid']."'");
          $taskjobstatusfinished = 0;
+         
          foreach ($a_taskjobstatus as $statusdata) {
             $a_joblog = $PluginFusioninventoryTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$statusdata['id']."'
                AND (`state`='2' OR `state`='4' OR `state`='5')");
@@ -792,8 +793,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          }
          if ((count($a_taskjobstatus) == $taskjobstatusfinished)
                  AND (count($a_taskjobstatus) > 0 )) {
-
-            $finished = 1;
+            if ($finished == '2') {
+               $finished = 1;
+            }
             $nb_finished++;
          } else {
             $finished = 0;
