@@ -313,8 +313,11 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
                LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` on `plugin_fusioninventory_taskjobstatus_id` = `".$this->getTable()."`.`id`
                WHERE `plugin_fusioninventory_taskjobs_id`='".$this->fields['plugin_fusioninventory_taskjobs_id']."'
                      AND `glpi_plugin_fusioninventory_taskjoblogs`.`state`='3'
-                     AND `date`>='".date("Y-m-d H:i:s",$start_taskjob)."' ";
+                     AND `date`>='".date("Y-m-d H:i:s",$start_taskjob)."'
+                     AND `uniqid` != '".$this->fields['uniqid']."'
+               GROUP BY `uniqid`";
             $result = $DB->query($query);
+            logInFile("KOIN", $DB->numrows($result)." => ".$query."\n");
             if ($DB->numrows($result) >= ($PluginFusioninventoryTaskjob->fields['retry_nb'] - 1)) {
                $a_input['state'] = 4;
             } else {
