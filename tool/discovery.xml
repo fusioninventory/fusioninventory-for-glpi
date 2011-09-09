@@ -87,7 +87,8 @@
       <SYSDESCR><![CDATA[AL-CX11]]></SYSDESCR>
       <MANUFACTURER>0</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0454</MODELSNMP>
+      <MODELSNMP>Printer0471</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.1248.1.2.2.1.1.1.5.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -116,7 +117,7 @@
       <SYSDESCR><![CDATA[Brother NC-6400h, Firmware Ver.1.15  (07.01.23),MID 8C5-B43,FID 2]]></SYSDESCR>
       <MANUFACTURER>57</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0094</MODELSNMP>
+      <MODELSNMP>Printer0246</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -151,6 +152,14 @@
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[Canon iR C4580 /P]]></SYSDESCR>
+      <MANUFACTURER>56</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0366</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.1602.1.2.1.4.0</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[Canon iR2270 /P]]></SYSDESCR>
       <MANUFACTURER>56</MANUFACTURER>
       <TYPE>3</TYPE>
@@ -161,7 +170,7 @@
       <SYSDESCR><![CDATA[Canon iR3025 /P]]></SYSDESCR>
       <MANUFACTURER>56</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0119</MODELSNMP>
+      <MODELSNMP>Printer0455</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -176,7 +185,7 @@
       <SYSDESCR><![CDATA[Canon iR5000 /P]]></SYSDESCR>
       <MANUFACTURER>56</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0059</MODELSNMP>
+      <MODELSNMP>Printer0456</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -266,6 +275,30 @@
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[HP LaserJet 3390]]></SYSDESCR>
+      <MANUFACTURER>51</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0115</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[HP LaserJet 4100 MFP ]]></SYSDESCR>
+      <MANUFACTURER>51</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0391</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[HP LaserJet 4100 MFP]]></SYSDESCR>
+      <MANUFACTURER>51</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0391</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[HP LaserJet M1522nf MFP]]></SYSDESCR>
       <MANUFACTURER>51</MANUFACTURER>
       <TYPE>3</TYPE>
@@ -278,6 +311,22 @@
       <MANUFACTURER>51</MANUFACTURER>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0385</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[HP LaserJet M3035 MFP]]></SYSDESCR>
+      <MANUFACTURER>51</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0115</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[HP LaserJet M4345 MFP]]></SYSDESCR>
+      <MANUFACTURER>51</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0416</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -314,6 +363,24 @@
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[Hardware: x86 Family 6 Model 15 Stepping 6 AT/AT COMPATIBLE - Software: Windows Version 5.2 (Build 3790 Multiprocessor Free)]]></SYSDESCR>
+      <MANUFACTURER>0</MANUFACTURER>
+      <TYPE>1</TYPE>
+      <MODELSNMP>Networking0124</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[IBM OS/400 V5R2M0]]></SYSDESCR>
+      <MANUFACTURER>0</MANUFACTURER>
+      <TYPE>1</TYPE>
+      <MODELSNMP>Networking0124</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[IBM OS/400 V5R3M0]]></SYSDESCR>
+      <MANUFACTURER>0</MANUFACTURER>
+      <TYPE>1</TYPE>
+      <MODELSNMP>Networking0124</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[KONICA MINOLTA 222]]></SYSDESCR>
       <MANUFACTURER>58</MANUFACTURER>
       <TYPE>3</TYPE>
@@ -324,14 +391,14 @@
       <SYSDESCR><![CDATA[KONICA MINOLTA 250]]></SYSDESCR>
       <MANUFACTURER>58</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0099</MODELSNMP>
+      <MODELSNMP>Printer0428</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[KONICA MINOLTA 282]]></SYSDESCR>
       <MANUFACTURER>58</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0099</MODELSNMP>
+      <MODELSNMP>Printer0428</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -351,6 +418,13 @@
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[KONICA MINOLTA bizhub C252]]></SYSDESCR>
+      <MANUFACTURER>58</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0490</MODELSNMP>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[KONICA MINOLTA bizhub C253]]></SYSDESCR>
       <MANUFACTURER>58</MANUFACTURER>
       <TYPE>3</TYPE>
@@ -362,7 +436,7 @@
       <SYSDESCR><![CDATA[KONICA MINOLTA bizhub C353]]></SYSDESCR>
       <MANUFACTURER>58</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0096</MODELSNMP>
+      <MODELSNMP>Printer0358</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -372,6 +446,54 @@
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0384</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark E240n version BR.Q.P203 kernel 2.4.0-test6 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>54</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0468</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark E250dn version NM.NA.N099 kernel 2.6.10 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>54</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0466</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark E332n version 141.C09 kernel 2.4.0-test6 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>54</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0468</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark E332n version 141.C20 kernel 2.4.0-test6 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>54</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0468</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark E342n version BR.H.P204 kernel 2.4.0-test6 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>54</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0468</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark E352dn version NM.NA.N094a-p1 kernel 2.6.10 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>54</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0482</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -391,10 +513,34 @@
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark T520 version 54.30.51 kernel 2.4.0-test6 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>54</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0460</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark T620 version 54.00.51 kernel 2.4.0-test6 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>54</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0460</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[Lexmark T630 version 55.10.19 kernel 2.4.0-test6 All-N-1]]></SYSDESCR>
       <MANUFACTURER>54</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0041</MODELSNMP>
+      <MODELSNMP>Printer0466</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark T632 version 55.10.19 kernel 2.4.0-test6 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>54</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0466</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -402,22 +548,31 @@
       <SYSDESCR><![CDATA[Lexmark T640 version NS.NP.N118 kernel 2.6.6 All-N-1]]></SYSDESCR>
       <MANUFACTURER>54</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0306</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MODELSNMP>Printer0466</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Lexmark T640 version NS.NP.N219 kernel 2.6.6 All-N-1]]></SYSDESCR>
       <MANUFACTURER>54</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0040</MODELSNMP>
+      <MODELSNMP>Printer0465</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Lexmark T642 version NS.NP.N219 kernel 2.6.6 All-N-1]]></SYSDESCR>
       <MANUFACTURER>54</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0041</MODELSNMP>
+      <MODELSNMP>Printer0466</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark T652 version NR.APS.N308a kernel 2.6.18.5 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>54</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0475</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -425,7 +580,7 @@
       <SYSDESCR><![CDATA[Lexmark W840 version NS.NP.N118 kernel 2.6.6 All-N-1]]></SYSDESCR>
       <MANUFACTURER>54</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0105</MODELSNMP>
+      <MODELSNMP>Printer0468</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -433,12 +588,44 @@
       <SYSDESCR><![CDATA[Lexmark X644e version NC0.NPS.N048 kernel 2.6.10 All-N-1]]></SYSDESCR>
       <MANUFACTURER>54</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0041</MODELSNMP>
+      <MODELSNMP>Printer0466</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark X644e version NC2.NPS.N211 kernel 2.6.10 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>54</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0466</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark X644e version NC2.NPS.N221 kernel 2.6.10 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>54</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0466</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[MarkNet X2011e  Version 4.20.11  Ethernet 10/100.]]></SYSDESCR>
+      <MANUFACTURER>0</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0295</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[MarkNet X2011e  Version 4.20.21  Ethernet 10/100.]]></SYSDESCR>
+      <MANUFACTURER>0</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0295</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[MarkNet X2011e  Version 4.20.30  Ethernet 10/100.]]></SYSDESCR>
       <MANUFACTURER>0</MANUFACTURER>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0295</MODELSNMP>
@@ -463,15 +650,31 @@
       <MODELSNMP>Networking0124</MODELSNMP>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[Neoware Station]]></SYSDESCR>
+      <MANUFACTURER>0</MANUFACTURER>
+      <TYPE>1</TYPE>
+      <MODELSNMP>Networking0124</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[Officejet Pro L7600]]></SYSDESCR>
       <MANUFACTURER>51</MANUFACTURER>
       <TYPE>3</TYPE>
+      <MODELSNMP>Printer0093</MODELSNMP>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[ProCurve J4899B Switch 2650, revision H.08.98, ROM H.08.02 (/sw/code/build/fish(ts_08_5))]]></SYSDESCR>
       <MANUFACTURER>51</MANUFACTURER>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking1633</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[ProCurve J4900A Switch 2626, revision H.10.29, ROM H.08.02 (/sw/code/build/fish(mkfs))]]></SYSDESCR>
+      <MANUFACTURER>51</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1858</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -576,6 +779,14 @@
       <MANUFACTURER>51</MANUFACTURER>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0392</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[hp LaserJet 4345 mfp]]></SYSDESCR>
+      <MANUFACTURER>51</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0487</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -875,9 +1086,20 @@
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 12.2(46)SE, RELEASE SOFTWARE (fc2)^MCopyright (c) 1986-2008 by Cisco Systems, Inc.^MCompiled Thu 21-Aug-08 15:43 by nachen]]></SYSDESCR>
+      <MANUFACTURER>50</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1918</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 12.2(46)SE, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Thu 21-Aug-08 15:43 by nachen]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
+      <MODELSNMP>Networking1918</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco Systems Catalyst 1900,V9.00.00    ]]></SYSDESCR>
@@ -1345,6 +1567,9 @@
       <SYSDESCR><![CDATA[KONICA MINOLTA bizhub C203]]></SYSDESCR>
       <MANUFACTURER>58</MANUFACTURER>
       <TYPE>3</TYPE>
+      <MODELSNMP>Printer0486</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[KONICA MINOLTA bizhub C352]]></SYSDESCR>
@@ -3357,7 +3582,8 @@
       <SYSDESCR><![CDATA[Brother NC-4100h, Firmware Ver.1.10  (02.07.12),MID 84UZ23,FID 4]]></SYSDESCR>
       <MANUFACTURER>57</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0062</MODELSNMP>
+      <MODELSNMP>Printer0467</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.2435.2.3.9.4.2.1.5.5.1.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -7086,7 +7312,7 @@
       <SYSDESCR><![CDATA[Brother NC-6600h, Firmware Ver.1.02  (08.03.14),MID 8C5-C45,FID 2]]></SYSDESCR>
       <MANUFACTURER>57</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0094</MODELSNMP>
+      <MODELSNMP>Printer0469</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -8571,7 +8797,8 @@
       <SYSDESCR><![CDATA[EPSON AL-M2000]]></SYSDESCR>
       <MANUFACTURER>61</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0327</MODELSNMP>
+      <MODELSNMP>Printer0470</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.1248.1.2.2.1.1.1.5.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -12370,5 +12597,461 @@
       <SYSDESCR><![CDATA[ST2030 MGCP SNMPv1/v2c Agent]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>23</TYPE>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, 2800 Software (C2800NM-IPVOICEK9-M), Version 12.4(15)T8, RELEASE SOFTWARE (fc3)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2008 by Cisco Systems, Inc.^MCompiled Mon 01-Dec-08 15:28 by prod_rel_team]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1830</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, 2800 Software (C2800NM-IPVOICEK9-M), Version 12.4(15)T8, RELEASE SOFTWARE (fc3)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Mon 01-Dec-08 15:28 by prod_rel_team]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1830</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[CDC 1625_DCC 2625]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0472</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[NRG MP 4500 1.04 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0455</MODELSNMP>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[NRG C7425hdn 1.12 / NRG Network Printer C model]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0473</MODELSNMP>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Fortigate IPS Web]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1915</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[CX4-240 - Flare 4.30.0.0.5.512]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1916</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, Catalyst 4500 L3 Switch Software (cat4500-IPBASEK9-M), Version 12.2(50)SG7, RELEASE SOFTWARE (fc2)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2010 by Cisco Systems, Inc.^MCompiled Tue 20-Apr-10 22:10 by pr]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1917</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, Catalyst 4500 L3 Switch Software (cat4500-IPBASEK9-M), Version 12.2(50)SG7, RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems, Inc.Compiled Tue 20-Apr-10 22:10 by pr]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1917</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Enterasys Networks, Inc. C2H124-48 Rev 05.02.08.0006]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1919</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark X652de version NR.APS.N447b2 kernel 2.6.18.5 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0474</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[3Com Switch 4210 PWR 18-Port Software Version 3Com OS V3.01.05s56]]></SYSDESCR>
+      <MANUFACTURER>52</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1678</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Apple AirPort - Apple Inc., 2006-2009.  All rights Reserved.]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0033</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[KONICA MINOLTA 163 PCL]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0476</MODELSNMP>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark X652de version NR.APS.N368cWS kernel 2.6.18.5 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0466</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark X652de version NR.APS.N504b kernel 2.6.18.5 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0466</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[OKI OkiLAN 8300e Rev.04.50 10/100BASE Ethernet PrintServer: Attached to C5900 Rev.D1.08 : (C)2005 Oki Data Corporation]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0477</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.2001.1.1.1.1.11.1.10.45.0</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark X544 version NR.APS.N469 kernel 2.6.18.5 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0188</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark T642 version NS.NP.N118 kernel 2.6.6 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0466</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark C522 version NS.NP.N212 kernel 2.6.6 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0478</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark T652 version NR.APS.N447b2 kernel 2.6.18.5 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0466</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[ProCurve J8697A Switch 5406zl, revision K.13.51, ROM K.12.14 (/sw/code/build/btm(t3a))]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1858</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[ProCurve J4899A Switch 2650, revision H.10.74, ROM H.08.02 (/sw/code/build/fish(mkfs))]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1858</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[ProCurve J8164A Switch 2626-PWR, revision H.10.74, ROM H.08.02 (/sw/code/build/fish(mkfs))]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1858</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[FS-1350DN]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0479</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Brother NC-210h, Firmware Ver.0.09  ,MID 8CA-K49-001]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0480</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[GX e3350N 4.0.0/RICOH Network Printer C model]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0481</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark W850 version NS.APS.N320 kernel 2.6.18.5 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0335</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark X658de version NR.APS.N368 kernel 2.6.18.5 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0466</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark X644e version NC2.NPS.N220 kernel 2.6.10 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0466</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark Optra S 1255  Version 1.10.17  Ethernet 10/100.]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0460</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark W850 version NP.APS.N332a kernel 2.6.18.5 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0483</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[3Com Switch 5500-EI 28-Port Software Version 3Com OS V3.03.01s168e]]></SYSDESCR>
+      <MANUFACTURER>52</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1678</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[ProCurve J9085A Switch 2610-24, revision R.11.60, ROM R.10.06 (/sw/code/build/nemo(R_ndx))]]></SYSDESCR>
+      <MANUFACTURER>51</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1858</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[3Com Switch 5500G-EI PWR 24-Port Software Version 3Com OS V3.03.01s168]]></SYSDESCR>
+      <MANUFACTURER>52</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1678</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Hardware: Intel64 Family 6 Model 44 Stepping 2 AT/AT COMPATIBLE - Software: Windows Version 6.1 (Build 7601 Multiprocessor Free)]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>1</TYPE>
+      <MODELSNMP>Networking0124</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Xerox Phaser 8560N; OS 9.82, PS 4.7.0, Eng 22.L0.4.7.0, Net 37.54.03.02.2008, Adobe PostScript 3016.101 (11), PCL 5c Version 5.0]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0451</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Brother NC-6500h, Firmware Ver.0.39  (08.06.05),MID 8CE-144,FID 2]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0484</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.2435.2.3.9.4.2.1.5.5.1.0</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[SHARP MX-M282N]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0353</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[HP Color LaserJet CM4730 MFP]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0422</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[ProCurve J8692A Switch 3500yl-24G, revision K.12.57, ROM K.12.12 (/sw/code/build/btm(t2g))]]></SYSDESCR>
+      <MANUFACTURER>51</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1858</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Canon iR-ADV C5035 /P]]></SYSDESCR>
+      <MANUFACTURER>56</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0413</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[NRG MP 9001 1.12 / NRG Network Printer C model / NRG Network Scanner C model]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0485</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark T652 version NR.APS.N504 kernel 2.6.18.5 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>54</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0466</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[KONICA MINOLTA 7220]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0428</MODELSNMP>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Brother NC-6800h, Firmware Ver.1.04  (09.05.08),MID 8C5-D21,FID 2]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0467</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.2435.2.3.9.4.2.1.5.5.1.0</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[HP Color LaserJet CM6049 MFP]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0488</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[3Com Switch 4210 18-Port Software Version 3Com OS V3.01.12s168]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1678</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[3Com Switch 4500 26-Port Software Version 3Com OS V3.03.02s168p02]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1678</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[3Com Switch 4500 26-Port Software Version 3Com OS V3.03.00s168]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1678</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[ProCurve J4900A Switch 2626, revision H.10.83, ROM H.08.02 (/sw/code/build/fish(mkfs))]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1858</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark T650 version NR.APS.N447b2 kernel 2.6.18.5 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0466</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[SHARP MX-2610N]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0489</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark E360dn version NR.APS.N449 kernel 2.6.18.5 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark X654de version NR.APS.N528 kernel 2.6.18.5 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0466</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark T652 version NR.APS.N368 kernel 2.6.18.5 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0466</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[OKI OkiLAN 8300e Rev.04.55 10/100BASE Ethernet PrintServer: Attached to C5700 Rev.D2.12 : (C)2005 Oki Data Corporation]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0491</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.2001.1.1.1.1.11.1.10.45.0</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[infotec  ISC 2525 1.59 / infotec Network Printer C model / infotec Network Scanner C model / infotec Network Facsimile C model]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0492</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Canon iR-ADV C5030-B1 /P]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0098</MODELSNMP>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
 </SNMPDISCOVERY>
