@@ -591,7 +591,7 @@ function appear_array(id){
          LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` on plugin_fusioninventory_taskjobstatus_id=`glpi_plugin_fusioninventory_taskjobstatus`.`id`
          WHERE `plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
          AND (`glpi_plugin_fusioninventory_taskjoblogs`.`state` = '2' 
-            OR ``glpi_plugin_fusioninventory_taskjoblogs`.state` = '3'
+            OR `glpi_plugin_fusioninventory_taskjoblogs`.`state` = '3'
             OR `glpi_plugin_fusioninventory_taskjoblogs`.`state` = '4' 
             OR `glpi_plugin_fusioninventory_taskjoblogs`.`state` = '5')
          GROUP BY glpi_plugin_fusioninventory_taskjobstatus.uniqid,plugin_fusioninventory_agents_id";
