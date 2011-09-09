@@ -785,7 +785,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $taskjobstatusfinished = 0;
          foreach ($a_taskjobstatus as $statusdata) {
             $a_joblog = $PluginFusioninventoryTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$statusdata['id']."'
-               AND `state` IN (2,4,5)");
+               AND (`state`='2' OR `state`='4' OR `state`='5')");
             if (count($a_joblog) > 0) {
                $taskjobstatusfinished++;
             }
