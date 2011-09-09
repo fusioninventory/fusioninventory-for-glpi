@@ -63,7 +63,7 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
 
       $actions     = importArrayFromDB($job->fields['action']);
       $definitions   = importArrayFromDB($job->fields['definition']);
-      $error = 0;
+      $taskvalid = 0;
 
       $computers = array();
       foreach ($actions as $action) {
@@ -130,8 +130,10 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
                                                   0,
                                                   '',
                                                   1,
-                                                  "No agent found for this computer");
-            $error = 1;            
+                                                  "No agent found for this computer",
+                                                  0,
+                                                  0);
+            $error = 1;
          } else {         
             $c_input['plugin_fusioninventory_agents_id'] = $agents_id;
 
@@ -141,14 +143,17 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
             $c_input['plugin_fusioninventory_taskjobstatus_id'] = $jobstatus_id;
             $c_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
 
+            $taskvalid++;
             $joblog->add($c_input);
             unset($c_input['state']);
          }
       }
 
-      if ($error == '0') {
+      if ($taskvalid > 0) {
          $job->fields['status']= 1;
          $job->update($job->fields);
+      } else {
+         $job->reinitializeTaskjobs($job->fields['plugin_fusioninventory_tasks_id']);
       }
 
       /*$agent_actionslist = array();
