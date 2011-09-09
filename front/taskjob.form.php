@@ -260,17 +260,18 @@ if (isset($_POST['definition_add'])) {
    
 } elseif (isset($_POST['forceend'])) {
    $mytaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+   $pFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
    $mytaskjobstatus->getFromDB($_POST['taskjobstatus_id']);
+   $jobstatus = $mytaskjobstatus->fields;
    $a_taskjobstatus = $mytaskjobstatus->find("`uniqid`='".$mytaskjobstatus->fields['uniqid']."'");
    foreach($a_taskjobstatus as $data) {
-
       if ($data['state'] != PluginFusioninventoryTaskjobstatus::FINISHED) {
-         $mytaskjobstatus->changeStatusFinish($data['id'], 0, '', 1, "Action cancelled by user");
+         $mytaskjobstatus->changeStatusFinish($data['id'], 0, '', 1, "Action cancelled by user", 0, 0);
       }
    }
-//   $mytaskjob->getFromDB($_POST['taskjobs_id']);
-//   $mytaskjob->fields['status'] = 1;
-//   $mytaskjob->update($mytaskjob->fields);
+   
+   $pFusioninventoryTaskjob->getFromDB($jobstatus['plugin_fusioninventory_taskjobs_id']);
+   $pFusioninventoryTaskjob->reinitializeTaskjobs($pFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']);
 
    Html::redirect($_SERVER['HTTP_REFERER']);
 }

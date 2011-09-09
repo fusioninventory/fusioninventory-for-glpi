@@ -276,7 +276,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
    * @return nothing
    *
    **/
-   function changeStatusFinish($taskjobstatus, $items_id, $itemtype, $error=0, $message='', $unknown=0) {
+   function changeStatusFinish($taskjobstatus, $items_id, $itemtype, $error=0, $message='', $unknown=0, $reinitialize=1) {
       global $DB;
       
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
@@ -339,7 +339,9 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       $input['id'] = $this->fields['plugin_fusioninventory_taskjobs_id'];
       $input['status'] = 0;
       $PluginFusioninventoryTaskjob->update($input);
-      $PluginFusioninventoryTaskjob->reinitializeTaskjobs($PluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']);
+      if ($reinitialize == '1') {
+         $PluginFusioninventoryTaskjob->reinitializeTaskjobs($PluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']);
+      }
    }
 
    

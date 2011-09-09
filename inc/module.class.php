@@ -48,7 +48,7 @@ class PluginFusioninventoryModule extends CommonDBTM {
    static function getAll($p_inactive=false) {
       $plugin = new Plugin();
       if ($p_inactive) {
-         return $plugin->find("`state` IN ('1', '4') AND `directory` LIKE 'fusinv%'");
+         return $plugin->find("(`state` = '1' OR `state` = '4') AND `directory` LIKE 'fusinv%'");
       } else {
          return $plugin->find("`state`='1' AND `directory` LIKE 'fusinv%'");
       }
