@@ -63,6 +63,7 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
 
       $actions     = importArrayFromDB($job->fields['action']);
       $definitions   = importArrayFromDB($job->fields['definition']);
+      $error = 0;
 
       $computers = array();
       foreach ($actions as $action) {
@@ -123,21 +124,32 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
          $c_input['date'] = date("Y-m-d H:i:s");
 
          //get agent if for this computer
-         if(!$agents_id = $agent->getAgentWithComputerid($computer_id)) continue;
-         $c_input['plugin_fusioninventory_agents_id'] = $agents_id;
+         if(!$agents_id = $agent->getAgentWithComputerid($computer_id)) {
+            $jobstatus_id= $jobstatus->add($c_input);
+            $jobstatus->changeStatusFinish($jobstatus_id,
+                                                  0,
+                                                  '',
+                                                  1,
+                                                  "No agent found for this computer");
+            $error = 1;            
+         } else {         
+            $c_input['plugin_fusioninventory_agents_id'] = $agents_id;
 
-         $jobstatus_id= $jobstatus->add($c_input);
+            $jobstatus_id= $jobstatus->add($c_input);
 
-         //Add log of taskjob
-         $c_input['plugin_fusioninventory_taskjobstatus_id'] = $jobstatus_id;
-         $c_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
+            //Add log of taskjob
+            $c_input['plugin_fusioninventory_taskjobstatus_id'] = $jobstatus_id;
+            $c_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
 
-         $joblog->add($c_input);
-         unset($c_input['state']);
+            $joblog->add($c_input);
+            unset($c_input['state']);
+         }
       }
 
-      $job->fields['status']= 1;
-      $job->update($job->fields);
+      if ($error == '0') {
+         $job->fields['status']= 1;
+         $job->update($job->fields);
+      }
 
       /*$agent_actionslist = array();
       foreach($agent_actions as $targets) {
