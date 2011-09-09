@@ -312,8 +312,8 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
 
       $query = "SELECT id
                 FROM `glpi_networkports`
-                WHERE `mac` IN ('".$p_mac."',
-                                  '".strtoupper($p_mac)."')
+                WHERE (`mac` = '".$p_mac."' OR
+                                  `mac` = '".strtoupper($p_mac)."')
                       AND `id`!='".$p_fromPortID."';"; // do not get the link port
 		$result = $DB->query($query);
 		$data = $DB->fetch_assoc($result);
