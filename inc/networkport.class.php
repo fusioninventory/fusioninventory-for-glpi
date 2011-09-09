@@ -285,8 +285,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       
       $queryVerif = "SELECT *
                      FROM `glpi_networkports_networkports`
-                     WHERE `networkports_id_1` IN ('".$this->getValue('id')."', '".$destination_port."')
-                           AND `networkports_id_2` IN ('".$this->getValue('id')."', '".$destination_port."');";
+                     WHERE (`networkports_id_1` = '".$this->getValue('id')."' OR `networkports_id_1` = '".$destination_port."')
+                           AND (`networkports_id_2` = '".$this->getValue('id')."' OR `networkports_id_2` = '".$destination_port."');";
 
       if ($resultVerif=$DB->query($queryVerif)) {
          if ($DB->numrows($resultVerif) == "0") { // no existing connection between those 2 ports
@@ -528,9 +528,12 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
          $mac[$index]=$ptp->getValue('mac');
       }
       if ($macs!='') {
+         $where = "`mac` = '";
+         $where .= implode("' OR `mac` = '", $mac); 
+         $where .= "'";
          $query = "SELECT `mac`
                    FROM `glpi_networkequipments`
-                   WHERE `mac` IN (".$macs.");";
+                   WHERE (".$where.");";
          $result=$DB->query($query);
          if ($DB->numrows($result) == 1) {
             $switch = $DB->fetch_assoc($result);
