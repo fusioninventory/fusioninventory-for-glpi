@@ -111,7 +111,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
             echo "<table class='tab_cadre'>";
             echo "<tr>";
             echo "<th></th>";
-            echo "<th>Uniqid</th>";
+            echo "<th>".$LANG['plugin_fusioninventory']['task'][47]."</th>";
             echo "<th>".$LANG['plugin_fusioninventory']['processes'][38]."</th>";
             echo "<th>".$LANG['plugin_fusioninventory']['agents'][28]."</th>";
             echo "<th>";
@@ -165,7 +165,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
             $result = $DB->query($query);
             echo "<tr>";
             echo "<th></th>";
-            echo "<th>Uniqid</th>";
+            echo "<th>".$LANG['plugin_fusioninventory']['task'][47]."</th>";
             echo "<th>".$LANG['plugin_fusioninventory']['agents'][28]."</th>";
             echo "<th>";
             echo $LANG['common'][27];
