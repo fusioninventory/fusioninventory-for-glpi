@@ -180,7 +180,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
          echo "<table class='tab_cadre' width='950'>";
          echo "<tr>";
          echo "<th></th>";
-         echo "<th>Uniqid</th>";
+         echo "<th>".$LANG['plugin_fusioninventory']['task'][47]."</th>";
          echo "<th>".$LANG['plugin_fusioninventory']['task'][2]."</th>";
          echo "<th>".$LANG['plugin_fusioninventory']['agents'][28]."</th>";
          echo "<th>";
