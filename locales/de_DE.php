@@ -78,27 +78,27 @@ $LANG['plugin_fusinvinventory']['rule'][8]="Tag";
 
 $LANG['plugin_fusinvinventory']['setup'][17]="Das Plugin FusionInventory INVENTORY benötigt ein aktiviertes FusionInventory Plugin um selber aktiviert zu werden.";
 $LANG['plugin_fusinvinventory']['setup'][18]="Das Plugin FusionInventory INVENTORY benötigt ein aktiviertes FusionInventory Plugin um selber deinstalliert werden zu können.";
-$LANG['plugin_fusinvinventory']['setup'][20]="Import-Optionen";
+$LANG['plugin_fusinvinventory']['setup'][20]="Importoptionen";
 $LANG['plugin_fusinvinventory']['setup'][21]="Komponenten";
 $LANG['plugin_fusinvinventory']['setup'][22]="Globaler Import";
 $LANG['plugin_fusinvinventory']['setup'][23]="Kein Import";
 $LANG['plugin_fusinvinventory']['setup'][24]="Einmaliger Import";
 $LANG['plugin_fusinvinventory']['setup'][25]="Registrierungsdatei";
-$LANG['plugin_fusinvinventory']['setup'][26]="Prozess";
+$LANG['plugin_fusinvinventory']['setup'][26]="Processes";
 $LANG['plugin_fusinvinventory']['setup'][27]="Einmaliger Import via Seriennummer";
-$LANG['plugin_fusinvinventory']['setup'][28]="Automatic computers transfer";
-$LANG['plugin_fusinvinventory']['setup'][29]="Model for automatic computers transfer in an other entity";
+$LANG['plugin_fusinvinventory']['setup'][28]="Automatischer Computertransfer";
+$LANG['plugin_fusinvinventory']['setup'][29]="Modell für den automatischen Computertransfer in eine andere Entität.";
 $LANG['plugin_fusinvinventory']['setup'][30]="Netzwerklaufwerke";
 $LANG['plugin_fusinvinventory']['setup'][31]="Virtuelle netzwerkadapter";
-$LANG['plugin_fusinvinventory']['setup'][32]="This option will not import this item";
-$LANG['plugin_fusinvinventory']['setup'][33]="This option will merge items with same name to reduce number of items if this management isn't important";
-$LANG['plugin_fusinvinventory']['setup'][34]="This option will create one item for each item found";
-$LANG['plugin_fusinvinventory']['setup'][35]="This option will create one item for each item have serial number";
+$LANG['plugin_fusinvinventory']['setup'][32]="Diese Option wird nicht dieses Element importieren";
+$LANG['plugin_fusinvinventory']['setup'][33]="Diese Option wird die Elemente vereinen um die Anzahl der Elemente zu reduzieren.";
+$LANG['plugin_fusinvinventory']['setup'][34]="Diese Option wird für jedes gefundene Element ein Element erzeugen.";
+$LANG['plugin_fusinvinventory']['setup'][35]="Diese Option wird für jedes Element mit einer Seriennummer ein Element erzeugen";
 $LANG['plugin_fusinvinventory']['setup'][36]="Standardstatus";
 
 $LANG['plugin_fusinvinventory']['title'][0]="FusionInventory INVENTORY";
-$LANG['plugin_fusinvinventory']['title'][1]="Lokal inventarisieren";
-$LANG['plugin_fusinvinventory']['title'][2]="VMware host remote inventarisieren";
+$LANG['plugin_fusinvinventory']['title'][1]="Lokales Inventar";
+$LANG['plugin_fusinvinventory']['title'][2]="VMware host remote inventory";
 
-$LANG['plugin_fusinvinventory']['vmwareesx'][0]="VMware Host";
+$LANG['plugin_fusinvinventory']['vmwareesx'][0]="VMware host";
 ?>

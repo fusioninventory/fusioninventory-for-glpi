@@ -38,7 +38,7 @@ $LANG['plugin_fusinvinventory']['antivirus'][1]="Nessun antivirus nel computer";
 $LANG['plugin_fusinvinventory']['antivirus'][2]="Versione";
 $LANG['plugin_fusinvinventory']['antivirus'][3]="Aggiornato";
 
-$LANG['plugin_fusinvinventory']['bios'][0]="Bios";
+$LANG['plugin_fusinvinventory']['bios'][0]="BIOS";
 
 $LANG['plugin_fusinvinventory']['blacklist'][0]="Valori in blacklist";
 $LANG['plugin_fusinvinventory']['blacklist'][1]="Nuovo valori in blacklist";
@@ -84,7 +84,7 @@ $LANG['plugin_fusinvinventory']['setup'][22]="Importo globale";
 $LANG['plugin_fusinvinventory']['setup'][23]="Nessun importo";
 $LANG['plugin_fusinvinventory']['setup'][24]="Importo unico";
 $LANG['plugin_fusinvinventory']['setup'][25]="Registro";
-$LANG['plugin_fusinvinventory']['setup'][26]="Processo";
+$LANG['plugin_fusinvinventory']['setup'][26]="Processes";
 $LANG['plugin_fusinvinventory']['setup'][27]="Importazione unica in base al numero seriale";
 $LANG['plugin_fusinvinventory']['setup'][28]="Trasferimento automatico computers";
 $LANG['plugin_fusinvinventory']['setup'][29]="Modello per trasferimento automatico computers";
@@ -98,7 +98,7 @@ $LANG['plugin_fusinvinventory']['setup'][36]="Stato predefinito";
 
 $LANG['plugin_fusinvinventory']['title'][0]="Inventario FusionInventory";
 $LANG['plugin_fusinvinventory']['title'][1]="Inventario locale";
-$LANG['plugin_fusinvinventory']['title'][2]="Inventario host remote VMware";
+$LANG['plugin_fusinvinventory']['title'][2]="VMware host remote inventory";
 
-$LANG['plugin_fusinvinventory']['vmwareesx'][0]="Hosto Vmware";
+$LANG['plugin_fusinvinventory']['vmwareesx'][0]="VMware host";
 ?>

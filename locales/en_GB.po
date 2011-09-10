@@ -1,0 +1,241 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: FusionInventory\n"
+"Report-Msgid-Bugs-To: http://forge.fusioninventory.org\n"
+"POT-Creation-Date: 2011-08-21 22:45+0200\n"
+"PO-Revision-Date: 2011-08-21 22:45+0200\n"
+"Last-Translator: promotux <d.durieux.com>\n"
+"Language-Team: FusionInventory mailling list i18n <fusioninventory-i18n.alioth.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+
+#: title|0
+msgid "FusionInventory INVENTORY"
+msgstr "FusionInventory INVENTORY"
+
+#: title|1
+msgid "Local inventory"
+msgstr "Local inventory"
+
+#: title|2
+msgid "VMware host remote inventory"
+msgstr "VMware host remote inventory"
+
+#: setup|17
+msgid "Plugin FusionInventory INVENTORY need plugin FusionInventory activated before activation."
+msgstr "Plugin FusionInventory INVENTORY need plugin FusionInventory activated before activation."
+
+#: setup|18
+msgid "Plugin FusionInventory INVENTORY need plugin FusionInventory activated before uninstall."
+msgstr "Plugin FusionInventory INVENTORY need plugin FusionInventory activated before uninstall."
+
+#: setup|20
+msgid "Import options"
+msgstr "Import options"
+
+#: setup|21
+msgid "Components"
+msgstr "Components"
+
+#: setup|22
+msgid "Global import"
+msgstr "Global import"
+
+#: setup|23
+msgid "No import"
+msgstr "No import"
+
+#: setup|24
+msgid "Unique import"
+msgstr "Unique import"
+
+#: setup|25
+msgid "Registry"
+msgstr "Registry"
+
+#: setup|26
+msgid "Processes"
+msgstr "Processes"
+
+#: setup|27
+msgid "Unique import on serial number"
+msgstr "Unique import on serial number"
+
+#: setup|28
+msgid "Automatic computers transfer"
+msgstr "Automatic computers transfer"
+
+#: setup|29
+msgid "Model for automatic computers transfer in an other entity"
+msgstr "Model for automatic computers transfer in an other entity"
+
+#: setup|30
+msgid "Network drives"
+msgstr "Network drives"
+
+#: setup|31
+msgid "Virtual network card"
+msgstr "Virtual network card"
+
+#: setup|32
+msgid "This option will not import this item"
+msgstr "This option will not import this item"
+
+#: setup|33
+msgid "This option will merge items with same name to reduce number of items if this management isn't important"
+msgstr "This option will merge items with same name to reduce number of items if this management isn't important"
+
+#: setup|34
+msgid "This option will create one item for each item found"
+msgstr "This option will create one item for each item found"
+
+#: setup|35
+msgid "This option will create one item for each item have serial number"
+msgstr "This option will create one item for each item have serial number"
+
+#: setup|36
+msgid "Default status"
+msgstr "Default status"
+
+#: menu|0
+msgid "Import agent XML file"
+msgstr "Import agent XML file"
+
+#: menu|1
+msgid "Criteria rules"
+msgstr "Criteria rules"
+
+#: menu|2
+msgid "BlackList"
+msgstr "BlackList"
+
+#: menu|4
+msgid "Data integrity check"
+msgstr "Data integrity check"
+
+#: importxml|0
+msgid "Import XML file from an Agent"
+msgstr "Import XML file from an Agent"
+
+#: importxml|1
+msgid "Computer injected into GLPI"
+msgstr "Computer injected into GLPI"
+
+#: importxml|2
+msgid "No file to import!"
+msgstr "No file to import!"
+
+#: importxml|3
+msgid "XML file not valid!"
+msgstr "XML file not valid!"
+
+#: rule|0
+msgid "Computer existent criteria rules"
+msgstr "Computer existent criteria rules"
+
+#: rule|1
+msgid "Existant criterium"
+msgstr "Existant criterium"
+
+#: rule|2
+msgid "Serial Number"
+msgstr "Serial Number"
+
+#: rule|3
+msgid "MAC address"
+msgstr "MAC address"
+
+#: rule|4
+msgid "Microsoft product key"
+msgstr "Microsoft product key"
+
+#: rule|5
+msgid "Computer model"
+msgstr "Computer model"
+
+#: rule|6
+msgid "Hard disk serial number"
+msgstr "Hard disk serial number"
+
+#: rule|7
+msgid "Partitions serial number"
+msgstr "Partitions serial number"
+
+#: rule|8
+msgid "Tag"
+msgstr "Tag"
+
+#: rule|30
+msgid "Import in asset"
+msgstr "Import in asset"
+
+#: rule|31
+msgid "Import in unknown devices"
+msgstr "Import in unknown devices"
+
+#: rule|100
+msgid "Entity rules"
+msgstr "Entity rules"
+
+#: rule|102
+msgid "Ignore in FusionInventory import"
+msgstr "Ignore in FusionInventory import"
+
+#: blacklist|0
+msgid "blacklisted value"
+msgstr "blacklisted value"
+
+#: blacklist|1
+msgid "New value to blacklist"
+msgstr "New value to blacklist"
+
+#: profile|2
+msgid "Existance criteria"
+msgstr "Existance criteria"
+
+#: profile|3
+msgid "XML file manual import"
+msgstr "XML file manual import"
+
+#: profile|4
+msgid "Fields blacklist"
+msgstr "Fields blacklist"
+
+#: antivirus|0
+msgid "Antivirus"
+msgstr "Antivirus"
+
+#: antivirus|1
+msgid "No antivirus on this computer"
+msgstr "No antivirus on this computer"
+
+#: antivirus|2
+msgid "Version"
+msgstr "Version"
+
+#: antivirus|3
+msgid "Up to date"
+msgstr "Up to date"
+
+#: computer|0
+msgid "Last inventory"
+msgstr "Last inventory"
+
+#: vmwareesx|0
+msgid "VMware host"
+msgstr "VMware host"
+
+#: integrity|0
+msgid "Only in GLPI (check to delete)"
+msgstr "Only in GLPI (check to delete)"
+
+#: integrity|1
+msgid "Only in last inventory (check to import)"
+msgstr "Only in last inventory (check to import)"
+
+#: bios|0
+msgid "BIOS"
+msgstr "BIOS"
+
