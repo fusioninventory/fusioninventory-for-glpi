@@ -131,7 +131,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
                         $tmp['multiparts'] = $fileparts;
 
                         if (isset($result_file['p2p-retention-duration'])) {
-                           $tmp['p2p-retention-duration'] = $result_file['p2p-retention-duration'];
+                           $tmp['p2p-retention-duration'] = $result_file['p2p_retention_days'] * 3600 * 24;
                         } else {
                            $tmp['p2p-retention-duration'] = 0;
                         }
