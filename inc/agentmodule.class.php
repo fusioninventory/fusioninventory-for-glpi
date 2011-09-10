@@ -186,7 +186,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          $modulename = $data["modulename"];
          foreach ($a_methods as $datamod) {
             if (isset($datamod['name'])
-                    AND (strtolower($data["modulename"]) == $datamod['method'])) {
+                    AND (strtolower($data["modulename"]) == strtolower($datamod['method']))) {
                $modulename = $datamod['name'];
             }
          }
