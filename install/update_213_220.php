@@ -92,7 +92,7 @@ function update213to220() {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
       echo "Move Connections history to another table...";
-      createProgressBar("Move Connections history to another table");
+      Html::createProgressBar("Move Connections history to another table");
 
       for ($i=0; $i < $nb; $i = $i + 500) {
          Html::changeProgressBarPosition($i, $nb, "$i / $nb");
@@ -877,7 +877,7 @@ function update213to220_ConvertField() {
    echo "</tr>";
    echo "<tr>";
    echo "<td>";
-   createProgressBar("Update Ports history");
+   Html::createProgressBar("Update Ports history");
    $i = 0;
    $nb = count($constantsfield);
 
@@ -932,7 +932,7 @@ function update213to220_ConvertField() {
    echo "</tr>";
    echo "<tr>";
    echo "<td>";
-   createProgressBar("Move create connections");
+   Html::createProgressBar("Move create connections");
    $query = "SELECT *
              FROM `glpi_plugin_fusioninventory_snmp_history`
              WHERE `Field` = '0'
@@ -1000,7 +1000,7 @@ function update213to220_ConvertField() {
    echo "</tr>";
    echo "<tr>";
    echo "<td>";
-   createProgressBar("Move delete connections");
+   Html::createProgressBar("Move delete connections");
    $query = "SELECT *
              FROM `glpi_plugin_fusioninventory_snmp_history`
              WHERE `Field` = '0'

@@ -340,12 +340,9 @@ class PluginFusioninventoryTask extends CommonDBTM {
       
       // ** Get task in next execution
       $a_tasks = $this->find("`is_active` = '1'");
-      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=next'>Next<sup>(".
+      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=next'>Planned for running<sup>(".
               count($a_tasks).")</sup></a></th>";
 
-      // ** Get task previously executed
-      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=previous'>Previous</a></th>";
-      
       // ** Get task running
       $pluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $pluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
@@ -359,6 +356,9 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "<th><a href='".$_SERVER['PHP_SELF']."?see=running'>Running<sup>(".
               count($a_tasks).")</sup></a></th>";
       
+      // ** Get task previously executed
+      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=previous'>Executed</a></th>";
+            
       // ** Get task inactive
       $a_tasks = $this->find("`is_active` = '0'");
       echo "<th><a href='".$_SERVER['PHP_SELF']."?see=inactives'>Inactives<sup>(".
