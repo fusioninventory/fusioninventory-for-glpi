@@ -392,8 +392,8 @@ $LANG['plugin_fusinvsnmp']['report'][1]="Printed page counter";
 $LANG['plugin_fusinvsnmp']['codetasklog'][1]="devices queried";
 $LANG['plugin_fusinvsnmp']['codetasklog'][2]="devices found";
 $LANG['plugin_fusinvsnmp']['codetasklog'][3]="SNMP equipment definition isn't up to date on agent. For the next run, it will get new version from server.";
-$LANG['plugin_fusinvsnmp']['codetasklog'][4]="add the item";
-$LANG['plugin_fusinvsnmp']['codetasklog'][5]="update the item";
+$LANG['plugin_fusinvsnmp']['codetasklog'][4]="Add the item";
+$LANG['plugin_fusinvsnmp']['codetasklog'][5]="Update the item";
 $LANG['plugin_fusinvsnmp']['codetasklog'][6]="Inventory started";
 
 $LANG['plugin_fusinvsnmp']['legend'][0]="Connection with a switch or a server in trunk or tagged mode";
