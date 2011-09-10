@@ -375,7 +375,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
       echo "</tr>";
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
-      createProgressBar("Importing SNMP models, please wait...");
+      Html::createProgressBar("Importing SNMP models, please wait...");
       foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) {
          $importexport->import($file,0,1);
          $i++;
