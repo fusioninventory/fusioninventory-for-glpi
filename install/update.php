@@ -33,6 +33,7 @@
  */
 
 function pluginFusinvinventoryGetCurrentVersion($version) {
+   global $DB;
 
    $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
    $version_installed = $PluginFusioninventoryConfig->getValue(PluginFusioninventoryModule::getModuleId("fusinvinventory"),
@@ -41,6 +42,32 @@ function pluginFusinvinventoryGetCurrentVersion($version) {
    if ($version_installed) {
       return $version_installed;
    } else {
+      $pFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+      $a_findmodule = current($pFusioninventoryAgentmodule->find("`modulename`='INVENTORY'", "", 1));
+      if (isset($a_findmodule['plugins_id'])) {
+         $versionconfig = $PluginFusioninventoryConfig->getValue($a_findmodule['plugins_id'], "version");
+         if (PluginFusioninventoryModule::getModuleId("fusinvinventory") != $a_findmodule['plugins_id']) {
+            $query = "UPDATE `glpi_plugin_fusioninventory_configs`
+               SET `plugins_id`='".PluginFusioninventoryModule::getModuleId("fusinvinventory")."' 
+               WHERE `plugins_id`='".$a_findmodule['plugins_id']."'";
+            $DB->query($query);
+            $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
+               SET `plugins_id`='".PluginFusioninventoryModule::getModuleId("fusinvinventory")."' 
+               WHERE `plugins_id`='".$a_findmodule['plugins_id']."'";
+            $DB->query($query);
+            $query = "UPDATE `glpi_plugin_fusioninventory_taskjobs`
+               SET `plugins_id`='".PluginFusioninventoryModule::getModuleId("fusinvinventory")."' 
+               WHERE `plugins_id`='".$a_findmodule['plugins_id']."'";
+            $DB->query($query);
+            $query = "UPDATE `glpi_plugin_fusioninventory_profiles`
+               SET `plugins_id`='".PluginFusioninventoryModule::getModuleId("fusinvinventory")."' 
+               WHERE `plugins_id`='".$a_findmodule['plugins_id']."'";
+            $DB->query($query);
+         }
+      }
+      if ($versionconfig) {
+         return $versionconfig;
+      }
       return '0';
    }
 }
