@@ -55,6 +55,7 @@ $LANG['plugin_fusioninventory']['agents'][41]="Servicio URL";
 $LANG['plugin_fusioninventory']['agents'][42]="Agente de usuario";
 $LANG['plugin_fusioninventory']['agents'][43]="Información para la configuración del agente";
 $LANG['plugin_fusioninventory']['agents'][44]="URL del servidor";
+$LANG['plugin_fusioninventory']['agents'][45]="Exceptions";
 $LANG['plugin_fusioninventory']['agents'][4]="Último contacto";
 $LANG['plugin_fusioninventory']['agents'][6]="desactivado";
 
@@ -183,6 +184,8 @@ $LANG['plugin_fusioninventory']['task'][43]="Modo de comunicación";
 $LANG['plugin_fusioninventory']['task'][44]="Ver toda la información sobre la tarea";
 $LANG['plugin_fusioninventory']['task'][45]="Opciones avanzadas";
 $LANG['plugin_fusioninventory']['task'][46]="Reiniciar";
+$LANG['plugin_fusioninventory']['task'][47]="Unique id";
+$LANG['plugin_fusioninventory']['task'][48]="To inventory";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Iniciado";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Correcto";
