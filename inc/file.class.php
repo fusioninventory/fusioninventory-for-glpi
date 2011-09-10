@@ -124,7 +124,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
                         $tmp['name']                      = $result_file['name'];
                         $tmp['p2p']                    = $result_file['is_p2p'];
 
-                        $mirrors = PluginFusinvdeployFile_Mirror::getForFile($result_file['id']);
+                        $mirrors = PluginFusinvdeployFile_Mirror::getList();
                         $tmp['mirrors'] = $mirrors;
 
                         $fileparts = PluginFusinvdeployFilepart::getForFile($result_file['id']);
