@@ -90,8 +90,39 @@ function pluginFusinvsnmpGetCurrentVersion($version) {
                  AND TableExists("glpi_plugin_fusinvsnmp_configlogfields")) {
             return "2.3.0-1";
          }
-         return $versionconfig;
       }
+      if ($versionconfig == '') {
+         $pFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+         $a_findmodule = current($pFusioninventoryAgentmodule->find("`modulename`='NETDISCOVERY'", "", 1));
+         if (isset($a_findmodule['plugins_id'])) {
+            $versionconfig = $PluginFusioninventoryConfig->getValue($a_findmodule['plugins_id'], "version");
+            if ((isset($versionconfig)) AND (!empty($versionconfig))) {
+               if ($versionconfig == '2.2.1'
+                       AND TableExists("glpi_plugin_fusinvsnmp_configlogfields")) {
+                  return "2.3.0-1";
+               }
+            }
+            if ($plugins_id != $a_findmodule['plugins_id']) {
+               $query = "UPDATE `glpi_plugin_fusioninventory_configs`
+                  SET `plugins_id`='".$plugins_id."' 
+                  WHERE `plugins_id`='".$a_findmodule['plugins_id']."'";
+               $DB->query($query);
+               $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
+                  SET `plugins_id`='".$plugins_id."' 
+                  WHERE `plugins_id`='".$a_findmodule['plugins_id']."'";
+               $DB->query($query);
+               $query = "UPDATE `glpi_plugin_fusioninventory_taskjobs`
+                  SET `plugins_id`='".$plugins_id."' 
+                  WHERE `plugins_id`='".$a_findmodule['plugins_id']."'";
+               $DB->query($query);
+               $query = "UPDATE `glpi_plugin_fusioninventory_profiles`
+                  SET `plugins_id`='".$plugins_id."' 
+                  WHERE `plugins_id`='".$a_findmodule['plugins_id']."'";
+               $DB->query($query);
+            }
+         }
+      }
+      return $versionconfig;
    }
 }
 
