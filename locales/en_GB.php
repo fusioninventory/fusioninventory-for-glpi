@@ -134,6 +134,7 @@ $LANG['plugin_fusioninventory']['agents'][41]="Service URL";
 $LANG['plugin_fusioninventory']['agents'][42]="Useragent";
 $LANG['plugin_fusioninventory']['agents'][43]="Informations for agent configuration";
 $LANG['plugin_fusioninventory']['agents'][44]="Communication url of the server";
+$LANG['plugin_fusioninventory']['agents'][45]="Exceptions";
 
 $LANG['plugin_fusioninventory']['unknown'][2]="Approved devices";
 $LANG['plugin_fusioninventory']['unknown'][4]="Network hub";
@@ -174,6 +175,7 @@ $LANG['plugin_fusioninventory']['task'][44]="See all informations of task";
 $LANG['plugin_fusioninventory']['task'][45]="Advanced options";
 $LANG['plugin_fusioninventory']['task'][46]="Reset";
 $LANG['plugin_fusioninventory']['task'][47]="Unique id";
+$LANG['plugin_fusioninventory']['task'][48]="To inventory";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Started";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";

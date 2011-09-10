@@ -528,7 +528,7 @@ function appear_array(id){
             }
          }
          // Search for code to display lang traduction ==pluginname::9876==
-         preg_match_all("/==(.*)\:\:([0-9]*)==/", $datas['comment'], $matches);
+         preg_match_all("/==(\w*)\:\:([0-9]*)==/", $datas['comment'], $matches);
          foreach($matches[0] as $num=>$commentvalue) {
             $datas['comment'] = str_replace($commentvalue, $LANG['plugin_'.$matches[1][$num]]["codetasklog"][$matches[2][$num]], $datas['comment']);
          }
