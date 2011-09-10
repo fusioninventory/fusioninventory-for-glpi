@@ -1606,10 +1606,10 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       Dropdown::showInteger("periodicity_count", $pluginFusioninventoryTask->fields['periodicity_count'], 0, 300);
       $a_time = array();
       $a_time[] = "------";
-      $a_time['minutes'] = "minutes";
-      $a_time['hours'] = "heures";
-      $a_time['days'] = "jours";
-      $a_time['months'] = "mois";
+      $a_time['minutes'] = $LANG['job'][22];
+      $a_time['hours'] = $LANG['job'][21];
+      $a_time['days'] = ucfirst($LANG['calendar'][12]);
+      $a_time['months'] = ucfirst($LANG['calendar'][14]);
       Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$pluginFusioninventoryTask->fields['periodicity_type']));
       echo "</td>";
       echo "</tr>";
