@@ -80,7 +80,8 @@ class PluginFusinvdeployStaticmisc {
    static function getActionType() {
       global $LANG;
       return array(0 => DROPDOWN_EMPTY_VALUE,
-                   'PluginFusinvdeployGroup' => $LANG['plugin_fusinvdeploy']['group'][3]);
+                   'PluginFusinvdeployGroup' => $LANG['plugin_fusinvdeploy']['group'][3],
+                   'Computer' => $LANG['Menu'][0]);
    }
 
    static function task_definitiontype_deployinstall($a_itemtype) {
@@ -141,6 +142,14 @@ class PluginFusinvdeployStaticmisc {
 
    static function task_definitionselection_PluginFusinvdeployGroup_deployuninstall() {
       return self::getDeployActions();
+   }
+   
+   static function task_definitionselection_Computer_deployinstall() {
+      $options = array();
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name']        = 'actionselectiontoadd';
+      return Dropdown::show("Computer", $options);
    }
 
    static function task_actionselection_PluginFusioninventoryAgent_deployinstall() {
