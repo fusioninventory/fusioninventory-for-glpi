@@ -58,7 +58,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          echo "<tr>";
          echo "<th width='130'>".$LANG['plugin_fusioninventory']['task'][26]."</th>";
          echo "<th width='180'>".$LANG['plugin_fusioninventory']['agents'][34]."</th>";
-         echo "<th>Exceptions</th>";
+         echo "<th>".$LANG['plugin_fusioninventory']['agents'][45]."</th>";
          echo "</tr>";
          
          echo "<tr class='tab_bg_1'>";
