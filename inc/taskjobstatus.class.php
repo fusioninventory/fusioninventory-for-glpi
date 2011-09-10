@@ -317,7 +317,6 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
                      AND `uniqid` != '".$this->fields['uniqid']."'
                GROUP BY `uniqid`";
             $result = $DB->query($query);
-            logInFile("KOIN", $DB->numrows($result)." => ".$query."\n");
             if ($DB->numrows($result) >= ($PluginFusioninventoryTaskjob->fields['retry_nb'] - 1)) {
                $a_input['state'] = 4;
             } else {
