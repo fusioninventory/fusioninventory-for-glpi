@@ -246,11 +246,11 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
          $input['entities_id'] = $entities_id;
          $items_id = $class->add($input);
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
-               '[detail] ==fusinvsnmp::4== '.$class->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
+               '[==fusinvsnmp::7==] ==fusinvsnmp::4== '.$class->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
          $this->addtaskjoblog();
       } else {
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
-               '[detail] ==fusinvsnmp::5== '.$class->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
+               '[==fusinvsnmp::7==] ==fusinvsnmp::5== '.$class->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
          $this->addtaskjoblog();
       }
       $this->importDevice($itemtype, $items_id);

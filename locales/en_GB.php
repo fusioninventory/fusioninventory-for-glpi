@@ -71,6 +71,7 @@ $LANG['plugin_fusinvsnmp']['snmp'][49]="Number of errors in reception";
 $LANG['plugin_fusinvsnmp']['snmp'][51]="Duplex";
 $LANG['plugin_fusinvsnmp']['snmp'][53]="Last inventory";
 $LANG['plugin_fusinvsnmp']['snmp'][54]="Datas not available";
+$LANG['plugin_fusinvsnmp']['snmp'][55]="Number per second";
 
 $LANG['plugin_fusinvsnmp']['snmpauth'][1]="Community";
 $LANG['plugin_fusinvsnmp']['snmpauth'][2]="User";
@@ -128,6 +129,9 @@ $LANG['plugin_fusinvsnmp']['state'][4]="Starting date";
 $LANG['plugin_fusinvsnmp']['state'][5]="Ending date";
 $LANG['plugin_fusinvsnmp']['state'][6]="Total discovery devices";
 $LANG['plugin_fusinvsnmp']['state'][7]="Total in error";
+$LANG['plugin_fusinvsnmp']['state'][8]="Devices not imported";
+$LANG['plugin_fusinvsnmp']['state'][9]="Devices linked";
+$LANG['plugin_fusinvsnmp']['state'][10]="Devices imported";
 
 $LANG['plugin_fusinvsnmp']['mapping'][1]="networking > location";
 $LANG['plugin_fusinvsnmp']['mapping'][2]="networking > firmware";
@@ -395,6 +399,7 @@ $LANG['plugin_fusinvsnmp']['codetasklog'][3]="SNMP equipment definition isn't up
 $LANG['plugin_fusinvsnmp']['codetasklog'][4]="Add the item";
 $LANG['plugin_fusinvsnmp']['codetasklog'][5]="Update the item";
 $LANG['plugin_fusinvsnmp']['codetasklog'][6]="Inventory started";
+$LANG['plugin_fusinvsnmp']['codetasklog'][7]="Detail";
 
 $LANG['plugin_fusinvsnmp']['legend'][0]="Connection with a switch or a server in trunk or tagged mode";
 $LANG['plugin_fusinvsnmp']['legend'][1]="Other connections (with a computer, a printer...)";

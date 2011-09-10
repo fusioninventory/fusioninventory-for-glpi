@@ -83,11 +83,11 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
       echo "<th>".$LANG['joblist'][0]."</th>";
       echo "<th>".$LANG['plugin_fusinvsnmp']['state'][4]."</th>";
       echo "<th>".$LANG['plugin_fusinvsnmp']['state'][5]."</th>";
-      echo "<th>totaltime execution</th>";
-      echo "<th>ratio nb/s</th>";
-      echo "<th>nbthreads</th>";
-      echo "<th>nb query</th>";
-      echo "<th>nb error</th>";
+      echo "<th>".$LANG['job'][20]."</th>";
+      echo "<th>".$LANG['plugin_fusinvsnmp']['snmp'][55]."</th>";
+      echo "<th>".$LANG['plugin_fusinvsnmp']['agents'][24]."</th>";
+      echo "<th>".$LANG['plugin_fusioninventory']['task'][48]."</th>";
+      echo "<th>".$LANG['common'][63]."</th>";
       echo "</tr>";
 
       $sql = "SELECT `glpi_plugin_fusioninventory_taskjobstatus`.*
