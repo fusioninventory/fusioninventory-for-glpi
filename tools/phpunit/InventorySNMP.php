@@ -705,7 +705,7 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
          if ((string)$child->IFTYPE == '6') {
             
             $a_ports = $NetworkPort->find("`itemtype`='".$itemtype."' AND `items_id`='".$items_id."'
-                                          AND `name` IN ('".(string)$child->IFNAME."', '".(string)$child->IFDESCR."')");
+                                          AND (`name` = '".(string)$child->IFNAME."' OR `name` = '".(string)$child->IFDESCR."')");
             $this->assertEquals(count($a_ports), 1 , 'Found more than 1 port in DB ('.count($a_ports).' ports instead 1 for port '.(string)$child->IFDESCR.')['.$xmlFile.']');
            
             $data = array();

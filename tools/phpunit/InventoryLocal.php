@@ -1,5 +1,8 @@
 <?php
 
+ini_set("memory_limit", "-1");
+ini_set("max_execution_time", "0");
+
 define('PHPUnit_MAIN_METHOD', 'Plugins_Fusioninventory_InventoryLocal::main');
 
 if (!defined('GLPI_ROOT')) {
@@ -111,60 +114,66 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
     public function testSendinventories() {
       
       $MyDirectory = opendir("xml/inventory_local");
+      $k = 0;
       while(false !== ($Entry = readdir($MyDirectory))) {
          if(is_dir('xml/inventory_local/'.$Entry)&& $Entry != '.' && $Entry != '..') {
             $myVersion = opendir("xml/inventory_local/".$Entry);
             while(false !== ($xmlFilename = readdir($myVersion))) {
                if ($xmlFilename != '.' && $xmlFilename != '..') {
-
                   // We have the XML of each computer inventory
                   $xml = simplexml_load_file("xml/inventory_local/".$Entry."/".$xmlFilename,'SimpleXMLElement', LIBXML_NOCDATA);
+                  if ($xml->asXML()) {
+echo "************************\n";
+echo "Memory : ".memory_get_usage()." / ".memory_get_peak_usage()."\n";
+                     $deviceid_ok = 0;
+                     if (!empty($xml->DEVICEID)) {
+                        $deviceid_ok = 1;
+                     }
+                     $this->assertEquals($deviceid_ok, 1 , 'Problem on XML, DEVICEID of file xml/inventory_local/'.$Entry.'/'.$xmlFilename.' not good!');
 
-                  $deviceid_ok = 0;
-                  if (!empty($xml->DEVICEID)) {
-                     $deviceid_ok = 1;
-                  }
-                  $this->assertEquals($deviceid_ok, 1 , 'Problem on XML, DEVICEID of file xml/inventory_local/'.$Entry.'/'.$xmlFilename.' not good!');
-
-                  $inputProlog = '<?xml version="1.0" encoding="UTF-8"?>
+                     $inputProlog = '<?xml version="1.0" encoding="UTF-8"?>
 <REQUEST>
   <DEVICEID>'.$xml->DEVICEID.'</DEVICEID>
   <QUERY>PROLOG</QUERY>
   <TOKEN>NTMXKUBJ</TOKEN>
 </REQUEST>';
-
-                  $this->testProlog($inputProlog, $xml->DEVICEID);
-
-                  $array = $this->testSendinventory("xml/inventory_local/".$Entry."/".$xmlFilename, $xml);
-                  $items_id = $array[0];
-                  $unknown  = $array[1];
-
-                  $this->testPrinter("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
-
-                  $this->testMonitor("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
-
-                  $this->testCPU("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
-
-                  $this->testDrive("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
-
-                  $this->testController("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
-
-                  $this->testSound("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
-
-                  $this->testVideo("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
-
-                  $this->testMemory("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
-
-                  $this->testNetwork($xml, $items_id, $unknown, "xml/inventory_local/".$Entry."/".$xmlFilename);
-
-                  $this->testSoftware("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
-
-                  $this->testHardware("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
-                  $this->testHardwareModifications("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id);
+echo "# testProlog\n";
+                     $this->testProlog($inputProlog, $xml->DEVICEID);
+                     $k++;
+echo "# testSendinventory\n";
+                     $array = $this->testSendinventory("xml/inventory_local/".$Entry."/".$xmlFilename, $xml);
+                     $items_id = $array[0];
+                     $unknown  = $array[1];
+echo "# testPrinter\n";
+                     $this->testPrinter("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+echo "# testMonitor\n";
+                     $this->testMonitor("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+echo "# testCPU\n";
+                     $this->testCPU("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+echo "# testDrive\n";
+                     $this->testDrive("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+echo "# testController\n";
+                     $this->testController("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+echo "# testSound\n";
+                     $this->testSound("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+echo "# testVideo\n";
+                     $this->testVideo("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+echo "# testMemory\n";
+                     $this->testMemory("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+echo "# testNetwork\n";
+                     $this->testNetwork($xml, $items_id, $unknown, "xml/inventory_local/".$Entry."/".$xmlFilename);
+echo "# testSoftware\n";
+                     $this->testSoftware("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+echo "# testHardware\n";
+                     $this->testHardware("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+echo "# testHardwareModifications\n";
+                     $this->testHardwareModifications("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id);
+                     echo "Number of files : ".$k."\n";
+                  }
                }
             }
          }
-      }
+      }      
    }
 
    
@@ -204,12 +213,12 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
       $emulatorAgent = new emulatorAgent;
       $emulatorAgent->server_urlpath = "/glpi080/plugins/fusioninventory/";
-      $input_xml = $xml->asXML();
-      $returnAgent = $emulatorAgent->sendProlog($input_xml);
       echo "====================\n";
       echo $xmlFile."\n";
+      $input_xml = $xml->asXML();
+      $returnAgent = $emulatorAgent->sendProlog($input_xml);
       echo $returnAgent."\n";
-
+      
       $Computer = new Computer();
 //      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
       if (isset($xml->CONTENT->BIOS->SSN)) {
