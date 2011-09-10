@@ -152,7 +152,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   } else if ((string)$child->ERROR->TYPE == "PRINTER") {
                      $itemtype = "Printer";
                   }
-                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[detail] '.(string)$child->ERROR->MESSAGE.' [['.$itemtype.'::'.$child->ERROR->ID.']]';
+                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] '.(string)$child->ERROR->MESSAGE.' [['.$itemtype.'::'.$child->ERROR->ID.']]';
                   $this->addtaskjoblog();
                } else if (!isset($child->INFO->COMMENTS)
                        AND !isset($child->INFO->NAME)
@@ -163,7 +163,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   } else if ((string)$child->TYPE == "PRINTER") {
                      $itemtype = "Printer";
                   }
-                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[detail] No informations [['.$itemtype.'::'.$child->ID.']]';
+                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] No informations [['.$itemtype.'::'.$child->ID.']]';
                   $this->addtaskjoblog();
                } else {
 //               $errors.=$this->importDevice($child);
@@ -201,7 +201,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                break;
             
             default :
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[detail] '.$LANG['plugin_fusioninventory']['errors'][22].' CONTENT : '.$child->getName();
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] '.$LANG['plugin_fusioninventory']['errors'][22].' CONTENT : '.$child->getName();
                $this->addtaskjoblog();
          }
       }
@@ -1339,12 +1339,12 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          PluginFusioninventoryUnknownDevice::writeXML($items_id, $_SESSION['SOURCE_XMLDEVICE']);
          $class->update($input);
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
-            '[detail] ==fusinvsnmp::5== Update '.PluginFusioninventoryUnknownDevice::getTypeName().' [[PluginFusioninventoryUnknownDevice::'.$items_id.']]';
+            '[==fusinvsnmp::7==] ==fusinvsnmp::5== Update '.PluginFusioninventoryUnknownDevice::getTypeName().' [[PluginFusioninventoryUnknownDevice::'.$items_id.']]';
          $this->addtaskjoblog();
 
       } else {
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
-               '[detail] Update '.$class->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
+               '[==fusinvsnmp::7==] Update '.$class->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
          $this->addtaskjoblog();
          $errors .= $this->importDevice($itemtype, $items_id);
       }
