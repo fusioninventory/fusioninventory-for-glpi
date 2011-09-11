@@ -330,6 +330,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
    
    
    function taskMenu() {
+      global $DB;
       
       if (!isset($_GET['see'])) {
          $_GET['see'] = 'next';
@@ -338,12 +339,34 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
       
-      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=next'>Next</a></th>";
-      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=previous'>Previous</a></th>";
-      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=running'>Running</a></th>";
-      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=inactives'>Inactives</a></th>";
+      // ** Get task in next execution
+      $result = $this->getTasksPlanned();      
+      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=next'>Planned for running<sup>(".
+              $DB->numrows($result).")</sup></a></th>";
+
+      // ** Get task running
+      $result = $this->getTasksRunning(); 
+      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=running'>Running<sup>(".
+              $DB->numrows($result).")</sup></a></th>";
+            
+      // ** Get task in error
       echo "<th><a href='".$_SERVER['PHP_SELF']."?see=inerror'>In error</a></th>";
-      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=all'>All</a></th>";
+      $a_tasks = $this->find();
+
+      // ** Get task active
+      $a_tasks = $this->find("`is_active` = '1'");
+      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=actives'>Actives<sup>(".
+              count($a_tasks).")</sup></a></th>";
+      
+      // ** Get task inactive
+      $a_tasks = $this->find("`is_active` = '0'");
+      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=inactives'>Inactives<sup>(".
+              count($a_tasks).")</sup></a></th>";
+      
+      // ** Get all task
+      $a_tasks = $this->find();
+      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=all'>All<sup>(".
+              count($a_tasks).")</sup></a></th>";
       
       echo "</tr>";
       echo "</table><br/>";
@@ -353,6 +376,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
    
    
    function displayTaks($condition) {
+      global $DB,$LANG;
 
       $pluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       
@@ -362,39 +386,70 @@ class PluginFusioninventoryTask extends CommonDBTM {
       switch ($condition) {
          
          case 'next':
-            $where = "`is_active` = '1'";
+            $result = $this->getTasksPlanned();
             break;
-         
-         case 'previous':
-            $where = "`is_active` = '1'";
-            break;
-         
+
          case 'running':
-            $where = "`is_active` = '1'";
-            break;
-         
-         case 'inactives':
-            $where = "`is_active` = '0'";
+            $result = $this->getTasksRunning();
             break;
          
          case 'inerror':
             $where = "`is_active` = '1'";
             break;
+
+         case 'actives':
+            $query = "SELECT * FROM `glpi_plugin_fusioninventory_tasks`
+               WHERE `is_active`='1'";
+            $result = $DB->query($query);
+            break;
+         
+         case 'inactives':
+            $query = "SELECT * FROM `glpi_plugin_fusioninventory_tasks`
+               WHERE `is_active`='0'";
+            $result = $DB->query($query);
+            break;
          
          case 'all':
-            $where = "";
+            $query = "SELECT * FROM `glpi_plugin_fusioninventory_tasks`";
+            $result = $DB->query($query);
             break;
 
       }
-      
-      $a_tasks = $this->find($where, "date_scheduled ASC");
-      foreach ($a_tasks as $data_task) {
+      while ($data_task=$DB->fetch_array($result)) {
          $this->getFromDB($data_task['id']);
          echo "<tr class='tab_bg_1'>";
-         echo "<td width='32'><img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_running.png'/></td>";
+         echo "<td width='32'>";
+         $conditionpic = $condition;
+         if ($this->fields['is_active'] == '0') {
+            $conditionpic = 'inactives';
+         } else if ($DB->numrows($this->getTasksPlanned($this->fields['id'])) > 0) {
+            $conditionpic = 'next';
+         } else if ($DB->numrows($this->getTasksRunning($this->fields['id'])) > 0){
+            $conditionpic = 'running';
+         }
+         
+         
+         
+         if ($conditionpic == 'next') {
+            echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_scheduled.png'/></td>";
+         } else if ($conditionpic == 'inactives') {
+            echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_disabled.png'/></td>";
+         } else if ($conditionpic == 'actives') {
+            echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_enabled.png'/></td>";
+         } else if ($conditionpic == 'running') {
+            echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_running.png'/></td>";
+         } else {
+            
+         }
          echo "<td>
             <a href='".$this->getFormURL()."?id=".$data_task['id']."' style='font-size: 16px; '>"
-                 .$this->getName()."</a> (".ucfirst($data_task['communication']).")<br/>&nbsp;";
+                 .$this->getName()."</a> (".ucfirst($data_task['communication'])." ";
+         if ($data_task['communication'] == "push") {
+            Html::showToolTip($LANG['plugin_fusioninventory']['task'][41]);
+         } else if ($data_task['communication'] == "pull") {
+            Html::showToolTip($LANG['plugin_fusioninventory']['task'][42]);
+         }
+         echo ")<br/>&nbsp;";
          $a_taskjobs = $pluginFusioninventoryTaskjob->find("`plugin_fusioninventory_tasks_id`='".$data_task['id']."'");
          foreach ($a_taskjobs as $data_taskjob) {
             $pluginFusioninventoryTaskjob->getFromDB($data_taskjob['id']);
@@ -412,11 +467,51 @@ class PluginFusioninventoryTask extends CommonDBTM {
          echo "</tr>";
       }
       
-      echo "</table>";
-      
+      echo "</table>";      
    }
    
    
+   
+   function getTasksRunning($tasks_id=0) {
+      global $DB;
+      
+      $where = '';
+      if ($tasks_id > 0) {
+         $where = " AND task.`id`='".$tasks_id."'
+            LIMIT 1"; 
+      }
+      
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_tasks` as task
+         WHERE execution_id != 
+            (SELECT execution_id FROM glpi_plugin_fusioninventory_taskjobs as taskjob
+               WHERE taskjob.`plugin_fusioninventory_tasks_id`=task.`id`
+               ORDER BY execution_id DESC 
+               LIMIT 1
+            )".$where;
+      return $DB->query($query);
+   }
+
+   
+   function getTasksPlanned($tasks_id=0) {
+      global $DB;
+      
+      $where = '';
+      if ($tasks_id > 0) {
+         $where = " AND task.`id`='".$tasks_id."'
+            LIMIT 1"; 
+      }
+      
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_tasks` as task
+         WHERE execution_id = 
+            (SELECT execution_id FROM glpi_plugin_fusioninventory_taskjobs as taskjob
+               WHERE taskjob.`plugin_fusioninventory_tasks_id`=task.`id`
+               ORDER BY execution_id DESC 
+               LIMIT 1
+            )
+            AND `is_active`='1'
+            AND UNIX_TIMESTAMP(date_scheduled) > '".date('U')."'".$where;
+      return $DB->query($query);
+   }
 }
 
 ?>

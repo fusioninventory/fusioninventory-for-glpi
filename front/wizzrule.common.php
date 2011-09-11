@@ -115,7 +115,7 @@ if (isset($_GET["action"])) {
    echo "<tr><th><div class='relative'><strong>" .$rulecollection->getTitle(). "</strong>";
    echo " - " .$LANG['rulesengine'][76]. "</th></tr>\n";
    echo "<tr><td class='center'>";
-   createProgressBar($LANG['rulesengine'][90]);
+   Html::createProgressBar($LANG['rulesengine'][90]);
    echo "</td></tr>\n";
    echo "</table>";
 

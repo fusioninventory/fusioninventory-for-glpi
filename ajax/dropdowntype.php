@@ -26,35 +26,27 @@
    along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David Durieux
+   Original Author of file: David DURIEUX
    Co-authors of file:
    Purpose of file:
    ----------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', '../../..');
+if (strpos($_SERVER['PHP_SELF'],"dropdowntype.php")) {
+   define('GLPI_ROOT','../../..');
+   include (GLPI_ROOT."/inc/includes.php");
+   header("Content-Type: text/html; charset=UTF-8");
+   Html::header_nocache();
 }
 
-include (GLPI_ROOT."/inc/includes.php");
+Session::checkCentralAccess();
+$value = 0;
+$title = 0;
+if (isset($_POST['value'])) {
+   $value = $_POST['value'];
+}
 
-Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","tasks");
-
-PluginFusioninventoryProfile::checkRight("fusioninventory", "task","r");
-
-PluginFusioninventoryMenu::displayMenu("mini");
-
-PluginFusioninventoryTaskjob::getAllowurlfopen();
-echo "<br/>";
-
-$pluginFusioninventoryTask = new PluginFusioninventoryTask();
-$pluginFusioninventoryTask->taskMenu();
-$pluginFusioninventoryTask->displayTaks($_GET['see']);
-
-//$_GET['target']="task.php";
-//
-//Search::show('PluginFusioninventoryTask');
-
-Html::footer();
+$PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
+$PluginFusioninventoryTaskjob->dropdownType($_POST['typename'], $_POST['method'], $value, $_POST['taskjobs_id'], "");
 
 ?>

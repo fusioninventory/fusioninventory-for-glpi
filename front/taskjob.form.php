@@ -211,8 +211,7 @@ if (isset($_POST['definition_add'])) {
    } else {
       $mytaskjob->update($_POST);
    }
-   Html::redirect($_SERVER['HTTP_REFERER']);
-   
+   Html::redirect($_SERVER['HTTP_REFERER']);   
 
 } else if (isset($_POST["delete"])) {
    // * delete taskjob

@@ -54,7 +54,7 @@ Session::checkCentralAccess();
 echo "<script type='text/javascript'>
 var select = document.getElementById('definitionlist');
 var obj = document.getElementById('".$_POST['defselectadd']."');
-var deftype = document.getElementById('".$_POST['deftypeid']."');
+var deftype = document.getElementById('".$_POST['definitiontypeid']."');
 
 var list = document.getElementById('definitionselection').innerHTML;
 
