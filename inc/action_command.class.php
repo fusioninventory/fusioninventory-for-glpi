@@ -55,7 +55,9 @@ class PluginFusinvdeployAction_Command extends CommonDBTM {
       $commands = getAllDatasFromTable('glpi_plugin_fusinvdeploy_actions_commands',
                                        "`id`='$commands_id'");
       foreach ($commands as $command) {
-         $tmp    = array('exec' => $command['exec']);
+         if (!empty($command['exec']))
+            $tmp    = array('exec' => $command['exec']);
+         else continue;
          $linked = array('PluginFusinvdeployAction_Commandstatus'      => 'retChecks',
                          'PluginFusinvdeployAction_Commandenvvariable' => 'envs');
          foreach ($linked as $class => $value) {

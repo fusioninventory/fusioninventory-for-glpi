@@ -62,10 +62,10 @@ class PluginFusinvdeployAction extends CommonDBTM {
      // printCleanArray($results);
 
       foreach ($results as $result) {
-         $actions[] = call_user_func(array($result['itemtype'], 'getActions'),$result['items_id']/*,
+         $tmp = call_user_func(array($result['itemtype'], 'getActions'),$result['items_id']/*,
                                    $actions*/);
 
-
+         if (!empty($tmp)) $actions[] = $tmp;
       }
       return $actions;
    }

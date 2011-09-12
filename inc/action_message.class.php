@@ -50,10 +50,12 @@ class PluginFusinvdeployAction_Message extends CommonDBTM {
       $commands = getAllDatasFromTable('glpi_plugin_fusinvdeploy_actions_messages',
                                        "`id`='$commands_id'");
       foreach ($commands as $command) {
-         $tmp['msg']    = array('default' => $command['message']);
-         $tmp['title']  = array('default' => $command['name']);
-         $tmp['type']   = $command['type'];
-         $response['messageBox'] = $tmp;
+         if (!empty($command['message']) || !empty($command['name'])) {
+            $tmp['msg']    = array('default' => $command['message']);
+            $tmp['title']  = array('default' => $command['name']);
+            $tmp['type']   = $command['type'];
+            $response['messageBox'] = $tmp;
+         } else continue;
       }
 
       return $response;
