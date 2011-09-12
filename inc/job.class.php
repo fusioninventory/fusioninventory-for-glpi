@@ -117,16 +117,18 @@ class PluginFusinvdeployJob {
 
          $jobstatus = PluginFusioninventoryTaskjoblog::getByUniqID($p['uuid']);
 
-         if ($update_job) {
+         /*if ($update_job) {
             $taskjob = new PluginFusioninventoryTaskjoblog();
             $taskjob->update($jobstatus);
-         }
+         }*/
          $taskjoblog = new PluginFusioninventoryTaskjoblog();
          $tmp['plugin_fusioninventory_taskjobstatus_id'] = $jobstatus['id'];
          $tmp['itemtype']                                = $jobstatus['itemtype'];
          $tmp['items_id']                                = $jobstatus['items_id'];
          $tmp['comment']                                 = $p['msg'];
          $tmp['date']                                    = date("Y-m-d H:i:s");
+
+         $pass_addlog = false;
 
          // add log message
          if (is_array($p['log'])/* && $tmp['comment'] == ""*/) {
@@ -143,16 +145,29 @@ class PluginFusinvdeployJob {
          } elseif ($p['currentStep'] != '') {
             $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_RUNNING;
             if ($tmp['comment'] == '') $tmp['comment'] = $p['currentStep'];
+            if ($p['status'] != '') {
+               $tmp['comment'] .= " : ".$p['status'];
+               if ($p['status'] == 'ko') $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_ERROR;
+               if ($p['status'] == 'ok') $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_OK;
+            }
          } elseif ($p['status'] == 'ok') {
-            $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_OK;
+            $pass_addlog = true;
          } else {
             $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_STARTED;
          }
 
-         $taskjoblog->add($tmp);
+         if (!$pass_addlog) {
+            $taskjoblog->addTaskjoblog(
+                  $tmp['plugin_fusioninventory_taskjobstatus_id'],
+                  $tmp['items_id'],
+                  $tmp['itemtype'],
+                  $tmp['state'],
+                  $tmp['comment']
+            );
+         }
 
          //change task to finish and replanned if retry available
-         if ($p['status'] != "") {
+         if ($p['status'] != "" && $p['currentStep'] == '') {
             $error = "0";
             if ($p['status'] == 'ko') $error = "1";
             //set status to finished and reinit job

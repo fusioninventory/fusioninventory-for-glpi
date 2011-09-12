@@ -254,6 +254,8 @@ var taskJobGrid = new Ext.grid.GridPanel({
             taskJobGrid.store.remove(r);
          }
 
+         taskJobStore.save();
+
          /*//taskJobStore.save();
          console.log(taskJobStore);
          taskJobStore.fireEvent("destroy");
