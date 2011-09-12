@@ -47,18 +47,13 @@ class PluginFusinvdeployFile_Mirror extends CommonDBTM {
       $DB->query($query);
    }
 
-   static function getForFile($files_id) {
+   static function getList() {
       global $CFG_GLPI;
-      $results = getAllDatasFromTable('glpi_plugin_fusinvdeploy_files_mirrors',
-                                      "`plugin_fusinvdeploy_files_id`='$files_id'");
+      $results = getAllDatasFromTable('glpi_plugin_fusinvdeploy_mirrors');
 
       $mirrors = array();
       foreach ($results as $result) {
-         $mirror = new PluginFusinvdeployMirror();
-         if ($result['plugin_fusinvdeploy_mirrors_id']) {
-            $mirror->getFromDB($result['plugin_fusinvdeploy_mirrors_id']);
-            $mirrors[] = $mirror->fields['url'];
-         }
+          $mirrors[] = $result['url'];
       }
 
       //always add default mirror (this server)
