@@ -167,7 +167,7 @@ class PluginFusinvdeployJob {
          }
 
          //change task to finish and replanned if retry available
-         if ($p['status'] != "" && $p['currentStep'] == '') {
+         if ($p['status'] != "" && $p['currentStep'] != "" || $p['status'] == "ko") {
             $error = "0";
             if ($p['status'] == 'ko') $error = "1";
             //set status to finished and reinit job
