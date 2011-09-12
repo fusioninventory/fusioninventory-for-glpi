@@ -394,14 +394,9 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       echo "<tr><th colspan='4'>".$LANG['buttons'][0]."</th></tr>";
       echo "<tr>";
 
-      echo "<td class='left'>".$LANG['common'][17]." : </td>";
+      echo "<td class='left'></td>";
       echo "<td class='left'>";
-      $itemtype = array(
-         'Computer'
-      );
-      echo "<select name='itemtype' id='group_search_itemtype'>
-      <option>Computer</option>
-      </select>";
+      echo "<input type='hidden' name='itemtype' id='group_search_itemtype' value='Computer' />";
       echo "</td>";
 
       echo "<td>".$LANG['common'][15]."&nbsp;: </td>";
@@ -545,7 +540,8 @@ class PluginFusinvdeployGroup extends CommonDBTM {
          'operatingsystems_id'   => $params['operatingsystems_id'],
          'operatingsystem_name'  => $params['operatingsystem_name'],
          'otherserial'           => $params['otherserial'],
-         'name'                  => $params['name']
+         'name'                  => $params['name'],
+         'limit'                 => 100
       );
 
       if ($params['operatingsystems_id'] != 0) unset($params['operatingsystem_name']);
@@ -553,22 +549,41 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       $datas = PluginWebservicesMethodInventaire::methodListInventoryObjects($params, '');
 
       echo "<div class='center'>";
-      echo "<table class='tab_cadrehov'>";
 
+      if ($type == 'static') {
+         self::openArrowMassiveDown("group_search");
+         echo "<input type='submit' class='submit' value="
+            .$LANG['buttons'][8]." name='additem' />";
+         closeArrowMassive();
+      }
+
+      $nb_col = 4;
+
+      echo "<table class='tab_cadrehov'>";
       echo "<thead><tr>";
       if ($type == 'static') echo "<th></th>";
-      echo "<th>".$LANG['common'][16]."</th>";
+      echo "<th colspan='".($nb_col*2)."'>".$LANG['common'][16]."</th>";
       echo "</tr></thead>";
 
       $stripe = true;
+      $computer = new Computer;
+      $i=1;
+      echo "<tr class='tab_bg_".(((int)$stripe)+1)."'>";
       foreach ($datas as $row) {
-         $stripe =! $stripe;
-         echo "<tr class='tab_bg_".(((int)$stripe)+1)."'>";
-         if ($type == 'static')
-            echo "<td><input type='checkbox' name='item[".$row["id"]."]' value='".$row["id"]."'></td>";
-         echo "<td colspan='4'>".$row['name']."</td>";
-         echo "</tr>";
+         $computer->getFromDB($row["id"]);
+         if ($type == 'static') {
+            echo "<td width='1%'><input type='checkbox' name='item[".$row["id"]."]' value='".$row["id"]."'></td>";
+         }
+         echo "<td>".$computer->getLink(true)."</td>";
+
+         if (($i % $nb_col) == 0) {
+            $stripe =! $stripe;
+            echo "</tr><tr class='tab_bg_".(((int)$stripe)+1)."'>";
+         }
+         $i++;
       }
+      echo "</tr>";
+      echo "</table>";
 
       if ($type == 'static') {
          openArrowMassive("group_search");
@@ -577,7 +592,6 @@ class PluginFusinvdeployGroup extends CommonDBTM {
          closeArrowMassive();
       }
 
-      echo "</table>";
       echo "</div>";
    }
 
@@ -611,5 +625,24 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       echo "<input title=\"".$LANG['buttons'][0]." (".$CFG_GLPI['ajax_wildcard']." ".$LANG['search'][1].")\"
             type='text' value='$value' ondblclick=\"this.value='".
              $CFG_GLPI["ajax_wildcard"]."';\" id='search_$id' name='____data_$id' size='$size'>\n";
+   }
+
+   static function openArrowMassiveDown($formname, $fixed=false, $width='80%') {
+      global $CFG_GLPI, $LANG;
+
+      if ($fixed) {
+         echo "<table class='tab_glpi' width='950px'>";
+      } else {
+         echo "<table class='tab_glpi' width='80%'>";
+      }
+
+      echo "<tr><td><img src='".$CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/pics/arrow-left-down.png' alt=''></td>";
+      echo "<td class='center'>";
+      echo "<a onclick= \"if ( markCheckboxes('$formname') ) return false;\"
+             href='#'>".$LANG['buttons'][18]."</a></td>";
+      echo "<td>/</td><td class='center'>";
+      echo "<a onclick= \"if ( unMarkCheckboxes('$formname') ) return false;\"
+             href='#'>".$LANG['buttons'][19]."</a></td>";
+      echo "<td class='left' width='".$width."'>";
    }
 }
