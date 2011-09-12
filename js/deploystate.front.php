@@ -253,18 +253,21 @@ var taskJobLogsTreeGrid = new Ext.ux.tree.TreeGrid({
                createGridTooltip.defer(1, this, ['', contentId, message]);
                return('<div id="' + contentId + '"></div>');
             }
-
+            return '';
          }
       })
    },{
       dataIndex: 'type',
-      hidden: true
+      hidden: true,
+      width: 0
    },{
       dataIndex: 'status_id',
-      hidden: true
+      hidden: true,
+      width: 0
    },{
       dataIndex: 'logs_id',
-      hidden: true
+      hidden: true,
+      width: 0
    }],
    root : new Ext.tree.AsyncTreeNode({
       iconCls :'no-icon',
