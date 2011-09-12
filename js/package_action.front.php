@@ -46,7 +46,7 @@ $width_left_fieldset_default  = $width_left-125;
 $width_layout = $width_left + $width_right;
 $height_layout = ($height_left>$height_right)?$height_left:$height_right;
 
-$column_width = array(30,150,400,1,1,1,1,1,1,1,1,1,1);
+$column_width = array(30,180,370,1,1,1,1,1,1,1,1,1,1);
 
 $label_width = 75;
 
@@ -159,12 +159,11 @@ var {$render}actionGridReader = new Ext.data.JsonReader({
             '{$render}messagetype']
 });
 
-var {$render}actionGridStore = new Ext.data.GroupingStore({
+var {$render}actionGridStore = new Ext.data.Store({
    url: '../ajax/package_action.data.php?package_id={$id}&render={$render}',
    autoLoad: true,
    reader: {$render}actionGridReader,
-   sortInfo: {field: '{$render}id', direction: "ASC"},
-   groupField : '{$render}itemtype'
+   sortInfo: {field: '{$render}id', direction: "ASC"}
 });
 
 //define grid
@@ -180,15 +179,6 @@ var {$render}actionGrid = new Ext.grid.GridPanel({
    style:'margin-bottom:5px',
    title: '{$LANG['plugin_fusinvdeploy']['form']['title'][8]} ({$title2})',
    stateId: '{$render}actionGrid',
-   view: new Ext.grid.GroupingView({
-      forceFit:true,
-      groupTextTpl: '{text}',
-      startCollapsed : true,
-      hideGroupedColumn: true,
-      forceFit : true,
-      emptyText: '',
-      emptyGroupText: ''
-   }),
    tbar: [{
       text: '{$LANG['plugin_fusinvdeploy']['form']['title'][6]}',
       iconCls: 'exticon-add',
