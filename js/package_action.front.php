@@ -494,8 +494,8 @@ function {$render}Command_refreshDynFieldset(val) {
       case 'PluginFusinvdeployAction_Mkdir':
          {$render}Command_dynFieldset.add({$render}Command_fieldset_item_PluginFusinvdeployAction_Mkdir);
          break;
-      case 'PluginFusinvdeployAction_Message':
-         {$render}Command_dynFieldset.add({$render}Command_fieldset_item_PluginFusinvdeployAction_Message);
+      /*case 'PluginFusinvdeployAction_Message':
+         {$render}Command_dynFieldset.add({$render}Command_fieldset_item_PluginFusinvdeployAction_Message);*/
          break;
       default:
          {$render}Command_dynFieldset.add({$render}Command_fieldset_item_default);
@@ -609,8 +609,8 @@ var {$render}actionForm = new Ext.FormPanel({
             ['PluginFusinvdeployAction_Command', '{$LANG['plugin_fusinvdeploy']['package'][1]}'],
             ['PluginFusinvdeployAction_Move',    '{$LANG['plugin_fusinvdeploy']['package'][18]}'],
             ['PluginFusinvdeployAction_Delete',  '{$LANG['plugin_fusinvdeploy']['package'][20]}'],
-            ['PluginFusinvdeployAction_Mkdir',   '{$LANG['plugin_fusinvdeploy']['package'][27]}'],
-            ['PluginFusinvdeployAction_Message', '{$LANG['plugin_fusinvdeploy']['package'][21]}']
+            ['PluginFusinvdeployAction_Mkdir',   '{$LANG['plugin_fusinvdeploy']['package'][27]}']/*,
+            ['PluginFusinvdeployAction_Message', '{$LANG['plugin_fusinvdeploy']['package'][21]}']*/
          ]
       }),
       mode: 'local',
