@@ -211,6 +211,8 @@ class PluginFusinvdeployAction extends CommonDBTM {
    }
 
    public function createData($params) {
+      global $DB;
+
       $package_id = $params['package_id'];
       $render = $params['render'];
 
@@ -251,6 +253,18 @@ class PluginFusinvdeployAction extends CommonDBTM {
                       'items_id'                       => $items_id,
                       'plugin_fusinvdeploy_orders_id'  => $order_id);
 
+      //get max previous ranking
+      $sql_ranking = "SELECT ranking FROM ".$this->getTable()."
+         WHERE plugin_fusinvdeploy_orders_id = '$order_id' ORDER BY ranking DESC";
+      $res_ranking = $DB->query($sql_ranking);
+      if ($DB->numrows($res_ranking) == 0) $ranking = 0;
+      else {
+         $data_ranking = $DB->fetch_array($res_ranking);
+         $ranking = $data_ranking['ranking']+1;
+      }
+      $data['ranking'] = $ranking;
+
+      //add this new action
       $newId = $this->add($data);
 
 
