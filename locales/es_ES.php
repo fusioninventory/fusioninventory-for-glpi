@@ -83,12 +83,12 @@ $LANG['plugin_fusinvinventory']['setup'][21]="Componentes";
 $LANG['plugin_fusinvinventory']['setup'][22]="Importación global";
 $LANG['plugin_fusinvinventory']['setup'][23]="No importar";
 $LANG['plugin_fusinvinventory']['setup'][24]="Importación única";
-$LANG['plugin_fusinvinventory']['setup'][25]="Registrar";
+$LANG['plugin_fusinvinventory']['setup'][25]="Registro";
 $LANG['plugin_fusinvinventory']['setup'][26]="Proceso";
 $LANG['plugin_fusinvinventory']['setup'][27]="Importación única por número de serie";
 $LANG['plugin_fusinvinventory']['setup'][28]="Transferencia automática de ordenadores";
 $LANG['plugin_fusinvinventory']['setup'][29]="Modelo para la transferencia automática de ordenadores a otra entidad";
-$LANG['plugin_fusinvinventory']['setup'][30]="Controlador de red";
+$LANG['plugin_fusinvinventory']['setup'][30]="Unidad de red";
 $LANG['plugin_fusinvinventory']['setup'][31]="Tarjeta de red virtual";
 $LANG['plugin_fusinvinventory']['setup'][32]="Esta opción no importará este elemento";
 $LANG['plugin_fusinvinventory']['setup'][33]="Esta opción mezclará elementos con igual nombre para reducir su número si su gestión individual no es importante";
@@ -98,7 +98,7 @@ $LANG['plugin_fusinvinventory']['setup'][36]="Estado por defecto";
 
 $LANG['plugin_fusinvinventory']['title'][0]="FusionInventory INVENTORY";
 $LANG['plugin_fusinvinventory']['title'][1]="Inventario local";
-$LANG['plugin_fusinvinventory']['title'][2]="Inventario de VMware ESX";
+$LANG['plugin_fusinvinventory']['title'][2]="Inventario de servidores VMware ESX";
 
-$LANG['plugin_fusinvinventory']['vmwareesx'][0]="VMware host";
+$LANG['plugin_fusinvinventory']['vmwareesx'][0]="Servidor VMware ESX";
 ?>

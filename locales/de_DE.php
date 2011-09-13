@@ -56,7 +56,7 @@ $LANG['plugin_fusinvinventory']['integrity'][1]="Nur in der letzten Inventarisie
 $LANG['plugin_fusinvinventory']['menu'][0]="XML-Datei eines Agents importieren";
 $LANG['plugin_fusinvinventory']['menu'][1]="Kriterien";
 $LANG['plugin_fusinvinventory']['menu'][2]="Schwarze Liste";
-$LANG['plugin_fusinvinventory']['menu'][4]="Data integrity check";
+$LANG['plugin_fusinvinventory']['menu'][4]="Datenintegritätscheck";
 
 $LANG['plugin_fusinvinventory']['profile'][2]="Existenzregeln";
 $LANG['plugin_fusinvinventory']['profile'][3]="Manueller XML-Import";
@@ -84,7 +84,7 @@ $LANG['plugin_fusinvinventory']['setup'][22]="Globaler Import";
 $LANG['plugin_fusinvinventory']['setup'][23]="Kein Import";
 $LANG['plugin_fusinvinventory']['setup'][24]="Einmaliger Import";
 $LANG['plugin_fusinvinventory']['setup'][25]="Registrierungsdatei";
-$LANG['plugin_fusinvinventory']['setup'][26]="Processes";
+$LANG['plugin_fusinvinventory']['setup'][26]="Prozesse";
 $LANG['plugin_fusinvinventory']['setup'][27]="Einmaliger Import via Seriennummer";
 $LANG['plugin_fusinvinventory']['setup'][28]="Automatischer Computertransfer";
 $LANG['plugin_fusinvinventory']['setup'][29]="Modell für den automatischen Computertransfer in eine andere Entität.";
@@ -98,7 +98,7 @@ $LANG['plugin_fusinvinventory']['setup'][36]="Standardstatus";
 
 $LANG['plugin_fusinvinventory']['title'][0]="FusionInventory INVENTORY";
 $LANG['plugin_fusinvinventory']['title'][1]="Lokales Inventar";
-$LANG['plugin_fusinvinventory']['title'][2]="VMware host remote inventory";
+$LANG['plugin_fusinvinventory']['title'][2]="VMware host, Remoteinventar";
 
 $LANG['plugin_fusinvinventory']['vmwareesx'][0]="VMware host";
 ?>
