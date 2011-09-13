@@ -154,7 +154,8 @@ class PluginFusinvdeployAction extends CommonDBTM {
                       items_id as {$render}items_id,
                       ranking as {$render}ranking
                FROM `glpi_plugin_fusinvdeploy_actions`
-               WHERE `id` = '$id'";
+               WHERE `id` = '$id'
+               ORDER BY ranking";
       $qry  = $DB->query($sql);
 
       $nb   = $DB->numrows($qry);
@@ -165,6 +166,8 @@ class PluginFusinvdeployAction extends CommonDBTM {
       $itemtype = $row[$render.'itemtype'];
       $action   = new $itemtype();
       $action->getFromDB($row[$render.'items_id']);
+
+      $row[$render.'ranking'] = $action->getField('ranking');
 
       if($action instanceof PluginFusinvdeployAction_Command) {
          $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['form']['label'][2]." : </b> ";
@@ -368,6 +371,67 @@ class PluginFusinvdeployAction extends CommonDBTM {
       }
 
       return $res;
+   }
+
+
+   function update_ranking($params = array())  {
+      $id_moved = $params['row_moved'];
+      $id_destination = $params['row_destination'];
+      $package_id = $params['package_id'];
+      $render = $params['render'];
+
+      //get order id
+      $render_type   = PluginFusinvdeployOrder::getRender($render);
+      $order_id = PluginFusinvdeployOrder::getIdForPackage($package_id,$render_type);
+
+      //get rankings
+      $action_moved = new $this;
+      $action_moved->getFromDB($id_moved);
+      $ranking_moved = $action_moved->getField('ranking');
+      $action_destination = new $this;
+      $action_destination->getFromDB($id_destination);
+      $ranking_destination = $action_destination->getField('ranking');
+
+      $actions = new $this;
+      if ($ranking_moved < $ranking_destination) {
+         //get all rows between this two rows
+         $rows_id = $actions->find("plugin_fusinvdeploy_orders_id = '$order_id'
+               AND ranking > '$ranking_moved'
+               AND ranking <= '$ranking_destination'"
+         );
+
+         //decrement ranking for all this rows
+         foreach($rows_id as $id => $values) {
+            $options = array();
+            $options['id'] = $id;
+            $options['ranking'] = $values['ranking']-1;
+            $actions->update($options);
+            unset($options);
+         }
+      } else {
+         //get all rows between this two rows
+         $rows_id = $actions->find("plugin_fusinvdeploy_orders_id = '$order_id'
+               AND ranking < '$ranking_moved'
+               AND ranking >= '$ranking_destination'"
+         );
+
+         //decrement ranking for all this rows
+         foreach($rows_id as $id => $values) {
+            $options = array();
+            $options['id'] = $id;
+            $options['ranking'] = $values['ranking']+1;
+            $actions->update($options);
+            unset($options);
+         }
+      }
+
+      //set ranking to moved row
+      $options['id'] = $id_moved;
+      $options['ranking'] = $ranking_destination;
+      $action_moved->update($options);
+
+      return "{success:true}";
+
    }
 }
 

@@ -131,6 +131,10 @@ var {$render}actionColumns =  [{
    header: '{$LANG['plugin_fusinvdeploy']['form']['action_message'][3]}',
    width: {$column_width[12]},
    dataIndex: '{$render}messagetype'
+}, {
+   id: '{$render}ranking',
+   hidden:true,
+   dataIndex: '{$render}ranking'
 }];
 
 //define renderer for grid columns
@@ -156,14 +160,14 @@ var {$render}actionGridReader = new Ext.data.JsonReader({
    root: '{$render}actions',
    fields: ['{$render}id', '{$render}itemtype', '{$render}value', '{$render}from', '{$render}to',
             '{$render}exec', '{$render}path', '{$render}messagename', '{$render}messagevalue',
-            '{$render}messagetype']
+            '{$render}messagetype', '{$render}ranking']
 });
 
 var {$render}actionGridStore = new Ext.data.Store({
    url: '../ajax/package_action.data.php?package_id={$id}&render={$render}',
    autoLoad: true,
    reader: {$render}actionGridReader,
-   sortInfo: {field: '{$render}id', direction: "ASC"}
+   sortInfo: {field: '{$render}ranking', direction: "ASC"}
 });
 
 //define grid
@@ -254,11 +258,31 @@ var {$render}actionGrid = new Ext.grid.GridPanel({
                   if(dd.getDragData(e)) {
                      var cindex=dd.getDragData(e).rowIndex;
                      if(typeof(cindex) != "undefined") {
+
+                        //get rows id
+                        var id_moved = data.selections[0].data.{$render}id;
+                        var id_destination = dd.getDragData(e).selections[0].data.{$render}id;
+
+                        //save reorder
+                        /*Ext.Ajax.request({
+                           url : '../ajax/package_action.reorder.php',
+                           params : {
+                              row_moved: id_moved,
+                              row_destination: id_destination,
+                              package_id: '{$id}',
+                              render: '{$render}'
+                           },
+                           method: 'GET',
+                           success: function ( result, request ) {
+                              ds.reload();
+                           }
+                        });*/
+
                         for(i = 0; i <  rows.length; i++) {
-                           ds.remove(ds.getById(rows[i].id));
-                        }
-                        ds.insert(cindex,data.selections);
-                        sm.clearSelections();
+                        ds.remove(ds.getById(rows[i].id));
+                                }
+                                ds.insert(cindex,data.selections);
+                                sm.clearSelections();
                      }
                   }
                }
