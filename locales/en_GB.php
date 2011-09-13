@@ -199,11 +199,11 @@ $LANG['plugin_fusinvdeploy']['task'][18] = "---";
 $LANG['plugin_fusinvdeploy']['task'][19] = "Edit impossible, this task is active";
 $LANG['plugin_fusinvdeploy']['task'][20] = "This task is active. delete denied";
 
-$LANG['plugin_fusinvdeploy']['group'][0] = "Groups";
-$LANG['plugin_fusinvdeploy']['group'][1] = "Static group";
-$LANG['plugin_fusinvdeploy']['group'][2] = "dynamic group";
-$LANG['plugin_fusinvdeploy']['group'][3] = "Group";
-$LANG['plugin_fusinvdeploy']['group'][4] = "Add group";
+$LANG['plugin_fusinvdeploy']['group'][0] = "Sets";
+$LANG['plugin_fusinvdeploy']['group'][1] = "Static set";
+$LANG['plugin_fusinvdeploy']['group'][2] = "dynamic set";
+$LANG['plugin_fusinvdeploy']['group'][3] = "Set";
+$LANG['plugin_fusinvdeploy']['group'][4] = "Add set";
 $LANG['plugin_fusinvdeploy']['group'][5] = "Si aucune ligne de la liste n'est selectionné, le champs texte de gauche sera utilisé pour la recherche";
 
 ?>

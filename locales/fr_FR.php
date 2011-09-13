@@ -199,10 +199,10 @@ $LANG['plugin_fusinvdeploy']['task'][18] = "---";
 $LANG['plugin_fusinvdeploy']['task'][19] = "Edition impossible, cette tâche est active";
 $LANG['plugin_fusinvdeploy']['task'][20] = "Tâche active, suppression impossible";
 
-$LANG['plugin_fusinvdeploy']['group'][0] = "Groupes";
-$LANG['plugin_fusinvdeploy']['group'][1] = "Groupe statique";
-$LANG['plugin_fusinvdeploy']['group'][2] = "Groupe dynamique";
-$LANG['plugin_fusinvdeploy']['group'][3] = "Groupe";
-$LANG['plugin_fusinvdeploy']['group'][4] = "Ajouter groupe";
+$LANG['plugin_fusinvdeploy']['group'][0] = "Ensembles d'ordinateurs";
+$LANG['plugin_fusinvdeploy']['group'][1] = "Ensemble statique";
+$LANG['plugin_fusinvdeploy']['group'][2] = "Ensemble dynamique";
+$LANG['plugin_fusinvdeploy']['group'][3] = "Ensemble d'ordinateur";
+$LANG['plugin_fusinvdeploy']['group'][4] = "Ajouter ensemble";
 $LANG['plugin_fusinvdeploy']['group'][5] = "Si aucune ligne de la liste n'est selectionné, le champ texte de gauche sera utilisé pour la recherche";
 ?>
