@@ -36,6 +36,7 @@ define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
 
 if(!isset($_GET['tasks_id'])) exit;
+if($_REQUEST['tasks'] == '') $_REQUEST['tasks'] = json_encode(array());
 
 $taskjob = new PluginFusinvdeployTaskjob;
 $res = $taskjob->saveDatas($_REQUEST);

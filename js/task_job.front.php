@@ -254,14 +254,18 @@ var taskJobGrid = new Ext.grid.GridPanel({
             taskJobGrid.store.remove(r);
          }
 
+         //mark all row a edited
+         taskJobGrid.getStore().getRange().forEach(function(r){
+            r.set('modified', 'true');
+         });
+
          taskJobStore.save();
 
-         /*//taskJobStore.save();
-         console.log(taskJobStore);
-         taskJobStore.fireEvent("destroy");
-         taskJobStore.proxy.fireEvent("destroy");*/
-
          if(taskJobStore.data.length == 0) {
+            Ext.Ajax.request({
+               url : '../ajax/task_job.save.php?tasks_id={$id}' ,
+               params : { tasks : '' }
+            });
             taskJobForm.collapse();
             taskJobForm.buttons[0].setDisabled(true);
          } else {

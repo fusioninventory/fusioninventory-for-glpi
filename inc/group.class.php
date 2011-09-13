@@ -660,7 +660,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       echo "<div class='center'><br />";
       $nb_col = 5;
 
-      echo "<table class='tab_cadrehov' width='100%'>";
+      echo "<table class='tab_cadrehov' style='width:950px'>";
       echo "<thead><tr>";
       if ($type == 'static') echo "<th></th>";
       echo "<th colspan='".($nb_col*2)."'>".$LANG['Menu'][0]."</th>";
