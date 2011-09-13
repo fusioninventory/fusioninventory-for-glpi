@@ -151,6 +151,10 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
             'value' => 'Computer',
          ),
          array(
+            'name' => $LANG['common'][35],
+            'value' => 'Group',
+         ),
+         array(
             'name' => $LANG['plugin_fusinvdeploy']['group'][0],
             'value' => 'PluginFusinvdeployGroup',
          )
@@ -186,6 +190,22 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
                      $i++;
                   }
 
+                  $res = json_encode($res);
+                  break;
+               case 'Group':
+                  $like = "1";
+                  if (isset($params['query'])) {
+                     $like = "name LIKE '%".mysql_escape_string($params['query'])."'";
+                  }
+                  $group = new Group;
+                  $group_datas = $group->find($like);
+                  $i=0;
+                  foreach($group_datas as $group_data) {
+                     $res['action_selections'][$i]['id'] = $group_data['id'];
+                     $res['action_selections'][$i]['name'] = $group_data['name'];
+                     $i++;
+                  }
+                  //logDebug($res);
                   $res = json_encode($res);
                   break;
                case 'PluginFusinvdeployGroup':

@@ -134,6 +134,9 @@ function renderActionSelection(val, metaData, record) {
       case 'PluginFusinvdeployGroup':
          var img = '<img src="../pics/ext/group.png">&nbsp;';
          break;
+      case 'Group':
+         var img = '<img src="../pics/ext/group_user">&nbsp;';
+         break;
       default:
          var img = '';
    }
