@@ -55,7 +55,7 @@ $LANG['plugin_fusioninventory']['agents'][41]="Servicio URL";
 $LANG['plugin_fusioninventory']['agents'][42]="Agente de usuario";
 $LANG['plugin_fusioninventory']['agents'][43]="Información para la configuración del agente";
 $LANG['plugin_fusioninventory']['agents'][44]="URL del servidor";
-$LANG['plugin_fusioninventory']['agents'][45]="Exceptiones";
+$LANG['plugin_fusioninventory']['agents'][45]="Excepciones";
 $LANG['plugin_fusioninventory']['agents'][4]="Último contacto";
 $LANG['plugin_fusioninventory']['agents'][6]="desactivado";
 
@@ -73,7 +73,7 @@ $LANG['plugin_fusioninventory']['codetasklog'][3]="Importación denegada";
 $LANG['plugin_fusioninventory']['config'][0]="Frecuencia de inventario (en horas)";
 
 $LANG['plugin_fusioninventory']['credential'][1]="Credencial para inventario remoto";
-$LANG['plugin_fusioninventory']['credential'][2]="Inventario de dispotivo remoto";
+$LANG['plugin_fusioninventory']['credential'][2]="Inventario de servidor VMware ESX";
 $LANG['plugin_fusioninventory']['credential'][3]="Credenciales";
 
 $LANG['plugin_fusioninventory']['discovery'][5]="Número de dispositivos importados";
@@ -112,11 +112,11 @@ $LANG['plugin_fusioninventory']['locks'][0]="Eliminar bloqueos";
 $LANG['plugin_fusioninventory']['locks'][1]="Añadir bloqueos";
 
 $LANG['plugin_fusioninventory']['menu'][1]="Gestión de agentes";
-$LANG['plugin_fusioninventory']['menu'][2]="Rango de direcciones IP (configuración)";
+$LANG['plugin_fusioninventory']['menu'][2]="Rangos de direcciones IP";
 $LANG['plugin_fusioninventory']['menu'][3]="Menú";
-$LANG['plugin_fusioninventory']['menu'][4]="Dispositivo desconocido";
-$LANG['plugin_fusioninventory']['menu'][5]="Autenticación de dispositivos remotos (VMware)";
-$LANG['plugin_fusioninventory']['menu'][6]="Dispositivos remotos a inventariar (VMware)";
+$LANG['plugin_fusioninventory']['menu'][4]="Dispositivos desconocidos";
+$LANG['plugin_fusioninventory']['menu'][5]="Autenticación en servidores VMware ESX";
+$LANG['plugin_fusioninventory']['menu'][6]="Servidores VMware ESX";
 $LANG['plugin_fusioninventory']['menu'][7]="Acciones en curso";
 
 $LANG['plugin_fusioninventory']['processes'][1]="PID";
@@ -136,12 +136,12 @@ $LANG['plugin_fusioninventory']['rules'][15]="UUID";
 $LANG['plugin_fusioninventory']['rules'][16]="Etiqueta FusionInventory";
 $LANG['plugin_fusioninventory']['rules'][17]="Importación denegada";
 $LANG['plugin_fusioninventory']['rules'][18]="Dispositivo creado";
-$LANG['plugin_fusioninventory']['rules'][2]="Reglas de importación y enlace del equipo";
+$LANG['plugin_fusioninventory']['rules'][2]="Reglas de importación y actualización de bienes";
 $LANG['plugin_fusioninventory']['rules'][3]="Buscar equipo GLPI con estado";
 $LANG['plugin_fusioninventory']['rules'][4]="Entidad de destino del equipo";
-$LANG['plugin_fusioninventory']['rules'][5]="Enlace FusionInventory";
-$LANG['plugin_fusioninventory']['rules'][6]="Enlazar si es posible. Si no, denegar importación";
-$LANG['plugin_fusioninventory']['rules'][7]="Enlazar si es posible. Si no, crear dispositivo";
+$LANG['plugin_fusioninventory']['rules'][5]="Vincular a FusionInventory";
+$LANG['plugin_fusioninventory']['rules'][6]="Actualizar si es posible; si no, denegar importación";
+$LANG['plugin_fusioninventory']['rules'][7]="Actualizar si es posible; si no, crear dispositivo";
 $LANG['plugin_fusioninventory']['rules'][8]="Enviar";
 $LANG['plugin_fusioninventory']['rules'][9]="existe";
 
@@ -184,8 +184,8 @@ $LANG['plugin_fusioninventory']['task'][43]="Modo de comunicación";
 $LANG['plugin_fusioninventory']['task'][44]="Ver toda la información sobre la tarea";
 $LANG['plugin_fusioninventory']['task'][45]="Opciones avanzadas";
 $LANG['plugin_fusioninventory']['task'][46]="Reiniciar";
-$LANG['plugin_fusioninventory']['task'][47]="Identificador único";
-$LANG['plugin_fusioninventory']['task'][48]="Inventariar";
+$LANG['plugin_fusioninventory']['task'][47]="Identificador";
+$LANG['plugin_fusioninventory']['task'][48]="Consultados";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Iniciado";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Correcto";
@@ -200,7 +200,7 @@ $LANG['plugin_fusioninventory']['title'][1]="FusionInventory";
 
 $LANG['plugin_fusioninventory']['unknown'][2]="Dispositivo aprobado";
 $LANG['plugin_fusioninventory']['unknown'][4]="Concentrador de red";
-$LANG['plugin_fusioninventory']['unknown'][5]="Material desconocido a importar en el inventario";
+$LANG['plugin_fusioninventory']['unknown'][5]="Importar dispositivo desconocido en los bienes (inventariar)";
 
 $LANG['plugin_fusioninventory']['wizard'][0]="Elija una acción";
 $LANG['plugin_fusioninventory']['wizard'][10]="Elija (descubrimiento de red / inventario de red)";
