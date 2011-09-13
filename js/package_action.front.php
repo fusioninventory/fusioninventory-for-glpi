@@ -177,14 +177,14 @@ var {$render}actionGrid = new Ext.grid.GridPanel({
    height: {$height_left},
    width: {$width_left},
    style:'margin-bottom:5px',
+   enableDragDrop : true,
+   ddGroup : '{$render}actionGridDD',
    title: '{$LANG['plugin_fusinvdeploy']['form']['title'][8]} ({$title2})',
    stateId: '{$render}actionGrid',
    tbar: [{
       text: '{$LANG['plugin_fusinvdeploy']['form']['title'][6]}',
       iconCls: 'exticon-add',
       handler: function(btn,ev) {
-
-
          var u = new {$render}actionGridStore.recordType({
             {$render}id             : '',
             {$render}itemtype       : '',
@@ -237,8 +237,39 @@ var {$render}actionGrid = new Ext.grid.GridPanel({
             {$render}actionForm.buttons[0].setDisabled(false);
          }
       }
-   })
+   }),
+   listeners: {
+      'render': {
+         scope: this,
+         fn: function(grid) {
+            //Enable drag and drop to order actions
+
+            var ddrow = new Ext.dd.DropTarget({$render}actionGrid.container, {
+               ddGroup : '{$render}actionGridDD',
+               copy:false,
+               notifyDrop : function(dd, e, data){
+                  var ds = {$render}actionGrid.store;
+                  var sm = {$render}actionGrid.getSelectionModel();
+                  var rows = sm.getSelections();
+                  if(dd.getDragData(e)) {
+                     var cindex=dd.getDragData(e).rowIndex;
+                     if(typeof(cindex) != "undefined") {
+                        for(i = 0; i <  rows.length; i++) {
+                           ds.remove(ds.getById(rows[i].id));
+                        }
+                        ds.insert(cindex,data.selections);
+                        sm.clearSelections();
+                        alert('test');
+                     }
+                  }
+               }
+            })
+         }
+      }
+   }
 });
+
+
 
 
 /**** NEW RET CHECKS ****/
