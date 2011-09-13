@@ -127,6 +127,8 @@ class PluginFusinvdeployGroup extends CommonDBTM {
    function showForm($ID, $options = array()) {
       global $LANG;
 
+      if (isset($_SESSION['groupSearchResults'])) unset($_SESSION['groupSearchResults']);
+
       if ($ID > 0) {
          $this->check($ID,'r');
       } else {
@@ -389,6 +391,12 @@ class PluginFusinvdeployGroup extends CommonDBTM {
             'building'              => '',
             'name'                  => ''
          );
+
+         if (isset($_SESSION['groupSearchResults'])) {
+            foreach($_SESSION['groupSearchResults'] as $key => $field) {
+               $fields[$key] = $field;
+            }
+         }
       }
 
       echo "<tr><th colspan='4'>".$LANG['buttons'][0]."</th></tr>";
@@ -401,7 +409,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
 
       echo "<td>".$LANG['common'][15]."&nbsp;: </td>";
       echo "<td>";
-      $rand_location = mt_rand();
+      $rand_location = '';
       Dropdown::show('Location', array(
          'value'  => $fields['locations'],
          'name'   => 'locations',
@@ -484,15 +492,22 @@ class PluginFusinvdeployGroup extends CommonDBTM {
 
       echo "<td class='center' colspan='4'>";
 
-      $this->ajaxLoad(
+      self::groupAjaxLoad($type);
+
+      echo "</td>";
+      echo "</tr>";
+   }
+
+   static function groupAjaxLoad($type) {
+      global $CFG_GLPI;
+
+      self::ajaxLoad(
          'group_search_submit',
          'group_results',
          $CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/ajax/group_results.php",
          array(
             'itemtype'              => 'group_search_itemtype',
-            /*'start'               => 'group_search_start',
-            'limit'                 => 'group_search_limit',*/
-            'location_id'           => 'dropdown_locations'.$rand_location,
+            'location_id'           => 'dropdown_locations',
             'operatingsystem_name'  => 'search_operatingsystems_id',
             'operatingsystems_id'   => 'operatingsystems_id',
             'serial'                => 'group_search_serial',
@@ -501,65 +516,151 @@ class PluginFusinvdeployGroup extends CommonDBTM {
          ),
          $type
       );
-      echo "</td>";
-      echo "</tr>";
+
    }
 
-   function ajaxLoad($to_observe, $toupdate, $url, $params_id, $type) {
+   static function ajaxLoad($to_observe, $toupdate, $url, $params_id, $type) {
+      $start = 0;
+      if (isset($_REQUEST['start'])) $start = $_REQUEST['start'];
+
+
       echo "<script type='text/javascript'>
-      Ext.get('$to_observe').on('click', function() {
-         Ext.get('$toupdate').load({
-            url: '$url',
-            scripts: true,
-            params: {
-               type: '$type',";
-               $out = "";
-               foreach($params_id as $name => $id) {
-                  $out .= "$name: Ext.get('$id').getValue(),";
-               }
-               echo substr($out, 0, -1);
-            echo"}
-         });
-      });
+      Ext.onReady(function() {
+         function loadResults() {
+            Ext.get('$toupdate').load({
+               url: '$url',
+               scripts: true,
+               params: {
+                  type: '$type',
+                  start: '$start',
+                  ";
+                  $out = "";
+                  foreach($params_id as $name => $id) {
+                     $out .= "$name: Ext.get('$id').getValue(),";
+                  }
+                  echo substr($out, 0, -1);
+               echo"}
+            });
+         }
+         Ext.get('$to_observe').on('click', function() {
+            loadResults();
+         });";
+      if (isset($_REQUEST['start'])) echo "setTimeout(function(thisObj) { loadResults(); }, 200, this);";
+
+      echo "})
       </script>";
    }
 
-   static function showSearchResulst($params) {
+   /**
+    * Print pager for group list
+    *
+    * @param $title displayed above
+    * @param $start from witch item we start
+    * @param $numrows total items
+    *
+    * @return nothing (print a pager)
+    **/
+   static function printGroupPager($title, $start, $numrows) {
+      global $CFG_GLPI, $LANG;
+
+      $list_limit = 50;
+      // Forward is the next step forward
+      $forward = $start+$list_limit;
+
+      // This is the end, my friend
+      $end = $numrows-$list_limit;
+
+      // Human readable count starts here
+      $current_start = $start+1;
+
+      // And the human is viewing from start to end
+      $current_end = $current_start+$list_limit-1;
+      if ($current_end>$numrows) {
+         $current_end = $numrows;
+      }
+      // Empty case
+      if ($current_end==0) {
+         $current_start = 0;
+      }
+      // Backward browsing
+      if ($current_start-$list_limit<=0) {
+         $back = 0;
+      } else {
+         $back = $start-$list_limit;
+      }
+
+      // Print it
+      echo "<table class='tab_cadre_pager'>";
+      if ($title) {
+         echo "<tr><th colspan='6'>$title</th></tr>";
+      }
+      echo "<tr>\n";
+
+      // Back and fast backward button
+      if (!$start==0) {
+         echo "<th class='left'><a href='javascript:reloadTab(\"start=0\");'>
+               <img src='".$CFG_GLPI["root_doc"]."/pics/first.png' alt=\"".$LANG['buttons'][33].
+                "\" title=\"".$LANG['buttons'][33]."\"></a></th>";
+         echo "<th class='left'><a href='javascript:reloadTab(\"start=$back\");'>
+               <img src='".$CFG_GLPI["root_doc"]."/pics/left.png' alt=\"".$LANG['buttons'][12].
+                "\" title=\"".$LANG['buttons'][12]."\"></th>";
+      }
+
+      echo "<td width='50%' class='tab_bg_2'>";
+      printPagerForm();
+      echo "</td>";
+
+      // Print the "where am I?"
+      echo "<td width='50%' class='tab_bg_2 b'>";
+      echo $LANG['pager'][2]."&nbsp;".$current_start."&nbsp;".$LANG['pager'][1]."&nbsp;".
+           $current_end."&nbsp;".$LANG['pager'][3]."&nbsp;".$numrows."&nbsp;";
+      echo "</td>\n";
+
+      // Forward and fast forward button
+      if ($forward<$numrows) {
+         echo "<th class='right'><a href='javascript:reloadTab(\"start=$forward\");'>
+               <img src='".$CFG_GLPI["root_doc"]."/pics/right.png' alt=\"".$LANG['buttons'][11].
+                "\" title=\"".$LANG['buttons'][11]."\"></a></th>";
+         echo "<th class='right'><a href='javascript:reloadTab(\"start=$end\");'>
+               <img src='".$CFG_GLPI["root_doc"]."/pics/last.png' alt=\"".$LANG['buttons'][32].
+                "\" title=\"".$LANG['buttons'][32]."\"></th>";
+      }
+
+      // End pager
+      echo "</tr></table>";
+   }
+
+   static function showSearchResults($params) {
       global $CFG_GLPI, $LANG;
 
       if(isset($params['type'])) $type  = $params['type'];
       else exit;
 
-      $params = array(
+      $options = array(
          'type'                  => $type,
          'itemtype'              => $params['itemtype'],
-         /*'start'               => $params['start'],
-         'limit'                 => $params['limit'],*/
          'location_id'           => $params['location_id'],
          'serial'                => $params['serial'],
          'operatingsystems_id'   => $params['operatingsystems_id'],
          'operatingsystem_name'  => $params['operatingsystem_name'],
          'otherserial'           => $params['otherserial'],
          'name'                  => $params['name'],
-         'limit'                 => 100
+         'limit'                 => 99999999
       );
 
-      if ($params['operatingsystems_id'] != 0) unset($params['operatingsystem_name']);
+      if ($options['operatingsystems_id'] != 0) unset($options['operatingsystem_name']);
 
-      $datas = PluginWebservicesMethodInventaire::methodListInventoryObjects($params, '');
+      $nb_items = count(PluginWebservicesMethodInventaire::methodListInventoryObjects($options, ''));
 
-      echo "<div class='center'>";
+      $options['limit'] = 50;
+      $options['start'] = $params['start'];
 
-      if ($type == 'static') {
-         self::openArrowMassiveDown("group_search");
-         echo "<input type='submit' class='submit' value="
-            .$LANG['buttons'][8]." name='additem' />";
-         closeArrowMassive();
-      }
+      $datas = PluginWebservicesMethodInventaire::methodListInventoryObjects($options, '');
 
-      $nb_col = 4;
+      echo "<div class='center'><br />";
+      $nb_col = 5;
 
-      echo "<table class='tab_cadrehov'>";
+      echo "<table class='tab_cadrehov' width='100%'>";
       echo "<thead><tr>";
       if ($type == 'static') echo "<th></th>";
       echo "<th colspan='".($nb_col*2)."'>".$LANG['common'][16]."</th>";
@@ -572,9 +673,13 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       foreach ($datas as $row) {
          $computer->getFromDB($row["id"]);
          if ($type == 'static') {
-            echo "<td width='1%'><input type='checkbox' name='item[".$row["id"]."]' value='".$row["id"]."'></td>";
+            echo "<td width='1%'>";
+            echo "<input type='checkbox' name='item[".$row["id"]."]' value='".$row["id"]."'>";
+            echo "</td>";
          }
-         echo "<td>".$computer->getLink(true)."</td>";
+         echo "<td>";
+         echo $computer->getLink(true);
+         echo "</td>";
 
          if (($i % $nb_col) == 0) {
             $stripe =! $stripe;
@@ -590,7 +695,9 @@ class PluginFusinvdeployGroup extends CommonDBTM {
          echo "<input type='submit' class='submit' value="
             .$LANG['buttons'][8]." name='additem' />";
          closeArrowMassive();
-      }
+      } else echo "<br />";
+
+      self::printGroupPager('', $params['start'], $nb_items);
 
       echo "</div>";
    }
@@ -625,24 +732,5 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       echo "<input title=\"".$LANG['buttons'][0]." (".$CFG_GLPI['ajax_wildcard']." ".$LANG['search'][1].")\"
             type='text' value='$value' ondblclick=\"this.value='".
              $CFG_GLPI["ajax_wildcard"]."';\" id='search_$id' name='____data_$id' size='$size'>\n";
-   }
-
-   static function openArrowMassiveDown($formname, $fixed=false, $width='80%') {
-      global $CFG_GLPI, $LANG;
-
-      if ($fixed) {
-         echo "<table class='tab_glpi' width='950px'>";
-      } else {
-         echo "<table class='tab_glpi' width='80%'>";
-      }
-
-      echo "<tr><td><img src='".$CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/pics/arrow-left-down.png' alt=''></td>";
-      echo "<td class='center'>";
-      echo "<a onclick= \"if ( markCheckboxes('$formname') ) return false;\"
-             href='#'>".$LANG['buttons'][18]."</a></td>";
-      echo "<td>/</td><td class='center'>";
-      echo "<a onclick= \"if ( unMarkCheckboxes('$formname') ) return false;\"
-             href='#'>".$LANG['buttons'][19]."</a></td>";
-      echo "<td class='left' width='".$width."'>";
    }
 }

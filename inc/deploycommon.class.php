@@ -100,6 +100,7 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
                      foreach($fields_array as $key =>$field) {
                         if (trim($field) == '') unset($fields_array[$key]);
                      }
+                     $fields_array['limit'] == 999999999;
                      $datas = PluginWebservicesMethodInventaire::methodListInventoryObjects($fields_array, '');
                      foreach($datas as $data) {
                         $computers[] = $data['id'];
@@ -133,7 +134,7 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
                                                   "No agent found for this computer",
                                                   0,
                                                   0);
-         } else {         
+         } else {
             $c_input['plugin_fusioninventory_agents_id'] = $agents_id;
 
             $jobstatus_id= $jobstatus->add($c_input);
