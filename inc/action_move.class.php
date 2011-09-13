@@ -51,6 +51,7 @@ class PluginFusinvdeployAction_Move extends CommonDBTM {
       foreach ($moves as $move) {
          if (!empty($move['from']) && !empty($move['to'])) {
             $response['move'] = array('from' =>$move['from'], 'to' => $move['to']);
+         }
          else continue;
       }
       return $response;

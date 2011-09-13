@@ -259,7 +259,6 @@ var {$render}actionGrid = new Ext.grid.GridPanel({
                         }
                         ds.insert(cindex,data.selections);
                         sm.clearSelections();
-                        alert('test');
                      }
                   }
                }
