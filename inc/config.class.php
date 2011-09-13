@@ -34,14 +34,13 @@
 // ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
+class PluginFusinvdeployConfig extends CommonDBTM {
 
-class PluginFusinvDeployConfig extends CommonDBTM {
-
-	function initConfigModule() {
-		global $DB;
+   function initConfigModule() {
+      global $DB;
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
       $Config = new Config;
@@ -55,7 +54,7 @@ class PluginFusinvDeployConfig extends CommonDBTM {
       $PluginFusioninventoryConfig->initConfig($plugins_id, $insert);
    }
 
-	function putForm($p_post) {
+   function putForm($p_post) {
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
 
@@ -63,8 +62,8 @@ class PluginFusinvDeployConfig extends CommonDBTM {
       $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'glpi_path', $p_post['glpi_path']);
    }
 
-	function showForm($options=array()) {
-		global $LANG,$CFG_GLPI;
+   function showForm($options=array()) {
+      global $LANG,$CFG_GLPI;
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
 
@@ -74,9 +73,9 @@ class PluginFusinvDeployConfig extends CommonDBTM {
       echo "<div class='center' id='tabsbody'>";
       echo "<table class='tab_cadre_fixe'>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_fusinvdeploy']["config"][0]."&nbsp;:</td>";
-		echo "<td>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusinvdeploy']["config"][0]."&nbsp;:</td>";
+      echo "<td>";
       echo "<input type='text' name='glpi_path' value='".$PluginFusioninventoryConfig->getValue($plugins_id, 'glpi_path')."' />";
       echo "</td>";
       echo "<td colspan='2'></td>";;
@@ -91,7 +90,7 @@ class PluginFusinvDeployConfig extends CommonDBTM {
       echo "</form>";
 
       return true;
-	}
+   }
 }
 
 ?>

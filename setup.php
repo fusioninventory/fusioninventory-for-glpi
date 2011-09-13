@@ -98,7 +98,7 @@ function plugin_init_fusinvdeploy() {
 
    if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvdeploy'][$LANG['plugin_fusinvdeploy']["title"][0]])) {
       $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvdeploy'][$LANG['plugin_fusinvdeploy']["title"][0]] =
-                                             array('class'        => 'PluginFusinvDeployConfig',
+                                             array('class'        => 'PluginFusinvdeployConfig',
                                                    'submitbutton' => 'plugin_fusinvdeploy_config_set',
                                                    'submitmethod' => 'putForm');
    }
