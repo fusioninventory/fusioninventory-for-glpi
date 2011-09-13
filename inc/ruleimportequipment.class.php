@@ -48,6 +48,9 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
    const LINK_RESULT_NO_IMPORT = 0;
    const LINK_RESULT_IMPORT    = 1;
    const LINK_RESULT_LINK      = 2;
+   
+   const LINK_RESULT_DENIED            = 0;
+   const LINK_RESULT_CREATE            = 1;
 
    var $restrict_matching = PluginFusioninventoryRule::AND_MATCHING;
 
@@ -264,8 +267,6 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
    function findWithGlobalCriteria($input) {
       global $DB, $CFG_GLPI;
       
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
-                                                   print_r($input, true));
       $complex_criterias = array();
       $sql_where         = '';
       $sql_from          = '';
@@ -290,11 +291,14 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
          if (!empty($criteria)) {
             foreach ($criteria as $crit) {
                if (!isset($input[$criterion]) || $input[$criterion] == '') {
-                  $continue = false;
+                  $definition_criteria = $this->getCriteria($crit->fields['criteria']);
+                  if (isset($definition_criteria['is_global']) AND $definition_criteria['is_global']) {
+                     $continue = false;
+                  }
                } else if ($crit->fields["condition"] == PluginFusioninventoryRule::PATTERN_FIND) {
                   $complex_criterias[] = $crit;
                   $nb_crit_find++;
-               } else if ($crit->fields["condition"] == Rule::PATTERN_EXISTS) {
+               } else if ($crit->fields["condition"] == PluginFusioninventoryRule::PATTERN_EXISTS) {
                   if (!isset($input[$crit->fields['criteria']])
                           OR empty($input[$crit->fields['criteria']])) {
                      return false;
@@ -546,16 +550,13 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
          $classname = $_SESSION['plugin_fusioninventory_classrulepassed'];
          $class = new $classname();
       }
-      if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
-         logInFile("pluginFusioninventory-rules", "execute action\n");
-      }
+
       if (count($this->actions)) {
          foreach ($this->actions as $action) {
             if ($action->fields['field'] == '_fusion') {
-               if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug')) {
-                  logInFile("pluginFusioninventory-rules", "value".$action->fields["value"]."\n");
-               }
-               if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_IMPORT) {
+
+               if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_IMPORT
+                       OR $action->fields["value"] == self::RULE_ACTION_LINK_OR_NO_IMPORT) {
                   if (isset($this->criterias_results['found_equipment'])) {
                      foreach ($this->criterias_results['found_equipment'] as $itemtype=>$datas) {
                         $items_id = current($datas);
@@ -569,55 +570,66 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                         }
                      }
                   } else {
-                     // Import into new equipment
-                     $itemtype_found = 0;
-                     if (count($this->criterias)) {
-                        foreach ($this->criterias as $criteria){
-                           if ($criteria->fields['criteria'] == 'itemtype') {
-                              $itemtype = $criteria->fields['pattern'];
-                              if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
-                                 $class->rulepassed("0", $itemtype);
-                                 return $output;
-                              } else {
-                                 $output['action'] = self::LINK_RESULT_IMPORT;
-                                 return $output;
+                     if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_NO_IMPORT) {
+                        $output['action'] = self::LINK_RESULT_DENIED;
+                     } else {
+                        // Import into new equipment
+                        $itemtype_found = 0;
+                        if (count($this->criterias)) {
+                           foreach ($this->criterias as $criteria){
+                              if ($criteria->fields['criteria'] == 'itemtype') {
+                                 $itemtype = $criteria->fields['pattern'];
+                                 if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
+                                    $class->rulepassed("0", $itemtype);
+                                    return $output;
+                                 } else {
+                                    $output['action'] = self::LINK_RESULT_CREATE;
+                                    return $output;
+                                 }
+                                 $itemtype_found = 1;
                               }
-                              $itemtype_found = 1;
+                           }
+                        }
+                        if ($itemtype_found == "0") {
+                           if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
+                              $class->rulepassed("0", "PluginFusioninventoryUnknownDevice");
+                              return $output;
+                           } else {
+                              $output['action'] = self::LINK_RESULT_CREATE;
+                              return $output;
                            }
                         }
                      }
-                     if ($itemtype_found == "0") {
-                        if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
-                           $class->rulepassed("0", "PluginFusioninventoryUnknownDevice");
-                           return $output;
-                        } else {
-                           $output['action'] = self::LINK_RESULT_IMPORT;
-                           return $output;
-                        }
-                     }
-                  }
-               } else if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_NO_IMPORT) {
-                  if (isset($this->criterias_results['found_equipment'])) {
-                     foreach ($this->criterias_results['found_equipment'] as $itemtype=>$datas) {
-                        $items_id = current($datas);
-                        $output['found_equipment'] = array($items_id, $itemtype);
-                        if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
-                           $class->rulepassed($items_id, $itemtype);
-                           return $output;
-                        } else {
-                           $output['action'] = self::LINK_RESULT_LINK;
-                           return $output;
-                        }
-                     }
-                  } else {
-                     // no import
-                     $output['action'] = self::LINK_RESULT_NO_IMPORT;
                   }
                }
 
             } else {
                // no import
-               $output['action'] = self::LINK_RESULT_NO_IMPORT;
+               $itemtype_found = 0;
+               if (count($this->criterias)) {
+                  foreach ($this->criterias as $criteria){
+                     if ($criteria->fields['criteria'] == 'itemtype') {
+                        $itemtype = $criteria->fields['pattern'];
+                        if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
+                           $class->rulepassed("0", $itemtype);
+                           return $output;
+                        } else {
+                           $output['action'] = self::LINK_RESULT_CREATE;
+                           return $output;
+                        }
+                        $itemtype_found = 1;
+                     }
+                  }
+               }
+               if ($itemtype_found == "0") {
+                  if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
+                     $class->rulepassed("0", "PluginFusioninventoryUnknownDevice");
+                     return $output;
+                  } else {
+                     $output['action'] = self::LINK_RESULT_CREATE;
+                     return $output;
+                  }
+               }
             }
          }
       }
