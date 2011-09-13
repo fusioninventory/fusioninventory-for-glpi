@@ -299,7 +299,7 @@ $LANG['plugin_fusinvsnmp']['menu'][10]="Estado del inventario de red";
 $LANG['plugin_fusinvsnmp']['menu'][2]="Configuración rango direcciones IP";
 $LANG['plugin_fusinvsnmp']['menu'][5]="Historial de puertos del conmutador de red";
 $LANG['plugin_fusinvsnmp']['menu'][6]="Puertos no usados en conmutadores de red";
-$LANG['plugin_fusinvsnmp']['menu'][9]="Estado del descubrimiento";
+$LANG['plugin_fusinvsnmp']['menu'][9]="Estado del descubrimiento de red";
 
 $LANG['plugin_fusinvsnmp']['mib'][1]="Etiqueta MIB";
 $LANG['plugin_fusinvsnmp']['mib'][2]="Objeto";
@@ -387,10 +387,10 @@ $LANG['plugin_fusinvsnmp']['snmpauth'][6]="Protocolo de cifrado para datos";
 $LANG['plugin_fusinvsnmp']['state'][10]="Dispositivos importados";
 $LANG['plugin_fusinvsnmp']['state'][4]="Fecha de inicio";
 $LANG['plugin_fusinvsnmp']['state'][5]="Fecha de fin";
-$LANG['plugin_fusinvsnmp']['state'][6]="Total de dispositivos descubiertos";
+$LANG['plugin_fusinvsnmp']['state'][6]="Dispositivos descubiertos";
 $LANG['plugin_fusinvsnmp']['state'][7]="Total con error";
 $LANG['plugin_fusinvsnmp']['state'][8]="Dispositivos no importados";
-$LANG['plugin_fusinvsnmp']['state'][9]="Dispositivos no enlazados";
+$LANG['plugin_fusinvsnmp']['state'][9]="Dispositivos actualizados";
 
 $LANG['plugin_fusinvsnmp']['stats'][0]="Contador total";
 $LANG['plugin_fusinvsnmp']['stats'][1]="páginas por día";
