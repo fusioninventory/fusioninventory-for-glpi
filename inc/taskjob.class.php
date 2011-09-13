@@ -121,7 +121,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $this->getEmpty();
       }
 
-      $heightdiv = 220;
+      $heightdiv = 200;
       echo "<div id='taskjobdisplay' style='height:".$heightdiv."px; overflow:hidden;'>";
       echo "<form method='post' name='form_taskjob' action='".
             $CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/taskjob.form.php''>";
@@ -154,43 +154,16 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo '</tr>';
       
       echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='2' width='500'>";
-      echo $this->getTypeName();
-      echo "</th>";
-      echo "<th width='25%'>";
-      echo $LANG['plugin_fusioninventory']['task'][27];
-      $this->plusButton('definition');
-      echo "</th>";
-      echo "<th width='25%'>";
-      echo $LANG['plugin_fusioninventory']['task'][28];
-      $this->plusButton('action');
-      echo "</th>";
-      echo "</tr>";
-            
-      echo "<tr class='tab_bg_1'>";
-      echo "<td height='18'>".$LANG['plugin_fusioninventory']['task'][26]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      $randmethod = $this->dropdownMethod("method", $this->fields['method']);
-      echo "</td>";
-      
-      // ** Definitions
-      echo "<td rowspan='5' valign='top'>";
-      $this->showTaskjobItems('definition', $randmethod, $id);
-      echo "</td>";
-      
-      // ** Actions
-      echo "<td rowspan='5' valign='top'>";
-      $this->showTaskjobItems('action', $randmethod, $id);
-      echo "</td>";
-      echo "</tr>";
-      
-      echo "<tr>";
       echo "<td height='18'>".$LANG['common'][16]."&nbsp;:</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
       echo "</td>";
+      echo "<td height='18'>".$LANG['plugin_fusioninventory']['task'][26]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      $randmethod = $this->dropdownMethod("method", $this->fields['method']);
+      echo "</td>";
       echo "</tr>";
-      
+            
       echo "<tr class='tab_bg_1'>";
       echo "<td height='18'>".$LANG['common'][25]."&nbsp;:</td>";
       echo "<td align='center'>";
@@ -202,8 +175,18 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          echo "<input type='hidden' name='method-".$datas['method']."' value='".PluginFusioninventoryModule::getModuleId($datas['module'])."' />";
       }
       echo "</td>";
+      echo "<th width='25%'>";
+      echo $LANG['plugin_fusioninventory']['task'][27];
+      $this->plusButton('definition');
+      echo "<br/><i>Liste des objets sur lesquelles l'action doit porter</i>";
+      echo "</th>";
+      echo "<th width='25%'>";
+      echo $LANG['plugin_fusioninventory']['task'][28];
+      $this->plusButton('action');
+      echo "<br/><i>Liste des objets qui vont effectuer l'action</i>";
+      echo "</th>";
       echo "</tr>";
-      
+
       echo "<tr class='tab_bg_1'>";
       echo "<td height='18'>".$LANG['plugin_fusioninventory']['task'][31]."&nbsp;:</td>";
       echo "<td align='center'>";
@@ -216,18 +199,31 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $a_time['months'] = $LANG['plugin_fusioninventory']['task'][38];
       Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$this->fields['periodicity_type']));
       echo "</td>";
+      // ** Definitions
+      echo "<td rowspan='2' valign='top'>";
+      $this->showTaskjobItems('definition', $randmethod, $id);
+      echo "</td>";
+      
+      // ** Actions
+      echo "<td rowspan='2' valign='top'>";
+      $this->showTaskjobItems('action', $randmethod, $id);
+      echo "</td>";
+      echo "</tr>";
+      
+      echo "<tr>";
+      echo "<td colspan='2'></td>";
       echo "</tr>";
       
       echo "<tr>";
       if ($id<=0) {
-         echo "<td colspan='2' valign='top' align='center'>";
+         echo "<td colspan='4' valign='top' align='center'>";
          echo "<input type='submit' name='add' value=\"".$LANG['buttons'][8]."\" class='submit'>";
          echo "</td>";
       } else {
-         echo "<td valign='top' align='center'>";
+         echo "<td valign='top' align='center' colspan='2'>";
          echo "<input type='submit' name='update' value=\"".$LANG['buttons'][7]."\" class='submit'>";
          echo "</td>";
-         echo "<td valign='top' align='center'>";
+         echo "<td valign='top' align='center' colspan='2'>";
          echo "<input type='submit' name='delete' value=\"".$LANG['buttons'][22]."\"
                          class='submit' ".Html::addConfirmationOnAction($LANG['common'][50]).">";
          echo "</td>";

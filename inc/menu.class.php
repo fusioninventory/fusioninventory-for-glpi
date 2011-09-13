@@ -49,14 +49,14 @@ class PluginFusioninventoryMenu {
    static function displayMenu($type = "big") {
       global $LANG,$CFG_GLPI;
 
-      // FOR THE BETA/RC
-      echo "<center>"; 
-      echo "<a href='http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/wiki/Beta_test'>";
-      echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/beta.png'/></a>";
-      echo "&nbsp;<a href='https://www.transifex.net/projects/p/FusionInventory/'>";
-      echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/Translate.png'/></a>"; 
-      echo "</center><br/>";
-      // END FOR THE BETA
+//      // FOR THE BETA/RC
+//      echo "<center>"; 
+//      echo "<a href='http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/wiki/Beta_test'>";
+//      echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/beta.png'/></a>";
+//      echo "&nbsp;<a href='https://www.transifex.net/projects/p/FusionInventory/'>";
+//      echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/Translate.png'/></a>"; 
+//      echo "</center><br/>";
+//      // END FOR THE BETA
 
       $width_status = 0;
 
