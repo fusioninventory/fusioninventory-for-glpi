@@ -89,10 +89,22 @@ class PluginFusinvdeployFilepart extends CommonDBTM {
       preg_match('/.\/..\/([^\/]+)/', $params['file'], $matches);
 
       $sha512 = mysql_real_escape_string($matches[1]);
+      $short_sha512 = substr($sha512, 0, 6);
 
+      //search by shortsha512
       $PluginFusinvdeployFilepart = new PluginFusinvdeployFilepart;
-      # TODO, use sha512short here to find the filepart (See: #1106)
-      $files = $PluginFusinvdeployFilepart->find("sha512='".$sha512."'");
+      $files = $PluginFusinvdeployFilepart->find("shortsha512='".$short_sha512."'");
+
+      if (count($files) > 1) {
+         //find file with long sha512
+         foreach ($files as $file) {
+            if ($file['sha512'] == $sha512) {
+               unset($files);
+               $files = array($file);
+               break;
+            }
+         }
+      }
 
       if (count($files) == 1) {
          $file = array_pop($files);

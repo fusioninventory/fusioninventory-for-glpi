@@ -223,9 +223,11 @@ class PluginFusinvdeployFile extends CommonDBTM {
          if (file_exists($tmpFilepart)) {
             if (feof($fdIn) || filesize($tmpFilepart)>= $maxPartSize) {
                $sha512 = $this->registerFilepart ($repoPath, $tmpFilepart);
+               $short_sha512 = substr($sha512, 0, 6);
                $PluginFusinvdeployFilepart->add(
                   array(
                      'sha512'                        => $sha512,
+                     'shortsha512'                   => $short_sha512,
                      'plugin_fusinvdeploy_orders_id' => $order_id,
                      'plugin_fusinvdeploy_files_id'  => $file_id
                   )
