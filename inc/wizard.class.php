@@ -177,10 +177,10 @@ class PluginFusioninventoryWizard {
          
          $rulecollection = new $classname;
          if (isset($_GET['id'])) {
-            include ($CFG_GLPI['root_doc'] . "/plugins/fusioninventory/front/wizzrule.common.form.php");
+            include (GLPI_ROOT."/plugins/fusioninventory/front/wizzrule.common.form.php");
          } else {
             self::addButton();
-            include ($CFG_GLPI['root_doc'] . "/plugins/fusioninventory/front/wizzrule.common.php");
+            include (GLPI_ROOT."/plugins/fusioninventory/front/wizzrule.common.php");
          }
 
       } else if (isset($_GET['id'])) {
