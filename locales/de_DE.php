@@ -30,7 +30,7 @@
 
 // ----------------------------------------------------------------------
 // Original Author of file: Mathieu SIMON
-// Co-authors of file: 
+// Co-authors of file:
 // Purpose of file:
 // ----------------------------------------------------------------------
 
@@ -67,6 +67,7 @@ $LANG['plugin_fusinvdeploy']['package'][24]="One or more task(s) (#task#) uses t
 $LANG['plugin_fusinvdeploy']['package'][25]="New name";
 $LANG['plugin_fusinvdeploy']['package'][26]="Add a package";
 $LANG['plugin_fusinvdeploy']['package'][27]="make a directory";
+$LANG['plugin_fusinvdeploy']['package'][28]="File copy";
 
 $LANG['plugin_fusinvdeploy']['files'][0]="Dateiverwaltung";
 $LANG['plugin_fusinvdeploy']['files'][1]="Dateiname";

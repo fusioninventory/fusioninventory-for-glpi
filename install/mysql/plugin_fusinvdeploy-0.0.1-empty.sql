@@ -37,6 +37,14 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_moves` (
 PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_actions_copies`;
+CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_copies` (
+  `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+  `from` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `to` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_actions_commandenvvariables`;
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_commandenvvariables` (
 `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,

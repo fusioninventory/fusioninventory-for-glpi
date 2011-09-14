@@ -111,6 +111,15 @@ class PluginFusinvdeployAction extends CommonDBTM {
             $row[$render.'from'] = $action->getField('from');
             $row[$render.'to']   = $action->getField('to');
 
+         } else if($action instanceof PluginFusinvdeployAction_Copy) {
+            $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['form']['label'][16]." : </b> ";
+            $row[$render.'value'].= $action->getField('from');
+            $row[$render.'value'].= " <b>".$LANG['plugin_fusinvdeploy']['form']['label'][17]." : </b> ";
+            $row[$render.'value'].= $action->getField('to');
+
+            $row[$render.'from'] = $action->getField('from');
+            $row[$render.'to']   = $action->getField('to');
+
          }  else if($action instanceof PluginFusinvdeployAction_Delete) {
             $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['form']['label'][2]." : </b> ";
             $row[$render.'value'].= $action->getField('path');
@@ -184,6 +193,15 @@ class PluginFusinvdeployAction extends CommonDBTM {
          $row[$render.'from'] = $action->getField('from');
          $row[$render.'to']   = $action->getField('to');
 
+      } else if($action instanceof PluginFusinvdeployAction_Copy) {
+         $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['form']['label'][16]." : </b> ";
+         $row[$render.'value'].= $action->getField('from');
+         $row[$render.'value'].= " <b>".$LANG['plugin_fusinvdeploy']['form']['label'][17]." : </b> ";
+         $row[$render.'value'].= $action->getField('to');
+
+         $row[$render.'from'] = $action->getField('from');
+         $row[$render.'to']   = $action->getField('to');
+
       }  else if($action instanceof PluginFusinvdeployAction_Delete) {
          $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['form']['label'][2]." : </b> ";
          $row[$render.'value'].= $action->getField('path');
@@ -234,6 +252,10 @@ class PluginFusinvdeployAction extends CommonDBTM {
          $data = array( 'exec'   => $params['exec']);
 
       } else if($itemtype instanceof PluginFusinvdeployAction_Move){
+         $data = array( 'from'   => $params['from'],
+                        'to'     => $params['to']);
+
+      } else if($itemtype instanceof PluginFusinvdeployAction_Copy){
          $data = array( 'from'   => $params['from'],
                         'to'     => $params['to']);
 
@@ -317,6 +339,10 @@ class PluginFusinvdeployAction extends CommonDBTM {
                $data = array( 'from'   => $params['from'],
                               'to'     => $params['to']);
 
+            } else if($itemtype instanceof PluginFusinvdeployAction_Copy){
+               $data = array( 'from'   => $params['from'],
+                              'to'     => $params['to']);
+
             } else if($itemtype instanceof PluginFusinvdeployAction_Delete) {
                $data = array( 'path'   => $params['path']);
 
@@ -343,6 +369,10 @@ class PluginFusinvdeployAction extends CommonDBTM {
                $data = array( 'exec'   => $params['exec']);
 
             } else if($itemtype instanceof PluginFusinvdeployAction_Move){
+               $data = array( 'from'   => $params['from'],
+                              'to'     => $params['to']);
+
+            } else if($itemtype instanceof PluginFusinvdeployAction_Copy){
                $data = array( 'from'   => $params['from'],
                               'to'     => $params['to']);
 

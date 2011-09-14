@@ -38,19 +38,19 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusinvdeployAction_Move extends CommonDBTM {
+class PluginFusinvdeployAction_Copy extends CommonDBTM {
 
    static function getTypeName() {
       global $LANG;
 
-      return $LANG['plugin_fusinvdeploy']['package'][18];
+      return $LANG['plugin_fusinvdeploy']['package'][28];
    }
 
-   static function getActions($moves_id, $response = array()) {
-      $moves = getAllDatasFromTable('glpi_plugin_fusinvdeploy_actions_moves', "`id`='$moves_id'");
-      foreach ($moves as $move) {
-         if (!empty($move['from']) && !empty($move['to'])) {
-            $response['move'] = array('from' =>$move['from'], 'to' => $move['to']);
+   static function getActions($copies_id, $response = array()) {
+      $copies = getAllDatasFromTable('glpi_plugin_fusinvdeploy_actions_copies', "`id`='$copies_id'");
+      foreach ($copies as $copy) {
+         if (!empty($copy['from']) && !empty($copy['to'])) {
+            $response['copy'] = array('from' =>$copy['from'], 'to' => $copy['to']);
          }
          else continue;
       }

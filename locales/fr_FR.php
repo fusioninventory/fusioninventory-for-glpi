@@ -66,6 +66,7 @@ $LANG['plugin_fusinvdeploy']['package'][24]="Une ou plusieurs tâche(s) (#task#)
 $LANG['plugin_fusinvdeploy']['package'][25]="Nouveau nom";
 $LANG['plugin_fusinvdeploy']['package'][26]="Ajouter un paquet";
 $LANG['plugin_fusinvdeploy']['package'][27]="Créer un répertoire";
+$LANG['plugin_fusinvdeploy']['package'][28]="Copier un fichier";
 
 $LANG['plugin_fusinvdeploy']['files'][0]="Gestion des fichiers";
 $LANG['plugin_fusinvdeploy']['files'][1]="Nom de fichier";

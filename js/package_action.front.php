@@ -144,6 +144,8 @@ function {$render}renderType(val) {
          return '{$LANG['plugin_fusinvdeploy']['package'][1]}';
       case 'PluginFusinvdeployAction_Move':
          return '{$LANG['plugin_fusinvdeploy']['package'][18]}';
+      case 'PluginFusinvdeployAction_Copy':
+         return '{$LANG['plugin_fusinvdeploy']['package'][28]}';
       case 'PluginFusinvdeployAction_Delete':
          return '{$LANG['plugin_fusinvdeploy']['package'][20]}';
       case 'PluginFusinvdeployAction_Mkdir':
@@ -451,6 +453,17 @@ var {$render}Command_fieldset_item_PluginFusinvdeployAction_Move = [{
    }
 ];
 
+var {$render}Command_fieldset_item_PluginFusinvdeployAction_Copy = [{
+      fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][16]}',
+      name: '{$render}from',
+      xtype: 'textfield'
+   } , {
+      fieldLabel:'{$LANG['plugin_fusinvdeploy']['form']['label'][17]}',
+      name: '{$render}to',
+      xtype: 'textfield'
+   }
+];
+
 var {$render}Command_fieldset_item_PluginFusinvdeployAction_Delete = [{
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][5]}',
       name: '{$render}path',
@@ -541,6 +554,9 @@ function {$render}Command_refreshDynFieldset(val) {
          break;
       case 'PluginFusinvdeployAction_Move':
          {$render}Command_dynFieldset.add({$render}Command_fieldset_item_PluginFusinvdeployAction_Move);
+         break;
+      case 'PluginFusinvdeployAction_Copy':
+         {$render}Command_dynFieldset.add({$render}Command_fieldset_item_PluginFusinvdeployAction_Copy);
          break;
       case 'PluginFusinvdeployAction_Delete':
          {$render}Command_dynFieldset.add({$render}Command_fieldset_item_PluginFusinvdeployAction_Delete);
@@ -662,6 +678,7 @@ var {$render}actionForm = new Ext.FormPanel({
          data: [
             ['PluginFusinvdeployAction_Command', '{$LANG['plugin_fusinvdeploy']['package'][1]}'],
             ['PluginFusinvdeployAction_Move',    '{$LANG['plugin_fusinvdeploy']['package'][18]}'],
+            ['PluginFusinvdeployAction_Copy',    '{$LANG['plugin_fusinvdeploy']['package'][28]}'],
             ['PluginFusinvdeployAction_Delete',  '{$LANG['plugin_fusinvdeploy']['package'][20]}'],
             ['PluginFusinvdeployAction_Mkdir',   '{$LANG['plugin_fusinvdeploy']['package'][27]}']/*,
             ['PluginFusinvdeployAction_Message', '{$LANG['plugin_fusinvdeploy']['package'][21]}']*/
