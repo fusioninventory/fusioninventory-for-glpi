@@ -55,11 +55,9 @@ class PluginFusinvdeployAction extends CommonDBTM {
    }
 
    static function getForOrder($orders_id) {
-      $results = getAllDatasFromTable('glpi_plugin_fusinvdeploy_actions',
-                                      "`plugin_fusinvdeploy_orders_id`='$orders_id'");
+      $action = new self;
+      $results = $action->find("`plugin_fusinvdeploy_orders_id`='$orders_id'", "ranking ASC");
       $actions = array();
-
-     // printCleanArray($results);
 
       foreach ($results as $result) {
          $tmp = call_user_func(array($result['itemtype'], 'getActions'),$result['items_id']/*,
@@ -405,8 +403,11 @@ class PluginFusinvdeployAction extends CommonDBTM {
 
 
    function update_ranking($params = array())  {
-      $id_moved = $params['row_moved'];
-      $id_destination = $params['row_destination'];
+
+      //get params
+      $id_moved = $params['id'];
+      $old_ranking = $params['old_ranking'];
+      $new_ranking = $params['new_ranking'];
       $package_id = $params['package_id'];
       $render = $params['render'];
 
@@ -418,9 +419,7 @@ class PluginFusinvdeployAction extends CommonDBTM {
       $action_moved = new $this;
       $action_moved->getFromDB($id_moved);
       $ranking_moved = $action_moved->getField('ranking');
-      $action_destination = new $this;
-      $action_destination->getFromDB($id_destination);
-      $ranking_destination = $action_destination->getField('ranking');
+      $ranking_destination = $new_ranking;
 
       $actions = new $this;
       if ($ranking_moved < $ranking_destination) {

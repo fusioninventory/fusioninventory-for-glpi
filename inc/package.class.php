@@ -217,6 +217,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       require_once GLPI_ROOT."/plugins/fusinvdeploy/lib/extjs/FileUploadField.js";
       require_once GLPI_ROOT."/plugins/fusinvdeploy/lib/extjs/Spinner.js";
       require_once GLPI_ROOT."/plugins/fusinvdeploy/lib/extjs/SpinnerField.js";
+      require_once GLPI_ROOT."/plugins/fusinvdeploy/lib/extjs/GridDragDropRowOrder.js";
       echo "</script>";
 
       return true;

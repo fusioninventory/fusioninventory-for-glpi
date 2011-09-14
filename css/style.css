@@ -317,3 +317,9 @@ padding:       5px;
 #deployStates .x-tree-elbow-line {width :6px !important;}
 
 
+.grid-row-insert-below {
+    border-bottom:1px solid #659900;
+}
+.grid-row-insert-above {
+    border-top:1px solid #659900;
+}

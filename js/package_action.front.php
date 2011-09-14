@@ -183,8 +183,6 @@ var {$render}actionGrid = new Ext.grid.GridPanel({
    height: {$height_left},
    width: {$width_left},
    style:'margin-bottom:5px',
-   enableDragDrop : true,
-   ddGroup : '{$render}actionGridDD',
    title: '{$LANG['plugin_fusinvdeploy']['form']['title'][8]} ({$title2})',
    stateId: '{$render}actionGrid',
    tbar: [{
@@ -244,54 +242,32 @@ var {$render}actionGrid = new Ext.grid.GridPanel({
          }
       }
    }),
-   listeners: {
-      'render': {
-         scope: this,
-         fn: function(grid) {
-            //Enable drag and drop to order actions
+   enableDragDrop: true,
+   plugins: [
+      new Ext.ux.dd.GridDragDropRowOrder({
+         scrollable: true,
+         copy: false,
+         listeners: {
+            afterrowmove: function (objThis, oldIndex, newIndex, records) {
+               var id = records[0].data.{$render}id;
 
-            var ddrow = new Ext.dd.DropTarget({$render}actionGrid.container, {
-               ddGroup : '{$render}actionGridDD',
-               copy:false,
-               notifyDrop : function(dd, e, data){
-                  var ds = {$render}actionGrid.store;
-                  var sm = {$render}actionGrid.getSelectionModel();
-                  var rows = sm.getSelections();
-                  if(dd.getDragData(e)) {
-                     var cindex=dd.getDragData(e).rowIndex;
-                     if(typeof(cindex) != "undefined") {
-
-                        //get rows id
-                        var id_moved = data.selections[0].data.{$render}id;
-                        var id_destination = dd.getDragData(e).selections[0].data.{$render}id;
-
-                        //save reorder
-                        /*Ext.Ajax.request({
-                           url : '../ajax/package_action.reorder.php',
-                           params : {
-                              row_moved: id_moved,
-                              row_destination: id_destination,
-                              package_id: '{$id}',
-                              render: '{$render}'
-                           },
-                           method: 'GET',
-                           success: function ( result, request ) {
-                              ds.reload();
-                           }
-                        });*/
-
-                        for(i = 0; i <  rows.length; i++) {
-                        ds.remove(ds.getById(rows[i].id));
-                                }
-                                ds.insert(cindex,data.selections);
-                                sm.clearSelections();
-                     }
-                  }
-               }
-            })
+               //save reorder
+               Ext.Ajax.request({
+                  url : '../ajax/package_action.reorder.php',
+                  params : {
+                     id: id,
+                     old_ranking: oldIndex,
+                     new_ranking: newIndex,
+                     package_id: '{$id}',
+                     render: '{$render}'
+                  },
+                  method: 'GET'
+               });
+            }
          }
-      }
-   }
+      })
+   ],
+   ddGroup: '{$render}actionGridDD'
 });
 
 
