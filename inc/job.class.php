@@ -147,8 +147,6 @@ class PluginFusinvdeployJob {
             if ($tmp['comment'] == '') $tmp['comment'] = $p['currentStep'];
             if ($p['status'] != '') {
                $tmp['comment'] .= " : ".$p['status'];
-               if ($p['status'] == 'ko') $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_ERROR;
-               if ($p['status'] == 'ok') $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_OK;
             }
          } elseif ($p['status'] == 'ok') {
             $pass_addlog = true;
