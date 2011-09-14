@@ -59,6 +59,18 @@ function plugin_init_fusinvdeploy() {
       }
       return false;
    }
+   if (!$plugin->isActivated("fusinvinventory")) {
+      if (isset($_GET['id'])
+         && isset($_GET['action'])
+            && strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
+         switch ($_GET['action']) {
+            case 'activate':
+               addMessageAfterRedirect($LANG['plugin_fusinvdeploy']["setup"][21]);
+               break;
+         }
+      }
+      return false;
+   }
    if (!$plugin->isInstalled("webservices")) {
       if (isset($_GET['id'])
          && isset($_GET['action'])
@@ -131,7 +143,8 @@ function plugin_init_fusinvdeploy() {
 
 // Name and Version of the plugin
 function plugin_version_fusinvdeploy() {
-   return array('name'           => 'FusionInventory Deployment',
+   global $LANG;
+   return array('name'           => $LANG['plugin_fusinvdeploy']['title'][0],
                 'shortname'      => 'fusinvdeploy',
                 'version'        => '0.0.1',
                 'author'         => "<a href='http://www.teclib.com'>TECLIB'</a>",
@@ -147,6 +160,10 @@ function plugin_fusinvdeploy_check_prerequisites() {
       $plugin = new Plugin;
       if (!$plugin->isActivated("fusioninventory")) {
           print $LANG['plugin_fusinvdeploy']["setup"][17]."<br />\n";
+         return false;
+      }
+      if (!$plugin->isActivated("fusinvinventory")) {
+          print $LANG['plugin_fusinvdeploy']["setup"][21]."<br />\n";
          return false;
       }
       if (!$plugin->isInstalled("webservices")) {
