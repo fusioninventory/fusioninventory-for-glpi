@@ -75,8 +75,8 @@ class PluginFusinvdeployCheck extends CommonDBTM {
     * @return an array with all checks, or an empty array is nothing defined
     */
    static function getForOrder($orders_id) {
-      $results = getAllDatasFromTable('glpi_plugin_fusinvdeploy_checks',
-                                      "`plugin_fusinvdeploy_orders_id`='$orders_id'");
+      $check = new self;
+      $results = $check->find("`plugin_fusinvdeploy_orders_id`='$orders_id'", "ranking ASC");
 
       $checks = array();
       foreach ($results as $result) {
@@ -94,6 +94,67 @@ class PluginFusinvdeployCheck extends CommonDBTM {
       }
 
       return $checks;
+   }
+
+   function update_ranking($params = array())  {
+
+      //get params
+      $id_moved = $params['id'];
+      $old_ranking = $params['old_ranking'];
+      $new_ranking = $params['new_ranking'];
+      $package_id = $params['package_id'];
+      $render = $params['render'];
+
+      //get order id
+      $render_type   = PluginFusinvdeployOrder::getRender($render);
+      $order_id = PluginFusinvdeployOrder::getIdForPackage($package_id,$render_type);
+
+      //get rankings
+      $action_moved = new $this;
+      $action_moved->getFromDB($id_moved);
+      $ranking_moved = $action_moved->getField('ranking');
+      $ranking_destination = $new_ranking;
+
+      $actions = new $this;
+      if ($ranking_moved < $ranking_destination) {
+         //get all rows between this two rows
+         $rows_id = $actions->find("plugin_fusinvdeploy_orders_id = '$order_id'
+               AND ranking > '$ranking_moved'
+               AND ranking <= '$ranking_destination'"
+         );
+
+         //decrement ranking for all this rows
+         foreach($rows_id as $id => $values) {
+            $options = array();
+            $options['id'] = $id;
+            $options['ranking'] = $values['ranking']-1;
+            $actions->update($options);
+            unset($options);
+         }
+      } else {
+         //get all rows between this two rows
+         $rows_id = $actions->find("plugin_fusinvdeploy_orders_id = '$order_id'
+               AND ranking < '$ranking_moved'
+               AND ranking >= '$ranking_destination'"
+         );
+
+         //decrement ranking for all this rows
+         foreach($rows_id as $id => $values) {
+            $options = array();
+            $options['id'] = $id;
+            $options['ranking'] = $values['ranking']+1;
+            $actions->update($options);
+            unset($options);
+         }
+      }
+
+      //set ranking to moved row
+      $options['id'] = $id_moved;
+      $options['ranking'] = $ranking_destination;
+      $action_moved->update($options);
+
+      return "{success:true}";
+
    }
 }
 ?>

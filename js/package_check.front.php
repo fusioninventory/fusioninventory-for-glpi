@@ -97,6 +97,10 @@ var {$render}checkColumns =  [{
    width: {$column_width[3]},
    dataIndex: '{$render}value',
    renderer: {$render}renderValue
+}, {
+   id: '{$render}ranking',
+   dataIndex: '{$render}ranking',
+   hidden: true
 }];
 
 
@@ -139,15 +143,15 @@ function {$render}renderValue(val, meta, record) {
 //create store and load data
 var {$render}checkGridReader = new Ext.data.JsonReader({
    root: '{$render}checks',
-   fields: ['{$render}id', '{$render}type', '{$render}path', '{$render}value','{$render}unit']
+   fields: ['{$render}id', '{$render}type', '{$render}path',
+   '{$render}value', '{$render}unit', '{$render}ranking']
 });
 
-var {$render}checkGridStore = new Ext.data.GroupingStore({
+var {$render}checkGridStore = new Ext.data.Store({
    url: '../ajax/package_check.data.php?package_id={$id}&render={$render}',
    autoLoad: true,
    reader: {$render}checkGridReader,
-   sortInfo: {field: '{$render}id', direction: "ASC"},
-   groupField : '{$render}type'
+   sortInfo: {field: '{$render}ranking', direction: "ASC"}
 });
 
 function printObject(o) {
@@ -171,15 +175,6 @@ var {$render}checkGrid = new Ext.grid.GridPanel({
    style:'margin-bottom:5px',
    title: '{$LANG['plugin_fusinvdeploy']['form']['title'][2]} ({$title2})',
    stateId: '{$render}checkGrid',
-   view: new Ext.grid.GroupingView({
-      forceFit:true,
-      groupTextTpl: '{text}',
-      startCollapsed : true,
-      hideGroupedColumn: true,
-      forceFit : true,
-      emptyText: '',
-      emptyGroupText: ''
-   }),
    tbar: [{
       text: '{$LANG['plugin_fusinvdeploy']['form']['title'][1]}',
       iconCls: 'exticon-add',
@@ -231,7 +226,33 @@ var {$render}checkGrid = new Ext.grid.GridPanel({
             {$render}checkForm.buttons[0].setDisabled(false);
          }
       }
-   })
+   }),
+   enableDragDrop: true,
+   plugins: [
+      new Ext.ux.dd.GridDragDropRowOrder({
+         scrollable: true,
+         copy: false,
+         listeners: {
+            afterrowmove: function (objThis, oldIndex, newIndex, records) {
+               var id = records[0].data.{$render}id;
+
+               //save reorder
+               Ext.Ajax.request({
+                  url : '../ajax/package_check.reorder.php',
+                  params : {
+                     id: id,
+                     old_ranking: oldIndex,
+                     new_ranking: newIndex,
+                     package_id: '{$id}',
+                     render: '{$render}'
+                  },
+                  method: 'GET'
+               });
+            }
+         }
+      })
+   ],
+   ddGroup: '{$render}checkGridDD'
 });
 
 

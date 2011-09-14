@@ -32,41 +32,17 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
+
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
 
-global $DB;
-
-if(isset($_GET['package_id'])){
-   $package_id = $_GET['package_id'];
-   $render     = $_GET['render'];
-} else {
+if(!isset($_GET['package_id'])){
+   echo "{success:false, message:\"_GET['package_id'] not found\"}";
    exit;
 }
 
-$render_type   = PluginFusinvdeployOrder::getRender($render);
-$order_id      = PluginFusinvdeployOrder::getIdForPackage($package_id,$render_type);
-$sql           = "SELECT id as {$render}id,
-                      type as {$render}type,
-                      path as {$render}path,
-                      value as {$render}value,
-                      ranking as {$render}ranking,
-                      IF (
-                        type = 'freespaceGreater'
-                        OR type = 'fileSizeLower'
-                        OR type = 'fileSizeGreater'
-                        OR type = 'fileSizeEqual' , '".$LANG['common'][82]."', '') as {$render}unit
-                   FROM `glpi_plugin_fusinvdeploy_checks`
-                   WHERE `plugin_fusinvdeploy_orders_id` = '$order_id'";
+$check = new PluginFusinvdeployCheck;
+$res = $check->update_ranking($_REQUEST);
 
+echo $res;
 
-$qry  = $DB->query($sql);
-$nb   = $DB->numrows($qry);
-$res  = array();
-
-while($row = $DB->fetch_array($qry)) {
-   $res[$render.'checks'][] = $row;
-}
-
-echo json_encode($res);
-?>

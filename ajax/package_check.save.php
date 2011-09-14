@@ -71,6 +71,18 @@ if (isset ($_POST["id"]) && !$_POST['id']) {
                   'value'                         => $_POST['value'],
                   'plugin_fusinvdeploy_orders_id' => $order_id);
 
+
+   //get max previous ranking
+   $sql_ranking = "SELECT ranking FROM ".$check->getTable()."
+      WHERE plugin_fusinvdeploy_orders_id = '$order_id' ORDER BY ranking DESC";
+   $res_ranking = $DB->query($sql_ranking);
+   if ($DB->numrows($res_ranking) == 0) $ranking = 0;
+   else {
+      $data_ranking = $DB->fetch_array($res_ranking);
+      $ranking = $data_ranking['ranking']+1;
+   }
+   $data['ranking'] = $ranking;
+
    $check->add($data);
    echo "{success:true}";
 
