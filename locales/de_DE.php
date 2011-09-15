@@ -39,6 +39,8 @@ $version="2.3.0-1";
 
 $LANG['plugin_fusinvdeploy']['title'][0]="$title";
 
+$LANG['plugin_fusinvdeploy']['massiveactions'][0]="Target a deployment task";
+
 $LANG['plugin_fusinvdeploy']['package'][0]="Aktion";
 $LANG['plugin_fusinvdeploy']['package'][1]="Befehl";
 $LANG['plugin_fusinvdeploy']['package'][2]="Ausführen (ausführbare Datei im Paket)";

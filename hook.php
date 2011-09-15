@@ -30,7 +30,7 @@
  */
 
 // ----------------------------------------------------------------------
-// Original Author of file: DURIEUX David
+// Original Author of file: Alexandre Delaunay
 // Purpose of file:
 // ----------------------------------------------------------------------
 
@@ -76,7 +76,12 @@ function plugin_fusinvdeploy_MassiveActions($type) {
 
    switch ($type) {
       case 'PluginFusinvdeployPackage' :
-         return array("plugin_fusinvdeploy_duplicatePackage" => $LANG['buttons'][54]);
+         return array('plugin_fusinvdeploy_duplicatePackage' => $LANG['buttons'][54]);
+         break;
+      case 'Computer':
+         return array('plugin_fusinvdeploy_targetDeployTask'
+                  => $LANG['plugin_fusinvdeploy']['massiveactions'][0]
+         );
          break;
    }
    return array();
@@ -88,10 +93,28 @@ function plugin_fusinvdeploy_MassiveActionsDisplay($options=array()) {
    switch ($options['itemtype']) {
       case 'PluginFusinvdeployPackage' :
          switch ($options['action']) {
-            case "plugin_fusinvdeploy_duplicatePackage" :
-               echo $LANG['plugin_fusinvdeploy']['package'][25].":&nbsp;<input type='text' name='newname' value=''>";
+            case 'plugin_fusinvdeploy_duplicatePackage' :
+               echo $LANG['plugin_fusinvdeploy']['package'][25].
+                     ":&nbsp;<input type='text' name='newname' value=''>";
                echo "&nbsp;<input type='submit' name='massiveaction' class='submit' value='".
-                     $LANG["buttons"][2]."'>&nbsp;";
+                     $LANG['buttons'][2]."'>&nbsp;";
+            break;
+         }
+         break;
+      case 'Computer' :
+         switch ($options['action']) {
+            case 'plugin_fusinvdeploy_targetDeployTask' :
+               echo $LANG['plugin_fusinvdeploy']['task'][5].":&nbsp;";
+               Dropdown::show('PluginFusinvdeployTask', array(
+                     'name'      => "tasks_id",
+                     'condition' => "is_active = 0"
+               ));
+               echo "&nbsp;".$LANG['plugin_fusinvdeploy']['package'][7].":&nbsp;";
+               Dropdown::show('PluginFusinvdeployPackage', array(
+                     'name'      => "packages_id"
+               ));
+               echo "&nbsp;<input type='submit' name='massiveaction' class='submit' value='".
+                     $LANG['buttons'][2]."'>&nbsp;";
             break;
          }
          break;
@@ -114,6 +137,30 @@ function plugin_fusinvdeploy_MassiveActionsProcess($data) {
                }
             }
 
+         }
+         break;
+      case 'plugin_fusinvdeploy_targetDeployTask' :
+         if ($data['itemtype'] == 'Computer') {
+            $taskjob = new PluginFusinvdeployTaskjob;
+            logDebug($data);
+
+            $tasks = array();
+            foreach ($data['item'] as $key => $val) {
+               $task = new StdClass;
+               $task->package_id = $data['packages_id'];
+               $task->action_type = 'Computer';
+               $task->action_selection = $key;
+               $task->method = 'deployinstall';
+               $task->retry_nb = 3;
+               $task->retry_time = 0;
+               $tasks[] = $task;
+            }
+
+            $params = array(
+               'tasks_id'        => $data['tasks_id'],
+               'tasks' => json_encode($tasks)
+            );
+            $taskjob->saveDatas($params);
          }
          break;
    }
