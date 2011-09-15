@@ -320,5 +320,95 @@ class PluginFusinvdeployFile extends CommonDBTM {
       return $LANG['plugin_fusinvdeploy']['files'][6]
          ." : ".min($max_upload, $max_post, $memory_limit).$LANG['common'][82];
    }
+
+   function uploadFile()  {
+      global $LANG;
+
+      if(isset($_GET['package_id'])){
+         $package_id = $_GET['package_id'];
+         $render     = $_GET['render'];
+      } else {
+         exit;
+      }
+
+      foreach($_POST as $POST_key => $POST_value) {
+         $new_key         = preg_replace('#^'.$render.'#','',$POST_key);
+         $_POST[$new_key] = $POST_value;
+      }
+
+      foreach($_FILES as $FILES_key => $FILES_value) {
+         $new_key          = preg_replace('#^'.$render.'#','',$FILES_key);
+         $_FILES[$new_key] = $FILES_value;
+      }
+
+      $render   = PluginFusinvdeployOrder::getRender($render);
+      $order_id = PluginFusinvdeployOrder::getIdForPackage($package_id,$render);
+
+      if (isset ($_POST["id"]) and !$_POST['id']) {
+
+      #logDebug($_POST);
+      #logDebug($_FILES);
+
+        //file uploaded?
+         $filename = null;
+         $file_tmp_name = null;
+         if (isset($_FILES['file']['tmp_name']) and !empty($_FILES['file']['tmp_name'])){
+            $file_tmp_name = $_FILES['file']['tmp_name'];
+         } /*elseif(isset($_POST['url']) and !empty($_POST['url'])) {
+            $filename = $_POST['filename'];
+         }*/
+         if (isset($_FILES['file']['name']) and !empty($_FILES['file']['name']))
+            $filename = $_FILES['file']['name'];
+
+         //file upload errors
+         if (isset($_FILES['file']['error'])) {
+            switch ($_FILES['file']['error']) {
+               case UPLOAD_ERR_INI_SIZE:
+               case UPLOAD_ERR_FORM_SIZE:
+                  print "{success:false, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][20]}\"}";
+                  exit;
+               case UPLOAD_ERR_PARTIAL:
+                  print "{success:false, file:'{$filename}',msg:\"The uploaded file was only partially uploaded.\"}";
+                  exit;
+               case UPLOAD_ERR_NO_FILE:
+                  print "{success:false, file:'{$filename}',msg:\"No file was uploaded.\"}";
+                  exit;
+               case UPLOAD_ERR_NO_TMP_DIR:
+                  print "{success:false, file:'{$filename}',msg:\"Missing a temporary folder.\"}";
+                  exit;
+               case UPLOAD_ERR_CANT_WRITE:
+                  print "{success:false, file:'{$filename}',msg:\"Failed to write file to disk.\"}";
+                  exit;
+               case UPLOAD_ERR_CANT_WRITE:
+                  print "{success:false, file:'{$filename}',msg:\"A PHP extension stopped the file upload.\"}";
+                  exit;
+               case UPLOAD_ERR_OK:
+                  //no error, continue
+            }
+         }
+
+         //prepare file data for insertion in repo
+         $data = array(
+            'file_tmp_name' => $file_tmp_name,
+            'mime_type' => $_FILES['file']['type'],
+            'filename' => $filename,
+            'is_p2p' => (($_POST['p2p'] == 'true') ? 1 : 0),
+            'uncompress' => (($_POST['uncompress'] == 'true') ? 1 : 0),
+            'p2p_retention_days' => is_numeric($_POST['validity']) ? $_POST['validity'] : 0,
+            'order_id' => $order_id
+         );
+
+         //Add file in repo
+         if ($filename && $this->addFileInRepo($data)) {
+            print "{success:true, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['action'][4]}\"}";
+            exit;
+         } else {
+            print "{success:false, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][15]}\"}";
+            exit;
+         }
+      }
+      print "{success:false, file:'none',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][15]}\"}";
+   }
+
 }
 ?>
