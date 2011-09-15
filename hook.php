@@ -142,7 +142,6 @@ function plugin_fusinvdeploy_MassiveActionsProcess($data) {
       case 'plugin_fusinvdeploy_targetDeployTask' :
          if ($data['itemtype'] == 'Computer') {
             $taskjob = new PluginFusinvdeployTaskjob;
-            logDebug($data);
 
             $tasks = array();
             foreach ($data['item'] as $key => $val) {
