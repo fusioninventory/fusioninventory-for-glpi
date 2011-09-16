@@ -55,7 +55,7 @@ $LANG['plugin_fusioninventory']['agents'][41]="Link d'accesso al servizio";
 $LANG['plugin_fusioninventory']['agents'][42]="Useragent";
 $LANG['plugin_fusioninventory']['agents'][43]="Informazioni per impostare l'agente";
 $LANG['plugin_fusioninventory']['agents'][44]="Link di communicazione con il server";
-$LANG['plugin_fusioninventory']['agents'][45]="Exceptions";
+$LANG['plugin_fusioninventory']['agents'][45]="Eccezioni";
 $LANG['plugin_fusioninventory']['agents'][4]="Ultimo Contatto dell'agente";
 $LANG['plugin_fusioninventory']['agents'][6]="Disabilita";
 
@@ -184,8 +184,8 @@ $LANG['plugin_fusioninventory']['task'][43]="Modo di comunicazione";
 $LANG['plugin_fusioninventory']['task'][44]="Vedere le informazioni complete del compito";
 $LANG['plugin_fusioninventory']['task'][45]="Opzioni avanzate";
 $LANG['plugin_fusioninventory']['task'][46]="Reset";
-$LANG['plugin_fusioninventory']['task'][47]="Unique id";
-$LANG['plugin_fusioninventory']['task'][48]="To inventory";
+$LANG['plugin_fusioninventory']['task'][47]="Identificativo univoco";
+$LANG['plugin_fusioninventory']['task'][48]="Da inventariare";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="In esecuzione";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";

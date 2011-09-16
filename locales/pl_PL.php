@@ -36,7 +36,7 @@
 $LANG['plugin_fusioninventory']['agents'][15]="Stan agenta";
 $LANG['plugin_fusioninventory']['agents'][17]="Agent jest uruchomiony";
 $LANG['plugin_fusioninventory']['agents'][22]="Oczekiwanie";
-$LANG['plugin_fusioninventory']['agents'][23]="Computer link";
+$LANG['plugin_fusioninventory']['agents'][23]="Połączony komputer";
 $LANG['plugin_fusioninventory']['agents'][24]="Token";
 $LANG['plugin_fusioninventory']['agents'][25]="Wersja";
 $LANG['plugin_fusioninventory']['agents'][27]="Moduły Agentów";
@@ -139,7 +139,7 @@ $LANG['plugin_fusioninventory']['rules'][18]="Urządzenie utworzono";
 $LANG['plugin_fusioninventory']['rules'][2]="Reguły importu sprzętu i kojarzenia";
 $LANG['plugin_fusioninventory']['rules'][3]="Znajdź zasoby GLPI ze statusem";
 $LANG['plugin_fusioninventory']['rules'][4]="Miejsce przeznaczenia sprzętu";
-$LANG['plugin_fusioninventory']['rules'][5]="FusionInventory link";
+$LANG['plugin_fusioninventory']['rules'][5]="Połączenie Fusioninventory";
 $LANG['plugin_fusioninventory']['rules'][6]="Powiązanie jeśli możliwe, import zabroniony jeśli brak";
 $LANG['plugin_fusioninventory']['rules'][7]="Powiązanie jeśli możliwe, jeśli brak utwórz";
 $LANG['plugin_fusioninventory']['rules'][8]="Wyślij";
@@ -204,7 +204,7 @@ $LANG['plugin_fusioninventory']['unknown'][5]="Importuj nieznane urządzenia do 
 
 $LANG['plugin_fusioninventory']['wizard'][0]="Wybór akcji";
 $LANG['plugin_fusioninventory']['wizard'][10]="Wybór (przeszukanie sieci lub inwentaryzacja)";
-$LANG['plugin_fusioninventory']['wizard'][11]="Breadcrumb";
+$LANG['plugin_fusioninventory']['wizard'][11]="Nawigacja okruszkowa";
 $LANG['plugin_fusioninventory']['wizard'][12]="Przeszukanie sieci";
 $LANG['plugin_fusioninventory']['wizard'][13]="Inwentaryzacja urządzeń";
 $LANG['plugin_fusioninventory']['wizard'][14]="Witamy w Fusioninventory. Chcesz zacząć konfigurację?";
