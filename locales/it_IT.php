@@ -84,7 +84,7 @@ $LANG['plugin_fusinvinventory']['setup'][22]="Importo globale";
 $LANG['plugin_fusinvinventory']['setup'][23]="Nessun importo";
 $LANG['plugin_fusinvinventory']['setup'][24]="Importo unico";
 $LANG['plugin_fusinvinventory']['setup'][25]="Registro";
-$LANG['plugin_fusinvinventory']['setup'][26]="Processes";
+$LANG['plugin_fusinvinventory']['setup'][26]="Processi";
 $LANG['plugin_fusinvinventory']['setup'][27]="Importazione unica in base al numero seriale";
 $LANG['plugin_fusinvinventory']['setup'][28]="Trasferimento automatico computers";
 $LANG['plugin_fusinvinventory']['setup'][29]="Modello per trasferimento automatico computers";
@@ -98,7 +98,7 @@ $LANG['plugin_fusinvinventory']['setup'][36]="Stato predefinito";
 
 $LANG['plugin_fusinvinventory']['title'][0]="Inventario FusionInventory";
 $LANG['plugin_fusinvinventory']['title'][1]="Inventario locale";
-$LANG['plugin_fusinvinventory']['title'][2]="VMware host remote inventory";
+$LANG['plugin_fusinvinventory']['title'][2]="Inventario host WMware remoto";
 
-$LANG['plugin_fusinvinventory']['vmwareesx'][0]="VMware host";
+$LANG['plugin_fusinvinventory']['vmwareesx'][0]="Host VMware";
 ?>
