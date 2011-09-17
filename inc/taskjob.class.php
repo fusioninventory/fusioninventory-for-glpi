@@ -703,16 +703,18 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          while ($data2=$DB->fetch_array($result2)) {
             $date_last = strtotime($data2['date']);         
          }
-                  
-         $period = 0;
-         $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp(
-                 $data['periodicity_type'], 
-                 $data['periodicity_count']);
+         
+         if ($nb_retry > 0) {
+            $period = 0;
+            $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp(
+                    $data['periodicity_type'], 
+                    $data['periodicity_count']);
 
-         if (($date_last + ($data['retry_time'] * 60)) < date('U')) {
-            $return = $PluginFusioninventoryTaskjob->prepareRunTaskjob($data);
-            if ($return > 0) {
-               $return = 1;
+            if (($date_last + ($data['retry_time'] * 60)) < date('U')) {
+               $return = $PluginFusioninventoryTaskjob->prepareRunTaskjob($data);
+               if ($return > 0) {
+                  $return = 1;
+               }
             }
          }
       }
