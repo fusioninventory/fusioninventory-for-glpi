@@ -376,7 +376,7 @@ $LANG['plugin_fusinvsnmp']['snmp'][4]="Descripción del dispositivo";
 $LANG['plugin_fusinvsnmp']['snmp'][51]="Duplex";
 $LANG['plugin_fusinvsnmp']['snmp'][53]="Último inventario";
 $LANG['plugin_fusinvsnmp']['snmp'][54]="Datos no disponibles";
-$LANG['plugin_fusinvsnmp']['snmp'][55]="Número por segundo";
+$LANG['plugin_fusinvsnmp']['snmp'][55]="Consultas por segundo";
 
 $LANG['plugin_fusinvsnmp']['snmpauth'][1]="Comunidad";
 $LANG['plugin_fusinvsnmp']['snmpauth'][2]="Usuario";
