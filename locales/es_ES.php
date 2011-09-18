@@ -116,7 +116,7 @@ $LANG['plugin_fusioninventory']['menu'][2]="Rangos de direcciones IP";
 $LANG['plugin_fusioninventory']['menu'][3]="Menú";
 $LANG['plugin_fusioninventory']['menu'][4]="Dispositivos desconocidos";
 $LANG['plugin_fusioninventory']['menu'][5]="Autenticación en servidores VMware ESX";
-$LANG['plugin_fusioninventory']['menu'][6]="Servidores VMware ESX";
+$LANG['plugin_fusioninventory']['menu'][6]="Inventario de servidores VMware ESX";
 $LANG['plugin_fusioninventory']['menu'][7]="Acciones en curso";
 
 $LANG['plugin_fusioninventory']['processes'][1]="PID";
