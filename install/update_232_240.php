@@ -106,6 +106,7 @@ function update232to240() {
             }
          }
          $taskjob['definition'] = json_encode($definition);
+         $taskjob['status'] = '0';
          $job->update($taskjob);
       }
 

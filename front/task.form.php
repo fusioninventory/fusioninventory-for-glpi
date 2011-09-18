@@ -79,11 +79,15 @@ if (isset($_POST['forcestart'])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task","w");
 
   $pft->getFromDB($_POST['id']);
-  if (($_POST['date_scheduled'] != $pft->fields['date_scheduled'])
-          AND ($_POST['periodicity_count'] == '0')) {
+
+  if ((($_POST['date_scheduled'] != $pft->fields['date_scheduled'])
+            AND ($_POST['periodicity_count'] == '0'))
+          OR ($_POST['periodicity_count'] == '0'
+            AND $_POST['periodicity_count'] != $pft->fields['periodicity_count'])){
      $_POST['execution_id'] = 0;
      $query = "UPDATE `glpi_plugin_fusioninventory_taskjobs`
-            SET `execution_id`='0' 
+            SET `execution_id`='0',
+               `status`='0'
          WHERE `plugin_fusioninventory_tasks_id`='".$_POST['id']."'";
      $DB->query($query);
   }

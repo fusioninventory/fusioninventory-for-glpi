@@ -198,6 +198,8 @@ function pluginFusioninventoryUpdate($current_version) {
       case "2.3.7":
       case "2.3.8":
       case "2.3.9":
+      case "2.3.10":
+      case "2.3.11":
          include("update_232_240.php");
          update232to240();
 
