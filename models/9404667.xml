@@ -10,6 +10,8 @@ HP J4865A ProCurve Switch 4108GL, revision G.07.107, ROM G.05.02 (/sw/code/build
 
 HP J4865A ProCurve Switch 4108GL, revision G.07.109, ROM G.05.02 (/sw/code/build/gamo(m03))
 
+HP J4905A ProCurve Switch 3400cl-24G, revision M.08.54, ROM I.08.02 (/sw/code/build/makf(f04))
+
 ProCurve J4819A Switch 5308xl, revision E.11.10, ROM E.05.05 (/sw/code/build/alpmo(alp11))
 
 ProCurve J4850A Switch 5304XL, revision E.11.21, ROM E.05.05 (/sw/code/build/alpmo(alp11))
@@ -17,6 +19,8 @@ ProCurve J4850A Switch 5304XL, revision E.11.21, ROM E.05.05 (/sw/code/build/alp
 ProCurve J4899A Switch 2650, revision H.10.74, ROM H.08.02 (/sw/code/build/fish(mkfs))
 
 ProCurve J4899B Switch 2650, revision H.08.92, ROM H.08.02 (/sw/code/build/fish(ts_08_5))
+
+ProCurve J4899B Switch 2650, revision H.10.31, ROM H.08.02 (/sw/code/build/fish(mkfs))
 
 ProCurve J4899B Switch 2650, revision H.10.35, ROM H.08.02 (/sw/code/build/fish(mkfs))
 
@@ -30,6 +34,8 @@ ProCurve J4899C Switch 2650, revision H.10.83, ROM H.08.05 (/sw/code/build/fish(
 
 ProCurve J4900A Switch 2626, revision H.10.29, ROM H.08.02 (/sw/code/build/fish(mkfs))
 
+ProCurve J4900A Switch 2626, revision H.10.67, ROM H.08.02 (/sw/code/build/fish(mkfs))
+
 ProCurve J4900A Switch 2626, revision H.10.83, ROM H.08.02 (/sw/code/build/fish(mkfs))
 
 ProCurve J4900B Switch 2626, revision H.08.106, ROM H.08.02 (/sw/code/build/fish(ts_08_5))
@@ -37,6 +43,8 @@ ProCurve J4900B Switch 2626, revision H.08.106, ROM H.08.02 (/sw/code/build/fish
 ProCurve J4900B Switch 2626, revision H.08.92, ROM H.08.02 (/sw/code/build/fish(ts_08_5))
 
 ProCurve J4900B Switch 2626, revision H.10.31, ROM H.08.02 (/sw/code/build/fish(mkfs))
+
+ProCurve J4900B Switch 2626, revision H.10.38, ROM H.08.02 (/sw/code/build/fish(mf_v10_fishp))
 
 ProCurve J4900B Switch 2626, revision H.10.83, ROM H.08.02 (/sw/code/build/fish(mkfs))
 
@@ -75,6 +83,8 @@ ProCurve J8697A Switch 5406zl, revision K.14.41, ROM K.12.20 (/sw/code/build/btm
 ProCurve J8698A Switch 5412zl, revision K.13.60, ROM K.12.17 (/sw/code/build/btm(t3a))
 
 ProCurve J8698A Switch 5412zl, revision K.14.41, ROM K.12.20 (/sw/code/build/btm(t4a))
+
+ProCurve J8762A Switch 2600-8-PWR, revision H.08.98, ROM H.08.03 (/sw/code/build/fish(ts_08_5))
 
 ProCurve J8770A Switch 4204vl, revision L.10.23, ROM L.10.03 (/sw/code/build/rmm(nabs))
 

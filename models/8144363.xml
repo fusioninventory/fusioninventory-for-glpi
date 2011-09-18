@@ -2,7 +2,12 @@
 	<name><![CDATA[8144363]]></name>
 	<type>2</type>
 	<key>Networking1882</key>
-	<comments><![CDATA[Cisco IOS Software, 2800 Software (C2800NM-ADVIPSERVICESK9-M), Version 12.4(13a), RELEASE SOFTWARE (fc1)^M
+	<comments><![CDATA[Cisco IOS Software, 2800 Software (C2800NM-ADVENTERPRISEK9-M), Version 12.4(15)T3, RELEASE SOFTWARE (fc1)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2008 by Cisco Systems, Inc.^M
+Compiled Thu 24-Jan-08 15:25 by prod_rel_team
+
+Cisco IOS Software, 2800 Software (C2800NM-ADVIPSERVICESK9-M), Version 12.4(13a), RELEASE SOFTWARE (fc1)^M
 Technical Support: http://www.cisco.com/techsupport^M
 Copyright (c) 1986-2007 by Cisco Systems, Inc.^M
 Compiled Tue 06-Mar-07 17:01 by prod_rel_team
