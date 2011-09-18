@@ -151,7 +151,7 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
 
          case 'Printer':
             $PluginFusinvsnmpPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
-
+            $_SESSION['glpi_plugins_fusinvsnmp_table'] = "glpi_plugin_fusinvsnmp_printers";
             $query = "SELECT *
                       FROM `glpi_plugin_fusinvsnmp_printers`
                       WHERE `printers_id`='".$items_id."' ";
@@ -159,7 +159,7 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
             if ($DB->numrows($result) > 0) {
                $data = $DB->fetch_assoc($result);
             }
-               
+
             $data['sysdescr'] = $snmp_device['sysdescr'];
             $data['plugin_fusinvsnmp_models_id'] = $snmp_device['plugin_fusinvsnmp_models_id'];
             $data['plugin_fusinvsnmp_configsecurities_id'] = $snmp_device['plugin_fusinvsnmp_configsecurities_id'];
@@ -175,7 +175,7 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
          
          case 'NetworkEquipment':
             $PluginFusinvsnmpNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
-
+            $_SESSION['glpi_plugins_fusinvsnmp_table'] = "glpi_plugin_fusinvsnmp_networkequipments";
             $query = "SELECT *
                       FROM `glpi_plugin_fusinvsnmp_networkequipments`
                       WHERE `networkequipments_id`='".$items_id."' ";
