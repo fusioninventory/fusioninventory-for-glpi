@@ -118,7 +118,8 @@ if (isset($_GET['allowcreate'])) {
    $allowcreate = $_GET['allowcreate'];
 }
 
-if (strstr($_SERVER['HTTP_REFERER'], "wizard.php")) {
+if (isset($_SERVER['HTTP_REFERER'])
+        AND (strstr($_SERVER['HTTP_REFERER'], "wizard.php"))) {
    glpi_header($_SERVER['HTTP_REFERER']."&id=".$id);
 }
 
