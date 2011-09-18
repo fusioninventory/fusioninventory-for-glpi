@@ -673,6 +673,9 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
    $type = get_Class($item);
    switch ($type) {
       case 'PluginFusioninventoryIPRange':
+         if (isset($_GET['allowcreate'])) {
+            $_SESSION['glpi_plugin_fusioninventory_allowcreate'] = $_GET['allowcreate'];
+         }
          return array (1 => $LANG['plugin_fusinvsnmp']['task'][15]." - ".$LANG['plugin_fusinvsnmp']['config'][4], 
                        2 => $LANG['plugin_fusinvsnmp']['task'][15]." - ".$LANG['plugin_fusinvsnmp']['config'][3]);
                        
@@ -805,13 +808,23 @@ function plugin_headings_actions_fusinvsnmp($item) {
 
 function plugin_headings_fusinvsnmp_task_netdiscovery($type, $id) {
    $iprange = new PluginFusioninventoryIPRange();
-   $iprange->permanentTask($_POST["id"], "NETDISCOVERY", true);
+   $allowcreate = 0;
+   if (isset($_SESSION['glpi_plugin_fusioninventory_allowcreate'])) {
+      $allowcreate = $_SESSION['glpi_plugin_fusioninventory_allowcreate'];
+      unset($_SESSION['glpi_plugin_fusioninventory_allowcreate']);
+   }
+   $iprange->permanentTask($_POST["id"], "NETDISCOVERY", $allowcreate);
    
 }
 
 function plugin_headings_fusinvsnmp_task_snmpquery($type, $id) {
    $iprange = new PluginFusioninventoryIPRange();
-   $iprange->permanentTask($_POST["id"], "SNMPQUERY", true);
+   $allowcreate = 0;
+   if (isset($_SESSION['glpi_plugin_fusioninventory_allowcreate'])) {
+      $allowcreate = $_SESSION['glpi_plugin_fusioninventory_allowcreate'];
+      unset($_SESSION['glpi_plugin_fusioninventory_allowcreate']);
+   }
+   $iprange->permanentTask($_POST["id"], "SNMPQUERY", $allowcreate);
    
 }
 
