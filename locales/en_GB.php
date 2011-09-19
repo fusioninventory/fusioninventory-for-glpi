@@ -91,8 +91,8 @@ $LANG['plugin_fusinvdeploy']['config'][0]="Address of the GLPI server (without h
 
 $LANG['plugin_fusinvdeploy']['setup'][17]="Plugin ".$title." needs FusionInventory plugin activated before activation.";
 $LANG['plugin_fusinvdeploy']['setup'][18]="Plugin ".$title." needs FusionInventory plugin activated before uninstall.";
-$LANG['plugin_fusinvdeploy']['setup'][19]="Plugin ".$title." needs Webservices plugin installed before activation.";
-$LANG['plugin_fusinvdeploy']['setup'][20]="Plugin ".$title." needs Webservices plugin installed before uninstall.";
+$LANG['plugin_fusinvdeploy']['setup'][19]="Plugin ".$title." needs Webservices plugin (>= 1.2.0) installed before activation.";
+$LANG['plugin_fusinvdeploy']['setup'][20]="Plugin ".$title." needs Webservices plugin (>= 1.2.0) installed before uninstall.";
 $LANG['plugin_fusinvdeploy']['setup'][21]="Plugin ".$title." needs FusionInventory INVENTORY plugin installed before uninstall.";
 
 $LANG['plugin_fusinvdeploy']['profile'][1]="$title";

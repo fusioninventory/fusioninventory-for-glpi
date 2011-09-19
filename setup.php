@@ -159,16 +159,25 @@ function plugin_fusinvdeploy_check_prerequisites() {
    if (version_compare('0.78',GLPI_VERSION) < 0) {
       $plugin = new Plugin;
       if (!$plugin->isActivated("fusioninventory")) {
-          print $LANG['plugin_fusinvdeploy']["setup"][17]."<br />\n";
+         print $LANG['plugin_fusinvdeploy']["setup"][17]."<br />\n";
          return false;
       }
       if (!$plugin->isActivated("fusinvinventory")) {
-          print $LANG['plugin_fusinvdeploy']["setup"][21]."<br />\n";
+         print $LANG['plugin_fusinvdeploy']["setup"][21]."<br />\n";
          return false;
       }
       if (!$plugin->isInstalled("webservices")) {
-          print $LANG['plugin_fusinvdeploy']["setup"][19]."<br />\n";
+         print $LANG['plugin_fusinvdeploy']["setup"][19]."<br />\n";
          return false;
+      } else {
+         //cheeck version of webservice
+         $plugin = new Plugin;
+         $tmp = $plugin->find("directory = 'webservices'");
+         $webservices_plugin = array_pop($tmp);
+         if (version_compare($webservices_plugin['version'], '2.4.0') < 0) {
+            print $LANG['plugin_fusinvdeploy']["setup"][19]."<br />\n";
+            return false;
+         }
       }
       return true;
    } else {
