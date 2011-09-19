@@ -50,7 +50,7 @@ $height_layout = ($height_left>$height_right)?$height_left:$height_right;
 
 $column_width = array(100,160,40,100,80,95,80);
 
-$label_width = 140;
+$label_width = 100;
 // END - Size of div/form/label...
 
 //get max upload file size
@@ -197,7 +197,7 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
       text: '{$LANG['plugin_fusinvdeploy']['form']['title'][4]}',
       iconCls: 'exticon-add',
       handler: function(btn, ev) {
-          {$render}fileForm.newFileMode(true);
+         {$render}fileForm.newFileMode(true);
 
          var {$render}u = new {$render}fileGridStore.recordType({
              {$render}file : '',
@@ -284,6 +284,7 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
 
 
 
+
 //define form
 var {$render}fileForm = new Ext.FormPanel({
    disabled: {$disabled},
@@ -302,12 +303,43 @@ var {$render}fileForm = new Ext.FormPanel({
    width: {$width_right},
    height: {$height_right},
    defaultType: 'textfield',
-   items: [
-      {name: '{$render}id',xtype: 'hidden'},
-      new Ext.ux.form.FileUploadField({
+   items: [{
+         name: '{$render}id',
+         xtype: 'hidden'
+      }, new Ext.form.ComboBox({
+         fieldLabel:'{$LANG['plugin_fusinvdeploy']['form']['label'][0]}',
+         id: '{$render}type',
+         name: '{$render}type',
+         valueField: 'name',
+         displayField: 'value',
+         allowBlank: false,
+         hiddenName: '{$render}itemtype',
+         store: new Ext.data.ArrayStore({
+            fields: ['name', 'value'],
+            data: [
+               ['PluginFusinvdeployFile_filehttp', '{$LANG['plugin_fusinvdeploy']['files'][7]}'],
+               ['PluginFusinvdeployFile_fileserver', '{$LANG['plugin_fusinvdeploy']['files'][8]}']
+            ]
+         }),
+         mode: 'local',
+         triggerAction: 'all',
+         listeners: {select:{fn:function(combo, record, index){
+            switch(record.data.name) {
+               case 'PluginFusinvdeployFile_filehttp':
+                  {$render}fileForm.getForm().findField('{$render}file_server').hide();
+                  {$render}fileForm.getForm().findField('{$render}file').show();
+                  {$render}fileForm.getForm().findField('{$render}file_info_maxfilesize').show();
+                  break;
+               case 'PluginFusinvdeployFile_fileserver':
+                  {$render}fileForm.getForm().findField('{$render}file').hide();
+                  {$render}fileForm.getForm().findField('{$render}file_info_maxfilesize').hide();
+                  {$render}fileForm.getForm().findField('{$render}file_server').show();
+                  break;
+            }
+         }}}
+      }), new Ext.ux.form.FileUploadField({
          name: '{$render}file',
          id: '{$render}file',
-/*         allowBlank: false, */
          hidden: true,
          width:180,
          fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][5]}',
@@ -317,22 +349,38 @@ var {$render}fileForm = new Ext.FormPanel({
             iconCls: 'exticon-file'
          }
       }), {
+         id: '{$render}file_info_maxfilesize',
          name: '{$render}file_info_maxfilesize',
          value: '{$maxUpload}',
          xtype: 'displayfield',
          allowBlank: false,
+         hidden:true,
          style: 'font-size:8px'
-      }, /*new Ext.form.Field({
-         fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['action'][5]}',
-         name: '{$render}url',
-         id: '{$render}url',
-         width: 50,
-      }),*/
-         {
+      }, {
+         fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][5]}',
+         name: '{$render}file_server',
+         id: '{$render}file_server',
+         hidden: true,
+         width: 180,
+         xtype:'trigger',
+         triggerClass: 'x-form-file-trigger',
+         onTriggerClick: function() {
+            chooser = new FileChooser({
+               width: 615,
+               height: 400,
+               url_ls: '../ajax/package_file.ls.php',
+               url_actions: '../ajax/package_file.actions.php',
+               title: '{$LANG['document'][36]}'
+            });
+
+            chooser.show(this, function(el, data) {
+               el.setValue(data);
+            });
+         }
+      }, {
          fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][6]}',
          name: '{$render}p2p',
          id: '{$render}p2p',
-/*         allowBlank: false, */
          xtype: 'radiogroup',
          width: 100,
          listeners: {change:{fn:function(){
@@ -464,8 +512,17 @@ var {$render}fileForm = new Ext.FormPanel({
       iconCls: 'exticon-cancel',
       hidden : true,
       handler: function(btn, ev) {
+         {$render}fileForm.newFileMode(false);
          {$render}fileForm.buttons[2].setVisible(false);
-         {$render}fileStore.reload();
+         var selection = {$render}fileGrid.getSelectionModel().getSelected();
+         if (!selection) {
+             return false;
+         }
+         if (selection !== undefined) {
+            {$render}fileGrid.store.remove(selection);
+            {$render}fileForm.collapse();
+         }
+         {$render}fileGrid.store.reload();
       }
    }],
    loadData : function({$render}rec) {
@@ -477,13 +534,16 @@ var {$render}fileForm = new Ext.FormPanel({
    newFileMode : function(s) {
       if (!{$disabled}) {
          if(s == true){
-            {$render}fileForm.getForm().findField('{$render}file').show();
+            {$render}fileForm.getForm().findField('{$render}type').show();
             {$render}fileForm.buttons[0].setVisible(true);
             {$render}fileForm.buttons[1].setVisible(false);
             {$render}fileForm.buttons[2].setVisible(true);
             {$render}fileGrid.setDisabled(true);
          } else {
+            {$render}fileForm.getForm().findField('{$render}type').hide();
             {$render}fileForm.getForm().findField('{$render}file').hide();
+            {$render}fileForm.getForm().findField('{$render}file_server').hide();
+            {$render}fileForm.getForm().findField('{$render}file_info_maxfilesize').hide();
             {$render}fileForm.buttons[0].setVisible(false);
             {$render}fileForm.buttons[1].setVisible(true);
             {$render}fileForm.buttons[2].setVisible(false);

@@ -213,11 +213,15 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       </script>";
 
       //load extjs plugins library
+      echo "<link rel='stylesheet' type='text/css' href='".GLPI_ROOT.
+            "/plugins/fusinvdeploy/lib/extjs/FileChooser/css/styles.css'>";
+
       echo "<script type='text/javascript'>";
       require_once GLPI_ROOT."/plugins/fusinvdeploy/lib/extjs/FileUploadField.js";
       require_once GLPI_ROOT."/plugins/fusinvdeploy/lib/extjs/Spinner.js";
       require_once GLPI_ROOT."/plugins/fusinvdeploy/lib/extjs/SpinnerField.js";
       require_once GLPI_ROOT."/plugins/fusinvdeploy/lib/extjs/GridDragDropRowOrder.js";
+      require_once GLPI_ROOT."/plugins/fusinvdeploy/lib/extjs/FileChooser/FileChooser.js";
       echo "</script>";
 
       return true;

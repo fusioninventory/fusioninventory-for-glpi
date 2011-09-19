@@ -77,6 +77,8 @@ $LANG['plugin_fusinvdeploy']['files'][3]="Operating system";
 $LANG['plugin_fusinvdeploy']['files'][4]="File to upload";
 $LANG['plugin_fusinvdeploy']['files'][5]="Folder in package";
 $LANG['plugin_fusinvdeploy']['files'][6]="Maximum file size";
+$LANG['plugin_fusinvdeploy']['files'][7]="Upload from my computer";
+$LANG['plugin_fusinvdeploy']['files'][8]="Upload from the server";
 
 $LANG['plugin_fusinvdeploy']['packagefiles'][0]="Files linked with package";
 

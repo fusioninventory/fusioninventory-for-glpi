@@ -220,6 +220,10 @@ width:16px;
 width:auto;
 }
 
+ .x-tree-node-leaf .x-tree-node-icon{
+background-image:url(../lib/extjs/theme/images/fusinvdeploy/tree/folder.gif);
+}
+
 .deploy_extjs {
 text-align:left;
 width : 950px;

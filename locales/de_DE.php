@@ -78,6 +78,8 @@ $LANG['plugin_fusinvdeploy']['files'][3]="Betriebssystem";
 $LANG['plugin_fusinvdeploy']['files'][4]="Dateien zum herunterladen";
 $LANG['plugin_fusinvdeploy']['files'][5]="Ordner im Paket";
 $LANG['plugin_fusinvdeploy']['files'][6]="Maximum file size";
+$LANG['plugin_fusinvdeploy']['files'][7]="Upload from my computer";
+$LANG['plugin_fusinvdeploy']['files'][8]="Upload from the server";
 
 $LANG['plugin_fusinvdeploy']['packagefiles'][0]="An Pakete gebundene Dateien";
 
