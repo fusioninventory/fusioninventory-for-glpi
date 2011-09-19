@@ -250,8 +250,14 @@ class PluginFusinvdeployPackage extends CommonDBTM {
    static function canEdit($id) {
       global $DB;
 
-      if (count(getAllDatasFromTable('glpi_plugin_fusinvdeploy_taskjobs',
-               "definition LIKE '%\"PluginFusinvdeployPackage\":\"".$id."%'")) > 0) return false;
+      $taskjobs_a = getAllDatasFromTable('glpi_plugin_fusioninventory_taskjobs',
+               "definition LIKE '%\"PluginFusinvdeployPackage\":\"".$id."%'");
+
+      foreach ($taskjobs_a as $job) {
+         $task = new PluginFusioninventoryTask;
+         $task->getFromDB($job['plugin_fusioninventory_tasks_id']);
+         if ($task->getField('is_active') == 1) return false;
+      }
       return true;
    }
 

@@ -174,7 +174,7 @@ function plugin_fusinvdeploy_check_prerequisites() {
          $plugin = new Plugin;
          $tmp = $plugin->find("directory = 'webservices'");
          $webservices_plugin = array_pop($tmp);
-         if (version_compare($webservices_plugin['version'], '2.4.0') < 0) {
+         if (version_compare($webservices_plugin['version'], '1.2.0') < 0) {
             print $LANG['plugin_fusinvdeploy']["setup"][19]."<br />\n";
             return false;
          }
