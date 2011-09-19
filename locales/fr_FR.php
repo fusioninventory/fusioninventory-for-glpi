@@ -77,8 +77,9 @@ $LANG['plugin_fusinvdeploy']['files'][3]="Plateforme";
 $LANG['plugin_fusinvdeploy']['files'][4]="Fichier à télécharger";
 $LANG['plugin_fusinvdeploy']['files'][5]="Dossier dans le paquet";
 $LANG['plugin_fusinvdeploy']['files'][6]="Taille maximale des fichiers";
-$LANG['plugin_fusinvdeploy']['files'][7]="Télécharger depuis mon ordinateur";
-$LANG['plugin_fusinvdeploy']['files'][8]="Télécharger depuis le serveur";
+$LANG['plugin_fusinvdeploy']['files'][7]="Télécharger depuis";
+$LANG['plugin_fusinvdeploy']['files'][8]="Mon ordinateur";
+$LANG['plugin_fusinvdeploy']['files'][9]="Le serveur";
 
 $LANG['plugin_fusinvdeploy']['packagefiles'][0]="Fichiers liés aux paquets";
 

@@ -50,7 +50,7 @@ $height_layout = ($height_left>$height_right)?$height_left:$height_right;
 
 $column_width = array(100,160,40,100,80,95,80);
 
-$label_width = 100;
+$label_width = 120;
 // END - Size of div/form/label...
 
 //get max upload file size
@@ -307,7 +307,7 @@ var {$render}fileForm = new Ext.FormPanel({
          name: '{$render}id',
          xtype: 'hidden'
       }, new Ext.form.ComboBox({
-         fieldLabel:'{$LANG['plugin_fusinvdeploy']['form']['label'][0]}',
+         fieldLabel:'{$LANG['plugin_fusinvdeploy']['files'][7]}',
          id: '{$render}type',
          name: '{$render}type',
          valueField: 'name',
@@ -317,8 +317,8 @@ var {$render}fileForm = new Ext.FormPanel({
          store: new Ext.data.ArrayStore({
             fields: ['name', 'value'],
             data: [
-               ['PluginFusinvdeployFile_filehttp', '{$LANG['plugin_fusinvdeploy']['files'][7]}'],
-               ['PluginFusinvdeployFile_fileserver', '{$LANG['plugin_fusinvdeploy']['files'][8]}']
+               ['PluginFusinvdeployFile_filehttp', '{$LANG['plugin_fusinvdeploy']['files'][8]}'],
+               ['PluginFusinvdeployFile_fileserver', '{$LANG['plugin_fusinvdeploy']['files'][9]}']
             ]
          }),
          mode: 'local',
@@ -364,6 +364,8 @@ var {$render}fileForm = new Ext.FormPanel({
          width: 180,
          xtype:'trigger',
          triggerClass: 'x-form-file-trigger',
+         editable:false,
+         emptyText: '{$LANG['plugin_fusinvdeploy']['form']['action'][3]}',
          onTriggerClick: function() {
             chooser = new FileChooser({
                width: 615,

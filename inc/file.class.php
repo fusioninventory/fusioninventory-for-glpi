@@ -336,6 +336,10 @@ class PluginFusinvdeployFile extends CommonDBTM {
          $_POST[$new_key] = $POST_value;
       }
 
+      //if file sent is from server
+      if (isset($_POST['file_server'])) return $this->uploadFileFromServer();
+
+      //if file sed is from http post
       foreach($_FILES as $FILES_key => $FILES_value) {
          $new_key          = preg_replace('#^'.$render.'#','',$FILES_key);
          $_FILES[$new_key] = $FILES_value;
@@ -408,6 +412,42 @@ class PluginFusinvdeployFile extends CommonDBTM {
          }
       }
       print "{success:false, file:'none',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][15]}\"}";
+   }
+
+   public function uploadFileFromServer() {
+      global $LANG;
+
+      $package_id = $_GET['package_id'];
+      $render     = $_GET['render'];
+
+      $render   = PluginFusinvdeployOrder::getRender($render);
+      $order_id = PluginFusinvdeployOrder::getIdForPackage($package_id,$render);
+
+      if (isset ($_POST["id"]) and !$_POST['id']) {
+         $file_tmp_name = $_POST['file_server'];
+         $filename = substr($file_tmp_name, strrpos($file_tmp_name, '/')+1);
+         $mime_type = @mime_content_type($file_tmp_name);
+
+         //prepare file data for insertion in repo
+         $data = array(
+            'file_tmp_name' => $file_tmp_name,
+            'mime_type' => $mime_type,
+            'filename' => $filename,
+            'is_p2p' => (($_POST['p2p'] == 'true') ? 1 : 0),
+            'uncompress' => (($_POST['uncompress'] == 'true') ? 1 : 0),
+            'p2p_retention_days' => is_numeric($_POST['validity']) ? $_POST['validity'] : 0,
+            'order_id' => $order_id
+         );
+
+         //Add file in repo
+         if ($filename && $this->addFileInRepo($data)) {
+            print "{success:true, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['action'][4]}\"}";
+            exit;
+         } else {
+            print "{success:false, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][15]}\"}";
+            exit;
+         }
+      } print "{success:false, file:'none',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][15]}\"}";
    }
 
 }
