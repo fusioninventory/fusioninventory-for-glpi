@@ -36,31 +36,8 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT."/inc/includes.php");
 
-global $DB;
+$file = new PluginFusinvdeployFile;
+echo $file->getDatas($_REQUEST);
 
-if(isset($_GET['package_id'])){
-   $package_id = $_GET['package_id'];
-   $render = $_GET['render'];
-} else {
-   exit;
-}
 
-$render_type   = PluginFusinvdeployOrder::getRender($render);
-$order_id      = PluginFusinvdeployOrder::getIdForPackage($package_id,$render_type);
-
-$sql = "SELECT id as {$render}id, name as {$render}file, mimetype as {$render}mimetype,
-               is_p2p as {$render}p2p, p2p_retention_days as {$render}validity,
-               uncompress as {$render}uncompress, DATE_FORMAT(create_date,'%d/%m/%Y') as {$render}dateadd
-        FROM `glpi_plugin_fusinvdeploy_files`
-        WHERE `plugin_fusinvdeploy_orders_id` = '$order_id'";
-
-$qry = $DB->query($sql);
-$nb = $DB->numrows($qry);
-$res = array();
-
-while($row = $DB->fetch_assoc($qry)){
-   $res[$render.'files'][] = $row;
-}
-
-echo json_encode($res);
 ?>

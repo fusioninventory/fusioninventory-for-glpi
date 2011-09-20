@@ -72,6 +72,39 @@ class PluginFusinvdeployFile extends CommonDBTM {
       $DB->query($query);
    }
 
+   function getDatas($params)  {
+      global $DB;
+
+      if(isset($params['package_id'])){
+         $package_id = $params['package_id'];
+         $render = $params['render'];
+      } else {
+         exit;
+      }
+
+      $render_type   = PluginFusinvdeployOrder::getRender($render);
+      $order_id      = PluginFusinvdeployOrder::getIdForPackage($package_id,$render_type);
+
+      $sql = "SELECT id as {$render}id, name as {$render}file, mimetype as {$render}mimetype,
+                     is_p2p as {$render}p2p, p2p_retention_days as {$render}validity,
+                     uncompress as {$render}uncompress,
+                     DATE_FORMAT(create_date,'%d/%m/%Y') as {$render}dateadd,
+                     filesize as {$render}filesize
+              FROM `glpi_plugin_fusinvdeploy_files`
+              WHERE `plugin_fusinvdeploy_orders_id` = '$order_id'";
+
+      $qry = $DB->query($sql);
+      $nb = $DB->numrows($qry);
+      $res = array();
+
+      while($row = $DB->fetch_assoc($qry)){
+         $row[$render.'filesize'] = self::processFilesize($row[$render.'filesize']);
+         $res[$render.'files'][] = $row;
+      }
+
+      return json_encode($res);
+   }
+
    static function getForOrder($orders_id) {
       $results = getAllDatasFromTable('glpi_plugin_fusinvdeploy_files',
                                       "`plugin_fusinvdeploy_orders_id`='$orders_id'");
@@ -180,6 +213,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
       $filename = addslashes($params['filename']);
       $file_tmp_name = $params['file_tmp_name'];
+      $filesize = $params['filesize'];
       $is_p2p = $params['is_p2p'];
       $uncompress = $params['uncompress'];
       $p2p_retention_days = $params['p2p_retention_days'];
@@ -203,6 +237,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
          'name' => $filename,
          'is_p2p' => $is_p2p,
          'mimetype' => $mime_type,
+         'filesize' => $filesize,
          'create_date' => date('Y-m-d H:i:s'),
          'p2p_retention_days' => $p2p_retention_days,
          'uncompress' => $uncompress,
@@ -337,7 +372,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
       }
 
       //if file sent is from server
-      if (isset($_POST['file_server'])) return $this->uploadFileFromServer();
+      if ($_POST['itemtype'] == 'fileserver') return $this->uploadFileFromServer();
 
       //if file sed is from http post
       foreach($_FILES as $FILES_key => $FILES_value) {
@@ -395,6 +430,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
          $data = array(
             'file_tmp_name' => $file_tmp_name,
             'mime_type' => $_FILES['file']['type'],
+            'filesize' => $_FILES['file']['size'],
             'filename' => $filename,
             'is_p2p' => (($_POST['p2p'] == 'true') ? 1 : 0),
             'uncompress' => (($_POST['uncompress'] == 'true') ? 1 : 0),
@@ -427,11 +463,13 @@ class PluginFusinvdeployFile extends CommonDBTM {
          $file_tmp_name = $_POST['file_server'];
          $filename = substr($file_tmp_name, strrpos($file_tmp_name, '/')+1);
          $mime_type = @mime_content_type($file_tmp_name);
+         $filesize = filesize($file_tmp_name);
 
          //prepare file data for insertion in repo
          $data = array(
             'file_tmp_name' => $file_tmp_name,
             'mime_type' => $mime_type,
+            'filesize' => $filesize,
             'filename' => $filename,
             'is_p2p' => (($_POST['p2p'] == 'true') ? 1 : 0),
             'uncompress' => (($_POST['uncompress'] == 'true') ? 1 : 0),
@@ -448,6 +486,21 @@ class PluginFusinvdeployFile extends CommonDBTM {
             exit;
          }
       } print "{success:false, file:'none',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][15]}\"}";
+   }
+
+   public static function processFilesize($filesize) {
+      if ($filesize >= (1024 * 1024 * 1024)) {
+         $filesize = round($filesize / (1024 * 1024 * 1024), 1)."Go";
+      } elseif ($filesize >= 1024 * 1024) {
+         $filesize = round($filesize /  (1024 * 1024), 1)."Mo";
+
+      } elseif ($filesize >= 1024) {
+         $filesize = round($filesize / 1024, 1)."Ko";
+
+      } else {
+         $filesize .= "o";
+      }
+      return $filesize;
    }
 
 }

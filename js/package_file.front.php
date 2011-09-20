@@ -48,7 +48,7 @@ $width_left_fieldset_default  = $width_left-125;
 $width_layout = $width_left + $width_right;
 $height_layout = ($height_left>$height_right)?$height_left:$height_right;
 
-$column_width = array(100,160,40,100,80,95,80);
+$column_width = array(0,160,40,60,40,75,95,90);
 
 $label_width = 120;
 // END - Size of div/form/label...
@@ -104,25 +104,29 @@ var {$render}fileColumns =  [{
    dataIndex: '{$render}mimetype',
    renderer: {$render}renderMimetype
 }, {
+   header: '{$LANG['plugin_fusinvdeploy']['form']['label'][21]}',
+   width: {$column_width[3]},
+   dataIndex: '{$render}filesize'
+}, {
    id: '{$render}p2p',
    header: '{$LANG['plugin_fusinvdeploy']['form']['label'][6]}',
-   width: {$column_width[3]},
+   width: {$column_width[4]},
    dataIndex: '{$render}p2p',
    renderer: {$render}renderBool
 }, {
    id: '{$render}dateadd',
    header: '{$LANG['plugin_fusinvdeploy']['form']['label'][7]}',
-   width: {$column_width[4]},
+   width: {$column_width[5]},
    dataIndex: '{$render}dateadd'
 }, {
    id: '{$render}validity',
    header: '{$LANG['plugin_fusinvdeploy']['form']['label'][8]}',
-   width: {$column_width[5]},
+   width: {$column_width[6]},
    dataIndex: '{$render}validity'
 }, {
    id: '{$render}uncompress',
    header: '{$LANG['plugin_fusinvdeploy']['form']['label'][19]}',
-   width: {$column_width[6]},
+   width: {$column_width[7]},
    dataIndex: '{$render}uncompress',
    renderer: {$render}renderBool
 }];
@@ -150,6 +154,7 @@ var {$render}fileGridStore = new Ext.data.ArrayStore({
       {name: '{$render}id'},
       {name: '{$render}file'},
       {name: '{$render}mimetype'},
+      {name: '{$render}filesize'},
       {name: '{$render}p2p'},
       {name: '{$render}dateadd'},
       {name: '{$render}validity'},
@@ -158,8 +163,17 @@ var {$render}fileGridStore = new Ext.data.ArrayStore({
 });
 
 var {$render}fileReader = new Ext.data.JsonReader({
-   root           : '{$render}files',
-   fields            : ['{$render}id', '{$render}file', '{$render}mimetype', '{$render}p2p','{$render}dateadd', '{$render}validity', '{$render}uncompress']
+   root: '{$render}files',
+   fields: [
+      '{$render}id',
+      '{$render}file',
+      '{$render}mimetype',
+      '{$render}filesize',
+      '{$render}p2p',
+      '{$render}dateadd',
+      '{$render}validity',
+      '{$render}uncompress'
+   ]
 });
 
 var {$render}fileStore = new Ext.data.GroupingStore({
@@ -317,20 +331,20 @@ var {$render}fileForm = new Ext.FormPanel({
          store: new Ext.data.ArrayStore({
             fields: ['name', 'value'],
             data: [
-               ['PluginFusinvdeployFile_filehttp', '{$LANG['plugin_fusinvdeploy']['files'][8]}'],
-               ['PluginFusinvdeployFile_fileserver', '{$LANG['plugin_fusinvdeploy']['files'][9]}']
+               ['filehttp', '{$LANG['plugin_fusinvdeploy']['files'][8]}'],
+               ['fileserver', '{$LANG['plugin_fusinvdeploy']['files'][9]}']
             ]
          }),
          mode: 'local',
          triggerAction: 'all',
          listeners: {select:{fn:function(combo, record, index){
             switch(record.data.name) {
-               case 'PluginFusinvdeployFile_filehttp':
+               case 'filehttp':
                   {$render}fileForm.getForm().findField('{$render}file_server').hide();
                   {$render}fileForm.getForm().findField('{$render}file').show();
                   {$render}fileForm.getForm().findField('{$render}file_info_maxfilesize').show();
                   break;
-               case 'PluginFusinvdeployFile_fileserver':
+               case 'fileserver':
                   {$render}fileForm.getForm().findField('{$render}file').hide();
                   {$render}fileForm.getForm().findField('{$render}file_info_maxfilesize').hide();
                   {$render}fileForm.getForm().findField('{$render}file_server').show();
