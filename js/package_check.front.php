@@ -511,6 +511,15 @@ var {$render}checkForm = new Ext.FormPanel({
          btn.setVisible(false);
          {$render}checkGrid.store.reload();
          {$render}checkGrid.setDisabled(false);
+
+         var selection = {$render}checkGrid.getSelectionModel().getSelected();
+         if (!selection) {
+             return false;
+         }
+         if (selection !== undefined) {
+            {$render}checkGrid.store.remove(selection);
+         }
+         {$render}checkGrid.store.reload()
       }
    }],
    loadData : function({$render}rec) {

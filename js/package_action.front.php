@@ -687,8 +687,17 @@ var {$render}actionForm = new Ext.FormPanel({
       hidden : true,
       handler: function(btn, ev) {
          btn.setVisible(false);
-         {$render}actionGrid.store.reload();
          {$render}actionGrid.setDisabled(false);
+
+         var selection = {$render}actionGrid.getSelectionModel().getSelected();
+         if (!selection) {
+             return false;
+         }
+         if (selection !== undefined) {
+            {$render}actionGrid.store.remove(selection);
+         }
+         {$render}actionGrid.store.reload();
+
       }
    }],
    loadData : function(rec) {
