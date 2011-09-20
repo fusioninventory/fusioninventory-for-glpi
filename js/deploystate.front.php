@@ -108,18 +108,35 @@ function createGridTooltip(value, contentid, message) {
    var btn = new Ext.Button({
       text: value,
       icon: '../pics/ext/information.png',
-      height: 6
+      height: 6,
+      listeners: {
+         click: {
+            fn:function (btn,event){
+               var tooltip = new Ext.ToolTip({
+                  target: btn.id,
+                  anchor: 'right',
+                  cls: 'log-tooltip',
+                  autoHide: false,
+                  autoShow: false,
+                  closable: true,
+                  showDelay: 100,
+                  html: message,
+                  listeners: {
+                     hide: {
+                        fn:function (cmp){
+                           tooltip.destroy();
+                        }
+                     }
+                  }
+               });
+
+               tooltip.show();
+            }
+         }
+      }
    }).render(document.body, contentid);
 
-   new Ext.ToolTip({
-      target: btn.id,
-      anchor: 'right',
-      cls: 'log-tooltip',
-      showDelay: 100,
-      html: message
-   });
 
-   Ext.QuickTips.init();
 }
 
 var taskJobsTreeGrid = new Ext.ux.tree.TreeGrid({
@@ -230,7 +247,10 @@ var taskJobLogsTreeGrid = new Ext.ux.tree.TreeGrid({
       tpl: new Ext.XTemplate('{log:this.logRenderer}', {
          logRenderer: function(val, values) {
             var message = '';
-            switch(values.comment) {
+
+            if (val != '')
+                  message = val;
+            else switch(values.comment) {
                case '{$stateConst['RECEIVED']}':
                   message = "{$LANG['plugin_fusinvdeploy']['deploystatus'][2]}"
                   break;
@@ -243,8 +263,7 @@ var taskJobLogsTreeGrid = new Ext.ux.tree.TreeGrid({
                case '{$stateConst['PROCESSING']}':
                   message = "{$LANG['plugin_fusinvdeploy']['deploystatus'][5]}"
                   break;
-               case 'log':
-                  message = val;
+              default:
                   break
             }
 

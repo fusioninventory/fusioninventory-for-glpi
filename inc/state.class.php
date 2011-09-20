@@ -171,9 +171,10 @@ class PluginFusinvdeployState extends CommonDBTM {
       $i = 0;
       while ($row = $DB->fetch_assoc($query_res)) {
          $row['log'] = '';
-         if (substr($row['comment'], 0, 4) == "log:") {
-            $row['log'] = substr($row['comment'], 4);
-            $row['comment'] = "log";
+         $logs_pos = strpos($row['comment'], "log:");
+         if ($logs_pos !== false) {
+            $row['log'] = substr($row['comment'], $logs_pos+4);
+            $row['comment'] = substr($row['comment'], 0, $logs_pos);
          }
          $row['comment']= self::processComment($row['state'], $row['comment']);
 

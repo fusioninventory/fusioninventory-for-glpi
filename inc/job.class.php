@@ -148,6 +148,11 @@ class PluginFusinvdeployJob {
             if ($p['status'] != '') {
                $tmp['comment'] .= " : ".$p['status'];
             }
+            if ($p['currentStep'] == 'downloading' && isset($p['sha512'])) {
+               $tmp['comment'] .= "log:sha512:";
+               $tmp['comment'] .= $p['sha512'];
+            }
+
          } elseif ($p['status'] == 'ok') {
             $pass_addlog = true;
          } else {
