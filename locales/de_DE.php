@@ -92,6 +92,7 @@ $LANG['plugin_fusinvdeploy']['deploystatus'][4]="Preparing the working directory
 $LANG['plugin_fusinvdeploy']['deploystatus'][5]="The agent is processing the job";
 
 $LANG['plugin_fusinvdeploy']['config'][0]="Adresse des GLPI-Servers (ohne http://)";
+$LANG['plugin_fusinvdeploy']['config'][1]="Root folder for sending file from server";
 
 $LANG['plugin_fusinvdeploy']['setup'][17]="Das Plugin ".$title." benötigt ein aktiviertes FusionInventory Plugin um selber aktiviert zu werden.";
 $LANG['plugin_fusinvdeploy']['setup'][18]="Das Plugin ".$title." benötigt ein aktiviertes FusionInventory Plugin um selber deinstalliert werden zu können.";

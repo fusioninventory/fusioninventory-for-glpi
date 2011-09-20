@@ -91,6 +91,7 @@ $LANG['plugin_fusinvdeploy']['deploystatus'][4]="Preparation du répertoire de t
 $LANG['plugin_fusinvdeploy']['deploystatus'][5]="L'agent traite l'ordre";
 
 $LANG['plugin_fusinvdeploy']['config'][0]="Adresse du serveur GLPI (sans le http://)";
+$LANG['plugin_fusinvdeploy']['config'][1]="Dossier racine pour l'envoi de fichier depuis le serveur";
 
 $LANG['plugin_fusinvdeploy']['setup'][17]="Le plugin ".$title." a besoin que le plugin FusionInventory soit activé pour être lui-même activé.";
 $LANG['plugin_fusinvdeploy']['setup'][18]="Le plugin ".$title." a besoin que le plugin FusionInventory soit activé pour être lui-même désinstallé.";

@@ -60,6 +60,7 @@ class PluginFusinvdeployConfig extends CommonDBTM {
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
       $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'glpi_path', $p_post['glpi_path']);
+      $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'server_upload_path', $p_post['server_upload_path']);
    }
 
    function showForm($options=array()) {
@@ -77,6 +78,14 @@ class PluginFusinvdeployConfig extends CommonDBTM {
       echo "<td>".$LANG['plugin_fusinvdeploy']["config"][0]."&nbsp;:</td>";
       echo "<td>";
       echo "<input type='text' name='glpi_path' value='".$PluginFusioninventoryConfig->getValue($plugins_id, 'glpi_path')."' />";
+      echo "</td>";
+      echo "<td colspan='2'></td>";;
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusinvdeploy']['config'][1]."&nbsp;:</td>";
+      echo "<td>";
+      echo "<input type='text' name='server_upload_path' value='".$PluginFusioninventoryConfig->getValue($plugins_id, 'server_upload_path')."' />";
       echo "</td>";
       echo "<td colspan='2'></td>";;
       echo "</tr>";

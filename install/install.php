@@ -36,7 +36,7 @@
 
 
 function pluginFusinvdeployInstall() {
-   global $DB,$LANG;
+   global $DB,$LANG, $CFG_GLPI;
 
    // Get informations of plugin
    $a_plugin = plugin_version_fusinvdeploy();
@@ -74,7 +74,10 @@ function pluginFusinvdeployInstall() {
 
       $config = new PluginFusioninventoryConfig;
 
-      $insert = array('glpi_path' => '');
+      $insert = array(
+         'glpi_path' => '',
+         'server_upload_path' => $_SERVER['DOCUMENT_ROOT'].$CFG_GLPI['root_doc']
+      );
       $config->initConfig($plugins_id, $insert);
 
       $agentmodule         = new PluginFusioninventoryAgentmodule;
