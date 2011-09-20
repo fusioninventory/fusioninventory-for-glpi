@@ -66,6 +66,8 @@ switch ($_REQUEST['action']) {
       $dir = opendir($directory);
       $i = 0;
 
+      $results = array();
+
       // Get a list of all the files in the directory
       while ($temp = readdir($dir)) {
          if (stristr($temp, '_fm_')) continue; // If this is a temp file, skip it.
