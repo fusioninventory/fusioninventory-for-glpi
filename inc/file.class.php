@@ -371,8 +371,11 @@ class PluginFusinvdeployFile extends CommonDBTM {
          $_POST[$new_key] = $POST_value;
       }
 
+      #logDebug($_POST);
+      #logDebug($_FILES);
+
       //if file sent is from server
-      if ($_POST['itemtype'] == 'fileserver') return $this->uploadFileFromServer();
+      if (isset($_POST['itemtype']) && $_POST['itemtype'] == 'fileserver') return $this->uploadFileFromServer();
 
       //if file sed is from http post
       foreach($_FILES as $FILES_key => $FILES_value) {
@@ -384,9 +387,6 @@ class PluginFusinvdeployFile extends CommonDBTM {
       $order_id = PluginFusinvdeployOrder::getIdForPackage($package_id,$render);
 
       if (isset ($_POST["id"]) and !$_POST['id']) {
-
-      #logDebug($_POST);
-      #logDebug($_FILES);
 
         //file uploaded?
          $filename = null;
