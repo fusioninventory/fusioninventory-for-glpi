@@ -87,14 +87,14 @@ img.x-tree-node-icon.file {
    background-image: url(../images/leaf.gif);
 }
 
-.x-grid3-row {
+#FileChooser .x-grid3-row {
    border:none;
    cursor: default;
    border-bottom: 1px solid #E4E4E2;
    width:100%;
 }
 
-.x-grid3-row-over {
+#FileChooser .x-grid3-row-over {
    border-bottom:1px solid #FFEEC1;
    background: repeat-x left top #EFEFEF;
 }
