@@ -134,13 +134,16 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
       $c_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
       $c_input['state']                              = 0;
       $c_input['plugin_fusioninventory_agents_id']   = 0;
-      $c_input['uniqid']                             = $uniqid;
+
 
       foreach($computers as $computer_id) {
+         $uniqid= uniqid();
+
          $c_input['state'] = 0;
          $c_input['itemtype'] = 'Computer';
          $c_input['items_id'] = $computer_id;
          $c_input['date'] = date("Y-m-d H:i:s");
+         $c_input['uniqid']                             = $uniqid;
 
          //get agent if for this computer
          if(!$agents_id = $agent->getAgentWithComputerid($computer_id)) {
