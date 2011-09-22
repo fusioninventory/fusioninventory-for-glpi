@@ -143,7 +143,7 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
          $c_input['itemtype'] = 'Computer';
          $c_input['items_id'] = $computer_id;
          $c_input['date'] = date("Y-m-d H:i:s");
-         $c_input['uniqid']                             = $uniqid;
+         $c_input['uniqid'] = $uniqid;
 
          //get agent if for this computer
          if(!$agents_id = $agent->getAgentWithComputerid($computer_id)) {

@@ -326,7 +326,6 @@ var {$render}fileForm = new Ext.FormPanel({
          name: '{$render}type',
          valueField: 'name',
          displayField: 'value',
-         allowBlank: false,
          width:180,
          hiddenName: '{$render}itemtype',
          store: new Ext.data.ArrayStore({
