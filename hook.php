@@ -1421,7 +1421,6 @@ function plugin_fusinvsnmp_addSelect($type,$id,$num) {
             return " `glpi_networkports`.`ip`  AS ITEM_$num, ";
          }
          break;
-         
    }
    return "";
 }
@@ -1716,7 +1715,7 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
          break;
 
       case 'PluginFusioninventoryAgent';
-         if ($new_table.".".$linkfield == 'glpi_plugin_fusinvsnmp_agentconfigs.') {
+         if ($new_table.".".$linkfield == 'glpi_plugin_fusinvsnmp_agentconfigs.plugin_fusinvsnmp_agentconfigs_id') {
             return " LEFT JOIN `glpi_plugin_fusinvsnmp_agentconfigs` ON (`glpi_plugin_fusioninventory_agents`.`id` = `glpi_plugin_fusinvsnmp_agentconfigs`.`plugin_fusioninventory_agents_id`) ";
          }
 
