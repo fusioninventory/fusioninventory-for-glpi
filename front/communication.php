@@ -129,11 +129,15 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          // ** If agent use gzip
          $compressmode = "gzencode";
       } else if ($xml = gzinflate (substr($GLOBALS["HTTP_RAW_POST_DATA"], 2))) {
-         // ** OCS agent 2.0 Compatibility
+         // ** OCS agent 2.0 Compatibility, but return in gzcompress
          $compressmode = "gzdeflate";
+         if (strstr($xml, "<QUERY>PROLOG</QUERY>")
+                 AND !strstr($xml, "<TOKEN>")) {
+            $compressmode = "gzcompress";
+         }         
       } else {
          $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
-      }      
+      }
       
       $ssl = $fusioninventory_config->getValue($fusioninventoryModule_id, 'ssl_only');
       if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"))
