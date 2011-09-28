@@ -100,6 +100,8 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       if ($loadplugins == '1') {
          $users_id = $fusioninventory_config->getValue($fusioninventoryModule_id, 'users_id');
          $_SESSION['glpiID'] = $users_id;
+         $_SESSION['glpiactiveprofile'] = array();
+         $_SESSION['glpiactiveprofile']['interface'] = '';
             $plugin = new Plugin();
             $plugin->init();
             $LOADED_PLUGINS = array();
