@@ -38,6 +38,7 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
+checkLoginUser();
 // ** Used for rules in the wizard
 
 if (!isset($_GET['wizz'])) {

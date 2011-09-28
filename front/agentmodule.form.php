@@ -39,6 +39,8 @@ include (GLPI_ROOT . "/inc/includes.php");
 commonHeader($LANG['plugin_fusioninventory']['title'][0], $_SERVER["PHP_SELF"], "plugins", 
              "fusioninventory", "agentmodules");
 
+PluginFusioninventoryProfile::checkRight("fusioninventory", "agent", "r");
+
 $agentmodule = new PluginFusioninventoryAgentmodule();
 
 if (isset($_POST["agent_add"])) {

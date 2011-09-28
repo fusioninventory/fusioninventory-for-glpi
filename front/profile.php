@@ -36,6 +36,8 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT."/inc/includes.php");
 
+checkLoginUser();
+
 $prof=new PluginFusioninventoryProfile();
 
 //Save profile

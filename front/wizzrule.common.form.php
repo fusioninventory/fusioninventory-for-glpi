@@ -37,6 +37,8 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+checkLoginUser();
+
 $rule = $rulecollection->getRuleClass();
 $rulecollection->checkGlobal('r');
 

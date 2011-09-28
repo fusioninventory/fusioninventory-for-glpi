@@ -36,8 +36,7 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-//todo
-//PluginFusioninventoryProfile::checkRight("snmp_networking","r");
+checkLoginUser();
 
 if(isset($_POST["unlock_field_fusioninventory"])){
    $typeright = strtolower($_POST['type']);
