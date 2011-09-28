@@ -36,7 +36,7 @@ define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
 
 commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","fusinvinventory-ruleentity");
-
+checkLoginUser();
 PluginFusioninventoryMenu::displayMenu("mini");
 
 $rulecollection = new PluginFusinvinventoryRuleEntityCollection();
