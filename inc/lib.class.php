@@ -333,7 +333,10 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                                  AND ($arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"])))
                               OR ((isset($arrSectionToAdd['VOLUMN'])
                                  AND (isset($arrSectionToRemove["VOLUMN"]))
-                                 AND ($arrSectionToAdd["VOLUMN"] == $arrSectionToRemove["VOLUMN"])))) {
+                                 AND ($arrSectionToAdd["VOLUMN"] == $arrSectionToRemove["VOLUMN"])))
+                              OR ((isset($arrSectionToAdd['LETTER'])
+                                 AND (isset($arrSectionToRemove["LETTER"]))
+                                 AND ($arrSectionToAdd["LETTER"] == $arrSectionToRemove["LETTER"])))) {
 
                               $boolUpdate = true;
                            }
