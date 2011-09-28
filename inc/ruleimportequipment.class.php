@@ -210,6 +210,21 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
       if ($condition == self::PATTERN_IS_EMPTY) {
           return $LANG['choice'][1];
       }
+      if ($condition==self::PATTERN_IS || $condition==self::PATTERN_IS_NOT) {
+         $crit = $this->getCriteria($ID);
+
+         if (isset($crit['type'])) {
+            switch ($crit['type']) {
+               
+               case "dropdown_itemtype" :
+                  $array = $this->getTypes();
+                  return $array[$pattern];
+                  break;
+            
+               
+            }
+         }
+      }
       return false;
    }
 
@@ -805,7 +820,6 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
       }
       return $output;
    }
-
 }
-
+   
 ?>
