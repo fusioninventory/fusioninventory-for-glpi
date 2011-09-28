@@ -304,8 +304,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          $datasToUpdate = array();
          $existUpdate = 0;
          foreach($sectionsToRemove as $sectionId => $serializedSectionToRemove) {
-            $sectionName=substr(strrchr($infoSections["sections"][$sectionId], "}"), 1 );
-            
+            $sectionName=trim(substr(strrchr($infoSections["sections"][$sectionId], "}"), 1 ));
             if (in_array($sectionName, $a_sections)) {
                foreach($sectionsToAdd as $arrayId => $serializedSectionToAdd) {
                   //check if we have the same section Name for an sectionToRemove and an sectionToAdd
@@ -708,12 +707,16 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       $serializedSections = htmlspecialchars_decode($rowSelect[1].$rowSelect[2].$rowSelect[3], ENT_QUOTES); // Recover double quotes
 //      $serializedSections = str_replace("\t", "", $serializedSections); // To remove the indentation at beginning of line
       $arraySerializedSections = explode("\n", $serializedSections); // Recovering a table with one line per entry
+      $previous_infosection = array();
       foreach ($arraySerializedSections as $valeur) {
          $arraySerializedSectionsTemp = explode("<<=>>", $valeur); // For each line, we create a table with data separated
          if (isset($arraySerializedSectionsTemp[0]) AND isset($arraySerializedSectionsTemp[1])) {
             if ($arraySerializedSectionsTemp[0] != "" && $arraySerializedSectionsTemp[1] != "") { // that is added to infosections
                $infoSections["sections"][$arraySerializedSectionsTemp[0]] = $arraySerializedSectionsTemp[1];
             }
+            $previous_infosection = $arraySerializedSectionsTemp[0];
+         } else {
+            $infoSections["sections"][$previous_infosection] .= "\n".$valeur;
          }
       }
       return $infoSections;
