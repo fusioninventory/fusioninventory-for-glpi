@@ -7,13 +7,11 @@ class LocalesTest extends PHPUnit_Framework_TestCase {
     * This function tests the difference of the locales files keys
     */
    public function testPluginLocales() {
-      chdir($this->path_locales);
-
       $locales_a = array();
 
       //get all lang files
-      foreach (glob("*.php") as $filename) {
-         require_once "../".$this->path_locales."/".$filename;
+      foreach (glob($this->path_locales."/*.php") as $filename) {
+         require_once $filename;
 
          $locales_a[$filename] = $LANG[$this->lang_key];
          unset($LANG[$this->lang_key]);
