@@ -38,6 +38,7 @@ function pluginFusinvinventoryGetCurrentVersion($version) {
    $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
    $version_installed = $PluginFusioninventoryConfig->getValue(PluginFusioninventoryModule::getModuleId("fusinvinventory"),
                                              "version");
+   $versionconfig = '';
 
    if ($version_installed) {
       return $version_installed;
