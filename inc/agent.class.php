@@ -427,6 +427,17 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo $LANG['plugin_fusioninventory']['agents'][15];
       echo "</th>";
       echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>";
+      echo $LANG['plugin_fusioninventory']['agents'][25]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      $this->getFromDB($agent_id);
+      echo $this->fields['useragent'];
+      
+      echo "</td>";
+      echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
