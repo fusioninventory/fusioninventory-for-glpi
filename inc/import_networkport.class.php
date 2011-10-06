@@ -94,7 +94,9 @@ class PluginFusinvinventoryImport_Networkport extends CommonDBTM {
       }
       if (isset($dataSection["TYPE"])) {
          $a_NetworkPort["networkinterfaces_id"]
-                     = Dropdown::importExternal('NetworkInterface', $dataSection["TYPE"]);
+                     = Dropdown::importExternal('NetworkInterface', 
+                                                $dataSection["TYPE"],
+                                                $_SESSION["plugin_fusinvinventory_entity"]);
       }
       if (isset($dataSection["IPMASK"]))
          $a_NetworkPort['netmask'] = $dataSection["IPMASK"];

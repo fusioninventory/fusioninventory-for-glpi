@@ -121,12 +121,14 @@ class PluginFusinvinventoryImport_Monitor extends CommonDBTM {
       if (isset($dataSection['CAPTION'])) {
          $a_monitor['name'] = $dataSection['CAPTION'];
          $monitorModel = new MonitorModel();
-         $a_monitor['monitormodels_id'] = $monitorModel->importExternal($dataSection['CAPTION']);
+         $a_monitor['monitormodels_id'] = $monitorModel->importExternal($dataSection['CAPTION'],
+                                                                        $_SESSION["plugin_fusinvinventory_entity"]);
       }
       if ((isset($dataSection['MANUFACTURER']))
               AND (!empty($dataSection['MANUFACTURER']))) {
          $a_monitor['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
-                                                                   $dataSection['MANUFACTURER']);
+                                                                   $dataSection['MANUFACTURER'],
+                                                                   $_SESSION["plugin_fusinvinventory_entity"]);
       }
       if (isset($dataSection['SERIAL'])) {
          $a_monitor['serial'] = $dataSection['SERIAL'];

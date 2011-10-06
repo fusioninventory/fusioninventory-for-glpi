@@ -212,7 +212,11 @@ class PluginFusinvinventoryInventory {
             $dataEntity = $ruleEntity->processAllRules($input_rules, array());
             
             if (isset($dataEntity['entities_id'])) {
-               $_SESSION["plugin_fusinvinventory_entity"] = $dataEntity['entities_id'];
+               if ($dataEntity['entities_id'] == "-1") {
+                  $_SESSION["plugin_fusinvinventory_entity"] = 0;
+               } else {
+                  $_SESSION["plugin_fusinvinventory_entity"] = $dataEntity['entities_id'];
+               }
             } else {
                $_SESSION["plugin_fusinvinventory_entity"] = "N/A";
             }
@@ -241,7 +245,8 @@ class PluginFusinvinventoryInventory {
             $computer->getFromDB($items_id);
             if ((isset($xml->CONTENT->HARDWARE->OSNAME)) 
                     AND ($computer->fields['operatingsystems_id'] 
-                            != $operatingSystem->importExternal((string)$xml->CONTENT->HARDWARE->OSNAME))) {
+                            != $operatingSystem->importExternal((string)$xml->CONTENT->HARDWARE->OSNAME,
+                                                                $_SESSION["plugin_fusinvinventory_entity"]))) {
                $_SESSION["plugin_fusinvinventory_history_add"] = false;
                $_SESSION["plugin_fusinvinventory_no_history_add"] = true;
             }
@@ -269,7 +274,8 @@ class PluginFusinvinventoryInventory {
          $input['item_type'] = "Computer";
          if (isset($xml->CONTENT->HARDWARE->WORKGROUP)) {
             $input['domain'] = Dropdown::importExternal("Domain",
-                                       (string)$xml->CONTENT->HARDWARE->WORKGROUP);
+                                                        (string)$xml->CONTENT->HARDWARE->WORKGROUP,
+                                                        $_SESSION["plugin_fusinvinventory_entity"]);
          }
          if (isset($xml->CONTENT->BIOS->SSN)) {
             $input['serial'] = (string)$xml->CONTENT->BIOS->SSN;
@@ -463,7 +469,9 @@ class PluginFusinvinventoryInventory {
          $xml_drive->addChild("LABEL", $disk_data['name']);
          $xml_drive->addChild("VOLUMN", $disk_data['device']);
          $xml_drive->addChild("MOUNTPOINT", $disk_data['mountpoint']);
-         $filesystem = Dropdown::importExternal('Filesystem', $disk_data['filesystems_id']);
+         $filesystem = Dropdown::importExternal('Filesystem', 
+                                                $disk_data['filesystems_id'],
+                                                $_SESSION["plugin_fusinvinventory_entity"]);
          if ($filesystem != "&nbsp;") {
             $xml_drive->addChild("FILESYSTEM", $filesystem);
          }

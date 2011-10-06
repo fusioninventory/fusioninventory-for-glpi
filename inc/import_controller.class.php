@@ -79,7 +79,8 @@ class PluginFusinvinventoryImport_Controller extends CommonDBTM {
               AND (!preg_match("/^\((.*)\)$/", $dataSection['MANUFACTURER'])) ) {
          
          $controller['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
-                                                                          $dataSection['MANUFACTURER']);
+                                                                     $dataSection['MANUFACTURER'],
+                                                                     $_SESSION["plugin_fusinvinventory_entity"]);
       }
 
       $DeviceControl = new DeviceControl();

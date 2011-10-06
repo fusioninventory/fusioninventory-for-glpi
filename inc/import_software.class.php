@@ -85,7 +85,9 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
       } else {
          $modified_version = $array['version'];
       }
-      $software_id = $Software->addOrRestoreFromTrash($modified_name, $manufacturer, $_SESSION["plugin_fusinvinventory_entity"]);
+      $software_id = $Software->addOrRestoreFromTrash($modified_name, 
+                                                      $manufacturer, 
+                                                      $_SESSION["plugin_fusinvinventory_entity"]);
 
       $isNewVers = 0;
       $query = "SELECT `id`

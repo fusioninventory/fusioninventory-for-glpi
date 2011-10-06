@@ -111,7 +111,9 @@ class PluginFusinvinventoryImport_Drive extends CommonDBTM {
          $disk['mountpoint'] = $dataSection['TYPE'];
       }
       if (isset($dataSection["FILESYSTEM"])) {
-         $disk['filesystems_id']=Dropdown::importExternal('Filesystem', $dataSection["FILESYSTEM"]);
+         $disk['filesystems_id']=Dropdown::importExternal('Filesystem', 
+                                                          $dataSection["FILESYSTEM"],
+                                                          $_SESSION["plugin_fusinvinventory_entity"]);
       }
       if (isset($dataSection['TOTAL'])) {
          $disk['totalsize']=$dataSection['TOTAL'];
