@@ -711,13 +711,14 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       $arraySerializedSections = explode("\n", $serializedSections); // Recovering a table with one line per entry
       $previous_infosection = array();
       foreach ($arraySerializedSections as $valeur) {
+         
          $arraySerializedSectionsTemp = explode("<<=>>", $valeur); // For each line, we create a table with data separated
          if (isset($arraySerializedSectionsTemp[0]) AND isset($arraySerializedSectionsTemp[1])) {
             if ($arraySerializedSectionsTemp[0] != "" && $arraySerializedSectionsTemp[1] != "") { // that is added to infosections
                $infoSections["sections"][$arraySerializedSectionsTemp[0]] = $arraySerializedSectionsTemp[1];
             }
             $previous_infosection = $arraySerializedSectionsTemp[0];
-         } else {
+         } else if ($valeur != '') {
             $infoSections["sections"][$previous_infosection] .= "\n".$valeur;
          }
       }
