@@ -108,7 +108,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
    static function getForOrder($orders_id) {
       $results = getAllDatasFromTable('glpi_plugin_fusinvdeploy_files',
-                                      "`plugin_fusinvdeploy_orders_id`='$orders_id' and sha512 <> ''");
+                                      "`plugin_fusinvdeploy_orders_id`='$orders_id' AND sha512 <> ''");
 
       $files = array();
       foreach ($results as $result) {
@@ -149,7 +149,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
                   foreach ($orders as $order) {
                      $results_files = getAllDatasFromTable('glpi_plugin_fusinvdeploy_files',
-                                         "`plugin_fusinvdeploy_orders_id`='".$order['id']."'");
+                                         "`plugin_fusinvdeploy_orders_id`='".$order['id']."' AND sha512 <> ''");
 
 
                      foreach ($results_files as $result_file) {
