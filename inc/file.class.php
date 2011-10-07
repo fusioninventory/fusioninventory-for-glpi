@@ -91,7 +91,8 @@ class PluginFusinvdeployFile extends CommonDBTM {
                      DATE_FORMAT(create_date,'%d/%m/%Y') as {$render}dateadd,
                      filesize as {$render}filesize
               FROM `glpi_plugin_fusinvdeploy_files`
-              WHERE `plugin_fusinvdeploy_orders_id` = '$order_id'";
+              WHERE `plugin_fusinvdeploy_orders_id` = '$order_id'
+              AND sha512 <> ''"; # ignoring partially downloaded files
 
       $qry = $DB->query($sql);
       $nb = $DB->numrows($qry);
@@ -107,7 +108,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
    static function getForOrder($orders_id) {
       $results = getAllDatasFromTable('glpi_plugin_fusinvdeploy_files',
-                                      "`plugin_fusinvdeploy_orders_id`='$orders_id'");
+                                      "`plugin_fusinvdeploy_orders_id`='$orders_id' AND sha512 <> ''");
 
       $files = array();
       foreach ($results as $result) {
@@ -148,7 +149,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
                   foreach ($orders as $order) {
                      $results_files = getAllDatasFromTable('glpi_plugin_fusinvdeploy_files',
-                                         "`plugin_fusinvdeploy_orders_id`='".$order['id']."'");
+                                         "`plugin_fusinvdeploy_orders_id`='".$order['id']."' AND sha512 <> ''");
 
 
                      foreach ($results_files as $result_file) {
@@ -249,6 +250,9 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
 
       $fdIn = fopen ( $file_tmp_name , 'rb' );
+      if (!$fdIn) {
+         return;
+      }
 
       $partCpt = 0;
       $currentPartSize = 0;
@@ -285,6 +289,10 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
    function checkPresenceFile($hash) {
       global $DB;
+
+      if (strlen < 10) {
+         return false;
+      }
 
       $query = "SELECT id, sha512 FROM ".$this->getTable()." WHERE shortsha512 = '".substr($hash, 0, 6 )."'";
       $res = $DB->query($query);
@@ -482,7 +490,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
             print "{success:true, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['action'][4]}\"}";
             exit;
          } else {
-            print "{success:false, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][15]}\"}";
+            print "{success:false, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][22]}\"}";
             exit;
          }
       } print "{success:false, file:'none',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][15]}\"}";
