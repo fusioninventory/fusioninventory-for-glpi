@@ -468,6 +468,13 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          $hub_id = $this->createHub($p_oPort, $agent_id);
       }
       // State : Now we have hub and it's id
+      
+      // Add source port id in comment of hub
+      $h_input = array();
+      $h_input['id'] = $hub_id;
+      $h_input['comment'] = "Port : ".$p_oPort->getValue('id');
+      $this->update($h_input);
+      
 
       // Get all ports connected to this hub
       $a_portglpi = array();
