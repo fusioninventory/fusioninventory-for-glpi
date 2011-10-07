@@ -47,6 +47,9 @@ function pluginFusioninventoryInstall($version) {
    if (!class_exists('PluginFusioninventorySetup')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
    }
+   if (!class_exists('PluginFusioninventoryUnknownDevice')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/unknowndevice.class.php");
+   }
    if (!class_exists('PluginFusioninventoryRuleImportEquipmentCollection')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/ruleimportequipmentcollection.class.php");
    }
