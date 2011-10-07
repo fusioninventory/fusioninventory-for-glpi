@@ -179,10 +179,10 @@ $LANG['plugin_fusinvdeploy']['form']['mirror'][3] = "Adresse du mirroir";
 $LANG['plugin_fusinvdeploy']['form']['command_status'][0] = "Faites votre choix...";
 $LANG['plugin_fusinvdeploy']['form']['command_status'][1] = "Type";
 $LANG['plugin_fusinvdeploy']['form']['command_status'][2] = "Valeur";
-$LANG['plugin_fusinvdeploy']['form']['command_status'][3] = "RETURNCODE_OK";
-$LANG['plugin_fusinvdeploy']['form']['command_status'][4] = "RETURNCODE_KO";
-$LANG['plugin_fusinvdeploy']['form']['command_status'][5] = "REGEX_OK";
-$LANG['plugin_fusinvdeploy']['form']['command_status'][6] = "REGEX_KO";
+$LANG['plugin_fusinvdeploy']['form']['command_status'][3] = "Code retour attendu";
+$LANG['plugin_fusinvdeploy']['form']['command_status'][4] = "Code retour invalide";
+$LANG['plugin_fusinvdeploy']['form']['command_status'][5] = "Expression r&eacute;guli&egrave;re attendue";
+$LANG['plugin_fusinvdeploy']['form']['command_status'][6] = "Expression r&eacute;guli&egrave;re invalide";
 
 $LANG['plugin_fusinvdeploy']['form']['command_envvariable'][1] = "Variable d'environnement";
 
