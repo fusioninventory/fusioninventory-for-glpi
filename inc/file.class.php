@@ -249,6 +249,9 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
 
       $fdIn = fopen ( $file_tmp_name , 'rb' );
+      if (!$fdIn) {
+         return;
+      }
 
       $partCpt = 0;
       $currentPartSize = 0;
@@ -482,7 +485,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
             print "{success:true, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['action'][4]}\"}";
             exit;
          } else {
-            print "{success:false, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][15]}\"}";
+            print "{success:false, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][22]}\"}";
             exit;
          }
       } print "{success:false, file:'none',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][15]}\"}";
