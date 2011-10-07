@@ -178,13 +178,13 @@ $LANG['plugin_fusinvdeploy']['form']['mirror'][1] = "Mirror";
 $LANG['plugin_fusinvdeploy']['form']['mirror'][2] = "Mirrors";
 $LANG['plugin_fusinvdeploy']['form']['mirror'][3] = "Address of the mirror";
 
-$LANG['plugin_fusinvdeploy']['form']['command_status'][0] = "Make your choice..."; $LANG[
-'plugin_fusinvdeploy']['form']['command_status'][1] = "Type"; $LANG['plugin_fusinvdeploy']['form'
-]['command_status'][2] = "Value"; $LANG['plugin_fusinvdeploy']['form']['command_status'][3] =
-"Expected return code"; $LANG['plugin_fusinvdeploy']['form']['command_status'][4] = "Invalid
-return code"; $LANG['plugin_fusinvdeploy']['form']['command_status'][5] = "Expected regular
-expression"; $LANG['plugin_fusinvdeploy']['form']['command_status'][6] = "Invalid regular
-expression";
+$LANG['plugin_fusinvdeploy']['form']['command_status'][0] = "Make your choice...";
+$LANG['plugin_fusinvdeploy']['form']['command_status'][1] = "Type";
+$LANG['plugin_fusinvdeploy']['form']['command_status'][2] = "Value";
+$LANG['plugin_fusinvdeploy']['form']['command_status'][3] = "Expected return code";
+$LANG['plugin_fusinvdeploy']['form']['command_status'][4] = "Invalid return code";
+$LANG['plugin_fusinvdeploy']['form']['command_status'][5] = "Expected regular expression";
+$LANG['plugin_fusinvdeploy']['form']['command_status'][6] = "Invalid regular expression";
 
 $LANG['plugin_fusinvdeploy']['form']['command_envvariable'][1] = "Environment variable";
 
