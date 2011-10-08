@@ -30,6 +30,8 @@
 // Original Author of file: David DURIEUX
 // Purpose of file:
 // ----------------------------------------------------------------------
+ini_set("memory_limit", "-1");
+ini_set("max_execution_time", "0");
 
 if (!defined('GLPI_ROOT')) {
 	define('GLPI_ROOT', '../../..');

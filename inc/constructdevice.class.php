@@ -77,6 +77,7 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       $mapping_pre[2]['.1.3.6.1.4.1.9.9.25.1.1.1.2.5']      = 'firmware';
       $mapping_pre[2]['.1.3.6.1.2.16.19.2.0']               = 'firmware';
       $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.9.22']       = 'firmware';
+      $mapping_pre[2]['.1.3.6.1.4.1.4526.11.11.1.0']        = 'firmware';
       $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.2']               = 'ifdescr';
       $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.1']               = 'ifIndex';
       $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.14']              = 'ifinerrors';
