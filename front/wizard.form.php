@@ -36,7 +36,7 @@ if (!defined('GLPI_ROOT')) {
    define('GLPI_ROOT', '../../..');
 }
 
-include (GLPI_ROOT."/inc/includes.php");
+require_once GLPI_ROOT."/inc/includes.php";
 
 checkLoginUser();
 // ** Used for rules in the wizard
