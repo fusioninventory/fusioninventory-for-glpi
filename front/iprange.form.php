@@ -52,7 +52,7 @@ if (isset ($_POST["add"])) {
       $_POST['ip_end']    = $_POST['ip_end0'].".".$_POST['ip_end1'].".";
       $_POST['ip_end']   .= $_POST['ip_end2'].".".$_POST['ip_end3'];
       $newID = $iprange->add($_POST);
-      glpi_header(getItemTypeFormURL('PluginFusioninventoryIPRange')."?id=$newID");
+      glpi_header($_SERVER['HTTP_REFERER']);
    } else {
       glpi_header($_SERVER['HTTP_REFERER']);
    }
