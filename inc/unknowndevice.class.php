@@ -296,7 +296,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>" . $LANG['networking'][14] . " :</td>";
          echo "<td align='center'>";
-         echo "<input type='text' name='otherserial' value='" . $this->fields["ip"] . "' size='35'/>";
+         echo "<input type='text' name='ip' value='" . $this->fields["ip"] . "' size='35'/>";
          echo "</td>";
 
          echo "<td align='center'>" . $LANG['networking'][15] . "&nbsp;:</td>";
