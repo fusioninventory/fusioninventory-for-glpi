@@ -302,7 +302,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          echo "<td align='center'>" . $LANG['networking'][15] . "&nbsp;:</td>";
          echo "</td>";
          echo "<td align='center'>";
-         echo "<input type='text' name='otherserial' value='" . $this->fields["mac"] . "' size='35'/>";
+         echo "<input type='text' name='mac' value='" . $this->fields["mac"] . "' size='35'/>";
          echo "</td>";
          echo "</tr>";
       }
