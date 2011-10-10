@@ -51,9 +51,11 @@ class PluginFusinvdeployAction_Command extends CommonDBTM {
       $temp->deleteByCriteria(array('plugin_fusinvdeploy_commands_id' => $this->fields['id']));
    }
 
-   static function getActions($commands_id, $response = array()) {
+   static function getActions($commands_id, $action_id) {
       $commands = getAllDatasFromTable('glpi_plugin_fusinvdeploy_actions_commands',
                                        "`id`='$commands_id'");
+
+      $response = array();
       foreach ($commands as $command) {
          if (!empty($command['exec']))
             $tmp    = array('exec' => $command['exec']);
@@ -61,7 +63,7 @@ class PluginFusinvdeployAction_Command extends CommonDBTM {
          $linked = array('PluginFusinvdeployAction_Commandstatus'      => 'retChecks',
                          'PluginFusinvdeployAction_Commandenvvariable' => 'envs');
          foreach ($linked as $class => $value) {
-            $result = call_user_func(array($class,'getForCommand'),$commands_id);
+            $result = call_user_func(array($class,'getForCommand'), $action_id);
             if (!empty($result)) {
                $tmp[$value] = $result;
             }
