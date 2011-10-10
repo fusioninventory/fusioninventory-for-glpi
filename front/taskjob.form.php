@@ -43,7 +43,6 @@ commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"p
 PluginFusioninventoryProfile::checkRight("fusioninventory", "task", "r");
 
 if (isset($_POST['definition_add'])) {
-   print_r($_POST);exit;
    // * Add a definition
    $mytaskjob->getFromDB($_POST['id']);
    $a_listdef = importArrayFromDB($mytaskjob->fields['definition']);
