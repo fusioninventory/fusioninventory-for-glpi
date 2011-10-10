@@ -127,17 +127,14 @@ class PluginFusinvdeployJob {
          $tmp['items_id']                                = $jobstatus['items_id'];
          $tmp['comment']                                 = $p['msg'];
          $tmp['date']                                    = date("Y-m-d H:i:s");
-
-         $pass_addlog = false;
+	 $tmp['comment']                                 = "";
 
          // add log message
          if (is_array($p['log'])/* && $tmp['comment'] == ""*/) {
-            $tmp['comment'] = "log:";
             foreach($p['log'] as $log) {
                $tmp['comment'] .= $log."\n";
             }
          } elseif ($p['log'] != "") {
-            $tmp['comment'] = "log:";
             $tmp['comment'] .= $p['log'];
          }
          if ($p['status'] == 'ko') {
@@ -148,24 +145,18 @@ class PluginFusinvdeployJob {
             if ($p['status'] != '') {
                $tmp['comment'] .= " : ".$p['status'];
             }
-            if ($p['currentStep'] == 'downloading' && isset($p['sha512'])) {
-               $tmp['comment'] .= "log:sha512 : ";
-               $tmp['comment'] .= $p['sha512'];
-            }
 
-         } elseif ($p['status'] == 'ok') {
-            $pass_addlog = true;
-         } else {
+         } elseif ($p['status'] != 'ok') {
             $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_STARTED;
          }
 
-         if (!$pass_addlog) {
+         if ($tmp['comment'] != "") {
             $taskjoblog->addTaskjoblog(
                   $tmp['plugin_fusioninventory_taskjobstatus_id'],
                   $tmp['items_id'],
                   $tmp['itemtype'],
                   $tmp['state'],
-                  $tmp['comment']
+                  htmlentities($tmp['comment'], ENT_IGNORE, "UTF-8")
             );
          }
 
