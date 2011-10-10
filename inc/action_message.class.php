@@ -46,7 +46,9 @@ class PluginFusinvdeployAction_Message extends CommonDBTM {
       return $LANG['plugin_fusinvdeploy']['package'][21];
    }
 
-   static function getActions($commands_id, $response = array()) {
+   static function getActions($commands_id) {
+      $response = array();
+
       $commands = getAllDatasFromTable('glpi_plugin_fusinvdeploy_actions_messages',
                                        "`id`='$commands_id'");
       foreach ($commands as $command) {

@@ -52,10 +52,11 @@ class PluginFusinvdeployAction_Command extends CommonDBTM {
    }
 
    static function getActions($commands_id, $action_id) {
+      $response = array();
+
       $commands = getAllDatasFromTable('glpi_plugin_fusinvdeploy_actions_commands',
                                        "`id`='$commands_id'");
 
-      $response = array();
       foreach ($commands as $command) {
          if (!empty($command['exec']))
             $tmp    = array('exec' => $command['exec']);

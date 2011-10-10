@@ -46,7 +46,9 @@ class PluginFusinvdeployAction_Move extends CommonDBTM {
       return $LANG['plugin_fusinvdeploy']['package'][18];
    }
 
-   static function getActions($moves_id, $response = array()) {
+   static function getActions($moves_id) {
+      $response = array();
+
       $moves = getAllDatasFromTable('glpi_plugin_fusinvdeploy_actions_moves', "`id`='$moves_id'");
       foreach ($moves as $move) {
          if (!empty($move['from']) && !empty($move['to'])) {

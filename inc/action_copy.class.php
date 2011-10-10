@@ -46,7 +46,9 @@ class PluginFusinvdeployAction_Copy extends CommonDBTM {
       return $LANG['plugin_fusinvdeploy']['package'][28];
    }
 
-   static function getActions($copies_id, $response = array()) {
+   static function getActions($copies_id) {
+      $response = array();
+
       $copies = getAllDatasFromTable('glpi_plugin_fusinvdeploy_actions_copies', "`id`='$copies_id'");
       foreach ($copies as $copy) {
          if (!empty($copy['from']) && !empty($copy['to'])) {

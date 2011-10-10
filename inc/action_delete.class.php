@@ -46,7 +46,9 @@ class PluginFusinvdeployAction_Delete extends CommonDBTM {
       return $LANG['plugin_fusinvdeploy']['package'][20];
    }
 
-   static function getActions($moves_id, $response = array()) {
+   static function getActions($moves_id) {
+      $response = array();
+
       $deletes = getAllDatasFromTable('glpi_plugin_fusinvdeploy_actions_deletes', "`id`='$moves_id'");
       foreach ($deletes as $delete) {
          if (!empty($delete['path']))
