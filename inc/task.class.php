@@ -132,7 +132,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
          }
 
          $i++;
-         $ong[$i] = $LANG['plugin_fusioninventory']['task'][15];
+         $ong[$i] = $LANG['joblist'][9]." <img src='".$CFG_GLPI['root_doc']."/pics/add_dropdown.png'/>";
       }
       return $ong;
    }
