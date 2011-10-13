@@ -251,14 +251,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['task'][34]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      if ($this->fields['permanent'] != NULL) {
-         echo $LANG['choice'][1];
-      } else {
-         echo $LANG['choice'][0];
-      }
-      echo "</td>";
+      echo "<td colspan='2'></td>";
       echo "</tr>";
       
       $this->showFormButtons($options);
