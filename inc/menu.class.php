@@ -190,7 +190,7 @@ class PluginFusioninventoryMenu {
 
       echo "<tr>";
       echo "<th colspan='".count($a_menu)."' nowrap width='".$width."'>
-         &nbsp;".$LANG['plugin_'.$plugin_name]['title'][0]."&nbsp;</th>";
+         &nbsp;".str_replace("FusionInventory ","",$LANG['plugin_'.$plugin_name]['title'][0])."&nbsp;</th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1' id='menu".$plugin_name."' style='display:none'>";
