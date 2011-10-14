@@ -108,6 +108,12 @@ function pluginFusioninventoryInstall($version) {
       }
 
 
+   // Remove old rules
+   $Rule = new Rule();
+   $a_rules = $Rule->find("`sub_type`='PluginFusioninventoryRuleImportEquipment'");
+   foreach ($a_rules as $data) {
+      $Rule->delete($data);
+   }
 
 
 
