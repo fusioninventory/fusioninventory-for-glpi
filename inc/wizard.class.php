@@ -121,14 +121,14 @@ class PluginFusioninventoryWizard {
             }
             echo "<td class='bgout'
                onmouseover='this.className=\"bgover\"' onmouseout='this.className=\"bgout\"'
-               onClick='location.href=\"".$CFG_GLPI['root_doc']
-               ."/plugins/fusioninventory/front/wizard.php?wizz=".$array[1].$getariane."\"'
-               width='240' height='155' align='center'>";
+               width='240' height='155' align='center'>
+               <a href='".$CFG_GLPI['root_doc']
+               ."/plugins/fusioninventory/front/wizard.php?wizz=".$array[1].$getariane."'>";
             echo "<strong>".$array[0]."</strong><br/><br/>";
             if ($array[2] != '') {
                echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/".$array[2]."'/>";
             }
-            echo "</td>";
+            echo "</a></td>";
          }
          echo "</tr>";
          echo "</table>";
