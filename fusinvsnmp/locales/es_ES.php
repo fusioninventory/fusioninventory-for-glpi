@@ -1,0 +1,428 @@
+<?php
+
+/*
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
+
+   LICENSE
+
+   This file is part of FusionInventory.
+
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundación, either versión 2 of the License, or
+   any later versión.
+
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License para more details.
+
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file: Mathieu SIMON
+   Purpose of file:
+   ----------------------------------------------------------------------
+ */
+
+$title="FusionInventory SNMP";
+$versión="2.3.6-1";
+
+$LANG['plugin_fusinvsnmp']['title'][0]="$title";
+$LANG['plugin_fusinvsnmp']['title'][1]="información SNMP";
+$LANG['plugin_fusinvsnmp']['title'][2]="historial de conexiones";
+$LANG['plugin_fusinvsnmp']['title'][5]="bloqueos de FusionInventory";
+$LANG['plugin_fusinvsnmp']['title'][6]="SNMP";
+
+$LANG['plugin_fusinvsnmp']['config'][3] = "inventario SNMP";
+$LANG['plugin_fusinvsnmp']['config'][4] = "Descubrimiento de dispositivos";
+$LANG['plugin_fusinvsnmp']['config'][8] = "Nunca";
+$LANG['plugin_fusinvsnmp']['config'][9] = "Siempre";
+
+$LANG['plugin_fusinvsnmp']['profile'][2]="Configuración";
+$LANG['plugin_fusinvsnmp']['profile'][3]="autenticación SNMP";
+$LANG['plugin_fusinvsnmp']['profile'][4]="Rango IPe";
+$LANG['plugin_fusinvsnmp']['profile'][5]="Equipos de red SNMP";
+$LANG['plugin_fusinvsnmp']['profile'][6]="Impresora SNMP";
+$LANG['plugin_fusinvsnmp']['profile'][7]="modelo SNMPl";
+$LANG['plugin_fusinvsnmp']['profile'][8]="informe Impresoras";
+$LANG['plugin_fusinvsnmp']['profile'][9]="informe Red";
+
+$LANG['plugin_fusinvsnmp']['setup'][17]="El plugin ".$title." necesita el pluginFusionInventory activado antes de su activación.";
+$LANG['plugin_fusinvsnmp']['setup'][18]="El plugin ".$title." necesita el pluginFusionInventory activado antes de la desinstalación.";
+$LANG['plugin_fusinvsnmp']['setup'][19]="Convirtiendo historial de puertos";
+$LANG['plugin_fusinvsnmp']['setup'][20]="Moviendo historial creación conexiones";
+$LANG['plugin_fusinvsnmp']['setup'][21]="Moviendo historial conexiones borradas";
+
+$LANG['plugin_fusinvsnmp']['functionalities'][3]="SNMP";
+$LANG['plugin_fusinvsnmp']['functionalities'][43]="autenticación SNMP";
+
+$LANG['plugin_fusinvsnmp']['snmp'][4]="Sysdescr";
+$LANG['plugin_fusinvsnmp']['snmp'][12]="Uptime";
+$LANG['plugin_fusinvsnmp']['snmp'][13]="Uso de CPU (en %)";
+$LANG['plugin_fusinvsnmp']['snmp'][14]="Uso de memoria (en %)";
+$LANG['plugin_fusinvsnmp']['snmp'][40]="Array de puertos";
+$LANG['plugin_fusinvsnmp']['snmp'][41]="Descripción del puerto";
+$LANG['plugin_fusinvsnmp']['snmp'][42]="MTU";
+$LANG['plugin_fusinvsnmp']['snmp'][43]="Velocidad";
+$LANG['plugin_fusinvsnmp']['snmp'][44]="Estado interno";
+$LANG['plugin_fusinvsnmp']['snmp'][45]="Último cambio";
+$LANG['plugin_fusinvsnmp']['snmp'][46]="nº de bytes recibidos";
+$LANG['plugin_fusinvsnmp']['snmp'][47]="nº de errores de entrada";
+$LANG['plugin_fusinvsnmp']['snmp'][48]="nº de bytes enviados";
+$LANG['plugin_fusinvsnmp']['snmp'][49]="nº de errores en recepción";
+$LANG['plugin_fusinvsnmp']['snmp'][50]="Conexión";
+$LANG['plugin_fusinvsnmp']['snmp'][51]="Duplex";
+$LANG['plugin_fusinvsnmp']['snmp'][53]="Último inventario";
+$LANG['plugin_fusinvsnmp']['snmp'][54]="Datos no disponibles";
+
+$LANG['plugin_fusinvsnmp']['snmpauth'][1]="Comunidad";
+$LANG['plugin_fusinvsnmp']['snmpauth'][2]="Usuario";
+$LANG['plugin_fusinvsnmp']['snmpauth'][4]="Protocolo de cifrado para autenticación ";
+$LANG['plugin_fusinvsnmp']['snmpauth'][5]="Contraseña";
+$LANG['plugin_fusinvsnmp']['snmpauth'][6]="Protocolo de cifrado para datos";
+$LANG['plugin_fusinvsnmp']['snmpauth'][7]="Contraseña";
+
+$LANG['plugin_fusinvsnmp']['errors'][50]="Versión de GLPI no compatible, requerida la versión 0.78";
+
+$LANG['plugin_fusinvsnmp']['prt_history'][0]="Historial y estadísticas de contadores de impresoras";
+$LANG['plugin_fusinvsnmp']['prt_history'][12]="Total de páginas impresas";
+$LANG['plugin_fusinvsnmp']['prt_history'][13]="Páginas / día";
+$LANG['plugin_fusinvsnmp']['prt_history'][20]="Historal de métricas de impresoras";
+$LANG['plugin_fusinvsnmp']['prt_history'][21]="Fecha";
+$LANG['plugin_fusinvsnmp']['prt_history'][22]="Métricas";
+$LANG['plugin_fusinvsnmp']['prt_history'][31]="Unidad de tiempo";
+$LANG['plugin_fusinvsnmp']['prt_history'][32]="Añadir a printer";
+$LANG['plugin_fusinvsnmp']['prt_history'][33]="Borrar una impresora";
+$LANG['plugin_fusinvsnmp']['prt_history'][34]="día";
+$LANG['plugin_fusinvsnmp']['prt_history'][35]="semana";
+$LANG['plugin_fusinvsnmp']['prt_history'][36]="mes";
+$LANG['plugin_fusinvsnmp']['prt_history'][37]="año";
+
+$LANG['plugin_fusinvsnmp']['massiveaction'][1]="Asignar modeloo SNMP";
+$LANG['plugin_fusinvsnmp']['massiveaction'][2]="Asignar autenticación SNMP";
+
+$LANG['plugin_fusinvsnmp']['model_info'][2]="versión SNMP";
+$LANG['plugin_fusinvsnmp']['model_info'][3]="autenticación SNMP";
+$LANG['plugin_fusinvsnmp']['model_info'][4]="modelos SNMP";
+$LANG['plugin_fusinvsnmp']['model_info'][6]="Editar modelo SNMP";
+$LANG['plugin_fusinvsnmp']['model_info'][7]="Crear modelo SNMP";
+$LANG['plugin_fusinvsnmp']['model_info'][8]="Modelo ya existente";
+$LANG['plugin_fusinvsnmp']['model_info'][9]="Importación completada con éxito";
+$LANG['plugin_fusinvsnmp']['model_info'][10]="importación de modelo SNMP";
+$LANG['plugin_fusinvsnmp']['model_info'][11]="is_active";
+$LANG['plugin_fusinvsnmp']['model_info'][12]="Clave de descubrimiento de modelo";
+$LANG['plugin_fusinvsnmp']['model_info'][13]="Cargar el modelo correcto";
+$LANG['plugin_fusinvsnmp']['model_info'][14]="Cargar el modelo SNMP correcto";
+$LANG['plugin_fusinvsnmp']['model_info'][15]="Importación masiva de modelos";
+$LANG['plugin_fusinvsnmp']['model_info'][16]="Importación masiva de modelos en la carpeta plugins/fusinvsnmp/models/";
+
+$LANG['plugin_fusinvsnmp']['mib'][1]="Etiqueta MIB";
+$LANG['plugin_fusinvsnmp']['mib'][2]="Objeto";
+$LANG['plugin_fusinvsnmp']['mib'][3]="OID";
+$LANG['plugin_fusinvsnmp']['mib'][4]="añadir un OID...";
+$LANG['plugin_fusinvsnmp']['mib'][5]="lista de OID";
+$LANG['plugin_fusinvsnmp']['mib'][6]="Contadores de puerto";
+$LANG['plugin_fusinvsnmp']['mib'][7]="Puerto dinámico (.x)";
+$LANG['plugin_fusinvsnmp']['mib'][8]="Campos conectados";
+$LANG['plugin_fusinvsnmp']['mib'][9]="VLAN";
+
+$LANG['plugin_fusinvsnmp']['processes'][37]="Total de IPs";
+
+$LANG['plugin_fusinvsnmp']['state'][4]="Fecha de inicio";
+$LANG['plugin_fusinvsnmp']['state'][5]="Fecha de fin";
+$LANG['plugin_fusinvsnmp']['state'][6]="Total de dispositivos descubiertos";
+$LANG['plugin_fusinvsnmp']['state'][7]="Total con error";
+
+$LANG['plugin_fusinvsnmp']['mapping'][1]="red > localización";
+$LANG['plugin_fusinvsnmp']['mapping'][2]="red > firmware";
+$LANG['plugin_fusinvsnmp']['mapping'][3]="red > uptime";
+$LANG['plugin_fusinvsnmp']['mapping'][4]="red > puerto > mtu";
+$LANG['plugin_fusinvsnmp']['mapping'][5]="red > puerto > speed";
+$LANG['plugin_fusinvsnmp']['mapping'][6]="red > puerto > estado interno";
+$LANG['plugin_fusinvsnmp']['mapping'][7]="red > ports > Último Cambio";
+$LANG['plugin_fusinvsnmp']['mapping'][8]="red > puerto > nº de bytes entrantes";
+$LANG['plugin_fusinvsnmp']['mapping'][9]="red > puerto > nº de bytes salientes";
+$LANG['plugin_fusinvsnmp']['mapping'][10]="red > puerto > nº de errores de entrada";
+$LANG['plugin_fusinvsnmp']['mapping'][11]="red > puerto > nº de errores de salida";
+$LANG['plugin_fusinvsnmp']['mapping'][12]="red > uso de CPU";
+$LANG['plugin_fusinvsnmp']['mapping'][13]="red > nº de serie";
+$LANG['plugin_fusinvsnmp']['mapping'][14]="red > puerto > estado conexión";
+$LANG['plugin_fusinvsnmp']['mapping'][15]="red > puerto > MAC address";
+$LANG['plugin_fusinvsnmp']['mapping'][16]="red > puerto > nombre";
+$LANG['plugin_fusinvsnmp']['mapping'][17]="red > modelo";
+$LANG['plugin_fusinvsnmp']['mapping'][18]="red > ports > tipo";
+$LANG['plugin_fusinvsnmp']['mapping'][19]="red > VLAN";
+$LANG['plugin_fusinvsnmp']['mapping'][20]="red > nombre";
+$LANG['plugin_fusinvsnmp']['mapping'][21]="red > memoria total";
+$LANG['plugin_fusinvsnmp']['mapping'][22]="red > memoria libre";
+$LANG['plugin_fusinvsnmp']['mapping'][23]="red > puerto > descripción del puerto";
+$LANG['plugin_fusinvsnmp']['mapping'][24]="impresora > nombre";
+$LANG['plugin_fusinvsnmp']['mapping'][25]="impresora > modelo";
+$LANG['plugin_fusinvsnmp']['mapping'][26]="impresora > memoria total";
+$LANG['plugin_fusinvsnmp']['mapping'][27]="impresora > nº de serie";
+$LANG['plugin_fusinvsnmp']['mapping'][28]="impresora > métricas > total nº de páginas impresas";
+$LANG['plugin_fusinvsnmp']['mapping'][29]="impresora > métricas > nº de páginas B/N impresas";
+$LANG['plugin_fusinvsnmp']['mapping'][30]="impresora > métricas > nº de páginas color impresas";
+$LANG['plugin_fusinvsnmp']['mapping'][31]="impresora > métricas > nº de páginas monocromo impresas";
+$LANG['plugin_fusinvsnmp']['mapping'][32]="impresora > métricas > nº de páginas color impresas";
+$LANG['plugin_fusinvsnmp']['mapping'][33]="red > puerto > tipo duplex";
+$LANG['plugin_fusinvsnmp']['mapping'][34]="impresora > consumibles > cartucho negro (%)";
+$LANG['plugin_fusinvsnmp']['mapping'][35]="impresora > consumibles > cartucho foto negro (%)";
+$LANG['plugin_fusinvsnmp']['mapping'][36]="impresora > consumibles > cartucho azul (%)";
+$LANG['plugin_fusinvsnmp']['mapping'][37]="impresora > consumibles > cartucho amarillo (%)";
+$LANG['plugin_fusinvsnmp']['mapping'][38]="impresora > consumibles > cartucho rosa (%)";
+$LANG['plugin_fusinvsnmp']['mapping'][39]="impresora > consumibles > cartucho light azul (%)";
+$LANG['plugin_fusinvsnmp']['mapping'][40]="impresora > consumibles > cartucho light rosa (%)";
+$LANG['plugin_fusinvsnmp']['mapping'][41]="impresora > consumibles > revelador (%)";
+$LANG['plugin_fusinvsnmp']['mapping'][42]="impresora > consumibles > revelador negro (%)";
+$LANG['plugin_fusinvsnmp']['mapping'][43]="impresora > consumibles > revelador color (%)";
+$LANG['plugin_fusinvsnmp']['mapping'][44]="impresora > consumibles > revelador azul (%)";
+$LANG['plugin_fusinvsnmp']['mapping'][45]="impresora > consumibles > revelador amarillo (%)";
+$LANG['plugin_fusinvsnmp']['mapping'][46]="impresora > consumibles > revelador rosa (%)";
+$LANG['plugin_fusinvsnmp']['mapping'][47]="impresora > consumibles > negro unidad transfer (%)";
+$LANG['plugin_fusinvsnmp']['mapping'][48]="impresora > consumibles > azul unidad transfer (%)";
+$LANG['plugin_fusinvsnmp']['mapping'][49]="impresora > consumibles > amarillo unidad transfer (%)";
+$LANG['plugin_fusinvsnmp']['mapping'][50]="impresora > consumibles > rosa unidad transfer (%)";
+$LANG['plugin_fusinvsnmp']['mapping'][51]="impresora > consumibles > contenedor residuos (%)";
+$LANG['plugin_fusinvsnmp']['mapping'][52]="impresora > consumibles > four (%)";
+$LANG['plugin_fusinvsnmp']['mapping'][53]="impresora > consumibles > módulo limpieza (%)";
+$LANG['plugin_fusinvsnmp']['mapping'][54]="impresora > métricas > nº de páginas duplex impresas";
+$LANG['plugin_fusinvsnmp']['mapping'][55]="impresora > métricas > nomber of páginas escaneadas";
+$LANG['plugin_fusinvsnmp']['mapping'][56]="impresora > locación";
+$LANG['plugin_fusinvsnmp']['mapping'][57]="impresora > puerto > nombre";
+$LANG['plugin_fusinvsnmp']['mapping'][58]="impresora > puerto > MAC address";
+$LANG['plugin_fusinvsnmp']['mapping'][59]="impresora > consumibles > cartucho negro (tinta max)";
+$LANG['plugin_fusinvsnmp']['mapping'][60]="impresora > consumibles > cartucho negro (tinta restante )";
+$LANG['plugin_fusinvsnmp']['mapping'][61]="impresora > consumibles > cartucho azul (tinta max)";
+$LANG['plugin_fusinvsnmp']['mapping'][62]="impresora > consumibles > cartucho azul (tinta restante)";
+$LANG['plugin_fusinvsnmp']['mapping'][63]="impresora > consumibles > cartucho amarillo (tinta max)";
+$LANG['plugin_fusinvsnmp']['mapping'][64]="impresora > consumibles > cartucho amarillo (tinta restante)";
+$LANG['plugin_fusinvsnmp']['mapping'][65]="impresora > consumibles > cartucho rosa (tinta max)";
+$LANG['plugin_fusinvsnmp']['mapping'][66]="impresora > consumibles > cartucho rosa (tinta restante)";
+$LANG['plugin_fusinvsnmp']['mapping'][67]="impresora > consumibles > cartucho light azul (tinta max)";
+$LANG['plugin_fusinvsnmp']['mapping'][68]="impresora > consumibles > cartucho light azul (tinta restante)";
+$LANG['plugin_fusinvsnmp']['mapping'][69]="impresora > consumibles > cartucho light rosa (tinta max)";
+$LANG['plugin_fusinvsnmp']['mapping'][70]="impresora > consumibles > cartucho light rosa (tinta restante)";
+$LANG['plugin_fusinvsnmp']['mapping'][71]="impresora > consumibles > fotoconductor (tinta max)";
+$LANG['plugin_fusinvsnmp']['mapping'][72]="impresora > consumibles > fotoconductor (tinta restante)";
+$LANG['plugin_fusinvsnmp']['mapping'][73]="impresora > consumibles > revelador negro (tinta max)";
+$LANG['plugin_fusinvsnmp']['mapping'][74]="impresora > consumibles > revelador negro (tinta restante)";
+$LANG['plugin_fusinvsnmp']['mapping'][75]="impresora > consumibles > revelador color (tinta max)";
+$LANG['plugin_fusinvsnmp']['mapping'][76]="impresora > consumibles > revelador color (tinta restante)";
+$LANG['plugin_fusinvsnmp']['mapping'][77]="impresora > consumibles > revelador azul (tinta max)";
+$LANG['plugin_fusinvsnmp']['mapping'][78]="impresora > consumibles > revelador azul (tinta restante)";
+$LANG['plugin_fusinvsnmp']['mapping'][79]="impresora > consumibles > revelador amarillo (tinta max)";
+$LANG['plugin_fusinvsnmp']['mapping'][80]="impresora > consumibles > revelador amarillo (tinta restante)";
+$LANG['plugin_fusinvsnmp']['mapping'][81]="impresora > consumibles > revelador rosa (tinta max)";
+$LANG['plugin_fusinvsnmp']['mapping'][82]="impresora > consumibles > revelador rosa (tinta restante)";
+$LANG['plugin_fusinvsnmp']['mapping'][83]="impresora > consumibles > negro unidad transfer (tinta max)";
+$LANG['plugin_fusinvsnmp']['mapping'][84]="impresora > consumibles > negro unidad transfer (tinta restante)";
+$LANG['plugin_fusinvsnmp']['mapping'][85]="impresora > consumibles > azul unidad transfer (tinta max)";
+$LANG['plugin_fusinvsnmp']['mapping'][86]="impresora > consumibles > azul unidad transfer (tinta restante)";
+$LANG['plugin_fusinvsnmp']['mapping'][87]="impresora > consumibles > amarillo unidad transfer (tinta max)";
+$LANG['plugin_fusinvsnmp']['mapping'][88]="impresora > consumibles > amarillo unidad transfer (tinta restante)";
+$LANG['plugin_fusinvsnmp']['mapping'][89]="impresora > consumibles > rosa unidad transfer (tinta max)";
+$LANG['plugin_fusinvsnmp']['mapping'][90]="impresora > consumibles > rosa unidad transfer (tinta restante)";
+$LANG['plugin_fusinvsnmp']['mapping'][91]="impresora > consumibles > contenedor residuos (tinta max)";
+$LANG['plugin_fusinvsnmp']['mapping'][92]="impresora > consumibles > contenedor residuos (tinta restante)";
+$LANG['plugin_fusinvsnmp']['mapping'][93]="impresora > consumibles > four (tinta max)";
+$LANG['plugin_fusinvsnmp']['mapping'][94]="impresora > consumibles > four (tinta restante)";
+$LANG['plugin_fusinvsnmp']['mapping'][95]="impresora > consumibles > módulo limpieza (tinta max)";
+$LANG['plugin_fusinvsnmp']['mapping'][96]="impresora > consumibles > módulo limpieza (tinta restante)";
+$LANG['plugin_fusinvsnmp']['mapping'][97]="impresora > puerto > tipo";
+$LANG['plugin_fusinvsnmp']['mapping'][98]="impresora > consumibles > Kit mantenimiento (max)";
+$LANG['plugin_fusinvsnmp']['mapping'][99]="impresora > consumibles > Kit mantenimiento (remaining)";
+$LANG['plugin_fusinvsnmp']['mapping'][400]="impresora > consumibles > Kit mantenimiento (%)";
+$LANG['plugin_fusinvsnmp']['mapping'][401]="red > usuario CPU";
+$LANG['plugin_fusinvsnmp']['mapping'][402]="red > sistema CPU";
+$LANG['plugin_fusinvsnmp']['mapping'][403]="red > contacto";
+$LANG['plugin_fusinvsnmp']['mapping'][404]="red > comentarios";
+$LANG['plugin_fusinvsnmp']['mapping'][405]="impresora > contacto";
+$LANG['plugin_fusinvsnmp']['mapping'][406]="impresora > comentarios";
+$LANG['plugin_fusinvsnmp']['mapping'][407]="impresora > puerto > dirección IP";
+$LANG['plugin_fusinvsnmp']['mapping'][408]="red > puerto > número index";
+$LANG['plugin_fusinvsnmp']['mapping'][409]="red > Dirección CDP";
+$LANG['plugin_fusinvsnmp']['mapping'][410]="red > Puerto CDP";
+$LANG['plugin_fusinvsnmp']['mapping'][411]="red > puerto > trunk/tagged";
+$LANG['plugin_fusinvsnmp']['mapping'][412]="red > filtros dirección MAC (dot1dTpFdbAddress)";
+$LANG['plugin_fusinvsnmp']['mapping'][413]="red > Direcciones físicas en memoria (ipNetToMediaPhysAddress)";
+$LANG['plugin_fusinvsnmp']['mapping'][414]="red > instancias de puertos (dot1dTpFdbPort)";
+$LANG['plugin_fusinvsnmp']['mapping'][415]="red > nº de puertos asociados id del puerto (dot1dBasePortIfIndex)";
+$LANG['plugin_fusinvsnmp']['mapping'][416]="impresora > puerto nº index";
+$LANG['plugin_fusinvsnmp']['mapping'][417]="red > MAC address";
+$LANG['plugin_fusinvsnmp']['mapping'][418]="impresora nº Inventario";
+$LANG['plugin_fusinvsnmp']['mapping'][419]="red nº Inventario";
+$LANG['plugin_fusinvsnmp']['mapping'][420]="impresora > fabricante";
+$LANG['plugin_fusinvsnmp']['mapping'][421]="red > direcciones IP";
+$LANG['plugin_fusinvsnmp']['mapping'][422]="red > PVID (port VLAN ID)";
+$LANG['plugin_fusinvsnmp']['mapping'][423]="impresora > métricas > total nº de páginas impresas (print)";
+$LANG['plugin_fusinvsnmp']['mapping'][424]="impresora > métricas > nº de páginas B/N impresas (print)";
+$LANG['plugin_fusinvsnmp']['mapping'][425]="impresora > métricas > nº de páginas color impresas (print)";
+$LANG['plugin_fusinvsnmp']['mapping'][426]="impresora > métricas > total nº de páginas impresas (copy)";
+$LANG['plugin_fusinvsnmp']['mapping'][427]="impresora > métricas > nº de páginas B/N impresas (copy)";
+$LANG['plugin_fusinvsnmp']['mapping'][428]="impresora > métricas > nº de páginas color impresas (copy)";
+$LANG['plugin_fusinvsnmp']['mapping'][429]="impresora > métricas > total nº de páginas impresas (fax)";
+$LANG['plugin_fusinvsnmp']['mapping'][430]="red > puerto > vlan";
+
+
+$LANG['plugin_fusinvsnmp']['mapping'][101]="";
+$LANG['plugin_fusinvsnmp']['mapping'][102]="";
+$LANG['plugin_fusinvsnmp']['mapping'][103]="";
+$LANG['plugin_fusinvsnmp']['mapping'][104]="MTU";
+$LANG['plugin_fusinvsnmp']['mapping'][105]="Velocidad";
+$LANG['plugin_fusinvsnmp']['mapping'][106]="Estado interno";
+$LANG['plugin_fusinvsnmp']['mapping'][107]="Último Cambio";
+$LANG['plugin_fusinvsnmp']['mapping'][108]="nº de bytes recibidos";
+$LANG['plugin_fusinvsnmp']['mapping'][109]="nº de bytes transmitidos";
+$LANG['plugin_fusinvsnmp']['mapping'][110]="nº de errores de entrada";
+$LANG['plugin_fusinvsnmp']['mapping'][111]="nº de errores de salida";
+$LANG['plugin_fusinvsnmp']['mapping'][112]="uso de CPU";
+$LANG['plugin_fusinvsnmp']['mapping'][113]="";
+$LANG['plugin_fusinvsnmp']['mapping'][114]="Conexión";
+$LANG['plugin_fusinvsnmp']['mapping'][115]="Dirección MAC interna";
+$LANG['plugin_fusinvsnmp']['mapping'][116]="Nombre";
+$LANG['plugin_fusinvsnmp']['mapping'][117]="Modelo";
+$LANG['plugin_fusinvsnmp']['mapping'][118]="Tipo";
+$LANG['plugin_fusinvsnmp']['mapping'][119]="VLAN";
+$LANG['plugin_fusinvsnmp']['mapping'][128]="Total nº de páginas impresas";
+$LANG['plugin_fusinvsnmp']['mapping'][129]="nº de páginas B/N impresas";
+$LANG['plugin_fusinvsnmp']['mapping'][130]="nº de páginas color impresas";
+$LANG['plugin_fusinvsnmp']['mapping'][131]="nº de páginas monocromo impresas";
+$LANG['plugin_fusinvsnmp']['mapping'][132]="nº de páginas color impresas";
+$LANG['plugin_fusinvsnmp']['mapping'][134]="Cartucho Negro";
+$LANG['plugin_fusinvsnmp']['mapping'][135]="Cartucho Foto negro";
+$LANG['plugin_fusinvsnmp']['mapping'][136]="Cartucho Azul";
+$LANG['plugin_fusinvsnmp']['mapping'][137]="Cartucho Amarillo";
+$LANG['plugin_fusinvsnmp']['mapping'][138]="Cartucho Rosa";
+$LANG['plugin_fusinvsnmp']['mapping'][139]="Cartucho Light azul";
+$LANG['plugin_fusinvsnmp']['mapping'][140]="Cartucho Light rosa";
+$LANG['plugin_fusinvsnmp']['mapping'][141]="Revelador";
+$LANG['plugin_fusinvsnmp']['mapping'][142]="Revelador Negro";
+$LANG['plugin_fusinvsnmp']['mapping'][143]="Revelador Color";
+$LANG['plugin_fusinvsnmp']['mapping'][144]="Revelador Azul";
+$LANG['plugin_fusinvsnmp']['mapping'][145]="Revelador Amarillo";
+$LANG['plugin_fusinvsnmp']['mapping'][146]="Revelador Rosa";
+$LANG['plugin_fusinvsnmp']['mapping'][147]="Negro unidad transfer";
+$LANG['plugin_fusinvsnmp']['mapping'][148]="Azul unidad transfer";
+$LANG['plugin_fusinvsnmp']['mapping'][149]="Amarillo unidad transfer";
+$LANG['plugin_fusinvsnmp']['mapping'][150]="Rosa unidad transfer";
+$LANG['plugin_fusinvsnmp']['mapping'][151]="Contenedor residuos";
+$LANG['plugin_fusinvsnmp']['mapping'][152]="Four";
+$LANG['plugin_fusinvsnmp']['mapping'][153]="Módulo limpieza";
+$LANG['plugin_fusinvsnmp']['mapping'][154]="nº de páginas impresas duplex";
+$LANG['plugin_fusinvsnmp']['mapping'][155]="nº de páginas escaneadas";
+$LANG['plugin_fusinvsnmp']['mapping'][156]="Kit mantenimiento";
+$LANG['plugin_fusinvsnmp']['mapping'][157]="Tóner Negro";
+$LANG['plugin_fusinvsnmp']['mapping'][158]="Tóner Azul";
+$LANG['plugin_fusinvsnmp']['mapping'][159]="Tóner Rosa";
+$LANG['plugin_fusinvsnmp']['mapping'][160]="Tóner Amarillo";
+$LANG['plugin_fusinvsnmp']['mapping'][161]="Tambor Negro";
+$LANG['plugin_fusinvsnmp']['mapping'][162]="Tambor Azul";
+$LANG['plugin_fusinvsnmp']['mapping'][163]="Tambor Rosa";
+$LANG['plugin_fusinvsnmp']['mapping'][164]="Tambor Amarillo";
+$LANG['plugin_fusinvsnmp']['mapping'][165]="Mucha información agrupada";
+$LANG['plugin_fusinvsnmp']['mapping'][166]="Tóner Negro 2";
+$LANG['plugin_fusinvsnmp']['mapping'][167]="Tóner Negro Utilizado";
+$LANG['plugin_fusinvsnmp']['mapping'][168]="Tóner Negro Restante";
+$LANG['plugin_fusinvsnmp']['mapping'][169]="Tóner Azul Max";
+$LANG['plugin_fusinvsnmp']['mapping'][170]="Tóner Azul Utilizado";
+$LANG['plugin_fusinvsnmp']['mapping'][171]="Tóner Azul Restante";
+$LANG['plugin_fusinvsnmp']['mapping'][172]="Tóner Rosa Max";
+$LANG['plugin_fusinvsnmp']['mapping'][173]="Tóner Rosa Utilizado";
+$LANG['plugin_fusinvsnmp']['mapping'][174]="Tóner Rosa Restante";
+$LANG['plugin_fusinvsnmp']['mapping'][175]="Tóner Amarillo Max";
+$LANG['plugin_fusinvsnmp']['mapping'][176]="Tóner Amarillo Utilizado";
+$LANG['plugin_fusinvsnmp']['mapping'][177]="Tóner Amarillo Restante";
+$LANG['plugin_fusinvsnmp']['mapping'][178]="Tambor Negro Max";
+$LANG['plugin_fusinvsnmp']['mapping'][179]="Tambor Negro Utilizado";
+$LANG['plugin_fusinvsnmp']['mapping'][180]="Tambor Negro Restante";
+$LANG['plugin_fusinvsnmp']['mapping'][181]="Tambor Azul Max";
+$LANG['plugin_fusinvsnmp']['mapping'][182]="Tambor Azul Utilizado";
+$LANG['plugin_fusinvsnmp']['mapping'][183]="Tambor AzulRestante";
+$LANG['plugin_fusinvsnmp']['mapping'][184]="Tambor Rosa Max";
+$LANG['plugin_fusinvsnmp']['mapping'][185]="Tambor Rosa Utilizado";
+$LANG['plugin_fusinvsnmp']['mapping'][186]="Tambor Rosa Restante";
+$LANG['plugin_fusinvsnmp']['mapping'][187]="Tambor Amarillo Max";
+$LANG['plugin_fusinvsnmp']['mapping'][188]="Tambor Amarillo Utilizado";
+$LANG['plugin_fusinvsnmp']['mapping'][189]="Tambor Amarillo Restante";
+$LANG['plugin_fusinvsnmp']['mapping'][190]="Contenedor residuos Max";
+$LANG['plugin_fusinvsnmp']['mapping'][191]="Contenedor residuos Utilizado";
+$LANG['plugin_fusinvsnmp']['mapping'][192]="Contenedor residuos Restante";
+$LANG['plugin_fusinvsnmp']['mapping'][193]="Kit mantenimiento Max";
+$LANG['plugin_fusinvsnmp']['mapping'][194]="Kit mantenimiento Utilizado";
+$LANG['plugin_fusinvsnmp']['mapping'][195]="Kit mantenimiento Restante";
+$LANG['plugin_fusinvsnmp']['mapping'][196]="Cartucho tinta Gris";
+
+$LANG['plugin_fusinvsnmp']['mapping'][1423]="Total nº de páginas impresas (print)";
+$LANG['plugin_fusinvsnmp']['mapping'][1424]="nº de páginas B/N impresas (print)";
+$LANG['plugin_fusinvsnmp']['mapping'][1425]="nº de páginas color impresas (print)";
+$LANG['plugin_fusinvsnmp']['mapping'][1426]="Total nº de páginas impresas (copy)";
+$LANG['plugin_fusinvsnmp']['mapping'][1427]="nº de páginas B/N impresas (copy)";
+$LANG['plugin_fusinvsnmp']['mapping'][1428]="nº de páginas color impresas (copy)";
+$LANG['plugin_fusinvsnmp']['mapping'][1429]="Total nº de páginas impresas (fax)";
+$LANG['plugin_fusinvsnmp']['mapping'][1434]="Total nº de páginas grandes impresas";
+
+$LANG['plugin_fusinvsnmp']['menu'][2]="Configuración rango IP ";
+$LANG['plugin_fusinvsnmp']['menu'][5]="Historial puertos Switch";
+$LANG['plugin_fusinvsnmp']['menu'][6]="Puertos no usados de switchs";
+$LANG['plugin_fusinvsnmp']['menu'][9]="Estado descubrimiento";
+$LANG['plugin_fusinvsnmp']['menu'][10]="Estado inventario Red";
+
+$LANG['plugin_fusinvsnmp']['discovery'][5]="nº de dispositivos importados";
+$LANG['plugin_fusinvsnmp']['discovery'][9]="nº de dispositivos no importados por tipo no definido";
+
+$LANG['plugin_fusinvsnmp']['iprange'][0]="Inicio rango IP";
+$LANG['plugin_fusinvsnmp']['iprange'][1]="Fin rango IP";
+$LANG['plugin_fusinvsnmp']['iprange'][2]="Rangos IP";
+$LANG['plugin_fusinvsnmp']['iprange'][3]="Consulta";
+$LANG['plugin_fusinvsnmp']['iprange'][7]="IP incorrecta";
+
+$LANG['plugin_fusinvsnmp']['agents'][24]="Nº de hilos";
+$LANG['plugin_fusinvsnmp']['agents'][25]="Agente(s)";
+$LANG['plugin_fusinvsnmp']['agents'][26]="Versión módulo Netdiscovery";
+$LANG['plugin_fusinvsnmp']['agents'][27]="Versión módulo Snmpquery";
+
+$LANG['plugin_fusinvsnmp']['task'][15]="Tarea permanente - Descubrimiento";
+$LANG['plugin_fusinvsnmp']['task'][16]="Tarea permanente - Inventario";
+$LANG['plugin_fusinvsnmp']['task'][17]="Tipo comunicación";
+$LANG['plugin_fusinvsnmp']['task'][18]="Crear tarea fácilmente";
+
+$LANG['plugin_fusinvsnmp']['constructdevice'][0]="Gestión de los mib de material";
+$LANG['plugin_fusinvsnmp']['constructdevice'][1]="Creación automática de modelos";
+$LANG['plugin_fusinvsnmp']['constructdevice'][2]="Generar fichero descubrimiento";
+$LANG['plugin_fusinvsnmp']['constructdevice'][3]="Borrar modelos no usados";
+$LANG['plugin_fusinvsnmp']['constructdevice'][4]="Exportar todos los modelos";
+$LANG['plugin_fusinvsnmp']['constructdevice'][5]="Recreaa comentarios de modelos";
+
+$LANG['plugin_fusinvsnmp']['stats'][0]="Contador total";
+$LANG['plugin_fusinvsnmp']['stats'][1]="páginas por día";
+$LANG['plugin_fusinvsnmp']['stats'][2]="Mostrar";
+
+$LANG['plugin_fusinvsnmp']['report'][0]="nº de días desde último inventario";
+$LANG['plugin_fusinvsnmp']['report'][1]="Contadar de páginas impresas";
+
+$LANG['plugin_fusinvsnmp']['codetasklog'][1]="dispositivos consultados";
+$LANG['plugin_fusinvsnmp']['codetasklog'][2]="dispositivos encontrados";
+$LANG['plugin_fusinvsnmp']['codetasklog'][3]="la definición del equipo no está actualizada en el agente. En la próxima ejecución actualizará la versión desde el servidor. SNMP";
+$LANG['plugin_fusinvsnmp']['codetasklog'][4]=$LANG['log'][20];
+$LANG['plugin_fusinvsnmp']['codetasklog'][5]=$LANG['log'][21];
+$LANG['plugin_fusinvsnmp']['codetasklog'][6]="Inventario iniciado";
+
+$LANG['plugin_fusinvsnmp']['legend'][0]="Conexión con un switch o un servidor en modo trunk o tagged";
+$LANG['plugin_fusinvsnmp']['legend'][1]="Otras conexiones (con un ordenador, una impresora...)";
+
+$LANG['plugin_fusinvsnmp']['printhistory'][1]="Demasiados datos para mostrar";
+
+$LANG['plugin_fusinvsnmp']["portlogs"][0]="Configuración del historial";
+$LANG['plugin_fusinvsnmp']["portlogs"][1]="Lista de campos con histórico habilitado";
+$LANG['plugin_fusinvsnmp']["portlogs"][2]="Retention en días";
+
+?>
