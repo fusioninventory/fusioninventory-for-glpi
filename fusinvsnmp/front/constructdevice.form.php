@@ -1,0 +1,123 @@
+<?php
+
+/*
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
+
+   LICENSE
+
+   This file is part of FusionInventory.
+
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
+
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: David DURIEUX
+   Co-authors of file:
+   Purpose of file:
+   ----------------------------------------------------------------------
+ */
+
+define('GLPI_ROOT', '../../..');
+
+include (GLPI_ROOT . "/inc/includes.php");
+
+$PluginFusinvsnmpConstructDevice = new PluginFusinvsnmpConstructDevice();
+
+Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","constructdevice");
+
+
+PluginFusioninventoryMenu::displayMenu("mini");
+
+if (isset($_GET['vlan_update'])) {
+   $query_update = "UPDATE `glpi_plugin_fusinvsnmp_constructdevice_miboids`
+         SET vlan=0
+      WHERE plugin_fusinvsnmp_constructdevices_id=".$_GET['id']."
+         AND plugin_fusinvsnmp_miboids_id=".$_GET['vlan_update'];
+   $DB->query($query_update);
+   Html::back();
+} else if (isset ($_POST["add"])) {
+   $query = "SELECT * FROM glpi_plugin_fusinvsnmp_constructdevices
+      WHERE sysdescr='".$_POST['sysdescr']."' ";
+   $result = $DB->query($query);
+	if ($DB->numrows($result) == '0') {
+      $PluginFusinvsnmpConstructDevice->add($_POST);
+   } else {
+      $_SESSION["MESSAGE_AFTER_REDIRECT"] = "Déjà existant";
+   }
+	Html::back();
+} else if (isset($_POST['addWalk'])) {
+   $i = 1;
+   while ($i == '1') {
+      $md5 = md5(rand(1, 1000000));
+      $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_constructdevicewalks`
+         WHERE log='".$md5."' ";
+      $result = $DB->query($query);
+      if ($DB->numrows($result) == "0") {
+         $i = 0;
+      }   
+   }
+
+   $query_ins = "INSERT INTO `glpi_plugin_fusinvsnmp_constructdevicewalks` (
+`id` ,
+`plugin_fusinvsnmp_constructdevices_id` ,
+`log`
+)
+VALUES (
+NULL , '".$_POST['id']."', '".$md5."'
+)";
+   $id_ins = $DB->query($query_ins);
+   move_uploaded_file($_FILES['walk']['tmp_name'], GLPI_PLUGIN_DOC_DIR."/fusioninventory/walks/".$md5);
+   Html::back();
+} else if (isset($_POST['mib'])) { // Check MIBS
+   foreach($_POST['oidsselected'] as $oid) {
+      $a_mapping = explode('||', $_POST['links_oid_fields_'.$oid]);
+
+      $mapping = new PluginFusioninventoryMapping;
+      $mappings = $mapping->get($a_mapping[0], $a_mapping[1]);
+      $mappings_id = $mappings->fields['id'];
+      $query_ins = "INSERT INTO glpi_plugin_fusinvsnmp_constructdevice_miboids
+         (`plugin_fusinvsnmp_miboids_id`, `plugin_fusinvsnmp_constructdevices_id`,
+            `plugin_fusioninventory_mappings_id`,
+            `oid_port_counter`, `oid_port_dyn`, `vlan`)
+         VALUES
+         ('".$oid."', '".$_POST['id']."', '".$mappings_id."',
+            '".$_POST['oid_port_counter_'.$oid]."',
+            '".$_POST['oid_port_dyn_'.$oid]."',
+              '".$_POST['vlan_'.$oid]."' )";
+      $DB->query($query_ins);     
+   }
+   Html::back();
+} else if (isset ($_POST["update"])) {
+	$PluginFusinvsnmpConstructDevice->update($_POST);
+	Html::back();
+} else if (isset ($_POST["delete"])) {
+	$PluginFusinvsnmpConstructDevice->delete($_POST);
+	Html::redirect("construct_device.php");
+}
+
+$id = "";
+if (isset($_GET["id"])) {
+	$id = $_GET["id"];
+}
+
+$PluginFusinvsnmpConstructDevice->showForm($id);
+$PluginFusinvsnmpConstructDevice->manageWalks($_SERVER["PHP_SELF"], $id);
+
+Html::footer();
+
+?>
