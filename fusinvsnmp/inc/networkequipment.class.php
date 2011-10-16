@@ -934,28 +934,55 @@ function appear_legend(id){
             $id = $NetworkPort->getContact($a_port['id']);
             if ($id) {
                $NetworkPort->getFromDB($id);
+               $link = '';
+               $link1 = '';
+               $link2 = '';
                if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
                   $classname = $NetworkPort->fields['itemtype'];
-                  $Class = new $classname;
-                  $Class->getFromDB($NetworkPort->fields['items_id']);
-                  if ($Class->fields['accepted'] == 1) {
+                  $item = new $classname;
+                  $item->getFromDB($NetworkPort->fields['items_id']);
+                  $link1 = $item->getLink(1);
+                  $link = str_replace($item->getName(0), $NetworkPort->fields["mac"],
+                                      $item->getLink());
+                  $link2 = str_replace($item->getName(0), $NetworkPort->fields["ip"],
+                                       $item->getLink());
+                  if ($item->fields['accepted'] == 1) {
                      echo "<tr>";
-                     echo "<td style='background:#bfec75'
-                                              class='tab_bg_1_2'>".$Class->getLink(1)."</td>";
-                     echo "</tr>";
+                     echo "<td align='center'  style='background:#bfec75'
+                                              class='tab_bg_1_2'>".$item->getLink(1);
+
                   } else {
                      echo "<tr>";
-                     echo "<td style='background:#cf9b9b'
-                                              class='tab_bg_1_2'>".$Class->getLink(1)."</td>";
-                     echo "</tr>";
+                     echo "<td align='center' style='background:#cf9b9b'
+                                              class='tab_bg_1_2'>".$item->getLink(1);
                   }
+                  if (!empty($link)) {
+                     echo "<br/>".$link;
+                  }
+                  if (!empty($link2)) {
+                     echo "<br/>".$link2;
+                  }
+                  echo "</td>";
+                  echo "</tr>";
                } else {
                   $classname = $NetworkPort->fields['itemtype'];
-                  $Class = new $classname;
-                  $Class->getFromDB($NetworkPort->fields['items_id']);
+                  $item = new $classname;
+                  $item->getFromDB($NetworkPort->fields['items_id']);
+                  $link1 = $item->getLink(1);
+                  $link = str_replace($item->getName(0), $NetworkPort->fields["mac"],
+                                      $item->getLink());
+                  $link2 = str_replace($item->getName(0), $NetworkPort->fields["ip"],
+                                       $item->getLink());
                   echo "<tr>";
-                  echo "<td ".$background_img."
-                                           class='tab_bg_1_2'>".$Class->getLink(1)."</td>";
+                  echo "<td align='center'  ".$background_img."
+                                           class='tab_bg_1_2'>".$item->getLink(1);
+                  if (!empty($link)) {
+                     echo "<br/>".$link;
+                  }
+                  if (!empty($link2)) {
+                     echo "<br/>".$link2;
+                  }
+                  echo "</td>";
                   echo "</tr>";
                   
                }
