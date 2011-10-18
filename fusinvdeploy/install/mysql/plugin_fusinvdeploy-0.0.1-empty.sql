@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_files` (
   `uncompress` tinyint(1) NOT NULL DEFAULT '0',
   `sha512` varchar(128) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `shortsha512` varchar(6) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `filesize` INT(32) NOT NULL DEFAULT  '0',
+  `filesize` INT(64) NOT NULL DEFAULT  '0',
   `plugin_fusinvdeploy_orders_id` INT(11) NOT NULL DEFAULT  '0',
 PRIMARY KEY (  `id` )
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
