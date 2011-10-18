@@ -290,7 +290,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
    function checkPresenceFile($hash) {
       global $DB;
 
-      if (strlen < 10) {
+      if (strlen($hash) < 10) {
          return false;
       }
 
