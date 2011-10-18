@@ -65,6 +65,7 @@ function pluginFusinvdeployInstall() {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
          mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'].'/files');
          mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'].'/packages');
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'].'/upload');
       }
 
       include_once (GLPI_ROOT . "/plugins/fusinvdeploy/inc/staticmisc.class.php");
@@ -76,7 +77,7 @@ function pluginFusinvdeployInstall() {
 
       $insert = array(
          'glpi_path' => '',
-         'server_upload_path' => $_SERVER['DOCUMENT_ROOT'].$CFG_GLPI['root_doc']
+         'server_upload_path' => $_SERVER['DOCUMENT_ROOT'].'/files/_plugins/'.$a_plugin['shortname'].'/upload'
       );
       $config->initConfig($plugins_id, $insert);
 
