@@ -45,7 +45,9 @@ function format_permissions($perms) {
 }
 
 function get_directory_contents($directory, $folders_only = false, $files_only = false) {
-   $dir = opendir($directory);
+   if (!($dir = opendir($directory))) {
+      return false;
+   }
 
    $data = array();
 
