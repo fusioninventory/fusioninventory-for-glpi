@@ -156,7 +156,7 @@ function plugin_headings_actions_fusinvinventory($item) {
 
 
 function plugin_headings_fusinvinventory_xml($item) {
-   global $LANG;
+   global $LANG,$CFG_GLPI;
 
    $id = $item->getField('id');
 
@@ -173,14 +173,20 @@ function plugin_headings_fusinvinventory_xml($item) {
       echo "<tr>";
       echo "<th>".$LANG['plugin_fusioninventory']['title'][1]." ".
          $LANG['plugin_fusioninventory']['xml'][0];
-      echo " (".$LANG['common'][26]."&nbsp;: " . 
+      echo " (".$LANG['plugin_fusinvinventory']['computer'][0]."&nbsp;: " . 
          convDateTime(date("Y-m-d H:i:s", 
                       filemtime(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id))).")";
       echo "</th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td width='130'>";
+      echo "<td width='130' align='center'>";
+      echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/send_xml.php?pluginname=fusinvinventory&file=".$folder."/".$id."'>".$LANG['document'][15]."</a>";
+      echo "</td>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>";
       echo "<pre width='130'>".$xml."</pre>";
       echo "</td>";
       echo "</tr>";
