@@ -228,15 +228,14 @@ class PluginFusinvdeployFile extends CommonDBTM {
       $repoPath = GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/repository/";
       $tmpFilepart = tempnam(GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/", "filestore");
 
-
+      $sha512 = hash_file('sha512', $file_tmp_name);
+      $short_sha512 = substr($sha512, 0, 6);
       //check if file is not already present
-      if ($file_id = $this->checkPresenceFile(hash_file('sha512', $file_tmp_name))) {
+      if ($file_id = $this->checkPresenceFile($sha512)) {
          $message = $LANG['plugin_fusinvdeploy']['form']['message'][3];
          return $file_id;
       }
 
-      $sha512 = hash_file('sha512', $file_tmp_name);
-      $short_sha512 = substr($sha512, 0, 6);
       $data = array(
          'name' => $filename,
          'is_p2p' => $is_p2p,
