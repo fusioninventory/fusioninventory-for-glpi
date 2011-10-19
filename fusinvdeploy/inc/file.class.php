@@ -244,8 +244,6 @@ class PluginFusinvdeployFile extends CommonDBTM {
          'create_date' => date('Y-m-d H:i:s'),
          'p2p_retention_days' => $p2p_retention_days,
          'uncompress' => $uncompress,
-         'sha512' => $sha512,
-         'shortsha512' => $short_sha512,
          'plugin_fusinvdeploy_orders_id' => $order_id,
       );
       $file_id = $this->add($data);
@@ -263,12 +261,12 @@ class PluginFusinvdeployFile extends CommonDBTM {
          clearstatcache();
          if (file_exists($tmpFilepart)) {
             if (feof($fdIn) || filesize($tmpFilepart)>= $maxPartSize) {
-               $sha512 = $this->registerFilepart ($repoPath, $tmpFilepart);
-               $short_sha512 = substr($sha512, 0, 6);
+               $part_sha512 = $this->registerFilepart ($repoPath, $tmpFilepart);
+               $part_short_sha512 = substr($part_sha512, 0, 6);
                $PluginFusinvdeployFilepart->add(
                   array(
-                     'sha512'                        => $sha512,
-                     'shortsha512'                   => $short_sha512,
+                     'sha512'                        => $part_sha512,
+                     'shortsha512'                   => $part_short_sha512,
                      'plugin_fusinvdeploy_orders_id' => $order_id,
                      'plugin_fusinvdeploy_files_id'  => $file_id
                   )
@@ -286,6 +284,13 @@ class PluginFusinvdeployFile extends CommonDBTM {
          gzclose($fdPart);
 
       } while (1);
+
+
+      $this->update(array(
+         'id' => $file_id,
+         'sha512' => $sha512,
+         'shortsha512' => $short_sha512,
+      ));
       return $file_id;
    }
 
