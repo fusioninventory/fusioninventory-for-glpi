@@ -210,6 +210,9 @@ class PluginFusinvdeployFile extends CommonDBTM {
    function addFileInRepo ($params) {
       global $LANG;
 
+
+      set_time_limit(600);
+
       $PluginFusinvdeployFilepart = new PluginFusinvdeployFilepart();
 
       $filename = addslashes($params['filename']);
