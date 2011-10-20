@@ -50,10 +50,18 @@ class PluginFusinvinventoryInventory {
    **/
    function import($p_DEVICEID, $p_CONTENT, $p_xml) {
       global $LANG;
+      global $DB;
 
       $errors = '';
 
-      $this->sendCriteria($p_DEVICEID, $p_CONTENT, $p_xml);
+      $ret = $DB->query("SELECT GET_LOCK('inventory', 15)");
+      if ($DB->result($ret, 0, 0) == 1) {
+          $this->sendCriteria($p_DEVICEID, $p_CONTENT, $p_xml);
+
+          $DB->request("SELECT RELEASE_LOCK('inventory')");
+      } else {
+          die ("TIMEOUT: SERVER OVERLOADED\n");
+      }
 
       return $errors;
    }
