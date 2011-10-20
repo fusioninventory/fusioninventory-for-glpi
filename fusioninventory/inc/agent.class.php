@@ -427,17 +427,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo $LANG['plugin_fusioninventory']['agents'][15];
       echo "</th>";
       echo "</tr>";
-      
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo $LANG['plugin_fusioninventory']['agents'][25]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      $this->getFromDB($agent_id);
-      echo $this->fields['useragent'];
-      
-      echo "</td>";
-      echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
@@ -448,38 +437,35 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $this->getFromDB($agent_id);
       $a_ip = $this->getIPs($_POST['id'], 'Computer');
       $waiting = 0;
-      foreach($a_ip as $ip) {
-         $agentStatus = $PluginFusioninventoryTaskjob->getRealStateAgent($agent_id);
-         if ($agentStatus == 'waiting') {
-            if ($waiting == '0') {
-               $waiting = 1;
-               echo $LANG['plugin_fusioninventory']['agents'][38];
-               echo "<input type='hidden' name='ip' value='".$ip."' />";
-               echo "<input type='hidden' name='agent_id' value='".$agent_id."' />";
-               break;
-            }
-         }
-         if ($waiting == '0') {
-            switch($agentStatus) {
-
-               case 'running':
-                  $waiting = $LANG['plugin_fusioninventory']['taskjoblog'][6];
-                  break;
-
-               case 'noanswer':
-                  $waiting = $LANG['plugin_fusioninventory']['agents'][30];
-                  break;
-
-               case 'noanswer':
-                  $waiting = $LANG['plugin_fusioninventory']['agents'][40];
-                  break;
-
-            }
-         }
+      $ip = "";
+      while(empty($ip) && count($ip)) {
+	      $ip = array_shift($a_ip);
       }
-      if ($waiting != '1') {
-         echo $waiting;
+
+      $agentStatus = $PluginFusioninventoryTaskjob->getRealStateAgent($agent_id);
+      switch($agentStatus) {
+
+         case 'running':
+            echo $LANG['plugin_fusioninventory']['taskjoblog'][6];
+            break;
+
+         case 'noanswer':
+            echo $LANG['plugin_fusioninventory']['agents'][30];
+            break;
+
+         case 'noanswer':
+            echo $LANG['plugin_fusioninventory']['agents'][40];
+            break;
+
+         case 'waiting':
+            $waiting = 1;
+            echo $LANG['plugin_fusioninventory']['agents'][38];
+            echo "<input type='hidden' name='ip' value='".$ip."' />";
+            echo "<input type='hidden' name='agent_id' value='".$agent_id."' />";
+            break;
+
       }
+
       echo "</td>";
       echo "</tr>";
 
