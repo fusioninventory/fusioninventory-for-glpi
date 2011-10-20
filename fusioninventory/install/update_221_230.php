@@ -33,22 +33,13 @@
  */
 
 // Update from 2.2.1 to 2.3.0
-function update221to230() {
+function update221to230($migrationname) {
    global $DB, $CFG_GLPI, $LANG;
+   
+   $migration = new $migrationname("2.3.0");
 
    ini_set("max_execution_time", "0");
 
-   echo "<strong>Update 2.2.1 to 2.3.0</strong><br/>";
-   echo "</td>";
-   echo "</tr>";
-
-   echo "<tr class='tab_bg_1'>";
-   echo "<td align='center'>";
-
-   plugin_fusioninventory_displayMigrationMessage("230"); // Start
-
-   plugin_fusioninventory_displayMigrationMessage("230", $LANG['update'][141]); // Updating schema
-   
    $plugin = new Plugin();
    $data = $plugin->find("`name` = 'FusionInventory'");
    $fields = current($data);
@@ -102,7 +93,7 @@ function update221to230() {
       // End is not used in 0.72.x
    );
 
-   plugin_fusioninventory_displayMigrationMessage("230", $LANG['update'][141]." - glpi_plugin_fusioninventory_mappings");
+   $migration->displayMessage("Create mapping table");
 
    $sql = "CREATE TABLE `glpi_plugin_fusioninventory_mappings` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -297,7 +288,7 @@ function update221to230() {
     * Update `glpi_dropdown_plugin_fusioninventory_mib_label`
     * to `glpi_plugin_fusinvsnmp_miblabels`
     */
-   plugin_fusioninventory_displayMigrationMessage("230", $LANG['update'][141]." - glpi_plugin_fusinvsnmp_miblabels");
+   $migration->displayMessage("Update SNMP MIB labels");
    $sql = "RENAME TABLE `glpi_dropdown_plugin_fusioninventory_mib_label`
       TO `glpi_plugin_fusinvsnmp_miblabels`";
    $DB->query($sql);
@@ -313,7 +304,7 @@ function update221to230() {
     * Update `glpi_dropdown_plugin_fusioninventory_mib_object`
     * to `glpi_plugin_fusinvsnmp_mibobjects`
     */
-   plugin_fusioninventory_displayMigrationMessage("230", $LANG['update'][141]." - glpi_plugin_fusinvsnmp_mibobjects");
+   $migration->displayMessage("Udpate SNMP MIB objects");
    $sql = "RENAME TABLE `glpi_dropdown_plugin_fusioninventory_mib_object`
       TO `glpi_plugin_fusinvsnmp_mibobjects`";
    $DB->query($sql);
@@ -329,7 +320,7 @@ function update221to230() {
     * Update `glpi_dropdown_plugin_fusioninventory_mib_oid`
     * to `glpi_plugin_fusinvsnmp_miboids`
     */
-   plugin_fusioninventory_displayMigrationMessage("230", $LANG['update'][141]." - glpi_plugin_fusinvsnmp_miboids");
+   $migration->displayMessage("Update SNMP MIB OID");
    $sql = "RENAME TABLE `glpi_dropdown_plugin_fusioninventory_mib_oid`
       TO `glpi_plugin_fusinvsnmp_miboids`";
    $DB->query($sql);
@@ -344,7 +335,7 @@ function update221to230() {
    /*
     * Drop `glpi_dropdown_plugin_fusioninventory_snmp_auth_auth_protocol`
     */
-   plugin_fusioninventory_displayMigrationMessage("230", $LANG['update'][141]." - glpi_dropdown_plugin_fusioninventory_snmp_auth_auth_protocol");
+   $migration->displayMessage("Update SNMP authentication");
    $sql = "DROP TABLE `glpi_dropdown_plugin_fusioninventory_snmp_auth_auth_protocol`";
    $DB->query($sql);
 

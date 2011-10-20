@@ -89,13 +89,13 @@ ini_set("max_execution_time", "0");
 
 if (($current_version != PLUGIN_FUSIONINVENTORY_VERSION)
      AND $current_version!='0') {
-   pluginFusioninventoryUpdate($current_version);
+   pluginFusioninventoryUpdate($current_version, $migration);
    $migration->displayWarning("Update done.");
 } else if ($current_version == PLUGIN_FUSIONINVENTORY_VERSION) {
    $migration->displayWarning("No migration needed.");
 } else {
    include (GLPI_ROOT . "/plugins/fusioninventory/install/install.php");
-   pluginFusioninventoryInstall(PLUGIN_FUSIONINVENTORY_VERSION);
+   pluginFusioninventoryInstall(PLUGIN_FUSIONINVENTORY_VERSION, $migration);
    $migration->displayWarning("installation done.");
 }
 

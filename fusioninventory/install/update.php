@@ -140,86 +140,128 @@ function pluginFusioninventoryGetCurrentVersion($version) {
 }
 
 
-function pluginFusioninventoryUpdate($current_version) {
-   echo "<center>";
-   echo "<table class='tab_cadre' width='950'>";
-   echo "<tr>";
-   echo "<th>Update process<th>";
-   echo "</tr>";
 
-   echo "<tr class='tab_bg_1'>";
-   echo "<td align='center'>";
-
+function pluginFusioninventoryUpdate($current_version, $migrationname='Migration') {
+   global $DB;
+   
    // update from current_version to last case version + 1
-   switch ($current_version){
-      case "1.0.0":
-         include("update_100_110.php");
-         update100to110();
-      case "1.1.0":
-         include("update_110_200.php");
-         update110to200();
-      case "2.0.0":
-         include("update_200_201.php");
-         update200to201();
-      case "2.0.1":
-         include("update_201_202.php");
-         update201to202();
-      case "2.0.2":
-         include("update_202_210.php");
-         update202to210();
-      case "2.1.0":
-         include("update_210_211.php");
-         update210to211();
-      case "2.1.1":
-         include("update_211_212.php");
-         update211to212();
-      case "2.1.2":
-         include("update_212_213.php");
-         update212to213();
-      case "2.1.3":
-         include("update_213_220.php");
-         update213to220();
-      case "2.2.0":
-         include("update_220_221.php");
-         update220to221();
-      case "2.2.1":
-      case "2.2.2":
-      case "2.2.3":
-      case "2.2.4":
-      case "2.2.5":
-         include("update_221_230.php");
-         update221to230();
-      case "2.3.0":
-      case "2.3.1":
-         include("update_231_232.php");
-         update231to232();
-      case "2.3.2":
-         include("update_232_233.php");
-         update232to233();
-      case "2.3.3":
-      case "2.3.4":
-      case "2.3.5":
-      case "2.3.6":
-      case "2.3.7":
-      case "2.3.8":
-      case "2.3.9":
-      case "2.3.10":
-      case "2.3.11":
-         include("update_232_240.php");
-         update232to240();
-      case "2.4.0":
-         include("update_240_08011.php");
-         update240to080011();
-
+//   switch ($current_version){
+//      case "1.0.0":
+//         include("update_100_110.php");
+//         update100to110();
+//      case "1.1.0":
+//         include("update_110_200.php");
+//         update110to200();
+//      case "2.0.0":
+//         include("update_200_201.php");
+//         update200to201();
+//      case "2.0.1":
+//         include("update_201_202.php");
+//         update201to202();
+//      case "2.0.2":
+//         include("update_202_210.php");
+//         update202to210();
+//      case "2.1.0":
+//         include("update_210_211.php");
+//         update210to211();
+//      case "2.1.1":
+//         include("update_211_212.php");
+//         update211to212();
+//      case "2.1.2":
+//         include("update_212_213.php");
+//         update212to213();
+//      case "2.1.3":
+//         include("update_213_220.php");
+//         update213to220();
+//      case "2.2.0":
+//         include("update_220_221.php");
+//         update220to221($migrationname);
+//      case "2.2.1":
+//      case "2.2.2":
+//      case "2.2.3":
+//      case "2.2.4":
+//      case "2.2.5":
+//         include("update_221_230.php");
+//         update221to230($migrationname);
+//      case "2.3.0":
+//      case "2.3.1":
+//         include("update_231_232.php");
+//         update231to232();
+//      case "2.3.2":
+//         include("update_232_233.php");
+//         update232to233();
+//      case "2.3.3":
+//      case "2.3.4":
+//      case "2.3.5":
+//      case "2.3.6":
+//      case "2.3.7":
+//      case "2.3.8":
+//      case "2.3.9":
+//      case "2.3.10":
+//      case "2.3.11":
+//         include("update_232_240.php");
+//         update232to240();
+//      case "2.4.0":
+//         include("update_240_08011.php");
+//         update240to080011();
+//
+//   }
+   
+   $migration = new $migrationname($current_version);
+   $prepare_task = array();
+   
+   // ** Manage glpi_plugin_fusioninventory_ipranges
+   if (TableExists("glpi_plugin_tracker_rangeip")) {
+      // Get all data to create task
+      $query = "SELECT * FROM `glpi_plugin_tracker_rangeip`";
+      $result=$DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         if ($data['discover'] == '1') {
+            $prepare_task[] = array("agents_id" => $data['FK_tracker_agents'],
+                                    "ipranges_id" => $data['ID'],
+                                    "netdiscovery" => "1");
+         }
+         if ($data['query'] == '1') {
+            $prepare_task[] = array("agents_id" => $data['FK_tracker_agents'],
+                                    "ipranges_id" => $data['ID'],
+                                    "snmpquery" => "1");
+         }         
+      }      
    }
+   $migration->renameTable("glpi_plugin_tracker_rangeip", 
+                           "glpi_plugin_fusioninventory_ipranges");
+   $migration->changeField("glpi_plugin_fusioninventory_ipranges",
+                           "ID",
+                           "id",
+                           "int(11) NOT NULL");
+   $migration->changeField("glpi_plugin_fusioninventory_ipranges",
+                           "ifaddr_start",
+                           "ip_start",
+                           "varchar(255) DEFAULT NULL");
+   $migration->changeField("glpi_plugin_fusioninventory_ipranges",
+                           "ifaddr_end",
+                           "ip_end",
+                           "varchar(255) DEFAULT NULL");
+   $migration->changeField("glpi_plugin_fusioninventory_ipranges",
+                           "FK_entities",
+                           "entities_id",
+                           "int(11) NOT NULL DEFAULT '0'");
+   $migration->dropField("glpi_plugin_fusioninventory_ipranges",
+                         "FK_tracker_agents");
+   $migration->dropField("glpi_plugin_fusioninventory_ipranges",
+                         "discover");
+   $migration->dropField("glpi_plugin_fusioninventory_ipranges",
+                         "query");
+
+   
+   
+   
+   
 
    $plugins_id = PluginFusioninventoryModule::getModuleId("fusioninventory");
    include_once(GLPI_ROOT."/plugins/fusioninventory/inc/profile.class.php");
    PluginFusioninventoryProfile::changeProfile($plugins_id);
 
-   echo "</td>";
-   echo "</tr>";
-   echo "</table></center>";
 
    include_once(GLPI_ROOT."/plugins/fusioninventory/inc/config.class.php");
    $config = new PluginFusioninventoryConfig();
