@@ -85,10 +85,11 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                                  $Transfer->fields);
          }
 
+
       //if ($internalId = $this->isMachineExist()) {
          // Get internal ID with $items_id
          $a_serialized = array();
-         $query = "SELECT * FROM `glpi_plugin_fusinvinventory_libserialization`
+         $query = "SELECT internal_id FROM `glpi_plugin_fusinvinventory_libserialization`
                    WHERE `computers_id`='".$items_id."'
                    LIMIT 1";
          $result = $DB->query($query);
