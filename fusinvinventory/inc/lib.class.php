@@ -98,7 +98,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                $a_serialized = $DB->fetch_assoc($result);
             }
          }
-         $internalId = uniqid();
+         $internalId = uniqid("", true);
          if (isset($a_serialized['internal_id'])) {
             $internalId = $a_serialized['internal_id'];
          } else {
@@ -138,7 +138,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
 
          //We launch CreateMachine() hook and provide an InternalId
          $xmlSections = $this->_getXMLSections($simpleXMLObj);
-         $internalId = uniqid();
+         $internalId = uniqid("", true);
 
          try {
             $PluginFusinvinventoryLibhook = new PluginFusinvinventoryLibhook();
