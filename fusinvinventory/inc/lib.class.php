@@ -646,12 +646,11 @@ class PluginFusinvinventoryLib extends CommonDBTM {
    function _serializeIntoDB($internalId, $serializedSections) {
       global $DB;
 
-
-      $serializedSections = str_replace("\\", "\\\\", $serializedSections);
-      $a_serializedSections = str_split(htmlspecialchars($serializedSections, ENT_QUOTES), 800000);
+#      $serializedSections = str_replace("\\", "\\\\", $serializedSections);
+      $a_serializedSections = str_split($serializedSections, 800000);
 
       $queryUpdate = "UPDATE `glpi_plugin_fusinvinventory_libserialization`
-		SET `serialized_sections1` = '" . $a_serializedSections[0] ."',
+		SET `serialized_sections1` = '" . mysql_real_escape_string($a_serializedSections[0]) ."',
          `last_fusioninventory_update`='".date("Y-m-d H:i:s")."'
       WHERE `internal_id` = '" . $internalId . "'";
 
@@ -707,7 +706,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       $resultSelect = $DB->query($querySelect);
       $rowSelect = mysql_fetch_row($resultSelect);
       $infoSections["externalId"] = $rowSelect[0];
-      $serializedSections = htmlspecialchars_decode($rowSelect[1].$rowSelect[2].$rowSelect[3], ENT_QUOTES); // Recover double quotes
+      $serializedSections = $rowSelect[1].$rowSelect[2].$rowSelect[3];
 //      $serializedSections = str_replace("\t", "", $serializedSections); // To remove the indentation at beginning of line
       $arraySerializedSections = explode("\n", $serializedSections); // Recovering a table with one line per entry
       $previous_infosection = array();
