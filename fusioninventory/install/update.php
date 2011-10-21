@@ -209,50 +209,204 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    
    $migration = new $migrationname($current_version);
    $prepare_task = array();
+   $prepare_rangeip = array();
+   
+   // TODO remove
+//   $migration = new Migration($current_version);
+   // END TODO remove
+   
    
    // ** Manage glpi_plugin_fusioninventory_ipranges
-   if (TableExists("glpi_plugin_tracker_rangeip")) {
-      // Get all data to create task
-      $query = "SELECT * FROM `glpi_plugin_tracker_rangeip`";
-      $result=$DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
-         if ($data['discover'] == '1') {
-            $prepare_task[] = array("agents_id" => $data['FK_tracker_agents'],
-                                    "ipranges_id" => $data['ID'],
-                                    "netdiscovery" => "1");
+      if (TableExists("glpi_plugin_tracker_rangeip")) {
+         // Get all data to create task
+         $query = "SELECT * FROM `glpi_plugin_tracker_rangeip`";
+         $result=$DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
+            if ($data['discover'] == '1') {
+               $prepare_task[] = array("agents_id" => $data['FK_tracker_agents'],
+                                       "ipranges_id" => $data['ID'],
+                                       "netdiscovery" => "1");
+            }
+            if ($data['query'] == '1') {
+               $prepare_task[] = array("agents_id" => $data['FK_tracker_agents'],
+                                       "ipranges_id" => $data['ID'],
+                                       "snmpquery" => "1");
+            }
          }
-         if ($data['query'] == '1') {
-            $prepare_task[] = array("agents_id" => $data['FK_tracker_agents'],
-                                    "ipranges_id" => $data['ID'],
-                                    "snmpquery" => "1");
+      }
+      if (TableExists("glpi_plugin_fusioninventory_rangeip")
+              AND FieldExists("glpi_plugin_fusioninventory_rangeip", 
+                              "FK_fusioninventory_agents_discover")) {
+         
+         // Get all data to create task
+         $query = "SELECT * FROM `glpi_plugin_fusioninventory_rangeip`";
+         $result=$DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
+            if ($data['discover'] == '1') {
+               $prepare_task[] = array("agents_id" => $data['FK_fusioninventory_agents_discover'],
+                                       "ipranges_id" => $data['ID'],
+                                       "netdiscovery" => "1");
+            }
+            if ($data['query'] == '1') {
+               $prepare_task[] = array("agents_id" => $data['FK_fusioninventory_agents_query'],
+                                       "ipranges_id" => $data['ID'],
+                                       "snmpquery" => "1");
+            }
          }         
-      }      
-   }
-   $migration->renameTable("glpi_plugin_tracker_rangeip", 
-                           "glpi_plugin_fusioninventory_ipranges");
-   $migration->changeField("glpi_plugin_fusioninventory_ipranges",
-                           "ID",
-                           "id",
-                           "int(11) NOT NULL");
-   $migration->changeField("glpi_plugin_fusioninventory_ipranges",
-                           "ifaddr_start",
-                           "ip_start",
-                           "varchar(255) DEFAULT NULL");
-   $migration->changeField("glpi_plugin_fusioninventory_ipranges",
-                           "ifaddr_end",
-                           "ip_end",
-                           "varchar(255) DEFAULT NULL");
-   $migration->changeField("glpi_plugin_fusioninventory_ipranges",
-                           "FK_entities",
-                           "entities_id",
-                           "int(11) NOT NULL DEFAULT '0'");
-   $migration->dropField("glpi_plugin_fusioninventory_ipranges",
-                         "FK_tracker_agents");
-   $migration->dropField("glpi_plugin_fusioninventory_ipranges",
-                         "discover");
-   $migration->dropField("glpi_plugin_fusioninventory_ipranges",
-                         "query");
-
+      }
+      $newTable = "glpi_plugin_fusioninventory_ipranges";
+      $migration->renameTable("glpi_plugin_tracker_rangeip", 
+                              $newTable);
+      $migration->changeField($newTable,
+                              "ID",
+                              "id",
+                              "int(11) NOT NULL");
+      $migration->changeField($newTable,
+                              "ifaddr_start",
+                              "ip_start",
+                              "varchar(255) DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "ifaddr_end",
+                              "ip_end",
+                              "varchar(255) DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "FK_entities",
+                              "entities_id",
+                              "int(11) NOT NULL DEFAULT '0'");
+      $migration->dropField($newTable,
+                            "FK_tracker_agents");
+      $migration->dropField($newTable,
+                            "discover");
+      $migration->dropField($newTable,
+                            "query");
+      $migration->dropField($newTable,
+                            "FK_fusioninventory_agents_discover");
+      $migration->dropField($newTable,
+                            "FK_fusioninventory_agents_query");
+      $migration->dropKey($newTable, "FK_tracker_agents");
+      $migration->dropKey($newTable, "FK_tracker_agents_2");
+   
+   // ** Manage glpi_plugin_fusioninventory_agents
+      $prepare_agentConfig = array();
+      if (TableExists("glpi_plugin_tracker_agents")
+              AND FieldExists("glpi_plugin_tracker_agents", 
+                              "ifaddr_start")) {
+         $query = "SELECT * FROM `glpi_plugin_tracker_agents`";
+         $result=$DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
+            $prepare_rangeip[] = array("ip_start"=> $data['ifaddr_start'],
+                                       "ip_end"  => $data['ifaddr_end'],
+                                       "name"    => $data['name']);
+            $prepare_agentConfig[] = array("name" => $data["name"],
+                                           "lock" => $data['lock'],
+                                           "threads_snmpquery"    => $data['nb_process_query'],
+                                           "threads_netdiscovery" => $data['nb_process_discovery']);
+         }
+         $DB->query("DROP TABLE `glpi_plugin_tracker_agents`");
+      } else if (TableExists("glpi_plugin_tracker_agents")
+                  AND FieldExists("glpi_plugin_tracker_agents", 
+                              "core_discovery")) {
+         $query = "SELECT * FROM `glpi_plugin_tracker_agents`";
+         $result=$DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
+            $prepare_agentConfig[] = array("name" => $data["name"],
+                                           "lock" => $data['lock'],
+                                           "threads_snmpquery"    => $data['threads_query'],
+                                           "threads_netdiscovery" => $data['threads_discovery']);
+         }
+         $DB->query("DROP TABLE `glpi_plugin_tracker_agents`");
+      } else if (TableExists("glpi_plugin_fusioninventory_agents")) {
+         $newTable = "glpi_plugin_fusioninventory_agents";
+         if (FieldExists($newTable, "module_snmpquery")) {
+            $query = "SELECT * FROM `glpi_plugin_fusioninventory_agents`";
+            $result=$DB->query($query);
+            while ($data=$DB->fetch_array($result)) {
+               $prepare_agentConfig[] = array("id" => $data["ID"],
+                                              "threads_snmpquery"    => $data['threads_query'],
+                                              "threads_netdiscovery" => $data['threads_discovery'],
+                                              "SNMPQUERY" => $data['module_snmpquery'],
+                                              "NETDISCOVERY" => $data['module_netdiscovery'],
+                                              "INVENTORY" => $data['module_inventory'],
+                                              "WAKEONLAN" => $data['module_wakeonlan']);
+            }
+         }
+         $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(11) NOT NULL");
+         $migration->changeField($newTable,
+                                 "last_agent_update",
+                                 "last_contact",
+                                 "datetime DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "fusioninventory_agent_version",
+                                 "version",
+                                 "varchar(255) DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "key",
+                                 "device_id",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "on_device",
+                                 "items_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "device_type",
+                                 "itemtype",
+                                 "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
+         
+         $migration->dropField($newTable, 
+                               "module_snmpquery");
+         $migration->dropField($newTable, 
+                               "module_netdiscovery");
+         $migration->dropField($newTable, 
+                               "module_inventory");
+         $migration->dropField($newTable, 
+                               "module_wakeonlan");
+         $migration->dropField($newTable, 
+                               "core_discovery");
+         $migration->dropField($newTable, 
+                               "threads_discovery");
+         $migration->dropField($newTable, 
+                               "core_query");
+         $migration->dropField($newTable, 
+                               "threads_query");
+         
+         
+         $migration->addField($newTable, 
+                              "entities_id", 
+                              "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable, 
+                              "is_recursive", 
+                              "tinyint(1) NOT NULL DEFAULT '1'");
+         $migration->addField($newTable, 
+                              "useragent", 
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         
+         $migration->dropKey($newTable, 
+                             "key");
+         
+         $migration->addKey($newTable,
+                            "device_id");
+         $migration->addKey($newTable,
+                            array("itemtype", "items_id"),
+                            "item");
+      }
+      
+      
+      
+      
+      
+      
+      
+      
+   
+   
+   
+   
+   $migration->executeMigration();
+   
+   // TODO update itemtypes
    
    
    
