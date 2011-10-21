@@ -50,10 +50,18 @@ class PluginFusinvinventoryInventory {
    **/
    function import($p_DEVICEID, $p_CONTENT, $p_xml) {
       global $LANG;
+      global $DB;
 
       $errors = '';
 
-      $this->sendCriteria($p_DEVICEID, $p_CONTENT, $p_xml);
+      $ret = $DB->query("SELECT GET_LOCK('inventory', 15)");
+      if ($DB->result($ret, 0, 0) == 1) {
+          $this->sendCriteria($p_DEVICEID, $p_CONTENT, $p_xml);
+
+          $DB->request("SELECT RELEASE_LOCK('inventory')");
+      } else {
+          die ("TIMEOUT: SERVER OVERLOADED\n");
+      }
 
       return $errors;
    }
@@ -72,13 +80,25 @@ class PluginFusinvinventoryInventory {
    **/
    function sendCriteria($p_DEVICEID, $p_CONTENT, $p_xml) {
 
-      // Hack to put OS in software
+      // Hack
       $sxml = simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA);
           
-      $sxml_soft = $sxml->CONTENT->addChild('SOFTWARES');
-      $sxml_soft->addChild('COMMENTS', (string)$sxml->CONTENT->HARDWARE->OSCOMMENTS);
-      $sxml_soft->addChild('NAME', (string)$sxml->CONTENT->HARDWARE->OSNAME);
-      $sxml_soft->addChild('VERSION', (string)$sxml->CONTENT->HARDWARE->OSVERSION);
+         // Hack to put OS in software
+         $sxml_soft = $sxml->CONTENT->addChild('SOFTWARES');
+         $sxml_soft->addChild('COMMENTS', (string)$sxml->CONTENT->HARDWARE->OSCOMMENTS);
+         $sxml_soft->addChild('NAME', (string)$sxml->CONTENT->HARDWARE->OSNAME);
+         $sxml_soft->addChild('VERSION', (string)$sxml->CONTENT->HARDWARE->OSVERSION);
+      
+         // Hack for USB Printer serial
+         if (isset($xml->CONTENT->PRINTERS)) {
+            foreach($xml->CONTENT->PRINTERS as $printer) {
+               if ((isset($printer->SERIAL)) 
+                       AND (preg_match('/\/$/', (string)$printer->SERIAL))) {
+                  $printer->SERIAL = preg_replace('/\/$/', '', (string)$printer->SERIAL);
+               }
+            }
+         }
+      
       $p_xml = $sxml->asXML();
       // End hack
       

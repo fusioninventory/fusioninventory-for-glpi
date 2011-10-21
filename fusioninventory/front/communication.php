@@ -90,7 +90,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    // ********** End ********** //
    
    if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
-      // Get conf tu know if SSL is only
+      // Get conf to know if are in SSL only mode
    
       $fusioninventory_config      = new PluginFusioninventoryConfig();
       $PluginFusioninventoryModule = new PluginFusioninventoryModule();
