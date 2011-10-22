@@ -292,7 +292,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       $infoSections = $this->_getInfoSections($internalId);
       // Retrieve all sections from xml file
       $serializedSectionsFromXML = array();
-      
+
       foreach($xmlSections as $xmlSection) {
          array_push($serializedSectionsFromXML, $xmlSection["sectionDatawName"]);
       }
@@ -716,9 +716,29 @@ class PluginFusinvinventoryLib extends CommonDBTM {
             $infoSections["sections"][$previous_infosection] .= "\n".$valeur;
          }
       }
+      $infoSections['sections'] = $this->convertData($infoSections['sections']);
       return $infoSections;
    }
 
+   
+   
+   static function convertData($infoSections) {
+      foreach ($infoSections as $key=>$value) {
+         $matches = array();
+         $matches1 = array();
+         preg_match("/(a:\d+:)\{(.*)\}(\w+)/m", $value, $matches1);
+         
+         preg_match_all('/s:\d+:"(.*?)";/m', $matches1[2], $matches);
+         $constuctArray = array();
+         $i = 0;
+         for ($i = 0; $i < count($matches[1]); $i = $i+2) {
+            $constuctArray[$matches[1][$i]] = clean_cross_side_scripting_deep(addslashes_deep($matches[1][($i+1)]));
+         }
+         $infoSections[$key] = serialize($constuctArray).$matches1[3];
+      }
+      return $infoSections;
+   }
+   
 
 
    /**
@@ -784,6 +804,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       }
       $this->_serializeIntoDB($internal_id, $serializedSections);
    }
+
 }
 
 ?>
