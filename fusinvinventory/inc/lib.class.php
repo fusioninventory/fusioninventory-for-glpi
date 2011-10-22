@@ -314,13 +314,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                   if($xmlSections[$arrayId]['sectionName'] == $sectionName) {
                      //Finally, we have to determine if it's an update or not
                      $boolUpdate = false;
-                     if (!unserialize($serializedSectionToAdd)) {
-                        //logInFile('serialise', $serializedSectionToAdd);
-                     }
                      $arrSectionToAdd = unserialize($serializedSectionToAdd);
-                     if (!unserialize($serializedSectionToRemove)) {
-                        //logInFile('serialise', $serializedSectionToRemove);
-                     }
                      $arrSectionToRemove = unserialize($serializedSectionToRemove);
                      
                      //TODO: Traiter les notices sur les indices de tableau qui n'existent pas.
