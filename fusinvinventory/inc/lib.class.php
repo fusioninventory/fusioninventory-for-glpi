@@ -109,7 +109,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
 
          // Link computer to agent FusionInventory
          $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-         $PluginFusioninventoryAgent->setAgentWithComputerid($items_id, addslashes_deep($xml->DEVICEID));
+         $PluginFusioninventoryAgent->setAgentWithComputerid($items_id, $xml->DEVICEID);
 
          // Transfer agent entity
          $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
@@ -150,7 +150,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
 
             // Link computer to agent FusionInventory
             $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-            $PluginFusioninventoryAgent->setAgentWithComputerid($items_id, addslashes_deep($xml->DEVICEID));
+            $PluginFusioninventoryAgent->setAgentWithComputerid($items_id, $xml->DEVICEID);
 
             // Transfer agent entity
             $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
@@ -214,7 +214,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          foreach ($section->children() as $data) {
             if ($section->getName() == "VIRTUALMACHINES"
                     AND $data->getName() == "COMMENT") {
-               $sectionData[$data->getName()] = addslashes_deep((string)$data);
+               $sectionData[$data->getName()] = (string)$data;
             } else {
                $sectionData[$data->getName()] = (string)$data;
             }
@@ -644,7 +644,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       $a_serializedSections = str_split($serializedSections, 800000);
 
       $queryUpdate = "UPDATE `glpi_plugin_fusinvinventory_libserialization`
-		SET `serialized_sections1` = '" . mysql_real_escape_string($a_serializedSections[0]) ."',
+		SET `serialized_sections1` = '".$a_serializedSections[0]."',
          `last_fusioninventory_update`='".date("Y-m-d H:i:s")."'
       WHERE `internal_id` = '" . $internalId . "'";
 
