@@ -121,14 +121,14 @@ class PluginFusioninventoryWizard {
             }
             echo "<td class='bgout'
                onmouseover='this.className=\"bgover\"' onmouseout='this.className=\"bgout\"'
-               onClick='location.href=\"".$CFG_GLPI['root_doc']
-               ."/plugins/fusioninventory/front/wizard.php?wizz=".$array[1].$getariane."\"'
-               width='240' height='155' align='center'>";
+               width='240' height='155' align='center'>
+               <a href='".$CFG_GLPI['root_doc']
+               ."/plugins/fusioninventory/front/wizard.php?wizz=".$array[1].$getariane."'>";
             echo "<strong>".$array[0]."</strong><br/><br/>";
             if ($array[2] != '') {
                echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/".$array[2]."'/>";
             }
-            echo "</td>";
+            echo "</a></td>";
          }
          echo "</tr>";
          echo "</table>";
@@ -177,10 +177,10 @@ class PluginFusioninventoryWizard {
          
          $rulecollection = new $classname;
          if (isset($_GET['id'])) {
-            include ($CFG_GLPI['root_doc'] . "/plugins/fusioninventory/front/wizzrule.common.form.php");
+            include (GLPI_ROOT."/plugins/fusioninventory/front/wizzrule.common.form.php");
          } else {
             self::addButton();
-            include ($CFG_GLPI['root_doc'] . "/plugins/fusioninventory/front/wizzrule.common.php");
+            include (GLPI_ROOT."/plugins/fusioninventory/front/wizzrule.common.php");
          }
 
       } else if (isset($_GET['id'])) {
@@ -353,8 +353,8 @@ class PluginFusioninventoryWizard {
       return array(
       $LANG['plugin_fusioninventory']['wizard'][0]   => "w_start",
       $LANG['plugin_fusioninventory']['wizard'][1]   => "w_inventorychoice",
-      $LANG['plugin_fusioninventory']['functionalities'][16]   => "w_authsnmp",
       $LANG['plugin_fusioninventory']['iprange'][2]  => "w_iprange",
+      $LANG['plugin_fusioninventory']['functionalities'][16]   => "w_authsnmp",
       $LANG['plugin_fusioninventory']['rules'][2]    => "w_importrules",
       $LANG['plugin_fusioninventory']['task'][1]     => "w_tasks",
       $LANG['plugin_fusioninventory']['wizard'][7]   => "w_tasksforcerun",
@@ -404,8 +404,8 @@ class PluginFusioninventoryWizard {
       global $LANG;
 
       return array(
-      $LANG['plugin_fusioninventory']['functionalities'][16]   => "w_authsnmp",
       $LANG['plugin_fusioninventory']['iprange'][2]  => "w_iprange",
+      $LANG['plugin_fusioninventory']['functionalities'][16]   => "w_authsnmp",
       $LANG['plugin_fusioninventory']['rules'][2]    => "w_importrules",
       $LANG['plugin_fusioninventory']['task'][1]     => "w_tasks",
       $LANG['plugin_fusioninventory']['wizard'][7]   => "w_tasksforcerun",
@@ -434,7 +434,7 @@ class PluginFusioninventoryWizard {
          && $plugin->isActivated('fusinvsnmp')) {
          
          $a_buttons[] = array($LANG['plugin_fusioninventory']['wizard'][12],
-                               'w_authsnmp',
+                               'w_iprange',
                                'networkscan.png',
                                'filNetDiscovery');         
       }
@@ -482,7 +482,7 @@ class PluginFusioninventoryWizard {
          && $plugin->isActivated('fusinvsnmp')) {
          
          $a_buttons[] = array($LANG['plugin_fusioninventory']['wizard'][17],
-                                'w_authsnmp',
+                                'w_iprange',
                                 'general_inventory.png',
                                 'filInventorySNMP');
       }

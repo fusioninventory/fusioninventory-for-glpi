@@ -50,6 +50,9 @@ class PluginFusioninventoryProfile extends CommonDBTM {
     **/
     static function addProfile($p_plugins_id, $p_type, $p_right, $p_profiles_id=NULL) {
       if (is_null($p_profiles_id)) {
+         if (!isset($_SESSION['glpiactiveprofile']['id'])) {
+            return;
+         }
          $p_profiles_id = $_SESSION['glpiactiveprofile']['id'];
       }
       if (!self::profileExists($p_plugins_id, $p_profiles_id, $p_type)) {

@@ -77,7 +77,8 @@ class PluginFusinvinventoryImport_Sound extends CommonDBTM {
               AND (!preg_match("/^\((.*)\)$/", $dataSection['MANUFACTURER'])) ) {
          
          $sound['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
-                                                                          $dataSection['MANUFACTURER']);
+                                                               $dataSection['MANUFACTURER'],
+                                                               $_SESSION["plugin_fusinvinventory_entity"]);
       }
       if (isset($dataSection['DESCRIPTION'])) {
          $sound['comment'] = $dataSection['DESCRIPTION'];

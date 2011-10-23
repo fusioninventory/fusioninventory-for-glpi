@@ -94,7 +94,9 @@ class PluginFusinvinventoryImport_Networkport extends CommonDBTM {
       }
       if (isset($dataSection["TYPE"])) {
          $a_NetworkPort["networkinterfaces_id"]
-                     = Dropdown::importExternal('NetworkInterface', $dataSection["TYPE"]);
+                     = Dropdown::importExternal('NetworkInterface', 
+                                                $dataSection["TYPE"],
+                                                $_SESSION["plugin_fusinvinventory_entity"]);
       }
       if (isset($dataSection["IPMASK"]))
          $a_NetworkPort['netmask'] = $dataSection["IPMASK"];
@@ -107,12 +109,12 @@ class PluginFusinvinventoryImport_Networkport extends CommonDBTM {
 
       $devID = 0;
       if ($type == 'update') {
-         $NetworkPort->update($a_NetworkPort);
+         $NetworkPort->update($a_NetworkPort, $_SESSION["plugin_fusinvinventory_history_add"]);
       } else {
          if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
             $a_NetworkPort['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
          }
-         $devID = $NetworkPort->add($a_NetworkPort);
+         $devID = $NetworkPort->add($a_NetworkPort, array(), $_SESSION["plugin_fusinvinventory_history_add"]);
       }
       return $devID;
    }

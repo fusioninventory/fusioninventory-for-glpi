@@ -52,7 +52,8 @@ if (isset ($_POST["add"])) {
       $_POST['ip_end']    = $_POST['ip_end0'].".".$_POST['ip_end1'].".";
       $_POST['ip_end']   .= $_POST['ip_end2'].".".$_POST['ip_end3'];
       $newID = $iprange->add($_POST);
-      Html::redirect(Toolbox::deleteDir('PluginFusioninventoryIPRange')."?id=$newID");
+
+      glpi_header($_SERVER['HTTP_REFERER']);
    } else {
       Html::redirect($_SERVER['HTTP_REFERER']);
    }
@@ -118,7 +119,8 @@ if (isset($_GET['allowcreate'])) {
    $allowcreate = $_GET['allowcreate'];
 }
 
-if (strstr($_SERVER['HTTP_REFERER'], "wizard.php")) {
+if (isset($_SERVER['HTTP_REFERER'])
+        AND (strstr($_SERVER['HTTP_REFERER'], "wizard.php"))) {
    Html::redirect($_SERVER['HTTP_REFERER']."&id=".$id);
 }
 

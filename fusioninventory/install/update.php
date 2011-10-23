@@ -34,6 +34,11 @@
 
 function pluginFusioninventoryGetCurrentVersion($version) {
    global $DB;
+   
+   if (!class_exists('PluginFusioninventoryModule')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
+   }
+   
    if ((!TableExists("glpi_plugin_tracker_config")) &&
       (!TableExists("glpi_plugin_fusioninventory_config")) &&
       (!TableExists("glpi_plugin_fusioninventory_configs"))) {
@@ -198,8 +203,13 @@ function pluginFusioninventoryUpdate($current_version) {
       case "2.3.7":
       case "2.3.8":
       case "2.3.9":
+      case "2.3.10":
+      case "2.3.11":
          include("update_232_240.php");
          update232to240();
+      case "2.4.0":
+         include("update_240_08011.php");
+         update240to080011();
 
    }
 

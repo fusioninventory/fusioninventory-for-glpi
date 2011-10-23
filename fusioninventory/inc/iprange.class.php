@@ -295,7 +295,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
             echo "<td align='center'>";
             echo "<a href='".Toolbox::deleteDir('PluginFusioninventoryIPRange');
             echo "?id=".$_POST['id']."&allowcreate=1'>";
-            echo $LANG['plugin_fusioninventory']['task'][18]."</a>";
+            echo $LANG['plugin_fusinvsnmp']['task'][18]."</a>";
             echo "</td>";
             echo "</tr>";
             echo "</table>";
@@ -324,6 +324,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
          $input["entities_id"] = $this->getEntityID();
 
          $taskjob_id = $PluginFusioninventoryTaskjob->add($input);
+         glpi_header(str_replace("&allowcreate=1", "",$_SERVER['HTTP_REFERER']));
       }
       // Get task job or create if not exist
       $PluginFusioninventoryTask->getFromDB($task_id);

@@ -52,7 +52,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       return PluginFusioninventoryProfile::haveRight("fusioninventory", "task", "w");
    }
 
-
+   
    function canView() {
       return PluginFusioninventoryProfile::haveRight("fusioninventory", "task", "r");
    }
@@ -193,9 +193,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       Dropdown::showInteger("periodicity_count", $this->fields['periodicity_count'], 0, 300);
       $a_time = array();
       $a_time[] = "------";
-      $a_time['minutes'] = $LANG['plugin_fusioninventory']['task'][35];
-      $a_time['hours'] = $LANG['plugin_fusioninventory']['task'][36];
-      $a_time['days'] = $LANG['plugin_fusioninventory']['task'][37];
+      $a_time['minutes'] = strtolower($LANG['job'][22]);
+      $a_time['hours'] = strtolower($LANG['job'][21]);
+      $a_time['days'] = $LANG['calendar'][12];
       $a_time['months'] = $LANG['plugin_fusioninventory']['task'][38];
       Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$this->fields['periodicity_type']));
       echo "</td>";
@@ -839,6 +839,7 @@ return namelist;
             if ($pass == '1') {
                $return = $PluginFusioninventoryTaskjob->prepareRunTaskjob($data);
                if ($return > 0) {
+
                   $return = 1;
                }
             }
@@ -871,16 +872,19 @@ return namelist;
          while ($data2=$DB->fetch_array($result2)) {
             $date_last = strtotime($data2['date']);         
          }
-                  
-         $period = 0;
-         $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp(
-                 $data['periodicity_type'], 
-                 $data['periodicity_count']);
+         
+         if ($nb_retry > 0) {
+            $period = 0;
+            $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp(
+                    $data['periodicity_type'], 
+                    $data['periodicity_count']);
 
-         if (($date_last + ($data['retry_time'] * 60)) < date('U')) {
-            $return = $PluginFusioninventoryTaskjob->prepareRunTaskjob($data);
-            if ($return > 0) {
-               $return = 1;
+            if (($date_last + ($data['retry_time'] * 60)) < date('U')) {
+               $return = $PluginFusioninventoryTaskjob->prepareRunTaskjob($data);
+               if ($return > 0) {
+
+                  $return = 1;
+               }
             }
          }
       }
@@ -1649,17 +1653,17 @@ return namelist;
 
             case 'minutes':
                $a_time = $pluginFusioninventoryTask->fields['periodicity_count']." ".
-                    $LANG['plugin_fusioninventory']['task'][35];
+               strtolower($LANG['job'][22]);
                break;
 
             case 'hours':
                $a_time = $pluginFusioninventoryTask->fields['periodicity_count']." ".
-                    $LANG['plugin_fusioninventory']['task'][36];
+                    strtolower($LANG['job'][21]);
                break;
 
             case 'days':
                $a_time = $pluginFusioninventoryTask->fields['periodicity_count']." ".
-                    $LANG['plugin_fusioninventory']['task'][37];
+                    $LANG['calendar'][12];
                break;
 
             case 'months':

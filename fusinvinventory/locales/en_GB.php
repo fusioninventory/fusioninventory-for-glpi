@@ -36,7 +36,7 @@ $title="FusionInventory INVENTORY";
 
 $LANG['plugin_fusinvinventory']['title'][0]="FusionInventory INVENTORY";
 $LANG['plugin_fusinvinventory']['title'][1]="Local inventory";
-$LANG['plugin_fusinvinventory']['title'][2]="Vmware host remote inventory";
+$LANG['plugin_fusinvinventory']['title'][2]="VMware host remote inventory";
 
 $LANG['plugin_fusinvinventory']['setup'][17]="Plugin FusionInventory INVENTORY need plugin FusionInventory activated before activation.";
 $LANG['plugin_fusinvinventory']['setup'][18]="Plugin FusionInventory INVENTORY need plugin FusionInventory activated before uninstall.";
@@ -46,7 +46,7 @@ $LANG['plugin_fusinvinventory']['setup'][22]="Global import";
 $LANG['plugin_fusinvinventory']['setup'][23]="No import";
 $LANG['plugin_fusinvinventory']['setup'][24]="Unique import";
 $LANG['plugin_fusinvinventory']['setup'][25]="Registry";
-$LANG['plugin_fusinvinventory']['setup'][26]="Processus";
+$LANG['plugin_fusinvinventory']['setup'][26]="Processes";
 $LANG['plugin_fusinvinventory']['setup'][27]="Unique import on serial number";
 $LANG['plugin_fusinvinventory']['setup'][28]="Automatic computers transfer";
 $LANG['plugin_fusinvinventory']['setup'][29]="Model for automatic computers transfer in an other entity";
@@ -96,11 +96,11 @@ $LANG['plugin_fusinvinventory']['antivirus'][3]="Up to date";
 
 $LANG['plugin_fusinvinventory']['computer'][0]="Last inventory";
 
-$LANG['plugin_fusinvinventory']['vmwareesx'][0]="Vmware host";
+$LANG['plugin_fusinvinventory']['vmwareesx'][0]="VMware host";
 
 $LANG['plugin_fusinvinventory']['integrity'][0]="Only in GLPI (check to delete)";
 $LANG['plugin_fusinvinventory']['integrity'][1]="Only in last inventory (check to import)";
 
-$LANG['plugin_fusinvinventory']['bios'][0]="Bios";
+$LANG['plugin_fusinvinventory']['bios'][0]="BIOS";
 
 ?>

@@ -77,7 +77,7 @@ class PluginFusinvinventoryImport_Antivirus extends CommonDBTM {
          $antivirus['name'] = $dataSection['NAME'];
       }
       if (isset($dataSection['COMPANY'])) {
-         $antivirus['manufacturers_id'] = Dropdown::importExternal('Manufacturer', $dataSection['COMPANY']);
+         $antivirus['manufacturers_id'] = Dropdown::importExternal('Manufacturer', $dataSection['COMPANY'], $_SESSION["plugin_fusinvinventory_entity"]);
       }
       if (isset($dataSection['VERSION'])) {
          $antivirus['version'] = $dataSection['VERSION'];

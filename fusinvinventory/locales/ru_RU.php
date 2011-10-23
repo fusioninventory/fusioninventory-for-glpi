@@ -38,7 +38,7 @@ $LANG['plugin_fusinvinventory']['antivirus'][1]="Нет антивируса н�
 $LANG['plugin_fusinvinventory']['antivirus'][2]="Версия";
 $LANG['plugin_fusinvinventory']['antivirus'][3]="Обновление";
 
-$LANG['plugin_fusinvinventory']['bios'][0]="Bios";
+$LANG['plugin_fusinvinventory']['bios'][0]="BIOS";
 
 $LANG['plugin_fusinvinventory']['blacklist'][0]="значение черного списка";
 $LANG['plugin_fusinvinventory']['blacklist'][1]="Новое значение в черный список";
@@ -84,7 +84,7 @@ $LANG['plugin_fusinvinventory']['setup'][22]="Глобальный импорт"
 $LANG['plugin_fusinvinventory']['setup'][23]="Не импортрировать";
 $LANG['plugin_fusinvinventory']['setup'][24]="Уникальный импорт";
 $LANG['plugin_fusinvinventory']['setup'][25]="Реестр";
-$LANG['plugin_fusinvinventory']['setup'][26]="Processus";
+$LANG['plugin_fusinvinventory']['setup'][26]="Processes";
 $LANG['plugin_fusinvinventory']['setup'][27]="Уникальный импорт серийных номеров";
 $LANG['plugin_fusinvinventory']['setup'][28]="Автоматическая передача компьютеров";
 $LANG['plugin_fusinvinventory']['setup'][29]="Автоматическая модель для передачи компьютеров в другую организацию";
@@ -98,7 +98,7 @@ $LANG['plugin_fusinvinventory']['setup'][36]="Статус по умолчани
 
 $LANG['plugin_fusinvinventory']['title'][0]="FusionInventory INVENTORY";
 $LANG['plugin_fusinvinventory']['title'][1]="Local inventory";
-$LANG['plugin_fusinvinventory']['title'][2]="Vmware host remote inventory";
+$LANG['plugin_fusinvinventory']['title'][2]="VMware host remote inventory";
 
-$LANG['plugin_fusinvinventory']['vmwareesx'][0]="Vmware host";
+$LANG['plugin_fusinvinventory']['vmwareesx'][0]="VMware host";
 ?>

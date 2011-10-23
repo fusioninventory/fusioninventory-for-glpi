@@ -1,5 +1,27 @@
+<<<<<<< HEAD
 internetmonitoring
 iphelper
 nns
 remove.txt
 reports
+=======
+.svn
+.gitignore
+appliances
+archires
+barcode
+behaviors
+centraltabs
+diff_plugin_locale.php
+manufacturersimports
+monitoring
+pdf
+remove.txt
+reports
+resources
+updatelangfusion.sh
+wallboard
+wallboard_20111011.tar
+webservices
+xmlexport
+>>>>>>> glpi0.80

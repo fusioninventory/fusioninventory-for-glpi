@@ -49,14 +49,15 @@ class PluginFusioninventoryMenu {
    static function displayMenu($type = "big") {
       global $LANG,$CFG_GLPI;
 
-//      // FOR THE BETA/RC
-//      echo "<center>"; 
-//      echo "<a href='http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/wiki/Beta_test'>";
-//      echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/beta.png'/></a>";
-//      echo "&nbsp;<a href='https://www.transifex.net/projects/p/FusionInventory/'>";
-//      echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/Translate.png'/></a>"; 
-//      echo "</center><br/>";
-//      // END FOR THE BETA
+      // FOR THE BETA/RC
+      echo "<center>"; 
+      echo "<a href='http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/wiki/Beta_test'>";
+      echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/beta.png'/></a>";
+      echo "&nbsp;<a href='https://www.transifex.net/projects/p/FusionInventory/'>";
+      echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/Translate.png'/></a>"; 
+      echo "</center><br/>";
+      // END FOR THE BETA
+
 
       $width_status = 0;
 
@@ -82,6 +83,7 @@ class PluginFusioninventoryMenu {
       if (Session::haveRight("rule_ocs","r")) {
          $a_menu[4]['name'] = $LANG['plugin_fusioninventory']['rules'][2];
          $a_menu[4]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
+
          $a_menu[4]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryRuleImportEquipment');
       }
       
@@ -89,6 +91,7 @@ class PluginFusioninventoryMenu {
          $a_menu[9]['name'] = $LANG['plugin_fusioninventory']['rules'][19];
          $a_menu[9]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
          $a_menu[9]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryIgnoredimportdevice');
+         $a_menu[4]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryRuleImportEquipment');
       }
 
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice", "r")) {
@@ -195,7 +198,7 @@ class PluginFusioninventoryMenu {
 
       echo "<tr>";
       echo "<th colspan='".count($a_menu)."' nowrap width='".$width."'>
-         &nbsp;".$LANG['plugin_'.$plugin_name]['title'][0]."&nbsp;</th>";
+         &nbsp;".str_replace("FusionInventory ","",$LANG['plugin_'.$plugin_name]['title'][0])."&nbsp;</th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1' id='menu".$plugin_name."' style='display:none'>";

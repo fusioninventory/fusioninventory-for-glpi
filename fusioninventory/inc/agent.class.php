@@ -278,19 +278,18 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    * @param $p_xml simpleXMLobject
    *
    **/
-   function importToken($p_xml) {
-      $sxml = @simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA);
-
-      if (isset($sxml->DEVICEID)) {
+   function importToken($pxml) {
+      
+      if (isset($pxml->DEVICEID)) {
          $pta = new PluginFusioninventoryAgent();
-         $a_agent = $pta->find("`device_id`='".Toolbox::addslashes_deep($sxml->DEVICEID)."'", "", "1");
+         $a_agent = $pta->find("`device_id`='".$pxml->DEVICEID."'", "", "1");
          if (empty($a_agent)) {
             $a_input = array();
-            if (isset($sxml->TOKEN)) {
-               $a_input['token'] = Toolbox::addslashes_deep($sxml->TOKEN);
+            if (isset($pxml->TOKEN)) {
+               $a_input['token'] = $pxml->TOKEN;
             }
-            $a_input['name']         = Toolbox::addslashes_deep($sxml->DEVICEID);
-            $a_input['device_id']    = Toolbox::addslashes_deep($sxml->DEVICEID);
+            $a_input['name']         = $pxml->DEVICEID;
+            $a_input['device_id']    = $pxml->DEVICEID;
             $a_input['entities_id']  = 0;
             $a_input['last_contact'] = date("Y-m-d H:i:s");
             $a_input['useragent']    = $_SERVER['HTTP_USER_AGENT'];
@@ -300,8 +299,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             foreach ($a_agent as $data) {
                $input = array();
                $input['id'] = $data['id'];
-               if (isset($sxml->TOKEN)) {
-                  $input['token'] = $sxml->TOKEN;
+               if (isset($pxml->TOKEN)) {
+                  $input['token'] = $pxml->TOKEN;
                }
                $input['last_contact'] = date("Y-m-d H:i:s");
                $input['useragent']    = $_SERVER['HTTP_USER_AGENT'];
@@ -437,38 +436,35 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $this->getFromDB($agent_id);
       $a_ip = $this->getIPs($_POST['id'], 'Computer');
       $waiting = 0;
-      foreach($a_ip as $ip) {
-         $agentStatus = $PluginFusioninventoryTaskjob->getRealStateAgent($agent_id);
-         if ($agentStatus == 'waiting') {
-            if ($waiting == '0') {
-               $waiting = 1;
-               echo $LANG['plugin_fusioninventory']['agents'][38];
-               echo "<input type='hidden' name='ip' value='".$ip."' />";
-               echo "<input type='hidden' name='agent_id' value='".$agent_id."' />";
-               break;
-            }
-         }
-         if ($waiting == '0') {
-            switch($agentStatus) {
-
-               case 'running':
-                  $waiting = $LANG['plugin_fusioninventory']['taskjoblog'][6];
-                  break;
-
-               case 'noanswer':
-                  $waiting = $LANG['plugin_fusioninventory']['agents'][30];
-                  break;
-
-               case 'noanswer':
-                  $waiting = $LANG['plugin_fusioninventory']['agents'][40];
-                  break;
-
-            }
-         }
+      $ip = "";
+      while(empty($ip) && count($ip)) {
+	      $ip = array_shift($a_ip);
       }
-      if ($waiting != '1') {
-         echo $waiting;
+
+      $agentStatus = $PluginFusioninventoryTaskjob->getRealStateAgent($agent_id);
+      switch($agentStatus) {
+
+         case 'running':
+            echo $LANG['plugin_fusioninventory']['taskjoblog'][6];
+            break;
+
+         case 'noanswer':
+            echo $LANG['plugin_fusioninventory']['agents'][30];
+            break;
+
+         case 'noanswer':
+            echo $LANG['plugin_fusioninventory']['agents'][40];
+            break;
+
+         case 'waiting':
+            $waiting = 1;
+            echo $LANG['plugin_fusioninventory']['agents'][38];
+            echo "<input type='hidden' name='ip' value='".$ip."' />";
+            echo "<input type='hidden' name='agent_id' value='".$agent_id."' />";
+            break;
+
       }
+
       echo "</td>";
       echo "</tr>";
 

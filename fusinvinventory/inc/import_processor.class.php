@@ -84,7 +84,8 @@ class PluginFusinvinventoryImport_Processor extends CommonDBTM {
       }
       if (isset($dataSection['MANUFACTURER'])) {
          $processor["manufacturers_id"] = Dropdown::importExternal('Manufacturer',
-                                                                 $dataSection['MANUFACTURER']);
+                                                                   $dataSection['MANUFACTURER'],
+                                                                   $_SESSION["plugin_fusinvinventory_entity"]);
       }
       
       $DeviceProcessor = new DeviceProcessor();

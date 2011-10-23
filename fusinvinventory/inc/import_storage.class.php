@@ -99,10 +99,14 @@ class PluginFusinvinventoryImport_Storage extends CommonDBTM {
          $drive['designation'] = $dataSection['NAME'];
       }
       if (isset($dataSection['MANUFACTURER'])) {
-         $drive['manufacturers_id'] = Dropdown::importExternal('Manufacturer',$dataSection['MANUFACTURER']);
+         $drive['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
+                                                               $dataSection['MANUFACTURER'],
+                                                               $_SESSION["plugin_fusinvinventory_entity"]);
       }
       if (isset($dataSection['INTERFACE'])) {
-         $drive['interfacetypes_id'] = Dropdown::importExternal('InterfaceType',$dataSection['INTERFACE']);
+         $drive['interfacetypes_id'] = Dropdown::importExternal('InterfaceType',
+                                                                $dataSection['INTERFACE'],
+                                                                $_SESSION["plugin_fusinvinventory_entity"]);
       }
       if ($type_tmp == "HardDrive") {
          $specificity = $drive['specif_default'] = "0";

@@ -81,11 +81,11 @@ class PluginFusinvinventoryImport_User extends CommonDBTM {
             if ($DB->numrows($result) == 1) {
                $input["users_id"] = $DB->result($result, 0, 0);
                $_SESSION["plugin_fusinvinventory_userdefined"] = 1;
-               $Computer->update($input);
+               $Computer->update($input, $_SESSION["plugin_fusinvinventory_history_add"]);
                return $DB->result($result, 0, 0);
             }
          }
-         $Computer->update($input);
+         $Computer->update($input, $_SESSION["plugin_fusinvinventory_history_add"]);
          return "-".$dataSection['LOGIN'];
       }
       return "";

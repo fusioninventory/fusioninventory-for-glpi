@@ -140,11 +140,11 @@ class PluginFusioninventoryCommunication {
       // Do not manage <REQUEST> element (always the same)
       
       $_SESSION["plugin_fusioninventory_disablelocks"] = 1;
-      $this->setXML($p_xml);
+      $this->sxml = $p_xml;
       $errors = '';
 
       $xmltag = (string)$this->sxml->QUERY;
-      $agent = $PluginFusioninventoryAgent->InfosByKey(Toolbox::addslashes_deep($this->sxml->DEVICEID));
+      $agent = $PluginFusioninventoryAgent->InfosByKey($this->sxml->DEVICEID);
       if ($xmltag == "PROLOG") {
          return false;
       }
@@ -153,12 +153,9 @@ class PluginFusioninventoryCommunication {
       }
 
       if (isset($this->sxml->CONTENT->MODULEVERSION)) {
-
-         $PluginFusioninventoryAgent->setAgentVersions($agent['id'], $xmltag, 
-                                                       Toolbox::addslashes_deep((string)$this->sxml->CONTENT->MODULEVERSION));
+         $PluginFusioninventoryAgent->setAgentVersions($agent['id'], $xmltag, (string)$this->sxml->CONTENT->MODULEVERSION);
       } else if (isset($this->sxml->CONTENT->VERSIONCLIENT)) {
-         $version = str_replace("FusionInventory-Agent_", "", 
-                                Toolbox::addslashes_deep((string)$this->sxml->CONTENT->VERSIONCLIENT));
+         $version = str_replace("FusionInventory-Agent_", "", (string)$this->sxml->CONTENT->VERSIONCLIENT);
 
          $PluginFusioninventoryAgent->setAgentVersions($agent['id'], $xmltag, $version);
       }
@@ -172,7 +169,9 @@ class PluginFusioninventoryCommunication {
       if (isset($_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"])) {
          $moduleClass = $_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"];
          $moduleCommunication = new $moduleClass();
-         $errors.=$moduleCommunication->import($this->sxml->DEVICEID, $this->sxml->CONTENT, $p_xml);
+         $errors.=$moduleCommunication->import($this->sxml->DEVICEID, 
+                 $this->sxml->CONTENT, 
+                 $p_xml);
       } else {
          $errors.=$LANG['plugin_fusioninventory']['errors'][22].' QUERY : *'.$xmltag."*\n";
       }
@@ -481,7 +480,21 @@ class PluginFusioninventoryCommunication {
            return false;
        }
        return $data;
+   }
+      
+      
+
+   function cleanXML($xml) {
+      foreach ($xml->children() as $key=>$value) {
+         if ($value->count() > 0) {
+            $value = $this->cleanXML($value);
+         } else {         
+            $value = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep($value));
+            $xml->$key = $value;
+         }      
       }
+      return $xml;
+   }
 
 }
 

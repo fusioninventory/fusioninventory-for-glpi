@@ -38,7 +38,7 @@ $LANG['plugin_fusinvinventory']['antivirus'][1]="Pas d'antivirus sur cet ordinat
 $LANG['plugin_fusinvinventory']['antivirus'][2]="Version";
 $LANG['plugin_fusinvinventory']['antivirus'][3]="A jour";
 
-$LANG['plugin_fusinvinventory']['bios'][0]="Bios";
+$LANG['plugin_fusinvinventory']['bios'][0]="BIOS";
 
 $LANG['plugin_fusinvinventory']['blacklist'][0]="Valeur en liste noire";
 $LANG['plugin_fusinvinventory']['blacklist'][1]="Nouvelle valeur à ajouter en liste noire";
@@ -98,7 +98,7 @@ $LANG['plugin_fusinvinventory']['setup'][36]="Statut par défaut";
 
 $LANG['plugin_fusinvinventory']['title'][0]="FusionInventory INVENTORY";
 $LANG['plugin_fusinvinventory']['title'][1]="Inventaire local";
-$LANG['plugin_fusinvinventory']['title'][2]="Inventaire distant VMware";
+$LANG['plugin_fusinvinventory']['title'][2]="Inventaire distant des hôtes VMware";
 
 $LANG['plugin_fusinvinventory']['vmwareesx'][0]="Hôte VMware";
 ?>

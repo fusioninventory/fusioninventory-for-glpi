@@ -300,10 +300,10 @@ function plugin_headings_fusioninventory_locks($item) {
    $id = $item->getField('id');
    $fusioninventory_locks = new PluginFusioninventoryLock();
    if ($id == '') {
-      $fusioninventory_locks->showForm(Toolbox::deleteDir('PluginFusioninventoryLock'),
+      $fusioninventory_locks->showForm(getItemTypeFormURL('PluginFusioninventoryLock'),
                                                        $type);
    } else {
-      $fusioninventory_locks->showForm(Toolbox::deleteDir('PluginFusioninventoryLock').'?id='.$id,
+      $fusioninventory_locks->showForm(getItemTypeFormURL('PluginFusioninventoryLock').'?id='.$id,
                                                        $type, $id);
    }
 }
@@ -364,7 +364,7 @@ function plugin_headings_fusioninventory_xml($item) {
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
       echo "<tr>";
       echo "<th>".$LANG['plugin_fusioninventory']['xml'][0];
-      echo " (".$LANG['common'][26]."&nbsp;: " . Html::convDateTime(date("Y-m-d H:i:s", filemtime(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".$id))).")";
+      echo " (".$LANG['plugin_fusinvinventory']['computer'][0]."&nbsp;: " . Html::convDateTime(date("Y-m-d H:i:s", filemtime(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".$id))).")";
       echo "</th>";
       echo "</tr>";
 

@@ -597,66 +597,64 @@ function appear_legend(id){
                       ORDER BY `rank`;";
 		$result_array=$DB->query($query_array);
 		while ($data_array=$DB->fetch_array($result_array)) {
-			echo "<th>";
-			switch ($data_array['num']) {
-				case 2 :
-					echo $LANG['plugin_fusinvsnmp']['mapping'][104];
-					break;
 
-				case 3 :
-					echo $LANG['plugin_fusinvsnmp']['mapping'][105];
-					break;
+         if ($data_array['num'] != '8'
+                 AND $data_array['num'] != '9') {
+            echo "<th>";
+            switch ($data_array['num']) {
+               case 2 :
+                  echo $LANG['plugin_fusinvsnmp']['mapping'][104];
+                  break;
 
-				case 4 :
-					echo $LANG['plugin_fusinvsnmp']['mapping'][106];
-					break;
+               case 3 :
+                  echo $LANG['plugin_fusinvsnmp']['mapping'][105];
+                  break;
 
-				case 5 :
-					echo $LANG['plugin_fusinvsnmp']['mapping'][107];
-					break;
+               case 4 :
+                  echo $LANG['plugin_fusinvsnmp']['mapping'][106];
+                  break;
 
-				case 6 :
-					echo $LANG['plugin_fusinvsnmp']['snmp'][46];
-					break;
+               case 5 :
+                  echo $LANG['plugin_fusinvsnmp']['mapping'][107];
+                  break;
 
-				case 7 :
-					echo $LANG['plugin_fusinvsnmp']['mapping'][110];
-					break;
+               case 6 :
+                  echo $LANG['plugin_fusinvsnmp']['snmp'][46]." / ".
+                        $LANG['plugin_fusinvsnmp']['snmp'][48];
+                  break;
 
-				case 8 :
-					echo $LANG['plugin_fusinvsnmp']['snmp'][48];
-					break;
+               case 7 :
+                  echo $LANG['plugin_fusinvsnmp']['mapping'][110]." / ".
+                          $LANG['plugin_fusinvsnmp']['snmp'][49];
+                  break;
 
-				case 9 :
-					echo $LANG['plugin_fusinvsnmp']['snmp'][49];
-					break;
+               case 10 :
+                  echo $LANG['plugin_fusinvsnmp']['snmp'][51];
+                  break;
 
-				case 10 :
-					echo $LANG['plugin_fusinvsnmp']['snmp'][51];
-					break;
+               case 11 :
+                  echo $LANG['plugin_fusinvsnmp']['mapping'][115];
+                  break;
 
-				case 11 :
-					echo $LANG['plugin_fusinvsnmp']['mapping'][115];
-					break;
+               case 12 :
+                  echo $LANG["networking"][17];
+                  break;
 
-				case 12 :
-					echo $LANG["networking"][17];
-					break;
+               case 13 :
+                  echo $LANG['plugin_fusinvsnmp']['mapping'][114];
+                  break;
 
-				case 13 :
-					echo $LANG['plugin_fusinvsnmp']['mapping'][114];
-					break;
+               case 14 :
+                  echo $LANG["networking"][56];
+                  break;
 
-				case 14 :
-					echo $LANG["networking"][56];
-					break;
+               case 15 :
+                  echo $LANG['plugin_fusinvsnmp']['snmp'][41];
+                  break;
 
-            case 15 :
-					echo $LANG['plugin_fusinvsnmp']['snmp'][41];
-					break;
-
-			}
-			echo "</th>";
+            }
+            echo "</th>";
+         }
 		}
 		echo "</tr>";
 		// Fin de l'entête du tableau
@@ -726,34 +724,32 @@ function appear_legend(id){
                      } else {
 								echo $this->byteSize($data["ifinoctets"],1000)."o";
                      }
-							echo "</td>";
-							break;
-
-						case 7 :
-							if ($data["ifinerrors"] == "0") {
-								echo "<td>-";
-                     } else {
-								echo "<td background='#cf9b9b' class='tab_bg_1_2'>";
-								echo $data["ifinerrors"];
-							}
-							echo "</td>";
-							break;
-
-						case 8 :
-							echo "<td>";
+							echo " / ";
 							if ($data["ifinoctets"] == "0") {
 								echo "-";
                      } else {
 								echo $this->byteSize($data["ifoutoctets"],1000)."o";
                      }
+                     
 							echo "</td>";
 							break;
 
-						case 9 :
-							if ($data["ifouterrors"] == "0") {
-								echo "<td>-";
+						case 7 :
+                     $color = '';
+                     if ($data["ifinerrors"] != "0"
+                             OR $data["ifouterrors"] != "0") {
+                        $color = "background='#cf9b9b' class='tab_bg_1_2'";
+                     }
+							if ($data["ifinerrors"] == "0") {
+								echo "<td ".$color.">-";
                      } else {
-								echo "<td background='#cf9b9b' class='tab_bg_1_2'>";
+								echo "<td ".$color.">";
+								echo $data["ifinerrors"];
+							}
+							echo " / ";
+							if ($data["ifouterrors"] == "0") {
+								echo "-";
+                     } else {
 								echo $data["ifouterrors"];
 							}
 							echo "</td>";
@@ -934,28 +930,55 @@ function appear_legend(id){
             $id = $NetworkPort->getContact($a_port['id']);
             if ($id) {
                $NetworkPort->getFromDB($id);
+               $link = '';
+               $link1 = '';
+               $link2 = '';
                if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
                   $classname = $NetworkPort->fields['itemtype'];
-                  $Class = new $classname;
-                  $Class->getFromDB($NetworkPort->fields['items_id']);
-                  if ($Class->fields['accepted'] == 1) {
+                  $item = new $classname;
+                  $item->getFromDB($NetworkPort->fields['items_id']);
+                  $link1 = $item->getLink(1);
+                  $link = str_replace($item->getName(0), $NetworkPort->fields["mac"],
+                                      $item->getLink());
+                  $link2 = str_replace($item->getName(0), $NetworkPort->fields["ip"],
+                                       $item->getLink());
+                  if ($item->fields['accepted'] == 1) {
                      echo "<tr>";
-                     echo "<td style='background:#bfec75'
-                                              class='tab_bg_1_2'>".$Class->getLink(1)."</td>";
-                     echo "</tr>";
+                     echo "<td align='center'  style='background:#bfec75'
+                                              class='tab_bg_1_2'>".$item->getLink(1);
+
                   } else {
                      echo "<tr>";
-                     echo "<td style='background:#cf9b9b'
-                                              class='tab_bg_1_2'>".$Class->getLink(1)."</td>";
-                     echo "</tr>";
+                     echo "<td align='center' style='background:#cf9b9b'
+                                              class='tab_bg_1_2'>".$item->getLink(1);
                   }
+                  if (!empty($link)) {
+                     echo "<br/>".$link;
+                  }
+                  if (!empty($link2)) {
+                     echo "<br/>".$link2;
+                  }
+                  echo "</td>";
+                  echo "</tr>";
                } else {
                   $classname = $NetworkPort->fields['itemtype'];
-                  $Class = new $classname;
-                  $Class->getFromDB($NetworkPort->fields['items_id']);
+                  $item = new $classname;
+                  $item->getFromDB($NetworkPort->fields['items_id']);
+                  $link1 = $item->getLink(1);
+                  $link = str_replace($item->getName(0), $NetworkPort->fields["mac"],
+                                      $item->getLink());
+                  $link2 = str_replace($item->getName(0), $NetworkPort->fields["ip"],
+                                       $item->getLink());
                   echo "<tr>";
-                  echo "<td ".$background_img."
-                                           class='tab_bg_1_2'>".$Class->getLink(1)."</td>";
+                  echo "<td align='center'  ".$background_img."
+                                           class='tab_bg_1_2'>".$item->getLink(1);
+                  if (!empty($link)) {
+                     echo "<br/>".$link;
+                  }
+                  if (!empty($link2)) {
+                     echo "<br/>".$link2;
+                  }
+                  echo "</td>";
                   echo "</tr>";
                   
                }

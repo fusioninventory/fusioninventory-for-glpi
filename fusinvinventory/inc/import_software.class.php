@@ -85,8 +85,9 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
       } else {
          $modified_version = $array['version'];
       }
-
-      $software_id = $Software->addOrRestoreFromTrash($modified_name, $manufacturer, $_SESSION["plugin_fusinvinventory_entity"]);
+      $software_id = $Software->addOrRestoreFromTrash($modified_name, 
+                                                      $manufacturer, 
+                                                      $_SESSION["plugin_fusinvinventory_entity"]);
 
       $isNewVers = 0;
       $query = "SELECT `id`
@@ -107,8 +108,11 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
          if (isset($array['PUBLISHER'])) {
             $input["manufacturers_id"] = $manufacturer;
          }
+         if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
+            $input['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
+         }
          $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
-         $isNewVers = $SoftwareVersion->add($input);
+         $isNewVers = $SoftwareVersion->add($input, array(), $_SESSION["plugin_fusinvinventory_history_add"]);
       }
 
       $Computer_SoftwareVersion = new Computer_SoftwareVersion;
@@ -124,7 +128,7 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
             "",
             1);
       if (count($a_soft) == 0) {      
-         $Computer_SoftwareVersion_id = $Computer_SoftwareVersion->add($array);
+         $Computer_SoftwareVersion_id = $Computer_SoftwareVersion->add($array, array(), $_SESSION["plugin_fusinvinventory_history_add"]);
          return $Computer_SoftwareVersion_id;
       }
    }

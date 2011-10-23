@@ -55,7 +55,10 @@ if (isset($_POST['definition_add'])) {
       }
    }
    if ($add == '1') {
-      $a_listdef[] = array($_POST['DefinitionType']=>$_POST['definitionselectiontoadd']);
+      if (isset($_POST['DefinitionType']) 
+              AND $_POST['DefinitionType'] != '') {
+         $a_listdef[] = array($_POST['DefinitionType']=>$_POST['definitionselectiontoadd']);
+      }
    }
    $input = array();
    $input['id'] = $_POST['id'];
@@ -75,7 +78,10 @@ if (isset($_POST['definition_add'])) {
       }
    }
    if ($add == '1') {
-      $a_listact[] = array($_POST['ActionType']=>$_POST['actionselectiontoadd']);
+      if (isset($_POST['ActionType']) 
+              AND $_POST['ActionType'] != '') {
+         $a_listact[] = array($_POST['ActionType']=>$_POST['actionselectiontoadd']);
+      }
    }
    $input = array();
    $input['id'] = $_POST['id'];

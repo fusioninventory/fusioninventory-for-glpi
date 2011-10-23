@@ -68,6 +68,7 @@ if (!class_exists("PluginFusioninventoryConfig")) {
 <REPLY>
    <ERROR>Plugin FusionInventory not installed!</ERROR>
 </REPLY>";
+   session_destroy();
    exit;
 }
 
@@ -90,7 +91,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    // ********** End ********** //
    
    if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
-      // Get conf tu know if SSL is only
+      // Get conf to know if are in SSL only mode
    
       $fusioninventory_config      = new PluginFusioninventoryConfig();
       $PluginFusioninventoryModule = new PluginFusioninventoryModule();
@@ -100,6 +101,8 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       if ($loadplugins == '1') {
          $users_id = $fusioninventory_config->getValue($fusioninventoryModule_id, 'users_id');
          $_SESSION['glpiID'] = $users_id;
+         $_SESSION['glpiactiveprofile'] = array();
+         $_SESSION['glpiactiveprofile']['interface'] = '';
             $plugin = new Plugin();
             $plugin->init();
             $LOADED_PLUGINS = array();
@@ -115,7 +118,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
             }
       }
       ob_end_clean();
-      
+
       // Get compression of XML
       $xml = '';
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
@@ -129,12 +132,16 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          // ** If agent use gzip
          $compressmode = "gzencode";
       } else if ($xml = gzinflate (substr($GLOBALS["HTTP_RAW_POST_DATA"], 2))) {
-         // ** OCS agent 2.0 Compatibility
+         // ** OCS agent 2.0 Compatibility, but return in gzcompress
          $compressmode = "gzdeflate";
+         if (strstr($xml, "<QUERY>PROLOG</QUERY>")
+                 AND !strstr($xml, "<TOKEN>")) {
+            $compressmode = "gzcompress";
+         }         
       } else {
          $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
-      }      
-      
+      }
+
       $ssl = $fusioninventory_config->getValue($fusioninventoryModule_id, 'ssl_only');
       if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"))
           OR ($ssl == "0")) {
@@ -144,6 +151,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    <REPLY>
    </REPLY>");
          $communication->noSSL($compressmode);
+         session_destroy();
          exit();
       }
 
@@ -163,13 +171,18 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    <ERROR>XML not well formed!</ERROR>
 </REPLY>");
          $PluginFusioninventoryCommunication->emptyAnswer($compressmode);
+         session_destroy();
+         exit();
       }
    
-      $pta->importToken($xml);
+      // Clean for XSS and other in XML
+      $pxml = $communication->cleanXML($pxml);
+            
+      $pta->importToken($pxml);
    
       $top0 = 0;
       $top0 = gettimeofday();
-      if (!$communication->import($xml)) {
+      if (!$communication->import($pxml)) {
    
          if (isset($pxml->DEVICEID)) {
    

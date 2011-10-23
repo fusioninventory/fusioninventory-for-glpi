@@ -47,11 +47,17 @@ function pluginFusioninventoryInstall($version) {
    if (!class_exists('PluginFusioninventorySetup')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
    }
+   if (!class_exists('PluginFusioninventoryUnknownDevice')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/unknowndevice.class.php");
+   }
    if (!class_exists('PluginFusioninventoryRuleImportEquipmentCollection')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/ruleimportequipmentcollection.class.php");
    }
    if (!class_exists('PluginFusioninventoryRuleImportEquipment')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/ruleimportequipment.class.php");
+   }
+   if (!class_exists('PluginFusioninventoryModule')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
    }
    // Get informations of plugin
 
@@ -105,6 +111,12 @@ function pluginFusioninventoryInstall($version) {
       }
 
 
+   // Remove old rules
+   $Rule = new Rule();
+   $a_rules = $Rule->find("`sub_type`='PluginFusioninventoryRuleImportEquipment'");
+   foreach ($a_rules as $data) {
+      $Rule->delete($data);
+   }
 
 
 

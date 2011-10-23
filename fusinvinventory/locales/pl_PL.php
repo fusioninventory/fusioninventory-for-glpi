@@ -82,10 +82,10 @@ $LANG['plugin_fusinvinventory']['setup'][20]="Opcje importu";
 $LANG['plugin_fusinvinventory']['setup'][21]="Komponenty";
 $LANG['plugin_fusinvinventory']['setup'][22]="Import globalny";
 $LANG['plugin_fusinvinventory']['setup'][23]="Brak importu";
-$LANG['plugin_fusinvinventory']['setup'][24]="Unique import";
+$LANG['plugin_fusinvinventory']['setup'][24]="Importuj Unikalne";
 $LANG['plugin_fusinvinventory']['setup'][25]="Rejestry";
-$LANG['plugin_fusinvinventory']['setup'][26]="Przebieg";
-$LANG['plugin_fusinvinventory']['setup'][27]="Unique import on serial number";
+$LANG['plugin_fusinvinventory']['setup'][26]="Procesy";
+$LANG['plugin_fusinvinventory']['setup'][27]="Importuj unikalne po numerze seryjnym";
 $LANG['plugin_fusinvinventory']['setup'][28]="Automatyczne przenoszenie komputerów";
 $LANG['plugin_fusinvinventory']['setup'][29]="Model for automatic computers transfer in an other entity";
 $LANG['plugin_fusinvinventory']['setup'][30]="Dyski sieciowe";
@@ -98,7 +98,7 @@ $LANG['plugin_fusinvinventory']['setup'][36]="Domyślny status";
 
 $LANG['plugin_fusinvinventory']['title'][0]="FusionInventory INWENTARYZACJA";
 $LANG['plugin_fusinvinventory']['title'][1]="Lokalna inwentaryzacja";
-$LANG['plugin_fusinvinventory']['title'][2]="Zdalna inwentaryzacja Maszyny VMware";
+$LANG['plugin_fusinvinventory']['title'][2]="zdalna  inwentaryzacja serwera VMware";
 
-$LANG['plugin_fusinvinventory']['vmwareesx'][0]="Maszyna VMware";
+$LANG['plugin_fusinvinventory']['vmwareesx'][0]="Serwer VMware";
 ?>

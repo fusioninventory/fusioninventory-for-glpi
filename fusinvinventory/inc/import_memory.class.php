@@ -94,7 +94,9 @@ class PluginFusinvinventoryImport_Memory extends CommonDBTM {
       }
       if (isset($dataSection["TYPE"])) {
          $memory["devicememorytypes_id"]
-               = Dropdown::importExternal('DeviceMemoryType', $dataSection["TYPE"]);
+               = Dropdown::importExternal('DeviceMemoryType', 
+                                          $dataSection["TYPE"],
+                                          $_SESSION["plugin_fusinvinventory_entity"]);
       }
       
       $DeviceMemory = new DeviceMemory();

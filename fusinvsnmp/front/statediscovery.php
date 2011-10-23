@@ -40,7 +40,7 @@ $PluginFusinvsnmpStateDiscovery = new PluginFusinvsnmpStateDiscovery();
 
 Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","statediscovery");
 
-//PluginFusioninventoryProfile::checkRight("fusinvsnmp", "statediscovery","r");
+PluginFusioninventoryProfile::checkRight("fusioninventory", "task","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 

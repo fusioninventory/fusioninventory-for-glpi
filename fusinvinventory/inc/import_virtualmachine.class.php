@@ -81,17 +81,20 @@ class PluginFusinvinventoryImport_Virtualmachine extends CommonDBTM {
 
       if (isset($dataSection["VMTYPE"])) {
          $vm['virtualmachinetypes_id']=Dropdown::importExternal('VirtualMachineType', 
-                                                                  $dataSection["VMTYPE"]);
+                                                                $dataSection["VMTYPE"],
+                                                                $_SESSION["plugin_fusinvinventory_entity"]);
       }
 
       if (isset($dataSection["SUBSYSTEM"])) {
          $vm['virtualmachinesystems_id']=Dropdown::importExternal('VirtualMachineSystem', 
-                                                                  $dataSection["SUBSYSTEM"]);
+                                                                  $dataSection["SUBSYSTEM"],
+                                                                  $_SESSION["plugin_fusinvinventory_entity"]);
       }
 
       if (isset($dataSection["STATUS"])) {
          $vm['virtualmachinestates_id']=Dropdown::importExternal('VirtualMachineState', 
-                                                                  $dataSection["STATUS"]);
+                                                                  $dataSection["STATUS"],
+                                                                  $_SESSION["plugin_fusinvinventory_entity"]);
       }
 
       if (isset($dataSection["UUID"])) {

@@ -673,6 +673,9 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
    $type = get_Class($item);
    switch ($type) {
       case 'PluginFusioninventoryIPRange':
+         if (isset($_GET['allowcreate'])) {
+            $_SESSION['glpi_plugin_fusioninventory_allowcreate'] = $_GET['allowcreate'];
+         }
          return array (1 => $LANG['plugin_fusinvsnmp']['task'][15]." - ".$LANG['plugin_fusinvsnmp']['config'][4], 
                        2 => $LANG['plugin_fusinvsnmp']['task'][15]." - ".$LANG['plugin_fusinvsnmp']['config'][3]);
                        
@@ -805,13 +808,23 @@ function plugin_headings_actions_fusinvsnmp($item) {
 
 function plugin_headings_fusinvsnmp_task_netdiscovery($type, $id) {
    $iprange = new PluginFusioninventoryIPRange();
-   $iprange->permanentTask($_POST["id"], "NETDISCOVERY", true);
+   $allowcreate = 0;
+   if (isset($_SESSION['glpi_plugin_fusioninventory_allowcreate'])) {
+      $allowcreate = $_SESSION['glpi_plugin_fusioninventory_allowcreate'];
+      unset($_SESSION['glpi_plugin_fusioninventory_allowcreate']);
+   }
+   $iprange->permanentTask($_POST["id"], "NETDISCOVERY", $allowcreate);
    
 }
 
 function plugin_headings_fusinvsnmp_task_snmpquery($type, $id) {
    $iprange = new PluginFusioninventoryIPRange();
-   $iprange->permanentTask($_POST["id"], "SNMPQUERY", true);
+   $allowcreate = 0;
+   if (isset($_SESSION['glpi_plugin_fusioninventory_allowcreate'])) {
+      $allowcreate = $_SESSION['glpi_plugin_fusioninventory_allowcreate'];
+      unset($_SESSION['glpi_plugin_fusioninventory_allowcreate']);
+   }
+   $iprange->permanentTask($_POST["id"], "SNMPQUERY", $allowcreate);
    
 }
 
@@ -882,7 +895,7 @@ function plugin_headings_fusinvsnmp_xml($item) {
       echo "<tr>";
       echo "<th>".$LANG['plugin_fusioninventory']['title'][1]." ".
          $LANG['plugin_fusioninventory']['xml'][0];
-      echo " (".$LANG['common'][26]."&nbsp;: " . 
+      echo " (".$LANG['plugin_fusinvinventory']['computer'][0]."&nbsp;: " . 
          Html::convDateTime(date("Y-m-d H:i:s", 
                       filemtime(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/".$type."/".$folder."/".$id))).")";
       echo "</th>";
@@ -1408,7 +1421,6 @@ function plugin_fusinvsnmp_addSelect($type,$id,$num) {
             return " `glpi_networkports`.`ip`  AS ITEM_$num, ";
          }
          break;
-         
    }
    return "";
 }
@@ -1703,7 +1715,7 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
          break;
 
       case 'PluginFusioninventoryAgent';
-         if ($new_table.".".$linkfield == 'glpi_plugin_fusinvsnmp_agentconfigs.') {
+         if ($new_table.".".$linkfield == 'glpi_plugin_fusinvsnmp_agentconfigs.plugin_fusinvsnmp_agentconfigs_id') {
             return " LEFT JOIN `glpi_plugin_fusinvsnmp_agentconfigs` ON (`glpi_plugin_fusioninventory_agents`.`id` = `glpi_plugin_fusinvsnmp_agentconfigs`.`plugin_fusioninventory_agents_id`) ";
          }
 

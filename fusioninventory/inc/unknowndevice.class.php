@@ -296,13 +296,13 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>" . $LANG['networking'][14] . " :</td>";
          echo "<td align='center'>";
-         echo "<input type='text' name='otherserial' value='" . $this->fields["ip"] . "' size='35'/>";
+         echo "<input type='text' name='ip' value='" . $this->fields["ip"] . "' size='35'/>";
          echo "</td>";
 
          echo "<td align='center'>" . $LANG['networking'][15] . "&nbsp;:</td>";
          echo "</td>";
          echo "<td align='center'>";
-         echo "<input type='text' name='otherserial' value='" . $this->fields["mac"] . "' size='35'/>";
+         echo "<input type='text' name='mac' value='" . $this->fields["mac"] . "' size='35'/>";
          echo "</td>";
          echo "</tr>";
       }
@@ -468,6 +468,13 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          $hub_id = $this->createHub($p_oPort, $agent_id);
       }
       // State : Now we have hub and it's id
+      
+      // Add source port id in comment of hub
+      $h_input = array();
+      $h_input['id'] = $hub_id;
+      $h_input['comment'] = "Port : ".$p_oPort->getValue('id');
+      $this->update($h_input);
+      
 
       // Get all ports connected to this hub
       $a_portglpi = array();

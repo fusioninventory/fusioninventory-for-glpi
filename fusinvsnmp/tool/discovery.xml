@@ -174,6 +174,13 @@
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[Canon iR3225 /P]]></SYSDESCR>
+      <MANUFACTURER>56</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0455</MODELSNMP>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[Canon iR3235 /P]]></SYSDESCR>
       <MANUFACTURER>56</MANUFACTURER>
       <TYPE>3</TYPE>
@@ -202,6 +209,12 @@
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0089</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Digi Connect ME Version 82000856_F6 07/21/2006]]></SYSDESCR>
+      <MANUFACTURER>0</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0001</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[HP Business Inkjet 2800]]></SYSDESCR>
@@ -671,6 +684,14 @@
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[ProCurve J4899B Switch 2650, revision H.10.31, ROM H.08.02 (/sw/code/build/fish(mkfs))]]></SYSDESCR>
+      <MANUFACTURER>51</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1858</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[ProCurve J4900A Switch 2626, revision H.10.29, ROM H.08.02 (/sw/code/build/fish(mkfs))]]></SYSDESCR>
       <MANUFACTURER>51</MANUFACTURER>
       <TYPE>2</TYPE>
@@ -1015,6 +1036,9 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(25)SEE1, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2006 by Cisco Systems, Inc.Compiled Sun 21-May-06 21:33 by yenanh]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
+      <MODELSNMP>Networking1770</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(25)SEE2, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2006 by Cisco Systems, Inc.^MCompiled Fri 28-Jul-06 04:33 by yenanh]]></SYSDESCR>
@@ -1575,6 +1599,8 @@
       <SYSDESCR><![CDATA[KONICA MINOLTA bizhub C352]]></SYSDESCR>
       <MANUFACTURER>58</MANUFACTURER>
       <TYPE>3</TYPE>
+      <MODELSNMP>Printer0490</MODELSNMP>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[KONICA MINOLTA bizhub C451]]></SYSDESCR>
@@ -1965,7 +1991,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio 2016 0.40.12 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0012</MODELSNMP>
+      <MODELSNMP>Printer0493</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -1998,7 +2024,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio 3030 1.23 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0044</MODELSNMP>
+      <MODELSNMP>Printer0495</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -2031,7 +2057,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio AP410N 1.05 / RICOH Network Printer C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0071</MODELSNMP>
+      <MODELSNMP>Printer0507</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -2039,14 +2065,14 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP 161 1.04 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0174</MODELSNMP>
+      <MODELSNMP>Printer0512</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP 161 1.05 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0067</MODELSNMP>
+      <MODELSNMP>Printer0290</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -2059,7 +2085,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP 2000 1.09.1 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0045</MODELSNMP>
+      <MODELSNMP>Printer0496</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -2067,7 +2093,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP 2510 1.04 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0044</MODELSNMP>
+      <MODELSNMP>Printer0495</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -2075,7 +2101,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP 3350 1.01.3 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0111</MODELSNMP>
+      <MODELSNMP>Printer0412</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -2083,7 +2109,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP 3350 1.08 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0121</MODELSNMP>
+      <MODELSNMP>Printer0499</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -2091,7 +2117,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP 3350 1.14 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0111</MODELSNMP>
+      <MODELSNMP>Printer0412</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -2114,7 +2140,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP C2000 1.67 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0046</MODELSNMP>
+      <MODELSNMP>Printer0497</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -2122,7 +2148,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP C2000 1.68 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0046</MODELSNMP>
+      <MODELSNMP>Printer0497</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -2140,7 +2166,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0046</MODELSNMP>
+      <MODELSNMP>Printer0497</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -2163,7 +2189,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio SP 4100N 1.06 / RICOH Network Printer C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0172</MODELSNMP>
+      <MODELSNMP>Printer0500</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -2184,7 +2210,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio SP C420DN 1.00 / RICOH Network Printer C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0122</MODELSNMP>
+      <MODELSNMP>Printer0501</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -2192,7 +2218,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio SP C420DN 1.03 / RICOH Network Printer C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0043</MODELSNMP>
+      <MODELSNMP>Printer0494</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -2200,7 +2226,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio SP C811DN 1.07 / RICOH Network Printer C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0076</MODELSNMP>
+      <MODELSNMP>Printer0502</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -2560,7 +2586,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio 2022 1.02.1 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0012</MODELSNMP>
+      <MODELSNMP>Printer0493</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -2568,7 +2594,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio 1022 5.20 / RICOH Network Printer C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0012</MODELSNMP>
+      <MODELSNMP>Printer0493</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -2972,14 +2998,14 @@
       <SYSDESCR><![CDATA[RICOH Aficio 3260C 1.24 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0042</MODELSNMP>
+      <MODELSNMP>Printer0473</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP C6000 1.05 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0043</MODELSNMP>
+      <MODELSNMP>Printer0494</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -2987,7 +3013,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio 3030 1.11.1 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0044</MODELSNMP>
+      <MODELSNMP>Printer0495</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -2995,7 +3021,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP 2500 1.00 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0045</MODELSNMP>
+      <MODELSNMP>Printer0496</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -3003,7 +3029,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP C2500 1.68 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0046</MODELSNMP>
+      <MODELSNMP>Printer0497</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -3011,7 +3037,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP C3500 1.66.1 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0047</MODELSNMP>
+      <MODELSNMP>Printer0498</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -3786,7 +3812,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio CL7000 1.15 / RICOH Network Printer C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0106</MODELSNMP>
+      <MODELSNMP>Printer0503</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -3794,7 +3820,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP 2000 1.07 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0045</MODELSNMP>
+      <MODELSNMP>Printer0504</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -3802,7 +3828,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP 4000 1.05 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0123</MODELSNMP>
+      <MODELSNMP>Printer0505</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -3810,7 +3836,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP 5500 3.01 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0108</MODELSNMP>
+      <MODELSNMP>Printer0506</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -4567,7 +4593,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP C2800 1.21 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0161</MODELSNMP>
+      <MODELSNMP>Printer0508</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -4605,7 +4631,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP C4500 1.66.1 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0047</MODELSNMP>
+      <MODELSNMP>Printer0498</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -4620,7 +4646,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP 3351 1.00 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0169</MODELSNMP>
+      <MODELSNMP>Printer0509</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -4628,7 +4654,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP 2851 1.00 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0169</MODELSNMP>
+      <MODELSNMP>Printer0509</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -4636,7 +4662,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP 2500 1.04 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0165</MODELSNMP>
+      <MODELSNMP>Printer0510</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -4644,7 +4670,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP 171 1.01 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0121</MODELSNMP>
+      <MODELSNMP>Printer0511</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -4652,7 +4678,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP 2550B 1.01.3 / RICOH Network Printer C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0121</MODELSNMP>
+      <MODELSNMP>Printer0499</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -4660,7 +4686,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP 2550B 1.01.3 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0121</MODELSNMP>
+      <MODELSNMP>Printer0499</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -4668,7 +4694,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP 4000 1.02 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0123</MODELSNMP>
+      <MODELSNMP>Printer0505</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -5021,7 +5047,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP C4000 1.21 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0043</MODELSNMP>
+      <MODELSNMP>Printer0494</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -5053,7 +5079,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP 2550 1.14 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0111</MODELSNMP>
+      <MODELSNMP>Printer0412</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -5109,7 +5135,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP 1100 3.11.3 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0256</MODELSNMP>
+      <MODELSNMP>Printer0513</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -5117,7 +5143,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP C3000 1.67 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0182</MODELSNMP>
+      <MODELSNMP>Printer0514</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -5125,7 +5151,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP 3500 1.01 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0044</MODELSNMP>
+      <MODELSNMP>Printer0495</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -5193,7 +5219,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP 2550 1.13 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0121</MODELSNMP>
+      <MODELSNMP>Printer0499</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -5262,7 +5288,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software^M IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(12c)EA1, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2002 by cisco Systems, Inc.^MCompiled Sun 24-Nov-02 23:31 by antonino]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1792</MODELSNMP>
+      <MODELSNMP>Networking1921</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -5270,7 +5296,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(12c)EA1, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2002 by cisco Systems, Inc.Compiled Sun 24-Nov-02 23:31 by antonino]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1792</MODELSNMP>
+      <MODELSNMP>Networking1921</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -5570,37 +5596,45 @@
       <SYSDESCR><![CDATA[RICOH Aficio SP C311N V1.00 / RICOH Network Printer C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
+      <MODELSNMP>Printer0515</MODELSNMP>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP 2550 1.14 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
+      <MODELSNMP>Printer0516</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP 4000 1.10 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
+      <MODELSNMP>Printer0517</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP 4000 1.06 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
+      <MODELSNMP>Printer0517</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP C3000 1.70 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
+      <MODELSNMP>Printer0324</MODELSNMP>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP C2800 1.23 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0161</MODELSNMP>
+      <MODELSNMP>Printer0508</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -5738,7 +5772,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP 7500 2.05 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0108</MODELSNMP>
+      <MODELSNMP>Printer0506</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -6406,7 +6440,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP 3350 1.10 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0121</MODELSNMP>
+      <MODELSNMP>Printer0499</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -6414,7 +6448,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP C4000 1.23 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0161</MODELSNMP>
+      <MODELSNMP>Printer0508</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -6886,14 +6920,14 @@
       <SYSDESCR><![CDATA[RICOH Aficio 3030 1.26 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0119</MODELSNMP>
+      <MODELSNMP>Printer0455</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio 3224C 1.13 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0042</MODELSNMP>
+      <MODELSNMP>Printer0473</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -7260,14 +7294,14 @@
       <SYSDESCR><![CDATA[RICOH Aficio 2020D 0.40.12 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0275</MODELSNMP>
+      <MODELSNMP>Printer0512</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP 5001 1.00 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0276</MODELSNMP>
+      <MODELSNMP>Printer0177</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -7275,7 +7309,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP C2050 1.14 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0277</MODELSNMP>
+      <MODELSNMP>Printer0043</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -7283,7 +7317,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP C5000 1.22 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0277</MODELSNMP>
+      <MODELSNMP>Printer0043</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -7291,7 +7325,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio SP C221SF v1.02  / RICOH Network Printer C model /RICOH Network Scanner C model /RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0278</MODELSNMP>
+      <MODELSNMP>Printer0432</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -7882,7 +7916,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP 2000L / RICOH Network Printer D model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0174</MODELSNMP>
+      <MODELSNMP>Printer0512</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -8594,7 +8628,7 @@
       <SYSDESCR><![CDATA[RICOH Aficio MP 171 1.00.1 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <MANUFACTURER>62</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0316</MODELSNMP>
+      <MODELSNMP>Printer0485</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -12308,10 +12342,17 @@
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[Juniper Networks, Inc. ex8208 internet router, kernel JUNOS 10.4R5.5 #0: 2011-06-14 03:40:39 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R5.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-06-14 02:59:54 UTC Copyright ]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1922</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex8208 internet router, kernel JUNOS 10.4R5.5 #0: 2011-06-14 03:40:39 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R5.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-06-14 02:59:54 UTC Copyright]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1907</MODELSNMP>
+      <MODELSNMP>Networking1922</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -12801,7 +12842,7 @@
       <SYSDESCR><![CDATA[GX e3350N 4.0.0/RICOH Network Printer C model]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0481</MODELSNMP>
+      <MODELSNMP>Printer0518</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -13052,6 +13093,749 @@
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0098</MODELSNMP>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Juniper Networks, Inc. ex4200-48t internet router, kernel JUNOS 10.4R4.5 #0: 2011-05-06 05:43:08 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R4.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-05-06 05:25:39 UTC Copyri]]></SYSDESCR>
+      <MANUFACTURER>0</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1920</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco Cisco PIX Security Appliance Version 8.0(4)]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1923</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[ProCurve J8762A Switch 2600-8-PWR, revision H.08.98, ROM H.08.03 (/sw/code/build/fish(ts_08_5))]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1858</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[ProCurve J4900A Switch 2626, revision H.10.67, ROM H.08.02 (/sw/code/build/fish(mkfs))]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1858</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[ProCurve J4900B Switch 2626, revision H.10.38, ROM H.08.02 (/sw/code/build/fish(mf_v10_fishp))]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1858</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[HP J4900A ProCurve Switch 2626, revision H.07.50, ROM H.07.40 (/sw/code/build/fish(ff03))]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1625</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[HP J4905A ProCurve Switch 3400cl-24G, revision M.08.54, ROM I.08.02 (/sw/code/build/makf(f04))]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1858</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[HP J9001A Wireless Services xl Module, Revision WS.02.27]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0033</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[RICOH Aficio MP C5000 1.24 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0519</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark X363dn version NR.APS.N469 kernel 2.6.18.5 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0460</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[OKI OkiLAN 8450e Rev.06.51 10/100BASE Ethernet PrintServer: Attached to C8800 Rev.E1.06 : Copyright (c) 2006 Oki Data Corporation. All rights reserved.]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0520</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.2001.1.1.1.1.11.1.10.45.0</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[RICOH Aficio 1022 5.17.1 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0461</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[RICOH Aficio 2232C 1.23 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0521</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[RICOH Aficio 3045 1.39 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0320</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[RICOH Aficio MP C6501 1.01 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0522</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C3750E Software (C3750E-UNIVERSAL-M), Version 12.2(35)SE5, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2007 by Cisco Systems, Inc.^MCompiled Thu 19-Jul-07 16:17 by nachen]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1770</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C3750E Software (C3750E-UNIVERSAL-M), Version 12.2(35)SE5, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Thu 19-Jul-07 16:17 by nachen]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1770</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, CBS31X0 Software (CBS31X0-UNIVERSAL-M), Version 12.2(50)SE1, RELEASE SOFTWARE (fc2)^MCopyright (c) 1986-2009 by Cisco Systems, Inc.^MCompiled Mon 06-Apr-09 05:05 by amvarma]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1776</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, CBS31X0 Software (CBS31X0-UNIVERSAL-M), Version 12.2(50)SE1, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Mon 06-Apr-09 05:05 by amvarma]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1776</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[RICOH Aficio MP C2000 1.68 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0321</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[RICOH Aficio MP C2050 1.17 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0522</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[RICOH Aficio MP C2550 1.17 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0522</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[HP Color LaserJet CM2320nf MFP]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0393</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Dell 3130cn Color Laser; Net 13.71, Controller 201005101352, Engine 05.06.00]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0523</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Juniper Networks, Inc. ex4200-48t internet router, kernel JUNOS 10.4R6.5 #0: 2011-07-23 10:41:45 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R6.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-07-23 10:19:14 UTC Copyri]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1922</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Juniper Networks, Inc. ex2200-24p-4g internet router, kernel JUNOS 10.1R3.7 #0: 2010-07-10 04:59:51 UTC     builder@queth.juniper.net:/volume/build/junos/10.1/release/10.1R3.7/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2010-07-10 04:34:44 UTC Copyrig]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1924</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Juniper Networks, Inc. ex2200-48p-4g internet router, kernel JUNOS 10.4R6.5 #0: 2011-07-23 09:59:51 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R6.5/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2011-07-23 09:39:20 UTC Copyrig]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1922</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Juniper Networks, Inc. ex8208 internet router, kernel JUNOS 10.4R6.5 #0: 2011-07-23 10:41:45 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R6.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-07-23 10:19:14 UTC Copyright ]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1924</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Juniper Networks, Inc. ex8208 internet router, kernel JUNOS 10.4R6.5 #0: 2011-07-23 10:41:45 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R6.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-07-23 10:19:14 UTC Copyright]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1924</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Juniper Networks, Inc. ex2200-48p-4g internet router, kernel JUNOS 10.1R4.4 #0: 2010-11-12 18:07:04 UTC     builder@queth.juniper.net:/volume/build/junos/10.1/release/10.1R4.4/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2010-11-12 17:44:45 UTC Copyrig]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1925</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Juniper Networks, Inc. ex2200-48p-4g internet router, kernel JUNOS 10.1R3.7 #0: 2010-07-10 04:59:51 UTC     builder@queth.juniper.net:/volume/build/junos/10.1/release/10.1R3.7/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2010-07-10 04:34:44 UTC Copyrig]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1924</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Juniper Networks, Inc. ex2200-48p-4g internet router, kernel JUNOS 10.4R5.5 #0: 2011-06-14 02:01:48 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R5.5/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2011-06-14 01:35:26 UTC Copyrig]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1925</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Juniper Networks, Inc. ex4200-48p internet router, kernel JUNOS 10.0S10.1 #0: 2010-11-08 21:23:50 UTC     builder@ormonth.juniper.net:/volume/build/junos/10.0/service/10.0S10.1/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-11-08 20:47:22 UTC Co]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1922</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Juniper Networks, Inc. ex2200-48t-4g internet router, kernel JUNOS 10.4R6.5 #0: 2011-07-23 09:59:51 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R6.5/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2011-07-23 09:39:20 UTC Copyrig]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1922</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Juniper Networks, Inc. ex2200-24p-4g internet router, kernel JUNOS 10.4R6.5 #0: 2011-07-23 09:59:51 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R6.5/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2011-07-23 09:39:20 UTC Copyrig]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1924</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Juniper Networks, Inc. ex2200-48p-4g internet router, kernel JUNOS 10.1S6.2 #0: 2010-08-12 03:04:29 UTC     builder@queth.juniper.net:/volume/build/junos/10.1/service/10.1S6.2/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2010-08-12 02:46:25 UTC Copyrig]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1926</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Juniper Networks, Inc. ex4200-48p internet router, kernel JUNOS 10.0S6.1 #0: 2010-06-08 21:41:37 UTC     builder@ormonth.juniper.net:/volume/build/junos/10.0/service/10.0S6.1/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-06-08 21:28:32 UTC Copy]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1924</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Juniper Networks, Inc. ex2200-48p-4g internet router, kernel JUNOS 10.4R3.4 #0: 2011-03-19 21:28:55 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R3.4/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2011-03-19 21:09:28 UTC Copyrig]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1924</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Juniper Networks, Inc. ex4200-24p internet router, kernel JUNOS 10.4R5.5 #0: 2011-06-14 03:40:39 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R5.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-06-14 02:59:54 UTC Copyri]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1922</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Juniper Networks, Inc. ex4200-48p internet router, kernel JUNOS 10.4R5.5 #0: 2011-06-14 03:40:39 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R5.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-06-14 02:59:54 UTC Copyri]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1922</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Juniper Networks, Inc. ex4200-24t internet router, kernel JUNOS 10.1S1.3 #0: 2010-03-31 20:03:32 UTC     builder@queth.juniper.net:/volume/build/junos/10.1/service/10.1S1.3/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-03-31 19:27:56 UTC Copyri]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1922</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Juniper Networks, Inc. ex8208 internet router, kernel JUNOS 10.4S6.6 #0: 2011-08-24 06:20:03 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/service/10.4S6.6/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-08-24 05:54:50 UTC Copyright ]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1922</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Juniper Networks, Inc. ex8208 internet router, kernel JUNOS 10.4S6.6 #0: 2011-08-24 06:20:03 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/service/10.4S6.6/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-08-24 05:54:50 UTC Copyright]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1922</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Juniper Networks, Inc. ex4200-24t internet router, kernel JUNOS 10.0S10.1 #0: 2010-11-08 21:23:50 UTC     builder@ormonth.juniper.net:/volume/build/junos/10.0/service/10.0S10.1/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-11-08 20:47:22 UTC Co]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1922</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Juniper Networks, Inc. ex2200-24p-4g internet router, kernel JUNOS 10.1R4.4 #0: 2010-11-12 18:07:04 UTC     builder@queth.juniper.net:/volume/build/junos/10.1/release/10.1R4.4/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2010-11-12 17:44:45 UTC Copyrig]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1922</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco Systems, Inc./VPN 3000 Concentrator Version 4.7.2.P built by vmurphy on Jul 30 2008 17:39:30]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1927</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco Systems, Inc. WS-C2980^MCisco Catalyst Operating System Software, Version 5.5(5)^MCopyright (c) 1995-2000 by Cisco Systems, Inc.^M]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1928</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.9.5.1.2.19.0</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco Systems, Inc. WS-C2980Cisco Catalyst Operating System Software, Version 5.5(5)Copyright (c) 1995-2000 by Cisco Systems, Inc.]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1928</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.9.5.1.2.19.0</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Brother NC-6800h, Firmware Ver.1.05  (11.02.16),MID 8C5-D51,FID 2]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0524</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.2435.2.3.9.4.2.1.5.5.1.0</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software ^MIOS (tm) s72033_rp Software (s72033_rp-JK9S-M), Version 12.2(18)SXD5, RELEASE SOFTWARE (fc3)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2005 by cisco Systems, Inc.^MCompiled Fri]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1929</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.9.3.6.3.0</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) s72033_rp Software (s72033_rp-JK9S-M), Version 12.2(18)SXD5, RELEASE SOFTWARE (fc3)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2005 by cisco Systems, Inc.Compiled Fri]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1929</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.9.3.6.3.0</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[ExtremeXOS version 12.5.3.9 v1253b9 by release-manager on Tue Apr 26 20:36:04 PDT 2011]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1930</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software ^MIOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(14)AZ, RELEASE SOFTWARE (fc2)^MCopyright (c) 1986-2003 by cisco Systems, Inc.^MCompiled Tue 14-Oct-03 17:30 by antonino]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1931</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(14)AZ, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2003 by cisco Systems, Inc.Compiled Tue 14-Oct-03 17:30 by antonino]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1931</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Juniper Networks, Inc. ex3200-48p internet router, kernel JUNOS 10.3R1.9 #0: 2010-08-13 12:43:56 UTC     builder@zigeth.juniper.net:/volume/build/junos/10.3/release/10.3R1.9/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-08-13 12:28:47 UTC Copyr]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1932</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Juniper Networks, Inc. ex4200-48p internet router, kernel JUNOS 10.2R1.8 #0: 2010-05-27 21:05:57 UTC     builder@shoth.juniper.net:/volume/build/junos/10.2/release/10.2R1.8/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-05-27 20:44:44 UTC Copyri]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1932</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Summit48si - Version 7.6.4 (Build 4) by Release_Master 04/27/07 09:06:43]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1933</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Summit200-48 - Version 7.7e.3 (Build 5) by Release_Master 01/11/08 02:53:46]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1934</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Summit300-24 - Version 7.4e.2 (Build 6) by Release_Master 09/13/05 12:11:11]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1935</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[ExtremeXOS version 12.0.3.16 v1203b16 by release-manager on Tue Apr 8 01:08:39 PDT 2008]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1936</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C1240 Software (C1240-K9W7-M), Version 12.4(10b)JA, RELEASE SOFTWARE (fc2)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2007 by Cisco Systems, Inc.^MCompiled Wed 24-Oct-07 15:31 by prod_rel_team]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1908</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C1240 Software (C1240-K9W7-M), Version 12.4(10b)JA, RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Wed 24-Oct-07 15:31 by prod_rel_team]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1908</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, 2800 Software (C2800NM-ADVENTERPRISEK9-M), Version 12.4(15)T3, RELEASE SOFTWARE (fc1)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2008 by Cisco Systems, Inc.^MCompiled Thu 24-Jan-08 15:25 by prod_rel_team]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1882</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, 2800 Software (C2800NM-ADVENTERPRISEK9-M), Version 12.4(15)T3, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Thu 24-Jan-08 15:25 by prod_rel_team]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1882</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C181X Software (C181X-ADVENTERPRISEK9-M), Version 12.4(15)T3, RELEASE SOFTWARE (fc1)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2008 by Cisco Systems, Inc.^MCompiled Thu 24-Jan-08 13:05 by prod_rel_team]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1937</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C181X Software (C181X-ADVENTERPRISEK9-M), Version 12.4(15)T3, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Thu 24-Jan-08 13:05 by prod_rel_team]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1937</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPSERVICES-M), Version 12.2(25)SEB4, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2005 by Cisco Systems, Inc.^MCompiled Tue 30-Aug-05 15:47 by yenanh]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1770</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPSERVICES-M), Version 12.2(25)SEB4, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2005 by Cisco Systems, Inc.Compiled Tue 30-Aug-05 15:47 by yenanh]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1770</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[3Com Switch 5500-EI 28-Port Software Version 3Com OS V3.03.02s56ep05]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1678</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Xerox WorkCentre Multifunction System, ESS 0.R01.08.114.01, IOT 23.54.0, UI 0.2.97.62, Scanner 17.5.0]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0525</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Xerox WorkCentre 7235;ESS PS1.221.8,IOT 2.2.1,IIT 8.0.7,ADF 11.6.5,FAX 1.30.53]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0526</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[RICOH Aficio MP C2051 1.00.2 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0522</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[RICOH Aficio MP C4501 2.04 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0522</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[GS724TP]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1938</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[KONICA MINOLTA bizhub C20]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0376</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[RICOH Aficio MP C300 1.04 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0522</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software^MIOS (tm) C3550 Software (C3550-I5Q3L2-M), Version 12.1(13)EA1c, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2003 by cisco Systems, Inc.^MCompiled Tue 24-Jun-03 18:49 by yenanh]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1939</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco Internetwork Operating System SoftwareIOS (tm) C3550 Software (C3550-I5Q3L2-M), Version 12.1(13)EA1c, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2003 by cisco Systems, Inc.Compiled Tue 24-Jun-03 18:49 by yenanh]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1939</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[AcceleratorOS, Accelerator 6900 SeriesVersion v6.1.4 (Build1.11)Compiled on June 11 21:25:58 2009Kernel version: 2.4.33 Compiled on Jun 11 20:46:33 2009System is up for 420 days and 4:10 hour(s).]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1940</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[FS750T2 V1.1.5]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0001</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[FS700TS Switch]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking1941</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[ZyWALL USG 200]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0098</MODELSNMP>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[ZyWALL USG 100]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0163</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Dell 3130cn Color Laser; Net 13.22, Controller 200907141828, Engine 05.04.00]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0527</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Dell Color Laser 3010cn; Net 6.38, Controller 200611021052, Engine 01.09.00]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0528</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Dell Laser Printer S2500 version 22.40.07 kernel 2.4.0-test6 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0460</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[KONICA MINOLTA magicolor 5650]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0376</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[KONICA MINOLTA bizhub 40P]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0310</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark Optra SC 1275  Version 1.10.17  Ethernet 10/100.]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0529</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Lexmark Optra T610  Version 3.11.17  Ethernet 10/100.]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0460</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Officejet 9100 series]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0530</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.11.2.4.3.1.25.0</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[SAGEM MF 9323]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0345</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[SAGEM MF 9745]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0345</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Xerox Phaser 8550DP;PS 3.11.0,Net 24.38.04.28.2005,Eng 18.P1.3.11.0,OS 4.278]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0451</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[XEROX WorkCentre 24 v  3.  1.  0]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0443</MODELSNMP>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Xerox WorkCentre 5225;ESS PS1.207.8,IOT 11.31.0,FIN B13.3.0,IIT 3.8.0,ADF 20.0.0,SJFI3.0.9,SSMI1.8.2]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0531</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Xerox WorkCentre 5655 v1 Multifunction System; System 21.113.2.0, ESS 050.060.50812, IOT 091.002.065, UI 020.011.030, Finisher 003.040.000, Scanner 017.005.000, BIOS 07.10]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0525</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[HP LaserJet CP1025nw]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0532</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
 </SNMPDISCOVERY>

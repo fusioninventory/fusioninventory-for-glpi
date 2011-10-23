@@ -71,13 +71,12 @@ class PluginFusinvinventoryLibhook {
       $input = array();
       $input['id'] = $Computer->fields['id'];
       $input['is_deleted'] = 0;
-      $input['autoupdatesystems_id'] = Dropdown::importExternal('AutoUpdateSystem', 'FusionInventory');
+      $input['autoupdatesystems_id'] = Dropdown::importExternal('AutoUpdateSystem', 
+                                                                'FusionInventory',
+                                                                $_SESSION["plugin_fusinvinventory_entity"]);
       $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
 
       $Computer->update($input, 0);
-
-      $PluginFusinvinventoryLibhook->writeXMLFusion($items_id);
-       
     }
 
 
@@ -125,9 +124,6 @@ class PluginFusinvinventoryLibhook {
       foreach($data as $section) {
          if ($section['sectionName'] == 'HARDWARE') {
             $dataSection = unserialize($section['dataSection']);
-            foreach($dataSection as $key=>$value) {
-               $dataSection[$key] = Toolbox::addslashes_deep($value);
-            }
             if (isset($dataSection['CHASSIS_TYPE'])) {
                $computer_type = $dataSection['CHASSIS_TYPE'];
             }
@@ -137,9 +133,6 @@ class PluginFusinvinventoryLibhook {
       foreach($data as $section) {
          $i++;
          $dataSection = unserialize($section['dataSection']);
-         foreach($dataSection as $key=>$value) {
-            $dataSection[$key] = Toolbox::addslashes_deep($value);
-         }
          switch ($section['sectionName']) {
 
             case 'BIOS':
@@ -150,14 +143,16 @@ class PluginFusinvinventoryLibhook {
 
                   if (!in_array('manufacturers_id', $a_lockable)) {
                      $inputC['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
-                                                                          $dataSection['SMANUFACTURER']);
+                                                                            $dataSection['SMANUFACTURER'],
+                                                                            $_SESSION["plugin_fusinvinventory_entity"]);
                   }
                } else if ((isset($dataSection['MMANUFACTURER']))
                             AND (!empty($dataSection['MMANUFACTURER']))) {
 
                   if (!in_array('manufacturers_id', $a_lockable)) {
                      $inputC['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
-                                                                          $dataSection['MMANUFACTURER']);
+                                                                            $dataSection['MMANUFACTURER'],
+                                                                            $_SESSION["plugin_fusinvinventory_entity"]);
                
                   }
                } else if ((isset($dataSection['BMANUFACTURER']))
@@ -165,19 +160,20 @@ class PluginFusinvinventoryLibhook {
 
                   if (!in_array('manufacturers_id', $a_lockable)) {
                      $inputC['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
-                                                                          $dataSection['BMANUFACTURER']);
+                                                                            $dataSection['BMANUFACTURER'],
+                                                                            $_SESSION["plugin_fusinvinventory_entity"]);
                
                   }
                }
                if (isset($dataSection['SMODEL']) AND $dataSection['SMODEL'] != '') {
                   if (!in_array('computermodels_id', $a_lockable)) {
                      $ComputerModel = new ComputerModel();
-                     $inputC['computermodels_id'] = $ComputerModel->importExternal($dataSection['SMODEL']);
+                     $inputC['computermodels_id'] = $ComputerModel->importExternal($dataSection['SMODEL'], $_SESSION["plugin_fusinvinventory_entity"]);
                   }
                } else if (isset($dataSection['MMODEL']) AND $dataSection['MMODEL'] != '') {
                   if (!in_array('computermodels_id', $a_lockable)) {
                      $ComputerModel = new ComputerModel();
-                     $inputC['computermodels_id'] = $ComputerModel->importExternal($dataSection['MMODEL']);
+                     $inputC['computermodels_id'] = $ComputerModel->importExternal($dataSection['MMODEL'], $_SESSION["plugin_fusinvinventory_entity"]);
                   }
                }
                if (isset($dataSection['SSN']))
@@ -188,15 +184,15 @@ class PluginFusinvinventoryLibhook {
                $computerType = new ComputerType();
                if ($computer_type != '') {
                   if (!in_array('computertypes_id', $a_lockable)) {
-                     $inputC['computertypes_id'] = $computerType->importExternal($computer_type);
+                     $inputC['computertypes_id'] = $computerType->importExternal($computer_type, $_SESSION["plugin_fusinvinventory_entity"]);
                   } 
                } else  if (isset($dataSection['TYPE'])) {
                   if (!in_array('computertypes_id', $a_lockable)) {
-                     $inputC['computertypes_id'] = $computerType->importExternal($dataSection['TYPE']);
+                     $inputC['computertypes_id'] = $computerType->importExternal($dataSection['TYPE'], $_SESSION["plugin_fusinvinventory_entity"]);
                   }
                } else if (isset($dataSection['MMODEL'])) {
                   if (!in_array('computertypes_id', $a_lockable)) {
-                     $inputC['computertypes_id'] = $computerType->importExternal($dataSection['MMODEL']);
+                     $inputC['computertypes_id'] = $computerType->importExternal($dataSection['MMODEL'], $_SESSION["plugin_fusinvinventory_entity"]);
                   }
                }
                
@@ -213,11 +209,11 @@ class PluginFusinvinventoryLibhook {
 
                   if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusinvinventory_moduleid"], 'location') == '1') {
                      $Computer->fields['locations_id'] = Dropdown::importExternal('Location',
-                                                                          $dataSection['KEYVALUE']);
+                                                                                  $dataSection['KEYVALUE'],
+                                                                                  $_SESSION["plugin_fusinvinventory_entity"]);
                   }
                   if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusinvinventory_moduleid"], 'group') == '1') {
-                     $Computer->fields['groups_id'] = Dropdown::importExternal('Group',
-                                                                          $dataSection['KEYVALUE']);
+                     $Computer->fields['groups_id'] = PluginFusinvinventoryLibhook::importGroup($dataSection['KEYVALUE'], $_SESSION["plugin_fusinvinventory_entity"]);
                   }
                }
                break;
@@ -233,14 +229,14 @@ class PluginFusinvinventoryLibhook {
                if (isset($dataSection['OSNAME'])) {
                   if (!in_array('operatingsystems_id', $a_lockable)) {
                      $OperatingSystem = new OperatingSystem();
-                     $inputC['operatingsystems_id'] = $OperatingSystem->importExternal($dataSection['OSNAME']);
+                     $inputC['operatingsystems_id'] = $OperatingSystem->importExternal($dataSection['OSNAME'], $_SESSION["plugin_fusinvinventory_entity"]);
                   }
                }
                if (!in_array('operatingsystemversions_id', $a_lockable)) {
                   $addfield = 0;
                   if (isset($dataSection['OSVERSION'])) {
                      $OperatingSystemVersion = new OperatingSystemVersion();
-                     $inputC['operatingsystemversions_id'] = $OperatingSystemVersion->importExternal($dataSection['OSVERSION']);
+                     $inputC['operatingsystemversions_id'] = $OperatingSystemVersion->importExternal($dataSection['OSVERSION'], $_SESSION["plugin_fusinvinventory_entity"]);
                      $addfield = 1;
                   }
                   if ($addfield == '0') {
@@ -283,7 +279,7 @@ class PluginFusinvinventoryLibhook {
                   if (isset($dataSection['OSCOMMENTS'])) {
                      if (strstr($dataSection['OSCOMMENTS'], 'Service Pack')) {
                         $OperatingSystemServicePack = new OperatingSystemServicePack();
-                        $inputC['operatingsystemservicepacks_id'] = $OperatingSystemServicePack->importExternal($dataSection['OSCOMMENTS']);
+                        $inputC['operatingsystemservicepacks_id'] = $OperatingSystemServicePack->importExternal($dataSection['OSCOMMENTS'], $_SESSION["plugin_fusinvinventory_entity"]);
                         $addfield = 1;
                      }
                   }
@@ -331,7 +327,7 @@ class PluginFusinvinventoryLibhook {
       foreach($data as $section) {
          $dataSection = unserialize($section['dataSection']);
          foreach($dataSection as $key=>$value) {
-            $dataSection[$key] = Toolbox::addslashes_deep($value);
+            $dataSection[$key] = $value;
          }
          switch ($section['sectionName']) {
 
@@ -698,9 +694,6 @@ class PluginFusinvinventoryLibhook {
          $sectionName = $array[0];
          if ($sectionName == 'HARDWARE') {
             $dataSection = unserialize($section['dataSection']);
-            foreach($dataSection as $key=>$value) {
-               $dataSection[$key] = Toolbox::addslashes_deep($value);
-            }
             if (isset($dataSection['CHASSIS_TYPE'])) {
                $computer_type = $dataSection['CHASSIS_TYPE'];
             }
@@ -709,9 +702,6 @@ class PluginFusinvinventoryLibhook {
       
       foreach($data as $section) {
          $dataSection = unserialize($section['dataSection']);
-         foreach($dataSection as $key=>$value) {
-            $dataSection[$key] = Toolbox::addslashes_deep($value);
-         }
          $array = explode("/", $section['sectionId']);
          $items_id = $array[1];
          $sectionName = $array[0];
@@ -767,32 +757,35 @@ class PluginFusinvinventoryLibhook {
 
                      if (!in_array('manufacturers_id', $a_lockable)) {
                         $inputC['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
-                                                                             $dataSection['SMANUFACTURER']);
+                                                                               $dataSection['SMANUFACTURER'], 
+                                                                               $_SESSION["plugin_fusinvinventory_entity"]);
                      }
                   } else if ((isset($dataSection['MMANUFACTURER']))
                                AND (!empty($dataSection['MMANUFACTURER']))) {
 
                      if (!in_array('manufacturers_id', $a_lockable)) {
                         $inputC['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
-                                                                             $dataSection['MMANUFACTURER']);
+                                                                               $dataSection['MMANUFACTURER'],
+                                                                               $_SESSION["plugin_fusinvinventory_entity"]);
                      }
                   } else if ((isset($dataSection['BMANUFACTURER']))
                                AND (!empty($dataSection['BMANUFACTURER']))) {
 
                      if (!in_array('manufacturers_id', $a_lockable)) {
                         $inputC['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
-                                                                             $dataSection['BMANUFACTURER']);
+                                                                               $dataSection['BMANUFACTURER'],
+                                                                               $_SESSION["plugin_fusinvinventory_entity"]);
                      }
                   }
                   if (isset($dataSection['SMODEL']) AND $dataSection['SMODEL'] != '') {
                      if (!in_array('computermodels_id', $a_lockable)) {
                         $ComputerModel = new ComputerModel();
-                        $inputC['computermodels_id'] = $ComputerModel->importExternal($dataSection['SMODEL']);
+                        $inputC['computermodels_id'] = $ComputerModel->importExternal($dataSection['SMODEL'], $_SESSION["plugin_fusinvinventory_entity"]);
                      }
                   } else if (isset($dataSection['MMODEL']) AND $dataSection['MMODEL'] != '') {
                      if (!in_array('computermodels_id', $a_lockable)) {
                         $ComputerModel = new ComputerModel();
-                        $inputC['computermodels_id'] = $ComputerModel->importExternal($dataSection['MMODEL']);
+                        $inputC['computermodels_id'] = $ComputerModel->importExternal($dataSection['MMODEL'], $_SESSION["plugin_fusinvinventory_entity"]);
                      }
                   }
                   if (isset($dataSection['SSN']))
@@ -803,15 +796,15 @@ class PluginFusinvinventoryLibhook {
                   $computerType = new ComputerType();
                   if ($computer_type != '') {
                      if (!in_array('computertypes_id', $a_lockable)) {
-                        $inputC['computertypes_id'] = $computerType->importExternal($computer_type);
+                        $inputC['computertypes_id'] = $computerType->importExternal($computer_type, $_SESSION["plugin_fusinvinventory_entity"]);
                      }
                   } else if (isset($dataSection['TYPE'])) {
                      if (!in_array('computertypes_id', $a_lockable)) {
-                        $inputC['computertypes_id'] = $computerType->importExternal($dataSection['TYPE']);
+                        $inputC['computertypes_id'] = $computerType->importExternal($dataSection['TYPE'], $_SESSION["plugin_fusinvinventory_entity"]);
                      }
                   } else if (isset($dataSection['MMODEL'])) {
                      if (!in_array('computertypes_id', $a_lockable)) {
-                        $inputC['computertypes_id'] = $computerType->importExternal($dataSection['MMODEL']);
+                        $inputC['computertypes_id'] = $computerType->importExternal($dataSection['MMODEL'], $_SESSION["plugin_fusinvinventory_entity"]);
                      }
                   }
                   if (isset($dataSection['SKUNUMBER'])) {
@@ -828,12 +821,12 @@ class PluginFusinvinventoryLibhook {
                           
                      if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusinvinventory_moduleid"], 'location') == 1) {
                         $Computer->fields['locations_id'] = Dropdown::importExternal('Location',
-                                                                             $dataSection['KEYVALUE']);
+                                                                                     $dataSection['KEYVALUE'],
+                                                                                     $_SESSION["plugin_fusinvinventory_entity"]);
                         $Computer->update($Computer->fields);
                      }
                      if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusinvinventory_moduleid"], 'group') == 1) {
-                        $Computer->fields['groups_id'] = Dropdown::importExternal('Group',
-                                                                             $dataSection['KEYVALUE']);
+                        $Computer->fields['groups_id'] = PluginFusinvinventoryLibhook::importGroup($dataSection['KEYVALUE'], $_SESSION["plugin_fusinvinventory_entity"]);
                         $Computer->update($Computer->fields);
                      }
                   }
@@ -849,13 +842,13 @@ class PluginFusinvinventoryLibhook {
                   if (isset($dataSection['OSNAME'])) {
                      if (!in_array('operatingsystems_id', $a_lockable)) {
                         $OperatingSystem = new OperatingSystem();
-                        $inputC['operatingsystems_id'] = $OperatingSystem->importExternal($dataSection['OSNAME']);
+                        $inputC['operatingsystems_id'] = $OperatingSystem->importExternal($dataSection['OSNAME'], $_SESSION["plugin_fusinvinventory_entity"]);
                      }
                   }
                   if (isset($dataSection['OSVERSION'])) {
                      if (!in_array('operatingsystemversions_id', $a_lockable)) {
                         $OperatingSystemVersion = new OperatingSystemVersion();
-                        $inputC['operatingsystemversions_id'] = $OperatingSystemVersion->importExternal($dataSection['OSVERSION']);
+                        $inputC['operatingsystemversions_id'] = $OperatingSystemVersion->importExternal($dataSection['OSVERSION'], $_SESSION["plugin_fusinvinventory_entity"]);
                      }
                   }
                   if (isset($dataSection['WINPRODID'])) {
@@ -878,7 +871,7 @@ class PluginFusinvinventoryLibhook {
                      if (!in_array('operatingsystemservicepacks_id', $a_lockable)) {
                         if (strstr($dataSection['OSCOMMENTS'], 'Service Pack')) {
                            $OperatingSystemServicePack = new OperatingSystemServicePack();
-                           $inputC['operatingsystemservicepacks_id'] = $OperatingSystemServicePack->importExternal($dataSection['OSCOMMENTS']);
+                           $inputC['operatingsystemservicepacks_id'] = $OperatingSystemServicePack->importExternal($dataSection['OSCOMMENTS'], $_SESSION["plugin_fusinvinventory_entity"]);
                         }
                      }
                   }
@@ -950,8 +943,8 @@ class PluginFusinvinventoryLibhook {
    * @return nothing
    *
    **/
-    function writeXMLFusion($items_id) {
-      if (isset($_SESSION['SOURCEXML'])) {
+    function writeXMLFusion($items_id,$xml='') {
+      if ($xml != '') {
          // TODO : Write in _plugins/fusinvinventory/xxx/idmachine.xml
          $folder = substr($items_id,0,-1);
          if (empty($folder)) {
@@ -961,7 +954,7 @@ class PluginFusinvinventoryLibhook {
             mkdir(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder);
          }
          $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$items_id, 'w');
-         fwrite($fileopen, $_SESSION['SOURCEXML']);
+         fwrite($fileopen, $xml);
          fclose($fileopen);
        }
     }
@@ -1097,6 +1090,31 @@ class PluginFusinvinventoryLibhook {
          }
       }
     }
+    
+    
+   static function importGroup($value, $entities_id) {
+      global $DB;
+
+      if (empty ($value)) {
+         return 0;
+      }
+
+      $query2 = "SELECT `id`
+                 FROM `glpi_groups`
+                 WHERE `name` = '$value'
+                       AND `entities_id` = '$entities_id'";
+      $result2 = $DB->query($query2);
+
+      if ($DB->numrows($result2) == 0) {
+         $group                = new Group();
+         $input["name"]        = $value;
+         $input["entities_id"] = $entities_id;
+         return $group->add($input);
+      }
+      $line2 = $DB->fetch_array($result2);
+      return $line2["id"];
+   }
+    
 }
 
 ?>
