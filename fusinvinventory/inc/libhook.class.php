@@ -77,9 +77,6 @@ class PluginFusinvinventoryLibhook {
       $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
 
       $Computer->update($input, 0);
-
-      $PluginFusinvinventoryLibhook->writeXMLFusion($items_id);
-       
     }
 
 
@@ -946,8 +943,8 @@ class PluginFusinvinventoryLibhook {
    * @return nothing
    *
    **/
-    function writeXMLFusion($items_id) {
-      if (isset($_SESSION['SOURCEXML'])) {
+    function writeXMLFusion($items_id,$xml='') {
+      if ($xml != '') {
          // TODO : Write in _plugins/fusinvinventory/xxx/idmachine.xml
          $folder = substr($items_id,0,-1);
          if (empty($folder)) {
@@ -957,7 +954,7 @@ class PluginFusinvinventoryLibhook {
             mkdir(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder);
          }
          $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$items_id, 'w');
-         fwrite($fileopen, $_SESSION['SOURCEXML']);
+         fwrite($fileopen, $xml);
          fclose($fileopen);
        }
     }

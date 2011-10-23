@@ -37,7 +37,6 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusinvinventoryInventory {
-
    
    /**
    * Import data
@@ -103,8 +102,8 @@ class PluginFusinvinventoryInventory {
       $PluginFusinvinventoryBlacklist = new PluginFusinvinventoryBlacklist();
       $p_xml = $PluginFusinvinventoryBlacklist->cleanBlacklist($p_xml);
 
-      $_SESSION['SOURCEXML'] = $p_xml->asXML();
-
+      $_SESSION['SOURCEXML'] = $p_xml;
+      
       $xml = $p_xml;
       $input = array();
 
@@ -189,8 +188,9 @@ class PluginFusinvinventoryInventory {
    function rulepassed($items_id, $itemtype) {
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
                                                    "Rule passed : ".$items_id.", ".$itemtype."\n");
-      $xml = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
-
+      //$xml = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = $_SESSION['SOURCEXML'];
+      
       if ($itemtype == 'Computer') {
          $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
          $Computer = new Computer();
@@ -282,8 +282,8 @@ class PluginFusinvinventoryInventory {
          $input['id'] = $class->fields['id'];
          
          // Write XML file
-         if (isset($_SESSION['SOURCEXML'])) {
-            PluginFusioninventoryUnknownDevice::writeXML($items_id, $_SESSION['SOURCEXML']);
+         if (isset($xml)) {
+            PluginFusioninventoryUnknownDevice::writeXML($items_id, $xml->asXML());
          }
          
          if (isset($xml->CONTENT->HARDWARE->NAME)) {

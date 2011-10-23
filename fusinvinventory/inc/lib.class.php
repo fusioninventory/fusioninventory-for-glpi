@@ -51,11 +51,9 @@ class PluginFusinvinventoryLib extends CommonDBTM {
    * @return nothing
    *
    **/
-   function startAction($simpleXMLObj, $items_id, $new=0) {
+   function startAction($xml, $items_id, $new=0) {
       global $DB;
 
-      $xml = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
-      
       if ($new == "0") {
          // Transfer if entity is different
          $Computer = new Computer();
@@ -125,11 +123,11 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          }
 
          //Sections update
-         $xmlSections = $this->_getXMLSections($simpleXMLObj);
+         $xmlSections = $this->_getXMLSections($xml);
          $this->updateLibMachine($xmlSections, $internalId);
          
          $PluginFusinvinventoryLibhook = new PluginFusinvinventoryLibhook();
-         $PluginFusinvinventoryLibhook->writeXMLFusion($items_id);
+         $PluginFusinvinventoryLibhook->writeXMLFusion($items_id, $xml->asXML());
       } else {
          // New Computer
          if ($_SESSION["plugin_fusinvinventory_entity"] == NOT_AVAILABLE) {
@@ -137,7 +135,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          }
 
          //We launch CreateMachine() hook and provide an InternalId
-         $xmlSections = $this->_getXMLSections($simpleXMLObj);
+         $xmlSections = $this->_getXMLSections($xml);
          $internalId = uniqid("", true);
 
          try {
@@ -166,6 +164,8 @@ class PluginFusinvinventoryLib extends CommonDBTM {
             }
 
             $this->addLibMachine($internalId, $items_id);
+            
+            $PluginFusinvinventoryLibhook->writeXMLFusion($items_id, $xml->asXML());
 
             $this->updateLibMachine($xmlSections, $internalId);
 
