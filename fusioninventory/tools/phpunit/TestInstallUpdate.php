@@ -46,7 +46,7 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
     function verifyDBNice() {
        global $DB;
        
-       $comparaisonSQLFile = "plugin_fusioninventory-2.4.0-empty";
+       $comparaisonSQLFile = "plugin_fusioninventory-2.4.0-empty.sql";
        // See http://joefreeman.co.uk/blog/2009/07/php-script-to-compare-mysql-database-schemas/
        
        $file_content = file_get_contents("../../install/mysql/".$comparaisonSQLFile);
@@ -63,6 +63,9 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
              if (preg_match("/^`/", trim($line))) {
                 $s_line = explode("`", $line);
                 $s_type = explode("COMMENT", $s_line[2]);
+                $s_type[0] = str_replace(" COLLATE utf8_unicode_ci", "", $s_type[0]);
+                $s_type[0] = str_replace("( ", "(", $s_type[0]);
+                $s_type[0] = str_replace(" )", ")", $s_type[0]);
                 $a_tables_ref[$current_table][$s_line[1]] = str_replace(",", "", $s_type[0]);
              }
           }
@@ -77,6 +80,9 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
       while ($data=$DB->fetch_array($result)) {
          if (strstr($data[0], "tracker")
                  OR strstr($data[0], "fusion")) {
+            $data[0] = str_replace(" COLLATE utf8_unicode_ci", "", $data[0]);
+            $data[0] = str_replace("( ", "(", $data[0]);
+            $data[0] = str_replace(" )", ")", $data[0]);
             $a_tables[] = $data[0];
          }
       }
@@ -86,9 +92,9 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
          $result = $DB->query($query);
          while ($data=$DB->fetch_array($result)) {
             $construct = $data['Type'];
-            if ($data['Type'] == 'text') {
-               $construct .= ' COLLATE utf8_unicode_ci';
-            }
+//            if ($data['Type'] == 'text') {
+//               $construct .= ' COLLATE utf8_unicode_ci';
+//            }
             if ($data['Null'] == 'YES') {
                $construct .= ' NOT NULL';
             } else {
@@ -107,11 +113,26 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
       }
       
        // Compare
-      $tables_toremove = array_diff($a_tables_db, $a_tables_ref);
-      $tables_toadd = array_diff($a_tables_ref, $a_tables_db);
+      $tables_toremove = array_diff_assoc($a_tables_db, $a_tables_ref);
+      $tables_toadd = array_diff_assoc($a_tables_ref, $a_tables_db);
        
+      // See tables missing or to delete
       $this->assertEquals(count($tables_toadd), 0, 'Tables missing '.print_r($tables_toadd));
       $this->assertEquals(count($tables_toremove), 0, 'Tables to delete '.print_r($tables_toremove));
+      
+      // See if fields are same
+      foreach ($a_tables_db as $table=>$data) {
+         if (isset($a_tables_ref[$table])) {
+            $fields_toremove = array_diff_assoc($data, $a_tables_ref[$table]);
+            $fields_toadd = array_diff_assoc($a_tables_ref[$table], $data);
+            
+            // See tables missing or to delete
+            $this->assertEquals(count($fields_toadd), 0, 'Fields missing/not good in '.$table.' '.print_r($fields_toadd));
+            $this->assertEquals(count($fields_toremove), 0, 'Fields to delete in '.$table.' '.print_r($fields_toremove));
+            
+         }         
+      }
+      
       
       // TODO : test glpi_displaypreferences, rules...
     }

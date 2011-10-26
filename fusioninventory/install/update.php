@@ -257,6 +257,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $newTable = "glpi_plugin_fusioninventory_ipranges";
       $migration->renameTable("glpi_plugin_tracker_rangeip", 
                               $newTable);
+      $migration->renameTable("glpi_plugin_fusinvsnmp_ipranges", 
+                              $newTable);
       $migration->changeField($newTable,
                               "ID",
                               "id",
@@ -286,6 +288,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $migration->dropKey($newTable, "FK_tracker_agents");
       $migration->dropKey($newTable, "FK_tracker_agents_2");
    
+      
+      
    // ** Manage glpi_plugin_fusioninventory_agents
       $prepare_agentConfig = array();
       if (TableExists("glpi_plugin_tracker_agents")
@@ -395,14 +399,61 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       
       
       
-      
-      
-      
-      
+   // ** Unknown devices
+      $newTable = "glpi_plugin_fusioninventory_unknowndevices";
+      $migration->changeField($newTable, 'name', 'name', 'varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL');
+      $migration->changeField($newTable, 'date_mod', 'date_mod', 'datetime DEFAULT NULL');
+      $migration->changeField($newTable, 'entities_id', 'entities_id', "int(11) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable, 'locations_id', 'locations_id', "int(11) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable, 'is_deleted', 'is_deleted', "smallint(6) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable, 'serial', 'serial', "varchar(255) NULL DEFAULT NULL");
+      $migration->changeField($newTable, 'otherserial', 'otherserial', "varchar(255) NULL DEFAULT NULL");
+      $migration->changeField($newTable, 'contact', 'contact', "varchar(255) NULL DEFAULT NULL");
+      $migration->changeField($newTable, 'domain', 'domain', "int(11) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable, 'comment', 'comment', "text NULL DEFAULT NULL");
+      $migration->changeField($newTable, 'item_type', 'item_type', "varchar(255) NULL DEFAULT NULL");
+      $migration->changeField($newTable, 'accepted', 'accepted', "INT(1) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable, 'plugin_fusioninventory_agents_id', 'plugin_fusioninventory_agents_id', "int(11) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable, 'ip', 'ip', "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->changeField($newTable, 'mac', 'mac', "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->changeField($newTable, 'hub', 'hub', "int(1) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable, 'states_id', 'states_id', "int(11) NOT NULL DEFAULT '0'");
       
    
-   
-   
+   // ** glpi_plugin_fusioninventory_credentials
+      $newTable = "glpi_plugin_fusioninventory_credentials";
+      if (!TableExists($newtable)) {
+         $query = "CREATE TABLE  `glpi_plugin_fusioninventory_credentials` (
+                     `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+                     `entities_id` int(11) NOT NULL DEFAULT '0',
+                     `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+                     `name` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
+                     `username` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
+                     `password` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
+                     `comment` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ,
+                     `date_mod` DATETIME NOT NULL ,
+                     `itemtype` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
+                     PRIMARY KEY (  `id` )
+                     ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
+         $DB->query($query);
+      }
+
+   // ** glpi_plugin_fusioninventory_credentials
+      $newTable = "glpi_plugin_fusioninventory_credentialips";
+      if (!TableExists($newtable)) {
+         $query = "CREATE TABLE  `glpi_plugin_fusioninventory_credentialips` (
+                     `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+                     `entities_id` int(11) NOT NULL DEFAULT '0',
+                     `plugin_fusioninventory_credentials_id` INT( 11 ) NOT NULL DEFAULT  '0',
+                     `name` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
+                     `comment` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ,
+                     `ip` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
+                     `date_mod` DATETIME NOT NULL ,
+                     PRIMARY KEY (  `id` )
+                     ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
+         $DB->query($query);
+      }
+      
    
    $migration->executeMigration();
    
