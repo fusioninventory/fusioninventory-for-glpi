@@ -442,15 +442,15 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $newTable = "glpi_plugin_fusioninventory_credentialips";
       if (!TableExists($newTable)) {
          $query = "CREATE TABLE  `glpi_plugin_fusioninventory_credentialips` (
-                     `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+                     `id` int(11) NOT NULL AUTO_INCREMENT ,
                      `entities_id` int(11) NOT NULL DEFAULT '0',
-                     `plugin_fusioninventory_credentials_id` INT( 11 ) NOT NULL DEFAULT  '0',
-                     `name` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
-                     `comment` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ,
-                     `ip` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
-                     `date_mod` DATETIME NOT NULL ,
+                     `plugin_fusioninventory_credentials_id` int(11) NOT NULL DEFAULT  '0',
+                     `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
+                     `comment` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ,
+                     `ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
+                     `date_mod` datetime NOT NULL ,
                      PRIMARY KEY (  `id` )
-                     ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
+                     ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci";
          $DB->query($query);
       }
       
