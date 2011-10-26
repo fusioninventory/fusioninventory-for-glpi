@@ -701,7 +701,8 @@ class PluginFusinvinventoryLibhook {
       }
       
       foreach($data as $section) {
-         $dataSection = unserialize($section['dataSection']);
+//         $dataSection = unserialize($section['dataSection']);
+         $dataSection = $section['dataSection'];
          $array = explode("/", $section['sectionId']);
          $items_id = $array[1];
          $sectionName = $array[0];
