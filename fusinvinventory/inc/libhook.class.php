@@ -693,7 +693,7 @@ class PluginFusinvinventoryLibhook {
          $array = explode("/", $section['sectionId']);
          $sectionName = $array[0];
          if ($sectionName == 'HARDWARE') {
-            $dataSection = unserialize($section['dataSection']);
+            $dataSection = $section['dataSection'];
             if (isset($dataSection['CHASSIS_TYPE'])) {
                $computer_type = $dataSection['CHASSIS_TYPE'];
             }
@@ -701,7 +701,8 @@ class PluginFusinvinventoryLibhook {
       }
       
       foreach($data as $section) {
-         $dataSection = unserialize($section['dataSection']);
+//         $dataSection = unserialize($section['dataSection']);
+         $dataSection = $section['dataSection'];
          $array = explode("/", $section['sectionId']);
          $items_id = $array[1];
          $sectionName = $array[0];
