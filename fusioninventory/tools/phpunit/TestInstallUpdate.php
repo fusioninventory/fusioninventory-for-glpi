@@ -76,7 +76,7 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
       $result = $DB->query($query);
       while ($data=$DB->fetch_array($result)) {
          if (strstr($data[0], "tracker")
-                 OR strstr($data[0], "fusi")) {
+                 OR strstr($data[0], "fusion")) {
             $a_tables[] = $data[0];
          }
       }
@@ -120,8 +120,18 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
    function testDB() {
       global $DB;
        
+      $query = "SHOW TABLES";
+      $result = $DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         if (strstr($data[0], "tracker")
+                 OR strstr($data[0], "fusi")) {
+            $DB->query("DROP TABLE ".$data[0]);
+         }
+      }
+      
+      
       // ** Insert in DB
-      $DB_file = GLPI_ROOT ."/plugins/fusioninventory/tools/phpunit/dbupdate/i-1.1.0.sql";
+      $DB_file = GLPI_ROOT ."/plugins/fusioninventory/tools/phpunit/dbupdate/i-2.3.3.sql";
       $DBf_handle = fopen($DB_file, "rt");
       $sql_query = fread($DBf_handle, filesize($DB_file));
       fclose($DBf_handle);
