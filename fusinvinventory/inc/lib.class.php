@@ -544,10 +544,6 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                         //Delete this section from sectionToRemove and sectionToAdd
                         unset($sectionsToRemove[$sectionId]);
                         unset($sectionsToAdd[$arrayId]);
-                        logInFile("ANTIVIRUS", "===================\n");
-                        logInFile("ANTIVIRUS", print_r($arrSectionToAdd, true));
-                        logInFile("ANTIVIRUS", print_r($arrSectionToRemove, true));
-
 //                        array_push($datasToUpdate, array(
 //                                     "sectionId"=>$sectionId,
 //                                     "dataSection"=>$xmlSections[$arrayId]['sectionData']));
@@ -570,7 +566,6 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                         foreach($arrSectionToAdd as $key=>$value) {
                            $arraydiff[$key] = $value;
                         }
-                        logInFile("ANTIVIRUS", print_r($arraydiff, true));
                         array_push($datasToUpdate, array(
                                      "sectionId"=>$sectionId,
                                      "dataSection"=>$arraydiff));
