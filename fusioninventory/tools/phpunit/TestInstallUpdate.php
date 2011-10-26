@@ -63,7 +63,9 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
              if (preg_match("/^`/", trim($line))) {
                 $s_line = explode("`", $line);
                 $s_type = explode("COMMENT", $s_line[2]);
+                $s_type[0] = trim($s_type[0]);
                 $s_type[0] = str_replace(" COLLATE utf8_unicode_ci", "", $s_type[0]);
+                $s_type[0] = str_replace(" CHARACTER SET utf8", "", $s_type[0]);
                 $s_type[0] = str_replace("( ", "(", $s_type[0]);
                 $s_type[0] = str_replace(" )", ")", $s_type[0]);
                 $a_tables_ref[$current_table][$s_line[1]] = str_replace(",", "", $s_type[0]);
@@ -95,18 +97,17 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
 //            if ($data['Type'] == 'text') {
 //               $construct .= ' COLLATE utf8_unicode_ci';
 //            }
-            if ($data['Null'] == 'YES') {
-               $construct .= ' NOT NULL';
-            } else {
-               $construct .= ' NULL';
-            }
-            if ($data['Extra'] == 'auto_increment') {
-               $construct .= ' AUTO_INCREMENT';
-            } else {
-               if ($data['Default'] == '') {
-                  $data['Default'] = "''";
+            if ($data['Type'] != 'text') {
+               if ($data['Null'] == 'YES') {
+                  $construct .= ' NULL';
+               } else {
+                  $construct .= ' NOT NULL';
                }
-               $construct .= ' DEFAULT '.$data['Default'];
+               if ($data['Extra'] == 'auto_increment') {
+                  $construct .= ' AUTO_INCREMENT';
+               } else {
+                  $construct .= " DEFAULT '".$data['Default']."'";
+               }
             }
             $a_tables_db[$table][$data['Field']] = $construct;
          }         
@@ -125,7 +126,9 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
          if (isset($a_tables_ref[$table])) {
             $fields_toremove = array_diff_assoc($data, $a_tables_ref[$table]);
             $fields_toadd = array_diff_assoc($a_tables_ref[$table], $data);
-            
+//            print_r($data);
+//            print_r($a_tables_ref[$table]);
+//            exit;
             // See tables missing or to delete
             $this->assertEquals(count($fields_toadd), 0, 'Fields missing/not good in '.$table.' '.print_r($fields_toadd));
             $this->assertEquals(count($fields_toremove), 0, 'Fields to delete in '.$table.' '.print_r($fields_toremove));

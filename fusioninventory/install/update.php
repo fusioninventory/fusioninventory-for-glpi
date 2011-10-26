@@ -422,7 +422,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    
    // ** glpi_plugin_fusioninventory_credentials
       $newTable = "glpi_plugin_fusioninventory_credentials";
-      if (!TableExists($newtable)) {
+      if (!TableExists($newTable)) {
          $query = "CREATE TABLE  `glpi_plugin_fusioninventory_credentials` (
                      `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
                      `entities_id` int(11) NOT NULL DEFAULT '0',
@@ -440,7 +440,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
    // ** glpi_plugin_fusioninventory_credentials
       $newTable = "glpi_plugin_fusioninventory_credentialips";
-      if (!TableExists($newtable)) {
+      if (!TableExists($newTable)) {
          $query = "CREATE TABLE  `glpi_plugin_fusioninventory_credentialips` (
                      `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
                      `entities_id` int(11) NOT NULL DEFAULT '0',
@@ -454,7 +454,20 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $DB->query($query);
       }
       
-   
+      
+   // ** glpi_plugin_fusioninventory_agentmodules
+      $newTable = "glpi_plugin_fusioninventory_agentmodules";
+      $migration->changeField($newTable, 'id', 'id', "int(11) NOT NULL AUTO_INCREMENT");
+      $migration->changeField($newTable, 'plugins_id', 'plugins_id', "int(11) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable, 'modulename', 'modulename', "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->changeField($newTable, 'is_active', 'is_active', "int(1) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable, 'exceptions', 'exceptions', "text COMMENT 'array(agent_id)'");
+      $migration->changeField($newTable, 'entities_id', 'entities_id', "int(11) NOT NULL DEFAULT '-1'");
+      $migration->changeField($newTable, 'url', 'url', "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+      $migration->addField($newTable, 'url', "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+      
+      
+
    $migration->executeMigration();
    
    // TODO update itemtypes
