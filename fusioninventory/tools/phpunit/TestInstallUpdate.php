@@ -98,10 +98,13 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
             if ($data['Type'] == 'text') {
                if ($data['Null'] == 'NO') {
                   $construct .= ' NOT NULL';
+               } else {
+                  $construct .= ' DEFAULT NULL';
                }
             } else {
-               if ((strstr($data['Type'], "varchar")
-                       OR $data['Type'] == 'datetime')
+               if ((strstr($data['Type'], "char")
+                       OR $data['Type'] == 'datetime'
+                       OR strstr($data['Type'], "int"))
                        AND $data['Null'] == 'YES'
                        AND $data['Default'] == '') {
                   $construct .= ' DEFAULT NULL';

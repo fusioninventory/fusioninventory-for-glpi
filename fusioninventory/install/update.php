@@ -406,13 +406,13 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $migration->changeField($newTable, 'entities_id', 'entities_id', "int(11) NOT NULL DEFAULT '0'");
       $migration->changeField($newTable, 'locations_id', 'locations_id', "int(11) NOT NULL DEFAULT '0'");
       $migration->changeField($newTable, 'is_deleted', 'is_deleted', "smallint(6) NOT NULL DEFAULT '0'");
-      $migration->changeField($newTable, 'serial', 'serial', "varchar(255) NULL DEFAULT NULL");
-      $migration->changeField($newTable, 'otherserial', 'otherserial', "varchar(255) NULL DEFAULT NULL");
-      $migration->changeField($newTable, 'contact', 'contact', "varchar(255) NULL DEFAULT NULL");
+      $migration->changeField($newTable, 'serial', 'serial', "varchar(255) DEFAULT NULL");
+      $migration->changeField($newTable, 'otherserial', 'otherserial', "varchar(255) DEFAULT NULL");
+      $migration->changeField($newTable, 'contact', 'contact', "varchar(255) DEFAULT NULL");
       $migration->changeField($newTable, 'domain', 'domain', "int(11) NOT NULL DEFAULT '0'");
-      $migration->changeField($newTable, 'comment', 'comment', "text NULL DEFAULT NULL");
-      $migration->changeField($newTable, 'item_type', 'item_type', "varchar(255) NULL DEFAULT NULL");
-      $migration->changeField($newTable, 'accepted', 'accepted', "INT(1) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable, 'comment', 'comment', "text DEFAULT NULL");
+      $migration->changeField($newTable, 'item_type', 'item_type', "varchar(255) DEFAULT NULL");
+      $migration->changeField($newTable, 'accepted', 'accepted', "int(1) NOT NULL DEFAULT '0'");
       $migration->changeField($newTable, 'plugin_fusioninventory_agents_id', 'plugin_fusioninventory_agents_id', "int(11) NOT NULL DEFAULT '0'");
       $migration->changeField($newTable, 'ip', 'ip', "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
       $migration->changeField($newTable, 'mac', 'mac', "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
@@ -466,7 +466,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $migration->changeField($newTable, 'url', 'url', "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
       $migration->addField($newTable, 'url', "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
       
-      
+   
+   // ** glpi_plugin_fusioninventory_locks
+      $newTable = "glpi_plugin_fusioninventory_locks";
+      $migration->changeField($newTable, 'items_id', 'items_id', "int(11) NOT NULL DEFAULT '0'");
 
    $migration->executeMigration();
    
