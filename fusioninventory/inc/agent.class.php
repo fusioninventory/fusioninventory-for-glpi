@@ -38,6 +38,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryAgent extends CommonDBTM {
    
+   public $dohistory = true;
 
    /**
    * Get name of this type
@@ -156,7 +157,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
          $ong[1]=$LANG['title'][26];
       }
-       $ong[2] = $LANG['plugin_fusioninventory']['agents'][36];
+      $ong[2] = $LANG['plugin_fusioninventory']['agents'][36];
+      $ong[3] = $LANG['title'][38];
       return $ong;
    }
 
