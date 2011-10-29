@@ -152,7 +152,7 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
       }
       
       
-      // TODO : test glpi_displaypreferences, rules...
+      // TODO : test glpi_displaypreferences, rules, bookmark...
     }
     
     
@@ -170,7 +170,9 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
       
       
       // ** Insert in DB
-      $DB_file = GLPI_ROOT ."/plugins/fusioninventory/tools/phpunit/dbupdate/i-2.3.3.sql";
+      $version = "2.3.3";
+      $version = "2.1.3";
+      $DB_file = GLPI_ROOT ."/plugins/fusioninventory/tools/phpunit/dbupdate/i-".$version.".sql";
       $DBf_handle = fopen($DB_file, "rt");
       $sql_query = fread($DBf_handle, filesize($DB_file));
       fclose($DBf_handle);
