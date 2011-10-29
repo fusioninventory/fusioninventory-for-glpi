@@ -141,6 +141,9 @@ function plugin_init_fusioninventory() {
             = 'front/ruleimportequipment.form.php';
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['ruleimportequipment']
             = 'front/ruleimportequipment.php';
+         
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['agents'] = 'front/agent.php';
+
 
          if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agent","r")) {
 
