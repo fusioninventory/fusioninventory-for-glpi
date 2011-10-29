@@ -162,6 +162,21 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       return $ong;
    }
 
+   
+   
+   function getComments() {
+      global $LANG;
+
+      $comment = $LANG['plugin_fusioninventory']['agents'][42].' : '.$this->fields['useragent'].'<br/>
+         '.$LANG['plugin_fusioninventory']['agents'][4].' : '.convDateTime($this->fields['last_contact']).' minutes';
+
+      if (!empty($comment)) {
+         return showToolTip($comment, array('display' => false));
+      }
+
+      return $comment;
+   }
+   
 
 
    /**
@@ -428,6 +443,18 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo $LANG['plugin_fusioninventory']['agents'][15];
       echo "</th>";
       echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>";
+      echo $LANG['plugin_fusioninventory']['agents'][28]."&nbsp:";
+      echo "</td>";
+      echo "<td>";
+      $pFusioninventoryAgent = new PluginFusioninventoryAgent();
+      $pFusioninventoryAgent->getFromDB($agent_id);
+      echo $pFusioninventoryAgent->getLink(1);
+      
+      echo "</td>";
+      echo "</tr>";      
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
