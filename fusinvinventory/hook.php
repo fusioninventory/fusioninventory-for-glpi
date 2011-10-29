@@ -124,7 +124,9 @@ function plugin_get_headings_fusinvinventory($item,$withtemplate) {
             $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".
                $LANG['plugin_fusioninventory']['xml'][0];
             $array[2] = $LANG['plugin_fusinvinventory']['antivirus'][0];
-            $array[3] = $LANG['plugin_fusinvinventory']['menu'][4];
+            if (haveRight("computer", "w")) {
+               $array[3] = $LANG['plugin_fusinvinventory']['menu'][4];
+            }
             $array[4] = $LANG['plugin_fusinvinventory']['bios'][0];
          }
          return $array;
