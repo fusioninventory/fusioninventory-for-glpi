@@ -82,6 +82,16 @@ function pluginFusinvsnmpGetCurrentVersion($version) {
          }
       }      
    } else {
+      if (!class_exists('PluginFusioninventoryConfig')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusioninventory/inc/config.class.php");
+      }
+      if (!class_exists('PluginFusioninventoryAgentmodule')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
+      }
+      if (!class_exists('PluginFusioninventoryModule')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
+      }
+      
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
       $versionconfig = $PluginFusioninventoryConfig->getValue($plugins_id, "version");
@@ -130,6 +140,10 @@ function pluginFusinvsnmpGetCurrentVersion($version) {
 
 function pluginFusinvsnmpUpdate($current_version) {
 
+   if (!class_exists('PluginFusioninventoryMapping')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/mapping.class.php");
+   }
+   
    switch ($current_version){
       case "2.2.1":
          include("update_221_230.php");

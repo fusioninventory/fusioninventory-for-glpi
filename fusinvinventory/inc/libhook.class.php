@@ -77,9 +77,6 @@ class PluginFusinvinventoryLibhook {
       $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
 
       $Computer->update($input, 0);
-
-      $PluginFusinvinventoryLibhook->writeXMLFusion($items_id);
-       
     }
 
 
@@ -127,9 +124,6 @@ class PluginFusinvinventoryLibhook {
       foreach($data as $section) {
          if ($section['sectionName'] == 'HARDWARE') {
             $dataSection = unserialize($section['dataSection']);
-            foreach($dataSection as $key=>$value) {
-               $dataSection[$key] = addslashes_deep($value);
-            }
             if (isset($dataSection['CHASSIS_TYPE'])) {
                $computer_type = $dataSection['CHASSIS_TYPE'];
             }
@@ -139,9 +133,6 @@ class PluginFusinvinventoryLibhook {
       foreach($data as $section) {
          $i++;
          $dataSection = unserialize($section['dataSection']);
-         foreach($dataSection as $key=>$value) {
-            $dataSection[$key] = addslashes_deep($value);
-         }
          switch ($section['sectionName']) {
 
             case 'BIOS':
@@ -336,7 +327,7 @@ class PluginFusinvinventoryLibhook {
       foreach($data as $section) {
          $dataSection = unserialize($section['dataSection']);
          foreach($dataSection as $key=>$value) {
-            $dataSection[$key] = addslashes_deep($value);
+            $dataSection[$key] = $value;
          }
          switch ($section['sectionName']) {
 
@@ -702,10 +693,7 @@ class PluginFusinvinventoryLibhook {
          $array = explode("/", $section['sectionId']);
          $sectionName = $array[0];
          if ($sectionName == 'HARDWARE') {
-            $dataSection = unserialize($section['dataSection']);
-            foreach($dataSection as $key=>$value) {
-               $dataSection[$key] = addslashes_deep($value);
-            }
+            $dataSection = $section['dataSection'];
             if (isset($dataSection['CHASSIS_TYPE'])) {
                $computer_type = $dataSection['CHASSIS_TYPE'];
             }
@@ -713,10 +701,8 @@ class PluginFusinvinventoryLibhook {
       }
       
       foreach($data as $section) {
-         $dataSection = unserialize($section['dataSection']);
-         foreach($dataSection as $key=>$value) {
-            $dataSection[$key] = addslashes_deep($value);
-         }
+//         $dataSection = unserialize($section['dataSection']);
+         $dataSection = $section['dataSection'];
          $array = explode("/", $section['sectionId']);
          $items_id = $array[1];
          $sectionName = $array[0];
@@ -958,8 +944,8 @@ class PluginFusinvinventoryLibhook {
    * @return nothing
    *
    **/
-    function writeXMLFusion($items_id) {
-      if (isset($_SESSION['SOURCEXML'])) {
+    function writeXMLFusion($items_id,$xml='') {
+      if ($xml != '') {
          // TODO : Write in _plugins/fusinvinventory/xxx/idmachine.xml
          $folder = substr($items_id,0,-1);
          if (empty($folder)) {
@@ -969,7 +955,7 @@ class PluginFusinvinventoryLibhook {
             mkdir(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder);
          }
          $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$items_id, 'w');
-         fwrite($fileopen, $_SESSION['SOURCEXML']);
+         fwrite($fileopen, $xml);
          fclose($fileopen);
        }
     }

@@ -56,6 +56,9 @@ function pluginFusioninventoryInstall($version) {
    if (!class_exists('PluginFusioninventoryRuleImportEquipment')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/ruleimportequipment.class.php");
    }
+   if (!class_exists('PluginFusioninventoryModule')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
+   }
    // Get informations of plugin
 
    // ** Clean if FUsion / Tracker has been installed and uninstalled (not clean correctly)

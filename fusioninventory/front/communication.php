@@ -68,6 +68,7 @@ if (!class_exists("PluginFusioninventoryConfig")) {
 <REPLY>
    <ERROR>Plugin FusionInventory not installed!</ERROR>
 </REPLY>";
+   session_destroy();
    exit;
 }
 
@@ -90,7 +91,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    // ********** End ********** //
    
    if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
-      // Get conf tu know if SSL is only
+      // Get conf to know if are in SSL only mode
    
       $fusioninventory_config      = new PluginFusioninventoryConfig();
       $PluginFusioninventoryModule = new PluginFusioninventoryModule();
@@ -150,6 +151,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    <REPLY>
    </REPLY>");
          $communication->noSSL($compressmode);
+         session_destroy();
          exit();
       }
 
@@ -169,13 +171,18 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    <ERROR>XML not well formed!</ERROR>
 </REPLY>");
          $PluginFusioninventoryCommunication->emptyAnswer($compressmode);
+         session_destroy();
+         exit();
       }
    
-      $pta->importToken($xml);
+      // Clean for XSS and other in XML
+      $pxml = $communication->cleanXML($pxml);
+            
+      $pta->importToken($pxml);
    
       $top0 = 0;
       $top0 = gettimeofday();
-      if (!$communication->import($xml)) {
+      if (!$communication->import($pxml)) {
    
          if (isset($pxml->DEVICEID)) {
    
