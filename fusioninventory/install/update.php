@@ -216,78 +216,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    // END TODO remove
    
    
-   // ** Manage glpi_plugin_fusioninventory_ipranges
-      if (TableExists("glpi_plugin_tracker_rangeip")) {
-         // Get all data to create task
-         $query = "SELECT * FROM `glpi_plugin_tracker_rangeip`";
-         $result=$DB->query($query);
-         while ($data=$DB->fetch_array($result)) {
-            if ($data['discover'] == '1') {
-               $prepare_task[] = array("agents_id" => $data['FK_tracker_agents'],
-                                       "ipranges_id" => $data['ID'],
-                                       "netdiscovery" => "1");
-            }
-            if ($data['query'] == '1') {
-               $prepare_task[] = array("agents_id" => $data['FK_tracker_agents'],
-                                       "ipranges_id" => $data['ID'],
-                                       "snmpquery" => "1");
-            }
-         }
-      }
-      if (TableExists("glpi_plugin_fusioninventory_rangeip")
-              AND FieldExists("glpi_plugin_fusioninventory_rangeip", 
-                              "FK_fusioninventory_agents_discover")) {
-         
-         // Get all data to create task
-         $query = "SELECT * FROM `glpi_plugin_fusioninventory_rangeip`";
-         $result=$DB->query($query);
-         while ($data=$DB->fetch_array($result)) {
-            if ($data['discover'] == '1') {
-               $prepare_task[] = array("agents_id" => $data['FK_fusioninventory_agents_discover'],
-                                       "ipranges_id" => $data['ID'],
-                                       "netdiscovery" => "1");
-            }
-            if ($data['query'] == '1') {
-               $prepare_task[] = array("agents_id" => $data['FK_fusioninventory_agents_query'],
-                                       "ipranges_id" => $data['ID'],
-                                       "snmpquery" => "1");
-            }
-         }         
-      }
-      $newTable = "glpi_plugin_fusioninventory_ipranges";
-      $migration->renameTable("glpi_plugin_tracker_rangeip", 
-                              $newTable);
-      $migration->renameTable("glpi_plugin_fusinvsnmp_ipranges", 
-                              $newTable);
-      $migration->changeField($newTable,
-                              "ID",
-                              "id",
-                              "int(11) NOT NULL");
-      $migration->changeField($newTable,
-                              "ifaddr_start",
-                              "ip_start",
-                              "varchar(255) DEFAULT NULL");
-      $migration->changeField($newTable,
-                              "ifaddr_end",
-                              "ip_end",
-                              "varchar(255) DEFAULT NULL");
-      $migration->changeField($newTable,
-                              "FK_entities",
-                              "entities_id",
-                              "int(11) NOT NULL DEFAULT '0'");
-      $migration->dropField($newTable,
-                            "FK_tracker_agents");
-      $migration->dropField($newTable,
-                            "discover");
-      $migration->dropField($newTable,
-                            "query");
-      $migration->dropField($newTable,
-                            "FK_fusioninventory_agents_discover");
-      $migration->dropField($newTable,
-                            "FK_fusioninventory_agents_query");
-      $migration->dropKey($newTable, "FK_tracker_agents");
-      $migration->dropKey($newTable, "FK_tracker_agents_2");
-   
       
       
    // ** Manage glpi_plugin_fusioninventory_agents
@@ -406,6 +334,12 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $migration->addField($newTable, 
                            "useragent", 
                            "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->addField($newTable, 
+                           "itemtype", 
+                           "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->addField($newTable, 
+                           "items_id", 
+                           "int(11) NOT NULL DEFAULT '0'");
 
       $migration->dropKey($newTable, 
                           "key");
@@ -447,9 +381,103 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       }
       
       
-   // ** Unknown devices
-      $newTable = "glpi_plugin_fusioninventory_unknowndevices";
+      
+   // ** glpi_plugin_fusioninventory_configs
+      $newTable = "glpi_plugin_fusioninventory_configs";
       if (!TableExists($newTable)) {
+         $query = "CREATE TABLE `glpi_plugin_fusioninventory_configs` (
+                     `id` int(1) NOT NULL AUTO_INCREMENT,
+                     `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+                     `value` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+                     `plugins_id` int(11) NOT NULL DEFAULT '0',
+                     PRIMARY KEY (`id`),
+                     UNIQUE KEY `unicity` (`type`, `plugins_id`)
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+         $DB->query($query);
+      }
+      
+
+   
+   // ** Manage glpi_plugin_fusioninventory_ipranges
+      if (TableExists("glpi_plugin_tracker_rangeip")) {
+         // Get all data to create task
+         $query = "SELECT * FROM `glpi_plugin_tracker_rangeip`";
+         $result=$DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
+            if ($data['discover'] == '1') {
+               $prepare_task[] = array("agents_id" => $data['FK_tracker_agents'],
+                                       "ipranges_id" => $data['ID'],
+                                       "netdiscovery" => "1");
+            }
+            if ($data['query'] == '1') {
+               $prepare_task[] = array("agents_id" => $data['FK_tracker_agents'],
+                                       "ipranges_id" => $data['ID'],
+                                       "snmpquery" => "1");
+            }
+         }
+      }
+      if (TableExists("glpi_plugin_fusioninventory_rangeip")
+              AND FieldExists("glpi_plugin_fusioninventory_rangeip", 
+                              "FK_fusioninventory_agents_discover")) {
+         
+         // Get all data to create task
+         $query = "SELECT * FROM `glpi_plugin_fusioninventory_rangeip`";
+         $result=$DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
+            if ($data['discover'] == '1') {
+               $prepare_task[] = array("agents_id" => $data['FK_fusioninventory_agents_discover'],
+                                       "ipranges_id" => $data['ID'],
+                                       "netdiscovery" => "1");
+            }
+            if ($data['query'] == '1') {
+               $prepare_task[] = array("agents_id" => $data['FK_fusioninventory_agents_query'],
+                                       "ipranges_id" => $data['ID'],
+                                       "snmpquery" => "1");
+            }
+         }         
+      }
+      $newTable = "glpi_plugin_fusioninventory_ipranges";
+      $migration->renameTable("glpi_plugin_tracker_rangeip", 
+                              $newTable);
+      $migration->renameTable("glpi_plugin_fusinvsnmp_ipranges", 
+                              $newTable);
+      $migration->changeField($newTable,
+                              "ID",
+                              "id",
+                              "int(11) NOT NULL");
+      $migration->changeField($newTable,
+                              "ifaddr_start",
+                              "ip_start",
+                              "varchar(255) DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "ifaddr_end",
+                              "ip_end",
+                              "varchar(255) DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "FK_entities",
+                              "entities_id",
+                              "int(11) NOT NULL DEFAULT '0'");
+      $migration->dropField($newTable,
+                            "FK_tracker_agents");
+      $migration->dropField($newTable,
+                            "discover");
+      $migration->dropField($newTable,
+                            "query");
+      $migration->dropField($newTable,
+                            "FK_fusioninventory_agents_discover");
+      $migration->dropField($newTable,
+                            "FK_fusioninventory_agents_query");
+      $migration->dropKey($newTable, "FK_tracker_agents");
+      $migration->dropKey($newTable, "FK_tracker_agents_2");
+   
+      
+      
+      
+   // ** glpi_plugin_fusioninventory_unknowndevices
+      $newTable = "glpi_plugin_fusioninventory_unknowndevices";
+      if (TableExists('glpi_plugin_tracker_unknown_device')) {
+         $migration->renameTable("glpi_plugin_tracker_unknown_device", $newTable);
+      } else if (!TableExists($newTable)) {
          $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unknowndevices` (
                      `id` int(11) NOT NULL AUTO_INCREMENT,
                      `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -476,7 +504,12 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                      KEY `date_mod` (`date_mod`)
                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
          $DB->query($query);
-      } else {      
+      } else {    
+         $migration->changeField($newTable, 'id', 'id', "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable, 'FK_entities', 'entities_id', "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable, 'location', 'locations_id', "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable, 'deleted', 'is_deleted', "smallint(6) NOT NULL DEFAULT '0'");
+         
          $migration->changeField($newTable, 'name', 'name', 'varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL');
          $migration->changeField($newTable, 'date_mod', 'date_mod', 'datetime DEFAULT NULL');
          $migration->changeField($newTable, 'entities_id', 'entities_id', "int(11) NOT NULL DEFAULT '0'");
@@ -515,7 +548,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $DB->query($query);
       }
 
-   // ** glpi_plugin_fusioninventory_credentials
+   // ** glpi_plugin_fusioninventory_credentialips
       $newTable = "glpi_plugin_fusioninventory_credentialips";
       if (!TableExists($newTable)) {
          $query = "CREATE TABLE  `glpi_plugin_fusioninventory_credentialips` (
@@ -550,22 +583,153 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       }
       
       
-   // ** glpi_plugin_fusioninventory_configs
-      $newTable = "glpi_plugin_fusioninventory_configs";
+      
+   // ** glpi_plugin_fusioninventory_tasks
+      $newTable = "glpi_plugin_fusioninventory_tasks";
       if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `glpi_plugin_fusioninventory_configs` (
-                     `id` int(1) NOT NULL AUTO_INCREMENT,
-                     `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-                     `value` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-                     `plugins_id` int(11) NOT NULL DEFAULT '0',
-                     PRIMARY KEY (`id`),
-                     UNIQUE KEY `unicity` (`type`, `plugins_id`)
+         $query = "CREATE TABLE `glpi_plugin_fusioninventory_tasks` (
+                    `id` int(11) NOT NULL AUTO_INCREMENT,
+                    `entities_id` int(11) NOT NULL DEFAULT '-1',
+                    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+                    `date_creation` datetime DEFAULT NULL,
+                    `comment` text DEFAULT NULL COLLATE utf8_unicode_ci,
+                    `is_active` int(1) NOT NULL DEFAULT '0',
+                    `communication` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'push',
+                    `permanent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+                    `date_scheduled` datetime DEFAULT NULL,
+                    `periodicity_count` int(6) NOT NULL DEFAULT '0',
+                    `periodicity_type` varchar(255) DEFAULT NULL,
+                    `execution_id` int(20) NOT NULL DEFAULT '0',
+                    PRIMARY KEY (`id`),
+                    KEY `entities_id` ( `entities_id` ),
+                    KEY `is_active` ( `is_active` )
                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
          $DB->query($query);
       }
       
       
       
+   // ** glpi_plugin_fusioninventory_taskjobs
+      $newTable = "glpi_plugin_fusioninventory_taskjobs";
+      if (!TableExists($newTable)) {
+         $query = "CREATE TABLE `glpi_plugin_fusioninventory_taskjobs` (
+                    `id` int(11) NOT NULL AUTO_INCREMENT,
+                    `plugin_fusioninventory_tasks_id` int(11) NOT NULL DEFAULT '0',
+                    `entities_id` int(11) NOT NULL DEFAULT '-1',
+                    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+                    `date_creation` datetime DEFAULT NULL,
+                    `retry_nb` int(2) NOT NULL DEFAULT '0',
+                    `retry_time` int(11) NOT NULL DEFAULT '0',
+                    `plugins_id` int(11) NOT NULL DEFAULT '0',
+                    `method` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+                    `definition` text DEFAULT NULL COLLATE utf8_unicode_ci,
+                    `action` text DEFAULT NULL COLLATE utf8_unicode_ci,
+                    `comment` text DEFAULT NULL COLLATE utf8_unicode_ci,
+                    `users_id` int(11) NOT NULL DEFAULT '0',
+                    `status` int(11) NOT NULL DEFAULT '0',
+                    `rescheduled_taskjob_id` int(11) NOT NULL DEFAULT '0',
+                    `statuscomments` text DEFAULT NULL COLLATE utf8_unicode_ci,
+                    `periodicity_count` int(6) NOT NULL DEFAULT '0',
+                    `periodicity_type` varchar(255) DEFAULT NULL,
+                    `execution_id` int(20) NOT NULL DEFAULT '0',
+                    PRIMARY KEY (`id`),
+                    KEY `plugin_fusioninventory_tasks_id` (`plugin_fusioninventory_tasks_id`),
+                    KEY `entities_id` (`entities_id`),
+                    KEY `plugins_id` (`plugins_id`),
+                    KEY `users_id` (`users_id`),
+                    KEY `rescheduled_taskjob_id` (`rescheduled_taskjob_id`),
+                    KEY `method` (`method`)
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+         $DB->query($query);
+      }
+      
+      
+
+   // ** glpi_plugin_fusioninventory_taskjoblogs
+      $newTable = "glpi_plugin_fusioninventory_taskjoblogs";
+      if (!TableExists($newTable)) {
+         $query = "CREATE TABLE `glpi_plugin_fusioninventory_taskjoblogs` (
+                    `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                    `plugin_fusioninventory_taskjobstatus_id` int(11) NOT NULL DEFAULT '0',
+                    `date` datetime DEFAULT NULL,
+                    `items_id` int(11) NOT NULL DEFAULT '0',
+                    `itemtype` varchar(100) DEFAULT NULL,
+                    `state` int(11) NOT NULL DEFAULT '0',
+                    `comment` text DEFAULT NULL,
+                    PRIMARY KEY (`id`),
+                    KEY `plugin_fusioninventory_taskjobstatus_id` (`plugin_fusioninventory_taskjobstatus_id`,`state`)
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+         $DB->query($query);
+      }
+      
+      
+
+   // ** glpi_plugin_fusioninventory_taskjobstatus
+      $newTable = "glpi_plugin_fusioninventory_taskjobstatus";
+      if (!TableExists($newTable)) {
+         $query = "CREATE TABLE `glpi_plugin_fusioninventory_taskjobstatus` (
+                    `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                    `plugin_fusioninventory_taskjobs_id` int(11) NOT NULL DEFAULT '0',
+                    `items_id` int(11) NOT NULL DEFAULT '0',
+                    `itemtype` varchar(100) DEFAULT NULL,
+                    `state` int(11) NOT NULL DEFAULT '0',
+                    `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
+                    `specificity` varchar(255) DEFAULT NULL,
+                    `uniqid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+                    PRIMARY KEY (`id`),
+                    KEY `plugin_fusioninventory_taskjobs_id` (`plugin_fusioninventory_taskjobs_id`),
+                    KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`,`state`),
+                    KEY `plugin_fusioninventory_taskjob_2` (`plugin_fusioninventory_taskjobs_id`,`state`)
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+         $DB->query($query);
+      }
+      
+      
+      
+
+   // ** glpi_plugin_fusioninventory_profiles
+      $newTable = "glpi_plugin_fusioninventory_profiles";
+      if (!TableExists($newTable)) {
+         $query = "CREATE TABLE `glpi_plugin_fusioninventory_profiles` (
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                     `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+                     `right` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
+                     `plugins_id` int(11) NOT NULL DEFAULT '0',
+                     `profiles_id` int(11) NOT NULL DEFAULT '0',
+                     PRIMARY KEY (`id`),
+                     UNIQUE KEY `unicity` (`type`, `plugins_id`, `profiles_id`)
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+         $DB->query($query);
+      }
+      
+      
+      
+   // ** glpi_plugin_fusioninventory_mappings
+      $newTable = "glpi_plugin_fusioninventory_mappings";
+      if (!TableExists($newTable)) {
+         $query = "CREATE TABLE `glpi_plugin_fusioninventory_mappings` (
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                     `itemtype` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+                     `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+                     `table` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+                     `tablefield` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+                     `locale` int(4) NOT NULL DEFAULT '0',
+                     `shortlocale` int(4) DEFAULT NULL,
+                     PRIMARY KEY (`id`),
+                     KEY `name` (`name`),
+                     KEY `itemtype` (`itemtype`),
+                     KEY `table` (`table`),
+                     KEY `tablefield` (`tablefield`)
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+         $DB->query($query);
+      }
+      
+      
+      
+   // ** Delete old table not used
+      if (!TableExists("glpi_plugin_tracker_computers")) {
+         $DB->query("DROP TABLE `glpi_plugin_tracker_computers`");
+      }
       
       
    $migration->executeMigration();

@@ -185,7 +185,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_mappings` (
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `table` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `tablefield` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `locale` int(4) NOT NULL DEFAULT '',
+   `locale` int(4) NOT NULL DEFAULT '0',
    `shortlocale` int(4) DEFAULT NULL,
    PRIMARY KEY (`id`),
    KEY `name` (`name`),
