@@ -337,7 +337,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_networkportlogs`;
 
 CREATE TABLE `glpi_plugin_fusinvsnmp_networkportlogs` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
-   `networkports_id` int(11) NOT NULL,
+   `networkports_id` int(11) NOT NULL DEFAULT '0',
    `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
    `date_mod` datetime DEFAULT NULL,
    `value_old` varchar(255) DEFAULT NULL,

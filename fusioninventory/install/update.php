@@ -210,6 +210,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $migration = new $migrationname($current_version);
    $prepare_task = array();
    $prepare_rangeip = array();
+   $prepare_Config = array();
+   
    
    // TODO remove
 //   $migration = new Migration($current_version);
@@ -385,7 +387,18 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       
    // ** glpi_plugin_fusioninventory_configs
       $newTable = "glpi_plugin_fusioninventory_configs";
-      if (!TableExists($newTable)) {
+      if (TableExists('glpi_plugin_tracker_config')) {
+         if (FieldExists('glpi_plugin_tracker_config', 'ssl_only')) {
+            $query = "SELECT * FROM `glpi_plugin_tracker_config`
+               LIMIT 1"; 
+            $result = $DB->query($query);
+            if ($DB->numrows($result) > 0) {
+               $data = $DB->fetch_assoc($result);
+               $prepare_Config['ssl_only'] = $data['ssl_only'];
+            }            
+         }
+      
+      } else if (!TableExists($newTable)) {
          $query = "CREATE TABLE `glpi_plugin_fusioninventory_configs` (
                      `id` int(1) NOT NULL AUTO_INCREMENT,
                      `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
@@ -741,16 +754,46 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    
    
    
+   // ** Add default rules
+      if (TableExists("glpi_plugin_tracker_config_discovery")) {
+         // TODO Add the default rules...
+
+      }
+   
+   
 
    $plugins_id = PluginFusioninventoryModule::getModuleId("fusioninventory");
    include_once(GLPI_ROOT."/plugins/fusioninventory/inc/profile.class.php");
    PluginFusioninventoryProfile::changeProfile($plugins_id);
 
-
-   include_once(GLPI_ROOT."/plugins/fusioninventory/inc/config.class.php");
-   $config = new PluginFusioninventoryConfig();
-   $config->updateConfigType($plugins_id, 'version', PLUGIN_FUSIONINVENTORY_VERSION);
-
+   // ** Manage configuration of plugin
+      include_once(GLPI_ROOT."/plugins/fusioninventory/inc/config.class.php");
+      $config = new PluginFusioninventoryConfig();
+      $a_input = array();
+      $a_input['version'] = PLUGIN_FUSIONINVENTORY_VERSION;
+      if (!$config->getValue($plugins_id, "ssl_only")) {
+         $a_input['ssl_only'] = 0;
+      }
+      if (isset($prepare_Config['ssl_only'])) {
+         $a_input['ssl_only'] = $prepare_Config['ssl_only'];
+      }
+      if (!$config->getValue($plugins_id, "delete_task")) {
+         $a_input['delete_task'] = 20;
+      }
+      if (!$config->getValue($plugins_id, "inventory_frequence")) {
+         $a_input['inventory_frequence'] = 24;
+      }
+      if (!$config->getValue($plugins_id, "agent_port")) {
+         $a_input['agent_port'] = 62354;
+      }
+      if (!$config->getValue($plugins_id, "extradebug")) {
+         $a_input['extradebug'] = 0;
+      }
+      if (!$config->getValue($plugins_id, "users_id")) {
+         $a_input['users_id'] = 0;
+      }
+      $config->initConfig($plugins_id, $a_input);
+   
 }
 
 
