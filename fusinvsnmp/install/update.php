@@ -1133,44 +1133,188 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    $a_input['shortlocale'] = 189;
    $pFusioninventoryMapping->set($a_input);
 
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'pagecountertotalpages';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_printerlogs';
+   $a_input['tablefield']  = 'pages_total';
+   $a_input['locale']      = 28;
+   $a_input['shortlocale'] = 128;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'pagecounterblackpages';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_printerlogs';
+   $a_input['tablefield']  = 'pages_n_b';
+   $a_input['locale']      = 29;
+   $a_input['shortlocale'] = 129;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'pagecountercolorpages';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_printerlogs';
+   $a_input['tablefield']  = 'pages_color';
+   $a_input['locale']      = 30;
+   $a_input['shortlocale'] = 130;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'pagecounterrectoversopages';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_printerlogs';
+   $a_input['tablefield']  = 'pages_recto_verso';
+   $a_input['locale']      = 54;
+   $a_input['shortlocale'] = 154;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'pagecounterscannedpages';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_printerlogs';
+   $a_input['tablefield']  = 'scanned';
+   $a_input['locale']      = 55;
+   $a_input['shortlocale'] = 155;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'pagecountertotalpages_print';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_printerlogs';
+   $a_input['tablefield']  = 'pages_total_print';
+   $a_input['locale']      = 423;
+   $a_input['shortlocale'] = 1423;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'pagecounterblackpages_print';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_printerlogs';
+   $a_input['tablefield']  = 'pages_n_b_print';
+   $a_input['locale']      = 424;
+   $a_input['shortlocale'] = 1424;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'pagecountercolorpages_print';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_printerlogs';
+   $a_input['tablefield']  = 'pages_color_print';
+   $a_input['locale']      = 425;
+   $a_input['shortlocale'] = 1425;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'pagecountertotalpages_copy';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_printerlogs';
+   $a_input['tablefield']  = 'pages_total_copy';
+   $a_input['locale']      = 426;
+   $a_input['shortlocale'] = 1426;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'pagecounterblackpages_copy';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_printerlogs';
+   $a_input['tablefield']  = 'pages_n_b_copy';
+   $a_input['locale']      = 427;
+   $a_input['shortlocale'] = 1427;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'pagecountercolorpages_copy';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_printerlogs';
+   $a_input['tablefield']  = 'pages_color_copy';
+   $a_input['locale']      = 428;
+   $a_input['shortlocale'] = 1428;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'pagecountertotalpages_fax';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_printerlogs';
+   $a_input['tablefield']  = 'pages_total_fax';
+   $a_input['locale']      = 429;
+   $a_input['shortlocale'] = 1429;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'pagecounterlargepages';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_printerlogs';
+   $a_input['tablefield']  = 'pages_total_large';
+   $a_input['locale']      = 434;
+   $a_input['shortlocale'] = 1434;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'ifPhysAddress';
+   $a_input['table']       = 'glpi_networkports';
+   $a_input['tablefield']  = 'mac';
+   $a_input['locale']      = 48;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'ifName';
+   $a_input['table']       = 'glpi_networkports';
+   $a_input['tablefield']  = 'name';
+   $a_input['locale']      = 57;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'ifaddr';
+   $a_input['table']       = 'glpi_networkports';
+   $a_input['tablefield']  = 'ip';
+   $a_input['locale']      = 407;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'ifType';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 97;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'ifIndex';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 416;
+   $pFusioninventoryMapping->set($a_input);
+
    
+   // ** Computer
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Computer';
+   $a_input['name']        = 'serial';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = 'serial';
+   $a_input['locale']      = 13;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Computer';
+   $a_input['name']        = 'ifPhysAddress';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = 'mac';
+   $a_input['locale']      = 15;
+   $pFusioninventoryMapping->set($a_input);
    
-   $pFusioninventoryMapping->set($p_itemtype, 'pagecountertotalpages','glpi_plugin_fusinvsnmp_printerlogs',
-                                 'pages_total',28,128);
-   $pFusioninventoryMapping->set($p_itemtype,'pagecounterblackpages','glpi_plugin_fusinvsnmp_printerlogs',
-                                 'pages_n_b',29,129);
-   $pFusioninventoryMapping->set($p_itemtype, 'pagecountercolorpages','glpi_plugin_fusinvsnmp_printerlogs',
-                                 'pages_color',30,130);
-   $pFusioninventoryMapping->set($p_itemtype, 'pagecounterrectoversopages','glpi_plugin_fusinvsnmp_printerlogs',
-                                 'pages_recto_verso',54,154);
-   $pFusioninventoryMapping->set($p_itemtype, 'pagecounterscannedpages','glpi_plugin_fusinvsnmp_printerlogs',
-                                 'scanned',55,155);
-   $pFusioninventoryMapping->set($p_itemtype, 'pagecountertotalpages_print','glpi_plugin_fusinvsnmp_printerlogs',
-                                 'pages_total_print',423,1423);
-   $pFusioninventoryMapping->set($p_itemtype, 'pagecounterblackpages_print','glpi_plugin_fusinvsnmp_printerlogs',
-                                 'pages_n_b_print',424,1424);
-   $pFusioninventoryMapping->set($p_itemtype, 'pagecountercolorpages_print','glpi_plugin_fusinvsnmp_printerlogs',
-                                 'pages_color_print',425,1425);
-   $pFusioninventoryMapping->set($p_itemtype, 'pagecountertotalpages_copy','glpi_plugin_fusinvsnmp_printerlogs',
-                                 'pages_total_copy',426,1426);
-   $pFusioninventoryMapping->set($p_itemtype, 'pagecounterblackpages_copy','glpi_plugin_fusinvsnmp_printerlogs',
-                                 'pages_n_b_copy',427,1427);
-   $pFusioninventoryMapping->set($p_itemtype, 'pagecountercolorpages_copy','glpi_plugin_fusinvsnmp_printerlogs',
-                                 'pages_color_copy',428,1428);
-   $pFusioninventoryMapping->set($p_itemtype, 'pagecountertotalpages_fax','glpi_plugin_fusinvsnmp_printerlogs',
-                                 'pages_total_fax',429,1429);
-   $pFusioninventoryMapping->set($p_itemtype, 'pagecounterlargepages','glpi_plugin_fusinvsnmp_printerlogs',
-                                 'pages_total_large',434,1434);
-   $pFusioninventoryMapping->set($p_itemtype, 'ifPhysAddress','glpi_networkports','mac',58,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'ifName','glpi_networkports','name',57,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'ifaddr','glpi_networkports','ip',407,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'ifType','','',97,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'ifIndex','','',416,NULL);
-           
-   $p_itemtype = 'Computer';
-   $pFusioninventoryMapping->set($p_itemtype, 'serial','','serial',13,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'ifPhysAddress','','mac',15,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'ifaddr','','ip',407,NULL);
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Computer';
+   $a_input['name']        = 'ifaddr';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = 'ip';
+   $a_input['locale']      = 407;
+   $pFusioninventoryMapping->set($a_input);
    
    
    
