@@ -56,26 +56,39 @@ class PluginFusioninventoryMapping extends CommonDBTM {
    
    
    
-   function set($p_itemtype, $p_name, $p_table, $p_tablefield, $p_locale, $p_shortlocale) {
+   /**
+    *
+    * @param $parm
+    */
+   function set($parm) {
+//      $p_itemtype, $p_name, $p_table, $p_tablefield, $p_locale, $p_shortlocale) {
       global $DB;
       
       $data = current(getAllDatasFromTable("glpi_plugin_fusioninventory_mappings", 
-                                   "`itemtype`='NetworkEquipment' AND `name`='location'"));
+                                   "`itemtype`='".$parm['itemtype']."' AND `name`='".$parm['name']."'"));
       if (empty($data)) {
          // Insert
-         $query = "INSERT INTO `glpi_plugin_fusioninventory_mappings`
-                     (`itemtype`, `name`, `table`, `tablefield`, `locale`, `shortlocale`)
-                  VALUES ('".$p_itemtype."','".$p_name."','".$p_table."',
-                          '".$p_tablefield."','".$p_locale."','".$p_shortlocale."')";
+         if (isset($parm['shortlocale'])) {
+            $query = "INSERT INTO `glpi_plugin_fusioninventory_mappings`
+                        (`itemtype`, `name`, `table`, `tablefield`, `locale`, `shortlocale`)
+                     VALUES ('".$parm['itemtype']."','".$parm['name']."','".$parm['table']."',
+                             '".$parm['tablefield']."','".$parm['locale']."','".$parm['shortlocale']."')";
+         } else {
+            $query = "INSERT INTO `glpi_plugin_fusioninventory_mappings`
+                        (`itemtype`, `name`, `table`, `tablefield`, `locale`)
+                     VALUES ('".$parm['itemtype']."','".$parm['name']."','".$parm['table']."',
+                             '".$parm['tablefield']."','".$parm['locale']."')";
+         }
          $DB->query($query);
-      } elseif ($data['table'] != $p_table
-                OR $data['tablefield'] != $p_tablefield
-                OR $data['locale'] != $p_locale) {
-         $data['table'] = $p_table;
-         $data['tablefield'] = $p_tablefield;
-         $data['locale'] = $p_locale;
-         $data['shortlocale'] = $p_shortlocale;
-         
+      } elseif ($data['table'] != $parm['table']
+                OR $data['tablefield'] != $parm['tablefield']
+                OR $data['locale'] != $parm['locale']) {
+         $data['table'] = $parm['table'];
+         $data['tablefield'] = $parm['tablefield'];
+         $data['locale'] = $parm['locale'];
+         if (isset($parm['shortlocale'])) {
+            $data['shortlocale'] = $parm['shortlocale'];
+         }
          $this->update($data);
       }
    }

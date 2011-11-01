@@ -179,51 +179,289 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    
    // ** Udpate mapping
    $pFusioninventoryMapping = new PluginFusioninventoryMapping();
-   $p_itemtype = 'NetworkEquipment';
-   $pFusioninventoryMapping->set($p_itemtype, 'location','glpi_networkequipments','locations_id',1,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'firmware','glpi_networkequipments',
-                                 'networkequipmentfirmwares_id',2,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'firmware1','','',2,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'firmware2','','',2,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'contact','glpi_networkequipments','contact',403,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'comments','glpi_networkequipments','comment',404,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'uptime','glpi_plugin_fusinvsnmp_networkequipments',
-                                 'uptime',3,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'cpu','glpi_plugin_fusinvsnmp_networkequipments',
-                                 'cpu',12,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'cpuuser','glpi_plugin_fusinvsnmp_networkequipments',
-                                 'cpu',401,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'cpusystem','glpi_plugin_fusinvsnmp_networkequipments',
-                                 'cpu',402,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'serial','glpi_networkequipments','serial',13,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'otherserial','glpi_networkequipments','otherserial',419,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'name','glpi_networkequipments','name',20,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'ram','glpi_networkequipments','ram',21,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'memory','glpi_plugin_fusinvsnmp_networkequipments',
-                                 'memory',22,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'vtpVlanName','','',19,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'vmvlan','','',430,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'entPhysicalModelName','glpi_networkequipments',
-                                 'networkequipmentmodels_id',17,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'macaddr','glpi_networkequipments','ip',417,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'cdpCacheAddress','','',409,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'cdpCacheDevicePort','','',410,NULL);
    
-   $pFusioninventoryMapping->set($p_itemtype, 'cdpCacheVersion','','',435,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'cdpCacheDeviceId','','',436,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'cdpCachePlatform','','',437,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'lldpRemChassisId','','',431,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'lldpRemPortId','','',432,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'lldpLocChassisId','','',432,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'lldpRemSysDesc','','',438,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'lldpRemSysName','','',439,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'lldpRemPortDesc','','',440,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'vlanTrunkPortDynamicStatus','','',411,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'dot1dTpFdbAddress','','',412,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'ipNetToMediaPhysAddress','','',413,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'dot1dTpFdbPort','','',414,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'dot1dBasePortIfIndex','','',415,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'ipAdEntAddr','','',421,NULL);
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'location';
+   $a_input['table']       = 'glpi_networkequipments';
+   $a_input['tablefield']  = 'locations_id';
+   $a_input['locale']      = 1;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'firmware';
+   $a_input['table']       = 'glpi_networkequipments';
+   $a_input['tablefield']  = 'networkequipmentfirmwares_id';
+   $a_input['locale']      = 2;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'firmware1';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 2;
+   $pFusioninventoryMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'firmware2';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 2;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'contact';
+   $a_input['table']       = 'glpi_networkequipments';
+   $a_input['tablefield']  = 'contact';
+   $a_input['locale']      = 403;
+   $pFusioninventoryMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'comments';
+   $a_input['table']       = 'glpi_networkequipments';
+   $a_input['tablefield']  = 'comment';
+   $a_input['locale']      = 404;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'uptime';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkequipments';
+   $a_input['tablefield']  = 'uptime';
+   $a_input['locale']      = 3;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'cpu';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkequipments';
+   $a_input['tablefield']  = 'cpu';
+   $a_input['locale']      = 12;
+   $pFusioninventoryMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'cpuuser';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkequipments';
+   $a_input['tablefield']  = 'cpu';
+   $a_input['locale']      = 401;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'cpusystem';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkequipments';
+   $a_input['tablefield']  = 'cpu';
+   $a_input['locale']      = 402;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'serial';
+   $a_input['table']       = 'glpi_networkequipments';
+   $a_input['tablefield']  = 'serial';
+   $a_input['locale']      = 13;
+   $pFusioninventoryMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'otherserial';
+   $a_input['table']       = 'glpi_networkequipments';
+   $a_input['tablefield']  = 'otherserial';
+   $a_input['locale']      = 419;
+   $pFusioninventoryMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'name';
+   $a_input['table']       = 'glpi_networkequipments';
+   $a_input['tablefield']  = 'name';
+   $a_input['locale']      = 20;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ram';
+   $a_input['table']       = 'glpi_networkequipments';
+   $a_input['tablefield']  = 'ram';
+   $a_input['locale']      = 21;
+   $pFusioninventoryMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'memory';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkequipments';
+   $a_input['tablefield']  = 'memory';
+   $a_input['locale']      = 22;
+   $pFusioninventoryMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'vtpVlanName';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 19;
+   $pFusioninventoryMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'vmvlan';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 430;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'entPhysicalModelName';
+   $a_input['table']       = 'glpi_networkequipments';
+   $a_input['tablefield']  = 'networkequipmentmodels_id';
+   $a_input['locale']      = 17;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'macaddr';
+   $a_input['table']       = 'glpi_networkequipments';
+   $a_input['tablefield']  = 'ip';
+   $a_input['locale']      = 417;
+   $pFusioninventoryMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'cdpCacheAddress';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 409;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'cdpCacheDevicePort';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 410;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'cdpCacheVersion';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 435;
+   $pFusioninventoryMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'cdpCacheDeviceId';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 436;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'cdpCachePlatform';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 437;
+   $pFusioninventoryMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'lldpRemChassisId';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 431;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'lldpRemPortId';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 432;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'lldpLocChassisId';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 432;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'lldpRemSysDesc';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 438;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'lldpRemSysName';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 439;
+   $pFusioninventoryMapping->set($a_input);
+   $a_input = array();
+
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'lldpRemPortDesc';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 440;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'vlanTrunkPortDynamicStatus';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 411;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'dot1dTpFdbAddress';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 412;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ipNetToMediaPhysAddress';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 413;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'dot1dTpFdbPort';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 414;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'dot1dBasePortIfIndex';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 415;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ipAdEntAddr';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 421;
+   $pFusioninventoryMapping->set($a_input);
+   
    $pFusioninventoryMapping->set($p_itemtype, 'PortVlanIndex','','',422,NULL);
    $pFusioninventoryMapping->set($p_itemtype, 'ifIndex','','',408,NULL);
    $pFusioninventoryMapping->set($p_itemtype, 'ifmtu','glpi_plugin_fusinvsnmp_networkports',
