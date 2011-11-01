@@ -461,99 +461,679 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    $a_input['tablefield']  = '';
    $a_input['locale']      = 421;
    $pFusioninventoryMapping->set($a_input);
+
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'PortVlanIndex';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 422;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ifIndex';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 408;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ifmtu';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkports';
+   $a_input['tablefield']  = 'ifmtu';
+   $a_input['locale']      = 4;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ifspeed';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkports';
+   $a_input['tablefield']  = 'ifspeed';
+   $a_input['locale']      = 5;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ifinternalstatus';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkports';
+   $a_input['tablefield']  = 'ifinternalstatus';
+   $a_input['locale']      = 6;
+   $pFusioninventoryMapping->set($a_input);
+
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'iflastchange';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkports';
+   $a_input['tablefield']  = 'iflastchange';
+   $a_input['locale']      = 7;
    
-   $pFusioninventoryMapping->set($p_itemtype, 'PortVlanIndex','','',422,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'ifIndex','','',408,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'ifmtu','glpi_plugin_fusinvsnmp_networkports',
-                                 'ifmtu',4,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'ifspeed','glpi_plugin_fusinvsnmp_networkports',
-                                 'ifspeed',5,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'ifinternalstatus','glpi_plugin_fusinvsnmp_networkports',
-                                 'ifinternalstatus',6,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'iflastchange','glpi_plugin_fusinvsnmp_networkports',
-                                 'iflastchange',7,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'ifinoctets','glpi_plugin_fusinvsnmp_networkports',
-                                 'ifinoctets',8,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'ifoutoctets','glpi_plugin_fusinvsnmp_networkports',
-                                 'ifoutoctets',9,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'ifinerrors','glpi_plugin_fusinvsnmp_networkports',
-                                 'ifinerrors',10,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'ifouterrors','glpi_plugin_fusinvsnmp_networkports',
-                                 'ifouterrors',11,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'ifstatus','glpi_plugin_fusinvsnmp_networkports',
-                                 'ifstatus',14,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'ifPhysAddress','glpi_networkports','mac',15,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'ifName','glpi_networkports','name',16,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'ifType','','',18,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'ifdescr','glpi_plugin_fusinvsnmp_networkports',
-                                 'ifdescr',23,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'portDuplex','glpi_plugin_fusinvsnmp_networkports',
-                                 'portduplex',33,NULL);
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ifinoctets';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkports';
+   $a_input['tablefield']  = 'ifinoctets';
+   $a_input['locale']      = 8;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ifoutoctets';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkports';
+   $a_input['tablefield']  = 'ifoutoctets';
+   $a_input['locale']      = 9;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ifinerrors';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkports';
+   $a_input['tablefield']  = 'ifinerrors';
+   $a_input['locale']      = 10;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ifouterrors';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkports';
+   $a_input['tablefield']  = 'ifouterrors';
+   $a_input['locale']      = 11;
+   $pFusioninventoryMapping->set($a_input);
    
-   $p_itemtype = 'Printer';
-   $pFusioninventoryMapping->set($p_itemtype, 'model','glpi_printers','printermodels_id',25,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'enterprise','glpi_printers','manufacturers_id',420,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'serial','glpi_printers','serial',27,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'contact','glpi_printers','contact',405,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'comments','glpi_printers','comment',406,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'name','glpi_printers','comment',24,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'otherserial','glpi_printers','otherserial',418,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'memory','glpi_printers','memory_size',26,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'location','glpi_printers','locations_id',56,NULL);
-   $pFusioninventoryMapping->set($p_itemtype, 'informations','','',165,165);
-   $pFusioninventoryMapping->set($p_itemtype, 'tonerblack','','',157,157);
-   $pFusioninventoryMapping->set($p_itemtype, 'tonerblackmax','','',166,166);
-   $pFusioninventoryMapping->set($p_itemtype, 'tonerblackused','','',167,167);
-   $pFusioninventoryMapping->set($p_itemtype, 'tonerblackremaining','','',168,168);
-   $pFusioninventoryMapping->set($p_itemtype, 'tonerblack2','','',157,157);
-   $pFusioninventoryMapping->set($p_itemtype, 'tonerblack2max','','',166,166);
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ifstatus';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkports';
+   $a_input['tablefield']  = 'ifstatus';
+   $a_input['locale']      = 14;
+   $pFusioninventoryMapping->set($a_input);
    
-   $pFusioninventoryMapping->set($p_itemtype, 'tonerblack2used','','',167,167);
-   $pFusioninventoryMapping->set($p_itemtype, 'tonerblack2remaining','','',168,168);
-   $pFusioninventoryMapping->set($p_itemtype, 'tonercyan','','',158,158);
-   $pFusioninventoryMapping->set($p_itemtype, 'tonercyanmax','','',169,169);
-   $pFusioninventoryMapping->set($p_itemtype, 'tonercyanused','','',170,170);
-   $pFusioninventoryMapping->set($p_itemtype, 'tonercyanremaining','','',171,171);
-   $pFusioninventoryMapping->set($p_itemtype, 'tonermagenta','','',159,159);
-   $pFusioninventoryMapping->set($p_itemtype, 'tonermagentamax','','',172,172);
-   $pFusioninventoryMapping->set($p_itemtype, 'tonermagentaused','','',173,173);
-   $pFusioninventoryMapping->set($p_itemtype, 'tonermagentaremaining','','',174,174);
-   $pFusioninventoryMapping->set($p_itemtype, 'toneryellow','','',160,160);
-   $pFusioninventoryMapping->set($p_itemtype, 'toneryellowmax','','',175,175);
-   $pFusioninventoryMapping->set($p_itemtype, 'toneryellowused','','',176,176);
-   $pFusioninventoryMapping->set($p_itemtype, 'toneryellowremaining','','',177,177);
-   $pFusioninventoryMapping->set($p_itemtype, 'wastetoner','','',151,151);
-   $pFusioninventoryMapping->set($p_itemtype, 'wastetonermax','','',190,190);
-   $pFusioninventoryMapping->set($p_itemtype, 'wastetonerused','','',191,191);
-   $pFusioninventoryMapping->set($p_itemtype, 'wastetonerremaining','','',192,192);
-   $pFusioninventoryMapping->set($p_itemtype, 'cartridgeblack','','',134,134);
-   $pFusioninventoryMapping->set($p_itemtype, 'cartridgeblackphoto','','',135,135);
-   $pFusioninventoryMapping->set($p_itemtype, 'cartridgecyan','','',136,136);
-   $pFusioninventoryMapping->set($p_itemtype, 'cartridgecyanlight','','',139,139);
-   $pFusioninventoryMapping->set($p_itemtype, 'cartridgemagenta','','',138,138);
-   $pFusioninventoryMapping->set($p_itemtype, 'cartridgemagentalight','','',140,140);
-   $pFusioninventoryMapping->set($p_itemtype, 'cartridgeyellow','','',137,137);
-   $pFusioninventoryMapping->set($p_itemtype, 'cartridgegrey','','',196,196);
-   $pFusioninventoryMapping->set($p_itemtype, 'maintenancekit','','',156,156);
-   $pFusioninventoryMapping->set($p_itemtype, 'maintenancekitmax','','',193,193);
-   $pFusioninventoryMapping->set($p_itemtype, 'maintenancekitused','','',194,194);
-   $pFusioninventoryMapping->set($p_itemtype, 'maintenancekitremaining','','',195,195);
-   $pFusioninventoryMapping->set($p_itemtype, 'drumblack','','',161,161);
-   $pFusioninventoryMapping->set($p_itemtype, 'drumblackmax','','',178,178);
-   $pFusioninventoryMapping->set($p_itemtype, 'drumblackused','','',179,179);
-   $pFusioninventoryMapping->set($p_itemtype, 'drumblackremaining','','',180,180);
-   $pFusioninventoryMapping->set($p_itemtype, 'drumcyan','','',162,162);
-   $pFusioninventoryMapping->set($p_itemtype, 'drumcyanmax','','',181,181);
-   $pFusioninventoryMapping->set($p_itemtype, 'drumcyanused','','',182,182);
-   $pFusioninventoryMapping->set($p_itemtype, 'drumcyanremaining','','',183,183);   
-   $pFusioninventoryMapping->set($p_itemtype, 'drummagenta','','',163,163);
-   $pFusioninventoryMapping->set($p_itemtype, 'drummagentamax','','',184,184);
-   $pFusioninventoryMapping->set($p_itemtype, 'drummagentaused','','',185,185);
-   $pFusioninventoryMapping->set($p_itemtype, 'drummagentaremaining','','',186,186);
-   $pFusioninventoryMapping->set($p_itemtype, 'drumyellow','','',164,164);
-   $pFusioninventoryMapping->set($p_itemtype, 'drumyellowmax','','',187,187);
-   $pFusioninventoryMapping->set($p_itemtype, 'drumyellowused','','',188,188);
-   $pFusioninventoryMapping->set($p_itemtype, 'drumyellowremaining','','',189,189);
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ifPhysAddress';
+   $a_input['table']       = 'glpi_networkports';
+   $a_input['tablefield']  = 'mac';
+   $a_input['locale']      = 15;
+   $pFusioninventoryMapping->set($a_input);
+   
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ifName';
+   $a_input['table']       = 'glpi_networkports';
+   $a_input['tablefield']  = 'name';
+   $a_input['locale']      = 16;
+   $pFusioninventoryMapping->set($a_input);
+   
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ifType';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 18;
+   $pFusioninventoryMapping->set($a_input);
+   
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ifdescr';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkports';
+   $a_input['tablefield']  = 'ifdescr';
+   $a_input['locale']      = 23;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'portDuplex';
+   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkports';
+   $a_input['tablefield']  = 'portduplex';
+   $a_input['locale']      = 33;
+   $pFusioninventoryMapping->set($a_input);
+
+   // Printers
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'model';
+   $a_input['table']       = 'glpi_printers';
+   $a_input['tablefield']  = 'printermodels_id';
+   $a_input['locale']      = 25;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'enterprise';
+   $a_input['table']       = 'glpi_printers';
+   $a_input['tablefield']  = 'manufacturers_id';
+   $a_input['locale']      = 420;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'serial';
+   $a_input['table']       = 'glpi_printers';
+   $a_input['tablefield']  = 'serial';
+   $a_input['locale']      = 27;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'contact';
+   $a_input['table']       = 'glpi_printers';
+   $a_input['tablefield']  = 'contact';
+   $a_input['locale']      = 405;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'comments';
+   $a_input['table']       = 'glpi_printers';
+   $a_input['tablefield']  = 'comment';
+   $a_input['locale']      = 406;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'name';
+   $a_input['table']       = 'glpi_printers';
+   $a_input['tablefield']  = 'comment';
+   $a_input['locale']      = 24;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'otherserial';
+   $a_input['table']       = 'glpi_printers';
+   $a_input['tablefield']  = 'otherserial';
+   $a_input['locale']      = 418;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'memory';
+   $a_input['table']       = 'glpi_printers';
+   $a_input['tablefield']  = 'memory_size';
+   $a_input['locale']      = 26;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'location';
+   $a_input['table']       = 'glpi_printers';
+   $a_input['tablefield']  = 'locations_id';
+   $a_input['locale']      = 56;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'informations';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 165;
+   $a_input['shortlocale'] = 165;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonerblack';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 157;
+   $a_input['shortlocale'] = 157;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonerblackmax';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 166;
+   $a_input['shortlocale'] = 166;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonerblackused';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 167;
+   $a_input['shortlocale'] = 167;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonerblackremaining';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 168;
+   $a_input['shortlocale'] = 168;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonerblack2';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 157;
+   $a_input['shortlocale'] = 157;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonerblack2max';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 166;
+   $a_input['shortlocale'] = 166;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonerblack2used';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 167;
+   $a_input['shortlocale'] = 167;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonerblack2remaining';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 168;
+   $a_input['shortlocale'] = 168;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonercyan';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 158;
+   $a_input['shortlocale'] = 158;
+   $pFusioninventoryMapping->set($a_input);
+   
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonercyanmax';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 169;
+   $a_input['shortlocale'] = 169;
+   $pFusioninventoryMapping->set($a_input);
+      
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonercyanused';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 170;
+   $a_input['shortlocale'] = 170;
+   $pFusioninventoryMapping->set($a_input);
+   
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonercyanremaining';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 171;
+   $a_input['shortlocale'] = 171;
+   $pFusioninventoryMapping->set($a_input);
+   
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonermagenta';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 159;
+   $a_input['shortlocale'] = 159;
+   $pFusioninventoryMapping->set($a_input);
+   
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonermagentamax';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 172;
+   $a_input['shortlocale'] = 172;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonermagentaused';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 173;
+   $a_input['shortlocale'] = 173;
+   $pFusioninventoryMapping->set($a_input);
+   
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonermagentaremaining';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 174;
+   $a_input['shortlocale'] = 174;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'toneryellow';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 160;
+   $a_input['shortlocale'] = 160;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'toneryellowmax';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 175;
+   $a_input['shortlocale'] = 175;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'toneryellowused';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 176;
+   $a_input['shortlocale'] = 176;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'toneryellowused';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 177;
+   $a_input['shortlocale'] = 177;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'wastetoner';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 151;
+   $a_input['shortlocale'] = 151;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'wastetonermax';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 190;
+   $a_input['shortlocale'] = 190;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'wastetonerused';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 191;
+   $a_input['shortlocale'] = 191;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'wastetonerremaining';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 192;
+   $a_input['shortlocale'] = 192;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgeblack';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 134;
+   $a_input['shortlocale'] = 134;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgeblackphoto';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 135;
+   $a_input['shortlocale'] = 135;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgecyan';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 136;
+   $a_input['shortlocale'] = 136;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgecyanlight';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 139;
+   $a_input['shortlocale'] = 139;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgemagenta';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 138;
+   $a_input['shortlocale'] = 138;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgemagentalight';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 140;
+   $a_input['shortlocale'] = 140;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgeyellow';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 137;
+   $a_input['shortlocale'] = 137;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgegrey';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 196;
+   $a_input['shortlocale'] = 196;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'maintenancekit';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 156;
+   $a_input['shortlocale'] = 156;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'maintenancekitmax';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 193;
+   $a_input['shortlocale'] = 193;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'maintenancekitused';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 194;
+   $a_input['shortlocale'] = 194;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'maintenancekitremaining';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 195;
+   $a_input['shortlocale'] = 195;
+   $pFusioninventoryMapping->set($a_input);
+   
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drumblack';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 161;
+   $a_input['shortlocale'] = 161;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drumblackmax';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 178;
+   $a_input['shortlocale'] = 178;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drumblackused';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 179;
+   $a_input['shortlocale'] = 179;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drumblackremaining';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 180;
+   $a_input['shortlocale'] = 180;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drumcyan';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 162;
+   $a_input['shortlocale'] = 162;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drumcyanmax';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 181;
+   $a_input['shortlocale'] = 181;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drumcyanused';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 182;
+   $a_input['shortlocale'] = 182;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drumcyanremaining';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 183;
+   $a_input['shortlocale'] = 183;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drummagenta';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 163;
+   $a_input['shortlocale'] = 163;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drummagentamax';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 184;
+   $a_input['shortlocale'] = 184;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drummagentaused';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 185;
+   $a_input['shortlocale'] = 185;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drummagentaremaining';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 186;
+   $a_input['shortlocale'] = 186;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drumyellow';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 164;
+   $a_input['shortlocale'] = 164;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drumyellowmax';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 187;
+   $a_input['shortlocale'] = 187;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drumyellowused';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 188;
+   $a_input['shortlocale'] = 188;
+   $pFusioninventoryMapping->set($a_input);
+
+   $pFusioninventoryMapping->set($a_input);
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drumyellowremaining';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 189;
+   $a_input['shortlocale'] = 189;
+   $pFusioninventoryMapping->set($a_input);
+
+   
    
    $pFusioninventoryMapping->set($p_itemtype, 'pagecountertotalpages','glpi_plugin_fusinvsnmp_printerlogs',
                                  'pages_total',28,128);
