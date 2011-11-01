@@ -397,8 +397,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                $prepare_Config['ssl_only'] = $data['ssl_only'];
             }            
          }
-      
-      } else if (!TableExists($newTable)) {
+         $DB->query("DROP TABLE glpi_plugin_tracker_config");
+      }
+      if (!TableExists($newTable)) {
          $query = "CREATE TABLE `glpi_plugin_fusioninventory_configs` (
                      `id` int(1) NOT NULL AUTO_INCREMENT,
                      `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
