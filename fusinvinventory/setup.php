@@ -162,6 +162,10 @@ function plugin_fusinvinventory_check_prerequisites() {
       echo $LANG['plugin_fusioninventory']['errors'][50];
       return false;
    }
+   $plugin = new Plugin();
+   if (!$plugin->isActivated("fusioninventory")) {
+      return false;
+   }
    return true;
 }
 

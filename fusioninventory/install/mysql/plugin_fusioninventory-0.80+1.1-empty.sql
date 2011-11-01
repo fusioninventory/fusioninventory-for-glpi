@@ -41,7 +41,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_agents` (
    PRIMARY KEY (`id`),
    KEY `name` (`name`),
    KEY `device_id` (`device_id`),
-   KEY `item` (`itemtype`,`items_id`)
+   KEY `item` (`itemtype`,`items_id`),
+   KEY `items_id` (`items_id`),
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 

@@ -80,6 +80,11 @@ $migration = new CliMigration($current_version);
 if (!isset($current_version)) {
    $current_version = 0;
 }
+if ($current_version == '0') {
+   $migration->displayWarning("***** Install process of plugin FUSIONINVENTORY *****");
+} else {
+   $migration->displayWarning("***** Update process of plugin FUSIONINVENTORY *****");
+}
 
 $migration->displayWarning("Current FusionInventory version: $current_version");
 $migration->displayWarning("Version to update: ".PLUGIN_FUSIONINVENTORY_VERSION);
@@ -101,16 +106,61 @@ if (($current_version != PLUGIN_FUSIONINVENTORY_VERSION)
 
 $plugin = new Plugin();
 $plugin->getFromDBbyDir("fusioninventory");
-$function = 'plugin_fusioninventory_check_config';
-if (function_exists($function)) {
-   if ($function()) {
-      $plugin->update(array('id'    => $plugin->fields['id'],
-                          'state' => Plugin::NOTACTIVATED));
-   } else {
-      $plugin->update(array('id'    => $plugin->fields['id'],
-                          'state' => Plugin::TOBECONFIGURED));
+$plugin->activate($plugin->fields['id']);
+
+
+// ** Install / update too plugin fusinvsnmp
+if ($plugin->getFromDBbyDir("fusinvsnmp")) {
+   include_once(GLPI_ROOT . "/plugins/fusinvsnmp/install/update.php");
+   include_once(GLPI_ROOT . "/plugins/fusinvsnmp/locales/en_GB.php");
+   $current_version = pluginFusinvsnmpGetCurrentVersion(PLUGIN_FUSINVSNMP_VERSION);
+
+   $migration = new CliMigration($current_version);
+   
+   if (!isset($current_version)) {
+      $current_version = 0;
    }
+   if ($current_version == '0') {
+      $migration->displayWarning("***** Install process of plugin FUSINVSNMP *****");
+   } else {
+      $migration->displayWarning("***** Update process of plugin FUSINVSNMP *****");
+   }
+   
+   $migration->displayWarning("Current FusinvSNMP version: $current_version");
+   $migration->displayWarning("Version to update: ".PLUGIN_FUSINVSNMP_VERSION);
+   
+   if (($current_version != PLUGIN_FUSINVSNMP_VERSION)
+        AND $current_version!='0') {
+   pluginFusinvsnmpUpdate($current_version, $migration);
+      $migration->displayWarning("Update done.");
+   } else if ($current_version == PLUGIN_FUSINVSNMP_VERSION) {
+      $migration->displayWarning("No migration needed.");
+   } else {
+      include (GLPI_ROOT . "/plugins/fusinvsnmp/install/install.php");
+      pluginFusinvsnmpInstall(PLUGIN_FUSINVSNMP_VERSION, $migration);
+      $migration->displayWarning("installation done.");
+   }
+   
+   
 }
+
+
+
+
+
+
+
+//
+//$function = 'plugin_fusioninventory_check_config';
+//if (function_exists($function)) {
+//   if ($function()) {
+//      $plugin->update(array('id'    => $plugin->fields['id'],
+//                          'state' => Plugin::NOTACTIVATED));
+//   } else {
+//      $plugin->update(array('id'    => $plugin->fields['id'],
+//                          'state' => Plugin::TOBECONFIGURED));
+//   }
+//}
 
 
 if (in_array('--optimize', $_SERVER['argv'])) {

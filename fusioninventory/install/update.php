@@ -349,7 +349,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $migration->addKey($newTable,
                          array("itemtype", "items_id"),
                          "item");
-      
+      $migration->addKey($newTable,
+                         "items_id");
       
       
    // ** glpi_plugin_fusioninventory_agentmodules
@@ -444,7 +445,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $migration->changeField($newTable,
                               "ID",
                               "id",
-                              "int(11) NOT NULL");
+                              "int(11) NOT NULL AUTO_INCREMENT");
       $migration->changeField($newTable,
                               "ifaddr_start",
                               "ip_start",
@@ -730,6 +731,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       if (!TableExists("glpi_plugin_tracker_computers")) {
          $DB->query("DROP TABLE `glpi_plugin_tracker_computers`");
       }
+      
       
       
    $migration->executeMigration();

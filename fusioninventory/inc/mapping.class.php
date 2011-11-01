@@ -53,6 +53,32 @@ class PluginFusioninventoryMapping extends CommonDBTM {
       }
       return false;
    }
+   
+   
+   
+   function set($p_itemtype, $p_name, $p_table, $p_tablefield, $p_locale, $p_shortlocale) {
+      global $DB;
+      
+      $data = current(getAllDatasFromTable("glpi_plugin_fusioninventory_mappings", 
+                                   "`itemtype`='NetworkEquipment' AND `name`='location'"));
+      if (empty($data)) {
+         // Insert
+         $query = "INSERT INTO `glpi_plugin_fusioninventory_mappings`
+                     (`itemtype`, `name`, `table`, `tablefield`, `locale`, `shortlocale`)
+                  VALUES ('".$p_itemtype."','".$p_name."','".$p_table."',
+                          '".$p_tablefield."','".$p_locale."','".$p_shortlocale."')";
+         $DB->query($query);
+      } elseif ($data['table'] != $p_table
+                OR $data['tablefield'] != $p_tablefield
+                OR $data['locale'] != $p_locale) {
+         $data['table'] = $p_table;
+         $data['tablefield'] = $p_tablefield;
+         $data['locale'] = $p_locale;
+         $data['shortlocale'] = $p_shortlocale;
+         
+         $this->update($data);
+      }
+   }
 }
 
 ?>
