@@ -396,8 +396,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                $data = $DB->fetch_assoc($result);
                $prepare_Config['ssl_only'] = $data['ssl_only'];
             }            
-         }
-         $DB->query("DROP TABLE glpi_plugin_tracker_config");
+         }         
       }
       if (!TableExists($newTable)) {
          $query = "CREATE TABLE `glpi_plugin_fusioninventory_configs` (
@@ -742,16 +741,82 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       
       
    // ** Delete old table not used
-      if (!TableExists("glpi_plugin_tracker_computers")) {
+      if (TableExists("glpi_plugin_tracker_computers")) {
          $DB->query("DROP TABLE `glpi_plugin_tracker_computers`");
+      }
+      if (TableExists("glpi_plugin_tracker_connection_history")) {
+         $DB->query("DROP TABLE `glpi_plugin_tracker_connection_history`");
       }
       
       
       
    $migration->executeMigration();
    
-   // TODO update itemtypes
+   /*
+    * Clean for port orphelin
+    */
+   //networkports with item_type = 0
+   $NetworkPort = new NetworkPort();
+   $NetworkPort_Vlan = new NetworkPort_Vlan();
+   $NetworkPort_NetworkPort = new NetworkPort_NetworkPort();
+   $a_networkports = $NetworkPort->find("`itemtype`=''");
+   foreach ($a_networkports as $data) {
+      if ($NetworkPort_NetworkPort->getFromDBForNetworkPort($data['id'])) {
+         $NetworkPort_NetworkPort->delete($NetworkPort_NetworkPort->fields);
+      }
+      $a_vlans = $NetworkPort_Vlan->find("`networkports_id`='".$data['id']."'");
+      foreach ($a_vlans as $a_vlan) {
+         $NetworkPort_Vlan->delete($a_vlan);
+      }
+      $NetworkPort->delete($data, 1);
+   }
    
+   
+   /*
+    * Update networports to convert itemtype 5153 to PluginFusioninventoryUnknownDevice
+    */
+   $sql = "UPDATE `glpi_networkports`
+      SET `itemtype`='PluginFusioninventoryUnknownDevice'
+      WHERE `itemtype`='5153'";
+   $DB->query($sql);
+   $sql = "UPDATE `glpi_networkports`
+      SET `itemtype`='PluginFusioninventoryTask'
+      WHERE `itemtype`='5166'";
+   $DB->query($sql);
+
+   /*
+    * Clean display preferences not used 
+    */
+   $sql = "DELETE FROM `glpi_displaypreferences`
+      WHERE `itemtype`='5150' ";
+   $DB->query($sql);
+   $sql = "DELETE FROM `glpi_displaypreferences`
+      WHERE `itemtype`='5160' ";
+   $DB->query($sql);
+   $sql = "DELETE FROM `glpi_displaypreferences`
+      WHERE `itemtype`='5161' ";
+   $DB->query($sql);
+   $sql = "DELETE FROM `glpi_displaypreferences`
+      WHERE `itemtype`='5163' ";
+   $DB->query($sql);   
+   $sql = "DELETE FROM `glpi_displaypreferences`
+      WHERE `itemtype`='5165' ";
+   $DB->query($sql);
+
+   
+
+   
+   /*
+    * Update display preferences
+    */
+   $sql = "UPDATE `glpi_displaypreferences`
+      SET `itemtype`='PluginFusioninventoryUnknownDevice'
+      WHERE `itemtype`='5153' ";
+   $DB->query($sql);
+   $sql = "UPDATE `glpi_displaypreferences`
+      SET `itemtype`='PluginFusioninventoryAgent'
+      WHERE `itemtype`='5158' ";
+   $DB->query($sql);
    
    
    

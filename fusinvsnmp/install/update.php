@@ -1750,6 +1750,44 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    if (TableExists("glpi_plugin_tracker_config_discovery")) {
       $DB->query("DROP TABLE glpi_plugin_tracker_config_discovery");
    }  
+   
+   
+   /*
+    *  Convert displaypreferences
+    */
+   $sql = "UPDATE `glpi_displaypreferences`
+      SET `itemtype`='PluginFusinvsnmpModel'
+      WHERE `itemtype`='5151' ";
+   $DB->query($sql);
+   $sql = "UPDATE `glpi_displaypreferences`
+      SET `itemtype`='PluginFusinvsnmpConfigSecurity'
+      WHERE `itemtype`='5152' ";
+   $DB->query($sql);
+   $sql = "UPDATE `glpi_displaypreferences`
+      SET `itemtype`='PluginFusinvsnmpPrinterCartridge'
+      WHERE `itemtype`='5156' ";
+   $DB->query($sql);
+   $sql = "UPDATE `glpi_displaypreferences`
+      SET `itemtype`='PluginFusinvsnmpNetworkPort'
+      WHERE `itemtype`='5157' ";
+   $DB->query($sql);
+   $sql = "UPDATE `glpi_displaypreferences`
+      SET `itemtype`='PluginFusinvsnmpIPRange'
+      WHERE `itemtype`='5159' ";
+   $DB->query($sql);
+   $sql = "UPDATE `glpi_displaypreferences`
+      SET `itemtype`='PluginFusinvsnmpNetworkPortLog'
+      WHERE `itemtype`='5162' ";
+   $DB->query($sql);
+   $sql = "UPDATE `glpi_displaypreferences`
+      SET `itemtype`='PluginFusinvsnmpConstructDevice'
+      WHERE `itemtype`='5167' ";
+   $DB->query($sql);
+   $sql = "UPDATE `glpi_displaypreferences`
+      SET `itemtype`='PluginFusinvsnmpPrinterLog'
+      WHERE `itemtype`='5168' ";
+   $DB->query($sql);
+
       
 
    $config = new PluginFusioninventoryConfig();
