@@ -674,7 +674,7 @@ var {$render}actionForm = new Ext.FormPanel({
       iconCls: 'exticon-save',
       disabled:true,
       handler: function(btn,ev) {
-         {$render}actionFormSave()
+         {$render}actionFormSave();
          {$render}actionGrid.setDisabled(false);
          {$render}actionForm.buttons[1].setVisible(false);
       }
