@@ -269,7 +269,11 @@ var taskJobGrid = new Ext.grid.GridPanel({
                url : '../ajax/task_job.save.php?tasks_id={$id}' ,
                params : { tasks : '' }
             });
+
+            taskJobForm.hide();
             taskJobForm.collapse();
+            taskJobForm.disable();
+
             taskJobForm.buttons[0].setDisabled(true);
          } else {
             taskJobGrid.getSelectionModel().selectFirstRow();
@@ -283,8 +287,11 @@ var taskJobGrid = new Ext.grid.GridPanel({
             var rec = taskJobGrid.store.getAt(index);
             taskJobForm.loadData(rec);
             taskJobForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][12]}');
-            taskJobForm.expand();
             taskJobForm.buttons[0].setDisabled(false);
+
+            taskJobForm.expand();
+            taskJobForm.show();
+            taskJobForm.enable();
          }
       }
    }),
@@ -299,7 +306,8 @@ var taskJobGrid = new Ext.grid.GridPanel({
 
 /**** DEFINE FORM ****/
 var taskJobForm = new Ext.FormPanel({
-   disabled: {$disabled},
+   disabled: true,
+   hidden: true,
    region: 'east',
    collapsible: true,
    collapsed: true,
