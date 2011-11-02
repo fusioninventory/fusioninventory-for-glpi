@@ -109,72 +109,69 @@ class PluginFusinvdeployJob {
       $p['msg']            = ''; //Message to be logged
       $p['log']            = '';
       foreach ($params as $key => $value) {
-         $p[$key] = $value;
+         $p[$key] = clean_cross_side_scripting_deep($value);
       }
 
       //Get the agent ID by his deviceid
-      if ($agents_id = PluginFusinvdeployJob::getAgentByDeviceID($p['machineid'])) {
-
-         $jobstatus = PluginFusioninventoryTaskjoblog::getByUniqID($p['uuid']);
-
-         /*if ($update_job) {
-            $taskjob = new PluginFusioninventoryTaskjoblog();
-            $taskjob->update($jobstatus);
-         }*/
-         $taskjoblog = new PluginFusioninventoryTaskjoblog();
-         $tmp['plugin_fusioninventory_taskjobstatus_id'] = $jobstatus['id'];
-         $tmp['itemtype']                                = $jobstatus['itemtype'];
-         $tmp['items_id']                                = $jobstatus['items_id'];
-         $tmp['comment']                                 = $p['msg'];
-         $tmp['date']                                    = date("Y-m-d H:i:s");
-	 $tmp['comment']                                 = "";
-
-         // add log message
-         if (is_array($p['log'])/* && $tmp['comment'] == ""*/) {
-            foreach($p['log'] as $log) {
-               $tmp['comment'] .= $log."\n";
-            }
-         } elseif ($p['log'] != "") {
-            $tmp['comment'] .= $p['log'];
-         }
-         if ($p['status'] == 'ko') {
-            $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_ERROR;
-         } elseif ($p['currentStep'] != '') {
-            $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_RUNNING;
-            if ($tmp['comment'] == '') $tmp['comment'] = $p['currentStep'];
-            if ($p['status'] != '') {
-               $tmp['comment'] .= " : ".$p['status'];
-            }
-
-         } elseif ($p['status'] != 'ok') {
-            $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_STARTED;
-         }
-
-         if ($tmp['comment'] != "") {
-            $taskjoblog->addTaskjoblog(
-                  $tmp['plugin_fusioninventory_taskjobstatus_id'],
-                  $tmp['items_id'],
-                  $tmp['itemtype'],
-                  $tmp['state'],
-                  htmlentities($tmp['comment'], ENT_IGNORE, "UTF-8")
-            );
-         }
-
-         //change task to finish and replanned if retry available
-         if ($p['status'] != "" && $p['currentStep'] == "" || $p['status'] == "ko") {
-            $error = "0";
-            if ($p['status'] == 'ko') $error = "1";
-            //set status to finished and reinit job
-            $taskjobstatus = new PluginFusioninventoryTaskjobstatus;
-            $taskjobstatus->changeStatusFinish(
-               $jobstatus['id'],
-               $jobstatus['items_id'],
-               $jobstatus['itemtype'],
-               $error
-            );
-         }
-
+      $agents_id = PluginFusinvdeployJob::getAgentByDeviceID($p['machineid']);
+      if (!$agents_id) {
+        die;
       }
+
+     $jobstatus = PluginFusioninventoryTaskjoblog::getByUniqID($p['uuid']);
+
+     /*if ($update_job) {
+        $taskjob = new PluginFusioninventoryTaskjoblog();
+        $taskjob->update($jobstatus);
+     }*/
+     $taskjoblog = new PluginFusioninventoryTaskjoblog();
+     $tmp['plugin_fusioninventory_taskjobstatus_id'] = $jobstatus['id'];
+     $tmp['itemtype']                                = $jobstatus['itemtype'];
+     $tmp['items_id']                                = $jobstatus['items_id'];
+     $tmp['comment']                                 = htmlentities($p['msg'], ENT_IGNORE, "UTF-8");
+     $tmp['date']                                    = date("Y-m-d H:i:s");
+     $tmp['comment']                                 = "";
+     $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_RUNNING;
+
+     // add log message
+     if (is_array($p['log'])) {
+        foreach($p['log'] as $log) {
+           $tmp['comment'] .= $log."<br />\n";
+        }
+     } elseif ($p['log'] != "") {
+        $tmp['comment'] = $p['log'];
+     } elseif ($p['currentStep']) {
+        $tmp['comment'] = $p['currentStep'];
+     }
+
+     if ($p['status'] == 'ko') {
+        $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_ERROR;
+     }
+
+     if ($tmp['comment'] != "") {
+        $taskjoblog->addTaskjoblog(
+              $tmp['plugin_fusioninventory_taskjobstatus_id'],
+              $tmp['items_id'],
+              $tmp['itemtype'],
+              $tmp['state'],
+              $tmp['comment']
+        );
+     }
+
+     //change task to finish and replanned if retry available
+     if ($p['status'] != "" && $p['currentStep'] == "" || $p['status'] == "ko") {
+        $error = "0";
+        if ($p['status'] == 'ko') $error = "1";
+        //set status to finished and reinit job
+        $taskjobstatus = new PluginFusioninventoryTaskjobstatus;
+        $taskjobstatus->changeStatusFinish(
+           $jobstatus['id'],
+           $jobstatus['items_id'],
+           $jobstatus['itemtype'],
+           $error
+        );
+     }
+
       self::sendOk();
    }
 
