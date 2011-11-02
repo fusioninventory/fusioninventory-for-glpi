@@ -160,12 +160,12 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_modelmibs`;
 
 CREATE TABLE `glpi_plugin_fusinvsnmp_modelmibs` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
-   `plugin_fusinvsnmp_models_id` int(11) DEFAULT NULL,
-   `plugin_fusinvsnmp_miblabels_id` int(11) DEFAULT NULL,
-   `plugin_fusinvsnmp_miboids_id` int(11) DEFAULT NULL,
-   `plugin_fusinvsnmp_mibobjects_id` int(11) DEFAULT NULL,
-   `oid_port_counter` tinyint(1) DEFAULT NULL,
-   `oid_port_dyn` tinyint(1) DEFAULT NULL,
+   `plugin_fusinvsnmp_models_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusinvsnmp_miblabels_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusinvsnmp_miboids_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusinvsnmp_mibobjects_id` int(11) NOT NULL DEFAULT '0',
+   `oid_port_counter` tinyint(1) NOT NULL DEFAULT '0',
+   `oid_port_dyn` tinyint(1) NOT NULL DEFAULT '0',
    `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
    `is_active` tinyint(1) NOT NULL DEFAULT '1',
    `vlan` tinyint(1) NOT NULL DEFAULT '0',

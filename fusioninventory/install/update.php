@@ -747,6 +747,31 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       if (TableExists("glpi_plugin_tracker_connection_history")) {
          $DB->query("DROP TABLE `glpi_plugin_tracker_connection_history`");
       }
+      if (TableExists("glpi_plugin_tracker_agents_processes")) {
+         $DB->query("DROP TABLE `glpi_plugin_tracker_agents_processes`");
+      }
+      if (TableExists("glpi_plugin_tracker_config_snmp_history")) {
+         $DB->query("DROP TABLE `glpi_plugin_tracker_config_snmp_history`");
+      }
+      if (TableExists("glpi_plugin_tracker_config_snmp_networking")) {
+         $DB->query("DROP TABLE `glpi_plugin_tracker_config_snmp_networking`");
+      }
+      if (TableExists("glpi_plugin_tracker_config_snmp_printer")) {
+         $DB->query("DROP TABLE `glpi_plugin_tracker_config_snmp_printer`");         
+      }
+      if (TableExists("glpi_plugin_tracker_config_snmp_script")) {
+         $DB->query("DROP TABLE `glpi_plugin_tracker_config_snmp_script`");         
+      }
+      if (TableExists("glpi_plugin_tracker_connection_stats")) {
+         $DB->query("DROP TABLE `glpi_plugin_tracker_connection_stats`");         
+      }
+      if (TableExists("glpi_plugin_tracker_discovery")) {
+         $DB->query("DROP TABLE `glpi_plugin_tracker_discovery`");         
+      }
+      if (TableExists("glpi_plugin_tracker_errors")) {
+         $DB->query("DROP TABLE `glpi_plugin_tracker_errors`");         
+      }
+      
       
       
       

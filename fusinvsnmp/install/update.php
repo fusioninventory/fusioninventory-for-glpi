@@ -1387,6 +1387,113 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
       
       
    // ** glpi_plugin_fusinvsnmp_modelmibs
+      $newTable = "glpi_plugin_fusinvsnmp_modelmibs";
+      $migration->renameTable("glpi_plugin_tracker_mib_networking", 
+                              $newTable);
+      $migration->changeField($newTable,
+                              "ID",
+                              "id",
+                              "int(11) NOT NULL AUTO_INCREMENT");
+      $migration->changeField($newTable,
+                              "FK_model_infos",
+                              "plugin_fusinvsnmp_models_id",
+                              "int(11) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable,
+                              "FK_mib_label",
+                              "plugin_fusinvsnmp_miblabels_id",
+                              "int(11) NOT NULL DEFAULT '0'");      
+      $migration->changeField($newTable,
+                              "FK_mib_oid",
+                              "plugin_fusinvsnmp_miboids_id",
+                              "int(11) NOT NULL DEFAULT '0'"); 
+      $migration->changeField($newTable,
+                              "FK_mib_object",
+                              "plugin_fusinvsnmp_mibobjects_id",
+                              "int(11) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable,
+                              "oid_port_counter",
+                              "oid_port_counter",
+                              "tinyint(1) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable,
+                              "oid_port_dyn",
+                              "oid_port_dyn",
+                              "tinyint(1) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable,
+                              "oid_port_dyn",
+                              "oid_port_dyn",
+                              "tinyint(1) NOT NULL DEFAULT '0'");
+      $migration->addField($newTable, 
+                           "plugin_fusioninventory_mappings_id", 
+                           "int(11) NOT NULL DEFAULT '0'");
+      $migration->migrationOneTable($newTable);
+      // Update with mapping
+      $pFusinvsnmpModelMib = new PluginFusinvsnmpModelMib();
+      $query = "SELECT * FROM `".$newTable."`";
+      $result=$DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         $pFusioninventoryMapping = new PluginFusioninventoryMapping();
+         $mapping = 0;
+         if ($data['mapping_type'] == '2') {
+            $data['mapping_type'] == 'NetworkEquipment';
+         } else if ($data['mapping_type'] == '3') {
+            $data['mapping_type'] == 'Printer';
+         } else {
+            $data['mapping_type'] = '';
+         }
+         if ($mapping_id = $pFusioninventoryMapping->get($data['mapping_type'], $data['mapping_name'])) {
+            $data['plugin_fusioninventory_mappings_id'] = $mapping_id;
+            $pFusinvsnmpModelMib->update($data);
+         }
+      }
+      $migration->dropField($newTable,
+                            "mapping_type");
+      $migration->dropField($newTable,
+                            "mapping_name");
+      
+      $migration->changeField($newTable,
+                              "activation",
+                              "is_active",
+                              "tinyint(1) NOT NULL DEFAULT '1'");
+      $migration->changeField($newTable,
+                              "vlan",
+                              "vlan",
+                              "tinyint(1) NOT NULL DEFAULT '0'");
+      
+/*
+CREATE TABLE `glpi_plugin_tracker_mib_networking` (
+  `mapping_type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `mapping_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `activation` int(1) NOT NULL DEFAULT '1',
+  `vlan` int(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ID`),
+  KEY `FK_model_infos` (`FK_model_infos`),
+  KEY `FK_model_infos_2` (`FK_model_infos`,`oid_port_dyn`),
+  KEY `FK_model_infos_3` (`FK_model_infos`,`oid_port_counter`,`mapping_name`),
+  KEY `FK_model_infos_4` (`FK_model_infos`,`mapping_name`),
+  KEY `oid_port_dyn` (`oid_port_dyn`),
+  KEY `activation` (`activation`)
+) ENGINE=MyISAM AUTO_INCREMENT=542 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+ * 
+ * 
+CREATE TABLE `glpi_plugin_fusinvsnmp_modelmibs` (
+
+   `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
+   `is_active` tinyint(1) NOT NULL DEFAULT '1',
+   `vlan` tinyint(1) NOT NULL DEFAULT '0',
+   PRIMARY KEY (`id`),
+   KEY `plugin_fusinvsnmp_models_id` (`plugin_fusinvsnmp_models_id`),
+   KEY `plugin_fusinvsnmp_models_id_2` (`plugin_fusinvsnmp_models_id`,`oid_port_dyn`),
+   KEY `plugin_fusinvsnmp_models_id_3` (`plugin_fusinvsnmp_models_id`,`oid_port_counter`,`plugin_fusioninventory_mappings_id`),
+   KEY `plugin_fusinvsnmp_models_id_4` (`plugin_fusinvsnmp_models_id`,`plugin_fusioninventory_mappings_id`),
+   KEY `oid_port_dyn` (`oid_port_dyn`),
+   KEY `is_active` (`is_active`),
+   KEY `plugin_fusioninventory_mappings_id` (`plugin_fusioninventory_mappings_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+ */
+      
+      
       
       
    // ** glpi_plugin_fusinvsnmp_models
