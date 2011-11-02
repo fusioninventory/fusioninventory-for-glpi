@@ -223,8 +223,10 @@ var {$render}actionGrid = new Ext.grid.GridPanel({
             params: { {$render}id: selection[0].data.{$render}id }
          });
          if({$render}actionGridStore.data.length == 0) {
-            if (!{$render}actionForm.collapsed) {$render}actionForm.toggleCollapse();
             {$render}actionForm.buttons[0].setDisabled(true);
+
+            {$render}actionForm.hide();
+            {$render}actionForm.collapse();
          } else {
             {$render}actionGrid.getSelectionModel().selectFirstRow();
          }
@@ -239,6 +241,9 @@ var {$render}actionGrid = new Ext.grid.GridPanel({
             {$render}actionForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][7]}');
             {$render}actionForm.expand();
             {$render}actionForm.buttons[0].setDisabled(false);
+
+            {$render}actionForm.enable();
+            {$render}actionForm.show();
          }
       }
    }),
@@ -625,8 +630,8 @@ function {$render}actionFormSave() {
 }
 
 var {$render}actionForm = new Ext.FormPanel({
-   disabled: {$disabled},
-   hidden: {$disabled},
+   disabled: true,
+   hidden: true,
    region: 'east',
    collapsible: true,
    collapsed: true,
@@ -697,6 +702,11 @@ var {$render}actionForm = new Ext.FormPanel({
             {$render}actionGrid.store.remove(selection);
          }
          {$render}actionGrid.store.reload();
+
+         if({$render}actionGridStore.data.length == 0) {
+            {$render}actionForm.hide();
+            {$render}actionForm.collapse();
+         }
 
       }
    }],

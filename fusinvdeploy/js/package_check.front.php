@@ -208,8 +208,11 @@ var {$render}checkGrid = new Ext.grid.GridPanel({
             params: { {$render}id: selection[0].data.{$render}id }
          });
          if({$render}checkGridStore.data.length == 0) {
-            if (!{$render}checkForm.collapsed) {$render}checkForm.toggleCollapse();
+            {$render}checkForm.hide();
+            {$render}checkForm.collapse();
+
             {$render}checkForm.buttons[0].setDisabled(true);
+
          } else {
             {$render}checkGrid.getSelectionModel().selectFirstRow();
          }
@@ -220,6 +223,8 @@ var {$render}checkGrid = new Ext.grid.GridPanel({
       listeners: {
          rowselect: function(g,index,ev) {
             var {$render}rec = {$render}checkGrid.store.getAt(index);
+            {$render}checkForm.show();
+            {$render}checkForm.enable();
             {$render}checkForm.loadData({$render}rec);
             {$render}checkForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][0]}');
             {$render}checkForm.expand();
@@ -416,8 +421,8 @@ function {$render}refreshDynFieldset(val) {
 
 //define form
 var {$render}checkForm = new Ext.FormPanel({
-   disabled: {$disabled},
-   hidden: {$disabled},
+   disabled: true,
+   hidden: true,
    region: 'east',
    collapsible: true,
    collapsed: true,
@@ -519,7 +524,13 @@ var {$render}checkForm = new Ext.FormPanel({
          if (selection !== undefined) {
             {$render}checkGrid.store.remove(selection);
          }
-         {$render}checkGrid.store.reload()
+
+         {$render}checkGrid.store.reload();
+
+         if({$render}checkGridStore.data.length == 0) {
+            {$render}checkForm.hide();
+            {$render}checkForm.collapse();
+         }
       }
    }],
    loadData : function({$render}rec) {

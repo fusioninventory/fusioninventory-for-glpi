@@ -251,6 +251,15 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
                },
                success: function(){
                   {$render}fileStore.reload();
+
+                  {$render}fileForm.hide();
+                  {$render}fileForm.collapse();
+               },
+               success: function(){
+                  {$render}fileStore.reload();
+
+                  {$render}fileForm.hide();
+                  {$render}fileForm.collapse();
                }
             });
          }
@@ -301,10 +310,10 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
 
 //define form
 var {$render}fileForm = new Ext.FormPanel({
-   disabled: {$disabled},
+   disabled: true,
+   hidden : true,
    collapsible: true,
    collapsed: true,
-   hidden : {$disabled},
    region: 'east',
    labelWidth: {$label_width},
    fileUpload        : true,
@@ -536,9 +545,13 @@ var {$render}fileForm = new Ext.FormPanel({
          }
          if (selection !== undefined) {
             {$render}fileGrid.store.remove(selection);
-            {$render}fileForm.collapse();
          }
          {$render}fileGrid.store.reload();
+
+         if({$render}fileGrid.store.data.length == 0) {
+            {$render}fileForm.hide();
+            {$render}fileForm.collapse();
+         }
       }
    }],
    loadData : function({$render}rec) {
@@ -567,6 +580,7 @@ var {$render}fileForm = new Ext.FormPanel({
          }
          {$render}fileForm.show();
          {$render}fileForm.expand();
+         {$render}fileForm.enable();
       }
    }
 });
