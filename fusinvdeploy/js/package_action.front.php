@@ -236,14 +236,16 @@ var {$render}actionGrid = new Ext.grid.GridPanel({
       singleSelect: true,
       listeners: {
          rowselect: function(g,index,ev) {
-            var rec = {$render}actionGrid.store.getAt(index);
-            {$render}actionForm.loadData(rec);
-            {$render}actionForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][7]}');
-            {$render}actionForm.expand();
-            {$render}actionForm.buttons[0].setDisabled(false);
+            if (!{$disabled}) {
+               var rec = {$render}actionGrid.store.getAt(index);
+               {$render}actionForm.loadData(rec);
+               {$render}actionForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][7]}');
+               {$render}actionForm.expand();
+               {$render}actionForm.buttons[0].setDisabled(false);
 
-            {$render}actionForm.enable();
-            {$render}actionForm.show();
+               {$render}actionForm.enable();
+               {$render}actionForm.show();
+            }
          }
       }
    }),

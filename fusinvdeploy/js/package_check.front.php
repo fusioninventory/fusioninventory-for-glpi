@@ -222,13 +222,15 @@ var {$render}checkGrid = new Ext.grid.GridPanel({
       singleSelect: true,
       listeners: {
          rowselect: function(g,index,ev) {
-            var {$render}rec = {$render}checkGrid.store.getAt(index);
-            {$render}checkForm.show();
-            {$render}checkForm.enable();
-            {$render}checkForm.loadData({$render}rec);
-            {$render}checkForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][0]}');
-            {$render}checkForm.expand();
-            {$render}checkForm.buttons[0].setDisabled(false);
+            if (!{$disabled}) {
+               var {$render}rec = {$render}checkGrid.store.getAt(index);
+               {$render}checkForm.show();
+               {$render}checkForm.enable();
+               {$render}checkForm.loadData({$render}rec);
+               {$render}checkForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][0]}');
+               {$render}checkForm.expand();
+               {$render}checkForm.buttons[0].setDisabled(false);
+            }
          }
       }
    }),
