@@ -269,35 +269,34 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
       singleSelect: true,
       listeners: {
          rowselect: function(g, index, ev) {
+            if (!{$disabled}) {
+               var {$render}rec = {$render}fileGrid.store.getAt(index);
+               {$render}fileForm.loadData({$render}rec);
+
+               if({$render}rec.get('{$render}file') == '') {$render}fileForm.newFileMode(true);
+               else {$render}fileForm.newFileMode(false);
 
 
-            var {$render}rec = {$render}fileGrid.store.getAt(index);
-            {$render}fileForm.loadData({$render}rec);
+               if({$render}rec.get('{$render}p2p') == 0){
+                  Ext.getCmp('{$render}p2p_t').setValue(false);
+                  Ext.getCmp('{$render}p2p_f').setValue(true);
+               }else{
+                  Ext.getCmp('{$render}p2p_f').setValue(false);
+                  Ext.getCmp('{$render}p2p_t').setValue(true);
+               }
 
-            if({$render}rec.get('{$render}file') == '') {$render}fileForm.newFileMode(true);
-            else {$render}fileForm.newFileMode(false);
+               if({$render}rec.get('{$render}uncompress') == 0){
+                  Ext.getCmp('{$render}uncompress_t').setValue(false);
+                  Ext.getCmp('{$render}uncompress_f').setValue(true);
+               }else{
+                  Ext.getCmp('{$render}uncompress_f').setValue(false);
+                  Ext.getCmp('{$render}uncompress_t').setValue(true);
+               }
 
-
-            if({$render}rec.get('{$render}p2p') == 0){
-               Ext.getCmp('{$render}p2p_t').setValue(false);
-               Ext.getCmp('{$render}p2p_f').setValue(true);
-            }else{
-               Ext.getCmp('{$render}p2p_f').setValue(false);
-               Ext.getCmp('{$render}p2p_t').setValue(true);
+               Ext.getCmp('{$render}file').setValue('');
+               //Ext.getCmp('{$render}url').setValue('');
+               {$render}fileForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][5]}');
             }
-
-            if({$render}rec.get('{$render}uncompress') == 0){
-               Ext.getCmp('{$render}uncompress_t').setValue(false);
-               Ext.getCmp('{$render}uncompress_f').setValue(true);
-            }else{
-               Ext.getCmp('{$render}uncompress_f').setValue(false);
-               Ext.getCmp('{$render}uncompress_t').setValue(true);
-            }
-
-            Ext.getCmp('{$render}file').setValue('');
-            //Ext.getCmp('{$render}url').setValue('');
-            {$render}fileForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][5]}');
-
          }
       }
    })
