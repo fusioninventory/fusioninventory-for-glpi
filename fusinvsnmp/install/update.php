@@ -1390,6 +1390,12 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
       $newTable = "glpi_plugin_fusinvsnmp_modelmibs";
       $migration->renameTable("glpi_plugin_tracker_mib_networking", 
                               $newTable);
+      if (FieldExists($newTable, "FK_mib_label")) {
+         $query = "UPDATE `".$newTable."`
+            SET `FK_mib_label`='0' 
+            WHERE `FK_mib_label` IS NULL";
+         $DB->query($query);
+      }
       $migration->changeField($newTable,
                               "ID",
                               "id",
@@ -1413,10 +1419,6 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
       $migration->changeField($newTable,
                               "oid_port_counter",
                               "oid_port_counter",
-                              "tinyint(1) NOT NULL DEFAULT '0'");
-      $migration->changeField($newTable,
-                              "oid_port_dyn",
-                              "oid_port_dyn",
                               "tinyint(1) NOT NULL DEFAULT '0'");
       $migration->changeField($newTable,
                               "oid_port_dyn",
@@ -1461,11 +1463,6 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
       
 /*
 CREATE TABLE `glpi_plugin_tracker_mib_networking` (
-  `mapping_type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `mapping_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `activation` int(1) NOT NULL DEFAULT '1',
-  `vlan` int(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`ID`),
   KEY `FK_model_infos` (`FK_model_infos`),
   KEY `FK_model_infos_2` (`FK_model_infos`,`oid_port_dyn`),
   KEY `FK_model_infos_3` (`FK_model_infos`,`oid_port_counter`,`mapping_name`),
@@ -1477,11 +1474,6 @@ CREATE TABLE `glpi_plugin_tracker_mib_networking` (
  * 
  * 
 CREATE TABLE `glpi_plugin_fusinvsnmp_modelmibs` (
-
-   `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
-   `is_active` tinyint(1) NOT NULL DEFAULT '1',
-   `vlan` tinyint(1) NOT NULL DEFAULT '0',
-   PRIMARY KEY (`id`),
    KEY `plugin_fusinvsnmp_models_id` (`plugin_fusinvsnmp_models_id`),
    KEY `plugin_fusinvsnmp_models_id_2` (`plugin_fusinvsnmp_models_id`,`oid_port_dyn`),
    KEY `plugin_fusinvsnmp_models_id_3` (`plugin_fusinvsnmp_models_id`,`oid_port_counter`,`plugin_fusioninventory_mappings_id`),
