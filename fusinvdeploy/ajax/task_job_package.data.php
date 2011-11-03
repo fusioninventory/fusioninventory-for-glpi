@@ -34,6 +34,7 @@
 
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
+checkLoginUser();
 
 $package = new PluginFusinvdeployPackage;
 $res = $package->getAllDatas($_REQUEST);

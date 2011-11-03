@@ -37,6 +37,10 @@
 session_start();
 header("Cache-control: private");
 
+define('GLPI_ROOT', '../../..');
+include (GLPI_ROOT . "/inc/includes.php");
+checkLoginUser();
+
 // Turn off error reporting
 error_reporting(0);
 

@@ -35,6 +35,7 @@
 
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
+checkLoginUser();
 
 if(isset($_GET['render'])){
    $render = $_GET['render'];
@@ -51,13 +52,13 @@ $action = new PluginFusinvdeployAction();
 
 if (isset ($_POST["id"]) && $_POST['id']) {
    $action->getFromDB($_POST["id"]);
-   
+
    $itemtype = $action->getField('itemtype');
    $items_id = $action->getField('items_id');
-   
+
    $itemtype = new $itemtype;
    $itemtype->delete(array('id'=>$items_id));
-   
+
    $action->delete($_POST);
 
    echo "{success:true}";

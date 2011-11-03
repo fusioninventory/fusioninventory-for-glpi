@@ -38,6 +38,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 include (GLPI_ROOT."/inc/includes.php");
+checkLoginUser();
 
 commonHeader($LANG['plugin_fusinvdeploy']['task'][0],$_SERVER["PHP_SELF"],"plugins",
              "fusioninventory","task");

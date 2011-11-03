@@ -38,6 +38,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 include (GLPI_ROOT."/inc/includes.php");
+checkLoginUser();
 
 if (!isset($_GET["id"])) {
    $_GET["id"] = "";

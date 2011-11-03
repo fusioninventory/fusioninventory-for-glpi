@@ -34,6 +34,7 @@
 
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
+checkLoginUser();
 
 global $DB;
 
@@ -50,9 +51,9 @@ $order_id      = PluginFusinvdeployOrder::getIdForPackage($package_id,$render_ty
 $sql = " SELECT `glpi_plugin_fusinvdeploy_actions_commands`.id as {$render}commands_id,
                 `glpi_plugin_fusinvdeploy_actions_commands`.exec as {$render}commands_name
          FROM `glpi_plugin_fusinvdeploy_actions` as `glpi_plugin_fusinvdeploy_actions`
-         INNER JOIN `glpi_plugin_fusinvdeploy_actions_commands` 
+         INNER JOIN `glpi_plugin_fusinvdeploy_actions_commands`
                         as `glpi_plugin_fusinvdeploy_actions_commands`
-               ON    `glpi_plugin_fusinvdeploy_actions_commands`.id 
+               ON    `glpi_plugin_fusinvdeploy_actions_commands`.id
                =     `glpi_plugin_fusinvdeploy_actions`.items_id
          WHERE `glpi_plugin_fusinvdeploy_actions`.plugin_fusinvdeploy_orders_id = '$order_id'";
 
