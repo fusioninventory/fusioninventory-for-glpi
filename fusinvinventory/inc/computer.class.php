@@ -92,6 +92,16 @@ class PluginFusinvinventoryComputer extends CommonDBTM {
       echo '<td>'. $LANG['computers'][9]." - ".$LANG['common'][27].'&nbsp;:</td>';
       echo '<td>'.convDate($a_computerextend['operatingsystem_installationdate']).'</td>';
       echo '</tr>';     
+
+      echo '<tr class="tab_bg_1">';
+      echo '<td>'.$LANG['plugin_fusinvinventory']['computer'][1].'&nbsp;:</td>';
+      echo '<td>'.$a_computerextend['winowner'].'</td>';
+      echo '</tr>';  
+
+      echo '<tr class="tab_bg_1">';
+      echo '<td>'.$LANG['plugin_fusinvinventory']['computer'][2].'&nbsp;:</td>';
+      echo '<td>'.$a_computerextend['wincompany'].'</td>';
+      echo '</tr>'; 
       
       echo '</table>';
       echo '</div>';

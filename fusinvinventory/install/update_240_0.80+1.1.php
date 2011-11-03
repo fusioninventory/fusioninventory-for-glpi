@@ -85,6 +85,12 @@ function update240to080011() {
     $migration->addField($newTable, 
                         "operatingsystem_installationdate", 
                         "datetime DEFAULT NULL");
+    $migration->addField($newTable, 
+                        "winowner", 
+                        "varchar(255) DEFAULT NULL");
+    $migration->addField($newTable, 
+                        "wincompany", 
+                        "varchar(255) DEFAULT NULL");
     $migration->addKey($newTable, 
                        "computers_id");
 

@@ -323,6 +323,12 @@ class PluginFusinvinventoryLibhook {
                      $inputC['comment'] = $dataSection['DESCRIPTION'];
                   }
                }
+               if (isset($dataSection['WINOWNER'])) {
+                  $inputCext['winowner'] = $dataSection['WINOWNER'];
+               }
+               if (isset($dataSection['WINCOMPANY'])) {
+                  $inputCext['wincompany'] = $dataSection['WINCOMPANY'];
+               }
                break;
 
             case 'SOUNDS':
@@ -942,6 +948,13 @@ class PluginFusinvinventoryLibhook {
                   if (isset($dataSection['OSINSTALLDATE'])) {
                      $inputCext['operatingsystem_installationdate'] = $dataSection['OSINSTALLDATE'];
                   }
+                  if (isset($dataSection['WINOWNER'])) {
+                     $inputCext['winowner'] = $dataSection['WINOWNER'];
+                  }
+                  if (isset($dataSection['WINCOMPANY'])) {
+                     $inputCext['wincompany'] = $dataSection['WINCOMPANY'];
+                  }
+                  
                   if (isset($inputCext['id'])) {
                      $pFusinvinventoryComputer->update($inputCext, $_SESSION["plugin_fusinvinventory_history_add"]);
                   } else {

@@ -64,6 +64,8 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_computers` (
   `bios_version` varchar(255) DEFAULT NULL,
   `bios_manufacturers_id` int(11) NOT NULL default '0',
   `operatingsystem_installationdate` datetime DEFAULT NULL,
+  `winowner` varchar(255) DEFAULT NULL,
+  `wincompany` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `computers_id` (`computers_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
