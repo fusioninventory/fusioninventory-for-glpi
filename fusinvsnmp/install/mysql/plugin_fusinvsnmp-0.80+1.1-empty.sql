@@ -185,8 +185,8 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_models`;
 
 CREATE TABLE `glpi_plugin_fusinvsnmp_models` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
-   `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-   `itemtype` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+   `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+   `itemtype` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
    `discovery_key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `comment` text COLLATE utf8_unicode_ci,
    PRIMARY KEY (`id`),
@@ -234,7 +234,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_networkports`;
 
 CREATE TABLE `glpi_plugin_fusinvsnmp_networkports` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
-   `networkports_id` int(11) NOT NULL,
+   `networkports_id` int(11) NOT NULL DEFAULT '0',
    `ifmtu` int(8) NOT NULL DEFAULT '0',
    `ifspeed` bigint(50) NOT NULL DEFAULT '0',
    `ifinternalstatus` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -319,9 +319,9 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_configsecurities`;
 CREATE TABLE `glpi_plugin_fusinvsnmp_configsecurities` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `snmpversion` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
-   `community` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-   `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+   `snmpversion` varchar(8) COLLATE utf8_unicode_ci NOT NULL DEFAULT '1',
+   `community` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `username` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `authentication` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
    `auth_passphrase` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
    `encryption` varchar(255) COLLATE utf8_unicode_ci NOT NULL,

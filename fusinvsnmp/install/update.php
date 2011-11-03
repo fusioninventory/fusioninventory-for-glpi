@@ -1460,70 +1460,64 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                               "vlan",
                               "vlan",
                               "tinyint(1) NOT NULL DEFAULT '0'");
-      
-/*
-CREATE TABLE `glpi_plugin_tracker_mib_networking` (
-  KEY `FK_model_infos` (`FK_model_infos`),
-  KEY `FK_model_infos_2` (`FK_model_infos`,`oid_port_dyn`),
-  KEY `FK_model_infos_3` (`FK_model_infos`,`oid_port_counter`,`mapping_name`),
-  KEY `FK_model_infos_4` (`FK_model_infos`,`mapping_name`),
-  KEY `oid_port_dyn` (`oid_port_dyn`),
-  KEY `activation` (`activation`)
-) ENGINE=MyISAM AUTO_INCREMENT=542 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
- * 
- * 
-CREATE TABLE `glpi_plugin_fusinvsnmp_modelmibs` (
-   KEY `plugin_fusinvsnmp_models_id` (`plugin_fusinvsnmp_models_id`),
-   KEY `plugin_fusinvsnmp_models_id_2` (`plugin_fusinvsnmp_models_id`,`oid_port_dyn`),
-   KEY `plugin_fusinvsnmp_models_id_3` (`plugin_fusinvsnmp_models_id`,`oid_port_counter`,`plugin_fusioninventory_mappings_id`),
-   KEY `plugin_fusinvsnmp_models_id_4` (`plugin_fusinvsnmp_models_id`,`plugin_fusioninventory_mappings_id`),
-   KEY `oid_port_dyn` (`oid_port_dyn`),
-   KEY `is_active` (`is_active`),
-   KEY `plugin_fusioninventory_mappings_id` (`plugin_fusioninventory_mappings_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
- */
-      
-      
+      $migration->dropKey($newTable, 
+                          "FK_model_infos");
+      $migration->dropKey($newTable, 
+                          "FK_model_infos_2");
+      $migration->dropKey($newTable, 
+                          "FK_model_infos_3");
+      $migration->dropKey($newTable, 
+                          "FK_model_infos_4");
+      $migration->dropKey($newTable, 
+                          "oid_port_dyn");
+      $migration->dropKey($newTable, 
+                          "activation");
+      $migration->addKey($newTable,
+                         "plugin_fusinvsnmp_models_id");      
+      $migration->addKey($newTable,
+                         array("plugin_fusinvsnmp_models_id", "oid_port_dyn"),
+                         "plugin_fusinvsnmp_models_id_2");      
+      $migration->addKey($newTable,
+                         array("plugin_fusinvsnmp_models_id", "oid_port_counter", "plugin_fusioninventory_mappings_id"),
+                         "plugin_fusinvsnmp_models_id_3");
+      $migration->addKey($newTable,
+                         array("plugin_fusinvsnmp_models_id", "plugin_fusioninventory_mappings_id"),
+                         "plugin_fusinvsnmp_models_id_4");
+      $migration->addKey($newTable,
+                         "oid_port_dyn");
+      $migration->addKey($newTable,
+                         "is_active"); 
+      $migration->addKey($newTable,
+                         "plugin_fusioninventory_mappings_id");
       
       
    // ** glpi_plugin_fusinvsnmp_models
+      if (!TableExists("glpi_plugin_fusinvsnmp_models")) {
+         $DB->query("CREATE TABLE `glpi_plugin_fusinvsnmp_models`");
+      }
+      $migration->addField($newTable, 
+                           "id", 
+                           "int(11) NOT NULL AUTO_INCREMENT");
+      $migration->addField($newTable, 
+                           "name", 
+                           "varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+      $migration->addField($newTable, 
+                           "itemtype", 
+                           "varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+      $migration->addField($newTable, 
+                           "discovery_key", 
+                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->addField($newTable, 
+                           "comment", 
+                           "text COLLATE utf8_unicode_ci");
+      $migration->addKey($newTable,
+                         "name");      
+      $migration->addKey($newTable,
+                         "itemtype");      
       
       
    // ** glpi_plugin_fusinvsnmp_networkequipments
-      
-      
-   // ** glpi_plugin_fusinvsnmp_networkequipmentips
-      $newTable = "glpi_plugin_fusinvsnmp_networkequipmentips";
-      $migration->renameTable("glpi_plugin_tracker_networking_ifaddr", 
-                              $newTable);
-      $migration->changeField($newTable,
-                              "ID",
-                              "id",
-                              "int(11) NOT NULL AUTO_INCREMENT");
-      $migration->changeField($newTable,
-                              "FK_networking",
-                              "networkequipments_id",
-                              "int(11) NOT NULL DEFAULT '0'");
-      $migration->changeField($newTable,
-                              "ifaddr",
-                              "ip",
-                              "varchar(255) DEFAULT NULL");
-      $migration->changeField($newTable,
-                              "ip",
-                              "ip",
-                              "varchar(255) DEFAULT NULL");
-      $migration->dropKey($newTable, 
-                          "ifaddr");
-      $migration->addKey($newTable,
-                         "ip");
-      $migration->addKey($newTable,
-                         "networkequipments_id");
-  
-      
-   // ** glpi_plugin_fusinvsnmp_networkports
-      $newTable = "glpi_plugin_fusinvsnmp_networkports";
+      $newTable = "glpi_plugin_fusinvsnmp_networkequipments";
       $migration->renameTable("glpi_plugin_tracker_networking", 
                               $newTable);
       $migration->changeField($newTable,
@@ -1574,7 +1568,113 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_modelmibs` (
       $migration->addKey($newTable,
                          array("plugin_fusinvsnmp_models_id", "plugin_fusinvsnmp_configsecurities_id"),
                          "plugin_fusinvsnmp_models_id");
-
+      
+      
+   // ** glpi_plugin_fusinvsnmp_networkequipmentips
+      $newTable = "glpi_plugin_fusinvsnmp_networkequipmentips";
+      $migration->renameTable("glpi_plugin_tracker_networking_ifaddr", 
+                              $newTable);
+      $migration->changeField($newTable,
+                              "ID",
+                              "id",
+                              "int(11) NOT NULL AUTO_INCREMENT");
+      $migration->changeField($newTable,
+                              "FK_networking",
+                              "networkequipments_id",
+                              "int(11) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable,
+                              "ifaddr",
+                              "ip",
+                              "varchar(255) DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "ip",
+                              "ip",
+                              "varchar(255) DEFAULT NULL");
+      $migration->dropKey($newTable, 
+                          "ifaddr");
+      $migration->addKey($newTable,
+                         "ip");
+      $migration->addKey($newTable,
+                         "networkequipments_id");
+  
+      
+   // ** glpi_plugin_fusinvsnmp_networkports
+      $newTable = "glpi_plugin_fusinvsnmp_networkports";
+      $migration->renameTable("glpi_plugin_tracker_networking_ports", 
+                              $newTable);
+      $migration->changeField($newTable,
+                              "ID",
+                              "id",
+                              "int(11) NOT NULL AUTO_INCREMENT");
+      $migration->changeField($newTable,
+                              "FK_networking_ports",
+                              "networkports_id",
+                              "int(11) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable,
+                              "ifmtu",
+                              "ifmtu",
+                              "int(8) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable,
+                              "ifspeed",
+                              "ifspeed",
+                              "bigint(50) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable,
+                              "ifinternalstatus",
+                              "ifinternalstatus",
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "ifconnectionstatus",
+                              "ifconnectionstatus",
+                              "int(8) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable,
+                              "iflastchange",
+                              "iflastchange",
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "ifinoctets",
+                              "ifinoctets",
+                              "bigint(50) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable,
+                              "ifinerrors",
+                              "ifinerrors",
+                              "bigint(50) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable,
+                              "ifoutoctets",
+                              "ifoutoctets",
+                              "bigint(50) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable,
+                              "ifouterrors",
+                              "ifouterrors",
+                              "bigint(50) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable,
+                              "ifstatus",
+                              "ifstatus",
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "ifmac",
+                              "mac",
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "ifdescr",
+                              "ifdescr",
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "portduplex",
+                              "portduplex",
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "trunk",
+                              "trunk",
+                              "tinyint(1) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable,
+                              "lastup",
+                              "lastup",
+                              "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
+      $migration->dropKey($newTable, 
+                          "FK_networking_ports");
+      $migration->addKey($newTable,
+                         "networkports_id");
+      
       
    // ** glpi_plugin_fusinvsnmp_printerlogs
       $newTable = "glpi_plugin_fusinvsnmp_printerlogs";
@@ -1742,6 +1842,53 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_modelmibs` (
       
    // ** glpi_plugin_fusinvsnmp_configsecurities
       // TODO get info to create SNMP authentification with old values of Tracker plugin
+      $newTable = "glpi_plugin_fusinvsnmp_configsecurities";
+      $migration->renameTable("glpi_plugin_tracker_snmp_connection", 
+                              $newTable);
+      $migration->changeField($newTable,
+                              "ID",
+                              "id",
+                              "int(11) NOT NULL AUTO_INCREMENT");
+      $migration->changeField($newTable,
+                              "name",
+                              "name",
+                              "varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "FK_snmp_version",
+                              "snmpversion",
+                              "varchar(8) COLLATE utf8_unicode_ci NOT NULL DEFAULT '1'");
+      $migration->changeField($newTable,
+                              "community",
+                              "community",
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "sec_name",
+                              "username",
+                              "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT NULL");
+
+/*
+  `sec_level` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `auth_protocol` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `auth_passphrase` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `priv_protocol` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `priv_passphrase` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `deleted` int(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ID`),
+  KEY `FK_snmp_version` (`FK_snmp_version`)
+ * 
+
+   `authentication` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+   `auth_passphrase` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+   `encryption` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+   `priv_passphrase` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+   PRIMARY KEY (`id`),
+   KEY `snmpversion` (`snmpversion`),
+   KEY `is_deleted` (`is_deleted`)
+ */
+      
+      
+      
       if (TableExists("glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol")) {
          $DB->query("DROP TABLE glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol");
       }

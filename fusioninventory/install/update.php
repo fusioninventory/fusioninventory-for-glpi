@@ -771,6 +771,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       if (TableExists("glpi_plugin_tracker_errors")) {
          $DB->query("DROP TABLE `glpi_plugin_tracker_errors`");         
       }
+      if (TableExists("glpi_plugin_tracker_model_infos")) {
+         $DB->query("DROP TABLE `glpi_plugin_tracker_model_infos`");         
+      }
       
       
       
