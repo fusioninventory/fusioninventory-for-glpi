@@ -87,6 +87,12 @@ class PluginFusinvinventoryComputer extends CommonDBTM {
       echo Dropdown::getDropdownName("glpi_manufacturers", $a_computerextend['bios_manufacturers_id']);
       echo '</td>';
       echo '</tr>';
+      
+      echo '<tr class="tab_bg_1">';
+      echo '<td>'. $LANG['computers'][9]." - ".$LANG['common'][27].'&nbsp;:</td>';
+      echo '<td>'.convDate($a_computerextend['operatingsystem_installationdate']).'</td>';
+      echo '</tr>';     
+      
       echo '</table>';
       echo '</div>';
       

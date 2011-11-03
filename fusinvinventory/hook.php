@@ -81,11 +81,11 @@ function plugin_fusinvinventory_getAddSearchOptions($itemtype) {
          $sopt[5156]['linkfield'] = '';
          $sopt[5156]['name']      = $LANG['plugin_fusinvinventory']['bios'][0]."-".$LANG['rulesengine'][78];
          
-         $sopt[5155]['table']     = 'glpi_plugin_fusinvinventory_computers';
-         $sopt[5155]['field']     = 'operatingsystem_installationdate';
-         $sopt[5155]['linkfield'] = '';
-         $sopt[5155]['name']      = $LANG['computers'][9]."-".$LANG['common'][27];
-         $sopt[5155]['datatype']  = 'date';
+         $sopt[5157]['table']     = 'glpi_plugin_fusinvinventory_computers';
+         $sopt[5157]['field']     = 'operatingsystem_installationdate';
+         $sopt[5157]['linkfield'] = '';
+         $sopt[5157]['name']      = $LANG['computers'][9]."-".$LANG['common'][27];
+         $sopt[5157]['datatype']  = 'date';
          
    }
    return $sopt;
