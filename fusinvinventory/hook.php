@@ -69,6 +69,24 @@ function plugin_fusinvinventory_getAddSearchOptions($itemtype) {
          $sopt[5154]['linkfield'] = '';
          $sopt[5154]['name']      = 'Antivirus à jour';
          $sopt[5154]['datatype']  = 'bool';
+         
+         $sopt[5155]['table']     = 'glpi_plugin_fusinvinventory_computers';
+         $sopt[5155]['field']     = 'bios_date';
+         $sopt[5155]['linkfield'] = '';
+         $sopt[5155]['name']      = $LANG['plugin_fusinvinventory']['bios'][0]."-".$LANG['common'][27];
+         $sopt[5155]['datatype']  = 'date';
+         
+         $sopt[5156]['table']     = 'glpi_plugin_fusinvinventory_computers';
+         $sopt[5156]['field']     = 'bios_version';
+         $sopt[5156]['linkfield'] = '';
+         $sopt[5156]['name']      = $LANG['plugin_fusinvinventory']['bios'][0]."-".$LANG['rulesengine'][78];
+         
+         $sopt[5155]['table']     = 'glpi_plugin_fusinvinventory_computers';
+         $sopt[5155]['field']     = 'operatingsystem_installationdate';
+         $sopt[5155]['linkfield'] = '';
+         $sopt[5155]['name']      = $LANG['computers'][9]."-".$LANG['common'][27];
+         $sopt[5155]['datatype']  = 'date';
+         
    }
    return $sopt;
 }
@@ -214,55 +232,8 @@ function plugin_headings_fusinvinventory_integrity($item) {
 function plugin_headings_fusinvinventory_bios($item) {
    global $DB,$LANG;
    
-   if (get_class($item) == 'Computer') {
-      $bios=array(
-         'BMANUFACTURER'=>'',
-         'BVERSION'=>'',
-         'BDATE'=>'');
-
-      $pluginFusinvinventoryLib = new PluginFusinvinventoryLib();
-      $query = "SELECT internal_id FROM ".$pluginFusinvinventoryLib->getTable()." 
-         WHERE computers_id='".$item->fields['id']."'";
-      $result = $DB->query($query);
-      if($result AND $DB->numrows($result) > 0) {
-         $intid = $DB->result($result,0,'internal_id');
-         $infosSections = $pluginFusinvinventoryLib->_getInfoSections($intid);
-         if($infosSections) {
-            foreach($infosSections['sections'] as $key => $val) {
-               if(preg_match('/^BIOS/',$key)) {
-                  foreach(unserialize($val) as $k => $info) {
-                     if(isset($bios[$k])) {
-                        $bios[$k] = $info;
-                     }
-                  }
-               }
-            }
-         }
-         // Display form
-         echo '<div align="center">';
-         echo '<table class="tab_cadre_fixe" style="margin: 0; margin-top: 5px;">';
-         echo '<tr>';
-         echo '<th colspan="2">'.$LANG['plugin_fusinvinventory']['bios'][0].'</th>';
-         echo '</tr>';
-
-         echo '<tr class="tab_bg_1">';
-         echo '<td>'.$LANG['common'][27].'&nbsp;:</td>';
-         echo '<td>'.$bios['BDATE'].'</td>';
-         echo '</tr>';
-
-         echo '<tr class="tab_bg_1">';
-         echo '<td>'.$LANG['rulesengine'][78].'&nbsp;:</td>';
-         echo '<td>'.$bios['BVERSION'].'</td>';
-         echo '</tr>';
-
-         echo '<tr class="tab_bg_1">';
-         echo '<td>'.$LANG['common'][5].'&nbsp;:</td>';
-         echo '<td>'.$bios['BMANUFACTURER'].'</td>';
-         echo '</tr>';
-         echo '</table>';
-         echo '</div>';
-      }
-   }
+   $pFusinvinventoryComputer = new PluginFusinvinventoryComputer();
+   $pFusinvinventoryComputer->showForm($item->fields['id']);
 }
 
 
