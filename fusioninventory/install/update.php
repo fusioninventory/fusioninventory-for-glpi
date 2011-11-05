@@ -144,83 +144,29 @@ function pluginFusioninventoryGetCurrentVersion($version) {
 function pluginFusioninventoryUpdate($current_version, $migrationname='Migration') {
    global $DB;
    
-   // update from current_version to last case version + 1
-//   switch ($current_version){
-//      case "1.0.0":
-//         include("update_100_110.php");
-//         update100to110();
-//      case "1.1.0":
-//         include("update_110_200.php");
-//         update110to200();
-//      case "2.0.0":
-//         include("update_200_201.php");
-//         update200to201();
-//      case "2.0.1":
-//         include("update_201_202.php");
-//         update201to202();
-//      case "2.0.2":
-//         include("update_202_210.php");
-//         update202to210();
-//      case "2.1.0":
-//         include("update_210_211.php");
-//         update210to211();
-//      case "2.1.1":
-//         include("update_211_212.php");
-//         update211to212();
-//      case "2.1.2":
-//         include("update_212_213.php");
-//         update212to213();
-//      case "2.1.3":
-//         include("update_213_220.php");
-//         update213to220();
-//      case "2.2.0":
-//         include("update_220_221.php");
-//         update220to221($migrationname);
-//      case "2.2.1":
-//      case "2.2.2":
-//      case "2.2.3":
-//      case "2.2.4":
-//      case "2.2.5":
-//         include("update_221_230.php");
-//         update221to230($migrationname);
-//      case "2.3.0":
-//      case "2.3.1":
-//         include("update_231_232.php");
-//         update231to232();
-//      case "2.3.2":
-//         include("update_232_233.php");
-//         update232to233();
-//      case "2.3.3":
-//      case "2.3.4":
-//      case "2.3.5":
-//      case "2.3.6":
-//      case "2.3.7":
-//      case "2.3.8":
-//      case "2.3.9":
-//      case "2.3.10":
-//      case "2.3.11":
-//         include("update_232_240.php");
-//         update232to240();
-//      case "2.4.0":
-//         include("update_240_08011.php");
-//         update240to080011();
-//
-//   }
-   
    $migration = new $migrationname($current_version);
    $prepare_task = array();
    $prepare_rangeip = array();
    $prepare_Config = array();
    
-   
    // TODO remove
 //   $migration = new Migration($current_version);
    // END TODO remove
    
-   
+   /*
+    * CHeck if folders are right created
+    */
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
+   }
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp');
+   }
       
       
-   // ** Manage glpi_plugin_fusioninventory_agents
+   /*
+    *  Manage glpi_plugin_fusioninventory_agents
+    */
       $newTable = "glpi_plugin_fusioninventory_agents";
       $prepare_agentConfig = array();
       if (TableExists("glpi_plugin_tracker_agents")
@@ -355,7 +301,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                          "items_id");
       
       
-   // ** glpi_plugin_fusioninventory_agentmodules
+   /*
+    * table glpi_plugin_fusioninventory_agentmodules
+    */
       $newTable = "glpi_plugin_fusioninventory_agentmodules";
       if (!TableExists($newTable)) {
          $query = "CREATE TABLE `glpi_plugin_fusioninventory_agentmodules` (
@@ -385,7 +333,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       
       
       
-   // ** glpi_plugin_fusioninventory_configs
+   /*
+    * Table glpi_plugin_fusioninventory_configs
+    */
       $newTable = "glpi_plugin_fusioninventory_configs";
       if (TableExists('glpi_plugin_tracker_config')) {
          if (FieldExists('glpi_plugin_tracker_config', 'ssl_only')) {
@@ -412,7 +362,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       
 
    
-   // ** Manage glpi_plugin_fusioninventory_ipranges
+   /*
+    * Table glpi_plugin_fusioninventory_ipranges
+    */
       if (TableExists("glpi_plugin_tracker_rangeip")) {
          // Get all data to create task
          $query = "SELECT * FROM `glpi_plugin_tracker_rangeip`";
@@ -487,7 +439,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       
       
       
-   // ** glpi_plugin_fusioninventory_unknowndevices
+   /*
+    * Table glpi_plugin_fusioninventory_unknowndevices
+    */
       $newTable = "glpi_plugin_fusioninventory_unknowndevices";
       if (TableExists('glpi_plugin_tracker_unknown_device')) {
          $migration->renameTable("glpi_plugin_tracker_unknown_device", $newTable);
@@ -544,7 +498,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       }
       
    
-   // ** glpi_plugin_fusioninventory_credentials
+   /*
+    * Table glpi_plugin_fusioninventory_credentials
+    */
       $newTable = "glpi_plugin_fusioninventory_credentials";
       if (!TableExists($newTable)) {
          $query = "CREATE TABLE  `glpi_plugin_fusioninventory_credentials` (
@@ -562,7 +518,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $DB->query($query);
       }
 
-   // ** glpi_plugin_fusioninventory_credentialips
+   /*
+    * Table glpi_plugin_fusioninventory_credentialips
+    */
       $newTable = "glpi_plugin_fusioninventory_credentialips";
       if (!TableExists($newTable)) {
          $query = "CREATE TABLE  `glpi_plugin_fusioninventory_credentialips` (
@@ -579,7 +537,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       }
       
   
-   // ** glpi_plugin_fusioninventory_locks
+   /*
+    * Table glpi_plugin_fusioninventory_locks
+    */
       $newTable = "glpi_plugin_fusioninventory_locks";
       if (!TableExists($newTable)) {
          $query = "CREATE TABLE `glpi_plugin_fusioninventory_locks` (
@@ -598,7 +558,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       
       
       
-   // ** glpi_plugin_fusioninventory_tasks
+   /*
+    * Table glpi_plugin_fusioninventory_tasks
+    */
       $newTable = "glpi_plugin_fusioninventory_tasks";
       if (!TableExists($newTable)) {
          $query = "CREATE TABLE `glpi_plugin_fusioninventory_tasks` (
@@ -623,7 +585,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       
       
       
-   // ** glpi_plugin_fusioninventory_taskjobs
+   /*
+    * Table glpi_plugin_fusioninventory_taskjobs
+    */
       $newTable = "glpi_plugin_fusioninventory_taskjobs";
       if (!TableExists($newTable)) {
          $query = "CREATE TABLE `glpi_plugin_fusioninventory_taskjobs` (
@@ -659,7 +623,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       
       
 
-   // ** glpi_plugin_fusioninventory_taskjoblogs
+   /*
+    * Table glpi_plugin_fusioninventory_taskjoblogs
+    */
       $newTable = "glpi_plugin_fusioninventory_taskjoblogs";
       if (!TableExists($newTable)) {
          $query = "CREATE TABLE `glpi_plugin_fusioninventory_taskjoblogs` (
@@ -678,7 +644,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       
       
 
-   // ** glpi_plugin_fusioninventory_taskjobstatus
+   /*
+    * Table glpi_plugin_fusioninventory_taskjobstatus
+    */
       $newTable = "glpi_plugin_fusioninventory_taskjobstatus";
       if (!TableExists($newTable)) {
          $query = "CREATE TABLE `glpi_plugin_fusioninventory_taskjobstatus` (
@@ -701,7 +669,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       
       
 
-   // ** glpi_plugin_fusioninventory_profiles
+   /*
+    * Table glpi_plugin_fusioninventory_profiles
+    */
       $newTable = "glpi_plugin_fusioninventory_profiles";
       if (!TableExists($newTable)) {
          $query = "CREATE TABLE `glpi_plugin_fusioninventory_profiles` (
@@ -718,7 +688,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       
       
       
-   // ** glpi_plugin_fusioninventory_mappings
+   /*
+    * Table glpi_plugin_fusioninventory_mappings
+    */
       $newTable = "glpi_plugin_fusioninventory_mappings";
       if (!TableExists($newTable)) {
          $query = "CREATE TABLE `glpi_plugin_fusioninventory_mappings` (
@@ -740,7 +712,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       
       
       
-   // ** Delete old table not used
+   /*
+    * Table Delete old table not used
+    */
       if (TableExists("glpi_plugin_tracker_computers")) {
          $DB->query("DROP TABLE `glpi_plugin_tracker_computers`");
       }
@@ -774,8 +748,12 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       if (TableExists("glpi_plugin_tracker_model_infos")) {
          $DB->query("DROP TABLE `glpi_plugin_tracker_model_infos`");         
       }
-      
-      
+      if (TableExists("glpi_plugin_tracker_processes")) {
+         $DB->query("DROP TABLE `glpi_plugin_tracker_processes`");         
+      }
+      if (TableExists("glpi_plugin_tracker_processes_values")) {
+         $DB->query("DROP TABLE `glpi_plugin_tracker_processes_values`");         
+      }      
       
       
    $migration->executeMigration();
@@ -848,7 +826,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    
    
    
-   // ** Add default rules
+   /*
+    *  Add default rules
+    */
       if (TableExists("glpi_plugin_tracker_config_discovery")) {
          // TODO Add the default rules...
 
@@ -860,7 +840,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    include_once(GLPI_ROOT."/plugins/fusioninventory/inc/profile.class.php");
    PluginFusioninventoryProfile::changeProfile($plugins_id);
 
-   // ** Manage configuration of plugin
+   /*
+    *  Manage configuration of plugin
+    */
       include_once(GLPI_ROOT."/plugins/fusioninventory/inc/config.class.php");
       $config = new PluginFusioninventoryConfig();
       $a_input = array();

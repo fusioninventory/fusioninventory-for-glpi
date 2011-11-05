@@ -142,7 +142,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_constructdevice_miboids` (
 DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_networkportconnectionlogs`;
 
 CREATE TABLE `glpi_plugin_fusinvsnmp_networkportconnectionlogs` (
-   `id` int(11) NOT NULL AUTO_INCREMENT ,
+   `id` int(11) NOT NULL AUTO_INCREMENT,
    `date_mod` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
    `creation` tinyint(1) NOT NULL DEFAULT '0',
    `networkports_id_source` int(11) NOT NULL DEFAULT '0',
