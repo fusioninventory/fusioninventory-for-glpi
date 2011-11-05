@@ -84,7 +84,7 @@ function plugin_fusinvinventory_getAddSearchOptions($itemtype) {
          $sopt[5157]['table']     = 'glpi_plugin_fusinvinventory_computers';
          $sopt[5157]['field']     = 'operatingsystem_installationdate';
          $sopt[5157]['linkfield'] = '';
-         $sopt[5157]['name']      = $LANG['computers'][9]."-".$LANG['common'][27];
+         $sopt[5157]['name']      = $LANG['computers'][9]." - ".$LANG['install'][3]." (".strtolower($LANG['common'][27]).")";
          $sopt[5157]['datatype']  = 'date';
 
          $sopt[5158]['table']     = 'glpi_plugin_fusinvinventory_computers';
@@ -155,7 +155,7 @@ function plugin_get_headings_fusinvinventory($item,$withtemplate) {
             if (haveRight("computer", "w")) {
                $array[3] = $LANG['plugin_fusinvinventory']['menu'][4];
             }
-            $array[4] = $LANG['plugin_fusinvinventory']['bios'][0];
+            $array[4] = $LANG['entity'][14];
          }
          return $array;
          break;

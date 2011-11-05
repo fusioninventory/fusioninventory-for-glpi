@@ -68,17 +68,26 @@ class PluginFusinvinventoryComputer extends CommonDBTM {
       echo '<div align="center">';
       echo '<table class="tab_cadre_fixe" style="margin: 0; margin-top: 5px;">';
       echo '<tr>';
-      echo '<th colspan="2">'.$LANG['plugin_fusinvinventory']['bios'][0].'</th>';
+      echo '<th colspan="4">'.$LANG['entity'][14].'</th>';
       echo '</tr>';
 
       echo '<tr class="tab_bg_1">';
+      echo '<th colspan="2" width="50%">'.$LANG['plugin_fusinvinventory']['bios'][0].'</th>';
+      echo '<th colspan="2">'.$LANG['common'][67].'</th>';
+      echo '</tr>';
+      
+      echo '<tr class="tab_bg_1">';
       echo '<td>'.$LANG['common'][27].'&nbsp;:</td>';
       echo '<td>'.convDate($a_computerextend['bios_date']).'</td>';
+      echo "<td>".$LANG['computers'][9]." - ".$LANG['install'][3]." (".strtolower($LANG['common'][27]).")&nbsp;:</td>";
+      echo '<td>'.convDate($a_computerextend['operatingsystem_installationdate']).'</td>';
       echo '</tr>';
 
       echo '<tr class="tab_bg_1">';
       echo '<td>'.$LANG['rulesengine'][78].'&nbsp;:</td>';
       echo '<td>'.$a_computerextend['bios_version'].'</td>';
+      echo '<td>'.$LANG['plugin_fusinvinventory']['computer'][1].'&nbsp;:</td>';
+      echo '<td>'.$a_computerextend['winowner'].'</td>';
       echo '</tr>';
 
       echo '<tr class="tab_bg_1">';
@@ -86,23 +95,10 @@ class PluginFusinvinventoryComputer extends CommonDBTM {
       echo '<td>';
       echo Dropdown::getDropdownName("glpi_manufacturers", $a_computerextend['bios_manufacturers_id']);
       echo '</td>';
-      echo '</tr>';
-      
-      echo '<tr class="tab_bg_1">';
-      echo '<td>'. $LANG['computers'][9]." - ".$LANG['common'][27].'&nbsp;:</td>';
-      echo '<td>'.convDate($a_computerextend['operatingsystem_installationdate']).'</td>';
-      echo '</tr>';     
-
-      echo '<tr class="tab_bg_1">';
-      echo '<td>'.$LANG['plugin_fusinvinventory']['computer'][1].'&nbsp;:</td>';
-      echo '<td>'.$a_computerextend['winowner'].'</td>';
-      echo '</tr>';  
-
-      echo '<tr class="tab_bg_1">';
       echo '<td>'.$LANG['plugin_fusinvinventory']['computer'][2].'&nbsp;:</td>';
       echo '<td>'.$a_computerextend['wincompany'].'</td>';
-      echo '</tr>'; 
-      
+      echo '</tr>';
+            
       echo '</table>';
       echo '</div>';
       
