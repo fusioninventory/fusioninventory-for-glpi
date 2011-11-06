@@ -116,6 +116,7 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
       $sql = "DROP TABLE `glpi_plugin_fusinvinventory_tmp_agents`";
       $DB->query($sql);
    }
+   
    /*
     * Add ESX module appear in version 2.4.0(0.80+1.0)
     */

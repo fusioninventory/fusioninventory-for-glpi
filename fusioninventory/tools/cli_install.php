@@ -140,6 +140,9 @@ if ($plugin->getFromDBbyDir("fusinvsnmp")) {
       pluginFusinvsnmpInstall(PLUGIN_FUSINVSNMP_VERSION, $migration);
       $migration->displayWarning("installation done.");
    }
+   
+   $plugin->getFromDBbyDir("fusinvsnmp");
+   $plugin->activate($plugin->fields['id']);
 }
    
 
@@ -174,7 +177,8 @@ if ($plugin->getFromDBbyDir("fusinvinventory")) {
       pluginFusinvinventoryInstall(PLUGIN_FUSINVINVENTORY_VERSION, $migration);
       $migration->displayWarning("installation done.");
    }
-   
+   $plugin->getFromDBbyDir("fusinvinventory");
+   $plugin->activate($plugin->fields['id']);
 }
 
 

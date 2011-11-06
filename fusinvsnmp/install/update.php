@@ -157,7 +157,9 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    $prepare_task = array();
    $prepare_rangeip = array();
    
-   // ** Udpate mapping
+   /*
+    * Udpate mapping
+    */
    $pFusioninventoryMapping = new PluginFusioninventoryMapping();
    
    $a_input = array();
@@ -1298,7 +1300,9 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    
    
    
-   // ** glpi_plugin_fusinvsnmp_miblabels
+   /*
+    * glpi_plugin_fusinvsnmp_miblabels
+    */
       $newTable = "glpi_plugin_fusinvsnmp_miblabels";
       $migration->renameTable("glpi_dropdown_plugin_tracker_mib_label", 
                               $newTable);
@@ -1316,7 +1320,9 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                               "text");
  
       
-   // ** glpi_plugin_fusinvsnmp_mibobjects
+   /*
+    *  glpi_plugin_fusinvsnmp_mibobjects
+    */
       $newTable = "glpi_plugin_fusinvsnmp_mibobjects";
       $migration->renameTable("glpi_dropdown_plugin_tracker_mib_object", 
                               $newTable);
@@ -1334,7 +1340,9 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                               "text");
       
       
-   // ** glpi_plugin_fusinvsnmp_miboids
+   /*
+    *  glpi_plugin_fusinvsnmp_miboids
+    */
       $newTable = "glpi_plugin_fusinvsnmp_miboids";
       $migration->renameTable("glpi_dropdown_plugin_tracker_mib_oid", 
                               $newTable);
@@ -1351,19 +1359,29 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                               "comment",
                               "text");
       
-   // ** glpi_plugin_fusinvsnmp_configlogfields
+   /*
+    * glpi_plugin_fusinvsnmp_configlogfields
+    */
       
       
-   // ** glpi_plugin_fusinvsnmp_constructdevices
+   /*
+    * glpi_plugin_fusinvsnmp_constructdevices
+    */
       
    
-   // ** glpi_plugin_fusinvsnmp_constructdevicewalks
+   /*
+    * glpi_plugin_fusinvsnmp_constructdevicewalks
+    */
       
       
-   // ** glpi_plugin_fusinvsnmp_constructdevice_miboids
+   /*
+    * glpi_plugin_fusinvsnmp_constructdevice_miboids
+    */
       
       
-   // ** glpi_plugin_fusinvsnmp_networkportconnectionlogs
+   /*
+    * glpi_plugin_fusinvsnmp_networkportconnectionlogs
+    */
       $newTable = "glpi_plugin_fusinvsnmp_networkportconnectionlogs";
       if (!TableExists($newTable)) {
          $DB->query('CREATE TABLE `'.$newTable.'` (
@@ -1396,7 +1414,9 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                          "date_mod");  
       $migration->migrationOneTable($newTable);
       
-   // ** glpi_plugin_fusinvsnmp_modelmibs
+   /*
+    *  glpi_plugin_fusinvsnmp_modelmibs
+    */
       $newTable = "glpi_plugin_fusinvsnmp_modelmibs";
       $migration->renameTable("glpi_plugin_tracker_mib_networking", 
                               $newTable);
@@ -1501,7 +1521,9 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                          "plugin_fusioninventory_mappings_id");
       
       
-   // ** glpi_plugin_fusinvsnmp_models
+   /*
+    * glpi_plugin_fusinvsnmp_models
+    */
       if (!TableExists("glpi_plugin_fusinvsnmp_models")) {
          $DB->query("CREATE TABLE `glpi_plugin_fusinvsnmp_models` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1529,7 +1551,9 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                          "itemtype");      
       
       
-   // ** glpi_plugin_fusinvsnmp_networkequipments
+   /*
+    * glpi_plugin_fusinvsnmp_networkequipments
+    */
       $newTable = "glpi_plugin_fusinvsnmp_networkequipments";
       $migration->renameTable("glpi_plugin_tracker_networking", 
                               $newTable);
@@ -1583,7 +1607,9 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                          "plugin_fusinvsnmp_models_id");
       
       
-   // ** glpi_plugin_fusinvsnmp_networkequipmentips
+   /*
+    * glpi_plugin_fusinvsnmp_networkequipmentips
+    */
       $newTable = "glpi_plugin_fusinvsnmp_networkequipmentips";
       $migration->renameTable("glpi_plugin_tracker_networking_ifaddr", 
                               $newTable);
@@ -1611,7 +1637,9 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                          "networkequipments_id");
   
       
-   // ** glpi_plugin_fusinvsnmp_networkports
+   /*
+    * glpi_plugin_fusinvsnmp_networkports
+    */
       $newTable = "glpi_plugin_fusinvsnmp_networkports";
       $migration->renameTable("glpi_plugin_tracker_networking_ports", 
                               $newTable);
@@ -1689,7 +1717,9 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                          "networkports_id");
       
       
-   // ** glpi_plugin_fusinvsnmp_printerlogs
+   /*
+    * glpi_plugin_fusinvsnmp_printerlogs
+    */
       $newTable = "glpi_plugin_fusinvsnmp_printerlogs";
       $migration->renameTable("glpi_plugin_tracker_printers_history", 
                               $newTable);
@@ -1758,7 +1788,9 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                          "printers_id");
       
       
-   // ** glpi_plugin_fusinvsnmp_printers
+   /*
+    *  glpi_plugin_fusinvsnmp_printers
+    */
       $newTable = "glpi_plugin_fusinvsnmp_printers";
       $migration->renameTable("glpi_plugin_tracker_printers", 
                               $newTable);
@@ -1801,7 +1833,9 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                          "plugin_fusinvsnmp_models_id");
    
       
-   // ** glpi_plugin_fusinvsnmp_printercartridges
+   /*
+    *  glpi_plugin_fusinvsnmp_printercartridges
+    */
       $newTable = "glpi_plugin_fusinvsnmp_printercartridges";
       $migration->renameTable("glpi_plugin_tracker_printers_cartridges", 
                               $newTable);
@@ -1853,7 +1887,9 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                          "cartridges_id");
       
       
-   // ** glpi_plugin_fusinvsnmp_configsecurities
+   /*
+    *  glpi_plugin_fusinvsnmp_configsecurities
+    */
       // TODO get info to create SNMP authentification with old values of Tracker plugin
       $newTable = "glpi_plugin_fusinvsnmp_configsecurities";
       $migration->renameTable("glpi_plugin_tracker_snmp_connection", 
@@ -1919,7 +1955,9 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
       }
 
        
-   // ** glpi_plugin_fusinvsnmp_networkportlogs
+   /*
+    * glpi_plugin_fusinvsnmp_networkportlogs
+    */
       $newTable = "glpi_plugin_fusinvsnmp_networkportlogs";
          if (TableExists("glpi_plugin_tracker_snmp_history")) {
             // **** Update history
@@ -2060,13 +2098,19 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                          "date_mod");
 
       
-   // ** glpi_plugin_fusinvsnmp_unknowndevices
+   /*
+    * glpi_plugin_fusinvsnmp_unknowndevices
+    */
       
       
-   // ** glpi_plugin_fusinvsnmp_agentconfigs
+   /*
+    * glpi_plugin_fusinvsnmp_agentconfigs
+    */
       
       
-   // ** glpi_plugin_fusinvsnmp_statediscoveries
+   /*
+    *  glpi_plugin_fusinvsnmp_statediscoveries
+    */
       
       
       
@@ -2220,7 +2264,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
       WHERE `itemtype`='5156' ";
    $DB->query($sql);
    $sql = "UPDATE `glpi_displaypreferences`
-      SET `itemtype`='PluginFusinvsnmpNetworkPort'
+      SET `itemtype`='PluginFusinvsnmpNetworkEquipment'
       WHERE `itemtype`='5157' ";
    $DB->query($sql);
    $sql = "UPDATE `glpi_displaypreferences`

@@ -149,6 +149,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $prepare_rangeip = array();
    $prepare_Config = array();
    
+   $a_plugin = plugin_version_fusioninventory();
+   $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
+   
    // TODO remove
 //   $migration = new Migration($current_version);
    // END TODO remove
@@ -330,6 +333,23 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->changeField($newTable, 'url', 'url', "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
          $migration->addField($newTable, 'url', "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
       }
+      $migration->migrationOneTable($newTable);
+      
+      
+   /*
+    * Add WakeOnLan module appear in version 2.3.0
+    */
+   $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` WHERE `modulename`='WAKEONLAN'";
+   $result = $DB->query($query);
+   if (!$DB->numrows($result)) {
+      $agentmodule = new PluginFusioninventoryAgentmodule;
+      $input = array();
+      $input['plugins_id'] = $plugins_id;
+      $input['modulename'] = "WAKEONLAN";
+      $input['is_active']  = 0;
+      $input['exceptions'] = exportArrayToDB(array());
+      $agentmodule->add($input);
+   }
       
       
       
@@ -834,6 +854,14 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       }
    
+   
+   
+   $input = array();
+   $input['plugins_id'] = $plugins_id;
+   $input['modulename'] = "WAKEONLAN";
+   $input['is_active']  = 0;
+   $input['exceptions'] = exportArrayToDB(array());
+   $PluginFusioninventoryAgentmodule->add($input);
    
 
    $plugins_id = PluginFusioninventoryModule::getModuleId("fusioninventory");

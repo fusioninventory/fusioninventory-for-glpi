@@ -156,6 +156,34 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
          }         
       }
       
+      /*
+       * Check if all modules registered
+       */
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` 
+         WHERE `modulename`='WAKEONLAN'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 1, 'WAKEONLAN module not registered');
+      
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` 
+         WHERE `modulename`='INVENTORY'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 1, 'INVENTORY module not registered');
+      
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` 
+         WHERE `modulename`='ESX'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 1, 'ESX module not registered');
+      
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` 
+         WHERE `modulename`='SNMPQUERY'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 1, 'SNMPQUERY module not registered');
+      
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` 
+         WHERE `modulename`='NETDISCOVERY'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 1, 'NETDISCOVERY module not registered');
+      
       
       // TODO : test glpi_displaypreferences, rules, bookmark...
     }
@@ -163,9 +191,9 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
     
    function testDB() {
       global $DB;
-       
-      if (isset($argv[1]) 
-              AND $argv[1] == 'dbread') {
+
+      if (isset($_SERVER['argv'][2]) 
+              AND $_SERVER['argv'][2] == 'dbread') {
          // Not write DB, so use current DB 
       } else {
          $query = "SHOW TABLES";

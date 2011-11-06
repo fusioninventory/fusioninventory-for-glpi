@@ -103,8 +103,22 @@ function plugin_fusinvinventory_getAddSearchOptions($itemtype) {
 
 function plugin_fusinvinventory_install() {
 
-   include (GLPI_ROOT . "/plugins/fusinvinventory/install/install.php");
-   pluginFusinvinventoryInstall();
+   $a_plugin = plugin_version_fusinvinventory();
+
+   include (GLPI_ROOT . "/plugins/fusinvinventory/install/update.php");
+   $version_detected = pluginfusinvinventoryGetCurrentVersion($a_plugin['version']);
+   if ((isset($version_detected))
+           AND ($version_detected != $a_plugin['version'])
+           AND $version_detected!='0') {
+
+      // Update
+      pluginFusinvinventoryUpdate($version_detected);
+   } else if ((isset($version_detected)) AND ($version_detected == $a_plugin['version'])) {
+      return true;
+   } else {
+      include (GLPI_ROOT . "/plugins/fusinvinventory/install/install.php");
+      pluginFusinvinventoryInstall(PLUGIN_FUSINVINVENTORY_VERSION);
+   }
 
    return true;
 }
