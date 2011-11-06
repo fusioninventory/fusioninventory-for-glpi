@@ -74,44 +74,48 @@ function pluginFusinvinventoryGetCurrentVersion($version) {
 }
 
 
-function pluginFusinvinventoryUpdate($current_version) {
-
-   echo "<center>";
-   echo "<table class='tab_cadre' width='950'>";
-   echo "<tr>";
-   echo "<th>Update process<th>";
-   echo "</tr>";
-
-   echo "<tr class='tab_bg_1'>";
-   echo "<td align='center'>";
-
-   include(GLPI_ROOT."/plugins/fusioninventory/install/update.php");
-
-   switch ($current_version) {
-
-      case "2.3.0-1":
-      case "2.3.1-1":
-         include("update_231_232.php");
-         update231to232();
-      case "2.3.2-1":
-      case "2.3.3-1":
-      case "2.3.4-1":
-      case "2.3.5-1":
-      case "2.3.6-1":
-      case "2.3.7-1":
-      case "2.3.8-1":
-      case "2.3.9-1":
-         include("update_232_240.php");
-         update232to240();
-
-   }
-
-   echo "</td>";
-   echo "</tr>";
-   echo "</table></center>";
+function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration') {
+   global $DB;
 
    $config = new PluginFusioninventoryConfig();
-   $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
+   $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');   
+   
+   if (!PluginFusioninventoryConfig::getValue($plugins_id, 'states_id_default')) {
+      $config->initConfig($plugins_id, array('states_id_default' => 0));
+   }
+   if (!PluginFusioninventoryConfig::getValue($plugins_id, "import_vm")) {
+       $config->initConfig($plugins_id, array("import_vm" => "1"));
+   }
+   if (!PluginFusioninventoryConfig::getValue($plugins_id, "component_networkdrive")) {
+       $config->initConfig($plugins_id, array("component_networkdrive" => "1"));
+   }
+   if (!PluginFusioninventoryConfig::getValue($plugins_id, "group")) {
+       $config->initConfig($plugins_id, array("group" => "0"));
+   }
+   if (!PluginFusioninventoryConfig::getValue($plugins_id, "component_networkcardvirtual")) {
+       $config->initConfig($plugins_id, array("component_networkcardvirtual" => "1"));
+   }
+   
+   if (TableExists("glpi_plugin_fusinvinventory_computers")) {
+      $Computer = new Computer();
+      $sql = "SELECT * FROM `glpi_plugin_fusinvinventory_computers`";
+      $result=$DB->query($sql);
+      while ($data = $DB->fetch_array($result)) {
+         if ($Computer->getFromDB($data['items_id'])) {
+            $input = array();
+            $input['id'] = $data['items_id'];
+            $input['uuid'] = $data['uuid'];
+            $Computer->update($input);
+         }
+      }
+      $sql = "DROP TABLE `glpi_plugin_fusinvinventory_computers`";
+      $DB->query($sql);
+   	
+   }
+   
+   
+
+
    $config->updateConfigType($plugins_id, 'version', PLUGIN_FUSINVINVENTORY_VERSION);
 }
 
