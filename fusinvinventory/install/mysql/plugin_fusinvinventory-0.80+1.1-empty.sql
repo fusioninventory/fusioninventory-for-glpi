@@ -54,6 +54,23 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_antivirus` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_computers`;
+
+CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_computers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `computers_id` int(11) NOT NULL default '0',
+  `bios_date` datetime DEFAULT NULL,
+  `bios_version` varchar(255) DEFAULT NULL,
+  `bios_manufacturers_id` int(11) NOT NULL default '0',
+  `operatingsystem_installationdate` datetime DEFAULT NULL,
+  `winowner` varchar(255) DEFAULT NULL,
+  `wincompany` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `computers_id` (`computers_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
 INSERT INTO `glpi_plugin_fusinvinventory_criterias` (`id`, `name`, `comment`) VALUES
 (1, 'Serial number', 'ssn'),
 (2, 'uuid', 'uuid'),

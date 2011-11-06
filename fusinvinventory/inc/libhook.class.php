@@ -77,9 +77,6 @@ class PluginFusinvinventoryLibhook {
       $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
 
       $Computer->update($input, 0);
-
-      $PluginFusinvinventoryLibhook->writeXMLFusion($items_id);
-       
     }
 
 
@@ -127,21 +124,24 @@ class PluginFusinvinventoryLibhook {
       foreach($data as $section) {
          if ($section['sectionName'] == 'HARDWARE') {
             $dataSection = unserialize($section['dataSection']);
-            foreach($dataSection as $key=>$value) {
-               $dataSection[$key] = addslashes_deep($value);
-            }
             if (isset($dataSection['CHASSIS_TYPE'])) {
                $computer_type = $dataSection['CHASSIS_TYPE'];
             }
          }
       }
+      $pFusinvinventoryComputer = new PluginFusinvinventoryComputer();
+      $a_computerextend = current($pFusinvinventoryComputer->find("`computers_id`='".$idmachine."'", 
+                                                                  "", 1));
+      $inputCext = array();
+      if (!empty($a_computerextend)) {         
+         $inputCext['id'] = $a_computerextend['id'];
+      } else {
+         $inputCext['computers_id'] = $idmachine;
+      }
       
       foreach($data as $section) {
          $i++;
          $dataSection = unserialize($section['dataSection']);
-         foreach($dataSection as $key=>$value) {
-            $dataSection[$key] = addslashes_deep($value);
-         }
          switch ($section['sectionName']) {
 
             case 'BIOS':
@@ -208,6 +208,20 @@ class PluginFusinvinventoryLibhook {
                if (isset($dataSection['SKUNUMBER'])) {
                   $PluginFusinvinventoryLibhook = new PluginFusinvinventoryLibhook();
                   $PluginFusinvinventoryLibhook->Suppliertag($idmachine, $dataSection['SKUNUMBER']);
+               }
+               if (isset($dataSection['BDATE'])) {
+                  $a_split = explode("/", $dataSection['BDATE']);
+                  // 2011-06-29 13:19:48
+                  $inputCext['bios_date'] = $a_split[2]."-".$a_split[0]."-".$a_split[1];
+               }
+               if (isset($dataSection['BVERSION'])) {
+                  $inputCext['bios_version'] = $dataSection['BVERSION'];
+               }
+               
+               if (isset($dataSection['BMANUFACTURER'])) {
+                  $inputCext['bios_manufacturers_id'] = Dropdown::importExternal('Manufacturer',
+                                                                                 $dataSection['BMANUFACTURER'],
+                                                                                 $_SESSION["plugin_fusinvinventory_entity"]);
                }
                break;
 
@@ -283,6 +297,9 @@ class PluginFusinvinventoryLibhook {
                      $inputC['domains_id'] = 0;
                   }
                }
+               if (isset($dataSection['OSINSTALLDATE'])) {
+                  $inputCext['operatingsystem_installationdate'] = date("Y-m-d", $dataSection['OSINSTALLDATE']);
+               }
                if (!in_array('operatingsystemservicepacks_id', $a_lockable)) {
                   $addfield = 0;
                   if (isset($dataSection['OSCOMMENTS'])) {
@@ -305,6 +322,12 @@ class PluginFusinvinventoryLibhook {
                   if (!in_array('comment', $a_lockable)) {
                      $inputC['comment'] = $dataSection['DESCRIPTION'];
                   }
+               }
+               if (isset($dataSection['WINOWNER'])) {
+                  $inputCext['winowner'] = $dataSection['WINOWNER'];
+               }
+               if (isset($dataSection['WINCOMPANY'])) {
+                  $inputCext['wincompany'] = $dataSection['WINCOMPANY'];
                }
                break;
 
@@ -331,13 +354,15 @@ class PluginFusinvinventoryLibhook {
       }
 
       $Computer->update($inputC, $_SESSION["plugin_fusinvinventory_history_add"]);
+      if (isset($inputCext['id'])) {
+         $pFusinvinventoryComputer->update($inputCext, $_SESSION["plugin_fusinvinventory_history_add"]);
+      } else {
+         $pFusinvinventoryComputer->add($inputCext, $_SESSION["plugin_fusinvinventory_history_add"]);
+      }
       $j = -1;
 
       foreach($data as $section) {
          $dataSection = unserialize($section['dataSection']);
-         foreach($dataSection as $key=>$value) {
-            $dataSection[$key] = addslashes_deep($value);
-         }
          switch ($section['sectionName']) {
 
             case 'CPUS':
@@ -702,21 +727,24 @@ class PluginFusinvinventoryLibhook {
          $array = explode("/", $section['sectionId']);
          $sectionName = $array[0];
          if ($sectionName == 'HARDWARE') {
-            $dataSection = unserialize($section['dataSection']);
-            foreach($dataSection as $key=>$value) {
-               $dataSection[$key] = addslashes_deep($value);
-            }
+            $dataSection = $section['dataSection'];
             if (isset($dataSection['CHASSIS_TYPE'])) {
                $computer_type = $dataSection['CHASSIS_TYPE'];
             }
          }
       }
-      
+      $pFusinvinventoryComputer = new PluginFusinvinventoryComputer();
+      $a_computerextend = current($pFusinvinventoryComputer->find("`computers_id`='".$idmachine."'", 
+                                                                  "", 1));
+      $inputCext = array();
+      if (!empty($a_computerextend)) {         
+         $inputCext['id'] = $a_computerextend['id'];
+      } else {
+         $inputCext['computers_id'] = $idmachine;
+      }
       foreach($data as $section) {
-         $dataSection = unserialize($section['dataSection']);
-         foreach($dataSection as $key=>$value) {
-            $dataSection[$key] = addslashes_deep($value);
-         }
+//         $dataSection = unserialize($section['dataSection']);
+         $dataSection = $section['dataSection'];
          $array = explode("/", $section['sectionId']);
          $items_id = $array[1];
          $sectionName = $array[0];
@@ -827,6 +855,26 @@ class PluginFusinvinventoryLibhook {
                      $PluginFusinvinventoryLibhook->Suppliertag($idmachine, $dataSection['SKUNUMBER']);
                   }
                   $Computer->update($inputC);
+                  
+                  if (isset($dataSection['BDATE'])) {
+                     $a_split = explode("/", $dataSection['BDATE']);
+                     // 2011-06-29 13:19:48
+                     $inputCext['bios_date'] = $a_split[2]."-".$a_split[0]."-".$a_split[1];
+                  }
+                  if (isset($dataSection['BVERSION'])) {
+                     $inputCext['bios_version'] = $dataSection['BVERSION'];
+                  }
+
+                  if (isset($dataSection['BMANUFACTURER'])) {
+                     $inputCext['bios_manufacturers_id'] = Dropdown::importExternal('Manufacturer',
+                                                                                    $dataSection['BMANUFACTURER'],
+                                                                                    $_SESSION["plugin_fusinvinventory_entity"]);
+                  }
+                  if (isset($inputCext['id'])) {
+                     $pFusinvinventoryComputer->update($inputCext, $_SESSION["plugin_fusinvinventory_history_add"]);
+                  } else {
+                     $pFusinvinventoryComputer->add($inputCext, $_SESSION["plugin_fusinvinventory_history_add"]);
+                  }
                   break;
 
                case 'ACCOUNTINFO':
@@ -896,6 +944,22 @@ class PluginFusinvinventoryLibhook {
                      }
                   }
                   $Computer->update($inputC);
+                  
+                  if (isset($dataSection['OSINSTALLDATE'])) {
+                     $inputCext['operatingsystem_installationdate'] = $dataSection['OSINSTALLDATE'];
+                  }
+                  if (isset($dataSection['WINOWNER'])) {
+                     $inputCext['winowner'] = $dataSection['WINOWNER'];
+                  }
+                  if (isset($dataSection['WINCOMPANY'])) {
+                     $inputCext['wincompany'] = $dataSection['WINCOMPANY'];
+                  }
+                  
+                  if (isset($inputCext['id'])) {
+                     $pFusinvinventoryComputer->update($inputCext, $_SESSION["plugin_fusinvinventory_history_add"]);
+                  } else {
+                     $pFusinvinventoryComputer->add($inputCext, $_SESSION["plugin_fusinvinventory_history_add"]);
+                  }
                   break;
 
                case 'USBDEVICES':
@@ -958,8 +1022,8 @@ class PluginFusinvinventoryLibhook {
    * @return nothing
    *
    **/
-    function writeXMLFusion($items_id) {
-      if (isset($_SESSION['SOURCEXML'])) {
+    function writeXMLFusion($items_id,$xml='') {
+      if ($xml != '') {
          // TODO : Write in _plugins/fusinvinventory/xxx/idmachine.xml
          $folder = substr($items_id,0,-1);
          if (empty($folder)) {
@@ -969,7 +1033,7 @@ class PluginFusinvinventoryLibhook {
             mkdir(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder);
          }
          $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$items_id, 'w');
-         fwrite($fileopen, $_SESSION['SOURCEXML']);
+         fwrite($fileopen, $xml);
          fclose($fileopen);
        }
     }

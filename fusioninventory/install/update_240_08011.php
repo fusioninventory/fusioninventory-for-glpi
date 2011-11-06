@@ -59,6 +59,11 @@ function update240to080011() {
    // * Deduplicates informations if are in this case
    
    
+   
+   // Add index
+   // glpi_plugin_fusinvinventory_blacklists.plugin_fusioninventory_criterium_id
+   // glpi_plugin_fusioninventory_agents.items_id
+   
    plugin_fusioninventory_displayMigrationMessage("0.80+1.1"); // End
 }
 

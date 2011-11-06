@@ -38,6 +38,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryAgent extends CommonDBTM {
    
+   public $dohistory = true;
 
    /**
    * Get name of this type
@@ -156,10 +157,26 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
          $ong[1]=$LANG['title'][26];
       }
-       $ong[2] = $LANG['plugin_fusioninventory']['agents'][36];
+      $ong[2] = $LANG['plugin_fusioninventory']['agents'][36];
+      $ong[3] = $LANG['title'][38];
       return $ong;
    }
 
+   
+   
+   function getComments() {
+      global $LANG;
+
+      $comment = $LANG['plugin_fusioninventory']['agents'][42].' : '.$this->fields['useragent'].'<br/>
+         '.$LANG['plugin_fusioninventory']['agents'][4].' : '.convDateTime($this->fields['last_contact']).' minutes';
+
+      if (!empty($comment)) {
+         return showToolTip($comment, array('display' => false));
+      }
+
+      return $comment;
+   }
+   
 
 
    /**
@@ -278,19 +295,18 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    * @param $p_xml simpleXMLobject
    *
    **/
-   function importToken($p_xml) {
-      $sxml = @simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA);
-
-      if (isset($sxml->DEVICEID)) {
+   function importToken($pxml) {
+      
+      if (isset($pxml->DEVICEID)) {
          $pta = new PluginFusioninventoryAgent();
-         $a_agent = $pta->find("`device_id`='".addslashes_deep($sxml->DEVICEID)."'", "", "1");
+         $a_agent = $pta->find("`device_id`='".$pxml->DEVICEID."'", "", "1");
          if (empty($a_agent)) {
             $a_input = array();
-            if (isset($sxml->TOKEN)) {
-               $a_input['token'] = addslashes_deep($sxml->TOKEN);
+            if (isset($pxml->TOKEN)) {
+               $a_input['token'] = $pxml->TOKEN;
             }
-            $a_input['name']         = addslashes_deep($sxml->DEVICEID);
-            $a_input['device_id']    = addslashes_deep($sxml->DEVICEID);
+            $a_input['name']         = $pxml->DEVICEID;
+            $a_input['device_id']    = $pxml->DEVICEID;
             $a_input['entities_id']  = 0;
             $a_input['last_contact'] = date("Y-m-d H:i:s");
             $a_input['useragent']    = $_SERVER['HTTP_USER_AGENT'];
@@ -300,8 +316,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             foreach ($a_agent as $data) {
                $input = array();
                $input['id'] = $data['id'];
-               if (isset($sxml->TOKEN)) {
-                  $input['token'] = $sxml->TOKEN;
+               if (isset($pxml->TOKEN)) {
+                  $input['token'] = $pxml->TOKEN;
                }
                $input['last_contact'] = date("Y-m-d H:i:s");
                $input['useragent']    = $_SERVER['HTTP_USER_AGENT'];
@@ -427,6 +443,18 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo $LANG['plugin_fusioninventory']['agents'][15];
       echo "</th>";
       echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>";
+      echo $LANG['plugin_fusioninventory']['agents'][28]."&nbsp:";
+      echo "</td>";
+      echo "<td>";
+      $pFusioninventoryAgent = new PluginFusioninventoryAgent();
+      $pFusioninventoryAgent->getFromDB($agent_id);
+      echo $pFusioninventoryAgent->getLink(1);
+      
+      echo "</td>";
+      echo "</tr>";      
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";

@@ -379,8 +379,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                break;
             case 'MODEL' :
                $NetworkEquipmentModel = new NetworkEquipmentModel();
-               $networkequipmentmodels_id = $NetworkEquipmentModel->import(array('name'=>(string)$p_info->MODEL));
-               $this->ptd->setValue('networkequipmentmodels_id', $networkequipmentmodels_id);
+               if (!in_array('networkequipmentmodels_id', $a_lockable)) {
+                  $networkequipmentmodels_id = $NetworkEquipmentModel->import(array('name'=>(string)$p_info->MODEL));
+                  $this->ptd->setValue('networkequipmentmodels_id', $networkequipmentmodels_id);
+               }
                break;
             case 'LOCATION' :
                if (!in_array('locations_id', $a_lockable)) {

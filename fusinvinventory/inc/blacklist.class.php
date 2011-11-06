@@ -145,7 +145,7 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
    *
    **/
    function cleanBlacklist($p_xml) {
-      $xml = simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = $p_xml;
 
       if (isset($xml->CONTENT->BIOS->SSN)) {
          $xml->CONTENT->BIOS->SSN = trim($xml->CONTENT->BIOS->SSN);
@@ -271,7 +271,7 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
             }
          }
       }
-      return $xml->asXML();
+      return $xml;
    }
 }
 
