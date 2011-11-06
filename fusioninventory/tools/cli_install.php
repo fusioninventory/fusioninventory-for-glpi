@@ -140,7 +140,40 @@ if ($plugin->getFromDBbyDir("fusinvsnmp")) {
       pluginFusinvsnmpInstall(PLUGIN_FUSINVSNMP_VERSION, $migration);
       $migration->displayWarning("installation done.");
    }
+}
    
+
+// ** Install / update too plugin fusinvinventory
+if ($plugin->getFromDBbyDir("fusinvinventory")) {
+   include_once(GLPI_ROOT . "/plugins/fusinvinventory/install/update.php");
+   include_once(GLPI_ROOT . "/plugins/fusinvinventory/locales/en_GB.php");
+   $current_version = pluginFusinvsnmpGetCurrentVersion(PLUGIN_FUSINVINVENTORY_VERSION);
+
+   $migration = new CliMigration($current_version);
+   
+   if (!isset($current_version)) {
+      $current_version = 0;
+   }
+   if ($current_version == '0') {
+      $migration->displayWarning("***** Install process of plugin FUSINVINVENTORY *****");
+   } else {
+      $migration->displayWarning("***** Update process of plugin FUSINVINVENTORY *****");
+   }
+   
+   $migration->displayWarning("Current FusinvINVENTORY version: $current_version");
+   $migration->displayWarning("Version to update: ".PLUGIN_FUSINVINVENTORY_VERSION);
+   
+   if (($current_version != PLUGIN_FUSINVINVENTORY_VERSION)
+        AND $current_version!='0') {
+   pluginFusinvinventoryUpdate($current_version, $migration);
+      $migration->displayWarning("Update done.");
+   } else if ($current_version == PLUGIN_FUSINVINVENTORY_VERSION) {
+      $migration->displayWarning("No migration needed.");
+   } else {
+      include (GLPI_ROOT . "/plugins/fusinvsnmp/install/install.php");
+      pluginFusinvinventoryInstall(PLUGIN_FUSINVINVENTORY_VERSION, $migration);
+      $migration->displayWarning("installation done.");
+   }
    
 }
 
