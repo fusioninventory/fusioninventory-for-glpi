@@ -2116,6 +2116,35 @@ function pluginFusinvsnmpUpdate($current_version, $migration='') {
     */
       
       
+   /*
+    * Table glpi_plugin_tracker_tmp_connections
+    */
+      $newTable = "glpi_plugin_tracker_tmp_connections";
+      if (TableExists($newTable)) {
+         if (countElementsInTable($newTable) == '0') {
+            $DB->query("DROP TABLE `".$newTable."`");
+         }
+      }
+      
+   /*
+    * Table glpi_plugin_tracker_tmp_netports
+    */
+      $newTable = "glpi_plugin_tracker_tmp_netports";
+      if (TableExists($newTable)) {
+         if (countElementsInTable($newTable) == '0') {
+            $DB->query("DROP TABLE `".$newTable."`");
+         }
+      }
+      
+   /*
+    * Table glpi_plugin_tracker_walks
+    */
+      $newTable = "glpi_plugin_tracker_walks";
+      if (TableExists($newTable)) {
+         if (countElementsInTable($newTable) == '0') {
+            $DB->query("DROP TABLE `".$newTable."`");
+         }
+      }
       
       
    $migration->executeMigration();
@@ -2294,6 +2323,41 @@ function pluginFusinvsnmpUpdate($current_version, $migration='') {
    $config->updateConfigType($plugins_id, 'version', PLUGIN_FUSINVSNMP_VERSION);
    
    // Update profiles
+   if (TableExists("glpi_plugin_tracker_profiles")) {
+      $profile = new Profile();
+      $pFusioninventoryProfile = new PluginFusioninventoryProfile();
+      $query = "SELECT * FROM `glpi_plugin_tracker_profiles`";
+      $result=$DB->query($query_select);
+      while ($data=$DB->fetch_array($result)) {
+         $profiledata = current($profile->find("`name`='".$data['name']."'", "", 1));
+         if (!empty($profiledata)) {
+            $newprofile = array();
+            $newprofile['snmp_networking'] = "networkequipment";
+            $newprofile['snmp_printers'] = "printer";
+            $newprofile['snmp_models'] = "model";
+            $newprofile['snmp_authentification'] = "configsecurity";
+            $newprofile['general_config'] = "configuration";
+            $newprofile['snmp_report'] = "reportprinter";
+            
+            foreach ($newprofile as $old=>$new) {
+               if (isset($profiledata[$old])) {         
+                  $pFusioninventoryProfile->addProfile($plugins_id, 
+                                                       $new, 
+                                                       $profiledata[$old], 
+                                                       $profiledata['id']);
+               }
+            }
+            if (isset($profiledata["snmp_report"])) {
+               $pFusioninventoryProfile->addProfile($plugins_id, 
+                                                    "reportnetworkequipment", 
+                                                    $profiledata["snmp_report"], 
+                                                    $profiledata['id']);
+            }
+         }         
+      }
+      $DB->query("DROP TABLE `glpi_plugin_tracker_profiles`");
+   }   
+   
    
 }
 

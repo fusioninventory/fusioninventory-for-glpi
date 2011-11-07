@@ -150,7 +150,7 @@ if ($plugin->getFromDBbyDir("fusinvsnmp")) {
 if ($plugin->getFromDBbyDir("fusinvinventory")) {
    include_once(GLPI_ROOT . "/plugins/fusinvinventory/install/update.php");
    include_once(GLPI_ROOT . "/plugins/fusinvinventory/locales/en_GB.php");
-   $current_version = pluginFusinvsnmpGetCurrentVersion(PLUGIN_FUSINVINVENTORY_VERSION);
+   $current_version = pluginFusinvinventoryGetCurrentVersion(PLUGIN_FUSINVINVENTORY_VERSION);
 
    $migration = new CliMigration($current_version);
    
@@ -173,7 +173,7 @@ if ($plugin->getFromDBbyDir("fusinvinventory")) {
    } else if ($current_version == PLUGIN_FUSINVINVENTORY_VERSION) {
       $migration->displayWarning("No migration needed.");
    } else {
-      include (GLPI_ROOT . "/plugins/fusinvsnmp/install/install.php");
+      include (GLPI_ROOT . "/plugins/fusinvinventory/install/install.php");
       pluginFusinvinventoryInstall(PLUGIN_FUSINVINVENTORY_VERSION, $migration);
       $migration->displayWarning("installation done.");
    }
@@ -181,23 +181,6 @@ if ($plugin->getFromDBbyDir("fusinvinventory")) {
    $plugin->activate($plugin->fields['id']);
 }
 
-
-
-
-
-
-
-//
-//$function = 'plugin_fusioninventory_check_config';
-//if (function_exists($function)) {
-//   if ($function()) {
-//      $plugin->update(array('id'    => $plugin->fields['id'],
-//                          'state' => Plugin::NOTACTIVATED));
-//   } else {
-//      $plugin->update(array('id'    => $plugin->fields['id'],
-//                          'state' => Plugin::TOBECONFIGURED));
-//   }
-//}
 
 
 if (in_array('--optimize', $_SERVER['argv'])) {
