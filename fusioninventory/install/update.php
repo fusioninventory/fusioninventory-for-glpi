@@ -46,6 +46,21 @@ function pluginFusioninventoryGetCurrentVersion($version) {
    } else if ((TableExists("glpi_plugin_tracker_config")) ||
          (TableExists("glpi_plugin_fusioninventory_config"))) {
 
+      if (TableExists("glpi_plugin_fusioninventory_configs")) {
+         $query = "SELECT `value` FROM `glpi_plugin_fusioninventory_configs`
+            WHERE `type`='version'
+               AND `plugins_id`='".PluginFusioninventoryModule::getModuleId('fusioninventory')."'
+            LIMIT 1";
+
+         $data = array();
+         if ($result=$DB->query($query)) {
+            if ($DB->numrows($result) == "1") {
+               $data = $DB->fetch_assoc($result);
+               return $data['value'];
+            }
+         }
+      }
+      
       if ((!TableExists("glpi_plugin_tracker_agents")) &&
          (!TableExists("glpi_plugin_fusioninventory_agents"))) {
          return "1.1.0";
@@ -151,6 +166,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    
    $a_plugin = plugin_version_fusioninventory();
    $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
+   
+   $migration->displayMessage("Update of plugin FusionInventory");
    
    // TODO remove
 //   $migration = new Migration($current_version);
@@ -342,6 +359,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` WHERE `modulename`='WAKEONLAN'";
    $result = $DB->query($query);
    if (!$DB->numrows($result)) {
+      if (!class_exists('PluginFusioninventoryAgentmodule')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
+      }
       $agentmodule = new PluginFusioninventoryAgentmodule;
       $input = array();
       $input['plugins_id'] = $plugins_id;
@@ -849,19 +869,14 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     *  Add default rules
     */
-      if (TableExists("glpi_plugin_tracker_config_discovery")) {
-         // TODO Add the default rules...
-
+   if (TableExists("glpi_plugin_tracker_config_discovery")) {
+      $migration->displayMessage("Create rules");
+      if (!class_exists('PluginFusioninventorySetup')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
       }
-   
-   
-   
-   $input = array();
-   $input['plugins_id'] = $plugins_id;
-   $input['modulename'] = "WAKEONLAN";
-   $input['is_active']  = 0;
-   $input['exceptions'] = exportArrayToDB(array());
-   $PluginFusioninventoryAgentmodule->add($input);
+      $PluginFusioninventorySetup = new PluginFusioninventorySetup();
+      $PluginFusioninventorySetup->initRules();
+   }   
    
 
    $plugins_id = PluginFusioninventoryModule::getModuleId("fusioninventory");

@@ -141,19 +141,22 @@ function pluginFusinvsnmpGetCurrentVersion($version) {
 
 
 
-function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
+function pluginFusinvsnmpUpdate($current_version, $migration='') {
    global $DB;
 
    if (!class_exists('PluginFusioninventoryMapping')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/mapping.class.php");
    }
 
+   if ($migration == '') {
+      $migration = new Migration($current_version);
+   }
+   $migration->displayMessage("Update of plugin FusinvSNMP");
+   
    
    $configSNMP = new PluginFusinvSNMPConfig;
    $configSNMP->initConfigModule();
    
-   
-   $migration = new $migrationname($current_version);
    $prepare_task = array();
    $prepare_rangeip = array();
    
@@ -1472,8 +1475,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          } else {
             $data['mapping_type'] = '';
          }
-         if ($mapping_id = $pFusioninventoryMapping->get($data['mapping_type'], $data['mapping_name'])) {
-            $data['plugin_fusioninventory_mappings_id'] = $mapping_id;
+         if ($mapping = $pFusioninventoryMapping->get($data['mapping_type'], $data['mapping_name'])) {
+            $data['plugin_fusioninventory_mappings_id'] = $mapping['id'];
             $pFusinvsnmpModelMib->update($data);
          }
       }
@@ -1872,8 +1875,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
       while ($data=$DB->fetch_array($result)) {
          $pFusioninventoryMapping = new PluginFusioninventoryMapping();
          $mapping = 0;
-         if ($mapping_id = $pFusioninventoryMapping->get("Printer", $data['object_name'])) {
-            $data['plugin_fusioninventory_mappings_id'] = $mapping_id;
+         if ($mapping = $pFusioninventoryMapping->get("Printer", $data['object_name'])) {
+            $data['plugin_fusioninventory_mappings_id'] = $mapping['id'];
             $pcartridge->update($data);
          }
       }
@@ -2054,8 +2057,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
       while ($data=$DB->fetch_array($result)) {
          $pFusioninventoryMapping = new PluginFusioninventoryMapping();
          $mapping = 0;
-         if ($mapping_id = $pFusioninventoryMapping->get("NetworkEquipment", $data['Field'])) {
-            $data['plugin_fusioninventory_mappings_id'] = $mapping_id;
+         if ($mapping = $pFusioninventoryMapping->get("NetworkEquipment", $data['Field'])) {
+            $data['plugin_fusioninventory_mappings_id'] = $mapping['id'];
             $pFusinvsnmpNetworkPortLog->update($data);
          }
       }
@@ -2759,6 +2762,15 @@ function update213to220_ConvertField($migration) {
    echo "Converting history port ...\n";
    $i = 0;
    $nb = count($constantsfield);
+   $migration->addKey("glpi_plugin_tracker_snmp_history", 
+                      "Field");
+   $migration->addKey("glpi_plugin_tracker_snmp_history", 
+                      array("Field", "old_value"),
+                      "Field_2");
+   $migration->addKey("glpi_plugin_tracker_snmp_history", 
+                      array("Field", "new_value"),
+                      "Field_3");
+   $migration->migrationOneTable("glpi_plugin_tracker_snmp_history");
 
    foreach($constantsfield as $langvalue=>$mappingvalue) {
       $i++;

@@ -39,6 +39,8 @@ function pluginFusioninventoryInstall($version, $migration='') {
       $migration = new Migration($version);
    }
    
+   $migration->displayMessage("Installation of plugin FusionInventory");
+   
    if (!class_exists('PluginFusioninventoryProfile')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
    }
