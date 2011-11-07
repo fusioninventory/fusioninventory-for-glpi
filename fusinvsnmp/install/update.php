@@ -153,12 +153,50 @@ function pluginFusinvsnmpUpdate($current_version, $migration='') {
    }
    $migration->displayMessage("Update of plugin FusinvSNMP");
    
+   $config = new PluginFusioninventoryConfig();
+   $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
    
    $configSNMP = new PluginFusinvSNMPConfig;
    $configSNMP->initConfigModule();
    
    $prepare_task = array();
    $prepare_rangeip = array();
+   
+   /*
+    * Add SNMPQUERY module if not present 
+    */
+   $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` WHERE `modulename`='SNMPQUERY'";
+   $result = $DB->query($query);
+   if (!$DB->numrows($result)) {
+      if (!class_exists('PluginFusioninventoryAgentmodule')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
+      }
+      $agentmodule = new PluginFusioninventoryAgentmodule;
+      $input = array();
+      $input['plugins_id'] = $plugins_id;
+      $input['modulename'] = "SNMPQUERY";
+      $input['is_active']  = 0;
+      $input['exceptions'] = exportArrayToDB(array());
+      $agentmodule->add($input);
+   }
+   
+   /*
+    * Add NETDISCOVERY module if not present 
+    */
+   $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` WHERE `modulename`='NETDISCOVERY'";
+   $result = $DB->query($query);
+   if (!$DB->numrows($result)) {
+      if (!class_exists('PluginFusioninventoryAgentmodule')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
+      }
+      $agentmodule = new PluginFusioninventoryAgentmodule;
+      $input = array();
+      $input['plugins_id'] = $plugins_id;
+      $input['modulename'] = "NETDISCOVERY";
+      $input['is_active']  = 0;
+      $input['exceptions'] = exportArrayToDB(array());
+      $agentmodule->add($input);
+   }
    
    /*
     * Udpate mapping
@@ -2318,8 +2356,7 @@ function pluginFusinvsnmpUpdate($current_version, $migration='') {
 
       
 
-   $config = new PluginFusioninventoryConfig();
-   $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
+
    $config->updateConfigType($plugins_id, 'version', PLUGIN_FUSINVSNMP_VERSION);
    
    // Update profiles

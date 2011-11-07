@@ -145,7 +145,8 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
          if (isset($a_tables_ref[$table])) {
             $fields_toremove = array_diff_assoc($data, $a_tables_ref[$table]);
             $fields_toadd = array_diff_assoc($a_tables_ref[$table], $data);
-            echo "======= DB ============== Ref =======\n";
+            echo "======= DB ============== Ref =======> ".$table."\n";
+            
             print_r($data);
             print_r($a_tables_ref[$table]);
             
