@@ -109,6 +109,7 @@ function pluginFusinvinventoryInstall($version, $migration='') {
       $input = $data;
       unset($input['id']);
       $input['sub_type'] = 'PluginFusinvinventoryRuleEntity';
+      $data['comment'] = addslashes_deep($data['comment']);
       $rule_id = $rulecollection->add($input);
 
       // Add criteria
