@@ -131,7 +131,7 @@ $LANG['plugin_fusinvdeploy']['form']['label'][22] = "Failed to copy file";
 
 $LANG['plugin_fusinvdeploy']['form']['action'][0] = "Add";
 $LANG['plugin_fusinvdeploy']['form']['action'][1] = "Delete";
-$LANG['plugin_fusinvdeploy']['form']['action'][2] = "Valid";
+$LANG['plugin_fusinvdeploy']['form']['action'][2] = "OK";
 $LANG['plugin_fusinvdeploy']['form']['action'][3] = "Select your file";
 $LANG['plugin_fusinvdeploy']['form']['action'][4] = "File saved!";
 $LANG['plugin_fusinvdeploy']['form']['action'][5] = "Or URL";
