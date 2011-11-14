@@ -976,7 +976,16 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $a_input['users_id'] = 0;
       }
       $config->initConfig($plugins_id, $a_input);
-   
+      
+      if (!class_exists('PluginFusioninventorySetup')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
+      }
+      $PluginFusioninventorySetup = new PluginFusioninventorySetup();
+      $users_id = $PluginFusioninventorySetup->createFusionInventoryUser();
+      $query = "UPDATE `glpi_plugin_fusioninventory_configs`
+                         SET `value`='".$users_id."'
+                  WHERE `type`='users_id'";
+      $DB->query($query);
 }
 
 
