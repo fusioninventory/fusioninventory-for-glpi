@@ -35,6 +35,7 @@
 
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
+checkLoginUser();
 
 if(!isset($_GET['package_id'])){
    echo "{success:false, message:\"_GET['package_id'] not found\"}";

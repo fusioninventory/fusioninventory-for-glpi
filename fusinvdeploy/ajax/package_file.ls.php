@@ -31,6 +31,9 @@
 // Original Author of file: Alexandre Delaunay
 // Purpose of file:
 // ----------------------------------------------------------------------
+define('GLPI_ROOT', '../../..');
+include (GLPI_ROOT."/inc/includes.php");
+checkLoginUser();
 
 // Include main config file
 include ("../lib/extjs/FileChooser/includes/config.inc.php");
