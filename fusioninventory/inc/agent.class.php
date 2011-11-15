@@ -565,11 +565,35 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     * @param plugins_id ID of the fusioninventory plugin
     * @param ip agent's IP
     * 
-    * @return an http url to contact the agent
+    * @return a list of http url to contact the agent
     */
-   static function getAgentBaseURL($plugins_id, $ip) {
+   static function getAgentBaseURLs($plugins_id, $agent_id) {
       $config = new PluginFusioninventoryConfig();
-      return "http://".$ip.":".$config->getValue($plugins_id, 'agent_port');
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+
+      $ret = array();
+
+      if ($PluginFusioninventoryAgent->getFromDB($agent_id)) {
+         $computer = new Computer();
+         $computer->getFromDB($PluginFusioninventoryAgent->fields['items_id']);
+         if ($computer->fields["name"] && $computer->fields["name"] != "localhost") {
+            array_push($ret, "http://".$computer->fields["name"].
+               ":".$config->getValue($plugins_id, 'agent_port'));
+
+            $domain = new Domain();
+            $domain->getFromDB($computer->fields['domains_id']);
+            array_push($ret, "http://".
+               $computer->fields["name"].'.'.
+               $domain->fields["name"].
+               ":".$config->getValue($plugins_id, 'agent_port'));
+         }
+      }
+
+      $a_ips = $PluginFusioninventoryAgent->getIPs($agent_id);
+      foreach ($a_ips as $ip) {
+         array_push($ret, "http://".$ip.":".$config->getValue($plugins_id, 'agent_port'));
+      }
+      return $ret;
    }
 
    
@@ -580,11 +604,14 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     * @param plugins_id ID of the fusioninventory plugin
     * @param ip agent's IP
     * 
-    * @return an http url to get the agent's state
+    * @return an array of http url to get the agent's state
     */
-   static function getAgentStatusURL($plugins_id, $ip) {
-      return self::getAgentBaseURL($plugins_id, $ip)."/status";
-      
+   static function getAgentStatusURLs($plugins_id, $agent_id) {
+      $ret = array();
+      foreach (self::getAgentBaseURLs($plugins_id, $agent_id) as $url) {
+         array_push($ret, $url."/status");
+      }
+      return $ret;
    }
 
    
@@ -597,8 +624,16 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     * 
     * @return an http url to ask the agent to wake up
     */
-   static function getAgentRunURL($plugins_id, $ip) {
-      return self::getAgentBaseURL($plugins_id, $ip)."/now";
+   static function getAgentRunURLs($plugins_id, $agent_id) {
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+
+      $PluginFusioninventoryAgent->getFromDB($agent_id);
+
+      $ret = array();
+      foreach (self::getAgentBaseURLs($plugins_id, $agent_id) as $url) {
+         array_push($ret, $url."/now/".$PluginFusioninventoryAgent->fields['token']);
+      }
+      return $ret;
    }
 
    
