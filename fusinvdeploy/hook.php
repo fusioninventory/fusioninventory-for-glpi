@@ -123,7 +123,7 @@ function plugin_fusinvdeploy_MassiveActionsDisplay($options=array()) {
 }
 
 function plugin_fusinvdeploy_MassiveActionsProcess($data) {
-   global $LANG;
+   global $LANG, $DB;
 
    switch ($data['action']) {
       case 'plugin_fusinvdeploy_duplicatePackage' :
@@ -142,8 +142,13 @@ function plugin_fusinvdeploy_MassiveActionsProcess($data) {
       case 'plugin_fusinvdeploy_targetDeployTask' :
          if ($data['itemtype'] == 'Computer') {
             $taskjob = new PluginFusinvdeployTaskjob;
-
             $tasks = array();
+
+
+            //get old datas
+            $oldjobs = $taskjob->find("plugin_fusinvdeploy_tasks_id = '".$data['tasks_id']."'");
+
+            //add new datas
             foreach ($data['item'] as $key => $val) {
                $task = new StdClass;
                $task->package_id = $data['packages_id'];
@@ -160,6 +165,24 @@ function plugin_fusinvdeploy_MassiveActionsProcess($data) {
                'tasks' => json_encode($tasks)
             );
             $taskjob->saveDatas($params);
+
+            //reimport old jobs
+            foreach($oldjobs as $job_id => $job) {
+               $sql = "INSERT INTO glpi_plugin_fusinvdeploy_taskjobs (";
+               foreach ($job as $key => $val) {
+                  $sql .= "`$key`, ";
+               }
+               $sql = substr($sql, 0, -2).") VALUES (";
+               foreach ($job as $val) {
+                  if (is_numeric($val) && (int)$val == $val) {
+                     $sql .= "$val, ";
+                  }
+                  else $sql .= "'$val', ";
+               }
+               $sql = substr($sql, 0, -2).");";
+
+               $DB->query($sql);
+            }
          }
          break;
    }
