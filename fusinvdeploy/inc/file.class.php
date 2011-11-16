@@ -230,11 +230,6 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
       $sha512 = hash_file('sha512', $file_tmp_name);
       $short_sha512 = substr($sha512, 0, 6);
-      //check if file is not already present
-      if ($file_id = $this->checkPresenceFile($sha512)) {
-         $message = $LANG['plugin_fusinvdeploy']['form']['message'][3];
-         return $file_id;
-      }
 
       $data = array(
          'name' => $filename,
