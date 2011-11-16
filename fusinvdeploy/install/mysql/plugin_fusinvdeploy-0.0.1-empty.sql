@@ -125,6 +125,8 @@ KEY `date_mod` (`date_mod`)
 DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_files_mirrors`;
 CREATE TABLE  `glpi_plugin_fusinvdeploy_files_mirrors` (
 `id` INT NOT NULL AUTO_INCREMENT ,
+`entities_id` INT( 11 ) NOT NULL DEFAULT  '0',
+`is_recursive` TINYINT( 1 ) NOT NULL DEFAULT  '0',
 `plugin_fusinvdeploy_files_id` INT( 11 ) NOT NULL DEFAULT  '0',
 `plugin_fusinvdeploy_mirrors_id` INT( 11 ) NOT NULL DEFAULT  '0',
 `ranking` INT( 11 ) NOT NULL DEFAULT  '0',
@@ -170,6 +172,8 @@ FROM glpi_plugin_fusioninventory_taskjobs;
 DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_groups`;
 CREATE TABLE  `glpi_plugin_fusinvdeploy_groups` (
 `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+`entities_id` INT( 11 ) NOT NULL DEFAULT  '0',
+`is_recursive` TINYINT( 1 ) NOT NULL DEFAULT  '0',
 `name` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
 `comment` text COLLATE utf8_unicode_ci NOT NULL,
 `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'STATIC, DYNAMIC',
