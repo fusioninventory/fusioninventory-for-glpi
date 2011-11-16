@@ -91,16 +91,15 @@ if (isset($_POST["add"])) {
    } elseif ($_REQUEST['type'] == 'dynamic') {
       $fields_array = array(
          'itemtype'              => $_REQUEST['itemtype'],
-/*       'start'                 => $_REQUEST['start'],
-         'limit'                 => $_REQUEST['limit'],*/
          'serial'                => $_REQUEST['serial'],
          'otherserial'           => $_REQUEST['otherserial'],
-         'locations'             => $_REQUEST['locations'],
+         'locations_id'          => $_REQUEST['locations_id'],
          'operatingsystems_id'   => $_REQUEST['operatingsystems_id'],
          'operatingsystem_name'  => $_REQUEST['____data_operatingsystems_id'],
          'room'                  => $_REQUEST['room'],
          'building'              => $_REQUEST['building'],
-         'name'                  => $_REQUEST['name']
+         'name'                  => $_REQUEST['name'],
+         'states_id'             => $_REQUEST['states_id']
       );
       $group_item->add(array(
          'groups_id' => $_REQUEST['groupID'],
@@ -114,16 +113,15 @@ if (isset($_POST["add"])) {
    if ($_REQUEST['type'] == 'dynamic') {
       $fields_array = array(
          'itemtype'              => $_REQUEST['itemtype'],
-/*       'start'                 => $_REQUEST['start'],
-         'limit'                 => $_REQUEST['limit'],*/
          'serial'                => $_REQUEST['serial'],
          'otherserial'           => $_REQUEST['otherserial'],
-         'locations'             => $_REQUEST['locations'],
+         'locations_id'          => $_REQUEST['locations_id'],
          'operatingsystems_id'   => $_REQUEST['operatingsystems_id'],
          'operatingsystem_name'  => $_REQUEST['____data_operatingsystems_id'],
          'room'                  => $_REQUEST['room'],
          'building'              => $_REQUEST['building'],
-         'name'                  => $_REQUEST['name']
+         'name'                  => $_REQUEST['name'],
+         'states_id'             => $_REQUEST['states_id']
       );
       $group_item->update(array(
          'id' => $_REQUEST['id'],
