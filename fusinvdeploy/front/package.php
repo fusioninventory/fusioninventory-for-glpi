@@ -38,6 +38,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 include (GLPI_ROOT."/inc/includes.php");
+checkLoginUser();
 
 commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins",
              "fusioninventory","packages");

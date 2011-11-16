@@ -34,6 +34,7 @@
 
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
+checkLoginUser();
 
 if(!isset($_GET['tasks_id'])) exit;
 

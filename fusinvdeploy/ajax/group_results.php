@@ -35,5 +35,7 @@
 
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
+checkLoginUser();
+
 $_SESSION['groupSearchResults'] = $_REQUEST;
 PluginFusinvdeployGroup::showSearchResults($_REQUEST);

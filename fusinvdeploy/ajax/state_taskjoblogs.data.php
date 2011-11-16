@@ -34,6 +34,7 @@
 
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
+checkLoginUser();
 
 if (!isset($_REQUEST['status_id'])) exit;
 if ($_REQUEST['status_id'] == 0)

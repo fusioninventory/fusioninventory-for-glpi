@@ -47,8 +47,7 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 if (isset($_POST['startagent'])) {
    $taskjob = new PluginFusioninventoryTaskjob();
-   $agent->getFromDB($_POST['agent_id']);
-   if ($taskjob->startAgentRemotly($_POST['ip'], $agent->fields['token'])) {
+   if ($taskjob->startAgentRemotly($_POST['agent_id'])) {
       addMessageAfterRedirect($LANG['plugin_fusioninventory']['agents'][17]);
    } else {
       addMessageAfterRedirect($LANG['plugin_fusioninventory']['agents'][30]);

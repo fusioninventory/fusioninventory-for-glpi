@@ -35,6 +35,8 @@
 
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
+checkLoginUser();
+
 header("Content-Type: text/html; charset=UTF-8");
 header_nocache();
 
@@ -52,7 +54,7 @@ if ($mirror->can($_POST['id'],'r')) {
       case 12 :
          Log::showForItem($mirror);
          break;
-   
+
       default :
          break;
    }
