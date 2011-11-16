@@ -723,13 +723,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       
       // Start agents must start in push mode
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-      foreach($_SESSION['glpi_plugin_fusioninventory']['agents'] as $agents_id=>$num) {
-         $a_ips = $PluginFusioninventoryAgent->getIPs($agents_id);
-         foreach ($a_ips as $ip) {
-            $PluginFusioninventoryAgent->getFromDB($agents_id);
-            $PluginFusioninventoryTaskjob->startAgentRemotly($ip, 
-                                                             $PluginFusioninventoryAgent->fields['token']);
-         }
+      foreach($_SESSION['glpi_plugin_fusioninventory']['agents'] as $agent_id=>$num) {
+         $PluginFusioninventoryTaskjob->startAgentRemotly($agent_id);
       }
       unset($_SESSION['glpi_plugin_fusioninventory']['agents']);
 
@@ -893,13 +888,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             }
          }
          
-         foreach($_SESSION['glpi_plugin_fusioninventory']['agents'] as $agents_id=>$num) {
-            $a_ips = $PluginFusioninventoryAgent->getIPs($agents_id);
-            foreach ($a_ips as $ip) {
-               $PluginFusioninventoryAgent->getFromDB($agents_id);
-               $PluginFusioninventoryTaskjob->startAgentRemotly($ip, 
-                                                                $PluginFusioninventoryAgent->fields['token']);
-            }
+         foreach($_SESSION['glpi_plugin_fusioninventory']['agents'] as $agent_id=>$num) {
+            $PluginFusioninventoryTaskjob->startAgentRemotly($agent_id);
          }
          unset($_SESSION['glpi_plugin_fusioninventory']['agents']);         
       } else {
@@ -974,13 +964,16 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
           )
       );
 
-      $str = @file_get_contents(PluginFusioninventoryAgent::getAgentStatusURL($plugins_id, $ip), 0, 
-                                $ctx);
-      $this->reenableusemode();
-      if (strstr($str, "waiting")) {
-         return true;
+      $ret = false;
+      foreach(PluginFusioninventoryAgent::getAgentStatusURLs($plugins_id, $agentid) as $url) {
+         $str = @file_get_contents($url, 0, $ctx);
+         if ($stre !== false && strstr($str, "waiting")) {
+            $ret = true;
+            break;
+         }
       }
-      return false;
+      $this->reenableusemode();
+      return $ret;
    }
 
 
@@ -991,33 +984,34 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
       $a_ip = $PluginFusioninventoryAgent->getIPs($items_id);
-      if (count($a_ip) > 0) {
 
-         $this->disableDebug();
+      $this->disableDebug();
 
-         $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
+      $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
-         $ctx = stream_context_create(array(
-             'http' => array(
-                 'timeout' => 2
-                 )
-             )
-         );
+      $ctx = stream_context_create(array(
+         'http' => array(
+            'timeout' => 2
+            )
+         )
+      );
 
-         foreach ($a_ip as $ip) {
-            $str = @file_get_contents(PluginFusioninventoryAgent::getAgentStatusURL($plugins_id, $ip), 
-                                      0, $ctx);
-            $this->reenableusemode();
-            if (strstr($str, "waiting")) {
-               return "waiting";
-            } else if (strstr($str, "running")) {
-               return "running";
-            }
+      $str="noanswer";
+      foreach(PluginFusioninventoryAgent::getAgentStatusURLs($plugins_id, $items_id) as $url) {
+         $str = @file_get_contents($url, 0, $ctx);
+         if ($str !== false) {
+            break;
          }
-         return "noanswer";
-      } else {
-         return "noip";
       }
+      $this->reenableusemode();
+
+      if (strstr($str, "waiting")) {
+         $ret="waiting";
+      } else if (strstr($str, "running")) {
+         $ret="running";
+      }
+
+      return $ret;
    }
    
 
@@ -1031,25 +1025,26 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    * @return bool true if agent wake up
    *
    **/
-   function startAgentRemotly($ip, $token) {
+   function startAgentRemotly($agent_id) {
 
-      $this->disableDebug();
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
+      $ret = false;
+
+      $this->disableDebug();
+
       $ctx = stream_context_create(array('http' => array('timeout' => 2)));
-      $data = @file_get_contents(PluginFusioninventoryAgent::getAgentStatusURL($plugins_id, $ip), 
-                                 0, $ctx);
-      if (isset($data) && !empty($data)) {
-         @file_get_contents(PluginFusioninventoryAgent::getAgentRunURL($plugins_id, $ip).$token, 0, 
-                            $ctx);
-         //Agent run Now
-         $this->reenableusemode();
-         return true;
-      } else {
-         //Agent not available
-         $this->reenableusemode();
-         return false;
+      foreach (PluginFusioninventoryAgent::getAgentRunURLs($plugins_id, $agent_id) as $runURL) {
+         if (@file_get_contents($runURL, 0, $ctx) !== false) {
+            $ret = true;
+            break;
+         }
       }
+      $this->reenableusemode();
+
+      return $ret;
    }
 
 
