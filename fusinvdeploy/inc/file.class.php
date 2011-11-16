@@ -468,21 +468,30 @@ class PluginFusinvdeployFile extends CommonDBTM {
    public function uploadFileFromServer() {
       global $LANG;
 
+      $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
+      $server_upload_path = $PluginFusioninventoryConfig->getValue($plugins_id, 'server_upload_path');
+
+
       $package_id = $_GET['package_id'];
       $render     = $_GET['render'];
+
+      if (preg_match('/\.\./', $_POST['file_server'])) {
+	 die;
+      }
 
       $render   = PluginFusinvdeployOrder::getRender($render);
       $order_id = PluginFusinvdeployOrder::getIdForPackage($package_id,$render);
 
       if (isset ($_POST["id"]) and !$_POST['id']) {
-         $file_tmp_name = $_POST['file_server'];
-         $filename = substr($file_tmp_name, strrpos($file_tmp_name, '/')+1);
-         $mime_type = @mime_content_type($file_tmp_name);
-         $filesize = filesize($file_tmp_name);
+         $file_path = $server_upload_path.'/'.$_POST['file_server'];
+         $filename = basename($file_path);
+         $mime_type = @mime_content_type($file_path);
+         $filesize = filesize($file_path);
 
          //prepare file data for insertion in repo
          $data = array(
-            'file_tmp_name' => $file_tmp_name,
+            'file_tmp_name' => $file_path,
             'mime_type' => $mime_type,
             'filesize' => $filesize,
             'filename' => $filename,
