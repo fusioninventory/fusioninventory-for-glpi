@@ -115,8 +115,8 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
                      $row = $DB->fetch_assoc($res);
                      $fields_array = unserialize($row['fields_array']);
                      if ($fields_array['operatingsystems_id'] != 0) unset($fields_array['operatingsystem_name']);
-                     foreach($fields_array as $key =>$field) {
-                        if (trim($field) == '') unset($fields_array[$key]);
+                     foreach($fields_array as $key => $field) {
+                        if (empty($field)) unset($fields_array[$key]);
                      }
                      $fields_array['limit'] == 999999999;
                      $datas = PluginWebservicesMethodInventaire::methodListInventoryObjects($fields_array, '');
