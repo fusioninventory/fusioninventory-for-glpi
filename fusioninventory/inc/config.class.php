@@ -50,7 +50,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       global $DB;
 
       foreach ($p_insert as $type=>$value) {
-         if (!$this->getValue($plugins_id, $type)) {
+         if (is_null($this->getValue($plugins_id, $type))) {
             $this->addConfig($plugins_id, $type, $value);
          } else {
             $this->updateConfigType($plugins_id, $type, $value);
@@ -72,13 +72,12 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       global $DB;
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
-      $data = $PluginFusioninventoryConfig->find("`plugins_id`='".$p_plugins_id."'
-                          AND `type`='".$p_type."'");
-      $config = current($data);
+      $config = current($PluginFusioninventoryConfig->find("`plugins_id`='".$p_plugins_id."'
+                          AND `type`='".$p_type."'"));
       if (isset($config['value'])) {
          return $config['value'];
       }
-      return false;
+      return NULL;
    }
 
 
@@ -209,9 +208,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @return boolean : true on success
     **/
    function updateConfigType($p_plugins_id, $p_type, $p_value) {
-      $data = $this->find("`plugins_id`='".$p_plugins_id."'
-                          AND `type`='".$p_type."'");
-      $config = current($data);
+      $config = current($this->find("`plugins_id`='".$p_plugins_id."'
+                          AND `type`='".$p_type."'"));
       if (isset($config['id'])) {
          return $this->updateConfig($config['id'], $p_value);
       }

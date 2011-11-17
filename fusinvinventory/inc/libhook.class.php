@@ -138,7 +138,7 @@ class PluginFusinvinventoryLibhook {
       } else {
          $inputCext['computers_id'] = $idmachine;
       }
-      
+
       foreach($data as $section) {
          $i++;
          $dataSection = unserialize($section['dataSection']);
