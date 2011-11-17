@@ -62,7 +62,7 @@ $LANG['plugin_fusinvinventory']['profile'][2]="Kryteria istnienia";
 $LANG['plugin_fusinvinventory']['profile'][3]="Ręczny import pliku XML";
 $LANG['plugin_fusinvinventory']['profile'][4]="Pola Czarnej Listy";
 
-$LANG['plugin_fusinvinventory']['rule'][0]="Computer existent criteria rules";
+$LANG['plugin_fusinvinventory']['rule'][0]="Reguły kryteriów istnienia Komputera";
 $LANG['plugin_fusinvinventory']['rule'][100]="Reguły dla jednostki";
 $LANG['plugin_fusinvinventory']['rule'][102]="Ignoruj w imporcie z Fusioninventory";
 $LANG['plugin_fusinvinventory']['rule'][1]="Kryterium istnienia";
@@ -87,7 +87,7 @@ $LANG['plugin_fusinvinventory']['setup'][25]="Rejestry";
 $LANG['plugin_fusinvinventory']['setup'][26]="Procesy";
 $LANG['plugin_fusinvinventory']['setup'][27]="Importuj unikalne po numerze seryjnym";
 $LANG['plugin_fusinvinventory']['setup'][28]="Automatyczne przenoszenie komputerów";
-$LANG['plugin_fusinvinventory']['setup'][29]="Model for automatic computers transfer in an other entity";
+$LANG['plugin_fusinvinventory']['setup'][29]="Model automatycznego transferu komputerów do innej jednostki";
 $LANG['plugin_fusinvinventory']['setup'][30]="Dyski sieciowe";
 $LANG['plugin_fusinvinventory']['setup'][31]="Wirtualna karta sieciowa";
 $LANG['plugin_fusinvinventory']['setup'][32]="Ta opcja nie importuje tej pozycji";

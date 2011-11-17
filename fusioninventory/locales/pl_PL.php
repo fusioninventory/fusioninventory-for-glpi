@@ -185,7 +185,7 @@ $LANG['plugin_fusioninventory']['task'][44]="Obejrzyj wszystkie informacje o zad
 $LANG['plugin_fusioninventory']['task'][45]="Zaawansowane opcje";
 $LANG['plugin_fusioninventory']['task'][46]="Wyczyść";
 $LANG['plugin_fusioninventory']['task'][47]="Unikalne id";
-$LANG['plugin_fusioninventory']['task'][48]="Zinwentaryzuj";
+$LANG['plugin_fusioninventory']['task'][48]="Zinwentaryzowane";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Uruchomiony";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";
