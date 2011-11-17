@@ -141,16 +141,15 @@ function pluginFusinvsnmpGetCurrentVersion($version) {
 
 
 
-function pluginFusinvsnmpUpdate($current_version, $migration='') {
+function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    global $DB;
 
    if (!class_exists('PluginFusioninventoryMapping')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/mapping.class.php");
    }
 
-   if ($migration == '') {
-      $migration = new Migration($current_version);
-   }
+   $migration = new $migrationname($current_version);
+   
    $migration->displayMessage("Update of plugin FusinvSNMP");
    
    $config = new PluginFusioninventoryConfig();
@@ -1500,22 +1499,24 @@ function pluginFusinvsnmpUpdate($current_version, $migration='') {
                            "int(11) NOT NULL DEFAULT '0'");
       $migration->migrationOneTable($newTable);
       // Update with mapping
-      $pFusinvsnmpModelMib = new PluginFusinvsnmpModelMib();
-      $query = "SELECT * FROM `".$newTable."`";
-      $result=$DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
-         $pFusioninventoryMapping = new PluginFusioninventoryMapping();
-         $mapping = 0;
-         if ($data['mapping_type'] == '2') {
-            $data['mapping_type'] == 'NetworkEquipment';
-         } else if ($data['mapping_type'] == '3') {
-            $data['mapping_type'] == 'Printer';
-         } else {
-            $data['mapping_type'] = '';
-         }
-         if ($mapping = $pFusioninventoryMapping->get($data['mapping_type'], $data['mapping_name'])) {
-            $data['plugin_fusioninventory_mappings_id'] = $mapping['id'];
-            $pFusinvsnmpModelMib->update($data);
+      if (FieldExists($newTable, "mapping_type")) {
+         $pFusinvsnmpModelMib = new PluginFusinvsnmpModelMib();
+         $query = "SELECT * FROM `".$newTable."`";
+         $result=$DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
+            $pFusioninventoryMapping = new PluginFusioninventoryMapping();
+            $mapping = 0;
+            if ($data['mapping_type'] == '2') {
+               $data['mapping_type'] == 'NetworkEquipment';
+            } else if ($data['mapping_type'] == '3') {
+               $data['mapping_type'] == 'Printer';
+            } else {
+               $data['mapping_type'] = '';
+            }
+            if ($mapping = $pFusioninventoryMapping->get($data['mapping_type'], $data['mapping_name'])) {
+               $data['plugin_fusioninventory_mappings_id'] = $mapping['id'];
+               $pFusinvsnmpModelMib->update($data);
+            }
          }
       }
       $migration->dropField($newTable,
@@ -2393,8 +2394,58 @@ function pluginFusinvsnmpUpdate($current_version, $migration='') {
          }         
       }
       $DB->query("DROP TABLE `glpi_plugin_tracker_profiles`");
-   }   
+   }
    
+   /*
+    * Fix problem with mapping with many entries with same mapping
+    */
+   $a_mapping = array();
+   $a_mappingdouble = array();
+   $query = "SELECT * FROM `glpi_plugin_fusioninventory_mappings`
+      ORDER BY `id`";
+   $result=$DB->query($query);
+   while ($data=$DB->fetch_array($result)) {
+      if (!isset($a_mapping[$data['itemtype'].".".$data['name']])) {
+         $a_mapping[$data['itemtype'].".".$data['name']] = $data['id'];
+      } else {
+         $a_mappingdouble[$data['id']] = $data['itemtype'].".".$data['name'];
+      }
+   }   
+   foreach($a_mappingdouble as $mapping_id=>$mappingkey) {
+      $query = "UPDATE `glpi_plugin_fusinvsnmp_modelmibs`
+         SET plugin_fusioninventory_mappings_id='".$a_mapping[$mappingkey]."'
+         WHERE plugin_fusioninventory_mappings_id='".$mapping_id."'";
+      $DB->query($query);
+      $query = "UPDATE `glpi_plugin_fusinvsnmp_printercartridges`
+         SET plugin_fusioninventory_mappings_id='".$a_mapping[$mappingkey]."'
+         WHERE plugin_fusioninventory_mappings_id='".$mapping_id."'";
+      $DB->query($query);
+      $query = "UPDATE `glpi_plugin_fusinvsnmp_networkportlogs`
+         SET plugin_fusioninventory_mappings_id='".$a_mapping[$mappingkey]."'
+         WHERE plugin_fusioninventory_mappings_id='".$mapping_id."'";
+      $DB->query($query);
+      $query = "UPDATE `glpi_plugin_fusinvsnmp_configlogfields`
+         SET plugin_fusioninventory_mappings_id='".$a_mapping[$mappingkey]."'
+         WHERE plugin_fusioninventory_mappings_id='".$mapping_id."'";
+      $DB->query($query);
+      $query = "DELETE FROM `glpi_plugin_fusioninventory_mappings`
+         WHERE `id` = '".$mapping_id."'";
+      $DB->query($query);
+   }
+   
+   /*
+    * Import / update SNMP models
+    */
+   if (!class_exists('PluginFusinvsnmpModel')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/model.class.php");
+   }
+   if (!class_exists('PluginFusinvsnmpImportExport')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/importexport.class.php");
+   }
+   if (!class_exists('PluginFusinvsnmpCommonDBTM')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/commondbtm.class.php");
+   }
+   PluginFusinvsnmpModel::importAllModels();
    
 }
 
