@@ -77,6 +77,7 @@ function pluginFusinvinventoryGetCurrentVersion($version) {
 function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration') {
    global $DB;
 
+   $migration = new $migrationname($current_version);
    $config = new PluginFusioninventoryConfig();
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');   
    
@@ -221,7 +222,6 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
    /*
     * Create table `glpi_plugin_fusinvinventory_computer` appear in 0.80+1.1
     */
-   $migration = new Migration("0.80+1.1");
    $newTable = "glpi_plugin_fusinvinventory_computers";
    if (!TableExists($newTable)) {
       $DB->query("CREATE TABLE `".$newTable."` (
@@ -261,6 +261,8 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
     */
 
     
+   
+   $migration->executeMigration();
     
    $config->updateConfigType($plugins_id, 'version', PLUGIN_FUSINVINVENTORY_VERSION);
 }
