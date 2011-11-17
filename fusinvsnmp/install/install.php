@@ -32,11 +32,17 @@
    ----------------------------------------------------------------------
  */
 
-function pluginFusinvsnmpInstall() {
+function pluginFusinvsnmpInstall($migration='') {
    global $DB,$LANG;
 
    ini_set("max_execution_time", "0");
 
+   if ($migration == '') {
+      $migration = new Migration($version);
+   }
+   
+   $migration->displayMessage("Installation of plugin FusinvSNMP");
+   
    // Get informations of plugin
    $a_plugin = plugin_version_fusinvsnmp();
 

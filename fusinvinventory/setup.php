@@ -32,7 +32,7 @@
    ----------------------------------------------------------------------
  */
 
-define ("PLUGIN_FUSINVINVENTORY_VERSION","2.4.0");
+define ("PLUGIN_FUSINVINVENTORY_VERSION","0.80+1.1");
 
 // Init the hooks of fusinvdeploy
 function plugin_init_fusinvinventory() {
@@ -160,6 +160,10 @@ function plugin_fusinvinventory_check_prerequisites() {
    
    if (version_compare(GLPI_VERSION,'0.80','lt') || version_compare(GLPI_VERSION,'0.81','ge')) {
       echo $LANG['plugin_fusioninventory']['errors'][50];
+      return false;
+   }
+   $plugin = new Plugin();
+   if (!$plugin->isActivated("fusioninventory")) {
       return false;
    }
    return true;

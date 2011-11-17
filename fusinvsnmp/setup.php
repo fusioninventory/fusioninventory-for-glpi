@@ -31,7 +31,7 @@
    Purpose of file:
    ----------------------------------------------------------------------
  */
-define ("PLUGIN_FUSINVSNMP_VERSION","2.4.0");
+define ("PLUGIN_FUSINVSNMP_VERSION","0.80+1.1");
 
 include_once ("includes.php");
 
@@ -219,6 +219,10 @@ function plugin_fusinvsnmp_check_prerequisites() {
    
    if (version_compare(GLPI_VERSION,'0.80','lt') || version_compare(GLPI_VERSION,'0.81','ge')) {
       echo $LANG['plugin_fusioninventory']['errors'][50];
+      return false;
+   }
+   $plugin = new Plugin();
+   if (!$plugin->isActivated("fusioninventory")) {
       return false;
    }
    return true;

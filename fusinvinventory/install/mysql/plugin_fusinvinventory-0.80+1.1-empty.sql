@@ -54,7 +54,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_antivirus` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-
 DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_computers`;
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_computers` (

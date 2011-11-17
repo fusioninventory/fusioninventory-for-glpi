@@ -50,7 +50,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       global $DB;
 
       foreach ($p_insert as $type=>$value) {
-         $this->addConfig($plugins_id, $type, $value);
+         if (!$this->getValue($plugins_id, $type)) {
+            $this->addConfig($plugins_id, $type, $value);
+         } else {
+            $this->updateConfigType($plugins_id, $type, $value);
+         }         
       }
    }
 
