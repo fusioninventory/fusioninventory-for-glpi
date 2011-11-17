@@ -171,18 +171,50 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
    /*
     * Update serialized sections to mysql_real_escape_string(htmlspecialchars_decode("data"))
     */
-//   $query = "SELECT * FROM `glpi_plugin_fusinvinventory_libserialization`";
-//   if ($result=$DB->query($query)) {
-//      while ($data=$DB->fetch_array($result)) {
-//         for ($i=1; $i<4;$i++) {
-//            $queryUpdate = "UPDATE `glpi_plugin_fusinvinventory_libserialization`
-//               SET `serialized_sections$i` = '" .
-//               mysql_real_escape_string(htmlspecialchars_decode($data['serialized_sections'.$i])) ."'
-//               WHERE `internal_id` = '" . $data['internal_id'] . "'";
-//            $DB->query($queryUpdate);
-//         }
-//      }
-//   }
+   if (!strstr($current_version, "+")) {// All version before 0.80+1.1 (new versioning)
+      if (!class_exists('PluginFusinvinventoryLib')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusinvinventory/inc/lib.class.php");
+      }
+      $pfLib = new PluginFusinvinventoryLib();
+      $query = "SELECT * FROM `glpi_plugin_fusinvinventory_libserialization`";
+      if ($result=$DB->query($query)) {
+         while ($data=$DB->fetch_array($result)) {
+            $infoSections = array();
+            $infoSections["externalId"] = '';
+            $infoSections["sections"] = array();
+            $infoSections["sectionsToModify"] = array();
+
+            /* Variables for the recovery and changes in the serialized sections */
+            $serializedSections = "";
+            $arraySerializedSections = array();
+            $arraySerializedSectionsTemp = array();
+
+            $infoSections["externalId"] = $data['internal_id'];
+            $serializedSections = htmlspecialchars_decode($data['serialized_sections1'].$data['serialized_sections2'].$data['serialized_sections3'], ENT_QUOTES); // Recover double quotes
+            $arraySerializedSections = explode("\n", $serializedSections); // Recovering a table with one line per entry
+            foreach ($arraySerializedSections as $valeur) {
+               $arraySerializedSectionsTemp = explode("<<=>>", $valeur); // For each line, we create a table with data separated
+               if (isset($arraySerializedSectionsTemp[0]) AND isset($arraySerializedSectionsTemp[1])) {
+                  if ($arraySerializedSectionsTemp[0] != "" && $arraySerializedSectionsTemp[1] != "") { // that is added to infosections
+                     $infoSections["sections"][$arraySerializedSectionsTemp[0]] = $arraySerializedSectionsTemp[1];
+                  }
+               }
+            }
+            $infoSections['sections'] = $pfLib->convertData($infoSections['sections']);
+
+            $serializedSections = "";
+            foreach($infoSections["sections"] as $key => $serializedSection) {
+               if (!strstr($key, "ENVS/")
+                     AND !strstr($key, "PROCESSES/")) {
+
+                  $serializedSections .= $key."<<=>>".$serializedSection."
+";
+               }
+            }
+            $pfLib->_serializeIntoDB($data['internal_id'], $serializedSections);
+         }
+      }
+   }
    
 
 
@@ -192,7 +224,10 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
    $migration = new Migration("0.80+1.1");
    $newTable = "glpi_plugin_fusinvinventory_computers";
    if (!TableExists($newTable)) {
-      $DB->query($newTable);
+      $DB->query("CREATE TABLE `".$newTable."` (
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                     PRIMARY KEY (`id`)
+                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
    }   
    $migration->addField($newTable, 
                         "id", 

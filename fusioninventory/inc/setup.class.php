@@ -61,6 +61,8 @@ class PluginFusioninventorySetup {
       $result=$DB->query($query);
       while ($data=$DB->fetch_array($result)) {
          if ((strstr($data[0],"glpi_plugin_fusioninventory_"))
+                 OR (strstr($data[0], "glpi_plugin_fusinvsnmp_"))
+                 OR (strstr($data[0], "glpi_plugin_fusinvinventory_"))
                 OR (strstr($data[0], "glpi_dropdown_plugin_fusioninventory"))
                 OR (strstr($data[0], "glpi_plugin_tracker"))
                 OR (strstr($data[0], "glpi_dropdown_plugin_tracker"))) {
@@ -809,6 +811,7 @@ class PluginFusioninventorySetup {
     */
    function createFusionInventoryUser() {
       $user = new User();
+      $a_users = array();
       $a_users = $user->find("`name`='Plugin_FusionInventory'");
       if (count($a_users) == '0') {
          $input = array();
@@ -817,16 +820,8 @@ class PluginFusioninventorySetup {
          $input['firstname'] = "Plugin FusionInventory";
          return $user->add($input);
       } else {
-         for ($i = 0; $i < 1000; $i++) {
-            $a_users = $user->find("`name`='Plugin_FusionInventory".$i."'");
-            if (count($a_users) == '0') {
-               $input = array();
-               $input['name'] = 'Plugin_FusionInventory'.$i;
-               $input['password'] = mt_rand(30, 39);
-               $input['firstname'] = "Plugin FusionInventory";
-               return $user->add($input);
-            }
-         }         
+         $user = current($a_users);
+         return $user['id'];        
       }
    }
 
