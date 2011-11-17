@@ -589,10 +589,17 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          }
       }
 
+      # Guess the machine name from the DEVICEID,
+      # useful when Windows domain != DNS domain
+      if(preg_match('/(\S+)-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}$/', $PluginFusioninventoryAgent->fields['name'], $stack)) {
+         array_push($ret, "http://".$stack[1].":".$config->getValue($plugins_id, 'agent_port'));
+      }
+
       $a_ips = $PluginFusioninventoryAgent->getIPs($agent_id);
       foreach ($a_ips as $ip) {
          array_push($ret, "http://".$ip.":".$config->getValue($plugins_id, 'agent_port'));
       }
+
       return $ret;
    }
 
