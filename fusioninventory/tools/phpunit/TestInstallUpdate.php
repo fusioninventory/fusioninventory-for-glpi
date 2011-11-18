@@ -48,13 +48,13 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
     }
 
     
-    function verifyDBNice() {
+    function verifyDBNice($pluginname) {
        global $DB;
        
-       $comparaisonSQLFile = "plugin_fusioninventory-0.80+1.1-empty.sql";
+       $comparaisonSQLFile = "plugin_".$pluginname."-0.80+1.1-empty.sql";
        // See http://joefreeman.co.uk/blog/2009/07/php-script-to-compare-mysql-database-schemas/
        
-       $file_content = file_get_contents("../../install/mysql/".$comparaisonSQLFile);
+       $file_content = file_get_contents("../../../".$pluginname."/install/mysql/".$comparaisonSQLFile);
        $a_lines = explode("\n", $file_content);
        
        $a_tables_ref = array();
@@ -83,8 +83,12 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
       $query = "SHOW TABLES";
       $result = $DB->query($query);
       while ($data=$DB->fetch_array($result)) {
-         if (strstr($data[0], "tracker")
-                 OR strstr($data[0], "fusion")) {
+         if ((strstr($data[0], "tracker")
+                 OR strstr($data[0], $pluginname))
+             AND(!strstr($data[0], "glpi_plugin_fusinvinventory_pcidevices"))
+             AND(!strstr($data[0], "glpi_plugin_fusinvinventory_pcivendors"))
+             AND(!strstr($data[0], "glpi_plugin_fusinvinventory_usbdevices"))
+             AND(!strstr($data[0], "glpi_plugin_fusinvinventory_usbvendors"))){
             $data[0] = str_replace(" COLLATE utf8_unicode_ci", "", $data[0]);
             $data[0] = str_replace("( ", "(", $data[0]);
             $data[0] = str_replace(" )", ")", $data[0]);
@@ -221,7 +225,13 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
        
       passthru("cd .. && /usr/local/bin/php -f cli_install.php");
        
-      $this->verifyDBNice();
+      $this->verifyDBNice("fusioninventory");
+      echo "***********************************************************\n";
+      echo "***********************************************************\n";
+      $this->verifyDBNice("fusinvinventory");
+      echo "***********************************************************\n";
+      echo "***********************************************************\n";
+      $this->verifyDBNice("fusinvsnmp");
    }
     
     

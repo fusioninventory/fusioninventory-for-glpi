@@ -840,8 +840,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $migration->changeField($newTable,
                               "shortlocale",
                               "shortlocale",
-                              "int(4) DEFAULT NULL");
-      
+                              "int(4) DEFAULT NULL");     
       
       
    /*

@@ -43,7 +43,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_miblabels`;
 CREATE TABLE `glpi_plugin_fusinvsnmp_miblabels` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `comment` text COLLATE utf8_unicode_ci,
+   `comment` text COLLATE utf8_unicode_ci DEFAULT NULL,
    PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -54,7 +54,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_mibobjects`;
 CREATE TABLE `glpi_plugin_fusinvsnmp_mibobjects` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `comment` text COLLATE utf8_unicode_ci,
+   `comment` text COLLATE utf8_unicode_ci DEFAULT NULL,
    PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -65,7 +65,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_miboids`;
 CREATE TABLE `glpi_plugin_fusinvsnmp_miboids` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `comment` text COLLATE utf8_unicode_ci,
+   `comment` text COLLATE utf8_unicode_ci DEFAULT NULL,
    PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -74,7 +74,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_miboids` (
 DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_configlogfields`;
 
 CREATE TABLE `glpi_plugin_fusinvsnmp_configlogfields` (
-   `id` int(8) NOT NULL AUTO_INCREMENT ,
+   `id` int(8) NOT NULL AUTO_INCREMENT,
    `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
    `days` int(255) NOT NULL DEFAULT '-1',
    PRIMARY KEY ( `id` ) ,
@@ -188,7 +188,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_models` (
    `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
    `itemtype` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
    `discovery_key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `comment` text COLLATE utf8_unicode_ci,
+   `comment` text COLLATE utf8_unicode_ci DEFAULT NULL,
    PRIMARY KEY (`id`),
    KEY `name` (`name`),
    KEY `itemtype` (`itemtype`)
@@ -201,7 +201,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_networkequipments`;
 CREATE TABLE `glpi_plugin_fusinvsnmp_networkequipments` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `networkequipments_id` int(11) NOT NULL DEFAULT '0',
-   `sysdescr` text COLLATE utf8_unicode_ci,
+   `sysdescr` text COLLATE utf8_unicode_ci DEFAULT NULL,
    `plugin_fusinvsnmp_models_id` int(11) NOT NULL DEFAULT '0',
    `plugin_fusinvsnmp_configsecurities_id` int(11) NOT NULL DEFAULT '0',
    `uptime` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
@@ -285,7 +285,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_printers`;
 CREATE TABLE `glpi_plugin_fusinvsnmp_printers` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `printers_id` int(11) NOT NULL DEFAULT '0',
-   `sysdescr` text COLLATE utf8_unicode_ci,
+   `sysdescr` text COLLATE utf8_unicode_ci DEFAULT NULL,
    `plugin_fusinvsnmp_models_id` int(11) NOT NULL DEFAULT '0',
    `plugin_fusinvsnmp_configsecurities_id` int(11) NOT NULL DEFAULT '0',
    `frequence_days` int(5) NOT NULL DEFAULT '1',
@@ -371,10 +371,10 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_agentconfigs`;
 CREATE TABLE `glpi_plugin_fusinvsnmp_agentconfigs` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
-   `version_netdiscovery` text COMMENT 'array(xmltag=>value)',
-   `version_snmpquery` text COMMENT 'array(xmltag=>value)',
+   `version_netdiscovery` text DEFAULT NULL COMMENT 'array(xmltag=>value)',
+   `version_snmpquery` text DEFAULT NULL COMMENT 'array(xmltag=>value)',
    `threads_netdiscovery` int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)',
-   `threads_snmpquery` int(4) DEFAULT '1' COMMENT 'array(xmltag=>value)',
+   `threads_snmpquery` int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)',
    `senddico` tinyint(1) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
    KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`)

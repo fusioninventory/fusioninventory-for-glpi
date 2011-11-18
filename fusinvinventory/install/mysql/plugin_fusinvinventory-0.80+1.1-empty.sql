@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_criterias`;
 CREATE TABLE `glpi_plugin_fusinvinventory_criterias` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `comment` text COLLATE utf8_unicode_ci,
+  `comment` text COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -12,11 +12,11 @@ CREATE TABLE `glpi_plugin_fusinvinventory_criterias` (
 DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_libserialization`;
 
 CREATE TABLE `glpi_plugin_fusinvinventory_libserialization` (
-  `internal_id` varchar(255) NOT NULL,
+  `internal_id` varchar(255) NOT NULL DEFAULT '',
   `computers_id` int(50) DEFAULT NULL,
-  `serialized_sections1` longtext,
-  `serialized_sections2` longtext,
-  `serialized_sections3` longtext,
+  `serialized_sections1` longtext NULL DEFAULT '',
+  `serialized_sections2` longtext NULL DEFAULT '',
+  `serialized_sections3` longtext NULL DEFAULT '',
   `hash` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `last_fusioninventory_update` datetime DEFAULT NULL,
   PRIMARY KEY (`internal_id`),
@@ -40,12 +40,12 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_antivirus`;
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_antivirus` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `computers_id` int(11) NOT NULL default '0',
+  `computers_id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(255) DEFAULT NULL,
-  `manufacturers_id` int(11) NOT NULL default '0',
+  `manufacturers_id` int(11) NOT NULL DEFAULT '0',
   `version` varchar(255) DEFAULT NULL,
-  `is_active` tinyint(1) NOT NULL default '0',
-  `uptodate` tinyint(1) NOT NULL default '0',
+  `is_active` tinyint(1) NOT NULL DEFAULT '0',
+  `uptodate` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
   KEY `version` (`version`),
@@ -58,10 +58,10 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_computers`;
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_computers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `computers_id` int(11) NOT NULL default '0',
+  `computers_id` int(11) NOT NULL DEFAULT '0',
   `bios_date` datetime DEFAULT NULL,
   `bios_version` varchar(255) DEFAULT NULL,
-  `bios_manufacturers_id` int(11) NOT NULL default '0',
+  `bios_manufacturers_id` int(11) NOT NULL DEFAULT '0',
   `operatingsystem_installationdate` datetime DEFAULT NULL,
   `winowner` varchar(255) DEFAULT NULL,
   `wincompany` varchar(255) DEFAULT NULL,

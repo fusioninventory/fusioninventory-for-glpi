@@ -152,6 +152,47 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
    }
    
    
+    /*
+    * Table glpi_plugin_fusinvinventory_antivirus
+    */
+   $newTable = "glpi_plugin_fusinvinventory_antivirus";
+   if (!TableExists($newTable)) {
+      $DB->query("CREATE TABLE `".$newTable."` (
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                     PRIMARY KEY (`id`)
+                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
+   }   
+   $migration->addField($newTable, 
+                        "id", 
+                        "int(11) NOT NULL AUTO_INCREMENT");
+   $migration->addField($newTable, 
+                        "computers_id", 
+                        "int(11) NOT NULL DEFAULT '0'");
+   $migration->addField($newTable, 
+                        "name", 
+                        "varchar(255) DEFAULT NULL");
+   $migration->addField($newTable, 
+                        "manufacturers_id", 
+                        "int(11) NOT NULL DEFAULT '0'");
+   $migration->addField($newTable, 
+                        "version", 
+                        "varchar(255) DEFAULT NULL");  
+   $migration->addField($newTable, 
+                        "is_active", 
+                        "tinyint(1) NOT NULL DEFAULT '0'");
+   $migration->addField($newTable, 
+                        "uptodate", 
+                        "tinyint(1) NOT NULL DEFAULT '0'");
+   $migration->addKey($newTable, 
+                       "name");
+   $migration->addKey($newTable, 
+                       "version");
+   $migration->addKey($newTable, 
+                       "is_active");
+   $migration->addKey($newTable, 
+                       "uptodate");
+
+   
    /*
     * Update pci and usb ids
     */
@@ -234,7 +275,7 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
                         "int(11) NOT NULL AUTO_INCREMENT");
    $migration->addField($newTable, 
                         "computers_id", 
-                        "int(11) NOT NULL default '0'");   
+                        "int(11) NOT NULL DEFAULT '0'");   
    $migration->addField($newTable, 
                         "bios_date", 
                         "datetime DEFAULT NULL");
@@ -243,7 +284,7 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
                         "varchar(255) DEFAULT NULL");
    $migration->addField($newTable, 
                         "bios_manufacturers_id", 
-                        "int(11) NOT NULL default '0'");
+                        "int(11) NOT NULL DEFAULT '0'");
    $migration->addField($newTable, 
                         "operatingsystem_installationdate", 
                         "datetime DEFAULT NULL");

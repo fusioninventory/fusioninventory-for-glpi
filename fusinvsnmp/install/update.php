@@ -2146,9 +2146,44 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
       
       
    /*
-    * glpi_plugin_fusinvsnmp_agentconfigs
+    * table glpi_plugin_fusinvsnmp_agentconfigs
     */
-      
+   $newTable = "glpi_plugin_fusinvsnmp_agentconfigs";
+   if (!TableExists($newTable)) {
+      $DB->query("CREATE TABLE `".$newTable."` (
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                     PRIMARY KEY (`id`)
+                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
+   }
+   $migration->addField($newTable, 
+                        "id", 
+                        "int(11) NOT NULL AUTO_INCREMENT");
+   $migration->addField($newTable, 
+                        "plugin_fusioninventory_agents_id", 
+                        "int(11) NOT NULL DEFAULT '0'"); 
+   $migration->addField($newTable, 
+                        "version_netdiscovery", 
+                        "text DEFAULT NULL COMMENT 'array(xmltag=>value)'"); 
+   $migration->addField($newTable, 
+                        "threads_netdiscovery", 
+                        "int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)'");
+   $migration->changeField($newTable,
+                              "threads_snmpquery",
+                              "threads_snmpquery",
+                              "int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)'");
+   $migration->addField($newTable, 
+                        "threads_snmpquery", 
+                        "int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)'"); 
+   $migration->changeField($newTable,
+                              "senddico",
+                              "senddico",
+                              "tinyint(1) NOT NULL DEFAULT '0'");
+   $migration->addField($newTable, 
+                        "senddico", 
+                        "tinyint(1) NOT NULL DEFAULT '0'"); 
+   $migration->addKey($newTable, 
+                       "plugin_fusioninventory_agents_id");
+   
       
    /*
     *  glpi_plugin_fusinvsnmp_statediscoveries
