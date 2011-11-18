@@ -814,9 +814,33 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $DB->query($query);
       }
       $migration->changeField($newTable,
+                              "id",
+                              "id",
+                              "int(11) NOT NULL AUTO_INCREMENT");
+      $migration->changeField($newTable,
+                              "itemtype",
+                              "itemtype",
+                              "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "name",
+                              "name",
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "table",
+                              "table",
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "tablefield",
+                              "tablefield",
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");      
+      $migration->changeField($newTable,
                               "locale",
                               "locale",
                               "int(4) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable,
+                              "shortlocale",
+                              "shortlocale",
+                              "int(4) DEFAULT NULL");
       
       
       
