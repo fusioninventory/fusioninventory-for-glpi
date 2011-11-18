@@ -813,6 +813,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
          $DB->query($query);
       }
+      $migration->changeField($newTable,
+                              "locale",
+                              "locale",
+                              "int(4) NOT NULL DEFAULT '0'");
       
       
       
