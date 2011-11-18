@@ -1398,6 +1398,16 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                               "comments",
                               "comment",
                               "text");
+      $migration->dropField($newTable,
+                            "plugin_fusinvsnmp_constructdevices_id");
+      $migration->dropField($newTable,
+                            "oid_port_counter");
+      $migration->dropField($newTable,
+                            "oid_port_dyn");
+      $migration->dropField($newTable,
+                            "itemtype");
+      $migration->dropField($newTable,
+                            "vlan");
       
    /*
     * glpi_plugin_fusinvsnmp_configlogfields
@@ -1949,6 +1959,10 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                               "snmpversion",
                               "varchar(8) COLLATE utf8_unicode_ci NOT NULL DEFAULT '1'");
       $migration->changeField($newTable,
+                              "snmpversion",
+                              "snmpversion",
+                              "varchar(8) COLLATE utf8_unicode_ci NOT NULL DEFAULT '1'");
+      $migration->changeField($newTable,
                               "community",
                               "community",
                               "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
@@ -1956,7 +1970,31 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                               "sec_name",
                               "username",
                               "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-
+      $migration->changeField($newTable,
+                              "username",
+                              "username",
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "authentication",
+                              "authentication",
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "auth_passphrase",
+                              "auth_passphrase",
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "encryption",
+                              "encryption",
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "priv_passphrase",
+                              "priv_passphrase",
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "is_deleted",
+                              "is_deleted",
+                              "tinyint(1) NOT NULL DEFAULT '0'");
+      
 /*
   `sec_level` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `auth_protocol` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
