@@ -1427,8 +1427,24 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    /*
     * glpi_plugin_fusinvsnmp_constructdevice_miboids
     */
-      
-      
+   $newTable = "glpi_plugin_fusinvsnmp_constructdevice_miboids";
+   $migration->changeField($newTable,
+                           "oid_port_counter",
+                           "oid_port_counter",
+                           "tinyint(1) NOT NULL DEFAULT '0'");
+   $migration->changeField($newTable,
+                           "oid_port_dyn",
+                           "oid_port_dyn",
+                           "tinyint(1) NOT NULL DEFAULT '0'");
+   $migration->changeField($newTable,
+                           "itemtype",
+                           "itemtype",
+                           "varchar(100) COLLATE utf8_unicode_ci NOT NULL");
+   $migration->changeField($newTable,
+                           "vlan",
+                           "vlan",
+                           "tinyint(1) NOT NULL DEFAULT '0'");
+   
    /*
     * glpi_plugin_fusinvsnmp_networkportconnectionlogs
     */

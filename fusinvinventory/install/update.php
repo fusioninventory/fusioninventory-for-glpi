@@ -192,6 +192,30 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
    $migration->addKey($newTable, 
                        "uptodate");
 
+    /*
+    * Table glpi_plugin_fusinvinventory_libserialization
+    */
+   $newTable = "glpi_plugin_fusinvinventory_libserialization";
+   if (!TableExists($newTable)) {
+      $DB->query("CREATE TABLE `".$newTable."` (
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                     PRIMARY KEY (`id`)
+                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
+   }   
+   $migration->changeField($newTable,
+                           "serialized_sections1",
+                           "serialized_sections1",
+                           "longtext DEFAULT NULL");
+   $migration->changeField($newTable,
+                           "serialized_sections2",
+                           "serialized_sections2",
+                           "longtext DEFAULT NULL");
+   $migration->changeField($newTable,
+                           "serialized_sections3",
+                           "serialized_sections3",
+                           "longtext DEFAULT NULL");
+   $migration->migrationOneTable($newTable);
+   
    
    /*
     * Update pci and usb ids

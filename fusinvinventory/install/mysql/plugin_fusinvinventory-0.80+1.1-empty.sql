@@ -14,9 +14,9 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_libserialization`;
 CREATE TABLE `glpi_plugin_fusinvinventory_libserialization` (
   `internal_id` varchar(255) NOT NULL DEFAULT '',
   `computers_id` int(50) DEFAULT NULL,
-  `serialized_sections1` longtext NULL DEFAULT '',
-  `serialized_sections2` longtext NULL DEFAULT '',
-  `serialized_sections3` longtext NULL DEFAULT '',
+  `serialized_sections1` longtext DEFAULT NULL,
+  `serialized_sections2` longtext DEFAULT NULL,
+  `serialized_sections3` longtext DEFAULT NULL,
   `hash` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `last_fusioninventory_update` datetime DEFAULT NULL,
   PRIMARY KEY (`internal_id`),

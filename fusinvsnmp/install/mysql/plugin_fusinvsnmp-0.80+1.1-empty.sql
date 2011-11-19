@@ -129,11 +129,10 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_constructdevice_miboids` (
    `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
    `oid_port_counter` tinyint(1) NOT NULL DEFAULT '0',
    `oid_port_dyn` tinyint(1) NOT NULL DEFAULT '0',
-   `itemtype` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+   `itemtype` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
    `vlan` tinyint(1) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
-   UNIQUE KEY `unicity` ( `plugin_fusinvsnmp_miboids_id`,
-      `plugin_fusinvsnmp_constructdevices_id`, `plugin_fusioninventory_mappings_id` ),
+   UNIQUE KEY `unicity` ( `plugin_fusinvsnmp_miboids_id`, `plugin_fusinvsnmp_constructdevices_id`, `plugin_fusioninventory_mappings_id` ),
    KEY `itemtype` ( `itemtype` )
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -149,8 +148,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_networkportconnectionlogs` (
    `networkports_id_destination` int(11) NOT NULL DEFAULT '0',
    `plugin_fusioninventory_agentprocesses_id` int(11) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
-   KEY `networkports_id_source` ( `networkports_id_source`, `networkports_id_destination`,
-          `plugin_fusioninventory_agentprocesses_id` ),
+   KEY `networkports_id_source` ( `networkports_id_source`, `networkports_id_destination`, `plugin_fusioninventory_agentprocesses_id` ),
    KEY `date_mod` (`date_mod`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -211,8 +209,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_networkequipments` (
    `last_PID_update` int(11) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
    KEY `networkequipments_id` (`networkequipments_id`),
-   KEY `plugin_fusinvsnmp_models_id` (`plugin_fusinvsnmp_models_id`,
-         `plugin_fusinvsnmp_configsecurities_id`)
+   KEY `plugin_fusinvsnmp_models_id` (`plugin_fusinvsnmp_models_id`,`plugin_fusinvsnmp_configsecurities_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 

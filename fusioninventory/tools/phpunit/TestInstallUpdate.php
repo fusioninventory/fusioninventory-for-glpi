@@ -110,6 +110,12 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
                } else {
                   $construct .= ' DEFAULT NULL';
                }
+            } else if ($data['Type'] == 'longtext') {
+               if ($data['Null'] == 'NO') {
+                  $construct .= ' NOT NULL';
+               } else {
+                  $construct .= ' DEFAULT NULL';
+               }
             } else {
                if ((strstr($data['Type'], "char")
                        OR $data['Type'] == 'datetime'
