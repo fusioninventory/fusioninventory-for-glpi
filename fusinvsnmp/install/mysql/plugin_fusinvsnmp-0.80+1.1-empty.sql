@@ -88,7 +88,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_constructdevices`;
 CREATE TABLE `glpi_plugin_fusinvsnmp_constructdevices` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `manufacturers_id` int(11) NOT NULL DEFAULT '0',
-   `sysdescr` text,
+   `sysdescr` text DEFAULT NULL,
    `itemtype` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
    `plugin_fusinvsnmp_models_id` int(11) DEFAULT NULL,
    `networkmodel_id` int(11) NOT NULL DEFAULT '0',
@@ -113,7 +113,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_constructdevicewalks`;
 CREATE TABLE `glpi_plugin_fusinvsnmp_constructdevicewalks` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `plugin_fusinvsnmp_constructdevices_id` int(11) NOT NULL DEFAULT '0',
-   `log` text,
+   `log` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `plugin_fusinvsnmp_constructdevices_id` ( `plugin_fusinvsnmp_constructdevices_id` )
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

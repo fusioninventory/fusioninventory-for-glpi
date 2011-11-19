@@ -1417,7 +1417,35 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    /*
     * glpi_plugin_fusinvsnmp_constructdevices
     */
-      
+   $newTable = "glpi_plugin_fusinvsnmp_constructdevices";
+   $migration->changeField($newTable,
+                           "have_someinformations",
+                           "have_someinformations",
+                           "tinyint(1) NOT NULL DEFAULT '0'");
+   $migration->changeField($newTable,
+                           "have_importantinformations",
+                           "have_importantinformations",
+                           "tinyint(1) NOT NULL DEFAULT '0'");
+   $migration->changeField($newTable,
+                           "have_ports",
+                           "have_ports",
+                           "tinyint(1) NOT NULL DEFAULT '0'");
+   $migration->changeField($newTable,
+                           "have_portsconnections",
+                           "have_portsconnections",
+                           "tinyint(1) NOT NULL DEFAULT '0'"); 
+   $migration->changeField($newTable,
+                           "have_vlan",
+                           "have_vlan",
+                           "tinyint(1) NOT NULL DEFAULT '0'");
+   $migration->changeField($newTable,
+                           "have_trunk",
+                           "have_trunk",
+                           "tinyint(1) NOT NULL DEFAULT '0'");
+   $migration->changeField($newTable,
+                           "released",
+                           "released",
+                           "tinyint(1) NOT NULL DEFAULT '0'");
    
    /*
     * glpi_plugin_fusinvsnmp_constructdevicewalks
@@ -1492,6 +1520,30 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
             WHERE `FK_mib_label` IS NULL";
          $DB->query($query);
       }
+      if (FieldExists($newTable, "plugin_fusinvsnmp_miblabels_id")) {
+         $query = "UPDATE `".$newTable."`
+            SET `plugin_fusinvsnmp_miblabels_id`='0' 
+            WHERE `plugin_fusinvsnmp_miblabels_id` IS NULL";
+         $DB->query($query);
+      }
+      $migration->changeField($newTable,
+                              "plugin_fusinvsnmp_models_id",
+                              "plugin_fusinvsnmp_models_id",
+                              "int(11) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable,
+                              "plugin_fusinvsnmp_miblabels_id",
+                              "plugin_fusinvsnmp_miblabels_id",
+                              "int(11) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable,
+                              "plugin_fusinvsnmp_miboids_id",
+                              "plugin_fusinvsnmp_miboids_id",
+                              "int(11) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable,
+                              "plugin_fusinvsnmp_mibobjects_id",
+                              "plugin_fusinvsnmp_mibobjects_id",
+                              "int(11) NOT NULL DEFAULT '0'");
+      $migration->migrationOneTable($newTable);
+      
       $migration->changeField($newTable,
                               "ID",
                               "id",
@@ -1503,11 +1555,11 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
       $migration->changeField($newTable,
                               "FK_mib_label",
                               "plugin_fusinvsnmp_miblabels_id",
-                              "int(11) NOT NULL DEFAULT '0'");      
+                              "int(11) NOT NULL DEFAULT '0'");
       $migration->changeField($newTable,
                               "FK_mib_oid",
                               "plugin_fusinvsnmp_miboids_id",
-                              "int(11) NOT NULL DEFAULT '0'"); 
+                              "int(11) NOT NULL DEFAULT '0'");
       $migration->changeField($newTable,
                               "FK_mib_object",
                               "plugin_fusinvsnmp_mibobjects_id",
