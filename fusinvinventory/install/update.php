@@ -305,6 +305,34 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
    
    $migration->executeMigration();
     
+   // Update blacklist
+   $input = array();
+   $input['03000200-0400-0500-0006-000700080009'] = '2';
+   $input['6AB5B300-538D-1014-9FB5-B0684D007B53'] = '2';
+   $input['01010101-0101-0101-0101-010101010101'] = '2';
+   $input['20:41:53:59:4e:ff'] = '3';
+   $input['02:00:4e:43:50:49'] = '3';
+   $input['e2:e6:16:20:0a:35'] = '3';
+   $input['d2:0a:2d:a0:04:be'] = '3';
+   $input['00:a0:c6:00:00:00'] = '3';
+   $input['d2:6b:25:2f:2c:e7'] = '3';
+   $input['33:50:6f:45:30:30'] = '3';
+   $input['0a:00:27:00:00:00'] = '3';
+   $input['00:50:56:C0:00:01'] = '3';
+   $input['00:50:56:C0:00:08'] = '3';
+   $input['MB-1234567890'] = '1';
+   foreach ($input as $value=>$type) {
+      $query = "SELECT * FROM `glpi_plugin_fusinvinventory_blacklists`
+         WHERE `plugin_fusioninventory_criterium_id`='".$type."'
+          AND `value`='".$value."'";
+      $result=$DB->query($query);
+      if ($DB->numrows($result) == '0') {
+         $query = "INSERT INTO `glpi_plugin_fusinvinventory_blacklists` (`plugin_fusioninventory_criterium_id`, `value`) VALUES
+            ( '".$type."', '".$value."')";
+         $DB->query($query);         
+      }
+   }
+   
    $config->updateConfigType($plugins_id, 'version', PLUGIN_FUSINVINVENTORY_VERSION);
 }
 

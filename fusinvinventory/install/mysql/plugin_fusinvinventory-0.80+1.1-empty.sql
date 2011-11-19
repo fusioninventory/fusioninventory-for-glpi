@@ -127,7 +127,22 @@ INSERT INTO `glpi_plugin_fusinvinventory_blacklists` (`id`, `plugin_fusioninvent
 (41, 5, 'Product Name'),
 (42, 5, 'System Name'),
 (43, 2, 'FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF'),
-(44, 10, 'System manufacturer');
+(44, 10, 'System manufacturer'),
+
+(45, 2, '03000200-0400-0500-0006-000700080009'),
+(46, 2, '6AB5B300-538D-1014-9FB5-B0684D007B53'),
+(47, 2, '01010101-0101-0101-0101-010101010101'),
+(48, 3, '20:41:53:59:4e:ff'),
+(49, 3, '02:00:4e:43:50:49'),
+(50, 3, 'e2:e6:16:20:0a:35'),
+(51, 3, 'd2:0a:2d:a0:04:be'),
+(52, 3, '00:a0:c6:00:00:00'),
+(53, 3, 'd2:6b:25:2f:2c:e7'),
+(54, 3, '33:50:6f:45:30:30'),
+(55, 3, '0a:00:27:00:00:00'),
+(56, 3, '00:50:56:C0:00:01'),
+(57, 3, '00:50:56:C0:00:08'),
+(58, 1, 'MB-1234567890');
 
 INSERT INTO `glpi_displaypreferences` (`itemtype`, `num`, `rank`, `users_id`) VALUES
 ('PluginFusinvinventoryBlacklist', 2, 1, 0);
