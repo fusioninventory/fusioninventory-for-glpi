@@ -1542,6 +1542,11 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                               "plugin_fusinvsnmp_mibobjects_id",
                               "plugin_fusinvsnmp_mibobjects_id",
                               "int(11) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable,
+                              "is_active",
+                              "is_active",
+                              "tinyint(1) NOT NULL DEFAULT '1'");
+      
       $migration->migrationOneTable($newTable);
       
       $migration->changeField($newTable,
