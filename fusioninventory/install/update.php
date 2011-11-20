@@ -473,6 +473,30 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $migration->renameTable("glpi_plugin_fusinvsnmp_ipranges", 
                               $newTable);
       $migration->changeField($newTable,
+                              "id",
+                              "id",
+                              "int(11) NOT NULL AUTO_INCREMENT");
+      $migration->changeField($newTable,
+                              "name",
+                              "name",
+                              "varchar(255) DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "entities_id",
+                              "entities_id",
+                              "int(11) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable,
+                              "ip_start",
+                              "ip_start",
+                              "varchar(255) DEFAULT NULL");
+      
+      $migration->changeField($newTable,
+                              "ip_end",
+                              "ip_end",
+                              "varchar(255) DEFAULT NULL");
+      
+      $migration->migrationOneTable($newTable);
+      
+      $migration->changeField($newTable,
                               "ID",
                               "id",
                               "int(11) NOT NULL AUTO_INCREMENT");

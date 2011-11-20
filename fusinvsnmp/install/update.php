@@ -1425,9 +1425,14 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                $queryu = "UPDATE `".$newTable."`
                   SET `field`='".$mapping['id']."'
                   WHERE `field`='".$data['field']."'";
+               $DB->query($queryu);
             }
          }
       }
+      $migration->changeField($newTable,
+                              "ID",
+                              "id",
+                              "int(8) NOT NULL AUTO_INCREMENT");
       $migration->changeField($newTable,
                               "field",
                               "plugin_fusioninventory_mappings_id",
@@ -1436,9 +1441,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                               "days",
                               "days",
                               "int(255) NOT NULL DEFAULT '-1'");
-      
-      
-      
+            
       
    /*
     * glpi_plugin_fusinvsnmp_constructdevices
@@ -2216,6 +2219,9 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
       }
       if (TableExists("glpi_plugin_fusioninventory_config_snmp_networking")) {
          $DB->query("DROP TABLE glpi_plugin_fusioninventory_config_snmp_networking");
+      }
+      if (TableExists("glpi_plugin_fusioninventory_config_snmp_history")) {
+         $DB->query("DROP TABLE glpi_plugin_fusioninventory_config_snmp_history");
       }
       
        
