@@ -132,9 +132,9 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
                   if ($data['Extra'] == 'auto_increment') {
                      $construct .= ' AUTO_INCREMENT';
                   } else {
-                     if ($data['Type'] != 'datetime') {
+//                     if ($data['Type'] != 'datetime') {
                         $construct .= " DEFAULT '".$data['Default']."'";
-                     }
+//                     }
                   }
                }
             }

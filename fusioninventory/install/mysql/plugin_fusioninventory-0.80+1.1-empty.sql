@@ -268,7 +268,7 @@ CREATE TABLE  `glpi_plugin_fusioninventory_credentials` (
    `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
    `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
    `comment` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-   `date_mod` datetime NOT NULL,
+   `date_mod` datetime DEFAULT NULL,
    `itemtype` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
    PRIMARY KEY (`id`)
 ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;
@@ -282,7 +282,7 @@ CREATE TABLE  `glpi_plugin_fusioninventory_credentialips` (
    `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
    `comment` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
    `ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-   `date_mod` datetime NOT NULL,
+   `date_mod` datetime DEFAULT NULL,
    PRIMARY KEY (`id`)
 ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 

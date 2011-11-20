@@ -258,7 +258,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_printerlogs`;
 CREATE TABLE `glpi_plugin_fusinvsnmp_printerlogs` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `printers_id` int(11) NOT NULL DEFAULT '0',
-   `date` datetime DEFAULT '0000-00-00 00:00:00',
+   `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
    `pages_total` int(11) NOT NULL DEFAULT '0',
    `pages_n_b` int(11) NOT NULL DEFAULT '0',
    `pages_color` int(11) NOT NULL DEFAULT '0',
@@ -354,7 +354,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_unknowndevices`;
 CREATE TABLE `glpi_plugin_fusinvsnmp_unknowndevices` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `plugin_fusioninventory_unknowndevices_id` int(11) NOT NULL DEFAULT '0',
-   `sysdescr` text,
+   `sysdescr` text DEFAULT NULL,
    `plugin_fusinvsnmp_models_id` int(11) NOT NULL DEFAULT '0',
    `plugin_fusinvsnmp_configsecurities_id` int(11) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
@@ -402,8 +402,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_statediscoveries` (
 ## INSERT
 ## glpi_plugin_fusinvsnmp_configsecurities
 INSERT INTO `glpi_plugin_fusinvsnmp_configsecurities`
-      (`id`, `name`, `snmpversion`, `community`, `username`, `authentication`, `auth_passphrase`,
-       `encryption`, `priv_passphrase`, `is_deleted`)
+      (`id`, `name`, `snmpversion`, `community`, `username`, `authentication`, `auth_passphrase`, `encryption`, `priv_passphrase`, `is_deleted`)
    VALUES (1, 'Public community v1', '1', 'public', '', '0', '', '0', '', '0'),
           (2, 'Public community v2c', '2', 'public', '', '0', '', '0', '', '0');
 

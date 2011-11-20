@@ -614,12 +614,17 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                      `username` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
                      `password` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
                      `comment` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ,
-                     `date_mod` DATETIME NOT NULL ,
+                     `date_mod` DATETIME DEFAULT NULL,
                      `itemtype` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
                      PRIMARY KEY (  `id` )
                      ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
          $DB->query($query);
       }
+      $migration->changeField($newTable,
+                              "date_mod",
+                              "date_mod",
+                              "DATETIME DEFAULT NULL");
+      
       
 
    /*
@@ -634,11 +639,15 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                      `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
                      `comment` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ,
                      `ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
-                     `date_mod` datetime NOT NULL ,
+                     `date_mod` datetime DEFAULT NULL ,
                      PRIMARY KEY (  `id` )
                      ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci";
          $DB->query($query);
       }
+      $migration->changeField($newTable,
+                              "date_mod",
+                              "date_mod",
+                              "DATETIME DEFAULT NULL");
       
   
    /*
