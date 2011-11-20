@@ -1412,6 +1412,32 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    /*
     * glpi_plugin_fusinvsnmp_configlogfields
     */
+      $newTable = "glpi_plugin_fusinvsnmp_configlogfields";
+      $migration->renameTable("glpi_plugin_fusioninventory_config_snmp_history", 
+                              $newTable);
+      if (FieldExists($newTable, "field")) {
+         $query = "SELECT * FROM `".$newTable."`";
+         $result=$DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
+            $pFusioninventoryMapping = new PluginFusioninventoryMapping();
+            $mapping = 0;
+            if ($mapping = $pFusioninventoryMapping->get("NetworkEquipment", $data['field'])) {
+               $queryu = "UPDATE `".$newTable."`
+                  SET `field`='".$mapping['id']."'
+                  WHERE `field`='".$data['field']."'";
+            }
+         }
+      }
+      $migration->changeField($newTable,
+                              "field",
+                              "plugin_fusioninventory_mappings_id",
+                              "int(11) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable,
+                              "days",
+                              "days",
+                              "int(255) NOT NULL DEFAULT '-1'");
+      
+      
       
       
    /*
@@ -2071,15 +2097,17 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                            "int(11) NOT NULL DEFAULT '0'");
       $migration->migrationOneTable($newTable);
       // Update with mapping
-      $pcartridge = new PluginFusinvsnmpCommonDBTM($newTable);
-      $query = "SELECT * FROM `".$newTable."`";
-      $result=$DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
-         $pFusioninventoryMapping = new PluginFusioninventoryMapping();
-         $mapping = 0;
-         if ($mapping = $pFusioninventoryMapping->get("Printer", $data['object_name'])) {
-            $data['plugin_fusioninventory_mappings_id'] = $mapping['id'];
-            $pcartridge->update($data);
+      if (FieldExists($newTable, "object_name")) {
+         $pcartridge = new PluginFusinvsnmpCommonDBTM($newTable);
+         $query = "SELECT * FROM `".$newTable."`";
+         $result=$DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
+            $pFusioninventoryMapping = new PluginFusioninventoryMapping();
+            $mapping = 0;
+            if ($mapping = $pFusioninventoryMapping->get("Printer", $data['object_name'])) {
+               $data['plugin_fusioninventory_mappings_id'] = $mapping['id'];
+               $pcartridge->update($data);
+            }
          }
       }
       $migration->dropField($newTable,
@@ -2186,7 +2214,10 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
       if (TableExists("glpi_dropdown_plugin_tracker_snmp_version")) {
          $DB->query("DROP TABLE glpi_dropdown_plugin_tracker_snmp_version");
       }
-
+      if (TableExists("glpi_plugin_fusioninventory_config_snmp_networking")) {
+         $DB->query("DROP TABLE glpi_plugin_fusioninventory_config_snmp_networking");
+      }
+      
        
    /*
     * glpi_plugin_fusinvsnmp_networkportlogs
@@ -2281,15 +2312,17 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                            "int(11) NOT NULL DEFAULT '0'");
       $migration->migrationOneTable($newTable);
       // Update with mapping
-      $pFusinvsnmpNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
-      $query = "SELECT * FROM `".$newTable."`";
-      $result=$DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
-         $pFusioninventoryMapping = new PluginFusioninventoryMapping();
-         $mapping = 0;
-         if ($mapping = $pFusioninventoryMapping->get("NetworkEquipment", $data['Field'])) {
-            $data['plugin_fusioninventory_mappings_id'] = $mapping['id'];
-            $pFusinvsnmpNetworkPortLog->update($data);
+      if (FieldExists($newTable, "Field")) {
+         $pFusinvsnmpNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
+         $query = "SELECT * FROM `".$newTable."`";
+         $result=$DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
+            $pFusioninventoryMapping = new PluginFusioninventoryMapping();
+            $mapping = 0;
+            if ($mapping = $pFusioninventoryMapping->get("NetworkEquipment", $data['Field'])) {
+               $data['plugin_fusioninventory_mappings_id'] = $mapping['id'];
+               $pFusinvsnmpNetworkPortLog->update($data);
+            }
          }
       }
       $migration->dropField($newTable,

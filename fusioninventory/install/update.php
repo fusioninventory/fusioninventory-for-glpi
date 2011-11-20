@@ -893,7 +893,17 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       }
       if (TableExists("glpi_plugin_tracker_processes_values")) {
          $DB->query("DROP TABLE `glpi_plugin_tracker_processes_values`");         
-      }      
+      }
+      if (TableExists("glpi_plugin_fusioninventory_agents_errors")) {
+         $DB->query("DROP TABLE `glpi_plugin_fusioninventory_agents_errors`");         
+      }
+      if (TableExists("glpi_plugin_fusioninventory_agents_processes")) {
+         $DB->query("DROP TABLE `glpi_plugin_fusioninventory_agents_processes`");
+      }
+      if (TableExists("glpi_plugin_fusioninventory_computers")) {
+         $DB->query("DROP TABLE `glpi_plugin_fusioninventory_computers`");
+      }
+      
       
       
    $migration->executeMigration();
