@@ -123,8 +123,11 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
     */
    $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` WHERE `modulename`='ESX'";
    $result = $DB->query($query);
-   if (!$DB->numrows($result)) {
-      $agentmodule = new PluginFusioninventoryAgentmodule;
+   if ($DB->numrows($result) == '0') {
+      if (!class_exists('PluginFusioninventoryAgentmodule')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
+      }
+      $agentmodule = new PluginFusioninventoryAgentmodule();
       $input = array();
       $input['plugins_id'] = $plugins_id;
       $input['modulename'] = "ESX";

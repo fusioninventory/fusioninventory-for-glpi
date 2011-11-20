@@ -90,7 +90,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_constructdevices` (
    `manufacturers_id` int(11) NOT NULL DEFAULT '0',
    `sysdescr` text DEFAULT NULL,
    `itemtype` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `plugin_fusinvsnmp_models_id` int(11) DEFAULT NULL,
+   `plugin_fusinvsnmp_models_id` int(11) NOT NULL DEFAULT '0',
    `networkmodel_id` int(11) NOT NULL DEFAULT '0',
    `printermodel_id` int(11) NOT NULL DEFAULT '0',
    `have_someinformations` tinyint(1) NOT NULL DEFAULT '0',

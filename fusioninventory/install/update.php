@@ -778,9 +778,37 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
          $DB->query($query);
       }
+      $migration->changeField($newTable,
+                              "id",
+                              "id",
+                              "bigint(20) NOT NULL AUTO_INCREMENT");
+      $migration->changeField($newTable,
+                              "plugin_fusioninventory_taskjobstatus_id",
+                              "plugin_fusioninventory_taskjobstatus_id",
+                              "int(11) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable,
+                              "date",
+                              "date",
+                              "datetime DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "items_id",
+                              "items_id",
+                              "int(11) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable,
+                              "itemtype",
+                              "itemtype",
+                              "varchar(100) DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "state",
+                              "state",
+                              "int(11) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable,
+                              "comment",
+                              "comment",
+                              "text DEFAULT NULL");
       
       
-
+      
    /*
     * Table glpi_plugin_fusioninventory_taskjobstatus
     */
@@ -802,7 +830,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
          $DB->query($query);
       }
-      
+      $migration->changeField($newTable,
+                              "id",
+                              "id",
+                              "bigint(20) NOT NULL AUTO_INCREMENT");
       
       
 

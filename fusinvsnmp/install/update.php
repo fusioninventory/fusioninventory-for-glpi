@@ -1475,6 +1475,56 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                            "released",
                            "released",
                            "tinyint(1) NOT NULL DEFAULT '0'");
+   $migration->changeField($newTable,
+                           "plugin_fusinvsnmp_models_id",
+                           "plugin_fusinvsnmp_models_id",
+                           "int(11) NOT NULL DEFAULT '0'");
+   
+   
+   $migration->addField($newTable, 
+                        "manufacturers_id", 
+                        "int(11) NOT NULL DEFAULT '0'");
+   
+   $migration->addField($newTable, 
+                        "sysdescr", 
+                        "text DEFAULT NULL");
+   $migration->addField($newTable, 
+                        "itemtype", 
+                        "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
+   $migration->addField($newTable, 
+                        "plugin_fusinvsnmp_models_id", 
+                        "int(11) NOT NULL DEFAULT '0'");
+   $migration->addField($newTable, 
+                        "networkmodel_id", 
+                        "int(11) NOT NULL DEFAULT '0'");
+   $migration->addField($newTable, 
+                        "printermodel_id", 
+                        "int(11) NOT NULL DEFAULT '0'");
+   $migration->addField($newTable, 
+                        "have_someinformations", 
+                        "tinyint(1) NOT NULL DEFAULT '0'");
+   $migration->addField($newTable, 
+                        "have_importantinformations", 
+                        "tinyint(1) NOT NULL DEFAULT '0'");
+   $migration->addField($newTable, 
+                        "have_ports", 
+                        "tinyint(1) NOT NULL DEFAULT '0'");
+   $migration->addField($newTable, 
+                        "have_portsconnections", 
+                        "tinyint(1) NOT NULL DEFAULT '0'");
+   $migration->addField($newTable, 
+                        "have_vlan", 
+                        "tinyint(1) NOT NULL DEFAULT '0'");
+   $migration->addField($newTable, 
+                        "have_trunk", 
+                        "tinyint(1) NOT NULL DEFAULT '0'");
+   $migration->addField($newTable, 
+                        "released", 
+                        "tinyint(1) NOT NULL DEFAULT '0'");
+   $migration->addField($newTable, 
+                        "releasedsnmpmodel_id", 
+                        "int(11) NOT NULL DEFAULT '0'");
+   
    
    /*
     * glpi_plugin_fusinvsnmp_constructdevicewalks
@@ -2353,6 +2403,10 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                             "new_device_type");
       $migration->dropField($newTable,
                             "new_device_ID");
+      $migration->changeField($newTable,
+                              "plugin_fusioninventory_agentprocesses_id",
+                              "plugin_fusioninventory_agentprocesses_id",
+                              "int(11) NOT NULL DEFAULT '0'");
       $migration->changeField($newTable,
                               "FK_process",
                               "plugin_fusioninventory_agentprocesses_id",
