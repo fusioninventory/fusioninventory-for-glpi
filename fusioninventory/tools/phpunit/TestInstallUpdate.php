@@ -60,7 +60,8 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
        $a_tables_ref = array();
        $current_table = '';
        foreach ($a_lines as $line) {
-          if (strstr($line, "CREATE TABLE ")) {
+          if (strstr($line, "CREATE TABLE ")
+                  OR strstr($line, "CREATE VIEW")) {
              $matches = array();
              preg_match("/`(.*)`/", $line, $matches);
              $current_table = $matches[1];
@@ -74,6 +75,12 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
                 $a_tables_ref[$current_table][$s_line[1]] = str_replace(",", "", $s_type[0]);
              }
           }
+       }
+       if (isset($a_tables_ref['glpi_plugin_fusinvdeploy_tasks'])) {
+          unset($a_tables_ref['glpi_plugin_fusinvdeploy_tasks']);
+       }
+       if (isset($a_tables_ref['glpi_plugin_fusinvdeploy_taskjobs'])) {
+          unset($a_tables_ref['glpi_plugin_fusinvdeploy_taskjobs']);
        }
        
       // * Get tables from MySQL
