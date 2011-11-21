@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_fileparts` (
   `plugin_fusinvdeploy_files_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
-a
+
 
 
 DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_files`;

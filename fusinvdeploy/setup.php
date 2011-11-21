@@ -101,6 +101,9 @@ function plugin_init_fusinvdeploy() {
    // ##### 3. get informations of the plugin #####
 
    $a_plugin = plugin_version_fusinvdeploy();
+   if (!class_exists('PluginFusioninventoryModule')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
+   }
    $moduleId = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
 
    // ##### 4. Set in session module_id #####
@@ -115,6 +118,9 @@ function plugin_init_fusinvdeploy() {
                                                    'submitmethod' => 'putForm');
    }
 
+   if (!class_exists('PluginFusioninventoryProfile')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
+   }
    $PLUGIN_HOOKS['change_profile']['fusinvdeploy'] =
       PluginFusioninventoryProfile::changeprofile($moduleId,$a_plugin['shortname']);
 

@@ -198,6 +198,13 @@ function plugin_init_fusioninventory() {
                '../fusioninventory/front/iprange.php';
          }
 
+         if (!class_exists('PluginFusioninventoryCredential')) { // if plugin is unactive
+            include(GLPI_ROOT . "/plugins/fusioninventory/inc/credential.class.php");
+         }
+         if (!class_exists('PluginFusioninventoryStaticmisc')) { // if plugin is unactive
+            include(GLPI_ROOT . "/plugins/fusioninventory/inc/staticmisc.class.php");
+         }
+         
          if (PluginFusioninventoryCredential::hasAlLeastOneType()) {
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "credential","w")) {
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['PluginFusioninventoryCredential'] = 
