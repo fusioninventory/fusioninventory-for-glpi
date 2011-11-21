@@ -1030,6 +1030,25 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $DB->query($sql);
    
    
+   /*
+    * Convert taskjob definition from PluginFusinvsnmpIPRange to PluginFusioninventoryIPRange
+    */
+   $query = "SELECT * FROM `glpi_plugin_fusioninventory_taskjobs`";
+   $result = $DB->query($query);
+   while ($data=$DB->fetch_array($result)) {
+      $a_defs = importArrayFromDB($data['definition']);
+      foreach ($a_defs as $num=>$a_def) {
+         if (key($a_def) == 'PluginFusinvsnmpIPRange') {
+            $a_defs[$num] = array('PluginFusioninventoryIPRange'=>current($a_def));
+         }
+      }
+      $queryu = "UPDATE `glpi_plugin_fusioninventory_taskjobs`
+         SET `definition`='".exportArrayToDB($a_defs)."'
+         WHERE `id`='".$data['id']."'";
+      $DB->query($queryu);
+   }
+   
+   
    
    /*
     *  Add default rules

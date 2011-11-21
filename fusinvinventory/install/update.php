@@ -195,6 +195,14 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
    $migration->addKey($newTable, 
                        "uptodate");
 
+   
+    /*
+    * Table glpi_plugin_fusinvinventory_antivirus
+    */
+      $newTable = "glpi_plugin_fusinvinventory_blacklists";
+      $migration->addKey($newTable, 
+                         "plugin_fusioninventory_criterium_id");
+   
     /*
     * Table glpi_plugin_fusinvinventory_libserialization
     */
@@ -241,6 +249,7 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
     * Update serialized sections to mysql_real_escape_string(htmlspecialchars_decode("data"))
     */
    if (!strstr($current_version, "+")) {// All version before 0.80+1.1 (new versioning)
+      $migration->displayMessage("Convert computer inventory, may require come minutes");
       if (!class_exists('PluginFusinvinventoryLib')) { // if plugin is unactive
          include(GLPI_ROOT . "/plugins/fusinvinventory/inc/lib.class.php");
       }

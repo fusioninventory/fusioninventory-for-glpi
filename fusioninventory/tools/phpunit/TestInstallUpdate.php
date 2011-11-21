@@ -185,6 +185,19 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, 'ESX module not registered');
       
+      $query = "SELECT `url` FROM `glpi_plugin_fusioninventory_agentmodules` 
+         WHERE `modulename`='ESX'";
+      $result = $DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         $url = 0;
+         if (!empty($data['url'])
+                 AND strstr($data['url'], "http")
+                 AND strstr($data['url'], "/esx")) {
+            $url = 1;
+         }
+         $this->assertEquals($url, 1, 'ESX module url not right');
+      }
+      
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` 
          WHERE `modulename`='SNMPQUERY'";
       $result = $DB->query($query);
@@ -194,6 +207,20 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
          WHERE `modulename`='NETDISCOVERY'";
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, 'NETDISCOVERY module not registered');
+      
+      /*
+       * Verify in taskjob definition PluginFusinvsnmpIPRange not exist
+       */
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_taskjobs`";
+      $result = $DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         $snmprangeip = 0;
+         if (strstr($data['definition'], "PluginFusinvsnmpIPRange")) {
+            $snmprangeip = 1;
+         }
+         $this->assertEquals($snmprangeip, 0, 'Have some "PluginFusinvsnmpIPRange" items in taskjob definition');
+      }
+      
       
       
       // TODO : test glpi_displaypreferences, rules, bookmark...
