@@ -86,13 +86,18 @@ function plugin_init_fusinvinventory() {
                                                                 'submitmethod'=>'putForm');
    }
 
-
+   if (!class_exists('PluginFusioninventoryProfile')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
+   }
    $PLUGIN_HOOKS['change_profile']['fusinvinventory']
       = PluginFusioninventoryProfile::changeprofile($moduleId,$a_plugin['shortname']);
 
    if (isset($_SESSION["glpiID"])) {
 
 		if (haveRight("configuration", "r") || haveRight("profile", "w")) {// Config page
+         if (!class_exists('PluginFusioninventoryConfiguration')) { // if plugin is unactive
+            include(GLPI_ROOT . "/plugins/fusioninventory/inc/configuration.class.php");
+         }
          $PluginFusioninventoryConfiguration = new PluginFusioninventoryConfiguration();
          $a_tabs = $PluginFusioninventoryConfiguration->defineTabs();
          $PLUGIN_HOOKS['config_page']['fusinvinventory'] = '../fusioninventory/front/configuration.form.php?glpi_tab='.array_search($a_plugin['name'], $a_tabs);
