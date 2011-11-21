@@ -217,6 +217,12 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, 'NETDISCOVERY module not registered');
       
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` 
+         WHERE `modulename`='DEPLOY'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 1, 'DEPLOY module not registered');
+      
+      
       /*
        * Verify in taskjob definition PluginFusinvsnmpIPRange not exist
        */
