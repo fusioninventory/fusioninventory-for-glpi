@@ -535,8 +535,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       if (TableExists('glpi_plugin_tracker_unknown_device')) {
          $migration->renameTable("glpi_plugin_tracker_unknown_device", $newTable);
       } else if (!TableExists($newTable)) {
-         $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unknowndevices` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT
+         $query = "CREATE TABLE `'.$newTable.'` (
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                      PRIMARY KEY (`id`)
                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
          $DB->query($query);
       }
