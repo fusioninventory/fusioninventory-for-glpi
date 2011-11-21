@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_actions`;
 
 CREATE TABLE `glpi_plugin_fusinvdeploy_actions` (
-  `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `plugin_fusinvdeploy_orders_id` int(11) NOT NULL DEFAULT '0',
   `itemtype` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
   `items_id` int(11) NOT NULL DEFAULT '0',
@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_fileparts` (
   `plugin_fusinvdeploy_files_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
-
+a
 
 
 DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_files`;
@@ -202,7 +202,8 @@ CREATE TABLE `glpi_plugin_fusinvdeploy_actions_messages` (
 
 DROP VIEW IF EXISTS `glpi_plugin_fusinvdeploy_tasks`;
 
-CREATE VIEW glpi_plugin_fusinvdeploy_tasks AS SELECT * FROM glpi_plugin_fusioninventory_tasks;
+CREATE VIEW glpi_plugin_fusinvdeploy_tasks 
+AS SELECT * FROM glpi_plugin_fusioninventory_tasks;
 
 
 

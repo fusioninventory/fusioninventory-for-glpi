@@ -88,7 +88,9 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
              AND(!strstr($data[0], "glpi_plugin_fusinvinventory_pcidevices"))
              AND(!strstr($data[0], "glpi_plugin_fusinvinventory_pcivendors"))
              AND(!strstr($data[0], "glpi_plugin_fusinvinventory_usbdevices"))
-             AND(!strstr($data[0], "glpi_plugin_fusinvinventory_usbvendors"))){
+             AND(!strstr($data[0], "glpi_plugin_fusinvinventory_usbvendors"))
+             AND($data[0] != 'glpi_plugin_fusinvdeploy_tasks')
+             AND($data[0] != 'glpi_plugin_fusinvdeploy_taskjobs')){
             $data[0] = str_replace(" COLLATE utf8_unicode_ci", "", $data[0]);
             $data[0] = str_replace("( ", "(", $data[0]);
             $data[0] = str_replace(" )", ")", $data[0]);
