@@ -40,7 +40,7 @@ function pluginFusinvdeployGetCurrentVersion($version) {
 }
 
 
-function pluginFusinvdeployUpdate($current_version) {
+function pluginFusinvdeployUpdate($current_version, $migrationname='Migration') {
 
 }
 ?>

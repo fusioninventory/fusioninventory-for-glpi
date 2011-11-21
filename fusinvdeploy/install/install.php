@@ -35,7 +35,7 @@
 // ----------------------------------------------------------------------
 
 
-function pluginFusinvdeployInstall() {
+function pluginFusinvdeployInstall($version, $migration='') {
    global $DB,$LANG, $CFG_GLPI;
 
    // Get informations of plugin
@@ -48,6 +48,9 @@ function pluginFusinvdeployInstall() {
       pluginFusinvdeployUpdate();
    } else {
       // Installation
+      if ($migration == '') {
+         $migration = new Migration($version);
+      }
 
       // Create database
       $DB_file    = GLPI_ROOT ."/plugins/fusinvdeploy/install/mysql/plugin_fusinvdeploy-".

@@ -265,6 +265,9 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
       echo "***********************************************************\n";
       echo "***********************************************************\n";
       $this->verifyDBNice("fusinvsnmp");
+      echo "***********************************************************\n";
+      echo "***********************************************************\n";
+      $this->verifyDBNice("fusinvdeploy");
    }
     
     
