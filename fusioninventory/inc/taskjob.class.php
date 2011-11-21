@@ -1364,9 +1364,13 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $a_definitions = importArrayFromDB($this->fields['definition']);
       foreach ($a_definitions as $num=>$data) {
          $classname = key($data);
-         $Class = new $classname;
-         if (!$Class->getFromDB(current($data))) {
+         if ($classname == '') {
             unset($a_definitions[$num]);
+         } else {
+            $Class = new $classname;
+            if (!$Class->getFromDB(current($data))) {
+               unset($a_definitions[$num]);
+            }
          }
       }
       if (count($a_definitions) == '0') {
