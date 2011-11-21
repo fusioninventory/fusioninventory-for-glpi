@@ -270,12 +270,16 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
             $infoSections["externalId"] = $data['internal_id'];
             $serializedSections = htmlspecialchars_decode($data['serialized_sections1'].$data['serialized_sections2'].$data['serialized_sections3'], ENT_QUOTES); // Recover double quotes
             $arraySerializedSections = explode("\n", $serializedSections); // Recovering a table with one line per entry
+            $previous_infosection = array();
             foreach ($arraySerializedSections as $valeur) {
                $arraySerializedSectionsTemp = explode("<<=>>", $valeur); // For each line, we create a table with data separated
                if (isset($arraySerializedSectionsTemp[0]) AND isset($arraySerializedSectionsTemp[1])) {
                   if ($arraySerializedSectionsTemp[0] != "" && $arraySerializedSectionsTemp[1] != "") { // that is added to infosections
                      $infoSections["sections"][$arraySerializedSectionsTemp[0]] = $arraySerializedSectionsTemp[1];
                   }
+                  $previous_infosection = $arraySerializedSectionsTemp[0];
+               } else if ($valeur != '') {
+                  $infoSections["sections"][$previous_infosection] .= "\n".$valeur;
                }
             }
             $infoSections['sections'] = $pfLib->convertData($infoSections['sections']);

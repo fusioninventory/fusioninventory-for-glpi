@@ -2522,8 +2522,38 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    }
    if (TableExists("glpi_plugin_tracker_config_discovery")) {
       $DB->query("DROP TABLE glpi_plugin_tracker_config_discovery");
-   }  
-
+   }
+   if (TableExists("glpi_dropdown_plugin_fusioninventory_mib_label")) {
+      $DB->query("DROP TABLE glpi_dropdown_plugin_fusioninventory_mib_label");
+   }
+   if (TableExists("glpi_dropdown_plugin_fusioninventory_mib_object")) {
+      $DB->query("DROP TABLE glpi_dropdown_plugin_fusioninventory_mib_object");
+   }
+   if (TableExists("glpi_dropdown_plugin_fusioninventory_mib_oid")) {
+      $DB->query("DROP TABLE glpi_dropdown_plugin_fusioninventory_mib_oid");
+   }
+   if (TableExists("glpi_dropdown_plugin_fusioninventory_snmp_auth_auth_protocol")) {
+      $DB->query("DROP TABLE glpi_dropdown_plugin_fusioninventory_snmp_auth_auth_protocol");
+   }
+   if (TableExists("glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol")) {
+      $DB->query("DROP TABLE glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol");
+   }
+   if (TableExists("glpi_dropdown_plugin_fusioninventory_snmp_version")) {
+      $DB->query("DROP TABLE glpi_dropdown_plugin_fusioninventory_snmp_version");
+   }
+   if (TableExists("glpi_plugin_fusinvsnmp_temp_profiles")) {
+      $DB->query("DROP TABLE glpi_plugin_fusinvsnmp_temp_profiles");
+   }
+   if (TableExists("glpi_plugin_fusinvsnmp_tmp_agents")) {
+      $DB->query("DROP TABLE glpi_plugin_fusinvsnmp_tmp_agents");
+   }
+   if (TableExists("glpi_plugin_fusinvsnmp_tmp_configs")) {
+      $DB->query("DROP TABLE glpi_plugin_fusinvsnmp_tmp_configs");
+   }
+   if (TableExists("glpi_plugin_fusinvsnmp_tmp_tasks")) {
+      $DB->query("DROP TABLE glpi_plugin_fusinvsnmp_tmp_tasks");
+   }
+   
    
    /*
     *  Clean old ports deleted but have some informations in SNMP tables
