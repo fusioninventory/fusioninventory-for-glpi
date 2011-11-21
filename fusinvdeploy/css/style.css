@@ -1,0 +1,337 @@
+@import url("../lib/extjs/theme/css/xtheme-fusinvdeploy.css");
+
+
+.x-form-file-wrap {
+position:relative;
+height:22px;
+}
+
+.x-form-file-wrap .x-form-file {
+position:absolute;
+right:0;
+-moz-opacity:0;
+filter:alpha(opacity: 0);
+opacity:0;
+z-index:2;
+height:22px;
+float:right;
+}
+
+.x-form-file-wrap .x-form-file-btn {
+float:right;
+right:0;
+}
+
+.x-form-file-wrap .x-form-file-text {
+position:absolute;
+left:0;
+z-index:3;
+color:#777;
+}
+
+.x-form-invalid,textarea.x-form-invalid {
+background-color:#FFF;
+border-color:#C30;
+}
+
+.x-panel-body-noheader {
+border:none;
+}
+
+.upload-icon {
+background:url('../pics/image_add.png') no-repeat 0 0!important;
+}
+
+#fi-button-msg {
+border:2px solid #ccc;
+background:#eee;
+float:left;
+margin:5px;
+padding:5px 10px;
+}
+
+.assigned {
+background-color:#DCEFFF!important;
+}
+
+.step_1 {
+background-color:#FF9;
+}
+
+.step_2 {
+background-color:#FC3;
+}
+
+.step_3 {
+background-color:#F90;
+}
+
+.step_4 {
+background-color:#F30;
+}
+
+.x-my-grid3-row-expander {
+width:100%;
+height:18px;
+background-position:4px 2px;
+background-repeat:no-repeat;
+background-color:transparent;
+background-image:url(../../../lib/extjs/resources/images/default/grid/row-expand-sprite.gif);
+}
+
+.x-my-grid3-row-collapsed .x-my-grid3-row-expander {
+background-position:4px 2px;
+}
+
+.x-my-grid3-row-expanded .x-my-grid3-row-expander {
+background-position:-21px 2px;
+}
+
+.x-my-grid3-row-collapsed .x-grid3-row-body {
+display:none!important;
+}
+
+.x-my-grid3-row-expanded .x-grid3-row-body {
+display:block!important;
+}
+
+.ux-row-action-cell .x-grid3-cell-inner {
+padding:1px 0 0;
+}
+
+.ux-row-action-item {
+float:left;
+min-width:16px;
+height:16px;
+background-repeat:no-repeat;
+cursor:pointer;
+overflow:hidden;
+margin:0 3px 0 2px;
+}
+
+.ux-row-action-item span {
+vertical-align:middle;
+line-height:18px;
+padding:0 0 0 20px;
+}
+
+.x-grid-group-hd div {
+position:relative;
+height:16px;
+}
+
+.ux-grow-action-item {
+min-width:16px;
+height:16px;
+background-repeat:no-repeat;
+background-position:0 50%!important;
+cursor:pointer;
+float:left;
+margin:0 0 0 4px;
+padding:0!important;
+}
+
+.ux-action-right {
+float:right;
+margin:0 3px 0 2px;
+padding:0!important;
+}
+
+.ux-grow-action-text {
+background:transparent none!important;
+float:left;
+margin:0!important;
+padding:0!important;
+}
+
+.exticon-add {
+background-image:url("../pics/ext/add.png");
+}
+
+.exticon-delete {
+background-image:url("../pics/ext/delete.png");
+}
+
+.exticon-save {
+background-image:url("../pics/ext/accept.png");
+}
+
+.exticon-file {
+background-image:url("../pics/ext/folder.png");
+}
+
+.exticon-cancel {
+background-image:url("../pics/ext/cancel.png");
+}
+
+.x-form-file-btn button {
+padding-left:0!important;
+}
+
+.x-form-field-wrap .x-form-spinner-trigger {
+background:transparent url('../pics/ext/spinner.gif') no-repeat 0 0;
+}
+
+.x-form-field-wrap .x-form-spinner-overup {
+background-position:-17px 0;
+}
+
+.x-form-field-wrap .x-form-spinner-clickup {
+background-position:-34px 0;
+}
+
+.x-form-field-wrap .x-form-spinner-overdown {
+background-position:-51px 0;
+}
+
+.x-form-field-wrap .x-form-spinner-clickdown {
+background-position:-68px 0;
+}
+
+.x-trigger-wrap-focus .x-form-spinner-trigger {
+background-position:-85px 0;
+}
+
+.x-trigger-wrap-focus .x-form-spinner-overup {
+background-position:-102px 0;
+}
+
+.x-trigger-wrap-focus .x-form-spinner-clickup {
+background-position:-119px 0;
+}
+
+.x-trigger-wrap-focus .x-form-spinner-overdown {
+background-position:-136px 0;
+}
+
+.x-trigger-wrap-focus .x-form-spinner-clickdown {
+background-position:-153px 0;
+}
+
+.x-trigger-wrap-focus .x-form-trigger {
+border-bottom:1px solid #7eadd9;
+}
+
+.ext-ie .ux-row-action-item,.ext-ie .ux-grow-action-item {
+width:16px;
+}
+
+.ext-ie .ux-row-action-text,.ext-ie .ux-row-action-item span {
+width:auto;
+}
+
+ .x-tree-node-leaf .x-tree-node-icon{
+background-image:url(../lib/extjs/theme/images/fusinvdeploy/tree/folder.gif);
+}
+
+.deploy_extjs {
+text-align:left;
+width : 950px;
+margin : 5px auto;
+border : 1px solid #cccccc;
+background-color:       #EBEAEB;
+}
+
+.deploy_extjs thead tr th {
+font-size:           13px;
+font-weight:         bold;
+text-align:          center;
+color:               grey;
+padding:       5px;
+}
+
+#page form{
+   margin-bottom : 0px;
+}
+
+
+#TaskJob .x-grid3-row {border:0px}
+#TaskJob .x-grid3-cell-inner {padding: 1px;}
+.x-grid-group-hd {border-bottom:1px solid #CCCCCC; padding-top: 0}
+
+.deployState_Group {
+   background-image:url("../pics/ext/add.png");
+}
+
+
+.c_state, .c_progress {
+   width:205px;
+   margin-left:10px;
+   white-space: normal;
+}
+.c_state {margin-left:8px;}
+.x-treegrid-node-ct-table .x-treegrid-node-ct-table .c_state {margin-left:18px;}
+
+
+#deployStates .x-grid3-header {
+   display:none
+}
+#deployStates .x-grid3-col-state, #deployStates .x-grid3-col-log {
+   padding:0 !important;
+}
+
+/* PROGRESS BAR */
+.progress-container {
+  border: 1px solid #ccc;
+  width: 120px;
+  margin: 0;
+  padding: 1px;
+  float: right;
+  background: white;
+  height: 14px !important;
+  border-radius:4px;
+}
+
+.progress-container > div {
+  background-color: #D0D99D;
+  height: 14px;
+  text-align:center;
+  border-radius:4px;
+  font-size:0.95em;
+}
+
+.x-treegrid-text {
+   padding-left:0 !important;
+}
+
+.no-icon {
+   display : none;
+}
+
+
+
+
+#taskJobLogsTreeGrid .x-treegrid-col {
+    font-size:0.9em; vertical-align:middle;
+}
+
+#taskJobLogsTreeGrid .group {
+   background-color:#F0E5BD;
+   font-weight:bold;
+}
+
+#taskJobLogsTreeGrid a {
+   font-weight:normal;
+}
+.log-tooltip .x-tip-body {
+   padding:5px;
+   font-weight:bold;
+   white-space: -moz-pre-wrap; /* Mozilla */
+   white-space: -hp-pre-wrap; /* HP printers */
+   white-space: -o-pre-wrap; /* Opera 7 */
+   white-space: -pre-wrap; /* Opera 4-6 */
+   white-space: pre-wrap; /* CSS 2.1 */
+   white-space: pre-line; /* CSS 3 (and 2.1 as well, actually) */
+   word-wrap: break-word; /* IE */
+   -moz-binding: url('xbl.xml#wordwrap'); /* Firefox (using XBL) */
+}
+
+#deployStates .x-tree-elbow-line {width :6px !important;}
+
+
+.grid-row-insert-below {
+    border-bottom:1px solid #659900;
+}
+.grid-row-insert-above {
+    border-top:1px solid #659900;
+}

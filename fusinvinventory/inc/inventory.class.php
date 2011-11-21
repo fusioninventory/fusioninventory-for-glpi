@@ -116,7 +116,7 @@ class PluginFusinvinventoryInventory {
       $p_xml = $PluginFusinvinventoryBlacklist->cleanBlacklist($p_xml);
 
       $_SESSION['SOURCEXML'] = $p_xml;
-      
+
       $xml = $p_xml;
       $input = array();
 
