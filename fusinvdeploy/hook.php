@@ -36,7 +36,8 @@
 
 function plugin_fusinvdeploy_install() {
    include_once (GLPI_ROOT . "/plugins/fusinvdeploy/install/install.php");
-   pluginFusinvdeployInstall();
+   $a_plugin = plugin_version_fusinvdeploy();
+   pluginFusinvdeployInstall($a_plugin['version']);
 
    return true;
 }
