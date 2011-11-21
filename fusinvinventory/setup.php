@@ -68,6 +68,9 @@ function plugin_init_fusinvinventory() {
    // ##### 3. get informations of the plugin #####
 
    $a_plugin = plugin_version_fusinvinventory();
+   if (!class_exists('PluginFusioninventoryModule')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
+   }
    $moduleId = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
 
    // ##### 4. Set in session module_id #####

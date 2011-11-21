@@ -1553,6 +1553,35 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                            "vlan",
                            "vlan",
                            "tinyint(1) NOT NULL DEFAULT '0'");
+   // Update with mapping
+   if (FieldExists($newTable, "mapping_name")) {
+      $pFusinvsnmpModelMib = new PluginFusinvsnmpModelMib();
+      $query = "SELECT * FROM `".$newTable."`";
+      $result=$DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         //if (!is_numeric($data['mapping_name'])) {
+            $pFusioninventoryMapping = new PluginFusioninventoryMapping();
+            $mapping = 0;
+            if ($data['itemtype'] == 'glpi_networkequipments') {
+               $data['mapping_type'] = 'NetworkEquipment';
+            } else if ($data['itemtype'] == 'glpi_printers') {
+               $data['mapping_type'] = 'Printer';
+            } else {
+               $data['mapping_type'] = '';
+            }
+            if ($mapping = $pFusioninventoryMapping->get($data['mapping_type'], $data['mapping_name'])) {
+               $data['mapping_name'] = $mapping['id'];
+               $pFusinvsnmpModelMib->update($data);
+            }
+         //}
+      }
+   }
+   $migration->changeField($newTable,
+                           "mapping_name",
+                           "plugin_fusioninventory_mappings_id",
+                           "int(11) NOT NULL DEFAULT '0'");
+   
+
    
    /*
     * glpi_plugin_fusinvsnmp_networkportconnectionlogs
@@ -1630,6 +1659,13 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
             WHERE `plugin_fusinvsnmp_miblabels_id` IS NULL";
          $DB->query($query);
       }
+      if (FieldExists($newTable, "plugin_fusinvsnmp_mibobjects_id")) {
+         $query = "UPDATE `".$newTable."`
+            SET `plugin_fusinvsnmp_mibobjects_id`='0' 
+            WHERE `plugin_fusinvsnmp_mibobjects_id` IS NULL";
+         $DB->query($query);
+      }
+      
       $migration->changeField($newTable,
                               "plugin_fusinvsnmp_models_id",
                               "plugin_fusinvsnmp_models_id",
@@ -2458,16 +2494,16 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                         "threads_netdiscovery", 
                         "int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)'");
    $migration->changeField($newTable,
-                              "threads_snmpquery",
-                              "threads_snmpquery",
-                              "int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)'");
+                           "threads_snmpquery",
+                           "threads_snmpquery",
+                           "int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)'");
    $migration->addField($newTable, 
                         "threads_snmpquery", 
                         "int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)'"); 
    $migration->changeField($newTable,
-                              "senddico",
-                              "senddico",
-                              "tinyint(1) NOT NULL DEFAULT '0'");
+                           "senddico",
+                           "senddico",
+                           "tinyint(1) NOT NULL DEFAULT '0'");
    $migration->addField($newTable, 
                         "senddico", 
                         "tinyint(1) NOT NULL DEFAULT '0'"); 
