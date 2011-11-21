@@ -541,14 +541,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $DB->query($query);
       }
       $migration->changeField($newTable, 'id', 'id', "int(11) NOT NULL AUTO_INCREMENT");
-      $migration->changeField($newTable, 'ID', 'id', "int(11) NOT NULL AUTO_INCREMENT");
-      $migration->changeField($newTable, 'FK_entities', 'entities_id', "int(11) NOT NULL DEFAULT '0'");
-      $migration->changeField($newTable, 'location', 'locations_id', "int(11) NOT NULL DEFAULT '0'");
-      $migration->changeField($newTable, 'deleted', 'is_deleted', "tinyint(1) NOT NULL DEFAULT '0'");
       $migration->changeField($newTable, 'name', 'name', 'varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL');
       $migration->changeField($newTable, 'date_mod', 'date_mod', 'datetime DEFAULT NULL');
-      $migration->changeField($newTable, 'entities_id', 'entities_id', "int(11) NOT NULL DEFAULT '0'");
-      $migration->changeField($newTable, 'locations_id', 'locations_id', "int(11) NOT NULL DEFAULT '0'");
       $migration->changeField($newTable, 'is_deleted', 'is_deleted', "tinyint(1) NOT NULL DEFAULT '0'");
       $migration->changeField($newTable, 'serial', 'serial', "varchar(255) DEFAULT NULL");
       $migration->changeField($newTable, 'otherserial', 'otherserial', "varchar(255) DEFAULT NULL");
@@ -562,6 +556,15 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $migration->changeField($newTable, 'mac', 'mac', "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
       $migration->changeField($newTable, 'hub', 'hub', "tinyint(1) NOT NULL DEFAULT '0'");
       $migration->changeField($newTable, 'states_id', 'states_id', "int(11) NOT NULL DEFAULT '0'");
+
+      $migration->migrationOneTable($newTable);
+      
+      $migration->changeField($newTable, 'ID', 'id', "int(11) NOT NULL AUTO_INCREMENT");
+      $migration->changeField($newTable, 'FK_entities', 'entities_id', "int(11) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable, 'location', 'locations_id', "int(11) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable, 'deleted', 'is_deleted', "tinyint(1) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable, 'entities_id', 'entities_id', "int(11) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable, 'locations_id', 'locations_id', "int(11) NOT NULL DEFAULT '0'");
       $migration->migrationOneTable($newTable);
       $migration->addField($newTable, 
                            "name", 
