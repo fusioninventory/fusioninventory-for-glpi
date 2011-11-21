@@ -144,6 +144,8 @@ function pluginFusinvsnmpGetCurrentVersion($version) {
 function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    global $DB;
 
+   ini_set("max_execution_time", "0");
+   
    if (!class_exists('PluginFusioninventoryMapping')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/mapping.class.php");
    }

@@ -159,6 +159,8 @@ function pluginFusioninventoryGetCurrentVersion($version) {
 function pluginFusioninventoryUpdate($current_version, $migrationname='Migration') {
    global $DB;
    
+   ini_set("max_execution_time", "0");
+   
    $migration = new $migrationname($current_version);
    $prepare_task = array();
    $prepare_rangeip = array();

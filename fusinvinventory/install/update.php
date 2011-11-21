@@ -76,6 +76,8 @@ function pluginFusinvinventoryGetCurrentVersion($version) {
 
 function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration') {
    global $DB;
+   
+   ini_set("max_execution_time", "0");
 
    $migration = new $migrationname($current_version);
    $config = new PluginFusioninventoryConfig();
