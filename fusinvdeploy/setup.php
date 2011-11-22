@@ -44,47 +44,47 @@ function plugin_init_fusinvdeploy() {
 
    $plugin = new Plugin;
    if (!$plugin->isActivated("fusioninventory")) {
-      if (isset($_GET['id'])
-         && isset($_GET['action'])
-            && strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
-         switch ($_GET['action']) {
-            case 'activate':
-               addMessageAfterRedirect($LANG['plugin_fusinvdeploy']["setup"][17]);
-               break;
-            case 'uninstall':
-               addMessageAfterRedirect($LANG['plugin_fusinvdeploy']["setup"][18]);
-               glpi_header($CFG_GLPI["root_doc"]."/front/plugin.php");
-               break;
-         }
-      }
+//      if (isset($_GET['id'])
+//         && isset($_GET['action'])
+//            && strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
+//         switch ($_GET['action']) {
+//            case 'activate':
+//               addMessageAfterRedirect($LANG['plugin_fusinvdeploy']["setup"][17]);
+//               break;
+//            case 'uninstall':
+//               addMessageAfterRedirect($LANG['plugin_fusinvdeploy']["setup"][18]);
+//               glpi_header($CFG_GLPI["root_doc"]."/front/plugin.php");
+//               break;
+//         }
+//      }
       return false;
    }
    if (!$plugin->isActivated("fusinvinventory")) {
-      if (isset($_GET['id'])
-         && isset($_GET['action'])
-            && strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
-         switch ($_GET['action']) {
-            case 'activate':
-               addMessageAfterRedirect($LANG['plugin_fusinvdeploy']["setup"][21]);
-               break;
-         }
-      }
+//      if (isset($_GET['id'])
+//         && isset($_GET['action'])
+//            && strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
+//         switch ($_GET['action']) {
+//            case 'activate':
+//               addMessageAfterRedirect($LANG['plugin_fusinvdeploy']["setup"][21]);
+//               break;
+//         }
+//      }
       return false;
    }
    if (!$plugin->isInstalled("webservices")) {
-      if (isset($_GET['id'])
-         && isset($_GET['action'])
-            && strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
-         switch ($_GET['action']) {
-            case 'activate':
-               addMessageAfterRedirect($LANG['plugin_fusinvdeploy']["setup"][19]);
-               break;
-            case 'uninstall':
-               addMessageAfterRedirect($LANG['plugin_fusinvdeploy']["setup"][20]);
-               glpi_header($CFG_GLPI["root_doc"]."/front/plugin.php");
-               break;
-         }
-      }
+//      if (isset($_GET['id'])
+//         && isset($_GET['action'])
+//            && strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
+//         switch ($_GET['action']) {
+//            case 'activate':
+//               addMessageAfterRedirect($LANG['plugin_fusinvdeploy']["setup"][19]);
+//               break;
+//            case 'uninstall':
+//               addMessageAfterRedirect($LANG['plugin_fusinvdeploy']["setup"][20]);
+//               glpi_header($CFG_GLPI["root_doc"]."/front/plugin.php");
+//               break;
+//         }
+//      }
       return false;
    }
 
