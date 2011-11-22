@@ -527,6 +527,17 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $migration->dropKey($newTable, "FK_tracker_agents");
       $migration->dropKey($newTable, "FK_tracker_agents_2");
    
+      if (!TableExists($newTable)) {
+        $DB->query("CREATE TABLE `glpi_plugin_fusioninventory_ipranges` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `name` varchar(255) DEFAULT NULL,
+   `entities_id` int(11) NOT NULL DEFAULT '0',
+   `ip_start` varchar(255) DEFAULT NULL,
+   `ip_end` varchar(255) DEFAULT NULL,
+   PRIMARY KEY (`id`),
+   KEY `entities_id` (`entities_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
+      }
       
       
       
