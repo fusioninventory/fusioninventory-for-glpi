@@ -548,7 +548,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       if (TableExists('glpi_plugin_tracker_unknown_device')) {
          $migration->renameTable("glpi_plugin_tracker_unknown_device", $newTable);
       } else if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `'.$newTable.'` (
+         $query = "CREATE TABLE `".$newTable."` (
                      `id` int(11) NOT NULL AUTO_INCREMENT,
                       PRIMARY KEY (`id`)
                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
@@ -870,7 +870,41 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
          $DB->query($query);
       }
+      $migration->changeField($newTable,
+                              "id",
+                              "id",
+                              "int(11) NOT NULL AUTO_INCREMENT");
+      $migration->changeField($newTable,
+                              "type",
+                              "type",
+                              "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+      $migration->changeField($newTable,
+                              "right",
+                              "right",
+                              "char(1) COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "plugins_id",
+                              "plugins_id",
+                              "int(11) NOT NULL DEFAULT '0'");
+      $migration->changeField($newTable,
+                              "profiles_id",
+                              "profiles_id",
+                              "int(11) NOT NULL DEFAULT '0'");
       
+      $migration->migrationOneTable($newTable);
+      
+      $migration->addField($newTable, 
+                           "type", 
+                           "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+      $migration->addField($newTable, 
+                           "right", 
+                           "char(1) COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->addField($newTable, 
+                           "plugins_id", 
+                           "int(11) NOT NULL DEFAULT '0'");
+      $migration->addField($newTable, 
+                           "profiles_id", 
+                           "int(11) NOT NULL DEFAULT '0'");
       
       
    /*
