@@ -1555,11 +1555,10 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                            "tinyint(1) NOT NULL DEFAULT '0'");
    // Update with mapping
    if (FieldExists($newTable, "mapping_name")) {
-      $pFusinvsnmpModelMib = new PluginFusinvsnmpModelMib();
       $query = "SELECT * FROM `".$newTable."`";
       $result=$DB->query($query);
       while ($data=$DB->fetch_array($result)) {
-         //if (!is_numeric($data['mapping_name'])) {
+         if (!is_numeric($data['mapping_name'])) {
             $pFusioninventoryMapping = new PluginFusioninventoryMapping();
             $mapping = 0;
             if ($data['itemtype'] == 'glpi_networkequipments') {
@@ -1571,9 +1570,12 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
             }
             if ($mapping = $pFusioninventoryMapping->get($data['mapping_type'], $data['mapping_name'])) {
                $data['mapping_name'] = $mapping['id'];
-               $pFusinvsnmpModelMib->update($data);
+               $queryu = "UPDATE `".$newTable."`
+                  SET `mapping_name`='".$mapping['id']."'
+                  WHERE `id`='".$data['id']."'";
+               $DB->query($queryu);
             }
-         //}
+         }
       }
    }
    $migration->changeField($newTable,
