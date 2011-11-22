@@ -893,6 +893,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       
       $migration->migrationOneTable($newTable);
       
+      $migration->changeField($newTable,
+                              "ID",
+                              "id",
+                              "int(11) NOT NULL AUTO_INCREMENT");
       $migration->addField($newTable, 
                            "type", 
                            "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
@@ -905,8 +909,44 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $migration->addField($newTable, 
                            "profiles_id", 
                            "int(11) NOT NULL DEFAULT '0'");
+      $migration->dropField($newTable,
+                            "name");
+      $migration->dropField($newTable,
+                            "interface");
+      $migration->dropField($newTable,
+                            "is_default");
+      $migration->dropField($newTable,
+                            "snmp_networking");
+      $migration->dropField($newTable,
+                            "snmp_printers");
+      $migration->dropField($newTable,
+                            "snmp_models");
+      $migration->dropField($newTable,
+                            "snmp_authentification");
+      $migration->dropField($newTable,
+                            "rangeip");
+      $migration->dropField($newTable,
+                            "agents");
+      $migration->dropField($newTable,
+                            "remotecontrol");
+      $migration->dropField($newTable,
+                            "agentsprocesses");
+      $migration->dropField($newTable,
+                            "unknowndevices");
+      $migration->dropField($newTable,
+                            "reports");
+      $migration->dropField($newTable,
+                            "deviceinventory");
+      $migration->dropField($newTable,
+                            "netdiscovery");
+      $migration->dropField($newTable,
+                            "snmp_query");
+      $migration->dropField($newTable,
+                            "wol");
+      $migration->dropField($newTable,
+                            "configuration");
       
-      
+
    /*
     * Table glpi_plugin_fusioninventory_mappings
     */
