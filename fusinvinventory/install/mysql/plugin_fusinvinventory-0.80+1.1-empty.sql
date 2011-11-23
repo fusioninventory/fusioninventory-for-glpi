@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_libserialization`;
 
 CREATE TABLE `glpi_plugin_fusinvinventory_libserialization` (
   `internal_id` varchar(255) NOT NULL DEFAULT '',
-  `computers_id` int(50) DEFAULT NULL,
+  `computers_id` int(11) DEFAULT NULL,
   `serialized_sections1` longtext DEFAULT NULL,
   `serialized_sections2` longtext DEFAULT NULL,
   `serialized_sections3` longtext DEFAULT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_blacklists` (
   `plugin_fusioninventory_criterium_id` int(11) NOT NULL DEFAULT '0',
   `value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `plugin_fusioninventory_criterium_id` (`plugin_fusioninventory_criterium_id`),
+  KEY `plugin_fusioninventory_criterium_id` (`plugin_fusioninventory_criterium_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 

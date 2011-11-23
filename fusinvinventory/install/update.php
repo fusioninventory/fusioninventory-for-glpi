@@ -199,35 +199,109 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
 
    
     /*
-    * Table glpi_plugin_fusinvinventory_antivirus
+    * Table glpi_plugin_fusinvinventory_blacklists
     */
       $newTable = "glpi_plugin_fusinvinventory_blacklists";
-      $migration->addKey($newTable, 
-                         "plugin_fusioninventory_criterium_id");
-   
+      if (!TableExists($newTable)) {
+         $query = "CREATE TABLE `".$newTable."` (
+                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        PRIMARY KEY (`id`)
+                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+         $DB->query($query);
+      }
+         $migration->changeField($newTable, 
+                                 'id', 
+                                 'id', 
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable, 
+                                 'plugin_fusioninventory_criterium_id', 
+                                 'plugin_fusioninventory_criterium_id', 
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable, 
+                                 'id', 
+                                 'id', 
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+      
+      $migration->migrationOneTable($newTable);
+      
+         $migration->addField($newTable, 
+                                 'id', 
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable, 
+                                 'plugin_fusioninventory_criterium_id', 
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable, 
+                                 'id', 
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->addKey($newTable, 
+                            "plugin_fusioninventory_criterium_id");
+         
+      
+      
     /*
     * Table glpi_plugin_fusinvinventory_libserialization
     */
    $newTable = "glpi_plugin_fusinvinventory_libserialization";
    if (!TableExists($newTable)) {
       $DB->query("CREATE TABLE `".$newTable."` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                     `internal_id` varchar(255) NOT NULL DEFAULT '',
                      PRIMARY KEY (`id`)
-                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1");
+                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
    }   
-   $migration->changeField($newTable,
-                           "serialized_sections1",
-                           "serialized_sections1",
-                           "longtext DEFAULT NULL");
-   $migration->changeField($newTable,
-                           "serialized_sections2",
-                           "serialized_sections2",
-                           "longtext DEFAULT NULL");
-   $migration->changeField($newTable,
-                           "serialized_sections3",
-                           "serialized_sections3",
-                           "longtext DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "internal_id",
+                              "internal_id",
+                              "varchar(255) NOT NULL DEFAULT ''");
+      $migration->changeField($newTable,
+                              "computers_id",
+                              "computers_id",
+                              "int(11) DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "serialized_sections1",
+                              "serialized_sections1",
+                              "longtext DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "serialized_sections2",
+                              "serialized_sections2",
+                              "longtext DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "serialized_sections3",
+                              "serialized_sections3",
+                              "longtext DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "hash",
+                              "hash",
+                              "varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->changeField($newTable,
+                              "last_fusioninventory_update",
+                              "last_fusioninventory_update",
+                              "datetime DEFAULT NULL");
+   
    $migration->migrationOneTable($newTable);
+   
+      $migration->addField($newTable,
+                              "internal_id",
+                              "varchar(255) NOT NULL DEFAULT ''");
+      $migration->addField($newTable,
+                              "computers_id",
+                              "int(11) DEFAULT NULL");
+      $migration->addField($newTable,
+                              "serialized_sections1",
+                              "longtext DEFAULT NULL");
+      $migration->addField($newTable,
+                              "serialized_sections2",
+                              "longtext DEFAULT NULL");
+      $migration->addField($newTable,
+                              "serialized_sections3",
+                              "longtext DEFAULT NULL");
+      $migration->addField($newTable,
+                              "hash",
+                              "varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->addField($newTable,
+                              "last_fusioninventory_update",
+                              "datetime DEFAULT NULL");
+   
+   
    
    
    /*
