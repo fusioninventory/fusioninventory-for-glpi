@@ -45,7 +45,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_miblabels` (
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `comment` text COLLATE utf8_unicode_ci DEFAULT NULL,
    PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -56,7 +56,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_mibobjects` (
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `comment` text COLLATE utf8_unicode_ci DEFAULT NULL,
    PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -67,7 +67,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_miboids` (
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `comment` text COLLATE utf8_unicode_ci DEFAULT NULL,
    PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -79,7 +79,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_configlogfields` (
    `days` int(255) NOT NULL DEFAULT '-1',
    PRIMARY KEY ( `id` ) ,
    KEY `plugin_fusioninventory_mappings_id` ( `plugin_fusioninventory_mappings_id` )
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -104,7 +104,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_constructdevices` (
    PRIMARY KEY (`id`),
    KEY `plugin_fusinvsnmp_models_id` ( `manufacturers_id`, `plugin_fusinvsnmp_models_id` ),
    KEY `itemtype` ( `itemtype` )
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -116,7 +116,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_constructdevicewalks` (
    `log` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `plugin_fusinvsnmp_constructdevices_id` ( `plugin_fusinvsnmp_constructdevices_id` )
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -132,9 +132,9 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_constructdevice_miboids` (
    `itemtype` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
    `vlan` tinyint(1) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
-   UNIQUE KEY `unicity` ( `plugin_fusinvsnmp_miboids_id`, `plugin_fusinvsnmp_constructdevices_id`, `plugin_fusioninventory_mappings_id` ),
+   UNIQUE KEY `unicity` (`plugin_fusinvsnmp_miboids_id`, `plugin_fusinvsnmp_constructdevices_id`, `plugin_fusioninventory_mappings_id`),
    KEY `itemtype` ( `itemtype` )
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -150,7 +150,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_networkportconnectionlogs` (
    PRIMARY KEY (`id`),
    KEY `networkports_id_source` ( `networkports_id_source`, `networkports_id_destination`, `plugin_fusioninventory_agentprocesses_id` ),
    KEY `date_mod` (`date_mod`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -175,7 +175,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_modelmibs` (
    KEY `oid_port_dyn` (`oid_port_dyn`),
    KEY `is_active` (`is_active`),
    KEY `plugin_fusioninventory_mappings_id` (`plugin_fusioninventory_mappings_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -190,7 +190,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_models` (
    PRIMARY KEY (`id`),
    KEY `name` (`name`),
    KEY `itemtype` (`itemtype`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -210,7 +210,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_networkequipments` (
    PRIMARY KEY (`id`),
    KEY `networkequipments_id` (`networkequipments_id`),
    KEY `plugin_fusinvsnmp_models_id` (`plugin_fusinvsnmp_models_id`,`plugin_fusinvsnmp_configsecurities_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -223,7 +223,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_networkequipmentips` (
    PRIMARY KEY (`id`),
    KEY `ip` (`ip`),
    KEY `networkequipments_id` (`networkequipments_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -249,7 +249,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_networkports` (
    `lastup` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
    PRIMARY KEY (`id`),
    KEY `networkports_id` (`networkports_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -273,7 +273,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_printerlogs` (
    `pages_total_fax` int(11) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
    KEY `printers_id` (`printers_id`,`date`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -292,7 +292,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_printers` (
    KEY `plugin_fusinvsnmp_configsecurities_id` (`plugin_fusinvsnmp_configsecurities_id`),
    KEY `printers_id` (`printers_id`),
    KEY `plugin_fusinvsnmp_models_id` (`plugin_fusinvsnmp_models_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -308,7 +308,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_printercartridges` (
    KEY `printers_id` (`printers_id`),
    KEY `plugin_fusioninventory_mappings_id` (`plugin_fusioninventory_mappings_id`),
    KEY `cartridges_id` (`cartridges_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_configsecurities`;
@@ -327,7 +327,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_configsecurities` (
    PRIMARY KEY (`id`),
    KEY `snmpversion` (`snmpversion`),
    KEY `is_deleted` (`is_deleted`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_networkportlogs`;
@@ -345,7 +345,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_networkportlogs` (
    KEY `plugin_fusioninventory_mappings_id` (`plugin_fusioninventory_mappings_id`),
    KEY `plugin_fusioninventory_agentprocesses_id` (`plugin_fusioninventory_agentprocesses_id`),
    KEY `date_mod` (`date_mod`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -359,7 +359,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_unknowndevices` (
    `plugin_fusinvsnmp_configsecurities_id` int(11) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
    KEY `plugin_fusioninventory_unknowndevices_id` (`plugin_fusioninventory_unknowndevices_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -375,7 +375,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_agentconfigs` (
    `senddico` tinyint(1) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
    KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -395,7 +395,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_statediscoveries` (
   `nb_exists` int(11) NOT NULL DEFAULT '0',
   `nb_import` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 

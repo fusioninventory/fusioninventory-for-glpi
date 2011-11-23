@@ -234,7 +234,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $query = "CREATE TABLE `".$newTable."` (
                      `id` int(11) NOT NULL AUTO_INCREMENT,
                      PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
          $DB->query($query);         
       }
       $migration->renameTable("glpi_plugin_tracker_agents", $newTable);
@@ -397,7 +397,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $query = "CREATE TABLE `".$newTable."` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
          $DB->query($query);
       }
          $migration->changeField($newTable, 
@@ -504,7 +504,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $query = "CREATE TABLE `".$newTable."` (
                      `id` int(1) NOT NULL AUTO_INCREMENT,
                      PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
          $DB->query($query);
       }
          $migration->changeField($newTable, 
@@ -594,7 +594,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $query = "CREATE TABLE `".$newTable."` (
                      `id` int(1) NOT NULL AUTO_INCREMENT,
                      PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
          $DB->query($query);
       }      
          $migration->changeField($newTable,
@@ -681,7 +681,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $query = "CREATE TABLE `".$newTable."` (
                      `id` int(11) NOT NULL AUTO_INCREMENT,
                       PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
          $DB->query($query);
       }
          $migration->changeField($newTable, 
@@ -851,7 +851,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $query = "CREATE TABLE `".$newTable."` (
                      `id` int(11) NOT NULL AUTO_INCREMENT,
                       PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
          $DB->query($query);
       }
          $migration->changeField($newTable,
@@ -931,7 +931,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $query = "CREATE TABLE `".$newTable."` (
                      `id` int(11) NOT NULL AUTO_INCREMENT,
                       PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
          $DB->query($query);
       }
          $migration->changeField($newTable,
@@ -998,7 +998,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $query = "CREATE TABLE `".$newTable."` (
                      `id` int(11) NOT NULL AUTO_INCREMENT,
                       PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
          $DB->query($query);
       }
          $migration->changeField($newTable,
@@ -1047,7 +1047,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $query = "CREATE TABLE `".$newTable."` (
                      `id` int(11) NOT NULL AUTO_INCREMENT,
                       PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
          $DB->query($query);
       }
          $migration->changeField($newTable,
@@ -1153,7 +1153,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $query = "CREATE TABLE `".$newTable."` (
                      `id` int(11) NOT NULL AUTO_INCREMENT,
                       PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
          $DB->query($query);
       }
          $migration->changeField($newTable,
@@ -1315,7 +1315,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $query = "CREATE TABLE `".$newTable."` (
                      `id` bigint(20) NOT NULL AUTO_INCREMENT,
                       PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
          $DB->query($query);
       }
          $migration->changeField($newTable,
@@ -1384,7 +1384,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $query = "CREATE TABLE `".$newTable."` (
                      `id` bigint(20) NOT NULL AUTO_INCREMENT,
                       PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
          $DB->query($query);
       }
          $migration->changeField($newTable,
@@ -1451,9 +1451,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                             array("plugin_fusioninventory_agents_id", "state"),
                             "plugin_fusioninventory_agents_id");
-         $migration->addKey($newTable,
-                            array("plugin_fusioninventory_taskjobs_id", "state"),
-                            "plugin_fusioninventory_taskjob_2");
+
          
 
    /*
@@ -1463,8 +1461,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       if (!TableExists($newTable)) {
          $query = "CREATE TABLE `".$newTable."` (
                      int(11) NOT NULL AUTO_INCREMENT,
-                      PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+                     PRIMARY KEY (`id`)
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
          $DB->query($query);
       }
          $migration->changeField($newTable,
@@ -1560,7 +1558,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $query = "CREATE TABLE `".$newTable."` (
                      int(11) NOT NULL AUTO_INCREMENT,
                       PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
          $DB->query($query);
       }
          $migration->changeField($newTable,

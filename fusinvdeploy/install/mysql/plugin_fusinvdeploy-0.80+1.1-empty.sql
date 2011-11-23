@@ -7,7 +7,7 @@ CREATE TABLE `glpi_plugin_fusinvdeploy_actions` (
   `items_id` int(11) NOT NULL DEFAULT '0',
   `ranking` int(11) DEFAULT NULL,
   PRIMARY KEY (  `id` )
-) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_commands` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `exec` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (  `id` )
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_moves` (
   `from` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `to` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_copies` (
   `from` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `to` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_commandenvvariables
   `value` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `plugin_fusinvdeploy_commands_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_commandstatus` (
   `value` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `plugin_fusinvdeploy_commands_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -97,7 +97,7 @@ CREATE TABLE `glpi_plugin_fusinvdeploy_checks` (
   `ranking` int(11) DEFAULT NULL,
   `plugin_fusinvdeploy_orders_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_files` (
   `filesize` bigint(20) NOT NULL DEFAULT '0',
   `plugin_fusinvdeploy_orders_id` int(11) NOT NULL DEFAULT '0',
 PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_orders` (
   `create_date` datetime DEFAULT NULL,
   `plugin_fusinvdeploy_packages_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -156,7 +156,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_packages` (
   `date_mod` datetime DEFAULT NULL,
 PRIMARY KEY (`id`),
 KEY `date_mod` (`date_mod`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -168,7 +168,7 @@ CREATE TABLE `glpi_plugin_fusinvdeploy_files_mirrors` (
   `plugin_fusinvdeploy_mirrors_id` int(11) NOT NULL DEFAULT '0',
   `ranking` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE = MYISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE = MYISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -184,7 +184,7 @@ CREATE TABLE `glpi_plugin_fusinvdeploy_mirrors` (
   `date_mod` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `date_mod` (`date_mod`)
-) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -196,7 +196,7 @@ CREATE TABLE `glpi_plugin_fusinvdeploy_actions_messages` (
   `message` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `type` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT  'info, postpone',
   PRIMARY KEY (`id`)
-) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -229,7 +229,7 @@ CREATE TABLE `glpi_plugin_fusinvdeploy_groups` (
   `comment` text COLLATE utf8_unicode_ci NOT NULL,
   `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'STATIC, DYNAMIC',
   PRIMARY KEY (`id`)
-) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -241,7 +241,7 @@ CREATE TABLE `glpi_plugin_fusinvdeploy_groups_staticdatas` (
   `itemtype` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `items_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (  `id` )
-) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -252,4 +252,4 @@ CREATE TABLE `glpi_plugin_fusinvdeploy_groups_dynamicdatas` (
   `groups_id` int(11) NOT NULL DEFAULT '0',
   `fields_array` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;

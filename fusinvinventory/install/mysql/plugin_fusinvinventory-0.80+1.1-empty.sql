@@ -6,7 +6,7 @@ CREATE TABLE `glpi_plugin_fusinvinventory_criterias` (
   `comment` text COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_libserialization`;
@@ -22,7 +22,7 @@ CREATE TABLE `glpi_plugin_fusinvinventory_libserialization` (
   PRIMARY KEY (`internal_id`),
   KEY `computers_id` (`computers_id`),
   KEY `last_fusioninventory_update` (`last_fusioninventory_update`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_blacklists` (
   `value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `plugin_fusioninventory_criterium_id` (`plugin_fusioninventory_criterium_id`),
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_antivirus`;
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_antivirus` (
   KEY `version` (`version`),
   KEY `is_active` (`is_active`),
   KEY `uptodate` (`uptodate`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_computers`;
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_computers` (
   `wincompany` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `computers_id` (`computers_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 

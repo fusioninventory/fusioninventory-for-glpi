@@ -43,7 +43,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_agents` (
    KEY `device_id` (`device_id`),
    KEY `item` (`itemtype`,`items_id`),
    KEY `items_id` (`items_id`),
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -56,7 +56,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_configs` (
    `plugins_id` int(11) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
    UNIQUE KEY `unicity` (`type`, `plugins_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -70,7 +70,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_locks` (
    PRIMARY KEY (`id`),
    KEY `tablename` (`tablename`),
    KEY `items_id` (`items_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -92,7 +92,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_tasks` (
   PRIMARY KEY (`id`),
   KEY `entities_id` (`entities_id`),
   KEY `is_active` (`is_active`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -125,7 +125,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjobs` (
   KEY `users_id` (`users_id`),
   KEY `rescheduled_taskjob_id` (`rescheduled_taskjob_id`),
   KEY `method` (`method`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -141,7 +141,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjoblogs` (
   `comment` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `plugin_fusioninventory_taskjobstatus_id` (`plugin_fusioninventory_taskjobstatus_id`,`state`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -160,7 +160,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjobstatus` (
   KEY `plugin_fusioninventory_taskjobs_id` (`plugin_fusioninventory_taskjobs_id`),
   KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`,`state`),
   KEY `plugin_fusioninventory_taskjob_2` (`plugin_fusioninventory_taskjobs_id`,`state`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -174,7 +174,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_profiles` (
    `profiles_id` int(11) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
    UNIQUE KEY `unicity` (`type`, `plugins_id`, `profiles_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -194,7 +194,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_mappings` (
    KEY `table` (`table`),
    KEY `tablefield` (`tablefield`)
 --   UNIQUE KEY `unicity` (`name`, `itemtype`) -- Specified key was too long; max key length is 1000 bytes
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -224,7 +224,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unknowndevices` (
    KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`),
    KEY `is_deleted` (`is_deleted`),
    KEY `date_mod` (`date_mod`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -242,7 +242,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_agentmodules` (
    UNIQUE KEY `unicity` (`plugins_id`, `modulename`),
    KEY `is_active` (`is_active`),
    KEY `entities_id` (`entities_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
 
 
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_ipranges`;
@@ -255,7 +256,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_ipranges` (
    `ip_end` varchar(255) DEFAULT NULL,
    PRIMARY KEY (`id`),
    KEY `entities_id` (`entities_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
 
 
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_credentials`;
@@ -271,7 +273,9 @@ CREATE TABLE  `glpi_plugin_fusioninventory_credentials` (
    `date_mod` datetime DEFAULT NULL,
    `itemtype` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
    PRIMARY KEY (`id`)
-) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;
+
+
 
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_credentialips`;
 
@@ -284,7 +288,7 @@ CREATE TABLE  `glpi_plugin_fusioninventory_credentialips` (
    `ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
    `date_mod` datetime DEFAULT NULL,
    PRIMARY KEY (`id`)
-) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 ## INSERT
