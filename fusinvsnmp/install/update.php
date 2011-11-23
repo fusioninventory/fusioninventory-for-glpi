@@ -1690,35 +1690,37 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
     */
       $newTable = "glpi_plugin_fusinvsnmp_constructdevice_miboids";
 
-   // Update with mapping
-   if (FieldExists($newTable, "mapping_name")) {
-      $query = "SELECT * FROM `".$newTable."`";
-      $result=$DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
-         if (!is_numeric($data['mapping_name'])) {
-            $pFusioninventoryMapping = new PluginFusioninventoryMapping();
-            $mapping = 0;
-            if ($data['itemtype'] == 'glpi_networkequipments') {
-               $data['mapping_type'] = 'NetworkEquipment';
-            } else if ($data['itemtype'] == 'glpi_printers') {
-               $data['mapping_type'] = 'Printer';
-            } else {
-               $data['mapping_type'] = '';
-            }
-            if ($mapping = $pFusioninventoryMapping->get($data['mapping_type'], $data['mapping_name'])) {
-               $data['mapping_name'] = $mapping['id'];
-               $queryu = "UPDATE `".$newTable."`
-                  SET `mapping_name`='".$mapping['id']."'
-                  WHERE `id`='".$data['id']."'";
-               $DB->query($queryu);
+      // Update with mapping
+      if (TableExists($newTable)) {
+         if (FieldExists($newTable, "mapping_name")) {
+            $query = "SELECT * FROM `".$newTable."`";
+            $result=$DB->query($query);
+            while ($data=$DB->fetch_array($result)) {
+               if (!is_numeric($data['mapping_name'])) {
+                  $pFusioninventoryMapping = new PluginFusioninventoryMapping();
+                  $mapping = 0;
+                  if ($data['itemtype'] == 'glpi_networkequipments') {
+                     $data['mapping_type'] = 'NetworkEquipment';
+                  } else if ($data['itemtype'] == 'glpi_printers') {
+                     $data['mapping_type'] = 'Printer';
+                  } else {
+                     $data['mapping_type'] = '';
+                  }
+                  if ($mapping = $pFusioninventoryMapping->get($data['mapping_type'], $data['mapping_name'])) {
+                     $data['mapping_name'] = $mapping['id'];
+                     $queryu = "UPDATE `".$newTable."`
+                        SET `mapping_name`='".$mapping['id']."'
+                        WHERE `id`='".$data['id']."'";
+                     $DB->query($queryu);
+                  }
+               }
             }
          }
+         $migration->changeField($newTable,
+                                 "mapping_name",
+                                 "plugin_fusioninventory_mappings_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
       }
-   }
-      $migration->changeField($newTable,
-                              "mapping_name",
-                              "plugin_fusioninventory_mappings_id",
-                              "int(11) NOT NULL DEFAULT '0'");
    
    $migration->migrationOneTable($newTable);
    
