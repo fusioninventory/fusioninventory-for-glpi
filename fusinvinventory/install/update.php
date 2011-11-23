@@ -218,9 +218,9 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
                                  'plugin_fusioninventory_criterium_id', 
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable, 
-                                 'id', 
-                                 'id', 
-                                 "int(11) NOT NULL AUTO_INCREMENT");
+                                 'value', 
+                                 'value', 
+                                 "varchar(255) DEFAULT NULL");
       
       $migration->migrationOneTable($newTable);
       
@@ -231,8 +231,8 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
                                  'plugin_fusioninventory_criterium_id', 
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable, 
-                                 'id', 
-                                 "int(11) NOT NULL AUTO_INCREMENT");
+                                 'value', 
+                                 "varchar(255) DEFAULT NULL");
          $migration->addKey($newTable, 
                             "plugin_fusioninventory_criterium_id");
          
