@@ -187,7 +187,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       
       
    /*
-    *  Manage glpi_plugin_fusioninventory_agents
+    *  Table glpi_plugin_fusioninventory_agents
     */
       $newTable = "glpi_plugin_fusioninventory_agents";
       $prepare_agentConfig = array();
@@ -231,153 +231,238 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             }
          }
       } else if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `glpi_plugin_fusioninventory_agents` (
+         $query = "CREATE TABLE `".$newTable."` (
                      `id` int(11) NOT NULL AUTO_INCREMENT,
-                     `entities_id` int(11) NOT NULL DEFAULT '0',
-                     `is_recursive` tinyint(1) NOT NULL DEFAULT '1',
-                     `name` varchar(255) DEFAULT NULL,
-                     `last_contact` datetime DEFAULT NULL,
-                     `version` varchar(255) DEFAULT NULL,
-                     `lock` int(1) NOT NULL DEFAULT '0',
-                     `device_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'XML <DEVICE_ID> TAG VALUE',
-                     `items_id` int(11) NOT NULL DEFAULT '0',
-                     `itemtype` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-                     `token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-                     `useragent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-                     PRIMARY KEY (`id`),
-                     KEY `name` (`name`),
-                     KEY `device_id` (`device_id`),
-                     KEY `item` (`itemtype`,`items_id`)
+                     PRIMARY KEY (`id`)
                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
          $DB->query($query);         
       }
       $migration->renameTable("glpi_plugin_tracker_agents", $newTable);
-      $migration->changeField($newTable,
-                              "ID",
-                              "id",
-                              "int(11) NOT NULL AUTO_INCREMENT");
-      $migration->changeField($newTable,
-                              "last_agent_update",
-                              "last_contact",
-                              "datetime DEFAULT NULL");
-      $migration->changeField($newTable,
-                              "fusioninventory_agent_version",
-                              "version",
-                              "varchar(255) DEFAULT NULL");
-      $migration->changeField($newTable,
-                              "key",
-                              "device_id",
-                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->changeField($newTable,
-                              "on_device",
-                              "items_id",
-                              "int(11) NOT NULL DEFAULT '0'");
-      $migration->changeField($newTable,
-                              "device_type",
-                              "itemtype",
-                              "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
-       $migration->changeField($newTable,
-                              "lock",
-                              "lock",
-                              "tinyint(1) NOT NULL DEFAULT '0'");
-       
-      $migration->dropField($newTable, 
-                            "module_snmpquery");
-      $migration->dropField($newTable, 
-                            "module_netdiscovery");
-      $migration->dropField($newTable, 
-                            "module_inventory");
-      $migration->dropField($newTable, 
-                            "module_wakeonlan");
-      $migration->dropField($newTable, 
-                            "core_discovery");
-      $migration->dropField($newTable, 
-                            "threads_discovery");
-      $migration->dropField($newTable, 
-                            "core_query");
-      $migration->dropField($newTable, 
-                            "threads_query");
-      $migration->dropField($newTable, 
-                            "tracker_agent_version");
-      $migration->dropField($newTable, 
-                            "logs");
-      $migration->dropField($newTable, 
-                            "fragment");
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "entities_id",
+                                 "entities_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "is_recursive",
+                                 "is_recursive",
+                                 "tinyint(1) NOT NULL DEFAULT '1'");
+         $migration->changeField($newTable,
+                                 "name",
+                                 "name",
+                                 "varchar(255) DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "last_contact",
+                                 "last_contact",
+                                 "datetime DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "version",
+                                 "version",
+                                 "varchar(255) DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "lock",
+                                 "lock",
+                                 "tinyint(1) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "device_id",
+                                 "device_id",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'XML <DEVICE_ID> TAG VALUE'");
+         $migration->changeField($newTable,
+                                 "items_id",
+                                 "items_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "itemtype",
+                                 "itemtype",
+                                 "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "token",
+                                 "token",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "useragent",
+                                 "useragent",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+
       $migration->migrationOneTable($newTable);
-      $migration->addField($newTable, 
-                           "entities_id", 
-                           "int(11) NOT NULL DEFAULT '0'");
-      $migration->addField($newTable, 
-                           "is_recursive", 
-                           "tinyint(1) NOT NULL DEFAULT '1'");
-      $migration->addField($newTable, 
-                           "name", 
-                           "varchar(255) DEFAULT NULL");
-      $migration->addField($newTable, 
-                           "last_contact", 
-                           "datetime DEFAULT NULL");
-      $migration->addField($newTable, 
-                           "version", 
-                           "varchar(255) DEFAULT NULL");
-      $migration->addField($newTable, 
-                           "lock", 
-                           "tinyint(1) NOT NULL DEFAULT '0'");
-      $migration->addField($newTable, 
-                           "device_id", 
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->addField($newTable, 
-                           "items_id", 
-                           "int(11) NOT NULL DEFAULT '0'");
-      $migration->addField($newTable, 
-                           "itemtype", 
-                           "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->addField($newTable, 
-                           "token", 
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->addField($newTable, 
-                           "useragent", 
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->dropKey($newTable, 
-                          "key");
-      $migration->addKey($newTable,
-                         "device_id");
-      $migration->addKey($newTable,
-                         array("itemtype", "items_id"),
-                         "item");
-      $migration->addKey($newTable,
-                         "items_id");
+      
+         $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "last_agent_update",
+                                 "last_contact",
+                                 "datetime DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "fusioninventory_agent_version",
+                                 "version",
+                                 "varchar(255) DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "key",
+                                 "device_id",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "on_device",
+                                 "items_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "device_type",
+                                 "itemtype",
+                                 "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "lock",
+                                 "lock",
+                                 "tinyint(1) NOT NULL DEFAULT '0'");
+         $migration->dropField($newTable, 
+                               "module_snmpquery");
+         $migration->dropField($newTable, 
+                               "module_netdiscovery");
+         $migration->dropField($newTable, 
+                               "module_inventory");
+         $migration->dropField($newTable, 
+                               "module_wakeonlan");
+         $migration->dropField($newTable, 
+                               "core_discovery");
+         $migration->dropField($newTable, 
+                               "threads_discovery");
+         $migration->dropField($newTable, 
+                               "core_query");
+         $migration->dropField($newTable, 
+                               "threads_query");
+         $migration->dropField($newTable, 
+                               "tracker_agent_version");
+         $migration->dropField($newTable, 
+                               "logs");
+         $migration->dropField($newTable, 
+                               "fragment");
+         $migration->dropKey($newTable, 
+                             "key");
+         
+      $migration->migrationOneTable($newTable);
+      
+         $migration->addField($newTable, 
+                              "entities_id", 
+                              "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable, 
+                              "is_recursive", 
+                              "tinyint(1) NOT NULL DEFAULT '1'");
+         $migration->addField($newTable, 
+                              "name", 
+                              "varchar(255) DEFAULT NULL");
+         $migration->addField($newTable, 
+                              "last_contact", 
+                              "datetime DEFAULT NULL");
+         $migration->addField($newTable, 
+                              "version", 
+                              "varchar(255) DEFAULT NULL");
+         $migration->addField($newTable, 
+                              "lock", 
+                              "tinyint(1) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable, 
+                              "device_id", 
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable, 
+                              "items_id", 
+                              "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable, 
+                              "itemtype", 
+                              "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable, 
+                              "token", 
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable, 
+                              "useragent", 
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addKey($newTable,
+                            "name");
+         $migration->addKey($newTable,
+                            "device_id");
+         $migration->addKey($newTable,
+                            array("itemtype", "items_id"),
+                            "item");
+         $migration->addKey($newTable,
+                            "items_id");
+
       
       
    /*
-    * table glpi_plugin_fusioninventory_agentmodules
+    * Table glpi_plugin_fusioninventory_agentmodules
     */
       $newTable = "glpi_plugin_fusioninventory_agentmodules";
       if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `glpi_plugin_fusioninventory_agentmodules` (
+         $query = "CREATE TABLE `".$newTable."` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
-                        `plugins_id` int(11) NOT NULL DEFAULT '0',
-                        `modulename` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-                        `is_active` int(1) NOT NULL DEFAULT '0',
-                        `exceptions` text DEFAULT NULL COMMENT 'array(agent_id)',
-                        `entities_id` int(11) NOT NULL DEFAULT '-1',
-                        `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-                        PRIMARY KEY (`id`),
-                        UNIQUE KEY `unicity` (`plugins_id`, `modulename`),
-                        KEY `is_active` (`is_active`),
-                        KEY `entities_id` (`entities_id`)
+                        PRIMARY KEY (`id`)
                      ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
          $DB->query($query);
-      } else {
-         $migration->changeField($newTable, 'id', 'id', "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable, 'plugins_id', 'plugins_id', "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable, 'modulename', 'modulename', "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable, 'is_active', 'is_active', "int(1) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable, 'exceptions', 'exceptions', "text COMMENT 'array(agent_id)'");
-         $migration->changeField($newTable, 'entities_id', 'entities_id', "int(11) NOT NULL DEFAULT '-1'");
-         $migration->changeField($newTable, 'url', 'url', "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
-         $migration->addField($newTable, 'url', "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
       }
+         $migration->changeField($newTable, 
+                                 'id', 
+                                 'id', 
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable, 
+                                 'plugins_id', 
+                                 'plugins_id', 
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable, 
+                                 'modulename', 
+                                 'modulename', 
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable, 
+                                 'is_active', 
+                                 'is_active', 
+                                 "int(1) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable, 
+                                 'exceptions', 
+                                 'exceptions', 
+                                 "text COMMENT 'array(agent_id)'");
+         $migration->changeField($newTable, 
+                                 'entities_id', 
+                                 'entities_id', 
+                                 "int(11) NOT NULL DEFAULT '-1'");
+         $migration->changeField($newTable, 
+                                 'url', 
+                                 'url', 
+                                 "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+         
       $migration->migrationOneTable($newTable);
+      
+         $migration->addField($newTable, 
+                              'id', 
+                              "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable, 
+                              'plugins_id', 
+                              "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable, 
+                              'modulename', 
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable, 
+                              'is_active', 
+                              "int(1) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable, 
+                              'exceptions', 
+                              "text COMMENT 'array(agent_id)'");
+         $migration->addField($newTable, 
+                              'entities_id', 
+                              "int(11) NOT NULL DEFAULT '-1'");
+         $migration->addField($newTable, 
+                              'url', 
+                              "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+         $migration->addKey($newTable,
+                            array("plugins_id", "modulename"),
+                            "unicity",
+                            "UNIQUE");
+         $migration->addKey($newTable,
+                            "is_active");
+         $migration->addKey($newTable,
+                            "entities_id");
+   
+      $migration->migrationOneTable($newTable);
+      
       
       
    /*
@@ -416,22 +501,54 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          }         
       }
       if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `glpi_plugin_fusioninventory_configs` (
+         $query = "CREATE TABLE `".$newTable."` (
                      `id` int(1) NOT NULL AUTO_INCREMENT,
-                     `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-                     `value` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-                     `plugins_id` int(11) NOT NULL DEFAULT '0',
-                     PRIMARY KEY (`id`),
-                     UNIQUE KEY `unicity` (`type`, `plugins_id`)
+                     PRIMARY KEY (`id`)
                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
          $DB->query($query);
       }
+         $migration->changeField($newTable, 
+                                 'id', 
+                                 'id', 
+                                 "int(1) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable, 
+                                 'type', 
+                                 'type', 
+                                 "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+         $migration->changeField($newTable, 
+                                 'value', 
+                                 'value', 
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable, 
+                                 'plugins_id', 
+                                 'plugins_id', 
+                                 "int(11) NOT NULL DEFAULT '0'");
+         
+      $migration->migrationOneTable($newTable);
+      
+         $migration->addField($newTable, 
+                                 'id', 
+                                 "int(1) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable, 
+                                 'type', 
+                                 "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+         $migration->addField($newTable, 
+                                 'value', 
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable, 
+                                 'plugins_id', 
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addKey($newTable,
+                            array("type", "plugins_id"),
+                            "unicity",
+                            "UNIQUE");
       
 
    
    /*
     * Table glpi_plugin_fusioninventory_ipranges
     */
+      $newTable = "glpi_plugin_fusioninventory_ipranges";
       if (TableExists("glpi_plugin_tracker_rangeip")) {
          // Get all data to create task
          $query = "SELECT * FROM `glpi_plugin_tracker_rangeip`";
@@ -468,77 +585,90 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                        "snmpquery" => "1");
             }
          }         
-      }
-      $newTable = "glpi_plugin_fusioninventory_ipranges";
+      }    
       $migration->renameTable("glpi_plugin_tracker_rangeip", 
                               $newTable);
       $migration->renameTable("glpi_plugin_fusinvsnmp_ipranges", 
-                              $newTable);
-      $migration->changeField($newTable,
-                              "id",
-                              "id",
-                              "int(11) NOT NULL AUTO_INCREMENT");
-      $migration->changeField($newTable,
-                              "name",
-                              "name",
-                              "varchar(255) DEFAULT NULL");
-      $migration->changeField($newTable,
-                              "entities_id",
-                              "entities_id",
-                              "int(11) NOT NULL DEFAULT '0'");
-      $migration->changeField($newTable,
-                              "ip_start",
-                              "ip_start",
-                              "varchar(255) DEFAULT NULL");
-      
-      $migration->changeField($newTable,
-                              "ip_end",
-                              "ip_end",
-                              "varchar(255) DEFAULT NULL");
+                              $newTable);      
+      if (!TableExists($newTable)) {
+         $query = "CREATE TABLE `".$newTable."` (
+                     `id` int(1) NOT NULL AUTO_INCREMENT,
+                     PRIMARY KEY (`id`)
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+         $DB->query($query);
+      }      
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "name",
+                                 "name",
+                                 "varchar(255) DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "entities_id",
+                                 "entities_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "ip_start",
+                                 "ip_start",
+                                 "varchar(255) DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "ip_end",
+                                 "ip_end",
+                                 "varchar(255) DEFAULT NULL");
       
       $migration->migrationOneTable($newTable);
       
-      $migration->changeField($newTable,
-                              "ID",
-                              "id",
-                              "int(11) NOT NULL AUTO_INCREMENT");
-      $migration->changeField($newTable,
-                              "ifaddr_start",
-                              "ip_start",
-                              "varchar(255) DEFAULT NULL");
-      $migration->changeField($newTable,
-                              "ifaddr_end",
-                              "ip_end",
-                              "varchar(255) DEFAULT NULL");
-      $migration->changeField($newTable,
-                              "FK_entities",
-                              "entities_id",
-                              "int(11) NOT NULL DEFAULT '0'");
-      $migration->dropField($newTable,
-                            "FK_tracker_agents");
-      $migration->dropField($newTable,
-                            "discover");
-      $migration->dropField($newTable,
-                            "query");
-      $migration->dropField($newTable,
-                            "FK_fusioninventory_agents_discover");
-      $migration->dropField($newTable,
-                            "FK_fusioninventory_agents_query");
-      $migration->dropKey($newTable, "FK_tracker_agents");
-      $migration->dropKey($newTable, "FK_tracker_agents_2");
+         $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "ifaddr_start",
+                                 "ip_start",
+                                 "varchar(255) DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "ifaddr_end",
+                                 "ip_end",
+                                 "varchar(255) DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "FK_entities",
+                                 "entities_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->dropField($newTable,
+                               "FK_tracker_agents");
+         $migration->dropField($newTable,
+                               "discover");
+         $migration->dropField($newTable,
+                               "query");
+         $migration->dropField($newTable,
+                               "FK_fusioninventory_agents_discover");
+         $migration->dropField($newTable,
+                               "FK_fusioninventory_agents_query");
+         $migration->dropKey($newTable, "FK_tracker_agents");
+         $migration->dropKey($newTable, "FK_tracker_agents_2");
+         
+      $migration->migrationOneTable($newTable);
    
-      if (!TableExists($newTable)) {
-        $DB->query("CREATE TABLE `glpi_plugin_fusioninventory_ipranges` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `name` varchar(255) DEFAULT NULL,
-   `entities_id` int(11) NOT NULL DEFAULT '0',
-   `ip_start` varchar(255) DEFAULT NULL,
-   `ip_end` varchar(255) DEFAULT NULL,
-   PRIMARY KEY (`id`),
-   KEY `entities_id` (`entities_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
-      }
-      
+         $migration->addField($newTable,
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable,
+                                 "name",
+                                 "varchar(255) DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "entities_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "ip_start",
+                                 "varchar(255) DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "ip_end",
+                                 "varchar(255) DEFAULT NULL");      
+         $migration->addKey($newTable,
+                            "entities_id");
+         
       
       
    /*
@@ -554,91 +684,162 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
          $DB->query($query);
       }
-      $migration->changeField($newTable, 'id', 'id', "int(11) NOT NULL AUTO_INCREMENT");
-      $migration->changeField($newTable, 'name', 'name', 'varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL');
-      $migration->changeField($newTable, 'date_mod', 'date_mod', 'datetime DEFAULT NULL');
-      $migration->changeField($newTable, 'is_deleted', 'is_deleted', "tinyint(1) NOT NULL DEFAULT '0'");
-      $migration->changeField($newTable, 'serial', 'serial', "varchar(255) DEFAULT NULL");
-      $migration->changeField($newTable, 'otherserial', 'otherserial', "varchar(255) DEFAULT NULL");
-      $migration->changeField($newTable, 'contact', 'contact', "varchar(255) DEFAULT NULL");
-      $migration->changeField($newTable, 'domain', 'domain', "int(11) NOT NULL DEFAULT '0'");
-      $migration->changeField($newTable, 'comment', 'comment', "text DEFAULT NULL");
-      $migration->changeField($newTable, 'item_type', 'item_type', "varchar(255) DEFAULT NULL");
-      $migration->changeField($newTable, 'accepted', 'accepted', "tinyint(1) NOT NULL DEFAULT '0'");
-      $migration->changeField($newTable, 'plugin_fusioninventory_agents_id', 'plugin_fusioninventory_agents_id', "int(11) NOT NULL DEFAULT '0'");
-      $migration->changeField($newTable, 'ip', 'ip', "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->changeField($newTable, 'mac', 'mac', "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->changeField($newTable, 'hub', 'hub', "tinyint(1) NOT NULL DEFAULT '0'");
-      $migration->changeField($newTable, 'states_id', 'states_id', "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable, 
+                                 'id', 
+                                 'id', 
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable, 
+                                 'name', 
+                                 'name', 
+                                 'varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL');
+         $migration->changeField($newTable, 
+                                 'date_mod', 
+                                 'date_mod', 
+                                 'datetime DEFAULT NULL');
+         $migration->changeField($newTable, 
+                                 'entities_id', 
+                                 'entities_id', 
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable, 
+                                 'locations_id', 
+                                 'locations_id', 
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable, 
+                                 'is_deleted', 
+                                 'is_deleted', 
+                                 "tinyint(1) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable, 
+                                 'serial', 
+                                 'serial', 
+                                 "varchar(255) DEFAULT NULL");
+         $migration->changeField($newTable, 
+                                 'otherserial', 
+                                 'otherserial', 
+                                 "varchar(255) DEFAULT NULL");
+         $migration->changeField($newTable, 
+                                 'contact', 
+                                 'contact', 
+                                 "varchar(255) DEFAULT NULL");
+         $migration->changeField($newTable, 
+                                 'domain', 
+                                 'domain', 
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable, 
+                                 'comment', 
+                                 'comment', 
+                                 "text DEFAULT NULL");
+         $migration->changeField($newTable, 
+                                 'item_type', 
+                                 'item_type', 
+                                 "varchar(255) DEFAULT NULL");
+         $migration->changeField($newTable, 
+                                 'accepted', 
+                                 'accepted', 
+                                 "tinyint(1) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable, 
+                                 'plugin_fusioninventory_agents_id', 
+                                 'plugin_fusioninventory_agents_id', 
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable, 
+                                 'ip', 
+                                 'ip', 
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable, 
+                                 'mac', 
+                                 'mac', 
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable, 
+                                 'hub', 
+                                 'hub', 
+                                 "tinyint(1) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable, 
+                                 'states_id', 
+                                 'states_id', 
+                                 "int(11) NOT NULL DEFAULT '0'");
 
       $migration->migrationOneTable($newTable);
       
-      $migration->changeField($newTable, 'ID', 'id', "int(11) NOT NULL AUTO_INCREMENT");
-      $migration->changeField($newTable, 'FK_entities', 'entities_id', "int(11) NOT NULL DEFAULT '0'");
-      $migration->changeField($newTable, 'location', 'locations_id', "int(11) NOT NULL DEFAULT '0'");
-      $migration->changeField($newTable, 'deleted', 'is_deleted', "tinyint(1) NOT NULL DEFAULT '0'");
-      $migration->changeField($newTable, 'entities_id', 'entities_id', "int(11) NOT NULL DEFAULT '0'");
-      $migration->changeField($newTable, 'locations_id', 'locations_id', "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable, 
+                                 'ID', 
+                                 'id', 
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable, 
+                                 'FK_entities', 
+                                 'entities_id', 
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable, 
+                                 'location', 
+                                 'locations_id', 
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable, 
+                                 'deleted', 
+                                 'is_deleted', 
+                                 "tinyint(1) NOT NULL DEFAULT '0'");
+      
       $migration->migrationOneTable($newTable);
-      $migration->addField($newTable, 
-                           "name", 
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->addField($newTable, 
-                           "date_mod", 
-                           "datetime DEFAULT NULL");     
-      $migration->addField($newTable, 
-                           "entities_id", 
-                           "int(11) NOT NULL DEFAULT '0'"); 
-      $migration->addField($newTable, 
-                           "locations_id", 
-                           "int(11) NOT NULL DEFAULT '0'");
-      $migration->addField($newTable, 
-                           "is_deleted", 
-                           "tinyint(1) NOT NULL DEFAULT '0'");
-      $migration->addField($newTable, 
-                           "serial", 
-                           "varchar(255) DEFAULT NULL");   
-      $migration->addField($newTable, 
-                           "otherserial", 
-                           "varchar(255) DEFAULT NULL");
-      $migration->addField($newTable, 
-                           "contact", 
-                           "varchar(255) DEFAULT NULL");
-      $migration->addField($newTable, 
-                           "domain", 
-                           "int(11) NOT NULL DEFAULT '0'");
-      $migration->addField($newTable, 
-                           "comment", 
-                           "text DEFAULT NULL");
-      $migration->addField($newTable, 
-                           "item_type", 
-                           "varchar(255) DEFAULT NULL");
-      $migration->addField($newTable, 
-                           "accepted", 
-                           "tinyint(1) NOT NULL DEFAULT '0'");
-      $migration->addField($newTable, 
-                           "plugin_fusioninventory_agents_id", 
-                           "int(11) NOT NULL DEFAULT '0'");
-      $migration->addField($newTable, 
-                           "ip", 
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->addField($newTable, 
-                           "mac", 
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->addField($newTable, 
-                           "hub", 
-                           "tinyint(1) NOT NULL DEFAULT '0'");
-      $migration->addField($newTable, 
-                           "states_id", 
-                           "int(11) NOT NULL DEFAULT '0'");
-      $migration->addKey($newTable,
-                         "entities_id");
-      $migration->addKey($newTable,
-                         "plugin_fusioninventory_agents_id");
-      $migration->addKey($newTable,
-                         "is_deleted");
-      $migration->addKey($newTable,
-                         "date_mod");
+      
+         $migration->addField($newTable, 
+                                 'id', 
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable, 
+                                 'name', 
+                                 'varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL');
+         $migration->addField($newTable, 
+                                 'date_mod', 
+                                 'datetime DEFAULT NULL');
+         $migration->addField($newTable, 
+                                 'entities_id', 
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable, 
+                                 'locations_id', 
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable, 
+                                 'is_deleted', 
+                                 "tinyint(1) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable, 
+                                 'serial', 
+                                 "varchar(255) DEFAULT NULL");
+         $migration->addField($newTable, 
+                                 'otherserial', 
+                                 "varchar(255) DEFAULT NULL");
+         $migration->addField($newTable, 
+                                 'contact', 
+                                 "varchar(255) DEFAULT NULL");
+         $migration->addField($newTable, 
+                                 'domain', 
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable, 
+                                 'comment', 
+                                 "text DEFAULT NULL");
+         $migration->addField($newTable, 
+                                 'item_type', 
+                                 "varchar(255) DEFAULT NULL");
+         $migration->addField($newTable, 
+                                 'accepted', 
+                                 "tinyint(1) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable, 
+                                 'plugin_fusioninventory_agents_id', 
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable, 
+                                 'ip', 
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable, 
+                                 'mac', 
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable, 
+                                 'hub', 
+                                 "tinyint(1) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable, 
+                                 'states_id', 
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addKey($newTable,
+                            "entities_id");
+         $migration->addKey($newTable,
+                            "plugin_fusioninventory_agents_id");
+         $migration->addKey($newTable,
+                            "is_deleted");
+         $migration->addKey($newTable,
+                            "date_mod");
       
       
    
@@ -647,25 +848,79 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     */
       $newTable = "glpi_plugin_fusioninventory_credentials";
       if (!TableExists($newTable)) {
-         $query = "CREATE TABLE  `glpi_plugin_fusioninventory_credentials` (
-                     `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
-                     `entities_id` int(11) NOT NULL DEFAULT '0',
-                     `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
-                     `name` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
-                     `username` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
-                     `password` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
-                     `comment` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ,
-                     `date_mod` DATETIME DEFAULT NULL,
-                     `itemtype` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
-                     PRIMARY KEY (  `id` )
-                     ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
+         $query = "CREATE TABLE `".$newTable."` (
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                      PRIMARY KEY (`id`)
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
          $DB->query($query);
       }
-      $migration->changeField($newTable,
-                              "date_mod",
-                              "date_mod",
-                              "DATETIME DEFAULT NULL");
-      
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "entities_id",
+                                 "entities_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "is_recursive",
+                                 "is_recursive",
+                                 "tinyint(1) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "name",
+                                 "name",
+                                 "varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+         $migration->changeField($newTable,
+                                 "username",
+                                 "username",
+                                 "varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+         $migration->changeField($newTable,
+                                 "password",
+                                 "password",
+                                 "varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+         $migration->changeField($newTable,
+                                 "comment",
+                                 "comment",
+                                 "text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "date_mod",
+                                 "date_mod",
+                                 "datetime DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "itemtype",
+                                 "itemtype",
+                                 "varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+         
+      $migration->migrationOneTable($newTable);
+         
+         $migration->addField($newTable,
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable,
+                                 "entities_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "is_recursive",
+                                 "tinyint(1) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "name",
+                                 "varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+         $migration->addField($newTable,
+                                 "username",
+                                 "varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+         $migration->addField($newTable,
+                                 "password",
+                                 "varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+         $migration->addField($newTable,
+                                 "comment",
+                                 "text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "date_mod",
+                                 "datetime DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "itemtype",
+                                 "varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+         
       
 
    /*
@@ -673,22 +928,66 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     */
       $newTable = "glpi_plugin_fusioninventory_credentialips";
       if (!TableExists($newTable)) {
-         $query = "CREATE TABLE  `glpi_plugin_fusioninventory_credentialips` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT ,
-                     `entities_id` int(11) NOT NULL DEFAULT '0',
-                     `plugin_fusioninventory_credentials_id` int(11) NOT NULL DEFAULT  '0',
-                     `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
-                     `comment` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ,
-                     `ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
-                     `date_mod` datetime DEFAULT NULL ,
-                     PRIMARY KEY (  `id` )
-                     ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci";
+         $query = "CREATE TABLE `".$newTable."` (
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                      PRIMARY KEY (`id`)
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
          $DB->query($query);
       }
-      $migration->changeField($newTable,
-                              "date_mod",
-                              "date_mod",
-                              "DATETIME DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "entities_id",
+                                 "entities_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "plugin_fusioninventory_credentials_id",
+                                 "plugin_fusioninventory_credentials_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "name",
+                                 "name",
+                                 "varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+         $migration->changeField($newTable,
+                                 "comment",
+                                 "comment",
+                                 "text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "ip",
+                                 "ip",
+                                 "varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+         $migration->changeField($newTable,
+                                 "date_mod",
+                                 "date_mod",
+                                 "datetime DEFAULT NULL");
+  
+      $migration->migrationOneTable($newTable);
+
+         $migration->addField($newTable,
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable,
+                                 "entities_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "plugin_fusioninventory_credentials_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "name",
+                                 "varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+         $migration->addField($newTable,
+                                 "comment",
+                                 "text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "ip",
+                                 "varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+         $migration->addField($newTable,
+                                 "date_mod",
+                                 "datetime DEFAULT NULL");
+      
+      
       
   
    /*
@@ -696,46 +995,153 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     */
       $newTable = "glpi_plugin_fusioninventory_locks";
       if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `glpi_plugin_fusioninventory_locks` (
+         $query = "CREATE TABLE `".$newTable."` (
                      `id` int(11) NOT NULL AUTO_INCREMENT,
-                     `tablename` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-                     `items_id` int(11) NOT NULL DEFAULT '0',
-                     `tablefields` text DEFAULT NULL,
-                     PRIMARY KEY (`id`),
-                     KEY `tablename` (`tablename`),
-                     KEY `items_id` (`items_id`)
+                      PRIMARY KEY (`id`)
                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
          $DB->query($query);
-      } else {
-         $migration->changeField($newTable, 'items_id', 'items_id', "int(11) NOT NULL DEFAULT '0'");
       }
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "tablename",
+                                 "tablename",
+                                 "varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+         $migration->changeField($newTable,
+                                 "items_id",
+                                 "items_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "tablefields",
+                                 "tablefields",
+                                 "text DEFAULT NULL");
+         
+      $migration->migrationOneTable($newTable);
       
-      
+         $migration->addField($newTable,
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable,
+                                 "tablename",
+                                 "varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+         $migration->addField($newTable,
+                                 "items_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "tablefields",
+                                 "text DEFAULT NULL");
+         $migration->addKey($newTable,
+                            "tablename");
+         $migration->addKey($newTable,
+                            "items_id");
+         
+         
       
    /*
     * Table glpi_plugin_fusioninventory_tasks
     */
       $newTable = "glpi_plugin_fusioninventory_tasks";
       if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `glpi_plugin_fusioninventory_tasks` (
-                    `id` int(11) NOT NULL AUTO_INCREMENT,
-                    `entities_id` int(11) NOT NULL DEFAULT '-1',
-                    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-                    `date_creation` datetime DEFAULT NULL,
-                    `comment` text DEFAULT NULL COLLATE utf8_unicode_ci,
-                    `is_active` int(1) NOT NULL DEFAULT '0',
-                    `communication` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'push',
-                    `permanent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-                    `date_scheduled` datetime DEFAULT NULL,
-                    `periodicity_count` int(6) NOT NULL DEFAULT '0',
-                    `periodicity_type` varchar(255) DEFAULT NULL,
-                    `execution_id` int(20) NOT NULL DEFAULT '0',
-                    PRIMARY KEY (`id`),
-                    KEY `entities_id` ( `entities_id` ),
-                    KEY `is_active` ( `is_active` )
+         $query = "CREATE TABLE `".$newTable."` (
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                      PRIMARY KEY (`id`)
                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
          $DB->query($query);
       }
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "entities_id",
+                                 "entities_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "name",
+                                 "name",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "date_creation",
+                                 "date_creation",
+                                 "datetime DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "comment",
+                                 "comment",
+                                 "text DEFAULT NULL COLLATE utf8_unicode_ci");
+         $migration->changeField($newTable,
+                                 "is_active",
+                                 "is_active",
+                                 "tinyint(1) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "communication",
+                                 "communication",
+                                 "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'push'");
+         $migration->changeField($newTable,
+                                 "permanent",
+                                 "permanent",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "date_scheduled",
+                                 "date_scheduled",
+                                 "datetime DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "periodicity_count",
+                                 "periodicity_count",
+                                 "int(6) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "periodicity_type",
+                                 "periodicity_type",
+                                 "varchar(255) DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "execution_id",
+                                 "execution_id",
+                                 "bigint(20) NOT NULL DEFAULT '0'");
+         
+      $migration->migrationOneTable($newTable);
+
+         $migration->addField($newTable,
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable,
+                                 "entities_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "name",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "date_creation",
+                                 "datetime DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "comment",
+                                 "text DEFAULT NULL COLLATE utf8_unicode_ci");
+         $migration->addField($newTable,
+                                 "is_active",
+                                 "tinyint(1) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "communication",
+                                 "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'push'");
+         $migration->addField($newTable,
+                                 "permanent",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "date_scheduled",
+                                 "datetime DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "periodicity_count",
+                                 "int(6) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "periodicity_type",
+                                 "varchar(255) DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "execution_id",
+                                 "bigint(20) NOT NULL DEFAULT '0'");
+         $migration->addKey($newTable,
+                            "entities_id");
+         $migration->addKey($newTable,
+                            "is_active");
+      
       
       
       
@@ -744,36 +1150,160 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     */
       $newTable = "glpi_plugin_fusioninventory_taskjobs";
       if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `glpi_plugin_fusioninventory_taskjobs` (
-                    `id` int(11) NOT NULL AUTO_INCREMENT,
-                    `plugin_fusioninventory_tasks_id` int(11) NOT NULL DEFAULT '0',
-                    `entities_id` int(11) NOT NULL DEFAULT '-1',
-                    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-                    `date_creation` datetime DEFAULT NULL,
-                    `retry_nb` int(2) NOT NULL DEFAULT '0',
-                    `retry_time` int(11) NOT NULL DEFAULT '0',
-                    `plugins_id` int(11) NOT NULL DEFAULT '0',
-                    `method` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-                    `definition` text DEFAULT NULL COLLATE utf8_unicode_ci,
-                    `action` text DEFAULT NULL COLLATE utf8_unicode_ci,
-                    `comment` text DEFAULT NULL COLLATE utf8_unicode_ci,
-                    `users_id` int(11) NOT NULL DEFAULT '0',
-                    `status` int(11) NOT NULL DEFAULT '0',
-                    `rescheduled_taskjob_id` int(11) NOT NULL DEFAULT '0',
-                    `statuscomments` text DEFAULT NULL COLLATE utf8_unicode_ci,
-                    `periodicity_count` int(6) NOT NULL DEFAULT '0',
-                    `periodicity_type` varchar(255) DEFAULT NULL,
-                    `execution_id` int(20) NOT NULL DEFAULT '0',
-                    PRIMARY KEY (`id`),
-                    KEY `plugin_fusioninventory_tasks_id` (`plugin_fusioninventory_tasks_id`),
-                    KEY `entities_id` (`entities_id`),
-                    KEY `plugins_id` (`plugins_id`),
-                    KEY `users_id` (`users_id`),
-                    KEY `rescheduled_taskjob_id` (`rescheduled_taskjob_id`),
-                    KEY `method` (`method`)
+         $query = "CREATE TABLE `".$newTable."` (
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                      PRIMARY KEY (`id`)
                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
          $DB->query($query);
       }
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "plugin_fusioninventory_tasks_id",
+                                 "plugin_fusioninventory_tasks_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "entities_id",
+                                 "entities_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "name",
+                                 "name",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "date_creation",
+                                 "date_creation",
+                                 "datetime DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "retry_nb",
+                                 "retry_nb",
+                                 "tinyint(2) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "retry_time",
+                                 "retry_time",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "plugins_id",
+                                 "plugins_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "method",
+                                 "method",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "definition",
+                                 "definition",
+                                 "text DEFAULT NULL COLLATE utf8_unicode_ci");
+         $migration->changeField($newTable,
+                                 "action",
+                                 "action",
+                                 "text DEFAULT NULL COLLATE utf8_unicode_ci");
+         $migration->changeField($newTable,
+                                 "comment",
+                                 "comment",
+                                 "text DEFAULT NULL COLLATE utf8_unicode_ci");
+         $migration->changeField($newTable,
+                                 "users_id",
+                                 "users_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "status",
+                                 "status",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "rescheduled_taskjob_id",
+                                 "rescheduled_taskjob_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "statuscomments",
+                                 "statuscomments",
+                                 "text DEFAULT NULL COLLATE utf8_unicode_ci");
+         $migration->changeField($newTable,
+                                 "periodicity_count",
+                                 "periodicity_count",
+                                 "int(6) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "periodicity_type",
+                                 "periodicity_type",
+                                 "varchar(255) DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "execution_id",
+                                 "execution_id",
+                                 "bigint(20) NOT NULL DEFAULT '0'");
+
+      $migration->migrationOneTable($newTable);
+      
+         $migration->addField($newTable,
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable,
+                                 "plugin_fusioninventory_tasks_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "entities_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "name",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "date_creation",
+                                 "datetime DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "retry_nb",
+                                 "tinyint(2) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "retry_time",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "plugins_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "method",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "definition",
+                                 "text DEFAULT NULL COLLATE utf8_unicode_ci");
+         $migration->addField($newTable,
+                                 "action",
+                                 "text DEFAULT NULL COLLATE utf8_unicode_ci");
+         $migration->addField($newTable,
+                                 "comment",
+                                 "text DEFAULT NULL COLLATE utf8_unicode_ci");
+         $migration->addField($newTable,
+                                 "users_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "status",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "rescheduled_taskjob_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "statuscomments",
+                                 "text DEFAULT NULL COLLATE utf8_unicode_ci");
+         $migration->addField($newTable,
+                                 "periodicity_count",
+                                 "int(6) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "periodicity_type",
+                                 "varchar(255) DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "execution_id",
+                                 "bigint(20) NOT NULL DEFAULT '0'");
+         $migration->addKey($newTable,
+                            "plugin_fusioninventory_tasks_id");
+         $migration->addKey($newTable,
+                            "entities_id");
+         $migration->addKey($newTable,
+                            "plugins_id");
+         $migration->addKey($newTable,
+                            "users_id");
+         $migration->addKey($newTable,
+                            "rescheduled_taskjob_id");
+         $migration->addKey($newTable,
+                            "method");
       
       
 
@@ -782,169 +1312,244 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     */
       $newTable = "glpi_plugin_fusioninventory_taskjoblogs";
       if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `glpi_plugin_fusioninventory_taskjoblogs` (
-                    `id` bigint(20) NOT NULL AUTO_INCREMENT,
-                    `plugin_fusioninventory_taskjobstatus_id` int(11) NOT NULL DEFAULT '0',
-                    `date` datetime DEFAULT NULL,
-                    `items_id` int(11) NOT NULL DEFAULT '0',
-                    `itemtype` varchar(100) DEFAULT NULL,
-                    `state` int(11) NOT NULL DEFAULT '0',
-                    `comment` text DEFAULT NULL,
-                    PRIMARY KEY (`id`),
-                    KEY `plugin_fusioninventory_taskjobstatus_id` (`plugin_fusioninventory_taskjobstatus_id`,`state`)
+         $query = "CREATE TABLE `".$newTable."` (
+                     `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                      PRIMARY KEY (`id`)
                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
          $DB->query($query);
       }
-      $migration->changeField($newTable,
-                              "id",
-                              "id",
-                              "bigint(20) NOT NULL AUTO_INCREMENT");
-      $migration->changeField($newTable,
-                              "plugin_fusioninventory_taskjobstatus_id",
-                              "plugin_fusioninventory_taskjobstatus_id",
-                              "int(11) NOT NULL DEFAULT '0'");
-      $migration->changeField($newTable,
-                              "date",
-                              "date",
-                              "datetime DEFAULT NULL");
-      $migration->changeField($newTable,
-                              "items_id",
-                              "items_id",
-                              "int(11) NOT NULL DEFAULT '0'");
-      $migration->changeField($newTable,
-                              "itemtype",
-                              "itemtype",
-                              "varchar(100) DEFAULT NULL");
-      $migration->changeField($newTable,
-                              "state",
-                              "state",
-                              "int(11) NOT NULL DEFAULT '0'");
-      $migration->changeField($newTable,
-                              "comment",
-                              "comment",
-                              "text DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "bigint(20) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "plugin_fusioninventory_taskjobstatus_id",
+                                 "plugin_fusioninventory_taskjobstatus_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "date",
+                                 "date",
+                                 "datetime DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "items_id",
+                                 "items_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "itemtype",
+                                 "itemtype",
+                                 "varchar(100) DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "state",
+                                 "state",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "comment",
+                                 "comment",
+                                 "text DEFAULT NULL");
+
+      $migration->migrationOneTable($newTable);
       
+         $migration->addField($newTable,
+                                 "id",
+                                 "bigint(20) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable,
+                                 "plugin_fusioninventory_taskjobstatus_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "date",
+                                 "datetime DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "items_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "itemtype",
+                                 "varchar(100) DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "state",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "comment",
+                                 "text DEFAULT NULL");
+         $migration->addKey($newTable,
+                            array("plugin_fusioninventory_taskjobstatus_id", "state"),
+                            "plugin_fusioninventory_taskjobstatus_id");
       
+         
       
    /*
     * Table glpi_plugin_fusioninventory_taskjobstatus
     */
       $newTable = "glpi_plugin_fusioninventory_taskjobstatus";
       if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `glpi_plugin_fusioninventory_taskjobstatus` (
-                    `id` bigint(20) NOT NULL AUTO_INCREMENT,
-                    `plugin_fusioninventory_taskjobs_id` int(11) NOT NULL DEFAULT '0',
-                    `items_id` int(11) NOT NULL DEFAULT '0',
-                    `itemtype` varchar(100) DEFAULT NULL,
-                    `state` int(11) NOT NULL DEFAULT '0',
-                    `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
-                    `specificity` varchar(255) DEFAULT NULL,
-                    `uniqid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-                    PRIMARY KEY (`id`),
-                    KEY `plugin_fusioninventory_taskjobs_id` (`plugin_fusioninventory_taskjobs_id`),
-                    KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`,`state`),
-                    KEY `plugin_fusioninventory_taskjob_2` (`plugin_fusioninventory_taskjobs_id`,`state`)
+         $query = "CREATE TABLE `".$newTable."` (
+                     `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                      PRIMARY KEY (`id`)
                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
          $DB->query($query);
       }
-      $migration->changeField($newTable,
-                              "id",
-                              "id",
-                              "bigint(20) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "bigint(20) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "plugin_fusioninventory_taskjobs_id",
+                                 "plugin_fusioninventory_taskjobs_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "items_id",
+                                 "items_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "itemtype",
+                                 "itemtype",
+                                 "varchar(100) DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "state",
+                                 "state",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "plugin_fusioninventory_agents_id",
+                                 "plugin_fusioninventory_agents_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "specificity",
+                                 "specificity",
+                                 "varchar(255) DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "uniqid",
+                                 "uniqid",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+
+      $migration->migrationOneTable($newTable);
       
-      
+         $migration->addField($newTable,
+                                 "id",
+                                 "bigint(20) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable,
+                                 "plugin_fusioninventory_taskjobs_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "items_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "itemtype",
+                                 "varchar(100) DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "state",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "plugin_fusioninventory_agents_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "specificity",
+                                 "varchar(255) DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "uniqid",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addKey($newTable,
+                            "plugin_fusioninventory_taskjobs_id");
+         $migration->addKey($newTable,
+                            array("plugin_fusioninventory_agents_id", "state"),
+                            "plugin_fusioninventory_agents_id");
+         $migration->addKey($newTable,
+                            array("plugin_fusioninventory_taskjobs_id", "state"),
+                            "plugin_fusioninventory_taskjob_2");
+         
 
    /*
     * Table glpi_plugin_fusioninventory_profiles
     */
       $newTable = "glpi_plugin_fusioninventory_profiles";
       if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `glpi_plugin_fusioninventory_profiles` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
-                     `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-                     `right` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
-                     `plugins_id` int(11) NOT NULL DEFAULT '0',
-                     `profiles_id` int(11) NOT NULL DEFAULT '0',
-                     PRIMARY KEY (`id`),
-                     UNIQUE KEY `unicity` (`type`, `plugins_id`, `profiles_id`)
+         $query = "CREATE TABLE `".$newTable."` (
+                     int(11) NOT NULL AUTO_INCREMENT,
+                      PRIMARY KEY (`id`)
                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
          $DB->query($query);
       }
-      $migration->changeField($newTable,
-                              "id",
-                              "id",
-                              "int(11) NOT NULL AUTO_INCREMENT");
-      $migration->changeField($newTable,
-                              "type",
-                              "type",
-                              "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
-      $migration->changeField($newTable,
-                              "right",
-                              "right",
-                              "char(1) COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->changeField($newTable,
-                              "plugins_id",
-                              "plugins_id",
-                              "int(11) NOT NULL DEFAULT '0'");
-      $migration->changeField($newTable,
-                              "profiles_id",
-                              "profiles_id",
-                              "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "type",
+                                 "type",
+                                 "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+         $migration->changeField($newTable,
+                                 "right",
+                                 "right",
+                                 "char(1) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "plugins_id",
+                                 "plugins_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "profiles_id",
+                                 "profiles_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
       
       $migration->migrationOneTable($newTable);
       
-      $migration->changeField($newTable,
-                              "ID",
-                              "id",
-                              "int(11) NOT NULL AUTO_INCREMENT");
-      $migration->addField($newTable, 
-                           "type", 
-                           "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
-      $migration->addField($newTable, 
-                           "right", 
-                           "char(1) COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->addField($newTable, 
-                           "plugins_id", 
-                           "int(11) NOT NULL DEFAULT '0'");
-      $migration->addField($newTable, 
-                           "profiles_id", 
-                           "int(11) NOT NULL DEFAULT '0'");
-      $migration->dropField($newTable,
-                            "name");
-      $migration->dropField($newTable,
-                            "interface");
-      $migration->dropField($newTable,
-                            "is_default");
-      $migration->dropField($newTable,
-                            "snmp_networking");
-      $migration->dropField($newTable,
-                            "snmp_printers");
-      $migration->dropField($newTable,
-                            "snmp_models");
-      $migration->dropField($newTable,
-                            "snmp_authentification");
-      $migration->dropField($newTable,
-                            "rangeip");
-      $migration->dropField($newTable,
-                            "agents");
-      $migration->dropField($newTable,
-                            "remotecontrol");
-      $migration->dropField($newTable,
-                            "agentsprocesses");
-      $migration->dropField($newTable,
-                            "unknowndevices");
-      $migration->dropField($newTable,
-                            "reports");
-      $migration->dropField($newTable,
-                            "deviceinventory");
-      $migration->dropField($newTable,
-                            "netdiscovery");
-      $migration->dropField($newTable,
-                            "snmp_query");
-      $migration->dropField($newTable,
-                            "wol");
-      $migration->dropField($newTable,
-                            "configuration");
+         $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->dropField($newTable,
+                               "name");
+         $migration->dropField($newTable,
+                               "interface");
+         $migration->dropField($newTable,
+                               "is_default");
+         $migration->dropField($newTable,
+                               "snmp_networking");
+         $migration->dropField($newTable,
+                               "snmp_printers");
+         $migration->dropField($newTable,
+                               "snmp_models");
+         $migration->dropField($newTable,
+                               "snmp_authentification");
+         $migration->dropField($newTable,
+                               "rangeip");
+         $migration->dropField($newTable,
+                               "agents");
+         $migration->dropField($newTable,
+                               "remotecontrol");
+         $migration->dropField($newTable,
+                               "agentsprocesses");
+         $migration->dropField($newTable,
+                               "unknowndevices");
+         $migration->dropField($newTable,
+                               "reports");
+         $migration->dropField($newTable,
+                               "deviceinventory");
+         $migration->dropField($newTable,
+                               "netdiscovery");
+         $migration->dropField($newTable,
+                               "snmp_query");
+         $migration->dropField($newTable,
+                               "wol");
+         $migration->dropField($newTable,
+                               "configuration");
+        
+      $migration->migrationOneTable($newTable);
+         
+         $migration->addField($newTable, 
+                              "type", 
+                              "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+         $migration->addField($newTable, 
+                              "right", 
+                              "char(1) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable, 
+                              "plugins_id", 
+                              "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable, 
+                              "profiles_id", 
+                              "int(11) NOT NULL DEFAULT '0'");
+         $migration->addKey($newTable,
+                            array("type", "plugins_id", "profiles_id"),
+                            "unicity",
+                            "UNIQUE");
+      
       
 
    /*
@@ -952,50 +1557,73 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     */
       $newTable = "glpi_plugin_fusioninventory_mappings";
       if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `glpi_plugin_fusioninventory_mappings` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
-                     `itemtype` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-                     `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-                     `table` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-                     `tablefield` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-                     `locale` int(4) NOT NULL DEFAULT '0',
-                     `shortlocale` int(4) DEFAULT NULL,
-                     PRIMARY KEY (`id`),
-                     KEY `name` (`name`),
-                     KEY `itemtype` (`itemtype`),
-                     KEY `table` (`table`),
-                     KEY `tablefield` (`tablefield`)
+         $query = "CREATE TABLE `".$newTable."` (
+                     int(11) NOT NULL AUTO_INCREMENT,
+                      PRIMARY KEY (`id`)
                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
          $DB->query($query);
       }
-      $migration->changeField($newTable,
-                              "id",
-                              "id",
-                              "int(11) NOT NULL AUTO_INCREMENT");
-      $migration->changeField($newTable,
-                              "itemtype",
-                              "itemtype",
-                              "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->changeField($newTable,
-                              "name",
-                              "name",
-                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->changeField($newTable,
-                              "table",
-                              "table",
-                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->changeField($newTable,
-                              "tablefield",
-                              "tablefield",
-                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");      
-      $migration->changeField($newTable,
-                              "locale",
-                              "locale",
-                              "int(4) NOT NULL DEFAULT '0'");
-      $migration->changeField($newTable,
-                              "shortlocale",
-                              "shortlocale",
-                              "int(4) DEFAULT NULL");     
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "itemtype",
+                                 "itemtype",
+                                 "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "name",
+                                 "name",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "table",
+                                 "table",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "tablefield",
+                                 "tablefield",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");      
+         $migration->changeField($newTable,
+                                 "locale",
+                                 "locale",
+                                 "int(4) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "shortlocale",
+                                 "shortlocale",
+                                 "int(4) DEFAULT NULL");
+         
+      $migration->migrationOneTable($newTable);
+      
+         $migration->addField($newTable,
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable,
+                                 "itemtype",
+                                 "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "name",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "table",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "tablefield",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");      
+         $migration->addField($newTable,
+                                 "locale",
+                                 "int(4) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "shortlocale",
+                                 "int(4) DEFAULT NULL");
+         $migration->addKey($newTable,
+                            "name");
+         $migration->addKey($newTable,
+                            "itemtype");
+         $migration->addKey($newTable,
+                            "table");
+         $migration->addKey($newTable,
+                            "tablefield");
+         
       
       
    /*
