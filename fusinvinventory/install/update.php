@@ -459,14 +459,36 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
       }
    }
    
-
-
-
-    
    
    $migration->executeMigration();
+   
+   /*
+    * Remove / at the end of printers (bugs in older versions of agents.
+    */
+   $printer = new Printer();
+   $query = "SELECT * FROM `glpi_printers`
+      WHERE `serial` LIKE '%/' ";
+   $result=$DB->query($query);
+   while ($data = $DB->fetch_array($result)) {
+      $cleanSerial = preg_replace('/\/$/', '', $data['serial']);
+      $querynb = "SELECT * FROM `glpi_printers`
+         WHERE `serial`='".$cleanSerial."'
+         LIMIT 1";
+      $resultnb=$DB->query($querynb);
+      if ($DB->numrows($resultnb) == '0') {
+         $input = array();
+         $input['id'] = $data['id'];
+         $input["serial"] = $cleanSerial;
+         $printer->update($input);
+      }
+   }
+   
+   
+   
     
-   // Update blacklist
+   /*
+    * Update blacklist
+    */
    $input = array();
    $input['03000200-0400-0500-0006-000700080009'] = '2';
    $input['6AB5B300-538D-1014-9FB5-B0684D007B53'] = '2';
