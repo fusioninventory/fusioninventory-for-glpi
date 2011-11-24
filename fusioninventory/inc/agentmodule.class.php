@@ -287,6 +287,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
                $i++;
             }
             $where .= ") ";
+            $where .= getEntitiesRestrictRequest("AND", $PluginFusioninventoryAgent->getTable());
          } else {
             return array();
          }
@@ -305,6 +306,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
                $i++;
             }
             $where .= ") ";
+            $where .= getEntitiesRestrictRequest("AND", $PluginFusioninventoryAgent->getTable());
          }
          if ($items_id != '0') {
             $a_agents = $PluginFusioninventoryAgent->find($where);

@@ -80,7 +80,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       $tab[2]['table']     = 'glpi_entities';
       $tab[2]['field']     = 'completename';
-      $tab[2]['linkfield'] = 'entities_id';
       $tab[2]['name']      = $LANG['entity'][0];
 
       $tab[3]['table']     = $this->getTable();
