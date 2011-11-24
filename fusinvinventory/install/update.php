@@ -321,10 +321,57 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
    }
    
    
+
+
+   /*
+    * Create table `glpi_plugin_fusinvinventory_computer` appear in 0.80+1.1
+    */
+   $newTable = "glpi_plugin_fusinvinventory_computers";
+   if (!TableExists($newTable)) {
+      $DB->query("CREATE TABLE `".$newTable."` (
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                     PRIMARY KEY (`id`)
+                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1");
+   }   
+      $migration->addField($newTable, 
+                           "id", 
+                           "int(11) NOT NULL AUTO_INCREMENT");
+      $migration->addField($newTable, 
+                           "computers_id", 
+                           "int(11) NOT NULL DEFAULT '0'");   
+      $migration->addField($newTable, 
+                           "bios_date", 
+                           "datetime DEFAULT NULL");
+      $migration->addField($newTable, 
+                           "bios_version", 
+                           "varchar(255) DEFAULT NULL");
+      $migration->addField($newTable, 
+                           "bios_manufacturers_id", 
+                           "int(11) NOT NULL DEFAULT '0'");
+      $migration->addField($newTable, 
+                           "operatingsystem_installationdate", 
+                           "datetime DEFAULT NULL");
+      $migration->addField($newTable, 
+                           "winowner", 
+                           "varchar(255) DEFAULT NULL");
+      $migration->addField($newTable, 
+                           "wincompany", 
+                           "varchar(255) DEFAULT NULL");
+      $migration->addKey($newTable, 
+                          "computers_id");
+   
+   $migration->migrationOneTable($newTable);
+   
+   
    /*
     * Update serialized sections to mysql_real_escape_string(htmlspecialchars_decode("data"))
     */
    if (!strstr($current_version, "+")) {// All version before 0.80+1.1 (new versioning)
+      $computer = new Computer();
+      if (!class_exists('PluginFusinvinventoryComputer')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusinvinventory/inc/computer.class.php");
+      }      
+      $pfComputer = new PluginFusinvinventoryComputer();
       $migration->displayMessage("Convert computer inventory, may require some minutes");
       if (!class_exists('PluginFusinvinventoryLib')) { // if plugin is unactive
          include(GLPI_ROOT . "/plugins/fusinvinventory/inc/lib.class.php");
@@ -370,52 +417,50 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
                }
             }
             $pfLib->_serializeIntoDB($data['internal_id'], $serializedSections);
+            
+            // * Add informations of BIOS (table glpi_plugin_fusinvinventory_computers)
+            $input = array();
+            $input['computers_id'] = $data['computers_id'];
+            foreach($infoSections['sections'] as $name=>$section) {
+               $split = explode("/", $name);
+               if (($split[1] > 0) OR (strstr($split[1], 'd'))) {
+                  $dataSection = unserialize($section);
+
+                  if ($split[0] == 'BIOS') {
+                     if (isset($dataSection['BDATE'])) {
+                        $a_split = explode("/", $dataSection['BDATE']);
+                        $input['bios_date'] = $a_split[2]."-".$a_split[0]."-".$a_split[1];
+                     }
+                     if (isset($dataSection['BVERSION'])) {
+                        $input['bios_version'] = $dataSection['BVERSION'];
+                     }
+                     if (isset($dataSection['BMANUFACTURER'])) {
+                        $computer->getFromDB($data['computers_id']);
+                        $input['bios_manufacturers_id'] = Dropdown::importExternal('Manufacturer',
+                                                                                    $dataSection['BMANUFACTURER'],
+                                                                                    $computer->fields['entities_id']);
+                     }
+                  }
+                  if ($split[0] == 'HARDWARE') {
+                     if (isset($dataSection['OSINSTALLDATE'])) {
+                        $input['operatingsystem_installationdate'] = date("Y-m-d", $dataSection['OSINSTALLDATE']);
+                     }
+                     if (isset($dataSection['WINOWNER'])) {
+                        $input['winowner'] = $dataSection['WINOWNER'];
+                     }
+                     if (isset($dataSection['WINCOMPANY'])) {
+                        $input['wincompany'] = $dataSection['WINCOMPANY'];
+                     }
+                  }
+               }
+            }
+            $pfComputer->add($input);
          }
       }
    }
    
 
 
-   /*
-    * Create table `glpi_plugin_fusinvinventory_computer` appear in 0.80+1.1
-    */
-   $newTable = "glpi_plugin_fusinvinventory_computers";
-   if (!TableExists($newTable)) {
-      $DB->query("CREATE TABLE `".$newTable."` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
-                     PRIMARY KEY (`id`)
-                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1");
-   }   
-   $migration->addField($newTable, 
-                        "id", 
-                        "int(11) NOT NULL AUTO_INCREMENT");
-   $migration->addField($newTable, 
-                        "computers_id", 
-                        "int(11) NOT NULL DEFAULT '0'");   
-   $migration->addField($newTable, 
-                        "bios_date", 
-                        "datetime DEFAULT NULL");
-   $migration->addField($newTable, 
-                        "bios_version", 
-                        "varchar(255) DEFAULT NULL");
-   $migration->addField($newTable, 
-                        "bios_manufacturers_id", 
-                        "int(11) NOT NULL DEFAULT '0'");
-   $migration->addField($newTable, 
-                        "operatingsystem_installationdate", 
-                        "datetime DEFAULT NULL");
-   $migration->addField($newTable, 
-                        "winowner", 
-                        "varchar(255) DEFAULT NULL");
-   $migration->addField($newTable, 
-                        "wincompany", 
-                        "varchar(255) DEFAULT NULL");
-   $migration->addKey($newTable, 
-                       "computers_id");
-    
-   /* 
-    * TODO : parse all libserialization to update the fields of the previous table not yet in DB
-    */
 
     
    

@@ -107,6 +107,7 @@ if (($current_version != PLUGIN_FUSIONINVENTORY_VERSION)
 $plugin = new Plugin();
 $plugin->getFromDBbyDir("fusioninventory");
 $plugin->activate($plugin->fields['id']);
+$plugin->load("fusioninventory");
 
 
 // ** Install / update too plugin fusinvsnmp
@@ -143,6 +144,7 @@ if ($plugin->getFromDBbyDir("fusinvsnmp")) {
    
    $plugin->getFromDBbyDir("fusinvsnmp");
    $plugin->activate($plugin->fields['id']);
+   $plugin->load("fusinvsnmp");
 }
    
 
@@ -179,6 +181,7 @@ if ($plugin->getFromDBbyDir("fusinvinventory")) {
    }
    $plugin->getFromDBbyDir("fusinvinventory");
    $plugin->activate($plugin->fields['id']);
+   $plugin->load("fusinvinventory");
 }
    
    
