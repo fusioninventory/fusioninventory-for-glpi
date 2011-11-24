@@ -236,6 +236,16 @@ class Plugins_Fusioninventory_TestInstallUpdate extends PHPUnit_Framework_TestCa
          $this->assertEquals($snmprangeip, 0, 'Have some "PluginFusinvsnmpIPRange" items in taskjob definition');
       }
       
+      /*
+       * Verify cron created
+       */
+      $crontask = new CronTask();
+      $this->assertTrue($crontask->getFromDBbyName('PluginFusioninventoryTaskjob', 'taskscheduler') , 
+              'Cron taskscheduler not created');
+      $this->assertTrue($crontask->getFromDBbyName('PluginFusioninventoryTaskjobstatus', 'cleantaskjob') , 
+              'Cron cleantaskjob not created');
+      $this->assertTrue($crontask->getFromDBbyName('PluginFusinvsnmpNetworkPortLog', 'cleannetworkportlogs') , 
+              'Cron cleannetworkportlogs not created');
       
       
       // TODO : test glpi_displaypreferences, rules, bookmark...

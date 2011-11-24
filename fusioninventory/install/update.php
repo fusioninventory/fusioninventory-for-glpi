@@ -1824,6 +1824,19 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                          SET `value`='".$users_id."'
                   WHERE `type`='users_id'";
       $DB->query($query);
+      
+   /*
+    * Add Crontask if not exist
+    */
+   $crontask = new CronTask();
+   if (!$crontask->getFromDBbyName('PluginFusioninventoryTaskjob', 'taskscheduler')) {
+      CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '60', 
+                         array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30));
+   }
+   if (!$crontask->getFromDBbyName('PluginFusioninventoryTaskjobstatus', 'cleantaskjob')) {
+      Crontask::Register('PluginFusioninventoryTaskjobstatus', 'cleantaskjob', (3600 * 24), 
+                         array('mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30));
+   }
 }
 
 

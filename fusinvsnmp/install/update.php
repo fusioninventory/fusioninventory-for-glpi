@@ -3689,7 +3689,17 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    }
    PluginFusinvsnmpModel::importAllModels();
    
+   /*
+    * Add Crontask if not exist
+    */
+   $crontask = new CronTask();
+   if (!$crontask->getFromDBbyName('PluginFusinvsnmpNetworkPortLog', 'cleannetworkportlogs')) {
+      Crontask::Register('PluginFusinvsnmpNetworkPortLog', 'cleannetworkportlogs', (3600 * 24), 
+                         array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
+
+   }
 }
+
 
 
 function update213to220_ConvertField($migration) {
