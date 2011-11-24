@@ -154,7 +154,7 @@ function plugin_version_fusinvinventory() {
                 'shortname'      => 'fusinvinventory',
                 'version'        => PLUGIN_FUSINVINVENTORY_VERSION,
                 'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
-                                    & <a href="mailto:v.mazzoni@siprossii.com">Vincent MAZZONI</a>',
+                                    & FusionInventory team',
                 'homepage'       =>'http://forge.fusioninventory.org/projects/pluginfusinvinventory',
                 'minGlpiVersion' => '0.80'// For compatibility / no install in version < 0.78
    );
