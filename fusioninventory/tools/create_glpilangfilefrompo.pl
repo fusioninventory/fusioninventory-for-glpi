@@ -15,7 +15,7 @@ exiting...\n";
 
 my $user = 'ddurieux';
 my $password = '';
-my $transifexhost = 'http://www.transifex.net/';
+my $transifexhost = 'https://www.transifex.net/';
 my $folder;
 if ($ARGV[0] eq "fusioninventory") {
    $folder = "Plugin_FusionInventory";
@@ -25,7 +25,7 @@ if ($ARGV[0] eq "fusioninventory") {
    $folder = "Plugin_Fusinvinventory";
 }
 
-my $remoteurltranslations = 'http://www.transifex.net/projects/p/FusionInventory/resource/'.$folder.'/';
+my $remoteurltranslations = 'https://www.transifex.net/projects/p/FusionInventory/resource/'.$folder.'/';
 
 
 `tx init --user=$user --pass=$password --host=$transifexhost`;
