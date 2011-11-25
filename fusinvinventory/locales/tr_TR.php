@@ -44,6 +44,8 @@ $LANG['plugin_fusinvinventory']['blacklist'][0]="blacklisted value";
 $LANG['plugin_fusinvinventory']['blacklist'][1]="New value to blacklist";
 
 $LANG['plugin_fusinvinventory']['computer'][0]="Last inventory";
+$LANG['plugin_fusinvinventory']['computer'][1]="Owner";
+$LANG['plugin_fusinvinventory']['computer'][2]="Company";
 
 $LANG['plugin_fusinvinventory']['importxml'][0]="Import XML file from an Agent";
 $LANG['plugin_fusinvinventory']['importxml'][1]="Computer injected into GLPI";

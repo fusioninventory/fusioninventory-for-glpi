@@ -44,6 +44,8 @@ $LANG['plugin_fusinvinventory']['blacklist'][0]="Wartości Czarnej Listy";
 $LANG['plugin_fusinvinventory']['blacklist'][1]="Nowa wartość do Czarnej Listy";
 
 $LANG['plugin_fusinvinventory']['computer'][0]="Ostatnia inwentaryzacja";
+$LANG['plugin_fusinvinventory']['computer'][1]="Owner";
+$LANG['plugin_fusinvinventory']['computer'][2]="Company";
 
 $LANG['plugin_fusinvinventory']['importxml'][0]="Import pliku XML od Agent-a";
 $LANG['plugin_fusinvinventory']['importxml'][1]="Komputer włączony do GLPI";
