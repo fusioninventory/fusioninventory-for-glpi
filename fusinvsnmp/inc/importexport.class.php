@@ -278,7 +278,6 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
             $PluginFusinvsnmpModelMib->delete(array('id'=>$mibs_id), 1);
         }
 
-        return false;
     }
 
     function createModel($xml, $message) {
