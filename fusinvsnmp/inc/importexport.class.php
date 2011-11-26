@@ -66,7 +66,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
       // Construction of XML file
       $xml = "<model>\n";
-      $xml .= "	<name><![CDATA[".$model_name."]]></name>\n";
+      $xml .= "	<name>".$model_name."</name>\n";
       $xml .= "	<type>".$type."</type>\n";
       $xml .= "	<key>".$discovery_key."</key>\n";
       $xml .= "	<comments><![CDATA[".$comment."]]></comments>\n";
@@ -80,11 +80,11 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       if ($result) {
 	 while ($data=$DB->fetch_array($result)) {
 	    $xml .= "		<oidobject>\n";
-	    $xml .= "			<object><![CDATA[".
+	    $xml .= "			<object>".
 	       Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_mibobjects",$data["plugin_fusinvsnmp_mibobjects_id"]).
-	       "]]></object>\n";
-	    $xml .= "			<oid><![CDATA[".
-	       Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_miboids",$data["plugin_fusinvsnmp_miboids_id"])."]]></oid>\n";
+	       "</object>\n";
+	    $xml .= "			<oid>".
+	       Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_miboids",$data["plugin_fusinvsnmp_miboids_id"])."</oid>\n";
 	    $xml .= "			<portcounter>".$data["oid_port_counter"]."</portcounter>\n";
 	    $xml .= "			<dynamicport>".$data["oid_port_dyn"]."</dynamicport>\n";
 	    $xml .= "			<mappings_id>".$data["plugin_fusioninventory_mappings_id"].
