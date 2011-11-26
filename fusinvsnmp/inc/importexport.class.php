@@ -186,13 +186,14 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
         }
 
 
-        // Verify same model exist
+        // check if the model already exists
         $query = "SELECT id
             FROM `glpi_plugin_fusinvsnmp_models`
             WHERE `name`='".(string)$xml->name."';";
         $result = $DB->query($query);
 
         if ($DB->numrows($result) > 0) {
+            // the model exists, update it
             if ($message == '1') {
                 $_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusinvsnmp']['model_info'][8];
             }
@@ -295,7 +296,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
             return false;
         } else {
-            // Add new model
+            // the model doesn't exist, create it
             $query = "INSERT INTO `glpi_plugin_fusinvsnmp_models`
                 (`name`,`itemtype`,`discovery_key`,`comment`)
                 VALUES('".(string)$xml->name."','".$type."','".(string)$xml->key."','".(string)$xml->comments."');";
