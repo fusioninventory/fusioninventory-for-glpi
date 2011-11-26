@@ -308,7 +308,6 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
         $DB->query($query);
         $plugin_fusinvsnmp_models_id = $DB->insert_id();
 
-        $i = -1;
         foreach($xml->oidlist->oidobject as $child) {
             $plugin_fusinvsnmp_mibobjects_id = 0;
             $plugin_fusinvsnmp_miboids_id = 0;
@@ -353,7 +352,6 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
             if (!isset($mappings_id) OR empty($mappings_id)) {
                 $mappings_id = '0';
             }
-
 
             $query = "INSERT INTO `glpi_plugin_fusinvsnmp_modelmibs`
                 (
