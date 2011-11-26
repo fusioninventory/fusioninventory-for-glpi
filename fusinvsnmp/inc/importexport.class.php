@@ -274,8 +274,18 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
             // the model doesn't exist, create it
             $type = $mapping_types[(string)$xml->type];
             $query = "INSERT INTO `glpi_plugin_fusinvsnmp_models`
-                (`name`,`itemtype`,`discovery_key`,`comment`)
-                VALUES('".(string)$xml->name."','".$type."','".(string)$xml->key."','".(string)$xml->comments."');";
+                (
+                    `name`,
+                    `itemtype`,
+                    `discovery_key`,
+                    `comment`
+                )
+                VALUES(
+                    '".(string)$xml->name."',
+                    '".$type."',
+                    '".(string)$xml->key."',
+                    '".(string)$xml->comments."'
+                );";
             $DB->query($query);
             $plugin_fusinvsnmp_models_id = $DB->insert_id();
 
@@ -327,11 +337,26 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
 
                 $query = "INSERT INTO `glpi_plugin_fusinvsnmp_modelmibs`
-                    (`plugin_fusinvsnmp_models_id`,`plugin_fusinvsnmp_miboids_id`,`plugin_fusinvsnmp_mibobjects_id`,`oid_port_counter`,
-                    `oid_port_dyn`,`plugin_fusioninventory_mappings_id`,`vlan`,`is_active`)
-                    VALUES('".$plugin_fusinvsnmp_models_id."','".$plugin_fusinvsnmp_miboids_id."','".$plugin_fusinvsnmp_mibobjects_id."',
-                        '".$oid_port_counter."', '".$oid_port_dyn."', '".$mappings_id."',
-                        '".$vlan."', '".$is_active."');";
+                    (
+                        `plugin_fusinvsnmp_models_id`,
+                        `plugin_fusinvsnmp_miboids_id`,
+                        `plugin_fusinvsnmp_mibobjects_id`,
+                        `oid_port_counter`,
+                        `oid_port_dyn`,
+                        `plugin_fusioninventory_mappings_id`,
+                        `vlan`,
+                        `is_active`
+                    )
+                    VALUES(
+                        '".$plugin_fusinvsnmp_models_id."',
+                        '".$plugin_fusinvsnmp_miboids_id."',
+                        '".$plugin_fusinvsnmp_mibobjects_id."',
+                        '".$oid_port_counter."',
+                        '".$oid_port_dyn."',
+                        '".$mappings_id."',
+                        '".$vlan."',
+                        '".$is_active."'
+                    );";
                 $DB->query($query);
             }
             if ($message == '1') {
