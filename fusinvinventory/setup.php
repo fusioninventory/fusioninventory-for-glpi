@@ -32,7 +32,7 @@
    ----------------------------------------------------------------------
  */
 
-define ("PLUGIN_FUSINVINVENTORY_VERSION","2.4.0");
+define ("PLUGIN_FUSINVINVENTORY_VERSION","0.80+1.1");
 
 // Init the hooks of fusinvdeploy
 function plugin_init_fusinvinventory() {
@@ -68,6 +68,9 @@ function plugin_init_fusinvinventory() {
    // ##### 3. get informations of the plugin #####
 
    $a_plugin = plugin_version_fusinvinventory();
+   if (!class_exists('PluginFusioninventoryModule')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
+   }
    $moduleId = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
 
    // ##### 4. Set in session module_id #####
@@ -86,13 +89,18 @@ function plugin_init_fusinvinventory() {
                                                                 'submitmethod'=>'putForm');
    }
 
-
+   if (!class_exists('PluginFusioninventoryProfile')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
+   }
    $PLUGIN_HOOKS['change_profile']['fusinvinventory']
       = PluginFusioninventoryProfile::changeprofile($moduleId,$a_plugin['shortname']);
 
    if (isset($_SESSION["glpiID"])) {
 
 		if (Session::haveRight("configuration", "r") || Session::haveRight("profile", "w")) {// Config page
+         if (!class_exists('PluginFusioninventoryConfiguration')) { // if plugin is unactive
+            include(GLPI_ROOT . "/plugins/fusioninventory/inc/configuration.class.php");
+         }
          $PluginFusioninventoryConfiguration = new PluginFusioninventoryConfiguration();
          $a_tabs = $PluginFusioninventoryConfiguration->defineTabs();
          $PLUGIN_HOOKS['config_page']['fusinvinventory'] = '../fusioninventory/front/configuration.form.php?glpi_tab='.array_search($a_plugin['name'], $a_tabs);
@@ -146,7 +154,7 @@ function plugin_version_fusinvinventory() {
                 'shortname'      => 'fusinvinventory',
                 'version'        => PLUGIN_FUSINVINVENTORY_VERSION,
                 'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
-                                    & <a href="mailto:v.mazzoni@siprossii.com">Vincent MAZZONI</a>',
+                                    & FusionInventory team',
                 'homepage'       =>'http://forge.fusioninventory.org/projects/pluginfusinvinventory',
                 'minGlpiVersion' => '0.80'// For compatibility / no install in version < 0.78
    );
@@ -159,6 +167,10 @@ function plugin_fusinvinventory_check_prerequisites() {
    global $LANG;
    if (version_compare(GLPI_VERSION,'0.83','lt') || version_compare(GLPI_VERSION,'0.84','ge')) {
       echo $LANG['plugin_fusinvinventory']['errors'][50];
+   }
+   $plugin = new Plugin();
+   if (!$plugin->isActivated("fusioninventory")) {
+      return false;
    }
    return true;
 }

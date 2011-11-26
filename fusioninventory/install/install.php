@@ -32,9 +32,15 @@
    ----------------------------------------------------------------------
  */
 
-function pluginFusioninventoryInstall($version) {
+function pluginFusioninventoryInstall($version, $migration='') {
    global $DB,$LANG,$CFG_GLPI;
 
+   if ($migration == '') {
+      $migration = new Migration($version);
+   }
+   
+   $migration->displayMessage("Installation of plugin FusionInventory");
+   
    if (!class_exists('PluginFusioninventoryProfile')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
    }
@@ -62,6 +68,7 @@ function pluginFusioninventoryInstall($version) {
    // Get informations of plugin
 
    // ** Clean if FUsion / Tracker has been installed and uninstalled (not clean correctly)
+   $migration->displayMessage("Clean data from old installation of the plugin");
    $sql = "DELETE FROM `glpi_displaypreferences`
       WHERE `itemtype`='5150'";
    $DB->query($sql);
@@ -112,6 +119,7 @@ function pluginFusioninventoryInstall($version) {
 
 
    // Remove old rules
+   $migration->displayMessage("Clean rules from old installation of the plugin");
    $Rule = new Rule();
    $a_rules = $Rule->find("`sub_type`='PluginFusioninventoryRuleImportEquipment'");
    foreach ($a_rules as $data) {
@@ -121,6 +129,7 @@ function pluginFusioninventoryInstall($version) {
 
 
    // ** Insert in DB
+   $migration->displayMessage("Creation tables in database");
    $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-"
               .$version."-empty.sql";
    $DBf_handle = fopen($DB_file, "rt");
@@ -130,7 +139,7 @@ function pluginFusioninventoryInstall($version) {
       if (get_magic_quotes_runtime()) $sql_line=Toolbox::stripslashes_deep($sql_line);
       if (!empty($sql_line)) $DB->query($sql_line);
    }
-
+   $migration->displayMessage("Creation of folders");
    if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
    }
@@ -141,6 +150,7 @@ function pluginFusioninventoryInstall($version) {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml');
    }
 
+   $migration->displayMessage("Initialize profiles");
    $plugin = new Plugin();
    $data = $plugin->find("`name` = 'FusionInventory'");
    $fields = current($data);
@@ -187,6 +197,9 @@ function pluginFusioninventoryInstall($version) {
                       array('mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30));
 
 
+   /*
+    * Load install function of each class for SQL creation
+    */
    foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/inc/*.class.php') as $file) {
       include_once ($file);
       $filesplit = explode("/", $file);
@@ -204,7 +217,8 @@ function pluginFusioninventoryInstall($version) {
       }
 
    }
-   
+
+   $migration->displayMessage("Create rules");
    $PluginFusioninventorySetup = new PluginFusioninventorySetup();
    $PluginFusioninventorySetup->initRules();
 }

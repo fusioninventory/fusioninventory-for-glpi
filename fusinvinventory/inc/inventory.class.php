@@ -96,14 +96,27 @@ class PluginFusinvinventoryInventory {
                }
             }
          }
-      
+         
+         // Hack to remove Memories with Flash types see ticket http://forge.fusioninventory.org/issues/1337
+         if (isset($p_xml->CONTENT->MEMORIES)) {
+            $i = 0;
+            foreach($p_xml->CONTENT->MEMORIES as $memory) {
+
+               if ((isset($memory->TYPE)) 
+                       AND (preg_match('/Flash/', (string)$memory->TYPE))) {
+                  unset($p_xml->CONTENT->MEMORIES->{$i});
+               }
+               $i++;
+            }
+         }
+         
       // End hack
       
       $PluginFusinvinventoryBlacklist = new PluginFusinvinventoryBlacklist();
       $p_xml = $PluginFusinvinventoryBlacklist->cleanBlacklist($p_xml);
 
       $_SESSION['SOURCEXML'] = $p_xml;
-      
+
       $xml = $p_xml;
       $input = array();
 

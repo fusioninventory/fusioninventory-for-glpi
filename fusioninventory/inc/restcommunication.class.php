@@ -174,10 +174,17 @@ class PluginFusioninventoryRestCommunication {
     * @return the url of the REST service
     */
    static function getDefaultRestURL($url, $plugin, $task) {
+      global $DB;
+      
       $task = strtolower($task);
       if (preg_match("/(.*)\/(plugins|front)/",$url,$values)) {
          return $values[1].'/plugins/'.$plugin.'/b/'.$task.'/';
       } else {
+         $query = "SELECT url_base FROM `glpi_configs`
+            LIMIT 1";
+         $result = $DB->query($query);
+         $data = $DB->fetch_assoc($result);
+         return $data['url_base'].'/plugins/'.$plugin.'/b/'.$task.'/';
          return "";
       }
    }

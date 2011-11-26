@@ -59,6 +59,44 @@ function update240to080011() {
       }
    }
    
+   /*
+    * Table `glpi_plugin_fusinvinventory_computer`
+    */
+   $migration = new Migration("0.80+1.1");
+   $newTable = "glpi_plugin_fusinvinventory_computers";
+   if (!TableExists($newTable)) {
+      $DB->query($newTable);
+   }   
+   $migration->addField($newTable, 
+                        "id", 
+                        "int(11) NOT NULL AUTO_INCREMENT");
+   $migration->addField($newTable, 
+                        "computers_id", 
+                        "int(11) NOT NULL default '0'");   
+    $migration->addField($newTable, 
+                        "bios_date", 
+                        "datetime DEFAULT NULL");
+    $migration->addField($newTable, 
+                        "bios_version", 
+                        "varchar(255) DEFAULT NULL");
+    $migration->addField($newTable, 
+                        "bios_manufacturers_id", 
+                        "int(11) NOT NULL default '0'");
+    $migration->addField($newTable, 
+                        "operatingsystem_installationdate", 
+                        "datetime DEFAULT NULL");
+    $migration->addField($newTable, 
+                        "winowner", 
+                        "varchar(255) DEFAULT NULL");
+    $migration->addField($newTable, 
+                        "wincompany", 
+                        "varchar(255) DEFAULT NULL");
+    $migration->addKey($newTable, 
+                       "computers_id");
+
+    // TODO : parse all libserialization to update these fields this computers yet in DB
+   
+   
    plugin_fusioninventory_displayMigrationMessage("0.80+1.1"); // End
 }
 

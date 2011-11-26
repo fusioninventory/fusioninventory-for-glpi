@@ -31,7 +31,7 @@
    Purpose of file:
    ----------------------------------------------------------------------
  */
-define ("PLUGIN_FUSIONINVENTORY_VERSION","2.4.0");
+define ("PLUGIN_FUSIONINVENTORY_VERSION","0.80+1.1");
 
 include_once(GLPI_ROOT."/inc/includes.php");
 
@@ -141,6 +141,9 @@ function plugin_init_fusioninventory() {
             = 'front/ruleimportequipment.form.php';
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['ruleimportequipment']
             = 'front/ruleimportequipment.php';
+         
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['agents'] = 'front/agent.php';
+
 
          if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agent","r")) {
 
@@ -195,6 +198,13 @@ function plugin_init_fusioninventory() {
                '../fusioninventory/front/iprange.php';
          }
 
+         if (!class_exists('PluginFusioninventoryCredential')) { // if plugin is unactive
+            include(GLPI_ROOT . "/plugins/fusioninventory/inc/credential.class.php");
+         }
+         if (!class_exists('PluginFusioninventoryStaticmisc')) { // if plugin is unactive
+            include(GLPI_ROOT . "/plugins/fusioninventory/inc/staticmisc.class.php");
+         }
+         
          if (PluginFusioninventoryCredential::hasAlLeastOneType()) {
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "credential","w")) {
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['PluginFusioninventoryCredential'] = 
@@ -291,7 +301,7 @@ function plugin_version_fusioninventory() {
                 'version'        => PLUGIN_FUSIONINVENTORY_VERSION,
                 'oldname'        => 'tracker',
                 'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
-                                    & <a href="mailto:v.mazzoni@siprossii.com">Vincent MAZZONI</a>',
+                                    & FusionInventory team',
                 'homepage'       =>'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/',
                 'minGlpiVersion' => '0.83'// For compatibility / no install in version < 0.78
    );

@@ -38,6 +38,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryAgent extends CommonDBTM {
    
+   public $dohistory = true;
 
    /**
    * Get name of this type
@@ -79,7 +80,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       $tab[2]['table']     = 'glpi_entities';
       $tab[2]['field']     = 'completename';
-      $tab[2]['linkfield'] = 'entities_id';
       $tab[2]['name']      = $LANG['entity'][0];
 
       $tab[3]['table']     = $this->getTable();
@@ -156,10 +156,26 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
          $ong[1]=$LANG['title'][26];
       }
-       $ong[2] = $LANG['plugin_fusioninventory']['agents'][36];
+      $ong[2] = $LANG['plugin_fusioninventory']['agents'][36];
+      $ong[3] = $LANG['title'][38];
       return $ong;
    }
 
+   
+   
+   function getComments() {
+      global $LANG;
+
+      $comment = $LANG['plugin_fusioninventory']['agents'][42].' : '.$this->fields['useragent'].'<br/>
+         '.$LANG['plugin_fusioninventory']['agents'][4].' : '.convDateTime($this->fields['last_contact']).' minutes';
+
+      if (!empty($comment)) {
+         return showToolTip($comment, array('display' => false));
+      }
+
+      return $comment;
+   }
+   
 
 
    /**
@@ -426,6 +442,18 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo $LANG['plugin_fusioninventory']['agents'][15];
       echo "</th>";
       echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>";
+      echo $LANG['plugin_fusioninventory']['agents'][28]."&nbsp:";
+      echo "</td>";
+      echo "<td>";
+      $pFusioninventoryAgent = new PluginFusioninventoryAgent();
+      $pFusioninventoryAgent->getFromDB($agent_id);
+      echo $pFusioninventoryAgent->getLink(1);
+      
+      echo "</td>";
+      echo "</tr>";      
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
@@ -536,11 +564,42 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     * @param plugins_id ID of the fusioninventory plugin
     * @param ip agent's IP
     * 
-    * @return an http url to contact the agent
+    * @return a list of http url to contact the agent
     */
-   static function getAgentBaseURL($plugins_id, $ip) {
+   static function getAgentBaseURLs($plugins_id, $agent_id) {
       $config = new PluginFusioninventoryConfig();
-      return "http://".$ip.":".$config->getValue($plugins_id, 'agent_port');
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+
+      $ret = array();
+
+      if ($PluginFusioninventoryAgent->getFromDB($agent_id)) {
+         $computer = new Computer();
+         $computer->getFromDB($PluginFusioninventoryAgent->fields['items_id']);
+         if ($computer->fields["name"] && $computer->fields["name"] != "localhost") {
+            array_push($ret, "http://".$computer->fields["name"].
+               ":".$config->getValue($plugins_id, 'agent_port'));
+
+            $domain = new Domain();
+            $domain->getFromDB($computer->fields['domains_id']);
+            array_push($ret, "http://".
+               $computer->fields["name"].'.'.
+               $domain->fields["name"].
+               ":".$config->getValue($plugins_id, 'agent_port'));
+         }
+      }
+
+      # Guess the machine name from the DEVICEID,
+      # useful when Windows domain != DNS domain
+      if(preg_match('/(\S+)-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}$/', $PluginFusioninventoryAgent->fields['name'], $stack)) {
+         array_push($ret, "http://".$stack[1].":".$config->getValue($plugins_id, 'agent_port'));
+      }
+
+      $a_ips = $PluginFusioninventoryAgent->getIPs($agent_id);
+      foreach ($a_ips as $ip) {
+         array_push($ret, "http://".$ip.":".$config->getValue($plugins_id, 'agent_port'));
+      }
+
+      return $ret;
    }
 
    
@@ -551,11 +610,14 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     * @param plugins_id ID of the fusioninventory plugin
     * @param ip agent's IP
     * 
-    * @return an http url to get the agent's state
+    * @return an array of http url to get the agent's state
     */
-   static function getAgentStatusURL($plugins_id, $ip) {
-      return self::getAgentBaseURL($plugins_id, $ip)."/status";
-      
+   static function getAgentStatusURLs($plugins_id, $agent_id) {
+      $ret = array();
+      foreach (self::getAgentBaseURLs($plugins_id, $agent_id) as $url) {
+         array_push($ret, $url."/status");
+      }
+      return $ret;
    }
 
    
@@ -568,8 +630,16 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     * 
     * @return an http url to ask the agent to wake up
     */
-   static function getAgentRunURL($plugins_id, $ip) {
-      return self::getAgentBaseURL($plugins_id, $ip)."/now";
+   static function getAgentRunURLs($plugins_id, $agent_id) {
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+
+      $PluginFusioninventoryAgent->getFromDB($agent_id);
+
+      $ret = array();
+      foreach (self::getAgentBaseURLs($plugins_id, $agent_id) as $url) {
+         array_push($ret, $url."/now/".$PluginFusioninventoryAgent->fields['token']);
+      }
+      return $ret;
    }
 
    

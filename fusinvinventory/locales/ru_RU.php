@@ -44,14 +44,16 @@ $LANG['plugin_fusinvinventory']['blacklist'][0]="значение черного
 $LANG['plugin_fusinvinventory']['blacklist'][1]="Новое значение в черный список";
 
 $LANG['plugin_fusinvinventory']['computer'][0]="Последняя версия inventory";
+$LANG['plugin_fusinvinventory']['computer'][1]="Owner";
+$LANG['plugin_fusinvinventory']['computer'][2]="Company";
 
 $LANG['plugin_fusinvinventory']['importxml'][0]="Импорт XML файла из агента";
 $LANG['plugin_fusinvinventory']['importxml'][1]="Компьютер добавлен в GLPI";
 $LANG['plugin_fusinvinventory']['importxml'][2]="Нет файла для импорта!";
-$LANG['plugin_fusinvinventory']['importxml'][3]="XML фаил не действителен!";
+$LANG['plugin_fusinvinventory']['importxml'][3]="XML файл не действителен!";
 
-$LANG['plugin_fusinvinventory']['integrity'][0]="Only in GLPI (check to delete)";
-$LANG['plugin_fusinvinventory']['integrity'][1]="Only in last inventory (check to import)";
+$LANG['plugin_fusinvinventory']['integrity'][0]="Только в GLPI (проверьте перед удалением)";
+$LANG['plugin_fusinvinventory']['integrity'][1]="Только в последней inventory (проверьте для импорта)";
 
 $LANG['plugin_fusinvinventory']['menu'][0]="Импорт XML файла агента";
 $LANG['plugin_fusinvinventory']['menu'][1]="Критерий привил";
@@ -59,15 +61,15 @@ $LANG['plugin_fusinvinventory']['menu'][2]="Черный список";
 $LANG['plugin_fusinvinventory']['menu'][4]="Проверка целостности данных";
 
 $LANG['plugin_fusinvinventory']['profile'][2]="Существующие критерии";
-$LANG['plugin_fusinvinventory']['profile'][3]="Рочное импортирование XML файла";
+$LANG['plugin_fusinvinventory']['profile'][3]="Ручной импорт XML файла";
 $LANG['plugin_fusinvinventory']['profile'][4]="Области черного списка";
 
-$LANG['plugin_fusinvinventory']['rule'][0]="Computer existent criteria rules";
+$LANG['plugin_fusinvinventory']['rule'][0]="Критерии правил компьютера";
 $LANG['plugin_fusinvinventory']['rule'][100]="Правила организации";
 $LANG['plugin_fusinvinventory']['rule'][102]="Игнорирование импорта в FusionInventory";
 $LANG['plugin_fusinvinventory']['rule'][1]="Существующий критерий";
-$LANG['plugin_fusinvinventory']['rule'][2]="Сирийный номер";
-$LANG['plugin_fusinvinventory']['rule'][30]="Import in asset";
+$LANG['plugin_fusinvinventory']['rule'][2]="Серийный номер";
+$LANG['plugin_fusinvinventory']['rule'][30]="Импорт в избранное";
 $LANG['plugin_fusinvinventory']['rule'][31]="Импорт неизвестных устройств";
 $LANG['plugin_fusinvinventory']['rule'][3]="MAC адрес";
 $LANG['plugin_fusinvinventory']['rule'][4]="Microsoft product key";
@@ -81,24 +83,24 @@ $LANG['plugin_fusinvinventory']['setup'][18]="Плагину FusionInventory INV
 $LANG['plugin_fusinvinventory']['setup'][20]="Параметры импорта";
 $LANG['plugin_fusinvinventory']['setup'][21]="Компоненты";
 $LANG['plugin_fusinvinventory']['setup'][22]="Глобальный импорт";
-$LANG['plugin_fusinvinventory']['setup'][23]="Не импортрировать";
+$LANG['plugin_fusinvinventory']['setup'][23]="Не импортировать";
 $LANG['plugin_fusinvinventory']['setup'][24]="Уникальный импорт";
 $LANG['plugin_fusinvinventory']['setup'][25]="Реестр";
-$LANG['plugin_fusinvinventory']['setup'][26]="Processes";
+$LANG['plugin_fusinvinventory']['setup'][26]="Процессы";
 $LANG['plugin_fusinvinventory']['setup'][27]="Уникальный импорт серийных номеров";
 $LANG['plugin_fusinvinventory']['setup'][28]="Автоматическая передача компьютеров";
 $LANG['plugin_fusinvinventory']['setup'][29]="Автоматическая модель для передачи компьютеров в другую организацию";
-$LANG['plugin_fusinvinventory']['setup'][30]="Network drives";
-$LANG['plugin_fusinvinventory']['setup'][31]="Virtual network card";
-$LANG['plugin_fusinvinventory']['setup'][32]="This option will not import this item";
-$LANG['plugin_fusinvinventory']['setup'][33]="This option will merge items with same name to reduce number of items if this management isn't important";
-$LANG['plugin_fusinvinventory']['setup'][34]="This option will create one item for each item found";
-$LANG['plugin_fusinvinventory']['setup'][35]="This option will create one item for each item have serial number";
+$LANG['plugin_fusinvinventory']['setup'][30]="Сетевые диски";
+$LANG['plugin_fusinvinventory']['setup'][31]="Виртуальный сетевой интерфейс";
+$LANG['plugin_fusinvinventory']['setup'][32]="Этот параметр не импортирует данный элемент";
+$LANG['plugin_fusinvinventory']['setup'][33]="Этот параметр объединит элементы с одинаковым именем для уменьшения количества элементов, если управление ими не актуально";
+$LANG['plugin_fusinvinventory']['setup'][34]="Этот параметр создает один элемент для каждого найденного элемента";
+$LANG['plugin_fusinvinventory']['setup'][35]="Этот параметр создает один элемент для каждого элемента с серийным номером";
 $LANG['plugin_fusinvinventory']['setup'][36]="Статус по умолчанию";
 
 $LANG['plugin_fusinvinventory']['title'][0]="FusionInventory INVENTORY";
-$LANG['plugin_fusinvinventory']['title'][1]="Local inventory";
-$LANG['plugin_fusinvinventory']['title'][2]="VMware host remote inventory";
+$LANG['plugin_fusinvinventory']['title'][1]="Локальная инвентаризация";
+$LANG['plugin_fusinvinventory']['title'][2]="VMware хост remote inventory";
 
-$LANG['plugin_fusinvinventory']['vmwareesx'][0]="VMware host";
+$LANG['plugin_fusinvinventory']['vmwareesx'][0]="VMware хост";
 ?>

@@ -31,7 +31,7 @@
    Purpose of file:
    ----------------------------------------------------------------------
  */
-define ("PLUGIN_FUSINVSNMP_VERSION","2.4.0");
+define ("PLUGIN_FUSINVSNMP_VERSION","0.80+1.1");
 
 include_once ("includes.php");
 
@@ -208,7 +208,7 @@ function plugin_version_fusinvsnmp() {
                 'shortname'      => 'fusinvsnmp',
                 'version'        => PLUGIN_FUSINVSNMP_VERSION,
                 'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
-                                    & <a href="mailto:v.mazzoni@siprossii.com">Vincent MAZZONI</a>',
+                                    & FusionInventory team',
                 'homepage'       =>'http://forge.fusioninventory.org/projects/pluginfusinvsnmp',
                 'minGlpiVersion' => '0.80'// For compatibility / no install in version < 0.78
    );
@@ -220,6 +220,10 @@ function plugin_fusinvsnmp_check_prerequisites() {
    
    if (version_compare(GLPI_VERSION,'0.83','lt') || version_compare(GLPI_VERSION,'0.84','ge')) {
       echo $LANG['plugin_fusioninventory']['errors'][50];
+      return false;
+   }
+   $plugin = new Plugin();
+   if (!$plugin->isActivated("fusioninventory")) {
       return false;
    }
    return true;

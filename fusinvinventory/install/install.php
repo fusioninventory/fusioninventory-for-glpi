@@ -32,155 +32,148 @@
    ----------------------------------------------------------------------
  */
 
-function pluginFusinvinventoryInstall() {
+function pluginFusinvinventoryInstall($version, $migration='') {
    global $DB,$LANG;
 
-   // Get informations of plugin
-   $a_plugin = plugin_version_fusinvinventory();
-
-   include (GLPI_ROOT . "/plugins/fusinvinventory/install/update.php");
-   $version_detected = pluginfusinvinventoryGetCurrentVersion($a_plugin['version']);
-   if ((isset($version_detected))
-           AND ($version_detected != $a_plugin['version'])
-           AND $version_detected!='0') {
-
-      // Update
-      pluginFusinvinventoryUpdate($version_detected);
-   } else if ((isset($version_detected)) AND ($version_detected == $a_plugin['version'])) {
-      return;
-   } else {
-      // Installation
-      // Add new module in plugin_fusioninventory (core)
-
-      // Create database
-      $empty_sql = "plugin_fusinvinventory-".$a_plugin['version']."-empty.sql";
-      foreach (array($empty_sql, 'usbid.sql', 'pciid.sql') as $sql) {
-         //Add tables for pciids
-         $DB_file = GLPI_ROOT ."/plugins/fusinvinventory/install/mysql/$sql";
-         $DBf_handle = fopen($DB_file, "rt");
-         $sql_query = fread($DBf_handle, filesize($DB_file));
-         fclose($DBf_handle);
-         foreach ( explode(";\n", "$sql_query") as $sql_line) {
-            if (get_magic_quotes_runtime()) $sql_line=Toolbox::stripslashes_deep($sql_line);
-            if (!empty($sql_line)) {
-               $DB->query($sql_line)/* or die($DB->error())*/;
-            }
-         }
-      }
-
-      // Create folder in GLPI_PLUGIN_DOC_DIR
-      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'])) {
-         mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
-      }
-
-      include_once (GLPI_ROOT . "/plugins/fusioninventory/inc/staticmisc.class.php");
-      include_once (GLPI_ROOT . "/plugins/fusinvinventory/inc/staticmisc.class.php");
-      $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
-      PluginFusioninventoryProfile::initProfile($a_plugin['shortname'], $plugins_id);
-      PluginFusioninventoryProfile::changeProfile($plugins_id);
-
-      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
-      $input = array();
-      $input['plugins_id'] = $plugins_id;
-      $input['modulename'] = "INVENTORY";
-      $input['is_active']  = 1;
-      $input['exceptions'] = exportArrayToDB(array());
-      $input['url']        = '';
-      $PluginFusioninventoryAgentmodule->add($input);
-
-      $input['modulename'] = "ESX";
-      $input['is_active']  = 0;
-      $input['url'] = PluginFusioninventoryRestCommunication::getDefaultRestURL($_SERVER['HTTP_REFERER'], 
-                                                                                 'fusinvinventory', 
-                                                                                 'esx');
-      $PluginFusioninventoryAgentmodule->add($input);
-
-       include(GLPI_ROOT . "/plugins/fusinvinventory/inc/config.class.php");
-      // Create configuration
-      $PluginFusinvinventoryConfig = new PluginFusinvinventoryConfig();
-      $PluginFusinvinventoryConfig->initConfigModule();
-
-      // Récupérer la config des entités des regles OCS
-      if (!class_exists('PluginFusinvinventoryRuleEntityCollection')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusinvinventory/inc/ruleentitycollection.class.php");
-      }
-      if (!class_exists('PluginFusinvinventoryRuleEntity')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusinvinventory/inc/ruleentity.class.php");
-      }
-      $Rule = new Rule();
-      $RuleCriteria = new RuleCriteria();
-      $RuleAction = new RuleAction();
-
-      $a_rules = $Rule->find("`sub_type`='RuleOcs'", "`ranking`");
-      foreach($a_rules as $data) {
-         $rulecollection = new PluginFusinvinventoryRuleEntityCollection();
-         $input = $data;
-         unset($input['id']);
-         $input['sub_type'] = 'PluginFusinvinventoryRuleEntity';
-         $rule_id = $rulecollection->add($input);
-
-         // Add criteria
-         $rule = $rulecollection->getRuleClass();
-         $rulecriteria = new RuleCriteria(get_class($rule));
-         $a_criteria = $RuleCriteria->find("`rules_id`='".$data['id']."'");
-         foreach ($a_criteria as $datacrit) {
-            $input = $datacrit;
-            unset($input['id']);
-            switch ($input['criteria']) {
-
-                  case 'IPADDRESS':
-                     $input['criteria'] = 'ip';
-                     break;
-
-                  case 'TAG':
-                     $input['criteria'] = 'tag';
-                     break;
-
-                  case 'DOMAIN':
-                     $input['criteria'] = 'domain';
-                     break;
-
-                  case 'IPSUBNET':
-                     $input['criteria'] = 'subnet';
-                     break;
-
-                  case 'SSN':
-                     $input['criteria'] = 'serial';
-                     break;
-
-                  case 'MACHINE_NAME':
-                     $input['criteria'] = 'name';
-                     break;
-            }
-
-            $input['rules_id'] = $rule_id;
-            if (($input['criteria'] != 'OCS_SERVER')
-                  AND ($input['criteria'] != 'DESCRIPTION')){
-               $rulecriteria->add($input);
-            }
-         }
-
-         // Add action
-         $ruleaction = new RuleAction(get_class($rule));
-         $a_rules = $RuleAction->find("`rules_id`='".$data['id']."'");
-         foreach ($a_rules as $dataaction) {
-            $input = $dataaction;
-            unset($input['id']);
-            if ($input['field'] == '_ignore_ocs_import') {
-               $input['field'] = "_ignore_import";
-            }
-            $input['rules_id'] = $rule_id;
-            $ruleaction->add($input);
-         }
-      }
-
-      // Import OCS locks
-      include_once GLPI_ROOT . "/plugins/fusinvinventory/inc/lock.class.php";
-      include_once GLPI_ROOT . "/plugins/fusinvinventory/inc/lib.class.php";
-      include_once GLPI_ROOT . "/plugins/fusinvinventory/inc/libhook.class.php";
-      $PluginFusinvinventoryLock = new PluginFusinvinventoryLock();
-      $PluginFusinvinventoryLock->importFromOcs();
+   if ($migration == '') {
+      $migration = new Migration($version);
    }
+   
+   // Get informations of plugin
+
+
+   // Installation
+   // Add new module in plugin_fusioninventory (core)
+   $a_plugin = plugin_version_fusinvinventory();
+   // Create database
+   $empty_sql = "plugin_fusinvinventory-".$a_plugin['version']."-empty.sql";
+   foreach (array($empty_sql, 'usbid.sql', 'pciid.sql') as $sql) {
+      //Add tables for pciids
+      $DB_file = GLPI_ROOT ."/plugins/fusinvinventory/install/mysql/$sql";
+      $DBf_handle = fopen($DB_file, "rt");
+      $sql_query = fread($DBf_handle, filesize($DB_file));
+      fclose($DBf_handle);
+      foreach ( explode(";\n", "$sql_query") as $sql_line) {
+         if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
+         if (!empty($sql_line)) {
+            $DB->query($sql_line)/* or die($DB->error())*/;
+         }
+      }
+   }
+
+   // Create folder in GLPI_PLUGIN_DOC_DIR
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'])) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
+   }
+
+   include_once (GLPI_ROOT . "/plugins/fusioninventory/inc/staticmisc.class.php");
+   include_once (GLPI_ROOT . "/plugins/fusinvinventory/inc/staticmisc.class.php");
+   $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
+   PluginFusioninventoryProfile::initProfile($a_plugin['shortname'], $plugins_id);
+   PluginFusioninventoryProfile::changeProfile($plugins_id);
+
+   $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
+   $input = array();
+   $input['plugins_id'] = $plugins_id;
+   $input['modulename'] = "INVENTORY";
+   $input['is_active']  = 1;
+   $input['exceptions'] = exportArrayToDB(array());
+   $input['url']        = '';
+   $PluginFusioninventoryAgentmodule->add($input);
+
+   $input['modulename'] = "ESX";
+   $input['is_active']  = 0;
+   $input['url'] = PluginFusioninventoryRestCommunication::getDefaultRestURL($_SERVER['HTTP_REFERER'], 
+                                                                              'fusinvinventory', 
+                                                                              'esx');
+   $PluginFusioninventoryAgentmodule->add($input);
+
+    include(GLPI_ROOT . "/plugins/fusinvinventory/inc/config.class.php");
+   // Create configuration
+   $PluginFusinvinventoryConfig = new PluginFusinvinventoryConfig();
+   $PluginFusinvinventoryConfig->initConfigModule();
+
+   // Récupérer la config des entités des regles OCS
+   if (!class_exists('PluginFusinvinventoryRuleEntityCollection')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusinvinventory/inc/ruleentitycollection.class.php");
+   }
+   if (!class_exists('PluginFusinvinventoryRuleEntity')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusinvinventory/inc/ruleentity.class.php");
+   }
+   $Rule = new Rule();
+   $RuleCriteria = new RuleCriteria();
+   $RuleAction = new RuleAction();
+
+   $a_rules = $Rule->find("`sub_type`='RuleOcs'", "`ranking`");
+   foreach($a_rules as $data) {
+      $rulecollection = new PluginFusinvinventoryRuleEntityCollection();
+      $input = $data;
+      unset($input['id']);
+      $input['sub_type'] = 'PluginFusinvinventoryRuleEntity';
+      $data['comment'] = addslashes_deep($data['comment']);
+      $rule_id = $rulecollection->add($input);
+
+      // Add criteria
+      $rule = $rulecollection->getRuleClass();
+      $rulecriteria = new RuleCriteria(get_class($rule));
+      $a_criteria = $RuleCriteria->find("`rules_id`='".$data['id']."'");
+      foreach ($a_criteria as $datacrit) {
+         $input = $datacrit;
+         unset($input['id']);
+         switch ($input['criteria']) {
+
+               case 'IPADDRESS':
+                  $input['criteria'] = 'ip';
+                  break;
+
+               case 'TAG':
+                  $input['criteria'] = 'tag';
+                  break;
+
+               case 'DOMAIN':
+                  $input['criteria'] = 'domain';
+                  break;
+
+               case 'IPSUBNET':
+                  $input['criteria'] = 'subnet';
+                  break;
+
+               case 'SSN':
+                  $input['criteria'] = 'serial';
+                  break;
+
+               case 'MACHINE_NAME':
+                  $input['criteria'] = 'name';
+                  break;
+         }
+
+         $input['rules_id'] = $rule_id;
+         if (($input['criteria'] != 'OCS_SERVER')
+               AND ($input['criteria'] != 'DESCRIPTION')){
+            $rulecriteria->add($input);
+         }
+      }
+
+      // Add action
+      $ruleaction = new RuleAction(get_class($rule));
+      $a_rules = $RuleAction->find("`rules_id`='".$data['id']."'");
+      foreach ($a_rules as $dataaction) {
+         $input = $dataaction;
+         unset($input['id']);
+         if ($input['field'] == '_ignore_ocs_import') {
+            $input['field'] = "_ignore_import";
+         }
+         $input['rules_id'] = $rule_id;
+         $ruleaction->add($input);
+      }
+   }
+
+   // Import OCS locks
+   include_once GLPI_ROOT . "/plugins/fusinvinventory/inc/lock.class.php";
+   include_once GLPI_ROOT . "/plugins/fusinvinventory/inc/lib.class.php";
+   include_once GLPI_ROOT . "/plugins/fusinvinventory/inc/libhook.class.php";
+   $PluginFusinvinventoryLock = new PluginFusinvinventoryLock();
+   $PluginFusinvinventoryLock->importFromOcs();
 }
 
 

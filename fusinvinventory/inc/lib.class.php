@@ -125,7 +125,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          //Sections update
          $xmlSections = $this->_getXMLSections($xml);
          $this->updateLibMachine($xmlSections, $internalId);
-         
+
          $PluginFusinvinventoryLibhook = new PluginFusinvinventoryLibhook();
          $PluginFusinvinventoryLibhook->writeXMLFusion($items_id, $xml->asXML());
       } else {
@@ -600,7 +600,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       }
       if ($sectionsToAdd) {
          $datasToAdd = array();
-
+ 
          //format data to send to hook createSection
          foreach($sectionsToAdd as $arrayId => $serializedSection) {
             array_push($datasToAdd, array(

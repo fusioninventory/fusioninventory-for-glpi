@@ -45,13 +45,16 @@ if(!isset($_POST["sort"])) $_POST["sort"] = "";
 if(!isset($_POST["order"])) $_POST["order"] = "";
 if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 
-$PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
+$pFusioninventoryAgent = new PluginFusioninventoryAgent;
+$pFusioninventoryAgent->getFromDB($_POST["id"]);
 
 switch($_POST['glpi_tab']) {
    case -1 :
-      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
-      $PluginFusioninventoryAgentmodule->showFormAgentException($_POST["id"]);
-      CommonGLPI::displayStandardTab($PluginFusioninventoryAgent, $_REQUEST['glpi_tab']);
+      $pFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+      $pFusioninventoryAgentmodule->showFormAgentException($_POST["id"]);
+      CommonGLPI::displayStandardTab($pFusioninventoryAgent, $_REQUEST['glpi_tab']);
+      Log::showForItem($pFusioninventoryAgent);
+
       break;
 
    case 1 :
@@ -62,6 +65,9 @@ switch($_POST['glpi_tab']) {
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
       $PluginFusioninventoryAgentmodule->showFormAgentException($_POST["id"]);
       break;
+   
+   case 3:
+      Log::showForItem($pFusioninventoryAgent);
 
    default :
       CommonGLPI::displayStandardTab($PluginFusioninventoryAgent, $_REQUEST['glpi_tab']);

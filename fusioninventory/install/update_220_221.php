@@ -33,21 +33,11 @@
  */
 
 // Update from 2.2.0 to 2.2.1
-function update220to221() {
+function update220to221($migrationname) {
    global $DB, $LANG;
 
-   echo "<strong>Update 2.2.0 to 2.2.1</strong><br/>";
-   echo "</td>";
-   echo "</tr>";
-
-   echo "<tr class='tab_bg_1'>";
-   echo "<td align='center'>";
-
-   plugin_fusioninventory_displayMigrationMessage("221"); // Start
-
-   plugin_fusioninventory_displayMigrationMessage("221", $LANG['update'][141]); // Updating schema
-
-   plugin_fusioninventory_displayMigrationMessage("221", $LANG['update'][141]." Clean networkports not linked with devices");
+   $migration = new $migrationname("2.2.1");
+   
    // Clean fusion IP when networkequipments_id has been deleted
    // (bug from Tracker 2.1.3 and before)
    $query = "SELECT `glpi_plugin_fusioninventory_networking_ifaddr`.*
@@ -63,7 +53,7 @@ function update220to221() {
       }
    }
 
-   plugin_fusioninventory_displayMigrationMessage("221", $LANG['update'][141]." Clean networkequipment IPs not linked with networkequipment (bug Tracker)");
+   $migration->displayMessage("Clean networkequipment IPs not linked with networkequipment (bug Tracker)");
    // delete when IP not valid (bug from Tracker 2.1.3 and before)
    $query = "SELECT * FROM `glpi_plugin_fusioninventory_networking_ifaddr`";
    if ($result=$DB->query($query)) {
@@ -75,7 +65,7 @@ function update220to221() {
          }
       }
    }
-   plugin_fusioninventory_displayMigrationMessage("221", $LANG['update'][141]." Different cleaning DB");
+   $migration->displayMessage("Different cleaning DB");
    // locations with entity -1 (bad code)
    $query = "DELETE FROM `glpi_locations`
              WHERE `entities_id`='-1' ";
@@ -118,14 +108,6 @@ function update220to221() {
       SET `version` = '2.2.1'
       WHERE `ID`=1
       LIMIT 1");
-
-   plugin_fusioninventory_displayMigrationMessage("221"); // End
-
-   echo "</td>";
-   echo "</tr>";
-
-   echo "<tr class='tab_bg_1'>";
-   echo "<td align='center'>";
 
 }
 

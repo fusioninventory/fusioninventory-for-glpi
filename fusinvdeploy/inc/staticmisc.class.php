@@ -1,0 +1,273 @@
+<?php
+
+/*
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2003-2008 by the INDEPNET Development Team.
+
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org//
+   ----------------------------------------------------------------------
+
+   LICENSE
+
+   This file is part of FusionInventory plugins.
+
+   FusionInventory is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2 of the License, or
+   (at your option) any later version.
+
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+   ------------------------------------------------------------------------
+ */
+
+// Original Author of file: David DURIEUX
+// Purpose of file:
+// ----------------------------------------------------------------------
+
+if (!defined('GLPI_ROOT')) {
+   die("Sorry. You can't access directly to this file");
+}
+
+class PluginFusinvdeployStaticmisc {
+
+   const DEPLOYMETHOD_INSTALL   = 'deployinstall';
+   const DEPLOYMETHOD_UNINSTALL = 'deployuninstall';
+
+   static function task_methods() {
+      global $LANG;
+
+      return array(array('module'         => 'fusinvdeploy',
+                         'method'         => self::DEPLOYMETHOD_INSTALL,
+                         'name'           => $LANG['plugin_fusinvdeploy']['package'][16],
+                         'task'           => "DEPLOY",
+                         'use_rest'       => true),
+#                   array('module'         => 'fusinvdeploy',
+#                         'method'         => self::DEPLOYMETHOD_UNINSTALL,
+#                         'name'           => $LANG['plugin_fusinvdeploy']['package'][17],
+#                         'task'           => "DEPLOY",
+#                         'use_rest'       => true)
+                         );
+   }
+
+   static function getItemtypeActions() {
+      return array('PluginFusinvdeployPackage');
+   }
+   /*
+   # Actions with itemtype autorized
+   static function task_action_deploy_install() {
+      return self::getItemtypeActions();
+   }
+
+   # Actions with itemtype autorized
+   static function task_action_deploy_uninstall() {
+      return self::getItemtypeActions();
+   }*/
+
+   static function getDefinitionType() {
+      global $LANG;
+      return array(0 => DROPDOWN_EMPTY_VALUE,
+                   'PluginFusinvdeployPackage' => $LANG['plugin_fusinvdeploy']['package'][7]);
+   }
+
+   static function getActionType() {
+      global $LANG;
+      return array(0 => DROPDOWN_EMPTY_VALUE,
+                   'PluginFusinvdeployGroup' => $LANG['plugin_fusinvdeploy']['group'][3],
+                   'Computer' => $LANG['Menu'][0],
+                   'Group' => $LANG['common'][35]
+                  );
+   }
+
+   static function task_definitiontype_deployinstall($a_itemtype) {
+      return self::getDefinitionType();
+   }
+
+   static function task_definitiontype_deployuninstall($a_itemtype) {
+      return self::getDefinitionType();
+   }
+
+   static function task_actiontype_deployinstall($a_itemtype) {
+      return self::getActionType();
+   }
+
+   static function task_actiontype_deployuninstall($a_itemtype) {
+      return self::getActionType();
+   }
+
+   static function getDeploySelections() {
+      global $LANG;
+
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name']        = 'definitionselectiontoadd';
+      return Dropdown::show("PluginFusinvdeployPackage", $options);
+   }
+
+  /* static function getDeployActions() {
+      global $LANG;
+
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = haveAccessToEntity($_SESSION['glpiactive_entity'],1);
+      $options['name']        = 'actionselectiontoadd';
+      return Dropdown::show("Computer", $options);
+   }*/
+
+   static function getDeployActions() {
+      global $LANG;
+
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name']        = 'actionselectiontoadd';
+      return Dropdown::show("PluginFusinvdeployGroup", $options);
+
+   }
+
+   static function task_definitionselection_PluginFusinvdeployPackage_deployinstall() {
+      return self::getDeploySelections();
+   }
+
+   static function task_definitionselection_PluginFusinvdeployPackage_deployuninstall() {
+      return self::getDeploySelections();
+   }
+
+   static function task_definitionselection_PluginFusinvdeployGroup_deployinstall() {
+      return self::getDeployActions();
+   }
+
+   static function task_definitionselection_PluginFusinvdeployGroup_deployuninstall() {
+      return self::getDeployActions();
+   }
+
+   static function task_definitionselection_Computer_deployinstall() {
+      $options = array();
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name']        = 'actionselectiontoadd';
+      return Dropdown::show("Computer", $options);
+   }
+
+   static function task_definitionselection_Group_deployinstall() {
+      $options = array();
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name']        = 'actionselectiontoadd';
+      return Dropdown::show("Group", $options);
+   }
+
+   static function task_actionselection_PluginFusioninventoryAgent_deployinstall() {
+      return self::getDeployActions();
+   }
+
+   static function task_actionselection_PluginFusioninventoryAgent_deployuninstall() {
+      return self::getDeployActions();
+   }
+
+   static function displayMenu() {
+      global $LANG;
+
+      $a_menu = array();
+      if (PluginFusioninventoryProfile::haveRight("fusinvdeploy", "packages", "r")) {
+         $a_menu[0]['name'] = $LANG['plugin_fusinvdeploy']["package"][6];
+         $a_menu[0]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_package.png";
+         $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/package.php";
+      }
+
+
+      $a_menu[1]['name'] = $LANG['plugin_fusinvdeploy']['form']['mirror'][1];
+      $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_files.png";
+      $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/mirror.php";
+
+      $a_menu[2]['name'] = $LANG['plugin_fusinvdeploy']['task'][0];
+      $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_task.png";
+      $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/task.php";
+
+      $a_menu[3]['name'] = $LANG['plugin_fusinvdeploy']['group'][0];
+      $a_menu[3]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_group.png";
+      $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/group.php";
+
+      if (PluginFusioninventoryProfile::haveRight("fusinvdeploy", "status", "r")) {
+         $a_menu[4]['name'] = $LANG['plugin_fusinvdeploy']["deploystatus"][0];
+         $a_menu[4]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_deploy_status.png";
+         $a_menu[4]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/deploystate.php";
+      }
+
+      return $a_menu;
+   }
+
+
+   static function profiles() {
+      global $LANG;
+
+      return array(array('profil'  => 'packages',
+                         'name'    => $LANG['plugin_fusinvdeploy']['profile'][2]),
+                   array('profil'  => 'status',
+                         'name'    => $LANG['plugin_fusinvdeploy']['profile'][3]));
+   }
+
+   static function task_deploy_getParameters() {
+      global $CFG_GLPI;
+
+      return array ('periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'Deploy',
+                    'remote' => PluginFusioninventoryAgentmodule::getUrlForModule('Deploy'));
+   }
+
+   static function json_indent($json) {
+      $result      = '';
+      $pos         = 0;
+      $strLen      = strlen($json);
+      $indentStr   = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+      $newLine     = "<br />";
+      $prevChar    = '';
+      $outOfQuotes = true;
+
+      for ($i=0; $i<=$strLen; $i++) {
+
+         // Grab the next character in the string.
+         $char = substr($json, $i, 1);
+
+         // Are we inside a quoted string?
+         if ($char == '"' && $prevChar != '\\') {
+            $outOfQuotes = !$outOfQuotes;
+
+           // If this character is the end of an element,
+           // output a new line and indent the next line.
+         } else if(($char == '}' || $char == ']') && $outOfQuotes) {
+            $result .= $newLine;
+            $pos --;
+            for ($j=0; $j<$pos; $j++) {
+               $result .= $indentStr;
+            }
+         }
+
+         // Add the character to the result string.
+         $result .= $char;
+
+         // If the last character was the beginning of an element,
+         // output a new line and indent the next line.
+         if (($char == ',' || $char == '{' || $char == '[') && $outOfQuotes) {
+            $result .= $newLine;
+            if ($char == '{' || $char == '[') {
+               $pos ++;
+            }
+
+            for ($j = 0; $j < $pos; $j++) {
+               $result .= $indentStr;
+            }
+         }
+
+         $prevChar = $char;
+      }
+
+      return $result;
+   }
+}
+
+?>

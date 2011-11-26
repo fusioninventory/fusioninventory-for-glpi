@@ -631,7 +631,7 @@ function plugin_fusinvsnmp_install() {
    global $DB, $LANG, $CFG_GLPI;
 
    include_once (GLPI_ROOT . "/plugins/fusinvsnmp/install/install.php");
-   pluginFusinvsnmpInstall();
+   pluginFusinvsnmpInstall(PLUGIN_FUSINVSNMP_VERSION);
 
    return true;
 }
