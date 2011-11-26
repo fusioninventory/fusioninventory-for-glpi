@@ -212,7 +212,11 @@ class PluginFusinvinventoryLibhook {
                if (isset($dataSection['BDATE'])) {
                   $a_split = explode("/", $dataSection['BDATE']);
                   // 2011-06-29 13:19:48
-                  $inputCext['bios_date'] = $a_split[2]."-".$a_split[0]."-".$a_split[1];
+                  if (isset($a_split[0])
+                          AND isset($a_split[1])
+                          AND isset($a_split[2])) {
+                     $inputCext['bios_date'] = $a_split[2]."-".$a_split[0]."-".$a_split[1];
+                  }
                }
                if (isset($dataSection['BVERSION'])) {
                   $inputCext['bios_version'] = $dataSection['BVERSION'];
@@ -859,7 +863,11 @@ class PluginFusinvinventoryLibhook {
                   if (isset($dataSection['BDATE'])) {
                      $a_split = explode("/", $dataSection['BDATE']);
                      // 2011-06-29 13:19:48
-                     $inputCext['bios_date'] = $a_split[2]."-".$a_split[0]."-".$a_split[1];
+                     if (isset($a_split[0])
+                          AND isset($a_split[1])
+                          AND isset($a_split[2])) {
+                        $inputCext['bios_date'] = $a_split[2]."-".$a_split[0]."-".$a_split[1];
+                      }
                   }
                   if (isset($dataSection['BVERSION'])) {
                      $inputCext['bios_version'] = $dataSection['BVERSION'];
