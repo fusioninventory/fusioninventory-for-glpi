@@ -105,13 +105,17 @@ function pluginFusinvdeployUninstall() {
    // Get informations of plugin
    $a_plugin = plugin_version_fusinvdeploy();
 
-   $setup = new PluginFusioninventorySetup();
+   if (class_exists('PluginFusioninventorySetup')) {
+      $setup = new PluginFusioninventorySetup();
 
-   if (file_exists(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'])) {
-      $setup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
+      if (file_exists(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'])) {
+         $setup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
+      }
    }
 
-   PluginFusioninventoryProfile::cleanProfile($a_plugin['shortname']);
+   if (class_exists('PluginFusioninventoryProfile')) {
+      PluginFusioninventoryProfile::cleanProfile($a_plugin['shortname']);
+   }
 
 
    //clean tasks
@@ -174,14 +178,16 @@ function pluginFusinvdeployUninstall() {
       }
    }
 
-   $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
+   if (class_exists('PluginFusioninventoryModule')) {
+      $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
 
-   $agentmodule = new PluginFusioninventoryAgentmodule;
-   $agentmodule->deleteModule($plugins_id);
+      $agentmodule = new PluginFusioninventoryAgentmodule;
+      $agentmodule->deleteModule($plugins_id);
 
-   $config = new PluginFusioninventoryConfig();
-   $config->cleanConfig(
-           PluginFusioninventoryModule::getModuleId($a_plugin['shortname']));
+      $config = new PluginFusioninventoryConfig();
+      $config->cleanConfig(
+               PluginFusioninventoryModule::getModuleId($a_plugin['shortname']));
+   }
 
    return true;
 }
