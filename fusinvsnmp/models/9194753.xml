@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[9194753]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1700</key>
 	<comments><![CDATA[Blue Coat PacketShaper 8.6.5
 

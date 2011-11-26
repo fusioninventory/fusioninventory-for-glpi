@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[5152816]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1865</key>
 	<comments><![CDATA[HP J4899A ProCurve Switch 2650, revision H.07.02, ROM H.07.01 (/sw/code/build/fish(f02))
 

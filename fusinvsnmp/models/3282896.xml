@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[3282896]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking0007</key>
 	<comments><![CDATA[24-Port Managed 10/100 Switch w/WebView
 

@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[9572539]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1891</key>
 	<comments><![CDATA[Cisco Internetwork Operating System Software ^M
 IOS (tm) C3550 Software (C3550-I9Q3L2-M), Version 12.1(9)EA1c, RELEASE SOFTWARE (fc1)^M

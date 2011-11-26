@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[9402046]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1900</key>
 	<comments><![CDATA[Cisco Internetwork Operating System Software ^M
 IOS (tm) C1100 Software (C1100-K9W7-M), Version 12.3(2)JA2, RELEASE SOFTWARE (fc1)^M

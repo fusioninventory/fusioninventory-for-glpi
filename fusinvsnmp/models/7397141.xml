@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[7397141]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1840</key>
 	<comments><![CDATA[Cisco Internetwork Operating System Software ^M
 IOS (tm) C2950lre Software (C2950lre-I6K2L2Q4-M), Version 12.1(22)EA11, RELEASE SOFTWARE (fc2)^M

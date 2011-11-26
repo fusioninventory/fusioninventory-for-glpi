@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[8171120]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking0057</key>
 	<comments><![CDATA[Brocade 4Gb SAN Switch Module for IBM eServer BladeCenter
 

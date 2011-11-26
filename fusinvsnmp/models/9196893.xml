@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[9196893]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1932</key>
 	<comments><![CDATA[Juniper Networks, Inc. ex3200-48p internet router, kernel JUNOS 10.3R1.9 #0: 2010-08-13 12:43:56 UTC     builder@zigeth.juniper.net:/volume/build/junos/10.3/release/10.3R1.9/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-08-13 12:28:47 UTC Copyr
 

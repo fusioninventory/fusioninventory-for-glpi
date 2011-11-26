@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[5856646]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1895</key>
 	<comments><![CDATA[ProCurve J4900B Switch 2626, revision H.10.50, ROM H.08.02 (/sw/code/build/fish(mkfs))
 

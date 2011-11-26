@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[7250650]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1807</key>
 	<comments><![CDATA[Cisco IOS Software, C870 Software (C870-ADVIPSERVICESK9-M), Version 12.4(24)T2, RELEASE SOFTWARE (fc2)^M
 Technical Support: http://www.cisco.com/techsupport^M

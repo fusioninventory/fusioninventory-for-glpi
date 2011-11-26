@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[268257]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1876</key>
 	<comments><![CDATA[Cisco IOS Software, s72033_rp Software (s72033_rp-ADVENTERPRISEK9_WAN-M), Version 12.2(33)SXI1, RELEASE SOFTWARE (fc3)^M
 Technical Support: http://www.cisco.com/techsupport^M

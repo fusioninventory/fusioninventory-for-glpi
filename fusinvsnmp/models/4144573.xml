@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[4144573]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1636</key>
 	<comments><![CDATA[ProCurve J4819A Switch 5308xl, revision E.11.03, ROM E.05.05 (/sw/code/build/alpmo(alp11))
 

@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[2000822]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1887</key>
 	<comments><![CDATA[Cisco IOS Software, 2800 Software (C2800NM-ADVENTERPRISEK9-M), Version 12.4(13b), RELEASE SOFTWARE (fc3)^M
 Technical Support: http://www.cisco.com/techsupport^M

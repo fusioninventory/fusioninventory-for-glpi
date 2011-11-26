@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[9404667]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1858</key>
 	<comments><![CDATA[HP J4819A ProCurve Switch 5308xl, revision E.10.74, ROM E.05.05 (/sw/code/build/alpmo(m35))
 

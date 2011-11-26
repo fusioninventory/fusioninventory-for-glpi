@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[2759260]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1920</key>
 	<comments><![CDATA[Juniper Networks, Inc. ex4200-48t internet router, kernel JUNOS 10.4R4.5 #0: 2011-05-06 05:43:08 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R4.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-05-06 05:25:39 UTC Copyri
 

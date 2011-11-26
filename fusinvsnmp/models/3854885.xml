@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[3854885]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1918</key>
 	<comments><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 12.2(46)SE, RELEASE SOFTWARE (fc2)^M
 Copyright (c) 1986-2008 by Cisco Systems, Inc.^M

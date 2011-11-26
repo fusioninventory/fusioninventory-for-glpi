@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[631569]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1851</key>
 	<comments><![CDATA[Cisco IOS Software, C3560 Software (C3560-IPSERVICESK9-M), Version 12.2(25)SEB4, RELEASE SOFTWARE (fc1)^M
 Copyright (c) 1986-2005 by Cisco Systems, Inc.^M

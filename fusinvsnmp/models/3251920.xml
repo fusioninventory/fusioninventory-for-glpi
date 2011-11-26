@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[3251920]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1839</key>
 	<comments><![CDATA[Cisco IOS Software, C850 Software (C850-ADVSECURITYK9-M), Version 12.4(15)T13, RELEASE SOFTWARE (fc3)^M
 Technical Support: http://www.cisco.com/techsupport^M

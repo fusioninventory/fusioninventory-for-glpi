@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[5826776]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking0001</key>
 	<comments><![CDATA[Blue Coat SG200 Series, ProxySG Version: SGOS 5.1.4.9, Release id: 29032
 

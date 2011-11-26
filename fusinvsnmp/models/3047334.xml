@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[3047334]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1883</key>
 	<comments><![CDATA[Cisco Internetwork Operating System Software^M
 IOS (tm) 4000 Software (XX-D-M), Version 10.3(4), RELEASE SOFTWARE (fc1)^M

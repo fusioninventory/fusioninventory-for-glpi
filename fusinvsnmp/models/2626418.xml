@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[2626418]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1775</key>
 	<comments><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(25)SEE3, RELEASE SOFTWARE (fc2)
 Copyright (c) 1986-2007 by Cisco Systems, Inc.

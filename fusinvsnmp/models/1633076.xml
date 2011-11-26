@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[1633076]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1852</key>
 	<comments><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE4, RELEASE SOFTWARE (fc1)
 Technical Support: http://www.cisco.com/techsupport

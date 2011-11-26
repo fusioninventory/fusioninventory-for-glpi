@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[683091]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1886</key>
 	<comments><![CDATA[Cisco IOS Software, 2800 Software (C2800NM-ADVIPSERVICESK9-M), Version 12.4(12), RELEASE SOFTWARE (fc1)^M
 Technical Support: http://www.cisco.com/techsupport^M

@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[9188035]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1800</key>
 	<comments><![CDATA[Cisco IOS Software, C1700 Software (C1700-ADVIPSERVICESK9-M), Version 12.4(23), RELEASE SOFTWARE (fc1)^M
 Technical Support: http://www.cisco.com/techsupport^M

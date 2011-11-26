@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[4471169]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1777</key>
 	<comments><![CDATA[Cisco Internetwork Operating System Software ^M
 IOS (tm) s72033_rp Software (s72033_rp-ADVIPSERVICESK9_WAN-M), Version 12.2(18)SXF17a, RELEASE SOFTWARE (fc1)^M

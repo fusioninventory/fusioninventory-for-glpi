@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[2398915]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1901</key>
 	<comments><![CDATA[Cisco IOS Software, C1310 Software (C1310-K9W7-M), Version 12.3(7)JA1, RELEASE SOFTWARE (fc1)^M
 Technical Support: http://www.cisco.com/techsupport^M

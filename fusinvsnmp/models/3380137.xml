@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[3380137]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking0160</key>
 	<comments><![CDATA[6.3.3.305.R01 Service Release, February 28, 2009.
 

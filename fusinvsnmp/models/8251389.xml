@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[8251389]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1914</key>
 	<comments><![CDATA[Ethernet Switch 470-48T      HW:32       FW:3.6.0.7   SW:v3.7.2.13  BN:00 ISVN:2 (c) Nortel Networks
 

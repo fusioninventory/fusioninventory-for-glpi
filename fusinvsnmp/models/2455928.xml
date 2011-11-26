@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[2455928]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1929</key>
 	<comments><![CDATA[Cisco Internetwork Operating System Software ^M
 IOS (tm) s72033_rp Software (s72033_rp-JK9S-M), Version 12.2(18)SXD5, RELEASE SOFTWARE (fc3)^M

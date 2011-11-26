@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[7104444]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1795</key>
 	<comments><![CDATA[Cisco Internetwork Operating System Software^M 
 IOS (tm) Catalyst 4000 L3 Switch Software (cat4000-I9K91S-M), Version 12.2(20)EWA3, RELEASE SOFTWARE (fc1)^M

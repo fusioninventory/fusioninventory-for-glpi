@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[8915309]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1873</key>
 	<comments><![CDATA[Cisco Internetwork Operating System Software ^M
 IOS (tm) 3700 Software (C3725-IS-M), Version 12.3(5a), RELEASE SOFTWARE (fc1)^M

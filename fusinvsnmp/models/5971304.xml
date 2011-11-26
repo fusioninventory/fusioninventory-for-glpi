@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[5971304]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1905</key>
 	<comments><![CDATA[Cisco Internetwork Operating System Software ^M
 IOS (tm) C2970 Software (C2970-I6K2L2-M), Version 12.1(19)EA1d, RELEASE SOFTWARE (fc1)^M

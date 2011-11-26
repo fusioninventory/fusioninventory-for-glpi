@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[9523642]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1804</key>
 	<comments><![CDATA[Cisco Internetwork Operating System Software ^M
 IOS (tm) C2600 Software (C2600-ADVIPSERVICESK9-M), Version 12.3(26), RELEASE SOFTWARE (fc2)^M

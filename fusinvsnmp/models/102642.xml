@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[102642]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1792</key>
 	<comments><![CDATA[Cisco Internetwork Operating System Software^M 
 IOS (tm) C2900XL Software (C2900XL-C3H2S-M), Version 12.0(5)WC17, RELEASE SOFTWARE (fc1)^M

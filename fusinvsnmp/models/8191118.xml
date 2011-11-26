@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[8191118]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1906</key>
 	<comments><![CDATA[ProCurve J4899B Switch 2650, revision H.10.50, ROM H.08.02 (/sw/code/build/fish(mkfs))
 

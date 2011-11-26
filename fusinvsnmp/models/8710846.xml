@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[8710846]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking0629</key>
 	<comments><![CDATA[H3C Comware Platform Software, Software Version 5.20, Release 6605P03^M
 H3C S7503E^M

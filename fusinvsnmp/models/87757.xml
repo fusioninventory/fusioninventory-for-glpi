@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[87757]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1889</key>
 	<comments><![CDATA[Cisco NX-OS(tm) n5000, Software (n5000-uk9), Version 4.2(1)N1(1), RELEASE SOFTWARE Copyright (c) 2002-2010 by Cisco Systems, Inc. Device Manager Version 5.0(1a),  Compiled 4/29/2010 19:00:00
 

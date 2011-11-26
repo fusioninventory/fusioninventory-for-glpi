@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[1633630]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1940</key>
 	<comments><![CDATA[AcceleratorOS, Accelerator 6900 Series
 Version v6.1.4 (Build1.11)

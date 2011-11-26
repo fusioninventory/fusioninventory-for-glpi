@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[8480734]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1850</key>
 	<comments><![CDATA[Cisco Systems, Inc. WS-C2948G-GE-TX
 Cisco Catalyst Operating System Software, Version 8.3(2)GLX

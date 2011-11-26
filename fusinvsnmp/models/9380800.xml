@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[9380800]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1880</key>
 	<comments><![CDATA[Cisco IOS Software, 7200 Software (C7200P-ADVIPSERVICESK9-M), Version 12.4(20)T1, RELEASE SOFTWARE (fc3)^M
 Technical Support: http://www.cisco.com/techsupport^M

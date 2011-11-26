@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[1508091]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1783</key>
 	<comments><![CDATA[Cisco Internetwork Operating System Software ^M
 IOS (tm) C2940 Software (C2940-I6Q4L2-M), Version 12.1(22)EA12, RELEASE SOFTWARE (fc1)^M

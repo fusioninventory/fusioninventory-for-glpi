@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[4983088]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1913</key>
 	<comments><![CDATA[Ethernet Routing Switch 4548GT        HW:04       FW:5.3.0.3   SW:v5.3.1.001 BN:01 (c) Nortel Networks
 

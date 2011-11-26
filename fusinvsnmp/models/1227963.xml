@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[1227963]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1629</key>
 	<comments><![CDATA[HP J4813A ProCurve Switch 2524, revision F.05.55, ROM F.02.01  (/sw/code/build/info(s02))
 

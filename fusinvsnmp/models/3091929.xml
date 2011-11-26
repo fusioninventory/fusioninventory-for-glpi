@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[3091929]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1123</key>
 	<comments><![CDATA[DGS-3024 Gigabit Ethernet Switch
 

@@ -39,12 +39,6 @@ if (!defined('GLPI_ROOT')) {
 //class PluginFusinvsnmpImportExport extends CommonDBTM {
 class PluginFusinvsnmpImportExport extends CommonGLPI {
 
-    $mapping_types = array(
-        1 => "Computer",
-        2 => "NetworkEquipment",
-        3 => "Printer"
-    );
-
     function export($ID_model) {
         global $DB;
 
@@ -252,7 +246,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
                 unset($mapping_type);
             }
             if (isset($child->mapping_type)) {
-                $mapping_type = $mapping_types[$child->mapping_type];
+                $mapping_type = $child->mapping_type;
             }
             $input["plugin_fusioninventory_mappings_id"] = 0;
             if (isset($child->mapping_name)) {
@@ -299,7 +293,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
             )
             VALUES(
                 '".(string)$xml->name."',
-                '".$mapping_types[(string)$xml->type]."',
+                '".(string)$xml->type."',
                 '".(string)$xml->key."',
                 '".(string)$xml->comments."'
             );";
@@ -332,7 +326,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
                 $oid_port_dyn = $child->dynamicport;
             }
             if (isset($child->mapping_type)) {
-                $mapping_type = $mapping_types[$child->mapping_type];
+                $mapping_type = $child->mapping_type;
             }
             if (isset($child->mapping_name)) {
                 $mapping_name = $child->mapping_name;

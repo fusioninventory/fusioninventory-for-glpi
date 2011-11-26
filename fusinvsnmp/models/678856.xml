@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[678856]]></name>
-	<type>2</type>
+	<type>NetworkEquipment</type>
 	<key>Networking1885</key>
 	<comments><![CDATA[Cisco Internetwork Operating System Software ^M
 IOS (tm) 7300 Software (C7300-P-M), Version 12.2(20)S6, RELEASE SOFTWARE (fc4)^M
