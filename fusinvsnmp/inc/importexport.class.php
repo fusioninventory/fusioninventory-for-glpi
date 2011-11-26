@@ -39,6 +39,12 @@ if (!defined('GLPI_ROOT')) {
 //class PluginFusinvsnmpImportExport extends CommonDBTM {
 class PluginFusinvsnmpImportExport extends CommonGLPI {
 
+    $mapping_types = array(
+        1 => "Computer",
+        2 => "NetworkEquipment",
+        3 => "Printer"
+    );
+
     function export($ID_model) {
         global $DB;
 
@@ -168,23 +174,6 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
         $PluginFusioninventoryMapping = new PluginFusioninventoryMapping();
 
         $xml = simplexml_load_file($file,'SimpleXMLElement', LIBXML_NOCDATA);
-        $type = (string)$xml->type;
-        switch ($type) {
-
-        case '1':
-            $type = "Computer";
-            break;
-
-        case '2':
-            $type = "NetworkEquipment";
-            break;
-
-        case '3':
-            $type = "Printer";
-            break;
-
-        }
-
 
         // check if the model already exists
         $query = "SELECT id
@@ -254,21 +243,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
                     unset($mapping_type);
                 }
                 if (isset($child->mapping_type)) {
-                    switch($child->mapping_type) {
-
-                    case '1':
-                        $mapping_type = 'Computer';
-                        break;
-
-                    case '2':
-                        $mapping_type = 'NetworkEquipment';
-                        break;
-
-                    case '3':
-                        $mapping_type = 'Printer';
-                        break;
-
-                    }
+                    $mapping_type = $mapping_types[$child->mapping_type];
                 }
                 $input["plugin_fusioninventory_mappings_id"] = 0;
                 if (isset($child->mapping_name)) {
@@ -297,6 +272,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
             return false;
         } else {
             // the model doesn't exist, create it
+            $type = $mapping_types[(string)$xml->type];
             $query = "INSERT INTO `glpi_plugin_fusinvsnmp_models`
                 (`name`,`itemtype`,`discovery_key`,`comment`)
                 VALUES('".(string)$xml->name."','".$type."','".(string)$xml->key."','".(string)$xml->comments."');";
@@ -330,21 +306,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
                     $oid_port_dyn = $child->dynamicport;
                 }
                 if (isset($child->mapping_type)) {
-                    switch($child->mapping_type) {
-
-                    case '1':
-                        $mapping_type = 'Computer';
-                        break;
-
-                    case '2':
-                        $mapping_type = 'NetworkEquipment';
-                        break;
-
-                    case '3':
-                        $mapping_type = 'Printer';
-                        break;
-
-                    }
+                    $mapping_type = $mapping_types[$child->mapping_type];
                 }
                 if (isset($child->mapping_name)) {
                     $mapping_name = $child->mapping_name;
