@@ -290,7 +290,6 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
         $PluginFusioninventoryMapping = new PluginFusioninventoryMapping();
 
-        $type = $mapping_types[(string)$xml->type];
         $query = "INSERT INTO `glpi_plugin_fusinvsnmp_models`
             (
                 `name`,
@@ -300,7 +299,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
             )
             VALUES(
                 '".(string)$xml->name."',
-                '".$type."',
+                '".$mapping_types[(string)$xml->type]."',
                 '".(string)$xml->key."',
                 '".(string)$xml->comments."'
             );";
