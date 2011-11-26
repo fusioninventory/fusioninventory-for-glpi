@@ -31,7 +31,7 @@
    Purpose of file:
    ----------------------------------------------------------------------
  */
-define ("PLUGIN_FUSIONINVENTORY_VERSION","0.80+1.1");
+define ("PLUGIN_FUSIONINVENTORY_VERSION","0.83+1.0");
 
 include_once(GLPI_ROOT."/inc/includes.php");
 

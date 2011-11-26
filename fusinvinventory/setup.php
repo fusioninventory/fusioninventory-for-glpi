@@ -32,7 +32,7 @@
    ----------------------------------------------------------------------
  */
 
-define ("PLUGIN_FUSINVINVENTORY_VERSION","0.80+1.1");
+define ("PLUGIN_FUSINVINVENTORY_VERSION","0.83+1.0");
 
 // Init the hooks of fusinvdeploy
 function plugin_init_fusinvinventory() {

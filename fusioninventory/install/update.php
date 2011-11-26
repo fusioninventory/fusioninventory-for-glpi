@@ -1837,6 +1837,12 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       Crontask::Register('PluginFusioninventoryTaskjobstatus', 'cleantaskjob', (3600 * 24), 
                          array('mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30));
    }
+   
+   if (!class_exists('PluginFusioninventoryIgnoredimportdevice')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/ignoredimportdevice.class.php");
+   }
+   $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
+   $pfIgnoredimportdevice->install();   
 }
 
 
