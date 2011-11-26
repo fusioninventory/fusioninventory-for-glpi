@@ -5,31 +5,38 @@ ini_set("max_execution_time", "0");
 
 define('PHPUnit_MAIN_METHOD', 'Plugins_Fusioninventory_InventoryLocal::main');
 
+global $CFG_GLPI;
+
 if (!defined('GLPI_ROOT')) {
    define('GLPI_ROOT', '../../../..');
-
    require_once GLPI_ROOT."/inc/includes.php";
-   $_SESSION['glpi_use_mode'] = 2;
-   $_SESSION['glpiactiveprofile']['id'] = 4;
-
-   ini_set('display_errors','On');
-   error_reporting(E_ALL | E_STRICT);
-   set_error_handler("userErrorHandler");
-
-   // Backup present DB
-   include_once("inc/backup.php");
-   backupMySQL();
-
-   $_SESSION["glpilanguage"] = 'fr_FR';
    
-   // Install
-   include_once("inc/installation.php");
-   installGLPI();
-   installFusionPlugins();
+//   $_SESSION['glpi_use_mode'] = 2;
+//   $_SESSION['glpiactiveprofile']['id'] = 4;
+//
+//   ini_set('display_errors','On');
+//   error_reporting(E_ALL | E_STRICT);
+//   set_error_handler("userErrorHandler");
+//
+//   // Backup present DB
+////   include_once("inc/backup.php");
+////   backupMySQL();
+//
+//   $_SESSION["glpilanguage"] = 'fr_FR';
+//   
+//   // Install
+////   include_once("inc/installation.php");
+////   installGLPI();
+////   installFusionPlugins();
+//
+//   loadLanguage();
+//
+//   $CFG_GLPI["root_doc"] = GLPI_ROOT;
+   
+   restore_error_handler();
 
-   loadLanguage();
-
-   $CFG_GLPI["root_doc"] = GLPI_ROOT;
+   error_reporting(E_ALL | E_STRICT);
+   ini_set('display_errors','On');
 }
 require_once 'emulatoragent.php';
 
@@ -195,7 +202,7 @@ echo "# testHardwareModifications\n";
          return;
       }
       $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi080/plugins/fusioninventory/";
+      $emulatorAgent->server_urlpath = "/glpi080test/plugins/fusioninventory/";
       $prologXML = $emulatorAgent->sendProlog($inputXML);
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
       $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".$deviceID."'");
@@ -212,7 +219,7 @@ echo "# testHardwareModifications\n";
       }
 
       $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi080/plugins/fusioninventory/";
+      $emulatorAgent->server_urlpath = "/glpi080test/plugins/fusioninventory/";
       echo "====================\n";
       echo $xmlFile."\n";
       $input_xml = $xml->asXML();
@@ -271,8 +278,9 @@ echo "# testHardwareModifications\n";
       // Verify not have 2 printer in DB with same printer serial
       foreach ($xml->CONTENT->PRINTERS as $child) {
          if (isset($child->SERIAL)) {
+            $child->SERIAL = preg_replace('/\/$/', '', (string)$child->SERIAL);
             $a_printer = $Printer->find("`serial`='".$child->SERIAL."'");
-            $this->assertEquals(count($a_printer), 1 , 'Problem on printers, printer created "'.count($a_printer).'" instead 1 times');
+            $this->assertEquals(count($a_printer), 1 , 'Problem on printers, printer created "'.count($a_printer).'" instead 1 times (serial : '.$child->SERIAL.')');
          }         
       }
       // Verify all printers are connected to the computer
@@ -333,11 +341,11 @@ echo "# testHardwareModifications\n";
                $result=$DB->query($query);
                $printer_select = array();
                while ($data=$DB->fetch_array($result)) {
-                  if (count($printer_select) < 1) {
+                  if (count($printer_select) == '0') {
                      if ((isset($child->NAME)) AND ($data['name'] == $child->NAME)) {
                         $printer_select = $data;
-                     } else if ((isset($child->DRIVER)) AND ($data['name'] == $child->DRIVER)) {
-                        $printer_select = $data;
+//                     } else if ((isset($child->DRIVER)) AND ($data['name'] == $child->DRIVER)) {
+//                        $printer_select = $data;
                      }
                   }
                }
@@ -615,7 +623,9 @@ echo "# testHardwareModifications\n";
       $i = 0;
       foreach ($xml->CONTENT->MEMORIES as $child) {
          if (isset($child->CAPTION)
-                 AND (string)$child->CAPACITY != 'No') {
+                 AND ctype_digit((string)$child->CAPACITY)
+                 AND (isset($child->TYPE)
+                         AND !preg_match('/Flash/', (string)$child->TYPE))) {
             $a_memoryXML["'".$i."-".$child->CAPTION."'"] = 1;
             $i++;
          }
@@ -638,7 +648,8 @@ echo "# testHardwareModifications\n";
          echo "testNetwork with no arguments...\n";
          return;
       }
-
+      
+      $pfBlacklist = new PluginFusinvinventoryBlacklist();
      
       if (!isset($xml->CONTENT->NETWORKS)) {
          return;
@@ -677,17 +688,19 @@ echo "# testHardwareModifications\n";
          if (empty($regs)) {
             unset($child->MACADDR);
          }
-         if ((isset($child->MACADDR)) AND (!empty($child->MACADDR))
-                 AND ((string)$child->MACADDR != "50:50:54:50:30:30")
-                 AND ((string)$child->DESCRIPTION != "Miniport d'ordonnancement de paquets")) {
+         if ((isset($child->MACADDR)) AND (!empty($child->MACADDR))) {
 
-            $query = "SELECT * FROM `glpi_networkports`
-            WHERE `items_id`='".$items_id."'
-               AND `itemtype`='".$itemtype."'
-               AND `mac`='".(string)$child->MACADDR."'";
-            $result=$DB->query($query);
-            $data = $DB->fetch_array($result);
-            $this->assertEquals($data['mac'], (string)$child->MACADDR , 'Network port macaddress not right inserted, have '.$data['mac'].' instead '.(string)$child->MACADDR.' ['.$xmlFile.']');
+            $a_found = $pfBlacklist->find("`value`='".(string)$child->MACADDR."'
+               AND `plugin_fusioninventory_criterium_id`='3'");
+            if (count($a_found) == '0') {            
+               $query = "SELECT * FROM `glpi_networkports`
+               WHERE `items_id`='".$items_id."'
+                  AND `itemtype`='".$itemtype."'
+                  AND `mac`='".(string)$child->MACADDR."'";
+               $result=$DB->query($query);
+               $data = $DB->fetch_array($result);
+               $this->assertEquals($data['mac'], (string)$child->MACADDR , 'Network port macaddress not right inserted, have '.$data['mac'].' instead '.(string)$child->MACADDR.' ['.$xmlFile.']');
+            }
          }
       }
 
@@ -796,20 +809,47 @@ echo "# testHardwareModifications\n";
 
       $Computer = new Computer();
       $Computer->getFromDB($items_id);
-
+      $pfBlacklist = new PluginFusinvinventoryBlacklist();
       foreach ($xml->CONTENT->BIOS as $child) {
+         $addm = 0;
          if ((isset($child->SMANUFACTURER))
                AND (!empty($child->SMANUFACTURER))) {
-
-            $this->assertEquals($Computer->fields['manufacturers_id'], Dropdown::importExternal('Manufacturer', (string)$child->SMANUFACTURER) , 'Difference of Hardware manufacturer, have '.$Computer->fields['manufacturers_id'].' instead '.Dropdown::importExternal('Manufacturer', (string)$child->SMANUFACTURER).' ['.$xmlFile.']');
-         } else if ((isset($child->BMANUFACTURER))
-                      AND (!empty($child->BMANUFACTURER))) {
-
-            $this->assertEquals($Computer->fields['manufacturers_id'], Dropdown::importExternal('Manufacturer', (string)$child->BMANUFACTURER) , 'Difference of Hardware manufacturer, have '.$Computer->fields['manufacturers_id'].' instead '.Dropdown::importExternal('Manufacturer', (string)$child->BMANUFACTURER).' ['.$xmlFile.']');
+            $a_found = $pfBlacklist->find("`value`='".(string)$child->SMANUFACTURER."'
+               AND `plugin_fusioninventory_criterium_id`='10'");
+            if (count($a_found) == '0') { 
+               $this->assertEquals($Computer->fields['manufacturers_id'], Dropdown::importExternal('Manufacturer', (string)$child->SMANUFACTURER) , 'Difference of Hardware manufacturer, have '.$Computer->fields['manufacturers_id'].' instead '.Dropdown::importExternal('Manufacturer', (string)$child->SMANUFACTURER).' ['.$xmlFile.']');
+               $addm = 1;
+            }
+         } 
+         if ($addm == '0'
+                 AND(isset($child->MMANUFACTURER))
+                 AND (!empty($child->MMANUFACTURER))) {
+            $a_found = $pfBlacklist->find("`value`='".(string)$child->MMANUFACTURER."'
+               AND `plugin_fusioninventory_criterium_id`='10'");
+            if (count($a_found) == '0') { 
+               $this->assertEquals($Computer->fields['manufacturers_id'], Dropdown::importExternal('Manufacturer', (string)$child->MMANUFACTURER) , 'Difference of Hardware manufacturer, have '.$Computer->fields['manufacturers_id'].' instead '.Dropdown::importExternal('Manufacturer', (string)$child->MMANUFACTURER).' ['.$xmlFile.']');
+               $addm = 1;
+            }
          }
-         if (isset($child->SMODEL)) {
+         if ($addm == '0'
+                 AND (isset($child->BMANUFACTURER))
+                 AND (!empty($child->BMANUFACTURER))) {
+
+            $a_found = $pfBlacklist->find("`value`='".(string)$child->BMANUFACTURER."'
+               AND `plugin_fusioninventory_criterium_id`='10'");
+            if (count($a_found) == '0') { 
+               $this->assertEquals($Computer->fields['manufacturers_id'], Dropdown::importExternal('Manufacturer', (string)$child->BMANUFACTURER) , 'Difference of Hardware manufacturer, have '.$Computer->fields['manufacturers_id'].' instead '.Dropdown::importExternal('Manufacturer', (string)$child->BMANUFACTURER).' ['.$xmlFile.']');
+               $addm = 1;
+            }
+         }
+         if (isset($child->SMODEL)
+                 AND (string)$child->SMODEL!='') {
             $ComputerModel = new ComputerModel;
             $this->assertEquals($Computer->fields['computermodels_id'], $ComputerModel->importExternal((string)$child->SMODEL) , 'Difference of Hardware model, have '.$Computer->fields['computermodels_id'].' instead '.$ComputerModel->importExternal((string)$child->SMODEL).' ['.$xmlFile.']');
+         } else if (isset($child->MMODEL)
+                 AND (string)$child->MMODEL!='') {
+            $ComputerModel = new ComputerModel;
+            $this->assertEquals($Computer->fields['computermodels_id'], $ComputerModel->importExternal((string)$child->MMODEL) , 'Difference of Hardware model, have '.$Computer->fields['computermodels_id'].' instead '.$ComputerModel->importExternal((string)$child->MMODEL).' ['.$xmlFile.']');
          }
          if (isset($child->SSN)) {
             if (!empty($child->SSN)) {
@@ -873,7 +913,7 @@ echo "# testHardwareModifications\n";
          $child->IPADDRESS = $ip.rand(0,254);
          $child->IPSUBNET = $ip."0";
       }
-      $this->testNetwork($xml, $items_id, $unknown, $xmlFile);
+      $this->testNetwork($xml, $items_id, "0", $xmlFile);
    }
 
    
@@ -1302,13 +1342,31 @@ $XML['Computer'] = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
       $this->testSendinventory("Nothing", $xml);
       $countlog_end = countElementsInTable(getTableForItemType("Log"));
       $a_logs = $log->find("", "id DESC", ($countlog_end - $countlog_start -1));
+      
+      foreach ($a_logs as $key=>$data) {
+         if ($data['itemtype'] == "Computer"
+                 AND $data['id_search_option'] == '0') {
+            unset($a_logs[$key]);
+            $countlog_end--;
+         }
+         if ($data['itemtype'] == 'PluginFusioninventoryAgent') {
+            unset($a_logs[$key]);
+            $countlog_end--;
+         }
+         if ($data['itemtype'] == "Software"
+                 AND $data['id_search_option'] == '0'){
+            unset($a_logs[$key]);
+            $countlog_end--;
+         }
+      }
+      
       $this->assertEquals(($countlog_end - $countlog_start - 1), 0 , 'Problem on log, must be 0 : \n'.print_r($a_logs, true));
    }
    
    
    function testHistoryWhenOSChange() {
       global $DB;
-      
+return;
       $xml = simplexml_load_file("xml/inventory_local/2.1.6/David-PC-2010-08-09-20-52-54-imprimante.xml",'SimpleXMLElement', LIBXML_NOCDATA);
       $xml->CONTENT->HARDWARE->UUID = "68405E00-E5BE-11DF-801C-B05981201220HHTT";
       $xml->CONTENT->HARDWARE->NAME = "port004HHT";
@@ -1332,7 +1390,15 @@ $XML['Computer'] = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
             unset($a_logs[$key]);
             $countlog_end--;
          }
-
+         if ($data['itemtype'] == 'PluginFusioninventoryAgent') {
+            unset($a_logs[$key]);
+            $countlog_end--;
+         }
+         if ($data['itemtype'] == "Software"
+                 AND $data['id_search_option'] == '0'){
+            unset($a_logs[$key]);
+            $countlog_end--;
+         }
       }
       $this->assertEquals(($countlog_end - $countlog_start), 0 , 'Problem on log, must be 0 on OS change : \n'.print_r($a_logs, true));
    }
