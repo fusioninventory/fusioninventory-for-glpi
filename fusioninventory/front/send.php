@@ -80,7 +80,7 @@ if (isset($_GET['file'])) {
          echo "Error opening file $filename";
       } else {
          // Pour que les \x00 ne devienne pas \0
-         $mc=get_magic_quotes_runtime();
+         $mc=Toolbox::get_magic_quotes_runtime();
          if ($mc) @set_magic_quotes_runtime(0);
          $fsize=filesize($file);
 

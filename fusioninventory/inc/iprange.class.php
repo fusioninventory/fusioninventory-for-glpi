@@ -362,7 +362,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       $a_time = array();
       $a_time[] = "------";
       $a_time['minutes'] = $LANG['job'][22];
-      $a_time['hours'] = $LANG['job'][21];
+      $a_time['hours'] = ucfirst($LANG['gmt'][1]);
       $a_time['days'] = ucfirst($LANG['calendar'][12]);
       $a_time['months'] = ucfirst($LANG['calendar'][14]);
       Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$PluginFusioninventoryTask->fields['periodicity_type']));

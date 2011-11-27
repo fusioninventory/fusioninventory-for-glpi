@@ -202,7 +202,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $a_time = array();
       $a_time[] = "------";
       $a_time['minutes'] = strtolower($LANG['job'][22]);
-      $a_time['hours'] = strtolower($LANG['job'][21]);
+      $a_time['hours'] = strtolower($LANG['gmt'][1]);
       $a_time['days'] = $LANG['calendar'][12];
       $a_time['months'] = $LANG['plugin_fusioninventory']['task'][38];
       Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$this->fields['periodicity_type']));
@@ -1665,7 +1665,7 @@ return namelist;
 
             case 'hours':
                $a_time = $pluginFusioninventoryTask->fields['periodicity_count']." ".
-                    strtolower($LANG['job'][21]);
+                    strtolower($LANG['gmt'][1]);
                break;
 
             case 'days':
@@ -1786,7 +1786,7 @@ return namelist;
       $a_time = array();
       $a_time[] = "------";
       $a_time['minutes'] = $LANG['job'][22];
-      $a_time['hours'] = $LANG['job'][21];
+      $a_time['hours'] = ucfirst($LANG['gmt'][1]);
       $a_time['days'] = ucfirst($LANG['calendar'][12]);
       $a_time['months'] = ucfirst($LANG['calendar'][14]);
       Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$pluginFusioninventoryTask->fields['periodicity_type']));

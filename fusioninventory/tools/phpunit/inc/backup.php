@@ -60,7 +60,7 @@ function restoreMySQL() {
 
       // do not strip comments due to problems when # in begin of a data line
       $formattedQuery .= $buffer;
-      if (get_magic_quotes_runtime()) {
+      if (Toolbox::get_magic_quotes_runtime()) {
          $formattedQuery = stripslashes($formattedQuery);
       }
       if (substr(rtrim($formattedQuery),-1) == ";") {
@@ -108,7 +108,7 @@ function get_content($DB, $table,$from,$limit) {
                          LIMIT ".intval($from).",".intval($limit));
    if ($result) {
       $num_fields = $DB->num_fields($result);
-      if (get_magic_quotes_runtime()) {
+      if (Toolbox::get_magic_quotes_runtime()) {
          $gmqr = true;
       }
       while ($row = $DB->fetch_row($result)) {

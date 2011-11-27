@@ -297,9 +297,9 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       if ($canedit && $totalnb > 0) {
          echo "</table>";
 
-         openArrowMassive("group_form$rand", true);
+         openArrowMassives("group_form$rand", true);
          echo "<input type='hidden' name='groups_id' value='$groupID'>";
-         closeArrowMassive('deleteitem', $LANG['buttons'][6]);
+         closeArrowMassives(array('deleteitem' => $LANG['buttons'][6]));
 
       } else {
          echo "</table>";
@@ -697,10 +697,10 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       echo "</table>";
 
       if ($type == 'static') {
-         openArrowMassive("group_search");
+         openArrowMassives("group_search");
          echo "<input type='submit' class='submit' value="
             .$LANG['buttons'][8]." name='additem' />";
-         closeArrowMassive();
+         closeArrowMassives();
       } else echo "<br />";
 
       self::printGroupPager('', $params['start'], $nb_items);
