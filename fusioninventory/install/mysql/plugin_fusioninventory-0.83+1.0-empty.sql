@@ -304,7 +304,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_ignoredimportdevices` (
    `mac` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `rules_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 ## INSERT
