@@ -106,12 +106,12 @@ function plugin_init_fusinvinventory() {
    if (isset($_SESSION["glpiID"])) {
 
 		if (Session::haveRight("configuration", "r") || Session::haveRight("profile", "w")) {// Config page
-         if (!class_exists('PluginFusioninventoryConfiguration')) { // if plugin is unactive
-            include(GLPI_ROOT . "/plugins/fusioninventory/inc/configuration.class.php");
+         if (!class_exists('PluginFusioninventoryConfig')) { // if plugin is unactive
+            include(GLPI_ROOT . "/plugins/fusioninventory/inc/config.class.php");
          }
-         $PluginFusioninventoryConfiguration = new PluginFusioninventoryConfiguration();
+         $PluginFusioninventoryConfiguration = new PluginFusioninventoryConfig();
          $a_tabs = $PluginFusioninventoryConfiguration->defineTabs();
-         $PLUGIN_HOOKS['config_page']['fusinvinventory'] = '../fusioninventory/front/configuration.form.php?glpi_tab='.array_search($a_plugin['name'], $a_tabs);
+         $PLUGIN_HOOKS['config_page']['fusinvinventory'] = '../fusioninventory/front/config.form.php?glpi_tab='.array_search($a_plugin['name'], $a_tabs);
       }
 
       $PLUGIN_HOOKS['use_massive_action']['fusinvinventory']=1;

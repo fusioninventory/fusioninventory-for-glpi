@@ -47,6 +47,15 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusinvinventoryConfig extends CommonDBTM {
 
 
+   function canCreate() {
+      return PluginFusioninventoryProfile::haveRight('fusioninventory', 'configuration', 'w');
+   }
+
+   function canView() {
+      return PluginFusioninventoryProfile::haveRight('fusioninventory', 'configuration', 'r');
+   }
+   
+   
    /**
    * Initialize config values of fusinvinventory plugin
    *
@@ -92,6 +101,29 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
    }
 
 
+   
+  function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $LANG;
+
+      if ($item->getType()=='PluginFusioninventoryConfig') {
+         return self::createTabEntry($LANG['plugin_fusinvinventory']['title'][0]);
+         return $LANG['plugin_fusinvinventory']['title'][0];
+      }
+      return '';
+   }
+   
+   
+   
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+
+      if ($item->getType()=='PluginFusioninventoryConfig') {
+         $pfConfig = new self();
+         $pfConfig->showForm();
+      }
+      return true;
+   }
+   
+   
 
    /**
    * Update values from tab in fusioninventory configuration form
@@ -124,15 +156,15 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
    * @return bool true if form is ok
    *
    **/
-   static function showForm($options=array()) {
+   function showForm($options=array()) {
       global $LANG;
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
 
-      echo "<form name='form' method='post' action='".$options['target']."'>";
-      echo "<table class='tab_cadre_fixe' cellpadding='1'>";
+      $this->fields['id'] = 1;
+      $this->showFormHeader($options);
  
       echo "<tr>";
       echo "<th colspan='4'>".$LANG['plugin_fusinvinventory']['setup'][20];
@@ -393,13 +425,8 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
       
-      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "w")) {
-         echo "<tr class='tab_bg_2'><td align='center' colspan='4'>
-               <input class='submit' type='submit' name='plugin_fusinvinventory_config_set'
-                      value='" . $LANG['buttons'][7] . "'></td></tr>";
-      }
-      echo "</table>";
-      echo "</form>";
+      $options['candel'] = false;
+      $this->showFormButtons($options);
 
       return true;
    }

@@ -45,7 +45,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 
-class PluginFusinvSNMPConfig extends CommonDBTM {
+class PluginFusinvsnmpConfig extends CommonDBTM {
 
    function initConfigModule() {
       global $DB;
@@ -65,7 +65,7 @@ class PluginFusinvSNMPConfig extends CommonDBTM {
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       global $LANG;
 
-      if ($item->getType()=='PluginFusioninventoryConfiguration') {
+      if ($item->getType()=='PluginFusioninventoryConfig') {
          if ($_SESSION['glpishow_count_on_tabs']) {
             return self::createTabEntry($LANG['plugin_fusinvsnmp']['title'][0]);
          }
@@ -78,8 +78,9 @@ class PluginFusinvSNMPConfig extends CommonDBTM {
    
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
-      if ($item->getType()=='PluginFusioninventoryConfiguration') {
-         self::showForm($item);
+      if ($item->getType()=='PluginFusioninventoryConfig') {
+         $pfConfig = new self();
+         $pfConfig->showForm($item);
       }
       return true;
    }
@@ -109,7 +110,7 @@ class PluginFusinvSNMPConfig extends CommonDBTM {
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
 
-      echo "<form name='form' method='post' action='".$options['target']."'>";
+      echo "<form name='form' method='post' action='".$this->getFormURL()."'>";
       echo "<div class='center' id='tabsbody'>";
       echo "<table class='tab_cadre_fixe'>";
 

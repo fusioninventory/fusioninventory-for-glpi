@@ -50,7 +50,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       global $LANG;
 
-      if ($item->getType()=='PluginFusioninventoryConfiguration') {
+      if ($item->getType()=='PluginFusioninventoryConfig') {
          return self::createTabEntry($LANG['plugin_fusioninventory']['agents'][27]);
          return $LANG['plugin_fusioninventory']['agents'][27];
       }
@@ -61,8 +61,9 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
-      if ($item->getType()=='PluginFusioninventoryConfiguration') {
-         self::showForm();
+      if ($item->getType()=='PluginFusioninventoryConfig') {
+         $pfAgentmodule = new self();
+         $pfAgentmodule->showForm();
       }
       return true;
    }
@@ -82,7 +83,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       $a_modules = $this->find();
       foreach ($a_modules as $data) {
          
-         echo "<form name='form_ic' method='post' action='".Toolbox::deleteDir(__CLASS__)."'>";
+         echo "<form name='form_ic' method='post' action='".$this->getFormURL()."'>";
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr>";
          echo "<th width='130'>".$LANG['plugin_fusioninventory']['task'][26]."</th>";

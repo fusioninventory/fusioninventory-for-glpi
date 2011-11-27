@@ -46,6 +46,24 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryConfig extends CommonDBTM {
 
+   
+  static function getTypeName() {
+      global $LANG;
+
+      return $LANG['plugin_fusioninventory']['functionalities'][2];
+   }
+   
+   
+   function canCreate() {
+      return PluginFusioninventoryProfile::haveRight('fusioninventory', 'configuration', 'w');
+   }
+
+   function canView() {
+      return PluginFusioninventoryProfile::haveRight('fusioninventory', 'configuration', 'r');
+   }
+   
+   
+   
    /**
     * Init config
     *
@@ -65,6 +83,57 @@ class PluginFusioninventoryConfig extends CommonDBTM {
          }         
       }
    }
+   
+   
+
+   function defineTabs($options=array()){
+      global $LANG,$CFG_GLPI;
+
+      $ong = array();
+//      $moduleTabs = array();
+      $this->addStandardTab("PluginFusioninventoryConfig", $ong, $options);
+      $this->addStandardTab("PluginFusioninventoryAgentmodule", $ong, $options);
+//      $ong[2]=$LANG['plugin_fusioninventory']['agents'][27];
+      
+      if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'])) {
+         $fusionTabs = $ong;
+         $moduleTabForms = $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'];
+         if (count($moduleTabForms)) {
+            foreach ($moduleTabForms as $module=>$form) {
+               $plugin = new Plugin;
+               if ($plugin->isActivated($module)) {
+                  $this->addStandardTab($form[key($form)]['class'], $ong, $options);
+               }
+            }
+            $moduleTabs = array_diff($ong, $fusionTabs);
+         }
+         $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabs'] = $moduleTabs;
+      }
+      return $ong;
+   }
+   
+   
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $LANG;
+
+      if ($item->getType()==__CLASS__) {
+         
+         return self::createTabEntry($LANG['plugin_fusioninventory']['functionalities'][2]);
+         return $LANG['plugin_fusioninventory']['functionalities'][2];
+      }
+      return '';
+   }
+   
+   
+   
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+
+      if ($item->getType()=='PluginFusioninventoryConfig') {
+         $item->showForm();
+      }
+      return true;
+   }
+   
 
 
    
@@ -119,9 +188,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
-      echo "<form name='form' method='post' action='".$options['target']."'>";
-      echo "<div class='center' id='tabsbody'>";
-      echo "<table class='tab_cadre_fixe'>";
+      $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][27]."&nbsp;:</td>";
@@ -140,7 +207,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::showInteger("delete_task",
                             $this->getValue($plugins_id, 'delete_task'),1,240);
-      echo " ".strtolower($LANG['stats'][31]);
+      echo " ".strtolower($LANG['calendar'][12]);
       echo "</td>";
 
       echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][8]." :</td>";
@@ -157,13 +224,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td colspan='2'></td>";
       echo "</tr>";
 
-
-      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "w")) {
-         echo "<tr class='tab_bg_2'><td align='center' colspan='4'>
-               <input class='submit' type='submit' name='plugin_fusioninventory_config_set'
-                      value='" . $LANG['buttons'][7] . "'></td></tr>";
-      }
-      echo "</table></div></form>";
+      $options['candel'] = false;
+      $this->showFormButtons($options);
 
       return true;
    }

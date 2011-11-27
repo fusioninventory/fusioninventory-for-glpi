@@ -93,7 +93,7 @@ function plugin_init_fusioninventory() {
          $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusioninventory_ipranges';
 
          if (Session::haveRight("configuration", "r") || Session::haveRight("profile", "w")) {// Config page
-            $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/configuration.form.php?glpi_tab=1';
+            $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/config.form.php?glpi_tab=1';
          }
 
          $PLUGIN_HOOKS['use_massive_action']['fusioninventory']=1;
@@ -163,7 +163,7 @@ function plugin_init_fusioninventory() {
 
    //         if (PluginFusioninventoryProfile::haveRight($_SESSION["plugin_".$a_plugin['shortname']."_moduleid"], "configuration","r")) {
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "r")) {// Config page
-               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['config'] = 'front/configuration.form.php';
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['config'] = 'front/config.form.php';
             }
    //         }
          }
@@ -187,7 +187,7 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agents']['page']  = '/plugins/fusioninventory/front/agent.php';
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configuration']['title'] = $LANG['plugin_fusioninventory']['functionalities'][2];
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configuration']['page']  = '/plugins/fusioninventory/front/configuration.form.php';
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configuration']['page']  = '/plugins/fusioninventory/front/config.form.php';
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['unknown']['title'] = $LANG['plugin_fusioninventory']['menu'][4];
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['unknown']['page']  = '/plugins/fusioninventory/front/unknowndevice.php';
