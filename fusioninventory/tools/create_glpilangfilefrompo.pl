@@ -73,22 +73,20 @@ foreach my $filename (@filesdir) {
 
    ------------------------------------------------------------------------
 
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author 
-   @comment   Not translate this file, use https://www.transifex.net/projects/p/FusionInventory/
-   @copyright Copyright (c) 2010-2011 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
+   \@package   FusionInventory
+   \@author    David Durieux
+   \@co-author 
+   \@comment   Not translate this file, use https://www.transifex.net/projects/p/FusionInventory/
+   \@copyright Copyright (c) 2010-2011 FusionInventory team
+   \@license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
+   \@link      http://www.fusioninventory.org/
+   \@link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   \@since     2010
  
    ------------------------------------------------------------------------
  */
-   Not translate this file, use https://www.transifex.net/projects/p/FusionInventory/
-   ----------------------------------------------------------------------
- */
+
 ");
    my @lines;
    while (my ($key, $po) = each %{$aref}) {

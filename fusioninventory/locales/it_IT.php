@@ -27,22 +27,20 @@
 
    ------------------------------------------------------------------------
 
-      FusionInventory
-       David Durieux
-   -author 
-      Not translate this file, use https://www.transifex.net/projects/p/FusionInventory/
-    Copyright (c) 2010-2011 FusionInventory team
-      AGPL License 3.0 or (at your option) any later version
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @comment   Not translate this file, use https://www.transifex.net/projects/p/FusionInventory/
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
-         http://www.fusioninventory.org/
-         http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-        2010
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
  
    ------------------------------------------------------------------------
  */
-   Not translate this file, use https://www.transifex.net/projects/p/FusionInventory/
-   ----------------------------------------------------------------------
- */
+
 
 $LANG['plugin_fusioninventory']['agents'][15]="Stato dell'agente";
 $LANG['plugin_fusioninventory']['agents'][17]="L'agente é in esecuzione";
