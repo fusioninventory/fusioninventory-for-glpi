@@ -90,11 +90,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       global $LANG,$CFG_GLPI;
 
       $ong = array();
-//      $moduleTabs = array();
+      $moduleTabs = array();
       $this->addStandardTab("PluginFusioninventoryConfig", $ong, $options);
       $this->addStandardTab("PluginFusioninventoryAgentmodule", $ong, $options);
-//      $ong[2]=$LANG['plugin_fusioninventory']['agents'][27];
-      
+
       if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'])) {
          $fusionTabs = $ong;
          $moduleTabForms = $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'];
