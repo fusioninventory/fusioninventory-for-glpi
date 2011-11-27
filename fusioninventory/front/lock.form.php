@@ -44,7 +44,7 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-checkLoginUser();
+Session::checkLoginUser();
 
 if(isset($_POST["unlock_field_fusioninventory"])){
    $typeright = strtolower($_POST['type']);

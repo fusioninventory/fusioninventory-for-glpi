@@ -42,7 +42,7 @@
 
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
-checkLoginUser();
+Session::checkLoginUser();
 Plugin::load('fusioninventory',true);
 
 $dropdown = new PluginFusinvsnmpMibObject();

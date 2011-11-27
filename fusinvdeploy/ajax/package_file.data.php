@@ -43,7 +43,7 @@
 define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT."/inc/includes.php");
-checkLoginUser();
+Session::checkLoginUser();
 
 $file = new PluginFusinvdeployFile;
 echo $file->getDatas($_REQUEST);

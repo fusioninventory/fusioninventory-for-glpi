@@ -42,7 +42,7 @@
 
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
-checkLoginUser();
+Session::checkLoginUser();
 
 // Include main config file
 include ("../lib/extjs/FileChooser/includes/config.inc.php");

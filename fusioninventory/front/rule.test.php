@@ -45,7 +45,7 @@ if (!defined('GLPI_ROOT')) {
    include (GLPI_ROOT."/inc/includes.php");
 }
 
-checkLoginUser();
+Session::checkLoginUser();
 $sub_type = 0;
 if (isset($_POST["sub_type"])) {
    $sub_type = $_POST["sub_type"];

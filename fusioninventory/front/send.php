@@ -46,7 +46,7 @@ if (!defined('GLPI_ROOT')) {
 if (!defined("GLPI_PLUGIN_DOC_DIR")){
    define("GLPI_PLUGIN_DOC_DIR",GLPI_ROOT . "/files/_plugins");
 }
-checkLoginUser();
+Session::checkLoginUser();
 
 $docDir = GLPI_PLUGIN_DOC_DIR.'/fusioninventory';
 
