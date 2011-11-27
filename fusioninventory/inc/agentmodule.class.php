@@ -47,6 +47,27 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryAgentmodule extends CommonDBTM {
    
 
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $LANG;
+
+      if ($item->getType()=='PluginFusioninventoryConfiguration') {
+         return self::createTabEntry($LANG['plugin_fusioninventory']['agents'][27]);
+         return $LANG['plugin_fusioninventory']['agents'][27];
+      }
+      return '';
+   }
+   
+   
+   
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+
+      if ($item->getType()=='PluginFusioninventoryConfiguration') {
+         self::showForm();
+      }
+      return true;
+   }
+   
+   
    /**
    * Display form forconfiguration of agent modules
    *

@@ -60,7 +60,32 @@ class PluginFusinvSNMPConfig extends CommonDBTM {
       $PluginFusioninventoryConfig->initConfig($plugins_id, $insert);
    }
 
+   
+   
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $LANG;
 
+      if ($item->getType()=='PluginFusioninventoryConfiguration') {
+         if ($_SESSION['glpishow_count_on_tabs']) {
+            return self::createTabEntry($LANG['plugin_fusinvsnmp']['title'][0]);
+         }
+         return $LANG['plugin_fusinvsnmp']['title'][0];
+      }
+      return '';
+   }
+   
+   
+   
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+
+      if ($item->getType()=='PluginFusioninventoryConfiguration') {
+         self::showForm($item);
+      }
+      return true;
+   }
+
+
+   
    
    function putForm($p_post) {
 

@@ -45,34 +45,67 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusioninventoryConfiguration extends CommonDBTM {
+   
+   
+   
+  static function getTypeName() {
+      global $LANG;
 
+      return $LANG['plugin_fusioninventory']['functionalities'][2];
+   }
+
+   
    
    function defineTabs($options=array()){
       global $LANG,$CFG_GLPI;
 
-      $tabs = array();
-      $moduleTabs = array();
-      $tabs['empty'] = $this->getTypeName();
-
-//      $tabs[2]=$LANG['plugin_fusioninventory']['agents'][27];
+      $ong = array();
+//      $moduleTabs = array();
+      $this->addStandardTab("PluginFusioninventoryConfiguration", $ong, $options);
+      $this->addStandardTab("PluginFusioninventoryAgentmodule", $ong, $options);
+//      $ong[2]=$LANG['plugin_fusioninventory']['agents'][27];
+      
 //      if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'])) {
-//         $fusionTabs = $tabs;
+//         $fusionTabs = $ong;
 //         $moduleTabForms = $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'];
 //         if (count($moduleTabForms)) {
 //            foreach ($moduleTabForms as $module=>$form) {
 //               $plugin = new Plugin;
 //               if ($plugin->isActivated($module)) {
-//                  $tabs[] = key($form);
+//                  $this->addStandardTab($form[key($form)]['class'], $ong, $options);
 //               }
 //            }
-//            $moduleTabs = array_diff($tabs, $fusionTabs);
+//            $moduleTabs = array_diff($ong, $fusionTabs);
 //         }
 //         $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabs'] = $moduleTabs;
 //      }
-      return $tabs;
+      return $ong;
    }
 
 
+   
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $LANG;
+
+      if ($item->getType()==__CLASS__) {
+         
+         return self::createTabEntry($LANG['plugin_fusioninventory']['functionalities'][2]);
+         return $LANG['plugin_fusioninventory']['functionalities'][2];
+      }
+      return '';
+   }
+   
+   
+   
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+
+      if ($item->getType()=='PluginFusioninventoryConfiguration') {
+         $item->showForm();
+      }
+      return true;
+   }
+   
+   
    
    function showForm($options=array()) {
       global $DB,$CFG_GLPI,$LANG;
