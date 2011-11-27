@@ -162,7 +162,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             return array();
          } else { // Non template case / editing an existing object
             $array = array ();
-            if (haveRight("computer", "w")) {
+            if (Session::haveRight("computer", "w")) {
                if (PluginFusioninventoryModule::getModuleId("fusioninventory")) {
                   $array[2] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['functionalities'][75];
                }
@@ -180,7 +180,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             return array();
          } else { // Non template case / editing an existing object
             $array = array ();
-            if (haveRight("monitor", "w")) {
+            if (Session::haveRight("monitor", "w")) {
                if (PluginFusioninventoryModule::getModuleId("fusioninventory")) {
                   $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['functionalities'][75];
                }
@@ -194,7 +194,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             return array();
          } else { // Non template case / editing an existing object
             $array = array ();
-            if (haveRight("networking", "w")) {
+            if (Session::haveRight("networking", "w")) {
                if (PluginFusioninventoryModule::getModuleId("fusioninventory")) {
                   $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['functionalities'][75];
                }
@@ -211,7 +211,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             return array();
          } else { // Non template case / editing an existing object
             $array = array ();
-            if (haveRight("printer", "w")) {
+            if (Session::haveRight("printer", "w")) {
                if (PluginFusioninventoryModule::getModuleId("fusioninventory")) {
                   $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['functionalities'][75];
                }

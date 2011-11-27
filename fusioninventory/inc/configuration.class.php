@@ -52,22 +52,23 @@ class PluginFusioninventoryConfiguration extends CommonDBTM {
 
       $tabs = array();
       $moduleTabs = array();
-      $tabs[1]=$LANG['plugin_fusioninventory']['functionalities'][2];
-      $tabs[2]=$LANG['plugin_fusioninventory']['agents'][27];
-      if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'])) {
-         $fusionTabs = $tabs;
-         $moduleTabForms = $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'];
-         if (count($moduleTabForms)) {
-            foreach ($moduleTabForms as $module=>$form) {
-               $plugin = new Plugin;
-               if ($plugin->isActivated($module)) {
-                  $tabs[] = key($form);
-               }
-            }
-            $moduleTabs = array_diff($tabs, $fusionTabs);
-         }
-         $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabs'] = $moduleTabs;
-      }
+      $tabs['empty'] = $this->getTypeName();
+
+//      $tabs[2]=$LANG['plugin_fusioninventory']['agents'][27];
+//      if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'])) {
+//         $fusionTabs = $tabs;
+//         $moduleTabForms = $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'];
+//         if (count($moduleTabForms)) {
+//            foreach ($moduleTabForms as $module=>$form) {
+//               $plugin = new Plugin;
+//               if ($plugin->isActivated($module)) {
+//                  $tabs[] = key($form);
+//               }
+//            }
+//            $moduleTabs = array_diff($tabs, $fusionTabs);
+//         }
+//         $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabs'] = $moduleTabs;
+//      }
       return $tabs;
    }
 

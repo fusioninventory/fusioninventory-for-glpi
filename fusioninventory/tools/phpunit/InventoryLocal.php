@@ -211,7 +211,7 @@ echo "# testHardwareModifications\n";
          return;
       }
       $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi080test/plugins/fusioninventory/";
+      $emulatorAgent->server_urlpath = "/glpi083/plugins/fusioninventory/";
       $prologXML = $emulatorAgent->sendProlog($inputXML);
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
       $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".$deviceID."'");
@@ -228,7 +228,7 @@ echo "# testHardwareModifications\n";
       }
 
       $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi080test/plugins/fusioninventory/";
+      $emulatorAgent->server_urlpath = "/glpi083/plugins/fusioninventory/";
       echo "====================\n";
       echo $xmlFile."\n";
       $input_xml = $xml->asXML();
