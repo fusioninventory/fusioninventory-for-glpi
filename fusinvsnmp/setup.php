@@ -218,7 +218,7 @@ function plugin_version_fusinvsnmp() {
                 'license'        => 'AGPLv3+',
                 'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
                                     & FusionInventory team',
-                'homepage'       =>'http://forge.fusioninventory.org/projects/pluginfusinvsnmp',
+                'homepage'       =>'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/',
                 'minGlpiVersion' => '0.80'// For compatibility / no install in version < 0.78
    );
 }
