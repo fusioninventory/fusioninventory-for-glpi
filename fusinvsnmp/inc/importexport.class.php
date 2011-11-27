@@ -174,11 +174,13 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       $result = $DB->query($query);
 
       if ($DB->numrows($result) > 0) {
-	 $this->updateModel($xml, $message, $result)
+         $this->updateModel($xml, $message, $result);
       } else {
-	 $this->createModel($xml, $message)
+         $this->createModel($xml, $message);
       }
    }
+   
+   
 
    function updateModel($xml, $message, $result) {
       global $DB,$LANG;
