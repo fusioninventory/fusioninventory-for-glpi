@@ -109,7 +109,7 @@ class PluginFusinvdeployJob {
       $p['msg']            = ''; //Message to be logged
       $p['log']            = '';
       foreach ($params as $key => $value) {
-         $p[$key] = clean_cross_side_scripting_deep($value);
+         $p[$key] = Toolbox::clean_cross_side_scripting_deep($value);
       }
 
       //Get the agent ID by his deviceid

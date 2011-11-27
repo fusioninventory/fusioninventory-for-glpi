@@ -100,7 +100,7 @@ class PluginFusinvinventoryLock {
                            if (strstr($sectionname, "USERS/")) {
                               if (!strstr($sectionname, "USERS/-")) {
                                  $users_id = str_replace("USERS/", "", $sectionname);
-                                 $input[$datas['glpiField']] = addslashes_deep($users_id);
+                                 $input[$datas['glpiField']] = Toolbox::addslashes_deep($users_id);
                                  $update_user = 1;
                               }
                            }
@@ -166,9 +166,9 @@ class PluginFusinvinventoryLock {
                                  }
                               }
                            }
-                           $input[$datas['glpiField']] = addslashes_deep($contact);
+                           $input[$datas['glpiField']] = Toolbox::addslashes_deep($contact);
                         } else {
-                           $input[$datas['glpiField']] = addslashes_deep($libunserialized[$datas['xmlSectionChild']]);
+                           $input[$datas['glpiField']] = Toolbox::addslashes_deep($libunserialized[$datas['xmlSectionChild']]);
                         }
                      }
                      $class->update($input);
