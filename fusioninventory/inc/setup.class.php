@@ -45,13 +45,15 @@ class PluginFusioninventorySetup {
       CronTask::Unregister('fusioninventory');
       
       $PluginFusioninventorySetup  = new PluginFusioninventorySetup();
-      $fusioninventory_config      = new PluginFusioninventoryConfig();
       $PluginFusioninventoryModule = new PluginFusioninventoryModule();
       $user = new User();
       $plugins_id = $PluginFusioninventoryModule->getModuleId("fusioninventory");
-   
-      $users_id = $fusioninventory_config->getValue($plugins_id, 'users_id');
-      $user->delete(array('id'=>$users_id), 1);
+
+      if (class_exists('PluginFusioninventoryConfig')) {
+         $fusioninventory_config      = new PluginFusioninventoryConfig();
+         $users_id = $fusioninventory_config->getValue($plugins_id, 'users_id');
+         $user->delete(array('id'=>$users_id), 1);
+      }
 
       if (file_exists(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
          $PluginFusioninventorySetup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
