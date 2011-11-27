@@ -157,7 +157,7 @@ class PluginFusinvdeployTask extends PluginFusioninventoryTask {
       //if task active, delete denied
       if ($this->getField('is_active') == 1) {
          addMessageAfterRedirect($LANG['plugin_fusinvdeploy']['task'][20]);
-         glpi_header(GLPI_ROOT."/plugins/fusinvdeploy/front/task.form.php?id=".$this->getField('id'));
+         Html::redirect(GLPI_ROOT."/plugins/fusinvdeploy/front/task.form.php?id=".$this->getField('id'));
          return false;
       }
 

@@ -56,15 +56,15 @@ $mirror = new PluginFusinvdeployMirror();
 if (isset ($_POST["add"])) {
 // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
    $newID = $mirror->add($_POST);
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["update"])) {
 // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
    $mirror->update($_POST);
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["delete"])) {
 // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
    $mirror->delete($_POST);
-   glpi_header(getItemTypeSearchURL('PluginFusinvdeployMirror'));
+   Html::redirect(getItemTypeSearchURL('PluginFusinvdeployMirror'));
 }
 
 $id = "";

@@ -332,7 +332,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
          $input["entities_id"] = $this->getEntityID();
 
          $taskjob_id = $PluginFusioninventoryTaskjob->add($input);
-         glpi_header(str_replace("&allowcreate=1", "",$_SERVER['HTTP_REFERER']));
+         Html::redirect(str_replace("&allowcreate=1", "",$_SERVER['HTTP_REFERER']));
       }
       // Get task job or create if not exist
       $PluginFusioninventoryTask->getFromDB($task_id);

@@ -58,7 +58,7 @@ function plugin_init_fusinvdeploy() {
 //               break;
 //            case 'uninstall':
 //               addMessageAfterRedirect($LANG['plugin_fusinvdeploy']["setup"][18]);
-//               glpi_header($CFG_GLPI["root_doc"]."/front/plugin.php");
+//               Html::redirect($CFG_GLPI["root_doc"]."/front/plugin.php");
 //               break;
 //         }
 //      }
@@ -86,7 +86,7 @@ function plugin_init_fusinvdeploy() {
 //               break;
 //            case 'uninstall':
 //               addMessageAfterRedirect($LANG['plugin_fusinvdeploy']["setup"][20]);
-//               glpi_header($CFG_GLPI["root_doc"]."/front/plugin.php");
+//               Html::redirect($CFG_GLPI["root_doc"]."/front/plugin.php");
 //               break;
 //         }
 //      }

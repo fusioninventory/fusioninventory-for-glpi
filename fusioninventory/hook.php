@@ -317,10 +317,10 @@ function plugin_headings_fusioninventory_locks($item) {
    $id = $item->getField('id');
    $fusioninventory_locks = new PluginFusioninventoryLock();
    if ($id == '') {
-      $fusioninventory_locks->showForm(getItemTypeFormURL('PluginFusioninventoryLock'),
+      $fusioninventory_locks->showForm(Toolbox::getItemTypeFormURL('PluginFusioninventoryLock'),
                                                        $type);
    } else {
-      $fusioninventory_locks->showForm(getItemTypeFormURL('PluginFusioninventoryLock').'?id='.$id,
+      $fusioninventory_locks->showForm(Toolbox::getItemTypeFormURL('PluginFusioninventoryLock').'?id='.$id,
                                                        $type, $id);
    }
 }

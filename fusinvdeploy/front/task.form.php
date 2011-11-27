@@ -56,7 +56,7 @@ $task = new PluginFusinvdeployTask();
 if (isset($_POST['forcestart'])) {
    $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
    $PluginFusioninventoryTaskjob->forceRunningTask($_POST['id']);
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 
 } else if (isset($_POST['reset'])) {
    $pFusioninventoryTask = new PluginFusioninventoryTask();
@@ -66,12 +66,12 @@ if (isset($_POST['forcestart'])) {
             `status`='0'
       WHERE `plugin_fusioninventory_tasks_id`='".$_POST['id']."'";
    $DB->query($query);
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 
 } else if (isset($_POST["add"])) {
    $task->check(-1, 'w', $_POST);
    $newID = $task->add($_POST);
-   glpi_header(GLPI_ROOT."/plugins/fusinvdeploy/front/task.form.php?id=".$newID);
+   Html::redirect(GLPI_ROOT."/plugins/fusinvdeploy/front/task.form.php?id=".$newID);
 
 } else if (isset($_POST["delete"])) {
    $task->check($_POST['id'], 'd');
@@ -89,7 +89,7 @@ if (isset($_POST['forcestart'])) {
    $task->check($_POST['id'], 'w');
    $task->update($_POST);
 
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 
 } else {
    commonHeader($LANG['plugin_fusinvdeploy']["title"][0],$_SERVER["PHP_SELF"],"plugins",

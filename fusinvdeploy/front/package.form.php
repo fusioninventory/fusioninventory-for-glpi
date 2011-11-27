@@ -56,15 +56,15 @@ $package = new PluginFusinvdeployPackage();
 if (isset ($_POST["add"])) {
 // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
    $newID = $package->add($_POST);
-   glpi_header(getItemTypeFormURL('PluginFusinvdeployPackage')."?id=".$newID);
+   html::redirect(Toolbox::getItemTypeFormURL('PluginFusinvdeployPackage')."?id=".$newID);
 } else if (isset ($_POST["update"])) {
 // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
    $package->update($_POST);
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["delete"])) {
 // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
    $package->delete($_POST);
-   glpi_header(getItemTypeSearchURL('PluginFusinvdeployPackage'));
+   Html::redirect(getItemTypeSearchURL('PluginFusinvdeployPackage'));
 }
 
 $id = "";

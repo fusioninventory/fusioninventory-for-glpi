@@ -61,7 +61,7 @@ if (isset($_REQUEST['type'])) {
 if (isset($_POST["add"])) {
    $group->check(-1, 'w', $_POST);
    $newID = $group->add($_POST);
-   glpi_header(GLPI_ROOT."/plugins/fusinvdeploy/front/group.form.php?id=".$newID);
+   Html::redirect(GLPI_ROOT."/plugins/fusinvdeploy/front/group.form.php?id=".$newID);
 
 } else if (isset($_POST["delete"])) {
    $group->check($_REQUEST['id'], 'd');
@@ -79,7 +79,7 @@ if (isset($_POST["add"])) {
    $group->check($_REQUEST['id'], 'w');
    $group->update($_POST);
 
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 
 } else if (isset($_POST["additem"])) {
    //$group_item->check(-1,'w',$_POST);
@@ -116,7 +116,7 @@ if (isset($_POST["add"])) {
       ));
    }
 
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 } else if (isset($_POST["updateitem"])) {
    //$group_item->check(-1,'w',$_POST);
    if ($_REQUEST['type'] == 'dynamic') {
@@ -139,7 +139,7 @@ if (isset($_POST["add"])) {
       ));
    }
 
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 
 } else if (isset($_REQUEST["deleteitem"])) {
    if ($_REQUEST['type'] == 'static') {
@@ -154,7 +154,7 @@ if (isset($_POST["add"])) {
 
    }
 
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 
 } else {
    commonHeader($LANG['plugin_fusinvdeploy']["title"][0],$_SERVER["PHP_SELF"],"plugins",

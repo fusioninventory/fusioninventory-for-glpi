@@ -65,7 +65,7 @@ if (!isset($_GET['wizz'])) {
       $url .= $key."=".$value;
       $i++;
    }
-   glpi_header($url);
+   Html::redirect($url);
 } else {
    include (GLPI_ROOT . "/plugins/fusioninventory/front/wizard.php");
 }

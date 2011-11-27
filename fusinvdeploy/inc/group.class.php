@@ -259,7 +259,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
                   if ($_SESSION["glpiis_ids_visible"] || empty($data["name"])) {
                      $ID = " (".$data["id"].")";
                   }
-                  $link = getItemTypeFormURL($itemtype);
+                  $link = Toolbox::getItemTypeFormURL($itemtype);
                   $name = "<a href=\"".$link."?id=".$data["id"]."\">".$data["name"]."$ID</a>";
 
                   echo "<tr class='tab_bg_1'>";
