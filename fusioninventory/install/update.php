@@ -1632,6 +1632,54 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                             "tablefield");
          
       
+         
+
+   /*
+    * Table glpi_plugin_fusioninventory_ignoredimportdevices
+    */
+      $newTable = "glpi_plugin_fusioninventory_ignoredimportdevices";
+      if (!TableExists($newTable)) {
+         $query = "CREATE TABLE `".$newTable."` (
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                      PRIMARY KEY (`id`)
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+         $DB->query($query);
+      }
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "name",
+                                 "name",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "date",
+                                 "date",
+                                 "datetime DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "itemtype",
+                                 "itemtype",
+                                 "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "entities_id",
+                                 "entities_id",
+                                 "int(11) NOT NULL DEFAULT '0'");      
+         $migration->changeField($newTable,
+                                 "ip",
+                                 "ip",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "mac",
+                                 "mac",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "rules_id",
+                                 "rules_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+      $migration->migrationOneTable($newTable);
+
+         
       
    /*
     * Table Delete old table not used
