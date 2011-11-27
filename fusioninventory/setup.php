@@ -308,6 +308,7 @@ function plugin_version_fusioninventory() {
    return array('name'           => 'FusionInventory',
                 'shortname'      => 'fusioninventory',
                 'version'        => PLUGIN_FUSIONINVENTORY_VERSION,
+                'license'        => 'AGPLv3+',
                 'oldname'        => 'tracker',
                 'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
                                     & FusionInventory team',

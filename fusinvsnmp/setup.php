@@ -215,6 +215,7 @@ function plugin_version_fusinvsnmp() {
 	return array('name'           => 'FusionInventory SNMP',
                 'shortname'      => 'fusinvsnmp',
                 'version'        => PLUGIN_FUSINVSNMP_VERSION,
+                'license'        => 'AGPLv3+',
                 'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
                                     & FusionInventory team',
                 'homepage'       =>'http://forge.fusioninventory.org/projects/pluginfusinvsnmp',

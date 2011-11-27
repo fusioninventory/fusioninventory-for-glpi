@@ -161,6 +161,7 @@ function plugin_version_fusinvinventory() {
    return array('name'           => 'FusionInventory INVENTORY',
                 'shortname'      => 'fusinvinventory',
                 'version'        => PLUGIN_FUSINVINVENTORY_VERSION,
+                'license'        => 'AGPLv3+',
                 'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
                                     & FusionInventory team',
                 'homepage'       =>'http://forge.fusioninventory.org/projects/pluginfusinvinventory',

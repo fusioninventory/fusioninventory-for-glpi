@@ -158,6 +158,7 @@ function plugin_version_fusinvdeploy() {
    return array('name'           => $LANG['plugin_fusinvdeploy']['title'][0],
                 'shortname'      => 'fusinvdeploy',
                 'version'        => '0.83+1.0',
+                'license'        => 'AGPLv3+',
                 'author'         => "<a href='http://www.teclib.com'>TECLIB'</a>",
                 'homepage'       => 'http://forge.fusioninventory.org/projects/pluginfusinvdeploy',
                 'minGlpiVersion' => '0.78' // For compatibility / no install in version < 0.78
