@@ -47,6 +47,73 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryLock extends CommonDBTM{
 
+   
+   static function getTypeName() {
+      global $LANG;
+
+      return $LANG['plugin_fusioninventory']['functionalities'][75];
+   }
+
+
+   function canCreate() {
+      return true;
+   }
+
+
+   function canView() {
+      return true;
+   }
+   
+   
+   
+   static function countForLock(Computer $item) {
+
+      $pfLock = new self();
+      $a_data = current($pfLock->find("`tablename`='".$item->getTable()."' 
+         AND `items_id`='".$item->getID()."'", "", 1));
+      if (count($a_data) == '0') {
+         return 0;
+      } else {
+         return count(importArrayFromDB($a_data['tablefields']));
+      }
+   }
+
+   
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $LANG;
+
+      $itemtype = $item->getType();
+      if ($itemtype == 'NetworkEquipment') {
+         $itemtype = "networking";
+      }
+      if (Session::haveRight(strtolower($itemtype), "w")) {
+         if ($_SESSION['glpishow_count_on_tabs']) {
+            return self::createTabEntry($LANG['plugin_fusioninventory']['functionalities'][75], self::countForLock($item));
+         }
+         return $LANG['plugin_fusioninventory']['functionalities'][75];
+      }
+      return '';
+   }
+
+   
+   
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+
+      $pflock = new self();
+      if ($item->getID() < 1) {
+         $pflock->showForm(Toolbox::getItemTypeFormURL('PluginFusioninventoryLock'),
+                           $item->getType());
+      } else {
+         $pflock->showForm(Toolbox::getItemTypeFormURL('PluginFusioninventoryLock').'?id='.$id,
+                           $item->getType(), $item->getID());
+      }
+
+      return true;
+   }
+   
+   
+   
+   
    /**
     * Show locks form.
     *

@@ -65,7 +65,9 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryAgentmodule');
       Plugin::registerClass('PluginFusioninventoryIPRange');
       Plugin::registerClass('PluginFusioninventoryCredential');
-   
+      Plugin::registerClass('PluginFusioninventoryLock',
+              array('addtabon' => array('Computer','Monitor','Printer','NetworkEquipment')));
+              
       // ##### 3. get informations of the plugin #####
 
       $a_plugin = plugin_version_fusioninventory();
