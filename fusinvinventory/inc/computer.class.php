@@ -86,9 +86,9 @@ class PluginFusinvinventoryComputer extends CommonDBTM {
       
       echo '<tr class="tab_bg_1">';
       echo '<td>'.$LANG['common'][27].'&nbsp;:</td>';
-      echo '<td>'.convDate($a_computerextend['bios_date']).'</td>';
+      echo '<td>'.Html::convDate($a_computerextend['bios_date']).'</td>';
       echo "<td>".$LANG['computers'][9]." - ".$LANG['install'][3]." (".strtolower($LANG['common'][27]).")&nbsp;:</td>";
-      echo '<td>'.convDate($a_computerextend['operatingsystem_installationdate']).'</td>';
+      echo '<td>'.Html::convDate($a_computerextend['operatingsystem_installationdate']).'</td>';
       echo '</tr>';
 
       echo '<tr class="tab_bg_1">';
