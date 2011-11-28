@@ -174,9 +174,6 @@ function plugin_get_headings_fusinvinventory($item,$withtemplate) {
             $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".
                $LANG['plugin_fusioninventory']['xml'][0];
 
-            if (Session::haveRight("computer", "w")) {
-               $array[3] = $LANG['plugin_fusinvinventory']['menu'][4];
-            }
             $array[4] = $LANG['entity'][14];
          }
          return $array;
@@ -196,7 +193,7 @@ function plugin_headings_actions_fusinvinventory($item) {
          $array = array ();
          $array[1] = "plugin_headings_fusinvinventory_xml";
 
-         $array[3] = "plugin_headings_fusinvinventory_integrity";
+
          $array[4] = "plugin_headings_fusinvinventory_bios";
          return $array;
          break;
@@ -246,12 +243,6 @@ function plugin_headings_fusinvinventory_xml($item) {
    }
 }
 
-
-
-function plugin_headings_fusinvinventory_integrity($item) {
-   $pluginFusinvinventoryLibintegrity = new PluginFusinvinventoryLibintegrity();
-   $pluginFusinvinventoryLibintegrity->showForm($item->getField('id'));
-}
 
 
 function plugin_headings_fusinvinventory_bios($item) {

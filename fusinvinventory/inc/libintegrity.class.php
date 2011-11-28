@@ -67,6 +67,34 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
    }
    
    
+   
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $LANG;
+
+      if ($item->getType() == 'Computer') {
+         if (Session::haveRight('computer', "w")) {
+            $a_libserialization = $this->find("`computers_id`='".$item->getID()."'", '', 1);
+            if (count($a_libserialization) > 0) {
+               return self::createTabEntry($LANG['plugin_fusinvinventory']['menu'][4]);
+            }
+         }
+      }
+      return '';
+   }
+
+   
+   
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+
+      if ($item->getID() > 0) {
+         $pfAntivirus = new self();
+         $pfAntivirus->showForm($item->getID());
+      }
+
+      return true;
+   }
+   
+   
 
    /**
     * Display fields to add or delete to have right integrity between

@@ -69,6 +69,8 @@ function plugin_init_fusinvinventory() {
    Plugin::registerClass('PluginFusinvinventoryAntivirus',
               array('addtabon' => array('Computer')));
    Plugin::registerClass('PluginFusinvinventoryInventory');
+   Plugin::registerClass('PluginFusinvinventoryLibintegrity',
+              array('addtabon' => array('Computer')));
    
       //Classes for rulesengine
    Plugin::registerClass('PluginFusinvinventoryRuleEntity');
