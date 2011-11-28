@@ -495,7 +495,7 @@ class PluginFusioninventoryCommunication {
 
    function cleanXML($xml) {
       foreach ($xml->children() as $key=>$value) {
-         if ($value->count() > 0) {
+         if (count($value->children()) > 0) {
             $value = $this->cleanXML($value);
          } else {         
             $value = clean_cross_side_scripting_deep(addslashes_deep($value));
