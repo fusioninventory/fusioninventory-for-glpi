@@ -69,12 +69,15 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
    
    
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      global $LANG;
+      global $DB,$LANG;
 
       if ($item->getType() == 'Computer') {
          if (Session::haveRight('computer', "w")) {
-            $a_libserialization = $this->find("`computers_id`='".$item->getID()."'", '', 1);
-            if (count($a_libserialization) > 0) {
+            $query = "SELECT * FROM `".$this->getTable()."`
+               WHERE `computers_id`='".$item->getID()."'
+               LIMIT 1";
+            $result = $DB->query($query);
+            if ($DB->numrows($result) > 0) {
                return self::createTabEntry($LANG['plugin_fusinvinventory']['menu'][4]);
             }
          }
