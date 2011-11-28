@@ -145,6 +145,7 @@ $LANG['plugin_fusioninventory']['rules'][15]="uuid";
 $LANG['plugin_fusioninventory']['rules'][16]="Etiquette FusionInventory";
 $LANG['plugin_fusioninventory']['rules'][17]="Import refusé";
 $LANG['plugin_fusioninventory']['rules'][18]="Equipement créé";
+$LANG['plugin_fusioninventory']['rules'][19] = "Ignored import devices";
 $LANG['plugin_fusioninventory']['rules'][2]="Règles d'import et de liaison des matériels";
 $LANG['plugin_fusioninventory']['rules'][3]="Chercher les matériels GLPI ayant le statut";
 $LANG['plugin_fusioninventory']['rules'][4]="Entité de destination de la machine";
