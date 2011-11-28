@@ -62,6 +62,52 @@ class PluginFusinvinventoryComputer extends CommonDBTM {
    }
 
    
+   
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $LANG;
+
+      $array_ret = array();
+      if ($item->getType() == 'Computer') {
+         if (Session::haveRight('computer', "r")) {
+            $a_computers = $this->find("`computers_id`='".$item->getID()."'", '', 1);
+            if (count($a_computers) > 0) {
+               // Bios/other informations
+               $array_ret[0] = self::createTabEntry($LANG['entity'][14]);
+            }
+            
+            $id = $item->getField('id');
+            $folder = substr($id, 0, -1);
+            if (empty($folder)) {
+               $folder = '0';
+            }
+            if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id)) {
+               $array_ret[1] = self::createTabEntry($LANG['plugin_fusioninventory']['xml'][0]);
+            }
+         }
+      }
+      return $array_ret;
+   }
+
+   
+   
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+
+      $pfComputer = new self();
+      if ($tabnum == '0') {
+         if ($item->getID() > 0) {
+            $pfComputer->showForm($item->getID());
+         }
+      }
+      if ($tabnum == '1') {
+         if ($item->getID() > 0) {
+            $pfComputer->display_xml($item);
+         }
+      }
+      return true;
+   }
+   
+   
+   
    function showForm($computers_id) {
       global $LANG;
       
@@ -112,6 +158,46 @@ class PluginFusinvinventoryComputer extends CommonDBTM {
       
    }
    
+   
+   
+   function display_xml($item) {
+      global $LANG,$CFG_GLPI;
+
+      $id = $item->getField('id');
+
+      $folder = substr($id, 0, -1);
+      if (empty($folder)) {
+         $folder = '0';
+      }
+      if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id)) {
+         $xml = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id);
+         $xml = str_replace("<", "&lt;", $xml);
+         $xml = str_replace(">", "&gt;", $xml);
+         $xml = str_replace("\n", "<br/>", $xml);
+         echo "<table class='tab_cadre_fixe' cellpadding='1'>";
+         echo "<tr>";
+         echo "<th>".$LANG['plugin_fusioninventory']['title'][1]." ".
+            $LANG['plugin_fusioninventory']['xml'][0];
+         echo " (".$LANG['plugin_fusinvinventory']['computer'][0]."&nbsp;: " . 
+            Html::convDateTime(date("Y-m-d H:i:s", 
+                         filemtime(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id))).")";
+         echo "</th>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td width='130' align='center'>";
+         echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/send_xml.php?pluginname=fusinvinventory&file=".$folder."/".$id."'>".$LANG['document'][15]."</a>";
+         echo "</td>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>";
+         echo "<pre width='130'>".$xml."</pre>";
+         echo "</td>";
+         echo "</tr>";
+         echo "</table>";
+      }
+   }
    
 }
 

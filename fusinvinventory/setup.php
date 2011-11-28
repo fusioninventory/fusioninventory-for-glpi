@@ -68,6 +68,8 @@ function plugin_init_fusinvinventory() {
    // ##### 2. register class #####
    Plugin::registerClass('PluginFusinvinventoryAntivirus',
               array('addtabon' => array('Computer')));
+   Plugin::registerClass('PluginFusinvinventoryComputer',
+              array('addtabon' => array('Computer')));
    Plugin::registerClass('PluginFusinvinventoryInventory');
    Plugin::registerClass('PluginFusinvinventoryLibintegrity',
               array('addtabon' => array('Computer')));
@@ -137,10 +139,6 @@ function plugin_init_fusinvinventory() {
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['fusinvinventory-blacklist']
                   = '../fusinvinventory/front/blacklist.php';
    
-   // Tabs for each type
-   $PLUGIN_HOOKS['headings']['fusinvinventory'] = 'plugin_get_headings_fusinvinventory';
-   $PLUGIN_HOOKS['headings_action']['fusinvinventory'] = 'plugin_headings_actions_fusinvinventory';
-
 
    $PLUGIN_HOOKS['webservices']['fusinvinventory'] = 'plugin_fusinvinventory_registerMethods';
 
