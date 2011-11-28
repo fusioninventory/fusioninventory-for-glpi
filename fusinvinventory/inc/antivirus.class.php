@@ -79,6 +79,36 @@ class PluginFusinvinventoryAntivirus extends CommonDBTM {
       
    
    
+
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $LANG;
+
+      if ($item->getType() == 'Computer') {
+         if (Session::haveRight('computer', "r")) {
+            $a_antivirus = $this->find("`computers_id`='".$item->getID()."'", '', 1);
+            if (count($a_antivirus) > 0) {
+               return self::createTabEntry($LANG['plugin_fusinvinventory']['antivirus'][0]);
+            }
+         }
+      }
+      return '';
+   }
+
+   
+   
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+
+      if ($item->getID() > 0) {
+         $pfAntivirus = new self();
+         $pfAntivirus->showForm($item->getID());
+      }
+
+      return true;
+   }
+   
+   
+   
+   
    function addHistory($item){
       global $LANG;
       

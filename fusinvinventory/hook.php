@@ -173,7 +173,7 @@ function plugin_get_headings_fusinvinventory($item,$withtemplate) {
                 AND $withtemplate!='1') {
             $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".
                $LANG['plugin_fusioninventory']['xml'][0];
-            $array[2] = $LANG['plugin_fusinvinventory']['antivirus'][0];
+
             if (Session::haveRight("computer", "w")) {
                $array[3] = $LANG['plugin_fusinvinventory']['menu'][4];
             }
@@ -195,7 +195,7 @@ function plugin_headings_actions_fusinvinventory($item) {
       case 'Computer' :
          $array = array ();
          $array[1] = "plugin_headings_fusinvinventory_xml";
-         $array[2] = "plugin_headings_fusinvinventory_antivirus";
+
          $array[3] = "plugin_headings_fusinvinventory_integrity";
          $array[4] = "plugin_headings_fusinvinventory_bios";
          return $array;
@@ -244,13 +244,6 @@ function plugin_headings_fusinvinventory_xml($item) {
       echo "</tr>";
       echo "</table>";
    }
-}
-
-
-
-function plugin_headings_fusinvinventory_antivirus($item) {
-   $antirivus = new PluginFusinvinventoryAntivirus();
-   $antirivus->showForm($item->getField('id'));
 }
 
 
