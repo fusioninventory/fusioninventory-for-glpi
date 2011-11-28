@@ -56,7 +56,8 @@ function plugin_init_fusioninventory() {
 
       Plugin::registerClass('PluginFusioninventoryAgent');
       Plugin::registerClass('PluginFusioninventoryConfig');
-      Plugin::registerClass('PluginFusioninventoryTask');
+      Plugin::registerClass('PluginFusioninventoryTask',
+              array('addtabon' => array('Computer','Printer','NetworkEquipment','PluginFusioninventoryCredentialIp')));
       Plugin::registerClass('PluginFusioninventoryTaskjob');
       Plugin::registerClass('PluginFusioninventoryUnknownDevice');
       Plugin::registerClass('PluginFusioninventoryModule');
@@ -68,6 +69,11 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryLock',
               array('addtabon' => array('Computer','Monitor','Printer','NetworkEquipment')));
               
+      //Classes for rulesengine
+      Plugin::registerClass('PluginFusioninventoryRuleImportEquipment');
+      Plugin::registerClass('PluginFusioninventoryRuleImportEquipmentCollection',
+                            array('rulecollections_types'=>true));
+   
       // ##### 3. get informations of the plugin #####
 
       $a_plugin = plugin_version_fusioninventory();
