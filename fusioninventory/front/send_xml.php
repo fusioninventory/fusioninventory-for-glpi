@@ -89,7 +89,7 @@ if (isset($_GET['file'])) {
       } else {
          // Pour que les \x00 ne devienne pas \0
          $mc=get_magic_quotes_runtime();
-         if ($mc) @set_magic_quotes_runtime(0);
+         if ($mc) @ini_set('magic_quotes_runtime', 0);
          $fsize=filesize($file);
 
          if ($fsize){
@@ -98,7 +98,7 @@ if (isset($_GET['file'])) {
             echo $LANG['document'][47];
          }
 
-         if ($mc) @set_magic_quotes_runtime($mc);
+         if ($mc) @ini_set('magic_quotes_runtime', $mc);
       }
    }
 }
