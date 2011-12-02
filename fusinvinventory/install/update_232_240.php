@@ -74,7 +74,7 @@ function update232to240() {
       }
       $sql = "DROP TABLE `glpi_plugin_fusinvinventory_computers`";
       $DB->query($sql);
-   	
+      
    }
 
    if (TableExists("glpi_plugin_fusinvinventory_tmp_agents")) {

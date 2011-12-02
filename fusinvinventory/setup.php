@@ -105,7 +105,7 @@ function plugin_init_fusinvinventory() {
 
    if (isset($_SESSION["glpiID"])) {
 
-		if (haveRight("configuration", "r") || haveRight("profile", "w")) {// Config page
+      if (haveRight("configuration", "r") || haveRight("profile", "w")) {// Config page
          if (!class_exists('PluginFusioninventoryConfiguration')) { // if plugin is unactive
             include(GLPI_ROOT . "/plugins/fusioninventory/inc/configuration.class.php");
          }

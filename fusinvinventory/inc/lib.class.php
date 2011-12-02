@@ -41,7 +41,7 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 class PluginFusinvinventoryLib extends CommonDBTM {
@@ -412,14 +412,14 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                                  AND isset($arrSectionToAdd["CAPACITY"]) AND isset($arrSectionToRemove["CAPACITY"])
                                  AND isset($arrSectionToAdd["SPEED"]) AND isset($arrSectionToRemove["SPEED"]))) {
 
-                  				$boolUpdate = true;
+                              $boolUpdate = true;
                            }
                            break;
                            
                         case "MONITORS":
                            if (isset($arrSectionToAdd["DESCRIPTION"]) AND isset($arrSectionToRemove["DESCRIPTION"])
                                  AND $arrSectionToAdd["DESCRIPTION"] == $arrSectionToRemove["DESCRIPTION"]) {
-                  				$boolUpdate = true;
+                              $boolUpdate = true;
                            }
                            break;
                            
@@ -440,14 +440,14 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                               
                            } else if(isset($arrSectionToAdd["MACADDR"]) AND isset($arrSectionToRemove["MACADDR"])
                                  AND $arrSectionToAdd["MACADDR"] == $arrSectionToRemove["MACADDR"]) {
-                  				$boolUpdate = true;
+                              $boolUpdate = true;
                            }
                            break;
                            
                         case "PORTS":
                            if (isset($arrSectionToAdd["CAPTION"]) AND isset($arrSectionToRemove["CAPTION"])
                                  AND $arrSectionToAdd["CAPTION"] == $arrSectionToRemove["CAPTION"]) {
-                     			$boolUpdate = true;
+                              $boolUpdate = true;
                            }
                            break;
                            
@@ -456,7 +456,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                                  AND $arrSectionToAdd["DESCRIPTION"] == $arrSectionToRemove["DESCRIPTION"])
                               OR (isset($arrSectionToAdd["PORT"]) AND isset($arrSectionToRemove["PORT"])
                                  AND $arrSectionToAdd["PORT"] == $arrSectionToRemove["PORT"])) {
-                  				$boolUpdate = true;
+                              $boolUpdate = true;
                            }
                            break;
                            
@@ -465,7 +465,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                                  AND (isset($arrSectionToRemove["STARTED"]))
                                  AND ($arrSectionToAdd["STARTED"] == $arrSectionToRemove["STARTED"]))
                                  AND ($arrSectionToAdd["PID"] == $arrSectionToRemove["PID"])) {
-                  				$boolUpdate = true;
+                              $boolUpdate = true;
                            }
                            break;
                            
@@ -595,15 +595,15 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       if ($sectionsToRemove) {
          $sectionsIdToRemove = array();
          $sectiondetail = array();
-      	foreach($sectionsToRemove as $sectionId => $serializedSection) {
+         foreach($sectionsToRemove as $sectionId => $serializedSection) {
             unset($infoSections["sections"][$sectionId]);
             array_push($sectionsIdToRemove, $sectionId);
             $sectiondetail[$sectionId] = $serializedSection;
          }
 
          call_user_func(array($classhook,"removeSections"),
-		       $sectionsIdToRemove,
-		       $infoSections["externalId"],
+             $sectionsIdToRemove,
+             $infoSections["externalId"],
              $sectiondetail);
       }
       if ($sectionsToAdd) {
@@ -612,13 +612,13 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          //format data to send to hook createSection
          foreach($sectionsToAdd as $arrayId => $serializedSection) {
             array_push($datasToAdd, array(
-					  "sectionName"=>$xmlSections[$arrayId]['sectionName'],
-					  "dataSection"=>$xmlSections[$arrayId]['sectionData']));
+                 "sectionName"=>$xmlSections[$arrayId]['sectionName'],
+                 "dataSection"=>$xmlSections[$arrayId]['sectionData']));
          }
 
          $sectionsId = call_user_func(array($classhook,"addSections"),
-				     $datasToAdd,
-				     $infoSections["externalId"]);
+                 $datasToAdd,
+                 $infoSections["externalId"]);
 
          $infoSectionsId = array();
 
@@ -627,12 +627,12 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          }
 
          $allSectionsId = array_merge(
-				     $infoSectionsId,
-				     $sectionsId);
+                 $infoSectionsId,
+                 $sectionsId);
 
          $infoSections["sections"] = array_merge (
-						 $infoSections["sections"],
-						 $sectionsToAdd);
+                   $infoSections["sections"],
+                   $sectionsToAdd);
          if ((count($allSectionsId)) != (count($infoSections["sections"]))) {
 
          }
@@ -673,7 +673,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       $a_serializedSections = str_split($serializedSections, 800000);
 
       $queryUpdate = "UPDATE `glpi_plugin_fusinvinventory_libserialization`
-		SET `serialized_sections1` = '".$a_serializedSections[0]."',
+      SET `serialized_sections1` = '".$a_serializedSections[0]."',
          `last_fusioninventory_update`='".date("Y-m-d H:i:s")."'
       WHERE `internal_id` = '" . $internalId . "'";
 

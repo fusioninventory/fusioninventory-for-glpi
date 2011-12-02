@@ -71,16 +71,16 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
 
       $tab['common'] = $LANG['plugin_fusinvinventory']['menu'][2];
 
-		$tab[1]['table']     = $this->getTable();
-		$tab[1]['field']     = 'value';
-		$tab[1]['linkfield'] = 'value';
-		$tab[1]['name']      = $LANG['plugin_fusinvinventory']['blacklist'][0];
+      $tab[1]['table']     = $this->getTable();
+      $tab[1]['field']     = 'value';
+      $tab[1]['linkfield'] = 'value';
+      $tab[1]['name']      = $LANG['plugin_fusinvinventory']['blacklist'][0];
       $tab[1]['datatype']  = 'itemlink';
 
       $tab[2]['table']     = 'glpi_plugin_fusinvinventory_criterias';
-		$tab[2]['field']     = 'name';
-		$tab[2]['linkfield'] = 'plugin_fusioninventory_criterium_id';
-		$tab[2]['name']      = $LANG['common'][16];
+      $tab[2]['field']     = 'name';
+      $tab[2]['linkfield'] = 'plugin_fusioninventory_criterium_id';
+      $tab[2]['name']      = $LANG['common'][16];
       $tab[2]['datetype']  = "itemlink";
 
       return $tab;

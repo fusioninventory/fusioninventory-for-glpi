@@ -121,7 +121,7 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
          }
       }
       $sql = "DROP TABLE `glpi_plugin_fusinvinventory_computers`";
-      $DB->query($sql);   	
+      $DB->query($sql);      
    }
    if (TableExists("glpi_plugin_fusinvinventory_tmp_agents")) {
       $sql = "DROP TABLE `glpi_plugin_fusinvinventory_tmp_agents`";
