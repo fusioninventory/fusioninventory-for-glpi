@@ -133,7 +133,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
    * @return nothing
    *
    **/
-	function putForm($p_post) {
+   function putForm($p_post) {
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
 

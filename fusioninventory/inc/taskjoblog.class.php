@@ -210,22 +210,22 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
    function javascriptHistory() {
       global $CFG_GLPI;
       
-      		echo "<script  type='text/javascript'>
+            echo "<script  type='text/javascript'>
 function close_array(id){
-	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/collapse.png\''+
+   document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/collapse.png\''+
       'onClick=\'document.getElementById(\"viewfollowup'+id+'\").hide();appear_array('+id+');\' />&nbsp;<img src=\'".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/refresh.png\' />';
    document.getElementById('plusmoins'+id).style.backgroundColor = '#e4e4e2';
 }
 function appear_array(id){
-	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/expand.png\''+
+   document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/expand.png\''+
       'onClick=\'document.getElementById(\"viewfollowup'+id+'\").show();close_array('+id+');\' />';
    document.getElementById('plusmoins'+id).style.backgroundColor = '#f2f2f2';
 
 }
 
-		</script>";
+      </script>";
      
-		echo "<script type='text/javascript' src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/prototype.js'></script>";
+      echo "<script type='text/javascript' src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/prototype.js'></script>";
       echo "<script type='text/javascript' src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/effects.js'></script>";
 
       
@@ -322,7 +322,7 @@ function appear_array(id){
    *
    **/
    function showHistoryInDetail($agents_id, $uniqid, $width="950") {
-      global $DB,$CFG_GLPI,$LANG;
+      global $CFG_GLPI,$LANG;
 
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
@@ -605,7 +605,7 @@ function appear_array(id){
          GROUP BY glpi_plugin_fusioninventory_taskjobstatus.uniqid,plugin_fusioninventory_agents_id";
       $result=$DB->query($query);
       if ($result) {
-			while ($datajob=$DB->fetch_array($result)) {
+         while ($datajob=$DB->fetch_array($result)) {
             $finishState[$datajob['state']]++;
          }
       }

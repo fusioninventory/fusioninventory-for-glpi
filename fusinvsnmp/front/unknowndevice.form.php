@@ -47,8 +47,8 @@ include (GLPI_ROOT . "/inc/includes.php");
 $PluginFusinvsnmpUnknownDevice = new PluginFusinvsnmpUnknownDevice();
 
 if (isset($_POST["update"])) {
-	$PluginFusinvsnmpUnknownDevice->check($_POST['id'],'w');
-	$PluginFusinvsnmpUnknownDevice->update($_POST);
+   $PluginFusinvsnmpUnknownDevice->check($_POST['id'],'w');
+   $PluginFusinvsnmpUnknownDevice->update($_POST);
 
 } 
 Html::back();

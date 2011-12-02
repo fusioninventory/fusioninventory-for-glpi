@@ -85,7 +85,6 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
     * @param $field array
    **/
    function displaySpecificTypeField($ID, $field=array()) {
-      global $CFG_GLPI;
       
       switch ($field['type']) {
          case 'credentials' :
@@ -134,7 +133,8 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
    
    
    function title() {
-      global $CFG_GLPI, $LANG;
+      global $LANG;
+      
       //Leave empty !
       $buttons = array();
       if (PluginFusioninventoryProfile::haveRight('fusioninventory', 'credential', 'r')) {

@@ -41,7 +41,7 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 class PluginFusinvinventoryImport_Drive extends CommonDBTM {
@@ -98,7 +98,7 @@ class PluginFusinvinventoryImport_Drive extends CommonDBTM {
          $disk['computers_id']=$items_id;
       }
 
-      // totalsize 	freesize
+      // totalsize    freesize
       if ((isset($dataSection['LABEL'])) AND (!empty($dataSection['LABEL']))) {
          $disk['name']=$dataSection['LABEL'];
       } else if (((!isset($dataSection['VOLUMN'])) OR (empty($dataSection['VOLUMN']))) AND (isset($dataSection['LETTER']))) {

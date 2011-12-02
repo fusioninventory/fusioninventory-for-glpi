@@ -3456,97 +3456,97 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
     *  Clean old ports deleted but have some informations in SNMP tables
     */
    echo "Clean ports purged\n";
-	$query_select = "SELECT `glpi_plugin_fusinvsnmp_networkports`.`id`
+   $query_select = "SELECT `glpi_plugin_fusinvsnmp_networkports`.`id`
                     FROM `glpi_plugin_fusinvsnmp_networkports`
                           LEFT JOIN `glpi_networkports`
                                     ON `glpi_networkports`.`id` = `networkports_id`
                           LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `glpi_networkports`.`items_id`
                     WHERE `glpi_networkequipments`.`id` IS NULL";
-	$result=$DB->query($query_select);
-	while ($data=$DB->fetch_array($result)) {
+   $result=$DB->query($query_select);
+   while ($data=$DB->fetch_array($result)) {
       $query_del = "DELETE FROM `glpi_plugin_fusinvsnmp_networkports`
          WHERE `id`='".$data["id"]."'";
       $DB->query($query_del);
-	}
+   }
    
-	/*
+   /*
     *  Clean for multiple IP of a switch when this switch is purged but not these IPs
     */
    echo "Clean for multiple IP of a switch when this switch is purged but not these IPs\n";
-	$query_select = "SELECT `glpi_plugin_fusinvsnmp_networkequipmentips`.`id`
+   $query_select = "SELECT `glpi_plugin_fusinvsnmp_networkequipmentips`.`id`
                     FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
                           LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `networkequipments_id`
                     WHERE `glpi_networkequipments`.`id` IS NULL";
-	$result=$DB->query($query_select);
-	while ($data=$DB->fetch_array($result)) {
+   $result=$DB->query($query_select);
+   while ($data=$DB->fetch_array($result)) {
       $query_del = "DELETE FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
          WHERE `id`='".$data["id"]."'";
       $DB->query($query_del);
-	}
+   }
 
    
-	/*
+   /*
     * Clean for switch more informations again in DB when switch is purged
     */
-	echo "Clean for switch more informations again in DB when switch is purged\n";
+   echo "Clean for switch more informations again in DB when switch is purged\n";
    $query_select = "SELECT `glpi_plugin_fusinvsnmp_networkequipments`.`id`
                     FROM `glpi_plugin_fusinvsnmp_networkequipments`
                           LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `networkequipments_id`
                     WHERE `glpi_networkequipments`.`id` IS NULL";
-	$result=$DB->query($query_select);
-	while ($data=$DB->fetch_array($result)) {
+   $result=$DB->query($query_select);
+   while ($data=$DB->fetch_array($result)) {
        $query_del = "DELETE FROM `glpi_plugin_fusinvsnmp_networkequipments`
          WHERE `id`='".$data["id"]."'";
       $DB->query($query_del);
-	}
+   }
    
    
-	/*
+   /*
     * Clean for printer more informations again in DB when printer is purged
     */
-	"Clean for printer more informations again in DB when printer is purged\n";
+   "Clean for printer more informations again in DB when printer is purged\n";
    $query_select = "SELECT `glpi_plugin_fusinvsnmp_printers`.`id`
                     FROM `glpi_plugin_fusinvsnmp_printers`
                           LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `printers_id`
                     WHERE `glpi_printers`.`id` IS NULL";
-	$result=$DB->query($query_select);
-	while ($data=$DB->fetch_array($result)) {
+   $result=$DB->query($query_select);
+   while ($data=$DB->fetch_array($result)) {
       $query_del = "DELETE FROM `glpi_plugin_fusinvsnmp_printers`
          WHERE `id`='".$data["id"]."'";
       $DB->query($query_del);
-	}
+   }
    
    
-	/*
+   /*
     *  Clean printer cartridge not deleted with the printer associated
     */
    echo "Clean printer cartridge not deleted with the printer associated\n";
-	$query_select = "SELECT `glpi_plugin_fusinvsnmp_printercartridges`.`id`
+   $query_select = "SELECT `glpi_plugin_fusinvsnmp_printercartridges`.`id`
                     FROM `glpi_plugin_fusinvsnmp_printercartridges`
                           LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `printers_id`
                     WHERE `glpi_printers`.`id` IS NULL";
-	$result=$DB->query($query_select);
-	while ($data=$DB->fetch_array($result)) {
+   $result=$DB->query($query_select);
+   while ($data=$DB->fetch_array($result)) {
       $query_del = "DELETE FROM `glpi_plugin_fusinvsnmp_printercartridges`
          WHERE `id`='".$data["id"]."'";
       $DB->query($query_del);
-	}
+   }
    
 
    /*
     *  Clean printer history not deleted with printer associated
     */
-	echo "Clean printer history not deleted with printer associated\n";
+   echo "Clean printer history not deleted with printer associated\n";
    $query_select = "SELECT `glpi_plugin_fusinvsnmp_printerlogs`.`id`
                     FROM `glpi_plugin_fusinvsnmp_printerlogs`
                           LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `printers_id`
                     WHERE `glpi_printers`.`id` IS NULL";
-	$result=$DB->query($query_select);
-	while ($data=$DB->fetch_array($result)) {
+   $result=$DB->query($query_select);
+   while ($data=$DB->fetch_array($result)) {
       $query_del = "DELETE FROM `glpi_plugin_fusinvsnmp_printerlogs`
          WHERE `id`='".$data["id"]."'";
       $DB->query($query_del);
-	}
+   }
    
    
    /*

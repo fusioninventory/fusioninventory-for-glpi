@@ -41,7 +41,7 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 
@@ -62,7 +62,7 @@ class PluginFusinvsnmpAgentconfig extends CommonDBTM {
 
 
    function showForm($id, $options=array()) {
-      global $DB,$CFG_GLPI,$LANG;
+      global $LANG;
 
       $a_agent = $this->find("`plugin_fusioninventory_agents_id`='".$id."'");
       if (count($a_agent) > 0) {

@@ -489,7 +489,6 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
     *
     */
    function run($a_Taskjobstatus) {
-      global $DB;
       
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
       $PluginFusinvsnmpAgentconfig = new  PluginFusinvsnmpAgentconfig;

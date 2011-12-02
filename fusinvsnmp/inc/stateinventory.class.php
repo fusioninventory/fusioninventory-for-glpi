@@ -85,7 +85,7 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
 
       echo "<table class='tab_cadre_fixe'>";
 
-		echo "<tr class='tab_bg_1'>";
+      echo "<tr class='tab_bg_1'>";
       echo "<th>".$LANG['plugin_fusioninventory']['task'][47]."</th>";
       echo "<th>".$LANG['plugin_fusioninventory']['agents'][28]."</th>";
       echo "<th>".$LANG['joblist'][0]."</th>";

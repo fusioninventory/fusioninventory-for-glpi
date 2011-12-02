@@ -41,7 +41,7 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 class PluginFusinvsnmpCommunicationSNMPQuery {
@@ -64,7 +64,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     *@return "" (import ok) / error string (import ko)
     **/
    function import($p_DEVICEID, $p_CONTENT, $p_xml) {
-      global $LANG;
 
       $_SESSION['SOURCEXML'] = $p_xml;
 
@@ -87,9 +86,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             $PluginFusioninventoryTaskjobstatus->changeStatus($p_CONTENT->PROCESSNUMBER, 2);
             if ((!isset($p_CONTENT->AGENT->START)) AND (!isset($p_CONTENT->AGENT->END))) {
                $nb_devices = 0;
-               foreach($p_CONTENT->DEVICE as $child) {
-                  $nb_devices++;
-               }
+               $nb_devices = count($p_CONTENT->DEVICE->children());
+                  
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = $p_CONTENT->PROCESSNUMBER;
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $this->agent['id'];
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
@@ -301,7 +299,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     *@return errors string to be alimented if import ko / '' if ok
     **/
    function importInfo($itemtype, $items_id) {
-      global $LANG;
 
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->importInfo().');
@@ -528,7 +525,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $errors='';
       $PluginFusinvsnmpNetworkEquipmentIP = new PluginFusinvsnmpNetworkEquipmentIP();
       $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
-      foreach ($p_ips->children() as $name=>$child) {
+      foreach ($p_ips->children() as $child) {
          switch ($child->getName()) {
             case 'IP' :
                if ((string)$child != "127.0.0.1") {
@@ -916,7 +913,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             $macNotPhone_id = 0;
             $macNotPhone = '';
             $phonePort_id = 0;
-            foreach ($p_oPort->getMacsToConnect() as $num=>$ifmac) {
+            foreach ($p_oPort->getMacsToConnect() as $ifmac) {
                $a_ports = $NetworkPort->find("`mac`='".$ifmac."'");
                $a_port = current($a_ports);
                if ($a_port['itemtype'] == 'Phone') {
@@ -1330,7 +1327,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
 
    function rulepassed($items_id, $itemtype) {
-      global $DB;
       
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
                                                    "Rule passed : ".$items_id.", ".$itemtype."\n");

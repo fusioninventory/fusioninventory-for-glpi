@@ -41,7 +41,7 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 class PluginFusinvinventoryImportXML extends CommonDBTM  {
@@ -57,24 +57,24 @@ class PluginFusinvinventoryImportXML extends CommonDBTM  {
       global $DB,$CFG_GLPI,$LANG;
 
       $target = $CFG_GLPI['root_doc'].'/plugins/fusinvinventory/front/importxml.php';
-		echo "<form action='".$target."' method='post' enctype='multipart/form-data'>";
+      echo "<form action='".$target."' method='post' enctype='multipart/form-data'>";
 
-		echo "<br>";
-		echo "<table class='tab_cadre' cellpadding='1' width='600'><tr><th colspan='2'>";
-		echo $LANG['plugin_fusinvinventory']['importxml'][0]." :</th></tr>";
+      echo "<br>";
+      echo "<table class='tab_cadre' cellpadding='1' width='600'><tr><th colspan='2'>";
+      echo $LANG['plugin_fusinvinventory']['importxml'][0]." :</th></tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>";
-		echo "</td>";
-		echo "<td align='center'>";
-		echo "<input type='file' name='importfile' value=''/>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>";
+      echo "</td>";
+      echo "<td align='center'>";
+      echo "<input type='file' name='importfile' value=''/>";
       echo "&nbsp;<input type='submit' value='".$LANG["buttons"][37]."' class='submit'/>";
-		echo "</td>";
-		echo "</tr>";
+      echo "</td>";
+      echo "</tr>";
 
-		echo "</table>";
+      echo "</table>";
 
-		echo "</form>";
+      echo "</form>";
       return true;
    }
 

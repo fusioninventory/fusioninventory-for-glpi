@@ -46,7 +46,7 @@ header("Content-Type: text/html; charset=UTF-8");
 Html::header_nocache();
 
 if(!isset($_POST["id"])) {
-	exit();
+   exit();
 }
 
 if(!isset($_POST["sort"])) $_POST["sort"] = "";
@@ -59,23 +59,23 @@ $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice;
 $PluginFusioninventoryUnknownDevice->getFromDB($_POST['id']);
 
 switch($_POST['glpi_tab']) {
-	case -1 :
+   case -1 :
       NetworkPort::showForItem($PluginFusioninventoryUnknownDevice);
       $PluginFusioninventoryUnknownDevice->importForm($CFG_GLPI['root_doc'] . '/plugins/fusioninventory/front/unknowndevice.form.php?id='.$_POST["id"],$_POST["id"]);
       Log::showForItem($PluginFusioninventoryUnknownDevice);
       CommonGLPI::displayStandardTab($PluginFusioninventoryUnknownDevice, $_REQUEST['glpi_tab']);
       break;
 
-	case 1 :
+   case 1 :
       NetworkPort::showForItem($PluginFusioninventoryUnknownDevice);
-		break;
+      break;
 
    case 2 :
       $PluginFusioninventoryUnknownDevice->importForm($CFG_GLPI['root_doc'] . '/plugins/fusioninventory/front/unknowndevice.form.php?id='.$_POST["id"],$_POST["id"]);
       break;
 
    case 3 :
-		break;
+      break;
 
    case 4 :
       Log::showForItem($PluginFusioninventoryUnknownDevice);
@@ -83,7 +83,7 @@ switch($_POST['glpi_tab']) {
 
    default :
       CommonGLPI::displayStandardTab($PluginFusioninventoryUnknownDevice, $_REQUEST['glpi_tab']);
-		break;
+      break;
 }
 
 Html::ajaxFooter();

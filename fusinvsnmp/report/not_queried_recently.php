@@ -55,7 +55,7 @@ PluginFusioninventoryProfile::checkRight("fusinvsnmp","reportnetworkequipment","
 
 $nbdays = 1;
 if (isset($_GET["nbdays"])) {
-	$nbdays = $_GET["nbdays"];
+   $nbdays = $_GET["nbdays"];
 }
 $state = '';
 if (isset($_GET["state"])) {

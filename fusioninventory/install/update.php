@@ -1904,22 +1904,22 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
 
 function plugin_fusioninventory_displayMigrationMessage ($id, $msg="") {
-	global $LANG;
-	static $created=0;
-	static $deb;
+   global $LANG;
+   static $created=0;
+   static $deb;
 
-	if ($created != $id) {
-		if (empty($msg)) $msg=$LANG['rulesengine'][90];
-		echo "<div id='migration_message_$id'><p class='center'>$msg</p></div>";
-		$created = $id;
-		$deb = time();
-	} else {
-		if (empty($msg)) $msg=$LANG['rulesengine'][91];
-		$fin = time();
-		$tps = Html::timestampToString($fin-$deb);
-		echo "<script type='text/javascript'>document.getElementById('migration_message_$id').innerHTML = '<p class=\"center\">$msg ($tps)</p>';</script>\n";
-	}
-	Html::glpi_flush();
+   if ($created != $id) {
+      if (empty($msg)) $msg=$LANG['rulesengine'][90];
+      echo "<div id='migration_message_$id'><p class='center'>$msg</p></div>";
+      $created = $id;
+      $deb = time();
+   } else {
+      if (empty($msg)) $msg=$LANG['rulesengine'][91];
+      $fin = time();
+      $tps = Html::timestampToString($fin-$deb);
+      echo "<script type='text/javascript'>document.getElementById('migration_message_$id').innerHTML = '<p class=\"center\">$msg ($tps)</p>';</script>\n";
+   }
+   Html::glpi_flush();
 }
 
 ?>

@@ -41,14 +41,13 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 
 class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
 
    static function getTypeName() {
-      global $LANG;
 
       return "SNMP";
    }
@@ -71,7 +70,7 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
 
 
    function showForm($id, $options=array()) {
-      global $DB,$CFG_GLPI,$LANG;
+      global $LANG;
 
       $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
       $PluginFusioninventoryUnknownDevice->getFromDB($id);
@@ -94,11 +93,11 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
       echo "<td align='center' rowspan='2'>";
       echo $LANG['plugin_fusinvsnmp']['snmp'][4]."&nbsp;:";
       echo "</td>";
-		echo "<td rowspan='2'>";
-		echo "<textarea name='sysdescr'  cols='45' rows='5' />".$this->fields["sysdescr"]."</textarea>";
+      echo "<td rowspan='2'>";
+      echo "<textarea name='sysdescr'  cols='45' rows='5' />".$this->fields["sysdescr"]."</textarea>";
 
-		echo "<td align='center'>".$LANG['plugin_fusinvsnmp']['model_info'][4]."&nbsp;:</td>";
-		echo "<td align='center'>";
+      echo "<td align='center'>".$LANG['plugin_fusinvsnmp']['model_info'][4]."&nbsp;:</td>";
+      echo "<td align='center'>";
       if (!empty($PluginFusioninventoryUnknownDevice->fields['item_type'])) {
          Dropdown::show("PluginFusinvsnmpModel",
                      array('name'=>"plugin_fusinvsnmp_models_id",
@@ -110,10 +109,10 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_fusinvsnmp']['model_info'][3]."&nbsp;:</td>";
-		echo "<td align='center'>";
-		PluginFusinvsnmpSNMP::auth_dropdown($this->fields['plugin_fusinvsnmp_configsecurities_id']);
-		echo "</td>";
+      echo "<td align='center'>".$LANG['plugin_fusinvsnmp']['model_info'][3]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      PluginFusinvsnmpSNMP::auth_dropdown($this->fields['plugin_fusinvsnmp_configsecurities_id']);
+      echo "</td>";
       echo "</tr>";
       
       $this->showFormButtons($options);

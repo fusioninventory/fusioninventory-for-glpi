@@ -124,7 +124,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
    
    function defineTabs($options=array()){
-      global $LANG,$CFG_GLPI,$DB;
+      global $LANG,$CFG_GLPI;
 
       $ong = array();
       $ong[1] = $LANG['title'][26];
@@ -157,7 +157,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
    *
    **/
    function showForm($id, $options=array()) {
-      global $DB,$CFG_GLPI,$LANG;
+      global $LANG;
 
       $pFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $pFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();

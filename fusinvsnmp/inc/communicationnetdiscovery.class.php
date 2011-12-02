@@ -41,7 +41,7 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 require_once GLPI_ROOT.'/plugins/fusinvsnmp/inc/communicationsnmp.class.php';
@@ -60,8 +60,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
     * 
     **/
    function import($p_DEVICEID, $p_CONTENT, $p_xml) {
-
-      global $LANG;
+      
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryAgent  = new PluginFusioninventoryAgent();
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
@@ -81,9 +80,8 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                $PluginFusioninventoryTaskjobstatus->changeStatus($p_CONTENT->PROCESSNUMBER, 2);
                if ((!isset($p_CONTENT->AGENT->START)) AND (!isset($p_CONTENT->AGENT->END))) {
                   $nb_devices = 0;
-                  foreach($p_CONTENT->DEVICE as $child) {
-                     $nb_devices++;
-                  }
+                  $nb_devices = count($p_CONTENT->DEVICE->children());
+
                   $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = $p_CONTENT->PROCESSNUMBER;
                   $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $a_agent['id'];
                   $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
@@ -240,7 +238,6 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
 
    function rulepassed($items_id, $itemtype, $entities_id=0) {
-      global $DB;
 
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
                                                    "Rule passed : ".$items_id.", ".$itemtype."\n");
@@ -361,7 +358,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             if (!in_array('domain', $a_lockable)) {
                if (!empty($xml->WORKGROUP)) {
                $input['domain'] = Dropdown::importExternal("Domain",
-                                       (string)$xml->WORKGROUP,(string) $xml->ENTITY);
+                                       (string)$xml->WORKGROUP,(string)$xml->ENTITY);
                }
             }
             if (!empty($xml->TYPE)) {

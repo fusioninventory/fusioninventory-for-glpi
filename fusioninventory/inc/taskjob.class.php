@@ -117,7 +117,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    *
    **/
    function showForm($id, $options=array()) {
-      global $DB,$CFG_GLPI,$LANG;
+      global $CFG_GLPI,$LANG;
 
       if ($id != '') {
          $this->verifyDefinitionActions($id);
@@ -385,9 +385,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    * @return value rand of the dropdown
    *
    **/
-   function dropdownMethod($myname,$value=0) {
-      global $DB,$CFG_GLPI;
-      
+   function dropdownMethod($myname,$value=0,$entity_restrict='') {
+      global $CFG_GLPI;
+
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
 
       $a_methods2 = array();
@@ -419,9 +419,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    * @return value rand of the dropdown
    *
    **/
-   
+
    function dropdownType($myname,$method,$value=0, $taskjobs_id, $entity_restrict='') {
-      global $DB,$CFG_GLPI;
+      global $CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $a_type = array();
@@ -470,7 +470,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    *
    **/
    function dropdownvalue($myname,$definitiontype,$method,$deftypeid,$taskjobs_id,$value=0,$entity_restrict='', $title = 0) {
-      global $DB,$CFG_GLPI, $LANG;
+      global $CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $module = '';
@@ -656,7 +656,7 @@ return namelist;
    *
    **/
    function dropdownActionType($myname,$method,$value=0,$entity_restrict='') {
-      global $DB,$CFG_GLPI,$LANG;
+      global $CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $a_actioninitiontype = array();
@@ -705,7 +705,7 @@ return namelist;
    *
    **/
    function dropdownAction($myname,$actiontype,$method,$actiontypeid,$value=0,$entity_restrict='') {
-      global $DB,$CFG_GLPI, $LANG;
+      global $CFG_GLPI;
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $module = '';
       foreach ($a_methods as $datas) {
@@ -900,7 +900,6 @@ return namelist;
       
       
       // Start agents must start in push mode
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
       foreach($_SESSION['glpi_plugin_fusioninventory']['agents'] as $agent_id=>$num) {
          $PluginFusioninventoryTaskjob->startAgentRemotly($agent_id);
       }
@@ -1046,7 +1045,6 @@ return namelist;
 
       if ($this->reinitializeTaskjobs($tasks_id, 1)) {
          $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-         $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
          $_SESSION['glpi_plugin_fusioninventory']['agents'] = array();
 
          $query = "SELECT `".$PluginFusioninventoryTaskjob->getTable()."`.*,
@@ -1125,7 +1123,6 @@ return namelist;
    *
    **/
    function getStateAgent($ip, $agentid) {
-      global $LANG;
 
       $this->disableDebug();
 
@@ -1145,7 +1142,7 @@ return namelist;
       $ret = false;
       foreach(PluginFusioninventoryAgent::getAgentStatusURLs($plugins_id, $agentid) as $url) {
          $str = @file_get_contents($url, 0, $ctx);
-         if ($stre !== false && strstr($str, "waiting")) {
+         if ($str !== false && strstr($str, "waiting")) {
             $ret = true;
             break;
          }
@@ -1158,10 +1155,8 @@ return namelist;
    
    // $items_id = agent id
    function getRealStateAgent($items_id) {
-      global $LANG;
 
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-      $a_ip = $PluginFusioninventoryAgent->getIPs($items_id);
 
       $this->disableDebug();
 
@@ -1183,6 +1178,7 @@ return namelist;
       }
       $this->reenableusemode();
 
+      $ret = '';
       if (strstr($str, "waiting")) {
          $ret="waiting";
       } else if (strstr($str, "running")) {
@@ -1204,8 +1200,6 @@ return namelist;
    *
    **/
    function startAgentRemotly($agent_id) {
-
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
@@ -1350,7 +1344,6 @@ return namelist;
    *
    **/
    function showMiniAction($items_id, $width="950") {
-      global $LANG;
       
       echo "<center><table class='tab_cadrehov' style='width: ".$width."px'>";
 
@@ -1520,7 +1513,7 @@ return namelist;
        AND `glpi_plugin_fusioninventory_taskjobs`.`status`=1";
      $result=$DB->query($sql);
      if ($result) {
-			while ($data=$DB->fetch_array($result)) {
+         while ($data=$DB->fetch_array($result)) {
             $this->reinitializeTaskjobs($data['plugin_fusioninventory_tasks_id'], '1');
          }
      }

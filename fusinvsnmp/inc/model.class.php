@@ -41,7 +41,7 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 class PluginFusinvsnmpModel extends CommonDBTM {
@@ -63,92 +63,92 @@ class PluginFusinvsnmpModel extends CommonDBTM {
 
       $tab['common'] = $LANG['plugin_fusinvsnmp']['model_info'][4];
 
-		$tab[1]['table'] = $this->getTable();
-		$tab[1]['field'] = 'name';
-		$tab[1]['linkfield'] = 'name';
-		$tab[1]['name'] = $LANG['common'][16];
-		$tab[1]['datatype'] = 'itemlink';
+      $tab[1]['table'] = $this->getTable();
+      $tab[1]['field'] = 'name';
+      $tab[1]['linkfield'] = 'name';
+      $tab[1]['name'] = $LANG['common'][16];
+      $tab[1]['datatype'] = 'itemlink';
 
-		$tab[2]['table'] = $this->getTable();
-		$tab[2]['field'] = 'itemtype';
-		$tab[2]['linkfield'] = 'itemtype';
-		$tab[2]['name'] = $LANG['state'][6];
+      $tab[2]['table'] = $this->getTable();
+      $tab[2]['field'] = 'itemtype';
+      $tab[2]['linkfield'] = 'itemtype';
+      $tab[2]['name'] = $LANG['state'][6];
 
-		$tab[5]['table'] = $this->getTable();
-		$tab[5]['field'] = 'discovery_key';
-		$tab[5]['linkfield'] = 'discovery_key';
-		$tab[5]['name'] = $LANG['plugin_fusinvsnmp']['model_info'][12];
+      $tab[5]['table'] = $this->getTable();
+      $tab[5]['field'] = 'discovery_key';
+      $tab[5]['linkfield'] = 'discovery_key';
+      $tab[5]['name'] = $LANG['plugin_fusinvsnmp']['model_info'][12];
 
-		$tab[6]['table'] = $this->getTable();
-		$tab[6]['field'] = 'comment';
-		$tab[6]['linkfield'] = 'comment';
-		$tab[6]['name'] = $LANG['common'][25];
+      $tab[6]['table'] = $this->getTable();
+      $tab[6]['field'] = 'comment';
+      $tab[6]['linkfield'] = 'comment';
+      $tab[6]['name'] = $LANG['common'][25];
 
       return $tab;
    }
 
 
 
-	function showForm($id, $options=array()) {
-		global $DB,$CFG_GLPI,$LANG;
+   function showForm($id, $options=array()) {
+      global $CFG_GLPI,$LANG;
 
-		PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","r");
+      PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","r");
 
-		if ($id!='') {
-			$this->getFromDB($id);
+      if ($id!='') {
+         $this->getFromDB($id);
       } else {
-			$this->getEmpty();	
+         $this->getEmpty();   
       }
 
       $target = $CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/model.form.php';
             $this->showTabs($id);
-		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
+      echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
-		echo "<table class='tab_cadre' cellpadding='5' width='950'><tr><th colspan='2'>";
-		echo ($id =='' ? $LANG['plugin_fusinvsnmp']['model_info'][7] :
+      echo "<table class='tab_cadre' cellpadding='5' width='950'><tr><th colspan='2'>";
+      echo ($id =='' ? $LANG['plugin_fusinvsnmp']['model_info'][7] :
             $LANG['plugin_fusinvsnmp']['model_info'][6]);
-		echo " :</th></tr>";
+      echo " :</th></tr>";
 
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG["common"][16] . "</td>";
-		echo "<td align='center'>";
-		echo "<input type='text' name='name' value='" . $this->fields["name"] . "' size='35'/>";
-		echo "</td>";
-		echo "</tr>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>" . $LANG["common"][16] . "</td>";
+      echo "<td align='center'>";
+      echo "<input type='text' name='name' value='" . $this->fields["name"] . "' size='35'/>";
+      echo "</td>";
+      echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG["common"][17]."</td>";
-		echo "<td align='center'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>".$LANG["common"][17]."</td>";
+      echo "<td align='center'>";
 
-		$selected_value = $this->fields["itemtype"];
+      $selected_value = $this->fields["itemtype"];
       $selected = '';
-		echo "<select name='itemtype'>\n";
-		if ($selected_value == "0"){$selected = 'selected';}else{$selected = '';}
-		echo "<option value='0' ".$selected.">-----</option>\n";
-		if ($selected_value == COMPUTER_TYPE){$selected = 'selected';}else{$selected = '';}
-		echo "<option value='".COMPUTER_TYPE."' ".$selected.">".$LANG["Menu"][0]."</option>\n";
-		if ($selected_value == NETWORKING_TYPE){$selected = 'selected';}else{$selected = '';}
-		echo "<option value='".NETWORKING_TYPE."' ".$selected.">".$LANG["Menu"][1]."</option>\n";
-		if ($selected_value == PRINTER_TYPE){$selected = 'selected';}else{$selected = '';}
-		echo "<option value='".PRINTER_TYPE."' ".$selected.">".$LANG["Menu"][2]."</option>\n";
-		if ($selected_value == PERIPHERAL_TYPE){$selected = 'selected';}else{$selected = '';}
-		echo "<option value='".PERIPHERAL_TYPE."' ".$selected.">".$LANG["Menu"][16]."</option>\n";
-		if ($selected_value == PHONE_TYPE){$selected = 'selected';}else{$selected = '';}
-		echo "<option value='".PHONE_TYPE."' ".$selected.">".$LANG["Menu"][34]."</option>\n";
-		echo "</select>";
-		
-		echo "</td>";
-		echo "</tr>";
+      echo "<select name='itemtype'>\n";
+      if ($selected_value == "0"){$selected = 'selected';}else{$selected = '';}
+      echo "<option value='0' ".$selected.">-----</option>\n";
+      if ($selected_value == COMPUTER_TYPE){$selected = 'selected';}else{$selected = '';}
+      echo "<option value='".COMPUTER_TYPE."' ".$selected.">".$LANG["Menu"][0]."</option>\n";
+      if ($selected_value == NETWORKING_TYPE){$selected = 'selected';}else{$selected = '';}
+      echo "<option value='".NETWORKING_TYPE."' ".$selected.">".$LANG["Menu"][1]."</option>\n";
+      if ($selected_value == PRINTER_TYPE){$selected = 'selected';}else{$selected = '';}
+      echo "<option value='".PRINTER_TYPE."' ".$selected.">".$LANG["Menu"][2]."</option>\n";
+      if ($selected_value == PERIPHERAL_TYPE){$selected = 'selected';}else{$selected = '';}
+      echo "<option value='".PERIPHERAL_TYPE."' ".$selected.">".$LANG["Menu"][16]."</option>\n";
+      if ($selected_value == PHONE_TYPE){$selected = 'selected';}else{$selected = '';}
+      echo "<option value='".PHONE_TYPE."' ".$selected.">".$LANG["Menu"][34]."</option>\n";
+      echo "</select>";
+      
+      echo "</td>";
+      echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['common'][25] . "</td>";
-		echo "<td align='center'>";
-		echo nl2br($this->fields["comment"]);
-		echo "</td>";
-		echo "</tr>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>" . $LANG['common'][25] . "</td>";
+      echo "<td align='center'>";
+      echo nl2br($this->fields["comment"]);
+      echo "</td>";
+      echo "</tr>";
 
-		echo "<tr class='tab_bg_2'><td colspan='2'>";
+      echo "<tr class='tab_bg_2'><td colspan='2'>";
       if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
          if ($id=='') {
             echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] .
@@ -161,41 +161,41 @@ class PluginFusinvsnmpModel extends CommonDBTM {
                     $LANG["buttons"][6] . "\" class='submit'>";
          }
       }
-		echo "</td>";
-		echo "</tr>";
-		echo "</table></form></div>";
-	}
-	
-	
-	
-	/**
-	 * Get all OIDs from model 
-	 *
-	 * @param $ID_Device id of the device
-	 * @param $type type of device (NETWORKING_TYPE, PRINTER_TYPE ...)
-	 *
-	 * @return OID list in array
-	 *
-	**/
-	function oidlist($ID_Device,$type) {
-		global $DB;
+      echo "</td>";
+      echo "</tr>";
+      echo "</table></form></div>";
+   }
+   
+   
+   
+   /**
+    * Get all OIDs from model 
+    *
+    * @param $ID_Device id of the device
+    * @param $type type of device (NETWORKING_TYPE, PRINTER_TYPE ...)
+    *
+    * @return OID list in array
+    *
+   **/
+   function oidlist($ID_Device,$type) {
+      global $DB;
 
       $oids = array();
 
-		switch ($type) {
+      switch ($type) {
 
-			case NETWORKING_TYPE :
-				$query = "SELECT * 
+         case NETWORKING_TYPE :
+            $query = "SELECT * 
                       FROM `glpi_plugin_fusinvsnmp_networkequipments`
                            LEFT JOIN `glpi_plugin_fusinvsnmp_modelmibs`
                            ON `glpi_plugin_fusinvsnmp_networkequipments`.`plugin_fusinvsnmp_models_id`=
                               `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusinvsnmp_models_id`
                       WHERE `networkequipments_id`='".$ID_Device."'
                             AND `glpi_plugin_fusinvsnmp_modelmibs`.`is_active`='1' ";
-				break;
+            break;
 
-			case PRINTER_TYPE :
-				$query = "SELECT `glpi_plugin_fusinvsnmp_printers`.*,
+         case PRINTER_TYPE :
+            $query = "SELECT `glpi_plugin_fusinvsnmp_printers`.*,
                         `glpi_plugin_fusinvsnmp_modelmibs`.*,
                         `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`
                       FROM `glpi_plugin_fusinvsnmp_printers`
@@ -207,18 +207,18 @@ class PluginFusinvsnmpModel extends CommonDBTM {
                                  `glpi_plugin_fusioninventory_mappings`.`id`
                       WHERE `printers_id`='".$ID_Device."'
                             AND `glpi_plugin_fusinvsnmp_modelmibs`.`is_active`='1' ";
-				break;
+            break;
 
-		}
-		if (!empty($query)) {
-			$result=$DB->query($query);
-			while ($data=$DB->fetch_array($result)) {
-				$oids[$data['oid_port_counter']][$data['oid_port_dyn']][$data['mapping_name']] =
+      }
+      if (!empty($query)) {
+         $result=$DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
+            $oids[$data['oid_port_counter']][$data['oid_port_dyn']][$data['mapping_name']] =
                Dropdown::getDropdownName('glpi_plugin_fusinvsnmp_miboids',$data['plugin_fusinvsnmp_miboids_id']);
          }
-			return $oids;
-		}
-	}
+         return $oids;
+      }
+   }
 
 
 
@@ -292,9 +292,9 @@ class PluginFusinvsnmpModel extends CommonDBTM {
                       FROM `glpi_plugin_fusinvsnmp_models`
                       WHERE `discovery_key`='".$modelgetted."'
                       LIMIT 0,1";
-				$result = $DB->query($query);
-				$data = $DB->fetch_assoc($result);
-				$plugin_fusinvsnmp_models_id = $data['id'];
+            $result = $DB->query($query);
+            $data = $DB->fetch_assoc($result);
+            $plugin_fusinvsnmp_models_id = $data['id'];
             if ($comment != "") {
                return $data['discovery_key'];
             } else {
@@ -361,7 +361,6 @@ class PluginFusinvsnmpModel extends CommonDBTM {
       $PluginFusinvsnmpModel = new PluginFusinvsnmpModel();
       $a_models = $PluginFusinvsnmpModel->find("");
       foreach ($a_models as $a_model) {
-         $delete = 1;
          if (!isset($NewModelList[$a_model['name'].".xml"])) {
             $PluginFusinvsnmpModel->delete($a_model, 1);
          }

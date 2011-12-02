@@ -56,39 +56,39 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 //if (isset ($_POST["add"]) && isset($_POST["id"])) {
 if (isset ($_POST["add"])) {
-	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
-	$PluginFusinvsnmpModel->add($_POST);
-	Html::back();
+   PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
+   $PluginFusinvsnmpModel->add($_POST);
+   Html::back();
 } else if (isset ($_POST["update"])) {
-	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
-	$PluginFusinvsnmpModel->update($_POST);
-	Html::back();
+   PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
+   $PluginFusinvsnmpModel->update($_POST);
+   Html::back();
 } else if (isset ($_POST["delete"])) {
-	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
-	$PluginFusinvsnmpModel->delete($_POST);
-	Html::redirect($CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/model.php");
+   PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
+   $PluginFusinvsnmpModel->delete($_POST);
+   Html::redirect($CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/model.php");
 } else if (isset ($_FILES['importfile']['tmp_name']) && $_FILES['importfile']['tmp_name']!='') {
-	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
-	$PluginFusinvsnmpImportExport->import($_FILES['importfile']['tmp_name']);
-	Html::back();
+   PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
+   $PluginFusinvsnmpImportExport->import($_FILES['importfile']['tmp_name']);
+   Html::back();
 } else if (isset($_GET["is_active"])) {
-	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
-	$PluginFusinvsnmpModelMib->activation($_GET["is_active"]);
-	Html::back();
+   PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
+   $PluginFusinvsnmpModelMib->activation($_GET["is_active"]);
+   Html::back();
 } else if (isset($_POST['massimport'])) {
    PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
    $PluginFusinvsnmpImportExport->importMass();
-	Html::back();
+   Html::back();
 }
 if (isset ($_POST["add_oid"])) {
-	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
-	$PluginFusinvsnmpModelMib->add($_POST);
-	Html::back();
+   PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
+   $PluginFusinvsnmpModelMib->add($_POST);
+   Html::back();
 }
 if(!empty($_POST["item_coche"])) {
-	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
-	$PluginFusinvsnmpModelMib->deleteMib($_POST["item_coche"]);
-	Html::back();
+   PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
+   $PluginFusinvsnmpModelMib->deleteMib($_POST["item_coche"]);
+   Html::back();
 }
 
 if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","r")) {

@@ -41,7 +41,6 @@
  */
 
 function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
-   global $CFG_GLPI, $LANG;
 
    $searchopt = &Search::getOptions($type);
    $table = $searchopt[$id]["table"];
@@ -121,7 +120,6 @@ function cron_plugin_fusioninventory() {
 
 
 function plugin_fusioninventory_install() {
-   global $DB, $LANG, $CFG_GLPI;
 
    include (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
    $version_detected = pluginFusioninventoryGetCurrentVersion(PLUGIN_FUSIONINVENTORY_VERSION);
@@ -301,18 +299,18 @@ function plugin_headings_fusioninventory_tasks($item, $itemtype='', $items_id=0)
 
 
 function plugin_headings_fusioninventory($item, $withtemplate=0) {
-	global $CFG_GLPI;
+   global $CFG_GLPI;
 
-	switch (get_class($item)) {
-		case 'Profile' :
+   switch (get_class($item)) {
+      case 'Profile' :
 
-			$PluginFusioninventoryProfile = new PluginFusioninventoryProfile();
-//			if (!$prof->GetfromDB($id)) {
-//				PluginFusioninventoryDb::createaccess($id);
+         $PluginFusioninventoryProfile = new PluginFusioninventoryProfile();
+//         if (!$prof->GetfromDB($id)) {
+//            PluginFusioninventoryDb::createaccess($id);
 //         }
-			$PluginFusioninventoryProfile->showProfileForm($item->getField('id'), $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/profile.php");
-		break;
-	}
+         $PluginFusioninventoryProfile->showProfileForm($item->getField('id'), $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/profile.php");
+      break;
+   }
 }
 
 
@@ -383,16 +381,16 @@ function plugin_fusioninventory_MassiveActions($type) {
          return $array;
          break;
 
-		case "PluginFusioninventoryUnknownDevice";
-			return array (
-				"plugin_fusioninventory_unknown_import" => $LANG["buttons"][37]
-			);
+      case "PluginFusioninventoryUnknownDevice";
+         return array (
+            "plugin_fusioninventory_unknown_import" => $LANG["buttons"][37]
+         );
          break;
          
       case "PluginFusioninventoryTask";
-			return array (
-				'plugin_fusioninventory_transfert' => $LANG['buttons'][48]
-			);
+         return array (
+            'plugin_fusioninventory_transfert' => $LANG['buttons'][48]
+         );
          break;
          
          
@@ -402,7 +400,6 @@ function plugin_fusioninventory_MassiveActions($type) {
 }
 
 function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
-   global $LANG;
 
    $table = $options['options']['table'];
    $field = $options['options']['field'];
@@ -413,11 +410,11 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
 
       case "glpi_plugin_fusioninventory_unknowndevices.item_type":
          $type_list = array();
-			$type_list[] = 'Computer';
-			$type_list[] = 'NetworkEquipment';
-			$type_list[] = 'Printer';
-			$type_list[] = 'Peripheral';
-			$type_list[] = 'Phone';
+         $type_list[] = 'Computer';
+         $type_list[] = 'NetworkEquipment';
+         $type_list[] = 'Printer';
+         $type_list[] = 'Peripheral';
+         $type_list[] = 'Phone';
          Dropdown::dropdownTypes($linkfield,0,$type_list);
          return true;
          break;
@@ -426,7 +423,7 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
 
 //   switch ($table) {
 //
-//		case 'glpi_plugin_fusioninventory_agentmodules':
+//      case 'glpi_plugin_fusioninventory_agentmodules':
 //         $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
 //         $a_modules = $PluginFusioninventoryAgentmodule->find();
 //         foreach ($a_modules as $data) {
@@ -435,7 +432,7 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
 //               return true;
 //            }
 //         }
-//			break;
+//         break;
 //
 //    }
    return false;
@@ -444,7 +441,7 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
 
 
 function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
-   global $LANG, $CFG_GLPI, $DB;
+   global $LANG;
 
    switch ($options['itemtype']) {
       case "Computer":
@@ -494,13 +491,13 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
          }
          break;
 
-		case "PluginFusioninventoryUnknownDevice";
-			if ($options['action'] == "plugin_fusioninventory_unknown_import") {
+      case "PluginFusioninventoryUnknownDevice";
+         if ($options['action'] == "plugin_fusioninventory_unknown_import") {
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","w")) {
                echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
             }
          }
-			break;
+         break;
          
      case 'PluginFusioninventoryTask':
          if ($options['action'] == "plugin_fusioninventory_transfert") {
@@ -535,7 +532,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
          }
          break;
 
-		case "plugin_fusioninventory_unknown_import" :
+      case "plugin_fusioninventory_unknown_import" :
          if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","w")) {
             $Import = 0;
             $NoImport = 0;
@@ -548,7 +545,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
              Session::addMessageAfterRedirect($LANG['plugin_fusioninventory']["discovery"][5]." : ".$Import);
              Session::addMessageAfterRedirect($LANG['plugin_fusioninventory']["discovery"][9]." : ".$NoImport);
          }
-			break;
+         break;
          
       case "plugin_fusioninventory_transfert" :
          if ($data['itemtype'] == 'PluginFusioninventoryAgent') {
@@ -692,7 +689,6 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
 
 
 function plugin_fusioninventory_addSelect($type,$id,$num) {
-	global $SEARCH_OPTION;
 
    $searchopt = &Search::getOptions($type);
    $table = $searchopt[$id]["table"];
@@ -753,14 +749,13 @@ function plugin_fusioninventory_addOrderBy($type,$id,$order,$key=0) {
 function plugin_fusioninventory_addDefaultWhere($type) {
    if ($type == 'PluginFusioninventoryTaskjob') {
       return " ( select count(*) FROM `glpi_plugin_fusioninventory_taskjobstatus`
-			WHERE plugin_fusioninventory_taskjobs_id= `glpi_plugin_fusioninventory_taskjobs`.`id`
+         WHERE plugin_fusioninventory_taskjobs_id= `glpi_plugin_fusioninventory_taskjobs`.`id`
          AND `state`!='3' )";
    }
 }
 
 
 function plugin_fusioninventory_addWhere($link,$nott,$type,$id,$val) {
-	global $SEARCH_OPTION;
 
    $searchopt = &Search::getOptions($type);
    $table = $searchopt[$id]["table"];
@@ -871,7 +866,6 @@ function plugin_item_add_fusioninventory($parm) {
 
 
 function plugin_item_purge_fusioninventory($parm) {
-   global $DB;
 
    switch (get_class($parm)) {
 

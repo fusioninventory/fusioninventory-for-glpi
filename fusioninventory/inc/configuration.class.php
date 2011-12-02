@@ -28,7 +28,7 @@
    ------------------------------------------------------------------------
 
    @package   FusionInventory
-   @author    David Durieux
+   @author    Vincent Mazzoni
    @co-author 
    @copyright Copyright (c) 2010-2011 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
@@ -40,52 +40,47 @@
    ------------------------------------------------------------------------
  */
 
-define('GLPI_ROOT', '../../..');
-
-include (GLPI_ROOT."/inc/includes.php");
-
-Session::checkRight("config","w");
-
-Html::header($LANG['plugin_fusioninventory']['functionalities'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","summary");
-
-if (isset($_POST['update'])) {
-
-   if (empty($_POST['cleaning_days'])) {
-      $_POST['cleaning_days'] = 0;
-   }
-
-   $_POST['id']=1;
-   switch ($_POST['tabs']) {
-      
-      case 'config' :
-         $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
-         break;
-
-      case 'history' :
-         $PluginFusinvsnmpConfigLogField = new PluginFusinvsnmpConfigLogField();
-         foreach ($_POST as $key=>$val) {
-            $split = explode("-", $key);
-            if (isset($split[1]) AND is_numeric($split[1])) {
-               $PluginFusinvsnmpConfigLogField->getFromDB($split[1]);
-               $input = array();
-               $input['id'] = $PluginFusinvsnmpConfigLogField->fields['id'];
-               $input['days'] = $val;
-               $PluginFusinvsnmpConfigLogField->update($input);
-            }
-         }
-         break;
-
-   }
-   if (isset($PluginFusioninventoryConfig)) {
-      $PluginFusioninventoryConfig->update($_POST);
-   }
-   Html::back();
-} else if ((isset($_POST['Clean_history']))) {
-   $PluginFusinvsnmpNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
-   $PluginFusinvsnmpNetworkPortLog->cronCleannetworkportlogs();
-   Html::back();
+if (!defined('GLPI_ROOT')) {
+   die("Sorry. You can't access directly to this file");
 }
 
-Html::footer();
+class PluginFusioninventoryConfiguration extends CommonDBTM {
+
+   
+   function defineTabs($options=array()){
+      global $LANG;
+
+      $tabs = array();
+      $moduleTabs = array();
+      $tabs[1]=$LANG['plugin_fusioninventory']['functionalities'][2];
+      $tabs[2]=$LANG['plugin_fusioninventory']['agents'][27];
+      if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'])) {
+         $fusionTabs = $tabs;
+         $moduleTabForms = $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'];
+         if (count($moduleTabForms)) {
+            foreach ($moduleTabForms as $module=>$form) {
+               $plugin = new Plugin;
+               if ($plugin->isActivated($module)) {
+                  $tabs[] = key($form);
+               }
+            }
+            $moduleTabs = array_diff($tabs, $fusionTabs);
+         }
+         $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabs'] = $moduleTabs;
+      }
+      return $tabs;
+   }
+
+
+   
+   function showForm($options=array()) {
+
+      $this->showTabs($options);
+      $this->addDivForTabs();
+
+      return true;
+   }
+
+}
 
 ?>

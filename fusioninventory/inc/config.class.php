@@ -73,7 +73,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @return nothing
     **/
    function initConfig($plugins_id, $p_insert) {
-      global $DB;
 
       foreach ($p_insert as $type=>$value) {
          if (is_null($this->getValue($plugins_id, $type))) {
@@ -145,7 +144,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    * @return value or this field or false
    **/
    static function getValue($p_plugins_id, $p_type) {
-      global $DB;
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       $config = current($PluginFusioninventoryConfig->find("`plugins_id`='".$p_plugins_id."'
@@ -183,7 +181,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    *
    **/
    function showForm($options=array()) {
-      global $LANG,$CFG_GLPI;
+      global $LANG;
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 

@@ -52,7 +52,7 @@ Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER['PHP_SELF'],"u
 PluginFusioninventoryProfile::checkRight("fusinvsnmp","reportnetworkequipment","r");
 
 if (isset($_GET["networkports_id"])) {
-	$ports_id = $_GET["networkports_id"];
+   $ports_id = $_GET["networkports_id"];
 }
 
 echo "<form action='".$_SERVER["PHP_SELF"]."' method='get'>";
@@ -80,7 +80,7 @@ while ($data=$DB->fetch_array($result)) {
 }
 
 Dropdown::showFromArray("networkports_id",$ports,
-			               Array('value'=>$selected));
+                        Array('value'=>$selected));
 echo "</td>";
 echo "</tr>";
 

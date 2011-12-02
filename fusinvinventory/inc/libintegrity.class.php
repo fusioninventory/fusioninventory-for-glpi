@@ -41,7 +41,7 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 class PluginFusinvinventoryLibintegrity extends CommonDBTM {
@@ -176,7 +176,7 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
           ".$where."
           LIMIT ".intval($start)."," . intval($_SESSION['glpilist_limit']);
       $result=$DB->query($query);
-		while ($a_computerlib=$DB->fetch_array($result)) {
+      while ($a_computerlib=$DB->fetch_array($result)) {
          $computer_id = $a_computerlib['computers_id'];
          $a_sections = $PluginFusinvinventoryLib->_getInfoSections($a_computerlib['internal_id']);
          $Computer->getFromDB($computer_id);

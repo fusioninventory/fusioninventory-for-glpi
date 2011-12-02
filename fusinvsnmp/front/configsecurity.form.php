@@ -55,13 +55,13 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 
 if (isset ($_POST["add"])) {
-	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","w");
+   PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","w");
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
    $new_ID = 0;
-	if ($config->getValue($plugins_id, "storagesnmpauth") == "file") {
-		$new_ID = $PluginFusinvsnmpConfigSecurity->add_xml();
+   if ($config->getValue($plugins_id, "storagesnmpauth") == "file") {
+      $new_ID = $PluginFusinvsnmpConfigSecurity->add_xml();
    } else if ($config->getValue($plugins_id, "storagesnmpauth") == "DB") {
-		$new_ID = $PluginFusinvsnmpConfigSecurity->add($_POST);
+      $new_ID = $PluginFusinvsnmpConfigSecurity->add($_POST);
    }
    Html::back();
 } else if (isset ($_POST["update"])) {
@@ -76,7 +76,7 @@ if (isset ($_POST["add"])) {
 
 $id = "";
 if (isset($_GET["id"])) {
-	$id = $_GET["id"];
+   $id = $_GET["id"];
 }
 
 if (strstr($_SERVER['HTTP_REFERER'], "wizard.php")) {

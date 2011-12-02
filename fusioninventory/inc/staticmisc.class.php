@@ -76,7 +76,6 @@ class PluginFusioninventoryStaticmisc {
    *   value name of the itemtype
    **/
    static function task_definitiontype_wakeonlan($a_itemtype) {
-      global $LANG;
 
       $a_itemtype['Computer'] = Computer::getTypeName();
 
@@ -94,8 +93,7 @@ class PluginFusioninventoryStaticmisc {
    *
    **/
    static function task_definitionselection_Computer_wakeonlan($title) {
-      global $LANG;
-
+      
       $options = array();
       $options['entity'] = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;

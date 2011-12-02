@@ -41,7 +41,7 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 class PluginFusinvsnmpNetworkEquipmentIP extends PluginFusinvsnmpCommonDBTM {
@@ -91,7 +91,7 @@ class PluginFusinvsnmpNetworkEquipmentIP extends PluginFusinvsnmpCommonDBTM {
       
       echo "<table class='tab_cadre' width='950'>";
 
-		echo "<tr class='tab_bg_1'>";
+      echo "<tr class='tab_bg_1'>";
       echo "<th colspan='8'>";
       echo $LANG['networking'][14];
       echo "</th>";

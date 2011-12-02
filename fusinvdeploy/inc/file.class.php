@@ -478,7 +478,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
       $render     = $_GET['render'];
 
       if (preg_match('/\.\./', $_POST['file_server'])) {
-	 die;
+    die;
       }
 
       $render   = PluginFusinvdeployOrder::getRender($render);

@@ -62,7 +62,7 @@ if (isset($_GET['vlan_update'])) {
    $query = "SELECT * FROM glpi_plugin_fusinvsnmp_constructdevices
       WHERE sysdescr='".$_POST['sysdescr']."' ";
    $result = $DB->query($query);
-	if ($DB->numrows($result) == '0') {
+   if ($DB->numrows($result) == '0') {
       $PluginFusinvsnmpConstructDevice->add($_POST);
    } else {
       $_SESSION["MESSAGE_AFTER_REDIRECT"] = "Déjà existant";
@@ -120,7 +120,7 @@ NULL , '".$_POST['id']."', '".$md5."'
 
 $id = "";
 if (isset($_GET["id"])) {
-	$id = $_GET["id"];
+   $id = $_GET["id"];
 }
 
 $PluginFusinvsnmpConstructDevice->showForm($id);

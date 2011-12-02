@@ -41,13 +41,12 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 class PluginFusinvsnmpMibLabel extends CommonDropdown {
 
    static function getTypeName() {
-      global $LANG;
 
       return "Plugin FusionInventory MIB label";
    }
