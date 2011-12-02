@@ -340,7 +340,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             if (!in_array('domain', $a_lockable)) {
                if (!empty($xml->WORKGROUP)) {
                $input['domain'] = Dropdown::importExternal("Domain",
-                                       (string)$xml->WORKGROUP,(string) $xml->ENTITY);
+                                       (string)$xml->WORKGROUP,(string)$xml->ENTITY);
                }
             }
             if (!empty($xml->TYPE)) {
