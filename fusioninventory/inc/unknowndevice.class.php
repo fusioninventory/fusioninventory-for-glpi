@@ -669,7 +669,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
                         } else {
                            // We have founded a hub orphelin
-                           if ($nn->add(array('networkports_id_1'=> $p_oPort->getValue('id'), 'networkports_id_2' => portLink_id))) {
+                           if ($nn->add(array('networkports_id_1'=> $p_oPort->getValue('id'), 'networkports_id_2' => $dataLink['id']))) {
 //                              $PluginFusionInventoryAgentsProcesses->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
 //                                          array('query_nb_connections_created' => '1'));
 //                              plugin_fusioninventory_addLogConnection("make",$p_oPort->getValue('ID'));
