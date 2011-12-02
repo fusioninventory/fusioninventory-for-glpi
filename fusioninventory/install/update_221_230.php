@@ -408,7 +408,7 @@ function update221to230($migrationname) {
 
    $sql = "SELECT * FROM `glpi_plugin_fusioninventory_agents`";
    $result=$DB->query($sql);
-	while ($data=$DB->fetch_array($result)) {
+   while ($data=$DB->fetch_array($result)) {
       if ($data['module_inventory'] == '1') {
          $sql_ins = "INSERT INTO `glpi_plugin_fusinvinventory_tmp_agents`
             VALUE('".$data['ID']."', '1')";
@@ -1412,7 +1412,7 @@ function update221to230($migrationname) {
    $sql = "SELECT * FROM `glpi_plugin_fusioninventory_unknowndevices`
       WHERE `snmp`='1' ";
    $result=$DB->query($sql);
-	while ($data=$DB->fetch_array($result)) {
+   while ($data=$DB->fetch_array($result)) {
       $sql_ins = "INSERT INTO `glpi_plugin_fusinvsnmp_unknowndevices`
             (`plugin_fusioninventory_unknowndevices_id`,
             `plugin_fusinvsnmp_models_id`,

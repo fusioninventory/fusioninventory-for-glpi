@@ -371,7 +371,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
          GROUP BY `plugin_fusioninventory_taskjobstatus_id`";
       $result=$DB->query($sql);
       if ($result) {
-			while ($data=$DB->fetch_array($result)) {
+         while ($data=$DB->fetch_array($result)) {
             $PluginFusioninventoryTaskjobstatus->getFromDB($data['plugin_fusioninventory_taskjobstatus_id']);
             $PluginFusioninventoryTaskjobstatus->delete($PluginFusioninventoryTaskjobstatus->fields, 1);
             $sql_delete = "DELETE FROM `glpi_plugin_fusioninventory_taskjoblogs`

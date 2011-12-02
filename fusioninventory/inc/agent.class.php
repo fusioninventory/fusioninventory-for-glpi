@@ -80,11 +80,11 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     
       $tab['common'] = $LANG['plugin_fusioninventory']['agents'][28];
 
-		$tab[1]['table'] = $this->getTable();
-		$tab[1]['field'] = 'name';
-		$tab[1]['linkfield'] = 'name';
-		$tab[1]['name'] = $LANG['common'][16];
-		$tab[1]['datatype'] = 'itemlink';
+      $tab[1]['table'] = $this->getTable();
+      $tab[1]['field'] = 'name';
+      $tab[1]['linkfield'] = 'name';
+      $tab[1]['name'] = $LANG['common'][16];
+      $tab[1]['datatype'] = 'itemlink';
 
       $tab[2]['table']     = 'glpi_entities';
       $tab[2]['field']     = 'completename';
@@ -96,48 +96,48 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $tab[3]['name']      = $LANG['entity'][9];
       $tab[3]['datatype']  = 'bool';
 
-		$tab[4]['table'] = $this->getTable();
-		$tab[4]['field'] = 'last_contact';
-		$tab[4]['linkfield'] = '';
-		$tab[4]['name'] = $LANG['plugin_fusioninventory']['agents'][4];
-		$tab[4]['datatype'] = 'datetime';
+      $tab[4]['table'] = $this->getTable();
+      $tab[4]['field'] = 'last_contact';
+      $tab[4]['linkfield'] = '';
+      $tab[4]['name'] = $LANG['plugin_fusioninventory']['agents'][4];
+      $tab[4]['datatype'] = 'datetime';
 
-		$tab[5]['table'] = $this->getTable();
-		$tab[5]['field'] = 'lock';
-		$tab[5]['linkfield'] = 'lock';
-		$tab[5]['name'] = $LANG['plugin_fusioninventory']['agents'][37];
-		$tab[5]['datatype'] = 'bool';
+      $tab[5]['table'] = $this->getTable();
+      $tab[5]['field'] = 'lock';
+      $tab[5]['linkfield'] = 'lock';
+      $tab[5]['name'] = $LANG['plugin_fusioninventory']['agents'][37];
+      $tab[5]['datatype'] = 'bool';
 
-		$tab[6]['table'] = $this->getTable();
-		$tab[6]['field'] = 'device_id';
-		$tab[6]['linkfield'] = 'device_id';
-		$tab[6]['name'] = $LANG['plugin_fusioninventory']['agents'][35];
-		$tab[6]['datatype'] = 'text';
+      $tab[6]['table'] = $this->getTable();
+      $tab[6]['field'] = 'device_id';
+      $tab[6]['linkfield'] = 'device_id';
+      $tab[6]['name'] = $LANG['plugin_fusioninventory']['agents'][35];
+      $tab[6]['datatype'] = 'text';
 
-		$tab[7]['table'] = 'glpi_computers';
-		$tab[7]['field'] = 'name';
-		$tab[7]['linkfield'] = 'items_id';
-		$tab[7]['name'] = $LANG['plugin_fusioninventory']['agents'][23];
-		$tab[7]['datatype'] = 'itemlink';
+      $tab[7]['table'] = 'glpi_computers';
+      $tab[7]['field'] = 'name';
+      $tab[7]['linkfield'] = 'items_id';
+      $tab[7]['name'] = $LANG['plugin_fusioninventory']['agents'][23];
+      $tab[7]['datatype'] = 'itemlink';
       $tab[7]['itemlink_type']  = 'Computer';
 
-		$tab[8]['table'] = $this->getTable();
-		$tab[8]['field'] = 'version';
-		$tab[8]['linkfield'] = 'version';
-		$tab[8]['name'] = $LANG['plugin_fusioninventory']['agents'][25];
-		$tab[8]['datatype'] = 'text';
+      $tab[8]['table'] = $this->getTable();
+      $tab[8]['field'] = 'version';
+      $tab[8]['linkfield'] = 'version';
+      $tab[8]['name'] = $LANG['plugin_fusioninventory']['agents'][25];
+      $tab[8]['datatype'] = 'text';
 
-		$tab[9]['table'] = $this->getTable();
-		$tab[9]['field'] = 'token';
-		$tab[9]['linkfield'] = 'token';
-		$tab[9]['name'] = $LANG['plugin_fusioninventory']['agents'][24];
-		$tab[9]['datatype'] = 'text';
+      $tab[9]['table'] = $this->getTable();
+      $tab[9]['field'] = 'token';
+      $tab[9]['linkfield'] = 'token';
+      $tab[9]['name'] = $LANG['plugin_fusioninventory']['agents'][24];
+      $tab[9]['datatype'] = 'text';
 
-		$tab[10]['table'] = $this->getTable();
-		$tab[10]['field'] = 'useragent';
-		$tab[10]['linkfield'] = 'useragent';
-		$tab[10]['name'] = $LANG['plugin_fusioninventory']['agents'][42];
-		$tab[10]['datatype'] = 'text';
+      $tab[10]['table'] = $this->getTable();
+      $tab[10]['field'] = 'useragent';
+      $tab[10]['linkfield'] = 'useragent';
+      $tab[10]['name'] = $LANG['plugin_fusioninventory']['agents'][42];
+      $tab[10]['datatype'] = 'text';
 
       $i = 20;
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
@@ -474,7 +474,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $waiting = 0;
       $ip = "";
       while(empty($ip) && count($ip)) {
-	      $ip = array_shift($a_ip);
+         $ip = array_shift($a_ip);
       }
 
       $agentStatus = $PluginFusioninventoryTaskjob->getRealStateAgent($agent_id);

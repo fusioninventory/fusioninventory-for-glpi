@@ -55,7 +55,7 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 $id = "";
 if (isset($_GET["id"])) {
-	$id = $_GET["id"];
+   $id = $_GET["id"];
 }
 if (isset ($_POST["add"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "unknowndevice","w");
@@ -68,9 +68,9 @@ if (isset ($_POST["add"])) {
 } else if (isset($_POST["delete"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "unknowndevice","w");
 
-	$PluginFusioninventoryUnknownDevice->check($_POST['id'],'w');
+   $PluginFusioninventoryUnknownDevice->check($_POST['id'],'w');
 
-	$PluginFusioninventoryUnknownDevice->delete($_POST);
+   $PluginFusioninventoryUnknownDevice->delete($_POST);
 
    $PluginFusioninventoryUnknownDevice->redirectToList();
 } else if (isset($_POST["restore"])) {
@@ -86,14 +86,14 @@ if (isset ($_POST["add"])) {
 } else if (isset($_POST["purge"]) || isset($_GET["purge"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "unknowndevice","w");
 
-	$PluginFusioninventoryUnknownDevice->check($_POST['id'],'w');
+   $PluginFusioninventoryUnknownDevice->check($_POST['id'],'w');
 
-	$PluginFusioninventoryUnknownDevice->delete($_POST,1);
+   $PluginFusioninventoryUnknownDevice->delete($_POST,1);
    $PluginFusioninventoryUnknownDevice->redirectToList();
 } else if (isset($_POST["update"])) {
-	$PluginFusioninventoryUnknownDevice->check($_POST['id'],'w');
-	$PluginFusioninventoryUnknownDevice->update($_POST);
-	glpi_header($_SERVER['HTTP_REFERER']);
+   $PluginFusioninventoryUnknownDevice->check($_POST['id'],'w');
+   $PluginFusioninventoryUnknownDevice->update($_POST);
+   glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset($_POST["import"])) {
    $Import = 0;
    $NoImport = 0;

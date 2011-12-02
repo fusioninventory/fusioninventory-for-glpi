@@ -1350,7 +1350,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
        AND `glpi_plugin_fusioninventory_taskjobs`.`status`=1";
      $result=$DB->query($sql);
      if ($result) {
-			while ($data=$DB->fetch_array($result)) {
+         while ($data=$DB->fetch_array($result)) {
             $this->reinitializeTaskjobs($data['plugin_fusioninventory_tasks_id'], '1');
          }
      }
