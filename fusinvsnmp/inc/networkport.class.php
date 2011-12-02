@@ -41,7 +41,7 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
@@ -246,7 +246,7 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
     *@param $destination_port id of destination port
     *@return nothing
     **/
-	function connect() {
+   function connect() {
       if (count($this->portsToConnect)+count($this->unknownDevicesToConnect)==0) {
          // no connections --> don't delete existing connections :
          // the connected device may be powered off
@@ -283,8 +283,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
     *@param $destination_port id of destination port
     *@return nothing
     **/
-	function connectDB($destination_port='') {
-		global $DB;
+   function connectDB($destination_port='') {
+      global $DB;
 
       // Clean ports connected on themself
       $queryd = "DELETE FROM `glpi_networkports_networkports`
@@ -316,7 +316,7 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
     *@param $p_port='' Port id to disconnect
     *@return nothing
     **/
-	function disconnectDB($p_port='') {
+   function disconnectDB($p_port='') {
       if ($p_port=='') $p_port=$this->getValue('id');
       $nn = new NetworkPort_NetworkPort();
 
@@ -496,7 +496,7 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
     *@return nothing
     **/
    function cleanVlan($p_vlan, $p_port='') {
-		global $DB;
+      global $DB;
 
       if ($p_vlan != '') {
          if ($p_port != '') { // delete this vlan for this port
@@ -514,7 +514,7 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       }
       PluginFusinvsnmpNetworkPortLog::networkport_addLog($p_port, '', 'vmvlan');
       $DB->query($query);
-	}
+   }
 
 
 

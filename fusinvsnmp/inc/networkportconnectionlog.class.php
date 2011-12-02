@@ -41,7 +41,7 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 class PluginFusinvsnmpNetworkPortConnectionLog extends CommonDBTM {
@@ -95,8 +95,8 @@ class PluginFusinvsnmpNetworkPortConnectionLog extends CommonDBTM {
       }
 
       $result = $DB->query($query);
-		if ($result) {
-			while ($data=$DB->fetch_array($result)) {
+      if ($result) {
+         while ($data=$DB->fetch_array($result)) {
             echo "<tr class='tab_bg_1 center'>";
 
             echo "<td>";

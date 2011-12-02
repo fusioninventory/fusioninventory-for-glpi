@@ -41,7 +41,7 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-	define('GLPI_ROOT', '../../..');
+   define('GLPI_ROOT', '../../..');
 }
 
 include (GLPI_ROOT."/inc/includes.php");
@@ -57,18 +57,18 @@ PluginFusioninventoryMenu::displayMenu("mini");
 $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
 // Forms for FILE
 if ($PluginFusioninventoryConfig->getValue($plugins_id, "storagesnmpauth") == "file") {
-	if (!isset($_GET["id"])) {
+   if (!isset($_GET["id"])) {
       $PluginFusinvsnmpConfigSecurity = new PluginFusinvsnmpConfigSecurity();
-		echo $PluginFusinvsnmpConfigSecurity->plugin_fusioninventory_snmp_connections();
-	}
+      echo $PluginFusinvsnmpConfigSecurity->plugin_fusioninventory_snmp_connections();
+   }
 } else if ($PluginFusioninventoryConfig->getValue($plugins_id, "storagesnmpauth") == "DB") {
-	// Forms for DB
-	
-	$_GET['target']="configsecurity.php";
-	
+   // Forms for DB
+   
+   $_GET['target']="configsecurity.php";
+   
    Search::show('PluginFusinvsnmpConfigSecurity');
 } else {
-	echo $LANG['plugin_fusioninventory']['functionalities'][19];
+   echo $LANG['plugin_fusioninventory']['functionalities'][19];
 }
 
 commonFooter();

@@ -41,7 +41,7 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 /**
@@ -54,9 +54,9 @@ class PluginFusinvsnmpCommonDBTM extends CommonDBTM {
    protected $ptcdUpdates=array();
    protected $ptcdLinkedObjects=array();
 
-	/**
-	 * Constructor
-	**/
+   /**
+    * Constructor
+   **/
    function __construct($p_table = '') {
       if ($p_table == '') {
          $p_table = $_SESSION['glpi_plugins_fusinvsnmp_table'];

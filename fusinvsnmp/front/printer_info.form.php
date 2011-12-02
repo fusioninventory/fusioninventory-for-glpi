@@ -47,17 +47,17 @@ include (GLPI_ROOT."/inc/includes.php");
 PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printer","r");
 
 if ((isset($_POST['update'])) && (isset($_POST['id']))) {
-		PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printer","w");
-	
-	$plugin_fusioninventory_printer = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
-	
-	$_POST['printers_id'] = $_POST['id'];
-	unset($_POST['id']);
-	
-	$query = "SELECT * 
+      PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printer","w");
+   
+   $plugin_fusioninventory_printer = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
+   
+   $_POST['printers_id'] = $_POST['id'];
+   unset($_POST['id']);
+   
+   $query = "SELECT * 
              FROM `glpi_plugin_fusinvsnmp_printers`
              WHERE `printers_id`='".$_POST['printers_id']."' ";
-	$result = $DB->query($query);
+   $result = $DB->query($query);
 
    if ($DB->numrows($result) == "0") {
       $queryInsert = "INSERT INTO `glpi_plugin_fusinvsnmp_printers`(`printers_id`)
@@ -69,11 +69,11 @@ if ((isset($_POST['update'])) && (isset($_POST['id']))) {
       $result = $DB->query($query);
    }
 
-	$data = $DB->fetch_assoc($result);	
-	$_POST['id'] = $data['id'];
+   $data = $DB->fetch_assoc($result);   
+   $_POST['id'] = $data['id'];
 
-	$plugin_fusioninventory_printer->update($_POST);
-	
+   $plugin_fusioninventory_printer->update($_POST);
+   
 } else if ((isset($_POST["GetRightModel"])) && (isset($_POST['id']))) {
    $plugin_fusioninventory_model_infos = new PluginFusinvsnmpModel;
    $plugin_fusioninventory_model_infos->getrightmodel($_POST['id'], PRINTER_TYPE);
@@ -82,31 +82,31 @@ if ((isset($_POST['update'])) && (isset($_POST['id']))) {
 $arg = "";
 for ($i=1 ; $i <= 5 ; $i++) {
    $value = '';
-	switch ($i) {
-		case 1:
-			$value = "datetotalpages";
-			break;
+   switch ($i) {
+      case 1:
+         $value = "datetotalpages";
+         break;
 
-		case 2:
-			$value = "dateblackpages";
-			break;
+      case 2:
+         $value = "dateblackpages";
+         break;
 
-		case 3:
-			$value = "datecolorpages";
-			break;
+      case 3:
+         $value = "datecolorpages";
+         break;
 
-		case 4:
-			$value = "daterectoversopages";
-			break;
+      case 4:
+         $value = "daterectoversopages";
+         break;
 
-		case 5:
-			$value = "datescannedpages";
-			break;
+      case 5:
+         $value = "datescannedpages";
+         break;
 
-	}
-	if (isset($_POST[$value])) {
+   }
+   if (isset($_POST[$value])) {
       $_SESSION[$value] = $_POST[$value];
-	}
+   }
 }
 
 if (isset($_POST['graph_plugin_fusioninventory_printer_period'])) {

@@ -41,7 +41,7 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 
@@ -53,7 +53,7 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
     *
     *@return nothing
     **/
-	function initConfig() {
+   function initConfig() {
       global $DB,$CFG_GLPI;
       
       $NOLOG = '-1';
@@ -89,53 +89,53 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
             }
          }
       }
-	}
+   }
 
 
    
-	function getValue($field) {
-		global $DB;
+   function getValue($field) {
+      global $DB;
 
       // Get mapping
-      // 	plugin_fusioninventory_mappings_id
+      //    plugin_fusioninventory_mappings_id
 
-		$query = "SELECT days
+      $query = "SELECT days
                 FROM ".$this->getTable()."
                 WHERE `plugin_fusioninventory_mappings_id`='".$field."'
                 LIMIT 1;";
-		$result = $DB->query($query);
+      $result = $DB->query($query);
       if ($result) {
          $this->fields = $DB->fetch_row($result);
-			if ($this->fields) {
-				return $this->fields['0'];
+         if ($this->fields) {
+            return $this->fields['0'];
          }
-		}
-		return false;
-	}
+      }
+      return false;
+   }
 
    
    
-	function showForm($options=array()) {
-		global $LANG,$DB;
+   function showForm($options=array()) {
+      global $LANG,$DB;
 
       echo "<form name='form' method='post' action='".$options['target']."'>";
       echo "<div class='center' id='tabsbody'>";
       echo "<table class='tab_cadre_fixe'>";
 
-		echo "<tr>";
-		echo "<th colspan='2'>";
-		echo $LANG['plugin_fusinvsnmp']['portlogs'][0];
-		echo "</th>";
-		echo "</tr>";
+      echo "<tr>";
+      echo "<th colspan='2'>";
+      echo $LANG['plugin_fusinvsnmp']['portlogs'][0];
+      echo "</th>";
+      echo "</tr>";
 
-		echo "<tr>";
-		echo "<th>";
-		echo $LANG['plugin_fusinvsnmp']['portlogs'][1];
-		echo "</th>";
-		echo "<th>";
-		echo $LANG['plugin_fusinvsnmp']['portlogs'][2];
-		echo "</th>";
-		echo "</tr>";
+      echo "<tr>";
+      echo "<th>";
+      echo $LANG['plugin_fusinvsnmp']['portlogs'][1];
+      echo "</th>";
+      echo "<th>";
+      echo $LANG['plugin_fusinvsnmp']['portlogs'][2];
+      echo "</th>";
+      echo "</tr>";
 
       $days = array();
       $days[-1] = $LANG['plugin_fusinvsnmp']['config'][8];
@@ -151,7 +151,7 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
                 ORDER BY `itemtype`, `name`;";
       $result=$DB->query($query);
       if ($result) {
-			while ($data=$DB->fetch_array($result)) {
+         while ($data=$DB->fetch_array($result)) {
             echo "<tr class='tab_bg_1'>";
             echo "<td align='left'>";
             echo $LANG['plugin_fusinvsnmp']['mapping'][$data['locale']];
@@ -186,7 +186,7 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
       echo "</table></div></form>";
 
       return true;
-	}
+   }
 
 
    

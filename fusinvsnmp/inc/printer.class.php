@@ -41,7 +41,7 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
@@ -400,10 +400,10 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
 
 
 
-	function showForm($id, $options=array()) {
-		global $DB,$CFG_GLPI,$LANG;
+   function showForm($id, $options=array()) {
+      global $DB,$CFG_GLPI,$LANG;
 
-		PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printer","r");
+      PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printer","r");
 
       $this->oFusionInventory_printer->id = $id;
       
@@ -420,9 +420,9 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
          }
       }
       
-		// Form printer informations
+      // Form printer informations
 
-		echo "<div align='center'>";
+      echo "<div align='center'>";
       echo "<form method='post' name='snmp_form' id='snmp_form'
                  action=\"".$options['target']."\">";
       echo "<table class='tab_cadre' cellpadding='5' width='950'>";
@@ -433,7 +433,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       echo "</th>";
       echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
+      echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
       echo $LANG['plugin_fusinvsnmp']['snmp'][4];
       echo "</td>";
@@ -450,18 +450,18 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       echo "</td>";
       echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center' rowspan='2'>".$LANG['plugin_fusinvsnmp']['model_info'][4]."&nbsp;:</td>";
-		echo "<td align='center'>";
-		$query_models = "SELECT *
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center' rowspan='2'>".$LANG['plugin_fusinvsnmp']['model_info'][4]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      $query_models = "SELECT *
                        FROM `glpi_plugin_fusinvsnmp_models`
                        WHERE `itemtype`!='Printer'
                              AND `itemtype`!=''";
-		$result_models=$DB->query($query_models);
-		$exclude_models = array();
-		while ($data_models=$DB->fetch_array($result_models)) {
-			$exclude_models[] = $data_models['id'];
-		}
+      $result_models=$DB->query($query_models);
+      $exclude_models = array();
+      while ($data_models=$DB->fetch_array($result_models)) {
+         $exclude_models[] = $data_models['id'];
+      }
       Dropdown::show("PluginFusinvsnmpModel",
                      array('name'=>"plugin_fusinvsnmp_models_id",
                            'value'=>$this->oFusionInventory_printer->fields['plugin_fusinvsnmp_models_id'],
@@ -471,7 +471,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       echo "<td colspan='2'>";
 
       echo "</td>";
-		echo "</tr>";
+      echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
@@ -482,26 +482,26 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       echo "</td>";
       echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_fusinvsnmp']['model_info'][3]."&nbsp;:</td>";
-		echo "<td align='center'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>".$LANG['plugin_fusinvsnmp']['model_info'][3]."&nbsp;:</td>";
+      echo "<td align='center'>";
       PluginFusinvsnmpSNMP::auth_dropdown($this->oFusionInventory_printer->fields["plugin_fusinvsnmp_configsecurities_id"]);
-		echo "</td>";
+      echo "</td>";
       echo "<td colspan='2'>";
       echo "</td>";
       echo "</tr>";
 
-		echo "<tr class='tab_bg_2 center'>";
-		echo "<td colspan='4'>";
-		echo "<div align='center'>";
-		echo "<input type='hidden' name='id' value='".$id."'>";
-		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
-		echo "</td>";
-		echo "</tr>";
+      echo "<tr class='tab_bg_2 center'>";
+      echo "<td colspan='4'>";
+      echo "<div align='center'>";
+      echo "<input type='hidden' name='id' value='".$id."'>";
+      echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
+      echo "</td>";
+      echo "</tr>";
 
-		echo "</table></form>";
-		echo "</div>";
-	}
+      echo "</table></form>";
+      echo "</div>";
+   }
 }
 
 ?>

@@ -51,20 +51,20 @@ $PluginFusinvsnmpPrinterLog = new PluginFusinvsnmpPrinterLog();
 print_r($_POST);
 exit;
 if ((isset($_POST['delete']))) {
-	
-	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printer","w");
-	
-	if (isset($_POST['limit'])) {
-		for ($i=0 ; $i<$_POST['limit'] ; $i++) {
-			if ((isset($_POST["checked_$i"])) && ($_POST["checked_$i"] == 1)) {
+   
+   PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printer","w");
+   
+   if (isset($_POST['limit'])) {
+      for ($i=0 ; $i<$_POST['limit'] ; $i++) {
+         if ((isset($_POST["checked_$i"])) && ($_POST["checked_$i"] == 1)) {
             $input = array();
-   			if (isset($_POST["ID_$i"])) {
+            if (isset($_POST["ID_$i"])) {
                $input['id'] = $_POST["ID_$i"];
             }
-				$PluginFusinvsnmpPrinterLog->delete($input);
-			}
-		}
-	}
+            $PluginFusinvsnmpPrinterLog->delete($input);
+         }
+      }
+   }
 }
 
 glpi_header($_SERVER['HTTP_REFERER']);

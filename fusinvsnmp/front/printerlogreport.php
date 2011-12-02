@@ -78,36 +78,36 @@ Search::show('PluginFusinvsnmpPrinterLogReport');
 
 
 function displaySearchForm() {
-	global $_SERVER,$_GET,$LANG,$CFG_GLPI;
+   global $_SERVER,$_GET,$LANG,$CFG_GLPI;
 
-	echo "<form action='".$_SERVER["PHP_SELF"]."' method='post'>";
-	echo "<table class='tab_cadre' cellpadding='5'>";
-	echo "<tr class='tab_bg_1' align='center'>";
-	echo "<td>";
-	echo $LANG['plugin_fusinvsnmp']['state'][4]." :";
-	echo "</td>";
-   echo "<td width='120'>";
-	showDateFormItem("glpi_plugin_fusioninventory_date_start",$_SESSION['glpi_plugin_fusioninventory_date_start']);
-	echo "</td>";
-
-	echo "<td>";
-	echo $LANG['plugin_fusinvsnmp']['state'][5]." :";
-	echo "</td>";
-   echo "<td width='120'>";
-	showDateFormItem("glpi_plugin_fusioninventory_date_end",$_SESSION['glpi_plugin_fusioninventory_date_end']);
-	echo "</td>";
-
+   echo "<form action='".$_SERVER["PHP_SELF"]."' method='post'>";
+   echo "<table class='tab_cadre' cellpadding='5'>";
+   echo "<tr class='tab_bg_1' align='center'>";
    echo "<td>";
-	echo "<input type='submit' name='reset' value='reset' class='submit' />";
+   echo $LANG['plugin_fusinvsnmp']['state'][4]." :";
+   echo "</td>";
+   echo "<td width='120'>";
+   showDateFormItem("glpi_plugin_fusioninventory_date_start",$_SESSION['glpi_plugin_fusioninventory_date_start']);
    echo "</td>";
 
-	echo "<td>";
-	echo "<input type='submit' value='Valider' class='submit' />";
-	echo "</td>";
+   echo "<td>";
+   echo $LANG['plugin_fusinvsnmp']['state'][5]." :";
+   echo "</td>";
+   echo "<td width='120'>";
+   showDateFormItem("glpi_plugin_fusioninventory_date_end",$_SESSION['glpi_plugin_fusioninventory_date_end']);
+   echo "</td>";
 
-	echo "</tr>";
-	echo "</table>";
-	echo "</form>";
+   echo "<td>";
+   echo "<input type='submit' name='reset' value='reset' class='submit' />";
+   echo "</td>";
+
+   echo "<td>";
+   echo "<input type='submit' value='Valider' class='submit' />";
+   echo "</td>";
+
+   echo "</tr>";
+   echo "</table>";
+   echo "</form>";
 }
 
 commonFooter(); 

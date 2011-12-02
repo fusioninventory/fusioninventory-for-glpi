@@ -50,16 +50,16 @@ commonHeader($LANG['plugin_fusioninventory']['functionalities'][0],$_SERVER["PHP
 
 if (isset($_POST['update'])) {
 
-	if (empty($_POST['cleaning_days'])) {
-		$_POST['cleaning_days'] = 0;
+   if (empty($_POST['cleaning_days'])) {
+      $_POST['cleaning_days'] = 0;
    }
 
    $_POST['id']=1;
-	switch ($_POST['tabs']) {
+   switch ($_POST['tabs']) {
       
-		case 'config' :
-			$PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
-			break;
+      case 'config' :
+         $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+         break;
 
       case 'history' :
          $PluginFusinvsnmpConfigLogField = new PluginFusinvsnmpConfigLogField();
@@ -75,9 +75,9 @@ if (isset($_POST['update'])) {
          }
          break;
 
-	}
-	if (isset($PluginFusioninventoryConfig)) {
-		$PluginFusioninventoryConfig->update($_POST);
+   }
+   if (isset($PluginFusioninventoryConfig)) {
+      $PluginFusioninventoryConfig->update($_POST);
    }
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if ((isset($_POST['Clean_history']))) {

@@ -146,7 +146,7 @@ function update221to230() {
    $a_exceptions_discovery = array();
    $sql = "SELECT * FROM `glpi_plugin_fusinvsnmp_tmp_agents`";
    $result=$DB->query($sql);
-	while ($data=$DB->fetch_array($result)) {
+   while ($data=$DB->fetch_array($result)) {
       $sql_ins = "INSERT INTO `glpi_plugin_fusinvsnmp_agentconfigs`
          (`plugin_fusioninventory_agents_id`, `threads_netdiscovery`,
          `threads_snmpquery`)
@@ -170,7 +170,7 @@ function update221to230() {
    $sql = "SELECT * FROM `glpi_plugin_fusinvsnmp_tmp_configs`";
    $result=$DB->query($sql);
    $auth = 'DB';
-	while ($data=$DB->fetch_array($result)) {
+   while ($data=$DB->fetch_array($result)) {
       $auth = $data['authsnmp'];
    }
    $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();

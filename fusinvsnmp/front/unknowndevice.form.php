@@ -49,8 +49,8 @@ $PluginFusinvsnmpUnknownDevice = new PluginFusinvsnmpUnknownDevice();
 PluginFusioninventoryProfile::checkRight("fusioninventory", "unknowndevice","r");
 
 if (isset($_POST["update"])) {
-	$PluginFusinvsnmpUnknownDevice->check($_POST['id'],'w');
-	$PluginFusinvsnmpUnknownDevice->update($_POST);
+   $PluginFusinvsnmpUnknownDevice->check($_POST['id'],'w');
+   $PluginFusinvsnmpUnknownDevice->update($_POST);
 
 } 
 glpi_header($_SERVER['HTTP_REFERER']);

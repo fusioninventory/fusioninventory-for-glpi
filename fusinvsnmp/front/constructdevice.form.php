@@ -62,12 +62,12 @@ if (isset($_GET['vlan_update'])) {
    $query = "SELECT * FROM glpi_plugin_fusinvsnmp_constructdevices
       WHERE sysdescr='".$_POST['sysdescr']."' ";
    $result = $DB->query($query);
-	if ($DB->numrows($result) == '0') {
+   if ($DB->numrows($result) == '0') {
       $PluginFusinvsnmpConstructDevice->add($_POST);
    } else {
       $_SESSION["MESSAGE_AFTER_REDIRECT"] = "Déjà existant";
    }
-	glpi_header($_SERVER['HTTP_REFERER']);
+   glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset($_POST['addWalk'])) {
    $i = 1;
    while ($i == '1') {
@@ -111,16 +111,16 @@ NULL , '".$_POST['id']."', '".$md5."'
    }
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["update"])) {
-	$PluginFusinvsnmpConstructDevice->update($_POST);
-	glpi_header($_SERVER['HTTP_REFERER']);
+   $PluginFusinvsnmpConstructDevice->update($_POST);
+   glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["delete"])) {
-	$PluginFusinvsnmpConstructDevice->delete($_POST);
-	glpi_header("construct_device.php");
+   $PluginFusinvsnmpConstructDevice->delete($_POST);
+   glpi_header("construct_device.php");
 }
 
 $id = "";
 if (isset($_GET["id"])) {
-	$id = $_GET["id"];
+   $id = $_GET["id"];
 }
 
 $PluginFusinvsnmpConstructDevice->showForm($id);

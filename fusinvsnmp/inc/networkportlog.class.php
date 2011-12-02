@@ -41,24 +41,24 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 
 class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
 
-	/**
-	 * Insert port history with connection and disconnection
-	 *
-	 * @param $status status of port ('make' or 'remove')
-	 * @param $array with values : $array["networkports_id"], $array["value"], $array["itemtype"] and $array["device_ID"]
-	 *
-	 * @return id of inserted line
-	 *
-	**/
-	function insert_connection($status,$array,$plugin_fusioninventory_agentprocesses_id=0) {
-		global $DB,$CFG_GLPI;
+   /**
+    * Insert port history with connection and disconnection
+    *
+    * @param $status status of port ('make' or 'remove')
+    * @param $array with values : $array["networkports_id"], $array["value"], $array["itemtype"] and $array["device_ID"]
+    *
+    * @return id of inserted line
+    *
+   **/
+   function insert_connection($status,$array,$plugin_fusioninventory_agentprocesses_id=0) {
+      global $DB,$CFG_GLPI;
 
       $input = array();
       $input['date'] = date("Y-m-d H:i:s");
@@ -66,14 +66,14 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
       if ($status == "field") {
 
-			$query = "INSERT INTO `glpi_plugin_fusinvsnmp_networkportlogs` (
+         $query = "INSERT INTO `glpi_plugin_fusinvsnmp_networkportlogs` (
                                `networkports_id`,`plugin_fusioninventory_mappings_id`,`value_old`,`value_new`,`date_mod`)
                    VALUES('".$array["networkports_id"]."','".$array["plugin_fusioninventory_mappings_id"]."',
                           '".$array["value_old"]."','".$array["value_new"]."',
                           '".date("Y-m-d H:i:s")."');";
          $DB->query($query);
-		}
- 	}
+      }
+    }
 
    
 
@@ -83,11 +83,11 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       $this->showTabs($options);
       $this->showFormHeader($options);
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td colspan='3'>";
-		echo $LANG['plugin_fusioninventory']['functionalities'][29]." :";
-		echo "</td>";
-		echo "</tr>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td colspan='3'>";
+      echo $LANG['plugin_fusioninventory']['functionalities'][29]." :";
+      echo "</td>";
+      echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
 
@@ -110,7 +110,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
                 FROM `glpi_plugin_fusinvsnmp_configlogfields`;";
       $result=$DB->query($query);
       if ($result) {
-			while ($data=$DB->fetch_array($result)) {
+         while ($data=$DB->fetch_array($result)) {
             $type = '';
             $name= '';
             list($type,$name) = explode("-", $data['field']);
@@ -162,13 +162,13 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
          echo "&nbsp;";
       }
       echo "</td>";
-		echo "</tr>";
+      echo "</tr>";
 
-		echo "<tr>";
-		echo "<th colspan='3'>";
-		echo $LANG['plugin_fusioninventory']['functionalities'][60]." :";
-		echo "</th>";
-		echo "</tr>";
+      echo "<tr>";
+      echo "<th colspan='3'>";
+      echo $LANG['plugin_fusioninventory']['functionalities'][60]." :";
+      echo "</th>";
+      echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='3' class='center'>";
@@ -178,13 +178,13 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
-		echo "<tr>";
-		echo "<th colspan='3'>";
+      echo "<tr>";
+      echo "<th colspan='3'>";
       echo "&nbsp;";
-		echo "</th>";
-		echo "</tr>";
+      echo "</th>";
+      echo "</tr>";
 
-		$this->showFormButtons($options);
+      $this->showFormButtons($options);
 
       echo "<div id='tabcontent'></div>";
       echo "<script type='text/javascript'>loadDefaultTab();</script>";
