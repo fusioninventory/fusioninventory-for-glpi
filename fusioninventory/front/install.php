@@ -83,7 +83,7 @@ if (Session::haveRight("config","w") && Session::haveRight("profile","w")) {
       }
    }
 
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else {
 
    Html::header($LANG['login'][5],$_SERVER['PHP_SELF'],"plugins","fusioninventory");

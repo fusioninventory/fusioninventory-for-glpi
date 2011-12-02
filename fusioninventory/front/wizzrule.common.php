@@ -55,7 +55,7 @@ $rulecollection->checkGlobal('r');
 if (isset($_GET["action"])) {
    $rulecollection->checkGlobal('w');
    $rulecollection->changeRuleOrder($_GET["id"],$_GET["action"]);
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 
 } else if (isset($_POST["action"])) {
    $rulecollection->checkGlobal('w');
@@ -71,7 +71,7 @@ if (isset($_GET["action"])) {
                $rule->delete(array('id' => $key));
             }
             Event::log(0, "rules", 4, "setup", $_SESSION["glpiname"]." ".$LANG['log'][22]);
-            Html::redirect($_SERVER['HTTP_REFERER']);
+            Html::back();
          }
          break;
 

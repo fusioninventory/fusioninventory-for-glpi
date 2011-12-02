@@ -59,7 +59,7 @@ if(isset($_POST["unlock_field_fusioninventory"])){
          PluginFusioninventoryLock::setLockArray($_POST['type'], $_POST["id"], array());
       }
    }
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 }
 
 Html::footer();

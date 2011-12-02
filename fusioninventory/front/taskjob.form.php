@@ -72,7 +72,7 @@ if (isset($_POST['definition_add'])) {
    $input['id'] = $_POST['id'];
    $input['definition'] = exportArrayToDB($a_listdef);
    $mytaskjob->update($input);
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset($_POST['action_add'])) {
    // * Add an action
    $mytaskjob->getFromDB($_POST['id']);
@@ -95,7 +95,7 @@ if (isset($_POST['definition_add'])) {
    $input['id'] = $_POST['id'];
    $input['action'] = exportArrayToDB($a_listact);
    $mytaskjob->update($input);
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset($_POST['definition_delete'])) {
    // * Delete definition
    $mytaskjob->getFromDB($_POST['id']);
@@ -113,7 +113,7 @@ if (isset($_POST['definition_add'])) {
    $input['id'] = $_POST['id'];
    $input['definition'] = exportArrayToDB($a_listdef);
    $mytaskjob->update($input);
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset($_POST['action_delete'])) {
    // * Delete action
    $mytaskjob->getFromDB($_POST['id']);
@@ -131,7 +131,7 @@ if (isset($_POST['definition_add'])) {
    $input['id'] = $_POST['id'];
    $input['action'] = exportArrayToDB($a_listact);
    $mytaskjob->update($input);
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset($_POST['quickform'])) {
    $pluginFusioninventoryTask = new PluginFusioninventoryTask();
 
@@ -163,7 +163,7 @@ if (isset($_POST['definition_add'])) {
    if (isset($_POST['update'])) {
       $mytaskjob->update($inputtaskjob);
       $pluginFusioninventoryTask->update($inputtask);
-      Html::redirect($_SERVER['HTTP_REFERER']);
+      Html::back();
    } else if (isset($_POST['add'])) {
       if (!isset($_POST['entities_id'])) {
          $_POST['entities_id'] = $_SESSION['glpidefault_entity'];
@@ -199,7 +199,7 @@ if (isset($_POST['definition_add'])) {
       $_SESSION["plugin_fusioninventory_forcerun"][$taskjobs_id] = $uniqid;
    }
    unset($_SESSION["MESSAGE_AFTER_REDIRECT"]);
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset($_POST['add']) || isset($_POST['update'])) {
    // * Add and update taskjob
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task", "w");
@@ -225,7 +225,7 @@ if (isset($_POST['definition_add'])) {
    } else {
       $mytaskjob->update($_POST);
    }
-   Html::redirect($_SERVER['HTTP_REFERER']);   
+   Html::back();   
 
 } else if (isset($_POST["delete"])) {
    // * delete taskjob
@@ -269,7 +269,7 @@ if (isset($_POST['definition_add'])) {
    $mytask->update($mytask->fields);
    // force running this job (?)
 
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
    
 } elseif (isset($_POST['forceend'])) {
    $mytaskjobstatus = new PluginFusioninventoryTaskjobstatus();
@@ -286,7 +286,7 @@ if (isset($_POST['definition_add'])) {
    $pFusioninventoryTaskjob->getFromDB($jobstatus['plugin_fusioninventory_taskjobs_id']);
    $pFusioninventoryTaskjob->reinitializeTaskjobs($pFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']);
 
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 }
 
 if (strstr($_SERVER['HTTP_REFERER'], "wizard.php")) {

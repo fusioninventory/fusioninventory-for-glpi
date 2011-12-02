@@ -57,7 +57,7 @@ if (isset($_POST['update'])) {
    $config->updateConfigType($plugins_id, 'delete_task', $_POST['delete_task']);
    $config->updateConfigType($plugins_id, 'agent_port', $_POST['agent_port']);
    $config->updateConfigType($plugins_id, 'extradebug', $_POST['extradebug']);
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 }
 
 $pfConfig = new PluginFusioninventoryConfig();

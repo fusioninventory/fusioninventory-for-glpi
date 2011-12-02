@@ -52,7 +52,7 @@ Html::header($LANG['plugin_fusioninventory']['functionalities'][0], $_SERVER["PH
 if (isset($_POST['update'])) {
    $pfConfig = new PluginFusinvinventoryConfig();
    $pfConfig->putForm($_POST);
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 }
 
 Html::footer();

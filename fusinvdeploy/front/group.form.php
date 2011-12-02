@@ -79,7 +79,7 @@ if (isset($_POST["add"])) {
    $group->check($_REQUEST['id'], 'w');
    $group->update($_POST);
 
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 
 } else if (isset($_POST["additem"])) {
    //$group_item->check(-1,'w',$_POST);
@@ -116,7 +116,7 @@ if (isset($_POST["add"])) {
       ));
    }
 
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset($_POST["updateitem"])) {
    //$group_item->check(-1,'w',$_POST);
    if ($_REQUEST['type'] == 'dynamic') {
@@ -139,7 +139,7 @@ if (isset($_POST["add"])) {
       ));
    }
 
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 
 } else if (isset($_REQUEST["deleteitem"])) {
    if ($_REQUEST['type'] == 'static') {
@@ -154,7 +154,7 @@ if (isset($_POST["add"])) {
 
    }
 
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 
 } else {
    commonHeader($LANG['plugin_fusinvdeploy']["title"][0],$_SERVER["PHP_SELF"],"plugins",

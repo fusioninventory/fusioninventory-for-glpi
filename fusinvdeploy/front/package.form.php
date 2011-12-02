@@ -60,7 +60,7 @@ if (isset ($_POST["add"])) {
 } else if (isset ($_POST["update"])) {
 // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
    $package->update($_POST);
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset ($_POST["delete"])) {
 // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
    $package->delete($_POST);

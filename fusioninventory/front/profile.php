@@ -53,7 +53,7 @@ if (isset ($_POST)) {
    if (Session::haveRight("profile", "w")) {
       $prof->updateProfiles($_POST);
    }
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 }
 
 ?>

@@ -61,14 +61,14 @@ if (isset($_POST['startagent'])) {
    } else {
        Session::addMessageAfterRedirect($LANG['plugin_fusioninventory']['agents'][30]);
    }
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset ($_POST["add"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "agent", "w");
    if (($_POST['items_id'] != "0") AND ($_POST['items_id'] != "")) {
       $_POST['itemtype'] = '1';
    }
    $agent->add($_POST);
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset ($_POST["update"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "agent", "w");
    if (isset($_POST['items_id'])) {
@@ -77,14 +77,14 @@ if (isset($_POST['startagent'])) {
       }
    }
    $agent->update($_POST);
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset ($_POST["delete"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "agent", "w");
    $agent->delete($_POST);
    $agent->redirectToList();
 } else if (isset ($_POST["startagent"])) {
 
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 }
 
 

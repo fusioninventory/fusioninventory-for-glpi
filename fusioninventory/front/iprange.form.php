@@ -61,9 +61,9 @@ if (isset ($_POST["add"])) {
       $_POST['ip_end']   .= $_POST['ip_end2'].".".$_POST['ip_end3'];
       $newID = $iprange->add($_POST);
 
-      Html::redirect($_SERVER['HTTP_REFERER']);
+      Html::back();
    } else {
-      Html::redirect($_SERVER['HTTP_REFERER']);
+      Html::back();
    }
 } else if (isset ($_POST["update"])) {
    if (isset($_POST['communication'])) {
@@ -103,13 +103,13 @@ if (isset ($_POST["add"])) {
          $iprange->update($_POST);
       }
    }
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset ($_POST["delete"])) {
    if (isset($_POST['communication'])) {
       $task = new PluginFusioninventoryTask();
       $task->delete(array('id' => $_POST['task_id']), 1);
       $_SERVER['HTTP_REFERER'] = str_replace("&allowcreate=1", "", $_SERVER['HTTP_REFERER']);
-      Html::redirect($_SERVER['HTTP_REFERER']);
+      Html::back();
    } else {
       PluginFusioninventoryProfile::checkRight("fusioninventory", "iprange","w");
 

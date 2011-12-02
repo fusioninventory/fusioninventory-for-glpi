@@ -57,7 +57,7 @@ if (isset($_POST['forcestart'])) {
    $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
    $PluginFusioninventoryTaskjob->forceRunningTask($_POST['id']);
 
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset($_POST['reset'])) {
    $pFusioninventoryTask    = new PluginFusioninventoryTask();
 
@@ -67,7 +67,7 @@ if (isset($_POST['forcestart'])) {
             `status`='0'
       WHERE `plugin_fusioninventory_tasks_id`='".$_POST['id']."'";
    $DB->query($query);   
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
    
 } else if (isset ($_POST["add"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task","w");
@@ -103,7 +103,7 @@ if (isset($_POST['forcestart'])) {
   }
   $pft->update($_POST);
 
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 }
 
 PluginFusioninventoryTaskjob::getAllowurlfopen();

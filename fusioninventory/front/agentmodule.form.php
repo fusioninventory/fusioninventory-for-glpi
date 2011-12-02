@@ -59,7 +59,7 @@ if (isset($_POST["agent_add"])) {
    $input['exceptions'] = exportArrayToDB($a_agentList);
    $input['id']         = $_POST['id'];
    $agentmodule->update($input);
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset($_POST["agent_delete"])) {
    $agentmodule->getFromDB($_POST['id']);
    $a_agentList         = importArrayFromDB($agentmodule->fields['exceptions']);
@@ -72,7 +72,7 @@ if (isset($_POST["agent_add"])) {
    $input['exceptions'] = exportArrayToDB($a_agentList);
    $input['id'] = $_POST['id'];
    $agentmodule->update($input);
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset ($_POST["updateexceptions"])) {
    $a_modules = $agentmodule->find();
    foreach ($a_modules as $module_id=>$data) {
@@ -118,7 +118,7 @@ if (isset($_POST["agent_add"])) {
       $agentmodule->update($data);
    }
 
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset ($_POST["update"])) {
    $agentmodule->getFromDB($_POST['id']);
    $input = array();
@@ -135,7 +135,7 @@ if (isset($_POST["agent_add"])) {
    $input['url'] = $_POST['url'];
    
    $agentmodule->update($input);
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 }
 
 Html::footer();

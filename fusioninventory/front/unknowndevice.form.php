@@ -64,7 +64,7 @@ if (isset ($_POST["add"])) {
       $_POST['itemtype'] = '1';
    }
    $PluginFusioninventoryUnknownDevice->add($_POST);
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset($_POST["delete"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "unknowndevice","w");
 

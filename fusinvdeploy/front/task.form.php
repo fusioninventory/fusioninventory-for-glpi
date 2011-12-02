@@ -56,7 +56,7 @@ $task = new PluginFusinvdeployTask();
 if (isset($_POST['forcestart'])) {
    $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
    $PluginFusioninventoryTaskjob->forceRunningTask($_POST['id']);
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 
 } else if (isset($_POST['reset'])) {
    $pFusioninventoryTask = new PluginFusioninventoryTask();
@@ -66,7 +66,7 @@ if (isset($_POST['forcestart'])) {
             `status`='0'
       WHERE `plugin_fusioninventory_tasks_id`='".$_POST['id']."'";
    $DB->query($query);
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 
 } else if (isset($_POST["add"])) {
    $task->check(-1, 'w', $_POST);
@@ -89,7 +89,7 @@ if (isset($_POST['forcestart'])) {
    $task->check($_POST['id'], 'w');
    $task->update($_POST);
 
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 
 } else {
    commonHeader($LANG['plugin_fusinvdeploy']["title"][0],$_SERVER["PHP_SELF"],"plugins",
