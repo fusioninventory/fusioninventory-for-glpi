@@ -41,7 +41,7 @@
  */
 
 function pluginFusinvinventoryInstall($version, $migration='') {
-   global $DB,$LANG;
+   global $DB;
 
    if ($migration == '') {
       $migration = new Migration($version);

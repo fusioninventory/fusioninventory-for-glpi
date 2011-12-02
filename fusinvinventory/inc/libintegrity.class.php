@@ -792,7 +792,6 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
     * 
     */
    function deleteGLPI($import) {
-      global $DB;
 
       $split = explode("/", $import);
       $items_id = $split[0];

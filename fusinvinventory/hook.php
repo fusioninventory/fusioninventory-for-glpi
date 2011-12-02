@@ -262,8 +262,6 @@ function plugin_headings_fusinvinventory_integrity($item) {
 
 
 function plugin_headings_fusinvinventory_bios($item) {
-   global $DB,$LANG;
-   
    $pFusinvinventoryComputer = new PluginFusinvinventoryComputer();
    $pFusinvinventoryComputer->showForm($item->fields['id']);
 }

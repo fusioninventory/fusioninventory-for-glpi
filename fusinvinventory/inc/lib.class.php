@@ -273,7 +273,6 @@ class PluginFusinvinventoryLib extends CommonDBTM {
    *
    */
    public function updateLibMachine($xmlSections, $internalId) {
-      global $DB;
 
       $a_sections   = array();
       $a_sections[] = "DRIVES";

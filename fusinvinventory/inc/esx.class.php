@@ -55,7 +55,6 @@ class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
     * @return uniqid value
     */
    function prepareRun($taskjobs_id) {
-      global $DB;
    
       $task       = new PluginFusioninventoryTask();
       $job        = new PluginFusioninventoryTaskjob();

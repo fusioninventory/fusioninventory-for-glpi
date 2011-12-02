@@ -43,7 +43,7 @@
 
 // Init the hooks of fusinvdeploy
 function plugin_init_fusinvdeploy() {
-   global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
+   global $PLUGIN_HOOKS,$LANG;
 
    // ##### 1. Stop if fusioninventory not activated #####
 

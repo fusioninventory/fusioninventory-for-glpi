@@ -47,7 +47,6 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusinvinventoryComputer extends CommonDBTM {
    
    static function getTypeName() {
-      global $LANG;
 
       return "";
    }
@@ -67,7 +66,6 @@ class PluginFusinvinventoryComputer extends CommonDBTM {
       
       $a_computerextend = current($this->find("`computers_id`='".$computers_id."'", 
                                               "", 1));
-      $inputCext = array();
       if (empty($a_computerextend)) {
          $this->getEmpty();
          $a_computerextend = $this->fields;
