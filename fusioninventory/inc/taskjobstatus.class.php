@@ -71,7 +71,6 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
    *
    **/
    function stateTaskjob ($taskjobs_id, $width = '930', $return = 'html', $style = '') {
-      global $DB;
 
       $state = array();
       $state[0] = 0;
@@ -248,7 +247,6 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
    *
    **/
    function getTaskjobsAgent($agent_id) {
-      global $DB;
 
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
 

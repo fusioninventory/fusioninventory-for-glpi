@@ -58,7 +58,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
     * @return nothing (print the form)
     **/
    function showForm($p_target, $p_itemtype, $p_items_id=0) {
-      global $DB, $LANG, $SEARCH_OPTION;
+      global $LANG;
 
       $can = 0;
       $typeright = strtolower($p_itemtype);
@@ -220,7 +220,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
     * @return nothing
     **/
    static function deleteInLockArray($p_table, $p_items_id, $p_fieldToDel) {
-      global $DB;
 
       $fieldsToLock = PluginFusioninventoryLock::getLockFields($p_table, $p_items_id);
       if (count($fieldsToLock)){

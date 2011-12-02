@@ -58,7 +58,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
    
 
    function showForm($id, $options=array()) {
-      global $DB,$CFG_GLPI,$LANG;
+      global $LANG;
 
       PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","r");
 
@@ -146,7 +146,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
    
    
    function plugin_fusioninventory_snmp_connections($array=0) {
-      global $CFG_GLPI,$LANG;
+      global $LANG;
 
       $array_auth = array();
 

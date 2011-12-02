@@ -182,7 +182,6 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
     *  When agent contact server, this function send datas to agent
     */
    function run($a_Taskjobstatus) {
-      global $DB;
 
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();

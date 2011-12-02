@@ -218,6 +218,8 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
     *@return nothing
     **/
    function savePorts() {
+      global $CFG_GLPI;
+      
       $CFG_GLPI["deleted_tables"][]="glpi_networkports"; // TODO : to clean
       
       foreach ($this->ports as $index=>$ptp) {
@@ -242,6 +244,8 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
     *@return nothing
     **/
    function saveIfaddrs() {
+      global $CFG_GLPI;
+      
       $CFG_GLPI["deleted_tables"][]="glpi_plugin_fusinvsnmp_networkequipmentips"; // TODO : to clean
 
       $pti = new PluginFusinvsnmpNetworkEquipmentIP();
@@ -361,8 +365,8 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
          $ID_tn = $this->oFusionInventory_networkequipment->add($input);
          $this->oFusionInventory_networkequipment->getFromDB($ID_tn);
       } else {
-         foreach ($data as $ID_tn=>$datas) {
-            $this->oFusionInventory_networkequipment->fields = $data[$ID_tn];
+         foreach ($data as $datas) {
+            $this->oFusionInventory_networkequipment->fields = $datas;
          }
       }
 

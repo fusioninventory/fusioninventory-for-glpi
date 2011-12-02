@@ -269,7 +269,7 @@ class PluginFusioninventoryCommunication {
     * @return nothing (write text in log file)
     **/
    static function addLog($p_logs) {
-      global $CFG_GLPI;
+
       if ($_SESSION['glpi_use_mode']==DEBUG_MODE) {
          if (PluginFusioninventoryConfig::isExtradebugActive()) {
             file_put_contents(GLPI_LOG_DIR.'/pluginFusioninventory-communication.log',
@@ -395,8 +395,6 @@ class PluginFusioninventoryCommunication {
        // NOTE: $mtime may be negative (PHP integer limitations)
        $mtime = unpack("V", substr($data,4,4));
        $mtime = $mtime[1];
-       $xfl   = substr($data,8,1);
-       $os    = substr($data,8,1);
        $headerlen = 10;
        $extralen  = 0;
        $extra     = "";

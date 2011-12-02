@@ -117,7 +117,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    *
    **/
    function showForm($id, $options=array()) {
-      global $DB,$CFG_GLPI,$LANG;
+      global $CFG_GLPI,$LANG;
 
       if ($id != '') {
          $this->verifyDefinitionActions($id);
@@ -337,7 +337,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    *
    **/
    function dropdownMethod($myname,$value=0,$entity_restrict='') {
-      global $DB,$CFG_GLPI;
+      global $CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
 
@@ -399,7 +399,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    *
    **/
    function dropdownDefinitionType($myname,$method,$value=0,$entity_restrict='') {
-      global $DB,$CFG_GLPI;
+      global $CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $a_definitiontype = array();
@@ -445,7 +445,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    *
    **/
    function dropdownDefinition($myname,$definitiontype,$method,$deftypeid,$value=0,$entity_restrict='', $title = 0) {
-      global $DB,$CFG_GLPI, $LANG;
+      global $CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $module = '';
@@ -488,7 +488,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    *
    **/
    function dropdownActionType($myname,$method,$value=0,$entity_restrict='') {
-      global $DB,$CFG_GLPI,$LANG;
+      global $CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $a_actioninitiontype = array();
@@ -537,7 +537,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    *
    **/
    function dropdownAction($myname,$actiontype,$method,$actiontypeid,$value=0,$entity_restrict='') {
-      global $DB,$CFG_GLPI, $LANG;
+      global $CFG_GLPI;
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $module = '';
       foreach ($a_methods as $datas) {
@@ -730,7 +730,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       
       
       // Start agents must start in push mode
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
       foreach($_SESSION['glpi_plugin_fusioninventory']['agents'] as $agent_id=>$num) {
          $PluginFusioninventoryTaskjob->startAgentRemotly($agent_id);
       }
@@ -876,7 +875,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       if ($this->reinitializeTaskjobs($tasks_id, 1)) {
          $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-         $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
          $_SESSION['glpi_plugin_fusioninventory']['agents'] = array();
 
          $query = "SELECT `".$PluginFusioninventoryTaskjob->getTable()."`.*,
@@ -955,7 +953,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    *
    **/
    function getStateAgent($ip, $agentid) {
-      global $LANG;
 
       $this->disableDebug();
 
@@ -975,7 +972,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $ret = false;
       foreach(PluginFusioninventoryAgent::getAgentStatusURLs($plugins_id, $agentid) as $url) {
          $str = @file_get_contents($url, 0, $ctx);
-         if ($stre !== false && strstr($str, "waiting")) {
+         if ($str !== false && strstr($str, "waiting")) {
             $ret = true;
             break;
          }
@@ -988,10 +985,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    
    // $items_id = agent id
    function getRealStateAgent($items_id) {
-      global $LANG;
 
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-      $a_ip = $PluginFusioninventoryAgent->getIPs($items_id);
 
       $this->disableDebug();
 
@@ -1013,6 +1008,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       }
       $this->reenableusemode();
 
+      $ret = '';
       if (strstr($str, "waiting")) {
          $ret="waiting";
       } else if (strstr($str, "running")) {
@@ -1034,8 +1030,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    *
    **/
    function startAgentRemotly($agent_id) {
-
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
@@ -1180,7 +1174,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    *
    **/
    function showMiniAction($items_id, $width="950") {
-      global $LANG;
       
       echo "<center><table class='tab_cadrehov' style='width: ".$width."px'>";
 

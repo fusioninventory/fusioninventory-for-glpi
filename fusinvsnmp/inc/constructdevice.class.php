@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusinvsnmpConstructDevice extends CommonDBTM {
 
    function showForm($id, $options=array()) {
-      global $DB,$CFG_GLPI,$LANG;
+      global $DB,$LANG;
 
       if ($id!='') {
          $this->getFromDB($id);
@@ -119,7 +119,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
 
    
    function manageWalks($target, $id) {
-      global $DB,$CFG_GLPI,$LANG,$IMPORT_TYPES;
+      global $DB,$CFG_GLPI,$LANG;
 
       $query = "SELECT * FROM glpi_plugin_fusinvsnmp_constructdevices
          WHERE id='".$id."'";

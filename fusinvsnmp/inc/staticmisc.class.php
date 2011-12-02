@@ -76,7 +76,6 @@ class PluginFusinvsnmpStaticmisc {
 
 
    static function task_definitionselection_PluginFusioninventoryIPRange_netdiscovery($title) {
-      global $LANG;
 
       $options = array();
       $options['entity'] = $_SESSION['glpiactive_entity'];
@@ -109,7 +108,6 @@ class PluginFusinvsnmpStaticmisc {
 
 
    static function task_definitionselection_NetworkEquipment_snmpinventory($title) {
-      global $LANG;
 
       $options = array();
       $options['entity'] = $_SESSION['glpiactive_entity'];
@@ -122,7 +120,6 @@ class PluginFusinvsnmpStaticmisc {
 
 
    static function task_definitionselection_Printer_snmpinventory($title) {
-      global $LANG;
 
       $options = array();
       $options['entity'] = $_SESSION['glpiactive_entity'];

@@ -182,15 +182,12 @@ class PluginFusioninventoryWizard {
       echo "<td colspan='2' valign='top' width='950'>";
       
       if (isset($_GET['wizz']) AND (strstr($_GET['wizz'], "rules"))) {
-         
-         $rulecollection = new $classname;
          if (isset($_GET['id'])) {
             include (GLPI_ROOT."/plugins/fusioninventory/front/wizzrule.common.form.php");
          } else {
             self::addButton();
             include (GLPI_ROOT."/plugins/fusioninventory/front/wizzrule.common.php");
          }
-
       } else if (isset($_GET['id'])) {
          $class = new $classname;
          if ($_GET['wizz'] == 'w_tasks') {
@@ -649,8 +646,6 @@ class PluginFusioninventoryWizard {
          $_GET['order'] = 'DESC';
       }
       $_GET['target']="task.php";
-
-      $func = self::getMethod($ariane);
 
       PluginFusioninventoryWizard::displayShowForm($ariane,
                "PluginFusioninventoryTaskjob",

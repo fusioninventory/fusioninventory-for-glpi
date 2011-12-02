@@ -111,7 +111,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
 
    function showForm($id, $options=array()) {
-      global $DB,$CFG_GLPI,$LANG;
+      global $CFG_GLPI,$LANG;
 
       PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model", "r");
 
@@ -141,7 +141,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
 
    function showFormMassImport($target) {
-      global $DB,$CFG_GLPI,$LANG;
+      global $LANG;
 
       PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","r");
 
@@ -310,7 +310,6 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
          $DB->query($query);
          $plugin_fusinvsnmp_models_id = $DB->insert_id();
 
-         $i = -1;
          foreach($xml->oidlist->oidobject as $child) {
             $plugin_fusinvsnmp_mibobjects_id = 0;
             $plugin_fusinvsnmp_miboids_id = 0;
@@ -396,7 +395,6 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
 
    function import_netdiscovery($p_xml, $agentKey) {
-      global $DB,$LANG;
 
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpImportExport->import_netdiscovery().');

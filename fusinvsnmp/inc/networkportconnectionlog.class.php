@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusinvsnmpNetworkPortConnectionLog extends CommonDBTM {
 
    function showForm($input='') {
-      global $DB,$LANG,$CFG_GLPI,$INFOFORM_PAGES;
+      global $DB,$LANG,$CFG_GLPI;
 
       $NetworkPort = new NetworkPort();
 

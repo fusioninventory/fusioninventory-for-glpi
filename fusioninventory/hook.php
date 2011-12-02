@@ -41,7 +41,6 @@
  */
 
 function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
-   global $CFG_GLPI, $LANG;
 
    $searchopt = &Search::getOptions($type);
    $table = $searchopt[$id]["table"];
@@ -121,7 +120,6 @@ function cron_plugin_fusioninventory() {
 
 
 function plugin_fusioninventory_install() {
-   global $DB, $LANG, $CFG_GLPI;
 
    include (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
    $version_detected = pluginFusioninventoryGetCurrentVersion(PLUGIN_FUSIONINVENTORY_VERSION);
@@ -449,7 +447,6 @@ function plugin_fusioninventory_MassiveActions($type) {
 }
 
 function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
-   global $LANG;
 
    $table = $options['options']['table'];
    $field = $options['options']['field'];
@@ -491,7 +488,7 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
 
 
 function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
-   global $LANG, $CFG_GLPI, $DB;
+   global $LANG;
 
    switch ($options['itemtype']) {
       case "Computer":
@@ -739,7 +736,6 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
 
 
 function plugin_fusioninventory_addSelect($type,$id,$num) {
-   global $SEARCH_OPTION;
 
    $searchopt = &Search::getOptions($type);
    $table = $searchopt[$id]["table"];
@@ -807,7 +803,6 @@ function plugin_fusioninventory_addDefaultWhere($type) {
 
 
 function plugin_fusioninventory_addWhere($link,$nott,$type,$id,$val) {
-   global $SEARCH_OPTION;
 
    $searchopt = &Search::getOptions($type);
    $table = $searchopt[$id]["table"];
@@ -918,7 +913,6 @@ function plugin_item_add_fusioninventory($parm) {
 
 
 function plugin_item_purge_fusioninventory($parm) {
-   global $DB;
 
    switch (get_class($parm)) {
 

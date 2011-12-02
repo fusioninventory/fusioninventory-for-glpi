@@ -217,7 +217,6 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
 
    function rulepassed($items_id, $itemtype, $entities_id=0) {
-      global $DB;
 
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
                                                    "Rule passed : ".$items_id.", ".$itemtype."\n");

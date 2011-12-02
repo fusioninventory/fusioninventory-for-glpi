@@ -48,7 +48,7 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
    
 
    function showFormList($id, $options=array()) {
-      global $DB,$CFG_GLPI,$LANG,$IMPORT_TYPES;
+      global $DB,$CFG_GLPI,$LANG;
 
       if (!PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","r")) {
          return false;
@@ -226,7 +226,7 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
    
 
    function showFormAdd($id, $type_model, $mappings_used) {
-      global $DB,$CFG_GLPI,$LANG,$IMPORT_TYPES;
+      global $CFG_GLPI,$LANG;
 
       echo "<br>";
       $target = $CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/model.form.php';
@@ -318,7 +318,6 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
 
    
    function deleteMib($item_coche) {
-      global $DB;
       
       PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
       for ($i = 0; $i < count($item_coche); $i++) {
@@ -330,7 +329,6 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
 
 
    function activation($id) {
-      global $DB;
       
       $mib_networking = new PluginFusinvsnmpModelMib();
       

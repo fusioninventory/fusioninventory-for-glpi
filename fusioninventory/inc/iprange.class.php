@@ -113,7 +113,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
 
    function defineTabs($options=array()){
-      global $LANG,$CFG_GLPI,$DB;
+      global $LANG;
 
       $ong = array();
       if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
@@ -125,7 +125,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
 
    function showForm($id, $options=array()) {
-      global $DB,$CFG_GLPI,$LANG;
+      global $LANG;
 
       if ($id!='') {
          $this->getFromDB($id);

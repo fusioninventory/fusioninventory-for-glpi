@@ -48,7 +48,6 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusinvSNMPConfig extends CommonDBTM {
 
    function initConfigModule() {
-      global $DB;
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
 

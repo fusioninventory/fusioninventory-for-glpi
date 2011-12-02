@@ -54,7 +54,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    *
    **/
    function showForm() {
-      global $DB,$CFG_GLPI,$LANG;
+      global $LANG;
 
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
 

@@ -58,7 +58,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
     *
    **/
    function insert_connection($status,$array,$plugin_fusioninventory_agentprocesses_id=0) {
-      global $DB,$CFG_GLPI;
+      global $DB;
 
       $input = array();
       $input['date'] = date("Y-m-d H:i:s");
@@ -230,7 +230,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
    
    static function addLog($port,$field,$value_old,$value_new,$mapping,$plugin_fusioninventory_agentprocesses_id=0) {
-      global $DB,$CFG_GLPI;
+      global $DB;
 
       $PluginFusinvsnmpNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
       $doHistory = 1;
@@ -318,7 +318,6 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
    
    // $status = connection or disconnection
    static function addLogConnection($status,$port,$plugin_fusioninventory_agentprocesses_id=0) {
-      global $DB,$CFG_GLPI;
 
       $PluginFusinvsnmpNetworkPortConnectionLog = new PluginFusinvsnmpNetworkPortConnectionLog;
       $NetworkPort_NetworkPort=new NetworkPort_NetworkPort();
@@ -350,7 +349,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
    
    // List of history in networking display
    static function showHistory($ID_port) {
-      global $DB,$LANG,$INFOFORM_PAGES,$CFG_GLPI;
+      global $DB,$LANG,$CFG_GLPI;
 
       $np = new NetworkPort();
 

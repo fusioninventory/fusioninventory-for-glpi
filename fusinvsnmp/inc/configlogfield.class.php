@@ -54,7 +54,6 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
     *@return nothing
     **/
    function initConfig() {
-      global $DB,$CFG_GLPI;
       
       $NOLOG = '-1';
       $logs = array();

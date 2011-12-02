@@ -164,7 +164,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
 
    function defineTabs($options=array()){
-      global $LANG,$CFG_GLPI;
+      global $LANG;
 
 
       $ong = array();
@@ -192,7 +192,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    *
    **/
    function showForm($id, $options=array()) {
-      global $DB,$CFG_GLPI,$LANG;
+      global $LANG;
 
       //PluginFusioninventoryProfile::checkRight("fusioninventory", "networking","r");
 
@@ -408,8 +408,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    *
    **/
    function convertUnknownToUnknownNetwork($id) {
-      global $DB;
-
+      
       $np = new NetworkPort();
 
       $this->getFromDB($id);
@@ -446,7 +445,6 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    *
    **/
    function hubNetwork($p_oPort, $agent_id) {
-      global $DB;
 
       $nn = new NetworkPort_NetworkPort();
       $Netport = new NetworkPort();
@@ -646,7 +644,6 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    *
    **/
    function createHub($p_oPort, $agent_id) {
-      global $DB;
 
       $Netport = new NetworkPort();
       $nn = new NetworkPort_NetworkPort();
@@ -855,7 +852,6 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
     *
    **/
    function import($items_id,$Import=0, $NoImport=0) {
-      global $DB,$CFG_GLPI,$LANG;
 
       $NetworkPort = new NetworkPort();
 
@@ -1059,7 +1055,6 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    
 
    function cleanDBonPurge() {
-      global $DB;
 
       $networkPort= new NetworkPort();
       $networkPort->cleanDBonItemDelete($this->getType(), $this->fields['id']);

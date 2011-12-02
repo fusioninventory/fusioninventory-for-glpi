@@ -90,7 +90,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
 
 
    function showForm($id, $options=array()) {
-      global $DB,$CFG_GLPI,$LANG;
+      global $CFG_GLPI,$LANG;
 
       PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","r");
 
@@ -361,7 +361,6 @@ class PluginFusinvsnmpModel extends CommonDBTM {
       $PluginFusinvsnmpModel = new PluginFusinvsnmpModel();
       $a_models = $PluginFusinvsnmpModel->find("");
       foreach ($a_models as $a_model) {
-         $delete = 1;
          if (!isset($NewModelList[$a_model['name'].".xml"])) {
             $PluginFusinvsnmpModel->delete($a_model, 1);
          }

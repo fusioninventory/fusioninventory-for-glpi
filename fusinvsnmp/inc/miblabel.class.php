@@ -47,7 +47,6 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusinvsnmpMibLabel extends CommonDropdown {
 
    static function getTypeName() {
-      global $LANG;
 
       return "Plugin FusionInventory MIB label";
    }

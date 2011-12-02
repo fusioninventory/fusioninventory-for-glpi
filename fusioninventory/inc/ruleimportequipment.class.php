@@ -176,7 +176,6 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
     * @return the label's value or ''
    **/
    function displayAdditionRuleActionValue($value) {
-      global $LANG;
 
       $values = self::getRuleActionValues();
       if (isset($values[$value])) {
@@ -260,7 +259,6 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
 
 
    function displayAdditionalRuleAction($action, $params=array()) {
-      global $LANG;
 
       switch ($action['type']) {
          case 'fusion_type' :
@@ -664,7 +662,6 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
 
 
    function displayCriteriaSelectPattern($name, $ID, $condition, $value="", $test=false) {
-      global $CFG_GLPI;
 
       $crit    = $this->getCriteria($ID);
       $display = false;

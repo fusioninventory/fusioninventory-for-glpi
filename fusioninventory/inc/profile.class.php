@@ -107,7 +107,6 @@ class PluginFusioninventoryProfile extends CommonDBTM {
     * @param $a_profile array with Right type ('wol', 'agents'...) and Right (NULL, r, w)
     **/
    static function initProfile($pluginname, $plugins_id) {
-      global $DB;
 
       if (isset($pluginname)) {
          $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($pluginname);
@@ -279,7 +278,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
     * @return nothing
     **/
    function showProfileForm($items_id, $target) {
-      global $LANG,$CFG_GLPI;
+      global $LANG;
 
       if (!haveRight("profile","r")) return false;
 

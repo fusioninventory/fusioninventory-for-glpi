@@ -322,7 +322,7 @@ function appear_array(id){
    *
    **/
    function showHistoryInDetail($agents_id, $uniqid, $width="950") {
-      global $DB,$CFG_GLPI,$LANG;
+      global $CFG_GLPI,$LANG;
 
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();

@@ -105,7 +105,6 @@ class PluginFusioninventoryCredential extends CommonDropdown {
     * @param type $value 
     */
    function showItemtype($ID, $value=0) {
-      global $CFG_GLPI;
 
       //Criteria already added : only display the selected itemtype
       if ($ID > 0) {
@@ -131,7 +130,6 @@ class PluginFusioninventoryCredential extends CommonDropdown {
     * @param $options array
    **/
    function defineMoreTabs($options=array()) {
-      global $LANG;
       return array();
    }
 
@@ -379,7 +377,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    
    
    function title() {
-      global $CFG_GLPI, $LANG;
+      global $LANG;
 
       $buttons = array();
       if (PluginFusioninventoryProfile::haveRight('fusioninventory', 'credential', 'r')) {

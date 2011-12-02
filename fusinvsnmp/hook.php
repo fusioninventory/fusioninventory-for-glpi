@@ -234,7 +234,7 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
 
 
 function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
-   global $CFG_GLPI, $DB, $INFOFORM_PAGES, $LANG, $SEARCH_OPTION;
+   global $CFG_GLPI,$DB,$INFOFORM_PAGES,$LANG;
 
    $searchopt = &Search::getOptions($type);
    $table = $searchopt[$id]["table"];
@@ -636,7 +636,6 @@ function cron_plugin_fusinvsnmp() {
 
 
 function plugin_fusinvsnmp_install() {
-   global $DB, $LANG, $CFG_GLPI;
 
    include_once (GLPI_ROOT . "/plugins/fusinvsnmp/install/install.php");
    pluginFusinvsnmpInstall(PLUGIN_FUSINVSNMP_VERSION);
@@ -960,8 +959,7 @@ function plugin_fusinvsnmp_MassiveActions($type) {
 }
 
 function plugin_fusinvsnmp_MassiveActionsDisplay($options=array()) {
-   
-   global $LANG, $CFG_GLPI, $DB;
+   global $LANG,$DB;
 
    switch ($options['itemtype']) {
       case 'NetworkEquipment':
@@ -1034,7 +1032,6 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($options=array()) {
 }
 
 function plugin_fusinvsnmp_MassiveActionsProcess($data) {
-   global $LANG;
 
    switch ($data['action']) {
 
@@ -1770,7 +1767,6 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
 
 
 function plugin_fusinvsnmp_addOrderBy($type,$id,$order,$key=0) {
-   global $SEARCH_OPTION;
 
    $searchopt = &Search::getOptions($type);
    $table = $searchopt[$id]["table"];
@@ -1938,7 +1934,6 @@ function plugin_fusinvsnmp_addWhere($link,$nott,$type,$id,$val) {
    $field = $searchopt[$id]["field"];
 
 //echo "add where : ".$table.".".$field."<br/>";
-   $SEARCH=makeTextSearch($val,$nott);
 
    switch ($type) {
       // * Computer List (front/computer.php)
@@ -2227,7 +2222,6 @@ function plugin_fusinvsnmp_addWhere($link,$nott,$type,$id,$val) {
 
 
 function plugin_pre_item_purge_fusinvsnmp($parm) {
-   global $DB;
    
    switch (get_class($parm)) {
    
@@ -2326,7 +2320,6 @@ function plugin_pre_item_delete_fusinvsnmp($parm) {
 
 
 function plugin_item_add_fusinvsnmp($parm) {
-   global $DB;
    
    switch (get_class($parm)) {
 

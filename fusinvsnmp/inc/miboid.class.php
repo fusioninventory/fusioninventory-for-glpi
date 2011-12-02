@@ -48,7 +48,6 @@ class PluginFusinvsnmpMibOid extends CommonDropdown {
    // From CommonDBTM
 
    static function getTypeName() {
-      global $LANG;
 
       return "Plugin FusionInventory MIB OID";
    }

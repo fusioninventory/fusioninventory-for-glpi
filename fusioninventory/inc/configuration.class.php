@@ -48,7 +48,7 @@ class PluginFusioninventoryConfiguration extends CommonDBTM {
 
    
    function defineTabs($options=array()){
-      global $LANG,$CFG_GLPI;
+      global $LANG;
 
       $tabs = array();
       $moduleTabs = array();
@@ -74,7 +74,6 @@ class PluginFusioninventoryConfiguration extends CommonDBTM {
 
    
    function showForm($options=array()) {
-      global $DB,$CFG_GLPI,$LANG;
 
       $this->showTabs($options);
       $this->addDivForTabs();

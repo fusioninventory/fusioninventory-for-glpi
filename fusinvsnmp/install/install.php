@@ -41,7 +41,7 @@
  */
 
 function pluginFusinvsnmpInstall($version, $migrationname='Migration') {
-   global $DB,$LANG;
+   global $DB;
 
    ini_set("max_execution_time", "0");
 

@@ -331,7 +331,6 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
 
    
    static function auth_dropdown($selected="") {
-      global $DB;
 
       $PluginFusinvsnmpConfigSecurity = new PluginFusinvsnmpConfigSecurity();
       $config = new PluginFusioninventoryConfig();

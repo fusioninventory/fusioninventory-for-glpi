@@ -48,7 +48,6 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
 
    static function getTypeName() {
-      global $LANG;
 
       return "SNMP";
    }
@@ -71,7 +70,7 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
 
 
    function showForm($id, $options=array()) {
-      global $DB,$CFG_GLPI,$LANG;
+      global $LANG;
 
       $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
       $PluginFusioninventoryUnknownDevice->getFromDB($id);

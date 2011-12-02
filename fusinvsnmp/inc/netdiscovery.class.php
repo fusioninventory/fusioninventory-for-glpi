@@ -50,7 +50,6 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
 
    // Get all devices and put in taskjobstatus each task for each device for each agent
    function prepareRun($taskjobs_id) {
-      global $DB;
 
       $PluginFusioninventoryTask = new PluginFusioninventoryTask();
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
@@ -308,7 +307,6 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
     *
     */
    function run($a_Taskjobstatus) {
-      global $DB;
 
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
       $PluginFusinvsnmpAgentconfig = new  PluginFusinvsnmpAgentconfig;

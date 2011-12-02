@@ -61,7 +61,6 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
 
 
    static function getTypeName() {
-      global $LANG;
 
    }
 
@@ -146,7 +145,6 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
     *@return nothing
     **/
    function updateDB() {
-      global $DB;
 
       parent::updateDB();
       // update last_fusioninventory_update even if no other update
@@ -273,6 +271,8 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
     *@return nothing
     **/
    function savePorts() {
+      global $CFG_GLPI;
+      
       $CFG_GLPI["deleted_tables"][]="glpi_networkports"; // TODO : to clean
       
       foreach ($this->ports as $index=>$ptp) {
@@ -309,6 +309,8 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
     *@return nothing
     **/
    function saveCartridges() {
+      global $CFG_GLPI;
+      
       $CFG_GLPI["deleted_tables"][]="glpi_plugin_fusinvsnmp_printercartridges"; // TODO : to clean
 
       foreach ($this->cartridges as $index=>$ptc) {
@@ -401,7 +403,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
 
 
    function showForm($id, $options=array()) {
-      global $DB,$CFG_GLPI,$LANG;
+      global $DB,$LANG;
 
       PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printer","r");
 
@@ -415,8 +417,8 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
          $ID_tn = $this->oFusionInventory_printer->add($input);
          $this->oFusionInventory_printer->getFromDB($ID_tn);
       } else {
-         foreach ($data as $ID_tn=>$datas) {
-            $this->oFusionInventory_printer->fields = $data[$ID_tn];
+         foreach ($data as $datas) {
+            $this->oFusionInventory_printer->fields = $datas;
          }
       }
       

@@ -58,7 +58,6 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
    private $glpi_type=NETWORKING_TYPE; // NETWORKING_TYPE, PRINTER_TYPE...
 
    function __construct($p_type=NULL, $p_logFile='') {
-      global $CFG_GLPI;
 
       $logFile = '';
       if ($p_logFile != '') {

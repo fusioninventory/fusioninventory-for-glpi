@@ -43,7 +43,6 @@
 class PluginFusinvsnmpDiscovery extends CommonDBTM {
 
    static function criteria($p_criteria, $type=0) {
-      global $DB;
 
       $ptc = new PluginFusioninventoryConfig;
 
@@ -198,7 +197,7 @@ class PluginFusinvsnmpDiscovery extends CommonDBTM {
 
    
    static function find_device($a_criteria, $p_type=0) {
-      global $DB,$CFG_GLPI;
+      global $DB;
 
       $ci = new commonitem;
 
