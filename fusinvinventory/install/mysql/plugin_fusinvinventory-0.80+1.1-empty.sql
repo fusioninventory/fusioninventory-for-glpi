@@ -28,7 +28,7 @@ CREATE TABLE `glpi_plugin_fusinvinventory_libserialization` (
 
 DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_blacklists`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_blacklists` (
+CREATE TABLE `glpi_plugin_fusinvinventory_blacklists` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `plugin_fusioninventory_criterium_id` int(11) NOT NULL DEFAULT '0',
   `value` varchar(255) DEFAULT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_blacklists` (
 
 DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_antivirus`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_antivirus` (
+CREATE TABLE `glpi_plugin_fusinvinventory_antivirus` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `computers_id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(255) DEFAULT NULL,
@@ -55,9 +55,10 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_antivirus` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
+
 DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_computers`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_computers` (
+CREATE TABLE `glpi_plugin_fusinvinventory_computers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `computers_id` int(11) NOT NULL DEFAULT '0',
   `bios_date` datetime DEFAULT NULL,
