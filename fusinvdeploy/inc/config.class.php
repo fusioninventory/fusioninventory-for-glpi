@@ -59,6 +59,10 @@ class PluginFusinvdeployConfig extends CommonDBTM {
 
       $insert = array('glpi_path'=>$glpi_path);
       $PluginFusioninventoryConfig->initConfig($plugins_id, $insert);
+      
+      $a_infos = plugin_version_fusinvdeploy();
+      $PluginFusioninventoryConfig->initConfig($plugins_id, array('version' => $a_infos['version']));
+      
    }
 
    function putForm($p_post) {

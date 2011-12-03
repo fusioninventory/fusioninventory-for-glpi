@@ -46,11 +46,11 @@ function pluginFusinvdeployInstall($version, $migration='') {
    // Get informations of plugin
    $a_plugin = plugin_version_fusinvdeploy();
 
-   include (GLPI_ROOT . "/plugins/fusinvdeploy/install/update.php");
+   include_once (GLPI_ROOT . "/plugins/fusinvdeploy/install/update.php");
    $version_detected = pluginfusinvdeployGetCurrentVersion($a_plugin['version']);
    if ((isset($version_detected)) && ($version_detected != $a_plugin['version'])) {
       // Update
-      pluginFusinvdeployUpdate();
+      pluginFusinvdeployUpdate($version_detected);
    } else {
       // Installation
       if ($migration == '') {
