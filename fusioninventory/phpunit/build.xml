@@ -4,24 +4,28 @@
  
     <target name="ci"
         description="Tache principale d'integration continue"
-        depends="phpcs,phpmd,phpunit"
+        depends="clean,phpcs,phpmd,phpunit"
     />
+
+    <target name="clean" description="Vide les repertoires logs">
+	<delete dir=""${project.basedir}/../../../../build/logs/*"/>
+    </target>
+
  
-<target name="phpcs">
-    <phpcodesniffer standard="FusionInventory">
-        <fileset dir="${project.basedir}/../..">
-            <include name="**/*.php"/>
-        </fileset>
-        <formatter type="checkstyle" outfile="${project.basedir}/../../../../build/logs/checkstyle.xml"/>
-    </phpcodesniffer>
-</target>
+    <target name="phpcs">
+        <phpcodesniffer standard="FusionInventory">
+            <fileset dir="${project.basedir}/../..">
+                <include name="**/*.php"/>
+            </fileset>
+            <formatter type="checkstyle" outfile="${project.basedir}/../../../../build/logs/checkstyle.xml"/>
+        </phpcodesniffer>
+    </target>
 
-<target name="phpmd">
-    <exec command="phpmd ${project.basedir}/../../ xml codesize,unusedcode,naming --reportfile ${project.basedir}/../../../..//build/logs/phpmd.xml" />
-</target>
+    <target name="phpmd">
+        <exec command="phpmd ${project.basedir}/../../ xml codesize,unusedcode,naming --reportfile ${project.basedir}/../../../../build/logs/phpmd.xml" />
+    </target>
 
-
-     <target name="phpunit" description="Run PHPUnit tests">
+    <target name="phpunit" description="Run PHPUnit tests">
 	<exec command="phpunit --log-junit '${project.basedir}/../../../../build/logs/phpunit.xml' 
         --coverage-clover '${project.basedir}/../../../../build/logs/phpunit.coverage.xml' 
         --coverage-html '${project.basedir}/../../../../build/logs/coverage' 
