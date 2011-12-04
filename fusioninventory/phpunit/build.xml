@@ -12,6 +12,7 @@
         <delete file="${project.basedir}/../../../../build/logs/checkstyle.xml"/>
         <delete file="${project.basedir}/../../../../build/logs/phpunit.xml"/>
         <delete file="${project.basedir}/../../../../build/logs/phpunit.coverage.xml"/>
+        <delete file="${project.basedir}/../../../../build/logs/phpmd.xml"/>
     </target>
 
  
