@@ -4,7 +4,7 @@
  
     <target name="ci"
         description="Tache principale d'integration continue"
-        depends="phpunit"
+        depends="phpcs,phpmd,phpunit"
     />
  
 <target name="phpcs">
