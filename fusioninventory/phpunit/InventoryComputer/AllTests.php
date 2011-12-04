@@ -89,7 +89,7 @@ class InventoryComputer extends PHPUnit_Framework_TestCase {
 //      if (file_exists(GLPI_ROOT."/files/_plugins/fusioninventory/machines")) {
 //         $exist = 1;
 //      }
-//      $this->assertEquals($exist, 0 , 'Problem on inventory, machines & criterias folder must not create because inventory not allowed on this agent');
+//      $this->assertEquals($exist, 0, 'Problem on inventory, machines & criterias folder must not create because inventory not allowed on this agent');
 //   }
 
 
@@ -116,7 +116,7 @@ class InventoryComputer extends PHPUnit_Framework_TestCase {
             while(false !== ($xmlFilename = readdir($myVersion))) {
                if ($xmlFilename != '.' && $xmlFilename != '..') {
                   // We have the XML of each computer inventory
-                  $xml = simplexml_load_file("InventoryComputer/xml/".$Entry."/".$xmlFilename,'SimpleXMLElement', LIBXML_NOCDATA);
+                  $xml = simplexml_load_file("InventoryComputer/xml/".$Entry."/".$xmlFilename, 'SimpleXMLElement', LIBXML_NOCDATA);
                   if ($xml->asXML()) {
 echo "************************\n";
 echo "Memory : ".memory_get_usage()." / ".memory_get_peak_usage()."\n";
@@ -124,7 +124,7 @@ echo "Memory : ".memory_get_usage()." / ".memory_get_peak_usage()."\n";
                      if (!empty($xml->DEVICEID)) {
                         $deviceid_ok = 1;
                      }
-                     $this->assertEquals($deviceid_ok, 1 , 'Problem on XML, DEVICEID of file InventoryComputer/xml/'.$Entry.'/'.$xmlFilename.' not good!');
+                     $this->assertEquals($deviceid_ok, 1, 'Problem on XML, DEVICEID of file InventoryComputer/xml/'.$Entry.'/'.$xmlFilename.' not good!');
 
                      $inputProlog = '<?xml version="1.0" encoding="UTF-8"?>
 <REQUEST>
@@ -178,7 +178,7 @@ echo "# testHardwareModifications\n";
 //      if (file_exists(GLPI_ROOT."/files/_plugins/fusioninventory/machines")) {
 //         $exist = 1;
 //      }
-//      $this->assertEquals($exist, 1 , 'Problem on inventory, machines & criterias folder not create successfully!');
+//      $this->assertEquals($exist, 1, 'Problem on inventory, machines & criterias folder not create successfully!');
 //   }
 
 
@@ -194,9 +194,9 @@ echo "# testHardwareModifications\n";
       $prologXML = $emulatorAgent->sendProlog($inputXML);
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
       $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".$deviceID."'");
-      $this->assertEquals(count($a_agent), 1 , 'Problem on prolog, agent ('.$deviceID.') not right created!');
+      $this->assertEquals(count($a_agent), 1, 'Problem on prolog, agent ('.$deviceID.') not right created!');
 
-      $this->assertEquals(preg_match("/<RESPONSE>SEND<\/RESPONSE>/",$prologXML), 1, 'Prolog not send to agent!');
+      $this->assertEquals(preg_match("/<RESPONSE>SEND<\/RESPONSE>/", $prologXML), 1, 'Prolog not send to agent!');
    }
 
    function testSendinventory($xmlFile='', $xml='') {
@@ -237,7 +237,7 @@ echo "# testHardwareModifications\n";
          $a_computers = $PluginFusioninventoryUnknownDevice->find("`name`='".$xml->CONTENT->HARDWARE->NAME."'");
          $unknown = 1;
       }
-      $this->assertEquals(count($a_computers), 1 , 'Problem on creation computer, not created ('.$xmlFile.')');
+      $this->assertEquals(count($a_computers), 1, 'Problem on creation computer, not created ('.$xmlFile.')');
       foreach($a_computers as $items_id => $data) {
          return array($items_id, $unknown);
       }
@@ -258,7 +258,7 @@ echo "# testHardwareModifications\n";
       $Computer = new Computer();
       $Printer  = new Printer();
 
-      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = simplexml_load_file($xmlFile, 'SimpleXMLElement', LIBXML_NOCDATA);
 
       if (!isset($xml->CONTENT->PRINTERS)) {
          return;
@@ -268,7 +268,7 @@ echo "# testHardwareModifications\n";
          if (isset($child->SERIAL)) {
             $child->SERIAL = preg_replace('/\/$/', '', (string)$child->SERIAL);
             $a_printer = $Printer->find("`serial`='".$child->SERIAL."'");
-            $this->assertEquals(count($a_printer), 1 , 'Problem on printers, printer created "'.count($a_printer).'" instead 1 times (serial : '.$child->SERIAL.')');
+            $this->assertEquals(count($a_printer), 1, 'Problem on printers, printer created "'.count($a_printer).'" instead 1 times (serial : '.$child->SERIAL.')');
          }         
       }
       // Verify all printers are connected to the computer
@@ -293,7 +293,7 @@ echo "# testHardwareModifications\n";
          if (count($a_printerDiff) < count(array_diff_key($a_printerXML, $a_printerDB))) {
             $a_printerDiff = array_diff_key($a_printerXML, $a_printerDB);
          }
-         $this->assertEquals(count($a_printerDiff), 0 , 'Difference of printers "'.print_r($a_printerDiff, true).'" ['.$xmlFile.']');
+         $this->assertEquals(count($a_printerDiff), 0, 'Difference of printers "'.print_r($a_printerDiff, true).'" ['.$xmlFile.']');
 
 
          // Verify fields in GLPI
@@ -302,12 +302,12 @@ echo "# testHardwareModifications\n";
                $a_printer = $Printer->find("`serial`='".$child->SERIAL."' ");
                foreach ($a_printer as $printer_id => $datas) {
                   if (isset($child->NAME)) {
-                     $this->assertEquals(trim($child->NAME), $datas['name'] , 'Difference of printers fields ['.$xmlFile.']');
+                     $this->assertEquals(trim($child->NAME), $datas['name'], 'Difference of printers fields ['.$xmlFile.']');
                   } else if (isset($child->DRIVER)) {
-                     $this->assertEquals($child->DRIVER, $datas['name'] , 'Difference of printers fields ['.$xmlFile.']');
+                     $this->assertEquals($child->DRIVER, $datas['name'], 'Difference of printers fields ['.$xmlFile.']');
                   }
                   if (strstr($child->PORT, "USB")) {
-                     $this->assertEquals("1", $datas['have_usb'] , 'Difference of printers fields ['.$xmlFile.']');
+                     $this->assertEquals("1", $datas['have_usb'], 'Difference of printers fields ['.$xmlFile.']');
                   }
                   // Find in USBDEVICES to find manufacturer
                   foreach($xml->CONTENT->USBDEVICES as $childusb) {
@@ -316,7 +316,7 @@ echo "# testHardwareModifications\n";
                            $info = file_get_contents(GLPI_ROOT."/files/_plugins/fusioninventory/DataFilter/usbids/".strtolower($childusb->VENDORID)."/".strtolower($childusb->PRODUCTID)."info");
                            $array = explode("\n", $info);
                            $manufacturer_id = Dropdown::importExternal('Manufacturer', $array[0]);
-                           $this->assertEquals($manufacturer_id, $datas['manufacturers_id'] , 'Difference of printers fields ['.$xmlFile.']');
+                           $this->assertEquals($manufacturer_id, $datas['manufacturers_id'], 'Difference of printers fields ['.$xmlFile.']');
                         }
                      }
                   }
@@ -337,9 +337,9 @@ echo "# testHardwareModifications\n";
                      }
                   }
                }
-               $this->assertEquals(count($printer_select['id']), "1" , 'Problem to find printer for fields verification ['.$xmlFile.']');
+               $this->assertEquals(count($printer_select['id']), "1", 'Problem to find printer for fields verification ['.$xmlFile.']');
                if (strstr($child->PORT, "USB")) {
-                  $this->assertEquals("1", $printer_select['have_usb'] , 'Difference of printers fields ['.$xmlFile.']');
+                  $this->assertEquals("1", $printer_select['have_usb'], 'Difference of printers fields ['.$xmlFile.']');
                }
             }
 
@@ -361,7 +361,7 @@ echo "# testHardwareModifications\n";
       $Computer = new Computer();
       $Monitor  = new Monitor();
 
-      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = simplexml_load_file($xmlFile, 'SimpleXMLElement', LIBXML_NOCDATA);
 
       if (!isset($xml->CONTENT->MONITORS)) {
          return;
@@ -371,7 +371,7 @@ echo "# testHardwareModifications\n";
       foreach ($xml->CONTENT->MONITORS as $child) {
          if (isset($child->SERIAL)) {
             $a_monitor = $Monitor->find("`serial`='".$child->SERIAL."'");
-            $this->assertEquals(count($a_monitor), 1 , 'Problem on monitors, monitor created "'.count($a_monitor).'" instead 1 times');
+            $this->assertEquals(count($a_monitor), 1, 'Problem on monitors, monitor created "'.count($a_monitor).'" instead 1 times');
          }
       }
 
@@ -397,7 +397,7 @@ echo "# testHardwareModifications\n";
          if (count($a_monitorDiff) < count(array_diff_key($a_monitorXML, $a_monitorDB))) {
             $a_monitorDiff = array_diff_key($a_monitorXML, $a_monitorDB);
          }
-         $this->assertEquals(count($a_monitorDiff), 0 , 'Difference of monitors "'.print_r($a_monitorDiff, true).'"');
+         $this->assertEquals(count($a_monitorDiff), 0, 'Difference of monitors "'.print_r($a_monitorDiff, true).'"');
 
    }
 
@@ -413,7 +413,7 @@ echo "# testHardwareModifications\n";
          return;
       }
 
-      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = simplexml_load_file($xmlFile, 'SimpleXMLElement', LIBXML_NOCDATA);
 
       if (!isset($xml->CONTENT->CPUS)) {
          return;
@@ -436,7 +436,7 @@ echo "# testHardwareModifications\n";
          WHERE `computers_id`='".$items_id."' ";
       $result=$DB->query($query);
 
-      $this->assertEquals($DB->numrows($result), count($a_cpuXML) , 'Difference of CPUs, created '.$DB->numrows($result).' times instead '.count($a_cpuXML).' ['.$xmlFile.']');
+      $this->assertEquals($DB->numrows($result), count($a_cpuXML), 'Difference of CPUs, created '.$DB->numrows($result).' times instead '.count($a_cpuXML).' ['.$xmlFile.']');
    }
 
 
@@ -452,7 +452,7 @@ echo "# testHardwareModifications\n";
          return;
       }
 
-      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = simplexml_load_file($xmlFile, 'SimpleXMLElement', LIBXML_NOCDATA);
 
       if (!isset($xml->CONTENT->DRIVE)) {
          return;
@@ -472,7 +472,7 @@ echo "# testHardwareModifications\n";
          WHERE `computers_id`='".$items_id."' ";
       $result=$DB->query($query);
 
-      $this->assertEquals($DB->numrows($result), count($a_driveXML) , 'Difference of Drives, created '.$DB->numrows($result).' times instead '.count($a_driveXML).' ['.$xmlFile.']');
+      $this->assertEquals($DB->numrows($result), count($a_driveXML), 'Difference of Drives, created '.$DB->numrows($result).' times instead '.count($a_driveXML).' ['.$xmlFile.']');
    }
 
 
@@ -487,7 +487,7 @@ echo "# testHardwareModifications\n";
          return;
       }
 
-      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = simplexml_load_file($xmlFile, 'SimpleXMLElement', LIBXML_NOCDATA);
 
       if (!isset($xml->CONTENT->CONTROLLERS)) {
          return;
@@ -516,7 +516,7 @@ echo "# testHardwareModifications\n";
          WHERE `computers_id`='".$items_id."' ";
       $result=$DB->query($query);
 
-      $this->assertEquals($DB->numrows($result), count($a_controllerXML) , 'Difference of Controllers, created '.$DB->numrows($result).' times instead '.count($a_controllerXML).' ['.$xmlFile.']');
+      $this->assertEquals($DB->numrows($result), count($a_controllerXML), 'Difference of Controllers, created '.$DB->numrows($result).' times instead '.count($a_controllerXML).' ['.$xmlFile.']');
    }
 
 
@@ -531,7 +531,7 @@ echo "# testHardwareModifications\n";
          return;
       }
 
-      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = simplexml_load_file($xmlFile, 'SimpleXMLElement', LIBXML_NOCDATA);
 
       if (!isset($xml->CONTENT->SOUNDS)) {
          return;
@@ -551,7 +551,7 @@ echo "# testHardwareModifications\n";
          WHERE `computers_id`='".$items_id."' ";
       $result=$DB->query($query);
 
-      $this->assertEquals($DB->numrows($result), count($a_soundXML) , 'Difference of Sounds, created '.$DB->numrows($result).' times instead '.count($a_soundXML).' ['.$xmlFile.']');
+      $this->assertEquals($DB->numrows($result), count($a_soundXML), 'Difference of Sounds, created '.$DB->numrows($result).' times instead '.count($a_soundXML).' ['.$xmlFile.']');
    }
 
 
@@ -566,7 +566,7 @@ echo "# testHardwareModifications\n";
          return;
       }
 
-      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = simplexml_load_file($xmlFile, 'SimpleXMLElement', LIBXML_NOCDATA);
 
       if (!isset($xml->CONTENT->VIDEOS)) {
          return;
@@ -586,7 +586,7 @@ echo "# testHardwareModifications\n";
          WHERE `computers_id`='".$items_id."' ";
       $result=$DB->query($query);
 
-      $this->assertEquals($DB->numrows($result), count($a_videoXML) , 'Difference of Videos, created '.$DB->numrows($result).' times instead '.count($a_videoXML).' ['.$xmlFile.']');
+      $this->assertEquals($DB->numrows($result), count($a_videoXML), 'Difference of Videos, created '.$DB->numrows($result).' times instead '.count($a_videoXML).' ['.$xmlFile.']');
    }
 
 
@@ -601,7 +601,7 @@ echo "# testHardwareModifications\n";
          return;
       }
 
-      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = simplexml_load_file($xmlFile, 'SimpleXMLElement', LIBXML_NOCDATA);
 
       if (!isset($xml->CONTENT->MEMORIES)) {
          return;
@@ -624,7 +624,7 @@ echo "# testHardwareModifications\n";
          WHERE `computers_id`='".$items_id."' ";
       $result=$DB->query($query);
 
-      $this->assertEquals($DB->numrows($result), count($a_memoryXML) , 'Difference of Memories, created '.$DB->numrows($result).' times instead '.count($a_memoryXML).' ['.$xmlFile.']');
+      $this->assertEquals($DB->numrows($result), count($a_memoryXML), 'Difference of Memories, created '.$DB->numrows($result).' times instead '.count($a_memoryXML).' ['.$xmlFile.']');
    }
 
 
@@ -668,11 +668,11 @@ echo "# testHardwareModifications\n";
       }
       $result=$DB->query($query);
 
-      $this->assertEquals($DB->numrows($result), count($a_networkXML) , 'Difference of Networks, created '.$DB->numrows($result).' times instead '.count($a_networkXML).' ['.$xmlFile.'], '.$query);
+      $this->assertEquals($DB->numrows($result), count($a_networkXML), 'Difference of Networks, created '.$DB->numrows($result).' times instead '.count($a_networkXML).' ['.$xmlFile.'], '.$query);
 
       foreach ($xml->CONTENT->NETWORKS as $child) {
          $regs = array();
-         preg_match("/([0-9a-fA-F]{1,2}([:-]|$)){6}$/",(string)$child->MACADDR,$regs);
+         preg_match("/([0-9a-fA-F]{1,2}([:-]|$)){6}$/", (string)$child->MACADDR, $regs);
          if (empty($regs)) {
             unset($child->MACADDR);
          }
@@ -687,7 +687,7 @@ echo "# testHardwareModifications\n";
                   AND `mac`='".(string)$child->MACADDR."'";
                $result=$DB->query($query);
                $data = $DB->fetch_array($result);
-               $this->assertEquals($data['mac'], (string)$child->MACADDR , 'Network port macaddress not right inserted, have '.$data['mac'].' instead '.(string)$child->MACADDR.' ['.$xmlFile.']');
+               $this->assertEquals($data['mac'], (string)$child->MACADDR, 'Network port macaddress not right inserted, have '.$data['mac'].' instead '.(string)$child->MACADDR.' ['.$xmlFile.']');
             }
          }
       }
@@ -707,7 +707,7 @@ echo "# testHardwareModifications\n";
          return;
       }
 
-      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = simplexml_load_file($xmlFile, 'SimpleXMLElement', LIBXML_NOCDATA);
 
       if (!isset($xml->CONTENT->SOFTWARES)) {
          return;
@@ -767,7 +767,7 @@ echo "# testHardwareModifications\n";
                   LIMIT 1";
          $result=$DB->query($query);
 
-         $this->assertEquals($DB->numrows($result), 1 , 'Software not find in GLPI '.$DB->numrows($result).' times instead 1 ('.addslashes_deep($child->NAME).') ['.$xmlFile.']');
+         $this->assertEquals($DB->numrows($result), 1, 'Software not find in GLPI '.$DB->numrows($result).' times instead 1 ('.addslashes_deep($child->NAME).') ['.$xmlFile.']');
 
       }
 
@@ -787,7 +787,7 @@ echo "# testHardwareModifications\n";
          return;
       }
 
-      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = simplexml_load_file($xmlFile, 'SimpleXMLElement', LIBXML_NOCDATA);
       if ($xml->CONTENT->BIOS->SSN == '30003000000000000000000000300000000000000000000000000000000000000000000000000000000000') {
          unset($xml->CONTENT->BIOS->SSN);
       } else if ($xml->CONTENT->BIOS->SSN == 'To Be Filled By O.E.M.') {
@@ -805,7 +805,7 @@ echo "# testHardwareModifications\n";
             $a_found = $pfBlacklist->find("`value`='".(string)$child->SMANUFACTURER."'
                AND `plugin_fusioninventory_criterium_id`='10'");
             if (count($a_found) == '0') { 
-               $this->assertEquals($Computer->fields['manufacturers_id'], Dropdown::importExternal('Manufacturer', (string)$child->SMANUFACTURER) , 'Difference of Hardware manufacturer, have '.$Computer->fields['manufacturers_id'].' instead '.Dropdown::importExternal('Manufacturer', (string)$child->SMANUFACTURER).' ['.$xmlFile.']');
+               $this->assertEquals($Computer->fields['manufacturers_id'], Dropdown::importExternal('Manufacturer', (string)$child->SMANUFACTURER), 'Difference of Hardware manufacturer, have '.$Computer->fields['manufacturers_id'].' instead '.Dropdown::importExternal('Manufacturer', (string)$child->SMANUFACTURER).' ['.$xmlFile.']');
                $addm = 1;
             }
          } 
@@ -815,7 +815,7 @@ echo "# testHardwareModifications\n";
             $a_found = $pfBlacklist->find("`value`='".(string)$child->MMANUFACTURER."'
                AND `plugin_fusioninventory_criterium_id`='10'");
             if (count($a_found) == '0') { 
-               $this->assertEquals($Computer->fields['manufacturers_id'], Dropdown::importExternal('Manufacturer', (string)$child->MMANUFACTURER) , 'Difference of Hardware manufacturer, have '.$Computer->fields['manufacturers_id'].' instead '.Dropdown::importExternal('Manufacturer', (string)$child->MMANUFACTURER).' ['.$xmlFile.']');
+               $this->assertEquals($Computer->fields['manufacturers_id'], Dropdown::importExternal('Manufacturer', (string)$child->MMANUFACTURER), 'Difference of Hardware manufacturer, have '.$Computer->fields['manufacturers_id'].' instead '.Dropdown::importExternal('Manufacturer', (string)$child->MMANUFACTURER).' ['.$xmlFile.']');
                $addm = 1;
             }
          }
@@ -826,55 +826,55 @@ echo "# testHardwareModifications\n";
             $a_found = $pfBlacklist->find("`value`='".(string)$child->BMANUFACTURER."'
                AND `plugin_fusioninventory_criterium_id`='10'");
             if (count($a_found) == '0') { 
-               $this->assertEquals($Computer->fields['manufacturers_id'], Dropdown::importExternal('Manufacturer', (string)$child->BMANUFACTURER) , 'Difference of Hardware manufacturer, have '.$Computer->fields['manufacturers_id'].' instead '.Dropdown::importExternal('Manufacturer', (string)$child->BMANUFACTURER).' ['.$xmlFile.']');
+               $this->assertEquals($Computer->fields['manufacturers_id'], Dropdown::importExternal('Manufacturer', (string)$child->BMANUFACTURER), 'Difference of Hardware manufacturer, have '.$Computer->fields['manufacturers_id'].' instead '.Dropdown::importExternal('Manufacturer', (string)$child->BMANUFACTURER).' ['.$xmlFile.']');
                $addm = 1;
             }
          }
          if (isset($child->SMODEL)
                  AND (string)$child->SMODEL!='') {
             $ComputerModel = new ComputerModel;
-            $this->assertEquals($Computer->fields['computermodels_id'], $ComputerModel->importExternal((string)$child->SMODEL) , 'Difference of Hardware model, have '.$Computer->fields['computermodels_id'].' instead '.$ComputerModel->importExternal((string)$child->SMODEL).' ['.$xmlFile.']');
+            $this->assertEquals($Computer->fields['computermodels_id'], $ComputerModel->importExternal((string)$child->SMODEL), 'Difference of Hardware model, have '.$Computer->fields['computermodels_id'].' instead '.$ComputerModel->importExternal((string)$child->SMODEL).' ['.$xmlFile.']');
          } else if (isset($child->MMODEL)
                  AND (string)$child->MMODEL!='') {
             $ComputerModel = new ComputerModel;
-            $this->assertEquals($Computer->fields['computermodels_id'], $ComputerModel->importExternal((string)$child->MMODEL) , 'Difference of Hardware model, have '.$Computer->fields['computermodels_id'].' instead '.$ComputerModel->importExternal((string)$child->MMODEL).' ['.$xmlFile.']');
+            $this->assertEquals($Computer->fields['computermodels_id'], $ComputerModel->importExternal((string)$child->MMODEL), 'Difference of Hardware model, have '.$Computer->fields['computermodels_id'].' instead '.$ComputerModel->importExternal((string)$child->MMODEL).' ['.$xmlFile.']');
          }
          if (isset($child->SSN)) {
             if (!empty($child->SSN)) {
-               $this->assertEquals($Computer->fields['serial'], trim($child->SSN) , 'Difference of Hardware serial number, have '.$Computer->fields['serial'].' instead '.$child->SSN.' ['.$xmlFile.']');
+               $this->assertEquals($Computer->fields['serial'], trim($child->SSN), 'Difference of Hardware serial number, have '.$Computer->fields['serial'].' instead '.$child->SSN.' ['.$xmlFile.']');
             }
          }
       }
 
       foreach ($xml->CONTENT->HARDWARE as $child) {
          if (isset($child->NAME)) {
-            $this->assertEquals($Computer->fields['name'], (string)$child->NAME , 'Difference of Hardware name, have '.$Computer->fields['name'].' instead '.(string)$child->NAME.' ['.$xmlFile.']');
+            $this->assertEquals($Computer->fields['name'], (string)$child->NAME, 'Difference of Hardware name, have '.$Computer->fields['name'].' instead '.(string)$child->NAME.' ['.$xmlFile.']');
          }
          if (isset($child->OSNAME)) {
             $OperatingSystem = new OperatingSystem;
             if (!strstr((string)$child->OSNAME, "Debian GNU/Linux squeeze/sid ")
                     AND !strstr((string)$child->OSNAME, "Debian GNU/Linux 5.0 ")) {
-               $this->assertEquals($Computer->fields['operatingsystems_id'], $OperatingSystem->importExternal((string)$child->OSNAME) , 'Difference of Hardware operatingsystems, have '.$Computer->fields['operatingsystems_id'].' instead '.$OperatingSystem->importExternal((string)$child->OSNAME).' ['.$xmlFile.']');
+               $this->assertEquals($Computer->fields['operatingsystems_id'], $OperatingSystem->importExternal((string)$child->OSNAME), 'Difference of Hardware operatingsystems, have '.$Computer->fields['operatingsystems_id'].' instead '.$OperatingSystem->importExternal((string)$child->OSNAME).' ['.$xmlFile.']');
             }
          }
          if (isset($child->OSVERSION)) {
             $OperatingSystemVersion = new OperatingSystemVersion;
-            $this->assertEquals($Computer->fields['operatingsystemversions_id'], $OperatingSystemVersion->importExternal((string)$child->OSVERSION) , 'Difference of Hardware operatingsystemversions, have '.$Computer->fields['operatingsystemversions_id'].' instead '.$OperatingSystemVersion->importExternal((string)$child->OSVERSION).' ['.$xmlFile.']');
+            $this->assertEquals($Computer->fields['operatingsystemversions_id'], $OperatingSystemVersion->importExternal((string)$child->OSVERSION), 'Difference of Hardware operatingsystemversions, have '.$Computer->fields['operatingsystemversions_id'].' instead '.$OperatingSystemVersion->importExternal((string)$child->OSVERSION).' ['.$xmlFile.']');
          }
          if (isset($child->WINPRODID)) {
-            $this->assertEquals($Computer->fields['os_licenseid'], (string)$child->WINPRODID , 'Difference of Hardware os_licenseid, have '.$Computer->fields['os_licenseid'].' instead '.(string)$child->WINPRODID.' ['.$xmlFile.']');
+            $this->assertEquals($Computer->fields['os_licenseid'], (string)$child->WINPRODID, 'Difference of Hardware os_licenseid, have '.$Computer->fields['os_licenseid'].' instead '.(string)$child->WINPRODID.' ['.$xmlFile.']');
          }
          if (isset($child->WINPRODKEY)) {
-            $this->assertEquals($Computer->fields['os_license_number'], (string)$child->WINPRODKEY , 'Difference of Hardware os_license_number, have '.$Computer->fields['os_license_number'].' instead '.(string)$child->WINPRODKEY.' ['.$xmlFile.']');
+            $this->assertEquals($Computer->fields['os_license_number'], (string)$child->WINPRODKEY, 'Difference of Hardware os_license_number, have '.$Computer->fields['os_license_number'].' instead '.(string)$child->WINPRODKEY.' ['.$xmlFile.']');
          }
          if (isset($child->WORKGROUP)) {
             $Domain = new Domain;
-            $this->assertEquals($Computer->fields['domains_id'], $Domain->import(array('name'=>(string)$child->WORKGROUP)) , 'Difference of Hardware domain, have '.$Computer->fields['domains_id'].' instead '.$Domain->import(array('name'=>(string)$child->WORKGROUP)).' ['.$xmlFile.']');
+            $this->assertEquals($Computer->fields['domains_id'], $Domain->import(array('name'=>(string)$child->WORKGROUP)), 'Difference of Hardware domain, have '.$Computer->fields['domains_id'].' instead '.$Domain->import(array('name'=>(string)$child->WORKGROUP)).' ['.$xmlFile.']');
          }
          if (isset($child->OSCOMMENTS)) {
             if (strstr($child->OSCOMMENTS, 'Service Pack')) {
                $OperatingSystemServicePack = new OperatingSystemServicePack;
-               $this->assertEquals($Computer->fields['operatingsystemservicepacks_id'], $OperatingSystemServicePack->importExternal((string)$child->OSCOMMENTS) , 'Difference of Hardware operatingsystemservicepacks_id, have '.$Computer->fields['operatingsystemservicepacks_id'].' instead '.$OperatingSystemServicePack->importExternal((string)$child->OSCOMMENTS).' ['.$xmlFile.']');
+               $this->assertEquals($Computer->fields['operatingsystemservicepacks_id'], $OperatingSystemServicePack->importExternal((string)$child->OSCOMMENTS), 'Difference of Hardware operatingsystemservicepacks_id, have '.$Computer->fields['operatingsystemservicepacks_id'].' instead '.$OperatingSystemServicePack->importExternal((string)$child->OSCOMMENTS).' ['.$xmlFile.']');
 
                $Computer->fields['operatingsystemservicepacks_id'] = $OperatingSystemServicePack->importExternal((string)$child->OSCOMMENTS);
             }
@@ -893,12 +893,12 @@ echo "# testHardwareModifications\n";
          return;
       }
 
-      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = simplexml_load_file($xmlFile, 'SimpleXMLElement', LIBXML_NOCDATA);
 
       // Modification of networks ports
       foreach ($xml->CONTENT->NETWORKS as $child) {
-         $ip = rand(0,254).".".rand(0,254).".".rand(0,254).".";
-         $child->IPADDRESS = $ip.rand(0,254);
+         $ip = rand(0, 254).".".rand(0, 254).".".rand(0, 254).".";
+         $child->IPADDRESS = $ip.rand(0, 254);
          $child->IPSUBNET = $ip."0";
       }
       $this->testNetwork($xml, $items_id, "0", $xmlFile);
@@ -1326,7 +1326,7 @@ $XML['Computer'] = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
       
       $log = new Log();
       $countlog_start = countElementsInTable(getTableForItemType("Log"));
-      $xml = simplexml_load_string($XML['Computer'],'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = simplexml_load_string($XML['Computer'], 'SimpleXMLElement', LIBXML_NOCDATA);
       $this->testSendinventory("Nothing", $xml);
       $countlog_end = countElementsInTable(getTableForItemType("Log"));
       $a_logs = $log->find("", "id DESC", ($countlog_end - $countlog_start -1));
@@ -1348,14 +1348,14 @@ $XML['Computer'] = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
          }
       }
       
-      $this->assertEquals(($countlog_end - $countlog_start - 1), 0 , 'Problem on log, must be 0 : \n'.print_r($a_logs, true));
+      $this->assertEquals(($countlog_end - $countlog_start - 1), 0, 'Problem on log, must be 0 : \n'.print_r($a_logs, true));
    }
    
    
    function testHistoryWhenOSChange() {
       global $DB;
 return;
-      $xml = simplexml_load_file("InventoryComputer/xml/2.1.6/David-PC-2010-08-09-20-52-54-imprimante.xml",'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = simplexml_load_file("InventoryComputer/xml/2.1.6/David-PC-2010-08-09-20-52-54-imprimante.xml", 'SimpleXMLElement', LIBXML_NOCDATA);
       $xml->CONTENT->HARDWARE->UUID = "68405E00-E5BE-11DF-801C-B05981201220HHTT";
       $xml->CONTENT->HARDWARE->NAME = "port004HHT";
       $xml->CONTENT->BIOS->SSN = "XA201220HHHHRT";
@@ -1388,7 +1388,7 @@ return;
             $countlog_end--;
          }
       }
-      $this->assertEquals(($countlog_end - $countlog_start), 0 , 'Problem on log, must be 0 on OS change : \n'.print_r($a_logs, true));
+      $this->assertEquals(($countlog_end - $countlog_start), 0, 'Problem on log, must be 0 on OS change : \n'.print_r($a_logs, true));
    }
    
    
