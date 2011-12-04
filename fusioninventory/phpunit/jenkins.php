@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-error_log(implode(" ", $_SERVER['argv']), 3, "/root/.jenkins/jobs/Plugin FusionInventory 0.80+1.1/workspace/build/logs/glpi.log");
+error_log(print_r(($_SERVER, true), 3, "/root/.jenkins/jobs/Plugin FusionInventory 0.80+1.1/workspace/build/logs/glpi.log");
 system("cd ".realpath(dirname(__FILE__))." && ".implode(" ", $_SERVER['argv']));
 
 ?>
