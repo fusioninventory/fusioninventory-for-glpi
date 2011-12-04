@@ -358,16 +358,24 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_begin'])) {
          $begin=$_SESSION['glpi_plugin_fusioninventory_graph_begin'];
       }
-      if ( $begin == 'NULL' OR $begin == '' ) $begin=date("Y-m-01"); // first day of current month
+      if ( $begin == 'NULL' OR $begin == '' ) { 
+         $begin=date("Y-m-01"); // first day of current month
+      }
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_end'])) {
          $end=$_SESSION['glpi_plugin_fusioninventory_graph_end'];
       }
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_type'])) {
          $graphType = $_SESSION['glpi_plugin_fusioninventory_graph_type'];
       }
-      if ( $end == 'NULL' OR $end == '' ) $end=date("Y-m-d"); // today
-      if (isset($_SESSION['glpi_plugin_fusioninventory_graph_timeUnit'])) $timeUnit=$_SESSION['glpi_plugin_fusioninventory_graph_timeUnit'];
-      if (!isset($_SESSION['glpi_plugin_fusioninventory_graph_printersComp'])) $_SESSION['glpi_plugin_fusioninventory_graph_printersComp']=array();
+      if ( $end == 'NULL' OR $end == '' ) {
+         $end=date("Y-m-d"); // today
+      }
+      if (isset($_SESSION['glpi_plugin_fusioninventory_graph_timeUnit'])) {
+         $timeUnit=$_SESSION['glpi_plugin_fusioninventory_graph_timeUnit'];
+      }
+      if (!isset($_SESSION['glpi_plugin_fusioninventory_graph_printersComp'])) { 
+         $_SESSION['glpi_plugin_fusioninventory_graph_printersComp']=array();
+      }
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_printerCompAdd'])) {
          $printerCompAdd=$_SESSION['glpi_plugin_fusioninventory_graph_printerCompAdd'];
          if (!key_exists($printerCompAdd, $_SESSION['glpi_plugin_fusioninventory_graph_printersComp'])) {
@@ -392,7 +400,9 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 
       $printersList = '';
       foreach ($printers as $printers_id=>$printername) {
-         if ($printersList != '') $printersList .= '<br/>';
+         if ($printersList != '') {
+            $printersList .= '<br/>';
+         }
          if ($printers_id == $id) {
             $printersList .= $printername;
          } else {
@@ -402,7 +412,9 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       }
       $printersIds = "";
       foreach (array_keys($printers) as $printerId) {
-         if ($printersIds != '') $printersIds.=', ';
+         if ($printersIds != '') {
+            $printersIds.=', ';
+         }
          $printersIds .= $printerId;
       }
 

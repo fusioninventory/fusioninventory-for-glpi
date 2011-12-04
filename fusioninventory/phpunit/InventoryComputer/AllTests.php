@@ -847,9 +847,9 @@ echo "# testHardwareModifications\n";
       }
 
       foreach ($xml->CONTENT->HARDWARE as $child) {
-         if (isset($child->NAME))
+         if (isset($child->NAME)) {
             $this->assertEquals($Computer->fields['name'], (string)$child->NAME , 'Difference of Hardware name, have '.$Computer->fields['name'].' instead '.(string)$child->NAME.' ['.$xmlFile.']');
-
+         }
          if (isset($child->OSNAME)) {
             $OperatingSystem = new OperatingSystem;
             if (!strstr((string)$child->OSNAME, "Debian GNU/Linux squeeze/sid ")

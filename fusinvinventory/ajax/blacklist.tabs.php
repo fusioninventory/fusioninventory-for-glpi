@@ -49,9 +49,15 @@ if(!isset($_POST["id"])) {
    exit();
 }
 
-if(!isset($_POST["sort"])) $_POST["sort"] = "";
-if(!isset($_POST["order"])) $_POST["order"] = "";
-if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
+if (!isset($_POST["sort"])) {
+   $_POST["sort"] = "";
+}
+if (!isset($_POST["order"])) {
+   $_POST["order"] = "";
+}
+if (!isset($_POST["withtemplate"])) {
+   $_POST["withtemplate"] = "";
+}
 
 $PluginFusinvinventoryBlacklist = new PluginFusinvinventoryBlacklist();
 $PluginFusinvinventoryCriteria = new PluginFusinvinventoryCriteria();
