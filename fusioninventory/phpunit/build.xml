@@ -19,13 +19,14 @@
         <phpcodesniffer standard="FusionInventory">
             <fileset dir="${project.basedir}/../..">
                 <include name="**/*.php"/>
+		<exclude name="webservice/**"/>
             </fileset>
             <formatter type="checkstyle" outfile="${project.basedir}/../../../../build/logs/checkstyle.xml"/>
         </phpcodesniffer>
     </target>
 
     <target name="phpmd">
-        <exec command="phpmd ${project.basedir}/../../ xml codesize,unusedcode,naming --reportfile ${project.basedir}/../../../../build/logs/phpmd.xml" />
+        <exec command="phpmd '${project.basedir}/../../' xml codesize,unusedcode,naming --reportfile '${project.basedir}/../../../../build/logs/phpmd.xml' --exclude '${project.basedir}../../webservices'" />
     </target>
 
     <target name="phpunit" description="Run PHPUnit tests">
