@@ -8,7 +8,7 @@
     />
 
     <target name="clean" description="Vide les repertoires logs">
-	<delete dir=""${project.basedir}/../../../../build/logs/*"/>
+	<delete dir="${project.basedir}/../../../../build/logs/*"/>
     </target>
 
  
