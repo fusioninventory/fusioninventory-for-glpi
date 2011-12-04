@@ -8,7 +8,10 @@
     />
 
     <target name="clean" description="Vide les repertoires logs">
-	<delete dir="${project.basedir}/../../../../build/logs/*"/>
+        <delete dir="${project.basedir}/../../../../build/logs/coverage"/>
+        <delete file="${project.basedir}/../../../../build/logs/checkstyle.xml"/>
+        <delete file="${project.basedir}/../../../../build/logs/phpunit.xml"/>
+        <delete file="${project.basedir}/../../../../build/logs/phpunit.coverage.xml"/>
     </target>
 
  
