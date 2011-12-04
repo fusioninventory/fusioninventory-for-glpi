@@ -42,7 +42,8 @@
 
 
 if (!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', '../../..');
+   
+   define('GLPI_ROOT', realpath(dirname(__FILE__)).'../../..');
    
    include_once (GLPI_ROOT . "/inc/timer.class.php");
 
@@ -126,8 +127,6 @@ require_once 'FusinvInstall/AllTests.php';
 require_once 'InventoryComputer/AllTests.php';
 
 require_once 'emulatoragent.php';
-
-logInFile("path", realpath(dirname(__FILE__)));
 
 class AllTests {
    public static function suite() {
