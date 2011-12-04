@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="TestJenkins" default="ci" basedir=".">
+    <property name="source" value="src" />
+ 
+    <target name="ci"
+        description="Tache principale d'integration continue"
+        depends="phpunit"
+    />
+ 
+<target name="phpcs">
+    <phpcodesniffer standard="FusionInventory">
+        <fileset dir="${project.basedir}/../..">
+            <include name="**/*.php"/>
+        </fileset>
+        <formatter type="checkstyle" outfile="${project.basedir}/../../../../build/logs/checkstyle.xml"/>
+    </phpcodesniffer>
+</target>
+
+<target name="phpmd">
+    <exec command="phpmd ${project.basedir}/../../ xml codesize,unusedcode,naming --reportfile ${project.basedir}/../../../..//build/logs/phpmd.xml" />
+</target>
+
+
+     <target name="phpunit" description="Run PHPUnit tests">
+	<exec command="phpunit --log-junit '${project.basedir}/../../../../build/logs/phpunit.xml' 
+        --coverage-clover '${project.basedir}/../../../../build/logs/phpunit.coverage.xml' 
+        --coverage-html '${project.basedir}/../../../../build/logs/coverage' 
+        AllTests.php" />
+    </target>
+
+
+</project>
