@@ -127,6 +127,8 @@ require_once 'InventoryComputer/AllTests.php';
 
 require_once 'emulatoragent.php';
 
+logInFile("path", realpath(dirname(__FILE__)));
+
 class AllTests {
    public static function suite() {
       $suite = new PHPUnit_Framework_TestSuite('FusionInventory');
