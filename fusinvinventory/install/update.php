@@ -143,9 +143,13 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
       $input['modulename'] = "ESX";
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());
-      $input['url'] = PluginFusioninventoryRestCommunication::getDefaultRestURL($_SERVER['HTTP_REFERER'], 
-                                                                                 'fusinvinventory', 
-                                                                                 'esx');
+      $url= '';
+      if (isset($_SERVER['HTTP_REFERER'])) {
+         $url = $_SERVER['HTTP_REFERER'];
+      }
+      $input['url'] = PluginFusioninventoryRestCommunication::getDefaultRestURL($url, 
+                                                                                'fusinvinventory', 
+                                                                                'esx');
       $agentmodule->add($input);
    }
 
