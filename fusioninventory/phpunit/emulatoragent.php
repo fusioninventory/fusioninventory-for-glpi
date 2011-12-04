@@ -23,7 +23,7 @@ class emulatorAgent {
          $this->client = socket_accept($this->socket);
 
          //Cette méthode lit les données reçues par un client et les redistribue
-         $reception = socket_read($this->client , 255);
+         $reception = socket_read($this->client, 255);
 
          if (strstr($reception, "GET /now")) {
             call_user_func($function_prolog);

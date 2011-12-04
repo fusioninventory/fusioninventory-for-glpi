@@ -89,7 +89,7 @@ class PluginFusinvsnmpNetworkPortConnectionLog extends CommonDBTM {
       }
       $query = "SELECT * FROM `".$this->getTable()."`
          ".$condition."
-         ORDER BY `date`DESC , `plugin_fusioninventory_agentprocesses_id` DESC";
+         ORDER BY `date`DESC, `plugin_fusioninventory_agentprocesses_id` DESC";
       if (!isset($input['process_number'])) {
          $query .= " LIMIT 0,500";
       }

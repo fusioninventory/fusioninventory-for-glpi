@@ -253,8 +253,8 @@ class PluginFusinvinventoryLib extends CommonDBTM {
    public function addLibMachine($internalId, $externalId) {
 
       $queryInsert = "INSERT INTO `glpi_plugin_fusinvinventory_libserialization` 
-                      ( `internal_id` , `computers_id`)
-                      VALUES ('" . $internalId . "' , '".$externalId."')";
+                      ( `internal_id`, `computers_id`)
+                      VALUES ('" . $internalId . "', '".$externalId."')";
       mysql_query($queryInsert);
   }
 

@@ -260,14 +260,14 @@ CREATE TABLE `glpi_plugin_fusioninventory_ipranges` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_credentials`;
 
 CREATE TABLE  `glpi_plugin_fusioninventory_credentials` (
-`id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+`id` INT( 11 ) NOT NULL AUTO_INCREMENT,
 `entities_id` int(11) NOT NULL DEFAULT '0',
 `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
 `name` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
 `username` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
 `password` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
-`comment` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ,
-`date_mod` DATETIME NOT NULL ,
+`comment` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+`date_mod` DATETIME NOT NULL,
 `itemtype` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
 PRIMARY KEY (  `id` )
 ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;
@@ -275,13 +275,13 @@ PRIMARY KEY (  `id` )
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_credentialips`;
 
 CREATE TABLE  `glpi_plugin_fusioninventory_credentialips` (
-`id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+`id` INT( 11 ) NOT NULL AUTO_INCREMENT,
 `entities_id` int(11) NOT NULL DEFAULT '0',
 `plugin_fusioninventory_credentials_id` INT( 11 ) NOT NULL DEFAULT  '0',
 `name` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
-`comment` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ,
+`comment` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
 `ip` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT  '',
-`date_mod` DATETIME NOT NULL ,
+`date_mod` DATETIME NOT NULL,
 PRIMARY KEY (  `id` )
 ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 

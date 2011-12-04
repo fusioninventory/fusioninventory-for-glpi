@@ -250,7 +250,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
       $file_id = $this->add($data);
 
 
-      $fdIn = fopen ( $file_tmp_name , 'rb' );
+      $fdIn = fopen ( $file_tmp_name, 'rb' );
       if (!$fdIn) {
          return;
       }
