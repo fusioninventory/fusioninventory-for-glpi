@@ -47,7 +47,7 @@ class InventoryComputer extends PHPUnit_Framework_TestCase {
        global $DB,$LANG,$CFG_GLPI;
        loadLanguage();
 
-       $CFG_GLPI['root_doc'] = "http://127.0.0.1/glpi080/";
+       $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.80/";
          //deleteDir(GLPI_ROOT."/files/_plugins/fusioninventory/criterias");
          //deleteDir(GLPI_ROOT."/files/_plugins/fusioninventory/machines");
          system("rm -fr ".GLPI_ROOT."/files/_plugins/fusioninventory/criterias");
@@ -190,7 +190,7 @@ echo "# testHardwareModifications\n";
          return;
       }
       $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi080/plugins/fusioninventory/";
+      $emulatorAgent->server_urlpath = "/fusion0.80/plugins/fusioninventory/";
       $prologXML = $emulatorAgent->sendProlog($inputXML);
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
       $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".$deviceID."'");
@@ -207,7 +207,7 @@ echo "# testHardwareModifications\n";
       }
 
       $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi080/plugins/fusioninventory/";
+      $emulatorAgent->server_urlpath = "/fusion0.80/plugins/fusioninventory/";
       echo "====================\n";
       echo $xmlFile."\n";
       $input_xml = $xml->asXML();
