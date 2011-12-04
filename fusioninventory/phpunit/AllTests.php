@@ -43,7 +43,7 @@
 
 if (!defined('GLPI_ROOT')) {
    
-   define('GLPI_ROOT', realpath(dirname(__FILE__)).'../../..');
+   define('GLPI_ROOT', realpath(dirname(__FILE__)).'/../../..');
    
    include_once (GLPI_ROOT . "/inc/timer.class.php");
 
