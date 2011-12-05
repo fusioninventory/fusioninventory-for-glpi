@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusinvinventoryAntivirus extends CommonDBTM {
+class PluginFusinvinventoryInventoryComputerAntivirus extends CommonDBTM {
    
    static function getTypeName() {
       global $LANG;
@@ -120,7 +120,7 @@ class PluginFusinvinventoryAntivirus extends CommonDBTM {
          Log::history($item->fields['computers_id'], 
                      "Computer", 
                      $changes, 
-                     'PluginFusinvinventoryAntivirus', 
+                     'PluginFusinvinventoryInventoryComputerAntivirus', 
                      Log::HISTORY_LOG_SIMPLE_MESSAGE);         
       }
    }
@@ -221,7 +221,7 @@ class PluginFusinvinventoryAntivirus extends CommonDBTM {
    *
    **/
    static function cleanComputer($items_id) {
-      $PluginFusinvinventoryAntivirus = new PluginFusinvinventoryAntivirus();
+      $PluginFusinvinventoryAntivirus = new PluginFusinvinventoryInventoryComputerAntivirus();
       $a_antivirus = $PluginFusinvinventoryAntivirus->find("`computers_id`='".$items_id."'");
       if (count($a_antivirus) > 0) {
          $input = current($a_antivirus);

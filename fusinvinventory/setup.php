@@ -66,7 +66,7 @@ function plugin_init_fusinvinventory() {
    }
 
    // ##### 2. register class #####
-   Plugin::registerClass('PluginFusinvinventoryAntivirus',
+   Plugin::registerClass('PluginFusinvinventoryInventoryComputerAntivirus',
               array('addtabon' => array('Computer')));
    Plugin::registerClass('PluginFusinvinventoryComputer',
               array('addtabon' => array('Computer')));
@@ -125,7 +125,7 @@ function plugin_init_fusinvinventory() {
       $PLUGIN_HOOKS['pre_item_purge']['fusinvinventory'] = array('Computer' =>'plugin_pre_item_purge_fusinvinventory',
                                                                  'PluginFusioninventoryLock' => array('PluginFusinvinventoryLock', 'deleteLock'));
       $PLUGIN_HOOKS['pre_item_update']['fusinvinventory'] = array('PluginFusioninventoryLock' => array('PluginFusinvinventoryLock', 'deleteLock'));
-      $PLUGIN_HOOKS['item_update']['fusinvinventory'] = array('PluginFusinvinventoryAntivirus' => array('PluginFusinvinventoryAntivirus', 'addhistory'));
+      $PLUGIN_HOOKS['item_update']['fusinvinventory'] = array('PluginFusinvinventoryInventoryComputerAntivirus' => array('PluginFusinvinventoryInventoryComputerAntivirus', 'addhistory'));
       
    }
 
