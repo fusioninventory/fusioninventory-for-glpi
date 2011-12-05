@@ -58,7 +58,7 @@ class PluginFusinvinventoryLock {
    static function deleteLock($item) {
       global $DB;
 
-      $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
+      $PluginFusinvinventoryLib = new PluginFusioninventoryInventoryComputerLib();
 
       // Get mapping
       $a_mapping = PluginFusioninventoryInventoryComputerLibhook::getMapping();

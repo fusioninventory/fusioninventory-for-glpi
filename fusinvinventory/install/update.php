@@ -381,10 +381,10 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
       }      
       $pfComputer = new PluginFusinvinventoryComputer();
       $migration->displayMessage("Convert computer inventory, may require some minutes");
-      if (!class_exists('PluginFusinvinventoryLib')) { // if plugin is unactive
+      if (!class_exists('PluginFusioninventoryInventoryComputerLib')) { // if plugin is unactive
          include(GLPI_ROOT . "/plugins/fusinvinventory/inc/lib.class.php");
       }
-      $pfLib = new PluginFusinvinventoryLib();
+      $pfLib = new PluginFusioninventoryInventoryComputerLib();
       $query = "SELECT * FROM `glpi_plugin_fusinvinventory_libserialization`";
       if ($result=$DB->query($query)) {
          while ($data=$DB->fetch_array($result)) {

@@ -110,7 +110,7 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
    function showForm($computers_id = 0) {
       global $DB,$LANG,$CFG_GLPI;
 
-      $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
+      $PluginFusinvinventoryLib = new PluginFusioninventoryInventoryComputerLib();
       $Computer = new Computer();
 
       $start = 0;
@@ -779,7 +779,7 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
    function Import($import) {
       global $DB;
 
-      $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
+      $PluginFusinvinventoryLib = new PluginFusioninventoryInventoryComputerLib();
 
       $split = explode("/", $import);
       $computers_id = $split[0];

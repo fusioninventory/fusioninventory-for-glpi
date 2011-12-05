@@ -52,7 +52,7 @@ function plugin_fusinvinventory_getAddSearchOptions($itemtype) {
          $sopt[5150]['name']      = $LANG['plugin_fusioninventory']['title'][1]." - ".
             $LANG['plugin_fusinvinventory']['computer'][0];
          $sopt[5150]['datatype']  = 'datetime';
-         $sopt[5150]['itemlink_type'] = 'PluginFusinvinventoryLib';
+         $sopt[5150]['itemlink_type'] = 'PluginFusioninventoryInventoryComputerLib';
 
          $sopt[5151]['table']     = 'glpi_plugin_fusinvinventory_antivirus';
          $sopt[5151]['field']     = 'name';
@@ -177,7 +177,7 @@ function plugin_pre_item_purge_fusinvinventory($item) {
    switch (get_class($item)) {
 
       case 'Computer' :
-         $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
+         $PluginFusinvinventoryLib = new PluginFusioninventoryInventoryComputerLib();
          $PluginFusinvinventoryLib->removeExternalid($item->getField('id'));
          // Remove antivirus if set
          PluginFusioninventoryInventoryComputerAntivirus::cleanComputer($item->getField('id'));

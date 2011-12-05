@@ -249,7 +249,7 @@ class PluginFusioninventoryInventoryComputerInventory {
       $xml = $_SESSION['SOURCEXML'];
       
       if ($itemtype == 'Computer') {
-         $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
+         $PluginFusinvinventoryLib = new PluginFusioninventoryInventoryComputerLib();
          $Computer = new Computer();
 
          // ** Get entity with rules
@@ -697,7 +697,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          }
       }
       
-      $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
+      $PluginFusinvinventoryLib = new PluginFusioninventoryInventoryComputerLib();
       $PluginFusinvinventoryLib->addLibMachineFromGLPI($items_id, $internal_id, $xml, $a_sectionsinfos);
    }
 }

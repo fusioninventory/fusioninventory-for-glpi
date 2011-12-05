@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusinvinventoryLib extends CommonDBTM {
+class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
    var $table = "glpi_plugin_fusinvinventory_libserialization";
 
