@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_usbvendors`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_usbvendors`;
 
-CREATE TABLE `glpi_plugin_fusinvinventory_usbvendors` (
+CREATE TABLE `glpi_plugin_fusioninventory_usbvendors` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `vendorid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -9,20 +9,20 @@ CREATE TABLE `glpi_plugin_fusinvinventory_usbvendors` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_usbdevices`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_usbdevices`;
 
-CREATE TABLE `glpi_plugin_fusinvinventory_usbdevices` (
+CREATE TABLE `glpi_plugin_fusioninventory_usbdevices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `deviceid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `plugin_fusinvinventory_usbvendor_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_usbvendor_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `deviceid` (`deviceid`),
-  KEY `plugin_fusinvinventory_usbvendor_id` (`plugin_fusinvinventory_usbvendor_id`)
+  KEY `plugin_fusioninventory_usbvendor_id` (`plugin_fusioninventory_usbvendor_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-INSERT INTO `glpi_plugin_fusinvinventory_usbvendors`
+INSERT INTO `glpi_plugin_fusioninventory_usbvendors`
       (`id`, `vendorid`, `name`) VALUES 
 (1, '0001', 'Fry\'s Electronics'),
 (2, '0002', 'Ingram'),
@@ -3073,8 +3073,8 @@ INSERT INTO `glpi_plugin_fusinvinventory_usbvendors`
 (3047, 'VT', '0403  Component Video');
 
 
-INSERT INTO `glpi_plugin_fusinvinventory_usbdevices`
-      (`id`, `deviceid`, `name`, `plugin_fusinvinventory_usbvendor_id`) VALUES 
+INSERT INTO `glpi_plugin_fusioninventory_usbdevices`
+      (`id`, `deviceid`, `name`, `plugin_fusioninventory_usbvendor_id`) VALUES 
 (1, '142b', 'Arbiter Systems, Inc.', '1'),
 (2, '5301', 'GW-US54ZGL 802.11bg', '5'),
 (3, '0006', 'Generic USB Joystick', '6'),
