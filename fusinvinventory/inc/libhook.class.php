@@ -520,7 +520,7 @@ class PluginFusinvinventoryLibhook {
                break;
 
             case 'PRINTERS':
-               $PluginFusinvinventoryImport_Printer =  new PluginFusinvinventoryImport_Printer();
+               $PluginFusinvinventoryImport_Printer =  new PluginFusioninventoryInventoryComputerImport_Printer();
                $id_printer = $PluginFusinvinventoryImport_Printer->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_printer)) {
                   $id_printer = $j;
@@ -673,7 +673,7 @@ class PluginFusinvinventoryLibhook {
                      break;
 
                   case 'PRINTERS':
-                     $PluginFusinvinventoryImport_Printer =  new PluginFusinvinventoryImport_Printer();
+                     $PluginFusinvinventoryImport_Printer =  new PluginFusioninventoryInventoryComputerImport_Printer();
                      $PluginFusinvinventoryImport_Printer->deleteItem($items_id, $idmachine);
                      break;
 
