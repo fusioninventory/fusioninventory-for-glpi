@@ -378,7 +378,7 @@ class PluginFusinvinventoryLibhook {
          switch ($section['sectionName']) {
 
             case 'CPUS':
-               $PluginFusinvinventoryImport_Processor = new PluginFusinvinventoryImport_Processor();
+               $PluginFusinvinventoryImport_Processor = new PluginFusioninventoryInventoryComputerImport_Processor();
                $id_processor = $PluginFusinvinventoryImport_Processor->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_processor)) {
                   $id_processor = $j;
@@ -628,7 +628,7 @@ class PluginFusinvinventoryLibhook {
                switch ($sectionName) {
 
                   case 'CPUS':
-                     $PluginFusinvinventoryImport_Processor = new PluginFusinvinventoryImport_Processor();
+                     $PluginFusinvinventoryImport_Processor = new PluginFusioninventoryInventoryComputerImport_Processor();
                      $PluginFusinvinventoryImport_Processor->deleteItem($items_id, $idmachine);
                      break;
 
@@ -765,7 +765,7 @@ class PluginFusinvinventoryLibhook {
             switch ($sectionName) {
 
                case 'CPUS':
-                  $PluginFusinvinventoryImport_Processor = new PluginFusinvinventoryImport_Processor();
+                  $PluginFusinvinventoryImport_Processor = new PluginFusioninventoryInventoryComputerImport_Processor();
                   $PluginFusinvinventoryImport_Processor->AddUpdateItem("update", $items_id, $dataSection);
                   break;
                
