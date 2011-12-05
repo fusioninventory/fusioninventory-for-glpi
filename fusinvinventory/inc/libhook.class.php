@@ -400,7 +400,7 @@ class PluginFusinvinventoryLibhook {
             case 'CONTROLLERS':
                $id_controller = '';
                if ((isset($dataSection["NAME"])) AND (!isset($ignore_controllers[$dataSection["NAME"]]))) {
-                  $PluginFusinvinventoryImport_Controller = new PluginFusinvinventoryImport_Controller();
+                  $PluginFusinvinventoryImport_Controller = new PluginFusioninventoryInventoryComputerImport_Controller();
                   $id_controller = $PluginFusinvinventoryImport_Controller->AddUpdateItem("add", $idmachine, $dataSection);
                }
                if (empty($id_controller)) {
@@ -638,7 +638,7 @@ class PluginFusinvinventoryLibhook {
                      break;
 
                   case 'CONTROLLERS':
-                     $PluginFusinvinventoryImport_Controller = new PluginFusinvinventoryImport_Controller();
+                     $PluginFusinvinventoryImport_Controller = new PluginFusioninventoryInventoryComputerImport_Controller();
                      $PluginFusinvinventoryImport_Controller->deleteItem($items_id, $idmachine);
                      break;
 
@@ -776,7 +776,7 @@ class PluginFusinvinventoryLibhook {
 
                case 'CONTROLLERS':
                   $id_controller = '';
-                  $PluginFusinvinventoryImport_Controller = new PluginFusinvinventoryImport_Controller();
+                  $PluginFusinvinventoryImport_Controller = new PluginFusioninventoryInventoryComputerImport_Controller();
                   $id_controller = $PluginFusinvinventoryImport_Controller->AddUpdateItem("update", $items_id, $dataSection);
                   break;
 
