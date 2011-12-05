@@ -48,7 +48,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 PluginFusioninventoryProfile::checkRight("fusinvinventory", "importxml","w");
 
-$PluginFusinvinventoryLibintegrity = new PluginFusinvinventoryLibintegrity();
+$PluginFusinvinventoryLibintegrity = new PluginFusioninventoryInventoryComputerLibintegrity();
 if (!empty($_POST)) {
    if (isset($_POST['reimport'])) {
       foreach($_POST['reimport'] as $infos=>$num) {

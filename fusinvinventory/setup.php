@@ -71,7 +71,7 @@ function plugin_init_fusinvinventory() {
    Plugin::registerClass('PluginFusinvinventoryComputer',
               array('addtabon' => array('Computer')));
    Plugin::registerClass('PluginFusioninventoryInventoryComputerInventory');
-   Plugin::registerClass('PluginFusinvinventoryLibintegrity',
+   Plugin::registerClass('PluginFusioninventoryInventoryComputerLibintegrity',
               array('addtabon' => array('Computer')));
    
       //Classes for rulesengine

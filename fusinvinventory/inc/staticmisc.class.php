@@ -108,7 +108,7 @@ class PluginFusinvinventoryStaticmisc {
       if (PluginFusioninventoryProfile::haveRight("fusinvinventory", "importxml","w")) {
          $a_menu[4]['name'] = $LANG['plugin_fusinvinventory']['menu'][4];
          $a_menu[4]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusinvinventory/pics/menu_checkintegrity.png";
-         $a_menu[4]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvinventory/front/libintegrity.php";
+         $a_menu[4]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/inventorycomputerlibintegrity.php";
       }
       return $a_menu;
    }

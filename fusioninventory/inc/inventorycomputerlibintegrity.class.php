@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusinvinventoryLibintegrity extends CommonDBTM {
+class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
 
    var $table = "glpi_plugin_fusinvinventory_libserialization";
 
@@ -119,9 +119,9 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       }
       $where = "";
       if ($computers_id == '0') {
-         $_SESSION["glpisearchcount"]["PluginFusinvinventoryLibintegrity"] = 1;
-         Search::manageGetValues("PluginFusinvinventoryLibintegrity");
-         Search::showGenericSearch("PluginFusinvinventoryLibintegrity", $_GET);
+         $_SESSION["glpisearchcount"]["PluginFusioninventoryInventoryComputerLibintegrity"] = 1;
+         Search::manageGetValues("PluginFusioninventoryInventoryComputerLibintegrity");
+         Search::showGenericSearch("PluginFusioninventoryInventoryComputerLibintegrity", $_GET);
 
          if ($_GET['contains'][0] != '') {
             if (isset($_GET['searchtype'][0]) AND $_GET['searchtype'][0] == 'contains') {
@@ -145,9 +145,9 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       
       // Display the pager
       if ($computers_id == '0') {
-         Html::printPager($start,$number,$CFG_GLPI['root_doc']."/plugins/fusinvinventory/front/libintegrity.php",'');
+         Html::printPager($start,$number,$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/inventorycomputerlibintegrity.php",'');
       }
-      echo "<form method='post' name='integritylist' id='integritylist'  action=\"".$CFG_GLPI['root_doc'] . "/plugins/fusinvinventory/front/libintegrity.php\">";
+      echo "<form method='post' name='integritylist' id='integritylist'  action=\"".$CFG_GLPI['root_doc'] . "/plugins/fusioninventory/front/inventorycomputerlibintegrity.php\">";
       echo "<table class='tab_cadre' width='950'>";
       
       echo "<tr>";
@@ -738,7 +738,7 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       echo "</form>";
 
       if ($computers_id == '0') {
-         Html::printPager($start,$number,$CFG_GLPI['root_doc']."/plugins/fusinvinventory/front/libintegrity.php",'');
+         Html::printPager($start,$number,$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/inventorycomputerlibintegrity.php",'');
       }
    }
 
