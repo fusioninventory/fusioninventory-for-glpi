@@ -570,7 +570,7 @@ class PluginFusinvinventoryLibhook {
                break;
 
             case 'USERS':
-               $PluginFusinvinventoryImport_User = new PluginFusinvinventoryImport_User();
+               $PluginFusinvinventoryImport_User = new PluginFusioninventoryInventoryComputerImport_User();
                $id_user = $PluginFusinvinventoryImport_User->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_user)) {
                   $id_user = $j;
@@ -698,7 +698,7 @@ class PluginFusinvinventoryLibhook {
                      break;
 
                   case 'USERS':
-                     $PluginFusinvinventoryImport_User = new PluginFusinvinventoryImport_User();
+                     $PluginFusinvinventoryImport_User = new PluginFusioninventoryInventoryComputerImport_User();
                      $PluginFusinvinventoryImport_User->deleteItem($items_id, $idmachine);
                      break;
 
