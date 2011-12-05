@@ -441,7 +441,7 @@ class PluginFusinvinventoryLibhook {
                break;
 
             case 'NETWORKS':
-               $PluginFusinvinventoryImport_Networkport = new PluginFusinvinventoryImport_Networkport();
+               $PluginFusinvinventoryImport_Networkport = new PluginFusioninventoryInventoryComputerImport_Networkport();
                $id_network = $PluginFusinvinventoryImport_Networkport->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_network)) {
                   $id_network = $j;
@@ -658,7 +658,7 @@ class PluginFusinvinventoryLibhook {
                      break;
 
                   case 'NETWORKS':
-                     $PluginFusinvinventoryImport_Networkport = new PluginFusinvinventoryImport_Networkport();
+                     $PluginFusinvinventoryImport_Networkport = new PluginFusioninventoryInventoryComputerImport_Networkport();
                      $PluginFusinvinventoryImport_Networkport->deleteItem($items_id, $idmachine);
                      break;
 
@@ -796,7 +796,7 @@ class PluginFusinvinventoryLibhook {
                   break;
 
                case 'NETWORKS' :
-                  $PluginFusinvinventoryImport_Networkport = new PluginFusinvinventoryImport_Networkport();
+                  $PluginFusinvinventoryImport_Networkport = new PluginFusioninventoryInventoryComputerImport_Networkport();
                   $PluginFusinvinventoryImport_Networkport->AddUpdateItem("update", $items_id, $dataSection);
                   break;
 
