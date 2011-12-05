@@ -61,8 +61,8 @@ function update231to232() {
    if (!class_exists("PluginFusinvinventoryLib")) {
       include_once(GLPI_ROOT."/plugins/fusinvinventory/inc/lib.class.php");
    }
-   if (!class_exists("PluginFusinvinventoryLibhook")) {
-      include_once(GLPI_ROOT."/plugins/fusinvinventory/inc/libhook.class.php");
+   if (!class_exists("PluginFusioninventoryInventoryComputerLibhook")) {
+      include_once(GLPI_ROOT."/plugins/fusioninventory/inc/inventorycomputerlibhook.class.php");
    }
    if (!class_exists("PluginFusinvinventoryLock")) {
       include_once(GLPI_ROOT."/plugins/fusinvinventory/inc/lock.class.php");

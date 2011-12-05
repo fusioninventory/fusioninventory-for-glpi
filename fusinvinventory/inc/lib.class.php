@@ -134,7 +134,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          $xmlSections = $this->_getXMLSections($xml);
          $this->updateLibMachine($xmlSections, $internalId);
 
-         $PluginFusinvinventoryLibhook = new PluginFusinvinventoryLibhook();
+         $PluginFusinvinventoryLibhook = new PluginFusioninventoryInventoryComputerLibhook();
          $PluginFusinvinventoryLibhook->writeXMLFusion($items_id, $xml->asXML());
       } else {
          // New Computer
@@ -147,7 +147,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          $internalId = uniqid("", true);
 
          try {
-            $PluginFusinvinventoryLibhook = new PluginFusinvinventoryLibhook();
+            $PluginFusinvinventoryLibhook = new PluginFusioninventoryInventoryComputerLibhook();
             $PluginFusinvinventoryLibhook->createMachine($items_id);
             
             // Link computer to agent FusionInventory
@@ -308,7 +308,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       $sectionsToAdd    = array_diff($serializedSectionsFromXML, $infoSections["sections"]);
       $sectionsToRemove = array_diff($infoSections["sections"], $serializedSectionsFromXML);
 
-      $classhook = "PluginFusinvinventoryLibhook";
+      $classhook = "PluginFusioninventoryInventoryComputerLibhook";
 
       //updated section: process
       if($sectionsToRemove && $sectionsToAdd) {

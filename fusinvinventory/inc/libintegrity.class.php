@@ -796,7 +796,7 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       $a_sectionadd = array();
       $a_sectionadd[0]['sectionName'] = $sectionname;
       $a_sectionadd[0]['dataSection'] = $a_sections['sections'][$sectioncomplete];
-      $a_sectionid = PluginFusinvinventoryLibhook::addSections($a_sectionadd, $computers_id);
+      $a_sectionid = PluginFusioninventoryInventoryComputerLibhook::addSections($a_sectionadd, $computers_id);
       $newsectioncomplete = $a_sectionid[0];
 
       $serializedSections = "";

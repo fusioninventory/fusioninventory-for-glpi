@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusinvinventoryLibhook {
+class PluginFusioninventoryInventoryComputerLibhook {
 
 
     function __construct() {
@@ -69,7 +69,7 @@ class PluginFusinvinventoryLibhook {
     **/
     public static function createMachine($items_id) {
 
-      $PluginFusinvinventoryLibhook = new PluginFusinvinventoryLibhook();
+      $PluginFusinvinventoryLibhook = new PluginFusioninventoryInventoryComputerLibhook();
 
       $_SESSION["plugin_fusinvinventory_history_add"] = false;
       $_SESSION["plugin_fusinvinventory_no_history_add"] = true;
@@ -214,7 +214,7 @@ class PluginFusinvinventoryLibhook {
                }
                
                if (isset($dataSection['SKUNUMBER'])) {
-                  $PluginFusinvinventoryLibhook = new PluginFusinvinventoryLibhook();
+                  $PluginFusinvinventoryLibhook = new PluginFusioninventoryInventoryComputerLibhook();
                   $PluginFusinvinventoryLibhook->Suppliertag($idmachine, $dataSection['SKUNUMBER']);
                }
                if (isset($dataSection['BDATE'])) {
@@ -248,7 +248,7 @@ class PluginFusinvinventoryLibhook {
                                                                                   $_SESSION["plugin_fusinvinventory_entity"]);
                   }
                   if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusinvinventory_moduleid"], 'group') == '1') {
-                     $Computer->fields['groups_id'] = PluginFusinvinventoryLibhook::importGroup($dataSection['KEYVALUE'], $_SESSION["plugin_fusinvinventory_entity"]);
+                     $Computer->fields['groups_id'] = PluginFusioninventoryInventoryComputerLibhook::importGroup($dataSection['KEYVALUE'], $_SESSION["plugin_fusinvinventory_entity"]);
                   }
                }
                break;
@@ -863,7 +863,7 @@ class PluginFusinvinventoryLibhook {
                      }
                   }
                   if (isset($dataSection['SKUNUMBER'])) {
-                     $PluginFusinvinventoryLibhook = new PluginFusinvinventoryLibhook();
+                     $PluginFusinvinventoryLibhook = new PluginFusioninventoryInventoryComputerLibhook();
                      $PluginFusinvinventoryLibhook->Suppliertag($idmachine, $dataSection['SKUNUMBER']);
                   }
                   $Computer->update($inputC);
@@ -905,7 +905,7 @@ class PluginFusinvinventoryLibhook {
                         $Computer->update($Computer->fields);
                      }
                      if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusinvinventory_moduleid"], 'group') == 1) {
-                        $Computer->fields['groups_id'] = PluginFusinvinventoryLibhook::importGroup($dataSection['KEYVALUE'], $_SESSION["plugin_fusinvinventory_entity"]);
+                        $Computer->fields['groups_id'] = PluginFusioninventoryInventoryComputerLibhook::importGroup($dataSection['KEYVALUE'], $_SESSION["plugin_fusinvinventory_entity"]);
                         $Computer->update($Computer->fields);
                      }
                   }

@@ -61,7 +61,7 @@ class PluginFusinvinventoryLock {
       $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
 
       // Get mapping
-      $a_mapping = PluginFusinvinventoryLibhook::getMapping();
+      $a_mapping = PluginFusioninventoryInventoryComputerLibhook::getMapping();
       $a_fieldList = array();
       if ($item->fields['tablefields'] == $item->input['tablefields']) {
          $a_fieldList = importArrayFromDB($item->fields['tablefields']);
