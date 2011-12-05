@@ -120,7 +120,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          
       // End hack
       
-      $PluginFusinvinventoryBlacklist = new PluginFusinvinventoryBlacklist();
+      $PluginFusinvinventoryBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
       $p_xml = $PluginFusinvinventoryBlacklist->cleanBlacklist($p_xml);
 
       $_SESSION['SOURCEXML'] = $p_xml;

@@ -76,7 +76,7 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
 
          // Add in blacklit : 30003000000000000000000000300000000000000000000000000000000000000000000000000000000000
-         $PluginFusinvinventoryBlacklist = new PluginFusinvinventoryBlacklist();
+         $PluginFusinvinventoryBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
          $input = array();
          $input['plugin_fusioninventory_criterium_id'] = '1';
          $input['value'] = '30003000000000000000000000300000000000000000000000000000000000000000000000000000000000';
@@ -658,7 +658,7 @@ echo "# testHardwareModifications\n";
          return;
       }
       
-      $pfBlacklist = new PluginFusinvinventoryBlacklist();
+      $pfBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
      
       if (!isset($xml->CONTENT->NETWORKS)) {
          return;
@@ -818,7 +818,7 @@ echo "# testHardwareModifications\n";
 
       $Computer = new Computer();
       $Computer->getFromDB($items_id);
-      $pfBlacklist = new PluginFusinvinventoryBlacklist();
+      $pfBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
       foreach ($xml->CONTENT->BIOS as $child) {
          $addm = 0;
          if ((isset($child->SMANUFACTURER))

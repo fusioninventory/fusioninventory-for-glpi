@@ -135,9 +135,9 @@ function plugin_init_fusinvinventory() {
                   = '../fusioninventory/front/inventoryruleentity.php';
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['fusinvinventory-blacklist']
-                  = '../fusinvinventory/front/blacklist.form.php';
+                  = '../fusioninventory/front/inventorycomputerblacklist.form.php';
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['fusinvinventory-blacklist']
-                  = '../fusinvinventory/front/blacklist.php';
+                  = '../fusioninventory/front/inventorycomputerblacklist.php';
    
 
    $PLUGIN_HOOKS['webservices']['fusinvinventory'] = 'plugin_fusinvinventory_registerMethods';
@@ -145,7 +145,7 @@ function plugin_init_fusinvinventory() {
 
    // Fil ariane
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-blacklist']['title'] = $LANG['plugin_fusinvinventory']['menu'][2];
-   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-blacklist']['page']  = '/plugins/fusinvinventory/front/blacklist.php';
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-blacklist']['page']  = '/plugins/fusioninventory/front/inventorycomputerblacklist.php';
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleinventory']['title'] = $LANG['plugin_fusinvinventory']['menu'][1];
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleinventory']['page']  = '/plugins/fusinvinventory/front/ruleinventory.php';

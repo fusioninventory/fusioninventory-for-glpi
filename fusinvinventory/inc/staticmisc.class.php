@@ -101,8 +101,8 @@ class PluginFusinvinventoryStaticmisc {
 
       if (PluginFusioninventoryProfile::haveRight("fusinvinventory", "blacklist", "r")) {
          $a_menu[3]['name'] = $LANG['plugin_fusinvinventory']['menu'][2];
-         $a_menu[3]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusinvinventory/pics/menu_blacklist.png";
-         $a_menu[3]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvinventory/front/blacklist.php";
+         $a_menu[3]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_blacklist.png";
+         $a_menu[3]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/inventorycomputerblacklist.php";
       }
 
       if (PluginFusioninventoryProfile::haveRight("fusinvinventory", "importxml","w")) {

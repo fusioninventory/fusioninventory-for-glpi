@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusinvinventoryBlacklist extends CommonDBTM {
+class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
 
    static function getTypeName() {
       global $LANG;

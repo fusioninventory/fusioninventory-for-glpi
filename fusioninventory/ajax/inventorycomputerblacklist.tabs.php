@@ -53,7 +53,7 @@ if(!isset($_POST["sort"])) $_POST["sort"] = "";
 if(!isset($_POST["order"])) $_POST["order"] = "";
 if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 
-$PluginFusinvinventoryBlacklist = new PluginFusinvinventoryBlacklist();
+$PluginFusinvinventoryBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
 $PluginFusinvinventoryCriteria = new PluginFusinvinventoryCriteria();
 $fields = $PluginFusinvinventoryCriteria->find("");
 
