@@ -550,7 +550,7 @@ class PluginFusinvinventoryLibhook {
                break;
 
             case 'ANTIVIRUS':
-               $PluginFusinvinventoryImport_Antivirus =  new PluginFusinvinventoryImport_Antivirus();
+               $PluginFusinvinventoryImport_Antivirus =  new PluginFusioninventoryInventoryComputerImport_Antivirus();
                $id_antivirus = $PluginFusinvinventoryImport_Antivirus->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_antivirus)) {
                   $id_antivirus = $j;
@@ -688,7 +688,7 @@ class PluginFusinvinventoryLibhook {
                      break;
 
                   case 'ANTIVIRUS':
-                     $PluginFusinvinventoryImport_Antivirus =  new PluginFusinvinventoryImport_Antivirus();
+                     $PluginFusinvinventoryImport_Antivirus =  new PluginFusioninventoryInventoryComputerImport_Antivirus();
                      $PluginFusinvinventoryImport_Antivirus->deleteItem($items_id, $idmachine);
                      break;
 
@@ -993,7 +993,7 @@ class PluginFusinvinventoryLibhook {
                   break;
 
                case 'ANTIVIRUS':
-                  $PluginFusinvinventoryImport_Antivirus =  new PluginFusinvinventoryImport_Antivirus();
+                  $PluginFusinvinventoryImport_Antivirus =  new PluginFusioninventoryInventoryComputerImport_Antivirus();
                   $PluginFusinvinventoryImport_Antivirus->AddUpdateItem("update", $items_id, $dataSection);
                   break;
 
