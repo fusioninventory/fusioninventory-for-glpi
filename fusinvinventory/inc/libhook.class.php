@@ -507,7 +507,7 @@ class PluginFusinvinventoryLibhook {
                if ((isset($dataSection['SERIAL'])) AND (isset($ignore_USB[$dataSection['SERIAL']]))) {
                   // Ignore
                } else {
-                  $PluginFusinvinventoryImport_Peripheral =  new PluginFusinvinventoryImport_Peripheral();
+                  $PluginFusinvinventoryImport_Peripheral =  new PluginFusioninventoryInventoryComputerImport_Peripheral();
                   $id_peripheral = $PluginFusinvinventoryImport_Peripheral->AddUpdateItem("add", $idmachine, $dataSection);
                }
                
@@ -668,7 +668,7 @@ class PluginFusinvinventoryLibhook {
                      break;
 
                   case 'USBDEVICES':
-                     $PluginFusinvinventoryImport_Peripheral =  new PluginFusinvinventoryImport_Peripheral();
+                     $PluginFusinvinventoryImport_Peripheral =  new PluginFusioninventoryInventoryComputerImport_Peripheral();
                      $PluginFusinvinventoryImport_Peripheral->deleteItem($items_id, $idmachine);
                      break;
 
