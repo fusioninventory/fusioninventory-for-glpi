@@ -530,7 +530,7 @@ class PluginFusinvinventoryLibhook {
                break;
 
             case 'MONITORS':
-               $PluginFusinvinventoryImport_Monitor =  new PluginFusinvinventoryImport_Monitor();
+               $PluginFusinvinventoryImport_Monitor =  new PluginFusioninventoryInventoryComputerImport_Monitor();
                $id_monitor = $PluginFusinvinventoryImport_Monitor->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_monitor)) {
                   $id_monitor = $j;
@@ -678,7 +678,7 @@ class PluginFusinvinventoryLibhook {
                      break;
 
                   case 'MONITORS':
-                     $PluginFusinvinventoryImport_Monitor =  new PluginFusinvinventoryImport_Monitor();
+                     $PluginFusinvinventoryImport_Monitor =  new PluginFusioninventoryInventoryComputerImport_Monitor();
                      $PluginFusinvinventoryImport_Monitor->deleteItem($items_id, $idmachine);
                      break;
 

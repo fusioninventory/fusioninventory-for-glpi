@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusinvinventoryImport_Monitor extends CommonDBTM {
+class PluginFusioninventoryInventoryComputerImport_Monitor extends CommonDBTM {
 
 
    /**
