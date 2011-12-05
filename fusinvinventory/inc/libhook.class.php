@@ -560,7 +560,7 @@ class PluginFusinvinventoryLibhook {
                break;
 
             case 'VIRTUALMACHINES':
-               $PluginFusinvinventoryImport_Virtualmachine = new PluginFusinvinventoryImport_Virtualmachine();
+               $PluginFusinvinventoryImport_Virtualmachine = new PluginFusioninventoryInventoryComputerImport_Virtualmachine();
                $id_vm = $PluginFusinvinventoryImport_Virtualmachine->addUpdateItem("add",$idmachine,$dataSection);
                if (empty($id_storage)) {
                   $id_vm = $j;
@@ -693,7 +693,7 @@ class PluginFusinvinventoryLibhook {
                      break;
 
                   case 'VIRTUALMACHINES':
-                     $virtualmachine =  new PluginFusinvinventoryImport_Virtualmachine();
+                     $virtualmachine =  new PluginFusioninventoryInventoryComputerImport_Virtualmachine();
                      $virtualmachine->deleteItem($items_id, $idmachine);
                      break;
 
@@ -998,7 +998,7 @@ class PluginFusinvinventoryLibhook {
                   break;
 
                case 'VIRTUALMACHINES':
-                  $PluginFusinvinventoryImport_Virtualmachine =  new PluginFusinvinventoryImport_Virtualmachine();
+                  $PluginFusinvinventoryImport_Virtualmachine =  new PluginFusioninventoryInventoryComputerImport_Virtualmachine();
                   $PluginFusinvinventoryImport_Virtualmachine->AddUpdateItem("update", $items_id, $dataSection);
                   break;
 

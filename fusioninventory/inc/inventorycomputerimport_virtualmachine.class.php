@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class 
  **/
-class PluginFusinvinventoryImport_Virtualmachine extends CommonDBTM {
+class PluginFusioninventoryInventoryComputerImport_Virtualmachine extends CommonDBTM {
 
 
    function AddUpdateItem($type, $items_id, $dataSection) {
