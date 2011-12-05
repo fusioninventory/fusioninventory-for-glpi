@@ -196,7 +196,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
    private function _getXMLSections($simpleXMLObj) {
 
       $xmlSections = array();
-      $PluginFusinvinventoryLibfilter = new PluginFusinvinventoryLibfilter();
+      $PluginFusinvinventoryLibfilter = new PluginFusioninventoryInventoryComputerLibfilter();
 
       $sectionsToFilter = array();
       array_push ($sectionsToFilter,
