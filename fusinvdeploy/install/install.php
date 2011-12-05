@@ -95,7 +95,7 @@ function pluginFusinvdeployInstall($version, $migration='') {
       $input['modulename'] = "DEPLOY";
       $input['is_active']  = 1;
       $input['exceptions'] = exportArrayToDB(array());
-      $input['url']        = PluginFusioninventoryRestCommunication:: getDefaultRestURL($_SERVER['HTTP_REFERER'],
+      $input['url']        = PluginFusioninventoryCommunicationRest:: getDefaultRestURL($_SERVER['HTTP_REFERER'],
                                                                                         'fusinvdeploy',
                                                                                         'deploy');
 

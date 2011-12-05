@@ -91,7 +91,7 @@ function pluginFusinvinventoryInstall($version, $migration='') {
 
    $input['modulename'] = "ESX";
    $input['is_active']  = 0;
-   $input['url'] = PluginFusioninventoryRestCommunication::getDefaultRestURL($_SERVER['HTTP_REFERER'], 
+   $input['url'] = PluginFusioninventoryCommunicationRest::getDefaultRestURL($_SERVER['HTTP_REFERER'], 
                                                                               'fusinvinventory', 
                                                                               'esx');
    $PluginFusioninventoryAgentmodule->add($input);
