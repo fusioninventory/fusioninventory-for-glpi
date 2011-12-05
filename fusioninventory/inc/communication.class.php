@@ -292,7 +292,7 @@ class PluginFusioninventoryCommunication {
       $moduleRun = $PluginFusioninventoryTaskjobstatus->getTaskjobsAgent($agent_id);
       foreach ($moduleRun as $className => $array) {
          if (class_exists($className)) {
-            if ($className != "PluginFusinvinventoryESX") {
+            if ($className != "PluginFusioninventoryInventoryComputerESX") {
                $class = new $className();
                $sxml_temp = $class->run($array);
                $this->append_simplexml($this->sxml, $sxml_temp);

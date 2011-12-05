@@ -63,7 +63,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          $moduleRun = $PluginFusioninventoryTaskjobstatus->getTaskjobsAgent($a_agent['id']);
          foreach ($moduleRun as $className => $array) {
             if (class_exists($className)) {
-               if ($className == "PluginFusinvinventoryESX") {
+               if ($className == "PluginFusioninventoryInventoryComputerESX") {
                   $class = new $className();
                   $response = $class->run($array, $response);
                }

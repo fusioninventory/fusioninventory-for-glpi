@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
+class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCommunication {
 
    /**
     * Get all devices and put in taskjobstatus each task for
@@ -112,7 +112,7 @@ class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
                $a_input['date']  = date("Y-m-d H:i:s");
                $joblog->add($a_input);
 
-               $jobstatus->changeStatusFinish($jobstatus_id, 0, 'PluginFusinvinventoryESX', 1, 
+               $jobstatus->changeStatusFinish($jobstatus_id, 0, 'PluginFusioninventoryInventoryComputerESX', 1, 
                                               "Unable to find agent to run this job");
 
             }
