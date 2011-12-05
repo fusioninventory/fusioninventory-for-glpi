@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION","0.83+1.0");
+define ("PLUGIN_FUSIONINVENTORY_VERSION","0.84+1.0");
 
 include_once(GLPI_ROOT."/inc/includes.php");
 
@@ -321,7 +321,7 @@ function plugin_version_fusioninventory() {
                 'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
                                     & FusionInventory team',
                 'homepage'       =>'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/',
-                'minGlpiVersion' => '0.83'// For compatibility / no install in version < 0.78
+                'minGlpiVersion' => '0.84'// For compatibility / no install in version < 0.78
    );
 }
 
@@ -330,7 +330,7 @@ function plugin_version_fusioninventory() {
 function plugin_fusioninventory_check_prerequisites() {
    global $LANG;
    
-   if (version_compare(GLPI_VERSION,'0.83','lt') || version_compare(GLPI_VERSION,'0.84','ge')) {
+   if (version_compare(GLPI_VERSION,'0.84','lt') || version_compare(GLPI_VERSION,'0.85','ge')) {
       echo $LANG['plugin_fusioninventory']['errors'][50];
       return false;
    }
