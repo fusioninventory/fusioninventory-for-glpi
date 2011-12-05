@@ -109,7 +109,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
             $internalId = $a_serialized['internal_id'];
          } else {
             // load GLPI data in the XML
-            $PluginFusinvinventoryInventory = new PluginFusinvinventoryInventory();
+            $PluginFusinvinventoryInventory = new PluginFusioninventoryInventoryComputerInventory();
             $PluginFusinvinventoryInventory->createMachineInLib($items_id, $internalId);
          }
 

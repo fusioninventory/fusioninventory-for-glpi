@@ -153,7 +153,7 @@ class PluginFusioninventoryInventoryComputerImport_Monitor extends CommonDBTM {
             $a_monitor['is_global'] = 1;
          }
 
-      PluginFusinvinventoryInventory::addDefaultStateIfNeeded($a_monitor, true, 
+      PluginFusioninventoryInventoryComputerInventory::addDefaultStateIfNeeded($a_monitor, true, 
                                                               $a_monitor['is_global']);
 
          $monitor_id = $monitor->add($a_monitor);

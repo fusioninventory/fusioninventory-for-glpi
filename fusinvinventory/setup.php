@@ -70,7 +70,7 @@ function plugin_init_fusinvinventory() {
               array('addtabon' => array('Computer')));
    Plugin::registerClass('PluginFusinvinventoryComputer',
               array('addtabon' => array('Computer')));
-   Plugin::registerClass('PluginFusinvinventoryInventory');
+   Plugin::registerClass('PluginFusioninventoryInventoryComputerInventory');
    Plugin::registerClass('PluginFusinvinventoryLibintegrity',
               array('addtabon' => array('Computer')));
    
@@ -95,7 +95,7 @@ function plugin_init_fusinvinventory() {
    // ##### 5. Set in session XMLtags of methods #####
 
    $_SESSION['glpi_plugin_fusioninventory']['xmltags']['INVENTORY']
-      = 'PluginFusinvinventoryInventory';
+      = 'PluginFusioninventoryInventoryComputerInventory';
 
 
    if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvinventory'][$LANG['plugin_fusinvinventory']['title'][0]])) {

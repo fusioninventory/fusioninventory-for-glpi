@@ -89,7 +89,7 @@ class PluginFusinvinventoryImportXML extends CommonDBTM  {
    *
    **/
    function importXMLFile($file) {
-      $PluginFusinvinventoryInventory = new PluginFusinvinventoryInventory();
+      $PluginFusinvinventoryInventory = new PluginFusioninventoryInventoryComputerInventory();
       $p_xml = file_get_contents($file);
       libxml_use_internal_errors(true);
       if ($pxml = simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA)) {
@@ -115,7 +115,7 @@ class PluginFusinvinventoryImportXML extends CommonDBTM  {
    *
    **/
    function importXMLContent($p_xml) {
-      $PluginFusinvinventoryInventory = new PluginFusinvinventoryInventory();
+      $PluginFusinvinventoryInventory = new PluginFusioninventoryInventoryComputerInventory();
       libxml_use_internal_errors(true);
       if (simplexml_load_string($p_xml)) {
          libxml_clear_errors();

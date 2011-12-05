@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusinvinventoryInventory {
+class PluginFusioninventoryInventoryComputerInventory {
    
    /**
    * Import data
@@ -192,7 +192,7 @@ class PluginFusinvinventoryInventory {
             $input['name'] = '';
          }
          $input['itemtype'] = "Computer";
-      $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusinvinventoryInventory";
+      $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusioninventoryInventoryComputerInventory";
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
       $data = array();
       $data = $rule->processAllRules($input, array());
