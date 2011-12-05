@@ -67,7 +67,7 @@ class PluginFusinvinventoryImport_Antivirus extends CommonDBTM {
          return;
       }
 
-      $PluginFusinvinventoryAntivirus = new PluginFusinvinventoryInventoryComputerAntivirus();
+      $PluginFusinvinventoryAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
 
       $antivirus=array();
       $id_antivirus = 0;
@@ -122,7 +122,7 @@ class PluginFusinvinventoryImport_Antivirus extends CommonDBTM {
    *
    **/
    function deleteItem($items_id, $idmachine) {
-      $PluginFusinvinventoryAntivirus = new PluginFusinvinventoryInventoryComputerAntivirus();
+      $PluginFusinvinventoryAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
       $PluginFusinvinventoryAntivirus->getFromDB($items_id);
       if ($PluginFusinvinventoryAntivirus->fields['computers_id'] == $idmachine) {
          $PluginFusinvinventoryAntivirus->delete(array("id" => $items_id), 0, $_SESSION["plugin_fusinvinventory_history_add"]);
