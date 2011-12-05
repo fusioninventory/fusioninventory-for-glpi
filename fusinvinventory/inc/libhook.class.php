@@ -458,7 +458,7 @@ class PluginFusinvinventoryLibhook {
                // Add software name
                // Add version of software
                // link version with computer : glpi_computers_softwareversions
-               $PluginFusinvinventoryImport_Software = new PluginFusinvinventoryImport_Software();
+               $PluginFusinvinventoryImport_Software = new PluginFusioninventoryInventoryComputerImport_Software();
                if (!isset($dataSection['PUBLISHER'])) {
                   $dataSection['PUBLISHER'] = NULL;
                }
@@ -663,7 +663,7 @@ class PluginFusinvinventoryLibhook {
                      break;
 
                   case 'SOFTWARES':
-                     $PluginFusinvinventoryImport_Software = new PluginFusinvinventoryImport_Software();
+                     $PluginFusinvinventoryImport_Software = new PluginFusioninventoryInventoryComputerImport_Software();
                      $PluginFusinvinventoryImport_Software->deleteItem($items_id, $idmachine);
                      break;
 
