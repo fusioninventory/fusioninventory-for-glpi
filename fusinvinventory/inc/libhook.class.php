@@ -388,7 +388,7 @@ class PluginFusinvinventoryLibhook {
                break;
 
             case 'DRIVES':
-               $PluginFusinvinventoryImport_Drive = new PluginFusinvinventoryImport_Drive();
+               $PluginFusinvinventoryImport_Drive = new PluginFusioninventoryInventoryComputerImport_Drive();
                $id_disk = $PluginFusinvinventoryImport_Drive->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_disk)) {
                   $id_disk = $j;
@@ -633,7 +633,7 @@ class PluginFusinvinventoryLibhook {
                      break;
 
                   case 'DRIVES':
-                     $PluginFusinvinventoryImport_Drive = new PluginFusinvinventoryImport_Drive();
+                     $PluginFusinvinventoryImport_Drive = new PluginFusioninventoryInventoryComputerImport_Drive();
                      $PluginFusinvinventoryImport_Drive->deleteItem($items_id, $idmachine);
                      break;
 
@@ -770,7 +770,7 @@ class PluginFusinvinventoryLibhook {
                   break;
                
                case 'DRIVES':
-                  $PluginFusinvinventoryImport_Drive = new PluginFusinvinventoryImport_Drive();
+                  $PluginFusinvinventoryImport_Drive = new PluginFusioninventoryInventoryComputerImport_Drive();
                   $PluginFusinvinventoryImport_Drive->AddUpdateItem("update", $items_id, $dataSection);
                   break;
 
