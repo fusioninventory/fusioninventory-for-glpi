@@ -421,7 +421,7 @@ class PluginFusinvinventoryLibhook {
                break;
 
             case 'VIDEOS':
-               $PluginFusinvinventoryImport_Graphiccard = new PluginFusinvinventoryImport_Graphiccard();
+               $PluginFusinvinventoryImport_Graphiccard = new PluginFusioninventoryInventoryComputerImport_Graphiccard();
                $id_graphiccard = $PluginFusinvinventoryImport_Graphiccard->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_graphiccard)) {
                   $id_graphiccard = $j;
@@ -648,7 +648,7 @@ class PluginFusinvinventoryLibhook {
                      break;
 
                   case 'VIDEOS':
-                     $PluginFusinvinventoryImport_Graphiccard = new PluginFusinvinventoryImport_Graphiccard();
+                     $PluginFusinvinventoryImport_Graphiccard = new PluginFusioninventoryInventoryComputerImport_Graphiccard();
                      $PluginFusinvinventoryImport_Graphiccard->deleteItem($items_id, $idmachine);
                      break;
 
@@ -786,7 +786,7 @@ class PluginFusinvinventoryLibhook {
                   break;
 
                case 'VIDEOS':
-                  $PluginFusinvinventoryImport_Graphiccard = new PluginFusinvinventoryImport_Graphiccard();
+                  $PluginFusinvinventoryImport_Graphiccard = new PluginFusioninventoryInventoryComputerImport_Graphiccard();
                   $PluginFusinvinventoryImport_Graphiccard->AddUpdateItem("update", $items_id, $dataSection);
                   break;
 
