@@ -431,7 +431,7 @@ class PluginFusinvinventoryLibhook {
                break;
 
             case 'MEMORIES':
-               $PluginFusinvinventoryImport_Memory = new PluginFusinvinventoryImport_Memory();
+               $PluginFusinvinventoryImport_Memory = new PluginFusioninventoryInventoryComputerImport_Memory();
                $id_memory = $PluginFusinvinventoryImport_Memory->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_memory)) {
                   $id_memory = $j;
@@ -653,7 +653,7 @@ class PluginFusinvinventoryLibhook {
                      break;
 
                   case 'MEMORIES':
-                     $PluginFusinvinventoryImport_Memory = new PluginFusinvinventoryImport_Memory();
+                     $PluginFusinvinventoryImport_Memory = new PluginFusioninventoryInventoryComputerImport_Memory();
                      $PluginFusinvinventoryImport_Memory->deleteItem($items_id, $idmachine);
                      break;
 
@@ -791,7 +791,7 @@ class PluginFusinvinventoryLibhook {
                   break;
 
                case 'MEMORIES':
-                  $PluginFusinvinventoryImport_Memory = new PluginFusinvinventoryImport_Memory();
+                  $PluginFusinvinventoryImport_Memory = new PluginFusioninventoryInventoryComputerImport_Memory();
                   $PluginFusinvinventoryImport_Memory->AddUpdateItem("update", $items_id, $dataSection);
                   break;
 
