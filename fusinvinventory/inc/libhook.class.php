@@ -411,7 +411,7 @@ class PluginFusinvinventoryLibhook {
                break;
 
             case 'SOUNDS':
-               $PluginFusinvinventoryImport_Sound = new PluginFusinvinventoryImport_Sound();
+               $PluginFusinvinventoryImport_Sound = new PluginFusioninventoryInventoryComputerImport_Sound();
                $id_sound = $PluginFusinvinventoryImport_Sound->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_sound)) {
                   $id_sound = $j;
@@ -643,7 +643,7 @@ class PluginFusinvinventoryLibhook {
                      break;
 
                   case 'SOUNDS':
-                     $PluginFusinvinventoryImport_Sound = new PluginFusinvinventoryImport_Sound();
+                     $PluginFusinvinventoryImport_Sound = new PluginFusioninventoryInventoryComputerImport_Sound();
                      $PluginFusinvinventoryImport_Sound->deleteItem($items_id, $idmachine);
                      break;
 
@@ -781,7 +781,7 @@ class PluginFusinvinventoryLibhook {
                   break;
 
               case 'SOUNDS':
-                  $PluginFusinvinventoryImport_Sound = new PluginFusinvinventoryImport_Sound();
+                  $PluginFusinvinventoryImport_Sound = new PluginFusioninventoryInventoryComputerImport_Sound();
                   $PluginFusinvinventoryImport_Sound->AddUpdateItem("update", $items_id, $dataSection);
                   break;
 
