@@ -40,15 +40,18 @@
    ------------------------------------------------------------------------
  */
 
-define('GLPI_ROOT', '../../..');
-include (GLPI_ROOT . "/inc/includes.php");
+if (!defined('GLPI_ROOT')) {
+   define('GLPI_ROOT', '../../..');
+}
 
-Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","fusinvinventory-ruleentity");
+include (GLPI_ROOT."/inc/includes.php");
+
+Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","inventoryruleimport");
+
 Session::checkLoginUser();
-
 PluginFusioninventoryMenu::displayMenu("mini");
 
-$rulecollection = new PluginFusinvinventoryRuleEntityCollection();
+$rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
 
 include (GLPI_ROOT . "/front/rule.common.form.php");
 

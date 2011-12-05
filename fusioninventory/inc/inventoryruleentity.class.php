@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusinvinventoryRuleEntity extends Rule {
+class PluginFusioninventoryInventoryRuleEntity extends Rule {
 
    // From Rule
    public $right='rule_ocs';
@@ -162,7 +162,7 @@ class PluginFusinvinventoryRuleEntity extends Rule {
             return false;
             break;
 
-         case PluginFusioninventoryRuleImportEquipment::PATTERN_IS_EMPTY :
+         case PluginFusioninventoryInventoryRuleImport::PATTERN_IS_EMPTY :
             Dropdown::showYesNo($name, 0, 0);
             return true;
 

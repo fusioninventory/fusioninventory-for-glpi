@@ -88,7 +88,7 @@ class PluginFusioninventorySetup {
 
       // Delete rules
       $Rule = new Rule();
-      $a_rules = $Rule->find("`sub_type`='PluginFusioninventoryRuleImportEquipment'");
+      $a_rules = $Rule->find("`sub_type`='PluginFusioninventoryInventoryRuleImport'");
       foreach ($a_rules as $data) {
          $Rule->delete($data);
       }
@@ -133,22 +133,22 @@ class PluginFusioninventorySetup {
          if (!class_exists('PluginFusioninventoryUnknownDevice')) { // if plugin is unactive
             include(GLPI_ROOT . "/plugins/fusioninventory/inc/unknowndevice.class.php");
          }
-         if (!class_exists('PluginFusioninventoryRuleImportEquipmentCollection')) { // if plugin is unactive
-            include(GLPI_ROOT . "/plugins/fusioninventory/inc/ruleimportequipmentcollection.class.php");
+         if (!class_exists('PluginFusioninventoryInventoryRuleImportCollection')) { // if plugin is unactive
+            include(GLPI_ROOT . "/plugins/fusioninventory/inc/inventoryruleimportcollection.class.php");
          }
-         if (!class_exists('PluginFusioninventoryRuleImportEquipment')) { // if plugin is unactive
-            include(GLPI_ROOT . "/plugins/fusioninventory/inc/ruleimportequipment.class.php");
+         if (!class_exists('PluginFusioninventoryInventoryRuleImport')) { // if plugin is unactive
+            include(GLPI_ROOT . "/plugins/fusioninventory/inc/inventoryruleimport.class.php");
          }
       
       $ranking = 0;
       
      // Create rule for : Computer + serial + uuid
-      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
       $input['is_active']=1;
       $input['name']='Computer serial + uuid';
       $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
       $input['ranking'] = $ranking;
       $rule_id = $rulecollection->add($input);
 
@@ -202,12 +202,12 @@ class PluginFusioninventorySetup {
 
      $ranking++;
      // Create rule for : Computer + serial
-      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
       $input['is_active']=1;
       $input['name']='Computer serial';
       $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
       $input['ranking'] = $ranking;
       $rule_id = $rulecollection->add($input);
 
@@ -246,12 +246,12 @@ class PluginFusioninventorySetup {
 
       $ranking++;
 //      // Create rule for : Computer + uuid
-//      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+//      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
 //      $input = array();
 //      $input['is_active']=1;
 //      $input['name']='Computer uuid';
 //      $input['match']='AND';
-//      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+//      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
 //      $input['ranking'] = $ranking;
 //      $rule_id = $rulecollection->add($input);
 //
@@ -291,12 +291,12 @@ class PluginFusioninventorySetup {
 
      $ranking++;
      // Create rule for : Computer + mac
-      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
       $input['is_active']=1;
       $input['name']='Computer mac';
       $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
       $input['ranking'] = $ranking;
       $rule_id = $rulecollection->add($input);
 
@@ -335,12 +335,12 @@ class PluginFusioninventorySetup {
 
      $ranking++;
      // Create rule for : Computer + name
-      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
       $input['is_active']=1;
       $input['name']='Computer name';
       $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
       $input['ranking'] = $ranking;
       $rule_id = $rulecollection->add($input);
 
@@ -379,12 +379,12 @@ class PluginFusioninventorySetup {
 
       $ranking++;
       // Create rule for : Computer import
-      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
       $input['is_active']=1;
       $input['name']='Computer import';
       $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
       $input['ranking'] = $ranking;
       $rule_id = $rulecollection->add($input);
 
@@ -418,12 +418,12 @@ class PluginFusioninventorySetup {
 
      $ranking++;
      // Create rule for : Printer + serial
-      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
       $input['is_active']=1;
       $input['name']='Printer serial';
       $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
       $input['ranking'] = $ranking;
       $rule_id = $rulecollection->add($input);
 
@@ -462,12 +462,12 @@ class PluginFusioninventorySetup {
 
       $ranking++;
       // Create rule for : Printer + mac
-      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
       $input['is_active']=1;
       $input['name']='Printer mac';
       $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
       $input['ranking'] = $ranking;
       $rule_id = $rulecollection->add($input);
 
@@ -506,12 +506,12 @@ class PluginFusioninventorySetup {
 
       $ranking++;
       // Create rule for : Printer + name
-      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
       $input['is_active']=1;
       $input['name']='Printer name';
       $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
       $input['ranking'] = $ranking;
       $rule_id = $rulecollection->add($input);
 
@@ -550,12 +550,12 @@ class PluginFusioninventorySetup {
 
       $ranking++;
       // Create rule for : NetworkEquipment + serial
-      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
       $input['is_active']=1;
       $input['name']='NetworkEquipment serial';
       $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
       $input['ranking'] = $ranking;
       $rule_id = $rulecollection->add($input);
 
@@ -594,12 +594,12 @@ class PluginFusioninventorySetup {
 
       $ranking++;
       // Create rule for : NetworkEquipment + mac
-      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
       $input['is_active']=1;
       $input['name']='NetworkEquipment mac';
       $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
       $input['ranking'] = $ranking;
       $rule_id = $rulecollection->add($input);
 
@@ -638,12 +638,12 @@ class PluginFusioninventorySetup {
 
       $ranking++;
       // Create rule for : NetworkEquipment import
-      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
       $input['is_active']=1;
       $input['name']='NetworkEquipment import';
       $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
       $input['ranking'] = $ranking;
       $rule_id = $rulecollection->add($input);
 
@@ -668,12 +668,12 @@ class PluginFusioninventorySetup {
 
       $ranking++;
       // Create rule for search serial in all DB
-      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
       $input['is_active']=1;
       $input['name']='Find serial in all GLPI';
       $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
       $input['ranking'] = $ranking;
       $rule_id = $rulecollection->add($input);
 
@@ -706,12 +706,12 @@ class PluginFusioninventorySetup {
 
      $ranking++;
      // Create rule for search mac in all DB
-      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
       $input['is_active']=1;
       $input['name']='Find mac in all GLPI';
       $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
       $input['ranking'] = $ranking;
       $rule_id = $rulecollection->add($input);
 
@@ -744,12 +744,12 @@ class PluginFusioninventorySetup {
 
      $ranking++;
      // Create rule for search name in all DB
-      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
       $input['is_active']=1;
       $input['name']='Find name in all GLPI';
       $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
       $input['ranking'] = $ranking;
       $rule_id = $rulecollection->add($input);
 
@@ -782,12 +782,12 @@ class PluginFusioninventorySetup {
 
       $ranking++;
       // Create rule for import into unknown devices
-      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
       $input['is_active']=1;
       $input['name']='Unknown device import';
       $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
       $input['ranking'] = $ranking;
       $rule_id = $rulecollection->add($input);
 

@@ -40,17 +40,17 @@
    ------------------------------------------------------------------------
  */
 
-define('GLPI_ROOT', '../../..');
+if (!defined('GLPI_ROOT')) {
+   define('GLPI_ROOT', '../../..');
+}
 
-include (GLPI_ROOT . "/inc/includes.php");
+include (GLPI_ROOT."/inc/includes.php");
 
-Session::checkLoginUser();
-Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","fusinvinventory-ruleentity");
+header("Content-Type: text/html; charset=UTF-8");
+header_nocache();
 
-PluginFusioninventoryMenu::displayMenu("mini");
+checkRight('rule_ocs','r');
 
-$rulecollection = new PluginFusinvinventoryRuleEntityCollection();
-
-include (GLPI_ROOT . "/front/rule.common.php");
-
+$rule = new PluginFusioninventoryInventoryRuleImport();
+include (GLPI_ROOT."/ajax/rule.common.tabs.php");
 ?>

@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryRuleImportEquipmentCollection extends RuleCollection {
+class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection {
 
    // From RuleCollection
    public $stop_on_first_match = true;
@@ -98,22 +98,22 @@ class PluginFusioninventoryRuleImportEquipmentCollection extends RuleCollection 
          echo "<td>";
 
          switch ($output["action"]) {
-            case PluginFusioninventoryRuleImportEquipment::LINK_RESULT_LINK :
+            case PluginFusioninventoryInventoryRuleImport::LINK_RESULT_LINK :
                echo $LANG['setup'][620];
                break;
 
-            case PluginFusioninventoryRuleImportEquipment::LINK_RESULT_CREATE:
+            case PluginFusioninventoryInventoryRuleImport::LINK_RESULT_CREATE:
                echo $LANG['plugin_fusioninventory']['rules'][18];
                break;
 
-            case PluginFusioninventoryRuleImportEquipment::LINK_RESULT_DENIED:
+            case PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED:
                echo $LANG['plugin_fusioninventory']['rules'][17];
                break;
          }
 
          echo "</td>";
          echo "</tr>";
-         if ($output["action"] != PluginFusioninventoryRuleImportEquipment::LINK_RESULT_DENIED
+         if ($output["action"] != PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED
              && isset($output["found_equipment"])) {
             echo "<tr class='tab_bg_2'>";
             $className = $output["found_equipment"][1];

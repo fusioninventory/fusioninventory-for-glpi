@@ -179,14 +179,14 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
       $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize($input);
       $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusinvsnmpCommunicationNetDiscovery";
-      $rule = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rule = new PluginFusioninventoryInventoryRuleImportCollection();
       $data = array ();
       $data = $rule->processAllRules($input, array());
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
                                                    print_r($data, true));
 
       if (isset($data['action'])
-              AND ($data['action'] == PluginFusioninventoryRuleImportEquipment::LINK_RESULT_DENIED)) {
+              AND ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED)) {
          
          $a_text = '';
          foreach ($input as $key=>$data) {
@@ -202,7 +202,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
          if (isset($input['itemtype'])
               AND isset($data['action'])
-              AND ($data['action'] == PluginFusioninventoryRuleImportEquipment::LINK_RESULT_CREATE)) {
+              AND ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_CREATE)) {
 
             $this->rulepassed(0, $input['itemtype'],$input['entities_id']);
          } else if (isset($input['itemtype'])

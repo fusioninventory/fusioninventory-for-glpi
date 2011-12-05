@@ -531,7 +531,7 @@ class PluginFusioninventoryWizard {
     * @return Nothing (display)
     **/
    static function w_importrules($ariane='') {
-      PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusioninventoryRuleImportEquipmentCollection");
+      PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusioninventoryInventoryRuleImportCollection");
    }
    
    
@@ -544,7 +544,7 @@ class PluginFusioninventoryWizard {
     * @return Nothing (display)
     **/
    static function w_entityrules($ariane='') {
-      PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusinvinventoryRuleEntityCollection");
+      PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusioninventoryInventoryRuleEntityCollection");
    }
 
    

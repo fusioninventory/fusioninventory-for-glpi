@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusinvinventoryRuleEntityCollection extends RuleCollection {
+class PluginFusioninventoryInventoryRuleEntityCollection extends RuleCollection {
 
    // From RuleCollection
    public $stop_on_first_match=true;

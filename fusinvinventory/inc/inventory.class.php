@@ -76,7 +76,7 @@ class PluginFusinvinventoryInventory {
 
 
    /**
-   * Send Computer to ruleimportequipment
+   * Send Computer to inventoryruleimport
    *
    * @param $p_DEVICEID XML code to import
    * @param $p_CONTENT XML code of the Computer
@@ -193,7 +193,7 @@ class PluginFusinvinventoryInventory {
          }
          $input['itemtype'] = "Computer";
       $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusinvinventoryInventory";
-      $rule = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rule = new PluginFusioninventoryInventoryRuleImportCollection();
       $data = array();
       $data = $rule->processAllRules($input, array());
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
@@ -213,7 +213,7 @@ class PluginFusinvinventoryInventory {
          if (isset($input['serial'])) {
             $input['serialnumber'] = $input['serial'];
          }
-         $ruleEntity = new PluginFusinvinventoryRuleEntityCollection();
+         $ruleEntity = new PluginFusioninventoryInventoryRuleEntityCollection();
          $dataEntity = array ();
          $dataEntity = $ruleEntity->processAllRules($input, array());
          if (isset($dataEntity['entities_id'])) {
@@ -282,7 +282,7 @@ class PluginFusinvinventoryInventory {
                }
             }
 
-            $ruleEntity = new PluginFusinvinventoryRuleEntityCollection();
+            $ruleEntity = new PluginFusioninventoryInventoryRuleEntityCollection();
             $dataEntity = array ();
             $dataEntity = $ruleEntity->processAllRules($input_rules, array());
             

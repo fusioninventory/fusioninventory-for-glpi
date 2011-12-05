@@ -1256,7 +1256,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
       $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize($input);
       $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusinvsnmpCommunicationSNMPQuery";
-      $rule = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rule = new PluginFusioninventoryInventoryRuleImportCollection();
       $data = array();
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
                                                    "Input data : ".print_r($input, true));
@@ -1264,7 +1264,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
                                                    print_r($data, true));
       if (isset($data['action'])
-              AND ($data['action'] == PluginFusioninventoryRuleImportEquipment::LINK_RESULT_DENIED)) {
+              AND ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED)) {
 
          $a_text = '';
          foreach ($input as $key=>$data) {
@@ -1280,7 +1280,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
          if (isset($input['itemtype'])
               AND isset($data['action'])
-              AND ($data['action'] == PluginFusioninventoryRuleImportEquipment::LINK_RESULT_CREATE)) {
+              AND ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_CREATE)) {
 
             $errors .= $this->rulepassed(0, $input['itemtype']);
          } else if (isset($input['itemtype'])

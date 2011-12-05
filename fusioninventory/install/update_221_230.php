@@ -1518,11 +1518,11 @@ function update221to230($migrationname) {
    if (!class_exists('PluginFusioninventorySetup')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
    }
-   if (!class_exists('PluginFusioninventoryRuleImportEquipmentCollection')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusioninventory/inc/ruleimportequipmentcollection.class.php");
+   if (!class_exists('PluginFusioninventoryInventoryRuleImportCollection')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/inventoryruleimportcollection.class.php");
    }
-   if (!class_exists('PluginFusioninventoryRuleImportEquipment')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusioninventory/inc/ruleimportequipment.class.php");
+   if (!class_exists('PluginFusioninventoryInventoryRuleImport')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/inventoryruleimport.class.php");
    }
 
    $PluginFusioninventorySetup = new PluginFusioninventorySetup();

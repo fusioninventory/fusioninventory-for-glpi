@@ -70,8 +70,8 @@ function plugin_init_fusioninventory() {
               array('addtabon' => array('Computer','Monitor','Printer','NetworkEquipment')));
               
       //Classes for rulesengine
-      Plugin::registerClass('PluginFusioninventoryRuleImportEquipment');
-      Plugin::registerClass('PluginFusioninventoryRuleImportEquipmentCollection',
+      Plugin::registerClass('PluginFusioninventoryInventoryRuleImport');
+      Plugin::registerClass('PluginFusioninventoryInventoryRuleImportCollection',
                             array('rulecollections_types'=>true));
    
       // ##### 3. get informations of the plugin #####
@@ -154,10 +154,10 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['unknown'] = 'front/unknowndevice.form.php?add=1';
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['unknown'] = 'front/unknowndevice.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['ruleimportequipment']
-            = 'front/ruleimportequipment.form.php';
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['ruleimportequipment']
-            = 'front/ruleimportequipment.php';
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['inventoryruleimport']
+            = 'front/inventoryruleimport.form.php';
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['inventoryruleimport']
+            = 'front/inventoryruleimport.php';
          
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['agents'] = 'front/agent.php';
 
@@ -200,8 +200,8 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['unknown']['title'] = $LANG['plugin_fusioninventory']['menu'][4];
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['unknown']['page']  = '/plugins/fusioninventory/front/unknowndevice.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['ruleimportequipment']['title'] = $LANG['plugin_fusioninventory']['rules'][2];
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['ruleimportequipment']['page']  = '/plugins/fusioninventory/front/ruleimportequipment.php';
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['inventoryruleimport']['title'] = $LANG['plugin_fusioninventory']['rules'][2];
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['inventoryruleimport']['page']  = '/plugins/fusioninventory/front/inventoryruleimport.php';
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['iprange']['title'] = 
             $LANG['plugin_fusioninventory']['menu'][2];

@@ -102,11 +102,11 @@ function pluginFusinvinventoryInstall($version, $migration='') {
    $PluginFusinvinventoryConfig->initConfigModule();
 
    // Récupérer la config des entités des regles OCS
-   if (!class_exists('PluginFusinvinventoryRuleEntityCollection')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusinvinventory/inc/ruleentitycollection.class.php");
+   if (!class_exists('PluginFusioninventoryInventoryRuleEntityCollection')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/inventoryruleentitycollection.class.php");
    }
-   if (!class_exists('PluginFusinvinventoryRuleEntity')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusinvinventory/inc/ruleentity.class.php");
+   if (!class_exists('PluginFusioninventoryInventoryRuleEntity')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/inventoryruleentity.class.php");
    }
    $Rule = new Rule();
    $RuleCriteria = new RuleCriteria();
@@ -114,10 +114,10 @@ function pluginFusinvinventoryInstall($version, $migration='') {
 
    $a_rules = $Rule->find("`sub_type`='RuleOcs'", "`ranking`");
    foreach($a_rules as $data) {
-      $rulecollection = new PluginFusinvinventoryRuleEntityCollection();
+      $rulecollection = new PluginFusioninventoryInventoryRuleEntityCollection();
       $input = $data;
       unset($input['id']);
-      $input['sub_type'] = 'PluginFusinvinventoryRuleEntity';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleEntity';
       $data['comment'] = Toolbox::addslashes_deep($data['comment']);
       $rule_id = $rulecollection->add($input);
 
@@ -223,7 +223,7 @@ function pluginFusinvinventoryUninstall() {
 
    // Delete rules
    $Rule = new Rule();
-   $a_rules = $Rule->find("`sub_type`='PluginFusinvinventoryRuleEntity'");
+   $a_rules = $Rule->find("`sub_type`='PluginFusioninventoryInventoryRuleEntity'");
    foreach ($a_rules as $data) {
       $Rule->delete($data);
    }

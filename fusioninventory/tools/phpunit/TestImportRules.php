@@ -637,7 +637,7 @@ class Plugins_Fusioninventory_TestImortRules extends PHPUnit_Framework_TestCase 
       
      // Disable all rules
      $query = "UPDATE `glpi_rules` SET `is_active` = '0' 
-        WHERE `sub_type`='PluginFusioninventoryRuleImportEquipment' ";
+        WHERE `sub_type`='PluginFusioninventoryInventoryRuleImport' ";
      $DB->query($query);
 
       // Activate Extra-debug
@@ -791,12 +791,12 @@ class Plugins_Fusioninventory_TestImortRules extends PHPUnit_Framework_TestCase 
       global $DB, $XML;
       
       // Add the rule with criterial only if type = Computer
-      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
       $input['is_active']=1;
       $input['name']='Computer type import';
       $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
       $input['ranking'] = 0;
       $rule_id = $rulecollection->add($input);
 
@@ -821,12 +821,12 @@ class Plugins_Fusioninventory_TestImortRules extends PHPUnit_Framework_TestCase 
          $ruleaction->add($input);
          
       // Create rule for import into unknown devices
-      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
       $input['is_active']=1;
       $input['name']='Unknown device import';
       $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
       $input['ranking'] = 1;
       $rule2_id = $rulecollection->add($input);
 
@@ -892,12 +892,12 @@ class Plugins_Fusioninventory_TestImortRules extends PHPUnit_Framework_TestCase 
       global $DB, $XML;
       
       // Add the rule with criterial only if type = Computer
-      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
       $input['is_active']=1;
       $input['name']='Computer type import';
       $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
       $input['ranking'] = 0;
       $rule_id = $rulecollection->add($input);
 
@@ -928,12 +928,12 @@ class Plugins_Fusioninventory_TestImortRules extends PHPUnit_Framework_TestCase 
          $ruleaction->add($input);
          
       // Create rule for import into unknown devices
-      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
       $input['is_active']=1;
       $input['name']='Unknown device import';
       $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
       $input['ranking'] = 1;
       $rule2_id = $rulecollection->add($input);
 
@@ -1038,12 +1038,12 @@ class Plugins_Fusioninventory_TestImortRules extends PHPUnit_Framework_TestCase 
       
 
       // Add the rule with criterial only if type = Computer
-      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
       $input['is_active']=1;
       $input['name']='Computer type import';
       $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
       $input['ranking'] = 0;
       $rule_id = $rulecollection->add($input);
 
@@ -1081,12 +1081,12 @@ class Plugins_Fusioninventory_TestImortRules extends PHPUnit_Framework_TestCase 
          $ruleaction->add($input);
          
       // Create rule for import into unknown devices
-      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
       $input['is_active']=1;
       $input['name']='Unknown device import';
       $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
       $input['ranking'] = 1;
       $rule2_id = $rulecollection->add($input);
 
@@ -1213,7 +1213,7 @@ class Plugins_Fusioninventory_TestImortRules extends PHPUnit_Framework_TestCase 
       $computer->add($input);
       
       // Activation of rules
-      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
          // Computer serial + uuid
          $input = array();
          $input['is_active']=1;

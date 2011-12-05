@@ -45,7 +45,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 /// FusionInventory Rules class
-class PluginFusioninventoryRuleImportEquipment extends Rule {
+class PluginFusioninventoryInventoryRuleImport extends Rule {
 
    const PATTERN_IS_EMPTY              = 30;
    const RULE_ACTION_LINK_OR_CREATE    = 0;

@@ -41,14 +41,16 @@
  */
 
 define('GLPI_ROOT', '../../..');
+
 include (GLPI_ROOT . "/inc/includes.php");
 
-header("Content-Type: text/html; charset=UTF-8");
-header_nocache();
+Session::checkLoginUser();
+Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","fusinvinventory-ruleentity");
 
-checkRight('rule_ocs', 'r');
+PluginFusioninventoryMenu::displayMenu("mini");
 
-$rule = new PluginFusinvinventoryRuleEntity();
-include (GLPI_ROOT."/ajax/rule.common.tabs.php");
+$rulecollection = new PluginFusioninventoryInventoryRuleEntityCollection();
+
+include (GLPI_ROOT . "/front/rule.common.php");
 
 ?>

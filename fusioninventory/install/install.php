@@ -64,11 +64,11 @@ function pluginFusioninventoryInstall($version, $migration='') {
    if (!class_exists('PluginFusioninventoryUnknownDevice')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/unknowndevice.class.php");
    }
-   if (!class_exists('PluginFusioninventoryRuleImportEquipmentCollection')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusioninventory/inc/ruleimportequipmentcollection.class.php");
+   if (!class_exists('PluginFusioninventoryInventoryRuleImportCollection')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/inventoryruleimportcollection.class.php");
    }
-   if (!class_exists('PluginFusioninventoryRuleImportEquipment')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusioninventory/inc/ruleimportequipment.class.php");
+   if (!class_exists('PluginFusioninventoryInventoryRuleImport')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/inventoryruleimport.class.php");
    }
    if (!class_exists('PluginFusioninventoryModule')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
@@ -129,7 +129,7 @@ function pluginFusioninventoryInstall($version, $migration='') {
    // Remove old rules
    $migration->displayMessage("Clean rules from old installation of the plugin");
    $Rule = new Rule();
-   $a_rules = $Rule->find("`sub_type`='PluginFusioninventoryRuleImportEquipment'");
+   $a_rules = $Rule->find("`sub_type`='PluginFusioninventoryInventoryRuleImport'");
    foreach ($a_rules as $data) {
       $Rule->delete($data);
    }
