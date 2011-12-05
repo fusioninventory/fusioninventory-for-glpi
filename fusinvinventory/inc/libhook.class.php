@@ -540,7 +540,7 @@ class PluginFusinvinventoryLibhook {
                break;
 
             case 'STORAGES':
-               $PluginFusinvinventoryImport_Storage =  new PluginFusinvinventoryImport_Storage();
+               $PluginFusinvinventoryImport_Storage =  new PluginFusioninventoryInventoryComputerImport_Storage();
                $id_storage = $PluginFusinvinventoryImport_Storage->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_storage)) {
                   $id_storage = $j;
@@ -683,7 +683,7 @@ class PluginFusinvinventoryLibhook {
                      break;
 
                   case 'STORAGES':
-                     $PluginFusinvinventoryImport_Storage = new PluginFusinvinventoryImport_Storage();
+                     $PluginFusinvinventoryImport_Storage = new PluginFusioninventoryInventoryComputerImport_Storage();
                      $PluginFusinvinventoryImport_Storage->deleteItem($items_id, $idmachine, $sectiondetail[$section]);
                      break;
 
@@ -988,7 +988,7 @@ class PluginFusinvinventoryLibhook {
                   break;
 
                case 'STORAGES':
-                  $PluginFusinvinventoryImport_Storage = new PluginFusinvinventoryImport_Storage();
+                  $PluginFusinvinventoryImport_Storage = new PluginFusioninventoryInventoryComputerImport_Storage();
                   $PluginFusinvinventoryImport_Storage->AddUpdateItem("update", $items_id, $dataSection);
                   break;
 

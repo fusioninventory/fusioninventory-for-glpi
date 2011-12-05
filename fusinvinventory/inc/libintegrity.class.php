@@ -273,7 +273,7 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
 
                   case 'STORAGES':
                      $array_section = unserialize($section);
-                     $PluginFusinvinventoryImport_Storage = new PluginFusinvinventoryImport_Storage();
+                     $PluginFusinvinventoryImport_Storage = new PluginFusioninventoryInventoryComputerImport_Storage();
                      $type_tmp = $PluginFusinvinventoryImport_Storage->getTypeDrive($array_section);
                      if ($type_tmp == "Drive") {
                         $DeviceDrive = new Computer_Device('DeviceDrive');
