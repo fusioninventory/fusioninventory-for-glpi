@@ -40,64 +40,30 @@
    ------------------------------------------------------------------------
  */
 
-class Update extends PHPUnit_Framework_TestCase {
+if (!defined('GLPI_ROOT')) {
+   define('GLPI_ROOT', '../../..');
+   require GLPI_ROOT . "/inc/includes.php";
+   restore_error_handler();
 
-   public function testUpdate() {
-      
-      $Update = new Update();
-      $Update->Update("2.3.3");
-      $Update->Update("2.1.3");
-   }
-   
-   
-   function Update($version = '') {
-      global $DB;
-
-      if ($version == '') {
-         return;
-      }
-      $GLPIInstall = new GLPIInstall();
-      $GLPIInstall->testInstall();
-      
-      $query = "SHOW TABLES";
-      $result = $DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
-         if (strstr($data[0], "tracker")
-                 OR strstr($data[0], "fusi")) {
-            $DB->query("DROP TABLE ".$data[0]);
-         }
-      }
-      $query = "DELETE FROM `glpi_displaypreferences` 
-         WHERE `itemtype` LIKE 'PluginFus%'";
-      $DB->query($query);
-      
-      // ** Insert in DB
-      $res = $DB->runFile(GLPI_ROOT ."/plugins/fusioninventory/phpunit/FusinvInstall/Update/mysql/i-".$version.".sql");
-      $this->assertTrue($res, "Fail: SQL Error during insert version ".$version);
-      
-      passthru("cd ../tools/ && /usr/local/bin/php -f cli_install.php");
-      
-      $FusinvInstall = new FusinvInstall();
-      $FusinvInstall->testDB("fusioninventory");
-      
-      $FusinvInstall->testDB("fusinvinventory");
-      
-      $FusinvInstall->testDB("fusinvsnmp");
-      
-      $FusinvInstall->testDB("fusinvdeploy");
-      
-   }
+   error_reporting(E_ALL | E_STRICT);
+   ini_set('display_errors','On');
 }
 
+class Netinventory extends PHPUnit_Framework_TestCase {
 
+}
 
-class Update_AllTests  {
+require_once 'Hub/AllTests.php';
+require_once 'Connectionlogs/AllTests.php';
+
+class Netinventory_AllTests  {
 
    public static function suite() {
 
-      $suite = new PHPUnit_Framework_TestSuite('Update');
+      $suite = new PHPUnit_Framework_TestSuite('Netinventory');
+      $suite->addTest(Hub_AllTests::suite());
+      $suite->addTest(Connectionlogs_AllTests::suite());      
       return $suite;
-      
    }
 }
 ?>
