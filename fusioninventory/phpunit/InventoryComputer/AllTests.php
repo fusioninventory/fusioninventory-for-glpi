@@ -505,9 +505,18 @@ echo "# testHardwareModifications\n";
       $a_controllerXML = array();
       $i = 0;
       foreach ($xml->CONTENT->CONTROLLERS as $child) {
-         if ((isset($child->NAME)) AND (!isset($ignore_controllers["'".$child->NAME."'"]))) {
-            $a_controllerXML["'".$i."-".$child->NAME."'"] = 1;
-            $i++;
+         if ((isset($child->NAME)) 
+                 AND (!isset($ignore_controllers["'".$child->NAME."'"]))) {
+            if (!(isset($child->NAME)
+                    AND isset($child->CAPTION)
+                    AND isset($child->TYPE)
+                    AND empty($child->NAME)
+                    AND empty($child->CAPTION)
+                    AND empty($child->TYPE))) {
+               
+               $a_controllerXML["'".$i."-".$child->NAME."'"] = 1;
+               $i++;
+            }
          }
       }
 
