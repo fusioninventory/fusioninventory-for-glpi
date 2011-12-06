@@ -17,7 +17,7 @@
 
  
     <target name="phpcs">
-        <exec command="phpcs --standard=FusionInventory --extensions=php --ignore='${project.basedir}/../../webservices/*' --report=checkstyle '${project.basedir}/../..' > '${project.basedir}/../../../../build/logs/checkstyle.xml'" escape="false" />
+        <exec command="phpcs --standard=FusionInventory --extensions=php --ignore='${project.basedir}/../../webservices/*' --report=checkstyle '${project.basedir}/../../' > '${project.basedir}/../../../../build/logs/checkstyle.xml'" escape="false" />
     </target>
 
     <target name="phpmd">
