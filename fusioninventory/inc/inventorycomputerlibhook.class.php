@@ -137,7 +137,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
             }
          }
       }
-      $pFusinvinventoryComputer = new PluginFusinvinventoryComputer();
+      $pFusinvinventoryComputer = new PluginFusioninventoryInventoryComputerComputer();
       $a_computerextend = current($pFusinvinventoryComputer->find("`computers_id`='".$idmachine."'", 
                                                                   "", 1));
       $inputCext = array();
@@ -745,7 +745,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
             }
          }
       }
-      $pFusinvinventoryComputer = new PluginFusinvinventoryComputer();
+      $pFusinvinventoryComputer = new PluginFusioninventoryInventoryComputerComputer();
       $a_computerextend = current($pFusinvinventoryComputer->find("`computers_id`='".$idmachine."'", 
                                                                   "", 1));
       $inputCext = array();

@@ -68,7 +68,7 @@ function plugin_init_fusinvinventory() {
    // ##### 2. register class #####
    Plugin::registerClass('PluginFusioninventoryInventoryComputerAntivirus',
               array('addtabon' => array('Computer')));
-   Plugin::registerClass('PluginFusinvinventoryComputer',
+   Plugin::registerClass('PluginFusioninventoryInventoryComputerComputer',
               array('addtabon' => array('Computer')));
    Plugin::registerClass('PluginFusioninventoryInventoryComputerInventory');
    Plugin::registerClass('PluginFusioninventoryInventoryComputerLibintegrity',

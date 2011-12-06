@@ -376,8 +376,8 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
     */
    if (!strstr($current_version, "+")) {// All version before 0.80+1.1 (new versioning)
       $computer = new Computer();
-      if (!class_exists('PluginFusinvinventoryComputer')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusinvinventory/inc/computer.class.php");
+      if (!class_exists('PluginFusioninventoryInventoryComputerComputer')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputercomputer.class.php");
       }      
       $pfComputer = new PluginFusinvinventoryComputer();
       $migration->displayMessage("Convert computer inventory, may require some minutes");
