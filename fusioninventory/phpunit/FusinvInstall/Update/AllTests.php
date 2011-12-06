@@ -40,48 +40,64 @@
    ------------------------------------------------------------------------
  */
 
-// Update from 2.3.1 to 2.3.2
-function update231to232() {
-   global $LANG;
+class Update extends PHPUnit_Framework_TestCase {
 
-   echo "<strong>Update 2.3.1 to 2.3.2</strong><br/>";
-   echo "</td>";
-   echo "</tr>";
-
-   echo "<tr class='tab_bg_1'>";
-   echo "<td align='center'>";
-
-   plugin_fusioninventory_displayMigrationMessage("232"); // Start
-
-   plugin_fusioninventory_displayMigrationMessage("232", $LANG['update'][141]); // Updating schema
-   
-   plugin_fusioninventory_displayMigrationMessage("232", $LANG['update'][141]." - import locks");
-
-   // Import OCS locks
-   if (!class_exists("PluginFusioninventoryInventoryComputerLib")) {
-      include_once(GLPI_ROOT."/plugins/fusinvinventory/inc/lib.class.php");
-   }
-   if (!class_exists("PluginFusioninventoryInventoryComputerLibhook")) {
-      include_once(GLPI_ROOT."/plugins/fusioninventory/inc/inventorycomputerlibhook.class.php");
-   }
-   if (!class_exists("PluginFusinvinventoryLock")) {
-      include_once(GLPI_ROOT."/plugins/fusinvinventory/inc/lock.class.php");
-   }
-   if (!class_exists("PluginFusioninventoryLock")) {
-      include_once(GLPI_ROOT."/plugins/fusioninventory/inc/lock.class.php");
-   }
-//   $PluginFusinvinventoryLock = new PluginFusinvinventoryLock();
-//   $PluginFusinvinventoryLock->importFromOcs();
-
-   $config = new PluginFusioninventoryConfig();
-   $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
-
-   //Add configuration entry for default state of a newly imported asset
-   if (!$config->getValue($plugins_id, 'states_id_default')) {
-      $config->addConfig($plugins_id, 'states_id_default', 0);
+   public function testUpdate() {
+      
+      $Update = new Update();
+      $Update->Update("2.3.3");
+      $Update->Update("2.1.3");
    }
    
-   plugin_fusioninventory_displayMigrationMessage("232"); // End
+   
+   function Update($version = '') {
+      global $DB;
+
+      if ($version == '') {
+         return;
+      }
+      $GLPIInstall = new GLPIInstall();
+      $GLPIInstall->testInstall();
+      
+      $query = "SHOW TABLES";
+      $result = $DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         if (strstr($data[0], "tracker")
+                 OR strstr($data[0], "fusi")) {
+            $DB->query("DROP TABLE ".$data[0]);
+         }
+      }
+      $query = "DELETE FROM `glpi_displaypreferences` 
+         WHERE `itemtype` LIKE 'PluginFus%'";
+      $DB->query($query);
+      
+      // ** Insert in DB
+      $res = $DB->runFile(GLPI_ROOT ."/plugins/fusioninventory/tools/phpunit/dbupdate/i-".$version.".sql");
+      $this->assertTrue($res, "Fail: SQL Error during insert version ".$version);
+      
+      passthru("cd ../tools/ && /usr/local/bin/php -f cli_install.php");
+      
+      $FusinvInstall = new FusinvInstall();
+      $FusinvInstall->testDB("fusioninventory");
+      
+      $FusinvInstall->testDB("fusinvinventory");
+      
+      $FusinvInstall->testDB("fusinvsnmp");
+      
+      $FusinvInstall->testDB("fusinvdeploy");
+      
+   }
 }
 
+
+
+class Update_AllTests  {
+
+   public static function suite() {
+
+      $suite = new PHPUnit_Framework_TestSuite('Update');
+      return $suite;
+      
+   }
+}
 ?>

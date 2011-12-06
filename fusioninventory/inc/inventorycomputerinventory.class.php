@@ -56,7 +56,6 @@ class PluginFusioninventoryInventoryComputerInventory {
    * @return nothing (import ok) / error string (import ko)
    **/
    function import($p_DEVICEID, $p_CONTENT, $p_xml) {
-      global $LANG;
       global $DB;
 
       $errors = '';
@@ -108,16 +107,19 @@ class PluginFusioninventoryInventoryComputerInventory {
          // Hack to remove Memories with Flash types see ticket http://forge.fusioninventory.org/issues/1337
          if (isset($p_xml->CONTENT->MEMORIES)) {
             $i = 0;
+            $arrayName = array();
             foreach($p_xml->CONTENT->MEMORIES as $memory) {
-
                if ((isset($memory->TYPE)) 
                        AND (preg_match('/Flash/', (string)$memory->TYPE))) {
-                  unset($p_xml->CONTENT->MEMORIES->{$i});
+
+                  $arrayName[] = $i;
                }
                $i++;
             }
+            foreach ($arrayName as $key) {
+               unset($p_xml->CONTENT->MEMORIES[$key]);
+            }
          }
-         
       // End hack
       
       $PluginFusinvinventoryBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();

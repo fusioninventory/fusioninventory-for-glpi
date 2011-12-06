@@ -81,12 +81,12 @@ if (isset($_GET['vlan_update'])) {
    }
 
    $query_ins = "INSERT INTO `glpi_plugin_fusinvsnmp_constructdevicewalks` (
-`id` ,
-`plugin_fusinvsnmp_constructdevices_id` ,
+`id`,
+`plugin_fusinvsnmp_constructdevices_id`,
 `log`
 )
 VALUES (
-NULL , '".$_POST['id']."', '".$md5."'
+NULL, '".$_POST['id']."', '".$md5."'
 )";
    $id_ins = $DB->query($query_ins);
    move_uploaded_file($_FILES['walk']['tmp_name'], GLPI_PLUGIN_DOC_DIR."/fusioninventory/walks/".$md5);

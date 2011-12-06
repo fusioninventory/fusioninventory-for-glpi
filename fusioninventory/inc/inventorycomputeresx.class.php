@@ -55,7 +55,6 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
     * @return uniqid value
     */
    function prepareRun($taskjobs_id) {
-      global $DB;
    
       $task       = new PluginFusioninventoryTask();
       $job        = new PluginFusioninventoryTaskjob();
@@ -78,16 +77,13 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
             $item = new $itemtype();
             // Detect if agent exists
             if($item->getFromDB($items_id)) {
-               $a_ip= $item->getIPs($items_id);
-               foreach($a_ip as $ip) {
-                  if($task->fields['communication'] == 'push') {
-                     $agentStatus= $job->getStateAgent($ip, 0);
-                     if($agentStatus) {
-                        $agent_actionslist[$items_id] = $ip;
-                     }
-                  } elseif($task->fields['communication'] == 'pull') {
+               if($task->fields['communication'] == 'push') {
+                  $agentStatus = $job->getStateAgent('1',$items_id);
+                  if ($agentStatus) {
                      $agent_actionslist[$items_id] = 1;
                   }
+               } elseif($task->fields['communication'] == 'pull') {
+                  $agent_actionslist[$items_id] = 1;
                }
             }
          }

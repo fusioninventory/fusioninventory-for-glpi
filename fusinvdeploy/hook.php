@@ -130,7 +130,7 @@ function plugin_fusinvdeploy_MassiveActionsDisplay($options=array()) {
 }
 
 function plugin_fusinvdeploy_MassiveActionsProcess($data) {
-   global $LANG, $DB;
+   global $DB;
 
    switch ($data['action']) {
       case 'plugin_fusinvdeploy_duplicatePackage' :
@@ -174,7 +174,7 @@ function plugin_fusinvdeploy_MassiveActionsProcess($data) {
             $taskjob->saveDatas($params);
 
             //reimport old jobs
-            foreach($oldjobs as $job_id => $job) {
+            foreach($oldjobs as $job) {
                $sql = "INSERT INTO glpi_plugin_fusinvdeploy_taskjobs (";
                foreach ($job as $key => $val) {
                   $sql .= "`$key`, ";

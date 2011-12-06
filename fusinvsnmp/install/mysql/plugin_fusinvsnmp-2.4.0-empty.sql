@@ -74,10 +74,10 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_miboids` (
 DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_configlogfields`;
 
 CREATE TABLE `glpi_plugin_fusinvsnmp_configlogfields` (
-   `id` INT( 8 ) NOT NULL AUTO_INCREMENT ,
+   `id` INT( 8 ) NOT NULL AUTO_INCREMENT,
    `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
    `days` int(255) NOT NULL DEFAULT '-1',
-   PRIMARY KEY ( `id` ) ,
+   PRIMARY KEY ( `id` ),
    KEY `plugin_fusioninventory_mappings_id` ( `plugin_fusioninventory_mappings_id` )
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -142,7 +142,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_constructdevice_miboids` (
 DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_networkportconnectionlogs`;
 
 CREATE TABLE `glpi_plugin_fusinvsnmp_networkportconnectionlogs` (
-   `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+   `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
    `date_mod` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
    `creation` INT( 1 ) NOT NULL DEFAULT '0',
    `networkports_id_source` INT( 11 ) NOT NULL DEFAULT '0',

@@ -42,7 +42,7 @@
 
 // Update from 2.2.1 to 2.3.0
 function update240to080011() {
-   global $DB, $CFG_GLPI, $LANG;
+   global $DB;
 
    ini_set("max_execution_time", "0");
 

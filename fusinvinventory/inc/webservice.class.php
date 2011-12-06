@@ -57,7 +57,7 @@ class PluginFusinvinventoryWebservice {
    *
    **/
    static function methodTest($params, $protocol) {
-      global $LANG, $CFG_GLPI;
+      global $LANG;
 
       if (isset ($params['help'])) {
          return array('base64'  => 'string,mandatory',

@@ -110,7 +110,6 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
    
    
    function addHistory($item){
-      global $LANG;
       
       foreach ($item->oldvalues as $field=>$old_value) {
          $changes = array();

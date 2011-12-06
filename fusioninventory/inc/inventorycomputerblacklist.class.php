@@ -89,7 +89,6 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
 
    
    function defineTabs($options=array()){
-      global $LANG;
 
       $PluginFusinvinventoryCriteria = new PluginFusioninventoryInventoryComputerCriteria();
 

@@ -69,8 +69,6 @@ class PluginFusioninventoryInventoryComputerLibhook {
     **/
     public static function createMachine($items_id) {
 
-      $PluginFusinvinventoryLibhook = new PluginFusioninventoryInventoryComputerLibhook();
-
       $_SESSION["plugin_fusinvinventory_history_add"] = false;
       $_SESSION["plugin_fusinvinventory_no_history_add"] = true;
        // Else create computer
@@ -99,7 +97,6 @@ class PluginFusioninventoryInventoryComputerLibhook {
     *
     **/
     public static function addSections($data, $idmachine) {
-       global $DB;
 
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusinvinventory-addsection", 
                                                    "[".$idmachine."] ".print_r($data, true));

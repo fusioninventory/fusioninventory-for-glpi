@@ -40,48 +40,49 @@
    ------------------------------------------------------------------------
  */
 
-// Update from 2.3.1 to 2.3.2
-function update231to232() {
-   global $LANG;
 
-   echo "<strong>Update 2.3.1 to 2.3.2</strong><br/>";
-   echo "</td>";
-   echo "</tr>";
-
-   echo "<tr class='tab_bg_1'>";
-   echo "<td align='center'>";
-
-   plugin_fusioninventory_displayMigrationMessage("232"); // Start
-
-   plugin_fusioninventory_displayMigrationMessage("232", $LANG['update'][141]); // Updating schema
-   
-   plugin_fusioninventory_displayMigrationMessage("232", $LANG['update'][141]." - import locks");
-
-   // Import OCS locks
-   if (!class_exists("PluginFusioninventoryInventoryComputerLib")) {
-      include_once(GLPI_ROOT."/plugins/fusinvinventory/inc/lib.class.php");
-   }
-   if (!class_exists("PluginFusioninventoryInventoryComputerLibhook")) {
-      include_once(GLPI_ROOT."/plugins/fusioninventory/inc/inventorycomputerlibhook.class.php");
-   }
-   if (!class_exists("PluginFusinvinventoryLock")) {
-      include_once(GLPI_ROOT."/plugins/fusinvinventory/inc/lock.class.php");
-   }
-   if (!class_exists("PluginFusioninventoryLock")) {
-      include_once(GLPI_ROOT."/plugins/fusioninventory/inc/lock.class.php");
-   }
-//   $PluginFusinvinventoryLock = new PluginFusinvinventoryLock();
-//   $PluginFusinvinventoryLock->importFromOcs();
-
-   $config = new PluginFusioninventoryConfig();
-   $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
-
-   //Add configuration entry for default state of a newly imported asset
-   if (!$config->getValue($plugins_id, 'states_id_default')) {
-      $config->addConfig($plugins_id, 'states_id_default', 0);
-   }
-   
-   plugin_fusioninventory_displayMigrationMessage("232"); // End
+function displayMigrationMessage ($id, $msg="") {
+   // display nothing
 }
 
+
+class GLPIInstall extends PHPUnit_Framework_TestCase {
+
+   public function testInstall() {
+      global $DB;
+
+      $query = "SHOW TABLES";
+      $result = $DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         $DB->query("DROP TABLE ".$data[0]);
+      }
+      
+      include_once (GLPI_ROOT . "/inc/dbmysql.class.php");
+      include_once (GLPI_CONFIG_DIR . "/config_db.php");
+      
+      // Install a fresh 0.83 DB
+      $DB  = new DB();
+      $res = $DB->runFile(GLPI_ROOT ."/install/mysql/glpi-0.83-empty.sql");
+      $this->assertTrue($res, "Fail: SQL Error during install");
+
+      // update default language
+      $query = "UPDATE `glpi_configs`
+                SET `language` = 'fr_FR'";
+      $this->assertTrue($DB->query($query), "Fail: can't set default language");
+      $query = "UPDATE `glpi_users`
+                SET `language` = 'fr_FR'";
+      $this->assertTrue($DB->query($query), "Fail: can't set users language");
+   }
+}
+
+
+
+class GLPIInstall_AllTests  {
+
+   public static function suite() {
+
+      $suite = new PHPUnit_Framework_TestSuite('GLPIInstall');
+      return $suite;
+   }
+}
 ?>

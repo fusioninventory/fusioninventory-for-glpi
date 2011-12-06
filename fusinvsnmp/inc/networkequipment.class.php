@@ -598,7 +598,7 @@ function appear_legend(id){
 //                     title="'.$LANG['setup'][252].'"
 //                     src="'.$CFG_GLPI['root_doc'].'/pics/options_search.png" class="pointer"
 //                     onclick="var w = window.open(\''.$CFG_GLPI['root_doc'].
-//                        '/front/popup.php?popup=search_config&itemtype=PluginFusinvsnmpNetworkEquipment\' ,\'glpipopup\',
+//                        '/front/popup.php?popup=search_config&itemtype=PluginFusinvsnmpNetworkEquipment\',\'glpipopup\',
 //                        \'height=400, width=1000, top=100, left=100, scrollbars=yes\' ); w.focus();"></th>';
       echo "<th>".$LANG["common"][16]."</th>";
 
