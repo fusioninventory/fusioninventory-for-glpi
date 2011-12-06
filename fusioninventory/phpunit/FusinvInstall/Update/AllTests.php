@@ -72,7 +72,7 @@ class Update extends PHPUnit_Framework_TestCase {
       $DB->query($query);
       
       // ** Insert in DB
-      $res = $DB->runFile(GLPI_ROOT ."/plugins/fusioninventory/tools/phpunit/dbupdate/i-".$version.".sql");
+      $res = $DB->runFile(GLPI_ROOT ."/plugins/fusioninventory/phpunit/FusinvInstall/Update/mysql/i-".$version.".sql");
       $this->assertTrue($res, "Fail: SQL Error during insert version ".$version);
       
       passthru("cd ../tools/ && /usr/local/bin/php -f cli_install.php");
