@@ -905,12 +905,17 @@ echo "# testHardwareModifications\n";
       $xml = simplexml_load_file($xmlFile, 'SimpleXMLElement', LIBXML_NOCDATA);
 
       // Modification of networks ports
+      $modif = 0;
       foreach ($xml->CONTENT->NETWORKS as $child) {
          $ip = rand(0, 254).".".rand(0, 254).".".rand(0, 254).".";
          $child->IPADDRESS = $ip.rand(0, 254);
          $child->IPSUBNET = $ip."0";
+         $modif++;
       }
-      $this->testNetwork($xml, $items_id, "0", $xmlFile);
+      if ($modif > 0) {
+         $this->testProlog($inputProlog, $xml->DEVICEID);
+         $this->testNetwork($xml, $items_id, "0", $xmlFile);
+      }
    }
 
    
