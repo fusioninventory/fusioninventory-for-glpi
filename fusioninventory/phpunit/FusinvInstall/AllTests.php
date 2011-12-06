@@ -58,7 +58,7 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
          return;
       }
       
-       $comparaisonSQLFile = "plugin_".$pluginname."-0.80+1.1-empty.sql";
+       $comparaisonSQLFile = "plugin_".$pluginname."-0.83+1.1-empty.sql";
        // See http://joefreeman.co.uk/blog/2009/07/php-script-to-compare-mysql-database-schemas/
        
        $file_content = file_get_contents("../../".$pluginname."/install/mysql/".$comparaisonSQLFile);
