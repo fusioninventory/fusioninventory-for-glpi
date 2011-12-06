@@ -52,22 +52,7 @@ function pluginFusinvinventoryInstall($version, $migration='') {
 
    // Installation
    // Add new module in plugin_fusioninventory (core)
-   $a_plugin = plugin_version_fusinvinventory();
-   // Create database
-   $empty_sql = "plugin_fusinvinventory-".$a_plugin['version']."-empty.sql";
-   foreach (array($empty_sql, 'usbid.sql', 'pciid.sql') as $sql) {
-      //Add tables for pciids
-      $DB_file = GLPI_ROOT ."/plugins/fusinvinventory/install/mysql/$sql";
-      $DBf_handle = fopen($DB_file, "rt");
-      $sql_query = fread($DBf_handle, filesize($DB_file));
-      fclose($DBf_handle);
-      foreach ( explode(";\n", "$sql_query") as $sql_line) {
-         if (Toolbox::get_magic_quotes_runtime()) $sql_line=Toolbox::stripslashes_deep($sql_line);
-         if (!empty($sql_line)) {
-            $DB->query($sql_line)/* or die($DB->error())*/;
-         }
-      }
-   }
+   // ** [done]
 
    // Create folder in GLPI_PLUGIN_DOC_DIR
    if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'])) {
