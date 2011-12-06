@@ -83,7 +83,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                if ($result) {
                   while ($data=$DB->fetch_array($result)) {
                      if ($communication == 'push') {
-                        $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($data['ip'],0);
+                        $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent(1, $data['a_id']);
                         if ($agentStatus ==  true) {
                            $a_agentList[] = $data['a_id'];
                         }
@@ -313,7 +313,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
          if ($result = $DB->query($query)) {
             while ($data=$DB->fetch_array($result)) {
                if ($communication == 'push') {
-                  $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($data['ip'],0);
+                  $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent(1, $data['a_id']);
                   if ($agentStatus ==  true) {
                      if (!in_array($a_agentList,$data['a_id'])) {
                         $a_agentList[] = $data['a_id'];
