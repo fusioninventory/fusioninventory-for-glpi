@@ -54,7 +54,7 @@ if(!isset($_POST["order"])) $_POST["order"] = "";
 if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 
 $PluginFusinvinventoryBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
-$PluginFusinvinventoryCriteria = new PluginFusinvinventoryCriteria();
+$PluginFusinvinventoryCriteria = new PluginFusioninventoryInventoryComputerCriteria();
 $fields = $PluginFusinvinventoryCriteria->find("");
 
 foreach ($fields as $id=>$data) {

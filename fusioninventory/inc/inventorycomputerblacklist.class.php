@@ -91,7 +91,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
    function defineTabs($options=array()){
       global $LANG;
 
-      $PluginFusinvinventoryCriteria = new PluginFusinvinventoryCriteria();
+      $PluginFusinvinventoryCriteria = new PluginFusioninventoryInventoryComputerCriteria();
 
       $ong = array();
       $i = 1;
@@ -132,7 +132,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
       echo "</td>";
       echo "<td>".$LANG['common'][16]."</td>";
       echo "<td>";
-      Dropdown::show('PluginFusinvinventoryCriteria', array('name' => 'plugin_fusioninventory_criterium_id',
+      Dropdown::show('PluginFusioninventoryInventoryComputerCriteria', array('name' => 'plugin_fusioninventory_criterium_id',
                                                             'value' => $this->fields['plugin_fusioninventory_criterium_id']));
       echo "</td>";
       echo "</tr>";
@@ -159,7 +159,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
          $xml->CONTENT->BIOS->SSN = trim($xml->CONTENT->BIOS->SSN);
       }
 
-      $PluginFusinvinventoryCriteria = new PluginFusinvinventoryCriteria();
+      $PluginFusinvinventoryCriteria = new PluginFusioninventoryInventoryComputerCriteria();
       $fields = $PluginFusinvinventoryCriteria->find("");
       
       foreach($fields as $id=>$data) {
