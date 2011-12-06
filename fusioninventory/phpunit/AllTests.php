@@ -125,6 +125,7 @@ require_once 'GLPIInstall/AllTests.php';
 require_once 'FusinvInstall/AllTests.php';
 require_once 'InventoryComputer/AllTests.php';
 require_once 'Rules/AllTests.php';
+require_once 'Netinventory/AllTests.php';
 
 require_once 'emulatoragent.php';
 
@@ -135,6 +136,7 @@ class AllTests {
       $suite->addTest(FusinvInstall_AllTests::suite());
       $suite->addTest(InventoryComputer_AllTests::suite());
       $suite->addTest(Rules_AllTests::suite());
+      $suite->addTest(Netinventory_AllTests::suite());
       return $suite;
    }
 }
