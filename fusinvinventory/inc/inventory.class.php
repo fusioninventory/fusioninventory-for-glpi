@@ -56,7 +56,6 @@ class PluginFusinvinventoryInventory {
    * @return nothing (import ok) / error string (import ko)
    **/
    function import($p_DEVICEID, $p_CONTENT, $p_xml) {
-      global $LANG;
       global $DB;
 
       $errors = '';

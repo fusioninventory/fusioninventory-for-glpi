@@ -213,17 +213,17 @@ class PluginFusioninventoryCommunication {
 
       while ($token !== false) {
          // 1. open and closing tags on same line - no change
-         if (preg_match('/.+<\/\w[^>]*>$/', $token, $matches)) :
+         if (preg_match('/.+<\/\w[^>]*>$/', $token, $matches)) {
             $indent=0;
          // 2. closing tag - outdent now
-         elseif (preg_match('/^<\/\w/', $token, $matches)) :
+         } else if (preg_match('/^<\/\w/', $token, $matches)) {
             $pad = $pad-3;
          // 3. opening tag - don't pad this one, only subsequent tags
-         elseif (preg_match('/^<\w[^>]*[^\/]>.*$/', $token, $matches)) :
+         } else if (preg_match('/^<\w[^>]*[^\/]>.*$/', $token, $matches)) {
             $indent=3;
-         else :
+         } else {
             $indent = 0;
-         endif;
+         }
 
          $line    = Toolbox::str_pad($token, strlen($token)+$pad, '  ', STR_PAD_LEFT);
          $result .= $line . "\n";

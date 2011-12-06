@@ -215,7 +215,7 @@ class PluginFusioninventoryMenu {
       echo "<table>";
       foreach ($a_menu as $menu_id) {
          echo "<tr>";
-         $menu_id['pic'] = str_replace("/menu_","/menu_mini_" ,$menu_id['pic']);
+         $menu_id['pic'] = str_replace("/menu_","/menu_mini_",$menu_id['pic']);
          echo "<th>
                <img src='".$menu_id['pic']."' width='16' height='16'/></th>";
          echo "<th colspan='".(count($a_menu) - 1)."' width='190'>

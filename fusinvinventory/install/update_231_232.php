@@ -42,7 +42,7 @@
 
 // Update from 2.3.1 to 2.3.2
 function update231to232() {
-   global $DB, $CFG_GLPI, $LANG;
+   global $LANG;
 
    echo "<strong>Update 2.3.1 to 2.3.2</strong><br/>";
    echo "</td>";

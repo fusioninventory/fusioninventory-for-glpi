@@ -40,37 +40,49 @@
    ------------------------------------------------------------------------
  */
 
-define('GLPI_ROOT', '../../..');
-include (GLPI_ROOT . "/inc/includes.php");
-header("Content-Type: text/html; charset=UTF-8");
-Html::header_nocache();
 
-if(!isset($_POST["id"])) {
-   exit();
+function displayMigrationMessage ($id, $msg="") {
+   // display nothing
 }
 
-if (!isset($_POST["sort"])) {
-   $_POST["sort"] = "";
-}
-if (!isset($_POST["order"])) {
-   $_POST["order"] = "";
-}
-if (!isset($_POST["withtemplate"])) {
-   $_POST["withtemplate"] = "";
-}
 
-$PluginFusinvinventoryBlacklist = new PluginFusinvinventoryBlacklist();
-$PluginFusinvinventoryCriteria = new PluginFusinvinventoryCriteria();
-$fields = $PluginFusinvinventoryCriteria->find("");
+class GLPIInstall extends PHPUnit_Framework_TestCase {
 
-foreach ($fields as $id=>$data) {
-   if (($id == $_POST['glpi_tab']) OR ($_POST['glpi_tab'] == "-1")) {
-      //$PluginFusinvinventoryBlacklist->showArray($id);
-      echo "<br/>";
-      $PluginFusinvinventoryBlacklist->addForm($id);
+   public function testInstall() {
+      global $DB;
+
+      $query = "SHOW TABLES";
+      $result = $DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         $DB->query("DROP TABLE ".$data[0]);
+      }
+      
+      include_once (GLPI_ROOT . "/inc/dbmysql.class.php");
+      include_once (GLPI_CONFIG_DIR . "/config_db.php");
+      
+      // Install a fresh 0.80.5 DB
+      $DB  = new DB();
+      $res = $DB->runFile(GLPI_ROOT ."/install/mysql/glpi-0.80.3-empty.sql");
+      $this->assertTrue($res, "Fail: SQL Error during install");
+
+      // update default language
+      $query = "UPDATE `glpi_configs`
+                SET `language` = 'fr_FR'";
+      $this->assertTrue($DB->query($query), "Fail: can't set default language");
+      $query = "UPDATE `glpi_users`
+                SET `language` = 'fr_FR'";
+      $this->assertTrue($DB->query($query), "Fail: can't set users language");
    }
 }
 
-Html::ajaxFooter();
 
+
+class GLPIInstall_AllTests  {
+
+   public static function suite() {
+
+      $suite = new PHPUnit_Framework_TestSuite('GLPIInstall');
+      return $suite;
+   }
+}
 ?>

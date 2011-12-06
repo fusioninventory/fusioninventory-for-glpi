@@ -180,7 +180,7 @@ class PluginFusinvinventoryStaticmisc {
    *
    **/
    static function task_definitionselection_PluginFusioninventoryCredentialIp_ESX($title) {
-      global $DB, $LANG;
+      global $DB;
 
       $query = "SELECT `a`.`id`, `a`.`name` 
                 FROM `glpi_plugin_fusioninventory_credentialips` as `a` 
@@ -250,7 +250,6 @@ class PluginFusinvinventoryStaticmisc {
 
    
    static function task_actionselection_PluginFusioninventoryAgent_ESX() {
-      global $LANG;
       
       $array = array();
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
@@ -272,7 +271,6 @@ class PluginFusinvinventoryStaticmisc {
     * @return an array of parameters
     */
    static function task_ESX_getParameters() {
-      global $CFG_GLPI;
 
       return array ('periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'ESX', 
                     'remote' => PluginFusioninventoryAgentmodule::getUrlForModule('ESX'));

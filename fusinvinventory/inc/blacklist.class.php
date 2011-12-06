@@ -89,7 +89,6 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
 
    
    function defineTabs($options=array()){
-      global $LANG;
 
       $PluginFusinvinventoryCriteria = new PluginFusinvinventoryCriteria();
 

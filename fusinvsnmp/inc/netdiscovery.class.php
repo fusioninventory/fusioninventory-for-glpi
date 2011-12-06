@@ -97,13 +97,10 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
                if ($PluginFusioninventoryTask->fields['communication'] == 'pull') {
                   $a_agentlist[$agent_id] = 1;
                } else {
-                  $a_ip = $PluginFusioninventoryAgent->getIPs($agent_id);
                   $PluginFusioninventoryAgent->getFromDB($agent_id);
-                  foreach($a_ip as $ip) {
-                     $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($ip,0);
-                     if ($agentStatus) {
-                        $a_agentlist[$agent_id] = $ip;
-                     }
+                  $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent('1',$agent_id);
+                  if ($agentStatus) {
+                     $a_agentlist[$agent_id] = 1;
                   }
                }
             }
@@ -113,13 +110,12 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
          $a_agents = $PluginFusioninventoryAgentmodule->getAgentsCanDo('NETDISCOVERY');
          foreach($a_agents as $data) {
             if (($count_ip / 10) >= count($a_agentlist)) {
-               $a_ip = $PluginFusioninventoryAgent->getIPs($data['id']);
                $PluginFusioninventoryAgent->getFromDB($data['id']);
                foreach($a_ip as $ip) {
                   if ($PluginFusioninventoryTask->fields['communication'] == 'push') {
-                     $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($ip,0);
+                     $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent('1',$data['id']);
                      if ($agentStatus) {
-                        $a_agentlist[$data['id']] = $ip;
+                        $a_agentlist[$data['id']] = 1;
                      }
                   } else if ($PluginFusioninventoryTask->fields['communication'] == 'pull') {
                      $a_agentlist[$data['id']] = 1;

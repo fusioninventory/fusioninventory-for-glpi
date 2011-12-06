@@ -40,37 +40,43 @@
    ------------------------------------------------------------------------
  */
 
-define('GLPI_ROOT', '../../..');
-include (GLPI_ROOT . "/inc/includes.php");
-header("Content-Type: text/html; charset=UTF-8");
-Html::header_nocache();
+class Install extends PHPUnit_Framework_TestCase {
 
-if(!isset($_POST["id"])) {
-   exit();
-}
+   public function testInstall() {
+      global $DB;
 
-if (!isset($_POST["sort"])) {
-   $_POST["sort"] = "";
-}
-if (!isset($_POST["order"])) {
-   $_POST["order"] = "";
-}
-if (!isset($_POST["withtemplate"])) {
-   $_POST["withtemplate"] = "";
-}
+      // Delete if Table of FusionInventory or Tracker yet in DB
+      $query = "SHOW TABLES";
+      $result = $DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         if (strstr($data[0], "tracker")
+                 OR strstr($data[0], "fusi")) {
+            $DB->query("DROP TABLE ".$data[0]);
+         }
+      }
 
-$PluginFusinvinventoryBlacklist = new PluginFusinvinventoryBlacklist();
-$PluginFusinvinventoryCriteria = new PluginFusinvinventoryCriteria();
-$fields = $PluginFusinvinventoryCriteria->find("");
-
-foreach ($fields as $id=>$data) {
-   if (($id == $_POST['glpi_tab']) OR ($_POST['glpi_tab'] == "-1")) {
-      //$PluginFusinvinventoryBlacklist->showArray($id);
-      echo "<br/>";
-      $PluginFusinvinventoryBlacklist->addForm($id);
+      passthru("cd ../tools && /usr/local/bin/php -f cli_install.php");
+      
+      $FusinvInstall = new FusinvInstall();
+      $FusinvInstall->testDB("fusioninventory");
+      
+      $FusinvInstall->testDB("fusinvinventory");
+      
+      $FusinvInstall->testDB("fusinvsnmp");
+      
+      $FusinvInstall->testDB("fusinvdeploy");
+      
    }
 }
 
-Html::ajaxFooter();
 
+
+class Install_AllTests  {
+
+   public static function suite() {
+
+      $suite = new PHPUnit_Framework_TestSuite('Install');
+      return $suite;
+   }
+}
 ?>

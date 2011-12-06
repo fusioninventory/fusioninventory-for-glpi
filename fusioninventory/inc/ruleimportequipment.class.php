@@ -731,7 +731,7 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
                $types = $this->getTypes();
                ksort($types);
 
-               Dropdown::dropdownTypes($name, $value ,array_keys($types));
+               Dropdown::dropdownTypes($name, $value,array_keys($types));
                $display = true;
                break;
 

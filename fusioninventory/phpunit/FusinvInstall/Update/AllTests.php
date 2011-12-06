@@ -40,37 +40,64 @@
    ------------------------------------------------------------------------
  */
 
-define('GLPI_ROOT', '../../..');
-include (GLPI_ROOT . "/inc/includes.php");
-header("Content-Type: text/html; charset=UTF-8");
-Html::header_nocache();
+class Update extends PHPUnit_Framework_TestCase {
 
-if(!isset($_POST["id"])) {
-   exit();
-}
+   public function testUpdate() {
+      
+      $Update = new Update();
+      $Update->Update("2.3.3");
+      $Update->Update("2.1.3");
+   }
+   
+   
+   function Update($version = '') {
+      global $DB;
 
-if (!isset($_POST["sort"])) {
-   $_POST["sort"] = "";
-}
-if (!isset($_POST["order"])) {
-   $_POST["order"] = "";
-}
-if (!isset($_POST["withtemplate"])) {
-   $_POST["withtemplate"] = "";
-}
-
-$PluginFusinvinventoryBlacklist = new PluginFusinvinventoryBlacklist();
-$PluginFusinvinventoryCriteria = new PluginFusinvinventoryCriteria();
-$fields = $PluginFusinvinventoryCriteria->find("");
-
-foreach ($fields as $id=>$data) {
-   if (($id == $_POST['glpi_tab']) OR ($_POST['glpi_tab'] == "-1")) {
-      //$PluginFusinvinventoryBlacklist->showArray($id);
-      echo "<br/>";
-      $PluginFusinvinventoryBlacklist->addForm($id);
+      if ($version == '') {
+         return;
+      }
+      $GLPIInstall = new GLPIInstall();
+      $GLPIInstall->testInstall();
+      
+      $query = "SHOW TABLES";
+      $result = $DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         if (strstr($data[0], "tracker")
+                 OR strstr($data[0], "fusi")) {
+            $DB->query("DROP TABLE ".$data[0]);
+         }
+      }
+      $query = "DELETE FROM `glpi_displaypreferences` 
+         WHERE `itemtype` LIKE 'PluginFus%'";
+      $DB->query($query);
+      
+      // ** Insert in DB
+      $res = $DB->runFile(GLPI_ROOT ."/plugins/fusioninventory/tools/phpunit/dbupdate/i-".$version.".sql");
+      $this->assertTrue($res, "Fail: SQL Error during insert version ".$version);
+      
+      passthru("cd ../tools/ && /usr/local/bin/php -f cli_install.php");
+      
+      $FusinvInstall = new FusinvInstall();
+      $FusinvInstall->testDB("fusioninventory");
+      
+      $FusinvInstall->testDB("fusinvinventory");
+      
+      $FusinvInstall->testDB("fusinvsnmp");
+      
+      $FusinvInstall->testDB("fusinvdeploy");
+      
    }
 }
 
-Html::ajaxFooter();
 
+
+class Update_AllTests  {
+
+   public static function suite() {
+
+      $suite = new PHPUnit_Framework_TestSuite('Update');
+      return $suite;
+      
+   }
+}
 ?>
