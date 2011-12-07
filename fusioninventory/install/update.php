@@ -1680,6 +1680,46 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $migration->migrationOneTable($newTable);
 
          
+
+   /*
+    * Table glpi_plugin_fusioninventory_ignoredimportdevices
+    */
+      $newTable = "glpi_plugin_fusioninventory_inventorycomputercriterias";      
+      $migration->renameTable("glpi_plugin_fusinvinventory_criterias", $newTable);
+      
+      
+      
+   /*
+    * Table glpi_plugin_fusioninventory_inventorycomputerlibserialization
+    */
+      $newTable = "glpi_plugin_fusioninventory_inventorycomputerlibserialization";      
+      $migration->renameTable("glpi_plugin_fusinvinventory_libserialization", $newTable);
+      
+    
+      
+   /*
+    * Table glpi_plugin_fusioninventory_inventorycomputerblacklists
+    */
+      $newTable = "glpi_plugin_fusioninventory_inventorycomputerblacklists";      
+      $migration->renameTable("glpi_plugin_fusinvinventory_blacklists", $newTable);
+      
+      
+      
+   /*
+    * Table glpi_plugin_fusioninventory_inventorycomputerantivirus
+    */
+      $newTable = "glpi_plugin_fusioninventory_inventorycomputerantivirus";      
+      $migration->renameTable("glpi_plugin_fusinvinventory_antivirus", $newTable);
+      
+      
+      
+   /*
+    * Table glpi_plugin_fusioninventory_inventorycomputercomputers
+    */
+      $newTable = "glpi_plugin_fusioninventory_inventorycomputercomputers";      
+      $migration->renameTable("glpi_plugin_fusinvinventory_computers", $newTable);
+      
+      
       
    /*
     * Table Delete old table not used
@@ -1732,7 +1772,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       if (TableExists("glpi_plugin_fusioninventory_computers")) {
          $DB->query("DROP TABLE `glpi_plugin_fusioninventory_computers`");
       }
-      
       
       
    $migration->executeMigration();
@@ -1802,7 +1841,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       SET `itemtype`='PluginFusioninventoryAgent'
       WHERE `itemtype`='5158' ";
    $DB->query($sql);
-   
+   $sql = "UPDATE `glpi_displaypreferences`
+      SET `itemtype`='PluginFusioninventoryInventoryComputerBlacklist'
+      WHERE `itemtype`='PluginFusinvinventoryBlacklist' ";
+   $DB->query($sql);
    
    /*
     * Convert taskjob definition from PluginFusinvsnmpIPRange to PluginFusioninventoryIPRange

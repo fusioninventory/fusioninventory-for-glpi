@@ -46,7 +46,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
-   var $table = "glpi_plugin_fusinvinventory_libserialization";
+   var $table = "glpi_plugin_fusioninventory_inventorycomputerlibserialization";
 
 
    /**

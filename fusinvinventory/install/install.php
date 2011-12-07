@@ -65,26 +65,7 @@ function pluginFusinvinventoryInstall($version, $migration='') {
    PluginFusioninventoryProfile::initProfile($a_plugin['shortname'], $plugins_id);
    PluginFusioninventoryProfile::changeProfile($plugins_id);
 
-   $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
-   $input = array();
-   $input['plugins_id'] = $plugins_id;
-   $input['modulename'] = "INVENTORY";
-   $input['is_active']  = 1;
-   $input['exceptions'] = exportArrayToDB(array());
-   $input['url']        = '';
-   $PluginFusioninventoryAgentmodule->add($input);
 
-   $input['modulename'] = "ESX";
-   $input['is_active']  = 0;
-   $url= '';
-   if (isset($_SERVER['HTTP_REFERER'])) {
-      $url = $_SERVER['HTTP_REFERER'];
-   }
-   $input['url'] = PluginFusioninventoryCommunicationRest::getDefaultRestURL($_SERVER['HTTP_REFERER'], 
-                                                                              'fusinvinventory', 
-                                                                              'esx');
-
-   $PluginFusioninventoryAgentmodule->add($input);
 
     include(GLPI_ROOT . "/plugins/fusinvinventory/inc/config.class.php");
    // Create configuration

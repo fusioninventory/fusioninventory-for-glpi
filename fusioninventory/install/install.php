@@ -194,6 +194,7 @@ function pluginFusioninventoryInstall($version, $migration='') {
                     ('users_id', '".$users_id."', '".$plugins_id."')";
    $DB->query($query);
 
+   // * Register Agent TASKS
    PluginFusioninventoryProfile::changeProfile($plugins_id);
    $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
    $input = array();
@@ -202,6 +203,29 @@ function pluginFusioninventoryInstall($version, $migration='') {
    $input['is_active']  = 0;
    $input['exceptions'] = exportArrayToDB(array());
    $PluginFusioninventoryAgentmodule->add($input);
+   
+   $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
+   $input = array();
+   $input['plugins_id'] = $plugins_id;
+   $input['modulename'] = "INVENTORY";
+   $input['is_active']  = 1;
+   $input['exceptions'] = exportArrayToDB(array());
+   $input['url']        = '';
+   $PluginFusioninventoryAgentmodule->add($input);
+
+   $input['modulename'] = "ESX";
+   $input['is_active']  = 0;
+   $url= '';
+   if (isset($_SERVER['HTTP_REFERER'])) {
+      $url = $_SERVER['HTTP_REFERER'];
+   }
+   $input['url'] = PluginFusioninventoryCommunicationRest::getDefaultRestURL($_SERVER['HTTP_REFERER'], 
+                                                                              'fusinvinventory', 
+                                                                              'esx');
+   $PluginFusioninventoryAgentmodule->add($input);
+   
+   
+   
 
    CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '60', 
                       array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30));
