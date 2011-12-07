@@ -476,9 +476,6 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
             $this->assertEquals($pluginFusioninventoryUnknownDevice->fields['hub'],
                               '0', '(8) Hub connected on port fa0/1 of switch 1');
          }
-
-         
-         
    }
 
 
@@ -538,6 +535,13 @@ class Hub_AllTests  {
 
    public static function suite() {
 
+      $GLPIInstall = new GLPIInstall();
+      $Install = new Install();
+      $GLPIInstall->testInstall();
+      $Install->testInstall();
+      
+      Config::detectRootDoc();
+      
       $suite = new PHPUnit_Framework_TestSuite('Hub');
       return $suite;
    }
