@@ -913,7 +913,7 @@ echo "# testHardwareModifications\n";
          $modif++;
       }
       if ($modif > 0) {
-         $this->testProlog($inputProlog, $xml->DEVICEID);
+         $this->testSendinventory($xmlFile, $xml->DEVICEID);
          $this->testNetwork($xml, $items_id, "0", $xmlFile);
       }
    }
