@@ -491,7 +491,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
       }
 
       $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi080/plugins/fusioninventory/front/communication.php";
+      $emulatorAgent->server_urlpath = "/fusion0.80/plugins/fusioninventory/front/communication.php";
       if (empty($xmlstring)) {
          $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
       } else {
