@@ -4,7 +4,7 @@
  
     <target name="ci"
         description="Tache principale d'integration continue"
-        depends="clean,phpcs,phpmd,phpunit"
+        depends="clean,phpunit"
     />
 
     <target name="clean" description="Vide les repertoires logs">
