@@ -1,29 +1,31 @@
 <?php
 
-define('PHPUnit_MAIN_METHOD', 'Plugins_Fusioninventory_TestImortRules::main');
+/*
+   ------------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
-if (!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', '../../../..');
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ------------------------------------------------------------------------
 
-   require_once GLPI_ROOT."/inc/includes.php";
-   $_SESSION['glpi_use_mode'] = 2;
-   $_SESSION['glpiactiveprofile']['id'] = 4;
+   LICENSE
 
-   ini_set('display_errors','On');
-   error_reporting(E_ALL | E_STRICT);
-   set_error_handler("userErrorHandler");
+   This file is part of FusionInventory project.
 
-   // Backup present DB
-   include_once("inc/backup.php");
-   backupMySQL();
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-   $_SESSION["glpilanguage"] = 'fr_FR';
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   // Install
-   include_once("inc/installation.php");
-   installGLPI();
-   installFusionPlugins();
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
+<<<<<<< HEAD:fusioninventory/tools/phpunit/TestImportRules.php
    Session::loadLanguage();
    include_once(GLPI_ROOT."/locales/fr_FR.php");
    include_once(GLPI_ROOT."/plugins/fusioninventory/locales/fr_FR.php");
@@ -32,7 +34,710 @@ if (!defined('GLPI_ROOT')) {
    $CFG_GLPI["root_doc"] = GLPI_ROOT;
 }
 include_once('emulatoragent.php');
+=======
+   ------------------------------------------------------------------------
+>>>>>>> glpi0.80:fusioninventory/phpunit/Rules/AllTests.php
 
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
+ */
+
+class Rules extends PHPUnit_Framework_TestCase {
+
+
+   /*
+   * No rules
+   *   => Computer must be created in Computer type
+   *   => networkequipment must be created in network equipment (SNMP inventory)
+   *   => printer must be created in printer (SNMP inventory)
+   *   => type defined in discovery created into it's itemtype
+   *   => type not defined in discovery created into unknown devices
+   */
+   public function testNoRule() {
+      global $DB, $XML;
+      
+     // Disable all rules
+     $query = "UPDATE `glpi_rules` SET `is_active` = '0' 
+        WHERE `sub_type`='PluginFusioninventoryInventoryRuleImport' ";
+     $DB->query($query);
+
+      // Activate Extra-debug
+      $plugin = new Plugin();
+      $data = $plugin->find("`name` = 'FusionInventory'");
+      $fields = current($data);
+      $plugins_id = $fields['id'];
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+      $PluginFusioninventoryConfig->updateConfigType($plugins_id, "extradebug", "1");
+      
+      // Activate all modules for all agents
+       $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
+         SET `is_active`='1' ";
+      $DB->query($query);
+      
+       
+      // ** Import Computer => Computer must be created in Computer type
+      $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $xml = simplexml_load_string($XML['Computer'],'SimpleXMLElement', LIBXML_NOCDATA);
+      $emulatorAgent = new emulatorAgent;
+      $emulatorAgent->server_urlpath = "/fusion0.83/plugins/fusioninventory/";
+      $prologXML = $emulatorAgent->sendProlog($XML['Computer']);
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+      $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
+      $this->assertEquals(count($a_agent), 1 , 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
+      $computer = new Computer();
+      $a_computer = $computer->find("`name`='port004'");
+      $this->assertEquals(count($a_computer), 1 , 'Problem import Computer ('.(string)$xml->DEVICEID.') not right created!');
+      $computerdata = current($a_computer);
+      $this->assertEquals($computerdata['entities_id'], 0 , 'Problem On computer entity, must be created in root entity instead '.$computerdata['entities_id']);
+      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
+      $this->assertEquals(count($a_unknown), 0 , 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device created');
+//      $computer->delete(array('id'=>1), 1);      
+             
+      // ** Import networkequipment  => networkequipment must be created in network equipment (SNMP inventory)
+       
+         // Add task and taskjob
+         $pluginFusioninventoryTask = new PluginFusioninventoryTask();
+         $pluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+         $pluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+         
+         $input = array();
+         $input['entities_id'] = '0';
+         $input['name'] = 'snmpquery';
+         $tasks_id = $pluginFusioninventoryTask->add($input);
+
+         $input = array();
+         $input['plugin_fusioninventory_tasks_id'] = $tasks_id;
+         $input['method'] = 'snmpquery';
+         $input['status'] = 1;
+         $taskjobs_id = $pluginFusioninventoryTaskjob->add($input);
+
+         $input = array();
+         $input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
+         $input['itemtype'] = 'NetworkEquipment';
+         $input['items_id'] = '1';
+         $input['state'] = 1;
+         $input['plugin_fusioninventory_agents_id'] = 1;
+         $pluginFusioninventoryTaskjobstatus->add($input);
+         $input['items_id'] = '2';
+         $pluginFusioninventoryTaskjobstatus->add($input);
+         
+         $this->testSendinventory("toto", $XML['NetworkEquipment'], 0);
+         $networkEquipment = new NetworkEquipment();
+         $a_switch = $networkEquipment->find("`name`='switch2960-002'");
+         $this->assertEquals(count($a_switch), 1 , 'Problem import switch (switch2960-002) not right created!');
+         $switchdata = current($a_switch);
+         $this->assertEquals($switchdata['entities_id'], 0 , 'Problem On switch entity, must be created in root entity instead '.$switchdata['entities_id']);
+         $a_unknown = $pluginFusioninventoryUnknownDevice->find();
+         $this->assertEquals(count($a_unknown), 0 , 'Problem import switch (switch2960-002), unknown device created');
+//         $networkEquipment->delete(array('id'=>1), 1);
+      
+       // ** [TODO] Import printer 
+
+          
+         
+      // ** Unknowndevice_Computer => Computer must be created in Computer type
+      $input = array();
+      $input['entities_id'] = '0';
+      $input['name'] = 'netdiscovery';
+      $tasks_id = $pluginFusioninventoryTask->add($input);
+
+      $input = array();
+      $input['plugin_fusioninventory_tasks_id'] = $tasks_id;
+      $input['method'] = 'netdiscovery';
+      $input['status'] = 1;
+      $taskjobs_id = $pluginFusioninventoryTaskjob->add($input);
+
+      $input = array();
+      $input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
+      $input['itemtype'] = 'NetworkEquipment';
+      $input['items_id'] = '1';
+      $input['state'] = 1;
+      $input['plugin_fusioninventory_agents_id'] = 1;
+      $pluginFusioninventoryTaskjobstatus->add($input);
+      $input['items_id'] = '2';
+      $pluginFusioninventoryTaskjobstatus->add($input);
+      
+      $this->testSendinventory("toto", $XML['Unknowndevice_Computer'], 0);
+      $a_computer = $computer->find("`name`='Test2'");
+      $this->assertEquals(count($a_computer), 1 , 'Problem import discovered Computer (Test2) not right created!');
+      $computerdata = current($a_computer);
+      $this->assertEquals($computerdata['entities_id'], 0 , 'Problem On computer entity, must be created in root entity instead '.$computerdata['entities_id']);
+      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
+      $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered Computer (Test2), unknown device created');
+//      $computer->delete(array('id'=>1), 1);
+       
+      
+      // ** Unknowndevice_NetworkEquipment => NetworkEquipment must be created in NetworkEquipment type
+      $this->testSendinventory("toto", $XML['Unknowndevice_NetworkEquipment'], 0);
+      $a_networkequipment = $networkEquipment->find("`name`='Procurve 2524'");
+      $this->assertEquals(count($a_networkequipment), 1 , 'Problem import discovered networkequipment (Procurve 2524) not right created!');
+      $switchdata = current($a_networkequipment);
+      $this->assertEquals($switchdata['entities_id'], 0 , 'Problem On switch entity, must be created in root entity instead '.$switchdata['entities_id']);
+      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
+      $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered networkequipment (Procurve 2524), unknown device created');
+
+      
+      // ** Unknowndevice_Printer => Printer must be created in Printer type
+      $this->testSendinventory("toto", $XML['Unknowndevice_Printer'], 0);
+      $printer = new Printer();
+      $a_printer = $printer->find("`name`='COPIEUR-1'");
+      $this->assertEquals(count($a_printer), 1 , 'Problem import discovered printer (COPIEUR-1) not right created!');
+      $printerdata = current($a_printer);
+      $this->assertEquals($printerdata['entities_id'], 0 , 'Problem On printer entity, must be created in root entity instead '.$printerdata['entities_id']);
+      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
+      $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered printer (COPIEUR-1), unknown device created');
+
+      
+      // ** Unknowndevice_notype => type not defined in discovery created into unknown devices
+      $this->testSendinventory("toto", $XML['Unknowndevice_notype'], 0);
+      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
+      $this->assertEquals(count($a_unknown), 1 , 'Problem import discovered device with no type not right created!');
+      $unknowndata = current($a_unknown);
+      $this->assertEquals($unknowndata['entities_id'], 0 , 'Problem On unknown entity, must be created in root entity instead '.$unknowndata['entities_id']);
+      $unknown = current($a_unknown);
+      $pluginFusioninventoryUnknownDevice->delete($unknown, 1);      
+      
+   }
+
+    
+   
+   /*
+    *  Computer: Rule 1/ itemtype is computer
+    *                    -> FusionInventory link Assign Link if possible, else create device
+    *            Rule 2/ name is * 
+    *                    -> FusionInventory link Assign Link if possible, else create device
+    *    => Computer may be created in Computer type and not in unknown device
+    */
+   public function testImportComputerwithTypeOnly() {
+      global $DB, $XML;
+      
+      // Add the rule with criterial only if type = Computer
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Computer type import';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
+      $input['ranking'] = 0;
+      $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "itemtype";
+         $input['pattern']= 'Computer';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '0';
+         $ruleaction->add($input);
+         
+      // Create rule for import into unknown devices
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Unknown device import';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
+      $input['ranking'] = 1;
+      $rule2_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule2_id;
+         $input['criteria'] = "name";
+         $input['pattern']= '*';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule2_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '0';
+         $ruleaction->add($input);
+
+         
+      // ** Import Computer XML
+      $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $xml = simplexml_load_string($XML['Computer'],'SimpleXMLElement', LIBXML_NOCDATA);
+      $emulatorAgent = new emulatorAgent;
+      $emulatorAgent->server_urlpath = "/fusion0.83/plugins/fusioninventory/";
+      $prologXML = $emulatorAgent->sendProlog($XML['Computer']);
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+      $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
+      $this->assertEquals(count($a_agent), 1 , 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
+      $computer = new Computer();
+      $a_computer = $computer->find("`name`='port004'");
+      $this->assertEquals(count($a_computer), 2 , 'Problem import Computer ('.(string)$xml->DEVICEID.') not right created!');
+      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
+      $this->assertEquals(count($a_unknown), 0 , 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device created');
+         
+         
+      // ** Import discovered Computer
+      $this->testSendinventory("toto", $XML['Unknowndevice_Computer'], 0);
+      $a_computer = $computer->find("`name`='Test2'");
+      $this->assertEquals(count($a_computer), 2 , 'Problem import discovered Computer (Test2) not right created!');
+      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
+      $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered Computer (Test2), unknown device created');
+
+      
+      $rulecollection->delete(array('id'=>$rule_id), 1);
+      $rulecollection->delete(array('id'=>$rule2_id), 1);
+   }
+   
+   
+
+   /*
+    *  Computer: Rule 1/ itemtype is computer
+    *                    name exist
+    *                    -> FusionInventory link Assign Link if possible, else create device
+    *            Rule 2/ name is * 
+    *                    -> FusionInventory link Assign Link if possible, else create device
+    *    => Computer may be created in Computer type and not in unknown device
+    */
+   public function testImportComputerwithTypeAndNameExist() {
+      global $DB, $XML;
+      
+      // Add the rule with criterial only if type = Computer
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Computer type import';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
+      $input['ranking'] = 0;
+      $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "name";
+         $input['pattern']= 1;
+         $input['condition']=8;
+         $rulecriteria->add($input);
+         
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "itemtype";
+         $input['pattern']= 'Computer';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '0';
+         $ruleaction->add($input);
+         
+      // Create rule for import into unknown devices
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Unknown device import';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
+      $input['ranking'] = 1;
+      $rule2_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule2_id;
+         $input['criteria'] = "name";
+         $input['pattern']= '*';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule2_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '0';
+         $ruleaction->add($input);
+      
+      
+      // ** Import Computer XML (have name)
+      $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $xml = simplexml_load_string($XML['Computer'],'SimpleXMLElement', LIBXML_NOCDATA);
+      $emulatorAgent = new emulatorAgent;
+      $emulatorAgent->server_urlpath = "/fusion0.83/plugins/fusioninventory/";
+      $prologXML = $emulatorAgent->sendProlog($XML['Computer']);
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+      $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
+      $this->assertEquals(count($a_agent), 1 , 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
+      $computer = new Computer();
+      $a_computer = $computer->find("`name`='port004'");
+      $this->assertEquals(count($a_computer), 3 , 'Problem import Computer ('.(string)$xml->DEVICEID.') not right created!');
+      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
+      $this->assertEquals(count($a_unknown), 0 , 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device created');
+         
+         
+      // ** Import discovered Computer (have name)
+      $this->testSendinventory("toto", $XML['Unknowndevice_Computer'], 0);
+      $a_computer = $computer->find("`name`='Test2'");
+      $this->assertEquals(count($a_computer), 3 , 'Problem import discovered Computer (Test2) not right created!');
+      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
+      $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered Computer (Test2), unknown device created');
+
+      
+      // ** Import Computer XML (not have name)
+      $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $xmltmp = $XML['Computer'];
+      $xmltmp = str_replace(">port004<", "><", $xmltmp);
+      $xml = simplexml_load_string($xmltmp,'SimpleXMLElement', LIBXML_NOCDATA);
+      $emulatorAgent = new emulatorAgent;
+      $emulatorAgent->server_urlpath = "/fusion0.83/plugins/fusioninventory/";
+      $prologXML = $emulatorAgent->sendProlog($xmltmp);
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+      $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
+      $this->assertEquals(count($a_agent), 1 , 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
+      $computer = new Computer();
+      $a_computer = $computer->find("`name`='port004'");
+      $this->assertEquals(count($a_computer), 3 , 'Problem import Computer without name have been created into Computer instead unknown');
+      $a_computer = $computer->find("`name`=''");
+      $this->assertEquals(count($a_computer), 0 , 'Problem import Computer without name have been created into Computer instead unknown');
+      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
+      $this->assertEquals(count($a_unknown), 1 , 'Problem import Computer without name , unknown device not created');
+         
+      
+      // ** Import discovered Computer (not have name)
+      $xmltmp = $XML['Unknowndevice_Computer'];
+      $xmltmp = str_replace(">Test2<", "><", $xmltmp);
+      $this->testSendinventory("toto", $xmltmp, 0);
+      $a_computer = $computer->find("`name`='Test2'");
+      $this->assertEquals(count($a_computer), 3 , 'Problem import discovered Computer without name have been created into Computer instead unknown');
+      $a_computer = $computer->find("`name`=''");
+      $this->assertEquals(count($a_computer), 0 , 'Problem import Computer without name have been created into Computer instead unknown');
+      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
+      $this->assertEquals(count($a_unknown), 2 , 'Problem import discovered Computer without name, unknown device not created');
+
+            
+      $input = array();
+      $input['is_active']=0;
+      $input['id'] = $rule_id;
+      $rulecollection->update($input);
+      $input['id'] = $rule2_id;
+      $rulecollection->update($input);
+   }
+    
+
+    
+   /*
+    *  Computer (computer created into GLPI with good name: 
+    *            Rule 1/ itemtype is computer
+    *                    name exits
+    *                    name is present in GLPI
+    *                    -> FusionInventory link Assign Link if possible, else create device
+    *            Rule 2/ name is * 
+    *                    -> FusionInventory link Assign Link if possible, else create device
+    *    => Computer may be created in Computer type and not in unknown device
+    */
+   public function testImportComputerwithTypeAndNameExistNamePresent() {
+      global $DB, $XML;
+      
+
+      // Add the rule with criterial only if type = Computer
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Computer type import';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
+      $input['ranking'] = 0;
+      $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "name";
+         $input['pattern']= 1;
+         $input['condition']=10;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "name";
+         $input['pattern']= 1;
+         $input['condition']=8;
+         $rulecriteria->add($input);
+         
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "itemtype";
+         $input['pattern']= 'Computer';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '0';
+         $ruleaction->add($input);
+         
+      // Create rule for import into unknown devices
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Unknown device import';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
+      $input['ranking'] = 1;
+      $rule2_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule2_id;
+         $input['criteria'] = "name";
+         $input['pattern']= '*';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule2_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '0';
+         $ruleaction->add($input);
+      
+      
+         
+      // ** Import Computer XML (have name and exist in DB)
+      $computer = new Computer();
+      $computer->delete(array('id'=>3), 1);
+      $computer->delete(array('id'=>5), 1); 
+      $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $pluginFusioninventoryUnknownDevice->delete(array('id'=>2), 1);
+      $pluginFusioninventoryUnknownDevice->delete(array('id'=>3), 1);
+      $xml = simplexml_load_string($XML['Computer'],'SimpleXMLElement', LIBXML_NOCDATA);
+      $emulatorAgent = new emulatorAgent;
+      $emulatorAgent->server_urlpath = "/fusion0.83/plugins/fusioninventory/";
+      $prologXML = $emulatorAgent->sendProlog($XML['Computer']);
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+      $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
+      $this->assertEquals(count($a_agent), 1 , 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
+      $a_computer = $computer->find("`name`='port004'");
+      $this->assertEquals(count($a_computer), 1 , 'Problem import Computer ('.(string)$xml->DEVICEID.') not right created!');
+      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
+      $this->assertEquals(count($a_unknown), 0 , 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device created');
+         
+         
+         
+      // ** Import discovered Computer (have name and exist in DB)
+      $computer->delete(array('id'=>4), 1);
+      $computer->delete(array('id'=>6), 1);
+      $this->testSendinventory("toto", $XML['Unknowndevice_Computer'], 0);
+      $a_computer = $computer->find("`name`='Test2'");
+      $this->assertEquals(count($a_computer), 1 , 'Problem import discovered Computer (Test2) not right created!');
+      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
+      $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered Computer (Test2), unknown device created');
+
+         
+      // ** Import Computer XML (have name but not exist in DB)
+      $computer = new Computer();
+      $computer->delete(array('id'=>1), 1); 
+      $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $pluginFusioninventoryUnknownDevice->delete(array('id'=>2), 1);
+      $pluginFusioninventoryUnknownDevice->delete(array('id'=>3), 1);
+      $xml = simplexml_load_string($XML['Computer'],'SimpleXMLElement', LIBXML_NOCDATA);
+      $emulatorAgent = new emulatorAgent;
+      $emulatorAgent->server_urlpath = "/fusion0.83/plugins/fusioninventory/";
+      $prologXML = $emulatorAgent->sendProlog($XML['Computer']);
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+      $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
+      $this->assertEquals(count($a_agent), 1 , 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
+      $a_computer = $computer->find("`name`='port004'");
+      $this->assertEquals(count($a_computer), 0 , 'Problem import Computer ('.(string)$xml->DEVICEID.') is created!');
+      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
+      $this->assertEquals(count($a_unknown), 1 , 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device not created');
+         
+         
+      // ** Import discovered Computer (have name but not exist in DB)
+      $computer->delete(array('id'=>2), 1);
+      $this->testSendinventory("toto", $XML['Unknowndevice_Computer'], 0);
+      $a_computer = $computer->find("`name`='Test2'");
+      $this->assertEquals(count($a_computer), 0 , 'Problem import discovered Computer (Test2) created!');
+      $a_unknown = $pluginFusioninventoryUnknownDevice->find("`name`='Test2'");
+      $this->assertEquals(count($a_unknown), 1 , 'Problem import discovered Computer (Test2), unknown device not created');
+
+         
+      // ** Import Computer XML (not have name)
+      $computer->delete(array('id'=>7), 1);
+      $computer->delete(array('id'=>8), 1);
+      $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $xmltmp = $XML['Computer'];
+      $xmltmp = str_replace(">port004<", "><", $xmltmp);
+      $xml = simplexml_load_string($xmltmp,'SimpleXMLElement', LIBXML_NOCDATA);
+      $emulatorAgent = new emulatorAgent;
+      $emulatorAgent->server_urlpath = "/fusion0.83/plugins/fusioninventory/";
+      $prologXML = $emulatorAgent->sendProlog($xmltmp);
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+      $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
+      $this->assertEquals(count($a_agent), 1 , 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
+      $computer = new Computer();
+      $a_computer = $computer->find("`serial`='XA201220H'");
+      $this->assertEquals(count($a_computer), 0 , 'Problem import Computer without name have been created into Computer instead unknown');
+      $a_unknown = $pluginFusioninventoryUnknownDevice->find("`serial`='XA201220H'");
+      $this->assertEquals(count($a_unknown), 2 , 'Problem import Computer without name , unknown device not created');
+         
+                  
+      $input = array();
+      $input['is_active']=0;
+      $input['id'] = $rule_id;
+      $rulecollection->update($input);
+      $input['id'] = $rule2_id;
+      $rulecollection->update($input);
+         
+   }
+
+   
+   
+   public function testImportComputerCheckrulevalidationlocal_and_globalcriteria() {
+      global $DB, $XML;
+      
+      // Create computer only with serial and name;
+      $computer = new Computer();
+      $input = array();
+      $input['name'] = "port004";
+      $input['serial'] = "XA201220H";
+      $input['entities_id'] = 0; 
+      $computer->add($input);
+      
+      // Activation of rules
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+         // Computer serial + uuid
+         $input = array();
+         $input['is_active']=1;
+         $input['id']=6; 
+         $rule_id = $rulecollection->update($input);
+         
+         // Computer serial
+         $input = array();
+         $input['is_active']=1;
+         $input['id']=7; 
+         $rule_id = $rulecollection->update($input);
+      
+         // Computer name
+         $input = array();
+         $input['is_active']=1;
+         $input['id']=10; 
+         $rule_id = $rulecollection->update($input);
+         
+      $emulatorAgent = new emulatorAgent;
+      $emulatorAgent->server_urlpath = "/fusion0.83/plugins/fusioninventory/";
+      $prologXML = $emulatorAgent->sendProlog($XML['Computer']);
+      $a_computers = $computer->find("`serial`='XA201220H'");
+      $this->assertEquals(count($a_computers), 1 , 'Problem on global criteria of rules, 
+         these criteria must be valided to valid the rule (Computer seria = UUID)!');
+         
+   }
+    
+     
+     
+   function testSendinventory($xmlFile='', $xmlstring='', $create='0') {
+
+      if (empty($xmlFile)) {
+         echo "testSendinventory with no arguments...\n";
+         return;
+      }
+
+      $emulatorAgent = new emulatorAgent;
+      $emulatorAgent->server_urlpath = "/fusion0.83/plugins/fusioninventory/";
+      if (empty($xmlstring)) {
+         $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+      } else {
+         $xml = simplexml_load_string($xmlstring);
+      }
+
+      if ($create == '1') {
+         // Send prolog for creation of agent in GLPI
+         $input_xml = '<?xml version="1.0" encoding="UTF-8"?>
+   <REQUEST>
+     <DEVICEID>'.$xml->DEVICEID.'</DEVICEID>
+     <QUERY>PROLOG</QUERY>
+     <TOKEN>CBXTMXLU</TOKEN>
+   </REQUEST>';
+         $emulatorAgent->sendProlog($input_xml);
+         if (isset($xml->CONTENT->DEVICE)) {
+            foreach ($xml->CONTENT->DEVICE as $child) {
+               if (isset($child->INFO)) {
+                  foreach ($child->INFO as $child2) {
+                     if ($child2->TYPE == 'NETWORKING') {
+                        // Create switch in asset
+                        $NetworkEquipment = new NetworkEquipment();
+                        $input = array();
+                        if (isset($child2->SERIAL)) {
+                           $input['serial']=$child2->SERIAL;
+                        } else {
+                           $input['name']=$child2->NAME;
+                        }
+                        $input['entities_id'] = 0;
+                        $NetworkEquipment->add($input);
+                     }
+                  }
+               }
+            }
+         }
+      }
+      $input_xml = $xml->asXML();
+      $code = $emulatorAgent->sendProlog($input_xml);
+      echo $code."\n";
+   }
+   
+   
+}
+
+
+
+class Rules_AllTests  {
+
+   public static function suite() {
+      
+      $GLPIInstall = new GLPIInstall();
+      $Install = new Install();
+      $GLPIInstall->testInstall();
+      $Install->testInstall();
+      
+      
 
 // Define XML
 $XML = array();
@@ -607,700 +1312,10 @@ $XML['Unknowndevice_notype'] = '<?xml version="1.0" encoding="UTF-8"?>
      <DEVICEID>port004.bureau.siprossii.com-2010-12-30-12-24-14</DEVICEID>
   <QUERY>NETDISCOVERY</QUERY>
 </REQUEST>';
-
-/**
- * Test class for MyFile.
- * Generated by PHPUnit on 2010-08-06 at 12:05:09.
- */
-class Plugins_Fusioninventory_TestImortRules extends PHPUnit_Framework_TestCase {
-
-    public static function main() {
-        require_once 'PHPUnit/TextUI/TestRunner.php';
-
-        $suite  = new PHPUnit_Framework_TestSuite('Plugins_Fusioninventory_TestImortRules');
-        $result = PHPUnit_TextUI_TestRunner::run($suite);
-
-    }
-
-    
-    
-   /*
-   * No rules
-   *   => Computer must be created in Computer type
-   *   => networkequipment must be created in network equipment (SNMP inventory)
-   *   => printer must be created in printer (SNMP inventory)
-   *   => type defined in discovery created into it's itemtype
-   *   => type not defined in discovery created into unknown devices
-   */
-   public function testNoRule() {
-      global $DB, $XML;
       
-     // Disable all rules
-     $query = "UPDATE `glpi_rules` SET `is_active` = '0' 
-        WHERE `sub_type`='PluginFusioninventoryInventoryRuleImport' ";
-     $DB->query($query);
 
-      // Activate Extra-debug
-      $plugin = new Plugin();
-      $data = $plugin->find("`name` = 'FusionInventory'");
-      $fields = current($data);
-      $plugins_id = $fields['id'];
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
-      $PluginFusioninventoryConfig->updateConfigType($plugins_id, "extradebug", "1");
-      
-      // Activate all modules for all agents
-       $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
-         SET `is_active`='1' ";
-      $DB->query($query);
-      
-       
-      // ** Import Computer => Computer must be created in Computer type
-      $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
-      $xml = simplexml_load_string($XML['Computer'],'SimpleXMLElement', LIBXML_NOCDATA);
-      $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi080/plugins/fusioninventory/";
-      $prologXML = $emulatorAgent->sendProlog($XML['Computer']);
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-      $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
-      $this->assertEquals(count($a_agent), 1 , 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
-      $computer = new Computer();
-      $a_computer = $computer->find("`name`='port004'");
-      $this->assertEquals(count($a_computer), 1 , 'Problem import Computer ('.(string)$xml->DEVICEID.') not right created!');
-      $computerdata = current($a_computer);
-      $this->assertEquals($computerdata['entities_id'], 0 , 'Problem On computer entity, must be created in root entity instead '.$computerdata['entities_id']);
-      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 0 , 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device created');
-//      $computer->delete(array('id'=>1), 1);      
-             
-      // ** Import networkequipment  => networkequipment must be created in network equipment (SNMP inventory)
-       
-         // Add task and taskjob
-         $pluginFusioninventoryTask = new PluginFusioninventoryTask();
-         $pluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-         $pluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
-         
-         $input = array();
-         $input['entities_id'] = '0';
-         $input['name'] = 'snmpquery';
-         $tasks_id = $pluginFusioninventoryTask->add($input);
-
-         $input = array();
-         $input['plugin_fusioninventory_tasks_id'] = $tasks_id;
-         $input['method'] = 'snmpquery';
-         $input['status'] = 1;
-         $taskjobs_id = $pluginFusioninventoryTaskjob->add($input);
-
-         $input = array();
-         $input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
-         $input['itemtype'] = 'NetworkEquipment';
-         $input['items_id'] = '1';
-         $input['state'] = 1;
-         $input['plugin_fusioninventory_agents_id'] = 1;
-         $pluginFusioninventoryTaskjobstatus->add($input);
-         $input['items_id'] = '2';
-         $pluginFusioninventoryTaskjobstatus->add($input);
-         
-         $this->testSendinventory("toto", $XML['NetworkEquipment'], 0);
-         $networkEquipment = new NetworkEquipment();
-         $a_switch = $networkEquipment->find("`name`='switch2960-002'");
-         $this->assertEquals(count($a_switch), 1 , 'Problem import switch (switch2960-002) not right created!');
-         $switchdata = current($a_switch);
-         $this->assertEquals($switchdata['entities_id'], 0 , 'Problem On switch entity, must be created in root entity instead '.$switchdata['entities_id']);
-         $a_unknown = $pluginFusioninventoryUnknownDevice->find();
-         $this->assertEquals(count($a_unknown), 0 , 'Problem import switch (switch2960-002), unknown device created');
-//         $networkEquipment->delete(array('id'=>1), 1);
-      
-       // ** [TODO] Import printer 
-
-          
-         
-      // ** Unknowndevice_Computer => Computer must be created in Computer type
-      $input = array();
-      $input['entities_id'] = '0';
-      $input['name'] = 'netdiscovery';
-      $tasks_id = $pluginFusioninventoryTask->add($input);
-
-      $input = array();
-      $input['plugin_fusioninventory_tasks_id'] = $tasks_id;
-      $input['method'] = 'netdiscovery';
-      $input['status'] = 1;
-      $taskjobs_id = $pluginFusioninventoryTaskjob->add($input);
-
-      $input = array();
-      $input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
-      $input['itemtype'] = 'NetworkEquipment';
-      $input['items_id'] = '1';
-      $input['state'] = 1;
-      $input['plugin_fusioninventory_agents_id'] = 1;
-      $pluginFusioninventoryTaskjobstatus->add($input);
-      $input['items_id'] = '2';
-      $pluginFusioninventoryTaskjobstatus->add($input);
-      
-      $this->testSendinventory("toto", $XML['Unknowndevice_Computer'], 0);
-      $a_computer = $computer->find("`name`='Test2'");
-      $this->assertEquals(count($a_computer), 1 , 'Problem import discovered Computer (Test2) not right created!');
-      $computerdata = current($a_computer);
-      $this->assertEquals($computerdata['entities_id'], 0 , 'Problem On computer entity, must be created in root entity instead '.$computerdata['entities_id']);
-      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered Computer (Test2), unknown device created');
-//      $computer->delete(array('id'=>1), 1);
-       
-      
-      // ** Unknowndevice_NetworkEquipment => NetworkEquipment must be created in NetworkEquipment type
-      $this->testSendinventory("toto", $XML['Unknowndevice_NetworkEquipment'], 0);
-      $a_networkequipment = $networkEquipment->find("`name`='Procurve 2524'");
-      $this->assertEquals(count($a_networkequipment), 1 , 'Problem import discovered networkequipment (Procurve 2524) not right created!');
-      $switchdata = current($a_networkequipment);
-      $this->assertEquals($switchdata['entities_id'], 0 , 'Problem On switch entity, must be created in root entity instead '.$switchdata['entities_id']);
-      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered networkequipment (Procurve 2524), unknown device created');
-
-      
-      // ** Unknowndevice_Printer => Printer must be created in Printer type
-      $this->testSendinventory("toto", $XML['Unknowndevice_Printer'], 0);
-      $printer = new Printer();
-      $a_printer = $printer->find("`name`='COPIEUR-1'");
-      $this->assertEquals(count($a_printer), 1 , 'Problem import discovered printer (COPIEUR-1) not right created!');
-      $printerdata = current($a_printer);
-      $this->assertEquals($printerdata['entities_id'], 0 , 'Problem On printer entity, must be created in root entity instead '.$printerdata['entities_id']);
-      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered printer (COPIEUR-1), unknown device created');
-
-      
-      // ** Unknowndevice_notype => type not defined in discovery created into unknown devices
-      $this->testSendinventory("toto", $XML['Unknowndevice_notype'], 0);
-      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 1 , 'Problem import discovered device with no type not right created!');
-      $unknowndata = current($a_unknown);
-      $this->assertEquals($unknowndata['entities_id'], 0 , 'Problem On unknown entity, must be created in root entity instead '.$unknowndata['entities_id']);
-      $unknown = current($a_unknown);
-      $pluginFusioninventoryUnknownDevice->delete($unknown, 1);      
-      
+      $suite = new PHPUnit_Framework_TestSuite('Rules');
+      return $suite;
    }
-
-    
-   
-   /*
-    *  Computer: Rule 1/ itemtype is computer
-    *                    -> FusionInventory link Assign Link if possible, else create device
-    *            Rule 2/ name is * 
-    *                    -> FusionInventory link Assign Link if possible, else create device
-    *    => Computer may be created in Computer type and not in unknown device
-    */
-   public function testImportComputerwithTypeOnly() {
-      global $DB, $XML;
-      
-      // Add the rule with criterial only if type = Computer
-      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
-      $input = array();
-      $input['is_active']=1;
-      $input['name']='Computer type import';
-      $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
-      $input['ranking'] = 0;
-      $rule_id = $rulecollection->add($input);
-
-         // Add criteria
-         $rule = $rulecollection->getRuleClass();
-         $rulecriteria = new RuleCriteria(get_class($rule));
-         
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['criteria'] = "itemtype";
-         $input['pattern']= 'Computer';
-         $input['condition']=0;
-         $rulecriteria->add($input);
-
-         // Add action
-         $ruleaction = new RuleAction(get_class($rule));
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['action_type'] = 'assign';
-         $input['field'] = '_fusion';
-         $input['value'] = '0';
-         $ruleaction->add($input);
-         
-      // Create rule for import into unknown devices
-      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
-      $input = array();
-      $input['is_active']=1;
-      $input['name']='Unknown device import';
-      $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
-      $input['ranking'] = 1;
-      $rule2_id = $rulecollection->add($input);
-
-         // Add criteria
-         $rule = $rulecollection->getRuleClass();
-         $rulecriteria = new RuleCriteria(get_class($rule));
-         $input = array();
-         $input['rules_id'] = $rule2_id;
-         $input['criteria'] = "name";
-         $input['pattern']= '*';
-         $input['condition']=0;
-         $rulecriteria->add($input);
-
-         // Add action
-         $ruleaction = new RuleAction(get_class($rule));
-         $input = array();
-         $input['rules_id'] = $rule2_id;
-         $input['action_type'] = 'assign';
-         $input['field'] = '_fusion';
-         $input['value'] = '0';
-         $ruleaction->add($input);
-
-         
-      // ** Import Computer XML
-      $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
-      $xml = simplexml_load_string($XML['Computer'],'SimpleXMLElement', LIBXML_NOCDATA);
-      $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi080/plugins/fusioninventory/";
-      $prologXML = $emulatorAgent->sendProlog($XML['Computer']);
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-      $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
-      $this->assertEquals(count($a_agent), 1 , 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
-      $computer = new Computer();
-      $a_computer = $computer->find("`name`='port004'");
-      $this->assertEquals(count($a_computer), 2 , 'Problem import Computer ('.(string)$xml->DEVICEID.') not right created!');
-      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 0 , 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device created');
-         
-         
-      // ** Import discovered Computer
-      $this->testSendinventory("toto", $XML['Unknowndevice_Computer'], 0);
-      $a_computer = $computer->find("`name`='Test2'");
-      $this->assertEquals(count($a_computer), 2 , 'Problem import discovered Computer (Test2) not right created!');
-      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered Computer (Test2), unknown device created');
-
-      
-      $rulecollection->delete(array('id'=>$rule_id), 1);
-      $rulecollection->delete(array('id'=>$rule2_id), 1);
-   }
-   
-   
-
-   /*
-    *  Computer: Rule 1/ itemtype is computer
-    *                    name exist
-    *                    -> FusionInventory link Assign Link if possible, else create device
-    *            Rule 2/ name is * 
-    *                    -> FusionInventory link Assign Link if possible, else create device
-    *    => Computer may be created in Computer type and not in unknown device
-    */
-   public function testImportComputerwithTypeAndNameExist() {
-      global $DB, $XML;
-      
-      // Add the rule with criterial only if type = Computer
-      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
-      $input = array();
-      $input['is_active']=1;
-      $input['name']='Computer type import';
-      $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
-      $input['ranking'] = 0;
-      $rule_id = $rulecollection->add($input);
-
-         // Add criteria
-         $rule = $rulecollection->getRuleClass();
-         $rulecriteria = new RuleCriteria(get_class($rule));
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['criteria'] = "name";
-         $input['pattern']= 1;
-         $input['condition']=8;
-         $rulecriteria->add($input);
-         
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['criteria'] = "itemtype";
-         $input['pattern']= 'Computer';
-         $input['condition']=0;
-         $rulecriteria->add($input);
-
-         // Add action
-         $ruleaction = new RuleAction(get_class($rule));
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['action_type'] = 'assign';
-         $input['field'] = '_fusion';
-         $input['value'] = '0';
-         $ruleaction->add($input);
-         
-      // Create rule for import into unknown devices
-      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
-      $input = array();
-      $input['is_active']=1;
-      $input['name']='Unknown device import';
-      $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
-      $input['ranking'] = 1;
-      $rule2_id = $rulecollection->add($input);
-
-         // Add criteria
-         $rule = $rulecollection->getRuleClass();
-         $rulecriteria = new RuleCriteria(get_class($rule));
-         $input = array();
-         $input['rules_id'] = $rule2_id;
-         $input['criteria'] = "name";
-         $input['pattern']= '*';
-         $input['condition']=0;
-         $rulecriteria->add($input);
-
-         // Add action
-         $ruleaction = new RuleAction(get_class($rule));
-         $input = array();
-         $input['rules_id'] = $rule2_id;
-         $input['action_type'] = 'assign';
-         $input['field'] = '_fusion';
-         $input['value'] = '0';
-         $ruleaction->add($input);
-      
-      
-      // ** Import Computer XML (have name)
-      $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
-      $xml = simplexml_load_string($XML['Computer'],'SimpleXMLElement', LIBXML_NOCDATA);
-      $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi080/plugins/fusioninventory/";
-      $prologXML = $emulatorAgent->sendProlog($XML['Computer']);
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-      $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
-      $this->assertEquals(count($a_agent), 1 , 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
-      $computer = new Computer();
-      $a_computer = $computer->find("`name`='port004'");
-      $this->assertEquals(count($a_computer), 3 , 'Problem import Computer ('.(string)$xml->DEVICEID.') not right created!');
-      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 0 , 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device created');
-         
-         
-      // ** Import discovered Computer (have name)
-      $this->testSendinventory("toto", $XML['Unknowndevice_Computer'], 0);
-      $a_computer = $computer->find("`name`='Test2'");
-      $this->assertEquals(count($a_computer), 3 , 'Problem import discovered Computer (Test2) not right created!');
-      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered Computer (Test2), unknown device created');
-
-      
-      // ** Import Computer XML (not have name)
-      $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
-      $xmltmp = $XML['Computer'];
-      $xmltmp = str_replace(">port004<", "><", $xmltmp);
-      $xml = simplexml_load_string($xmltmp,'SimpleXMLElement', LIBXML_NOCDATA);
-      $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi080/plugins/fusioninventory/";
-      $prologXML = $emulatorAgent->sendProlog($xmltmp);
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-      $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
-      $this->assertEquals(count($a_agent), 1 , 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
-      $computer = new Computer();
-      $a_computer = $computer->find("`name`='port004'");
-      $this->assertEquals(count($a_computer), 3 , 'Problem import Computer without name have been created into Computer instead unknown');
-      $a_computer = $computer->find("`name`=''");
-      $this->assertEquals(count($a_computer), 0 , 'Problem import Computer without name have been created into Computer instead unknown');
-      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 1 , 'Problem import Computer without name , unknown device not created');
-         
-      
-      // ** Import discovered Computer (not have name)
-      $xmltmp = $XML['Unknowndevice_Computer'];
-      $xmltmp = str_replace(">Test2<", "><", $xmltmp);
-      $this->testSendinventory("toto", $xmltmp, 0);
-      $a_computer = $computer->find("`name`='Test2'");
-      $this->assertEquals(count($a_computer), 3 , 'Problem import discovered Computer without name have been created into Computer instead unknown');
-      $a_computer = $computer->find("`name`=''");
-      $this->assertEquals(count($a_computer), 0 , 'Problem import Computer without name have been created into Computer instead unknown');
-      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 2 , 'Problem import discovered Computer without name, unknown device not created');
-
-            
-      $input = array();
-      $input['is_active']=0;
-      $input['id'] = $rule_id;
-      $rulecollection->update($input);
-      $input['id'] = $rule2_id;
-      $rulecollection->update($input);
-   }
-    
-
-    
-   /*
-    *  Computer (computer created into GLPI with good name: 
-    *            Rule 1/ itemtype is computer
-    *                    name exits
-    *                    name is present in GLPI
-    *                    -> FusionInventory link Assign Link if possible, else create device
-    *            Rule 2/ name is * 
-    *                    -> FusionInventory link Assign Link if possible, else create device
-    *    => Computer may be created in Computer type and not in unknown device
-    */
-   public function testImportComputerwithTypeAndNameExistNamePresent() {
-      global $DB, $XML;
-      
-
-      // Add the rule with criterial only if type = Computer
-      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
-      $input = array();
-      $input['is_active']=1;
-      $input['name']='Computer type import';
-      $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
-      $input['ranking'] = 0;
-      $rule_id = $rulecollection->add($input);
-
-         // Add criteria
-         $rule = $rulecollection->getRuleClass();
-         $rulecriteria = new RuleCriteria(get_class($rule));
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['criteria'] = "name";
-         $input['pattern']= 1;
-         $input['condition']=10;
-         $rulecriteria->add($input);
-
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['criteria'] = "name";
-         $input['pattern']= 1;
-         $input['condition']=8;
-         $rulecriteria->add($input);
-         
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['criteria'] = "itemtype";
-         $input['pattern']= 'Computer';
-         $input['condition']=0;
-         $rulecriteria->add($input);
-
-         // Add action
-         $ruleaction = new RuleAction(get_class($rule));
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['action_type'] = 'assign';
-         $input['field'] = '_fusion';
-         $input['value'] = '0';
-         $ruleaction->add($input);
-         
-      // Create rule for import into unknown devices
-      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
-      $input = array();
-      $input['is_active']=1;
-      $input['name']='Unknown device import';
-      $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
-      $input['ranking'] = 1;
-      $rule2_id = $rulecollection->add($input);
-
-         // Add criteria
-         $rule = $rulecollection->getRuleClass();
-         $rulecriteria = new RuleCriteria(get_class($rule));
-         $input = array();
-         $input['rules_id'] = $rule2_id;
-         $input['criteria'] = "name";
-         $input['pattern']= '*';
-         $input['condition']=0;
-         $rulecriteria->add($input);
-
-         // Add action
-         $ruleaction = new RuleAction(get_class($rule));
-         $input = array();
-         $input['rules_id'] = $rule2_id;
-         $input['action_type'] = 'assign';
-         $input['field'] = '_fusion';
-         $input['value'] = '0';
-         $ruleaction->add($input);
-      
-      
-         
-      // ** Import Computer XML (have name and exist in DB)
-      $computer = new Computer();
-      $computer->delete(array('id'=>3), 1);
-      $computer->delete(array('id'=>5), 1); 
-      $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
-      $pluginFusioninventoryUnknownDevice->delete(array('id'=>2), 1);
-      $pluginFusioninventoryUnknownDevice->delete(array('id'=>3), 1);
-      $xml = simplexml_load_string($XML['Computer'],'SimpleXMLElement', LIBXML_NOCDATA);
-      $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi080/plugins/fusioninventory/";
-      $prologXML = $emulatorAgent->sendProlog($XML['Computer']);
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-      $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
-      $this->assertEquals(count($a_agent), 1 , 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
-      $a_computer = $computer->find("`name`='port004'");
-      $this->assertEquals(count($a_computer), 1 , 'Problem import Computer ('.(string)$xml->DEVICEID.') not right created!');
-      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 0 , 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device created');
-         
-         
-         
-      // ** Import discovered Computer (have name and exist in DB)
-      $computer->delete(array('id'=>4), 1);
-      $computer->delete(array('id'=>6), 1);
-      $this->testSendinventory("toto", $XML['Unknowndevice_Computer'], 0);
-      $a_computer = $computer->find("`name`='Test2'");
-      $this->assertEquals(count($a_computer), 1 , 'Problem import discovered Computer (Test2) not right created!');
-      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered Computer (Test2), unknown device created');
-
-         
-      // ** Import Computer XML (have name but not exist in DB)
-      $computer = new Computer();
-      $computer->delete(array('id'=>1), 1); 
-      $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
-      $pluginFusioninventoryUnknownDevice->delete(array('id'=>2), 1);
-      $pluginFusioninventoryUnknownDevice->delete(array('id'=>3), 1);
-      $xml = simplexml_load_string($XML['Computer'],'SimpleXMLElement', LIBXML_NOCDATA);
-      $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi080/plugins/fusioninventory/";
-      $prologXML = $emulatorAgent->sendProlog($XML['Computer']);
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-      $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
-      $this->assertEquals(count($a_agent), 1 , 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
-      $a_computer = $computer->find("`name`='port004'");
-      $this->assertEquals(count($a_computer), 0 , 'Problem import Computer ('.(string)$xml->DEVICEID.') is created!');
-      $a_unknown = $pluginFusioninventoryUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 1 , 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device not created');
-         
-         
-      // ** Import discovered Computer (have name but not exist in DB)
-      $computer->delete(array('id'=>2), 1);
-      $this->testSendinventory("toto", $XML['Unknowndevice_Computer'], 0);
-      $a_computer = $computer->find("`name`='Test2'");
-      $this->assertEquals(count($a_computer), 0 , 'Problem import discovered Computer (Test2) created!');
-      $a_unknown = $pluginFusioninventoryUnknownDevice->find("`name`='Test2'");
-      $this->assertEquals(count($a_unknown), 1 , 'Problem import discovered Computer (Test2), unknown device not created');
-
-         
-      // ** Import Computer XML (not have name)
-      $computer->delete(array('id'=>7), 1);
-      $computer->delete(array('id'=>8), 1);
-      $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
-      $xmltmp = $XML['Computer'];
-      $xmltmp = str_replace(">port004<", "><", $xmltmp);
-      $xml = simplexml_load_string($xmltmp,'SimpleXMLElement', LIBXML_NOCDATA);
-      $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi080/plugins/fusioninventory/";
-      $prologXML = $emulatorAgent->sendProlog($xmltmp);
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-      $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
-      $this->assertEquals(count($a_agent), 1 , 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
-      $computer = new Computer();
-      $a_computer = $computer->find("`serial`='XA201220H'");
-      $this->assertEquals(count($a_computer), 0 , 'Problem import Computer without name have been created into Computer instead unknown');
-      $a_unknown = $pluginFusioninventoryUnknownDevice->find("`serial`='XA201220H'");
-      $this->assertEquals(count($a_unknown), 2 , 'Problem import Computer without name , unknown device not created');
-         
-                  
-      $input = array();
-      $input['is_active']=0;
-      $input['id'] = $rule_id;
-      $rulecollection->update($input);
-      $input['id'] = $rule2_id;
-      $rulecollection->update($input);
-         
-   }
-
-   
-   
-   public function testImportComputerCheckrulevalidationlocal_and_globalcriteria() {
-      global $DB, $XML;
-      
-      // Create computer only with serial and name;
-      $computer = new Computer();
-      $input = array();
-      $input['name'] = "port004";
-      $input['serial'] = "XA201220H";
-      $input['entities_id'] = 0; 
-      $computer->add($input);
-      
-      // Activation of rules
-      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
-         // Computer serial + uuid
-         $input = array();
-         $input['is_active']=1;
-         $input['id']=6; 
-         $rule_id = $rulecollection->update($input);
-         
-         // Computer serial
-         $input = array();
-         $input['is_active']=1;
-         $input['id']=7; 
-         $rule_id = $rulecollection->update($input);
-      
-         // Computer name
-         $input = array();
-         $input['is_active']=1;
-         $input['id']=10; 
-         $rule_id = $rulecollection->update($input);
-         
-      $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi080/plugins/fusioninventory/";
-      $prologXML = $emulatorAgent->sendProlog($XML['Computer']);
-      $a_computers = $computer->find("`serial`='XA201220H'");
-      $this->assertEquals(count($a_computers), 1 , 'Problem on global criteria of rules, 
-         these criteria must be valided to valid the rule (Computer seria = UUID)!');
-         
-   }
-    
-     
-     
-   function testSendinventory($xmlFile='', $xmlstring='', $create='0') {
-
-      if (empty($xmlFile)) {
-         echo "testSendinventory with no arguments...\n";
-         return;
-      }
-
-      $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi080/plugins/fusioninventory/";
-      if (empty($xmlstring)) {
-         $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
-      } else {
-         $xml = simplexml_load_string($xmlstring);
-      }
-
-      if ($create == '1') {
-         // Send prolog for creation of agent in GLPI
-         $input_xml = '<?xml version="1.0" encoding="UTF-8"?>
-   <REQUEST>
-     <DEVICEID>'.$xml->DEVICEID.'</DEVICEID>
-     <QUERY>PROLOG</QUERY>
-     <TOKEN>CBXTMXLU</TOKEN>
-   </REQUEST>';
-         $emulatorAgent->sendProlog($input_xml);
-         if (isset($xml->CONTENT->DEVICE)) {
-            foreach ($xml->CONTENT->DEVICE as $child) {
-               if (isset($child->INFO)) {
-                  foreach ($child->INFO as $child2) {
-                     if ($child2->TYPE == 'NETWORKING') {
-                        // Create switch in asset
-                        $NetworkEquipment = new NetworkEquipment();
-                        $input = array();
-                        if (isset($child2->SERIAL)) {
-                           $input['serial']=$child2->SERIAL;
-                        } else {
-                           $input['name']=$child2->NAME;
-                        }
-                        $input['entities_id'] = 0;
-                        $NetworkEquipment->add($input);
-                     }
-                  }
-               }
-            }
-         }
-      }
-      $input_xml = $xml->asXML();
-      $code = $emulatorAgent->sendProlog($input_xml);
-      echo $code."\n";
-   }
-   
-
-   
 }
-
-// Call Plugins_Fusioninventory_Discovery_Newdevices::main() if this source file is executed directly.
-if (PHPUnit_MAIN_METHOD == 'Plugins_Fusioninventory_TestImortRules::main') {
-    Plugins_Fusioninventory_TestImortRules::main();
-
-}
-
 ?>

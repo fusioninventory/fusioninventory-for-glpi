@@ -17,11 +17,11 @@
 
  
     <target name="phpcs">
-        <exec command="phpcs --standard=FusionInventory --extensions=php --ignore='${project.basedir}/../../webservices/*' --report=checkstyle '${project.basedir}/../..' > '${project.basedir}/../../../../build/logs/checkstyle.xml'" escape="false" />
+        <exec command="phpcs --standard=FusionInventory --extensions=php --ignore='${project.basedir}/../../webservices/*' --report=checkstyle '${project.basedir}/../../' > '${project.basedir}/../../../../build/logs/checkstyle.xml'" escape="false" />
     </target>
 
     <target name="phpmd">
-        <exec command="phpmd --ignore='${project.basedir}/../../webservices/*' '${project.basedir}/../../' xml codesize,unusedcode,naming --reportfile '${project.basedir}/../../../../build/logs/phpmd.xml' --exclude '${project.basedir}../../webservices'" />
+        <exec command="phpmd '${project.basedir}/../../' xml codesize,unusedcode,naming --reportfile '${project.basedir}/../../../../build/logs/phpmd.xml' --exclude '${project.basedir}../../webservices'" />
     </target>
 
     <target name="phpunit" description="Run PHPUnit tests">
