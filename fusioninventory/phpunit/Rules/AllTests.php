@@ -88,7 +88,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
       $xml = simplexml_load_string($XML['Computer'],'SimpleXMLElement', LIBXML_NOCDATA);
       $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/fusion0.80/plugins/fusioninventory/";
+      $emulatorAgent->server_urlpath = "/fusion0.83/plugins/fusioninventory/";
       $prologXML = $emulatorAgent->sendProlog($XML['Computer']);
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
       $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
@@ -284,7 +284,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
       $xml = simplexml_load_string($XML['Computer'],'SimpleXMLElement', LIBXML_NOCDATA);
       $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/fusion0.80/plugins/fusioninventory/";
+      $emulatorAgent->server_urlpath = "/fusion0.83/plugins/fusioninventory/";
       $prologXML = $emulatorAgent->sendProlog($XML['Computer']);
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
       $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
@@ -391,7 +391,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
       $xml = simplexml_load_string($XML['Computer'],'SimpleXMLElement', LIBXML_NOCDATA);
       $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/fusion0.80/plugins/fusioninventory/";
+      $emulatorAgent->server_urlpath = "/fusion0.83/plugins/fusioninventory/";
       $prologXML = $emulatorAgent->sendProlog($XML['Computer']);
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
       $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
@@ -417,7 +417,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $xmltmp = str_replace(">port004<", "><", $xmltmp);
       $xml = simplexml_load_string($xmltmp,'SimpleXMLElement', LIBXML_NOCDATA);
       $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/fusion0.80/plugins/fusioninventory/";
+      $emulatorAgent->server_urlpath = "/fusion0.83/plugins/fusioninventory/";
       $prologXML = $emulatorAgent->sendProlog($xmltmp);
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
       $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
@@ -550,7 +550,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $pluginFusioninventoryUnknownDevice->delete(array('id'=>3), 1);
       $xml = simplexml_load_string($XML['Computer'],'SimpleXMLElement', LIBXML_NOCDATA);
       $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/fusion0.80/plugins/fusioninventory/";
+      $emulatorAgent->server_urlpath = "/fusion0.83/plugins/fusioninventory/";
       $prologXML = $emulatorAgent->sendProlog($XML['Computer']);
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
       $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
@@ -580,7 +580,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $pluginFusioninventoryUnknownDevice->delete(array('id'=>3), 1);
       $xml = simplexml_load_string($XML['Computer'],'SimpleXMLElement', LIBXML_NOCDATA);
       $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/fusion0.80/plugins/fusioninventory/";
+      $emulatorAgent->server_urlpath = "/fusion0.83/plugins/fusioninventory/";
       $prologXML = $emulatorAgent->sendProlog($XML['Computer']);
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
       $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
@@ -608,7 +608,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $xmltmp = str_replace(">port004<", "><", $xmltmp);
       $xml = simplexml_load_string($xmltmp,'SimpleXMLElement', LIBXML_NOCDATA);
       $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/fusion0.80/plugins/fusioninventory/";
+      $emulatorAgent->server_urlpath = "/fusion0.83/plugins/fusioninventory/";
       $prologXML = $emulatorAgent->sendProlog($xmltmp);
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
       $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
@@ -663,7 +663,7 @@ class Rules extends PHPUnit_Framework_TestCase {
          $rule_id = $rulecollection->update($input);
          
       $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/fusion0.80/plugins/fusioninventory/";
+      $emulatorAgent->server_urlpath = "/fusion0.83/plugins/fusioninventory/";
       $prologXML = $emulatorAgent->sendProlog($XML['Computer']);
       $a_computers = $computer->find("`serial`='XA201220H'");
       $this->assertEquals(count($a_computers), 1 , 'Problem on global criteria of rules, 
@@ -681,7 +681,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       }
 
       $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/fusion0.80/plugins/fusioninventory/";
+      $emulatorAgent->server_urlpath = "/fusion0.83/plugins/fusioninventory/";
       if (empty($xmlstring)) {
          $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
       } else {
