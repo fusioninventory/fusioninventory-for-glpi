@@ -45,7 +45,7 @@ class InventoryComputer extends PHPUnit_Framework_TestCase {
 
     public function testSetModuleInventoryOff() {
        global $DB,$LANG,$CFG_GLPI;
-       loadLanguage();
+       Session::loadLanguage();
 
        $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
          //deleteDir(GLPI_ROOT."/files/_plugins/fusioninventory/criterias");
