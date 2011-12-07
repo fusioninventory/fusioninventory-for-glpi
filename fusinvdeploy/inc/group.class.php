@@ -490,7 +490,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       echo "<select name='operatingsystems_id' id='operatingsystems_id'><option value='0'>".DROPDOWN_EMPTY_VALUE."</option></select>";
       echo "</span>\n";
 
-      showToolTip("* ".$LANG['search'][1]."<br />".$LANG['plugin_fusinvdeploy']['group'][5]);
+      Html::showToolTip("* ".$LANG['search'][1]."<br />".$LANG['plugin_fusinvdeploy']['group'][5]);
 
       echo "</td>";
 

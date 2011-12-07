@@ -175,10 +175,10 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       global $LANG;
 
       $comment = $LANG['plugin_fusioninventory']['agents'][42].' : '.$this->fields['useragent'].'<br/>
-         '.$LANG['plugin_fusioninventory']['agents'][4].' : '.convDateTime($this->fields['last_contact']).' minutes';
+         '.$LANG['plugin_fusioninventory']['agents'][4].' : '.Html::convDateTime($this->fields['last_contact']).' minutes';
 
       if (!empty($comment)) {
-         return showToolTip($comment, array('display' => false));
+         return Html::showToolTip($comment, array('display' => false));
       }
 
       return $comment;

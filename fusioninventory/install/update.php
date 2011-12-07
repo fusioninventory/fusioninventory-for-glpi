@@ -1897,8 +1897,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    if (!class_exists('PluginFusioninventoryIgnoredimportdevice')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/ignoredimportdevice.class.php");
    }
-   $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
-   $pfIgnoredimportdevice->install();   
+//   $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
+//   $pfIgnoredimportdevice->install();   
 }
 
 
