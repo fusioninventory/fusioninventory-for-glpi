@@ -470,7 +470,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    *
    **/
    function dropdownvalue($myname,$definitiontype,$method,$deftypeid,$taskjobs_id,$value=0,$entity_restrict='', $title = 0) {
-      global $CFG_GLPI;
+      global $CFG_GLPI,$LANG;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $module = '';
