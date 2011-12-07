@@ -59,7 +59,7 @@ require_once 'Connectionslogs/AllTests.php';
 class Netinventory_AllTests  {
 
    public static function suite() {
-
+      
       $suite = new PHPUnit_Framework_TestSuite('Netinventory');
       $suite->addTest(Hub_AllTests::suite());
       $suite->addTest(Connectionslogs_AllTests::suite());      

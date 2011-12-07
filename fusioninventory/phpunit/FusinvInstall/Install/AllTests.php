@@ -57,6 +57,8 @@ class Install extends PHPUnit_Framework_TestCase {
 
       passthru("cd ../tools && /usr/local/bin/php -f cli_install.php");
       
+      loadLanguage("en_GB");
+      
       $FusinvInstall = new FusinvInstall();
       $FusinvInstall->testDB("fusioninventory");
       
@@ -64,8 +66,7 @@ class Install extends PHPUnit_Framework_TestCase {
       
       $FusinvInstall->testDB("fusinvsnmp");
       
-      $FusinvInstall->testDB("fusinvdeploy");
-      
+      $FusinvInstall->testDB("fusinvdeploy");      
    }
 }
 

@@ -1552,6 +1552,24 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addField($newTable, 
                               "profiles_id", 
                               "int(11) NOT NULL DEFAULT '0'");
+      $migration->migrationOneTable($newTable);
+         // Remove multiple lines can have problem with unicity
+         $query = "SELECT * , count(`id`) AS cnt
+            FROM `glpi_plugin_fusioninventory_profiles`
+            GROUP BY `type`,`plugins_id`,`profiles_id`
+            HAVING cnt >1
+            ORDER BY cnt";
+         $result=$DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
+            $queryd = "DELETE FROM `glpi_plugin_fusioninventory_profiles`
+               WHERE `type`='".$data['type']."'
+                  AND `plugins_id`='".$data['plugins_id']."'
+                  AND `profiles_id`='".$data['profiles_id']."'
+               ORDER BY `id` DESC
+               LIMIT ".($data['cnt'] - 1)." ";
+            $DB->query($queryd);
+         }
+      
          $migration->addKey($newTable,
                             array("type", "plugins_id", "profiles_id"),
                             "unicity",
@@ -1939,8 +1957,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    if (!class_exists('PluginFusioninventoryIgnoredimportdevice')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/ignoredimportdevice.class.php");
    }
-   $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
-   $pfIgnoredimportdevice->install();   
+//   $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
+//   $pfIgnoredimportdevice->install();   
 }
 
 
