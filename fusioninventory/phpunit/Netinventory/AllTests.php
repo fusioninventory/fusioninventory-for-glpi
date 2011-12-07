@@ -59,6 +59,11 @@ require_once 'Connectionslogs/AllTests.php';
 class Netinventory_AllTests  {
 
    public static function suite() {
+      
+      $GLPIInstall = new GLPIInstall();
+      $Install = new Install();
+      $GLPIInstall->testInstall();
+      $Install->testInstall();
 
       $suite = new PHPUnit_Framework_TestSuite('Netinventory');
       $suite->addTest(Hub_AllTests::suite());
