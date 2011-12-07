@@ -913,8 +913,8 @@ echo "# testHardwareModifications\n";
          $modif++;
       }
       if ($modif > 0) {
-         $this->testSendinventory($xmlFile, $xml->DEVICEID);
-         $this->testNetwork($xml, $items_id, "0", $xmlFile);
+//         $this->testSendinventory($xmlFile, $xml->DEVICEID);
+//         $this->testNetwork($xml, $items_id, "0", $xmlFile);
       }
    }
 
