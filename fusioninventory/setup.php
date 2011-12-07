@@ -69,10 +69,24 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryLock',
               array('addtabon' => array('Computer','Monitor','Printer','NetworkEquipment')));
               
+      Plugin::registerClass('PluginFusioninventoryInventoryComputerAntivirus',
+                 array('addtabon' => array('Computer')));
+      Plugin::registerClass('PluginFusioninventoryInventoryComputerComputer',
+                 array('addtabon' => array('Computer')));
+      Plugin::registerClass('PluginFusioninventoryInventoryComputerInventory');
+      Plugin::registerClass('PluginFusioninventoryInventoryComputerLibintegrity',
+                 array('addtabon' => array('Computer')));
+
+         //Classes for rulesengine
+      Plugin::registerClass('PluginFusioninventoryInventoryRuleEntity');
+      Plugin::registerClass('PluginFusioninventoryInventoryRuleEntityCollection',
+                            array('rulecollections_types'=>true));
+      
       //Classes for rulesengine
       Plugin::registerClass('PluginFusioninventoryInventoryRuleImport');
       Plugin::registerClass('PluginFusioninventoryInventoryRuleImportCollection',
                             array('rulecollections_types'=>true));
+
    
       // ##### 3. get informations of the plugin #####
 
@@ -86,6 +100,8 @@ function plugin_init_fusioninventory() {
       // ##### 5. Set in session XMLtags of methods #####
 
       $_SESSION['glpi_plugin_fusioninventory']['xmltags']['WAKEONLAN'] = '';
+      $_SESSION['glpi_plugin_fusioninventory']['xmltags']['INVENTORY']
+                                 = 'PluginFusioninventoryInventoryComputerInventory';
 
       //$PLUGIN_HOOKS['init_session']['fusioninventory'] = array('Profile', 'initSession');
       $PLUGIN_HOOKS['change_profile']['fusioninventory'] =

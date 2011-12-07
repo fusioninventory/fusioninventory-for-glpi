@@ -129,6 +129,31 @@ class PluginFusioninventoryMenu {
          $a_menu[8]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryCredentialip');
 
       }
+      
+
+      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "importxml", "r")) {
+         $a_menu[9]['name'] = $LANG['plugin_fusinvinventory']['menu'][0];
+         $a_menu[9]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_importxml.png";
+         $a_menu[9]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvinventory/front/importxml.php";
+      }
+
+      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "existantrule", "r")) {
+         $a_menu[10]['name'] = $LANG['plugin_fusinvinventory']['rule'][100];
+         $a_menu[10]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
+         $a_menu[10]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/inventoryruleentity.php";
+      }
+
+      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "blacklist", "r")) {
+         $a_menu[11]['name'] = $LANG['plugin_fusinvinventory']['menu'][2];
+         $a_menu[11]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_blacklist.png";
+         $a_menu[11]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/inventorycomputerblacklist.php";
+      }
+
+      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "importxml","w")) {
+         $a_menu[4]['name'] = $LANG['plugin_fusinvinventory']['menu'][4];
+         $a_menu[4]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_checkintegrity.png";
+         $a_menu[4]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/inventorycomputerlibintegrity.php";
+      }
 
       echo "<div align='center' style='z-index: 1;position:absolute;width: 100%; margin: 0 auto;'>";
       echo "<table width='100%'>";

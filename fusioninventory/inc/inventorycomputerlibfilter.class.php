@@ -102,7 +102,7 @@ class PluginFusioninventoryInventoryComputerLibfilter extends CommonDBTM {
       $pciidArray = explode(":", $pciid);
       $vendorId = $pciidArray[0];
 
-      $query_select = "SELECT id, name FROM `glpi_plugin_fusinvinventory_pcivendors`
+      $query_select = "SELECT id, name FROM `glpi_plugin_fusioninventory_pcivendors`
         WHERE `vendorid`='".$vendorId."'
            LIMIT 1";
       $resultSelect = $DB->query($query_select);

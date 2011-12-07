@@ -46,7 +46,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
 
-   var $table = "glpi_plugin_fusinvinventory_libserialization";
+   var $table = "glpi_plugin_fusioninventory_inventorycomputerlibserialization";
 
    
    
@@ -136,7 +136,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
       }
       
       // Total Number of events
-      $query = "SELECT count(*) FROM `glpi_plugin_fusinvinventory_libserialization`
+      $query = "SELECT count(*) FROM `glpi_plugin_fusioninventory_inventorycomputerlibserialization`
           LEFT JOIN `glpi_computers` on `computers_id` = `glpi_computers`.`id`
           ".$where." ";
       $result = $DB->query($query);
@@ -171,7 +171,8 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
       echo "</th>";
       echo "</tr>";
 
-      $query = "SELECT `glpi_plugin_fusinvinventory_libserialization`.* FROM `glpi_plugin_fusinvinventory_libserialization`
+      $query = "SELECT `glpi_plugin_fusioninventory_inventorycomputerlibserialization`.* 
+            FROM `glpi_plugin_fusioninventory_inventorycomputerlibserialization`
           LEFT JOIN `glpi_computers` on `computers_id` = `glpi_computers`.`id`
           ".$where."
           LIMIT ".intval($start)."," . intval($_SESSION['glpilist_limit']);
@@ -786,7 +787,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
       $sectionname = $split[1];
       $sectioncomplete = $split[1]."/".$split[2];
       
-      $query = "SELECT * FROM `glpi_plugin_fusinvinventory_libserialization`
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_inventorycomputerlibserialization`
          WHERE `computers_id`='".$computers_id."'
          LIMIT 1";
       $result = $DB->query($query);

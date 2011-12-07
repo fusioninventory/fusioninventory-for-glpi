@@ -95,7 +95,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       //if ($internalId = $this->isMachineExist()) {
          // Get internal ID with $items_id
          $a_serialized = array();
-         $query = "SELECT internal_id FROM `glpi_plugin_fusinvinventory_libserialization`
+         $query = "SELECT internal_id FROM `glpi_plugin_fusioninventory_inventorycomputerlibserialization`
                    WHERE `computers_id`='".$items_id."'
                    LIMIT 1";
          $result = $DB->query($query);
@@ -252,7 +252,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    */
    public function addLibMachine($internalId, $externalId) {
 
-      $queryInsert = "INSERT INTO `glpi_plugin_fusinvinventory_libserialization` 
+      $queryInsert = "INSERT INTO `glpi_plugin_fusioninventory_inventorycomputerlibserialization` 
                       ( `internal_id`, `computers_id`)
                       VALUES ('" . $internalId . "', '".$externalId."')";
       mysql_query($queryInsert);
@@ -671,7 +671,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 #      $serializedSections = str_replace("\\", "\\\\", $serializedSections);
       $a_serializedSections = str_split($serializedSections, 800000);
 
-      $queryUpdate = "UPDATE `glpi_plugin_fusinvinventory_libserialization`
+      $queryUpdate = "UPDATE `glpi_plugin_fusioninventory_inventorycomputerlibserialization`
       SET `serialized_sections1` = '".$a_serializedSections[0]."',
          `last_fusioninventory_update`='".date("Y-m-d H:i:s")."'
       WHERE `internal_id` = '" . $internalId . "'";
@@ -679,22 +679,22 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $resultUpdate = $DB->query($queryUpdate);
 
       if (isset($a_serializedSections[1])) {
-         $queryUpdate = "UPDATE `glpi_plugin_fusinvinventory_libserialization`
+         $queryUpdate = "UPDATE `glpi_plugin_fusioninventory_inventorycomputerlibserialization`
          SET `serialized_sections2` = '" . $a_serializedSections[1] ."'
          WHERE `internal_id` = '" . $internalId . "'";
       } else {
-         $queryUpdate = "UPDATE `glpi_plugin_fusinvinventory_libserialization`
+         $queryUpdate = "UPDATE `glpi_plugin_fusioninventory_inventorycomputerlibserialization`
          SET `serialized_sections2` = ''
          WHERE `internal_id` = '" . $internalId . "'";
       }
       $resultUpdate = $DB->query($queryUpdate);
 
       if (isset($a_serializedSections[2])) {
-        $queryUpdate = "UPDATE `glpi_plugin_fusinvinventory_libserialization`
+        $queryUpdate = "UPDATE `glpi_plugin_fusioninventory_inventorycomputerlibserialization`
          SET `serialized_sections3` = '" . $a_serializedSections[2] ."'
          WHERE `internal_id` = '" . $internalId . "'";
       } else {
-         $queryUpdate = "UPDATE `glpi_plugin_fusinvinventory_libserialization`
+         $queryUpdate = "UPDATE `glpi_plugin_fusioninventory_inventorycomputerlibserialization`
          SET `serialized_sections3` = ''
          WHERE `internal_id` = '" . $internalId . "'";
       }
@@ -723,7 +723,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $arraySerializedSections = array();
       $arraySerializedSectionsTemp = array();
 
-      $querySelect = "SELECT `computers_id`, `serialized_sections1`, `serialized_sections2`, `serialized_sections3` FROM `glpi_plugin_fusinvinventory_libserialization`
+      $querySelect = "SELECT `computers_id`, `serialized_sections1`, `serialized_sections2`, `serialized_sections3` 
+            FROM `glpi_plugin_fusioninventory_inventorycomputerlibserialization`
          WHERE `internal_id` = '$internalId'";
       $resultSelect = $DB->query($querySelect);
       $rowSelect = mysql_fetch_row($resultSelect);
@@ -793,7 +794,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    function removeExternalid($computers_id) {
       global $DB;
 
-      $query_delete = "DELETE FROM `glpi_plugin_fusinvinventory_libserialization`
+      $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_inventorycomputerlibserialization`
          WHERE `computers_id`='".$computers_id."' ";
       $DB->query($query_delete);
    }

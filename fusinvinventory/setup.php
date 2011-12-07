@@ -66,18 +66,18 @@ function plugin_init_fusinvinventory() {
    }
 
    // ##### 2. register class #####
-   Plugin::registerClass('PluginFusioninventoryInventoryComputerAntivirus',
-              array('addtabon' => array('Computer')));
-   Plugin::registerClass('PluginFusioninventoryInventoryComputerComputer',
-              array('addtabon' => array('Computer')));
-   Plugin::registerClass('PluginFusioninventoryInventoryComputerInventory');
-   Plugin::registerClass('PluginFusioninventoryInventoryComputerLibintegrity',
-              array('addtabon' => array('Computer')));
-   
-      //Classes for rulesengine
-   Plugin::registerClass('PluginFusioninventoryInventoryRuleEntity');
-   Plugin::registerClass('PluginFusioninventoryInventoryRuleEntityCollection',
-                         array('rulecollections_types'=>true));
+//   Plugin::registerClass('PluginFusioninventoryInventoryComputerAntivirus',
+//              array('addtabon' => array('Computer')));
+//   Plugin::registerClass('PluginFusioninventoryInventoryComputerComputer',
+//              array('addtabon' => array('Computer')));
+//   Plugin::registerClass('PluginFusioninventoryInventoryComputerInventory');
+//   Plugin::registerClass('PluginFusioninventoryInventoryComputerLibintegrity',
+//              array('addtabon' => array('Computer')));
+//   
+//      //Classes for rulesengine
+//   Plugin::registerClass('PluginFusioninventoryInventoryRuleEntity');
+//   Plugin::registerClass('PluginFusioninventoryInventoryRuleEntityCollection',
+//                         array('rulecollections_types'=>true));
 
 
    // ##### 3. get informations of the plugin #####
@@ -94,8 +94,8 @@ function plugin_init_fusinvinventory() {
 
    // ##### 5. Set in session XMLtags of methods #####
 
-   $_SESSION['glpi_plugin_fusioninventory']['xmltags']['INVENTORY']
-      = 'PluginFusioninventoryInventoryComputerInventory';
+//   $_SESSION['glpi_plugin_fusioninventory']['xmltags']['INVENTORY']
+//      = 'PluginFusioninventoryInventoryComputerInventory';
 
 
    if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvinventory'][$LANG['plugin_fusinvinventory']['title'][0]])) {
