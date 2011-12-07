@@ -717,7 +717,7 @@ class Rules extends PHPUnit_Framework_TestCase {
 
 
 
-class Rulesr_AllTests  {
+class Rules_AllTests  {
 
    public static function suite() {
       
