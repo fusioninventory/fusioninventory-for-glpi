@@ -25,18 +25,7 @@
    You should have received a copy of the GNU Affero General Public License
    along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
-<<<<<<< HEAD:fusioninventory/tools/phpunit/TestImportRules.php
-   Session::loadLanguage();
-   include_once(GLPI_ROOT."/locales/fr_FR.php");
-   include_once(GLPI_ROOT."/plugins/fusioninventory/locales/fr_FR.php");
-   include_once(GLPI_ROOT."/plugins/fusinvsnmp/locales/fr_FR.php");
-   include_once(GLPI_ROOT."/plugins/fusinvinventory/locales/fr_FR.php");
-   $CFG_GLPI["root_doc"] = GLPI_ROOT;
-}
-include_once('emulatoragent.php');
-=======
    ------------------------------------------------------------------------
->>>>>>> glpi0.80:fusioninventory/phpunit/Rules/AllTests.php
 
    @package   FusionInventory
    @author    David Durieux
