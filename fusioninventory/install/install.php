@@ -76,6 +76,15 @@ function pluginFusioninventoryInstall($version, $migration='') {
       if (!class_exists('PluginFusioninventoryModule')) { // if plugin is unactive
          include(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
       }
+      if (!class_exists('PluginFusioninventoryConfig')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusioninventory/inc/config.class.php");
+      }
+      if (!class_exists('PluginFusioninventoryCommunicationRest')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusioninventory/inc/communicationrest.class.php");
+      }
+      
+      
+      
       
    // Get informations of plugin
 
@@ -121,6 +130,12 @@ function pluginFusioninventoryInstall($version, $migration='') {
       $DB->query($sql);
       $sql = "DELETE FROM `glpi_displaypreferences`
          WHERE `itemtype`='5168'";
+      $DB->query($sql);
+      $sql = "DELETE FROM `glpi_displaypreferences`
+         WHERE `itemtype` LIKE 'PluginFusioninventory%'";
+      $DB->query($sql);
+      $sql = "DELETE FROM `glpi_displaypreferences`
+         WHERE `itemtype` LIKE 'PluginFusinvinventory%'";
       $DB->query($sql);
       // Purge network ports have itemtype 5153
       $networkPort = new NetworkPort();
@@ -254,7 +269,7 @@ function pluginFusioninventoryInstall($version, $migration='') {
          $url = $_SERVER['HTTP_REFERER'];
       }
       $input['url'] = PluginFusioninventoryCommunicationRest::getDefaultRestURL($_SERVER['HTTP_REFERER'], 
-                                                                                 'fusinvinventory', 
+                                                                                 'fusioninventory', 
                                                                                  'esx');
       $PluginFusioninventoryAgentmodule->add($input);
    

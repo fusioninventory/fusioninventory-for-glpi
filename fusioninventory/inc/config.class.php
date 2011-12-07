@@ -48,7 +48,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
    
    /**
-   * Initialize config values of fusinvinventory plugin
+   * Initialize config values of fusioninventory plugin
    *
    * @return nothing
    *
@@ -88,14 +88,12 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['component_control']      = 1;
       $input['transfers_id_auto']      = 1;
       $input['states_id_default']      = 0;
-      $a_infos = plugin_version_fusinvinventory();
-      $input['version']                = $a_infos['version'];
       $input['location']               = 0;
       $input['group']                  = 0;
       $input['component_networkcardvirtual'] = 1;
 
       foreach ($input as $key => $value) {
-         $PluginFusioninventoryConfig->initConfig($plugins_id, array($key => $value));
+         $this->initConfig($plugins_id, array($key => $value));
       }
    }
 
