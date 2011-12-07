@@ -288,6 +288,8 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
    function createModel($xml, $message) {
       global $DB,$LANG;
 
+      $PluginFusioninventoryMapping = new PluginFusioninventoryMapping();
+      
       // Verify same model exist
       $query = "SELECT id
                 FROM `glpi_plugin_fusinvsnmp_models`
