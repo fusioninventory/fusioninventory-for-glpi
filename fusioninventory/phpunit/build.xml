@@ -4,7 +4,7 @@
  
     <target name="ci"
         description="Tache principale d'integration continue"
-        depends="clean,phpunit"
+        depends="clean,phpcs,phpmd,phpunit"
     />
 
     <target name="clean" description="Vide les repertoires logs">
@@ -21,7 +21,7 @@
     </target>
 
     <target name="phpmd">
-        <exec command="phpmd --ignore='${project.basedir}/../../webservices/*' '${project.basedir}/../../' xml codesize,unusedcode,naming --reportfile '${project.basedir}/../../../../build/logs/phpmd.xml' --exclude '${project.basedir}../../webservices'" />
+        <exec command="phpmd '${project.basedir}/../../' xml codesize,unusedcode,naming --reportfile '${project.basedir}/../../../../build/logs/phpmd.xml' --exclude '${project.basedir}../../webservices'" />
     </target>
 
     <target name="phpunit" description="Run PHPUnit tests">
