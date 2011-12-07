@@ -329,6 +329,8 @@ class Connectionslogs_AllTests  {
       $GLPIInstall->testInstall();
       $Install->testInstall();
       
+      Config::detectRootDoc();
+      
       $suite = new PHPUnit_Framework_TestSuite('Connectionslogs');
       return $suite;
    }

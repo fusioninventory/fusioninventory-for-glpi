@@ -540,6 +540,8 @@ class Hub_AllTests  {
       $GLPIInstall->testInstall();
       $Install->testInstall();
       
+      Config::detectRootDoc();
+      
       $suite = new PHPUnit_Framework_TestSuite('Hub');
       return $suite;
    }
