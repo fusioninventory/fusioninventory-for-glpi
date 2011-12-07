@@ -47,6 +47,62 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryConfig extends CommonDBTM {
 
    
+   /**
+   * Initialize config values of fusinvinventory plugin
+   *
+   * @return nothing
+   *
+   **/
+   function initConfigModule() {
+
+      $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
+
+      $input = array();
+      $input['version']                = PLUGIN_FUSIONINVENTORY_VERSION;
+      $input['ssl_only']               = '0';
+      $input['delete_task']            = '20';
+      $input['inventory_frequence']    = '24';
+      $input['agent_port']             = '62354';
+      $input['extradebug']             = '0';
+      $PluginFusioninventorySetup = new PluginFusioninventorySetup();
+      $users_id = $PluginFusioninventorySetup->createFusionInventoryUser();
+      $input['users_id']               = $users_id;
+      
+      $input['import_monitor']         = 2;
+      $input['import_printer']         = 2;
+      $input['import_peripheral']      = 2;
+      $input['import_software']        = 1;
+      $input['import_volume']          = 1;
+      $input['import_antivirus']       = 1;
+      $input['import_registry']        = 1;
+      $input['import_process']         = 1;
+      $input['import_vm']              = 1;
+      $input['component_processor']    = 1;
+      $input['component_memory']       = 1;
+      $input['component_harddrive']    = 1;
+      $input['component_networkcard']  = 1;
+      $input['component_graphiccard']  = 1;
+      $input['component_soundcard']    = 1;
+      $input['component_drive']        = 1;
+      $input['component_networkdrive'] = 1;
+      $input['component_control']      = 1;
+      $input['transfers_id_auto']      = 1;
+      $input['states_id_default']      = 0;
+      $a_infos = plugin_version_fusinvinventory();
+      $input['version']                = $a_infos['version'];
+      $input['location']               = 0;
+      $input['group']                  = 0;
+      $input['component_networkcardvirtual'] = 1;
+
+      foreach ($input as $key => $value) {
+         $PluginFusioninventoryConfig->initConfig($plugins_id, array($key => $value));
+      }
+   }
+
+ 
+  
+   
+   
   static function getTypeName() {
       global $LANG;
 

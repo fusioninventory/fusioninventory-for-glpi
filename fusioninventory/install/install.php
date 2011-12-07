@@ -49,74 +49,80 @@ function pluginFusioninventoryInstall($version, $migration='') {
    
    $migration->displayMessage("Installation of plugin FusionInventory");
    
-   if (!class_exists('PluginFusioninventoryProfile')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
-   }
-   if (!class_exists('PluginFusioninventoryAgentmodule')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
-   }
-   if (!class_exists('PluginFusioninventoryStaticmisc')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusioninventory/inc/staticmisc.class.php");
-   }
-   if (!class_exists('PluginFusioninventorySetup')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
-   }
-   if (!class_exists('PluginFusioninventoryUnknownDevice')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusioninventory/inc/unknowndevice.class.php");
-   }
-   if (!class_exists('PluginFusioninventoryInventoryRuleImportCollection')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusioninventory/inc/inventoryruleimportcollection.class.php");
-   }
-   if (!class_exists('PluginFusioninventoryInventoryRuleImport')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusioninventory/inc/inventoryruleimport.class.php");
-   }
-   if (!class_exists('PluginFusioninventoryModule')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
-   }
+   /*
+    * Load classes
+    */
+      if (!class_exists('PluginFusioninventoryProfile')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
+      }
+      if (!class_exists('PluginFusioninventoryAgentmodule')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
+      }
+      if (!class_exists('PluginFusioninventoryStaticmisc')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusioninventory/inc/staticmisc.class.php");
+      }
+      if (!class_exists('PluginFusioninventorySetup')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
+      }
+      if (!class_exists('PluginFusioninventoryUnknownDevice')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusioninventory/inc/unknowndevice.class.php");
+      }
+      if (!class_exists('PluginFusioninventoryInventoryRuleImportCollection')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusioninventory/inc/inventoryruleimportcollection.class.php");
+      }
+      if (!class_exists('PluginFusioninventoryInventoryRuleImport')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusioninventory/inc/inventoryruleimport.class.php");
+      }
+      if (!class_exists('PluginFusioninventoryModule')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
+      }
+      
    // Get informations of plugin
 
-   // ** Clean if FUsion / Tracker has been installed and uninstalled (not clean correctly)
-   $migration->displayMessage("Clean data from old installation of the plugin");
-   $sql = "DELETE FROM `glpi_displaypreferences`
-      WHERE `itemtype`='5150'";
-   $DB->query($sql);
-   $sql = "DELETE FROM `glpi_displaypreferences`
-      WHERE `itemtype`='5151'";
-   $DB->query($sql);
-   $sql = "DELETE FROM `glpi_displaypreferences`
-      WHERE `itemtype`='5152'";
-   $DB->query($sql);
-   $sql = "DELETE FROM `glpi_displaypreferences`
-      WHERE `itemtype`='5153'";
-   $DB->query($sql);
-   $sql = "DELETE FROM `glpi_displaypreferences`
-      WHERE `itemtype`='5156'";
-   $DB->query($sql);
-   $sql = "DELETE FROM `glpi_displaypreferences`
-      WHERE `itemtype`='5157'";
-   $DB->query($sql);
-   $sql = "DELETE FROM `glpi_displaypreferences`
-      WHERE `itemtype`='5158'";
-   $DB->query($sql);
-   $sql = "DELETE FROM `glpi_displaypreferences`
-      WHERE `itemtype`='5159'";
-   $DB->query($sql);
-   $sql = "DELETE FROM `glpi_displaypreferences`
-      WHERE `itemtype`='5161'";
-   $DB->query($sql);
-   $sql = "DELETE FROM `glpi_displaypreferences`
-      WHERE `itemtype`='5165'";
-   $DB->query($sql);
-   $sql = "DELETE FROM `glpi_displaypreferences`
-      WHERE `itemtype`='5166'";
-   $DB->query($sql);
-   $sql = "DELETE FROM `glpi_displaypreferences`
-      WHERE `itemtype`='5167'";
-   $DB->query($sql);
-   $sql = "DELETE FROM `glpi_displaypreferences`
-      WHERE `itemtype`='5168'";
-   $DB->query($sql);
-      // Purge network ports have itemtype tp 5153
+   /*
+    * Clean if Fusion / Tracker has been installed and uninstalled (not clean correctly)
+    */
+      $migration->displayMessage("Clean data from old installation of the plugin");
+      $sql = "DELETE FROM `glpi_displaypreferences`
+         WHERE `itemtype`='5150'";
+      $DB->query($sql);
+      $sql = "DELETE FROM `glpi_displaypreferences`
+         WHERE `itemtype`='5151'";
+      $DB->query($sql);
+      $sql = "DELETE FROM `glpi_displaypreferences`
+         WHERE `itemtype`='5152'";
+      $DB->query($sql);
+      $sql = "DELETE FROM `glpi_displaypreferences`
+         WHERE `itemtype`='5153'";
+      $DB->query($sql);
+      $sql = "DELETE FROM `glpi_displaypreferences`
+         WHERE `itemtype`='5156'";
+      $DB->query($sql);
+      $sql = "DELETE FROM `glpi_displaypreferences`
+         WHERE `itemtype`='5157'";
+      $DB->query($sql);
+      $sql = "DELETE FROM `glpi_displaypreferences`
+         WHERE `itemtype`='5158'";
+      $DB->query($sql);
+      $sql = "DELETE FROM `glpi_displaypreferences`
+         WHERE `itemtype`='5159'";
+      $DB->query($sql);
+      $sql = "DELETE FROM `glpi_displaypreferences`
+         WHERE `itemtype`='5161'";
+      $DB->query($sql);
+      $sql = "DELETE FROM `glpi_displaypreferences`
+         WHERE `itemtype`='5165'";
+      $DB->query($sql);
+      $sql = "DELETE FROM `glpi_displaypreferences`
+         WHERE `itemtype`='5166'";
+      $DB->query($sql);
+      $sql = "DELETE FROM `glpi_displaypreferences`
+         WHERE `itemtype`='5167'";
+      $DB->query($sql);
+      $sql = "DELETE FROM `glpi_displaypreferences`
+         WHERE `itemtype`='5168'";
+      $DB->query($sql);
+      // Purge network ports have itemtype 5153
       $networkPort = new NetworkPort();
       $sql = "SELECT * FROM `glpi_networkports`
          WHERE `itemtype`='5153'";
@@ -126,116 +132,164 @@ function pluginFusioninventoryInstall($version, $migration='') {
       }
 
 
-   // Remove old rules
-   $migration->displayMessage("Clean rules from old installation of the plugin");
-   $Rule = new Rule();
-   $a_rules = $Rule->find("`sub_type`='PluginFusioninventoryInventoryRuleImport'");
-   foreach ($a_rules as $data) {
-      $Rule->delete($data);
-   }
+   /*
+    * Remove old rules
+    */
+      $migration->displayMessage("Clean rules from old installation of the plugin");
+      $Rule = new Rule();
+      $a_rules = $Rule->find("`sub_type`='PluginFusioninventoryInventoryRuleImport'");
+      foreach ($a_rules as $data) {
+         $Rule->delete($data);
+      }
+      $a_rules = $Rule->find("`sub_type`='PluginFusinvinventoryRuleEntity'");
+      foreach ($a_rules as $data) {
+         $Rule->delete($data);
+      }
 
 
 
-   // ** Insert in DB
-   $migration->displayMessage("Creation tables in database");
+   /*
+    * Create DB structure
+    */
+      $migration->displayMessage("Creation tables in database");   
+      $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-"
+                 .$version."-empty.sql";
+      if (!$DB->runFile($DB_file)) {
+         $migration->displayMessage("Error on creation tables in database");
+      }
+      if (!$DB->runFile(GLPI_ROOT ."/plugins/fusioninventory/install/mysql/usbid.sql")) {
+         $migration->displayMessage("Error on creation table usbid in database");
+      }
+      if (!$DB->runFile(GLPI_ROOT ."/plugins/fusioninventory/install/mysql/pciid.sql")) {
+         $migration->displayMessage("Error on creation table pciid in database");
+      }
    
-   $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-"
-              .$version."-empty.sql";
-   if (!$DB->runFile($DB_file)) {
-      $migration->displayMessage("Error on creation tables in database");
-   }
-   if (!$DB->runFile(GLPI_ROOT ."/plugins/fusioninventory/install/mysql/usbid.sql")) {
-      $migration->displayMessage("Error on creation table usbid in database");
-   }
-   if (!$DB->runFile(GLPI_ROOT ."/plugins/fusioninventory/install/mysql/pciid.sql")) {
-      $migration->displayMessage("Error on creation table pciid in database");
-   }
+   /*
+    * Creation of folders
+    */
+      $migration->displayMessage("Creation of folders");
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
+      }
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp')) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp');
+      }
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml')) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml');
+      }
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/computer')) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/computer');
+      }
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/printer')) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/printer');
+      }
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/networkequipment')) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/networkequipment');
+      }
+      
+      
+   /*
+    * Manage profiles
+    */
+      $migration->displayMessage("Initialize profiles");
+      $plugin = new Plugin();
+      $data = $plugin->find("`name` = 'FusionInventory'");
+      $fields = current($data);
+      $plugins_id = $fields['id'];
+      PluginFusioninventoryProfile::initProfile('fusioninventory', $plugins_id);
+
    
-   $migration->displayMessage("Creation of folders");
-   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
-      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
-   }
-   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp')) {
-      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp');
-   }
-   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml')) {
-      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml');
-   }
-
-   $migration->displayMessage("Initialize profiles");
-   $plugin = new Plugin();
-   $data = $plugin->find("`name` = 'FusionInventory'");
-   $fields = current($data);
-   $plugins_id = $fields['id'];
-   PluginFusioninventoryProfile::initProfile('fusioninventory', $plugins_id);
-
-   // bug of purge network port when purge unknown devices
-   $sql = "SELECT `glpi_networkports`.`id` as nid FROM `glpi_networkports`
-      LEFT JOIN `glpi_plugin_fusioninventory_unknowndevices`
-         ON `glpi_plugin_fusioninventory_unknowndevices`.`id` = `glpi_networkports`.`items_id`
-      WHERE `itemtype`='PluginFusioninventoryUnknownDevice'
-         AND `glpi_plugin_fusioninventory_unknowndevices`.`id` IS NULL ";
-   $result=$DB->query($sql);
-   while ($data=$DB->fetch_array($result)) {
-      $networkPort->delete(array('id'=>$data['nid']), 1);
-   }
-
-   // glpi_plugin_fusioninventory_configs
-   $PluginFusioninventorySetup = new PluginFusioninventorySetup();
-   $users_id = $PluginFusioninventorySetup->createFusionInventoryUser();
-   $query = "INSERT INTO `glpi_plugin_fusioninventory_configs`
-                         (`type`, `value`, `plugins_id`)
-             VALUES ('version', '".$version."', '".$plugins_id."'),
-                    ('ssl_only', '0', '".$plugins_id."'),
-                    ('delete_task', '20', '".$plugins_id."'),
-                    ('inventory_frequence', '24', '".$plugins_id."'),
-                    ('agent_port', '62354', '".$plugins_id."'),
-                    ('extradebug', '0', '".$plugins_id."'),
-                    ('users_id', '".$users_id."', '".$plugins_id."')";
-   $DB->query($query);
-
-   // * Register Agent TASKS
-   PluginFusioninventoryProfile::changeProfile($plugins_id);
-   $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
-   $input = array();
-   $input['plugins_id'] = $plugins_id;
-   $input['modulename'] = "WAKEONLAN";
-   $input['is_active']  = 0;
-   $input['exceptions'] = exportArrayToDB(array());
-   $PluginFusioninventoryAgentmodule->add($input);
    
-   $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
-   $input = array();
-   $input['plugins_id'] = $plugins_id;
-   $input['modulename'] = "INVENTORY";
-   $input['is_active']  = 1;
-   $input['exceptions'] = exportArrayToDB(array());
-   $input['url']        = '';
-   $PluginFusioninventoryAgentmodule->add($input);
+   
+   /*
+    * bug of purge network port when purge unknown devices, so we clean
+    */
+      $sql = "SELECT `glpi_networkports`.`id` as nid FROM `glpi_networkports`
+         LEFT JOIN `glpi_plugin_fusioninventory_unknowndevices`
+            ON `glpi_plugin_fusioninventory_unknowndevices`.`id` = `glpi_networkports`.`items_id`
+         WHERE `itemtype`='PluginFusioninventoryUnknownDevice'
+            AND `glpi_plugin_fusioninventory_unknowndevices`.`id` IS NULL ";
+      $result=$DB->query($sql);
+      while ($data=$DB->fetch_array($result)) {
+         $networkPort->delete(array('id'=>$data['nid']), 1);
+      }
 
-   $input['modulename'] = "ESX";
-   $input['is_active']  = 0;
-   $url= '';
-   if (isset($_SERVER['HTTP_REFERER'])) {
-      $url = $_SERVER['HTTP_REFERER'];
-   }
-   $input['url'] = PluginFusioninventoryCommunicationRest::getDefaultRestURL($_SERVER['HTTP_REFERER'], 
-                                                                              'fusinvinventory', 
-                                                                              'esx');
-   $PluginFusioninventoryAgentmodule->add($input);
+      
+   /*
+    * Add config
+    */
+      $migration->displayMessage("Initialize configuration");
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+      $PluginFusioninventoryConfig->initConfigModule();
    
    
    
 
-   CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '60', 
-                      array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30));
-   Crontask::Register('PluginFusioninventoryTaskjobstatus', 'cleantaskjob', (3600 * 24), 
-                      array('mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30));
+   /*
+    * Register Agent TASKS
+    */
+      $migration->displayMessage("Initialize agent TASKS");
+      PluginFusioninventoryProfile::changeProfile($plugins_id);
+      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+      $input = array();
+      $input['plugins_id'] = $plugins_id;
+      $input['modulename'] = "WAKEONLAN";
+      $input['is_active']  = 0;
+      $input['exceptions'] = exportArrayToDB(array());
+      $PluginFusioninventoryAgentmodule->add($input);
+
+      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
+      $input = array();
+      $input['plugins_id'] = $plugins_id;
+      $input['modulename'] = "INVENTORY";
+      $input['is_active']  = 1;
+      $input['exceptions'] = exportArrayToDB(array());
+      $input['url']        = '';
+      $PluginFusioninventoryAgentmodule->add($input);
+
+      $input['modulename'] = "ESX";
+      $input['is_active']  = 0;
+      $url= '';
+      if (isset($_SERVER['HTTP_REFERER'])) {
+         $url = $_SERVER['HTTP_REFERER'];
+      }
+      $input['url'] = PluginFusioninventoryCommunicationRest::getDefaultRestURL($_SERVER['HTTP_REFERER'], 
+                                                                                 'fusinvinventory', 
+                                                                                 'esx');
+      $PluginFusioninventoryAgentmodule->add($input);
+   
+   
+   
+   /*
+    * Add cron task
+    */
+      $migration->displayMessage("Initialize cron task");
+      CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '60', 
+                         array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30));
+      Crontask::Register('PluginFusioninventoryTaskjobstatus', 'cleantaskjob', (3600 * 24), 
+                         array('mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30));
 
 
-   $migration->displayMessage("Create rules");
-   $PluginFusioninventorySetup = new PluginFusioninventorySetup();
-   $PluginFusioninventorySetup->initRules();
+      
+   /*
+    * Create rules
+    */      
+      $migration->displayMessage("Create rules");
+      $PluginFusioninventorySetup = new PluginFusioninventorySetup();
+      $PluginFusioninventorySetup->initRules();
+      
+      
+      
+   /*
+    *  Import OCS locks
+    */
+      $migration->displayMessage("Import OCS locks if exists");
+      include_once GLPI_ROOT . "/plugins/fusioninventory/inc/lock.class.php";
+      include_once GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputerlib.class.php";
+      include_once GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputerlibhook.class.php";
+      $PluginFusioninventoryLock = new PluginFusioninventoryLock();
+      $PluginFusioninventoryLock->importFromOcs();
+      
 }
 
 ?>

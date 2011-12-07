@@ -810,6 +810,84 @@ class PluginFusioninventorySetup {
          $input['value'] = '0';
          $ruleaction->add($input);
          
+         
+         
+      // ** Entities rules
+         // Récupérer la config des entités des regles OCS
+         if (!class_exists('PluginFusioninventoryInventoryRuleEntityCollection')) { // if plugin is unactive
+            include(GLPI_ROOT . "/plugins/fusioninventory/inc/inventoryruleentitycollection.class.php");
+         }
+         if (!class_exists('PluginFusioninventoryInventoryRuleEntity')) { // if plugin is unactive
+            include(GLPI_ROOT . "/plugins/fusioninventory/inc/inventoryruleentity.class.php");
+         }
+         $Rule = new Rule();
+         $RuleCriteria = new RuleCriteria();
+         $RuleAction = new RuleAction();
+
+         $a_rules = $Rule->find("`sub_type`='RuleOcs'", "`ranking`");
+         foreach($a_rules as $data) {
+            $rulecollection = new PluginFusioninventoryInventoryRuleEntityCollection();
+            $input = $data;
+            unset($input['id']);
+            $input['sub_type'] = 'PluginFusioninventoryInventoryRuleEntity';
+            $data['comment'] = Toolbox::addslashes_deep($data['comment']);
+            $rule_id = $rulecollection->add($input);
+
+            // Add criteria
+            $rule = $rulecollection->getRuleClass();
+            $rulecriteria = new RuleCriteria(get_class($rule));
+            $a_criteria = $RuleCriteria->find("`rules_id`='".$data['id']."'");
+            foreach ($a_criteria as $datacrit) {
+               $input = $datacrit;
+               unset($input['id']);
+               switch ($input['criteria']) {
+
+                     case 'IPADDRESS':
+                        $input['criteria'] = 'ip';
+                        break;
+
+                     case 'TAG':
+                        $input['criteria'] = 'tag';
+                        break;
+
+                     case 'DOMAIN':
+                        $input['criteria'] = 'domain';
+                        break;
+
+                     case 'IPSUBNET':
+                        $input['criteria'] = 'subnet';
+                        break;
+
+                     case 'SSN':
+                        $input['criteria'] = 'serial';
+                        break;
+
+                     case 'MACHINE_NAME':
+                        $input['criteria'] = 'name';
+                        break;
+               }
+
+               $input['rules_id'] = $rule_id;
+               if (($input['criteria'] != 'OCS_SERVER')
+                     AND ($input['criteria'] != 'DESCRIPTION')){
+                  $rulecriteria->add($input);
+               }
+            }
+
+            // Add action
+            $ruleaction = new RuleAction(get_class($rule));
+            $a_rules = $RuleAction->find("`rules_id`='".$data['id']."'");
+            foreach ($a_rules as $dataaction) {
+               $input = $dataaction;
+               unset($input['id']);
+               if ($input['field'] == '_ignore_ocs_import') {
+                  $input['field'] = "_ignore_import";
+               }
+               $input['rules_id'] = $rule_id;
+               $ruleaction->add($input);
+            }
+         }
+         
    }
    
    

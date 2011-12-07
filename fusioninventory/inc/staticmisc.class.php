@@ -155,7 +155,17 @@ class PluginFusioninventoryStaticmisc {
                    array('profil'  => 'credential',
                          'name'    => $LANG['plugin_fusioninventory']['menu'][5]),
                    array('profil'  => 'credentialip',
-                         'name'    => $LANG['plugin_fusioninventory']['menu'][6]));
+                         'name'    => $LANG['plugin_fusioninventory']['menu'][6]),
+          
+          
+                   array('profil'  => 'existantrule',
+                         'name'    => $LANG['plugin_fusinvinventory']['profile'][2]),
+                   array('profil'  => 'importxml',
+                         'name'    => $LANG['plugin_fusinvinventory']['profile'][3]),
+                   array('profil'  => 'blacklist',
+                         'name'    => $LANG['plugin_fusinvinventory']['profile'][4]),
+                   array('profil'  => 'ESX',
+                         'name'    => $LANG['plugin_fusinvinventory']['vmwareesx'][0]));
    }
    
    
