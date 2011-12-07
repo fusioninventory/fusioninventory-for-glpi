@@ -1,4 +1,4 @@
-<?
+<?php
 function format_permissions($perms) {
    if (($perms & 0xC000) == 0xC000) {
       // Socket

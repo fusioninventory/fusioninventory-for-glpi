@@ -77,7 +77,7 @@ include_once('emulatoragent.php');
 >>>>>>> glpi0.80:fusioninventory/phpunit/Netinventory/Connectionslogs/AllTests.php
  */
 
-class Connectionlogs extends PHPUnit_Framework_TestCase {
+class Connectionslogs extends PHPUnit_Framework_TestCase {
 
 
    public function testSetModuleInventoryOff() {
@@ -313,7 +313,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
       }
 
       $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi080/plugins/fusioninventory/front/communication.php";
+      $emulatorAgent->server_urlpath = "/fusion0.80/plugins/fusioninventory/front/communication.php";
       if (empty($xmlstring)) {
          $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
       } else {
@@ -357,11 +357,11 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
 
 
 
-class Connectionlogs_AllTests  {
+class Connectionslogs_AllTests  {
 
    public static function suite() {
 
-      $suite = new PHPUnit_Framework_TestSuite('Connectionlogs');
+      $suite = new PHPUnit_Framework_TestSuite('Connectionslogs');
       return $suite;
    }
 }
