@@ -51,6 +51,10 @@ if (!defined('GLPI_ROOT')) {
 
 class Netinventory extends PHPUnit_Framework_TestCase {
 
+   function testNetinventory() {
+      return;
+   }
+   
 }
 
 require_once 'Hub/AllTests.php';
