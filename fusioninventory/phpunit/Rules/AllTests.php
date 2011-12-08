@@ -1301,6 +1301,8 @@ class Rules_AllTests  {
       $GLPIInstall->testInstall();
       $Install->testInstall();
       
+      Config::detectRootDoc();
+      
       $suite = new PHPUnit_Framework_TestSuite('Rules');
       return $suite;
    }
