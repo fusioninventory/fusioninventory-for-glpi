@@ -3030,7 +3030,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                               $newTable);
       if (!TableExists($newTable)) {
          $query = "CREATE TABLE `".$newTable."` (
-                     int(11) NOT NULL AUTO_INCREMENT,
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
                       PRIMARY KEY (`id`)
                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
          $DB->query($query);
