@@ -45,7 +45,7 @@ class InventoryComputer extends PHPUnit_Framework_TestCase {
 
     public function testSetModuleInventoryOff() {
        global $DB,$LANG,$CFG_GLPI;
-       loadLanguage();
+       Session::loadLanguage();
 
        $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
          //deleteDir(GLPI_ROOT."/files/_plugins/fusioninventory/criterias");
@@ -772,11 +772,11 @@ echo "# testHardwareModifications\n";
             LEFT JOIN `glpi_softwares` ON `glpi_softwareversions`.`softwares_id` = `glpi_softwares`.`id`
             WHERE `computers_id`='".$items_id."'
                AND `glpi_softwareversions`.`name` = '".$child->VERSION."'
-               AND `glpi_softwares`.`name` = '".addslashes_deep($child->NAME)."'
+               AND `glpi_softwares`.`name` = '".Toolbox::addslashes_deep($child->NAME)."'
                   LIMIT 1";
          $result=$DB->query($query);
 
-         $this->assertEquals($DB->numrows($result), 1, 'Software not find in GLPI '.$DB->numrows($result).' times instead 1 ('.addslashes_deep($child->NAME).') ['.$xmlFile.']');
+         $this->assertEquals($DB->numrows($result), 1, 'Software not find in GLPI '.$DB->numrows($result).' times instead 1 ('.Toolbox::addslashes_deep($child->NAME).') ['.$xmlFile.']');
 
       }
 

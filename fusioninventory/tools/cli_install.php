@@ -53,10 +53,10 @@ if (!defined('GLPI_ROOT')) {
 include (GLPI_ROOT . "/inc/includes.php");
 
 // Init debug variable
-$_SESSION['glpi_use_mode'] = DEBUG_MODE;
+$_SESSION['glpi_use_mode'] = Session::DEBUG_MODE;
 $_SESSION['glpilanguage']  = "en_GB";
 
-LoadLanguage();
+Session::LoadLanguage();
 
 // Only show errors
 $CFG_GLPI["debug_sql"]        = $CFG_GLPI["debug_vars"] = 0;
@@ -86,7 +86,7 @@ class CliMigration extends Migration {
 
    function displayMessage ($msg) {
 
-      $msg .= " (".timestampToString(time()-$this->deb).")";
+      $msg .= " (".Html::timestampToString(time()-$this->deb).")";
       echo str_pad($msg, 100)."\r";
    }
 

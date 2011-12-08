@@ -78,7 +78,7 @@ switch($_POST['glpi_tab']) {
       Log::showForItem($pFusioninventoryAgent);
 
    default :
-      CommonGLPI::displayStandardTab($PluginFusioninventoryAgent, $_REQUEST['glpi_tab']);
+      CommonGLPI::displayStandardTab($pFusioninventoryAgent, $_REQUEST['glpi_tab']);
       break;
 }
 

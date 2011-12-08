@@ -288,6 +288,8 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
    function createModel($xml, $message) {
       global $DB,$LANG;
 
+      $PluginFusioninventoryMapping = new PluginFusioninventoryMapping();
+      
       // Verify same model exist
       $query = "SELECT id
                 FROM `glpi_plugin_fusinvsnmp_models`
@@ -397,10 +399,29 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
          return false;
       } else {
+         $mapping_type = '';
+         if (isset($child->mapping_type)) {
+            switch($child->mapping_type) {
+
+               case '1':
+                  $mapping_type = 'Computer';
+                  break;
+
+               case '2':
+                  $mapping_type = 'NetworkEquipment';
+                  break;
+
+               case '3':
+                  $mapping_type = 'Printer';
+                  break;
+
+            }
+         }
+         
          // Add new model
          $query = "INSERT INTO `glpi_plugin_fusinvsnmp_models`
                                (`name`,`itemtype`,`discovery_key`,`comment`)
-                   VALUES('".(string)$xml->name."','".$type."','".(string)$xml->key."','".(string)$xml->comments."');";
+                   VALUES('".(string)$xml->name."','".$mapping_type."','".(string)$xml->key."','".(string)$xml->comments."');";
          $DB->query($query);
          $plugin_fusinvsnmp_models_id = $DB->insert_id();
 
