@@ -53,7 +53,7 @@ if (!defined('GLPI_ROOT')) {
 include (GLPI_ROOT . "/inc/includes.php");
 
 // Init debug variable
-$_SESSION['glpi_use_mode'] = DEBUG_MODE;
+$_SESSION['glpi_use_mode'] = Session::DEBUG_MODE;
 $_SESSION['glpilanguage']  = "en_GB";
 
 Session::LoadLanguage();
