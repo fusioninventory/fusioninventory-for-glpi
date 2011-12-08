@@ -260,7 +260,8 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
                   AND `networkports_id_destination`='".$a_uport['id']."')
                 OR (`networkports_id_source`='".$a_uport['id']."'
                   AND `networkports_id_destination`='".$a_port1sw2['id']."'))");
-         $this->assertEquals(count($a_logs), 1, '(2) Connection log not created');
+         $this->assertEquals(count($a_logs), 1, '(2) Connection log not created 
+               ('.$a_port1sw2['id'].' => '.$a_uport['id'].')');
       
       
          
