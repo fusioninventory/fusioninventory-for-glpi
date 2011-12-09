@@ -66,7 +66,6 @@ if (isset($_GET["action"])) {
          if (isset($_POST["item"]) && count($_POST["item"])) {
             foreach ($_POST["item"] as $key => $val) {
                $rule->getFromDB($key);
-               $input["id"] = $key;
                $rulecollection->deleteRuleOrder($rule->fields["ranking"]);
                $rule->delete(array('id' => $key));
             }
@@ -89,6 +88,7 @@ if (isset($_GET["action"])) {
             $rule = new PluginFusioninventoryRule();
             foreach ($_POST["item"] as $key => $val) {
                if ($val == 1) {
+                  $input = array();
                   $input['id'] = $key;
                   $input['is_active'] = $_POST["activate_rule"];
                   $rule->update($input);
@@ -127,6 +127,7 @@ if (isset($_GET["action"])) {
    echo "</td></tr>\n";
    echo "</table>";
 
+   $manufacturer = 0;
    if (!isset($_GET['offset'])) {
       // First run
       $offset       = $rulecollection->replayRulesOnExistingDB(0, $max, array(), $_POST);
@@ -161,6 +162,7 @@ if (isset($_GET["action"])) {
 Html::header($LANG['rulesengine'][17], $_SERVER['PHP_SELF'], "admin", $rulecollection->menu_type,
              $rulecollection->menu_option);
 
+   $tabs = array();
    if ($rulecollection->showInheritedTab()) {
       $tabs[0] = array('title'  => $LANG['rulesengine'][20].' : '.
                                    Dropdown::getDropdownName('glpi_entities',

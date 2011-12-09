@@ -76,6 +76,7 @@ class PluginFusioninventoryMapping extends CommonDBTM {
                                    "`itemtype`='".$parm['itemtype']."' AND `name`='".$parm['name']."'"));
       if (empty($data)) {
          // Insert
+         $query = '';
          if (isset($parm['shortlocale'])) {
             $query = "INSERT INTO `glpi_plugin_fusioninventory_mappings`
                         (`itemtype`, `name`, `table`, `tablefield`, `locale`, `shortlocale`)

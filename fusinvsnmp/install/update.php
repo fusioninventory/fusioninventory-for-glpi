@@ -77,6 +77,7 @@ function pluginFusinvsnmpGetCurrentVersion($version) {
          } else if (TableExists("glpi_plugin_fusioninventory_config")) {
             $query = "SELECT version FROM glpi_plugin_fusioninventory_config LIMIT 1";
          }
+         $data = array();
          if ($query != "") {
             if ($result=$DB->query($query)) {
                if ($DB->numrows($result) == "1") {

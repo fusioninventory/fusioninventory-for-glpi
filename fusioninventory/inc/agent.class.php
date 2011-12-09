@@ -598,6 +598,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       # Guess the machine name from the DEVICEID,
       # useful when Windows domain != DNS domain
+      $stack = array();
       if(preg_match('/(\S+)-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}$/', $PluginFusioninventoryAgent->fields['name'], $stack)) {
          array_push($ret, "http://".$stack[1].":".$config->getValue($plugins_id, 'agent_port'));
       }

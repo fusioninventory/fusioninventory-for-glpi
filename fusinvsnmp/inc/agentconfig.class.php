@@ -47,7 +47,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpAgentconfig extends CommonDBTM {
 
-
    function canCreate() {
       return PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configuration", "w");
    }
@@ -60,11 +59,22 @@ class PluginFusinvsnmpAgentconfig extends CommonDBTM {
       return false;
    }
 
+   
 
-   function showForm($id, $options=array()) {
+   /**
+    * Display SNMP configuration form of an agent
+    *
+    * @global array $LANG
+    * 
+    * @param integer $agents_id id of the agent
+    * @param array $options
+    * 
+    * @return boolean true 
+    */
+   function showForm($agents_id, $options=array()) {
       global $LANG;
 
-      $a_agent = $this->find("`plugin_fusioninventory_agents_id`='".$id."'");
+      $a_agent = $this->find("`plugin_fusioninventory_agents_id`='".$agents_id."'");
       if (count($a_agent) > 0) {
          foreach ($a_agent as $data) {
             $this->getFromDB($data['id']);
@@ -74,7 +84,7 @@ class PluginFusinvsnmpAgentconfig extends CommonDBTM {
          $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
          $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
          unset($this->fields['id']);
-         $this->fields['plugin_fusioninventory_agents_id'] = $id;
+         $this->fields['plugin_fusioninventory_agents_id'] = $agents_id;
          $this->fields['threads_netdiscovery'] =
                  $PluginFusioninventoryConfig->getValue($plugins_id, 'threads_netdiscovery');
          $this->fields['threads_snmpquery'] =
@@ -101,6 +111,15 @@ class PluginFusinvsnmpAgentconfig extends CommonDBTM {
       return true;
    }
 
+   
+   
+   /**
+    * Load config of an agent
+    *
+    * @param integer $agents_id require the agent id 
+    * 
+    * @return nothing data stored in $this
+    */
    function loadAgentconfig($agents_id) {
 
       $a_agent = $this->find("`plugin_fusioninventory_agents_id`='".$agents_id."'");
@@ -123,7 +142,6 @@ class PluginFusinvsnmpAgentconfig extends CommonDBTM {
       unset($this->fields['id']);
       $this->add($this->fields);
    }
-
 }
 
 ?>

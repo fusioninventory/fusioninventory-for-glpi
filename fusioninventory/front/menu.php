@@ -58,7 +58,7 @@ if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agents", "r")
 
    PluginFusioninventoryMenu::displayMenu();
 } else {
-   displayRightError();
+   Html::displayRightError();
 }
 
 Html::footer();

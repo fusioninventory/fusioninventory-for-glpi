@@ -59,7 +59,7 @@ if (isset ($_POST["add"])) {
       $_POST['ip_start'] .= $_POST['ip_start2'].".".$_POST['ip_start3'];
       $_POST['ip_end']    = $_POST['ip_end0'].".".$_POST['ip_end1'].".";
       $_POST['ip_end']   .= $_POST['ip_end2'].".".$_POST['ip_end3'];
-      $newID = $iprange->add($_POST);
+      $iprange->add($_POST);
 
       Html::back();
    } else {

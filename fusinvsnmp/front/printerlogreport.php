@@ -78,7 +78,7 @@ Search::show('PluginFusinvsnmpPrinterLogReport');
 
 
 function displaySearchForm() {
-   global $_SERVER,$_GET,$LANG;
+   global $_SERVER,$LANG;
 
    echo "<form action='".$_SERVER["PHP_SELF"]."' method='post'>";
    echo "<table class='tab_cadre' cellpadding='5'>";

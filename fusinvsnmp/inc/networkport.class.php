@@ -69,7 +69,9 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       parent::__construct("glpi_networkports", $logFile);
       $this->oFusioninventory_networkport =
               new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkports");
-      if ($p_type!=NULL) $this->glpi_type = $p_type;
+      if ($p_type!=NULL) {
+         $this->glpi_type = $p_type;
+      }
       $this->type='PluginFusinvsnmpNetworkPort';
    }
 
@@ -316,7 +318,9 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
     *@return nothing
     **/
    function disconnectDB($p_port='') {
-      if ($p_port=='') $p_port=$this->getValue('id');
+      if ($p_port=='') {
+         $p_port=$this->getValue('id');
+      }
       $nn = new NetworkPort_NetworkPort();
 
       if ($nn->getOppositeContact($p_port) AND $nn->getFromDBForNetworkPort($nn->getOppositeContact($p_port))) {
@@ -497,6 +501,7 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
    function cleanVlan($p_vlan, $p_port='') {
       global $DB;
 
+      $query = '';
       if ($p_vlan != '') {
          if ($p_port != '') { // delete this vlan for this port
             $query="DELETE FROM `glpi_networkports_vlans`
@@ -529,7 +534,9 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       $ptp = new PluginFusinvsnmpNetworkPort;
       $mac = array();
       foreach($this->portsToConnect as $index=>$portConnection) {
-         if ($macs!='') $macs.=', ';
+         if ($macs!='') { 
+            $macs.=', ';
+         }
          $ptp->load($portConnection);
          $macs.="'".$ptp->getValue('mac')."'";
          $mac[$index]=$ptp->getValue('mac');

@@ -75,7 +75,7 @@ if (isset($_POST["agent_add"])) {
    Html::back();
 } else if (isset ($_POST["updateexceptions"])) {
    $a_modules = $agentmodule->find();
-   foreach ($a_modules as $module_id=>$data) {
+   foreach ($a_modules as $data) {
       $a_agentList        = importArrayFromDB($data['exceptions']);
       $agentModule        = 0;
       if (isset($_POST['activation-'.$data['modulename']])) {

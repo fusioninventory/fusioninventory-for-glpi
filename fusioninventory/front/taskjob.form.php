@@ -55,7 +55,7 @@ if (isset($_POST['definition_add'])) {
    $mytaskjob->getFromDB($_POST['id']);
    $a_listdef = importArrayFromDB($mytaskjob->fields['definition']);
    $add = 1;
-   foreach ($a_listdef as $num=>$dataDB) {
+   foreach ($a_listdef as $dataDB) {
       if (isset($dataDB[$_POST['DefinitionType']]) 
               AND $dataDB[$_POST['DefinitionType']] == $_POST['definitionselectiontoadd']) {
          $add = 0;
@@ -78,7 +78,7 @@ if (isset($_POST['definition_add'])) {
    $mytaskjob->getFromDB($_POST['id']);
    $a_listact = importArrayFromDB($mytaskjob->fields['action']);
    $add = 1;
-   foreach ($a_listact as $num=>$dataDB) {
+   foreach ($a_listact as $dataDB) {
       if (isset($dataDB[$_POST['ActionType']])
               AND $dataDB[$_POST['ActionType']] == $_POST['actionselectiontoadd']) {
          $add = 0;
