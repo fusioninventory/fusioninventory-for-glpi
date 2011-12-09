@@ -332,8 +332,9 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             }
              
 
-            if (!in_array('contact', $a_lockable))
+            if (!in_array('contact', $a_lockable)) {
                $input['contact'] = (string)$xml->USERSESSION;
+            }
             if (!in_array('domain', $a_lockable)) {
                if (!empty($xml->WORKGROUP)) {
                $input['domain'] = Dropdown::importExternal("Domain",
@@ -442,12 +443,14 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
          
          case 'NetworkEquipment':
             if (isset($xml->MAC) AND !empty($xml->MAC)) {
-               if (!in_array('mac', $a_lockable))
+               if (!in_array('mac', $a_lockable)) {
                   $input['mac'] = $xml->MAC;
+               }
             }
             if (isset($xml->IP)) {
-               if (!in_array('ip', $a_lockable))
+               if (!in_array('ip', $a_lockable)) {
                   $input['ip'] = $xml->IP;
+               }
             }
 
             $class->update($input);

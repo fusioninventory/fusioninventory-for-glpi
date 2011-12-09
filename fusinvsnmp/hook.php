@@ -42,14 +42,14 @@
 
 function plugin_fusinvsnmp_getDatabaseRelations() {
    $plugin = new Plugin();
-   if ($plugin->isActivated("fusinvsnmp"))
+   if ($plugin->isActivated("fusinvsnmp")) {
       return array (
          "glpi_plugin_fusinvsnmp_models" => array (
             "glpi_plugin_fusinvsnmp_unknowndevices" => "plugin_fusinvsnmp_models_id"
-         )
-      );
-   else
+         ));
+   } else {
       return array ();
+   }
 }
 
 
@@ -369,7 +369,9 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
                   $out .= "<a href=\"".$CFG_GLPI["root_doc"]."/";
                   $out .= $INFOFORM_PAGES['PluginFusioninventoryUnknownDevice']."?id=".$vartmp."\">";
                   $out .=  $NetworkPort->device_name;
-                  if ($CFG_GLPI["view_ID"]) $out .= " (".$vartmp.")";
+                  if ($CFG_GLPI["view_ID"]) {
+                     $out .= " (".$vartmp.")";
+                  }
                   $out .=  "</a><br/>";
                }
                return "<center>".$out."</center>";
@@ -541,10 +543,12 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
             case 'glpi_printers.name':
 
                // Search pages in printer history to limit SQL queries
-               if (isset($_SESSION['glpi_plugin_fusioninventory_history_start']))
+               if (isset($_SESSION['glpi_plugin_fusioninventory_history_start'])) {
                   unset($_SESSION['glpi_plugin_fusioninventory_history_start']);
-               if (isset($_SESSION['glpi_plugin_fusioninventory_history_end']))
+               }
+               if (isset($_SESSION['glpi_plugin_fusioninventory_history_end'])) {
                   unset($_SESSION['glpi_plugin_fusioninventory_history_end']);
+               }
                if ((isset($_SESSION['glpi_plugin_fusioninventory_date_start']))
                        AND (isset($_SESSION['glpi_plugin_fusioninventory_date_end']))) {
 

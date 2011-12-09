@@ -707,7 +707,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          }
          $this->ptd->addPort($ptp, $portIndex);
       } else { // virtual port : do not import but delete if exists
-         if ( is_numeric($ptp->getValue('id')) ) $ptp->deleteDB();
+         if (is_numeric($ptp->getValue('id'))) {
+            $ptp->deleteDB();
+         }
       }
       return $errors;
    }
@@ -1104,7 +1106,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       }
       if ($portID != '') {
          $p_oPort->addConnection($portID);
-         if ($ip != '') $p_oPort->setValue('ip', $ip);
+         if ($ip != '') {
+            $p_oPort->setValue('ip', $ip);
+         }
       } else {
          $p_oPort->addUnknownConnection($mac, $ip);
          //TODO : si ip ajouter une tache de decouverte sur l'ip pour recup autre info
@@ -1189,7 +1193,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                            switch ($ipName) {
 
                               case 'IP' :
-                                 if ($ipChild != '') return $ipChild;
+                                 if ($ipChild != '') {
+                                    return $ipChild;
+                                 }
                                  break;
                                  
                            }
