@@ -1232,7 +1232,8 @@ class Rules extends PHPUnit_Framework_TestCase {
       $prologXML = $emulatorAgent->sendProlog($XML['Computer']);
       $a_computers = $computer->find("`serial`='XA201220H'");
       $this->assertEquals(count($a_computers), 1 , 'Problem on global criteria of rules, 
-         these criteria must be valided to valid the rule (Computer seria = UUID)!');
+         these criteria must be valided to valid the rule (Computer serial + UUID)!\n
+         Return code on send inventory : '.$prologXML);
          
    }
     
