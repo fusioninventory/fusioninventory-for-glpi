@@ -70,6 +70,7 @@ if (isset($_GET['vlan_update'])) {
 	Html::back();
 } else if (isset($_POST['addWalk'])) {
    $i = 1;
+   $md5 = md5(rand(1, 1000000));
    while ($i == '1') {
       $md5 = md5(rand(1, 1000000));
       $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_constructdevicewalks`
@@ -80,15 +81,10 @@ if (isset($_GET['vlan_update'])) {
       }   
    }
 
-   $query_ins = "INSERT INTO `glpi_plugin_fusinvsnmp_constructdevicewalks` (
-`id`,
-`plugin_fusinvsnmp_constructdevices_id`,
-`log`
-)
-VALUES (
-NULL, '".$_POST['id']."', '".$md5."'
-)";
-   $id_ins = $DB->query($query_ins);
+   $query_ins = "INSERT INTO `glpi_plugin_fusinvsnmp_constructdevicewalks` 
+      (`id`,`plugin_fusinvsnmp_constructdevices_id`,`log`)
+      VALUES (NULL, '".$_POST['id']."', '".$md5."')";
+   $DB->query($query_ins);
    move_uploaded_file($_FILES['walk']['tmp_name'], GLPI_PLUGIN_DOC_DIR."/fusioninventory/walks/".$md5);
    Html::back();
 } else if (isset($_POST['mib'])) { // Check MIBS

@@ -181,7 +181,8 @@ class PluginFusinvsnmpModel extends CommonDBTM {
       global $DB;
 
       $oids = array();
-
+      $query = "";
+      
       switch ($type) {
 
          case NETWORKING_TYPE :

@@ -47,9 +47,9 @@ if (!defined('GLPI_ROOT')) {
 include (GLPI_ROOT."/inc/includes.php");
 
 header("Content-Type: text/html; charset=UTF-8");
-header_nocache();
+Html::header_nocache();
 
-checkRight('rule_ocs','r');
+Session::checkRight('rule_ocs','r');
 
 $rule = new PluginFusioninventoryRuleImportEquipment();
 include (GLPI_ROOT."/ajax/rule.common.tabs.php");

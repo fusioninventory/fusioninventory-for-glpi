@@ -58,6 +58,7 @@ if (isset($_POST["delete_criteria"])) {
 
    if (count($_POST["item"])) {
       foreach ($_POST["item"] as $key => $val) {
+         $input = array();
          $input["id"] = $key;
          $rulecriteria->delete($input);
       }
@@ -72,6 +73,7 @@ if (isset($_POST["delete_criteria"])) {
 
    if (count($_POST["item"])) {
       foreach ($_POST["item"] as $key => $val) {
+         $input = array();
          $input["id"] = $key;
          $ruleaction->delete($input);
       }

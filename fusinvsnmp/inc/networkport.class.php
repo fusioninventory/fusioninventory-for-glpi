@@ -501,6 +501,7 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
    function cleanVlan($p_vlan, $p_port='') {
       global $DB;
 
+      $query = '';
       if ($p_vlan != '') {
          if ($p_port != '') { // delete this vlan for this port
             $query="DELETE FROM `glpi_networkports_vlans`

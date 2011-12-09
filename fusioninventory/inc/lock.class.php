@@ -104,7 +104,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
          $pflock->showForm(Toolbox::getItemTypeFormURL('PluginFusioninventoryLock'),
                            $item->getType());
       } else {
-         $pflock->showForm(Toolbox::getItemTypeFormURL('PluginFusioninventoryLock').'?id='.$id,
+         $pflock->showForm(Toolbox::getItemTypeFormURL('PluginFusioninventoryLock').'?id='.$item->getID(),
                            $item->getType(), $item->getID());
       }
 

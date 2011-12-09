@@ -58,7 +58,6 @@ if (isset($_POST['update'])) {
    switch ($_POST['tabs']) {
       
       case 'config' :
-         $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
          break;
 
       case 'history' :

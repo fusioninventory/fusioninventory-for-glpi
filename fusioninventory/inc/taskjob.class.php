@@ -420,7 +420,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    *
    **/
 
-   function dropdownType($myname,$method,$value=0, $taskjobs_id, $entity_restrict='') {
+   function dropdownType($myname,$method,$value=0, $taskjobs_id=0, $entity_restrict='') {
       global $CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
@@ -1155,8 +1155,6 @@ return namelist;
    
    // $items_id = agent id
    function getRealStateAgent($items_id) {
-
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
 
       $this->disableDebug();
 
@@ -1967,7 +1965,6 @@ return namelist;
       global $LANG,$CFG_GLPI;
       
       echo "<div style='display:none' id='".$name."' >";
-      $rand = mt_rand();
       $params = array('method' => '__VALUE__',
                       'rand'      => $randmethod,
                       'myname'    => 'method',
