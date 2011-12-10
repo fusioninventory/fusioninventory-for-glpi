@@ -266,7 +266,9 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
                ('.$a_port1sw2['id'].' => '.$a_uport['id'].')');
          $DB->query("DELETE FROM `glpi_plugin_fusinvsnmp_networkportconnectionlogs`");
       
-         
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
    }
 
 
@@ -316,8 +318,11 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
       $input_xml = $xml->asXML();
       $code = $emulatorAgent->sendProlog($input_xml);
       echo $code."\n";
+      
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
    }
-
 
 }
 

@@ -40,55 +40,35 @@
    ------------------------------------------------------------------------
  */
 
-class Install extends PHPUnit_Framework_TestCase {
+class GLPIlogs extends PHPUnit_Framework_TestCase {
 
-   public function testInstall() {
-      global $DB;
-
-      // Delete if Table of FusionInventory or Tracker yet in DB
-      $query = "SHOW FULL TABLES WHERE TABLE_TYPE LIKE 'VIEW'";
-      $result = $DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
-         if (strstr($data[0], "fusi")) {
-            $DB->query("DROP VIEW ".$data[0]);
-         }
-      } 
+   public function testSQLlogs() {
       
-      $query = "SHOW TABLES";
-      $result = $DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
-         if (strstr($data[0], "tracker")
-                 OR strstr($data[0], "fusi")) {
-            $DB->query("DROP TABLE ".$data[0]);
-         }
-      }
-
-      passthru("cd ../tools && /usr/local/bin/php -f cli_install.php");
+      $filecontent = '';
+      $filecontent = file_get_contents(GLPI_ROOT."/files/_log/sql-errors.log");
       
-      Session::loadLanguage("en_GB");
-      
-      $FusinvInstall = new FusinvInstall();
-      $FusinvInstall->testDB("fusioninventory");
-      
-      $FusinvInstall->testDB("fusinvinventory");
-      
-      $FusinvInstall->testDB("fusinvsnmp");
-      
-      $FusinvInstall->testDB("fusinvdeploy");
-      
-      $GLPIlog = new GLPIlogs();
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
+      $this->assertEquals($filecontent, '', 'sql-errors.log not empty');      
    }
+   
+   
+   
+   public function testPHPlogs() {
+      
+      $filecontent = '';
+      $filecontent = file_get_contents(GLPI_ROOT."/files/_log/php-errors.log");
+      
+      $this->assertEquals($filecontent, '', 'php-errors.log not empty');      
+   } 
+   
 }
 
 
 
-class Install_AllTests  {
+class GLPIlogs_AllTests  {
 
    public static function suite() {
-
-      $suite = new PHPUnit_Framework_TestSuite('Install');
+      
+      $suite = new PHPUnit_Framework_TestSuite('GLPIlogs');
       return $suite;
    }
 }
