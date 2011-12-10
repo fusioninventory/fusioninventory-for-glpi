@@ -164,6 +164,10 @@ echo "# testHardware\n";
 echo "# testHardwareModifications\n";
                      $this->testHardwareModifications("InventoryComputer/xml/".$Entry."/".$xmlFilename, $items_id);
                      echo "Number of files : ".$k."\n";
+                     
+                     $GLPIlog = new GLPIlogs();
+                     $GLPIlog->testSQLlogs();
+                     $GLPIlog->testPHPlogs();
                   }
                }
             }

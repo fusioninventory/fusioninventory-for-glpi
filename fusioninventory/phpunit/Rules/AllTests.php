@@ -770,7 +770,10 @@ class Rules extends PHPUnit_Framework_TestCase {
       $this->assertEquals($unknowndata['entities_id'], 0 , 'Problem On unknown entity, must be created in root entity instead '.$unknowndata['entities_id']);
       $unknown = current($a_unknown);
       $pluginFusioninventoryUnknownDevice->delete($unknown, 1);      
-      
+    
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();      
    }
 
     
@@ -871,6 +874,11 @@ class Rules extends PHPUnit_Framework_TestCase {
       
       $rulecollection->delete(array('id'=>$rule_id), 1);
       $rulecollection->delete(array('id'=>$rule2_id), 1);
+      
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+      
    }
    
    
@@ -1014,6 +1022,10 @@ class Rules extends PHPUnit_Framework_TestCase {
       $rulecollection->update($input);
       $input['id'] = $rule2_id;
       $rulecollection->update($input);
+      
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
    }
     
 
@@ -1192,6 +1204,9 @@ class Rules extends PHPUnit_Framework_TestCase {
       $input['id'] = $rule2_id;
       $rulecollection->update($input);
          
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
    }
 
    
@@ -1235,6 +1250,9 @@ class Rules extends PHPUnit_Framework_TestCase {
          these criteria must be valided to valid the rule (Computer serial + UUID)!\n
          Return code on send inventory : '.$prologXML);
          
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
    }
     
      
@@ -1287,6 +1305,10 @@ class Rules extends PHPUnit_Framework_TestCase {
       $input_xml = $xml->asXML();
       $code = $emulatorAgent->sendProlog($input_xml);
       echo $code."\n";
+      
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
    }
    
    

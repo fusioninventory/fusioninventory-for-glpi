@@ -40,58 +40,35 @@
    ------------------------------------------------------------------------
  */
 
+class GLPIlogs extends PHPUnit_Framework_TestCase {
 
-function displayMigrationMessage ($id, $msg="") {
-   // display nothing
-}
-
-
-class GLPIInstall extends PHPUnit_Framework_TestCase {
-
-   public function testInstall() {
-      global $DB;
+   public function testSQLlogs() {
       
-      $query = "SHOW FULL TABLES WHERE TABLE_TYPE LIKE 'VIEW'";
-      $result = $DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
-         $DB->query("DROP VIEW ".$data[0]);
-      }      
-
-      $query = "SHOW TABLES";
-      $result = $DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
-         $DB->query("DROP TABLE ".$data[0]);
-      }
+      $filecontent = '';
+      $filecontent = file_get_contents(GLPI_ROOT."/files/_log/sql-errors.log");
       
-      include_once (GLPI_ROOT . "/inc/dbmysql.class.php");
-      include_once (GLPI_CONFIG_DIR . "/config_db.php");
-      
-      // Install a fresh 0.80.5 DB
-      $DB  = new DB();
-      $res = $DB->runFile(GLPI_ROOT ."/install/mysql/glpi-0.80.3-empty.sql");
-      $this->assertTrue($res, "Fail: SQL Error during install");
-
-      // update default language
-      $query = "UPDATE `glpi_configs`
-                SET `language` = 'fr_FR'";
-      $this->assertTrue($DB->query($query), "Fail: can't set default language");
-      $query = "UPDATE `glpi_users`
-                SET `language` = 'fr_FR'";
-      $this->assertTrue($DB->query($query), "Fail: can't set users language");
-      
-      $GLPIlog = new GLPIlogs();
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
+      $this->assertEquals($filecontent, '', 'sql-errors.log not empty');      
    }
+   
+   
+   
+   public function testPHPlogs() {
+      
+      $filecontent = '';
+      $filecontent = file_get_contents(GLPI_ROOT."/files/_log/php-errors.log");
+      
+      $this->assertEquals($filecontent, '', 'php-errors.log not empty');      
+   } 
+   
 }
 
 
 
-class GLPIInstall_AllTests  {
+class GLPIlogs_AllTests  {
 
    public static function suite() {
-
-      $suite = new PHPUnit_Framework_TestSuite('GLPIInstall');
+      
+      $suite = new PHPUnit_Framework_TestSuite('GLPIlogs');
       return $suite;
    }
 }

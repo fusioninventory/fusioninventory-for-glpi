@@ -44,6 +44,9 @@
 if (!defined('GLPI_ROOT')) {   
    define('GLPI_ROOT', '../../..');
    
+   file_put_contents(GLPI_ROOT."/files/_log/sql-errors.log", '');
+   file_put_contents(GLPI_ROOT."/files/_log/php-errors.log", '');
+   
    include_once (GLPI_ROOT . "/inc/timer.class.php");
 
    include_once (GLPI_ROOT . "/inc/common.function.php");
@@ -121,6 +124,7 @@ if (!defined('GLPI_ROOT')) {
 ini_set("memory_limit", "-1");
 ini_set("max_execution_time", "0");
 
+require_once 'GLPIlogs/AllTests.php';
 require_once 'GLPIInstall/AllTests.php';
 require_once 'FusinvInstall/AllTests.php';
 require_once 'InventoryComputer/AllTests.php';

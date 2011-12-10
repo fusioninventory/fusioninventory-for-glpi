@@ -476,6 +476,10 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
             $this->assertEquals($pluginFusioninventoryUnknownDevice->fields['hub'],
                               '0', '(8) Hub connected on port fa0/1 of switch 1');
          }
+         
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
    }
 
 
@@ -525,6 +529,10 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
       $input_xml = $xml->asXML();
       $code = $emulatorAgent->sendProlog($input_xml);
       echo $code."\n";
+      
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
    }
    
 }
