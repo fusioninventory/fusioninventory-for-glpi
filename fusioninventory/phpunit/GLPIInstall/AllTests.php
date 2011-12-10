@@ -50,6 +50,12 @@ class GLPIInstall extends PHPUnit_Framework_TestCase {
 
    public function testInstall() {
       global $DB;
+      
+      $query = "SHOW FULL TABLES WHERE TABLE_TYPE LIKE 'VIEW'";
+      $result = $DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         $DB->query("DROP VIEW ".$data[0]);
+      }      
 
       $query = "SHOW TABLES";
       $result = $DB->query($query);
