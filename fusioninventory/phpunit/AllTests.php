@@ -124,12 +124,12 @@ if (!defined('GLPI_ROOT')) {
 ini_set("memory_limit", "-1");
 ini_set("max_execution_time", "0");
 
-require_once 'GLPIlogs/AllTests.php';
 require_once 'GLPIInstall/AllTests.php';
 require_once 'FusinvInstall/AllTests.php';
 require_once 'InventoryComputer/AllTests.php';
 require_once 'Rules/AllTests.php';
 require_once 'Netinventory/AllTests.php';
+require_once 'GLPIlogs/AllTests.php';
 
 require_once 'emulatoragent.php';
 
