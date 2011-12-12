@@ -140,8 +140,7 @@ function plugin_init_fusinvinventory() {
                   = '../fusioninventory/front/inventorycomputerblacklist.php';
    
 
-   $PLUGIN_HOOKS['webservices']['fusinvinventory'] = 'plugin_fusinvinventory_registerMethods';
-
+   
 
    // Fil ariane
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-blacklist']['title'] = $LANG['plugin_fusinvinventory']['menu'][2];

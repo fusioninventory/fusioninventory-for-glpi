@@ -187,11 +187,6 @@ function plugin_pre_item_purge_fusinvinventory($item) {
 
 }
 
-function plugin_fusinvinventory_registerMethods() {
-   global $WEBSERVICES_METHOD;
-   
-   $WEBSERVICES_METHOD['fusioninventory.test'] = array('PluginFusinvinventoryWebservice', 
-                                                       'methodTest');
-}
+
 
 ?>

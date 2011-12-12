@@ -970,4 +970,11 @@ function plugin_item_transfer_fusioninventory($parm) {
 
 
 
+function plugin_fusioninventory_registerMethods() {
+   global $WEBSERVICES_METHOD;
+   
+   $WEBSERVICES_METHOD['fusioninventory.test'] = array('PluginFusioninventoryInventoryComputerWebservice', 
+                                                       'methodTest');
+}
+
 ?>

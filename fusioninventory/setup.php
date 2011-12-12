@@ -197,6 +197,8 @@ function plugin_init_fusioninventory() {
                alt='".$LANG['plugin_fusioninventory']['setup'][16]."'>"] =
             'front/documentation.php';
 
+         $PLUGIN_HOOKS['webservices']['fusioninventory'] = 'plugin_fusioninventory_registerMethods';
+
          // Fil ariane
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['menu']['title'] = $LANG['plugin_fusioninventory']['menu'][3];
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['menu']['page']  = '/plugins/fusioninventory/front/wizard.php';
