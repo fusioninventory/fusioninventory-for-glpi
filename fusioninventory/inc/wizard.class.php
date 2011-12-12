@@ -186,6 +186,7 @@ class PluginFusioninventoryWizard {
             include (GLPI_ROOT."/plugins/fusioninventory/front/wizzrule.common.form.php");
          } else {
             self::addButton();
+            $rulecollection = new $classname();
             include (GLPI_ROOT."/plugins/fusioninventory/front/wizzrule.common.php");
          }
       } else if (isset($_GET['id'])) {
@@ -714,7 +715,7 @@ class PluginFusioninventoryWizard {
             break;
 
          case 'filInventorySNMP':
-            $method = 'snmpquery';
+            $method = 'snmpinventory';
             break;
 
          case 'filInventoryESX':
