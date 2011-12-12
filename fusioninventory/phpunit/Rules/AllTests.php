@@ -635,6 +635,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $Install->testInstall();
       
       Config::detectRootDoc();
+      loadLanguage("en_GB");
       
      // Disable all rules
      $query = "UPDATE `glpi_rules` SET `is_active` = '0' 
@@ -794,12 +795,8 @@ class Rules extends PHPUnit_Framework_TestCase {
    public function testImportComputerwithTypeOnly() {
       global $DB, $XML;
       
-      $GLPIInstall = new GLPIInstall();
-      $Install = new Install();
-      $GLPIInstall->testInstall();
-      $Install->testInstall();
-      
       Config::detectRootDoc();
+      loadLanguage("en_GB");
       
       // Add the rule with criterial only if type = Computer
       $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
@@ -907,12 +904,8 @@ class Rules extends PHPUnit_Framework_TestCase {
    public function testImportComputerwithTypeAndNameExist() {
       global $DB, $XML;
       
-      $GLPIInstall = new GLPIInstall();
-      $Install = new Install();
-      $GLPIInstall->testInstall();
-      $Install->testInstall();
-      
       Config::detectRootDoc();
+      loadLanguage("en_GB");
       
       // Add the rule with criterial only if type = Computer
       $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
@@ -1063,13 +1056,9 @@ class Rules extends PHPUnit_Framework_TestCase {
    public function testImportComputerwithTypeAndNameExistNamePresent() {
       global $DB, $XML;
       
-      $GLPIInstall = new GLPIInstall();
-      $Install = new Install();
-      $GLPIInstall->testInstall();
-      $Install->testInstall();
-      
       Config::detectRootDoc();
-
+      loadLanguage("en_GB");
+      
       // Add the rule with criterial only if type = Computer
       $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
       $input = array();
@@ -1240,12 +1229,8 @@ class Rules extends PHPUnit_Framework_TestCase {
    public function testImportComputerCheckrulevalidationlocal_and_globalcriteria() {
       global $DB, $XML;
       
-      $GLPIInstall = new GLPIInstall();
-      $Install = new Install();
-      $GLPIInstall->testInstall();
-      $Install->testInstall();
-      
       Config::detectRootDoc();
+      loadLanguage("en_GB");
       
       // Create computer only with serial and name;
       $computer = new Computer();
