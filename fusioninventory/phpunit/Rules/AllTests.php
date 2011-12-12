@@ -802,6 +802,11 @@ class Rules extends PHPUnit_Framework_TestCase {
       
       Config::detectRootDoc();
       
+     // Disable all rules
+     $query = "UPDATE `glpi_rules` SET `is_active` = '0' 
+        WHERE `sub_type`='PluginFusioninventoryRuleImportEquipment' ";
+     $DB->query($query);
+      
       // Add the rule with criterial only if type = Computer
       $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
       $input = array();
@@ -914,6 +919,11 @@ class Rules extends PHPUnit_Framework_TestCase {
       $Install->testInstall();
       
       Config::detectRootDoc();
+      
+     // Disable all rules
+     $query = "UPDATE `glpi_rules` SET `is_active` = '0' 
+        WHERE `sub_type`='PluginFusioninventoryRuleImportEquipment' ";
+     $DB->query($query);
       
       // Add the rule with criterial only if type = Computer
       $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
@@ -1071,6 +1081,11 @@ class Rules extends PHPUnit_Framework_TestCase {
       
       Config::detectRootDoc();
 
+     // Disable all rules
+     $query = "UPDATE `glpi_rules` SET `is_active` = '0' 
+        WHERE `sub_type`='PluginFusioninventoryRuleImportEquipment' ";
+     $DB->query($query);
+      
       // Add the rule with criterial only if type = Computer
       $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
       $input = array();
@@ -1247,6 +1262,11 @@ class Rules extends PHPUnit_Framework_TestCase {
       $Install->testInstall();
       
       Config::detectRootDoc();
+      
+     // Disable all rules
+     $query = "UPDATE `glpi_rules` SET `is_active` = '0' 
+        WHERE `sub_type`='PluginFusioninventoryRuleImportEquipment' ";
+     $DB->query($query);
       
       // Create computer only with serial and name;
       $computer = new Computer();
