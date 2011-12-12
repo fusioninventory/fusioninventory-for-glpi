@@ -3572,40 +3572,14 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    /*
     *  Convert displaypreferences
     */
-   $sql = "UPDATE `glpi_displaypreferences`
-      SET `itemtype`='PluginFusinvsnmpModel'
-      WHERE `itemtype`='5151' ";
-   $DB->query($sql);
-   $sql = "UPDATE `glpi_displaypreferences`
-      SET `itemtype`='PluginFusinvsnmpConfigSecurity'
-      WHERE `itemtype`='5152' ";
-   $DB->query($sql);
-   $sql = "UPDATE `glpi_displaypreferences`
-      SET `itemtype`='PluginFusinvsnmpPrinterCartridge'
-      WHERE `itemtype`='5156' ";
-   $DB->query($sql);
-   $sql = "UPDATE `glpi_displaypreferences`
-      SET `itemtype`='PluginFusinvsnmpNetworkEquipment'
-      WHERE `itemtype`='5157' ";
-   $DB->query($sql);
-   $sql = "UPDATE `glpi_displaypreferences`
-      SET `itemtype`='PluginFusinvsnmpIPRange'
-      WHERE `itemtype`='5159' ";
-   $DB->query($sql);
-   $sql = "UPDATE `glpi_displaypreferences`
-      SET `itemtype`='PluginFusinvsnmpNetworkPortLog'
-      WHERE `itemtype`='5162' ";
-   $DB->query($sql);
-   $sql = "UPDATE `glpi_displaypreferences`
-      SET `itemtype`='PluginFusinvsnmpConstructDevice'
-      WHERE `itemtype`='5167' ";
-   $DB->query($sql);
-   $sql = "UPDATE `glpi_displaypreferences`
-      SET `itemtype`='PluginFusinvsnmpPrinterLog'
-      WHERE `itemtype`='5168' ";
-   $DB->query($sql);
-
-      
+   changeDisplayPreference("5151", "PluginFusinvsnmpModel");
+   changeDisplayPreference("5152", "PluginFusinvsnmpConfigSecurity");
+   changeDisplayPreference("5156", "PluginFusinvsnmpPrinterCartridge");
+   changeDisplayPreference("5157", "PluginFusinvsnmpNetworkEquipment");
+   changeDisplayPreference("5159", "PluginFusinvsnmpIPRange");
+   changeDisplayPreference("5162", "PluginFusinvsnmpNetworkPortLog");
+   changeDisplayPreference("5167", "PluginFusinvsnmpConstructDevice");
+   changeDisplayPreference("5168", "PluginFusinvsnmpPrinterLog");
 
 
    $config->updateConfigType($plugins_id, 'version', PLUGIN_FUSINVSNMP_VERSION);
@@ -4306,6 +4280,30 @@ function update213to220_ConvertField($migration) {
       }
       $migration->displayMessage("$i / $nb");
    }
+}
+
+
+
+function changeDisplayPreference($olditemtype, $newitemtype) {
+   global $DB;
+   
+   $query = "SELECT *,count(`id`) as `cnt` FROM `glpi_displaypreferences` 
+   WHERE (`itemtype` = '".$newitemtype."'
+   OR `itemtype` = '".$olditemtype."')
+   group by `users_id`, `num`";
+   $result=$DB->query($query);
+   while ($data=$DB->fetch_array($result)) {
+      if ($data['cnt'] > 1) {
+         $queryd = "DELETE FROM `glpi_displaypreferences`
+            WHERE `id`='".$data['id']."'";
+         $DB->query($queryd);
+      }
+   }
+   
+   $sql = "UPDATE `glpi_displaypreferences`
+      SET `itemtype`='".$newitemtype."'
+      WHERE `itemtype`='".$olditemtype."' ";
+   $DB->query($sql);   
 }
 
 ?>
