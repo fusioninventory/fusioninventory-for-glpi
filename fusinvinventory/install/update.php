@@ -312,7 +312,7 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
       $migration->addField($newTable,
                               "last_fusioninventory_update",
                               "datetime DEFAULT NULL");
-   
+   $migration->migrationOneTable($newTable);
    
    
    
@@ -428,45 +428,49 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
 ";
                }
             }
-            $pfLib->_serializeIntoDB($data['internal_id'], $serializedSections);
-            
-            // * Add informations of BIOS (table glpi_plugin_fusinvinventory_computers)
-            $input = array();
-            $input['computers_id'] = $data['computers_id'];
-            foreach($infoSections['sections'] as $name=>$section) {
-               $split = explode("/", $name);
-               if (($split[1] > 0) OR (strstr($split[1], 'd'))) {
-                  $dataSection = unserialize($section);
+            if ($computer->getFromDB($data['computers_id'])) {
+               $pfLib->_serializeIntoDB($data['internal_id'], $serializedSections);
 
-                  if ($split[0] == 'BIOS') {
-                     if (isset($dataSection['BDATE'])) {
-                        $a_split = explode("/", $dataSection['BDATE']);
-                        $input['bios_date'] = $a_split[2]."-".$a_split[0]."-".$a_split[1];
+               // * Add informations of BIOS (table glpi_plugin_fusinvinventory_computers)
+               $input = array();
+               $input['computers_id'] = $data['computers_id'];
+               foreach($infoSections['sections'] as $name=>$section) {
+                  $split = explode("/", $name);
+                  if (($split[1] > 0) OR (strstr($split[1], 'd'))) {
+                     $dataSection = unserialize($section);
+
+                     if ($split[0] == 'BIOS') {
+                        if (isset($dataSection['BDATE'])) {
+                           $a_split = explode("/", $dataSection['BDATE']);
+                           $input['bios_date'] = $a_split[2]."-".$a_split[0]."-".$a_split[1];
+                        }
+                        if (isset($dataSection['BVERSION'])) {
+                           $input['bios_version'] = $dataSection['BVERSION'];
+                        }
+                        if (isset($dataSection['BMANUFACTURER'])) {
+                           $input['bios_manufacturers_id'] = Dropdown::importExternal('Manufacturer',
+                                                                                       $dataSection['BMANUFACTURER'],
+                                                                                       $computer->fields['entities_id']);
+                        }
                      }
-                     if (isset($dataSection['BVERSION'])) {
-                        $input['bios_version'] = $dataSection['BVERSION'];
-                     }
-                     if (isset($dataSection['BMANUFACTURER'])) {
-                        $computer->getFromDB($data['computers_id']);
-                        $input['bios_manufacturers_id'] = Dropdown::importExternal('Manufacturer',
-                                                                                    $dataSection['BMANUFACTURER'],
-                                                                                    $computer->fields['entities_id']);
-                     }
-                  }
-                  if ($split[0] == 'HARDWARE') {
-                     if (isset($dataSection['OSINSTALLDATE'])) {
-                        $input['operatingsystem_installationdate'] = date("Y-m-d", $dataSection['OSINSTALLDATE']);
-                     }
-                     if (isset($dataSection['WINOWNER'])) {
-                        $input['winowner'] = $dataSection['WINOWNER'];
-                     }
-                     if (isset($dataSection['WINCOMPANY'])) {
-                        $input['wincompany'] = $dataSection['WINCOMPANY'];
+                     if ($split[0] == 'HARDWARE') {
+                        if (isset($dataSection['OSINSTALLDATE'])) {
+                           $input['operatingsystem_installationdate'] = date("Y-m-d", $dataSection['OSINSTALLDATE']);
+                        }
+                        if (isset($dataSection['WINOWNER'])) {
+                           $input['winowner'] = $dataSection['WINOWNER'];
+                        }
+                        if (isset($dataSection['WINCOMPANY'])) {
+                           $input['wincompany'] = $dataSection['WINCOMPANY'];
+                        }
                      }
                   }
                }
+               $pfComputer->add($input);
+            } else {
+               $DB->query("DELETE FROM `glpi_plugin_fusinvinventory_libserialization`
+                  WHERE `internal_id`='".$data['internal_id']."'");
             }
-            $pfComputer->add($input);
          }
       }
    }

@@ -629,6 +629,13 @@ class Rules extends PHPUnit_Framework_TestCase {
    public function testNoRule() {
       global $DB, $XML;
       
+      $GLPIInstall = new GLPIInstall();
+      $Install = new Install();
+      $GLPIInstall->testInstall();
+      $Install->testInstall();
+      
+      Config::detectRootDoc();
+      
      // Disable all rules
      $query = "UPDATE `glpi_rules` SET `is_active` = '0' 
         WHERE `sub_type`='PluginFusioninventoryInventoryRuleImport' ";
@@ -787,6 +794,13 @@ class Rules extends PHPUnit_Framework_TestCase {
    public function testImportComputerwithTypeOnly() {
       global $DB, $XML;
       
+      $GLPIInstall = new GLPIInstall();
+      $Install = new Install();
+      $GLPIInstall->testInstall();
+      $Install->testInstall();
+      
+      Config::detectRootDoc();
+      
       // Add the rule with criterial only if type = Computer
       $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
@@ -892,6 +906,13 @@ class Rules extends PHPUnit_Framework_TestCase {
     */
    public function testImportComputerwithTypeAndNameExist() {
       global $DB, $XML;
+      
+      $GLPIInstall = new GLPIInstall();
+      $Install = new Install();
+      $GLPIInstall->testInstall();
+      $Install->testInstall();
+      
+      Config::detectRootDoc();
       
       // Add the rule with criterial only if type = Computer
       $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
@@ -1042,6 +1063,12 @@ class Rules extends PHPUnit_Framework_TestCase {
    public function testImportComputerwithTypeAndNameExistNamePresent() {
       global $DB, $XML;
       
+      $GLPIInstall = new GLPIInstall();
+      $Install = new Install();
+      $GLPIInstall->testInstall();
+      $Install->testInstall();
+      
+      Config::detectRootDoc();
 
       // Add the rule with criterial only if type = Computer
       $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
@@ -1213,6 +1240,13 @@ class Rules extends PHPUnit_Framework_TestCase {
    public function testImportComputerCheckrulevalidationlocal_and_globalcriteria() {
       global $DB, $XML;
       
+      $GLPIInstall = new GLPIInstall();
+      $Install = new Install();
+      $GLPIInstall->testInstall();
+      $Install->testInstall();
+      
+      Config::detectRootDoc();
+      
       // Create computer only with serial and name;
       $computer = new Computer();
       $input = array();
@@ -1318,13 +1352,6 @@ class Rules extends PHPUnit_Framework_TestCase {
 class Rules_AllTests  {
 
    public static function suite() {
-      
-      $GLPIInstall = new GLPIInstall();
-      $Install = new Install();
-      $GLPIInstall->testInstall();
-      $Install->testInstall();
-      
-      Config::detectRootDoc();
       
       $suite = new PHPUnit_Framework_TestSuite('Rules');
       return $suite;
