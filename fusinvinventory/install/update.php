@@ -469,7 +469,7 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
                $pfComputer->add($input);
             } else {
                $DB->query("DELETE FROM `glpi_plugin_fusinvinventory_libserialization`
-                  WHERE `id`='".$data['id']."'");
+                  WHERE `internal_id`='".$data['internal_id']."'");
             }
          }
       }
