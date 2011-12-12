@@ -312,7 +312,7 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
       $migration->addField($newTable,
                               "last_fusioninventory_update",
                               "datetime DEFAULT NULL");
-   
+   $migration->migrationOneTable($newTable);
    
    
    
@@ -448,7 +448,6 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
                            $input['bios_version'] = $dataSection['BVERSION'];
                         }
                         if (isset($dataSection['BMANUFACTURER'])) {
-                           $computer->getFromDB($data['computers_id']);
                            $input['bios_manufacturers_id'] = Dropdown::importExternal('Manufacturer',
                                                                                        $dataSection['BMANUFACTURER'],
                                                                                        $computer->fields['entities_id']);
