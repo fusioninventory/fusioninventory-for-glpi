@@ -1812,14 +1812,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     * Update display preferences
     */
-   $sql = "UPDATE `glpi_displaypreferences`
-      SET `itemtype`='PluginFusioninventoryUnknownDevice'
-      WHERE `itemtype`='5153' ";
-   $DB->query($sql);
-   $sql = "UPDATE `glpi_displaypreferences`
-      SET `itemtype`='PluginFusioninventoryAgent'
-      WHERE `itemtype`='5158' ";
-   $DB->query($sql);
+   changeDisplayPreference("5153", "PluginFusioninventoryUnknownDevice");
+   changeDisplayPreference("5158", "PluginFusioninventoryAgent");
    
    
    /*
@@ -1938,6 +1932,30 @@ function plugin_fusioninventory_displayMigrationMessage ($id, $msg="") {
       echo "<script type='text/javascript'>document.getElementById('migration_message_$id').innerHTML = '<p class=\"center\">$msg ($tps)</p>';</script>\n";
    }
    Html::glpi_flush();
+}
+
+
+
+function changeDisplayPreference($olditemtype, $newitemtype) {
+   global $DB;
+   
+   $query = "SELECT *,count(`id`) as `cnt` FROM `glpi_displaypreferences` 
+   WHERE (`itemtype` = '".$newitemtype."'
+   OR `itemtype` = '".$olditemtype."')
+   group by `users_id`, `num`";
+   $result=$DB->query($query);
+   while ($data=$DB->fetch_array($result)) {
+      if ($data['cnt'] > 1) {
+         $queryd = "DELETE FROM `glpi_displaypreferences`
+            WHERE `id`='".$data['id']."'";
+         $DB->query($queryd);
+      }
+   }
+   
+   $sql = "UPDATE `glpi_displaypreferences`
+      SET `itemtype`='".$newitemtype."'
+      WHERE `itemtype`='".$olditemtype."' ";
+   $DB->query($sql);   
 }
 
 ?>
