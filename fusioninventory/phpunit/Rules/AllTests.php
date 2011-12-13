@@ -635,7 +635,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $Install->testInstall();
       
       Config::detectRootDoc();
-      loadLanguage("en_GB");
+      Session::loadLanguage("en_GB");
       
      // Disable all rules
      $query = "UPDATE `glpi_rules` SET `is_active` = '0' 
@@ -796,7 +796,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       global $DB, $XML;
       
       Config::detectRootDoc();
-      loadLanguage("en_GB");
+      Session::loadLanguage("en_GB");
       
       // Add the rule with criterial only if type = Computer
       $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
@@ -905,7 +905,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       global $DB, $XML;
       
       Config::detectRootDoc();
-      loadLanguage("en_GB");
+      Session::loadLanguage("en_GB");
       
       // Add the rule with criterial only if type = Computer
       $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
@@ -1057,7 +1057,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       global $DB, $XML;
       
       Config::detectRootDoc();
-      loadLanguage("en_GB");
+      Session::loadLanguage("en_GB");
       
       // Add the rule with criterial only if type = Computer
       $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
@@ -1230,7 +1230,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       global $DB, $XML;
       
       Config::detectRootDoc();
-      loadLanguage("en_GB");
+      Session::loadLanguage("en_GB");
       
       // Create computer only with serial and name;
       $computer = new Computer();
