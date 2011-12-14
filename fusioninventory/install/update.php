@@ -1696,6 +1696,27 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "rules_id",
                                  "int(11) NOT NULL DEFAULT '0'");
       $migration->migrationOneTable($newTable);
+         $migration->addField($newTable,
+                                 "name",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "date",
+                                 "datetime DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "itemtype",
+                                 "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "entities_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "ip",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "mac",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "rules_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
 
          
       
