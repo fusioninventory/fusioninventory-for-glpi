@@ -320,7 +320,8 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
    function deleteMib($item_coche) {
       
       PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
-      for ($i = 0; $i < count($item_coche); $i++) {
+      $size = count($item_coche);
+      for ($i = 0; $i < $size; $i++) {
          $this->getFromDB($item_coche[$i]);
          $this->deleteFromDB(1);
       }
