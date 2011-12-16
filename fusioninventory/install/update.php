@@ -480,18 +480,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` WHERE `modulename`='WAKEONLAN'";
    $result = $DB->query($query);
    if (!$DB->numrows($result)) {
-      if (!class_exists('PluginFusioninventoryAgentmodule')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
-      }
-      $agentmodule = new PluginFusioninventoryAgentmodule();
-      $input = array();
-      $input['plugins_id'] = $plugins_id;
-      $input['modulename'] = "WAKEONLAN";
-      $input['is_active']  = 0;
-      $input['exceptions'] = exportArrayToDB(array());
-      $agentmodule->add($input);
+      $query_ins= "INSERT INTO `glpi_plugin_fusioninventory_agentmodules`
+            (`plugins_id`, `modulename`, `is_active`, `exceptions`)
+         VALUES ('".$plugins_id."', 'WAKEONLAN', '0', '".exportArrayToDB(array())."')";
+      $DB->query($query_ins);
    }
-      
       
       
    /*
