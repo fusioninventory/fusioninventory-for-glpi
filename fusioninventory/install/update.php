@@ -395,7 +395,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                             "item");
          $migration->addKey($newTable,
                             "items_id");
-
+      $migration->migrationOneTable($newTable);
       
       
    /*
@@ -483,7 +483,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       if (!class_exists('PluginFusioninventoryAgentmodule')) { // if plugin is unactive
          include(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
       }
-      $agentmodule = new PluginFusioninventoryAgentmodule;
+      $agentmodule = new PluginFusioninventoryAgentmodule();
       $input = array();
       $input['plugins_id'] = $plugins_id;
       $input['modulename'] = "WAKEONLAN";
