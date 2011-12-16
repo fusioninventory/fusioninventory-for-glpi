@@ -42,7 +42,7 @@
 
 class Install extends PHPUnit_Framework_TestCase {
 
-   public function testInstall() {
+   public function testInstall($verify=1) {
       global $DB;
 
       // Delete if Table of FusionInventory or Tracker yet in DB
@@ -67,14 +67,16 @@ class Install extends PHPUnit_Framework_TestCase {
       
       loadLanguage("en_GB");
       
-      $FusinvInstall = new FusinvInstall();
-      $FusinvInstall->testDB("fusioninventory");
-      
-      $FusinvInstall->testDB("fusinvinventory");
-      
-      $FusinvInstall->testDB("fusinvsnmp");
-      
-      $FusinvInstall->testDB("fusinvdeploy");
+      if ($verify == '1') {
+         $FusinvInstall = new FusinvInstall();
+         $FusinvInstall->testDB("fusioninventory");
+
+         $FusinvInstall->testDB("fusinvinventory");
+
+         $FusinvInstall->testDB("fusinvsnmp");
+
+         $FusinvInstall->testDB("fusinvdeploy");
+      }
       
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
