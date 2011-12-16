@@ -76,7 +76,8 @@ class PluginFusinvinventoryLock {
             }
          }
       }
-      for ($i=0; $i < count($a_fieldList); $i++) {
+      $size = count($a_fieldList);
+      for ($i=0; $i < $size; $i++) {
          foreach ($a_mapping as $datas) {
             if (($item->fields['tablename'] == getTableForItemType($datas['glpiItemtype']))
                   AND ($a_fieldList[$i] == $datas['glpiField'])) {

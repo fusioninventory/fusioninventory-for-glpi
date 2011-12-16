@@ -49,7 +49,7 @@ class Hub extends PHPUnit_Framework_TestCase {
       $GLPIInstall = new GLPIInstall();
       $Install = new Install();
       $GLPIInstall->testInstall();
-      $Install->testInstall();
+      $Install->testInstall(0);
       
       Config::detectRootDoc();
 
