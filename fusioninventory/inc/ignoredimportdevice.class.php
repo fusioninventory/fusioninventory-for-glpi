@@ -127,8 +127,12 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
          
          echo "<td align='center'>";
          $itemtype = $data['itemtype'];
-         $item = new $itemtype();
-         echo $item->getTypeName();
+         if ($itemtype != '') {
+            $item = new $itemtype();
+            echo $item->getTypeName();
+         } else {
+            echo NOT_AVAILABLE;
+         }
          echo "</td>";
          
          echo "<td align='center'>";
