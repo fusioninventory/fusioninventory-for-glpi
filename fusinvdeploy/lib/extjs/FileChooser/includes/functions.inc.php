@@ -44,7 +44,7 @@ function format_permissions($perms) {
    return $return;
 }
 
-function get_directory_contents($directory, $folders_only = false, $files_only = false) {
+function get_directory_contents($directory) {
    if (!($dir = opendir($directory))) {
       return false;
    }
@@ -53,35 +53,22 @@ function get_directory_contents($directory, $folders_only = false, $files_only =
 
    // Get a list of all the folders and files in the directory
    while ($temp = readdir($dir)) {
-      if ($temp[0] != ".") {
-         if (is_dir($directory . "/" . $temp)) {
-            if ($files_only == false) {
-               $children = get_directory_contents($directory . "/" . $temp, $folders_only);
-               $tmp = array(
-                  'id' => str_replace(DIRECTORY, "", $directory . "/" . $temp),
-                  'text' => $temp,
-                  'url' => str_replace(DIRECTORY, "", $directory . "/" . $temp)
+      if ($temp[0] == ".") {
+         continue;
+      }
+      if (is_dir($directory . "/" . $temp)) {
+         $children = get_directory_contents($directory . "/" . $temp);
+         $tmp = array(
+               'id' => str_replace(DIRECTORY, "", $directory . "/" . $temp),
+               'text' => $temp,
+               'url' => str_replace(DIRECTORY, "", $directory . "/" . $temp)
                );
-               if (count($children) > 0) $tmp['children'] = $children;
-               else {
-                  $tmp['leaf'] = 'true';
-                  $tmp['children'] = array();
-               }
-               $data[] = $tmp;
-            }
-         } else {
-            if ($folders_only == false) {
-               // Exclude backup files from showing up in the list
-               if (stristr($temp, ".bak")) {
-                  continue;
-               }
-               $data[] = array(
-                  'id' => str_replace(DIRECTORY, "", $directory . "/" . $temp),
-                  'text' => $temp,
-                  'url' => str_replace(DIRECTORY, "", $directory . "/" . $temp)
-               );
-            }
+         if (count($children) > 0) $tmp['children'] = $children;
+         else {
+            $tmp['leaf'] = 'true';
+            $tmp['children'] = array();
          }
+         $data[] = $tmp;
       }
    }
 
