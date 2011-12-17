@@ -761,7 +761,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          $i = 0;
          $size = count($matches[1]);
          for ($i = 0; $i < $size; $i = $i+2) {
-            $constuctArray[$matches[1][$i]] = clean_cross_side_scripting_deep(addslashes_deep($matches[1][($i+1)]));
+            $constuctArray[$matches[1][$i]] = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep($matches[1][($i+1)]));
          }
          $infoSections[$key] = serialize($constuctArray).$matches1[3];
       }
