@@ -48,7 +48,7 @@ class Netdiscovery extends PHPUnit_Framework_TestCase {
       
       loadLanguage("en_GB");
 
-      $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.80/";
+      $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
       
       $pfAgent   = new PluginFusioninventoryAgent();
       $pfIPRange = new PluginFusioninventoryIPRange();
@@ -95,7 +95,7 @@ class Netdiscovery extends PHPUnit_Framework_TestCase {
       // Send data to server
       
       $emulatorAgent = new emulatorAgent();
-      $emulatorAgent->server_urlpath = "/fusion0.80/plugins/fusioninventory/";
+      $emulatorAgent->server_urlpath = "/fusion0.83/plugins/fusioninventory/";
       
       $input_xml = '<?xml version="1.0" encoding="UTF-8"?>
 <REQUEST>
