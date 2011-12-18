@@ -86,7 +86,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             $PluginFusioninventoryTaskjobstatus->changeStatus($p_CONTENT->PROCESSNUMBER, 2);
             if ((!isset($p_CONTENT->AGENT->START)) AND (!isset($p_CONTENT->AGENT->END))) {
                $nb_devices = 0;
-               $nb_devices = count($p_CONTENT->DEVICE->children());
+               $segs=$p_CONTENT->xpath('//DEVICE');
+               $nb_devices = count($segs);
                   
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = $p_CONTENT->PROCESSNUMBER;
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $this->agent['id'];
