@@ -1715,6 +1715,44 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "int(11) NOT NULL DEFAULT '0'");
          
          
+         
+   /*
+    * Table glpi_plugin_fusioninventory_rulematchedlogs
+    */
+      $newTable = "glpi_plugin_fusioninventory_rulematchedlogs";
+      if (!TableExists($newTable)) {
+         $query = "CREATE TABLE `".$newTable."` (
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                      PRIMARY KEY (`id`)
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+         $DB->query($query);
+      }
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         
+      $migration->migrationOneTable($newTable);
+      
+         $migration->addField($newTable,
+                                 "date",
+                                 "datetime DEFAULT NULL");
+      $migration->addField($newTable,
+                                 "items_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "itemtype",
+                                 "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "rules_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "plugin_fusioninventory_agents_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         
+         
+         
+         
       
    /*
     * Table Delete old table not used
