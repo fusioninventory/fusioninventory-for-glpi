@@ -72,6 +72,7 @@ $_SESSION['glpi_use_mode'] = 2;
 ob_end_clean();
 
 if (!class_exists("PluginFusioninventoryConfig")) {
+   header("Content-Type: application/xml");
    echo "<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
    <ERROR>Plugin FusionInventory not installed!</ERROR>
@@ -135,18 +136,24 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       $PluginFusioninventoryTaskjob->reenableusemode();
       $compressmode = 'none';
       if ($xml) {
+         header("Content-Type: application/x-compress-compress");
          $compressmode = "gzcompress";
       } else if ($xml = $communication->gzdecode($GLOBALS["HTTP_RAW_POST_DATA"])) {
          // ** If agent use gzip
+         header("Content-Type: application/x-compress-encode");
          $compressmode = "gzencode";
       } else if ($xml = gzinflate (substr($GLOBALS["HTTP_RAW_POST_DATA"], 2))) {
          // ** OCS agent 2.0 Compatibility, but return in gzcompress
          $compressmode = "gzdeflate";
          if (strstr($xml, "<QUERY>PROLOG</QUERY>")
                  AND !strstr($xml, "<TOKEN>")) {
+            header("Content-Type: application/x-compress-compress");
             $compressmode = "gzcompress";
-         }         
+         } else {
+            header("Content-Type: application/x-compress-deflate");
+         } 
       } else {
+         header("Content-Type: application/xml");
          $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
       }
 
