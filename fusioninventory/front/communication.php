@@ -70,7 +70,7 @@ set_error_handler(array('Toolbox','userErrorHandlerDebug'));
 $_SESSION['glpi_use_mode'] = 2;
 
 ob_end_clean();
-
+header("server-type: glpi/fusioninventory ".PLUGIN_FUSINVINVENTORY_VERSION);
 if (!class_exists("PluginFusioninventoryConfig")) {
    header("Content-Type: application/xml");
    echo "<?xml version='1.0' encoding='UTF-8'?>
