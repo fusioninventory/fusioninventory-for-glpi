@@ -130,6 +130,7 @@ require_once 'InventoryComputer/AllTests.php';
 require_once 'Rules/AllTests.php';
 require_once 'Netinventory/AllTests.php';
 require_once 'GLPIlogs/AllTests.php';
+require_once 'Netdiscovery/AllTests.php';
 
 require_once 'emulatoragent.php';
 
@@ -141,6 +142,7 @@ class AllTests {
       $suite->addTest(InventoryComputer_AllTests::suite());
       $suite->addTest(Rules_AllTests::suite());
       $suite->addTest(Netinventory_AllTests::suite());
+      $suite->addTest(Netdiscovery_AllTests::suite());
       return $suite;
    }
 }
