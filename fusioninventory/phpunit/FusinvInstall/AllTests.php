@@ -254,6 +254,54 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
               'Cron cleannetworkportlogs not created');
       
       
+      /*
+       * Verify config fields added
+       */
+      $plugins_id = PluginFusioninventoryModule::getModuleId("fusioninventory");
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs` 
+         WHERE `plugins_id`='".$plugins_id."'
+            AND `type`='ssl_only'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 1, "type 'ssl_only' not added in config");
+
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs` 
+         WHERE `plugins_id`='".$plugins_id."'
+            AND `type`='delete_task'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 1, "type 'delete_task' not added in config");
+      
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs` 
+         WHERE `plugins_id`='".$plugins_id."'
+            AND `type`='inventory_frequence'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 1, "type 'inventory_frequence' not added in config");
+ 
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs` 
+         WHERE `plugins_id`='".$plugins_id."'
+            AND `type`='agent_port'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 1, "type 'agent_port' not added in config");
+ 
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs` 
+         WHERE `plugins_id`='".$plugins_id."'
+            AND `type`='extradebug'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 1, "type 'extradebug' not added in config");
+ 
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs` 
+         WHERE `plugins_id`='".$plugins_id."'
+            AND `type`='users_id'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 1, "type 'users_id' not added in config");
+
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs` 
+         WHERE `plugins_id`='".$plugins_id."'
+            AND `type`='version'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 1, "type 'version' not added in config");
+
+      
+      
       // TODO : test glpi_displaypreferences, rules, bookmark...
       
    }
