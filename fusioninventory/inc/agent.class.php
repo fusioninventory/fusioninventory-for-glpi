@@ -317,8 +317,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             $a_input['entities_id']  = 0;
             $a_input['last_contact'] = date("Y-m-d H:i:s");
             $a_input['useragent']    = $_SERVER['HTTP_USER_AGENT'];
-            $pta->add($a_input);
-            return;
+            return $pta->add($a_input);
          } else {
             foreach ($a_agent as $data) {
                $input = array();
@@ -329,6 +328,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
                $input['last_contact'] = date("Y-m-d H:i:s");
                $input['useragent']    = $_SERVER['HTTP_USER_AGENT'];
                $pta->update($input);
+               return $data['id'];
             }
          }
       }

@@ -68,7 +68,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       
       $query = "DELETE FROM `glpi_plugin_fusioninventory_rulematchedlogs`
          WHERE `id` IN (
-            SELECT `id`
+            SELECT `id` FROM `glpi_plugin_fusioninventory_rulematchedlogs`
             WHERE `items_id` = '".$items_id."'
                AND `itemtype` = '".$itemtype."'
             ORDER BY `date` DESC
@@ -112,12 +112,14 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
          echo Html::convDateTime($data['date']);
          echo "</td>";
          echo "<td align='center'>";
-         $rule->getFromDB($data['rules_id']);
-         echo $rule->getLink(1);
+         if ($rule->getFromDB($data['rules_id'])) {
+            echo $rule->getLink(1);
+         }
          echo "</td>";
          echo "<td align='center'>";
-         $pfAgent->getFromDB($data['plugin_fusioninventory_agents_id']);
-         echo $pfAgent->getLink(1);
+         if ($pfAgent->getFromDB($data['plugin_fusioninventory_agents_id'])) {
+            echo $pfAgent->getLink(1);
+         }
          echo "</td>";
          echo "</tr>";
       }
