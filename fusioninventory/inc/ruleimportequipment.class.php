@@ -613,6 +613,7 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
                               if ($criteria->fields['criteria'] == 'itemtype') {
                                  $itemtype = $criteria->fields['pattern'];
                                  if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
+                                    $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
                                     $class->rulepassed("0", $itemtype);
                                     return $output;
                                  } else {
@@ -625,6 +626,7 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
                         }
                         if ($itemtype_found == "0") {
                            if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
+                              $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
                               $class->rulepassed("0", "PluginFusioninventoryUnknownDevice");
                               return $output;
                            } else {
@@ -647,6 +649,7 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
                      if ($criteria->fields['criteria'] == 'itemtype') {
                         $itemtype = $criteria->fields['pattern'];
                         if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
+                           $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
                            $class->rulepassed("0", $itemtype);
                            return $output;
                         } else {
@@ -659,6 +662,7 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
                }
                if ($itemtype_found == "0") {
                   if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
+                     $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
                      $class->rulepassed("0", "PluginFusioninventoryUnknownDevice");
                      return $output;
                   } else {

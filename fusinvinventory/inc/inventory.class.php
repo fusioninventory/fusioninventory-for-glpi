@@ -315,6 +315,20 @@ class PluginFusinvinventoryInventory {
 
             self::addDefaultStateIfNeeded($input, false);
             $items_id = $Computer->add($input);
+            if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
+               $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
+               $inputrulelog = array();
+               $inputrulelog['date'] = date('Y-m-d H:i:s');
+               $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
+               if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
+                  $inputrulelog['plugin_fusioninventory_agents_id'] = $_SESSION['plugin_fusioninventory_agents_id'];
+               }
+               $inputrulelog['items_id'] = $items_id;
+               $inputrulelog['itemtype'] = $itemtype;
+               $pfRulematchedlog->add($inputrulelog);
+               $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
+               unset($_SESSION['plugin_fusioninventory_rules_id']);
+            }
             $PluginFusinvinventoryLib->startAction($xml, $items_id, '1');
          } else {
             $computer = new Computer();
@@ -335,6 +349,20 @@ class PluginFusinvinventoryInventory {
             $input = array();
             $input['date_mod'] = date("Y-m-d H:i:s");
             $items_id = $class->add($input);
+            if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
+               $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
+               $inputrulelog = array();
+               $inputrulelog['date'] = date('Y-m-d H:i:s');
+               $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
+               if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
+                  $inputrulelog['plugin_fusioninventory_agents_id'] = $_SESSION['plugin_fusioninventory_agents_id'];
+               }
+               $inputrulelog['items_id'] = $items_id;
+               $inputrulelog['itemtype'] = $itemtype;
+               $pfRulematchedlog->add($inputrulelog);
+               $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
+               unset($_SESSION['plugin_fusioninventory_rules_id']);
+            }
          }
          $class->getFromDB($items_id);
          $input = array();

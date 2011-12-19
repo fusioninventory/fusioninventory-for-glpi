@@ -199,6 +199,24 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
          }
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==fusioninventory::3== '.implode(",", $a_text);
          $this->addtaskjoblog();
+         
+         $pFusioninventoryIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
+         $inputdb = array();
+         $inputdb['name'] = $input['name'];
+         $inputdb['date'] = date("Y-m-d H:i:s");
+         $inputdb['itemtype'] = $input['itemtype'];
+         if (isset($input['serial'])) {
+            $input['serialnumber'] = $input['serial'];
+         }
+         if (isset($input['ip'])) {
+            $inputdb['ip'] = exportArrayToDB($input['ip']);
+         }
+         if (isset($input['mac'])) {
+            $inputdb['mac'] = exportArrayToDB($input['mac']);
+         }
+         $inputdb['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
+         $pFusioninventoryIgnoredimportdevice->add($inputdb);
+         unset($_SESSION['plugin_fusioninventory_rules_id']);
       }
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
          if (isset($input['itemtype'])
@@ -212,27 +230,6 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
          } else {
             $this->rulepassed(0, "PluginFusioninventoryUnknownDevice",$input['entities_id']);
          }
-      } else {
-         $pFusioninventoryIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
-         $inputdb = array();
-         if (isset($input['name'])) {
-            $inputdb['name'] = $input['name'];
-         }
-         $inputdb['date'] = date("Y-m-d H:i:s");
-         if (isset($input['itemtype'])) {
-            $inputdb['itemtype'] = $input['itemtype'];
-         }         
-         if (isset($input['entities_id'])) {
-            $inputdb['entities_id'] = $input['entities_id'];
-         }         
-         if (isset($input['ip'])) {
-            $inputdb['ip'] = exportArrayToDB($input['ip']);
-         }
-         if (isset($input['mac'])) {
-            $inputdb['mac'] = exportArrayToDB($input['mac']);
-         }
-         $inputdb['rules_id'] = $data['_ruleid'];
-         $pFusioninventoryIgnoredimportdevice->add($inputdb);         
       }
    }
 
@@ -251,6 +248,20 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
          $input['date_mod'] = date("Y-m-d H:i:s");
          $input['entities_id'] = $entities_id;
          $items_id = $class->add($input);
+         if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
+            $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
+            $inputrulelog = array();
+            $inputrulelog['date'] = date('Y-m-d H:i:s');
+            $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
+            if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
+               $inputrulelog['plugin_fusioninventory_agents_id'] = $_SESSION['plugin_fusioninventory_agents_id'];
+            }
+            $inputrulelog['items_id'] = $items_id;
+            $inputrulelog['itemtype'] = $itemtype;
+            $pfRulematchedlog->add($inputrulelog);
+            $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
+            unset($_SESSION['plugin_fusioninventory_rules_id']);
+         }
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
                '[==fusinvsnmp::7==] ==fusinvsnmp::4== '.$class->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
          $this->addtaskjoblog();
