@@ -331,10 +331,9 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
 class Connectionslogs_AllTests  {
 
    public static function suite() {
-
-      $GLPIInstall = new GLPIInstall();
+      global $CFG_GLPI;
+      
       $Install = new Install();
-      $GLPIInstall->testInstall();
       $Install->testInstall(0);
       
       $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
@@ -343,4 +342,5 @@ class Connectionslogs_AllTests  {
       return $suite;
    }
 }
+
 ?>

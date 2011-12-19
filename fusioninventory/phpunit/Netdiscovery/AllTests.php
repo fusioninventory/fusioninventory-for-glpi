@@ -225,9 +225,7 @@ class Netdiscovery_AllTests  {
 
    public static function suite() {
       
-      $GLPIInstall = new GLPIInstall();
       $Install = new Install();
-      $GLPIInstall->testInstall();
       $Install->testInstall(0);
     
       $suite = new PHPUnit_Framework_TestSuite('Netdiscovery');

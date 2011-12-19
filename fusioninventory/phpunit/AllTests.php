@@ -75,6 +75,9 @@ require_once 'emulatoragent.php';
 class AllTests {
    public static function suite() {
       $suite = new PHPUnit_Framework_TestSuite('FusionInventory');
+      if (file_exists("save.sql")) {
+         unlink("save.sql");
+      }
       $suite->addTest(GLPIInstall_AllTests::suite());
       $suite->addTest(FusinvInstall_AllTests::suite());
       $suite->addTest(InventoryComputer_AllTests::suite());

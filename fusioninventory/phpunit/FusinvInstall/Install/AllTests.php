@@ -44,30 +44,47 @@ class Install extends PHPUnit_Framework_TestCase {
 
    public function testInstall($verify=1) {
       global $DB;
-
-      // Delete if Table of FusionInventory or Tracker yet in DB
-      $query = "SHOW FULL TABLES WHERE TABLE_TYPE LIKE 'VIEW'";
-      $result = $DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
-         if (strstr($data[0], "fusi")) {
+     
+      if (file_exists("save.sql") AND $verify == '0') {
+         
+         $query = "SHOW FULL TABLES WHERE TABLE_TYPE LIKE 'VIEW'";
+         $result = $DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
             $DB->query("DROP VIEW ".$data[0]);
-         }
-      } 
-      
-      $query = "SHOW TABLES";
-      $result = $DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
-         if (strstr($data[0], "tracker")
-                 OR strstr($data[0], "fusi")) {
+         }      
+
+         $query = "SHOW TABLES";
+         $result = $DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
             $DB->query("DROP TABLE ".$data[0]);
          }
-      }
+         
+         $res = $DB->runFile("save.sql");
+         $this->assertTrue($res, "Fail: SQL Error during import saved GLPI DB");
+      } else {      
 
-      passthru("cd ../tools && /usr/local/bin/php -f cli_install.php");
-      
-      Session::loadLanguage("en_GB");
-      
-      if ($verify == '1') {
+         // Delete if Table of FusionInventory or Tracker yet in DB
+         $query = "SHOW FULL TABLES WHERE TABLE_TYPE LIKE 'VIEW'";
+         $result = $DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
+            if (strstr($data[0], "fusi")) {
+               $DB->query("DROP VIEW ".$data[0]);
+            }
+         } 
+
+         $query = "SHOW TABLES";
+         $result = $DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
+            if (strstr($data[0], "tracker")
+                    OR strstr($data[0], "fusi")) {
+               $DB->query("DROP TABLE ".$data[0]);
+            }
+         }
+         
+         passthru("cd ../tools && /usr/local/bin/php -f cli_install.php");
+
+         Session::loadLanguage("en_GB");
+
          $FusinvInstall = new FusinvInstall();
          $FusinvInstall->testDB("fusioninventory");
 
@@ -76,6 +93,8 @@ class Install extends PHPUnit_Framework_TestCase {
          $FusinvInstall->testDB("fusinvsnmp");
 
 //         $FusinvInstall->testDB("fusinvdeploy");
+         
+         passthru("mysqldump -h ".$DB->dbhost." -u ".$DB->dbuser." -p".$DB->dbpassword." ".$DB->dbdefault." > save.sql");
       }
       
       $GLPIlog = new GLPIlogs();
@@ -94,4 +113,5 @@ class Install_AllTests  {
       return $suite;
    }
 }
+
 ?>

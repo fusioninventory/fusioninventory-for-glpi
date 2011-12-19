@@ -44,11 +44,9 @@ class Hub extends PHPUnit_Framework_TestCase {
 
 
    public function testSetModuleInventoryOff() {
-      global $DB;
+      global $DB,$CFG_GLPI;
       
-      $GLPIInstall = new GLPIInstall();
       $Install = new Install();
-      $GLPIInstall->testInstall();
       $Install->testInstall(0);
       
       $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
@@ -554,4 +552,5 @@ class Hub_AllTests  {
       return $suite;
    }
 }
+
 ?>

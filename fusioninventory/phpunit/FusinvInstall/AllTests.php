@@ -171,14 +171,13 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
          if (isset($a_tables_ref[$table])) {
             $fields_toremove = array_diff_assoc($data, $a_tables_ref[$table]);
             $fields_toadd = array_diff_assoc($a_tables_ref[$table], $data);
-            echo "======= DB ============== Ref =======> ".$table."\n";
-            
-            print_r($data);
-            print_r($a_tables_ref[$table]);
+            $diff = "======= DB ============== Ref =======> ".$table."\n";
+            $diff .= print_r($data, true);
+            $diff .= print_r($a_tables_ref[$table], true);
             
             // See tables missing or to delete
-            $this->assertEquals(count($fields_toadd), 0, 'Fields missing/not good in '.$table.' '.print_r($fields_toadd));
-            $this->assertEquals(count($fields_toremove), 0, 'Fields to delete in '.$table.' '.print_r($fields_toremove));
+            $this->assertEquals(count($fields_toadd), 0, 'Fields missing/not good in '.$table.' '.print_r($fields_toadd, true)." into ".$diff);
+            $this->assertEquals(count($fields_toremove), 0, 'Fields to delete in '.$table.' '.print_r($fields_toremove, true)." into ".$diff);
             
          }         
       }

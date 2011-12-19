@@ -72,4 +72,5 @@ class GLPIlogs_AllTests  {
       return $suite;
    }
 }
+
 ?>
