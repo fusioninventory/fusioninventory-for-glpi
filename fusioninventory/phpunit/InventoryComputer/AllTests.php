@@ -46,7 +46,6 @@ class InventoryComputer extends PHPUnit_Framework_TestCase {
     public function testSetModuleInventoryOff() {
        global $DB,$LANG,$CFG_GLPI;
 
-       print_r($_SESSION['glpi_plugins']);
        Session::loadLanguage("en_GB");
 
        $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";

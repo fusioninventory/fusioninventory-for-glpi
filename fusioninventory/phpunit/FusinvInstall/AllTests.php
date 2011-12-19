@@ -163,8 +163,8 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
       $tables_toadd = array_diff_assoc($a_tables_ref, $a_tables_db);
        
       // See tables missing or to delete
-      $this->assertEquals(count($tables_toadd), 0, 'Tables missing '.print_r($tables_toadd));
-      $this->assertEquals(count($tables_toremove), 0, 'Tables to delete '.print_r($tables_toremove));
+      $this->assertEquals(count($tables_toadd), 0, 'Tables missing '.print_r($tables_toadd, true));
+      $this->assertEquals(count($tables_toremove), 0, 'Tables to delete '.print_r($tables_toremove, true));
       
       // See if fields are same
       foreach ($a_tables_db as $table=>$data) {
