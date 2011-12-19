@@ -95,14 +95,15 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
    function cleanOlddata($items_id, $itemtype) {
       global $DB;
       
-      $query = "DELETE FROM `glpi_plugin_fusioninventory_rulematchedlogs`
-         WHERE `id` IN (
-            SELECT `id` FROM `glpi_plugin_fusioninventory_rulematchedlogs`
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_rulematchedlogs`
             WHERE `items_id` = '".$items_id."'
                AND `itemtype` = '".$itemtype."'
             ORDER BY `date` DESC
             LIMIT 30,50000)";
-      $DB->query($query);
+      $result = $DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         $this->delete(array('id'=>$data['id']));
+      }
    }
    
    
