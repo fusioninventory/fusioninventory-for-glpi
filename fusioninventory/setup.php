@@ -58,6 +58,8 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryConfig');
       Plugin::registerClass('PluginFusioninventoryTask',
               array('addtabon' => array('Computer','Printer','NetworkEquipment','PluginFusioninventoryCredentialIp')));
+      Plugin::registerClass('PluginFusioninventoryTaskjob',
+              array('addtabon' => array('Computer','Printer','NetworkEquipment','PluginFusioninventoryUnknowndevice')));
       Plugin::registerClass('PluginFusioninventoryTaskjob');
       Plugin::registerClass('PluginFusioninventoryUnknownDevice');
       Plugin::registerClass('PluginFusioninventoryModule');
