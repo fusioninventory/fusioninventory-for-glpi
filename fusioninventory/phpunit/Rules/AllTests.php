@@ -634,7 +634,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $GLPIInstall->testInstall();
       $Install->testInstall(0);
       
-      Config::detectRootDoc();
+      $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
       Session::loadLanguage("en_GB");
       
      // Disable all rules
@@ -795,7 +795,7 @@ class Rules extends PHPUnit_Framework_TestCase {
    public function testImportComputerwithTypeOnly() {
       global $DB, $XML;
       
-      Config::detectRootDoc();
+      $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
       Session::loadLanguage("en_GB");
       
       // Add the rule with criterial only if type = Computer
@@ -907,7 +907,7 @@ class Rules extends PHPUnit_Framework_TestCase {
    public function testImportComputerwithTypeAndNameExist() {
       global $DB, $XML;
       
-      Config::detectRootDoc();
+      $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
       Session::loadLanguage("en_GB");
       
       // Add the rule with criterial only if type = Computer
@@ -1062,7 +1062,7 @@ class Rules extends PHPUnit_Framework_TestCase {
    public function testImportComputerwithTypeAndNameExistNamePresent() {
       global $DB, $XML;
       
-      Config::detectRootDoc();
+      $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
       Session::loadLanguage("en_GB");
       
       // Add the rule with criterial only if type = Computer
@@ -1238,7 +1238,7 @@ class Rules extends PHPUnit_Framework_TestCase {
    public function testImportComputerCheckrulevalidationlocal_and_globalcriteria() {
       global $DB, $XML;
       
-      Config::detectRootDoc();
+      $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
       Session::loadLanguage("en_GB");
       
       // Create computer only with serial and name;

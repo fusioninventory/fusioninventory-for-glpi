@@ -224,10 +224,10 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, 'NETDISCOVERY module not registered');
       
-      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` 
-         WHERE `modulename`='DEPLOY'";
-      $result = $DB->query($query);
-      $this->assertEquals($DB->numrows($result), 1, 'DEPLOY module not registered');
+//      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` 
+//         WHERE `modulename`='DEPLOY'";
+//      $result = $DB->query($query);
+//      $this->assertEquals($DB->numrows($result), 1, 'DEPLOY module not registered');
       
       
       /*

@@ -337,7 +337,7 @@ class Connectionslogs_AllTests  {
       $GLPIInstall->testInstall();
       $Install->testInstall(0);
       
-      Config::detectRootDoc();
+      $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
       
       $suite = new PHPUnit_Framework_TestSuite('Connectionslogs');
       return $suite;
