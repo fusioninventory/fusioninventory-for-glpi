@@ -308,6 +308,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_ignoredimportdevices` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_rulematchedlogs`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_rulematchedlogs` (
@@ -317,7 +318,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_rulematchedlogs` (
    `itemtype` varchar(100) DEFAULT NULL,
    `rules_id` int(11) NOT NULL DEFAULT '0',
    `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `item` (`itemtype`,`items_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
