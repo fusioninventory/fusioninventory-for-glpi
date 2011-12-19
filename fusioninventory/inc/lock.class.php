@@ -223,8 +223,8 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
             // Get value of field
             $table = getTableNameForForeignKeyField($key);
-            $linkItemtype = getItemTypeForTable($table);
             if ($table != "") {
+               $linkItemtype = getItemTypeForTable($table);
                $class = new $linkItemtype();
                $key = $class->getTypeName();
                if (($val == "0") OR ($val == "")) {
