@@ -131,15 +131,23 @@ class PluginFusinvinventoryComputer extends CommonDBTM {
       echo '<tr class="tab_bg_1">';
       echo '<td>'.$LANG['common'][27].'&nbsp;:</td>';
       echo '<td>'.Html::convDate($a_computerextend['bios_date']).'</td>';
-      echo "<td>".$LANG['computers'][9]." - ".$LANG['install'][3]." (".strtolower($LANG['common'][27]).")&nbsp;:</td>";
-      echo '<td>'.Html::convDate($a_computerextend['operatingsystem_installationdate']).'</td>';
+      if (Html::convDate($a_computerextend['operatingsystem_installationdate']) == '') {
+         echo "<td colspan='2'></td>";
+      } else {
+         echo "<td>".$LANG['computers'][9]." - ".$LANG['install'][3]." (".strtolower($LANG['common'][27]).")&nbsp;:</td>";
+         echo '<td>'.Html::convDate($a_computerextend['operatingsystem_installationdate']).'</td>';
+      }
       echo '</tr>';
 
       echo '<tr class="tab_bg_1">';
       echo '<td>'.$LANG['rulesengine'][78].'&nbsp;:</td>';
       echo '<td>'.$a_computerextend['bios_version'].'</td>';
-      echo '<td>'.$LANG['plugin_fusinvinventory']['computer'][1].'&nbsp;:</td>';
-      echo '<td>'.$a_computerextend['winowner'].'</td>';
+      if ($a_computerextend['winowner'] == '') {
+         echo "<td colspan='2'></td>";
+      } else {
+         echo '<td>'.$LANG['plugin_fusinvinventory']['computer'][1].'&nbsp;:</td>';
+         echo '<td>'.$a_computerextend['winowner'].'</td>';
+      }
       echo '</tr>';
 
       echo '<tr class="tab_bg_1">';
@@ -147,8 +155,12 @@ class PluginFusinvinventoryComputer extends CommonDBTM {
       echo '<td>';
       echo Dropdown::getDropdownName("glpi_manufacturers", $a_computerextend['bios_manufacturers_id']);
       echo '</td>';
-      echo '<td>'.$LANG['plugin_fusinvinventory']['computer'][2].'&nbsp;:</td>';
-      echo '<td>'.$a_computerextend['wincompany'].'</td>';
+      if ($a_computerextend['wincompany'] == '') {
+         echo "<td colspan='2'></td>";
+      } else {
+         echo '<td>'.$LANG['plugin_fusinvinventory']['computer'][2].'&nbsp;:</td>';
+         echo '<td>'.$a_computerextend['wincompany'].'</td>';
+      }
       echo '</tr>';
             
       echo '</table>';
