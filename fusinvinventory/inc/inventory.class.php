@@ -202,7 +202,7 @@ class PluginFusinvinventoryInventory {
                                                    print_r($data, true));
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
          $this->rulepassed(0, "Computer");
-      } else {
+      } else if (!isset($data['found_equipment'])) {
          $pFusioninventoryIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
          $inputdb = array();
          $inputdb['name'] = $input['name'];
