@@ -911,6 +911,9 @@ class Rules extends PHPUnit_Framework_TestCase {
       Session::loadLanguage("en_GB");
       
       // Add the rule with criterial only if type = Computer
+      if (!class_exists("PluginFusioninventoryRuleImportEquipmentCollection")) {
+         include (GLPI_ROOT."/plugins/fusioninventory/ruleimportequipmentcollection.class.php");
+      } 
       $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
       $input = array();
       $input['is_active']=1;
@@ -1063,6 +1066,9 @@ class Rules extends PHPUnit_Framework_TestCase {
       Session::loadLanguage("en_GB");
       
       // Add the rule with criterial only if type = Computer
+      if (!class_exists("PluginFusioninventoryRuleImportEquipmentCollection")) {
+         include (GLPI_ROOT."/plugins/fusioninventory/ruleimportequipmentcollection.class.php");
+      } 
       $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
       $input = array();
       $input['is_active']=1;
@@ -1244,6 +1250,9 @@ class Rules extends PHPUnit_Framework_TestCase {
       $computer->add($input);
       
       // Activation of rules
+      if (!class_exists("PluginFusioninventoryRuleImportEquipmentCollection")) {
+         include (GLPI_ROOT."/plugins/fusioninventory/ruleimportequipmentcollection.class.php");
+      }
       $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
          // Computer serial + uuid
          $input = array();
