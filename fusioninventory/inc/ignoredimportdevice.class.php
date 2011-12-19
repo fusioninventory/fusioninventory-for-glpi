@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryRulematchedlog extends CommonDBTM {
+class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
    
    
    static function getTypeName() {
@@ -53,14 +53,114 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
    }
    
    function canCreate() {
-      return true;
+      return PluginFusioninventoryProfile::haveRight("fusioninventory", "iprange", "w");
    }
 
 
    function canView() {
-      return true;
+      return PluginFusioninventoryProfile::haveRight("fusioninventory", "iprange", "r");
    }
+
    
+   function showDevices() {
+      global $DB,$LANG;
+      
+      $rule = new Rule();
+      $entity = new Entity();
+      
+      $start = 0;
+      if (isset($_REQUEST["start"])) {
+         $start = $_REQUEST["start"];
+      }
+      
+      $nb_elements = countElementsInTableForMyEntities($this->getTable());
+      echo "<table class='tab_cadre' >";
+      echo "<tr>";
+      echo "<td colspan='7'>";
+      Html::printAjaxPager('',$start,$nb_elements);
+      echo "</td>";
+      echo "</tr>";
+      
+      echo "<tr>";
+      echo "<th>";
+      echo $LANG['common'][16];
+      echo "</th>";
+      echo "<th>";
+      echo $LANG['rulesengine'][102];
+      echo "</th>";
+      echo "<th>";
+      echo $LANG['common'][27];
+      echo "</th>";
+      echo "<th>";
+      echo $LANG['common'][17];
+      echo "</th>";
+      echo "<th>";
+      echo $LANG['entity'][0];
+      echo "</th>";
+      echo "<th>";
+      echo $LANG['networking'][14];
+      echo "</th>";
+      echo "<th>";
+      echo $LANG['networking'][15];
+      echo "</th>";
+      echo "</tr>";
+      
+      $query = "SELECT * FROM `".$this->getTable()."`
+         WHERE ".getEntitiesRestrictRequest("", $this->getTable(), '', '', $this->maybeRecursive())."
+         ORDER BY `date`DESC
+         LIMIT ".intval($start).",".intval($_SESSION['glpilist_limit']);
+      $result = $DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         echo "<tr class='tab_bg_1'>";
+         echo "<td align='center'>";
+         echo $data['name'];
+         echo "</td>";
+         
+         echo "<td align='center'>";
+         $rule->getFromDB($data['rules_id']);
+         echo $rule->getLink(1);
+         echo "</td>";
+         
+         echo "<td align='center'>";
+         echo Html::convDateTime($data['date']);
+         echo "</td>";
+         
+         echo "<td align='center'>";
+         $itemtype = $data['itemtype'];
+         if ($itemtype != '') {
+            $item = new $itemtype();
+            echo $item->getTypeName();
+         } else {
+            echo NOT_AVAILABLE;
+         }
+         echo "</td>";
+         
+         echo "<td align='center'>";
+         $entity->getFromDB($data['entities_id']);
+         echo $entity->getName();
+         echo "</td>";
+         
+         echo "<td align='center'>";
+         $a_ip = importArrayFromDB($data['ip']);
+         echo implode("<br/>", $a_ip);
+         echo "</td>";
+         
+         echo "<td align='center'>";
+         $a_mac = importArrayFromDB($data['mac']);
+         echo implode("<br/>", $a_mac);
+         echo "</td>";
+         echo "</tr>";
+      }
+      
+      echo "<tr>";
+      echo "<td colspan='7'>";
+      Html::printAjaxPager('',$start,$nb_elements);
+      echo "</td>";
+      echo "</tr>";
+      
+      echo "</table>";
+      
+   }
 }
 
 

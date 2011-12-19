@@ -566,7 +566,13 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
          $classname = $_SESSION['plugin_fusioninventory_classrulepassed'];
          $class = new $classname();
       }
-
+      
+      $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
+      $inputrulelog = array();
+      $inputrulelog['date'] = date('Y-m-d H:i:s');
+      $inputrulelog['rules_id'] = $this->fields['id'];
+      $inputrulelog['plugin_fusioninventory_agents_id'] = 0;
+      
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
                                                    "execute action\n");
 
@@ -583,6 +589,10 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
                         $items_id = current($datas);
                         $output['found_equipment'] = array($items_id, $itemtype);
                         if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
+                           $inputrulelog['items_id'] = $items_id;
+                           $inputrulelog['itemtype'] = $itemtype;
+                           $pfRulematchedlog->add($inputrulelog);
+                           $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
                            $class->rulepassed($items_id, $itemtype);
                            return $output;
                         } else {
