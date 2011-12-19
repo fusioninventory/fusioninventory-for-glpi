@@ -99,7 +99,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
             WHERE `items_id` = '".$items_id."'
                AND `itemtype` = '".$itemtype."'
             ORDER BY `date` DESC
-            LIMIT 30,50000)";
+            LIMIT 30,50000";
       $result = $DB->query($query);
       while ($data=$DB->fetch_array($result)) {
          $this->delete(array('id'=>$data['id']));
