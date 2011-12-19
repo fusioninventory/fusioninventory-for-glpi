@@ -72,8 +72,58 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
             WHERE `items_id` = '".$items_id."'
                AND `itemtype` = '".$itemtype."'
             ORDER BY `date` DESC
-            LIMIT 5,50000)";
+            LIMIT 30,50000)";
       $DB->query($query);
+   }
+   
+   
+   
+   function showForm($items_id, $itemtype) {
+      global $LANG;
+      
+      $rule = new Rule();
+      $pfAgent = new PluginFusioninventoryAgent();
+      
+      echo "<table class='tab_cadre_fixe' cellpadding='1'>";
+      
+      echo "<tr>";
+      echo "<th colspan='3'>";
+      echo $LANG['plugin_fusioninventory']['rules'][20];
+      echo "</th>";
+      echo "</tr>";
+      
+      echo "<tr>";
+      echo "<th>";
+      echo $LANG['common'][27];
+      echo "</th>";
+      echo "<th>";
+      echo $LANG['rulesengine'][102];
+      echo "</th>";
+      echo "<th>";
+      echo $LANG['plugin_fusioninventory']['agents'][28];
+      echo "</th>";
+      echo "</tr>";
+      
+      $allData = $this->find("`itemtype`='".$itemtype."' 
+                              AND `items_id`='".$items_id."'", "`date` DESC");
+      foreach ($allData as $data) {
+         echo "<tr class='tab_bg_1'>";
+         echo "<td align='center'>";
+         echo Html::convDateTime($data['date']);
+         echo "</td>";
+         echo "<td align='center'>";
+         $rule->getFromDB($data['rules_id']);
+         echo $rule->getLink(1);
+         echo "</td>";
+         echo "<td align='center'>";
+         $pfAgent->getFromDB($data['plugin_fusioninventory_agents_id']);
+         echo $pfAgent->getLink(1);
+         echo "</td>";
+         echo "</tr>";
+      }
+      echo "</table>";
+      
+      
    }
    
 }
