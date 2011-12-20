@@ -303,6 +303,30 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
       
       
       // TODO : test glpi_displaypreferences, rules, bookmark...
+
+      
+      if ($pluginname == 'fusinvsnmp') {
+         
+      /*
+       * Verify SNMP models have a right itemtype
+       */         
+      $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_models`
+         WHERE `itemtype` NOT IN('Computer','NetworkEquipment', 'Printer')";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 0, "SNMP models have invalid itemtype");
+         
+      
+      /*
+       * Verify SNMP models not in double
+       */
+      $query = "SELECT count(*) as cnt, `name` FROM `glpi_plugin_fusinvsnmp_models` 
+         GROUP BY `name` 
+         HAVING cnt >1";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 0, "SNMP models are in double (name of models)");
+         
+         
+      }
       
    }
 }
