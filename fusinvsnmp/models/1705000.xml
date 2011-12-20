@@ -17,7 +17,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.2.1.1.1.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>comments</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -27,7 +27,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.2.1.2.2.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>ifName</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -37,7 +37,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.2.1.2.2.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>ifIndex</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -47,7 +47,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.2.1.2.2.1.6</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>ifPhysAddress</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -57,7 +57,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.2.1.2.2.1.3</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>ifType</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -67,7 +67,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.2.1.1.6.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>location</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -87,7 +87,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.2.1.43.11.1.1.8.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>tonerblackmax</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -97,7 +97,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.2.1.43.11.1.1.9.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>tonerblackremaining</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -107,7 +107,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.2.1.4.20.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>ifaddr</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -117,7 +117,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.2.1.43.10.2.1.4.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>pagecountertotalpages</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -127,7 +127,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.2.1.25.3.2.1.3.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>model</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -137,7 +137,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.2.1.25.2.3.1.5.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>memory</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -147,7 +147,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.2.1.43.8.2.1.14.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>enterprise</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -157,7 +157,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.2.1.43.11.1.1.8.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>wastetonermax</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -167,7 +167,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.2.1.43.11.1.1.9.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>wastetonerremaining</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -177,7 +177,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.2.1.43.11.1.1.8.1.3</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>tonercyanmax</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -187,7 +187,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.2.1.43.11.1.1.9.1.3</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>tonercyanremaining</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -197,7 +197,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.2.1.43.11.1.1.8.1.4</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>tonermagentamax</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -207,7 +207,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.2.1.43.11.1.1.9.1.4</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>tonermagentaremaining</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -217,7 +217,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.2.1.43.11.1.1.9.1.5</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>toneryellowremaining</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -227,7 +227,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.4.1.367.3.2.1.7.3.5.1.1.3.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>name</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -237,7 +237,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>serial</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -247,7 +247,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.8</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>pagecountertotalpages_print</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -257,7 +257,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.9</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>pagecounterblackpages_print</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -267,7 +267,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.11</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>pagecountercolorpages_print</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -277,7 +277,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>pagecountertotalpages_copy</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -287,7 +287,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.3</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>pagecounterblackpages_copy</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -297,7 +297,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.5</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>pagecountercolorpages_copy</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -307,7 +307,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.6</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>pagecountertotalpages_fax</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -317,7 +317,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.2.1.43.11.1.1.6.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>tonerblack</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -327,7 +327,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.2.1.43.11.1.1.6.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>wastetoner</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -337,7 +337,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.2.1.43.11.1.1.6.1.3</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>tonercyan</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -347,7 +347,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.2.1.43.11.1.1.6.1.4</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>tonermagenta</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -357,7 +357,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.2.1.43.11.1.1.6.1.5</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>toneryellow</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -367,7 +367,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.13</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>pagecountercolorpages</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -377,7 +377,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.14</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>pagecounterblackpages</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -387,7 +387,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.47</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>pagecounterscannedpages</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -397,7 +397,7 @@ RICOH Aficio MP C3500 1.68 / RICOH Network Printer C model / RICOH Network Scann
 			<oid>.1.3.6.1.2.1.43.11.1.1.8.1.5</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>toneryellowmax</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
