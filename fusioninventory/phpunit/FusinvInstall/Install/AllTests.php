@@ -61,6 +61,16 @@ class Install extends PHPUnit_Framework_TestCase {
          
          $res = $DB->runFile("save.sql");
          $this->assertTrue($res, "Fail: SQL Error during import saved GLPI DB");
+         
+         echo "======= Import save.sql file =======\n";
+         
+         $FusinvInstall = new FusinvInstall();
+         $FusinvInstall->testDB("fusioninventory");
+
+         $FusinvInstall->testDB("fusinvinventory");
+
+         $FusinvInstall->testDB("fusinvsnmp");
+         
       } else {      
 
          // Delete if Table of FusionInventory or Tracker yet in DB

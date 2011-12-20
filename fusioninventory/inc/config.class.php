@@ -240,7 +240,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     **/
    function addConfig($p_plugins_id, $p_type, $p_value) {
       $existing_value = self::getValue($p_plugins_id, $p_type); 
-      if ($existing_value) {
+      if (!is_null($existing_value)) {
          return $existing_value;
       } else {
          return $this->add(array('plugins_id' => $p_plugins_id, 

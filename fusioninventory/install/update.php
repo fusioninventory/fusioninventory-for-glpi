@@ -396,7 +396,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                             "items_id");
       $migration->migrationOneTable($newTable);
-      
+      $DB->list_fields($newTable, false);
       
    /*
     * Table glpi_plugin_fusioninventory_agentmodules
@@ -544,6 +544,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                             array("type", "plugins_id"),
                             "unicity",
                             "UNIQUE");
+      $migration->migrationOneTable($newTable);
+      // Reinitialize cache of fields of table
+      $DB->list_fields($newTable, false);
       
 
    
@@ -1915,25 +1918,25 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $config = new PluginFusioninventoryConfig();
       $a_input = array();
       $a_input['version'] = PLUGIN_FUSIONINVENTORY_VERSION;
-      if (!$config->getValue($plugins_id, "ssl_only")) {
+      if (is_null($config->getValue($plugins_id, "ssl_only"))) {
          $a_input['ssl_only'] = 0;
       }
       if (isset($prepare_Config['ssl_only'])) {
          $a_input['ssl_only'] = $prepare_Config['ssl_only'];
       }
-      if (!$config->getValue($plugins_id, "delete_task")) {
+      if (is_null($config->getValue($plugins_id, "delete_task"))) {
          $a_input['delete_task'] = 20;
       }
-      if (!$config->getValue($plugins_id, "inventory_frequence")) {
+      if (is_null($config->getValue($plugins_id, "inventory_frequence"))) {
          $a_input['inventory_frequence'] = 24;
       }
-      if (!$config->getValue($plugins_id, "agent_port")) {
+      if (is_null($config->getValue($plugins_id, "agent_port"))) {
          $a_input['agent_port'] = 62354;
       }
-      if (!$config->getValue($plugins_id, "extradebug")) {
+      if (is_null($config->getValue($plugins_id, "extradebug"))) {
          $a_input['extradebug'] = 0;
       }
-      if (!$config->getValue($plugins_id, "users_id")) {
+      if (is_null($config->getValue($plugins_id, "users_id"))) {
          $a_input['users_id'] = 0;
       }
       $config->initConfig($plugins_id, $a_input);
