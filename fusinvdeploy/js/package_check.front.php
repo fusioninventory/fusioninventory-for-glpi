@@ -318,11 +318,11 @@ var {$render}fieldset_item_FreespaceGreater = [{
       store: new Ext.data.ArrayStore({
          fields: ['name', 'value'],
          data: [
-            ['{$LANG['common'][82]}', 'Mio'],
-            ['Go', 'Go']
+            ['MiB', 'MiB'],
+            ['GiB', 'GiB']
          ]
       }),
-      value: 'Mio',
+      value: 'MiB',
       mode: 'local',
       triggerAction: 'all'
    }
@@ -346,11 +346,11 @@ var {$render}fieldset_item_FileSize = [{
       store: new Ext.data.ArrayStore({
          fields: ['name', 'value'],
          data: [
-            ['{$LANG['common'][82]}', 'Mio'],
-            ['Go', 'Go']
+            ['MiB', 'MiB'],
+            ['GiB', 'GiB']
          ]
       }),
-      value: 'Mio',
+      value: 'MiB',
       mode: 'local',
       triggerAction: 'all'
    }

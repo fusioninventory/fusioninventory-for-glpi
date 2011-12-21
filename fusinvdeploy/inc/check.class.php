@@ -52,7 +52,7 @@ class PluginFusinvdeployCheck extends CommonDBTM {
    const FILE_EXISTS     = 'fileExists';      //File is present
    const FILE_MISSING     = 'fileMissing';      //File is missing
    const FILE_SIZEGREATER = 'fileSizeGreater';         //File size
-   const FILE_SIZEEQUAL   = 'fileSizeEqual';         //File size
+   const FILE_SIZEEQUAL   = 'fileSizeEquals';         //File size
    const FILE_SIZELOWER   = 'fileSizeLower';         //File size
    const FILE_SHA512      = 'fileSHA512';       //File sha512 checksum
    const FREE_SPACE       = 'freespaceGreater'; //Disk free space

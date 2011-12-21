@@ -66,7 +66,7 @@ if (($_POST['type'] == 'fileSizeGreater'
       || $_POST['type'] == 'fileSizeEqual'
       || $_POST['type'] == 'freespaceGreater'
    )
-         && $_POST['unit'] == 'Go') {
+         && $_POST['unit'] == 'GiB') {
    $_POST['value'] *= 1024;
 }
 unset($_POST['unit']);
