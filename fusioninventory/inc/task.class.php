@@ -1,35 +1,43 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 class PluginFusioninventoryTask extends CommonDBTM {
@@ -116,7 +124,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
    
    function defineTabs($options=array()){
-      global $LANG,$CFG_GLPI,$DB;
+      global $LANG,$CFG_GLPI;
 
       $ong = array();
       $ong[1] = $LANG['title'][26];
@@ -149,7 +157,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
    *
    **/
    function showForm($id, $options=array()) {
-      global $DB,$CFG_GLPI,$LANG;
+      global $LANG;
 
       $pFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $pFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
@@ -247,7 +255,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $a_time = array();
       $a_time[] = "------";
       $a_time['minutes'] = $LANG['job'][22];
-      $a_time['hours'] = $LANG['job'][21];
+      $a_time['hours'] = ucfirst($LANG['gmt'][1]);
       $a_time['days'] = ucfirst($LANG['calendar'][12]);
       $a_time['months'] = ucfirst($LANG['calendar'][14]);
       Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$this->fields['periodicity_type']));

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="TestJenkins" default="ci" basedir=".">
+    <property name="source" value="src" />
+ 
+    <target name="ci"
+        description="Tache principale d'integration continue"
+        depends="clean,phpcs,phpmd,phpunit"
+    />
+
+    <target name="clean" description="Vide les repertoires logs">
+        <delete dir="${project.basedir}/../../../../build/logs/coverage"/>
+        <delete file="${project.basedir}/../../../../build/logs/checkstyle.xml"/>
+        <delete file="${project.basedir}/../../../../build/logs/phpunit.xml"/>
+        <delete file="${project.basedir}/../../../../build/logs/phpunit.coverage.xml"/>
+        <delete file="${project.basedir}/../../../../build/logs/phpmd.xml"/>
+    </target>
+
+ 
+    <target name="phpcs">
+        <exec command="phpcs --standard=FusionInventory --extensions=php --ignore='${project.basedir}/../../webservices/*' --report=checkstyle '${project.basedir}/../../' > '${project.basedir}/../../../../build/logs/checkstyle.xml'" escape="false" />
+    </target>
+
+    <target name="phpmd">
+        <exec command="phpmd '${project.basedir}/../../' xml codesize,unusedcode,naming --reportfile '${project.basedir}/../../../../build/logs/phpmd.xml' --exclude '${project.basedir}../../webservices'" />
+    </target>
+
+    <target name="phpunit" description="Run PHPUnit tests">
+	<exec command="phpunit --log-junit '${project.basedir}/../../../../build/logs/phpunit.xml' 
+        --coverage-clover '${project.basedir}/../../../../build/logs/phpunit.coverage.xml' 
+        --coverage-html '${project.basedir}/../../../../build/logs/coverage' 
+        AllTests.php" />
+    </target>
+
+
+</project>

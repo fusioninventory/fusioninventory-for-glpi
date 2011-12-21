@@ -1,35 +1,43 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David Durieux
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 define('GLPI_ROOT', '../../..');
@@ -47,7 +55,7 @@ if (isset($_POST['definition_add'])) {
    $mytaskjob->getFromDB($_POST['id']);
    $a_listdef = importArrayFromDB($mytaskjob->fields['definition']);
    $add = 1;
-   foreach ($a_listdef as $num=>$dataDB) {
+   foreach ($a_listdef as $dataDB) {
       if (isset($dataDB[$_POST['DefinitionType']]) 
               AND $dataDB[$_POST['DefinitionType']] == $_POST['definitionselectiontoadd']) {
          $add = 0;
@@ -64,13 +72,13 @@ if (isset($_POST['definition_add'])) {
    $input['id'] = $_POST['id'];
    $input['definition'] = exportArrayToDB($a_listdef);
    $mytaskjob->update($input);
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset($_POST['action_add'])) {
    // * Add an action
    $mytaskjob->getFromDB($_POST['id']);
    $a_listact = importArrayFromDB($mytaskjob->fields['action']);
    $add = 1;
-   foreach ($a_listact as $num=>$dataDB) {
+   foreach ($a_listact as $dataDB) {
       if (isset($dataDB[$_POST['ActionType']])
               AND $dataDB[$_POST['ActionType']] == $_POST['actionselectiontoadd']) {
          $add = 0;
@@ -87,7 +95,7 @@ if (isset($_POST['definition_add'])) {
    $input['id'] = $_POST['id'];
    $input['action'] = exportArrayToDB($a_listact);
    $mytaskjob->update($input);
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset($_POST['definition_delete'])) {
    // * Delete definition
    $mytaskjob->getFromDB($_POST['id']);
@@ -105,7 +113,7 @@ if (isset($_POST['definition_add'])) {
    $input['id'] = $_POST['id'];
    $input['definition'] = exportArrayToDB($a_listdef);
    $mytaskjob->update($input);
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset($_POST['action_delete'])) {
    // * Delete action
    $mytaskjob->getFromDB($_POST['id']);
@@ -123,7 +131,7 @@ if (isset($_POST['definition_add'])) {
    $input['id'] = $_POST['id'];
    $input['action'] = exportArrayToDB($a_listact);
    $mytaskjob->update($input);
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset($_POST['quickform'])) {
    $pluginFusioninventoryTask = new PluginFusioninventoryTask();
 
@@ -155,21 +163,24 @@ if (isset($_POST['definition_add'])) {
    if (isset($_POST['update'])) {
       $mytaskjob->update($inputtaskjob);
       $pluginFusioninventoryTask->update($inputtask);
-      Html::redirect($_SERVER['HTTP_REFERER']);
+      Html::back();
    } else if (isset($_POST['add'])) {
       if (!isset($_POST['entities_id'])) {
          $_POST['entities_id'] = $_SESSION['glpidefault_entity'];
       }
       // Get entity of task
-      $pluginFusioninventoryTask = new PluginFusioninventoryTask();
-      $pluginFusioninventoryTask->getFromDB($_POST['plugin_fusioninventory_tasks_id']);
-      $entities_list = getSonsOf('glpi_entities', $pluginFusioninventoryTask->fields['entities_id']);
-      if (!in_array($_POST['entities_id'], $entities_list)) {
-         $_POST['entities_id'] = $pluginFusioninventoryTask->fields['entities_id'];
-      }      
-      $inputtask['date_scheduled'] = date("Y-m-d H:i:s");
-      $task_id = $pluginFusioninventoryTask->add($inputtask);
-      $inputtaskjob['plugin_fusioninventory_tasks_id'] = $task_id;
+      if (isset($_POST['plugin_fusioninventory_tasks_id'])) {
+         $pluginFusioninventoryTask = new PluginFusioninventoryTask();
+         $pluginFusioninventoryTask->getFromDB($_POST['plugin_fusioninventory_tasks_id']);
+         $entities_list = getSonsOf('glpi_entities', $pluginFusioninventoryTask->fields['entities_id']);
+         if (!in_array($_POST['entities_id'], $entities_list)) {
+            $_POST['entities_id'] = $pluginFusioninventoryTask->fields['entities_id'];
+         }
+      } else {
+         $inputtask['date_scheduled'] = date("Y-m-d H:i:s");
+         $task_id = $pluginFusioninventoryTask->add($inputtask);
+         $inputtaskjob['plugin_fusioninventory_tasks_id'] = $task_id;
+      }
       if (isset($_POST['method_id'])) {
          $_POST['method']  = $_POST['method_id'];
       }
@@ -191,7 +202,7 @@ if (isset($_POST['definition_add'])) {
       $_SESSION["plugin_fusioninventory_forcerun"][$taskjobs_id] = $uniqid;
    }
    unset($_SESSION["MESSAGE_AFTER_REDIRECT"]);
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 } else if (isset($_POST['add']) || isset($_POST['update'])) {
    // * Add and update taskjob
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task", "w");
@@ -217,7 +228,7 @@ if (isset($_POST['definition_add'])) {
    } else {
       $mytaskjob->update($_POST);
    }
-   Html::redirect($_SERVER['HTTP_REFERER']);   
+   Html::back();   
 
 } else if (isset($_POST["delete"])) {
    // * delete taskjob
@@ -261,7 +272,7 @@ if (isset($_POST['definition_add'])) {
    $mytask->update($mytask->fields);
    // force running this job (?)
 
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
    
 } elseif (isset($_POST['forceend'])) {
    $mytaskjobstatus = new PluginFusioninventoryTaskjobstatus();
@@ -278,7 +289,7 @@ if (isset($_POST['definition_add'])) {
    $pFusioninventoryTaskjob->getFromDB($jobstatus['plugin_fusioninventory_taskjobs_id']);
    $pFusioninventoryTaskjob->reinitializeTaskjobs($pFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']);
 
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 }
 
 if (strstr($_SERVER['HTTP_REFERER'], "wizard.php")) {

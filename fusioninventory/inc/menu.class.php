@@ -1,35 +1,43 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -84,14 +92,14 @@ class PluginFusioninventoryMenu {
          $a_menu[4]['name'] = $LANG['plugin_fusioninventory']['rules'][2];
          $a_menu[4]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
 
-         $a_menu[4]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryRuleImportEquipment');
+         $a_menu[4]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryInventoryRuleImport');
       }
       
       if (Session::haveRight("rule_ocs","r")) {
          $a_menu[9]['name'] = $LANG['plugin_fusioninventory']['rules'][19];
          $a_menu[9]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
          $a_menu[9]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryIgnoredimportdevice');
-         $a_menu[4]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryRuleImportEquipment');
+         $a_menu[4]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryInventoryRuleImport');
       }
 
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice", "r")) {
@@ -120,6 +128,31 @@ class PluginFusioninventoryMenu {
          $a_menu[8]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_credentialips.png";
          $a_menu[8]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryCredentialip');
 
+      }
+      
+
+      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "importxml", "r")) {
+         $a_menu[9]['name'] = $LANG['plugin_fusinvinventory']['menu'][0];
+         $a_menu[9]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_importxml.png";
+         $a_menu[9]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvinventory/front/importxml.php";
+      }
+
+      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "existantrule", "r")) {
+         $a_menu[10]['name'] = $LANG['plugin_fusinvinventory']['rule'][100];
+         $a_menu[10]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
+         $a_menu[10]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/inventoryruleentity.php";
+      }
+
+      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "blacklist", "r")) {
+         $a_menu[11]['name'] = $LANG['plugin_fusinvinventory']['menu'][2];
+         $a_menu[11]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_blacklist.png";
+         $a_menu[11]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/inventorycomputerblacklist.php";
+      }
+
+      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "importxml","w")) {
+         $a_menu[4]['name'] = $LANG['plugin_fusinvinventory']['menu'][4];
+         $a_menu[4]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_checkintegrity.png";
+         $a_menu[4]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/inventorycomputerlibintegrity.php";
       }
 
       echo "<div align='center' style='z-index: 1;position:absolute;width: 100%; margin: 0 auto;'>";
@@ -207,7 +240,7 @@ class PluginFusioninventoryMenu {
       echo "<table>";
       foreach ($a_menu as $menu_id) {
          echo "<tr>";
-         $menu_id['pic'] = str_replace("/menu_","/menu_mini_" ,$menu_id['pic']);
+         $menu_id['pic'] = str_replace("/menu_","/menu_mini_",$menu_id['pic']);
          echo "<th>
                <img src='".$menu_id['pic']."' width='16' height='16'/></th>";
          echo "<th colspan='".(count($a_menu) - 1)."' width='190'>

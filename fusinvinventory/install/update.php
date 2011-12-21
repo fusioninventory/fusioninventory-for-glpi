@@ -1,35 +1,43 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 function pluginFusinvinventoryGetCurrentVersion($version) {
@@ -113,7 +121,7 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
          }
       }
       $sql = "DROP TABLE `glpi_plugin_fusinvinventory_computers`";
-      $DB->query($sql);   	
+      $DB->query($sql);      
    }
    if (TableExists("glpi_plugin_fusinvinventory_tmp_agents")) {
       $sql = "DROP TABLE `glpi_plugin_fusinvinventory_tmp_agents`";
@@ -135,7 +143,11 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
       $input['modulename'] = "ESX";
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());
-      $input['url'] = PluginFusioninventoryRestCommunication::getDefaultRestURL($_SERVER['HTTP_REFERER'], 
+      $url= '';
+      if (isset($_SERVER['HTTP_REFERER'])) {
+         $url = $_SERVER['HTTP_REFERER'];
+      }
+      $input['url'] = PluginFusioninventoryCommunicationRest::getDefaultRestURL($_SERVER['HTTP_REFERER'], 
                                                                                  'fusinvinventory', 
                                                                                  'esx');
       $agentmodule->add($input);
@@ -300,7 +312,7 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
       $migration->addField($newTable,
                               "last_fusioninventory_update",
                               "datetime DEFAULT NULL");
-   
+   $migration->migrationOneTable($newTable);
    
    
    
@@ -313,7 +325,7 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
       $sql_query = fread($DBf_handle, filesize($DB_file));
       fclose($DBf_handle);
       foreach ( explode(";\n", "$sql_query") as $sql_line) {
-         if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
+         if (Toolbox::get_magic_quotes_runtime()) $sql_line=Toolbox::stripslashes_deep($sql_line);
          if (!empty($sql_line)) {
             $DB->query($sql_line)/* or die($DB->error())*/;
          }
@@ -368,15 +380,15 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
     */
    if (!strstr($current_version, "+")) {// All version before 0.80+1.1 (new versioning)
       $computer = new Computer();
-      if (!class_exists('PluginFusinvinventoryComputer')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusinvinventory/inc/computer.class.php");
+      if (!class_exists('PluginFusioninventoryInventoryComputerComputer')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputercomputer.class.php");
       }      
       $pfComputer = new PluginFusinvinventoryComputer();
       $migration->displayMessage("Convert computer inventory, may require some minutes");
-      if (!class_exists('PluginFusinvinventoryLib')) { // if plugin is unactive
+      if (!class_exists('PluginFusioninventoryInventoryComputerLib')) { // if plugin is unactive
          include(GLPI_ROOT . "/plugins/fusinvinventory/inc/lib.class.php");
       }
-      $pfLib = new PluginFusinvinventoryLib();
+      $pfLib = new PluginFusioninventoryInventoryComputerLib();
       $query = "SELECT * FROM `glpi_plugin_fusinvinventory_libserialization`";
       if ($result=$DB->query($query)) {
          while ($data=$DB->fetch_array($result)) {
@@ -416,45 +428,49 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
 ";
                }
             }
-            $pfLib->_serializeIntoDB($data['internal_id'], $serializedSections);
-            
-            // * Add informations of BIOS (table glpi_plugin_fusinvinventory_computers)
-            $input = array();
-            $input['computers_id'] = $data['computers_id'];
-            foreach($infoSections['sections'] as $name=>$section) {
-               $split = explode("/", $name);
-               if (($split[1] > 0) OR (strstr($split[1], 'd'))) {
-                  $dataSection = unserialize($section);
+            if ($computer->getFromDB($data['computers_id'])) {
+               $pfLib->_serializeIntoDB($data['internal_id'], $serializedSections);
 
-                  if ($split[0] == 'BIOS') {
-                     if (isset($dataSection['BDATE'])) {
-                        $a_split = explode("/", $dataSection['BDATE']);
-                        $input['bios_date'] = $a_split[2]."-".$a_split[0]."-".$a_split[1];
+               // * Add informations of BIOS (table glpi_plugin_fusinvinventory_computers)
+               $input = array();
+               $input['computers_id'] = $data['computers_id'];
+               foreach($infoSections['sections'] as $name=>$section) {
+                  $split = explode("/", $name);
+                  if (($split[1] > 0) OR (strstr($split[1], 'd'))) {
+                     $dataSection = unserialize($section);
+
+                     if ($split[0] == 'BIOS') {
+                        if (isset($dataSection['BDATE'])) {
+                           $a_split = explode("/", $dataSection['BDATE']);
+                           $input['bios_date'] = $a_split[2]."-".$a_split[0]."-".$a_split[1];
+                        }
+                        if (isset($dataSection['BVERSION'])) {
+                           $input['bios_version'] = $dataSection['BVERSION'];
+                        }
+                        if (isset($dataSection['BMANUFACTURER'])) {
+                           $input['bios_manufacturers_id'] = Dropdown::importExternal('Manufacturer',
+                                                                                       $dataSection['BMANUFACTURER'],
+                                                                                       $computer->fields['entities_id']);
+                        }
                      }
-                     if (isset($dataSection['BVERSION'])) {
-                        $input['bios_version'] = $dataSection['BVERSION'];
-                     }
-                     if (isset($dataSection['BMANUFACTURER'])) {
-                        $computer->getFromDB($data['computers_id']);
-                        $input['bios_manufacturers_id'] = Dropdown::importExternal('Manufacturer',
-                                                                                    $dataSection['BMANUFACTURER'],
-                                                                                    $computer->fields['entities_id']);
-                     }
-                  }
-                  if ($split[0] == 'HARDWARE') {
-                     if (isset($dataSection['OSINSTALLDATE'])) {
-                        $input['operatingsystem_installationdate'] = date("Y-m-d", $dataSection['OSINSTALLDATE']);
-                     }
-                     if (isset($dataSection['WINOWNER'])) {
-                        $input['winowner'] = $dataSection['WINOWNER'];
-                     }
-                     if (isset($dataSection['WINCOMPANY'])) {
-                        $input['wincompany'] = $dataSection['WINCOMPANY'];
+                     if ($split[0] == 'HARDWARE') {
+                        if (isset($dataSection['OSINSTALLDATE'])) {
+                           $input['operatingsystem_installationdate'] = date("Y-m-d", $dataSection['OSINSTALLDATE']);
+                        }
+                        if (isset($dataSection['WINOWNER'])) {
+                           $input['winowner'] = $dataSection['WINOWNER'];
+                        }
+                        if (isset($dataSection['WINCOMPANY'])) {
+                           $input['wincompany'] = $dataSection['WINCOMPANY'];
+                        }
                      }
                   }
                }
+               $pfComputer->add($input);
+            } else {
+               $DB->query("DELETE FROM `glpi_plugin_fusinvinventory_libserialization`
+                  WHERE `internal_id`='".$data['internal_id']."'");
             }
-            $pfComputer->add($input);
          }
       }
    }

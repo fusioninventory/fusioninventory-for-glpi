@@ -1,35 +1,43 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 class PluginFusioninventoryTaskjob extends CommonDBTM {
@@ -109,7 +117,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    *
    **/
    function showForm($id, $options=array()) {
-      global $DB,$CFG_GLPI,$LANG;
+      global $CFG_GLPI,$LANG;
 
       if ($id != '') {
          $this->verifyDefinitionActions($id);
@@ -194,7 +202,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $a_time = array();
       $a_time[] = "------";
       $a_time['minutes'] = strtolower($LANG['job'][22]);
-      $a_time['hours'] = strtolower($LANG['job'][21]);
+      $a_time['hours'] = strtolower($LANG['gmt'][1]);
       $a_time['days'] = $LANG['calendar'][12];
       $a_time['months'] = $LANG['plugin_fusioninventory']['task'][38];
       Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$this->fields['periodicity_type']));
@@ -377,9 +385,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    * @return value rand of the dropdown
    *
    **/
-   function dropdownMethod($myname,$value=0) {
-      global $DB,$CFG_GLPI;
-      
+   function dropdownMethod($myname,$value=0,$entity_restrict='') {
+      global $CFG_GLPI;
+
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
 
       $a_methods2 = array();
@@ -411,9 +419,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    * @return value rand of the dropdown
    *
    **/
-   
-   function dropdownType($myname,$method,$value=0, $taskjobs_id, $entity_restrict='') {
-      global $DB,$CFG_GLPI;
+
+   function dropdownType($myname,$method,$value=0, $taskjobs_id=0, $entity_restrict='') {
+      global $CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $a_type = array();
@@ -462,7 +470,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    *
    **/
    function dropdownvalue($myname,$definitiontype,$method,$deftypeid,$taskjobs_id,$value=0,$entity_restrict='', $title = 0) {
-      global $DB,$CFG_GLPI, $LANG;
+      global $CFG_GLPI,$LANG;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $module = '';
@@ -648,7 +656,7 @@ return namelist;
    *
    **/
    function dropdownActionType($myname,$method,$value=0,$entity_restrict='') {
-      global $DB,$CFG_GLPI,$LANG;
+      global $CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $a_actioninitiontype = array();
@@ -697,7 +705,7 @@ return namelist;
    *
    **/
    function dropdownAction($myname,$actiontype,$method,$actiontypeid,$value=0,$entity_restrict='') {
-      global $DB,$CFG_GLPI, $LANG;
+      global $CFG_GLPI;
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $module = '';
       foreach ($a_methods as $datas) {
@@ -892,7 +900,6 @@ return namelist;
       
       
       // Start agents must start in push mode
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
       foreach($_SESSION['glpi_plugin_fusioninventory']['agents'] as $agent_id=>$num) {
          $PluginFusioninventoryTaskjob->startAgentRemotly($agent_id);
       }
@@ -1038,7 +1045,6 @@ return namelist;
 
       if ($this->reinitializeTaskjobs($tasks_id, 1)) {
          $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-         $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
          $_SESSION['glpi_plugin_fusioninventory']['agents'] = array();
 
          $query = "SELECT `".$PluginFusioninventoryTaskjob->getTable()."`.*,
@@ -1117,7 +1123,6 @@ return namelist;
    *
    **/
    function getStateAgent($ip, $agentid) {
-      global $LANG;
 
       $this->disableDebug();
 
@@ -1137,7 +1142,7 @@ return namelist;
       $ret = false;
       foreach(PluginFusioninventoryAgent::getAgentStatusURLs($plugins_id, $agentid) as $url) {
          $str = @file_get_contents($url, 0, $ctx);
-         if ($stre !== false && strstr($str, "waiting")) {
+         if ($str !== false && strstr($str, "waiting")) {
             $ret = true;
             break;
          }
@@ -1150,10 +1155,6 @@ return namelist;
    
    // $items_id = agent id
    function getRealStateAgent($items_id) {
-      global $LANG;
-
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-      $a_ip = $PluginFusioninventoryAgent->getIPs($items_id);
 
       $this->disableDebug();
 
@@ -1175,6 +1176,7 @@ return namelist;
       }
       $this->reenableusemode();
 
+      $ret = '';
       if (strstr($str, "waiting")) {
          $ret="waiting";
       } else if (strstr($str, "running")) {
@@ -1196,8 +1198,6 @@ return namelist;
    *
    **/
    function startAgentRemotly($agent_id) {
-
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
@@ -1342,7 +1342,6 @@ return namelist;
    *
    **/
    function showMiniAction($items_id, $width="950") {
-      global $LANG;
       
       echo "<center><table class='tab_cadrehov' style='width: ".$width."px'>";
 
@@ -1512,7 +1511,7 @@ return namelist;
        AND `glpi_plugin_fusioninventory_taskjobs`.`status`=1";
      $result=$DB->query($sql);
      if ($result) {
-			while ($data=$DB->fetch_array($result)) {
+         while ($data=$DB->fetch_array($result)) {
             $this->reinitializeTaskjobs($data['plugin_fusioninventory_tasks_id'], '1');
          }
      }
@@ -1657,7 +1656,7 @@ return namelist;
 
             case 'hours':
                $a_time = $pluginFusioninventoryTask->fields['periodicity_count']." ".
-                    strtolower($LANG['job'][21]);
+                    strtolower($LANG['gmt'][1]);
                break;
 
             case 'days':
@@ -1778,7 +1777,7 @@ return namelist;
       $a_time = array();
       $a_time[] = "------";
       $a_time['minutes'] = $LANG['job'][22];
-      $a_time['hours'] = $LANG['job'][21];
+      $a_time['hours'] = ucfirst($LANG['gmt'][1]);
       $a_time['days'] = ucfirst($LANG['calendar'][12]);
       $a_time['months'] = ucfirst($LANG['calendar'][14]);
       Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$pluginFusioninventoryTask->fields['periodicity_type']));
@@ -1966,7 +1965,6 @@ return namelist;
       global $LANG,$CFG_GLPI;
       
       echo "<div style='display:none' id='".$name."' >";
-      $rand = mt_rand();
       $params = array('method' => '__VALUE__',
                       'rand'      => $randmethod,
                       'myname'    => 'method',

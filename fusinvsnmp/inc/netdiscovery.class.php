@@ -1,35 +1,43 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -42,7 +50,6 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
 
    // Get all devices and put in taskjobstatus each task for each device for each agent
    function prepareRun($taskjobs_id) {
-      global $DB;
 
       $PluginFusioninventoryTask = new PluginFusioninventoryTask();
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
@@ -90,13 +97,10 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
                if ($PluginFusioninventoryTask->fields['communication'] == 'pull') {
                   $a_agentlist[$agent_id] = 1;
                } else {
-                  $a_ip = $PluginFusioninventoryAgent->getIPs($agent_id);
                   $PluginFusioninventoryAgent->getFromDB($agent_id);
-                  foreach($a_ip as $ip) {
-                     $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($ip,0);
-                     if ($agentStatus) {
-                        $a_agentlist[$agent_id] = $ip;
-                     }
+                  $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent('1',$agent_id);
+                  if ($agentStatus) {
+                     $a_agentlist[$agent_id] = 1;
                   }
                }
             }
@@ -106,13 +110,12 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
          $a_agents = $PluginFusioninventoryAgentmodule->getAgentsCanDo('NETDISCOVERY');
          foreach($a_agents as $data) {
             if (($count_ip / 10) >= count($a_agentlist)) {
-               $a_ip = $PluginFusioninventoryAgent->getIPs($data['id']);
                $PluginFusioninventoryAgent->getFromDB($data['id']);
                foreach($a_ip as $ip) {
                   if ($PluginFusioninventoryTask->fields['communication'] == 'push') {
-                     $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($ip,0);
+                     $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent('1',$data['id']);
                      if ($agentStatus) {
-                        $a_agentlist[$data['id']] = $ip;
+                        $a_agentlist[$data['id']] = 1;
                      }
                   } else if ($PluginFusioninventoryTask->fields['communication'] == 'pull') {
                      $a_agentlist[$data['id']] = 1;
@@ -300,7 +303,6 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
     *
     */
    function run($a_Taskjobstatus) {
-      global $DB;
 
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
       $PluginFusinvsnmpAgentconfig = new  PluginFusinvsnmpAgentconfig;

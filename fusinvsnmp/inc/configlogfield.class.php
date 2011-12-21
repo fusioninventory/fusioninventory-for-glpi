@@ -1,39 +1,47 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access this file directly");
+   die("Sorry. You can't access this file directly");
 }
 
 
@@ -45,8 +53,7 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
     *
     *@return nothing
     **/
-	function initConfig() {
-      global $DB,$CFG_GLPI;
+   function initConfig() {
       
       $NOLOG = '-1';
       $logs = array();
@@ -81,53 +88,53 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
             }
          }
       }
-	}
+   }
 
 
    
-	function getValue($field) {
-		global $DB;
+   function getValue($field) {
+      global $DB;
 
       // Get mapping
-      // 	plugin_fusioninventory_mappings_id
+      //    plugin_fusioninventory_mappings_id
 
-		$query = "SELECT days
+      $query = "SELECT days
                 FROM ".$this->getTable()."
                 WHERE `plugin_fusioninventory_mappings_id`='".$field."'
                 LIMIT 1;";
-		$result = $DB->query($query);
+      $result = $DB->query($query);
       if ($result) {
          $this->fields = $DB->fetch_row($result);
-			if ($this->fields) {
-				return $this->fields['0'];
+         if ($this->fields) {
+            return $this->fields['0'];
          }
-		}
-		return false;
-	}
+      }
+      return false;
+   }
 
    
    
-	function showForm($options=array()) {
-		global $LANG,$DB;
+   function showForm($options=array()) {
+      global $LANG,$DB;
 
       echo "<form name='form' method='post' action='".$options['target']."'>";
       echo "<div class='center' id='tabsbody'>";
       echo "<table class='tab_cadre_fixe'>";
 
-		echo "<tr>";
-		echo "<th colspan='2'>";
-		echo $LANG['plugin_fusinvsnmp']['portlogs'][0];
-		echo "</th>";
-		echo "</tr>";
+      echo "<tr>";
+      echo "<th colspan='2'>";
+      echo $LANG['plugin_fusinvsnmp']['portlogs'][0];
+      echo "</th>";
+      echo "</tr>";
 
-		echo "<tr>";
-		echo "<th>";
-		echo $LANG['plugin_fusinvsnmp']['portlogs'][1];
-		echo "</th>";
-		echo "<th>";
-		echo $LANG['plugin_fusinvsnmp']['portlogs'][2];
-		echo "</th>";
-		echo "</tr>";
+      echo "<tr>";
+      echo "<th>";
+      echo $LANG['plugin_fusinvsnmp']['portlogs'][1];
+      echo "</th>";
+      echo "<th>";
+      echo $LANG['plugin_fusinvsnmp']['portlogs'][2];
+      echo "</th>";
+      echo "</tr>";
 
       $days = array();
       $days[-1] = $LANG['plugin_fusinvsnmp']['config'][8];
@@ -143,7 +150,7 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
                 ORDER BY `itemtype`, `name`;";
       $result=$DB->query($query);
       if ($result) {
-			while ($data=$DB->fetch_array($result)) {
+         while ($data=$DB->fetch_array($result)) {
             echo "<tr class='tab_bg_1'>";
             echo "<td align='left'>";
             echo $LANG['plugin_fusinvsnmp']['mapping'][$data['locale']];
@@ -178,7 +185,7 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
       echo "</table></div></form>";
 
       return true;
-	}
+   }
 
 
    

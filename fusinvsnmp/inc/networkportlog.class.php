@@ -1,56 +1,64 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access this file directly");
+   die("Sorry. You can't access this file directly");
 }
 
 
 class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
 
-	/**
-	 * Insert port history with connection and disconnection
-	 *
-	 * @param $status status of port ('make' or 'remove')
-	 * @param $array with values : $array["networkports_id"], $array["value"], $array["itemtype"] and $array["device_ID"]
-	 *
-	 * @return id of inserted line
-	 *
-	**/
-	function insert_connection($status,$array,$plugin_fusioninventory_agentprocesses_id=0) {
-		global $DB,$CFG_GLPI;
+   /**
+    * Insert port history with connection and disconnection
+    *
+    * @param $status status of port ('make' or 'remove')
+    * @param $array with values : $array["networkports_id"], $array["value"], $array["itemtype"] and $array["device_ID"]
+    *
+    * @return id of inserted line
+    *
+   **/
+   function insert_connection($status,$array,$plugin_fusioninventory_agentprocesses_id=0) {
+      global $DB;
 
       $input = array();
       $input['date'] = date("Y-m-d H:i:s");
@@ -58,14 +66,14 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
       if ($status == "field") {
 
-			$query = "INSERT INTO `glpi_plugin_fusinvsnmp_networkportlogs` (
+         $query = "INSERT INTO `glpi_plugin_fusinvsnmp_networkportlogs` (
                                `networkports_id`,`plugin_fusioninventory_mappings_id`,`value_old`,`value_new`,`date_mod`)
                    VALUES('".$array["networkports_id"]."','".$array["plugin_fusioninventory_mappings_id"]."',
                           '".$array["value_old"]."','".$array["value_new"]."',
                           '".date("Y-m-d H:i:s")."');";
          $DB->query($query);
-		}
- 	}
+      }
+    }
 
    
 
@@ -75,11 +83,11 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       $this->showTabs($options);
       $this->showFormHeader($options);
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td colspan='3'>";
-		echo $LANG['plugin_fusioninventory']['functionalities'][29]." :";
-		echo "</td>";
-		echo "</tr>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td colspan='3'>";
+      echo $LANG['plugin_fusioninventory']['functionalities'][29]." :";
+      echo "</td>";
+      echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
 
@@ -102,7 +110,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
                 FROM `glpi_plugin_fusinvsnmp_configlogfields`;";
       $result=$DB->query($query);
       if ($result) {
-			while ($data=$DB->fetch_array($result)) {
+         while ($data=$DB->fetch_array($result)) {
             $type = '';
             $name= '';
             list($type,$name) = explode("-", $data['field']);
@@ -154,13 +162,13 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
          echo "&nbsp;";
       }
       echo "</td>";
-		echo "</tr>";
+      echo "</tr>";
 
-		echo "<tr>";
-		echo "<th colspan='3'>";
-		echo $LANG['plugin_fusioninventory']['functionalities'][60]." :";
-		echo "</th>";
-		echo "</tr>";
+      echo "<tr>";
+      echo "<th colspan='3'>";
+      echo $LANG['plugin_fusioninventory']['functionalities'][60]." :";
+      echo "</th>";
+      echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='3' class='center'>";
@@ -170,13 +178,13 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
-		echo "<tr>";
-		echo "<th colspan='3'>";
+      echo "<tr>";
+      echo "<th colspan='3'>";
       echo "&nbsp;";
-		echo "</th>";
-		echo "</tr>";
+      echo "</th>";
+      echo "</tr>";
 
-		$this->showFormButtons($options);
+      $this->showFormButtons($options);
 
       echo "<div id='tabcontent'></div>";
       echo "<script type='text/javascript'>loadDefaultTab();</script>";
@@ -222,7 +230,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
    
    static function addLog($port,$field,$value_old,$value_new,$mapping,$plugin_fusioninventory_agentprocesses_id=0) {
-      global $DB,$CFG_GLPI;
+      global $DB;
 
       $PluginFusinvsnmpNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
       $doHistory = 1;
@@ -310,7 +318,6 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
    
    // $status = connection or disconnection
    static function addLogConnection($status,$port,$plugin_fusioninventory_agentprocesses_id=0) {
-      global $DB,$CFG_GLPI;
 
       $PluginFusinvsnmpNetworkPortConnectionLog = new PluginFusinvsnmpNetworkPortConnectionLog;
       $NetworkPort_NetworkPort=new NetworkPort_NetworkPort();
@@ -342,7 +349,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
    
    // List of history in networking display
    static function showHistory($ID_port) {
-      global $DB,$LANG,$INFOFORM_PAGES,$CFG_GLPI;
+      global $DB,$LANG,$CFG_GLPI;
 
       $np = new NetworkPort();
 

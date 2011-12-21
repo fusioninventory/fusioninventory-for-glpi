@@ -1,35 +1,43 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 function plugin_fusinvinventory_getAddSearchOptions($itemtype) {
@@ -44,7 +52,7 @@ function plugin_fusinvinventory_getAddSearchOptions($itemtype) {
          $sopt[5150]['name']      = $LANG['plugin_fusioninventory']['title'][1]." - ".
             $LANG['plugin_fusinvinventory']['computer'][0];
          $sopt[5150]['datatype']  = 'datetime';
-         $sopt[5150]['itemlink_type'] = 'PluginFusinvinventoryLib';
+         $sopt[5150]['itemlink_type'] = 'PluginFusioninventoryInventoryComputerLib';
 
          $sopt[5151]['table']     = 'glpi_plugin_fusinvinventory_antivirus';
          $sopt[5151]['field']     = 'name';
@@ -154,118 +162,6 @@ function plugin_fusinvinventory_needUpdate() {
 
 
 
-// Define headings added by the plugin //
-function plugin_get_headings_fusinvinventory($item,$withtemplate) {
-   global $LANG;
-
-   switch (get_class($item)) {
-      case 'Computer' :
-         $array = array ();
-         if ($_GET['id'] > 0
-                AND $withtemplate!='1') {
-            $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".
-               $LANG['plugin_fusioninventory']['xml'][0];
-            $array[2] = $LANG['plugin_fusinvinventory']['antivirus'][0];
-            if (haveRight("computer", "w")) {
-               $array[3] = $LANG['plugin_fusinvinventory']['menu'][4];
-            }
-            $array[4] = $LANG['entity'][14];
-         }
-         return $array;
-         break;
-   }
-
-
-}
-
-
-
-// Define headings actions added by the plugin
-function plugin_headings_actions_fusinvinventory($item) {
-
-   switch (get_class($item)) {
-      case 'Computer' :
-         $array = array ();
-         $array[1] = "plugin_headings_fusinvinventory_xml";
-         $array[2] = "plugin_headings_fusinvinventory_antivirus";
-         $array[3] = "plugin_headings_fusinvinventory_integrity";
-         $array[4] = "plugin_headings_fusinvinventory_bios";
-         return $array;
-         break;
-      case 'PluginFusioninventoryCredentialIp':
-         return array(1 => "plugin_headings_fusinvinventory_credentialip");
-   }
-
-}
-
-
-function plugin_headings_fusinvinventory_xml($item) {
-   global $LANG,$CFG_GLPI;
-
-   $id = $item->getField('id');
-
-   $folder = substr($id, 0, -1);
-   if (empty($folder)) {
-      $folder = '0';
-   }
-   if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id)) {
-      $xml = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id);
-      $xml = str_replace("<", "&lt;", $xml);
-      $xml = str_replace(">", "&gt;", $xml);
-      $xml = str_replace("\n", "<br/>", $xml);
-      echo "<table class='tab_cadre_fixe' cellpadding='1'>";
-      echo "<tr>";
-      echo "<th>".$LANG['plugin_fusioninventory']['title'][1]." ".
-         $LANG['plugin_fusioninventory']['xml'][0];
-      echo " (".$LANG['plugin_fusinvinventory']['computer'][0]."&nbsp;: " . 
-         Html::convDateTime(date("Y-m-d H:i:s", 
-                      filemtime(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id))).")";
-      echo "</th>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td width='130' align='center'>";
-      echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/send_xml.php?pluginname=fusinvinventory&file=".$folder."/".$id."'>".$LANG['document'][15]."</a>";
-      echo "</td>";
-      echo "</tr>";
-      
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo "<pre width='130'>".$xml."</pre>";
-      echo "</td>";
-      echo "</tr>";
-      echo "</table>";
-   }
-}
-
-
-
-function plugin_headings_fusinvinventory_antivirus($item) {
-   $antirivus = new PluginFusinvinventoryAntivirus();
-   $antirivus->showForm($item->getField('id'));
-}
-
-
-
-function plugin_headings_fusinvinventory_integrity($item) {
-   $pluginFusinvinventoryLibintegrity = new PluginFusinvinventoryLibintegrity();
-   $pluginFusinvinventoryLibintegrity->showForm($item->getField('id'));
-}
-
-
-function plugin_headings_fusinvinventory_bios($item) {
-   global $DB,$LANG;
-   
-   $pFusinvinventoryComputer = new PluginFusinvinventoryComputer();
-   $pFusinvinventoryComputer->showForm($item->fields['id']);
-}
-
-
-
-function plugin_headings_fusinvinventory($type,$id,$withtemplate=0) {
-
-}
-
 function plugin_fusinvinventory_addLeftJoin($itemtype, $ref_table, $new_table, $linkfield, 
                                             &$already_link_tables) {
    
@@ -281,21 +177,16 @@ function plugin_pre_item_purge_fusinvinventory($item) {
    switch (get_class($item)) {
 
       case 'Computer' :
-         $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
+         $PluginFusinvinventoryLib = new PluginFusioninventoryInventoryComputerLib();
          $PluginFusinvinventoryLib->removeExternalid($item->getField('id'));
          // Remove antivirus if set
-         PluginFusinvinventoryAntivirus::cleanComputer($item->getField('id'));
+         PluginFusioninventoryInventoryComputerAntivirus::cleanComputer($item->getField('id'));
          break;
 
    }
 
 }
 
-function plugin_fusinvinventory_registerMethods() {
-   global $WEBSERVICES_METHOD;
-   
-   $WEBSERVICES_METHOD['fusioninventory.test'] = array('PluginFusinvinventoryWebservice', 
-                                                       'methodTest');
-}
+
 
 ?>

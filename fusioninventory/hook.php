@@ -1,39 +1,46 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
-   global $CFG_GLPI, $LANG;
 
    $searchopt = &Search::getOptions($type);
    $table = $searchopt[$id]["table"];
@@ -113,7 +120,6 @@ function cron_plugin_fusioninventory() {
 
 
 function plugin_fusioninventory_install() {
-   global $DB, $LANG, $CFG_GLPI;
 
    include (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
    $version_detected = pluginFusioninventoryGetCurrentVersion(PLUGIN_FUSIONINVENTORY_VERSION);
@@ -150,47 +156,25 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
 
    switch (get_class($item)) {
       case 'Computer' :
+         $ong = array();
          if ($withtemplate) { // new object / template case
             return array();
          } else { // Non template case / editing an existing object
-            $array = array ();
-            if (haveRight("computer", "w")) {
-               if (PluginFusioninventoryModule::getModuleId("fusioninventory")) {
-                  $array[2] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['functionalities'][75];
-               }
-            }
-            if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
-               $array[3] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['task'][18];
-            }
+
+//            if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
+//               $array[3] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['task'][18];
+//            }
             
-            return $array;
+            return $ong;
          }
          break;
 
-      case 'Monitor' :
-         if ($withtemplate) { // new object / template case
-            return array();
-         } else { // Non template case / editing an existing object
-            $array = array ();
-            if (haveRight("monitor", "w")) {
-               if (PluginFusioninventoryModule::getModuleId("fusioninventory")) {
-                  $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['functionalities'][75];
-               }
-            }
-            return $array;
-         }
-         break;
 
       case 'NetworkEquipment' :
          if ($withtemplate) { // new object / template case
             return array();
          } else { // Non template case / editing an existing object
             $array = array ();
-            if (haveRight("networking", "w")) {
-               if (PluginFusioninventoryModule::getModuleId("fusioninventory")) {
-                  $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['functionalities'][75];
-               }
-            }
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
                $array[2] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['task'][18];
             }
@@ -203,11 +187,6 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             return array();
          } else { // Non template case / editing an existing object
             $array = array ();
-            if (haveRight("printer", "w")) {
-               if (PluginFusioninventoryModule::getModuleId("fusioninventory")) {
-                  $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['functionalities'][75];
-               }
-            }
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
                $array[2] = $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['task'][18];
             }
@@ -256,27 +235,20 @@ function plugin_headings_actions_fusioninventory($item) {
    switch (get_class($item)) {
       case 'Computer' :
          $array = array();
-         $array[2] = "plugin_headings_fusioninventory_locks";
          $array[3] = "plugin_headings_fusioninventory_tasks";
-         return $array;
-         break;
-
-      case 'Monitor' :
-         $array = array();
-         $array[1] = "plugin_headings_fusioninventory_locks";
          return $array;
          break;
 
       case 'Printer' :
          $array = array();
-         $array[1] = "plugin_headings_fusioninventory_locks";
+
          $array[2] = "plugin_headings_fusioninventory_tasks";
          return $array;
          break;
 
       case 'NetworkEquipment' :
          $array = array();
-         $array[1] = "plugin_headings_fusioninventory_locks";
+
          $array[2] = "plugin_headings_fusioninventory_tasks";
          return $array;
          break;
@@ -303,19 +275,6 @@ function plugin_headings_actions_fusioninventory($item) {
 }
 
 
-//function plugin_headings_fusioninventory_locks($type, $id) {
-function plugin_headings_fusioninventory_locks($item) {
-   $type = get_Class($item);
-   $id = $item->getField('id');
-   $fusioninventory_locks = new PluginFusioninventoryLock();
-   if ($id == '') {
-      $fusioninventory_locks->showForm(getItemTypeFormURL('PluginFusioninventoryLock'),
-                                                       $type);
-   } else {
-      $fusioninventory_locks->showForm(getItemTypeFormURL('PluginFusioninventoryLock').'?id='.$id,
-                                                       $type, $id);
-   }
-}
 
 function plugin_headings_fusioninventory_tasks($item, $itemtype='', $items_id=0) {
    if ($itemtype == '') {
@@ -340,18 +299,18 @@ function plugin_headings_fusioninventory_tasks($item, $itemtype='', $items_id=0)
 
 
 function plugin_headings_fusioninventory($item, $withtemplate=0) {
-	global $CFG_GLPI;
+   global $CFG_GLPI;
 
-	switch (get_class($item)) {
-		case 'Profile' :
+   switch (get_class($item)) {
+      case 'Profile' :
 
-			$PluginFusioninventoryProfile = new PluginFusioninventoryProfile();
-//			if (!$prof->GetfromDB($id)) {
-//				PluginFusioninventoryDb::createaccess($id);
+         $PluginFusioninventoryProfile = new PluginFusioninventoryProfile();
+//         if (!$prof->GetfromDB($id)) {
+//            PluginFusioninventoryDb::createaccess($id);
 //         }
-			$PluginFusioninventoryProfile->showProfileForm($item->getField('id'), $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/profile.php");
-		break;
-	}
+         $PluginFusioninventoryProfile->showProfileForm($item->getField('id'), $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/profile.php");
+      break;
+   }
 }
 
 
@@ -422,16 +381,16 @@ function plugin_fusioninventory_MassiveActions($type) {
          return $array;
          break;
 
-		case "PluginFusioninventoryUnknownDevice";
-			return array (
-				"plugin_fusioninventory_unknown_import" => $LANG["buttons"][37]
-			);
+      case "PluginFusioninventoryUnknownDevice";
+         return array (
+            "plugin_fusioninventory_unknown_import" => $LANG["buttons"][37]
+         );
          break;
          
       case "PluginFusioninventoryTask";
-			return array (
-				'plugin_fusioninventory_transfert' => $LANG['buttons'][48]
-			);
+         return array (
+            'plugin_fusioninventory_transfert' => $LANG['buttons'][48]
+         );
          break;
          
          
@@ -441,7 +400,6 @@ function plugin_fusioninventory_MassiveActions($type) {
 }
 
 function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
-   global $LANG;
 
    $table = $options['options']['table'];
    $field = $options['options']['field'];
@@ -452,11 +410,11 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
 
       case "glpi_plugin_fusioninventory_unknowndevices.item_type":
          $type_list = array();
-			$type_list[] = 'Computer';
-			$type_list[] = 'NetworkEquipment';
-			$type_list[] = 'Printer';
-			$type_list[] = 'Peripheral';
-			$type_list[] = 'Phone';
+         $type_list[] = 'Computer';
+         $type_list[] = 'NetworkEquipment';
+         $type_list[] = 'Printer';
+         $type_list[] = 'Peripheral';
+         $type_list[] = 'Phone';
          Dropdown::dropdownTypes($linkfield,0,$type_list);
          return true;
          break;
@@ -465,7 +423,7 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
 
 //   switch ($table) {
 //
-//		case 'glpi_plugin_fusioninventory_agentmodules':
+//      case 'glpi_plugin_fusioninventory_agentmodules':
 //         $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
 //         $a_modules = $PluginFusioninventoryAgentmodule->find();
 //         foreach ($a_modules as $data) {
@@ -474,7 +432,7 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
 //               return true;
 //            }
 //         }
-//			break;
+//         break;
 //
 //    }
    return false;
@@ -483,7 +441,7 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
 
 
 function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
-   global $LANG, $CFG_GLPI, $DB;
+   global $LANG;
 
    switch ($options['itemtype']) {
       case "Computer":
@@ -533,13 +491,13 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
          }
          break;
 
-		case "PluginFusioninventoryUnknownDevice";
-			if ($options['action'] == "plugin_fusioninventory_unknown_import") {
+      case "PluginFusioninventoryUnknownDevice";
+         if ($options['action'] == "plugin_fusioninventory_unknown_import") {
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","w")) {
                echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
             }
          }
-			break;
+         break;
          
      case 'PluginFusioninventoryTask':
          if ($options['action'] == "plugin_fusioninventory_transfert") {
@@ -574,7 +532,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
          }
          break;
 
-		case "plugin_fusioninventory_unknown_import" :
+      case "plugin_fusioninventory_unknown_import" :
          if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","w")) {
             $Import = 0;
             $NoImport = 0;
@@ -587,7 +545,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
              Session::addMessageAfterRedirect($LANG['plugin_fusioninventory']["discovery"][5]." : ".$Import);
              Session::addMessageAfterRedirect($LANG['plugin_fusioninventory']["discovery"][9]." : ".$NoImport);
          }
-			break;
+         break;
          
       case "plugin_fusioninventory_transfert" :
          if ($data['itemtype'] == 'PluginFusioninventoryAgent') {
@@ -731,7 +689,6 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
 
 
 function plugin_fusioninventory_addSelect($type,$id,$num) {
-	global $SEARCH_OPTION;
 
    $searchopt = &Search::getOptions($type);
    $table = $searchopt[$id]["table"];
@@ -792,14 +749,13 @@ function plugin_fusioninventory_addOrderBy($type,$id,$order,$key=0) {
 function plugin_fusioninventory_addDefaultWhere($type) {
    if ($type == 'PluginFusioninventoryTaskjob') {
       return " ( select count(*) FROM `glpi_plugin_fusioninventory_taskjobstatus`
-			WHERE plugin_fusioninventory_taskjobs_id= `glpi_plugin_fusioninventory_taskjobs`.`id`
+         WHERE plugin_fusioninventory_taskjobs_id= `glpi_plugin_fusioninventory_taskjobs`.`id`
          AND `state`!='3' )";
    }
 }
 
 
 function plugin_fusioninventory_addWhere($link,$nott,$type,$id,$val) {
-	global $SEARCH_OPTION;
 
    $searchopt = &Search::getOptions($type);
    $table = $searchopt[$id]["table"];
@@ -910,7 +866,6 @@ function plugin_item_add_fusioninventory($parm) {
 
 
 function plugin_item_purge_fusioninventory($parm) {
-   global $DB;
 
    switch (get_class($parm)) {
 
@@ -1014,5 +969,12 @@ function plugin_item_transfer_fusioninventory($parm) {
 }
 
 
+
+function plugin_fusioninventory_registerMethods() {
+   global $WEBSERVICES_METHOD;
+   
+   $WEBSERVICES_METHOD['fusioninventory.test'] = array('PluginFusioninventoryInventoryComputerWebservice', 
+                                                       'methodTest');
+}
 
 ?>

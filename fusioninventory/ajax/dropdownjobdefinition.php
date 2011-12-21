@@ -1,37 +1,44 @@
 <?php
+
 /*
- * @version $Id$
- -------------------------------------------------------------------------
- GLPI - Gestionnaire Libre de Parc Informatique
- Copyright (C) 2003-2011 by the INDEPNET Development Team.
+   ------------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://indepnet.net/   http://glpi-project.org
- -------------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ------------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of GLPI.
+   This file is part of FusionInventory project.
 
- GLPI is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
- GLPI is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with GLPI; if not, write to the Free Software Foundation, Inc.,
- 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- --------------------------------------------------------------------------
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: Julien Dombre
-// Purpose of file:
-// ----------------------------------------------------------------------
 
 define('GLPI_ROOT','../../..');
 include (GLPI_ROOT."/inc/includes.php");
@@ -60,7 +67,7 @@ if (isset($_POST["type"]) && isset($_POST["actortype"])) {
                           'entity'      => $_POST['entity_restrict'],
                           'right'       => $right,
                           'ldap_import' => true);
-
+         $withemail = false;
          if ($CFG_GLPI["use_mailing"]) {
             $withemail = (isset($_POST["allow_email"]) ? $_POST["allow_email"] : false);
             $paramscomment = array('value'       => '__VALUE__',

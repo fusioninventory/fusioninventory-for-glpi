@@ -1,35 +1,43 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -39,6 +47,28 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryAgentmodule extends CommonDBTM {
    
 
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $LANG;
+
+      if ($item->getType()=='PluginFusioninventoryConfig') {
+         return self::createTabEntry($LANG['plugin_fusioninventory']['agents'][27]);
+         return $LANG['plugin_fusioninventory']['agents'][27];
+      }
+      return '';
+   }
+   
+   
+   
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+
+      if ($item->getType()=='PluginFusioninventoryConfig') {
+         $pfAgentmodule = new self();
+         $pfAgentmodule->showForm();
+      }
+      return true;
+   }
+   
+   
    /**
    * Display form forconfiguration of agent modules
    *
@@ -46,14 +76,14 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    *
    **/
    function showForm() {
-      global $DB,$CFG_GLPI,$LANG;
+      global $LANG;
 
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
 
       $a_modules = $this->find();
       foreach ($a_modules as $data) {
          
-         echo "<form name='form_ic' method='post' action='".Toolbox::deleteDir(__CLASS__)."'>";
+         echo "<form name='form_ic' method='post' action='".$this->getFormURL()."'>";
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr>";
          echo "<th width='130'>".$LANG['plugin_fusioninventory']['task'][26]."</th>";

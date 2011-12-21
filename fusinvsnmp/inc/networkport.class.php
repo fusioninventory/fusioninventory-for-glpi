@@ -1,39 +1,47 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: Vincent MAZZONI
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    Vincent Mazzoni
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access this file directly");
+   die("Sorry. You can't access this file directly");
 }
 
 class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
@@ -50,7 +58,6 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
    private $glpi_type=NETWORKING_TYPE; // NETWORKING_TYPE, PRINTER_TYPE...
 
    function __construct($p_type=NULL, $p_logFile='') {
-      global $CFG_GLPI;
 
       $logFile = '';
       if ($p_logFile != '') {
@@ -62,7 +69,9 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       parent::__construct("glpi_networkports", $logFile);
       $this->oFusioninventory_networkport =
               new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkports");
-      if ($p_type!=NULL) $this->glpi_type = $p_type;
+      if ($p_type!=NULL) {
+         $this->glpi_type = $p_type;
+      }
       $this->type='PluginFusinvsnmpNetworkPort';
    }
 
@@ -238,7 +247,7 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
     *@param $destination_port id of destination port
     *@return nothing
     **/
-	function connect() {
+   function connect() {
       if (count($this->portsToConnect)+count($this->unknownDevicesToConnect)==0) {
          // no connections --> don't delete existing connections :
          // the connected device may be powered off
@@ -275,8 +284,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
     *@param $destination_port id of destination port
     *@return nothing
     **/
-	function connectDB($destination_port='') {
-		global $DB;
+   function connectDB($destination_port='') {
+      global $DB;
 
       // Clean ports connected on themself
       $queryd = "DELETE FROM `glpi_networkports_networkports`
@@ -308,8 +317,10 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
     *@param $p_port='' Port id to disconnect
     *@return nothing
     **/
-	function disconnectDB($p_port='') {
-      if ($p_port=='') $p_port=$this->getValue('id');
+   function disconnectDB($p_port='') {
+      if ($p_port=='') {
+         $p_port=$this->getValue('id');
+      }
       $nn = new NetworkPort_NetworkPort();
 
       if ($nn->getOppositeContact($p_port) AND $nn->getFromDBForNetworkPort($nn->getOppositeContact($p_port))) {
@@ -488,8 +499,9 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
     *@return nothing
     **/
    function cleanVlan($p_vlan, $p_port='') {
-		global $DB;
+      global $DB;
 
+      $query = '';
       if ($p_vlan != '') {
          if ($p_port != '') { // delete this vlan for this port
             $query="DELETE FROM `glpi_networkports_vlans`
@@ -506,7 +518,7 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       }
       PluginFusinvsnmpNetworkPortLog::networkport_addLog($p_port, '', 'vmvlan');
       $DB->query($query);
-	}
+   }
 
 
 
@@ -522,7 +534,9 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       $ptp = new PluginFusinvsnmpNetworkPort;
       $mac = array();
       foreach($this->portsToConnect as $index=>$portConnection) {
-         if ($macs!='') $macs.=', ';
+         if ($macs!='') { 
+            $macs.=', ';
+         }
          $ptp->load($portConnection);
          $macs.="'".$ptp->getValue('mac')."'";
          $mac[$index]=$ptp->getValue('mac');

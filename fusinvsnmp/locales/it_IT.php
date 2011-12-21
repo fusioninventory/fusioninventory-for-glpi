@@ -1,37 +1,46 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
-   Co-authors of file: 
-   Purpose of file:
-   Not translate this file, use https://www.transifex.net/projects/p/FusionInventory/
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @comment   Not translate this file, use https://www.transifex.net/projects/p/FusionInventory/
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
+
 
 $LANG['plugin_fusinvsnmp']['agents'][24]="Threads number";
 $LANG['plugin_fusinvsnmp']['agents'][25]="Agent(s)";
@@ -44,7 +53,7 @@ $LANG['plugin_fusinvsnmp']['codetasklog'][3]="SNMP equipment definition isn't up
 $LANG['plugin_fusinvsnmp']['codetasklog'][4]="Add the item";
 $LANG['plugin_fusinvsnmp']['codetasklog'][5]="Update the item";
 $LANG['plugin_fusinvsnmp']['codetasklog'][6]="Inventory started";
-$LANG['plugin_fusinvsnmp']['codetasklog'][7]="Detail";
+$LANG['plugin_fusinvsnmp']['codetasklog'][7]="Detaglio";
 
 $LANG['plugin_fusinvsnmp']['config'][3]="Inventario di rete (SNMP)";
 $LANG['plugin_fusinvsnmp']['config'][4]="Scansione rete";
@@ -67,19 +76,19 @@ $LANG['plugin_fusinvsnmp']['legend'][0]="Connection with a switch or a server in
 $LANG['plugin_fusinvsnmp']['legend'][1]="Other connections (with a computer, a printer...)";
 
 $LANG['plugin_fusinvsnmp']['mapping'][104]="MTU";
-$LANG['plugin_fusinvsnmp']['mapping'][105]="Speed";
-$LANG['plugin_fusinvsnmp']['mapping'][106]="Internal status";
-$LANG['plugin_fusinvsnmp']['mapping'][107]="Last Change";
+$LANG['plugin_fusinvsnmp']['mapping'][105]="Velocità";
+$LANG['plugin_fusinvsnmp']['mapping'][106]="Stato interno";
+$LANG['plugin_fusinvsnmp']['mapping'][107]="Ultimo cambiamento";
 $LANG['plugin_fusinvsnmp']['mapping'][108]="Number of received bytes";
 $LANG['plugin_fusinvsnmp']['mapping'][109]="Number of outgoing bytes";
 $LANG['plugin_fusinvsnmp']['mapping'][10]="networking > port > numero di errori in ingresso";
 $LANG['plugin_fusinvsnmp']['mapping'][110]="Number of input errors";
 $LANG['plugin_fusinvsnmp']['mapping'][111]="Number of output errors";
-$LANG['plugin_fusinvsnmp']['mapping'][112]="CPU usage";
+$LANG['plugin_fusinvsnmp']['mapping'][112]="Tempo CPU";
 $LANG['plugin_fusinvsnmp']['mapping'][114]="Connection";
-$LANG['plugin_fusinvsnmp']['mapping'][115]="Internal MAC address";
-$LANG['plugin_fusinvsnmp']['mapping'][116]="Name";
-$LANG['plugin_fusinvsnmp']['mapping'][117]="Model";
+$LANG['plugin_fusinvsnmp']['mapping'][115]="Indirizzo MAC interno";
+$LANG['plugin_fusinvsnmp']['mapping'][116]="Nome";
+$LANG['plugin_fusinvsnmp']['mapping'][117]="Modelo";
 $LANG['plugin_fusinvsnmp']['mapping'][118]="Type";
 $LANG['plugin_fusinvsnmp']['mapping'][119]="VLAN";
 $LANG['plugin_fusinvsnmp']['mapping'][11]="networking > port > numero di errori in uscita";
@@ -166,7 +175,7 @@ $LANG['plugin_fusinvsnmp']['mapping'][194]="Maintenance kit Utilisé";
 $LANG['plugin_fusinvsnmp']['mapping'][195]="Maintenance kit Restant";
 $LANG['plugin_fusinvsnmp']['mapping'][196]="Grey ink cartridge";
 $LANG['plugin_fusinvsnmp']['mapping'][19]="networking>VLAN";
-$LANG['plugin_fusinvsnmp']['mapping'][1]="networking > location";
+$LANG['plugin_fusinvsnmp']['mapping'][1]="network > posizione";
 $LANG['plugin_fusinvsnmp']['mapping'][20]="networking>nome";
 $LANG['plugin_fusinvsnmp']['mapping'][21]="networking>memoria totale";
 $LANG['plugin_fusinvsnmp']['mapping'][22]="networking>memoria libera";
@@ -177,7 +186,7 @@ $LANG['plugin_fusinvsnmp']['mapping'][26]="stampante>memoria totale";
 $LANG['plugin_fusinvsnmp']['mapping'][27]="stampante>numero di serie";
 $LANG['plugin_fusinvsnmp']['mapping'][28]="stampante>contatore>totale pagine stampate";
 $LANG['plugin_fusinvsnmp']['mapping'][29]="stampante>contatore>numero di pagine stampante in bianco e nero";
-$LANG['plugin_fusinvsnmp']['mapping'][2]="networking > firmware";
+$LANG['plugin_fusinvsnmp']['mapping'][2]="network > firmware";
 $LANG['plugin_fusinvsnmp']['mapping'][30]="stampante>contatore>numero di pagine stampante a colori";
 $LANG['plugin_fusinvsnmp']['mapping'][31]="stampante>contatore>numero di pagine stampante in monocromatico";
 $LANG['plugin_fusinvsnmp']['mapping'][33]="netowrking>port>tipo di duplex";
@@ -187,7 +196,7 @@ $LANG['plugin_fusinvsnmp']['mapping'][36]="stampante>consumabili> cartuccia cian
 $LANG['plugin_fusinvsnmp']['mapping'][37]="stampante>consumabili> cartuccia gialla (%)";
 $LANG['plugin_fusinvsnmp']['mapping'][38]="stampante>consumabili> cartuccia magenta (%)";
 $LANG['plugin_fusinvsnmp']['mapping'][39]="stampante>consumabili> cartuccia ciano chiaro (%)";
-$LANG['plugin_fusinvsnmp']['mapping'][3]="networking > uptime";
+$LANG['plugin_fusinvsnmp']['mapping'][3]="network > uptime";
 $LANG['plugin_fusinvsnmp']['mapping'][400]="printer > consumables > maintenance kit (%)";
 $LANG['plugin_fusinvsnmp']['mapping'][401]="networking>CPU utente";
 $LANG['plugin_fusinvsnmp']['mapping'][402]="networking>CPU sistema";
@@ -328,7 +337,7 @@ $LANG['plugin_fusinvsnmp']['portlogs'][0]="History configuration";
 $LANG['plugin_fusinvsnmp']['portlogs'][1]="List of fields for which to keep history";
 $LANG['plugin_fusinvsnmp']['portlogs'][2]="Retention in days";
 
-$LANG['plugin_fusinvsnmp']['printhistory'][1]="Too datas to display";
+$LANG['plugin_fusinvsnmp']['printhistory'][1]="Tropi dati da mostrare";
 
 $LANG['plugin_fusinvsnmp']['processes'][37]="Totale IP";
 

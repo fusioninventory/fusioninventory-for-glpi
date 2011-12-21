@@ -1,35 +1,43 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 define('GLPI_ROOT', '../../..');
@@ -54,7 +62,7 @@ if (isset($_GET['vlan_update'])) {
    $query = "SELECT * FROM glpi_plugin_fusinvsnmp_constructdevices
       WHERE sysdescr='".$_POST['sysdescr']."' ";
    $result = $DB->query($query);
-	if ($DB->numrows($result) == '0') {
+   if ($DB->numrows($result) == '0') {
       $PluginFusinvsnmpConstructDevice->add($_POST);
    } else {
       $_SESSION["MESSAGE_AFTER_REDIRECT"] = "Déjà existant";
@@ -62,6 +70,7 @@ if (isset($_GET['vlan_update'])) {
 	Html::back();
 } else if (isset($_POST['addWalk'])) {
    $i = 1;
+   $md5 = md5(rand(1, 1000000));
    while ($i == '1') {
       $md5 = md5(rand(1, 1000000));
       $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_constructdevicewalks`
@@ -72,15 +81,10 @@ if (isset($_GET['vlan_update'])) {
       }   
    }
 
-   $query_ins = "INSERT INTO `glpi_plugin_fusinvsnmp_constructdevicewalks` (
-`id` ,
-`plugin_fusinvsnmp_constructdevices_id` ,
-`log`
-)
-VALUES (
-NULL , '".$_POST['id']."', '".$md5."'
-)";
-   $id_ins = $DB->query($query_ins);
+   $query_ins = "INSERT INTO `glpi_plugin_fusinvsnmp_constructdevicewalks` 
+      (`id`,`plugin_fusinvsnmp_constructdevices_id`,`log`)
+      VALUES (NULL, '".$_POST['id']."', '".$md5."')";
+   $DB->query($query_ins);
    move_uploaded_file($_FILES['walk']['tmp_name'], GLPI_PLUGIN_DOC_DIR."/fusioninventory/walks/".$md5);
    Html::back();
 } else if (isset($_POST['mib'])) { // Check MIBS
@@ -112,7 +116,7 @@ NULL , '".$_POST['id']."', '".$md5."'
 
 $id = "";
 if (isset($_GET["id"])) {
-	$id = $_GET["id"];
+   $id = $_GET["id"];
 }
 
 $PluginFusinvsnmpConstructDevice->showForm($id);

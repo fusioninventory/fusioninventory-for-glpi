@@ -1,35 +1,43 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: Vincent MAZZONI
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    Vincent Mazzoni
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -37,10 +45,9 @@ if (!defined('GLPI_ROOT')) {
 }
 
 
-class PluginFusinvSNMPConfig extends CommonDBTM {
+class PluginFusinvsnmpConfig extends CommonDBTM {
 
    function initConfigModule() {
-      global $DB;
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
 
@@ -52,7 +59,33 @@ class PluginFusinvSNMPConfig extends CommonDBTM {
       $PluginFusioninventoryConfig->initConfig($plugins_id, $insert);
    }
 
+   
+   
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $LANG;
 
+      if ($item->getType()=='PluginFusioninventoryConfig') {
+         if ($_SESSION['glpishow_count_on_tabs']) {
+            return self::createTabEntry($LANG['plugin_fusinvsnmp']['title'][0]);
+         }
+         return $LANG['plugin_fusinvsnmp']['title'][0];
+      }
+      return '';
+   }
+   
+   
+   
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+
+      if ($item->getType()=='PluginFusioninventoryConfig') {
+         $pfConfig = new self();
+         $pfConfig->showForm($item);
+      }
+      return true;
+   }
+
+
+   
    
    function putForm($p_post) {
 
@@ -76,7 +109,7 @@ class PluginFusinvSNMPConfig extends CommonDBTM {
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
 
-      echo "<form name='form' method='post' action='".$options['target']."'>";
+      echo "<form name='form' method='post' action='".$this->getFormURL()."'>";
       echo "<div class='center' id='tabsbody'>";
       echo "<table class='tab_cadre_fixe'>";
 

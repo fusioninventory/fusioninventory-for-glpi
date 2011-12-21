@@ -1,39 +1,47 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: Vincent MAZZONI
-   Co-authors of file: David DURIEUX
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    Vincent Mazzoni
+   @co-author David Durieux
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access this file directly");
+   die("Sorry. You can't access this file directly");
 }
 
 require_once GLPI_ROOT.'/plugins/fusinvsnmp/inc/communicationsnmp.class.php';
@@ -52,8 +60,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
     * 
     **/
    function import($p_DEVICEID, $p_CONTENT, $p_xml) {
-
-      global $LANG;
+      
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryAgent  = new PluginFusioninventoryAgent();
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
@@ -73,9 +80,8 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                $PluginFusioninventoryTaskjobstatus->changeStatus($p_CONTENT->PROCESSNUMBER, 2);
                if ((!isset($p_CONTENT->AGENT->START)) AND (!isset($p_CONTENT->AGENT->END))) {
                   $nb_devices = 0;
-                  foreach($p_CONTENT->DEVICE as $child) {
-                     $nb_devices++;
-                  }
+                  $nb_devices = count($p_CONTENT->DEVICE->children());
+
                   $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = $p_CONTENT->PROCESSNUMBER;
                   $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $a_agent['id'];
                   $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
@@ -173,14 +179,14 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
       $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize($input);
       $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusinvsnmpCommunicationNetDiscovery";
-      $rule = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rule = new PluginFusioninventoryInventoryRuleImportCollection();
       $data = array ();
       $data = $rule->processAllRules($input, array());
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
                                                    print_r($data, true));
 
       if (isset($data['action'])
-              AND ($data['action'] == PluginFusioninventoryRuleImportEquipment::LINK_RESULT_DENIED)) {
+              AND ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED)) {
          
          $a_text = '';
          foreach ($input as $key=>$data) {
@@ -196,7 +202,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
          if (isset($input['itemtype'])
               AND isset($data['action'])
-              AND ($data['action'] == PluginFusioninventoryRuleImportEquipment::LINK_RESULT_CREATE)) {
+              AND ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_CREATE)) {
 
             $this->rulepassed(0, $input['itemtype'],$input['entities_id']);
          } else if (isset($input['itemtype'])
@@ -232,7 +238,6 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
 
    function rulepassed($items_id, $itemtype, $entities_id=0) {
-      global $DB;
 
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
                                                    "Rule passed : ".$items_id.", ".$itemtype."\n");
@@ -348,12 +353,13 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             }
              
 
-            if (!in_array('contact', $a_lockable))
+            if (!in_array('contact', $a_lockable)) {
                $input['contact'] = (string)$xml->USERSESSION;
+            }
             if (!in_array('domain', $a_lockable)) {
                if (!empty($xml->WORKGROUP)) {
                $input['domain'] = Dropdown::importExternal("Domain",
-                                       (string)$xml->WORKGROUP,(string) $xml->ENTITY);
+                                       (string)$xml->WORKGROUP,(string)$xml->ENTITY);
                }
             }
             if (!empty($xml->TYPE)) {
@@ -458,12 +464,14 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
          
          case 'NetworkEquipment':
             if (isset($xml->MAC) AND !empty($xml->MAC)) {
-               if (!in_array('mac', $a_lockable))
+               if (!in_array('mac', $a_lockable)) {
                   $input['mac'] = $xml->MAC;
+               }
             }
             if (isset($xml->IP)) {
-               if (!in_array('ip', $a_lockable))
+               if (!in_array('ip', $a_lockable)) {
                   $input['ip'] = $xml->IP;
+               }
             }
 
             $class->update($input);

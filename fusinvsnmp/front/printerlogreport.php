@@ -1,35 +1,43 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 $USEDBREPLICATE=1;
@@ -70,36 +78,36 @@ Search::show('PluginFusinvsnmpPrinterLogReport');
 
 
 function displaySearchForm() {
-	global $_SERVER,$_GET,$LANG,$CFG_GLPI;
+   global $_SERVER,$LANG;
 
-	echo "<form action='".$_SERVER["PHP_SELF"]."' method='post'>";
-	echo "<table class='tab_cadre' cellpadding='5'>";
-	echo "<tr class='tab_bg_1' align='center'>";
-	echo "<td>";
-	echo $LANG['plugin_fusinvsnmp']['state'][4]." :";
-	echo "</td>";
-   echo "<td width='120'>";
-	Html::showDateFormItem("glpi_plugin_fusioninventory_date_start",$_SESSION['glpi_plugin_fusioninventory_date_start']);
-	echo "</td>";
-
-	echo "<td>";
-	echo $LANG['plugin_fusinvsnmp']['state'][5]." :";
-	echo "</td>";
-   echo "<td width='120'>";
-	Html::showDateFormItem("glpi_plugin_fusioninventory_date_end",$_SESSION['glpi_plugin_fusioninventory_date_end']);
-	echo "</td>";
-
+   echo "<form action='".$_SERVER["PHP_SELF"]."' method='post'>";
+   echo "<table class='tab_cadre' cellpadding='5'>";
+   echo "<tr class='tab_bg_1' align='center'>";
    echo "<td>";
-	echo "<input type='submit' name='reset' value='reset' class='submit' />";
+   echo $LANG['plugin_fusinvsnmp']['state'][4]." :";
+   echo "</td>";
+   echo "<td width='120'>";
+   Html::showDateFormItem("glpi_plugin_fusioninventory_date_start",$_SESSION['glpi_plugin_fusioninventory_date_start']);
    echo "</td>";
 
-	echo "<td>";
-	echo "<input type='submit' value='Valider' class='submit' />";
-	echo "</td>";
+   echo "<td>";
+   echo $LANG['plugin_fusinvsnmp']['state'][5]." :";
+   echo "</td>";
+   echo "<td width='120'>";
+   Html::showDateFormItem("glpi_plugin_fusioninventory_date_end",$_SESSION['glpi_plugin_fusioninventory_date_end']);
+   echo "</td>";
 
-	echo "</tr>";
-	echo "</table>";
-	echo "</form>";
+   echo "<td>";
+   echo "<input type='submit' name='reset' value='reset' class='submit' />";
+   echo "</td>";
+
+   echo "<td>";
+   echo "<input type='submit' value='Valider' class='submit' />";
+   echo "</td>";
+
+   echo "</tr>";
+   echo "</table>";
+   echo "</form>";
 }
 
 Html::footer(); 

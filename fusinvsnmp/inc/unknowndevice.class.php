@@ -1,46 +1,53 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: Vincent MAZZONI
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    Vincent Mazzoni
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access this file directly");
+   die("Sorry. You can't access this file directly");
 }
 
 
 class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
 
    static function getTypeName() {
-      global $LANG;
 
       return "SNMP";
    }
@@ -63,7 +70,7 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
 
 
    function showForm($id, $options=array()) {
-      global $DB,$CFG_GLPI,$LANG;
+      global $LANG;
 
       $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
       $PluginFusioninventoryUnknownDevice->getFromDB($id);
@@ -86,11 +93,11 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
       echo "<td align='center' rowspan='2'>";
       echo $LANG['plugin_fusinvsnmp']['snmp'][4]."&nbsp;:";
       echo "</td>";
-		echo "<td rowspan='2'>";
-		echo "<textarea name='sysdescr'  cols='45' rows='5' />".$this->fields["sysdescr"]."</textarea>";
+      echo "<td rowspan='2'>";
+      echo "<textarea name='sysdescr'  cols='45' rows='5' />".$this->fields["sysdescr"]."</textarea>";
 
-		echo "<td align='center'>".$LANG['plugin_fusinvsnmp']['model_info'][4]."&nbsp;:</td>";
-		echo "<td align='center'>";
+      echo "<td align='center'>".$LANG['plugin_fusinvsnmp']['model_info'][4]."&nbsp;:</td>";
+      echo "<td align='center'>";
       if (!empty($PluginFusioninventoryUnknownDevice->fields['item_type'])) {
          Dropdown::show("PluginFusinvsnmpModel",
                      array('name'=>"plugin_fusinvsnmp_models_id",
@@ -102,10 +109,10 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_fusinvsnmp']['model_info'][3]."&nbsp;:</td>";
-		echo "<td align='center'>";
-		PluginFusinvsnmpSNMP::auth_dropdown($this->fields['plugin_fusinvsnmp_configsecurities_id']);
-		echo "</td>";
+      echo "<td align='center'>".$LANG['plugin_fusinvsnmp']['model_info'][3]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      PluginFusinvsnmpSNMP::auth_dropdown($this->fields['plugin_fusinvsnmp_configsecurities_id']);
+      echo "</td>";
       echo "</tr>";
       
       $this->showFormButtons($options);

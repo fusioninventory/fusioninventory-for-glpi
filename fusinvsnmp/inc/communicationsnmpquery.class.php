@@ -1,39 +1,47 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: Vincent MAZZONI
-   Co-authors of file: David DURIEUX
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    Vincent Mazzoni
+   @co-author David Durieux
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access this file directly");
+   die("Sorry. You can't access this file directly");
 }
 
 class PluginFusinvsnmpCommunicationSNMPQuery {
@@ -56,7 +64,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     *@return "" (import ok) / error string (import ko)
     **/
    function import($p_DEVICEID, $p_CONTENT, $p_xml) {
-      global $LANG;
 
       $_SESSION['SOURCEXML'] = $p_xml;
 
@@ -79,9 +86,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             $PluginFusioninventoryTaskjobstatus->changeStatus($p_CONTENT->PROCESSNUMBER, 2);
             if ((!isset($p_CONTENT->AGENT->START)) AND (!isset($p_CONTENT->AGENT->END))) {
                $nb_devices = 0;
-               foreach($p_CONTENT->DEVICE as $child) {
-                  $nb_devices++;
-               }
+               $nb_devices = count($p_CONTENT->DEVICE->children());
+                  
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = $p_CONTENT->PROCESSNUMBER;
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $this->agent['id'];
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
@@ -293,7 +299,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     *@return errors string to be alimented if import ko / '' if ok
     **/
    function importInfo($itemtype, $items_id) {
-      global $LANG;
 
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->importInfo().');
@@ -520,7 +525,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $errors='';
       $PluginFusinvsnmpNetworkEquipmentIP = new PluginFusinvsnmpNetworkEquipmentIP();
       $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
-      foreach ($p_ips->children() as $name=>$child) {
+      foreach ($p_ips->children() as $child) {
          switch ($child->getName()) {
             case 'IP' :
                if ((string)$child != "127.0.0.1") {
@@ -585,29 +590,32 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    
    /**
     * Import PORT Networking
-    *@param $p_port PORT code to import
+    * 
+    * @param $p_port PORT code to import
     *
-    *@return errors string to be alimented if import ko / '' if ok
+    * @return errors string to be alimented if import ko / '' if ok
     **/
    function importPortNetworking($p_port) {
       global $LANG;
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->importPortNetworking().');
       $errors='';
-//      $ptp = new PluginFusioninventoryNetworkPort(NETWORKING_TYPE);
       $ptp = new PluginFusinvsnmpNetworkPort("NetworkEquipment", $this->logFile);
       $ifType = $p_port->IFTYPE;
       if ( $ptp->isReal($ifType) ) { // not virtual port
          // Get port of unknown device CDP if exist
          $portloaded = 0;
+         $portIndex  = 0;
          if (!empty($this->unknownDeviceCDP)) {
             $NetworkPort = new NetworkPort();
             $a_unknownPorts = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
-                     AND `items_id`='".$this->unknownDeviceCDP."'");
-            foreach($a_unknownPorts as $dataport) {
+                     AND `items_id`='".$this->unknownDeviceCDP."'", 
+                 '',
+                  1);
+            if (count($a_unknownPorts) > 0) {
+               $dataport = current($a_unknownPorts);
                if ((isset($p_port->IFNAME))
-                       AND ($p_port->IFNAME == $dataport['name'])
-                       AND ($portloaded != '1')) {
+                       AND ($p_port->IFNAME == $dataport['name'])) {
 
                   // get this port and put in this switch
                   $dataport['itemtype'] = 'NetworkEquipment';
@@ -618,12 +626,12 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   $portIndex = $p_port->IFNUMBER;
                }
             }
-            $a_unknownPorts = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
-                     AND `items_id`='".$this->unknownDeviceCDP."'");
-            if (count($a_unknownPorts) == '0') {
+            $nbelements = countElementsInTable($NetworkPort->getTable(), 
+                    "`itemtype`='PluginFusioninventoryUnknownDevice'
+                        AND `items_id`='".$this->unknownDeviceCDP."'");
+            if ($nbelements == '0') {
                $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
-               $PluginFusioninventoryUnknownDevice->getFromDB($this->unknownDeviceCDP);
-               $PluginFusioninventoryUnknownDevice->delete($PluginFusioninventoryUnknownDevice->fields, 1);
+               $PluginFusioninventoryUnknownDevice->delete(array('id'=>$this->unknownDeviceCDP), 1);
                $this->unknownDeviceCDP = 0;
             }
          }
@@ -637,32 +645,40 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             }
          }
 
+         $trunk = 0;
          foreach ($p_port->children() as $name=>$child) {
             $ptp->setValue('entities_id', $this->ptd->fields['entities_id']);
             $trunk = 0;
             switch ($name) {
+               
                case 'CONNECTIONS' :
                   $errors.=$this->importConnections($child, $ptp);
                   break;
+               
                case 'VLANS' :
                   $errors.=$this->importVlans($child, $ptp);
                   break;
+               
                case 'IFNAME' :
                   PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('name', $child);
                   break;
+               
                case 'MAC' :
                   PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   if (!strstr($child, '00:00:00')) {
                      $ptp->setValue('mac', $child);
                   }
                   break;
+                  
                case 'IFNUMBER' :
                   PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('logical_number', $child);
                   break;
+               
                case 'IFTYPE' : // already managed
                   break;
+               
                case 'TRUNK' :
                   if ((string)$child == '1') {
                      PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
@@ -690,6 +706,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue(strtolower($name), $p_port->$name);
                   break;
+               
                default :
                   $errors.=$LANG['plugin_fusioninventory']['errors'][22].' PORT : '.$name."\n";
             }
@@ -702,7 +719,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          }
          $this->ptd->addPort($ptp, $portIndex);
       } else { // virtual port : do not import but delete if exists
-         if ( is_numeric($ptp->getValue('id')) ) $ptp->deleteDB();
+         if (is_numeric($ptp->getValue('id'))) {
+            $ptp->deleteDB();
+         }
       }
       return $errors;
    }
@@ -711,9 +730,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    
    /**
     * Import PORT Printer
-    *@param $p_port PORT code to import
+    * 
+    * @param $p_port PORT code to import
     *
-    *@return errors string to be alimented if import ko / '' if ok
+    * @return errors string to be alimented if import ko / '' if ok
     **/
    function importPortPrinter($p_port) {
       global $LANG;
@@ -732,24 +752,30 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          foreach ($p_port->children() as $name=>$child) {
             $ptp->setValue('entities_id', $this->ptd->fields['entities_id']);
             switch ($name) {
+               
                case 'IFNAME' :
                   PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('name', $child);
                   break;
+               
                case 'MAC' :
                   PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('mac', $child);
                   break;
+               
                case 'IP' :
                   PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('ip', $child);
                   break;
+               
                case 'IFNUMBER' :
                   PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('logical_number', $child);
                   break;
+               
                case 'IFTYPE' : // already managed
                   break;
+               
                default :
                   $errors.=$LANG['plugin_fusioninventory']['errors'][22].' PORT : '.$name."\n";
             }
@@ -763,9 +789,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
    /**
     * Import CARTRIDGES
-    *@param $p_cartridges CARTRIDGES code to import
+    * 
+    * @param $p_cartridges CARTRIDGES code to import
     *
-    *@return errors string to be alimented if import ko / '' if ok
+    * @return errors string to be alimented if import ko / '' if ok
     **/
    function importCartridges($p_cartridges) {
       global $LANG;
@@ -808,42 +835,55 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       foreach ($p_pagecounters->children() as $name=>$child)
       {
          switch ($child->getName()) {
+            
             case 'TOTAL' :
                $errors.=$this->ptd->addPageCounter('pages_total', $child);
                break;
+            
             case 'BLACK' :
                $errors.=$this->ptd->addPageCounter('pages_n_b', $child);
                break;
+            
             case 'COLOR' :
                $errors.=$this->ptd->addPageCounter('pages_color', $child);
                break;
+            
             case 'RECTOVERSO' :
                $errors.=$this->ptd->addPageCounter('pages_recto_verso', $child);
                break;
+            
             case 'SCANNED' :
                $errors.=$this->ptd->addPageCounter('scanned', $child);
                break;
+            
             case 'PRINTTOTAL' :
                $errors.=$this->ptd->addPageCounter('pages_total_print', $child);
                break;
+            
             case 'PRINTBLACK' :
                $errors.=$this->ptd->addPageCounter('pages_n_b_print', $child);
                break;
+            
             case 'PRINTCOLOR' :
                $errors.=$this->ptd->addPageCounter('pages_color_print', $child);
                break;
+            
             case 'COPYTOTAL' :
                $errors.=$this->ptd->addPageCounter('pages_total_copy', $child);
                break;
+            
             case 'COPYBLACK' :
                $errors.=$this->ptd->addPageCounter('pages_n_b_copy', $child);
                break;
+            
             case 'COPYCOLOR' :
                $errors.=$this->ptd->addPageCounter('pages_color_copy', $child);
                break;
+            
             case 'FAXTOTAL' :
                $errors.=$this->ptd->addPageCounter('pages_total_fax', $child);
                break;
+            
             default :
                $errors.=$LANG['plugin_fusioninventory']['errors'][22].' PAGECOUNTERS : '.$name."\n";
          }
@@ -879,8 +919,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $a_macsFound = array();
       foreach ($p_connections->children() as $child) {
          switch ($child->getName()) {
+            
             case 'CDP' : // already managed
                break;
+            
             case 'CONNECTION' :
                $continue = 1;
                if (isset($child->MAC)) {
@@ -895,6 +937,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   $errors.=$this->importConnection($child, $p_oPort, $cdp);
                }
                break;
+               
             default :
                $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CONNECTIONS : '
                         .$child->getName()."\n";
@@ -908,7 +951,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             $macNotPhone_id = 0;
             $macNotPhone = '';
             $phonePort_id = 0;
-            foreach ($p_oPort->getMacsToConnect() as $num=>$ifmac) {
+            foreach ($p_oPort->getMacsToConnect() as $ifmac) {
                $a_ports = $NetworkPort->find("`mac`='".$ifmac."'");
                $a_port = current($a_ports);
                if ($a_port['itemtype'] == 'Phone') {
@@ -928,7 +971,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $Phone->getFromDB($NetworkPort->fields['items_id']);
                $a_portsPhone = $NetworkPort->find("`items_id`='".$NetworkPort->fields['items_id']."'
                                                 AND `itemtype`='Phone'
-                                                AND `name`='Link'");
+                                                AND `name`='Link'", '', 1);
                $portLink_id = 0;
                if (count($a_portsPhone) == '1') {
                   $a_portPhone = current($a_portsPhone);
@@ -1070,26 +1113,29 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          }
          if ($ip != '' AND $ifdescr!='') {
             $portID=$PluginFusinvsnmpSNMP->getPortIDfromDeviceIP(
-                    $ip, 
-                    $ifdescr,
-                    $sysdescr,
-                    $sysname,
-                    $model);
+                                   $ip, 
+                                   $ifdescr,
+                                   $sysdescr,
+                                   $sysname,
+                                   $model);
          } else if($sysmac != '' AND $ifnumber!='') {
             $portID=$PluginFusinvsnmpSNMP->getPortIDfromSysmacandPortnumber($sysmac, $ifnumber);
          }
       } else {
          foreach ($p_connection->children() as $child) {
             switch ($child->getName()) {
+               
                case 'MAC' :
                   $mac=strval($child);
                   $portID=$PluginFusinvsnmpSNMP->getPortIDfromDeviceMAC($child, $p_oPort->getValue('id'));
                   $p_oPort->addMac($mac);
                   break;
+               
                case 'IP' ://TODO : si ip ajouter une tache de decouverte sur l'ip pour recup autre info // utile seulement si mac inconnu dans glpi
                   $ip=strval($child);
                   $p_oPort->addIp($ip);
                   break;
+               
                default :
                   $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CONNECTION (CDP='.$p_cdp.') : '
                            .$child->getName()."\n";
@@ -1099,7 +1145,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       }
       if ($portID != '') {
          $p_oPort->addConnection($portID);
-         if ($ip != '') $p_oPort->setValue('ip', $ip);
+         if ($ip != '') {
+            $p_oPort->setValue('ip', $ip);
+         }
       } else {
          $p_oPort->addUnknownConnection($mac, $ip);
          //TODO : si ip ajouter une tache de decouverte sur l'ip pour recup autre info
@@ -1147,12 +1195,15 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $number=''; $name='';
       foreach ($p_vlan->children() as $child) {
          switch ($child->getName()) {
+            
             case 'NUMBER' :
                $number=$child;
                break;
+            
             case 'NAME' :
                $name=$child;
                break;
+            
             default :
                $errors.=$LANG['plugin_fusioninventory']['errors'][22].' VLAN : '.$child->getName()."\n";
          }
@@ -1184,7 +1235,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                            switch ($ipName) {
 
                               case 'IP' :
-                                 if ($ipChild != '') return $ipChild;
+                                 if ($ipChild != '') {
+                                    return $ipChild;
+                                 }
                                  break;
                                  
                            }
@@ -1202,6 +1255,14 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
    
 
+   /**
+    * Send XML of SNMP device to rules
+    * 
+    * @param varchar $p_DEVICEID
+    * @param simplexml $p_CONTENT
+    * 
+    * @return type 
+    */
    function sendCriteria($p_DEVICEID, $p_CONTENT) {
 
       PluginFusioninventoryCommunication::addLog(
@@ -1251,7 +1312,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
       $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize($input);
       $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusinvsnmpCommunicationSNMPQuery";
-      $rule = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rule = new PluginFusioninventoryInventoryRuleImportCollection();
       $data = array();
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
                                                    "Input data : ".print_r($input, true));
@@ -1259,7 +1320,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
                                                    print_r($data, true));
       if (isset($data['action'])
-              AND ($data['action'] == PluginFusioninventoryRuleImportEquipment::LINK_RESULT_DENIED)) {
+              AND ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED)) {
 
          $a_text = '';
          foreach ($input as $key=>$data) {
@@ -1275,7 +1336,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
          if (isset($input['itemtype'])
               AND isset($data['action'])
-              AND ($data['action'] == PluginFusioninventoryRuleImportEquipment::LINK_RESULT_CREATE)) {
+              AND ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_CREATE)) {
 
             $errors .= $this->rulepassed(0, $input['itemtype']);
          } else if (isset($input['itemtype'])
@@ -1321,8 +1382,15 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
 
 
+   /**
+    * After rules import device
+    *
+    * @param integer $items_id id of the device in GLPI DB (0 = created, other = merge)
+    * @param varchar $itemtype itemtype of the device
+    * 
+    * @return type 
+    */
    function rulepassed($items_id, $itemtype) {
-      global $DB;
       
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
                                                    "Rule passed : ".$items_id.", ".$itemtype."\n");

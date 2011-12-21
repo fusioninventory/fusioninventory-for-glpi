@@ -1,37 +1,46 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
-define ("PLUGIN_FUSIONINVENTORY_VERSION","0.83+1.0");
+
+define ("PLUGIN_FUSIONINVENTORY_VERSION","0.84+1.0");
 
 include_once(GLPI_ROOT."/inc/includes.php");
 
@@ -47,7 +56,8 @@ function plugin_init_fusioninventory() {
 
       Plugin::registerClass('PluginFusioninventoryAgent');
       Plugin::registerClass('PluginFusioninventoryConfig');
-      Plugin::registerClass('PluginFusioninventoryTask');
+      Plugin::registerClass('PluginFusioninventoryTask',
+              array('addtabon' => array('Computer','Printer','NetworkEquipment','PluginFusioninventoryCredentialIp')));
       Plugin::registerClass('PluginFusioninventoryTaskjob');
       Plugin::registerClass('PluginFusioninventoryUnknownDevice');
       Plugin::registerClass('PluginFusioninventoryModule');
@@ -56,6 +66,27 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryAgentmodule');
       Plugin::registerClass('PluginFusioninventoryIPRange');
       Plugin::registerClass('PluginFusioninventoryCredential');
+      Plugin::registerClass('PluginFusioninventoryLock',
+              array('addtabon' => array('Computer','Monitor','Printer','NetworkEquipment')));
+              
+      Plugin::registerClass('PluginFusioninventoryInventoryComputerAntivirus',
+                 array('addtabon' => array('Computer')));
+      Plugin::registerClass('PluginFusioninventoryInventoryComputerComputer',
+                 array('addtabon' => array('Computer')));
+      Plugin::registerClass('PluginFusioninventoryInventoryComputerInventory');
+      Plugin::registerClass('PluginFusioninventoryInventoryComputerLibintegrity',
+                 array('addtabon' => array('Computer')));
+
+         //Classes for rulesengine
+      Plugin::registerClass('PluginFusioninventoryInventoryRuleEntity');
+      Plugin::registerClass('PluginFusioninventoryInventoryRuleEntityCollection',
+                            array('rulecollections_types'=>true));
+      
+      //Classes for rulesengine
+      Plugin::registerClass('PluginFusioninventoryInventoryRuleImport');
+      Plugin::registerClass('PluginFusioninventoryInventoryRuleImportCollection',
+                            array('rulecollections_types'=>true));
+
    
       // ##### 3. get informations of the plugin #####
 
@@ -69,6 +100,8 @@ function plugin_init_fusioninventory() {
       // ##### 5. Set in session XMLtags of methods #####
 
       $_SESSION['glpi_plugin_fusioninventory']['xmltags']['WAKEONLAN'] = '';
+      $_SESSION['glpi_plugin_fusioninventory']['xmltags']['INVENTORY']
+                                 = 'PluginFusioninventoryInventoryComputerInventory';
 
       //$PLUGIN_HOOKS['init_session']['fusioninventory'] = array('Profile', 'initSession');
       $PLUGIN_HOOKS['change_profile']['fusioninventory'] =
@@ -84,7 +117,7 @@ function plugin_init_fusioninventory() {
          $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusioninventory_ipranges';
 
          if (Session::haveRight("configuration", "r") || Session::haveRight("profile", "w")) {// Config page
-            $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/configuration.form.php?glpi_tab=1';
+            $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/config.form.php?glpi_tab=1';
          }
 
          $PLUGIN_HOOKS['use_massive_action']['fusioninventory']=1;
@@ -137,10 +170,10 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['unknown'] = 'front/unknowndevice.form.php?add=1';
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['unknown'] = 'front/unknowndevice.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['ruleimportequipment']
-            = 'front/ruleimportequipment.form.php';
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['ruleimportequipment']
-            = 'front/ruleimportequipment.php';
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['inventoryruleimport']
+            = 'front/inventoryruleimport.form.php';
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['inventoryruleimport']
+            = 'front/inventoryruleimport.php';
          
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['agents'] = 'front/agent.php';
 
@@ -154,7 +187,7 @@ function plugin_init_fusioninventory() {
 
    //         if (PluginFusioninventoryProfile::haveRight($_SESSION["plugin_".$a_plugin['shortname']."_moduleid"], "configuration","r")) {
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "r")) {// Config page
-               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['config'] = 'front/configuration.form.php';
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['config'] = 'front/config.form.php';
             }
    //         }
          }
@@ -163,6 +196,8 @@ function plugin_init_fusioninventory() {
                title='".$LANG['plugin_fusioninventory']['setup'][16]."'
                alt='".$LANG['plugin_fusioninventory']['setup'][16]."'>"] =
             'front/documentation.php';
+
+         $PLUGIN_HOOKS['webservices']['fusioninventory'] = 'plugin_fusioninventory_registerMethods';
 
          // Fil ariane
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['menu']['title'] = $LANG['plugin_fusioninventory']['menu'][3];
@@ -178,13 +213,13 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agents']['page']  = '/plugins/fusioninventory/front/agent.php';
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configuration']['title'] = $LANG['plugin_fusioninventory']['functionalities'][2];
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configuration']['page']  = '/plugins/fusioninventory/front/configuration.form.php';
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configuration']['page']  = '/plugins/fusioninventory/front/config.form.php';
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['unknown']['title'] = $LANG['plugin_fusioninventory']['menu'][4];
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['unknown']['page']  = '/plugins/fusioninventory/front/unknowndevice.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['ruleimportequipment']['title'] = $LANG['plugin_fusioninventory']['rules'][2];
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['ruleimportequipment']['page']  = '/plugins/fusioninventory/front/ruleimportequipment.php';
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['inventoryruleimport']['title'] = $LANG['plugin_fusioninventory']['rules'][2];
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['inventoryruleimport']['page']  = '/plugins/fusioninventory/front/inventoryruleimport.php';
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['iprange']['title'] = 
             $LANG['plugin_fusioninventory']['menu'][2];
@@ -248,48 +283,6 @@ function plugin_init_fusioninventory() {
    // Add unknown devices in list of devices with networport
    $CFG_GLPI["netport_types"][] = "PluginFusioninventoryUnknownDevice";
 
-/*
- * This not works
- */
-//   //Redect to FusionInventort communication.php only if user agent is ocs or fusion and if
-//   //agent url is http://ip/glpi/
-//   $plugin = new Plugin();
-//   if ($plugin->isInstalled('fusioninventory')
-//      && $plugin->isActivated('fusioninventory')
-//         //If getConfig is called on /plugins/fusioninventory/index.php, do not check user agent 
-//         //(need for debug and dev)
-//         && ((isset($_GET['action']) 
-//            && $_GET['action'] == 'getConfig') 
-//               && preg_match("/plugins\/fusioninventory\/index.php/", $_SERVER['PHP_SELF']))
-//                  //For production : if useraget is fusioninventory or ocs, 
-//                  //then redirect to the right communication page
-//                  || (isset($_SERVER['HTTP_USER_AGENT'])
-//                     && isFusioninventoryUserAgent($_SERVER['HTTP_USER_AGENT'])
-//                        && ((preg_match("/plugins\/fusioninventory\/index.php/", $_SERVER['PHP_SELF']))
-//                           || !preg_match("/fus(ion|inv).*/", $_SERVER['PHP_SELF'])))) {
-//
-//      //Load all plugins
-//      $plugin = new Plugin();
-//      if (!isset($_SESSION["glpi_plugins"])) {
-//         $plugin->init();
-//      }
-//      
-//      if (isset($_SESSION["glpi_plugins"]) && is_array($_SESSION["glpi_plugins"])) {
-//         if (count($_SESSION["glpi_plugins"])) {
-//            foreach ($_SESSION["glpi_plugins"] as $name) {
-//               if ($name != 'fusioninventory') {
-//                  Plugin::load($name);
-//               }
-//            }
-//         }
-//         // For plugins which require action after all plugin init
-//         doHook("post_init");
-//      }
-//      
-//      include_once(GLPI_ROOT ."/plugins/fusioninventory/front/communication.php");
-//      exit();
-//   }
-
 }
 
 
@@ -299,11 +292,12 @@ function plugin_version_fusioninventory() {
    return array('name'           => 'FusionInventory',
                 'shortname'      => 'fusioninventory',
                 'version'        => PLUGIN_FUSIONINVENTORY_VERSION,
+                'license'        => 'AGPLv3+',
                 'oldname'        => 'tracker',
                 'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
                                     & FusionInventory team',
                 'homepage'       =>'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/',
-                'minGlpiVersion' => '0.83'// For compatibility / no install in version < 0.78
+                'minGlpiVersion' => '0.84'// For compatibility / no install in version < 0.78
    );
 }
 
@@ -312,7 +306,7 @@ function plugin_version_fusioninventory() {
 function plugin_fusioninventory_check_prerequisites() {
    global $LANG;
    
-   if (version_compare(GLPI_VERSION,'0.83','lt') || version_compare(GLPI_VERSION,'0.84','ge')) {
+   if (version_compare(GLPI_VERSION,'0.84','lt') || version_compare(GLPI_VERSION,'0.85','ge')) {
       echo $LANG['plugin_fusioninventory']['errors'][50];
       return false;
    }

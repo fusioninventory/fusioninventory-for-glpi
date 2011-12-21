@@ -1,35 +1,43 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -38,6 +46,78 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryConfig extends CommonDBTM {
 
+   
+   /**
+   * Initialize config values of fusioninventory plugin
+   *
+   * @return nothing
+   *
+   **/
+   function initConfigModule() {
+
+      $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
+
+      $input = array();
+      $input['version']                = PLUGIN_FUSIONINVENTORY_VERSION;
+      $input['ssl_only']               = '0';
+      $input['delete_task']            = '20';
+      $input['inventory_frequence']    = '24';
+      $input['agent_port']             = '62354';
+      $input['extradebug']             = '0';
+      $PluginFusioninventorySetup = new PluginFusioninventorySetup();
+      $users_id = $PluginFusioninventorySetup->createFusionInventoryUser();
+      $input['users_id']               = $users_id;
+      
+      $input['import_monitor']         = 2;
+      $input['import_printer']         = 2;
+      $input['import_peripheral']      = 2;
+      $input['import_software']        = 1;
+      $input['import_volume']          = 1;
+      $input['import_antivirus']       = 1;
+      $input['import_registry']        = 1;
+      $input['import_process']         = 1;
+      $input['import_vm']              = 1;
+      $input['component_processor']    = 1;
+      $input['component_memory']       = 1;
+      $input['component_harddrive']    = 1;
+      $input['component_networkcard']  = 1;
+      $input['component_graphiccard']  = 1;
+      $input['component_soundcard']    = 1;
+      $input['component_drive']        = 1;
+      $input['component_networkdrive'] = 1;
+      $input['component_control']      = 1;
+      $input['transfers_id_auto']      = 1;
+      $input['states_id_default']      = 0;
+      $input['location']               = 0;
+      $input['group']                  = 0;
+      $input['component_networkcardvirtual'] = 1;
+
+      foreach ($input as $key => $value) {
+         $this->initConfig($plugins_id, array($key => $value));
+      }
+   }
+
+ 
+  
+   
+   
+  static function getTypeName() {
+      global $LANG;
+
+      return $LANG['plugin_fusioninventory']['functionalities'][2];
+   }
+   
+   
+   function canCreate() {
+      return PluginFusioninventoryProfile::haveRight('fusioninventory', 'configuration', 'w');
+   }
+
+   function canView() {
+      return PluginFusioninventoryProfile::haveRight('fusioninventory', 'configuration', 'r');
+   }
+   
+   
+   
    /**
     * Init config
     *
@@ -47,7 +127,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @return nothing
     **/
    function initConfig($plugins_id, $p_insert) {
-      global $DB;
 
       foreach ($p_insert as $type=>$value) {
          if (is_null($this->getValue($plugins_id, $type))) {
@@ -57,6 +136,56 @@ class PluginFusioninventoryConfig extends CommonDBTM {
          }         
       }
    }
+   
+   
+
+   function defineTabs($options=array()){
+      global $LANG,$CFG_GLPI;
+
+      $ong = array();
+      $moduleTabs = array();
+      $this->addStandardTab("PluginFusioninventoryConfig", $ong, $options);
+      $this->addStandardTab("PluginFusioninventoryAgentmodule", $ong, $options);
+
+      if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'])) {
+         $fusionTabs = $ong;
+         $moduleTabForms = $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'];
+         if (count($moduleTabForms)) {
+            foreach ($moduleTabForms as $module=>$form) {
+               $plugin = new Plugin;
+               if ($plugin->isActivated($module)) {
+                  $this->addStandardTab($form[key($form)]['class'], $ong, $options);
+               }
+            }
+            $moduleTabs = array_diff($ong, $fusionTabs);
+         }
+         $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabs'] = $moduleTabs;
+      }
+      return $ong;
+   }
+   
+   
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $LANG;
+
+      if ($item->getType()==__CLASS__) {
+         
+         return self::createTabEntry($LANG['plugin_fusioninventory']['functionalities'][2]);
+         return $LANG['plugin_fusioninventory']['functionalities'][2];
+      }
+      return '';
+   }
+   
+   
+   
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+
+      if ($item->getType()=='PluginFusioninventoryConfig') {
+         $item->showForm();
+      }
+      return true;
+   }
+   
 
 
    
@@ -69,7 +198,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    * @return value or this field or false
    **/
    static function getValue($p_plugins_id, $p_type) {
-      global $DB;
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       $config = current($PluginFusioninventoryConfig->find("`plugins_id`='".$p_plugins_id."'
@@ -107,13 +235,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    *
    **/
    function showForm($options=array()) {
-      global $LANG,$CFG_GLPI;
+      global $LANG;
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
-      echo "<form name='form' method='post' action='".$options['target']."'>";
-      echo "<div class='center' id='tabsbody'>";
-      echo "<table class='tab_cadre_fixe'>";
+      $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][27]."&nbsp;:</td>";
@@ -132,7 +258,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::showInteger("delete_task",
                             $this->getValue($plugins_id, 'delete_task'),1,240);
-      echo " ".strtolower($LANG['stats'][31]);
+      echo " ".strtolower($LANG['calendar'][12]);
       echo "</td>";
 
       echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][8]." :</td>";
@@ -149,13 +275,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td colspan='2'></td>";
       echo "</tr>";
 
-
-      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "w")) {
-         echo "<tr class='tab_bg_2'><td align='center' colspan='4'>
-               <input class='submit' type='submit' name='plugin_fusioninventory_config_set'
-                      value='" . $LANG['buttons'][7] . "'></td></tr>";
-      }
-      echo "</table></div></form>";
+      $options['candel'] = false;
+      $this->showFormButtons($options);
 
       return true;
    }

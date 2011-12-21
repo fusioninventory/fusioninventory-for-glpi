@@ -1,39 +1,47 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 class PluginFusioninventoryIPRange extends CommonDBTM {
@@ -83,26 +91,26 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
       $tab['common'] = $LANG['plugin_fusioninventory']['menu'][2];
 
-		$tab[1]['table'] = $this->getTable();
-		$tab[1]['field'] = 'name';
-		$tab[1]['linkfield'] = 'name';
-		$tab[1]['name'] = $LANG['common'][16];
-		$tab[1]['datatype'] = 'itemlink';
+      $tab[1]['table'] = $this->getTable();
+      $tab[1]['field'] = 'name';
+      $tab[1]['linkfield'] = 'name';
+      $tab[1]['name'] = $LANG['common'][16];
+      $tab[1]['datatype'] = 'itemlink';
 
-		$tab[2]['table'] = 'glpi_entities';
-		$tab[2]['field'] = 'completename';
-		$tab[2]['linkfield'] = 'entities_id';
-		$tab[2]['name'] = $LANG['entity'][0];
+      $tab[2]['table'] = 'glpi_entities';
+      $tab[2]['field'] = 'completename';
+      $tab[2]['linkfield'] = 'entities_id';
+      $tab[2]['name'] = $LANG['entity'][0];
 
-		$tab[3]['table'] = $this->getTable();
-		$tab[3]['field'] = 'ip_start';
-		$tab[3]['linkfield'] = 'ip_start';
-		$tab[3]['name'] = $LANG['plugin_fusioninventory']['iprange'][0];
+      $tab[3]['table'] = $this->getTable();
+      $tab[3]['field'] = 'ip_start';
+      $tab[3]['linkfield'] = 'ip_start';
+      $tab[3]['name'] = $LANG['plugin_fusioninventory']['iprange'][0];
 
- 		$tab[4]['table'] = $this->getTable();
-		$tab[4]['field'] = 'ip_end';
-		$tab[4]['linkfield'] = 'ip_end';
-		$tab[4]['name'] = $LANG['plugin_fusioninventory']['iprange'][1];
+       $tab[4]['table'] = $this->getTable();
+      $tab[4]['field'] = 'ip_end';
+      $tab[4]['linkfield'] = 'ip_end';
+      $tab[4]['name'] = $LANG['plugin_fusioninventory']['iprange'][1];
 
       return $tab;
    }
@@ -110,7 +118,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
 
    function defineTabs($options=array()){
-      global $LANG,$CFG_GLPI,$DB;
+      global $LANG;
 
       $ong = array();
       if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
@@ -121,28 +129,28 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
 
 
-	function showForm($id, $options=array()) {
-		global $DB,$CFG_GLPI,$LANG;
+   function showForm($id, $options=array()) {
+      global $LANG;
 
-		if ($id!='') {
-			$this->getFromDB($id);
+      if ($id!='') {
+         $this->getFromDB($id);
       } else {
-			$this->getEmpty();
+         $this->getEmpty();
       }
 
       $this->showTabs($options);
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
-		echo "<td align='center' colspan='2'>" . $LANG["common"][16] . "</td>";
-		echo "<td align='center' colspan='2'>";
-		echo "<input type='text' name='name' value='".$this->fields["name"]."'/>";
-		echo "</td>";
-		echo "</tr>";
+      echo "<td align='center' colspan='2'>" . $LANG["common"][16] . "</td>";
+      echo "<td align='center' colspan='2'>";
+      echo "<input type='text' name='name' value='".$this->fields["name"]."'/>";
+      echo "</td>";
+      echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center' colspan='2'>" . $LANG['plugin_fusioninventory']['iprange'][0] . "</td>";
-		echo "<td align='center' colspan='2'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center' colspan='2'>" . $LANG['plugin_fusioninventory']['iprange'][0] . "</td>";
+      echo "<td align='center' colspan='2'>";
       if (empty($this->fields["ip_start"]))
          $this->fields["ip_start"] = "...";
       $ipexploded = explode(".", $this->fields["ip_start"]);
@@ -153,16 +161,16 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
          }
          $i++;
       }
-		echo "<input type='text' value='".$ipexploded[0]."' name='ip_start0' id='ip_start0' size='3' maxlength='3' >.";
-		echo "<input type='text' value='".$ipexploded[1]."' name='ip_start1' id='ip_start1' size='3' maxlength='3' >.";
-		echo "<input type='text' value='".$ipexploded[2]."' name='ip_start2' id='ip_start2' size='3' maxlength='3' >.";
-		echo "<input type='text' value='".$ipexploded[3]."' name='ip_start3' id='ip_start3' size='3' maxlength='3' >";
-		echo "</td>";
-		echo "</tr>";
+      echo "<input type='text' value='".$ipexploded[0]."' name='ip_start0' id='ip_start0' size='3' maxlength='3' >.";
+      echo "<input type='text' value='".$ipexploded[1]."' name='ip_start1' id='ip_start1' size='3' maxlength='3' >.";
+      echo "<input type='text' value='".$ipexploded[2]."' name='ip_start2' id='ip_start2' size='3' maxlength='3' >.";
+      echo "<input type='text' value='".$ipexploded[3]."' name='ip_start3' id='ip_start3' size='3' maxlength='3' >";
+      echo "</td>";
+      echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center' colspan='2'>" . $LANG['plugin_fusioninventory']['iprange'][1] . "</td>";
-		echo "<td align='center' colspan='2'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center' colspan='2'>" . $LANG['plugin_fusioninventory']['iprange'][1] . "</td>";
+      echo "<td align='center' colspan='2'>";
       unset($ipexploded);
       if (empty($this->fields["ip_end"]))
          $this->fields["ip_end"] = "...";
@@ -187,12 +195,12 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       }
       </SCRIPT>";
 
-		echo "<input type='text' value='".$ipexploded[0]."' name='ip_end0' id='ip_end0' size='3' maxlength='3' onSelect='test(0)'>.";
-		echo "<input type='text' value='".$ipexploded[1]."' name='ip_end1' id='ip_end1' size='3' maxlength='3' onSelect='test(1)'>.";
-		echo "<input type='text' value='".$ipexploded[2]."' name='ip_end2' id='ip_end2' size='3' maxlength='3' onSelect='test(2)'>.";
-		echo "<input type='text' value='".$ipexploded[3]."' name='ip_end3' id='ip_end3' size='3' maxlength='3' onSelect='test(3)'>";
-		echo "</td>";
-		echo "</tr>";
+      echo "<input type='text' value='".$ipexploded[0]."' name='ip_end0' id='ip_end0' size='3' maxlength='3' onSelect='test(0)'>.";
+      echo "<input type='text' value='".$ipexploded[1]."' name='ip_end1' id='ip_end1' size='3' maxlength='3' onSelect='test(1)'>.";
+      echo "<input type='text' value='".$ipexploded[2]."' name='ip_end2' id='ip_end2' size='3' maxlength='3' onSelect='test(2)'>.";
+      echo "<input type='text' value='".$ipexploded[3]."' name='ip_end3' id='ip_end3' size='3' maxlength='3' onSelect='test(3)'>";
+      echo "</td>";
+      echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       if (Session::isMultiEntitiesMode()) {
@@ -324,7 +332,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
          $input["entities_id"] = $this->getEntityID();
 
          $taskjob_id = $PluginFusioninventoryTaskjob->add($input);
-         glpi_header(str_replace("&allowcreate=1", "",$_SERVER['HTTP_REFERER']));
+         Html::redirect(str_replace("&allowcreate=1", "",$_SERVER['HTTP_REFERER']));
       }
       // Get task job or create if not exist
       $PluginFusioninventoryTask->getFromDB($task_id);
@@ -354,7 +362,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       $a_time = array();
       $a_time[] = "------";
       $a_time['minutes'] = $LANG['job'][22];
-      $a_time['hours'] = $LANG['job'][21];
+      $a_time['hours'] = ucfirst($LANG['gmt'][1]);
       $a_time['days'] = ucfirst($LANG['calendar'][12]);
       $a_time['months'] = ucfirst($LANG['calendar'][14]);
       Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$PluginFusioninventoryTask->fields['periodicity_type']));

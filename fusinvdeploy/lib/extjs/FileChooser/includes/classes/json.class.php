@@ -244,11 +244,11 @@ class Services_JSON
                 return 'null';
 
             case 'integer':
-                return (int) $var;
+                return (int)$var;
 
             case 'double':
             case 'float':
-                return (float) $var;
+                return (float)$var;
 
             case 'string':
                 // STRINGS ARE EXPECTED TO BE IN ASCII OR UTF-8 FORMAT

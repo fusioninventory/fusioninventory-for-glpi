@@ -1,35 +1,43 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: Vincent MAZZONI
-   Co-authors of file: David DURIEUX
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    Vincent Mazzoni
+   @co-author David Durieux
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -39,6 +47,73 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryLock extends CommonDBTM{
 
+   
+   static function getTypeName() {
+      global $LANG;
+
+      return $LANG['plugin_fusioninventory']['functionalities'][75];
+   }
+
+
+   function canCreate() {
+      return true;
+   }
+
+
+   function canView() {
+      return true;
+   }
+   
+   
+   
+   static function countForLock(Computer $item) {
+
+      $pfLock = new self();
+      $a_data = current($pfLock->find("`tablename`='".$item->getTable()."' 
+         AND `items_id`='".$item->getID()."'", "", 1));
+      if (count($a_data) == '0') {
+         return 0;
+      } else {
+         return count(importArrayFromDB($a_data['tablefields']));
+      }
+   }
+
+   
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $LANG;
+
+      $itemtype = $item->getType();
+      if ($itemtype == 'NetworkEquipment') {
+         $itemtype = "networking";
+      }
+      if (Session::haveRight(strtolower($itemtype), "w")) {
+         if ($_SESSION['glpishow_count_on_tabs']) {
+            return self::createTabEntry($LANG['plugin_fusioninventory']['functionalities'][75], self::countForLock($item));
+         }
+         return $LANG['plugin_fusioninventory']['functionalities'][75];
+      }
+      return '';
+   }
+
+   
+   
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+
+      $pflock = new self();
+      if ($item->getID() < 1) {
+         $pflock->showForm(Toolbox::getItemTypeFormURL('PluginFusioninventoryLock'),
+                           $item->getType());
+      } else {
+         $pflock->showForm(Toolbox::getItemTypeFormURL('PluginFusioninventoryLock').'?id='.$item->getID(),
+                           $item->getType(), $item->getID());
+      }
+
+      return true;
+   }
+   
+   
+   
+   
    /**
     * Show locks form.
     *
@@ -50,7 +125,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
     * @return nothing (print the form)
     **/
    function showForm($p_target, $p_itemtype, $p_items_id=0) {
-      global $DB, $LANG, $SEARCH_OPTION;
+      global $LANG;
 
       $can = 0;
       $typeright = strtolower($p_itemtype);
@@ -212,7 +287,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
     * @return nothing
     **/
    static function deleteInLockArray($p_table, $p_items_id, $p_fieldToDel) {
-      global $DB;
 
       $fieldsToLock = PluginFusioninventoryLock::getLockFields($p_table, $p_items_id);
       if (count($fieldsToLock)){
@@ -446,6 +520,177 @@ class PluginFusioninventoryLock extends CommonDBTM{
       $exclude[] = "template_name";
       return $exclude;      
    }
+   
+   
+
+   /**
+   * Delete locks fields and get from lib value from last inventory
+   *
+   * @param $item object Computer object
+   *
+   * @return nothing
+   *
+   **/
+   static function deleteLock($item) {
+      global $DB;
+
+      $PluginFusinvinventoryLib = new PluginFusioninventoryInventoryComputerLib();
+
+      // Get mapping
+      $a_mapping = PluginFusioninventoryInventoryComputerLibhook::getMapping();
+      $a_fieldList = array();
+      if ($item->fields['tablefields'] == $item->input['tablefields']) {
+         $a_fieldList = importArrayFromDB($item->fields['tablefields']);
+      } else {
+         $a_fieldListTemp = importArrayFromDB($item->fields['tablefields']);
+         $a_inputList = importArrayFromDB($item->input['tablefields']);
+         $a_diff = array_diff($a_fieldListTemp, $a_inputList);
+         $a_fieldList = array();
+         foreach ($a_diff as $value) {
+            if (in_array($value, $a_fieldListTemp)) {
+               $a_fieldList[] = $value;
+            }
+         }
+      }
+      for ($i=0; $i < count($a_fieldList); $i++) {
+         foreach ($a_mapping as $datas) {
+            if (($item->fields['tablename'] == getTableForItemType($datas['glpiItemtype']))
+                  AND ($a_fieldList[$i] == $datas['glpiField'])) {
+
+               // Get serialization
+               $query = "SELECT * FROM `glpi_plugin_fusioninventory_inventorycomputerlibserialization`
+                  WHERE `computers_id`='".$item->fields['items_id']."'
+                     LIMIT 1";
+               $result = $DB->query($query);
+               if ($result) {
+                  if ($DB->numrows($result) == '1') {
+                     $a_serialized = $DB->fetch_assoc($result);
+                     $infoSections = $PluginFusinvinventoryLib->_getInfoSections($a_serialized['internal_id']);
+
+                     // Modify fields
+                     $table = getTableNameForForeignKeyField($datas['glpiField']);
+                     $itemtypeLink = "";
+                     if ($table != "") {
+                        $itemtypeLink = getItemTypeForTable($table);
+                     }
+                     $itemtype = $datas['glpiItemtype'];
+                     $class = new $itemtype();
+                     $class->getFromDB($item->fields['items_id']);
+                     $input = array();
+                     $input['id'] = $class->fields['id'];
+                     if ($itemtypeLink == "User") {
+                        $update_user = 0;
+                        foreach($infoSections["sections"] as $sectionname=>$serializeddatas) {
+                           if (strstr($sectionname, "USERS/")) {
+                              if (!strstr($sectionname, "USERS/-")) {
+                                 $users_id = str_replace("USERS/", "", $sectionname);
+                                 $input[$datas['glpiField']] = Toolbox::addslashes_deep($users_id);
+                                 $update_user = 1;
+                              }
+                           }
+                        }
+                        if ($update_user == '0') {
+                           foreach($infoSections["sections"] as $sectionname=>$serializeddatas) {
+                              if (strstr($sectionname, "USERS/")) {
+                                 if (strstr($sectionname, "USERS/-")) {
+                                    $users_name = str_replace("USERS/-", "", $sectionname);
+                                    $query_user = "SELECT `id`
+                                              FROM `glpi_users`
+                                              WHERE `name` = '".$users_name."';";
+                                    $result_user = $DB->query($query_user);
+                                    if ($DB->numrows($result_user) == 1) {
+                                       $input[$datas['glpiField']] = $DB->result($result_user, 0, 0);
+                                    }
+                                 }
+                              }
+                           }
+                        }
+                     } else if ($table != "") {
+                        $vallib = '';
+                        if ($table == 'glpi_computermodels') {
+                           $smodel = '';
+                           $mmodel = '';
+                           foreach($infoSections["sections"] as $sectionname=>$serializeddatas) {
+                              if (strstr($sectionname, "BIOS/")) {
+                                 $un = unserialize($serializeddatas);
+                                 $smodel = $un['SMODEL'];
+                                 $mmodel = $un['MMODEL'];
+                              }
+                           }
+                           if (isset($smodel) AND $smodel != '') {
+                              $ComputerModel = new ComputerModel();
+                              $input[$datas['glpiField']] = $ComputerModel->importExternal($smodel);
+                           } else if (isset($mmodel) AND $mmodel != '') {
+                              $ComputerModel = new ComputerModel();
+                              $input[$datas['glpiField']] = $ComputerModel->importExternal($mmodel);
+                           }
+                        } else {
+                        $libunserialized = unserialize($infoSections["sections"][$datas['xmlSection']."/".$item->fields['items_id']]);
+                        if ($datas['xmlSectionChild'] == "TYPE") {
+                           if ($libunserialized[$datas['xmlSectionChild']] != "") {
+                              $vallib = Dropdown::importExternal($itemtypeLink,$libunserialized[$datas['xmlSectionChild']]);
+                           } else {
+                              $vallib = Dropdown::importExternal($itemtypeLink,$libunserialized["MMODEL"]);
+                              }
+                           }
+                           $input[$datas['glpiField']] = $vallib;
+                        }
+                    } else {
+                        $libunserialized = unserialize($infoSections["sections"][$datas['xmlSection']."/".$item->fields['items_id']]);
+                        
+                        if ($datas['glpiField'] == 'contact') {
+                           $contact = '';
+                           foreach($infoSections["sections"] as $sectionname=>$serializeddatas) {
+                              if (strstr($sectionname, "USERS/")) {
+                                 $unserialiseUser = unserialize($serializeddatas);
+                                 if ($contact == '') {
+                                    $contact .= $unserialiseUser['LOGIN'];
+                                 } else {
+                                    $contact .= "/".$unserialiseUser['LOGIN'];
+                                 }
+                              }
+                           }
+                           $input[$datas['glpiField']] = Toolbox::addslashes_deep($contact);
+                        } else {
+                           $input[$datas['glpiField']] = Toolbox::addslashes_deep($libunserialized[$datas['xmlSectionChild']]);
+                        }
+                     }
+                     $class->update($input);
+                  }
+               }               
+            }
+         }
+      }
+   }
+
+
+   
+    /**
+    * Import OCS locks
+    *
+    * @return nothing
+    **/
+   function importFromOcs() {
+      global $DB;
+
+      $sql = "SELECT * FROM `glpi_ocslinks`";
+      $result=$DB->query($sql);
+      while ($data=$DB->fetch_array($result)) {
+         $a_ocslocks = importArrayFromDB($data['computer_update']);
+         $a_fields = array();
+         foreach ($a_ocslocks as $field) {
+            if (!strstr($field, "_version")
+                  AND $field != "date_mod") {
+               
+               $a_fields[] = $field;
+            }
+         }
+         if (count($a_fields) > 0) {
+            $this->addLocks("Computer", $data['computers_id'], $a_fields);
+         }
+      }
+   }
+   
 }
 
 ?>

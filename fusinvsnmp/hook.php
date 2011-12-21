@@ -1,47 +1,55 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 function plugin_fusinvsnmp_getDatabaseRelations() {
    $plugin = new Plugin();
-   if ($plugin->isActivated("fusinvsnmp"))
+   if ($plugin->isActivated("fusinvsnmp")) {
       return array (
          "glpi_plugin_fusinvsnmp_models" => array (
             "glpi_plugin_fusinvsnmp_unknowndevices" => "plugin_fusinvsnmp_models_id"
-         )
-      );
-   else
+         ));
+   } else {
       return array ();
+   }
 }
 
 
@@ -226,7 +234,7 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
 
 
 function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
-   global $CFG_GLPI, $DB, $INFOFORM_PAGES, $LANG, $SEARCH_OPTION;
+   global $CFG_GLPI,$DB,$INFOFORM_PAGES,$LANG;
 
    $searchopt = &Search::getOptions($type);
    $table = $searchopt[$id]["table"];
@@ -361,7 +369,9 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
                   $out .= "<a href=\"".$CFG_GLPI["root_doc"]."/";
                   $out .= $INFOFORM_PAGES['PluginFusioninventoryUnknownDevice']."?id=".$vartmp."\">";
                   $out .=  $NetworkPort->device_name;
-                  if ($CFG_GLPI["view_ID"]) $out .= " (".$vartmp.")";
+                  if ($CFG_GLPI["view_ID"]) {
+                     $out .= " (".$vartmp.")";
+                  }
                   $out .=  "</a><br/>";
                }
                return "<center>".$out."</center>";
@@ -533,10 +543,12 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
             case 'glpi_printers.name':
 
                // Search pages in printer history to limit SQL queries
-               if (isset($_SESSION['glpi_plugin_fusioninventory_history_start']))
+               if (isset($_SESSION['glpi_plugin_fusioninventory_history_start'])) {
                   unset($_SESSION['glpi_plugin_fusioninventory_history_start']);
-               if (isset($_SESSION['glpi_plugin_fusioninventory_history_end']))
+               }
+               if (isset($_SESSION['glpi_plugin_fusioninventory_history_end'])) {
                   unset($_SESSION['glpi_plugin_fusioninventory_history_end']);
+               }
                if ((isset($_SESSION['glpi_plugin_fusioninventory_date_start']))
                        AND (isset($_SESSION['glpi_plugin_fusioninventory_date_end']))) {
 
@@ -628,7 +640,6 @@ function cron_plugin_fusinvsnmp() {
 
 
 function plugin_fusinvsnmp_install() {
-   global $DB, $LANG, $CFG_GLPI;
 
    include_once (GLPI_ROOT . "/plugins/fusinvsnmp/install/install.php");
    pluginFusinvsnmpInstall(PLUGIN_FUSINVSNMP_VERSION);
@@ -952,8 +963,7 @@ function plugin_fusinvsnmp_MassiveActions($type) {
 }
 
 function plugin_fusinvsnmp_MassiveActionsDisplay($options=array()) {
-   
-   global $LANG, $CFG_GLPI, $DB;
+   global $LANG,$DB;
 
    switch ($options['itemtype']) {
       case 'NetworkEquipment':
@@ -1026,7 +1036,6 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($options=array()) {
 }
 
 function plugin_fusinvsnmp_MassiveActionsProcess($data) {
-   global $LANG;
 
    switch ($data['action']) {
 
@@ -1389,7 +1398,7 @@ function plugin_fusinvsnmp_addSelect($type,$id,$num) {
          switch ($table.".".$SEARCH_OPTION[$type][$id]["linkfield"]) {
 
             case "glpi_plugin_fusinvsnmp_agents.plugin_fusinvsnmp_agents_id_query" :
-               return "GROUP_CONCAT( DISTINCT CONCAT(gpta.name,'$$' ,gpta.id) SEPARATOR '$$$$') AS ITEM_$num, ";
+               return "GROUP_CONCAT( DISTINCT CONCAT(gpta.name,'$$',gpta.id) SEPARATOR '$$$$') AS ITEM_$num, ";
                break;
 
          }
@@ -1762,7 +1771,6 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
 
 
 function plugin_fusinvsnmp_addOrderBy($type,$id,$order,$key=0) {
-   global $SEARCH_OPTION;
 
    $searchopt = &Search::getOptions($type);
    $table = $searchopt[$id]["table"];
@@ -1930,7 +1938,6 @@ function plugin_fusinvsnmp_addWhere($link,$nott,$type,$id,$val) {
    $field = $searchopt[$id]["field"];
 
 //echo "add where : ".$table.".".$field."<br/>";
-   $SEARCH=Search::makeTextSearch($val,$nott);
 
    switch ($type) {
       // * Computer List (front/computer.php)
@@ -2219,7 +2226,6 @@ function plugin_fusinvsnmp_addWhere($link,$nott,$type,$id,$val) {
 
 
 function plugin_pre_item_purge_fusinvsnmp($parm) {
-   global $DB;
    
    switch (get_class($parm)) {
    
@@ -2318,7 +2324,6 @@ function plugin_pre_item_delete_fusinvsnmp($parm) {
 
 
 function plugin_item_add_fusinvsnmp($parm) {
-   global $DB;
    
    switch (get_class($parm)) {
 

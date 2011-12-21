@@ -1,90 +1,98 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access this file directly");
+   die("Sorry. You can't access this file directly");
 }
 
 class PluginFusinvsnmpSNMP extends CommonDBTM {
 
-	/**
-	 * Description
-	 *
-	 * @param
-	 * @param
-	 *
-	 * @return
-	 *
-	**/
-	function update_network_infos($id, $plugin_fusinvsnmp_models_id, $plugin_fusinvsnmp_configsecurities_id, $sysdescr) {
-		global $DB;
-		
-		$query = "SELECT *
+   /**
+    * Description
+    *
+    * @param
+    * @param
+    *
+    * @return
+    *
+   **/
+   function update_network_infos($id, $plugin_fusinvsnmp_models_id, $plugin_fusinvsnmp_configsecurities_id, $sysdescr) {
+      global $DB;
+      
+      $query = "SELECT *
                 FROM `glpi_plugin_fusinvsnmp_networkequipments`
                 WHERE `networkequipments_id`='".$id."';";
-		$result = $DB->query($query);
-		if ($DB->numrows($result) == "0") {
-			$queryInsert = "INSERT INTO `glpi_plugin_fusinvsnmp_networkequipments`(`networkequipments_id`)
+      $result = $DB->query($query);
+      if ($DB->numrows($result) == "0") {
+         $queryInsert = "INSERT INTO `glpi_plugin_fusinvsnmp_networkequipments`(`networkequipments_id`)
                          VALUES('".$id."');";
 
-			$DB->query($queryInsert);
-		}		
-		if (empty($plugin_fusinvsnmp_configsecurities_id)) {
-			$plugin_fusinvsnmp_configsecurities_id = 0;
+         $DB->query($queryInsert);
+      }      
+      if (empty($plugin_fusinvsnmp_configsecurities_id)) {
+         $plugin_fusinvsnmp_configsecurities_id = 0;
       }
-		$query = "UPDATE `glpi_plugin_fusinvsnmp_networkequipments`
+      $query = "UPDATE `glpi_plugin_fusinvsnmp_networkequipments`
                 SET `plugin_fusinvsnmp_models_id`='".$plugin_fusinvsnmp_models_id."',
                     `plugin_fusinvsnmp_configsecurities_id`='".$plugin_fusinvsnmp_configsecurities_id."',
                     `sysdescr`='".$sysdescr."'
                 WHERE `networkequipments_id`='".$id."';";
-	
-		$DB->query($query);
-	}
-	
+   
+      $DB->query($query);
+   }
+   
 
 
-	/**
-	 * Description
-	 *
-	 * @param $IP value ip of the device
-	 * @param $ifDescr value description/name of the port
-	 *
-	 * @return
-	 *
-	**/
-	function getPortIDfromDeviceIP($IP, $ifDescr, $sysdescr, $sysname, $model) {
-		global $DB;
+   /**
+    * Description
+    *
+    * @param $IP value ip of the device
+    * @param $ifDescr value description/name of the port
+    *
+    * @return
+    *
+   **/
+   function getPortIDfromDeviceIP($IP, $ifDescr, $sysdescr, $sysname, $model) {
+      global $DB;
 
       $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
       $pluginFusinvsnmpUnknownDevice = new PluginFusinvsnmpUnknownDevice();
@@ -92,10 +100,10 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
       $NetworkPort = new NetworkPort();
 
       $PortID = "";
-		$query = "SELECT *
+      $query = "SELECT *
                 FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
                 WHERE `ip`='".$IP."';";
-		$result = $DB->query($query);
+      $result = $DB->query($query);
       if ($DB->numrows($result) == "1") {
          $data = $DB->fetch_assoc($result);
 
@@ -271,8 +279,8 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
          }
          return($PortID);
       }
-		return($PortID);
-	}
+      return($PortID);
+   }
 
 
 
@@ -299,31 +307,30 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
    
 
 
-	/**
-	 * Get port id from device MAC address
-	 *
-	 * @param $p_mac MAC address
-	 * @param $p_fromPortID Link port id
-	 *
-	 * @return Port id
-	**/
-	function getPortIDfromDeviceMAC($p_mac, $p_fromPortID) {
-		global $DB;
+   /**
+    * Get port id from device MAC address
+    *
+    * @param $p_mac MAC address
+    * @param $p_fromPortID Link port id
+    *
+    * @return Port id
+   **/
+   function getPortIDfromDeviceMAC($p_mac, $p_fromPortID) {
+      global $DB;
 
       $query = "SELECT id
                 FROM `glpi_networkports`
                 WHERE (`mac` = '".$p_mac."' OR
                                   `mac` = '".strtoupper($p_mac)."')
                       AND `id`!='".$p_fromPortID."';"; // do not get the link port
-		$result = $DB->query($query);
-		$data = $DB->fetch_assoc($result);
-		return($data["id"]);
-	}
+      $result = $DB->query($query);
+      $data = $DB->fetch_assoc($result);
+      return($data["id"]);
+   }
 
 
    
    static function auth_dropdown($selected="") {
-      global $DB;
 
       $PluginFusinvsnmpConfigSecurity = new PluginFusinvsnmpConfigSecurity();
       $config = new PluginFusioninventoryConfig();

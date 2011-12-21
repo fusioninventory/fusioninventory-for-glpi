@@ -1,35 +1,43 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -72,11 +80,11 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     
       $tab['common'] = $LANG['plugin_fusioninventory']['agents'][28];
 
-		$tab[1]['table'] = $this->getTable();
-		$tab[1]['field'] = 'name';
-		$tab[1]['linkfield'] = 'name';
-		$tab[1]['name'] = $LANG['common'][16];
-		$tab[1]['datatype'] = 'itemlink';
+      $tab[1]['table'] = $this->getTable();
+      $tab[1]['field'] = 'name';
+      $tab[1]['linkfield'] = 'name';
+      $tab[1]['name'] = $LANG['common'][16];
+      $tab[1]['datatype'] = 'itemlink';
 
       $tab[2]['table']     = 'glpi_entities';
       $tab[2]['field']     = 'completename';
@@ -88,48 +96,48 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $tab[3]['name']      = $LANG['entity'][9];
       $tab[3]['datatype']  = 'bool';
 
-		$tab[4]['table'] = $this->getTable();
-		$tab[4]['field'] = 'last_contact';
-		$tab[4]['linkfield'] = '';
-		$tab[4]['name'] = $LANG['plugin_fusioninventory']['agents'][4];
-		$tab[4]['datatype'] = 'datetime';
+      $tab[4]['table'] = $this->getTable();
+      $tab[4]['field'] = 'last_contact';
+      $tab[4]['linkfield'] = '';
+      $tab[4]['name'] = $LANG['plugin_fusioninventory']['agents'][4];
+      $tab[4]['datatype'] = 'datetime';
 
-		$tab[5]['table'] = $this->getTable();
-		$tab[5]['field'] = 'lock';
-		$tab[5]['linkfield'] = 'lock';
-		$tab[5]['name'] = $LANG['plugin_fusioninventory']['agents'][37];
-		$tab[5]['datatype'] = 'bool';
+      $tab[5]['table'] = $this->getTable();
+      $tab[5]['field'] = 'lock';
+      $tab[5]['linkfield'] = 'lock';
+      $tab[5]['name'] = $LANG['plugin_fusioninventory']['agents'][37];
+      $tab[5]['datatype'] = 'bool';
 
-		$tab[6]['table'] = $this->getTable();
-		$tab[6]['field'] = 'device_id';
-		$tab[6]['linkfield'] = 'device_id';
-		$tab[6]['name'] = $LANG['plugin_fusioninventory']['agents'][35];
-		$tab[6]['datatype'] = 'text';
+      $tab[6]['table'] = $this->getTable();
+      $tab[6]['field'] = 'device_id';
+      $tab[6]['linkfield'] = 'device_id';
+      $tab[6]['name'] = $LANG['plugin_fusioninventory']['agents'][35];
+      $tab[6]['datatype'] = 'text';
 
-		$tab[7]['table'] = 'glpi_computers';
-		$tab[7]['field'] = 'name';
-		$tab[7]['linkfield'] = 'items_id';
-		$tab[7]['name'] = $LANG['plugin_fusioninventory']['agents'][23];
-		$tab[7]['datatype'] = 'itemlink';
+      $tab[7]['table'] = 'glpi_computers';
+      $tab[7]['field'] = 'name';
+      $tab[7]['linkfield'] = 'items_id';
+      $tab[7]['name'] = $LANG['plugin_fusioninventory']['agents'][23];
+      $tab[7]['datatype'] = 'itemlink';
       $tab[7]['itemlink_type']  = 'Computer';
 
-		$tab[8]['table'] = $this->getTable();
-		$tab[8]['field'] = 'version';
-		$tab[8]['linkfield'] = 'version';
-		$tab[8]['name'] = $LANG['plugin_fusioninventory']['agents'][25];
-		$tab[8]['datatype'] = 'text';
+      $tab[8]['table'] = $this->getTable();
+      $tab[8]['field'] = 'version';
+      $tab[8]['linkfield'] = 'version';
+      $tab[8]['name'] = $LANG['plugin_fusioninventory']['agents'][25];
+      $tab[8]['datatype'] = 'text';
 
-		$tab[9]['table'] = $this->getTable();
-		$tab[9]['field'] = 'token';
-		$tab[9]['linkfield'] = 'token';
-		$tab[9]['name'] = $LANG['plugin_fusioninventory']['agents'][24];
-		$tab[9]['datatype'] = 'text';
+      $tab[9]['table'] = $this->getTable();
+      $tab[9]['field'] = 'token';
+      $tab[9]['linkfield'] = 'token';
+      $tab[9]['name'] = $LANG['plugin_fusioninventory']['agents'][24];
+      $tab[9]['datatype'] = 'text';
 
-		$tab[10]['table'] = $this->getTable();
-		$tab[10]['field'] = 'useragent';
-		$tab[10]['linkfield'] = 'useragent';
-		$tab[10]['name'] = $LANG['plugin_fusioninventory']['agents'][42];
-		$tab[10]['datatype'] = 'text';
+      $tab[10]['table'] = $this->getTable();
+      $tab[10]['field'] = 'useragent';
+      $tab[10]['linkfield'] = 'useragent';
+      $tab[10]['name'] = $LANG['plugin_fusioninventory']['agents'][42];
+      $tab[10]['datatype'] = 'text';
 
       $i = 20;
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
@@ -150,7 +158,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
 
    function defineTabs($options=array()){
-      global $LANG,$CFG_GLPI;
+      global $LANG;
 
       $ong = array();
       if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
@@ -167,10 +175,10 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       global $LANG;
 
       $comment = $LANG['plugin_fusioninventory']['agents'][42].' : '.$this->fields['useragent'].'<br/>
-         '.$LANG['plugin_fusioninventory']['agents'][4].' : '.convDateTime($this->fields['last_contact']).' minutes';
+         '.$LANG['plugin_fusioninventory']['agents'][4].' : '.Html::convDateTime($this->fields['last_contact']).' minutes';
 
       if (!empty($comment)) {
-         return showToolTip($comment, array('display' => false));
+         return Html::showToolTip($comment, array('display' => false));
       }
 
       return $comment;
@@ -188,7 +196,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    *
    **/
    function showForm($items_id, $options=array()) {
-      global $DB,$CFG_GLPI,$LANG;
+      global $LANG;
 
       if ($items_id!='') {
          $this->getFromDB($items_id);
@@ -466,7 +474,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $waiting = 0;
       $ip = "";
       while(empty($ip) && count($ip)) {
-	      $ip = array_shift($a_ip);
+         $ip = array_shift($a_ip);
       }
 
       $agentStatus = $PluginFusioninventoryTaskjob->getRealStateAgent($agent_id);
@@ -590,6 +598,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       # Guess the machine name from the DEVICEID,
       # useful when Windows domain != DNS domain
+      $stack = array();
       if(preg_match('/(\S+)-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}$/', $PluginFusioninventoryAgent->fields['name'], $stack)) {
          array_push($ret, "http://".$stack[1].":".$config->getValue($plugins_id, 'agent_port'));
       }

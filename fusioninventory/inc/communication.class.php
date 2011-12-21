@@ -1,35 +1,43 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: Vincent MAZZONI
-   Co-authors of file: David DURIEUX
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    Vincent Mazzoni
+   @co-author David Durieux
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -205,17 +213,17 @@ class PluginFusioninventoryCommunication {
 
       while ($token !== false) {
          // 1. open and closing tags on same line - no change
-         if (preg_match('/.+<\/\w[^>]*>$/', $token, $matches)) :
+         if (preg_match('/.+<\/\w[^>]*>$/', $token, $matches)) {
             $indent=0;
          // 2. closing tag - outdent now
-         elseif (preg_match('/^<\/\w/', $token, $matches)) :
+         } else if (preg_match('/^<\/\w/', $token, $matches)) {
             $pad = $pad-3;
          // 3. opening tag - don't pad this one, only subsequent tags
-         elseif (preg_match('/^<\w[^>]*[^\/]>.*$/', $token, $matches)) :
+         } else if (preg_match('/^<\w[^>]*[^\/]>.*$/', $token, $matches)) {
             $indent=3;
-         else :
+         } else {
             $indent = 0;
-         endif;
+         }
 
          $line    = Toolbox::str_pad($token, strlen($token)+$pad, '  ', STR_PAD_LEFT);
          $result .= $line . "\n";
@@ -260,7 +268,7 @@ class PluginFusioninventoryCommunication {
     * @return nothing (write text in log file)
     **/
    static function addLog($p_logs) {
-      global $CFG_GLPI;
+
       if ($_SESSION['glpi_use_mode']==Session::DEBUG_MODE) {
          if (PluginFusioninventoryConfig::isExtradebugActive()) {
             file_put_contents(GLPI_LOG_DIR.'/pluginFusioninventory-communication.log',
@@ -284,7 +292,7 @@ class PluginFusioninventoryCommunication {
       $moduleRun = $PluginFusioninventoryTaskjobstatus->getTaskjobsAgent($agent_id);
       foreach ($moduleRun as $className => $array) {
          if (class_exists($className)) {
-            if ($className != "PluginFusinvinventoryESX") {
+            if ($className != "PluginFusioninventoryInventoryComputerESX") {
                $class = new $className();
                $sxml_temp = $class->run($array);
                $this->append_simplexml($this->sxml, $sxml_temp);
@@ -339,7 +347,7 @@ class PluginFusioninventoryCommunication {
          }
       }
       foreach ($simplexml_from->children() as $simplexml_child) {
-         $simplexml_temp = $simplexml_to->addChild($simplexml_child->getName(), (string) $simplexml_child);
+         $simplexml_temp = $simplexml_to->addChild($simplexml_child->getName(), (string)$simplexml_child);
          foreach ($simplexml_child->attributes() as $attr_key => $attr_value) {
             $simplexml_temp->addAttribute($attr_key, $attr_value);
          }
@@ -386,8 +394,6 @@ class PluginFusioninventoryCommunication {
        // NOTE: $mtime may be negative (PHP integer limitations)
        $mtime = unpack("V", substr($data,4,4));
        $mtime = $mtime[1];
-       $xfl   = substr($data,8,1);
-       $os    = substr($data,8,1);
        $headerlen = 10;
        $extralen  = 0;
        $extra     = "";
@@ -486,7 +492,7 @@ class PluginFusioninventoryCommunication {
 
    function cleanXML($xml) {
       foreach ($xml->children() as $key=>$value) {
-         if ($value->count() > 0) {
+         if (count($value->children()) > 0) {
             $value = $this->cleanXML($value);
          } else {         
             $value = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep($value));

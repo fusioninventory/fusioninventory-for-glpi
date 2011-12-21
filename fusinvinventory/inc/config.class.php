@@ -1,35 +1,43 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -39,6 +47,15 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusinvinventoryConfig extends CommonDBTM {
 
 
+   function canCreate() {
+      return PluginFusioninventoryProfile::haveRight('fusioninventory', 'configuration', 'w');
+   }
+
+   function canView() {
+      return PluginFusioninventoryProfile::haveRight('fusioninventory', 'configuration', 'r');
+   }
+   
+   
    /**
    * Initialize config values of fusinvinventory plugin
    *
@@ -84,6 +101,29 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
    }
 
 
+   
+  function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $LANG;
+
+      if ($item->getType()=='PluginFusioninventoryConfig') {
+         return self::createTabEntry($LANG['plugin_fusinvinventory']['title'][0]);
+         return $LANG['plugin_fusinvinventory']['title'][0];
+      }
+      return '';
+   }
+   
+   
+   
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+
+      if ($item->getType()=='PluginFusioninventoryConfig') {
+         $pfConfig = new self();
+         $pfConfig->showForm();
+      }
+      return true;
+   }
+   
+   
 
    /**
    * Update values from tab in fusioninventory configuration form
@@ -93,7 +133,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
    * @return nothing
    *
    **/
-	function putForm($p_post) {
+   function putForm($p_post) {
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
 
@@ -116,15 +156,15 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
    * @return bool true if form is ok
    *
    **/
-   static function showForm($options=array()) {
+   function showForm($options=array()) {
       global $LANG;
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
 
-      echo "<form name='form' method='post' action='".$options['target']."'>";
-      echo "<table class='tab_cadre_fixe' cellpadding='1'>";
+      $this->fields['id'] = 1;
+      $this->showFormHeader($options);
  
       echo "<tr>";
       echo "<th colspan='4'>".$LANG['plugin_fusinvinventory']['setup'][20];
@@ -385,13 +425,8 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
       
-      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "w")) {
-         echo "<tr class='tab_bg_2'><td align='center' colspan='4'>
-               <input class='submit' type='submit' name='plugin_fusinvinventory_config_set'
-                      value='" . $LANG['buttons'][7] . "'></td></tr>";
-      }
-      echo "</table>";
-      echo "</form>";
+      $options['candel'] = false;
+      $this->showFormButtons($options);
 
       return true;
    }

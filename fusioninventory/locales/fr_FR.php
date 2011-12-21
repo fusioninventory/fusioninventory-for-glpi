@@ -1,37 +1,46 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
-   Co-authors of file: 
-   Purpose of file:
-   Not translate this file, use https://www.transifex.net/projects/p/FusionInventory/
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @comment   Not translate this file, use https://www.transifex.net/projects/p/FusionInventory/
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
+
 
 $LANG['plugin_fusioninventory']['agents'][15]="Statut de l'agent";
 $LANG['plugin_fusioninventory']['agents'][17]="L'agent s'exécute";
@@ -136,6 +145,7 @@ $LANG['plugin_fusioninventory']['rules'][15]="uuid";
 $LANG['plugin_fusioninventory']['rules'][16]="Etiquette FusionInventory";
 $LANG['plugin_fusioninventory']['rules'][17]="Import refusé";
 $LANG['plugin_fusioninventory']['rules'][18]="Equipement créé";
+$LANG['plugin_fusioninventory']['rules'][19] = "Ignored import devices";
 $LANG['plugin_fusioninventory']['rules'][2]="Règles d'import et de liaison des matériels";
 $LANG['plugin_fusioninventory']['rules'][3]="Chercher les matériels GLPI ayant le statut";
 $LANG['plugin_fusioninventory']['rules'][4]="Entité de destination de la machine";

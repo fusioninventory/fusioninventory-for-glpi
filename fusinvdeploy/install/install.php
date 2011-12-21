@@ -1,39 +1,44 @@
 <?php
 
 /*
- * @version $Id$
- ----------------------------------------------------------------------
- FusionInventory
- Coded by the FusionInventory Development Team.
+   ------------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org//
- ----------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ------------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory project.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ------------------------------------------------------------------------
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author Alexandre Delaunay
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: DURIEUX David
-// Purpose of file:
-// ----------------------------------------------------------------------
-
 
 function pluginFusinvdeployInstall($version, $migration='') {
    global $DB,$LANG, $CFG_GLPI;
@@ -41,11 +46,11 @@ function pluginFusinvdeployInstall($version, $migration='') {
    // Get informations of plugin
    $a_plugin = plugin_version_fusinvdeploy();
 
-   include (GLPI_ROOT . "/plugins/fusinvdeploy/install/update.php");
+   include_once (GLPI_ROOT . "/plugins/fusinvdeploy/install/update.php");
    $version_detected = pluginfusinvdeployGetCurrentVersion($a_plugin['version']);
    if ((isset($version_detected)) && ($version_detected != $a_plugin['version'])) {
       // Update
-      pluginFusinvdeployUpdate();
+      pluginFusinvdeployUpdate($version_detected);
    } else {
       // Installation
       if ($migration == '') {
@@ -59,7 +64,7 @@ function pluginFusinvdeployInstall($version, $migration='') {
       $sql_query  = fread($DBf_handle, filesize($DB_file));
       fclose($DBf_handle);
       foreach ( explode(";\n", "$sql_query") as $sql_line) {
-         if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
+         if (Toolbox::get_magic_quotes_runtime()) $sql_line=Toolbox::stripslashes_deep($sql_line);
          if (!empty($sql_line)) $DB->query($sql_line)/* or die($DB->error())*/;
       }
 
@@ -90,7 +95,11 @@ function pluginFusinvdeployInstall($version, $migration='') {
       $input['modulename'] = "DEPLOY";
       $input['is_active']  = 1;
       $input['exceptions'] = exportArrayToDB(array());
-      $input['url']        = PluginFusioninventoryRestCommunication:: getDefaultRestURL($_SERVER['HTTP_REFERER'],
+      $url= '';
+      if (isset($_SERVER['HTTP_REFERER'])) {
+         $url = $_SERVER['HTTP_REFERER'];
+      }
+      $input['url']        = PluginFusioninventoryCommunicationRest:: getDefaultRestURL($_SERVER['HTTP_REFERER'],
                                                                                         'fusinvdeploy',
                                                                                         'deploy');
 
@@ -105,13 +114,17 @@ function pluginFusinvdeployUninstall() {
    // Get informations of plugin
    $a_plugin = plugin_version_fusinvdeploy();
 
-   $setup = new PluginFusioninventorySetup();
+   if (class_exists('PluginFusioninventorySetup')) {
+      $setup = new PluginFusioninventorySetup();
 
-   if (file_exists(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'])) {
-      $setup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
+      if (file_exists(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'])) {
+         $setup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
+      }
    }
 
-   PluginFusioninventoryProfile::cleanProfile($a_plugin['shortname']);
+   if (class_exists('PluginFusioninventoryProfile')) {
+      PluginFusioninventoryProfile::cleanProfile($a_plugin['shortname']);
+   }
 
 
    //clean tasks
@@ -174,14 +187,16 @@ function pluginFusinvdeployUninstall() {
       }
    }
 
-   $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
+   if (class_exists('PluginFusioninventoryModule')) {
+      $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
 
-   $agentmodule = new PluginFusioninventoryAgentmodule;
-   $agentmodule->deleteModule($plugins_id);
+      $agentmodule = new PluginFusioninventoryAgentmodule;
+      $agentmodule->deleteModule($plugins_id);
 
-   $config = new PluginFusioninventoryConfig();
-   $config->cleanConfig(
-           PluginFusioninventoryModule::getModuleId($a_plugin['shortname']));
+      $config = new PluginFusioninventoryConfig();
+      $config->cleanConfig(
+               PluginFusioninventoryModule::getModuleId($a_plugin['shortname']));
+   }
 
    return true;
 }

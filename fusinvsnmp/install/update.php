@@ -1,35 +1,43 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 function pluginFusinvsnmpGetCurrentVersion($version) {
@@ -69,6 +77,7 @@ function pluginFusinvsnmpGetCurrentVersion($version) {
          } else if (TableExists("glpi_plugin_fusioninventory_config")) {
             $query = "SELECT version FROM glpi_plugin_fusioninventory_config LIMIT 1";
          }
+         $data = array();
          if ($query != "") {
             if ($result=$DB->query($query)) {
                if ($DB->numrows($result) == "1") {
@@ -3022,7 +3031,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                               $newTable);
       if (!TableExists($newTable)) {
          $query = "CREATE TABLE `".$newTable."` (
-                     int(11) NOT NULL AUTO_INCREMENT,
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
                       PRIMARY KEY (`id`)
                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
          $DB->query($query);
@@ -3448,97 +3457,97 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
     *  Clean old ports deleted but have some informations in SNMP tables
     */
    echo "Clean ports purged\n";
-	$query_select = "SELECT `glpi_plugin_fusinvsnmp_networkports`.`id`
+   $query_select = "SELECT `glpi_plugin_fusinvsnmp_networkports`.`id`
                     FROM `glpi_plugin_fusinvsnmp_networkports`
                           LEFT JOIN `glpi_networkports`
                                     ON `glpi_networkports`.`id` = `networkports_id`
                           LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `glpi_networkports`.`items_id`
                     WHERE `glpi_networkequipments`.`id` IS NULL";
-	$result=$DB->query($query_select);
-	while ($data=$DB->fetch_array($result)) {
+   $result=$DB->query($query_select);
+   while ($data=$DB->fetch_array($result)) {
       $query_del = "DELETE FROM `glpi_plugin_fusinvsnmp_networkports`
          WHERE `id`='".$data["id"]."'";
       $DB->query($query_del);
-	}
+   }
    
-	/*
+   /*
     *  Clean for multiple IP of a switch when this switch is purged but not these IPs
     */
    echo "Clean for multiple IP of a switch when this switch is purged but not these IPs\n";
-	$query_select = "SELECT `glpi_plugin_fusinvsnmp_networkequipmentips`.`id`
+   $query_select = "SELECT `glpi_plugin_fusinvsnmp_networkequipmentips`.`id`
                     FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
                           LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `networkequipments_id`
                     WHERE `glpi_networkequipments`.`id` IS NULL";
-	$result=$DB->query($query_select);
-	while ($data=$DB->fetch_array($result)) {
+   $result=$DB->query($query_select);
+   while ($data=$DB->fetch_array($result)) {
       $query_del = "DELETE FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
          WHERE `id`='".$data["id"]."'";
       $DB->query($query_del);
-	}
+   }
 
    
-	/*
+   /*
     * Clean for switch more informations again in DB when switch is purged
     */
-	echo "Clean for switch more informations again in DB when switch is purged\n";
+   echo "Clean for switch more informations again in DB when switch is purged\n";
    $query_select = "SELECT `glpi_plugin_fusinvsnmp_networkequipments`.`id`
                     FROM `glpi_plugin_fusinvsnmp_networkequipments`
                           LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `networkequipments_id`
                     WHERE `glpi_networkequipments`.`id` IS NULL";
-	$result=$DB->query($query_select);
-	while ($data=$DB->fetch_array($result)) {
+   $result=$DB->query($query_select);
+   while ($data=$DB->fetch_array($result)) {
        $query_del = "DELETE FROM `glpi_plugin_fusinvsnmp_networkequipments`
          WHERE `id`='".$data["id"]."'";
       $DB->query($query_del);
-	}
+   }
    
    
-	/*
+   /*
     * Clean for printer more informations again in DB when printer is purged
     */
-	"Clean for printer more informations again in DB when printer is purged\n";
+   "Clean for printer more informations again in DB when printer is purged\n";
    $query_select = "SELECT `glpi_plugin_fusinvsnmp_printers`.`id`
                     FROM `glpi_plugin_fusinvsnmp_printers`
                           LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `printers_id`
                     WHERE `glpi_printers`.`id` IS NULL";
-	$result=$DB->query($query_select);
-	while ($data=$DB->fetch_array($result)) {
+   $result=$DB->query($query_select);
+   while ($data=$DB->fetch_array($result)) {
       $query_del = "DELETE FROM `glpi_plugin_fusinvsnmp_printers`
          WHERE `id`='".$data["id"]."'";
       $DB->query($query_del);
-	}
+   }
    
    
-	/*
+   /*
     *  Clean printer cartridge not deleted with the printer associated
     */
    echo "Clean printer cartridge not deleted with the printer associated\n";
-	$query_select = "SELECT `glpi_plugin_fusinvsnmp_printercartridges`.`id`
+   $query_select = "SELECT `glpi_plugin_fusinvsnmp_printercartridges`.`id`
                     FROM `glpi_plugin_fusinvsnmp_printercartridges`
                           LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `printers_id`
                     WHERE `glpi_printers`.`id` IS NULL";
-	$result=$DB->query($query_select);
-	while ($data=$DB->fetch_array($result)) {
+   $result=$DB->query($query_select);
+   while ($data=$DB->fetch_array($result)) {
       $query_del = "DELETE FROM `glpi_plugin_fusinvsnmp_printercartridges`
          WHERE `id`='".$data["id"]."'";
       $DB->query($query_del);
-	}
+   }
    
 
    /*
     *  Clean printer history not deleted with printer associated
     */
-	echo "Clean printer history not deleted with printer associated\n";
+   echo "Clean printer history not deleted with printer associated\n";
    $query_select = "SELECT `glpi_plugin_fusinvsnmp_printerlogs`.`id`
                     FROM `glpi_plugin_fusinvsnmp_printerlogs`
                           LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `printers_id`
                     WHERE `glpi_printers`.`id` IS NULL";
-	$result=$DB->query($query_select);
-	while ($data=$DB->fetch_array($result)) {
+   $result=$DB->query($query_select);
+   while ($data=$DB->fetch_array($result)) {
       $query_del = "DELETE FROM `glpi_plugin_fusinvsnmp_printerlogs`
          WHERE `id`='".$data["id"]."'";
       $DB->query($query_del);
-	}
+   }
    
    
    /*
@@ -3564,40 +3573,14 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    /*
     *  Convert displaypreferences
     */
-   $sql = "UPDATE `glpi_displaypreferences`
-      SET `itemtype`='PluginFusinvsnmpModel'
-      WHERE `itemtype`='5151' ";
-   $DB->query($sql);
-   $sql = "UPDATE `glpi_displaypreferences`
-      SET `itemtype`='PluginFusinvsnmpConfigSecurity'
-      WHERE `itemtype`='5152' ";
-   $DB->query($sql);
-   $sql = "UPDATE `glpi_displaypreferences`
-      SET `itemtype`='PluginFusinvsnmpPrinterCartridge'
-      WHERE `itemtype`='5156' ";
-   $DB->query($sql);
-   $sql = "UPDATE `glpi_displaypreferences`
-      SET `itemtype`='PluginFusinvsnmpNetworkEquipment'
-      WHERE `itemtype`='5157' ";
-   $DB->query($sql);
-   $sql = "UPDATE `glpi_displaypreferences`
-      SET `itemtype`='PluginFusinvsnmpIPRange'
-      WHERE `itemtype`='5159' ";
-   $DB->query($sql);
-   $sql = "UPDATE `glpi_displaypreferences`
-      SET `itemtype`='PluginFusinvsnmpNetworkPortLog'
-      WHERE `itemtype`='5162' ";
-   $DB->query($sql);
-   $sql = "UPDATE `glpi_displaypreferences`
-      SET `itemtype`='PluginFusinvsnmpConstructDevice'
-      WHERE `itemtype`='5167' ";
-   $DB->query($sql);
-   $sql = "UPDATE `glpi_displaypreferences`
-      SET `itemtype`='PluginFusinvsnmpPrinterLog'
-      WHERE `itemtype`='5168' ";
-   $DB->query($sql);
-
-      
+   changeDisplayPreference("5151", "PluginFusinvsnmpModel");
+   changeDisplayPreference("5152", "PluginFusinvsnmpConfigSecurity");
+   changeDisplayPreference("5156", "PluginFusinvsnmpPrinterCartridge");
+   changeDisplayPreference("5157", "PluginFusinvsnmpNetworkEquipment");
+   changeDisplayPreference("5159", "PluginFusinvsnmpIPRange");
+   changeDisplayPreference("5162", "PluginFusinvsnmpNetworkPortLog");
+   changeDisplayPreference("5167", "PluginFusinvsnmpConstructDevice");
+   changeDisplayPreference("5168", "PluginFusinvsnmpPrinterLog");
 
 
    $config->updateConfigType($plugins_id, 'version', PLUGIN_FUSINVSNMP_VERSION);
@@ -4298,6 +4281,30 @@ function update213to220_ConvertField($migration) {
       }
       $migration->displayMessage("$i / $nb");
    }
+}
+
+
+
+function changeDisplayPreference($olditemtype, $newitemtype) {
+   global $DB;
+   
+   $query = "SELECT *,count(`id`) as `cnt` FROM `glpi_displaypreferences` 
+   WHERE (`itemtype` = '".$newitemtype."'
+   OR `itemtype` = '".$olditemtype."')
+   group by `users_id`, `num`";
+   $result=$DB->query($query);
+   while ($data=$DB->fetch_array($result)) {
+      if ($data['cnt'] > 1) {
+         $queryd = "DELETE FROM `glpi_displaypreferences`
+            WHERE `id`='".$data['id']."'";
+         $DB->query($queryd);
+      }
+   }
+   
+   $sql = "UPDATE `glpi_displaypreferences`
+      SET `itemtype`='".$newitemtype."'
+      WHERE `itemtype`='".$olditemtype."' ";
+   $DB->query($sql);   
 }
 
 ?>

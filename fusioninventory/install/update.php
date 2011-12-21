@@ -1,35 +1,43 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David Durieux
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 function pluginFusioninventoryGetCurrentVersion($version) {
@@ -1544,6 +1552,24 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addField($newTable, 
                               "profiles_id", 
                               "int(11) NOT NULL DEFAULT '0'");
+      $migration->migrationOneTable($newTable);
+         // Remove multiple lines can have problem with unicity
+         $query = "SELECT * , count(`id`) AS cnt
+            FROM `glpi_plugin_fusioninventory_profiles`
+            GROUP BY `type`,`plugins_id`,`profiles_id`
+            HAVING cnt >1
+            ORDER BY cnt";
+         $result=$DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
+            $queryd = "DELETE FROM `glpi_plugin_fusioninventory_profiles`
+               WHERE `type`='".$data['type']."'
+                  AND `plugins_id`='".$data['plugins_id']."'
+                  AND `profiles_id`='".$data['profiles_id']."'
+               ORDER BY `id` DESC
+               LIMIT ".($data['cnt'] - 1)." ";
+            $DB->query($queryd);
+         }
+      
          $migration->addKey($newTable,
                             array("type", "plugins_id", "profiles_id"),
                             "unicity",
@@ -1624,6 +1650,94 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                             "tablefield");
          
       
+         
+
+   /*
+    * Table glpi_plugin_fusioninventory_ignoredimportdevices
+    */
+      $newTable = "glpi_plugin_fusioninventory_ignoredimportdevices";
+      if (!TableExists($newTable)) {
+         $query = "CREATE TABLE `".$newTable."` (
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                      PRIMARY KEY (`id`)
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+         $DB->query($query);
+      }
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "name",
+                                 "name",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "date",
+                                 "date",
+                                 "datetime DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "itemtype",
+                                 "itemtype",
+                                 "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "entities_id",
+                                 "entities_id",
+                                 "int(11) NOT NULL DEFAULT '0'");      
+         $migration->changeField($newTable,
+                                 "ip",
+                                 "ip",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "mac",
+                                 "mac",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "rules_id",
+                                 "rules_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+      $migration->migrationOneTable($newTable);
+
+         
+
+   /*
+    * Table glpi_plugin_fusioninventory_ignoredimportdevices
+    */
+      $newTable = "glpi_plugin_fusioninventory_inventorycomputercriterias";      
+      $migration->renameTable("glpi_plugin_fusinvinventory_criterias", $newTable);
+      
+      
+      
+   /*
+    * Table glpi_plugin_fusioninventory_inventorycomputerlibserialization
+    */
+      $newTable = "glpi_plugin_fusioninventory_inventorycomputerlibserialization";      
+      $migration->renameTable("glpi_plugin_fusinvinventory_libserialization", $newTable);
+      
+    
+      
+   /*
+    * Table glpi_plugin_fusioninventory_inventorycomputerblacklists
+    */
+      $newTable = "glpi_plugin_fusioninventory_inventorycomputerblacklists";      
+      $migration->renameTable("glpi_plugin_fusinvinventory_blacklists", $newTable);
+      
+      
+      
+   /*
+    * Table glpi_plugin_fusioninventory_inventorycomputerantivirus
+    */
+      $newTable = "glpi_plugin_fusioninventory_inventorycomputerantivirus";      
+      $migration->renameTable("glpi_plugin_fusinvinventory_antivirus", $newTable);
+      
+      
+      
+   /*
+    * Table glpi_plugin_fusioninventory_inventorycomputercomputers
+    */
+      $newTable = "glpi_plugin_fusioninventory_inventorycomputercomputers";      
+      $migration->renameTable("glpi_plugin_fusinvinventory_computers", $newTable);
+      
+      
       
    /*
     * Table Delete old table not used
@@ -1676,7 +1790,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       if (TableExists("glpi_plugin_fusioninventory_computers")) {
          $DB->query("DROP TABLE `glpi_plugin_fusioninventory_computers`");
       }
-      
       
       
    $migration->executeMigration();
@@ -1738,15 +1851,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     * Update display preferences
     */
-   $sql = "UPDATE `glpi_displaypreferences`
-      SET `itemtype`='PluginFusioninventoryUnknownDevice'
-      WHERE `itemtype`='5153' ";
-   $DB->query($sql);
-   $sql = "UPDATE `glpi_displaypreferences`
-      SET `itemtype`='PluginFusioninventoryAgent'
-      WHERE `itemtype`='5158' ";
-   $DB->query($sql);
-   
+   changeDisplayPreference("5153", "PluginFusioninventoryUnknownDevice");
+   changeDisplayPreference("5158", "PluginFusioninventoryAgent");
+   changeDisplayPreference("PluginFusinvinventoryBlacklist", "PluginFusioninventoryInventoryComputerBlacklist");
    
    /*
     * Convert taskjob definition from PluginFusinvsnmpIPRange to PluginFusioninventoryIPRange
@@ -1841,29 +1948,53 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    if (!class_exists('PluginFusioninventoryIgnoredimportdevice')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/ignoredimportdevice.class.php");
    }
-   $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
-   $pfIgnoredimportdevice->install();   
+//   $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
+//   $pfIgnoredimportdevice->install();   
 }
 
 
 
 function plugin_fusioninventory_displayMigrationMessage ($id, $msg="") {
-	global $LANG;
-	static $created=0;
-	static $deb;
+   global $LANG;
+   static $created=0;
+   static $deb;
 
-	if ($created != $id) {
-		if (empty($msg)) $msg=$LANG['rulesengine'][90];
-		echo "<div id='migration_message_$id'><p class='center'>$msg</p></div>";
-		$created = $id;
-		$deb = time();
-	} else {
-		if (empty($msg)) $msg=$LANG['rulesengine'][91];
-		$fin = time();
-		$tps = Html::timestampToString($fin-$deb);
-		echo "<script type='text/javascript'>document.getElementById('migration_message_$id').innerHTML = '<p class=\"center\">$msg ($tps)</p>';</script>\n";
-	}
-	Html::glpi_flush();
+   if ($created != $id) {
+      if (empty($msg)) $msg=$LANG['rulesengine'][90];
+      echo "<div id='migration_message_$id'><p class='center'>$msg</p></div>";
+      $created = $id;
+      $deb = time();
+   } else {
+      if (empty($msg)) $msg=$LANG['rulesengine'][91];
+      $fin = time();
+      $tps = Html::timestampToString($fin-$deb);
+      echo "<script type='text/javascript'>document.getElementById('migration_message_$id').innerHTML = '<p class=\"center\">$msg ($tps)</p>';</script>\n";
+   }
+   Html::glpi_flush();
+}
+
+
+
+function changeDisplayPreference($olditemtype, $newitemtype) {
+   global $DB;
+   
+   $query = "SELECT *,count(`id`) as `cnt` FROM `glpi_displaypreferences` 
+   WHERE (`itemtype` = '".$newitemtype."'
+   OR `itemtype` = '".$olditemtype."')
+   group by `users_id`, `num`";
+   $result=$DB->query($query);
+   while ($data=$DB->fetch_array($result)) {
+      if ($data['cnt'] > 1) {
+         $queryd = "DELETE FROM `glpi_displaypreferences`
+            WHERE `id`='".$data['id']."'";
+         $DB->query($queryd);
+      }
+   }
+   
+   $sql = "UPDATE `glpi_displaypreferences`
+      SET `itemtype`='".$newitemtype."'
+      WHERE `itemtype`='".$olditemtype."' ";
+   $DB->query($sql);   
 }
 
 ?>

@@ -1,35 +1,43 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 define ("PLUGIN_FUSINVSNMP_VERSION","0.83+1.0");
 
@@ -109,9 +117,9 @@ function plugin_init_fusinvsnmp() {
 	if (isset($_SESSION["glpiID"])) {
 
 		if (Session::haveRight("configuration", "r") || Session::haveRight("profile", "w")) {// Config page
-         $PluginFusioninventoryConfiguration = new PluginFusioninventoryConfiguration();
+         $PluginFusioninventoryConfiguration = new PluginFusioninventoryConfig();
          $a_tabs = $PluginFusioninventoryConfiguration->defineTabs();
-         $PLUGIN_HOOKS['config_page']['fusinvsnmp'] = '../fusioninventory/front/configuration.form.php?glpi_tab='.array_search($a_plugin['name'], $a_tabs);
+         $PLUGIN_HOOKS['config_page']['fusinvsnmp'] = '../fusioninventory/front/config.form.php?glpi_tab='.array_search($a_plugin['name'], $a_tabs);
       }
 
 		// Define SQL table restriction of entity
@@ -207,9 +215,10 @@ function plugin_version_fusinvsnmp() {
 	return array('name'           => 'FusionInventory SNMP',
                 'shortname'      => 'fusinvsnmp',
                 'version'        => PLUGIN_FUSINVSNMP_VERSION,
+                'license'        => 'AGPLv3+',
                 'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
                                     & FusionInventory team',
-                'homepage'       =>'http://forge.fusioninventory.org/projects/pluginfusinvsnmp',
+                'homepage'       =>'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/',
                 'minGlpiVersion' => '0.80'// For compatibility / no install in version < 0.78
    );
 }

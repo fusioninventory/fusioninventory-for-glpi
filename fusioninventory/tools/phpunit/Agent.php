@@ -46,7 +46,7 @@ class Plugins_Fusioninventory_Agent extends PHPUnit_Framework_TestCase {
                                                       AND token='NTMXKUBJ'
                                                       AND name='agenttest-2010-03-09-09-41-28'
                                                       AND last_contact IS NOT NULL");
-      $this->assertEquals(count($a_agent), 1 , 'Problem on creation agent (have '.count($a_agent).' times in DB), code is '.$code);
+      $this->assertEquals(count($a_agent), 1, 'Problem on creation agent (have '.count($a_agent).' times in DB), code is '.$code);
 
    }
 
@@ -58,7 +58,7 @@ class Plugins_Fusioninventory_Agent extends PHPUnit_Framework_TestCase {
                                                       AND token='NTMXKUBJ'
                                                       AND name='agenttest-2010-03-09-09-41-28'
                                                       AND last_contact IS NOT NULL");
-      $this->assertEquals(count($a_agent), 1 , 'Problem find agent (have '.count($a_agent).' times in DB)');
+      $this->assertEquals(count($a_agent), 1, 'Problem find agent (have '.count($a_agent).' times in DB)');
       if (count($a_agent) == '1') {
          foreach ($a_agent as $id=>$data) {
             $PluginFusioninventoryAgent->delete($data);
@@ -68,7 +68,7 @@ class Plugins_Fusioninventory_Agent extends PHPUnit_Framework_TestCase {
                                                       AND token='NTMXKUBJ'
                                                       AND name='agenttest-2010-03-09-09-41-28'
                                                       AND last_contact IS NOT NULL");
-      $this->assertEquals(count($a_agent), 0 , 'Unable to delete agent');
+      $this->assertEquals(count($a_agent), 0, 'Unable to delete agent');
    }
    
    

@@ -1,56 +1,64 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access this file directly");
+   die("Sorry. You can't access this file directly");
 }
 
 class PluginFusinvsnmpModelMib extends CommonDBTM {
    
 
    function showFormList($id, $options=array()) {
-      global $DB,$CFG_GLPI,$LANG,$IMPORT_TYPES;
+      global $DB,$CFG_GLPI,$LANG;
 
-		if (!PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","r")) {
-			return false;
+      if (!PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","r")) {
+         return false;
       } else if ((isset($id)) AND (!empty($id))) {
-			$query = "SELECT `itemtype`
+         $query = "SELECT `itemtype`
                    FROM `glpi_plugin_fusinvsnmp_models`
                    WHERE `id`='".$id."';";
-			$result = $DB->query($query);
-			$data = $DB->fetch_assoc($result);
-			$type_model = $data['itemtype'];
+         $result = $DB->query($query);
+         $data = $DB->fetch_assoc($result);
+         $type_model = $data['itemtype'];
 
          $query = "SELECT `glpi_plugin_fusinvsnmp_models`.`itemtype`,
                           `glpi_plugin_fusinvsnmp_modelmibs`.*,
@@ -218,7 +226,7 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
    
 
    function showFormAdd($id, $type_model, $mappings_used) {
-      global $DB,$CFG_GLPI,$LANG,$IMPORT_TYPES;
+      global $CFG_GLPI,$LANG;
 
       echo "<br>";
       $target = $CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/model.form.php';
@@ -305,48 +313,46 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
       echo "</tr>";
 
       echo "</table></form></div>";
-	}
+   }
 
 
-	
-	function deleteMib($item_coche) {
-		global $DB;
-		
-		PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
-		for ($i = 0; $i < count($item_coche); $i++) {
+   
+   function deleteMib($item_coche) {
+      
+      PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
+      for ($i = 0; $i < count($item_coche); $i++) {
          $this->getFromDB($item_coche[$i]);
          $this->deleteFromDB(1);
-		}
-	}
-
-
-
-	function activation($id) {
-		global $DB;
-		
-		$mib_networking = new PluginFusinvsnmpModelMib();
-		
-		$mib_networking->getFromDB($id);
-      $data = array();
-		$data['id'] = $id;
-		$data = $mib_networking->fields;
-		if ($mib_networking->fields["is_active"] == "1") {
-			$data['is_active'] = 0;
-      } else {
-			$data['is_active'] = 1;
       }
-		$mib_networking->update($data);
-	}
+   }
+
+
+
+   function activation($id) {
+      
+      $mib_networking = new PluginFusinvsnmpModelMib();
+      
+      $mib_networking->getFromDB($id);
+      $data = array();
+      $data['id'] = $id;
+      $data = $mib_networking->fields;
+      if ($mib_networking->fields["is_active"] == "1") {
+         $data['is_active'] = 0;
+      } else {
+         $data['is_active'] = 1;
+      }
+      $mib_networking->update($data);
+   }
 
 
    
    function oidList($p_sxml_node,$p_id) {
-		global $DB;
+      global $DB;
 
       $ptc = new PluginFusinvsnmpCommunicationSNMP();
 
       // oid GET
-		$query = "SELECT `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`,
+      $query = "SELECT `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`,
                        `glpi_plugin_fusinvsnmp_modelmibs`.*
                 FROM `glpi_plugin_fusinvsnmp_modelmibs`
                      LEFT JOIN `glpi_plugin_fusioninventory_mappings`
@@ -357,7 +363,7 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
                   AND `oid_port_counter`='0';";
 
       $result=$DB->query($query);
-		while ($data=$DB->fetch_array($result)) {
+      while ($data=$DB->fetch_array($result)) {
          switch ($data['oid_port_dyn']) {
             case 0:
                $ptc->addGet($p_sxml_node,

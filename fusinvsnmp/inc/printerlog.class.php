@@ -1,35 +1,43 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -350,16 +358,24 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_begin'])) {
          $begin=$_SESSION['glpi_plugin_fusioninventory_graph_begin'];
       }
-      if ( $begin == 'NULL' OR $begin == '' ) $begin=date("Y-m-01"); // first day of current month
+      if ( $begin == 'NULL' OR $begin == '' ) { 
+         $begin=date("Y-m-01"); // first day of current month
+      }
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_end'])) {
          $end=$_SESSION['glpi_plugin_fusioninventory_graph_end'];
       }
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_type'])) {
          $graphType = $_SESSION['glpi_plugin_fusioninventory_graph_type'];
       }
-      if ( $end == 'NULL' OR $end == '' ) $end=date("Y-m-d"); // today
-      if (isset($_SESSION['glpi_plugin_fusioninventory_graph_timeUnit'])) $timeUnit=$_SESSION['glpi_plugin_fusioninventory_graph_timeUnit'];
-      if (!isset($_SESSION['glpi_plugin_fusioninventory_graph_printersComp'])) $_SESSION['glpi_plugin_fusioninventory_graph_printersComp']=array();
+      if ( $end == 'NULL' OR $end == '' ) {
+         $end=date("Y-m-d"); // today
+      }
+      if (isset($_SESSION['glpi_plugin_fusioninventory_graph_timeUnit'])) {
+         $timeUnit=$_SESSION['glpi_plugin_fusioninventory_graph_timeUnit'];
+      }
+      if (!isset($_SESSION['glpi_plugin_fusioninventory_graph_printersComp'])) { 
+         $_SESSION['glpi_plugin_fusioninventory_graph_printersComp']=array();
+      }
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_printerCompAdd'])) {
          $printerCompAdd=$_SESSION['glpi_plugin_fusioninventory_graph_printerCompAdd'];
          if (!key_exists($printerCompAdd, $_SESSION['glpi_plugin_fusioninventory_graph_printersComp'])) {
@@ -384,7 +400,9 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 
       $printersList = '';
       foreach ($printers as $printers_id=>$printername) {
-         if ($printersList != '') $printersList .= '<br/>';
+         if ($printersList != '') {
+            $printersList .= '<br/>';
+         }
          if ($printers_id == $id) {
             $printersList .= $printername;
          } else {
@@ -394,7 +412,9 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       }
       $printersIds = "";
       foreach (array_keys($printers) as $printerId) {
-         if ($printersIds != '') $printersIds.=', ';
+         if ($printersIds != '') {
+            $printersIds.=', ';
+         }
          $printersIds .= $printerId;
       }
 

@@ -1,86 +1,94 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access this file directly");
+   die("Sorry. You can't access this file directly");
 }
 
 class PluginFusinvsnmpConstructDevice extends CommonDBTM {
 
    function showForm($id, $options=array()) {
-		global $DB,$CFG_GLPI,$LANG;
+      global $DB,$LANG;
 
-		if ($id!='') {
-			$this->getFromDB($id);
+      if ($id!='') {
+         $this->getFromDB($id);
       } else {
-			$this->getEmpty();
+         $this->getEmpty();
       }
 
       $this->showTabs($options);
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['common'][5].": 	</td><td>";
+      echo "<td>".$LANG['common'][5].":    </td><td>";
       Dropdown::show("Manufacturer",
                      array('name'=>"manufacturers_id",
                            'value'=>$this->fields["manufacturers_id"]));
       echo "</td>";
 
       echo "<tr>";
-      echo "<td>".$LANG['setup'][71].": 	</td><td>\n";
+      echo "<td>".$LANG['setup'][71].":    </td><td>\n";
       Dropdown::show("NetworkEquipmentFirmware",
                      array('name'=>"firmware",
                            'value'=>$this->fields["firmware"]));
       echo "</td>";
       echo "</tr>\n";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>" . $LANG['common'][25] . "</td>";
-		echo "<td>";
-		echo "<textarea name='sysdescr'  cols='110' rows='4' />".$this->fields["sysdescr"]."</textarea>";
-		echo "</td>";
-		echo "</tr>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>" . $LANG['common'][25] . "</td>";
+      echo "<td>";
+      echo "<textarea name='sysdescr'  cols='110' rows='4' />".$this->fields["sysdescr"]."</textarea>";
+      echo "</td>";
+      echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>" . $LANG['common'][17] . " :</td>";
-		echo "<td>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>" . $LANG['common'][17] . " :</td>";
+      echo "<td>";
          $type_list = array();
-			$type_list[] = COMPUTER_TYPE;
-			$type_list[] = NETWORKING_TYPE;
-			$type_list[] = PRINTER_TYPE;
-			$type_list[] = PERIPHERAL_TYPE;
-			$type_list[] = PHONE_TYPE;
+         $type_list[] = COMPUTER_TYPE;
+         $type_list[] = NETWORKING_TYPE;
+         $type_list[] = PRINTER_TYPE;
+         $type_list[] = PERIPHERAL_TYPE;
+         $type_list[] = PHONE_TYPE;
 
          // GENERIC OBJECT : Search types in generic object
          $plugin = new Plugin();
@@ -96,22 +104,22 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
             }
          }
          // END GENERIC OBJECT
-			Device::dropdownTypes('type',$this->fields["type"],$type_list);
-		echo "</td>";
+         Device::dropdownTypes('type',$this->fields["type"],$type_list);
+      echo "</td>";
       echo "</tr>";
 
-		$this->showFormButtons($options);
+      $this->showFormButtons($options);
 
       echo "<div id='tabcontent'></div>";
       echo "<script type='text/javascript'>loadDefaultTab();</script>";
 
       return true;
-	}
+   }
 
 
    
    function manageWalks($target, $id) {
-		global $DB,$CFG_GLPI,$LANG,$IMPORT_TYPES;
+      global $DB,$CFG_GLPI,$LANG;
 
       $query = "SELECT * FROM glpi_plugin_fusinvsnmp_constructdevices
          WHERE id='".$id."'";
@@ -240,7 +248,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          WHERE `plugin_fusinvsnmp_constructdevices_id`='".$id."'
             AND `mapping_name` != ''";
       if ($result = $DB->query($query)) {
-			while ($data = $DB->fetch_array($result)) {
+         while ($data = $DB->fetch_array($result)) {
             $a_mapping_used[$data['itemtype']."||".$data['mapping_name']] =
                   $data['itemtype']."||".$data['mapping_name'];
          }
@@ -256,7 +264,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       $a_oids2 = array();
       $a_mibs = array();
       if ($result = $DB->query($query)) {
-			if ($data = $DB->fetch_array($result)) {
+         if ($data = $DB->fetch_array($result)) {
             $file_content = file(GLPI_PLUGIN_DOC_DIR."/fusioninventory/walks/".$data['log']);
             echo $data['log']."<br/>";
             $query_oid = "SELECT * FROM glpi_plugin_fusinvsnmp_miboids";
@@ -459,7 +467,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       echo "<table class='tab_cadre' cellpadding='5' width='950'>";
       echo "<tr class='tab_bg_1 center'>";
       echo "<td>";
-		echo "<input type='hidden' name='id' value='" . $id . "'/>";
+      echo "<input type='hidden' name='id' value='" . $id . "'/>";
       echo "&nbsp;<input type='submit' name='mib' value=\"" . $LANG["buttons"][7] . "\" class='submit' >";
       echo "</td>";
       echo "</tr>";
@@ -470,7 +478,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       echo "<table class='tab_cadre' cellpadding='5' width='950'>";
       echo "<tr class='tab_bg_1 center'>";
       echo "<td>";
-		echo "<input type='hidden' name='id' value='" . $id . "'/>";
+      echo "<input type='hidden' name='id' value='" . $id . "'/>";
       echo "<input type='file' name='walk'/>";
       echo "&nbsp;<input type='submit' name='addWalk' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
       echo "</td>";
@@ -493,7 +501,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          WHERE type IN (1,2,3)
             AND log!=''";
       if ($result = $DB->query($query)) {
-			while ($data = $DB->fetch_array($result)) {
+         while ($data = $DB->fetch_array($result)) {
             // Load mibs
             $a_mib = array();
             $count_mib = 0;
@@ -623,7 +631,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                WHERE (discovery_key IS NULL OR discovery_key='')
                   AND itemtype='".NETWORKING_TYPE."' ";
       if ($result = $DB->query($query)) {
-			while ($data = $DB->fetch_array($result)) {
+         while ($data = $DB->fetch_array($result)) {
             while(strlen($num) < 4)
                $num = "0" . $num;
             $query_update = "UPDATE glpi_plugin_fusinvsnmp_models
@@ -653,7 +661,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                WHERE (discovery_key IS NULL OR discovery_key='')
                   AND itemtype='".PRINTER_TYPE."' ";
       if ($result = $DB->query($query)) {
-			while ($data = $DB->fetch_array($result)) {
+         while ($data = $DB->fetch_array($result)) {
             while(strlen($num) < 4)
                $num = "0" . $num;
             $query_update = "UPDATE glpi_plugin_fusinvsnmp_models
@@ -680,7 +688,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                FROM `".$this->getTable()."`
                WHERE type NOT IN('', 0) ";
       if ($result = $DB->query($query)) {
-			while ($data = $DB->fetch_array($result)) {
+         while ($data = $DB->fetch_array($result)) {
             $sxml_device = $sxml->addChild('DEVICE');
             $sxml_device->addAttribute('SYSDESCR', $data['sysdescr']);
             $sxml_device->addAttribute('MANUFACTURER', $data['manufacturers_id']); //dropdown

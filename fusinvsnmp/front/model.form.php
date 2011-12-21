@@ -1,35 +1,43 @@
 <?php
 
 /*
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ----------------------------------------------------------------------
+   ------------------------------------------------------------------------
 
    LICENSE
 
-   This file is part of FusionInventory.
+   This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 2 of the License, or
-   any later version.
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU Affero General Public License
+   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
-   Original Author of file: David DURIEUX
-   Co-authors of file:
-   Purpose of file:
-   ----------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author 
+   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2010
+ 
+   ------------------------------------------------------------------------
  */
 
 define('GLPI_ROOT', '../../..');
@@ -48,39 +56,39 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 //if (isset ($_POST["add"]) && isset($_POST["id"])) {
 if (isset ($_POST["add"])) {
-	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
-	$PluginFusinvsnmpModel->add($_POST);
-	Html::back();
+   PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
+   $PluginFusinvsnmpModel->add($_POST);
+   Html::back();
 } else if (isset ($_POST["update"])) {
-	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
-	$PluginFusinvsnmpModel->update($_POST);
-	Html::back();
+   PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
+   $PluginFusinvsnmpModel->update($_POST);
+   Html::back();
 } else if (isset ($_POST["delete"])) {
-	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
-	$PluginFusinvsnmpModel->delete($_POST);
-	Html::redirect($CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/model.php");
+   PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
+   $PluginFusinvsnmpModel->delete($_POST);
+   Html::redirect($CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/model.php");
 } else if (isset ($_FILES['importfile']['tmp_name']) && $_FILES['importfile']['tmp_name']!='') {
-	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
-	$PluginFusinvsnmpImportExport->import($_FILES['importfile']['tmp_name']);
-	Html::back();
+   PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
+   $PluginFusinvsnmpImportExport->import($_FILES['importfile']['tmp_name']);
+   Html::back();
 } else if (isset($_GET["is_active"])) {
-	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
-	$PluginFusinvsnmpModelMib->activation($_GET["is_active"]);
-	Html::back();
+   PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
+   $PluginFusinvsnmpModelMib->activation($_GET["is_active"]);
+   Html::back();
 } else if (isset($_POST['massimport'])) {
    PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
    $PluginFusinvsnmpImportExport->importMass();
-	Html::back();
+   Html::back();
 }
 if (isset ($_POST["add_oid"])) {
-	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
-	$PluginFusinvsnmpModelMib->add($_POST);
-	Html::back();
+   PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
+   $PluginFusinvsnmpModelMib->add($_POST);
+   Html::back();
 }
 if(!empty($_POST["item_coche"])) {
-	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
-	$PluginFusinvsnmpModelMib->deleteMib($_POST["item_coche"]);
-	Html::back();
+   PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
+   $PluginFusinvsnmpModelMib->deleteMib($_POST["item_coche"]);
+   Html::back();
 }
 
 if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","r")) {
