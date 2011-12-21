@@ -47,6 +47,16 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryAgentmodule extends CommonDBTM {
    
 
+   /**
+    * Display tab
+    * 
+    * @global array $LANG
+    * 
+    * @param CommonGLPI $item
+    * @param integer $withtemplate
+    * 
+    * @return varchar name of the tab(s) to display
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       global $LANG;
 
@@ -58,7 +68,16 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    }
    
    
-   
+ 
+   /**
+    * Display content of tab
+    * 
+    * @param CommonGLPI $item
+    * @param integer $tabnum
+    * @param interger $withtemplate
+    * 
+    * @return boolean true
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       if ($item->getType()=='PluginFusioninventoryConfig') {
@@ -68,6 +87,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       return true;
    }
    
+
    
    /**
    * Display form forconfiguration of agent modules
@@ -78,7 +98,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    function showForm() {
       global $LANG;
 
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginFusioninventoryAgent();
 
       $a_modules = $this->find();
       foreach ($a_modules as $data) {
@@ -145,8 +165,8 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
             echo "<select size='6' name='agent_to_delete[]'>";
             foreach ($a_agentList as $agent_id) {
-               $PluginFusioninventoryAgent->getFromDB($agent_id);
-               echo "<option value='".$agent_id."'>".$PluginFusioninventoryAgent->getName()."</option>";
+               $pfAgent->getFromDB($agent_id);
+               echo "<option value='".$agent_id."'>".$pfAgent->getName()."</option>";
             }
             echo "</select>";
             echo "</td>";
@@ -184,8 +204,8 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    /**
    * Display form to add exception of modules activation for each agent
    *
-   * @param $items_id integer ID of the agent
-   * @param $options array
+   * @param interger $items_id ID of the agent
+   * @param array $options
    *
    * @return bool true if form is ok
    *
@@ -292,7 +312,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    **/
    function getAgentsCanDo($module_name, $items_id=0) {
 
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+      $pfAgent = new PluginFusioninventoryAgent();
 
       if ($module_name == 'SNMPINVENTORY') {
          $module_name = 'SNMPQUERY';
@@ -317,7 +337,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
                $i++;
             }
             $where .= ") ";
-            $where .= getEntitiesRestrictRequest("AND", $PluginFusioninventoryAgent->getTable());
+            $where .= getEntitiesRestrictRequest("AND", $pfAgent->getTable());
          } else {
             return array();
          }
@@ -336,10 +356,10 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
                $i++;
             }
             $where .= ") ";
-            $where .= getEntitiesRestrictRequest("AND", $PluginFusioninventoryAgent->getTable());
+            $where .= getEntitiesRestrictRequest("AND", $pfAgent->getTable());
          }
          if ($items_id != '0') {
-            $a_agents = $PluginFusioninventoryAgent->find($where);
+            $a_agents = $pfAgent->find($where);
             if(array_key_exists($items_id, $a_agents)) {
                return true;
             }
@@ -347,7 +367,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       }
 
       if ($items_id == '0') {
-         $a_agents = $PluginFusioninventoryAgent->find($where);
+         $a_agents = $pfAgent->find($where);
          return $a_agents;
       } else {
          return false;
