@@ -1752,7 +1752,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addField($newTable,
                                  "plugin_fusioninventory_agents_id",
                                  "int(11) NOT NULL DEFAULT '0'");
-         
+         $migration->addField($newTable,
+                                 "plugin_fusioninventory_agentmodules_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
          
          
          

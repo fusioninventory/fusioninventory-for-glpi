@@ -571,6 +571,9 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
       $inputrulelog = array();
       $inputrulelog['date'] = date('Y-m-d H:i:s');
       $inputrulelog['rules_id'] = $this->fields['id'];
+      if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
+         $inputrulelog['method'] = $class->getMethod();
+      }
       if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
          $inputrulelog['plugin_fusioninventory_agents_id'] = $_SESSION['plugin_fusioninventory_agents_id'];
       }

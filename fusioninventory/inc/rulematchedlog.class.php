@@ -117,7 +117,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
       
       echo "<tr>";
-      echo "<th colspan='3'>";
+      echo "<th colspan='4'>";
       echo $LANG['plugin_fusioninventory']['rules'][20];
       echo "</th>";
       echo "</tr>";
@@ -131,6 +131,9 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       echo "</th>";
       echo "<th>";
       echo $LANG['plugin_fusioninventory']['agents'][28];
+      echo "</th>";
+      echo "<th>";
+      echo $LANG['plugin_fusioninventory']['task'][26];
       echo "</th>";
       echo "</tr>";
       
@@ -149,6 +152,14 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
          echo "<td align='center'>";
          if ($pfAgent->getFromDB($data['plugin_fusioninventory_agents_id'])) {
             echo $pfAgent->getLink(1);
+         }
+         echo "</td>";
+         echo "<td>";
+         $a_methods = PluginFusioninventoryStaticmisc::getmethods();
+         foreach ($a_methods as $mdata) {
+            if ($mdata['method'] == $data['method']) {
+               echo $mdata['name'];
+            }
          }
          echo "</td>";
          echo "</tr>";

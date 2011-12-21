@@ -325,6 +325,7 @@ class PluginFusinvinventoryInventory {
                }
                $inputrulelog['items_id'] = $items_id;
                $inputrulelog['itemtype'] = $itemtype;
+               $inputrulelog['method'] = 'inventory';
                $pfRulematchedlog->add($inputrulelog);
                $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
                unset($_SESSION['plugin_fusioninventory_rules_id']);
@@ -359,6 +360,7 @@ class PluginFusinvinventoryInventory {
                }
                $inputrulelog['items_id'] = $items_id;
                $inputrulelog['itemtype'] = $itemtype;
+               $inputrulelog['method'] = 'inventory';
                $pfRulematchedlog->add($inputrulelog);
                $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
                unset($_SESSION['plugin_fusioninventory_rules_id']);
@@ -729,6 +731,11 @@ class PluginFusinvinventoryInventory {
       
       $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
       $PluginFusinvinventoryLib->addLibMachineFromGLPI($items_id, $internal_id, $xml, $a_sectionsinfos);
+   }
+   
+   
+   static function getMethod() {
+      return 'inventory';
    }
 }
 
