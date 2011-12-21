@@ -122,8 +122,8 @@ class PluginFusinvinventoryInventory {
          }
       // End hack
       
-      $PluginFusinvinventoryBlacklist = new PluginFusinvinventoryBlacklist();
-      $p_xml = $PluginFusinvinventoryBlacklist->cleanBlacklist($p_xml);
+      $pfBlacklist = new PluginFusinvinventoryBlacklist();
+      $p_xml = $pfBlacklist->cleanBlacklist($p_xml);
 
       $_SESSION['SOURCEXML'] = $p_xml;
 
@@ -252,7 +252,7 @@ class PluginFusinvinventoryInventory {
       $xml = $_SESSION['SOURCEXML'];
       
       if ($itemtype == 'Computer') {
-         $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
+         $pfLib = new PluginFusinvinventoryLib();
          $Computer = new Computer();
 
          // ** Get entity with rules
@@ -331,7 +331,7 @@ class PluginFusinvinventoryInventory {
                $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
                unset($_SESSION['plugin_fusioninventory_rules_id']);
             }
-            $PluginFusinvinventoryLib->startAction($xml, $items_id, '1');
+            $pfLib->startAction($xml, $items_id, '1');
          } else {
             $computer = new Computer();
             $operatingSystem = new OperatingSystem();
@@ -343,7 +343,7 @@ class PluginFusinvinventoryInventory {
                $_SESSION["plugin_fusinvinventory_history_add"] = false;
                $_SESSION["plugin_fusinvinventory_no_history_add"] = true;
             }
-            $PluginFusinvinventoryLib->startAction($xml, $items_id, '0');
+            $pfLib->startAction($xml, $items_id, '0');
          }
       } else if ($itemtype == 'PluginFusioninventoryUnknownDevice') {
          $class = new $itemtype();
@@ -396,6 +396,13 @@ class PluginFusinvinventoryInventory {
    
    
 
+   /**
+    * Put/modify computer state 
+    * 
+    * @param type $input
+    * @param boolean $check_management
+    * @param type $management_value 
+    */
    static function addDefaultStateIfNeeded(&$input, $check_management = false, $management_value = 0) {
       $config = new PluginFusioninventoryConfig();
       $state = $config->getValue($_SESSION["plugin_fusinvinventory_moduleid"], "states_id_default");
@@ -730,11 +737,17 @@ class PluginFusinvinventoryInventory {
          }
       }
       
-      $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
-      $PluginFusinvinventoryLib->addLibMachineFromGLPI($items_id, $internal_id, $xml, $a_sectionsinfos);
+      $pfLib = new PluginFusinvinventoryLib();
+      $pfLib->addLibMachineFromGLPI($items_id, $internal_id, $xml, $a_sectionsinfos);
    }
    
    
+   
+   /**
+    * Return method name of this class/plugin
+    * 
+    * @return value  
+    */
    static function getMethod() {
       return 'inventory';
    }
