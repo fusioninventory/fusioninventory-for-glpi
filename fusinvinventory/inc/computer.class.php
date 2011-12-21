@@ -183,10 +183,10 @@ class PluginFusinvinventoryComputer extends CommonDBTM {
          $folder = '0';
       }
       if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id)) {
-         $xml = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id);
-         $xml = str_replace("<", "&lt;", $xml);
-         $xml = str_replace(">", "&gt;", $xml);
-         $xml = str_replace("\n", "<br/>", $xml);
+//         $xml = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id);
+//         $xml = str_replace("<", "&lt;", $xml);
+//         $xml = str_replace(">", "&gt;", $xml);
+//         $xml = str_replace("\n", "<br/>", $xml);
          echo "<table class='tab_cadre_fixe' cellpadding='1'>";
          echo "<tr>";
          echo "<th>".$LANG['plugin_fusioninventory']['title'][1]." ".
@@ -203,11 +203,11 @@ class PluginFusinvinventoryComputer extends CommonDBTM {
          echo "</td>";
          echo "</tr>";
 
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         echo "<pre width='130'>".$xml."</pre>";
-         echo "</td>";
-         echo "</tr>";
+//         echo "<tr class='tab_bg_1'>";
+//         echo "<td>";
+//         echo "<pre width='130'>".$xml."</pre>";
+//         echo "</td>";
+//         echo "</tr>";
          echo "</table>";
       }
    }
