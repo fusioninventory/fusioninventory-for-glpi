@@ -229,6 +229,7 @@ class PluginFusinvinventoryInventory {
             $inputdb['mac'] = exportArrayToDB($input['mac']);
          }
          $inputdb['rules_id'] = $data['_ruleid'];
+         $inputdb['method'] = 'inventory';
          $pFusioninventoryIgnoredimportdevice->add($inputdb);
       }
    }

@@ -1349,6 +1349,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             $inputdb['mac'] = exportArrayToDB($input['mac']);
          }
          $inputdb['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
+         $inputdb['method'] = 'netinventory';
          $pFusioninventoryIgnoredimportdevice->add($inputdb);
          unset($_SESSION['plugin_fusioninventory_rules_id']);
       }
