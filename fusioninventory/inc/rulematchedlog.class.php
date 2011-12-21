@@ -72,6 +72,8 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
          if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agent", "r")) {
              $array_ret[0] = self::createTabEntry($LANG['plugin_fusioninventory']['rules'][21]);
          }
+      } else {
+         $array_ret[1] = self::createTabEntry($LANG['plugin_fusioninventory']['rules'][21]);
       }
       return $array_ret;
    }
@@ -84,6 +86,10 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       if ($tabnum == '0') {
          if ($item->getID() > 0) {
             $pfRulematchedlog->showFormAgent($item->getID());
+         }
+      } else if ($tabnum == '1') {
+         if ($item->getID() > 0) {
+            $pfRulematchedlog->showForm($item->getID(), $item->getType());
          }
       }
       return true;
@@ -180,7 +186,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
       
       echo "<tr>";
-      echo "<th colspan='4'>";
+      echo "<th colspan='5'>";
       echo $LANG['plugin_fusioninventory']['rules'][20];
       echo "</th>";
       echo "</tr>";
@@ -197,6 +203,9 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       echo "</th>";
       echo "<th>";
       echo $LANG['common'][1];
+      echo "</th>";
+      echo "<th>";
+      echo $LANG['plugin_fusioninventory']['task'][26];
       echo "</th>";
       echo "</tr>";
       
@@ -220,6 +229,14 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
          if ($item->getFromDB($data['items_id'])) {
             echo $item->getLink(1);
          }         
+         echo "</td>";
+         echo "<td>";
+         $a_methods = PluginFusioninventoryStaticmisc::getmethods();
+         foreach ($a_methods as $mdata) {
+            if ($mdata['method'] == $data['method']) {
+               echo $mdata['name'];
+            }
+         }
          echo "</td>";
          echo "</tr>";
       }

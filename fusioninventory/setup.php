@@ -71,7 +71,10 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryLock',
               array('addtabon' => array('Computer','Monitor','Printer','NetworkEquipment')));
       Plugin::registerClass('PluginFusioninventoryRulematchedlog',
-              array('addtabon' => array('PluginFusioninventoryAgent')));   
+              array('addtabon' => array('PluginFusioninventoryAgent', 
+                                        'PluginFusioninventoryUnknownDevice',
+                                        'Printer',
+                                        'NetworkEquipment')));   
       
       //Classes for rulesengine
       Plugin::registerClass('PluginFusioninventoryRuleImportEquipment');
