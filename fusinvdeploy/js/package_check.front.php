@@ -410,7 +410,7 @@ function {$render}refreshDynFieldset(val) {
          {$render}dynFieldset.add({$render}fieldset_item_FileSHA512);
          break;
       case 'fileSizeGreater':
-      case 'fileSizeEqual':
+      case 'fileSizeEquals':
       case 'fileSizeLower':
          {$render}dynFieldset.add({$render}fieldset_item_FileSize);
          break;

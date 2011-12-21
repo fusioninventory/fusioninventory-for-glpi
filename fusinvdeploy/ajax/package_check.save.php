@@ -63,7 +63,7 @@ $check = new PluginFusinvdeployCheck;
 
 if (($_POST['type'] == 'fileSizeGreater'
       || $_POST['type'] == 'fileSizelower'
-      || $_POST['type'] == 'fileSizeEqual'
+      || $_POST['type'] == 'fileSizeEquals'
       || $_POST['type'] == 'freespaceGreater'
    )
          && $_POST['unit'] == 'GiB') {
