@@ -1714,8 +1714,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "rules_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
-                                 "plugin_fusioninventory_agentmodules_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
+                                 "method",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
          
          
          
@@ -1753,8 +1753,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "plugin_fusioninventory_agents_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
-                                 "plugin_fusioninventory_agentmodules_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
+                                 "method",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
          
          
          
