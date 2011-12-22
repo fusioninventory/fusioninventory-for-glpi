@@ -114,7 +114,6 @@ class PluginFusinvdeployJob {
       $p['status']         = ''; //status of the task
       $p['currentStep']    = ''; //current step of processing
       $p['msg']            = ''; //Message to be logged
-      $p['log']            = '';
       foreach ($params as $key => $value) {
          $p[$key] = clean_cross_side_scripting_deep($value);
       }
@@ -139,31 +138,32 @@ class PluginFusinvdeployJob {
      $tmp['date']                                    = date("Y-m-d H:i:s");
      $tmp['comment']                                 = "";
      $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_RUNNING;
-
      // add log message
-     if (is_array($p['log'])) {
-        foreach($p['log'] as $log) {
-           $tmp['comment'] .= $log."<br />\n";
-        }
-     } elseif ($p['log'] != "") {
-        $tmp['comment'] = $p['log'];
-     } elseif ($p['currentStep']) {
+     if ($p['currentStep']) {
         $tmp['comment'] = $p['currentStep'];
+     } elseif (is_array($p['msg'])) {
+         if ($tmp['comment'] != "") {
+            $tmp['comment'] .= "<br>";
+        }
+        $tmp['comment'] .= join('<br>', $p['msg']);
+     } elseif ($p['msg'] != "") {
+        if ($tmp['comment'] != "") {
+            $tmp['comment'] .= "<br>";
+        }
+        $tmp['comment'] .= $p['msg'];
      }
 
      if ($p['status'] == 'ko') {
         $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_ERROR;
      }
 
-     if ($tmp['comment'] != "") {
-        $taskjoblog->addTaskjoblog(
-              $tmp['plugin_fusioninventory_taskjobstatus_id'],
-              $tmp['items_id'],
-              $tmp['itemtype'],
-              $tmp['state'],
-              $tmp['comment']
-        );
-     }
+     $taskjoblog->addTaskjoblog(
+        $tmp['plugin_fusioninventory_taskjobstatus_id'],
+        $tmp['items_id'],
+        $tmp['itemtype'],
+        $tmp['state'],
+        $tmp['comment']
+     );
 
      //change task to finish and replanned if retry available
      if ($p['status'] != "" && $p['currentStep'] == "" || $p['status'] == "ko") {
