@@ -130,6 +130,8 @@ function plugin_init_fusioninventory() {
                                                                   'purgeTaskjob'),
                     'PluginFusioninventoryUnknownDevice' => array('PluginFusioninventoryUnknownDevice',
                                                                   'purgeUnknownDevice'));
+         $PLUGIN_HOOKS['pre_item_purge']['fusioninventory'] = array('Computer' =>'plugin_pre_item_purge_fusinvinventory');
+
          $PLUGIN_HOOKS['item_purge']['fusioninventory'] = $p;
 
          
@@ -140,7 +142,8 @@ function plugin_init_fusioninventory() {
                                        'Monitor'          => 'plugin_item_update_fusioninventory',
                                        'Peripheral'       => 'plugin_item_update_fusioninventory',
                                        'Phone'            => 'plugin_item_update_fusioninventory',
-                                       'NetworkPort'      => 'plugin_item_update_fusioninventory');
+                                       'NetworkPort'      => 'plugin_item_update_fusioninventory',
+                                       'PluginFusioninventoryInventoryComputerAntivirus' => array('PluginFusioninventoryInventoryComputerAntivirus', 'addhistory'));
 
 
          $PLUGIN_HOOKS['item_transfer']['fusioninventory'] = 'plugin_item_transfer_fusioninventory';
@@ -177,6 +180,17 @@ function plugin_init_fusioninventory() {
          
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['agents'] = 'front/agent.php';
 
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['fusinvinventory-ruleentity']
+                        = '../fusioninventory/front/inventoryruleentity.form.php';
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['fusinvinventory-ruleentity']
+                        = '../fusioninventory/front/inventoryruleentity.php';
+
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['fusinvinventory-blacklist']
+                        = '../fusioninventory/front/inventorycomputerblacklist.form.php';
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['fusinvinventory-blacklist']
+                        = '../fusioninventory/front/inventorycomputerblacklist.php';
+
+         
 
          if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agent","r")) {
 
@@ -256,9 +270,18 @@ function plugin_init_fusioninventory() {
                   '../fusioninventory/front/credentialip.php';
    
             }
-
          }
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-blacklist']['title'] = $LANG['plugin_fusinvinventory']['menu'][2];
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-blacklist']['page']  = '/plugins/fusioninventory/front/inventorycomputerblacklist.php';
 
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleinventory']['title'] = $LANG['plugin_fusinvinventory']['menu'][1];
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleinventory']['page']  = '/plugins/fusinvinventory/front/ruleinventory.php';
+
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleentity']['title'] = $LANG['plugin_fusinvinventory']['rule'][100];
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleentity']['page']  = '/plugins/fusioninventory/front/inventoryruleentity.php';
+
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-importxmlfile']['title'] = $LANG['plugin_fusinvinventory']['menu'][0];
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-importxmlfile']['page']  = '/plugins/fusinvinventory/front/importxml.php';
       }
    } else { // plugin not active, need $moduleId for uninstall check
       include_once(GLPI_ROOT.'/plugins/fusioninventory/inc/module.class.php');
