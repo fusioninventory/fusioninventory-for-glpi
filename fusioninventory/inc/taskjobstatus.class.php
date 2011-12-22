@@ -362,7 +362,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
    static function cronCleantaskjob() {
       global $DB;
 
-      $retentiontime = PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'delete_task');
+      $retentiontime = PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'delete_task', '');
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $sql = "SELECT * FROM `glpi_plugin_fusioninventory_taskjoblogs`
          WHERE  `date` < date_add(now(),interval -".$retentiontime." day)

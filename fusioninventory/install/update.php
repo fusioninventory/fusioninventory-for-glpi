@@ -1902,25 +1902,25 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $config = new PluginFusioninventoryConfig();
       $a_input = array();
       $a_input['version'] = PLUGIN_FUSIONINVENTORY_VERSION;
-      if (!$config->getValue($plugins_id, "ssl_only")) {
+      if (!$config->getValue($plugins_id, "ssl_only", '')) {
          $a_input['ssl_only'] = 0;
       }
       if (isset($prepare_Config['ssl_only'])) {
          $a_input['ssl_only'] = $prepare_Config['ssl_only'];
       }
-      if (!$config->getValue($plugins_id, "delete_task")) {
+      if (!$config->getValue($plugins_id, "delete_task", '')) {
          $a_input['delete_task'] = 20;
       }
-      if (!$config->getValue($plugins_id, "inventory_frequence")) {
+      if (!$config->getValue($plugins_id, "inventory_frequence", '')) {
          $a_input['inventory_frequence'] = 24;
       }
-      if (!$config->getValue($plugins_id, "agent_port")) {
+      if (!$config->getValue($plugins_id, "agent_port", '')) {
          $a_input['agent_port'] = 62354;
       }
-      if (!$config->getValue($plugins_id, "extradebug")) {
+      if (!$config->getValue($plugins_id, "extradebug", '')) {
          $a_input['extradebug'] = 0;
       }
-      if (!$config->getValue($plugins_id, "users_id")) {
+      if (!$config->getValue($plugins_id, "users_id", '')) {
          $a_input['users_id'] = 0;
       }
       $config->initConfig($plugins_id, $a_input);

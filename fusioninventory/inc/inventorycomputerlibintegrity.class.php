@@ -365,7 +365,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                      // of changes configuration of monitor import)
                      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
                      if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
-                             "import_monitor") == '3') { //Import on serial number
+                             "import_monitor", 'inventory') == '3') { //Import on serial number
 
                         $unserializedsection = unserialize($section);
                         if (isset($unserializedsection['SERIAL'])
@@ -384,7 +384,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                            }
                         }
                      } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
-                             "import_monitor") == '2') { //Import on serial number
+                             "import_monitor", 'inventory') == '2') { //Import on serial number
 
                         // Search in DB if exist
                         $query_monitor = "SELECT * FROM `glpi_computers_items`
@@ -405,7 +405,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                      // of changes configuration of printer import)
                      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
                      if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
-                             "import_printer") == '3') { //Import on serial number
+                             "import_printer", 'inventory') == '3') { //Import on serial number
 
                         $unserializedsection = unserialize($section);
                         if (isset($unserializedsection['SERIAL'])
@@ -424,7 +424,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                            }
                         }
                      } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
-                             "import_printer") == '2') { //Import on serial number
+                             "import_printer", 'inventory') == '2') { //Import on serial number
 
                         // Search in DB if exist
                         $query_printer = "SELECT * FROM `glpi_computers_items`
@@ -445,7 +445,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                      // of changes configuration of printer import)
                      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
                      if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
-                             "import_peripheral") == '3') { //Import on serial number
+                             "import_peripheral", 'inventory') == '3') { //Import on serial number
 
                         $unserializedsection = unserialize($section);
                         if (isset($unserializedsection['SERIAL'])
@@ -464,7 +464,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                            }
                         }
                      } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
-                             "import_periheral") == '2') { //Import on serial number
+                             "import_periheral", 'inventory') == '2') { //Import on serial number
 
                         // Search in DB if exist
                         $query_peripheral = "SELECT * FROM `glpi_computers_items`

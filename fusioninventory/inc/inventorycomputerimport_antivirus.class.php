@@ -63,7 +63,7 @@ class PluginFusioninventoryInventoryComputerImport_Antivirus extends CommonDBTM 
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"], 
-              "import_antivirus") == '0') {
+              "import_antivirus", 'inventory') == '0') {
          return;
       }
 

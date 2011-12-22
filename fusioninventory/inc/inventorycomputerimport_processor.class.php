@@ -63,7 +63,7 @@ class PluginFusioninventoryInventoryComputerImport_Processor extends CommonDBTM 
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
-              "component_processor") == '0') {
+              "component_processor", 'inventory') == '0') {
          return;
       }
 

@@ -71,7 +71,7 @@ class PluginFusioninventoryInventoryComputerImport_Networkport extends CommonDBT
       }
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
-              "component_networkcardvirtual") == '0') {
+              "component_networkcardvirtual", 'inventory') == '0') {
          if (isset($dataSection['VIRTUALDEV'])
                  AND $dataSection['VIRTUALDEV']=='1') {
             

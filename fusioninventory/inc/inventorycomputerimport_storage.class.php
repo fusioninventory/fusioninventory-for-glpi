@@ -72,7 +72,7 @@ class PluginFusioninventoryInventoryComputerImport_Storage extends CommonDBTM {
       if ($type_tmp == "Drive") {
          // it's cd-rom / dvd
          if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
-              "component_drive") == '0') {
+              "component_drive", 'inventory') == '0') {
             return;
          }
          $CompDevice = new Computer_Device('DeviceDrive');
@@ -82,7 +82,7 @@ class PluginFusioninventoryInventoryComputerImport_Storage extends CommonDBTM {
       } else {
          // it's harddisk
          if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
-              "component_harddrive") == '0') {
+              "component_harddrive", 'inventory') == '0') {
             return;
          }
          $CompDevice = new Computer_Device('DeviceHardDrive');

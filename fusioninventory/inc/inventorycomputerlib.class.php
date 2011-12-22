@@ -83,7 +83,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             // get value in Config ($config['transfers_id_auto'])
             $Transfer->getFromDB(
                 $PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
-                                                       'transfers_id_auto'));
+                                                       'transfers_id_auto', 'inventory'));
 
             $item_to_transfer = array("Computer" => array($items_id=>$items_id));
 

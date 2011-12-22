@@ -63,7 +63,7 @@ class PluginFusioninventoryInventoryComputerImport_Monitor extends CommonDBTM {
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
-                                                 "import_monitor") == '0') {
+                                                 "import_monitor", 'inventory') == '0') {
          return;
       }
 
@@ -79,7 +79,7 @@ class PluginFusioninventoryInventoryComputerImport_Monitor extends CommonDBTM {
          // Search if a monitor yet exist
 
          if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
-                 "import_monitor") == '2') {
+                 "import_monitor", 'inventory') == '2') {
 
             if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
                $a_monitors = $monitor->find("`serial`='".$dataSection['SERIAL']."'","", 1);
@@ -90,7 +90,7 @@ class PluginFusioninventoryInventoryComputerImport_Monitor extends CommonDBTM {
                }
             }
          } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
-                 "import_monitor") == '3') {
+                 "import_monitor", 'inventory') == '3') {
             // Import only with serial number
 
             if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
@@ -104,7 +104,7 @@ class PluginFusioninventoryInventoryComputerImport_Monitor extends CommonDBTM {
                return;
             }
          } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
-                 "import_monitor") == '1') {
+                 "import_monitor", 'inventory') == '1') {
             // GLOBAL
             if ((isset($dataSection['CAPTION'])) AND (!empty($dataSection['CAPTION']))) {
                $a_monitors = $monitor->find("`name`='".$dataSection['CAPTION']."'
@@ -149,7 +149,7 @@ class PluginFusioninventoryInventoryComputerImport_Monitor extends CommonDBTM {
       $monitor_id = 0;
       if (!isset($a_monitor['id'])) {
          if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
-                 "import_monitor") == '1') {
+                 "import_monitor", 'inventory') == '1') {
             $a_monitor['is_global'] = 1;
          }
 
@@ -187,7 +187,7 @@ class PluginFusioninventoryInventoryComputerImport_Monitor extends CommonDBTM {
    function deleteItem($items_id, $idmachine) {
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
-                 "import_monitor") != '0') {
+                 "import_monitor", 'inventory') != '0') {
          $Computer_Item = new Computer_Item();
          $Computer_Item->getFromDB($items_id);
          if ($Computer_Item->fields['computers_id'] == $idmachine) {

@@ -61,7 +61,7 @@ class PluginFusioninventoryInventoryComputerImport_Software extends CommonDBTM  
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
-              "import_software") == '0') {
+              "import_software", 'inventory') == '0') {
          return;
       }
 

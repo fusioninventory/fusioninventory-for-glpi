@@ -172,7 +172,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          $ong[1]=$LANG['title'][27];
          $ong[2]=$LANG['buttons'][37];
          $ptc = new PluginFusioninventoryConfig;
-         if (($ptc->is_active('fusioninventory', 'remotehttpagent')) AND(PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","w"))) {
+         if (($ptc->is_active('fusioninventory', 'remotehttpagent', '')) AND(PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","w"))) {
             $ong[3]=$LANG['plugin_fusioninventory']['task'][2];
          }
          $ong[4]=$LANG['title'][38];

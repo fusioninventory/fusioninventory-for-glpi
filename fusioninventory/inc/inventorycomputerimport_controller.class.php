@@ -63,7 +63,7 @@ class PluginFusioninventoryInventoryComputerImport_Controller extends CommonDBTM
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
-              "component_control") == '0') {
+              "component_control", 'inventory') == '0') {
          return;
       }
 

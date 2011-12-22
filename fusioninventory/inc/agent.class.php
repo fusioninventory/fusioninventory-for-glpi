@@ -585,14 +585,14 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $computer->getFromDB($PluginFusioninventoryAgent->fields['items_id']);
          if ($computer->fields["name"] && $computer->fields["name"] != "localhost") {
             array_push($ret, "http://".$computer->fields["name"].
-               ":".$config->getValue($plugins_id, 'agent_port'));
+               ":".$config->getValue($plugins_id, 'agent_port', ''));
 
             $domain = new Domain();
             $domain->getFromDB($computer->fields['domains_id']);
             array_push($ret, "http://".
                $computer->fields["name"].'.'.
                $domain->fields["name"].
-               ":".$config->getValue($plugins_id, 'agent_port'));
+               ":".$config->getValue($plugins_id, 'agent_port', ''));
          }
       }
 
@@ -600,12 +600,12 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       # useful when Windows domain != DNS domain
       $stack = array();
       if(preg_match('/(\S+)-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}$/', $PluginFusioninventoryAgent->fields['name'], $stack)) {
-         array_push($ret, "http://".$stack[1].":".$config->getValue($plugins_id, 'agent_port'));
+         array_push($ret, "http://".$stack[1].":".$config->getValue($plugins_id, 'agent_port', ''));
       }
 
       $a_ips = $PluginFusioninventoryAgent->getIPs($agent_id);
       foreach ($a_ips as $ip) {
-         array_push($ret, "http://".$ip.":".$config->getValue($plugins_id, 'agent_port'));
+         array_push($ret, "http://".$ip.":".$config->getValue($plugins_id, 'agent_port', ''));
       }
 
       return $ret;

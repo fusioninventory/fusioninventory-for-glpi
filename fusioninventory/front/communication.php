@@ -107,7 +107,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       $fusioninventoryModule_id    = $PluginFusioninventoryModule->getModuleId("fusioninventory");
       ob_start();
       if ($loadplugins == '1') {
-         $users_id = $fusioninventory_config->getValue($fusioninventoryModule_id, 'users_id');
+         $users_id = $fusioninventory_config->getValue($fusioninventoryModule_id, 'users_id', '');
          $_SESSION['glpiID'] = $users_id;
          $_SESSION['glpiactiveprofile'] = array();
          $_SESSION['glpiactiveprofile']['interface'] = '';
@@ -150,7 +150,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
       }
 
-      $ssl = $fusioninventory_config->getValue($fusioninventoryModule_id, 'ssl_only');
+      $ssl = $fusioninventory_config->getValue($fusioninventoryModule_id, 'ssl_only', '');
       if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"))
           OR ($ssl == "0")) {
          // echo "On continue";

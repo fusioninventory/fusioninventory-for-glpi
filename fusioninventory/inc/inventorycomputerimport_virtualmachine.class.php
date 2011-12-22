@@ -54,7 +54,7 @@ class PluginFusioninventoryInventoryComputerImport_Virtualmachine extends Common
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
-              "import_vm") == '0') {
+              "import_vm", 'inventory') == '0') {
          return;
       }
 

@@ -63,7 +63,7 @@ class PluginFusioninventoryInventoryComputerImport_Sound extends CommonDBTM {
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
-              "component_soundcard") == '0') {
+              "component_soundcard", 'inventory') == '0') {
          return;
       }
 
