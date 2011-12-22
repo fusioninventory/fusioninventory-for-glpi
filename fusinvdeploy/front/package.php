@@ -47,16 +47,14 @@ if (!defined('GLPI_ROOT')) {
 include (GLPI_ROOT."/inc/includes.php");
 Session::checkLoginUser();
 
-commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins",
+Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins",
              "fusioninventory","packages");
-
-//PluginFusioninventoryProfile::checkRight("Fusioninventory", "agents","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
 $package = new PluginFusinvdeployPackage();
 $package->showMenu();
 
-commonFooter();
+Html::footer();
 
 ?>

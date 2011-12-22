@@ -105,6 +105,7 @@ $LANG['plugin_fusinvdeploy']['setup'][18]="Le plugin ".$title." a besoin que le 
 $LANG['plugin_fusinvdeploy']['setup'][19]="Le plugin ".$title." a besoin que le plugin Webservices (>= 1.2.0) soit installé pour être lui-même activé.";
 $LANG['plugin_fusinvdeploy']['setup'][20]="Le plugin ".$title." a besoin que le plugin Webservices (>= 1.2.0) soit installé pour être lui-même désinstallé.";
 $LANG['plugin_fusinvdeploy']['setup'][21]="Le plugin ".$title." a besoin que le plugin FusionInventory INVENTORY soit installé pour être lui-même activé.";
+$LANG['plugin_fusinvdeploy']['setup'][22]="Le plugin ".$title." a besoin que le plugin FusionInventory INVENTORY soit installé pour être lui-même désinstallé.";
 
 $LANG['plugin_fusinvdeploy']['profile'][1]="$title";
 $LANG['plugin_fusinvdeploy']['profile'][2]="Gestion des paquets";

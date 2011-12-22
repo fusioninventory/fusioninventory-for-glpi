@@ -49,20 +49,37 @@ class PluginFusinvdeployConfig extends CommonDBTM {
    function initConfigModule() {
       global $DB;
 
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
       $Config = new Config;
       $Config->getFromDB('1');
 
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
-
-      $glpi_path = str_replace("http://", "", $Config->fields['url_base']);
-
-      $insert = array('glpi_path'=>$glpi_path);
+      $insert = array(	'glpi_path'				=> str_replace("http://", "", $Config->fields['url_base']),
+								'server_upload_path' => $_SERVER['DOCUMENT_ROOT'] . '/files/_plugins/' . 
+																	$a_plugin['shortname'] . '/upload');
       $PluginFusioninventoryConfig->initConfig($plugins_id, $insert);
-      
-      $a_infos = plugin_version_fusinvdeploy();
-      $PluginFusioninventoryConfig->initConfig($plugins_id, array('version' => $a_infos['version']));
-      
+   }
+
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $LANG;
+
+      if ($item->getType()=='PluginFusioninventoryConfig') {
+         if ($_SESSION['glpishow_count_on_tabs']) {
+            return self::createTabEntry($LANG['plugin_fusinvdeploy']['title'][0]);
+         }
+         return $LANG['plugin_fusinvdeploy']['title'][0];
+      }
+      return '';
+   }
+
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+
+      if ($item->getType()=='PluginFusioninventoryConfig') {
+         $pfConfig = new self();
+         $pfConfig->showForm($item);
+      }
+      return true;
    }
 
    function putForm($p_post) {
@@ -81,7 +98,7 @@ class PluginFusinvdeployConfig extends CommonDBTM {
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
 
-      echo "<form name='form' method='post' action='".$options['target']."'>";
+      echo "<form name='form' method='post' action='".$this->getFormURL()."'>";
       echo "<div class='center' id='tabsbody'>";
       echo "<table class='tab_cadre_fixe'>";
 

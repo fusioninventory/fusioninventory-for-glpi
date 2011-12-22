@@ -28,7 +28,7 @@
    ------------------------------------------------------------------------
 
    @package   FusionInventory
-   @author    Alexandre Delaunay
+   @author    David Durieux
    @co-author 
    @copyright Copyright (c) 2010-2011 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
@@ -40,22 +40,12 @@
    ------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', '../../..');
+include_once ("hook.php");
+
+// inc files 
+if (file_exists(GLPI_ROOT."/plugins/fusioninventory/inc/communication.class.php")) {
+   foreach (glob(GLPI_ROOT.'/plugins/fusinvdeploy/inc/*.php') as $file) {
+      include_once($file);
+   }
 }
-
-include (GLPI_ROOT."/inc/includes.php");
-Session::checkLoginUser();
-
-Html::header($LANG['plugin_fusinvdeploy']['task'][0],$_SERVER["PHP_SELF"],"plugins",
-             "fusioninventory","task");
-
-
-PluginFusioninventoryMenu::displayMenu("mini");
-
-$task = new PluginFusinvdeployTask();
-$task->showMenu();
-
-Html::footer();
-
 ?>

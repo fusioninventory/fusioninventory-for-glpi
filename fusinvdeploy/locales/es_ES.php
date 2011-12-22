@@ -102,8 +102,9 @@ $LANG['plugin_fusinvdeploy']['config'][1]="Directorio raíz para el envío de fi
 $LANG['plugin_fusinvdeploy']['setup'][17]="Para instalar o activar ".$title." es necesario que FusionInventory este activado previamente.";
 $LANG['plugin_fusinvdeploy']['setup'][18]="Para desinstalar ".$title." es necesario que FusionInventory esté activado previamente.";
 $LANG['plugin_fusinvdeploy']['setup'][19]="Para activar ".$title." es necesario contar con Webservices (>= 1.2.0) instalado previamente.";
-$LANG['plugin_fusinvdeploy']['setup'][20]="Plugin desinstalar ".$title." es necesario contar con Webservices (>= 1.2.0) instalado previamente.";
+$LANG['plugin_fusinvdeploy']['setup'][20]="Para desinstalar ".$title." es necesario contar con Webservices (>= 1.2.0) instalado previamente.";
 $LANG['plugin_fusinvdeploy']['setup'][21]="Para instalar o activar ".$title." es necesario que FusionInventory INVENTORY este activado previamente.";
+$LANG['plugin_fusinvdeploy']['setup'][22]="Para desinstalar ".$title." es necesario contar con FusionInventory INVENTORY instalado previamente.";
 
 $LANG['plugin_fusinvdeploy']['profile'][1]="$title";
 $LANG['plugin_fusinvdeploy']['profile'][2]="Gestión de paquetes";

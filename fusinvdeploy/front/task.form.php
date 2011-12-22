@@ -92,13 +92,13 @@ if (isset($_POST['forcestart'])) {
    Html::back();
 
 } else {
-   commonHeader($LANG['plugin_fusinvdeploy']["title"][0],$_SERVER["PHP_SELF"],"plugins",
+   Html::header($LANG['plugin_fusinvdeploy']["title"][0],$_SERVER["PHP_SELF"],"plugins",
    "fusioninventory","task");
 
    PluginFusioninventoryMenu::displayMenu("mini");
 
    $task->showForm($_GET["id"]);
-   commonFooter();
+   Html::footer();
 }
 
 ?>

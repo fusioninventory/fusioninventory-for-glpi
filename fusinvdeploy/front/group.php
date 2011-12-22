@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 include (GLPI_ROOT."/inc/includes.php");
 Session::checkLoginUser();
 
-commonHeader($LANG['plugin_fusinvdeploy']['group'][0],$_SERVER["PHP_SELF"],"plugins",
+Html::header($LANG['plugin_fusinvdeploy']['group'][0],$_SERVER["PHP_SELF"],"plugins",
              "fusioninventory","group");
 
 
@@ -56,6 +56,6 @@ PluginFusioninventoryMenu::displayMenu("mini");
 $group = new PluginFusinvdeployGroup();
 $group->showMenu();
 
-commonFooter();
+Html::footer();
 
 ?>

@@ -45,7 +45,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 Session::checkLoginUser();
 
 header("Content-Type: text/html; charset=UTF-8");
-header_nocache();
+Html::header_nocache();
 
 checkRight("create_ticket", "1");
 

@@ -79,16 +79,14 @@ class PluginFusinvdeployPackage extends CommonDBTM {
 
       $ong = array();
       if ($this->fields['id'] > 0){
-         //$ong[1]  = $LANG['plugin_fusinvdeploy']['package'][5];
-         $ong[2]  = $LANG['plugin_fusinvdeploy']['package'][14];
-         $ong[3]  = $LANG['plugin_fusinvdeploy']['package'][15];
-         $ong['no_all_tab'] = true;
+			$this->addStandardTab($LANG['plugin_fusinvdeploy']['package'][14], $ong, $options);
+			$this->addStandardTab($LANG['plugin_fusinvdeploy']['package'][15], $ong, $options);
       } elseif ($this->fields['id'] == -1) {
-         $ong[4] = $LANG['plugin_fusinvdeploy']['package'][5];
-         $ong['no_all_tab']=true;
-      } else { // New item
-         $ong[1] = $LANG['plugin_fusinvdeploy']['package'][26];
+			$this->addStandardTab($LANG['plugin_fusinvdeploy']['package'][5], $ong, $options);
+      } else {
+			$this->addStandardTab($LANG['plugin_fusinvdeploy']['package'][26], $ong, $options);
       }
+		$ong['no_all_tab'] = true;
       return $ong;
    }
 
@@ -166,7 +164,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
          $title = "";
       }
 
-      displayTitle(GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_mini_package.png", $title, $title, $buttons);
+      Html::displayTitle(GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_mini_package.png", $title, $title, $buttons);
    }
 
    function showMenu($options=array())  {

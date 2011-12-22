@@ -44,7 +44,7 @@ define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
 Session::checkLoginUser();
 
-commonHeader($LANG['plugin_fusinvdeploy']['form']['mirror'][1],$_SERVER["PHP_SELF"],"plugins",
+Html::header($LANG['plugin_fusinvdeploy']['form']['mirror'][1],$_SERVER["PHP_SELF"],"plugins",
    "fusioninventory","mirror");
 
 //PluginFusioninventoryProfile::checkRight("Fusioninventory", "agents","r");
@@ -72,6 +72,6 @@ if (isset($_GET["id"])) {
    $id = $_GET["id"];
 }
 $mirror->showForm($id);
-commonFooter();
+Html::footer();
 
 ?>
