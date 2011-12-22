@@ -222,6 +222,11 @@ $LANG['plugin_fusinvdeploy']['group'][1] = "Static group";
 $LANG['plugin_fusinvdeploy']['group'][2] = "Dynamic group";
 $LANG['plugin_fusinvdeploy']['group'][3] = "Group of computers";
 $LANG['plugin_fusinvdeploy']['group'][4] = "Add group";
-$LANG['plugin_fusinvdeploy']['group'][5] = "Si aucune ligne de la liste n'est selectionné, le champs texte de gauche sera utilisé pour la recherche";
+$LANG['plugin_fusinvdeploy']['group'][5] = "If no line in the list is selected, the text fields on the left will be used for search.";
 
+$LANG['plugin_fusinvdeploy']['menu'][1] = "Package management";
+$LANG['plugin_fusinvdeploy']['menu'][2] = "Mirror servers";
+$LANG['plugin_fusinvdeploy']['menu'][3] = "Deployment tasks";
+$LANG['plugin_fusinvdeploy']['menu'][4] = "Groups of computers";
+$LANG['plugin_fusinvdeploy']['menu'][5] = "Deployment status";
 ?>
