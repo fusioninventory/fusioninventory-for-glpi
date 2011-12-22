@@ -230,4 +230,75 @@ $LANG['plugin_fusioninventory']['wizard'][7]="Run tasks";
 $LANG['plugin_fusioninventory']['wizard'][8]="Tasks running result";
 
 $LANG['plugin_fusioninventory']['xml'][0]="XML";
+
+
+$LANG['plugin_fusioninventory']['antivirus'][0]="Antivirüs";
+$LANG['plugin_fusioninventory']['antivirus'][1]="No antivirus on this computer";
+$LANG['plugin_fusioninventory']['antivirus'][2]="Versiyon";
+$LANG['plugin_fusioninventory']['antivirus'][3]="Up to date";
+
+$LANG['plugin_fusioninventory']['bios'][0]="BIOS";
+
+$LANG['plugin_fusioninventory']['blacklist'][0]="blacklisted value";
+$LANG['plugin_fusioninventory']['blacklist'][1]="New value to blacklist";
+
+$LANG['plugin_fusioninventory']['computer'][0]="Last inventory";
+$LANG['plugin_fusioninventory']['computer'][1]="Owner";
+$LANG['plugin_fusioninventory']['computer'][2]="Company";
+
+$LANG['plugin_fusioninventory']['importxml'][0]="Import XML file from an Agent";
+$LANG['plugin_fusioninventory']['importxml'][1]="Computer injected into GLPI";
+$LANG['plugin_fusioninventory']['importxml'][2]="No file to import!";
+$LANG['plugin_fusioninventory']['importxml'][3]="XML file not valid!";
+
+$LANG['plugin_fusioninventory']['integrity'][0]="Only in GLPI (check to delete)";
+$LANG['plugin_fusioninventory']['integrity'][1]="Only in last inventory (check to import)";
+
+$LANG['plugin_fusioninventory']['menu'][8]="Import agent XML file";
+$LANG['plugin_fusioninventory']['menu'][9]="Criteria rules";
+$LANG['plugin_fusioninventory']['menu'][10]="BlackList";
+$LANG['plugin_fusioninventory']['menu'][11]="Data integrity check";
+
+$LANG['plugin_fusioninventory']['profile'][7]="Existance criteria";
+$LANG['plugin_fusioninventory']['profile'][8]="XML file manual import";
+$LANG['plugin_fusioninventory']['profile'][9]="Fields blacklist";
+
+$LANG['plugin_fusioninventory']['rule'][20]="Computer existent criteria rules";
+$LANG['plugin_fusioninventory']['rule'][100]="Entity rules";
+$LANG['plugin_fusioninventory']['rule'][102]="Ignore in FusionInventory import";
+$LANG['plugin_fusioninventory']['rule'][21]="Existant criterium";
+$LANG['plugin_fusioninventory']['rule'][22]="Serial Number";
+$LANG['plugin_fusioninventory']['rule'][30]="Import in asset";
+$LANG['plugin_fusioninventory']['rule'][31]="Import in unknown devices";
+$LANG['plugin_fusioninventory']['rule'][23]="MAC address";
+$LANG['plugin_fusioninventory']['rule'][24]="Microsoft product key";
+$LANG['plugin_fusioninventory']['rule'][25]="Computer model";
+$LANG['plugin_fusioninventory']['rule'][26]="Hard disk serial number";
+$LANG['plugin_fusioninventory']['rule'][27]="Partitions serial number";
+$LANG['plugin_fusioninventory']['rule'][28]="Tag";
+
+$LANG['plugin_fusioninventory']['setup'][17]="Plugin FusionInventory INVENTORY need plugin FusionInventory activated before activation.";
+$LANG['plugin_fusioninventory']['setup'][18]="Plugin FusionInventory INVENTORY need plugin FusionInventory activated before uninstall.";
+$LANG['plugin_fusioninventory']['setup'][20]="Import options";
+$LANG['plugin_fusioninventory']['setup'][21]="Components";
+$LANG['plugin_fusioninventory']['setup'][22]="Global import";
+$LANG['plugin_fusioninventory']['setup'][23]="No import";
+$LANG['plugin_fusioninventory']['setup'][24]="Unique import";
+$LANG['plugin_fusioninventory']['setup'][25]="Registry";
+$LANG['plugin_fusioninventory']['setup'][26]="Processes";
+$LANG['plugin_fusioninventory']['setup'][27]="Unique import on serial number";
+$LANG['plugin_fusioninventory']['setup'][28]="Automatic computers transfer";
+$LANG['plugin_fusioninventory']['setup'][29]="Model for automatic computers transfer in an other entity";
+$LANG['plugin_fusioninventory']['setup'][30]="Network drives";
+$LANG['plugin_fusioninventory']['setup'][31]="Virtual network card";
+$LANG['plugin_fusioninventory']['setup'][32]="This option will not import this item";
+$LANG['plugin_fusioninventory']['setup'][33]="This option will merge items with same name to reduce number of items if this management isn't important";
+$LANG['plugin_fusioninventory']['setup'][34]="This option will create one item for each item found";
+$LANG['plugin_fusioninventory']['setup'][35]="This option will create one item for each item have serial number";
+$LANG['plugin_fusioninventory']['setup'][36]="Default status";
+
+$LANG['plugin_fusioninventory']['title'][2]="VMware host remote inventory";
+
+$LANG['plugin_fusioninventory']['vmwareesx'][0]="VMware host";
+
 ?>

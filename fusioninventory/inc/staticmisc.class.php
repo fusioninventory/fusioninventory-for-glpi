@@ -72,7 +72,7 @@ class PluginFusioninventoryStaticmisc {
       $a_tasks[] = array('module'        => 'fusioninventory',
                          'method'         => 'ESX',
                          'selection_type' => 'devices',
-                         'name'           => $LANG['plugin_fusinvinventory']['title'][2],
+                         'name'           => $LANG['plugin_fusioninventory']['title'][2],
                          'use_rest'       => true);
       
       return $a_tasks;
@@ -173,13 +173,13 @@ class PluginFusioninventoryStaticmisc {
           
           
                    array('profil'  => 'existantrule',
-                         'name'    => $LANG['plugin_fusinvinventory']['profile'][2]),
+                         'name'    => $LANG['plugin_fusioninventory']['profile'][7]),
                    array('profil'  => 'importxml',
-                         'name'    => $LANG['plugin_fusinvinventory']['profile'][3]),
+                         'name'    => $LANG['plugin_fusioninventory']['profile'][8]),
                    array('profil'  => 'blacklist',
-                         'name'    => $LANG['plugin_fusinvinventory']['profile'][4]),
+                         'name'    => $LANG['plugin_fusioninventory']['profile'][9]),
                    array('profil'  => 'ESX',
-                         'name'    => $LANG['plugin_fusinvinventory']['vmwareesx'][0]));
+                         'name'    => $LANG['plugin_fusioninventory']['vmwareesx'][0]));
    }
    
    

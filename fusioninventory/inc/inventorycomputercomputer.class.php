@@ -124,7 +124,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       echo '</tr>';
 
       echo '<tr class="tab_bg_1">';
-      echo '<th colspan="2" width="50%">'.$LANG['plugin_fusinvinventory']['bios'][0].'</th>';
+      echo '<th colspan="2" width="50%">'.$LANG['plugin_fusioninventory']['bios'][0].'</th>';
       echo '<th colspan="2">'.$LANG['common'][67].'</th>';
       echo '</tr>';
       
@@ -138,7 +138,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       echo '<tr class="tab_bg_1">';
       echo '<td>'.$LANG['rulesengine'][78].'&nbsp;:</td>';
       echo '<td>'.$a_computerextend['bios_version'].'</td>';
-      echo '<td>'.$LANG['plugin_fusinvinventory']['computer'][1].'&nbsp;:</td>';
+      echo '<td>'.$LANG['plugin_fusioninventory']['computer'][1].'&nbsp;:</td>';
       echo '<td>'.$a_computerextend['winowner'].'</td>';
       echo '</tr>';
 
@@ -147,7 +147,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       echo '<td>';
       echo Dropdown::getDropdownName("glpi_manufacturers", $a_computerextend['bios_manufacturers_id']);
       echo '</td>';
-      echo '<td>'.$LANG['plugin_fusinvinventory']['computer'][2].'&nbsp;:</td>';
+      echo '<td>'.$LANG['plugin_fusioninventory']['computer'][2].'&nbsp;:</td>';
       echo '<td>'.$a_computerextend['wincompany'].'</td>';
       echo '</tr>';
             
@@ -176,7 +176,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          echo "<tr>";
          echo "<th>".$LANG['plugin_fusioninventory']['title'][1]." ".
             $LANG['plugin_fusioninventory']['xml'][0];
-         echo " (".$LANG['plugin_fusinvinventory']['computer'][0]."&nbsp;: " . 
+         echo " (".$LANG['plugin_fusioninventory']['computer'][0]."&nbsp;: " . 
             Html::convDateTime(date("Y-m-d H:i:s", 
                          filemtime(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id))).")";
          echo "</th>";

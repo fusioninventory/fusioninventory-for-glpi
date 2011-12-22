@@ -78,7 +78,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                LIMIT 1";
             $result = $DB->query($query);
             if ($DB->numrows($result) > 0) {
-               return self::createTabEntry($LANG['plugin_fusinvinventory']['menu'][4]);
+               return self::createTabEntry($LANG['plugin_fusioninventory']['menu'][11]);
             }
          }
       }
@@ -152,7 +152,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
       
       echo "<tr>";
       echo "<th colspan='4'>";
-      echo $LANG['plugin_fusinvinventory']['menu'][4];
+      echo $LANG['plugin_fusioninventory']['menu'][11];
       echo "</th>";
       echo "</tr>";
 
@@ -164,10 +164,10 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
       echo $LANG['common'][16];
       echo "</th>";
       echo "<th>";
-      echo $LANG['plugin_fusinvinventory']['integrity'][0];
+      echo $LANG['plugin_fusioninventory']['integrity'][0];
       echo "</th>";
       echo "<th>";
-      echo $LANG['plugin_fusinvinventory']['integrity'][1];
+      echo $LANG['plugin_fusioninventory']['integrity'][1];
       echo "</th>";
       echo "</tr>";
 

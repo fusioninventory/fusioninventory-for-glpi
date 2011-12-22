@@ -54,7 +54,7 @@ class PluginFusioninventoryInventoryRuleEntityCollection extends RuleCollection 
    function getTitle() {
       global $LANG;
 
-      return $LANG['plugin_fusinvinventory']['rule'][100];
+      return $LANG['plugin_fusioninventory']['rule'][100];
    }
 
 

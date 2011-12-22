@@ -231,4 +231,75 @@ $LANG['plugin_fusioninventory']['wizard'][7]="Exécutions de tâches";
 $LANG['plugin_fusioninventory']['wizard'][8]="Résultats d'exécution des tâches";
 
 $LANG['plugin_fusioninventory']['xml'][0]="XML";
+
+
+$LANG['plugin_fusioninventory']['antivirus'][0]="Antivirus";
+$LANG['plugin_fusioninventory']['antivirus'][1]="Pas d'antivirus sur cet ordinateur";
+$LANG['plugin_fusioninventory']['antivirus'][2]="Version";
+$LANG['plugin_fusioninventory']['antivirus'][3]="A jour";
+
+$LANG['plugin_fusioninventory']['bios'][0]="BIOS";
+
+$LANG['plugin_fusioninventory']['blacklist'][0]="Valeur en liste noire";
+$LANG['plugin_fusioninventory']['blacklist'][1]="Nouvelle valeur à ajouter en liste noire";
+
+$LANG['plugin_fusioninventory']['computer'][0]="Dernier inventaire";
+$LANG['plugin_fusioninventory']['computer'][1]="Propriétaire";
+$LANG['plugin_fusioninventory']['computer'][2]="Entreprise";
+
+$LANG['plugin_fusioninventory']['importxml'][0]="Import de fichier XML provenant de l'agent";
+$LANG['plugin_fusioninventory']['importxml'][1]="Ordinateur importé dans GLPI";
+$LANG['plugin_fusioninventory']['importxml'][2]="Fichier manquant !";
+$LANG['plugin_fusioninventory']['importxml'][3]="Fichier XML non valide !";
+
+$LANG['plugin_fusioninventory']['integrity'][0]="Seulement dans GLPI (cocher pour supprimer)";
+$LANG['plugin_fusioninventory']['integrity'][1]="Seulement dans le dernier inventaire (cocher pour importer)";
+
+$LANG['plugin_fusioninventory']['menu'][8]="Importer un fichier XML de l'agent";
+$LANG['plugin_fusioninventory']['menu'][9]="Règles de critères";
+$LANG['plugin_fusioninventory']['menu'][10]="Liste noire";
+$LANG['plugin_fusioninventory']['menu'][11]="Contrôle d'intégrité des données";
+
+$LANG['plugin_fusioninventory']['profile'][7]="Règles d'existence";
+$LANG['plugin_fusioninventory']['profile'][8]="Import manuel de fichier XML";
+$LANG['plugin_fusioninventory']['profile'][9]="Liste noire de champs";
+
+$LANG['plugin_fusioninventory']['rule'][20]="Règles de critères d'existence d'ordinateur";
+$LANG['plugin_fusioninventory']['rule'][100]="Règles d'entité";
+$LANG['plugin_fusioninventory']['rule'][102]="Ignorer lors de l'import FusionInventory";
+$LANG['plugin_fusioninventory']['rule'][21]="Critère d'existence";
+$LANG['plugin_fusioninventory']['rule'][22]="Numéro de série";
+$LANG['plugin_fusioninventory']['rule'][30]="Import dans l'inventaire";
+$LANG['plugin_fusioninventory']['rule'][31]="Import dans le matériel inconnu";
+$LANG['plugin_fusioninventory']['rule'][23]="Adresse MAC";
+$LANG['plugin_fusioninventory']['rule'][24]="Clé produit Microsoft";
+$LANG['plugin_fusioninventory']['rule'][25]="Modèle d'ordinateur";
+$LANG['plugin_fusioninventory']['rule'][26]="Numéro de série des disques durs";
+$LANG['plugin_fusioninventory']['rule'][27]="Numéro de série des partitions";
+$LANG['plugin_fusioninventory']['rule'][28]="Etiquette";
+
+$LANG['plugin_fusioninventory']['setup'][17]="Le plugin FusionInventory INVENTORY a besoin que le plugin FusionInventory soit activé pour être lui-même activé.";
+$LANG['plugin_fusioninventory']['setup'][18]="Le plugin FusionInventory INVENTORY a besoin que le plugin FusionInventory soit activé pour être lui-même désinstallé.";
+$LANG['plugin_fusioninventory']['setup'][20]="Options d'importation";
+$LANG['plugin_fusioninventory']['setup'][21]="Composants";
+$LANG['plugin_fusioninventory']['setup'][22]="Import global";
+$LANG['plugin_fusioninventory']['setup'][23]="Pas d'import";
+$LANG['plugin_fusioninventory']['setup'][24]="Import unique";
+$LANG['plugin_fusioninventory']['setup'][25]="Base de registre";
+$LANG['plugin_fusioninventory']['setup'][26]="Processus";
+$LANG['plugin_fusioninventory']['setup'][27]="Import unique sur numéro de série";
+$LANG['plugin_fusioninventory']['setup'][28]="Transfert automatique d'ordinateurs";
+$LANG['plugin_fusioninventory']['setup'][29]="Modèle pour le transfert automatique d'ordinateurs dans une autre entité";
+$LANG['plugin_fusioninventory']['setup'][30]="Volumes réseau";
+$LANG['plugin_fusioninventory']['setup'][31]="Carte réseau virtuelle";
+$LANG['plugin_fusioninventory']['setup'][32]="Cette option ne va pas importer l'élément";
+$LANG['plugin_fusioninventory']['setup'][33]="Cette option va fusionner les éléments qui ont le même nom et donc réduire le nombre d'élément si cette gestion n'est pas importante";
+$LANG['plugin_fusioninventory']['setup'][34]="Cette option va créer un élément pour chaque élément trouvé";
+$LANG['plugin_fusioninventory']['setup'][35]="Cette option va créer un élément pour chaque élément qui a un numéro de série";
+$LANG['plugin_fusioninventory']['setup'][36]="Statut par défaut";
+
+$LANG['plugin_fusioninventory']['title'][2]="Inventaire distant des hôtes VMware";
+
+$LANG['plugin_fusioninventory']['vmwareesx'][0]="Hôte VMware";
+
 ?>

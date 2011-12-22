@@ -49,7 +49,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
    static function getTypeName() {
       global $LANG;
 
-      return $LANG['plugin_fusinvinventory']['menu'][2];
+      return $LANG['plugin_fusioninventory']['menu'][10];
    }
 
    
@@ -69,12 +69,12 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
 
       $tab = array();
 
-      $tab['common'] = $LANG['plugin_fusinvinventory']['menu'][2];
+      $tab['common'] = $LANG['plugin_fusioninventory']['menu'][10];
 
       $tab[1]['table']     = $this->getTable();
       $tab[1]['field']     = 'value';
       $tab[1]['linkfield'] = 'value';
-      $tab[1]['name']      = $LANG['plugin_fusinvinventory']['blacklist'][0];
+      $tab[1]['name']      = $LANG['plugin_fusioninventory']['blacklist'][0];
       $tab[1]['datatype']  = 'itemlink';
 
       $tab[2]['table']     = 'glpi_plugin_fusinvinventory_criterias';
@@ -125,7 +125,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
       $this->showFormHeader();
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusinvinventory']['blacklist'][0]."</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['blacklist'][0]."</td>";
       echo "<td>";
       echo "<input type='text' name='value' value='".$this->fields['value']."' />";
       echo "</td>";

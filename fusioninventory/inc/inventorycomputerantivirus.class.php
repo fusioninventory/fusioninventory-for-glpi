@@ -49,7 +49,7 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
    static function getTypeName() {
       global $LANG;
 
-      return $LANG['plugin_fusinvinventory']['antivirus'][0];
+      return $LANG['plugin_fusioninventory']['antivirus'][0];
    }
 
    function canCreate() {
@@ -87,7 +87,7 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
          if (Session::haveRight('computer', "r")) {
             $a_antivirus = $this->find("`computers_id`='".$item->getID()."'", '', 1);
             if (count($a_antivirus) > 0) {
-               return self::createTabEntry($LANG['plugin_fusinvinventory']['antivirus'][0]);
+               return self::createTabEntry($LANG['plugin_fusioninventory']['antivirus'][0]);
             }
          }
       }
@@ -148,18 +148,18 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
  
       if (count($antivirusData) == '0') {
          echo "<tr>";
-         echo "<th>".$LANG['plugin_fusinvinventory']['antivirus'][0];
+         echo "<th>".$LANG['plugin_fusioninventory']['antivirus'][0];
          echo "</th>";
          echo "</tr>";
 
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'><br/><strong>";
-         echo $LANG['plugin_fusinvinventory']['antivirus'][1]."<br/>";
+         echo $LANG['plugin_fusioninventory']['antivirus'][1]."<br/>";
          echo "</strong><br/></td>";
          echo "</tr>";
       } else {
          echo "<tr>";
-         echo "<th colspan='4'>".$LANG['plugin_fusinvinventory']['antivirus'][0];
+         echo "<th colspan='4'>".$LANG['plugin_fusioninventory']['antivirus'][0];
          echo "</th>";
          echo "</tr>";
 
@@ -186,7 +186,7 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
          echo Dropdown::getDropdownName('glpi_manufacturers', $antivirusData["manufacturers_id"]);
          echo "</td>";
          echo "<td>";
-         echo $LANG['plugin_fusinvinventory']['antivirus'][3]."&nbsp;:";
+         echo $LANG['plugin_fusioninventory']['antivirus'][3]."&nbsp;:";
          echo "</td>";
          echo "<td>";
          echo Dropdown::getYesNo($antivirusData['uptodate']);
@@ -195,7 +195,7 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
 
          echo "<tr class='tab_bg_1'>";
          echo "<td>";
-         echo $LANG['plugin_fusinvinventory']['antivirus'][2]."&nbsp;:";
+         echo $LANG['plugin_fusioninventory']['antivirus'][2]."&nbsp;:";
          echo "</td>";
          echo "<td>";
          echo $antivirusData['version'];

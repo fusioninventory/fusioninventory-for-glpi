@@ -230,4 +230,75 @@ $LANG['plugin_fusioninventory']['wizard'][7]="Ejecutar tareas";
 $LANG['plugin_fusioninventory']['wizard'][8]="Resultado de las tareas en ejecución";
 
 $LANG['plugin_fusioninventory']['xml'][0]="XML";
+
+
+$LANG['plugin_fusioninventory']['antivirus'][0]="Antivirus";
+$LANG['plugin_fusioninventory']['antivirus'][1]="Sin antivirus en este ordenador";
+$LANG['plugin_fusioninventory']['antivirus'][2]="Versión";
+$LANG['plugin_fusioninventory']['antivirus'][3]="Actualizado";
+
+$LANG['plugin_fusioninventory']['bios'][0]="BIOS";
+
+$LANG['plugin_fusioninventory']['blacklist'][0]="valor en lista negra";
+$LANG['plugin_fusioninventory']['blacklist'][1]="Nuevo valor a la lista negra";
+
+$LANG['plugin_fusioninventory']['computer'][0]="Último inventario";
+$LANG['plugin_fusioninventory']['computer'][1]="Propietario";
+$LANG['plugin_fusioninventory']['computer'][2]="Compañía";
+
+$LANG['plugin_fusioninventory']['importxml'][0]="Importar fichero XML procedente de un agente";
+$LANG['plugin_fusioninventory']['importxml'][1]="Ordenador inyectado en GLPI";
+$LANG['plugin_fusioninventory']['importxml'][2]="¡No hay fichero para importar!";
+$LANG['plugin_fusioninventory']['importxml'][3]="¡Fichero XML inválido!";
+
+$LANG['plugin_fusioninventory']['integrity'][0]="Únicamente en GLPI (seleccionar para eliminar)";
+$LANG['plugin_fusioninventory']['integrity'][1]="Únicamente en el último inventario (seleccionar para importar)";
+
+$LANG['plugin_fusioninventory']['menu'][8]="Importar fichero XML del agente";
+$LANG['plugin_fusioninventory']['menu'][9]="Reglas de selección";
+$LANG['plugin_fusioninventory']['menu'][10]="Lista negra";
+$LANG['plugin_fusioninventory']['menu'][11]="Comprobar integridad de datos";
+
+$LANG['plugin_fusioninventory']['profile'][7]="Criterios de existencia";
+$LANG['plugin_fusioninventory']['profile'][8]="Importación manual del fichero XML";
+$LANG['plugin_fusioninventory']['profile'][9]="Lista negra de campos";
+
+$LANG['plugin_fusioninventory']['rule'][20]="Reglas para criterios de existencia del ordenador";
+$LANG['plugin_fusioninventory']['rule'][100]="Reglas de entidad";
+$LANG['plugin_fusioninventory']['rule'][102]="Ignorar en importación de FusionInventory";
+$LANG['plugin_fusioninventory']['rule'][21]="Criterio de existencia";
+$LANG['plugin_fusioninventory']['rule'][22]="Número de serie";
+$LANG['plugin_fusioninventory']['rule'][30]="Importar en bienes";
+$LANG['plugin_fusioninventory']['rule'][31]="Importar en dispositivos desconocidos";
+$LANG['plugin_fusioninventory']['rule'][23]="Dirección MAC";
+$LANG['plugin_fusioninventory']['rule'][24]="Clave de producto Microsoft";
+$LANG['plugin_fusioninventory']['rule'][25]="Modelo de ordenador";
+$LANG['plugin_fusioninventory']['rule'][26]="Número de serie del disco duro";
+$LANG['plugin_fusioninventory']['rule'][27]="Número de serie de las particiones";
+$LANG['plugin_fusioninventory']['rule'][28]="Etiqueta (Tag)";
+
+$LANG['plugin_fusioninventory']['setup'][17]="El plugin FusionInventory INVENTORY requiere que el plugin FusionInventory esté activado previamente.";
+$LANG['plugin_fusioninventory']['setup'][18]="El plugin FusionInventory INVENTORY requiere que FusionInventory esté activado previamente.";
+$LANG['plugin_fusioninventory']['setup'][20]="Opciones de importación";
+$LANG['plugin_fusioninventory']['setup'][21]="Componentes";
+$LANG['plugin_fusioninventory']['setup'][22]="Importación global";
+$LANG['plugin_fusioninventory']['setup'][23]="No importar";
+$LANG['plugin_fusioninventory']['setup'][24]="Importación única";
+$LANG['plugin_fusioninventory']['setup'][25]="Registro";
+$LANG['plugin_fusioninventory']['setup'][26]="Procesos";
+$LANG['plugin_fusioninventory']['setup'][27]="Importación única por número de serie";
+$LANG['plugin_fusioninventory']['setup'][28]="Transferencia automática de ordenadores";
+$LANG['plugin_fusioninventory']['setup'][29]="Modelo para la transferencia automática de ordenadores a otra entidad";
+$LANG['plugin_fusioninventory']['setup'][30]="Unidad de red";
+$LANG['plugin_fusioninventory']['setup'][31]="Tarjeta de red virtual";
+$LANG['plugin_fusioninventory']['setup'][32]="Esta opción no importará este elemento";
+$LANG['plugin_fusioninventory']['setup'][33]="Esta opción mezclará elementos con igual nombre para reducir su número si su gestión individual no es importante";
+$LANG['plugin_fusioninventory']['setup'][34]="Esta opción creará un elemento por cada elemento encontrado";
+$LANG['plugin_fusioninventory']['setup'][35]="Esta opción creará un elemento por cada elemento que cuente con número de serie";
+$LANG['plugin_fusioninventory']['setup'][36]="Estado por defecto";
+
+$LANG['plugin_fusioninventory']['title'][2]="Inventario de servidores VMware ESX";
+
+$LANG['plugin_fusioninventory']['vmwareesx'][0]="Servidor VMware ESX";
+
 ?>

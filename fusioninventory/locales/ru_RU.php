@@ -230,4 +230,75 @@ $LANG['plugin_fusioninventory']['wizard'][7]="Запустить задачи";
 $LANG['plugin_fusioninventory']['wizard'][8]="Результат выполнения задач";
 
 $LANG['plugin_fusioninventory']['xml'][0]="XML";
+
+
+$LANG['plugin_fusioninventory']['antivirus'][0]="Антивирус";
+$LANG['plugin_fusioninventory']['antivirus'][1]="Нет антивируса на этом компьютере";
+$LANG['plugin_fusioninventory']['antivirus'][2]="Версия";
+$LANG['plugin_fusioninventory']['antivirus'][3]="Обновление";
+
+$LANG['plugin_fusioninventory']['bios'][0]="BIOS";
+
+$LANG['plugin_fusioninventory']['blacklist'][0]="значение черного списка";
+$LANG['plugin_fusioninventory']['blacklist'][1]="Новое значение в черный список";
+
+$LANG['plugin_fusioninventory']['computer'][0]="Последняя версия inventory";
+$LANG['plugin_fusioninventory']['computer'][1]="Owner";
+$LANG['plugin_fusioninventory']['computer'][2]="Company";
+
+$LANG['plugin_fusioninventory']['importxml'][0]="Импорт XML файла из агента";
+$LANG['plugin_fusioninventory']['importxml'][1]="Компьютер добавлен в GLPI";
+$LANG['plugin_fusioninventory']['importxml'][2]="Нет файла для импорта!";
+$LANG['plugin_fusioninventory']['importxml'][3]="XML файл не действителен!";
+
+$LANG['plugin_fusioninventory']['integrity'][0]="Только в GLPI (проверьте перед удалением)";
+$LANG['plugin_fusioninventory']['integrity'][1]="Только в последней inventory (проверьте для импорта)";
+
+$LANG['plugin_fusioninventory']['menu'][8]="Импорт XML файла агента";
+$LANG['plugin_fusioninventory']['menu'][9]="Критерий привил";
+$LANG['plugin_fusioninventory']['menu'][10]="Черный список";
+$LANG['plugin_fusioninventory']['menu'][11]="Проверка целостности данных";
+
+$LANG['plugin_fusioninventory']['profile'][7]="Существующие критерии";
+$LANG['plugin_fusioninventory']['profile'][8]="Ручной импорт XML файла";
+$LANG['plugin_fusioninventory']['profile'][9]="Области черного списка";
+
+$LANG['plugin_fusioninventory']['rule'][20]="Критерии правил компьютера";
+$LANG['plugin_fusioninventory']['rule'][100]="Правила организации";
+$LANG['plugin_fusioninventory']['rule'][102]="Игнорирование импорта в FusionInventory";
+$LANG['plugin_fusioninventory']['rule'][21]="Существующий критерий";
+$LANG['plugin_fusioninventory']['rule'][22]="Серийный номер";
+$LANG['plugin_fusioninventory']['rule'][30]="Импорт в избранное";
+$LANG['plugin_fusioninventory']['rule'][31]="Импорт неизвестных устройств";
+$LANG['plugin_fusioninventory']['rule'][23]="MAC адрес";
+$LANG['plugin_fusioninventory']['rule'][24]="Microsoft product key";
+$LANG['plugin_fusioninventory']['rule'][25]="Модель компьютера";
+$LANG['plugin_fusioninventory']['rule'][26]="Серийный номер HDD";
+$LANG['plugin_fusioninventory']['rule'][27]="Серийный номер раздела";
+$LANG['plugin_fusioninventory']['rule'][28]="Тег";
+
+$LANG['plugin_fusioninventory']['setup'][17]="Плагину FusionInventory INVENTORY требуется активный плагин FusionInventory до его активации.";
+$LANG['plugin_fusioninventory']['setup'][18]="Плагину FusionInventory INVENTORY требуется активный плагин FusionInventory до его удаления.";
+$LANG['plugin_fusioninventory']['setup'][20]="Параметры импорта";
+$LANG['plugin_fusioninventory']['setup'][21]="Компоненты";
+$LANG['plugin_fusioninventory']['setup'][22]="Глобальный импорт";
+$LANG['plugin_fusioninventory']['setup'][23]="Не импортировать";
+$LANG['plugin_fusioninventory']['setup'][24]="Уникальный импорт";
+$LANG['plugin_fusioninventory']['setup'][25]="Реестр";
+$LANG['plugin_fusioninventory']['setup'][26]="Процессы";
+$LANG['plugin_fusioninventory']['setup'][27]="Уникальный импорт серийных номеров";
+$LANG['plugin_fusioninventory']['setup'][28]="Автоматическая передача компьютеров";
+$LANG['plugin_fusioninventory']['setup'][29]="Автоматическая модель для передачи компьютеров в другую организацию";
+$LANG['plugin_fusioninventory']['setup'][30]="Сетевые диски";
+$LANG['plugin_fusioninventory']['setup'][31]="Виртуальный сетевой интерфейс";
+$LANG['plugin_fusioninventory']['setup'][32]="Этот параметр не импортирует данный элемент";
+$LANG['plugin_fusioninventory']['setup'][33]="Этот параметр объединит элементы с одинаковым именем для уменьшения количества элементов, если управление ими не актуально";
+$LANG['plugin_fusioninventory']['setup'][34]="Этот параметр создает один элемент для каждого найденного элемента";
+$LANG['plugin_fusioninventory']['setup'][35]="Этот параметр создает один элемент для каждого элемента с серийным номером";
+$LANG['plugin_fusioninventory']['setup'][36]="Статус по умолчанию";
+
+$LANG['plugin_fusioninventory']['title'][2]="VMware хост remote inventory";
+
+$LANG['plugin_fusioninventory']['vmwareesx'][0]="VMware хост";
+
 ?>

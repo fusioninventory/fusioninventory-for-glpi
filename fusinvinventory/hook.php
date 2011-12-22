@@ -50,7 +50,7 @@ function plugin_fusinvinventory_getAddSearchOptions($itemtype) {
          $sopt[5150]['field']     = 'last_fusioninventory_update';
          $sopt[5150]['linkfield'] = '';
          $sopt[5150]['name']      = $LANG['plugin_fusioninventory']['title'][1]." - ".
-            $LANG['plugin_fusinvinventory']['computer'][0];
+            $LANG['plugin_fusioninventory']['computer'][0];
          $sopt[5150]['datatype']  = 'datetime';
          $sopt[5150]['itemlink_type'] = 'PluginFusioninventoryInventoryComputerLib';
 
@@ -81,13 +81,13 @@ function plugin_fusinvinventory_getAddSearchOptions($itemtype) {
          $sopt[5155]['table']     = 'glpi_plugin_fusinvinventory_computers';
          $sopt[5155]['field']     = 'bios_date';
          $sopt[5155]['linkfield'] = '';
-         $sopt[5155]['name']      = $LANG['plugin_fusinvinventory']['bios'][0]."-".$LANG['common'][27];
+         $sopt[5155]['name']      = $LANG['plugin_fusioninventory']['bios'][0]."-".$LANG['common'][27];
          $sopt[5155]['datatype']  = 'date';
          
          $sopt[5156]['table']     = 'glpi_plugin_fusinvinventory_computers';
          $sopt[5156]['field']     = 'bios_version';
          $sopt[5156]['linkfield'] = '';
-         $sopt[5156]['name']      = $LANG['plugin_fusinvinventory']['bios'][0]."-".$LANG['rulesengine'][78];
+         $sopt[5156]['name']      = $LANG['plugin_fusioninventory']['bios'][0]."-".$LANG['rulesengine'][78];
          
          $sopt[5157]['table']     = 'glpi_plugin_fusinvinventory_computers';
          $sopt[5157]['field']     = 'operatingsystem_installationdate';
@@ -98,12 +98,12 @@ function plugin_fusinvinventory_getAddSearchOptions($itemtype) {
          $sopt[5158]['table']     = 'glpi_plugin_fusinvinventory_computers';
          $sopt[5158]['field']     = 'winowner';
          $sopt[5158]['linkfield'] = '';
-         $sopt[5158]['name']      = $LANG['plugin_fusinvinventory']['computer'][1];
+         $sopt[5158]['name']      = $LANG['plugin_fusioninventory']['computer'][1];
 
          $sopt[5159]['table']     = 'glpi_plugin_fusinvinventory_computers';
          $sopt[5159]['field']     = 'wincompany';
          $sopt[5159]['linkfield'] = '';
-         $sopt[5159]['name']      = $LANG['plugin_fusinvinventory']['computer'][2];
+         $sopt[5159]['name']      = $LANG['plugin_fusioninventory']['computer'][2];
          
    }
    return $sopt;

@@ -332,7 +332,7 @@ function plugin_headings_fusioninventory_xml($item) {
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
       echo "<tr>";
       echo "<th>".$LANG['plugin_fusioninventory']['xml'][0];
-      echo " (".$LANG['plugin_fusinvinventory']['computer'][0]."&nbsp;: " . Html::convDateTime(date("Y-m-d H:i:s", filemtime(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".$id))).")";
+      echo " (".$LANG['plugin_fusioninventory']['computer'][0]."&nbsp;: " . Html::convDateTime(date("Y-m-d H:i:s", filemtime(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".$id))).")";
       echo "</th>";
       echo "</tr>";
 

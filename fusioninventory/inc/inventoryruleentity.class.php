@@ -53,7 +53,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
 
    function getTitle() {
       global $LANG;
-      return $LANG['plugin_fusinvinventory']['rule'][100];
+      return $LANG['plugin_fusioninventory']['rule'][100];
    }
 
    function preProcessPreviewResults($output) {
@@ -109,7 +109,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
       $criterias = array ();
 
       $criterias['tag']['field']     = 'name';
-      $criterias['tag']['name']      = $LANG['plugin_fusinvinventory']['rule'][8];
+      $criterias['tag']['name']      = $LANG['plugin_fusioninventory']['rule'][28];
       
       $criterias['domain']['field']     = 'name';
       $criterias['domain']['name']      = $LANG['setup'][89];
@@ -145,7 +145,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
       $actions['_affect_entity_by_tag']['type'] = 'text';
       $actions['_affect_entity_by_tag']['force_actions'] = array('regex_result');
 
-      $actions['_ignore_import']['name'] = $LANG['plugin_fusinvinventory']['rule'][102];
+      $actions['_ignore_import']['name'] = $LANG['plugin_fusioninventory']['rule'][102];
       $actions['_ignore_import']['type'] = 'yesonly';
 
       return $actions;
