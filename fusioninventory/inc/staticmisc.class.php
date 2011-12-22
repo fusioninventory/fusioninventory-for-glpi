@@ -61,6 +61,20 @@ class PluginFusioninventoryStaticmisc {
                          'method'               => 'wakeonlan',
                          'name'                 => $LANG['plugin_fusioninventory']['profile'][5],
                          'use_rest'             => false);
+      
+      $a_tasks[] =  array('module'         => 'fusioninventory',
+                          'method'         => 'inventory',
+                          'selection_type' => 'devices',
+                          'hidetask'       => 1,
+                          'name'           => $LANG['Menu'][38],
+                          'use_rest'       => false);
+                          
+      $a_tasks[] = array('module'        => 'fusioninventory',
+                         'method'         => 'ESX',
+                         'selection_type' => 'devices',
+                         'name'           => $LANG['plugin_fusinvinventory']['title'][2],
+                         'use_rest'       => true);
+      
       return $a_tasks;
    }
 
@@ -179,6 +193,131 @@ class PluginFusioninventoryStaticmisc {
    static function getStaticMiscClass($module) {
       return "Plugin".ucfirst($module)."Staticmisc";
    }
+   
+   
+   
+   /**
+   * Get types of datas available to select for taskjob definition for ESX method
+   *
+   * @param $a_itemtype array types yet added for definitions
+   *
+   * @return array ('itemtype'=>'value','itemtype'=>'value'...)
+   *   itemtype itemtype of object
+   *   value name of the itemtype
+   **/
+   static function task_definitiontype_ESX($a_itemtype) {
+      return array ('' => Dropdown::EMPTY_VALUE , 
+                    'PluginFusioninventoryCredentialIp' => PluginFusioninventoryCredentialIp::getTypeName());
+   }
+
+   
+   
+   /**
+   * Get all devices of definition type 'Computer' defined in task_definitiontype_wakeonlan
+   *
+   * @param $title value ???(not used I think)
+   *
+   * @return dropdown list of computers
+   *
+   **/
+   static function task_definitionselection_PluginFusioninventoryCredentialIp_ESX($title) {
+      global $DB;
+
+      $query = "SELECT `a`.`id`, `a`.`name` 
+                FROM `glpi_plugin_fusioninventory_credentialips` as `a` 
+                LEFT JOIN `glpi_plugin_fusioninventory_credentials` as `c` 
+                   ON `c`.`id` = `a`.`plugin_fusioninventory_credentials_id` 
+                WHERE `c`.`itemtype`='PluginFusinvinventoryVmwareESX'";
+      $query.= getEntitiesRestrictRequest(' AND','a');
+      $results = $DB->query($query);
+
+      $agents = array();
+      //$agents['.1'] = $LANG['common'][66];
+      while ($data = $DB->fetch_array($results)) {
+         $agents[$data['id']] = $data['name'];
+      }
+      if (!empty($agents)) {
+         return Dropdown::showFromArray('definitionselectiontoadd',$agents);
+      }
+   }
+
+
+   //------------------------------------------ Actions-------------------------------------//
+
+   static function task_actiontype_ESX($a_itemtype) {
+      global $LANG;
+      return array ('' => Dropdown::EMPTY_VALUE , 
+                    'PluginFusioninventoryAgent' => $LANG['plugin_fusioninventory']['profile'][2]);
+   }
+
+   
+   
+   /**
+   * Get all devices of definition type 'Computer' defined in task_definitiontype_wakeonlan
+   *
+   * @return dropdown list of computers
+   *
+   **/
+   static function task_actionselection_PluginFusioninventoryCredentialIp_ESX() {
+      global $DB;
+
+      $options = array();
+      $options['name'] = 'definitionactiontoadd';
+
+      $module = new PluginFusioninventoryAgentmodule();
+      $module_infos = $module->getActivationExceptions('esx');
+      $exceptions = json_decode($module_infos['exceptions'],true);
+
+      $in = "";
+      if (!empty($exceptions)) {
+         $in = " AND `a`.`id` NOT IN (".implode($exceptions,',').")";
+      }
+
+      $query = "SELECT `a`.`id`, `a`.`name` 
+                FROM `glpi_plugin_fusioninventory_credentialips` as `a` 
+                LEFT JOIN `glpi_plugin_fusioninventory_credentials` as `c` 
+                   ON `c`.`id` = `a`.`plugin_fusioninventory_credentials_id` 
+                WHERE `c`.`itemtype`='PluginFusioninventoryVmwareESX'";
+      $query.= getEntitiesRestrictRequest(' AND','glpi_plugin_fusioninventory_credentialips');
+      
+      $results = $DB->query($query);
+      $credentialips = array();
+      while ($data = $DB->fetch_array($results)) {
+         $credentialips[$data['id']] = $data['name'];
+      }
+      return Dropdown::showFromArray('actionselectiontoadd',$credentialips);
+   }
+   
+
+   
+   static function task_actionselection_PluginFusioninventoryAgent_ESX() {
+      
+      $array = array();
+      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+      $array1 = $PluginFusioninventoryAgentmodule->getAgentsCanDo(strtoupper("ESX"));
+      foreach ($array1 as $id => $data) {
+         $array[$id] = $data['name'];
+      }
+      asort($array);
+      return Dropdown::showFromArray('actionselectiontoadd', $array);
+   }
+
+   //------------------------------------------ ---------------------------------------------//
+   //------------------------------------------ REST PARAMS---------------------------------//
+   //------------------------------------------ -------------------------------------------//
+
+   /**
+    * Get ESX task parameters to send to the agent
+    * For the moment it's hardcoded, but in a future release it may be in DB
+    * @return an array of parameters
+    */
+   static function task_ESX_getParameters() {
+
+      return array ('periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'ESX', 
+                    'remote' => PluginFusioninventoryAgentmodule::getUrlForModule('ESX'));
+   }
+
+   
 }
 
 ?>
