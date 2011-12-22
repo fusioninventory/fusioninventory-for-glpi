@@ -134,23 +134,24 @@ class PluginFusinvdeployJob {
      $tmp['plugin_fusioninventory_taskjobstatus_id'] = $jobstatus['id'];
      $tmp['itemtype']                                = $jobstatus['itemtype'];
      $tmp['items_id']                                = $jobstatus['items_id'];
-     $tmp['comment']                                 = htmlentities($p['msg'], ENT_IGNORE, "UTF-8");
      $tmp['date']                                    = date("Y-m-d H:i:s");
      $tmp['comment']                                 = "";
      $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_RUNNING;
      // add log message
      if ($p['currentStep']) {
-        $tmp['comment'] = $p['currentStep'];
+        $tmp['comment'] = htmlentities($p['currentStep'], ENT_IGNORE, "UTF-8");
      } elseif (is_array($p['msg'])) {
          if ($tmp['comment'] != "") {
             $tmp['comment'] .= "<br>";
         }
-        $tmp['comment'] .= join('<br>', $p['msg']);
+        foreach ($p['msg'] as $line) {
+            $tmp['comment'] .= htmlentities($line, ENT_IGNORE, "UTF-8")."<br>";
+        }
      } elseif ($p['msg'] != "") {
         if ($tmp['comment'] != "") {
             $tmp['comment'] .= "<br>";
         }
-        $tmp['comment'] .= $p['msg'];
+        $tmp['comment'] .= htmlentities($p['msg'], ENT_IGNORE, "UTF-8");
      }
 
      if ($p['status'] == 'ko') {
@@ -178,7 +179,6 @@ class PluginFusinvdeployJob {
            $error
         );
      }
-
       self::sendOk();
    }
 
