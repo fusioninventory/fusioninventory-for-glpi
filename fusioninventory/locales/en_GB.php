@@ -46,6 +46,7 @@ $LANG['plugin_fusioninventory']['title'][0]="FusionInventory";
 $LANG['plugin_fusioninventory']['title'][1]="FusInv";
 
 $LANG['plugin_fusioninventory']['config'][0] = "Inventory frequency (in hours)";
+$LANG['plugin_fusioninventory']['config'][1] = "Computer Inventory";
 
 $LANG['plugin_fusioninventory']['profile'][0]="Rights management";
 $LANG['plugin_fusioninventory']['profile'][2]="Agents";

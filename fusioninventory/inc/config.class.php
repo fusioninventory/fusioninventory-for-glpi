@@ -173,7 +173,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       if ($item->getType()==__CLASS__) {
          $array_ret = array();
          $array_ret[0] = $LANG['plugin_fusioninventory']['functionalities'][2];         
-         $array_ret[1] = $LANG['plugin_fusioninventory']['title'][0];
+         $array_ret[1] = $LANG['plugin_fusioninventory']['config'][1];
          return $array_ret;
       }
       return '';
@@ -397,7 +397,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
    
    
-   function showFormInventory($options) {
+   function showFormInventory($options=array()) {
       global $LANG;
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
