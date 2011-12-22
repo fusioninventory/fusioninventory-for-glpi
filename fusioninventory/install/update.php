@@ -547,6 +547,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addField($newTable, 
                                  'plugins_id', 
                                  "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable, 
+                                 'module', 
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
          $migration->addKey($newTable,
                             array("type", "plugins_id"),
                             "unicity",

@@ -54,6 +54,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_configs` (
    `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
    `value` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `plugins_id` int(11) NOT NULL DEFAULT '0',
+   `module` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    PRIMARY KEY (`id`),
    UNIQUE KEY `unicity` (`type`, `plugins_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
