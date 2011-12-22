@@ -123,6 +123,18 @@ function plugin_init_fusinvdeploy() {
                                                    'submitmethod' => 'putForm');
    }
 
+   if (isset($_SESSION["glpiID"])) {
+
+      if (haveRight("configuration", "r") || haveRight("profile", "w")) {// Config page
+         if (!class_exists('PluginFusioninventoryConfiguration')) { // if plugin is unactive
+            include(GLPI_ROOT . "/plugins/fusioninventory/inc/configuration.class.php");
+         }
+         $PluginFusioninventoryConfiguration = new PluginFusioninventoryConfiguration();
+         $a_tabs = $PluginFusioninventoryConfiguration->defineTabs();
+         $PLUGIN_HOOKS['config_page']['fusinvdeploy'] = '../fusioninventory/front/configuration.form.php?glpi_tab='.array_search($a_plugin['name'], $a_tabs);
+      }
+	}
+
    if (!class_exists('PluginFusioninventoryProfile')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
    }
