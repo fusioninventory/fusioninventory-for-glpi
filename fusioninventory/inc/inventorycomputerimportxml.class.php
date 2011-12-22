@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusinvinventoryImportXML extends CommonDBTM  {
+class PluginFusioninventoryInventoryComputerImportXML extends CommonDBTM  {
 
 
    /**
@@ -56,7 +56,7 @@ class PluginFusinvinventoryImportXML extends CommonDBTM  {
    function showForm() {
       global $CFG_GLPI,$LANG;
 
-      $target = $CFG_GLPI['root_doc'].'/plugins/fusinvinventory/front/importxml.php';
+      $target = $CFG_GLPI['root_doc'].'/plugins/fusioninventory/front/inventorycomputerimportxml.php';
       echo "<form action='".$target."' method='post' enctype='multipart/form-data'>";
 
       echo "<br>";

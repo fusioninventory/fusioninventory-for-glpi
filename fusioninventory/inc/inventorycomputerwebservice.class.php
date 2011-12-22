@@ -69,7 +69,7 @@ class PluginFusioninventoryInventoryComputerWebservice {
 
       $content = base64_decode($params['base64']);
 
-      $PluginFusinvinventoryImportXML = new PluginFusinvinventoryImportXML();
+      $PluginFusinvinventoryImportXML = new PluginFusioninventoryInventoryComputerImportXML();
       $PluginFusinvinventoryImportXML->importXMLContent($content);
 
       $msg = $LANG['plugin_fusinvinventory']['importxml'][1];
