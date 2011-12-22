@@ -79,9 +79,7 @@ class Update extends PHPUnit_Framework_TestCase {
       
       $FusinvInstall = new FusinvInstall();
       $FusinvInstall->testDB("fusioninventory");
-      
-      $FusinvInstall->testDB("fusinvinventory");
-      
+
       $FusinvInstall->testDB("fusinvsnmp");
       
       $FusinvInstall->testDB("fusinvdeploy");
