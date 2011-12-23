@@ -223,4 +223,10 @@ $LANG['plugin_fusinvdeploy']['group'][2] = "Ensemble dynamique";
 $LANG['plugin_fusinvdeploy']['group'][3] = "Ensemble d'ordinateur";
 $LANG['plugin_fusinvdeploy']['group'][4] = "Ajouter ensemble";
 $LANG['plugin_fusinvdeploy']['group'][5] = "Si aucune ligne de la liste n'est selectionné, le champ texte de gauche sera utilisé pour la recherche";
+
+$LANG['plugin_fusinvdeploy']['menu'][1] = "Gestion des paquets";
+$LANG['plugin_fusinvdeploy']['menu'][2] = "Mirroir";
+$LANG['plugin_fusinvdeploy']['menu'][3] = "Tâches de deploiement";
+$LANG['plugin_fusinvdeploy']['menu'][4] = "Ensembles d'ordinateurs";
+$LANG['plugin_fusinvdeploy']['menu'][5] = "Etat des déploiements";
 ?>

@@ -222,6 +222,11 @@ $LANG['plugin_fusinvdeploy']['group'][1] = "Static set";
 $LANG['plugin_fusinvdeploy']['group'][2] = "dynamic set";
 $LANG['plugin_fusinvdeploy']['group'][3] = "Set";
 $LANG['plugin_fusinvdeploy']['group'][4] = "Add set";
-$LANG['plugin_fusinvdeploy']['group'][5] = "Si aucune ligne de la liste n'est selectionné, le champs texte de gauche sera utilisé pour la recherche";
+$LANG['plugin_fusinvdeploy']['group'][5] = "If no line in the list is selected, the text fields on the left will be used for search.";
 
+$LANG['plugin_fusinvdeploy']['menu'][1] = "Paketverwaltung";
+$LANG['plugin_fusinvdeploy']['menu'][2] = "Mirror";
+$LANG['plugin_fusinvdeploy']['menu'][3] = "Deployment tasks";
+$LANG['plugin_fusinvdeploy']['menu'][4] = "Sets";
+$LANG['plugin_fusinvdeploy']['menu'][5] = "Deployment status";
 ?>
