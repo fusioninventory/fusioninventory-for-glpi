@@ -318,11 +318,11 @@ var {$render}fieldset_item_FreespaceGreater = [{
       store: new Ext.data.ArrayStore({
          fields: ['name', 'value'],
          data: [
-            ['{$LANG['common'][82]}', 'Mio'],
-            ['Go', 'Go']
+            ['MiB', 'MiB'],
+            ['GiB', 'GiB']
          ]
       }),
-      value: 'Mio',
+      value: 'MiB',
       mode: 'local',
       triggerAction: 'all'
    }
@@ -346,11 +346,11 @@ var {$render}fieldset_item_FileSize = [{
       store: new Ext.data.ArrayStore({
          fields: ['name', 'value'],
          data: [
-            ['{$LANG['common'][82]}', 'Mio'],
-            ['Go', 'Go']
+            ['MiB', 'MiB'],
+            ['GiB', 'GiB']
          ]
       }),
-      value: 'Mio',
+      value: 'MiB',
       mode: 'local',
       triggerAction: 'all'
    }
@@ -410,7 +410,7 @@ function {$render}refreshDynFieldset(val) {
          {$render}dynFieldset.add({$render}fieldset_item_FileSHA512);
          break;
       case 'fileSizeGreater':
-      case 'fileSizeEqual':
+      case 'fileSizeEquals':
       case 'fileSizeLower':
          {$render}dynFieldset.add({$render}fieldset_item_FileSize);
          break;

@@ -170,6 +170,9 @@ function plugin_fusinvdeploy_check_prerequisites() {
    global $LANG;
    if (version_compare('0.78',GLPI_VERSION) < 0) {
       $plugin = new Plugin;
+      if ($plugin->isInstalled("fusioninventory")) {
+        return true;
+      }
       if (!$plugin->isActivated("fusioninventory")) {
          print $LANG['plugin_fusinvdeploy']["setup"][17]."<br />\n";
          return false;

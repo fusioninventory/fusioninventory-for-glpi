@@ -64,7 +64,7 @@ $sql           = "SELECT id as {$render}id,
                         type = 'freespaceGreater'
                         OR type = 'fileSizeLower'
                         OR type = 'fileSizeGreater'
-                        OR type = 'fileSizeEqual', '".$LANG['common'][82]."', '') as {$render}unit
+                        OR type = 'fileSizeEquals', 'MiB', '') as {$render}unit
                    FROM `glpi_plugin_fusinvdeploy_checks`
                    WHERE `plugin_fusinvdeploy_orders_id` = '$order_id'";
 
