@@ -395,8 +395,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                             "item");
          $migration->addKey($newTable,
                             "items_id");
-
-      
+      $migration->migrationOneTable($newTable);
+      $DB->list_fields($newTable, false);
       
    /*
     * Table glpi_plugin_fusioninventory_agentmodules
@@ -480,18 +480,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` WHERE `modulename`='WAKEONLAN'";
    $result = $DB->query($query);
    if (!$DB->numrows($result)) {
-      if (!class_exists('PluginFusioninventoryAgentmodule')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
-      }
-      $agentmodule = new PluginFusioninventoryAgentmodule;
-      $input = array();
-      $input['plugins_id'] = $plugins_id;
-      $input['modulename'] = "WAKEONLAN";
-      $input['is_active']  = 0;
-      $input['exceptions'] = exportArrayToDB(array());
-      $agentmodule->add($input);
+      $query_ins= "INSERT INTO `glpi_plugin_fusioninventory_agentmodules`
+            (`plugins_id`, `modulename`, `is_active`, `exceptions`)
+         VALUES ('".$plugins_id."', 'WAKEONLAN', '0', '".exportArrayToDB(array())."')";
+      $DB->query($query_ins);
    }
-      
       
       
    /*
@@ -554,6 +547,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                             array("type", "plugins_id"),
                             "unicity",
                             "UNIQUE");
+      $migration->migrationOneTable($newTable);
+      // Reinitialize cache of fields of table
+      $DB->list_fields($newTable, false);
       
 
    
@@ -1699,7 +1695,71 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "rules_id",
                                  "int(11) NOT NULL DEFAULT '0'");
       $migration->migrationOneTable($newTable);
-
+         $migration->addField($newTable,
+                                 "name",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "date",
+                                 "datetime DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "itemtype",
+                                 "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "entities_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "ip",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "mac",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "rules_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "method",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         
+         
+         
+   /*
+    * Table glpi_plugin_fusioninventory_rulematchedlogs
+    */
+      $newTable = "glpi_plugin_fusioninventory_rulematchedlogs";
+      if (!TableExists($newTable)) {
+         $query = "CREATE TABLE `".$newTable."` (
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                      PRIMARY KEY (`id`)
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+         $DB->query($query);
+      }
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         
+      $migration->migrationOneTable($newTable);
+      
+         $migration->addField($newTable,
+                                 "date",
+                                 "datetime DEFAULT NULL");
+      $migration->addField($newTable,
+                                 "items_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "itemtype",
+                                 "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "rules_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "plugin_fusioninventory_agents_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "method",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         
+         
          
 
    /*
@@ -1902,25 +1962,25 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $config = new PluginFusioninventoryConfig();
       $a_input = array();
       $a_input['version'] = PLUGIN_FUSIONINVENTORY_VERSION;
-      if (!$config->getValue($plugins_id, "ssl_only", '')) {
+      if (is_null($config->getValue($plugins_id, "ssl_only", ''))) {
          $a_input['ssl_only'] = 0;
       }
       if (isset($prepare_Config['ssl_only'])) {
          $a_input['ssl_only'] = $prepare_Config['ssl_only'];
       }
-      if (!$config->getValue($plugins_id, "delete_task", '')) {
+      if (is_null($config->getValue($plugins_id, "delete_task", ''))) {
          $a_input['delete_task'] = 20;
       }
-      if (!$config->getValue($plugins_id, "inventory_frequence", '')) {
+      if (is_null($config->getValue($plugins_id, "inventory_frequence", ''))) {
          $a_input['inventory_frequence'] = 24;
       }
-      if (!$config->getValue($plugins_id, "agent_port", '')) {
+      if (is_null($config->getValue($plugins_id, "agent_port", ''))) {
          $a_input['agent_port'] = 62354;
       }
-      if (!$config->getValue($plugins_id, "extradebug", '')) {
+      if (is_null($config->getValue($plugins_id, "extradebug", ''))) {
          $a_input['extradebug'] = 0;
       }
-      if (!$config->getValue($plugins_id, "users_id", '')) {
+      if (is_null($config->getValue($plugins_id, "users_id", ''))) {
          $a_input['users_id'] = 0;
       }
       $config->initConfig($plugins_id, $a_input);

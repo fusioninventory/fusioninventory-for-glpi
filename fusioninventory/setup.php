@@ -58,6 +58,8 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryConfig');
       Plugin::registerClass('PluginFusioninventoryTask',
               array('addtabon' => array('Computer','Printer','NetworkEquipment','PluginFusioninventoryCredentialIp')));
+      Plugin::registerClass('PluginFusioninventoryTaskjob',
+              array('addtabon' => array('Computer','Printer','NetworkEquipment','PluginFusioninventoryUnknowndevice')));
       Plugin::registerClass('PluginFusioninventoryTaskjob');
       Plugin::registerClass('PluginFusioninventoryUnknownDevice');
       Plugin::registerClass('PluginFusioninventoryModule');
@@ -81,6 +83,11 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryInventoryRuleEntity');
       Plugin::registerClass('PluginFusioninventoryInventoryRuleEntityCollection',
                             array('rulecollections_types'=>true));
+      Plugin::registerClass('PluginFusioninventoryRulematchedlog',
+              array('addtabon' => array('PluginFusioninventoryAgent', 
+                                        'PluginFusioninventoryUnknownDevice',
+                                        'Printer',
+                                        'NetworkEquipment')));   
       
       //Classes for rulesengine
       Plugin::registerClass('PluginFusioninventoryInventoryRuleImport');

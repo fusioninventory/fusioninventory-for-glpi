@@ -760,7 +760,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          preg_match_all('/s:\d+:"(.*?)";/m', $matches1[2], $matches);
          $constuctArray = array();
          $i = 0;
-         for ($i = 0; $i < count($matches[1]); $i = $i+2) {
+         $size = count($matches[1]);
+         for ($i = 0; $i < $size; $i = $i+2) {
             $constuctArray[$matches[1][$i]] = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep($matches[1][($i+1)]));
          }
          $infoSections[$key] = serialize($constuctArray).$matches1[3];

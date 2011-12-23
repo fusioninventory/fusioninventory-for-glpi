@@ -50,7 +50,7 @@ include ("../lib/extjs/FileChooser/includes/config.inc.php");
 // Include common functions
 include ("../lib/extjs/FileChooser/includes/functions.inc.php");
 
-$data = get_directory_contents(DIRECTORY, true);
+$data = get_directory_contents(DIRECTORY);
 
 print json_encode($data);
 ?>

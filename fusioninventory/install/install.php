@@ -137,14 +137,17 @@ function pluginFusioninventoryInstall($version, $migration='') {
       $sql = "DELETE FROM `glpi_displaypreferences`
          WHERE `itemtype` LIKE 'PluginFusinvinventory%'";
       $DB->query($sql);
-      // Purge network ports have itemtype 5153
-      $networkPort = new NetworkPort();
-      $sql = "SELECT * FROM `glpi_networkports`
-         WHERE `itemtype`='5153'";
-      $result=$DB->query($sql);
-      while ($data=$DB->fetch_array($result)) {
-         $networkPort->delete(array('id'=>$data['id']), 1);
-      }
+      $sql = "DELETE FROM `glpi_displaypreferences`
+         WHERE `itemtype` LIKE 'PluginFusinvsnmp%'";
+      $DB->query($sql);
+         // Purge network ports have itemtype tp 5153
+         $networkPort = new NetworkPort();
+         $sql = "SELECT * FROM `glpi_networkports`
+            WHERE `itemtype`='5153'";
+         $result=$DB->query($sql);
+         while ($data=$DB->fetch_array($result)) {
+            $networkPort->delete(array('id'=>$data['id']), 1);
+         }
 
 
    /*

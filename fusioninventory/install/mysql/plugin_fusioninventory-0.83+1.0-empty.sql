@@ -303,8 +303,26 @@ CREATE TABLE `glpi_plugin_fusioninventory_ignoredimportdevices` (
    `ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `mac` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `rules_id` int(11) NOT NULL DEFAULT '0',
+   `method` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_rulematchedlogs`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_rulematchedlogs` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `date` datetime DEFAULT NULL,
+   `items_id` int(11) NOT NULL DEFAULT '0',
+   `itemtype` varchar(100) DEFAULT NULL,
+   `rules_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
+   `method` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `item` (`itemtype`,`items_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 
 
 ## INSERT

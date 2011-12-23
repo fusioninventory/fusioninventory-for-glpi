@@ -103,11 +103,19 @@ class PluginFusioninventoryConfig extends CommonDBTM {
   
    
    
-  static function getTypeName() {
+   /**
+    * Display name of itemtype
+    * 
+    * @global array $LANG
+    * 
+    * @return value name of this itemtype
+    **/
+   static function getTypeName() {
       global $LANG;
 
       return $LANG['plugin_fusioninventory']['functionalities'][2];
    }
+
    
    
    function canCreate() {
@@ -167,6 +175,17 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    }
    
    
+   
+   /**
+    * Display tab
+    * 
+    * @global array $LANG
+    * 
+    * @param CommonGLPI $item
+    * @param integer $withtemplate
+    * 
+    * @return varchar name of the tab(s) to display 
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       global $LANG;
 
@@ -181,6 +200,15 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    
    
    
+   /**
+    * Display content of tab
+    * 
+    * @param CommonGLPI $item
+    * @param integer $tabnum
+    * @param interger $withtemplate
+    * 
+    * @return boolean true
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       if ($tabnum == '0') {
@@ -188,7 +216,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       } else if ($tabnum == '1') {
          $item->showFormInventory();
       }
-     return true;
+      return true;
    }
    
 
@@ -300,7 +328,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     **/
    function addConfig($p_plugins_id, $p_type, $p_value, $module) {
       $existing_value = self::getValue($p_plugins_id, $p_type, $module); 
-      if ($existing_value) {
+      if (!is_null($existing_value)) {
          return $existing_value;
       } else {
          return $this->add(array('plugins_id' => $p_plugins_id, 
@@ -671,9 +699,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       return true;
    }   
-   
-   
-   
+
 }
 
 ?>

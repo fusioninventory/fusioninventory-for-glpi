@@ -97,6 +97,8 @@ $LANG['plugin_fusioninventory']['rules'][16] = "FusionInventory tag";
 $LANG['plugin_fusioninventory']['rules'][17] = "Import denied";
 $LANG['plugin_fusioninventory']['rules'][18] = "Device created";
 $LANG['plugin_fusioninventory']['rules'][19] = "Ignored import devices";
+$LANG['plugin_fusioninventory']['rules'][20] = "Rule import logs";
+$LANG['plugin_fusioninventory']['rules'][21] = "Import informations";
 
 $LANG['plugin_fusioninventory']['rulesengine'][152] = "Assets to import";
 

@@ -68,17 +68,22 @@ require_once 'InventoryComputer/AllTests.php';
 require_once 'Rules/AllTests.php';
 require_once 'Netinventory/AllTests.php';
 require_once 'GLPIlogs/AllTests.php';
+require_once 'Netdiscovery/AllTests.php';
 
 require_once 'emulatoragent.php';
 
 class AllTests {
    public static function suite() {
       $suite = new PHPUnit_Framework_TestSuite('FusionInventory');
+      if (file_exists("save.sql")) {
+         unlink("save.sql");
+      }
       $suite->addTest(GLPIInstall_AllTests::suite());
       $suite->addTest(FusinvInstall_AllTests::suite());
       $suite->addTest(InventoryComputer_AllTests::suite());
       $suite->addTest(Rules_AllTests::suite());
       $suite->addTest(Netinventory_AllTests::suite());
+      $suite->addTest(Netdiscovery_AllTests::suite());
       return $suite;
    }
 }

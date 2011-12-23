@@ -80,7 +80,6 @@ class PluginFusioninventoryConfiguration extends CommonDBTM {
 
       return true;
    }
-
 }
 
 ?>

@@ -66,7 +66,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
    
    
    
-   static function countForLock(Computer $item) {
+   static function countForLock(CommonGLPI $item) {
 
       $pfLock = new self();
       $a_data = current($pfLock->find("`tablename`='".$item->getTable()."' 
@@ -223,8 +223,8 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
             // Get value of field
             $table = getTableNameForForeignKeyField($key);
-            $linkItemtype = getItemTypeForTable($table);
             if ($table != "") {
+               $linkItemtype = getItemTypeForTable($table);
                $class = new $linkItemtype();
                $key = $class->getTypeName();
                if (($val == "0") OR ($val == "")) {

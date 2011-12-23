@@ -122,8 +122,8 @@ class PluginFusioninventoryInventoryComputerInventory {
          }
       // End hack
       
-      $PluginFusinvinventoryBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
-      $p_xml = $PluginFusinvinventoryBlacklist->cleanBlacklist($p_xml);
+      $pfBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
+      $p_xml = $pfBlacklist->cleanBlacklist($p_xml);
 
       $_SESSION['SOURCEXML'] = $p_xml;
 
@@ -202,7 +202,7 @@ class PluginFusioninventoryInventoryComputerInventory {
                                                    print_r($data, true));
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
          $this->rulepassed(0, "Computer");
-      } else {
+      } else if (!isset($data['found_equipment'])) {
          $pFusioninventoryIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
          $inputdb = array();
          $inputdb['name'] = $input['name'];
@@ -229,6 +229,7 @@ class PluginFusioninventoryInventoryComputerInventory {
             $inputdb['mac'] = exportArrayToDB($input['mac']);
          }
          $inputdb['rules_id'] = $data['_ruleid'];
+         $inputdb['method'] = 'inventory';
          $pFusioninventoryIgnoredimportdevice->add($inputdb);
       }
    }
@@ -251,7 +252,7 @@ class PluginFusioninventoryInventoryComputerInventory {
       $xml = $_SESSION['SOURCEXML'];
       
       if ($itemtype == 'Computer') {
-         $PluginFusinvinventoryLib = new PluginFusioninventoryInventoryComputerLib();
+         $pfLib = new PluginFusioninventoryInventoryComputerLib();
          $Computer = new Computer();
 
          // ** Get entity with rules
@@ -315,7 +316,22 @@ class PluginFusioninventoryInventoryComputerInventory {
 
             self::addDefaultStateIfNeeded($input, false);
             $items_id = $Computer->add($input);
-            $PluginFusinvinventoryLib->startAction($xml, $items_id, '1');
+            if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
+               $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
+               $inputrulelog = array();
+               $inputrulelog['date'] = date('Y-m-d H:i:s');
+               $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
+               if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
+                  $inputrulelog['plugin_fusioninventory_agents_id'] = $_SESSION['plugin_fusioninventory_agents_id'];
+               }
+               $inputrulelog['items_id'] = $items_id;
+               $inputrulelog['itemtype'] = $itemtype;
+               $inputrulelog['method'] = 'inventory';
+               $pfRulematchedlog->add($inputrulelog);
+               $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
+               unset($_SESSION['plugin_fusioninventory_rules_id']);
+            }
+            $pfLib->startAction($xml, $items_id, '1');
          } else {
             $computer = new Computer();
             $operatingSystem = new OperatingSystem();
@@ -327,7 +343,7 @@ class PluginFusioninventoryInventoryComputerInventory {
                $_SESSION["plugin_fusinvinventory_history_add"] = false;
                $_SESSION["plugin_fusinvinventory_no_history_add"] = true;
             }
-            $PluginFusinvinventoryLib->startAction($xml, $items_id, '0');
+            $pfLib->startAction($xml, $items_id, '0');
          }
       } else if ($itemtype == 'PluginFusioninventoryUnknownDevice') {
          $class = new $itemtype();
@@ -335,6 +351,21 @@ class PluginFusioninventoryInventoryComputerInventory {
             $input = array();
             $input['date_mod'] = date("Y-m-d H:i:s");
             $items_id = $class->add($input);
+            if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
+               $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
+               $inputrulelog = array();
+               $inputrulelog['date'] = date('Y-m-d H:i:s');
+               $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
+               if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
+                  $inputrulelog['plugin_fusioninventory_agents_id'] = $_SESSION['plugin_fusioninventory_agents_id'];
+               }
+               $inputrulelog['items_id'] = $items_id;
+               $inputrulelog['itemtype'] = $itemtype;
+               $inputrulelog['method'] = 'inventory';
+               $pfRulematchedlog->add($inputrulelog);
+               $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
+               unset($_SESSION['plugin_fusioninventory_rules_id']);
+            }
          }
          $class->getFromDB($items_id);
          $input = array();
@@ -365,6 +396,13 @@ class PluginFusioninventoryInventoryComputerInventory {
    
    
 
+   /**
+    * Put/modify computer state 
+    * 
+    * @param type $input
+    * @param boolean $check_management
+    * @param type $management_value 
+    */
    static function addDefaultStateIfNeeded(&$input, $check_management = false, $management_value = 0) {
       $config = new PluginFusioninventoryConfig();
       $state = $config->getValue($_SESSION["plugin_fusinvinventory_moduleid"], 
@@ -700,8 +738,19 @@ class PluginFusioninventoryInventoryComputerInventory {
          }
       }
       
-      $PluginFusinvinventoryLib = new PluginFusioninventoryInventoryComputerLib();
-      $PluginFusinvinventoryLib->addLibMachineFromGLPI($items_id, $internal_id, $xml, $a_sectionsinfos);
+      $pfLib = new PluginFusioninventoryInventoryComputerLib();
+      $pfLib->addLibMachineFromGLPI($items_id, $internal_id, $xml, $a_sectionsinfos);
+   }
+   
+   
+   
+   /**
+    * Return method name of this class/plugin
+    * 
+    * @return value  
+    */
+   static function getMethod() {
+      return 'inventory';
    }
 }
 

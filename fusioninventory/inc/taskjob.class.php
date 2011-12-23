@@ -106,6 +106,38 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    }
 
    
+   
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $LANG;
+
+      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
+         return $LANG['plugin_fusioninventory']['title'][1]." ".$LANG['plugin_fusioninventory']['task'][18];
+      }
+      return '';
+   }
+   
+   
+   
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+
+      if ($item->getID() > 0) {
+         if ($item->getType() == 'Computer') {
+
+            // Possibility to remote agent
+            $allowed = PluginFusioninventoryTaskjob::getAllowurlfopen(1);
+            if (isset($allowed)) {
+               $pfAgent = new PluginFusioninventoryAgent();
+               $pfAgent->forceRemoteAgent();
+            }
+         }
+
+         $pfTaskjob = new PluginFusioninventoryTaskjob();
+         $pfTaskjob->manageTasksByObject($item->getType(), $item->getID());
+      }
+      return true;
+   }
+   
+   
 
    /**
    * Display form for taskjob

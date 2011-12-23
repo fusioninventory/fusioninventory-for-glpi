@@ -627,14 +627,12 @@ class Rules extends PHPUnit_Framework_TestCase {
    *   => type not defined in discovery created into unknown devices
    */
    public function testNoRule() {
-      global $DB, $XML;
+      global $DB,$XML,$CFG_GLPI;
       
-      $GLPIInstall = new GLPIInstall();
       $Install = new Install();
-      $GLPIInstall->testInstall();
-      $Install->testInstall();
+      $Install->testInstall(0);
       
-      Config::detectRootDoc();
+      $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
       Session::loadLanguage("en_GB");
       
      // Disable all rules
@@ -793,9 +791,9 @@ class Rules extends PHPUnit_Framework_TestCase {
     *    => Computer may be created in Computer type and not in unknown device
     */
    public function testImportComputerwithTypeOnly() {
-      global $DB, $XML;
+      global $DB,$XML,$CFG_GLPI;
       
-      Config::detectRootDoc();
+      $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
       Session::loadLanguage("en_GB");
       
       // Add the rule with criterial only if type = Computer
@@ -902,9 +900,9 @@ class Rules extends PHPUnit_Framework_TestCase {
     *    => Computer may be created in Computer type and not in unknown device
     */
    public function testImportComputerwithTypeAndNameExist() {
-      global $DB, $XML;
+      global $DB,$XML,$CFG_GLPI;
       
-      Config::detectRootDoc();
+      $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
       Session::loadLanguage("en_GB");
       
       // Add the rule with criterial only if type = Computer
@@ -1054,9 +1052,9 @@ class Rules extends PHPUnit_Framework_TestCase {
     *    => Computer may be created in Computer type and not in unknown device
     */
    public function testImportComputerwithTypeAndNameExistNamePresent() {
-      global $DB, $XML;
+      global $DB,$XML,$CFG_GLPI;
       
-      Config::detectRootDoc();
+      $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
       Session::loadLanguage("en_GB");
       
       // Add the rule with criterial only if type = Computer
@@ -1227,9 +1225,9 @@ class Rules extends PHPUnit_Framework_TestCase {
    
    
    public function testImportComputerCheckrulevalidationlocal_and_globalcriteria() {
-      global $DB, $XML;
+      global $DB,$XML,$CFG_GLPI;
       
-      Config::detectRootDoc();
+      $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
       Session::loadLanguage("en_GB");
       
       // Create computer only with serial and name;
@@ -1342,4 +1340,5 @@ class Rules_AllTests  {
       return $suite;
    }
 }
+
 ?>

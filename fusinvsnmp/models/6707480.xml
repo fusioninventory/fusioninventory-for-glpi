@@ -29,7 +29,7 @@ Lexmark W840 version NS.NP.N118 kernel 2.6.6 All-N-1
 			<oid>.1.3.6.1.2.1.1.1.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>comments</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -39,7 +39,7 @@ Lexmark W840 version NS.NP.N118 kernel 2.6.6 All-N-1
 			<oid>.1.3.6.1.2.1.43.11.1.1.6.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>drumblack</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -49,7 +49,7 @@ Lexmark W840 version NS.NP.N118 kernel 2.6.6 All-N-1
 			<oid>.1.3.6.1.2.1.43.11.1.1.8.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>drumblackmax</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -59,7 +59,7 @@ Lexmark W840 version NS.NP.N118 kernel 2.6.6 All-N-1
 			<oid>.1.3.6.1.2.1.43.11.1.1.9.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>drumblackremaining</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -69,7 +69,7 @@ Lexmark W840 version NS.NP.N118 kernel 2.6.6 All-N-1
 			<oid>.1.3.6.1.2.1.43.8.2.1.14.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>enterprise</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -79,7 +79,7 @@ Lexmark W840 version NS.NP.N118 kernel 2.6.6 All-N-1
 			<oid>.1.3.6.1.2.1.4.20.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>ifaddr</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -89,7 +89,7 @@ Lexmark W840 version NS.NP.N118 kernel 2.6.6 All-N-1
 			<oid>.1.3.6.1.2.1.2.2.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>ifIndex</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -99,7 +99,7 @@ Lexmark W840 version NS.NP.N118 kernel 2.6.6 All-N-1
 			<oid>.1.3.6.1.2.1.2.2.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>ifName</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -109,7 +109,7 @@ Lexmark W840 version NS.NP.N118 kernel 2.6.6 All-N-1
 			<oid>.1.3.6.1.2.1.2.2.1.6</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>ifPhysAddress</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -119,7 +119,7 @@ Lexmark W840 version NS.NP.N118 kernel 2.6.6 All-N-1
 			<oid>.1.3.6.1.2.1.2.2.1.3</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>ifType</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -129,7 +129,7 @@ Lexmark W840 version NS.NP.N118 kernel 2.6.6 All-N-1
 			<oid>.1.3.6.1.2.1.1.6.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>location</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -139,7 +139,7 @@ Lexmark W840 version NS.NP.N118 kernel 2.6.6 All-N-1
 			<oid>.1.3.6.1.2.1.25.2.3.1.5.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>memory</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -149,7 +149,7 @@ Lexmark W840 version NS.NP.N118 kernel 2.6.6 All-N-1
 			<oid>.1.3.6.1.4.1.641.2.1.2.1.2.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>model</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -159,7 +159,7 @@ Lexmark W840 version NS.NP.N118 kernel 2.6.6 All-N-1
 			<oid>.1.3.6.1.2.1.1.5.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>name</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -169,7 +169,7 @@ Lexmark W840 version NS.NP.N118 kernel 2.6.6 All-N-1
 			<oid>.1.3.6.1.2.1.43.10.2.1.4.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>pagecountertotalpages</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -179,7 +179,7 @@ Lexmark W840 version NS.NP.N118 kernel 2.6.6 All-N-1
 			<oid>.1.3.6.1.4.1.641.2.1.2.1.6.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>serial</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -189,7 +189,7 @@ Lexmark W840 version NS.NP.N118 kernel 2.6.6 All-N-1
 			<oid>.1.3.6.1.2.1.43.11.1.1.6.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>tonerblack</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -199,7 +199,7 @@ Lexmark W840 version NS.NP.N118 kernel 2.6.6 All-N-1
 			<oid>.1.3.6.1.2.1.43.11.1.1.8.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>tonerblackmax</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -209,7 +209,7 @@ Lexmark W840 version NS.NP.N118 kernel 2.6.6 All-N-1
 			<oid>.1.3.6.1.2.1.43.11.1.1.9.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
+			<mapping_type>Printer</mapping_type>
  			<mapping_name>tonerblackremaining</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>

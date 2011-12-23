@@ -159,12 +159,12 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                           AND `plugin_fusinvsnmp_configsecurities_id`!='0'
                           AND `glpi_plugin_fusinvsnmp_models`.`itemtype`='NetworkEquipment'";
          if ($PluginFusioninventoryIPRange->fields['entities_id'] != '-1') {
-           $query .= "AND `glpi_networkequipments`.`entities_id`='".$PluginFusioninventoryIPRange->fields['entities_id']."' ";
+           $query .= " AND `glpi_networkequipments`.`entities_id`='".$PluginFusioninventoryIPRange->fields['entities_id']."' ";
          }
          $query .= " AND inet_aton(`ip`)
                          BETWEEN inet_aton('".$PluginFusioninventoryIPRange->fields['ip_start']."')
                          AND inet_aton('".$PluginFusioninventoryIPRange->fields['ip_end']."') ";
-
+               Toolbox::logInFile("SQLKOIN", $query);
         $result=$DB->query($query);
         while ($data=$DB->fetch_array($result)) {
            $a_NetworkEquipment[] = $data['gID'];
