@@ -997,7 +997,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             $Import++;
             break;
 
-//         default:
+         default:
 //            // GENERIC OBJECT : Search types in generic object
 //            $typeimported = 0;
 //            $plugin = new Plugin;
@@ -1046,8 +1046,9 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 //            // END GENERIC OBJECT
 
 //            if ($typeimported == "0") {
-//               $NoImport++;
-//            }
+            $NoImport++;
+            break;
+            
       }
       return array($Import, $NoImport);
    }
