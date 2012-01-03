@@ -287,6 +287,8 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             foreach ($a_agentList as $agent_id) {
                if (($items_id != '0') AND ($items_id == $agent_id)) {
                   return true;
+               } else if ($items_id != '0') {
+                  return array();  
                }
                if ($i> 0) {
                   $sep  = ',';
@@ -307,6 +309,11 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             $i = 0;
             $sep  = '';
             foreach ($a_agentList as $agent_id) {
+               if (($items_id != '0') AND ($items_id == $agent_id)) {
+                  return true;
+               } else if ($items_id != '0') {
+                  return array();  
+               }
                if ($i> 0) {
                   $sep  = ',';
                }
