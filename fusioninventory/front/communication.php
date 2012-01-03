@@ -181,13 +181,18 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       } else if ($pxml = @simplexml_load_string(utf8_encode($xml),'SimpleXMLElement', LIBXML_NOCDATA)) {
          $xml = utf8_encode($xml);
       } else {
-         $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
+         $xml = preg_replace ('/<FOLDER>.*?<\/SOURCE>/', '', $xml);
+         $pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA);
+
+         if (!$pxml) {
+            $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
-   <ERROR>XML not well formed!</ERROR>
+<ERROR>XML not well formed!</ERROR>
 </REPLY>");
-         $PluginFusioninventoryCommunication->emptyAnswer($compressmode);
-         session_destroy();
-         exit();
+            $PluginFusioninventoryCommunication->emptyAnswer($compressmode);
+            session_destroy();
+            exit();
+         }
       }
    
       // Clean for XSS and other in XML
