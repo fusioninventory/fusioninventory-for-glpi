@@ -221,6 +221,11 @@ $LANG['plugin_fusinvdeploy']['group'][1] = "Grupo estático";
 $LANG['plugin_fusinvdeploy']['group'][2] = "Grupo dinámico";
 $LANG['plugin_fusinvdeploy']['group'][3] = "Grupo de ordenadores";
 $LANG['plugin_fusinvdeploy']['group'][4] = "Añadir grupo";
-$LANG['plugin_fusinvdeploy']['group'][5] = "Si aucune ligne de la liste n'est selectionné, le champs texte de gauche sera utilisé pour la recherche";
+$LANG['plugin_fusinvdeploy']['group'][5] = "If no line in the list is selected, the text fields on the left will be used for search.";
 
+$LANG['plugin_fusinvdeploy']['menu'][1] = "Gestión de paquetes";
+$LANG['plugin_fusinvdeploy']['menu'][2] = "Servidores espejo";
+$LANG['plugin_fusinvdeploy']['menu'][3] = "Tareas de despliegue";
+$LANG['plugin_fusinvdeploy']['menu'][4] = "Grupos de ordenadores";
+$LANG['plugin_fusinvdeploy']['menu'][5] = "Tareas de despliegue";
 ?>

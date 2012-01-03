@@ -237,6 +237,11 @@ class PluginFusinvdeployFile extends CommonDBTM {
       $sha512 = hash_file('sha512', $file_tmp_name);
       $short_sha512 = substr($sha512, 0, 6);
 
+		if($this->checkPresenceFile($short_sha512)) {
+         print "{success:false, file:'{$filename}',msg:\"File already exists.\"}";
+         exit;
+		}
+
       $data = array(
          'name' => $filename,
          'is_p2p' => $is_p2p,
@@ -245,10 +250,9 @@ class PluginFusinvdeployFile extends CommonDBTM {
          'create_date' => date('Y-m-d H:i:s'),
          'p2p_retention_days' => $p2p_retention_days,
          'uncompress' => $uncompress,
-         'plugin_fusinvdeploy_orders_id' => $order_id,
+         'plugin_fusinvdeploy_orders_id' => $order_id
       );
       $file_id = $this->add($data);
-
 
       $fdIn = fopen ( $file_tmp_name, 'rb' );
       if (!$fdIn) {
@@ -298,14 +302,14 @@ class PluginFusinvdeployFile extends CommonDBTM {
    function checkPresenceFile($hash) {
       global $DB;
 
-      if (strlen($hash) < 10) {
+      if (strlen($hash) > 10) {
          return false;
       }
 
-      $query = "SELECT id, sha512 FROM ".$this->getTable()." WHERE shortsha512 = '".substr($hash, 0, 6 )."'";
+      $query = "SELECT id, shortsha512 FROM ".$this->getTable()." WHERE shortsha512 = '".substr($hash, 0, 6 )."'";
       $res = $DB->query($query);
       $result = $DB->fetch_array($res);
-      if ($hash == $result["sha512"]) {
+      if ($hash == $result["shortsha512"]) {
         return $result["id"];
       }
 
