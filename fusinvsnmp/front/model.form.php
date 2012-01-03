@@ -92,8 +92,10 @@ if(!empty($_POST["item_coche"])) {
 }
 
 if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","r")) {
-   $PluginFusinvsnmpImportExport->showForm($_SERVER["PHP_SELF"]);
-   $PluginFusinvsnmpImportExport->showFormMassImport($_SERVER["PHP_SELF"]);
+   if (!isset($_GET["id"])) {
+      $PluginFusinvsnmpImportExport->showForm($_SERVER["PHP_SELF"]);
+      $PluginFusinvsnmpImportExport->showFormMassImport($_SERVER["PHP_SELF"]);
+   }
 }
 
 if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","r")) {
