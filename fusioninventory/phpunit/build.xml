@@ -13,6 +13,12 @@
         <delete file="${project.basedir}/../../../../build/logs/phpunit.xml"/>
         <delete file="${project.basedir}/../../../../build/logs/phpunit.coverage.xml"/>
         <delete file="${project.basedir}/../../../../build/logs/phpmd.xml"/>
+        <delete file="${project.basedir}/../../../files/_log/pluginFusinvinventory-addsection.log"/>
+        <delete file="${project.basedir}/../../../files/_log/pluginFusinvinventory-entityrules.log"/>
+        <delete file="${project.basedir}/../../../files/_log/pluginFusinvinventory-removesection.log"/>
+        <delete file="${project.basedir}/../../../files/_log/pluginFusinvinventory-updatesection.log"/>
+        <delete file="${project.basedir}/../../../files/_log/pluginFusioninventory-communication.log"/>
+        <delete file="${project.basedir}/../../../files/_log/pluginFusioninventory-rules.log"/>
     </target>
 
  
