@@ -50,6 +50,12 @@ class Switchinventory extends PHPUnit_Framework_TestCase {
          SET `is_active`='1'
          WHERE `modulename`='SNMPQUERY' ";
       $DB->query($query);
+      
+      $networkEquipment = new NetworkEquipment();
+      $a_equipments = $networkEquipment->find();
+      foreach ($a_equipments as $id=>$data) {
+         $networkEquipment->delete(array('id'=>$id), 1);
+      }
 
    }
 
@@ -363,8 +369,6 @@ class Switchinventory_AllTests  {
       $Install = new Install();
       $GLPIInstall->testInstall();
       $Install->testInstall(0);
-      
-      Config::detectRootDoc();
       
       $suite = new PHPUnit_Framework_TestSuite('Switchinventory');
       return $suite;
