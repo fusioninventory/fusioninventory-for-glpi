@@ -1146,9 +1146,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       }
       if ($portID != '') {
          $p_oPort->addConnection($portID);
-         if ($ip != '') {
-            $p_oPort->setValue('ip', $ip);
-         }
+//         if ($ip != '') {
+            //$p_oPort->setValue('ip', $ip);
+//         }
       } else {
          $p_oPort->addUnknownConnection($mac, $ip);
          //TODO : si ip ajouter une tache de decouverte sur l'ip pour recup autre info
