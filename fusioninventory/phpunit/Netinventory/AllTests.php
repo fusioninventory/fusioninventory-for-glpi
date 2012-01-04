@@ -50,6 +50,7 @@ class Netinventory extends PHPUnit_Framework_TestCase {
 
 require_once 'Hub/AllTests.php';
 require_once 'Connectionslogs/AllTests.php';
+require_once 'Switchinventory/AllTests.php';
 
 class Netinventory_AllTests  {
 
@@ -57,8 +58,10 @@ class Netinventory_AllTests  {
       
       $suite = new PHPUnit_Framework_TestSuite('Netinventory');
       $suite->addTest(Hub_AllTests::suite());
-      $suite->addTest(Connectionslogs_AllTests::suite());      
+      $suite->addTest(Connectionslogs_AllTests::suite());  
+      $suite->addTest(Switchinventory_AllTests::suite());
       return $suite;
    }
 }
+
 ?>
