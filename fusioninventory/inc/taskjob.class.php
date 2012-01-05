@@ -162,7 +162,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       }
 
       $heightdiv = 200;
-      echo "<div id='taskjobdisplay' style='height:".$heightdiv."px; overflow:hidden;'>";
+//      echo "<div id='taskjobdisplay' style='height:".$heightdiv."px; overflow:hidden;'>";
       echo "<form method='post' name='form_taskjob' action='".
             $CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/taskjob.form.php''>";
 
@@ -240,13 +240,27 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$this->fields['periodicity_type']));
       echo "</td>";
       // ** Definitions
-      echo "<td rowspan='2' valign='top'>";
+      echo "<td rowspan='4' valign='top'>";
       $this->showTaskjobItems('definition', $randmethod, $id);
       echo "</td>";
       
       // ** Actions
-      echo "<td rowspan='2' valign='top'>";
+      echo "<td rowspan='4' valign='top'>";
       $this->showTaskjobItems('action', $randmethod, $id);
+      echo "</td>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][24]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showInteger("retry_nb", $this->fields["retry_nb"], 0, 30);
+      echo "</td>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][25]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showInteger("retry_time", $this->fields["retry_time"], 0, 360);
       echo "</td>";
       echo "</tr>";
       
@@ -269,34 +283,20 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          echo "</td>";
       }
       echo '</tr>';
-
-//      echo "<tr class='tab_bg_1'>";
-//      echo "<td>".$LANG['plugin_fusioninventory']['task'][24]."&nbsp;:</td>";
-//      echo "<td align='center'>";
-//      Dropdown::showInteger("retry_nb", $this->fields["retry_nb"], 0, 30);
-//      echo "</td>";
-//      echo "</tr>";
-//      
-//      echo "<tr class='tab_bg_1'>";
-//      echo "<td>".$LANG['plugin_fusioninventory']['task'][25]."&nbsp;:</td>";
-//      echo "<td align='center'>";
-//      Dropdown::showInteger("retry_time", $this->fields["retry_time"], 0, 360);
-//      echo "</td>";
-//      echo "</tr>";
-  
+      
       echo "</table>";
       echo "</form>";
-      echo "</div>";
+//      echo "</div>";
       
-      echo "<div id='seemore'>";
-      echo "<table class='tab_cadre_fixe'>";
-      echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='4' align='center' onclick='expandtaskjobform()'>See more";
-      echo " <img src='".GLPI_ROOT."/pics/deplier_down.png'/>";
-      echo "</th>";
-      echo "</tr>";
-      echo "</table>";
-      echo "</div>";
+//      echo "<div id='seemore'>";
+//      echo "<table class='tab_cadre_fixe'>";
+//      echo "<tr class='tab_bg_1'>";
+//      echo "<th colspan='4' align='center' onclick='expandtaskjobform()'>See more";
+//      echo " <img src='".GLPI_ROOT."/pics/deplier_down.png'/>";
+//      echo "</th>";
+//      echo "</tr>";
+//      echo "</table>";
+//      echo "</div>";
       
       echo "<script language='javascript'>
          function expandtaskjobform() {
