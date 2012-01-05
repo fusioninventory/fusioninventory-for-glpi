@@ -510,7 +510,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
                LIMIT 1
             )
             AND `is_active`='1'
-            AND UNIX_TIMESTAMP(date_scheduled) > '".date('U')."'".$where;
+            AND `periodicity_count` > 0 
+            AND `periodicity_type` != '0' ".$where;
       return $DB->query($query);
    }
 }
