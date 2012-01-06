@@ -442,7 +442,9 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
                      if ($split[0] == 'BIOS') {
                         if (isset($dataSection['BDATE'])) {
                            $a_split = explode("/", $dataSection['BDATE']);
-                           $input['bios_date'] = $a_split[2]."-".$a_split[0]."-".$a_split[1];
+                           if (isset($a_split[1]) AND isset($a_split[2])) {
+                              $input['bios_date'] = $a_split[2]."-".$a_split[0]."-".$a_split[1];
+                           }
                         }
                         if (isset($dataSection['BVERSION'])) {
                            $input['bios_version'] = $dataSection['BVERSION'];
