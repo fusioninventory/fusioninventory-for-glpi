@@ -40,6 +40,77 @@
    ------------------------------------------------------------------------
  */
 
+function plugin_fusioninventory_getAddSearchOptions($itemtype) {
+   global $LANG;
+
+   $sopt = array();
+   if ($itemtype == 'Computer') {
+
+         $sopt[5150]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerlibserialization';
+         $sopt[5150]['field']     = 'last_fusioninventory_update';
+         $sopt[5150]['linkfield'] = '';
+         $sopt[5150]['name']      = $LANG['plugin_fusioninventory']['title'][1]." - ".
+            $LANG['plugin_fusioninventory']['computer'][0];
+         $sopt[5150]['datatype']  = 'datetime';
+         $sopt[5150]['itemlink_type'] = 'PluginFusioninventoryInventoryComputerLib';
+
+         $sopt[5151]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantivirus';
+         $sopt[5151]['field']     = 'name';
+         $sopt[5151]['linkfield'] = '';
+         $sopt[5151]['name']      = 'Antivirus name';
+         $sopt[5151]['datatype']  = 'text';
+
+         $sopt[5152]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantivirus';
+         $sopt[5152]['field']     = 'version';
+         $sopt[5152]['linkfield'] = '';
+         $sopt[5152]['name']      = 'Antivirus version';
+         $sopt[5152]['datatype']  = 'text';
+
+         $sopt[5153]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantivirus';
+         $sopt[5153]['field']     = 'is_active';
+         $sopt[5153]['linkfield'] = '';
+         $sopt[5153]['name']      = 'Antivirus activé';
+         $sopt[5153]['datatype']  = 'bool';
+
+         $sopt[5154]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantivirus';
+         $sopt[5154]['field']     = 'uptodate';
+         $sopt[5154]['linkfield'] = '';
+         $sopt[5154]['name']      = 'Antivirus à jour';
+         $sopt[5154]['datatype']  = 'bool';
+         
+         $sopt[5155]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+         $sopt[5155]['field']     = 'bios_date';
+         $sopt[5155]['linkfield'] = '';
+         $sopt[5155]['name']      = $LANG['plugin_fusioninventory']['bios'][0]."-".$LANG['common'][27];
+         $sopt[5155]['datatype']  = 'date';
+         
+         $sopt[5156]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+         $sopt[5156]['field']     = 'bios_version';
+         $sopt[5156]['linkfield'] = '';
+         $sopt[5156]['name']      = $LANG['plugin_fusioninventory']['bios'][0]."-".$LANG['rulesengine'][78];
+         
+         $sopt[5157]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+         $sopt[5157]['field']     = 'operatingsystem_installationdate';
+         $sopt[5157]['linkfield'] = '';
+         $sopt[5157]['name']      = $LANG['computers'][9]." - ".$LANG['install'][3]." (".strtolower($LANG['common'][27]).")";
+         $sopt[5157]['datatype']  = 'date';
+
+         $sopt[5158]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+         $sopt[5158]['field']     = 'winowner';
+         $sopt[5158]['linkfield'] = '';
+         $sopt[5158]['name']      = $LANG['plugin_fusioninventory']['computer'][1];
+
+         $sopt[5159]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+         $sopt[5159]['field']     = 'wincompany';
+         $sopt[5159]['linkfield'] = '';
+         $sopt[5159]['name']      = $LANG['plugin_fusioninventory']['computer'][2];
+         
+   }
+   return $sopt;
+}
+
+
+
 function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 
    $searchopt = &Search::getOptions($type);
@@ -733,6 +804,10 @@ function plugin_fusioninventory_addLeftJoin($itemtype,$ref_table,$new_table,$lin
             }
          }
          break;
+         
+      case 'Computer' :
+         return " LEFT JOIN `$new_table` ON (`$ref_table`.`id` = `$new_table`.`computers_id`) ";
+         break;
       
    }
 
@@ -824,6 +899,11 @@ function plugin_pre_item_purge_fusioninventory($parm) {
                      WHERE `items_id` = '".$parm["id"]."'
                         AND `itemtype` = '1' ";
          $DB->query($query);
+         
+         $PluginFusinvinventoryLib = new PluginFusioninventoryInventoryComputerLib();
+         $PluginFusinvinventoryLib->removeExternalid($item->getField('id'));
+         // Remove antivirus if set
+         PluginFusioninventoryInventoryComputerAntivirus::cleanComputer($item->getField('id'));
          break;
 
    }
