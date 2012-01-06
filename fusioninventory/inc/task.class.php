@@ -352,20 +352,20 @@ class PluginFusioninventoryTask extends CommonDBTM {
             
       // ** Get task in error
       echo "<th><a href='".$_SERVER['PHP_SELF']."?see=inerror'>In error</a></th>";
-      $a_tasks = $this->find();
+      $a_tasks = $this->find(getEntitiesRestrictRequest("", 'glpi_plugin_fusioninventory_tasks'));
 
       // ** Get task active
-      $a_tasks = $this->find("`is_active` = '1'");
+      $a_tasks = $this->find("`is_active` = '1' ".getEntitiesRestrictRequest("AND", 'glpi_plugin_fusioninventory_tasks'));
       echo "<th><a href='".$_SERVER['PHP_SELF']."?see=actives'>Actives<sup>(".
               count($a_tasks).")</sup></a></th>";
       
       // ** Get task inactive
-      $a_tasks = $this->find("`is_active` = '0'");
+      $a_tasks = $this->find("`is_active` = '0' ".getEntitiesRestrictRequest("AND", 'glpi_plugin_fusioninventory_tasks'));
       echo "<th><a href='".$_SERVER['PHP_SELF']."?see=inactives'>Inactives<sup>(".
               count($a_tasks).")</sup></a></th>";
       
       // ** Get all task
-      $a_tasks = $this->find();
+      $a_tasks = $this->find(getEntitiesRestrictRequest("", 'glpi_plugin_fusioninventory_tasks'));
       echo "<th><a href='".$_SERVER['PHP_SELF']."?see=all'>All<sup>(".
               count($a_tasks).")</sup></a></th>";
       
@@ -400,18 +400,19 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
          case 'actives':
             $query = "SELECT * FROM `glpi_plugin_fusioninventory_tasks`
-               WHERE `is_active`='1'";
+               WHERE `is_active`='1' ".getEntitiesRestrictRequest("AND", 'glpi_plugin_fusioninventory_tasks');
             $result = $DB->query($query);
             break;
          
          case 'inactives':
             $query = "SELECT * FROM `glpi_plugin_fusioninventory_tasks`
-               WHERE `is_active`='0'";
+               WHERE `is_active`='0' ".getEntitiesRestrictRequest("AND", 'glpi_plugin_fusioninventory_tasks');
             $result = $DB->query($query);
             break;
          
          case 'all':
-            $query = "SELECT * FROM `glpi_plugin_fusioninventory_tasks`";
+            $query = "SELECT * FROM `glpi_plugin_fusioninventory_tasks`
+               WHERE ".getEntitiesRestrictRequest("", 'glpi_plugin_fusioninventory_tasks');
             $result = $DB->query($query);
             break;
 
@@ -481,6 +482,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $where = " AND task.`id`='".$tasks_id."'
             LIMIT 1"; 
       }
+      $where .= getEntitiesRestrictRequest("AND", 'task');
       
       $query = "SELECT * FROM `glpi_plugin_fusioninventory_tasks` as task
          WHERE execution_id != 
@@ -501,6 +503,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $where = " AND task.`id`='".$tasks_id."'
             LIMIT 1"; 
       }
+      $where .= getEntitiesRestrictRequest("AND", 'task');
       
       $query = "SELECT * FROM `glpi_plugin_fusioninventory_tasks` as task
          WHERE execution_id = 
@@ -510,7 +513,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
                LIMIT 1
             )
             AND `is_active`='1'
-            AND UNIX_TIMESTAMP(date_scheduled) > '".date('U')."'".$where;
+            AND `periodicity_count` > 0 
+            AND `periodicity_type` != '0' ".$where;
       return $DB->query($query);
    }
 }
