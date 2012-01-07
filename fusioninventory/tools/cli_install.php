@@ -117,6 +117,7 @@ if (!isset($_SERVER['argv'][1])) {
 
    include (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
    include (GLPI_ROOT . "/plugins/fusioninventory/locales/en_GB.php");
+   include (GLPI_ROOT . "/plugins/fusioninventory/hook.php");
    $current_version = pluginFusioninventoryGetCurrentVersion(PLUGIN_FUSIONINVENTORY_VERSION);
 
    $migration = new CliMigration($current_version);
@@ -136,17 +137,17 @@ if (!isset($_SERVER['argv'][1])) {
    // To prevent problem of execution time
    ini_set("max_execution_time", "0");
 
+   $mess = '';
    if (($current_version != PLUGIN_FUSIONINVENTORY_VERSION)
         AND $current_version!='0') {
-      pluginFusioninventoryUpdate($current_version, $migration);
-      $migration->displayWarning("Update done.");
+      $mess = "Update done.";      
    } else if ($current_version == PLUGIN_FUSIONINVENTORY_VERSION) {
-      $migration->displayWarning("No migration needed.");
+      $mess = "No migration needed.";
    } else {
-      include (GLPI_ROOT . "/plugins/fusioninventory/install/install.php");
-      pluginFusioninventoryInstall(PLUGIN_FUSIONINVENTORY_VERSION, $migration);
-      $migration->displayWarning("installation done.");
+      $mess = "installation done.";
    }
+   plugin_fusioninventory_install();
+   $migration->displayWarning($mess);
 
    $plugin->getFromDBbyDir("fusioninventory");
    $plugin->load("fusioninventory");
