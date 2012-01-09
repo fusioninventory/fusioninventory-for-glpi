@@ -216,14 +216,18 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       }
       echo "</td>";
       echo "<th width='25%'>";
-      echo $LANG['plugin_fusioninventory']['task'][27];
-      $this->plusButton('definition');
-      echo "<br/><i>Liste des objets sur lesquelles l'action doit porter</i>";
+      if ($this->fields['id'] > 0) {
+         echo $LANG['plugin_fusioninventory']['task'][27];
+         $this->plusButton('definition');
+         echo "<br/><i>Liste des objets sur lesquelles l'action doit porter</i>";
+      }
       echo "</th>";
       echo "<th width='25%'>";
-      echo $LANG['plugin_fusioninventory']['task'][28];
-      $this->plusButton('action');
-      echo "<br/><i>Liste des objets qui vont effectuer l'action</i>";
+      if ($this->fields['id'] > 0) {
+         echo $LANG['plugin_fusioninventory']['task'][28];
+         $this->plusButton('action');
+         echo "<br/><i>Liste des objets qui vont effectuer l'action</i>";
+      }
       echo "</th>";
       echo "</tr>";
 
@@ -547,36 +551,43 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    function showList($id, $name) {
       global $DB,$CFG_GLPI,$LANG;
 
-      $this->getFromDB($id);
+      $ok = 0;
+      $ok = $this->getFromDB($id);
       echo "<table class='tab_cadre'>";
-      $a_typenames = importArrayFromDB($this->fields[$name]);
-      foreach ($a_typenames as $key=>$a_typename) {
-         foreach ($a_typename as $itemtype=>$items_id) {
-            $display = '';
-            if ($itemtype == "PluginFusioninventoryAgent"
-                    AND $items_id == ".1" ) {
-               $display = $LANG['plugin_fusioninventory']['agents'][32];
-            } else if ($itemtype == "PluginFusioninventoryAgent"
-                    AND $items_id == ".2" ) {
-               $display = $LANG['plugin_fusioninventory']['agents'][33];
-            } else {
-               $class = new $itemtype;
-               $class->getFromDB($items_id);
-               $display = $class->getLink(1);
+      $nb = 0;
+      if ($ok) {
+         $a_typenames = importArrayFromDB($this->fields[$name]);
+         foreach ($a_typenames as $key=>$a_typename) {
+            foreach ($a_typename as $itemtype=>$items_id) {
+               $display = '';
+               if ($itemtype == "PluginFusioninventoryAgent"
+                       AND $items_id == ".1" ) {
+                  $display = $LANG['plugin_fusioninventory']['agents'][32];
+               } else if ($itemtype == "PluginFusioninventoryAgent"
+                       AND $items_id == ".2" ) {
+                  $display = $LANG['plugin_fusioninventory']['agents'][33];
+               } else {
+                  $class = new $itemtype;
+                  $class->getFromDB($items_id);
+                  $display = $class->getLink(1);
+               }
+               echo "<tr>";
+               echo "<td style='padding: 1px 2px;'>";
+               echo "<input type='checkbox' name='".$name."item' value='".$key."'>";
+               echo "</td>";
+               echo "<td style='padding: 1px 2px;'>";
+               echo $display;
+               echo "</td>";
+               echo "</tr>";
+               $nb++;
             }
-            echo "<tr>";
-            echo "<td style='padding: 1px 2px;'>";
-            echo "<input type='checkbox' name='".$name."item' value='".$key."'>";
-            echo "</td>";
-            echo "<td style='padding: 1px 2px;'>";
-            echo $display;
-            echo "</td>";
-            echo "</tr>";
          }
       }
       echo "</table>";
 
-      echo "<center><input type='button' id='delete".$name."' name='delete".$name."' value=\"".$LANG['buttons'][6]."\" class='submit'></center>";
+      if ($nb > 0) {
+         echo "<center><input type='button' id='delete".$name."' name='delete".$name."' value=\"".$LANG['buttons'][6]."\" class='submit'></center>";
+      }
       $params = array($name.'item' => '__CHECKBOX__',
                       'type'      => $name,
                       'taskjobs_id'=>$id);
