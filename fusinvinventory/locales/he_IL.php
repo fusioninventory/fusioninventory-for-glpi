@@ -53,8 +53,8 @@ $LANG['plugin_fusinvinventory']['blacklist'][0]="ערך ברשימה השחור�
 $LANG['plugin_fusinvinventory']['blacklist'][1]="ערך חדש עבור רשימה השחורה";
 
 $LANG['plugin_fusinvinventory']['computer'][0]="ספירת מלאי אחרונה";
-$LANG['plugin_fusinvinventory']['computer'][1]="Owner";
-$LANG['plugin_fusinvinventory']['computer'][2]="Company";
+$LANG['plugin_fusinvinventory']['computer'][1]="בעלים";
+$LANG['plugin_fusinvinventory']['computer'][2]="חברה";
 
 $LANG['plugin_fusinvinventory']['importxml'][0]="לייבא קובץ XML מתוכנת סוכן";
 $LANG['plugin_fusinvinventory']['importxml'][1]="המחשב מוכנס למערכת GLPI";
