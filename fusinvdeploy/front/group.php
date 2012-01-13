@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    Alexandre Delaunay
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2011 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -54,7 +54,7 @@ Html::header($LANG['plugin_fusinvdeploy']['group'][0],$_SERVER["PHP_SELF"],"plug
 PluginFusioninventoryMenu::displayMenu("mini");
 
 $group = new PluginFusinvdeployGroup();
-$group->showMenu();
+$group->showList();
 
 Html::footer();
 

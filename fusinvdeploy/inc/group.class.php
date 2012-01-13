@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    Alexandre Delaunay
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2011 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -70,47 +70,53 @@ class PluginFusinvdeployGroup extends CommonDBTM {
    }
 
    function showList() {
-      echo "<table class='tab_cadre_navigation'><tr><td>";
-
       self::title();
       Search::show('PluginFusinvdeployGroup');
-
-      echo "</td></tr></table>";
    }
 
    function defineTabs($options=array()) {
       global $LANG;
 
       $ong = array();
-
-      if ($this->fields['id'] > 0) {
-         switch($this->fields['type']) {
-            case "STATIC":
-               $ong[2] = $LANG['plugin_fusinvdeploy']['group'][1];
-               break;
-            case "DYNAMIC":
-               $ong[3] = $LANG['plugin_fusinvdeploy']['group'][2];
-               break;
-         }
-      }
-      elseif ($this->fields['id'] == -1) {
-         $ong[4] = $LANG['plugin_fusinvdeploy']['group'][0];
-         $ong['no_all_tab']=true;
-      } else { // New item
-         $ong[1] = $LANG['plugin_fusinvdeploy']['group'][4];
+      if ($this->fields['id'] > 0){
+         $this->addStandardTab(__CLASS__, $ong, $options);
       }
 
       return $ong;
    }
 
-   function showMenu($options=array())  {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $LANG;
 
-      $this->displaylist = false;
-
-      $this->fields['id'] = -1;
-      $this->showTabs($options);
-      $this->addDivForTabs();
+      switch(get_class($item)) {
+         case __CLASS__:
+            switch($this->fields['type']) {
+               case "STATIC":
+                  return $LANG['plugin_fusinvdeploy']['group'][1];
+                  break;
+               case "DYNAMIC":
+                  return $LANG['plugin_fusinvdeploy']['group'][2];
+                  break;
+            break;
+      }
    }
+
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+      switch(get_class($item)) {
+         case __CLASS__:
+            $obj = new self;
+            $obj->getFromDB($_POST["id"]);
+            switch($obj->fields['type']) {
+               case "STATIC":
+                  $obj->showStaticForm();
+                  break;
+               case "DYNAMIC":
+                  $obj->showDynamicForm();
+                  break;
+            break;
+      }
+   }
+
 
    function title() {
       global $LANG;
@@ -123,11 +129,11 @@ class PluginFusinvdeployGroup extends CommonDBTM {
          $title = "";
       }
 
-      displayTitle(GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_group.png", $title, $title, $buttons);
+      Html::displayTitle(GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_group.png", $title, $title, $buttons);
    }
 
    function getSearchURL($full=true) {
-      return getItemTypeSearchURL('PluginFusinvdeployTask', $full);
+      return Toolbox::getItemTypeSearchURL('PluginFusinvdeployTask', $full);
    }
 
    function showForm($ID, $options = array()) {
