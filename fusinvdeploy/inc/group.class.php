@@ -485,12 +485,12 @@ class PluginFusinvdeployGroup extends CommonDBTM {
                              'table'      => 'glpi_operatingsystems',
                              'value'      => $fields['operatingsystems_id']);
 
-      ajaxUpdateItemOnInputTextEvent("search_operatingsystems_id", "operatingsystems_dropdown",
+      Ajax::updateItemOnInputTextEvent("search_operatingsystems_id", "operatingsystems_dropdown",
                                      $CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/ajax/dropdown_operatingsystems.php",
                                      $params_os, false);
 
       //load default operatingsystems_dropdown
-      ajaxUpdateItem("operatingsystems_dropdown",
+      Ajax::updateItem("operatingsystems_dropdown",
                                      $CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/ajax/dropdown_operatingsystems.php",
                                      $params_os, false, "search_operatingsystems_id");
 
