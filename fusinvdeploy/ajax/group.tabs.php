@@ -52,7 +52,7 @@ if(!isset($_POST["id"])) {
 }
 
 $group = new PluginFusinvdeployGroup();
-CommonGLPI::displayStandardTab($task, $_REQUEST['glpi_tab']);
+CommonGLPI::displayStandardTab($group, $_REQUEST['glpi_tab']);
 
 Html::ajaxFooter();
 

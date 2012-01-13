@@ -90,13 +90,14 @@ class PluginFusinvdeployGroup extends CommonDBTM {
 
       switch(get_class($item)) {
          case __CLASS__:
-            switch($this->fields['type']) {
+            switch($item->fields['type']) {
                case "STATIC":
                   return $LANG['plugin_fusinvdeploy']['group'][1];
                   break;
                case "DYNAMIC":
                   return $LANG['plugin_fusinvdeploy']['group'][2];
                   break;
+            }
             break;
       }
    }
@@ -113,6 +114,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
                case "DYNAMIC":
                   $obj->showDynamicForm();
                   break;
+            }
             break;
       }
    }
@@ -184,7 +186,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       return true;
    }
 
-   public function showStaticForm() {
+   function showStaticForm() {
       global $DB, $CFG_GLPI, $LANG;
 
       $groupID = $this->fields['id'];
@@ -334,7 +336,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       echo "</form>";
    }
 
-   public function showDynamicForm() {
+   function showDynamicForm() {
       global $DB, $CFG_GLPI, $LANG;
 
       $groupID = $this->fields['id'];
