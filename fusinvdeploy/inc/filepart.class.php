@@ -89,9 +89,9 @@ class PluginFusinvdeployFilepart extends CommonDBTM {
 
    static function httpSendFile($params) {
       if (!isset($params['file'])) {
-         //send an error if filename not specified
          header("HTTP/1.1 500");
          exit;
+
       }
       preg_match('/.\/..\/([^\/]+)/', $params['file'], $matches);
 
@@ -112,29 +112,48 @@ class PluginFusinvdeployFilepart extends CommonDBTM {
             }
          }
       }
-
-      if (count($files) == 1) {
-         $file = array_pop($files);
-
-         $repoPath = GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/repository/";
-         $sha512 = $file['sha512'];
-
-         $filedir = $repoPath.PluginFusinvdeployFile::getDirBySha512($sha512).'/'.$sha512.'.gz';
-
-         error_reporting(0);
-
-         header('Content-Description: File Transfer');
-         header('Content-Type: application/octet-stream');
-         header('Content-Disposition: attachment; filename='.$sha512.'.gz');
-         header('Content-Transfer-Encoding: binary');
-         header('Expires: 0');
-         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-         header('Pragma: public');
-         header('Content-Length: ' . filesize($filedir));
-         ob_clean();
-         flush();
-         readfile($filedir);
+      if (count($files) == 0 ) {
+         header("HTTP/1.1 404");
+         exit;
       }
+
+      if (count($files) > 1) {
+         header("HTTP/1.1 500");
+         exit;
+      }
+
+      $file = array_pop($files);
+
+      $repoPath = GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/repository/";
+      $sha512 = $file['sha512'];
+
+      $filePath = $repoPath.PluginFusinvdeployFile::getDirBySha512($sha512).'/'.$sha512.'.gz';
+
+
+
+      if (!is_file($filePath)) {
+         header("HTTP/1.1 404");
+         print "\n".getcwd().'/'.$filePath."\n\n";
+         exit;
+      } else if (!is_readable($filePath)) {
+         header("HTTP/1.1 403");
+         exit;
+      }
+
+
+      error_reporting(0);
+
+      header('Content-Description: File Transfer');
+      header('Content-Type: application/octet-stream');
+      header('Content-Disposition: attachment; filename='.$sha512.'.gz');
+      header('Content-Transfer-Encoding: binary');
+      header('Expires: 0');
+      header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+      header('Pragma: public');
+      header('Content-Length: ' . filesize($filePath));
+      ob_clean();
+      flush();
+      readfile($filePath);
       exit;
    }
 }

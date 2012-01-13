@@ -84,7 +84,7 @@ class Update extends PHPUnit_Framework_TestCase {
       
       $FusinvInstall->testDB("fusinvsnmp");
       
-      $FusinvInstall->testDB("fusinvdeploy");
+//      $FusinvInstall->testDB("fusinvdeploy");
       
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
@@ -104,4 +104,5 @@ class Update_AllTests  {
       
    }
 }
+
 ?>

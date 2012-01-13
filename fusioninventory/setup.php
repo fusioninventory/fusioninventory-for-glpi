@@ -70,7 +70,12 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryCredential');
       Plugin::registerClass('PluginFusioninventoryLock',
               array('addtabon' => array('Computer','Monitor','Printer','NetworkEquipment')));
-              
+      Plugin::registerClass('PluginFusioninventoryRulematchedlog',
+              array('addtabon' => array('PluginFusioninventoryAgent', 
+                                        'PluginFusioninventoryUnknownDevice',
+                                        'Printer',
+                                        'NetworkEquipment')));   
+      
       //Classes for rulesengine
       Plugin::registerClass('PluginFusioninventoryRuleImportEquipment');
       Plugin::registerClass('PluginFusioninventoryRuleImportEquipmentCollection',

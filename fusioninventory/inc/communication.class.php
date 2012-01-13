@@ -140,8 +140,8 @@ class PluginFusioninventoryCommunication {
    function import($p_xml, &$p_errors='') {
       global $LANG;
       
-      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+      $pfAgent = new PluginFusioninventoryAgent();
 
       PluginFusioninventoryCommunication::addLog('Function import().');
       // TODO : gérer l'encodage, la version
@@ -152,7 +152,7 @@ class PluginFusioninventoryCommunication {
       $errors = '';
 
       $xmltag = (string)$this->sxml->QUERY;
-      $agent = $PluginFusioninventoryAgent->InfosByKey($this->sxml->DEVICEID);
+      $agent = $pfAgent->InfosByKey($this->sxml->DEVICEID);
       if ($xmltag == "PROLOG") {
          return false;
       }
@@ -161,17 +161,14 @@ class PluginFusioninventoryCommunication {
       }
 
       if (isset($this->sxml->CONTENT->MODULEVERSION)) {
-         $PluginFusioninventoryAgent->setAgentVersions($agent['id'], $xmltag, (string)$this->sxml->CONTENT->MODULEVERSION);
+         $pfAgent->setAgentVersions($agent['id'], $xmltag, (string)$this->sxml->CONTENT->MODULEVERSION);
       } else if (isset($this->sxml->CONTENT->VERSIONCLIENT)) {
          $version = str_replace("FusionInventory-Agent_", "", (string)$this->sxml->CONTENT->VERSIONCLIENT);
-
-         $PluginFusioninventoryAgent->setAgentVersions($agent['id'], $xmltag, $version);
+         $pfAgent->setAgentVersions($agent['id'], $xmltag, $version);
       }
 
-
-      if (!$PluginFusioninventoryAgentmodule->getAgentsCanDo($xmltag, $agent['id'])) {
+      if (!$pfAgentmodule->getAgentsCanDo($xmltag, $agent['id'])) {
          return true;
-
       }
 
       if (isset($_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"])) {
@@ -269,7 +266,7 @@ class PluginFusioninventoryCommunication {
     **/
    static function addLog($p_logs) {
 
-      if ($_SESSION['glpi_use_mode']==Session::DEBUG_MODE) {
+      if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
          if (PluginFusioninventoryConfig::isExtradebugActive()) {
             file_put_contents(GLPI_LOG_DIR.'/pluginFusioninventory-communication.log',
                               "\n".time().' : '.$p_logs,
@@ -288,8 +285,8 @@ class PluginFusioninventoryCommunication {
     **/
    function getTaskAgent($agent_id) {
 
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
-      $moduleRun = $PluginFusioninventoryTaskjobstatus->getTaskjobsAgent($agent_id);
+      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $moduleRun = $pfTaskjobstatus->getTaskjobsAgent($agent_id);
       foreach ($moduleRun as $className => $array) {
          if (class_exists($className)) {
             if ($className != "PluginFusinvinventoryESX") {
@@ -308,9 +305,9 @@ class PluginFusioninventoryCommunication {
     *
     **/
    function addProlog() {
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+      $pfConfig = new PluginFusioninventoryConfig();
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
-      $this->sxml->addChild('PROLOG_FREQ', $PluginFusioninventoryConfig->getValue($plugins_id, "inventory_frequence"));
+      $this->sxml->addChild('PROLOG_FREQ', $pfConfig->getValue($plugins_id, "inventory_frequence"));
    }
 
 
@@ -322,8 +319,8 @@ class PluginFusioninventoryCommunication {
     *
     **/
    function addInventory($items_id) {
-      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
-      if ($PluginFusioninventoryAgentmodule->getAgentsCanDo('INVENTORY', $items_id)) {
+      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+      if ($pfAgentmodule->getAgentsCanDo('INVENTORY', $items_id)) {
          $this->sxml->addChild('RESPONSE', "SEND");
       }
    }
@@ -490,6 +487,12 @@ class PluginFusioninventoryCommunication {
       
       
 
+   /**
+    * Clean XML, ie convert to be insert without problem into MySQL DB
+    *
+    * @param type $xml
+    * @return type 
+    */
    function cleanXML($xml) {
       foreach ($xml->children() as $key=>$value) {
          if (count($value->children()) > 0) {
@@ -501,7 +504,6 @@ class PluginFusioninventoryCommunication {
       }
       return $xml;
    }
-
 }
 
 ?>

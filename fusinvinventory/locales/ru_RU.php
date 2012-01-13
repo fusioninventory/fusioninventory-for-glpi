@@ -53,8 +53,8 @@ $LANG['plugin_fusinvinventory']['blacklist'][0]="значение черного
 $LANG['plugin_fusinvinventory']['blacklist'][1]="Новое значение в черный список";
 
 $LANG['plugin_fusinvinventory']['computer'][0]="Последняя версия inventory";
-$LANG['plugin_fusinvinventory']['computer'][1]="Owner";
-$LANG['plugin_fusinvinventory']['computer'][2]="Company";
+$LANG['plugin_fusinvinventory']['computer'][1]="Владелец";
+$LANG['plugin_fusinvinventory']['computer'][2]="Компания";
 
 $LANG['plugin_fusinvinventory']['importxml'][0]="Импорт XML файла из агента";
 $LANG['plugin_fusinvinventory']['importxml'][1]="Компьютер добавлен в GLPI";

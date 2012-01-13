@@ -519,15 +519,15 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
    public static function processFilesize($filesize) {
       if ($filesize >= (1024 * 1024 * 1024)) {
-         $filesize = round($filesize / (1024 * 1024 * 1024), 1)."Go";
+         $filesize = round($filesize / (1024 * 1024 * 1024), 1)."GiB";
       } elseif ($filesize >= 1024 * 1024) {
-         $filesize = round($filesize /  (1024 * 1024), 1)."Mo";
+         $filesize = round($filesize /  (1024 * 1024), 1)."MiB";
 
       } elseif ($filesize >= 1024) {
-         $filesize = round($filesize / 1024, 1)."Ko";
+         $filesize = round($filesize / 1024, 1)."KB";
 
       } else {
-         $filesize .= "o";
+         $filesize;
       }
       return $filesize;
    }

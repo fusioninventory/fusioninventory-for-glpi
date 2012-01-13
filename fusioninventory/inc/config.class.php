@@ -47,11 +47,19 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryConfig extends CommonDBTM {
 
    
-  static function getTypeName() {
+   /**
+    * Display name of itemtype
+    * 
+    * @global array $LANG
+    * 
+    * @return value name of this itemtype
+    */
+   static function getTypeName() {
       global $LANG;
 
       return $LANG['plugin_fusioninventory']['functionalities'][2];
    }
+
    
    
    function canCreate() {
@@ -112,6 +120,17 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    }
    
    
+   
+   /**
+    * Display tab
+    * 
+    * @global array $LANG
+    * 
+    * @param CommonGLPI $item
+    * @param integer $withtemplate
+    * 
+    * @return varchar name of the tab(s) to display 
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       global $LANG;
 
@@ -125,6 +144,15 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    
    
    
+   /**
+    * Display content of tab
+    * 
+    * @param CommonGLPI $item
+    * @param integer $tabnum
+    * @param interger $withtemplate
+    * 
+    * @return boolean true
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       if ($item->getType()=='PluginFusioninventoryConfig') {
@@ -146,8 +174,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    **/
    static function getValue($p_plugins_id, $p_type) {
 
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
-      $config = current($PluginFusioninventoryConfig->find("`plugins_id`='".$p_plugins_id."'
+      $pfConfig = new PluginFusioninventoryConfig();
+      $config = current($pfConfig->find("`plugins_id`='".$p_plugins_id."'
                           AND `type`='".$p_type."'"));
       if (isset($config['value'])) {
          return $config['value'];
@@ -241,7 +269,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     **/
    function addConfig($p_plugins_id, $p_type, $p_value) {
       $existing_value = self::getValue($p_plugins_id, $p_type); 
-      if ($existing_value) {
+      if (!is_null($existing_value)) {
          return $existing_value;
       } else {
          return $this->add(array('plugins_id' => $p_plugins_id, 
@@ -333,7 +361,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
          Toolbox::logInFile($file, $message);
       }
    }
-
 }
 
 ?>

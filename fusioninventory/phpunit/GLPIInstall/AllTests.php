@@ -95,4 +95,5 @@ class GLPIInstall_AllTests  {
       return $suite;
    }
 }
+
 ?>

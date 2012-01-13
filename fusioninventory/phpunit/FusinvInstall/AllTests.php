@@ -163,22 +163,21 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
       $tables_toadd = array_diff_assoc($a_tables_ref, $a_tables_db);
        
       // See tables missing or to delete
-      $this->assertEquals(count($tables_toadd), 0, 'Tables missing '.print_r($tables_toadd));
-      $this->assertEquals(count($tables_toremove), 0, 'Tables to delete '.print_r($tables_toremove));
+      $this->assertEquals(count($tables_toadd), 0, 'Tables missing '.print_r($tables_toadd, true));
+      $this->assertEquals(count($tables_toremove), 0, 'Tables to delete '.print_r($tables_toremove, true));
       
       // See if fields are same
       foreach ($a_tables_db as $table=>$data) {
          if (isset($a_tables_ref[$table])) {
             $fields_toremove = array_diff_assoc($data, $a_tables_ref[$table]);
             $fields_toadd = array_diff_assoc($a_tables_ref[$table], $data);
-            echo "======= DB ============== Ref =======> ".$table."\n";
-            
-            print_r($data);
-            print_r($a_tables_ref[$table]);
+            $diff = "======= DB ============== Ref =======> ".$table."\n";
+            $diff .= print_r($data, true);
+            $diff .= print_r($a_tables_ref[$table], true);
             
             // See tables missing or to delete
-            $this->assertEquals(count($fields_toadd), 0, 'Fields missing/not good in '.$table.' '.print_r($fields_toadd));
-            $this->assertEquals(count($fields_toremove), 0, 'Fields to delete in '.$table.' '.print_r($fields_toremove));
+            $this->assertEquals(count($fields_toadd), 0, 'Fields missing/not good in '.$table.' '.print_r($fields_toadd, true)." into ".$diff);
+            $this->assertEquals(count($fields_toremove), 0, 'Fields to delete in '.$table.' '.print_r($fields_toremove, true)." into ".$diff);
             
          }         
       }
@@ -224,10 +223,10 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, 'NETDISCOVERY module not registered');
       
-      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` 
-         WHERE `modulename`='DEPLOY'";
-      $result = $DB->query($query);
-      $this->assertEquals($DB->numrows($result), 1, 'DEPLOY module not registered');
+//      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` 
+//         WHERE `modulename`='DEPLOY'";
+//      $result = $DB->query($query);
+//      $this->assertEquals($DB->numrows($result), 1, 'DEPLOY module not registered');
       
       
       /*
@@ -255,7 +254,79 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
               'Cron cleannetworkportlogs not created');
       
       
+      /*
+       * Verify config fields added
+       */
+      $plugins_id = PluginFusioninventoryModule::getModuleId("fusioninventory");
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs` 
+         WHERE `plugins_id`='".$plugins_id."'
+            AND `type`='ssl_only'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 1, "type 'ssl_only' not added in config");
+
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs` 
+         WHERE `plugins_id`='".$plugins_id."'
+            AND `type`='delete_task'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 1, "type 'delete_task' not added in config");
+      
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs` 
+         WHERE `plugins_id`='".$plugins_id."'
+            AND `type`='inventory_frequence'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 1, "type 'inventory_frequence' not added in config");
+ 
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs` 
+         WHERE `plugins_id`='".$plugins_id."'
+            AND `type`='agent_port'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 1, "type 'agent_port' not added in config");
+ 
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs` 
+         WHERE `plugins_id`='".$plugins_id."'
+            AND `type`='extradebug'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 1, "type 'extradebug' not added in config");
+ 
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs` 
+         WHERE `plugins_id`='".$plugins_id."'
+            AND `type`='users_id'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 1, "type 'users_id' not added in config");
+
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs` 
+         WHERE `plugins_id`='".$plugins_id."'
+            AND `type`='version'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 1, "type 'version' not added in config");
+
+      
+      
       // TODO : test glpi_displaypreferences, rules, bookmark...
+
+      
+      if ($pluginname == 'fusinvsnmp') {
+         
+      /*
+       * Verify SNMP models have a right itemtype
+       */         
+      $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_models`
+         WHERE `itemtype` NOT IN('Computer','NetworkEquipment', 'Printer')";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 0, "SNMP models have invalid itemtype");
+         
+      
+      /*
+       * Verify SNMP models not in double
+       */
+      $query = "SELECT count(*) as cnt, `name` FROM `glpi_plugin_fusinvsnmp_models` 
+         GROUP BY `name` 
+         HAVING cnt >1";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 0, "SNMP models are in double (name of models)");
+         
+         
+      }
       
    }
 }

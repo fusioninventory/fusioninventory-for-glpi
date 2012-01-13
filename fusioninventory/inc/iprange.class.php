@@ -277,20 +277,20 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
          $method = "snmpinventory";
       }
 
-      $PluginFusioninventoryTask = new PluginFusioninventoryTask();
-      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pfTask = new PluginFusioninventoryTask();
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
 
       $permanent = exportArrayToDB(array($this->getType()=>$items_id, 'module'=>$module_name));
 
       $task_id = 0;
       $taskjob_id= 0;
       // Get on task & taskjob (and create this task if not exist)
-      if ($a_task = $PluginFusioninventoryTask->find("`permanent` LIKE '".$permanent."'", "`id` DESC", "1")) {
+      if ($a_task = $pfTask->find("`permanent` LIKE '".$permanent."'", "`id` DESC", "1")) {
          $data = current($a_task);
          $task_id = $data['id'];
 
-         $a_taskjob = $PluginFusioninventoryTaskjob->find("`plugin_fusioninventory_tasks_id`='".$task_id."'", "id DESC");
+         $a_taskjob = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$task_id."'", "id DESC");
          $data = current($a_taskjob);
          $taskjob_id = $data['id'];
       } else {
@@ -321,7 +321,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
          $input['periodicity_count'] = "1";
          $input['periodicity_type'] = "hours";
 
-         $task_id = $PluginFusioninventoryTask->add($input);
+         $task_id = $pfTask->add($input);
 
          $input = array();
          $input['plugin_fusioninventory_tasks_id'] = $task_id;
@@ -331,16 +331,16 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
          $input['definition'] = '[{"PluginFusioninventoryIPRange":"'.$_POST['id'].'"}]';
          $input["entities_id"] = $this->getEntityID();
 
-         $taskjob_id = $PluginFusioninventoryTaskjob->add($input);
+         $taskjob_id = $pfTaskjob->add($input);
          Html::redirect(str_replace("&allowcreate=1", "",$_SERVER['HTTP_REFERER']));
       }
       // Get task job or create if not exist
-      $PluginFusioninventoryTask->getFromDB($task_id);
-      $PluginFusioninventoryTaskjob->getFromDB($taskjob_id);
+      $pfTask->getFromDB($task_id);
+      $pfTaskjob->getFromDB($taskjob_id);
 
       $options = array();
       $options['target'] = Toolbox::deleteDir('PluginFusioninventoryIPRange');
-      $PluginFusioninventoryTaskjob->showFormHeader($options);
+      $pfTaskjob->showFormHeader($options);
       
       echo "</td>";
       echo "<td colspan='4' align='center'>";
@@ -352,20 +352,20 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['common'][60]."&nbsp;:</td>";
       echo "<td align='center'>";
-      Dropdown::showYesNo("is_active",$PluginFusioninventoryTask->fields["is_active"]);
+      Dropdown::showYesNo("is_active",$pfTask->fields["is_active"]);
       echo "</td>";
       echo "</td>";
 
       echo "<td>".$LANG['plugin_fusioninventory']['task'][17]."&nbsp;:</td>";
       echo "<td align='center'>";
-      Dropdown::showInteger("periodicity_count", $PluginFusioninventoryTask->fields['periodicity_count'], 0, 300);
+      Dropdown::showInteger("periodicity_count", $pfTask->fields['periodicity_count'], 0, 300);
       $a_time = array();
       $a_time[] = "------";
       $a_time['minutes'] = $LANG['job'][22];
       $a_time['hours'] = ucfirst($LANG['gmt'][1]);
       $a_time['days'] = ucfirst($LANG['calendar'][12]);
       $a_time['months'] = ucfirst($LANG['calendar'][14]);
-      Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$PluginFusioninventoryTask->fields['periodicity_type']));
+      Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$pfTask->fields['periodicity_type']));
       echo "</td>";
       echo "</tr>";
 
@@ -377,11 +377,11 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
       $defaultValue = '';
 
-      if (!empty($PluginFusioninventoryTaskjob->fields['action'])) {
-         $array = importArrayFromDB($PluginFusioninventoryTaskjob->fields['action']);
+      if (!empty($pfTaskjob->fields['action'])) {
+         $array = importArrayFromDB($pfTaskjob->fields['action']);
          $defaultValue = current(current($array));
       }
-      $a_data = $PluginFusioninventoryTaskjob->get_agents($module_name);
+      $a_data = $pfTaskjob->get_agents($module_name);
       Dropdown::showFromArray('action', $a_data, array('value' => $defaultValue));
 
       echo "</td>";
@@ -392,7 +392,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       $com = array();
       $com['push'] = $LANG['plugin_fusioninventory']['task'][41];
       $com['pull'] = $LANG['plugin_fusioninventory']['task'][42];
-      Dropdown::showFromArray("communication", $com, array('value'=>$PluginFusioninventoryTask->fields["communication"]));
+      Dropdown::showFromArray("communication", $com, array('value'=>$pfTask->fields["communication"]));
       echo "</td>";
       echo "</tr>";
 
@@ -400,9 +400,9 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       echo "<input name='taskjob_id' type='hidden' value='".$taskjob_id."' />";
       echo "<input name='iprange' type='hidden' value='".$_POST['id']."' />";
 
-      $PluginFusioninventoryTaskjob->showFormButtons($options);
+      $pfTaskjob->showFormButtons($options);
 
-      $PluginFusioninventoryTaskjoblog->showHistory($PluginFusioninventoryTaskjob->fields['id']);
+      $pfTaskjoblog->showHistory($pfTaskjob->fields['id']);
    }
 
 

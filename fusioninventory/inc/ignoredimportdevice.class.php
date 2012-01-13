@@ -76,7 +76,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       $nb_elements = countElementsInTableForMyEntities($this->getTable());
       echo "<table class='tab_cadre' >";
       echo "<tr>";
-      echo "<td colspan='7'>";
+      echo "<td colspan='8'>";
       Html::printAjaxPager('',$start,$nb_elements);
       echo "</td>";
       echo "</tr>";
@@ -102,6 +102,9 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       echo "</th>";
       echo "<th>";
       echo $LANG['networking'][15];
+      echo "</th>";
+      echo "<th>";
+      echo $LANG['plugin_fusioninventory']['task'][26];
       echo "</th>";
       echo "</tr>";
       
@@ -148,6 +151,15 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
          echo "<td align='center'>";
          $a_mac = importArrayFromDB($data['mac']);
          echo implode("<br/>", $a_mac);
+         echo "</td>";
+         
+         echo "<td>";
+         $a_methods = PluginFusioninventoryStaticmisc::getmethods();
+         foreach ($a_methods as $mdata) {
+            if ($mdata['method'] == $data['method']) {
+               echo $mdata['name'];
+            }
+         }
          echo "</td>";
          echo "</tr>";
       }

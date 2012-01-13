@@ -1146,9 +1146,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       }
       if ($portID != '') {
          $p_oPort->addConnection($portID);
-         if ($ip != '') {
-            $p_oPort->setValue('ip', $ip);
-         }
+//         if ($ip != '') {
+            //$p_oPort->setValue('ip', $ip);
+//         }
       } else {
          $p_oPort->addUnknownConnection($mac, $ip);
          //TODO : si ip ajouter une tache de decouverte sur l'ip pour recup autre info
@@ -1333,6 +1333,25 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          }
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==fusioninventory::3== '.implode(",", $a_text);
          $this->addtaskjoblog();
+         
+         $pFusioninventoryIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
+         $inputdb = array();
+         $inputdb['name'] = $input['name'];
+         $inputdb['date'] = date("Y-m-d H:i:s");
+         $inputdb['itemtype'] = $input['itemtype'];
+         if (isset($input['serial'])) {
+            $input['serialnumber'] = $input['serial'];
+         }
+         if (isset($input['ip'])) {
+            $inputdb['ip'] = exportArrayToDB($input['ip']);
+         }
+         if (isset($input['mac'])) {
+            $inputdb['mac'] = exportArrayToDB($input['mac']);
+         }
+         $inputdb['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
+         $inputdb['method'] = 'netinventory';
+         $pFusioninventoryIgnoredimportdevice->add($inputdb);
+         unset($_SESSION['plugin_fusioninventory_rules_id']);
       }
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
          if (isset($input['itemtype'])
@@ -1353,30 +1372,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          } else {
             $errors .= $this->rulepassed(0, "PluginFusioninventoryUnknownDevice");
          }
-      } else {
-         $pFusioninventoryIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
-         $inputdb = array();
-         if (isset($input['name'])) {
-            $inputdb['name'] = $input['name'];
-         }
-         $inputdb['date'] = date("Y-m-d H:i:s");
-         $inputdb['itemtype'] = $input['itemtype'];
-         
-         $id_xml = (string)$p_CONTENT->INFO->ID;
-         $itemtype = $input['itemtype'];
-         $item = new $itemtype;
-         if ($item->getFromDB($id_xml)) {
-            $inputdb['entities_id'] = $item->fields['entities_id'];
-         }
-         
-         if (isset($input['ip'])) {
-            $inputdb['ip'] = exportArrayToDB($input['ip']);
-         }
-         if (isset($input['mac'])) {
-            $inputdb['mac'] = exportArrayToDB($input['mac']);
-         }
-         $inputdb['rules_id'] = $data['_ruleid'];
-         $pFusioninventoryIgnoredimportdevice->add($inputdb);
       }
       return $errors;
    }
@@ -1411,6 +1406,21 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             $input['entities_id'] = 0;
          }
          $items_id = $class->add($input);
+         if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
+            $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
+            $inputrulelog = array();
+            $inputrulelog['date'] = date('Y-m-d H:i:s');
+            $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
+            if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
+               $inputrulelog['plugin_fusioninventory_agents_id'] = $_SESSION['plugin_fusioninventory_agents_id'];
+            }
+            $inputrulelog['items_id'] = $items_id;
+            $inputrulelog['itemtype'] = $itemtype;
+            $inputrulelog['method'] = 'snmpinventory';
+            $pfRulematchedlog->add($inputrulelog);
+            $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
+            unset($_SESSION['plugin_fusioninventory_rules_id']);
+         }
       }
       if ($itemtype == "PluginFusioninventoryUnknownDevice") {
          $class->getFromDB($items_id);
@@ -1471,6 +1481,12 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
        }
        return $string;
    }
+   
+   
+   static function getMethod() {
+      return 'snmpinventory';
+   }
+   
 }
 
 ?>

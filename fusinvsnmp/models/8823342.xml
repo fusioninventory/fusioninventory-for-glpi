@@ -19,7 +19,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.4.1.9.9.23.1.2.1.1.4</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>cdpCacheAddress</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -29,7 +29,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.4.1.9.9.23.1.2.1.1.6</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>cdpCacheDeviceId</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -39,7 +39,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.4.1.9.9.23.1.2.1.1.7</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>cdpCacheDevicePort</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -49,7 +49,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.4.1.9.9.23.1.2.1.1.8</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>cdpCachePlatform</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -59,7 +59,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.4.1.9.9.23.1.2.1.1.5</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>cdpCacheVersion</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -69,7 +69,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.2.1.1.1.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>comments</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -79,7 +79,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.4.1.9.9.109.1.1.1.1.3.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>cpu</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -89,7 +89,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.2.1.17.1.4.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>dot1dBasePortIfIndex</mapping_name>
 			<vlan>1</vlan>
 			<activation>1</activation>
@@ -99,7 +99,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.2.1.17.4.3.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>dot1dTpFdbAddress</mapping_name>
 			<vlan>1</vlan>
 			<activation>1</activation>
@@ -109,7 +109,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.2.1.17.4.3.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>dot1dTpFdbPort</mapping_name>
 			<vlan>1</vlan>
 			<activation>1</activation>
@@ -119,7 +119,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.2.1.47.1.1.1.1.13.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>entPhysicalModelName</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -129,7 +129,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.2.1.47.1.1.1.1.9.1000</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>firmware</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -139,7 +139,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.2.1.2.2.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>ifdescr</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -149,7 +149,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.2.1.2.2.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>ifIndex</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -159,7 +159,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.2.1.2.2.1.14</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>ifinerrors</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -169,7 +169,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.2.1.2.2.1.10</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>ifinoctets</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -179,7 +179,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.2.1.2.2.1.7</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>ifinternalstatus</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -189,7 +189,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.2.1.2.2.1.9</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>iflastchange</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -199,7 +199,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.2.1.2.2.1.4</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>ifmtu</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -209,7 +209,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.2.1.31.1.1.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>ifName</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -219,7 +219,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.2.1.2.2.1.20</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>ifouterrors</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -229,7 +229,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.2.1.2.2.1.16</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>ifoutoctets</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -239,7 +239,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.2.1.2.2.1.6</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>ifPhysAddress</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -249,7 +249,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.2.1.2.2.1.5</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>ifspeed</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -259,7 +259,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.2.1.2.2.1.8</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>ifstatus</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -269,7 +269,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.2.1.2.2.1.3</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>ifType</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -279,7 +279,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.2.1.4.20.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>ipAdEntAddr</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -289,7 +289,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.2.1.4.22.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>ipNetToMediaPhysAddress</mapping_name>
 			<vlan>1</vlan>
 			<activation>1</activation>
@@ -299,7 +299,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.2.1.1.6.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>location</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -309,7 +309,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.2.1.17.1.1.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>macaddr</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -319,7 +319,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.4.1.9.2.1.8.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>memory</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -329,7 +329,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.2.1.1.5.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>name</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -339,7 +339,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.2.1.47.1.1.1.1.11.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>serial</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -349,7 +349,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.2.1.1.3.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>uptime</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -359,7 +359,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.4.1.9.9.46.1.6.1.1.14</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>vlanTrunkPortDynamicStatus</mapping_name>
 			<vlan>1</vlan>
 			<activation>1</activation>
@@ -369,7 +369,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.4.1.9.9.68.1.2.2.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>vmvlan</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -379,7 +379,7 @@ Compiled Tue 27-Oct-09 11:12 by prod_
 			<oid>.1.3.6.1.4.1.9.9.46.1.3.1.1.4.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
+			<mapping_type>NetworkEquipment</mapping_type>
  			<mapping_name>vtpVlanName</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>

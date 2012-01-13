@@ -46,7 +46,7 @@ class Netdiscovery extends PHPUnit_Framework_TestCase {
    public function testCountDevicesTasklog() {
       global $DB,$CFG_GLPI;
       
-      loadLanguage("en_GB");
+      Session::loadLanguage("en_GB");
 
       $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
       
@@ -225,9 +225,7 @@ class Netdiscovery_AllTests  {
 
    public static function suite() {
       
-      $GLPIInstall = new GLPIInstall();
       $Install = new Install();
-      $GLPIInstall->testInstall();
       $Install->testInstall(0);
     
       $suite = new PHPUnit_Framework_TestSuite('Netdiscovery');

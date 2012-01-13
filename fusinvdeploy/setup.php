@@ -157,27 +157,27 @@ function plugin_init_fusinvdeploy() {
 	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['packages']['title'] = 
 		$LANG['plugin_fusinvdeploy']['menu'][1];
 	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['packages']['page'] = 
-		'../fusinvdeploy/front/package.php';
+		'/plugins/fusinvdeploy/front/package.php';
 
 	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['mirror']['title'] = 
 		$LANG['plugin_fusinvdeploy']['menu'][2];
 	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['mirror']['page'] = 
-		'../fusinvdeploy/front/mirror.php';
+		'/plugins/fusinvdeploy/front/mirror.php';
 
 	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['task']['title'] = 
 		$LANG['plugin_fusinvdeploy']['menu'][3];
 	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['task']['page'] = 
-		'../fusinvdeploy/front/task.php';
+		'/plugins/fusinvdeploy/front/task.php';
 
 	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['group']['title'] = 
 		$LANG['plugin_fusinvdeploy']['menu'][4];
 	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['group']['page'] = 
-		'../fusinvdeploy/front/group.php';
+		'/plugins/fusinvdeploy/front/group.php';
 
 	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['deploy']['title'] = 
 		$LANG['plugin_fusinvdeploy']['menu'][5];
 	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['deploy']['page'] = 
-		'../fusinvdeploy/front/deploystate.php';
+		'/plugins/fusinvdeploy/front/deploystate.php';
 
    $PLUGIN_HOOKS['add_css']['fusinvdeploy'] = "css/style.css";
 
@@ -203,6 +203,9 @@ function plugin_fusinvdeploy_check_prerequisites() {
    global $LANG;
    if (version_compare('0.78',GLPI_VERSION) < 0) {
       $plugin = new Plugin;
+      if ($plugin->isInstalled("fusioninventory")) {
+        return true;
+      }
       if (!$plugin->isActivated("fusioninventory")) {
          print $LANG['plugin_fusinvdeploy']["setup"][17]."<br />\n";
          return false;

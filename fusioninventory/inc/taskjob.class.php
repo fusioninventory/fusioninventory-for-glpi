@@ -162,7 +162,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       }
 
       $heightdiv = 200;
-      echo "<div id='taskjobdisplay' style='height:".$heightdiv."px; overflow:hidden;'>";
+//      echo "<div id='taskjobdisplay' style='height:".$heightdiv."px; overflow:hidden;'>";
       echo "<form method='post' name='form_taskjob' action='".
             $CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/taskjob.form.php''>";
 
@@ -216,14 +216,18 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       }
       echo "</td>";
       echo "<th width='25%'>";
-      echo $LANG['plugin_fusioninventory']['task'][27];
-      $this->plusButton('definition');
-      echo "<br/><i>Liste des objets sur lesquelles l'action doit porter</i>";
+      if ($this->fields['id'] > 0) {
+         echo $LANG['plugin_fusioninventory']['task'][27];
+         $this->plusButton('definition');
+         echo "<br/><i>Liste des objets sur lesquelles l'action doit porter</i>";
+      }
       echo "</th>";
       echo "<th width='25%'>";
-      echo $LANG['plugin_fusioninventory']['task'][28];
-      $this->plusButton('action');
-      echo "<br/><i>Liste des objets qui vont effectuer l'action</i>";
+      if ($this->fields['id'] > 0) {
+         echo $LANG['plugin_fusioninventory']['task'][28];
+         $this->plusButton('action');
+         echo "<br/><i>Liste des objets qui vont effectuer l'action</i>";
+      }
       echo "</th>";
       echo "</tr>";
 
@@ -240,13 +244,27 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$this->fields['periodicity_type']));
       echo "</td>";
       // ** Definitions
-      echo "<td rowspan='2' valign='top'>";
+      echo "<td rowspan='4' valign='top'>";
       $this->showTaskjobItems('definition', $randmethod, $id);
       echo "</td>";
       
       // ** Actions
-      echo "<td rowspan='2' valign='top'>";
+      echo "<td rowspan='4' valign='top'>";
       $this->showTaskjobItems('action', $randmethod, $id);
+      echo "</td>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][24]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showInteger("retry_nb", $this->fields["retry_nb"], 0, 30);
+      echo "</td>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][25]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showInteger("retry_time", $this->fields["retry_time"], 0, 360);
       echo "</td>";
       echo "</tr>";
       
@@ -269,34 +287,20 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          echo "</td>";
       }
       echo '</tr>';
-
-//      echo "<tr class='tab_bg_1'>";
-//      echo "<td>".$LANG['plugin_fusioninventory']['task'][24]."&nbsp;:</td>";
-//      echo "<td align='center'>";
-//      Dropdown::showInteger("retry_nb", $this->fields["retry_nb"], 0, 30);
-//      echo "</td>";
-//      echo "</tr>";
-//      
-//      echo "<tr class='tab_bg_1'>";
-//      echo "<td>".$LANG['plugin_fusioninventory']['task'][25]."&nbsp;:</td>";
-//      echo "<td align='center'>";
-//      Dropdown::showInteger("retry_time", $this->fields["retry_time"], 0, 360);
-//      echo "</td>";
-//      echo "</tr>";
-  
+      
       echo "</table>";
       echo "</form>";
-      echo "</div>";
+//      echo "</div>";
       
-      echo "<div id='seemore'>";
-      echo "<table class='tab_cadre_fixe'>";
-      echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='4' align='center' onclick='expandtaskjobform()'>See more";
-      echo " <img src='".GLPI_ROOT."/pics/deplier_down.png'/>";
-      echo "</th>";
-      echo "</tr>";
-      echo "</table>";
-      echo "</div>";
+//      echo "<div id='seemore'>";
+//      echo "<table class='tab_cadre_fixe'>";
+//      echo "<tr class='tab_bg_1'>";
+//      echo "<th colspan='4' align='center' onclick='expandtaskjobform()'>See more";
+//      echo " <img src='".GLPI_ROOT."/pics/deplier_down.png'/>";
+//      echo "</th>";
+//      echo "</tr>";
+//      echo "</table>";
+//      echo "</div>";
       
       echo "<script language='javascript'>
          function expandtaskjobform() {
@@ -547,36 +551,43 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    function showList($id, $name) {
       global $DB,$CFG_GLPI,$LANG;
 
-      $this->getFromDB($id);
+      $ok = 0;
+      $ok = $this->getFromDB($id);
       echo "<table class='tab_cadre'>";
-      $a_typenames = importArrayFromDB($this->fields[$name]);
-      foreach ($a_typenames as $key=>$a_typename) {
-         foreach ($a_typename as $itemtype=>$items_id) {
-            $display = '';
-            if ($itemtype == "PluginFusioninventoryAgent"
-                    AND $items_id == ".1" ) {
-               $display = $LANG['plugin_fusioninventory']['agents'][32];
-            } else if ($itemtype == "PluginFusioninventoryAgent"
-                    AND $items_id == ".2" ) {
-               $display = $LANG['plugin_fusioninventory']['agents'][33];
-            } else {
-               $class = new $itemtype;
-               $class->getFromDB($items_id);
-               $display = $class->getLink(1);
+      $nb = 0;
+      if ($ok) {
+         $a_typenames = importArrayFromDB($this->fields[$name]);
+         foreach ($a_typenames as $key=>$a_typename) {
+            foreach ($a_typename as $itemtype=>$items_id) {
+               $display = '';
+               if ($itemtype == "PluginFusioninventoryAgent"
+                       AND $items_id == ".1" ) {
+                  $display = $LANG['plugin_fusioninventory']['agents'][32];
+               } else if ($itemtype == "PluginFusioninventoryAgent"
+                       AND $items_id == ".2" ) {
+                  $display = $LANG['plugin_fusioninventory']['agents'][33];
+               } else {
+                  $class = new $itemtype;
+                  $class->getFromDB($items_id);
+                  $display = $class->getLink(1);
+               }
+               echo "<tr>";
+               echo "<td style='padding: 1px 2px;'>";
+               echo "<input type='checkbox' name='".$name."item' value='".$key."'>";
+               echo "</td>";
+               echo "<td style='padding: 1px 2px;'>";
+               echo $display;
+               echo "</td>";
+               echo "</tr>";
+               $nb++;
             }
-            echo "<tr>";
-            echo "<td style='padding: 1px 2px;'>";
-            echo "<input type='checkbox' name='".$name."item' value='".$key."'>";
-            echo "</td>";
-            echo "<td style='padding: 1px 2px;'>";
-            echo $display;
-            echo "</td>";
-            echo "</tr>";
          }
       }
       echo "</table>";
 
-      echo "<center><input type='button' id='delete".$name."' name='delete".$name."' value=\"".$LANG['buttons'][6]."\" class='submit'></center>";
+      if ($nb > 0) {
+         echo "<center><input type='button' id='delete".$name."' name='delete".$name."' value=\"".$LANG['buttons'][6]."\" class='submit'></center>";
+      }
       $params = array($name.'item' => '__CHECKBOX__',
                       'type'      => $name,
                       'taskjobs_id'=>$id);
