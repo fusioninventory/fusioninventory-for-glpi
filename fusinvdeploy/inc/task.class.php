@@ -70,34 +70,33 @@ class PluginFusinvdeployTask extends PluginFusioninventoryTask {
 
       $ong = array();
 
-      if ($this->fields['id'] > 0) {
-         $ong[3] = $LANG['plugin_fusinvdeploy']['task'][13];
-      } elseif ($this->fields['id'] == -1) {
-         $ong[2] = $LANG['plugin_fusinvdeploy']['task'][1];
-         $ong['no_all_tab']=true;
-      } else { // New item
-         $ong[1] = $LANG['plugin_fusinvdeploy']['task'][3];
+      if ($this->fields['id'] > 0){
+         $this->addStandardTab(__CLASS__, $ong, $options);
       }
 
       return $ong;
    }
 
-   function showMenu($options=array())  {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $LANG;
 
-      $this->displaylist = false;
+      switch(get_class($item)) {
+         case __CLASS__: return $LANG['plugin_fusinvdeploy']['task'][13];
+      }
+   }
 
-      $this->fields['id'] = -1;
-      $this->showTabs($options);
-      $this->addDivForTabs();
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+      switch(get_class($item)) {
+         case __CLASS__:
+            $obj = new self;
+            $obj->showActions($_POST["id"]);
+            break;
+      }
    }
 
    function showList() {
-      echo "<table class='tab_cadre_navigation'><tr><td>";
-
       self::title();
       Search::show('PluginFusinvdeployTask');
-
-      echo "</td></tr></table>";
    }
 
    function title() {
@@ -111,7 +110,7 @@ class PluginFusinvdeployTask extends PluginFusioninventoryTask {
          $title = "";
       }
 
-      displayTitle($CFG_GLPI["root_doc"] . "/plugins/fusinvdeploy/pics/task.png", $title, $title, $buttons);
+      Html::displayTitle($CFG_GLPI["root_doc"] . "/plugins/fusinvdeploy/pics/task.png", $title, $title, $buttons);
    }
 
 
