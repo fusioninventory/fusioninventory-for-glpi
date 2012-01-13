@@ -36,7 +36,7 @@
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 define ("PLUGIN_FUSINVDEPLOY_VERSION","0.83+1.0");
@@ -110,12 +110,12 @@ function plugin_init_fusinvdeploy() {
    $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = $moduleId;
 
    if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']
-									['fusinvdeploy'][$LANG['plugin_fusinvdeploy']['title'][0]])) {
+                           ['fusinvdeploy'][$LANG['plugin_fusinvdeploy']['title'][0]])) {
       $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']
-									['fusinvdeploy'][$LANG['plugin_fusinvdeploy']['title'][0]] = 
-										array('class'			=>	'PluginFusinvdeployConfig',
-                                    'submitbutton'	=>	'plugin_fusinvdeploy_config_set',
-                                    'submitmethod'	=>	'putForm');
+                           ['fusinvdeploy'][$LANG['plugin_fusinvdeploy']['title'][0]] =
+                              array('class'        => 'PluginFusinvdeployConfig',
+                                    'submitbutton' => 'plugin_fusinvdeploy_config_set',
+                                    'submitmethod' => 'putForm');
    }
 
    if (isset($_SESSION["glpiID"])) {
@@ -128,7 +128,7 @@ function plugin_init_fusinvdeploy() {
          $a_tabs = $PluginFusioninventoryConfiguration->defineTabs();
          $PLUGIN_HOOKS['config_page']['fusinvdeploy'] = '../fusioninventory/front/config.form.php?glpi_tab='.array_search($a_plugin['name'], $a_tabs);
       }
-	}
+   }
 
    if (!class_exists('PluginFusioninventoryProfile')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
@@ -153,31 +153,31 @@ function plugin_init_fusinvdeploy() {
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['group'] =
       '../fusinvdeploy/front/group.php';
 
-	// Breadcrumbs
-	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['packages']['title'] = 
-		$LANG['plugin_fusinvdeploy']['menu'][1];
-	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['packages']['page'] = 
-		'/plugins/fusinvdeploy/front/package.php';
+   // Breadcrumbs
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['packages']['title'] =
+      $LANG['plugin_fusinvdeploy']['menu'][1];
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['packages']['page'] =
+      '/plugins/fusinvdeploy/front/package.php';
 
-	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['mirror']['title'] = 
-		$LANG['plugin_fusinvdeploy']['menu'][2];
-	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['mirror']['page'] = 
-		'/plugins/fusinvdeploy/front/mirror.php';
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['mirror']['title'] =
+      $LANG['plugin_fusinvdeploy']['menu'][2];
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['mirror']['page'] =
+      '/plugins/fusinvdeploy/front/mirror.php';
 
-	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['task']['title'] = 
-		$LANG['plugin_fusinvdeploy']['menu'][3];
-	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['task']['page'] = 
-		'/plugins/fusinvdeploy/front/task.php';
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['task']['title'] =
+      $LANG['plugin_fusinvdeploy']['menu'][3];
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['task']['page'] =
+      '/plugins/fusinvdeploy/front/task.php';
 
-	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['group']['title'] = 
-		$LANG['plugin_fusinvdeploy']['menu'][4];
-	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['group']['page'] = 
-		'/plugins/fusinvdeploy/front/group.php';
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['group']['title'] =
+      $LANG['plugin_fusinvdeploy']['menu'][4];
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['group']['page'] =
+      '/plugins/fusinvdeploy/front/group.php';
 
-	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['deploy']['title'] = 
-		$LANG['plugin_fusinvdeploy']['menu'][5];
-	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['deploy']['page'] = 
-		'/plugins/fusinvdeploy/front/deploystate.php';
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['deploy']['title'] =
+      $LANG['plugin_fusinvdeploy']['menu'][5];
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['deploy']['page'] =
+      '/plugins/fusinvdeploy/front/deploystate.php';
 
    $PLUGIN_HOOKS['add_css']['fusinvdeploy'] = "css/style.css";
 

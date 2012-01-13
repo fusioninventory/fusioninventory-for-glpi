@@ -36,7 +36,7 @@
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -49,7 +49,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
    static function getTypeName() {
       global $LANG;
 
-      return $LANG['plugin_fusinvdeploy']['package'][8];
+      return $LANG['plugin_fusinvdeploy']['package'][5];
    }
 
    function canCreate() {
@@ -72,24 +72,25 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       return true;
    }
 
-
-
    function defineTabs($options=array()){
       global $LANG,$CFG_GLPI;
 
       $ong = array();
       if ($this->fields['id'] > 0){
-			$this->addStandardTab($LANG['plugin_fusinvdeploy']['package'][14], $ong, $options);
-			$this->addStandardTab($LANG['plugin_fusinvdeploy']['package'][15], $ong, $options);
-      } elseif ($this->fields['id'] == -1) {
-			$this->addStandardTab($LANG['plugin_fusinvdeploy']['package'][5], $ong, $options);
-      } else {
-			$this->addStandardTab($LANG['plugin_fusinvdeploy']['package'][26], $ong, $options);
+         $this->addStandardTab('PluginFusinvdeployInstall', $ong, $options);
+         $this->addStandardTab('PluginFusinvdeployUninstall', $ong, $options);
       }
-		$ong['no_all_tab'] = true;
       return $ong;
    }
 
+   function showList() {
+      echo "<table class='tab_cadre_navigation' style='margin:0 auto;'><tr><td>";
+
+      self::title();
+      Search::show('PluginFusinvdeployPackage');
+
+      echo "</td></tr></table>";
+   }
 
    function getSearchOptions() {
       global $LANG;
@@ -167,30 +168,15 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       Html::displayTitle(GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_mini_package.png", $title, $title, $buttons);
    }
 
-   function showMenu($options=array())  {
 
-      $this->displaylist = false;
-
-      $this->fields['id'] = -1;
-      $this->showTabs($options);
-      $this->addDivForTabs();
-   }
-
-   function showList() {
-      echo "<table class='tab_cadre_navigation'><tr><td>";
-
-      self::title();
-      Search::show('PluginFusinvdeployPackage');
-
-      echo "</td></tr></table>";
-   }
-
-   function showForm($id, $options=array()) {
+   function showForm($ID, $options=array()) {
       global $DB,$CFG_GLPI,$LANG;
 
-      if ($id!='') {
-         $this->getFromDB($id);
+
+      if ($ID > 0) {
+         $this->check($ID,'r');
       } else {
+         $this->check(-1,'w');
          $this->getEmpty();
       }
 
