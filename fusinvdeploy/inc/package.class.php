@@ -84,12 +84,8 @@ class PluginFusinvdeployPackage extends CommonDBTM {
    }
 
    function showList() {
-      echo "<table class='tab_cadre_navigation' style='margin:0 auto;'><tr><td>";
-
       self::title();
       Search::show('PluginFusinvdeployPackage');
-
-      echo "</td></tr></table>";
    }
 
    function getSearchOptions() {
