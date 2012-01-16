@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    Alexandre Delaunay
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2011 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -237,10 +237,10 @@ class PluginFusinvdeployFile extends CommonDBTM {
       $sha512 = hash_file('sha512', $file_tmp_name);
       $short_sha512 = substr($sha512, 0, 6);
 
-		if($this->checkPresenceFile($short_sha512)) {
+      if($this->checkPresenceFile($short_sha512)) {
          print "{success:false, file:'{$filename}',msg:\"File already exists.\"}";
          exit;
-		}
+      }
 
       $data = array(
          'name' => $filename,
@@ -390,9 +390,6 @@ class PluginFusinvdeployFile extends CommonDBTM {
          $new_key         = preg_replace('#^'.$render.'#','',$POST_key);
          $_POST[$new_key] = $POST_value;
       }
-
-      #logDebug($_POST);
-      #logDebug($_FILES);
 
       //if file sent is from server
       if (isset($_POST['itemtype']) && $_POST['itemtype'] == 'fileserver') return $this->uploadFileFromServer();

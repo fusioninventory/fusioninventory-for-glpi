@@ -36,7 +36,7 @@
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -213,7 +213,6 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
                      $res['action_selections'][$i]['name'] = $group_data['name'];
                      $i++;
                   }
-                  //logDebug($res);
                   $res = json_encode($res);
                   break;
                case 'PluginFusinvdeployGroup':
