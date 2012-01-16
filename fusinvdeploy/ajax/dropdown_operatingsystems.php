@@ -60,7 +60,7 @@ $where = "WHERE 1";
 
 
 if (strlen($_POST['searchText'])>0 && $_POST['searchText']!=$CFG_GLPI["ajax_wildcard"]) {
-   $search = makeTextSearch($_POST['searchText']);
+   $search = Search::makeTextSearch($_POST['searchText']);
 
    $where .= " AND (`name` ".$search."
                     OR `id` = '".$_POST['searchText']."'";
@@ -99,8 +99,8 @@ if ($DB->numrows($result)) {
       }
       $selected = "";
       if ($data['id'] == $_POST['value']) $selected = "selected='selected'";
-      echo "<option value='".$data['id']."' $selected title=\"".cleanInputText($output)."\">".
-            utf8_substr($output, 0, $_SESSION["glpidropdown_chars_limit"])."</option>";
+      echo "<option value='".$data['id']."' $selected title=\"".Html::cleanInputText($output)."\">".
+            Toolbox::substr($output, 0, $_SESSION["glpidropdown_chars_limit"])."</option>";
    }
 }
 
