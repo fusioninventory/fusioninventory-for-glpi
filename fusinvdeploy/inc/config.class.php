@@ -52,18 +52,12 @@ class PluginFusinvdeployConfig extends CommonDBTM {
       $Config = new Config;
       $Config->getFromDB('1');
 
-      // Get informations of plugin
-      $a_plugin = plugin_version_fusinvdeploy();
-
       //init variables
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
 
-      $root_doc = str_replace("/front/plugin.php", "", $_SERVER['SCRIPT_FILENAME']);
-
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
       $insert = array(  'glpi_path'          => str_replace("http://", "", $Config->fields['url_base']),
-                        'server_upload_path' => $root_doc . '/files/_plugins/' .
-                                                   $a_plugin['shortname'] . '/upload');
+                        'server_upload_path' => '/tmp');
       $PluginFusioninventoryConfig->initConfig($plugins_id, $insert);
    }
 
