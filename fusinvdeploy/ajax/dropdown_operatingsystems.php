@@ -28,15 +28,15 @@
    ------------------------------------------------------------------------
 
    @package   FusionInventory
-   @author    
-   @co-author 
+   @author
+   @co-author
    @copyright Copyright (c) 2010-2011 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -88,7 +88,7 @@ if ($_POST['searchText']!=$CFG_GLPI["ajax_wildcard"] && $DB->numrows($result)==$
    echo "<option value='0'>--".$LANG['common'][11]."--</option>";
 }
 
-echo "<option value='0'>".DROPDOWN_EMPTY_VALUE."</option>";
+echo "<option value='0'>".Dropdown::EMPTY_VALUE."</option>";
 
 if ($DB->numrows($result)) {
    while ($data = $DB->fetch_array($result)) {

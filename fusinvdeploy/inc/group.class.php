@@ -495,7 +495,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
                                      $params_os, false, "search_operatingsystems_id");
 
       echo "<span id='operatingsystems_dropdown'>";
-      echo "<select name='operatingsystems_id' id='operatingsystems_id'><option value='0'>".DROPDOWN_EMPTY_VALUE."</option></select>";
+      echo "<select name='operatingsystems_id' id='operatingsystems_id'><option value='0'>".Dropdown::EMPTY_VALUE."</option></select>";
       echo "</span>\n";
 
       Html::showToolTip("* ".$LANG['search'][1]."<br />".$LANG['plugin_fusinvdeploy']['group'][5]);
