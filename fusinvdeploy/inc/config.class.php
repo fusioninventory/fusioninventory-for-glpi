@@ -36,7 +36,7 @@
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -55,9 +55,9 @@ class PluginFusinvdeployConfig extends CommonDBTM {
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
-      $insert = array(	'glpi_path'				=> str_replace("http://", "", $Config->fields['url_base']),
-								'server_upload_path' => $_SERVER['DOCUMENT_ROOT'] . '/files/_plugins/' . 
-																	$a_plugin['shortname'] . '/upload');
+      $insert = array(  'glpi_path'          => str_replace("http://", "", $Config->fields['url_base']),
+                        'server_upload_path' => $_SERVER['DOCUMENT_ROOT'] . '/files/_plugins/' .
+                                                   $a_plugin['shortname'] . '/upload');
       $PluginFusioninventoryConfig->initConfig($plugins_id, $insert);
    }
 
@@ -105,7 +105,11 @@ class PluginFusinvdeployConfig extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusinvdeploy']["config"][0]."&nbsp;:</td>";
       echo "<td>";
-      echo "<input type='text' name='glpi_path' value='".$PluginFusioninventoryConfig->getValue($plugins_id, 'glpi_path')."' />";
+      Html::autocompletionTextField($PluginFusioninventoryConfig, 'glpi_path', array(
+         'name'   => 'glpi_path',
+         'value'  => $PluginFusioninventoryConfig->getValue($plugins_id, 'glpi_path'),
+         'size'   => '100%'
+      ));
       echo "</td>";
       echo "<td colspan='2'></td>";;
       echo "</tr>";
@@ -113,7 +117,11 @@ class PluginFusinvdeployConfig extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusinvdeploy']['config'][1]."&nbsp;:</td>";
       echo "<td>";
-      echo "<input type='text' name='server_upload_path' value='".$PluginFusioninventoryConfig->getValue($plugins_id, 'server_upload_path')."' />";
+      Html::autocompletionTextField($PluginFusioninventoryConfig, 'server_upload_path', array(
+         'name'   => 'server_upload_path',
+         'value'  => $PluginFusioninventoryConfig->getValue($plugins_id, 'server_upload_path'),
+         'size'   => '100%'
+      ));
       echo "</td>";
       echo "<td colspan='2'></td>";;
       echo "</tr>";
