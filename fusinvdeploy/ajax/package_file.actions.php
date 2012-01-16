@@ -41,7 +41,7 @@
  */
 
 // Start the session for this page
-session_start();
+//session_start();
 header("Cache-control: private");
 
 define('GLPI_ROOT', '../../..');
