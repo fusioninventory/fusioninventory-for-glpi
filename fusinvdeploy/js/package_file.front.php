@@ -91,6 +91,16 @@ var {$render}msg = function(title, msg){
    });
 };
 
+var {$render}ToggleUncompress = function(filename) {
+   {$render}fileForm.getForm().findField('{$render}uncompress').hide();
+   if (
+      filename.indexOf('.zip') != -1
+      || filename.indexOf('.gz') != -1
+      || filename.indexOf('.bz2') != -1
+      ||filename.indexOf('.tar') != -1
+   ) {$render}fileForm.getForm().findField('{$render}uncompress').show();
+}
+
 //define colums for grid
 var {$render}fileColumns =  [{
    id: '{$render}id',
@@ -375,6 +385,12 @@ var {$render}fileForm = new Ext.FormPanel({
          emptyText: '{$LANG['plugin_fusinvdeploy']['form']['action'][3]}',
          buttonCfg: {
             iconCls: 'exticon-file'
+         },
+         listeners: {
+            'fileselected': function(fb, v){
+               var uncompress_field = {$render}fileForm.getForm().findField('{$render}uncompress');
+               {$render}ToggleUncompress(uncompress_field);
+            }
          }
       }), {
          id: '{$render}file_info_maxfilesize',
@@ -405,6 +421,7 @@ var {$render}fileForm = new Ext.FormPanel({
 
             chooser.show(this, function(el, data) {
                el.setValue(data);
+               {$render}ToggleUncompress(data);
             });
          }
       }, {
@@ -438,6 +455,7 @@ var {$render}fileForm = new Ext.FormPanel({
          allowBlank: false,
          xtype: 'radiogroup',
          width: 100,
+         hidden: true,
          items: [
             {boxLabel: '{$LANG['choice'][1]}', name: '{$render}uncompress', inputValue: 'true', id : '{$render}uncompress_t'},
             {boxLabel: '{$LANG['choice'][0]}', name: '{$render}uncompress', inputValue: 'false', id : '{$render}uncompress_f'}
@@ -562,8 +580,7 @@ var {$render}fileForm = new Ext.FormPanel({
    loadData : function({$render}rec) {
       this.record = {$render}rec;
       this.getForm().loadRecord({$render}rec);
-
-
+      {$render}ToggleUncompress(this.record.data.{$render}file);
    },
    newFileMode : function(s) {
       if (!{$disabled}) {
