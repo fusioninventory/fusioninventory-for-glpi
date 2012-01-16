@@ -305,9 +305,9 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       if ($canedit && $totalnb > 0) {
          echo "</table>";
 
-         openArrowMassives("group_form$rand", true);
+         Html::openArrowMassives("group_form$rand", true);
          echo "<input type='hidden' name='groups_id' value='$groupID'>";
-         closeArrowMassives(array('deleteitem' => $LANG['buttons'][6]));
+         Html::closeArrowMassives(array('deleteitem' => $LANG['buttons'][6]));
 
       } else {
          echo "</table>";
@@ -487,12 +487,12 @@ class PluginFusinvdeployGroup extends CommonDBTM {
 
       Ajax::updateItemOnInputTextEvent("search_operatingsystems_id", "operatingsystems_dropdown",
                                      $CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/ajax/dropdown_operatingsystems.php",
-                                     $params_os, false);
+                                     $params_os);
 
       //load default operatingsystems_dropdown
       Ajax::updateItem("operatingsystems_dropdown",
                                      $CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/ajax/dropdown_operatingsystems.php",
-                                     $params_os, false, "search_operatingsystems_id");
+                                     $params_os, /*false,*/ "search_operatingsystems_id");
 
       echo "<span id='operatingsystems_dropdown'>";
       echo "<select name='operatingsystems_id' id='operatingsystems_id'><option value='0'>".Dropdown::EMPTY_VALUE."</option></select>";
@@ -621,7 +621,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       }
 
       echo "<td width='50%' class='tab_bg_2'>";
-      printPagerForm();
+      Html::printPagerForm();
       echo "</td>";
 
       // Print the "where am I?"
@@ -705,10 +705,10 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       echo "</table>";
 
       if ($type == 'static') {
-         openArrowMassives("group_search");
+         Html::openArrowMassives("group_search");
          echo "<input type='submit' class='submit' value="
             .$LANG['buttons'][8]." name='additem' />";
-         closeArrowMassives();
+         Html::closeArrowMassives(array());
       } else echo "<br />";
 
       self::printGroupPager('', $params['start'], $nb_items);

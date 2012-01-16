@@ -47,7 +47,7 @@ Session::checkLoginUser();
 header("Content-Type: text/html; charset=UTF-8");
 Html::header_nocache();
 
-checkRight("create_ticket", "1");
+Session::checkRight("create_ticket", "1");
 
 // Security
 if (!TableExists($_POST['table'])) {
