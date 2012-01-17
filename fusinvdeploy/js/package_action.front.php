@@ -427,11 +427,9 @@ var {$render}Command_fieldset_item_default = [{
       name: '{$render}exec',
       xtype:  'textarea',
       width: {$field_width},
-      height : {$field_height}
+      height: {$field_height}
    }
 ];
-
-
 
 var {$render}Command_fieldset_item_PluginFusinvdeployAction_Command = [{
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][11]}',
@@ -445,36 +443,44 @@ var {$render}Command_fieldset_item_PluginFusinvdeployAction_Command = [{
 var {$render}Command_fieldset_item_PluginFusinvdeployAction_Move = [{
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][16]}',
       name: '{$render}from',
-      xtype: 'textfield'
+      xtype: 'textarea',
+      width: {$field_width}
    } , {
       fieldLabel:'{$LANG['plugin_fusinvdeploy']['form']['label'][17]}',
       name: '{$render}to',
-      xtype: 'textfield'
+      xtype: 'textarea',
+      width: {$field_width}
    }
 ];
 
 var {$render}Command_fieldset_item_PluginFusinvdeployAction_Copy = [{
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][16]}',
       name: '{$render}from',
-      xtype: 'textfield'
+      xtype: 'textarea',
+      width: {$field_width}
    } , {
       fieldLabel:'{$LANG['plugin_fusinvdeploy']['form']['label'][17]}',
       name: '{$render}to',
-      xtype: 'textfield'
+      xtype: 'textarea',
+      width: {$field_width}
    }
 ];
 
 var {$render}Command_fieldset_item_PluginFusinvdeployAction_Delete = [{
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][5]}',
       name: '{$render}path',
-      xtype: 'textfield'
+      xtype: 'textarea',
+      width: {$field_width},
+      height : 150
    }
 ];
 
 var {$render}Command_fieldset_item_PluginFusinvdeployAction_Mkdir = [{
       fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][1]}',
       name: '{$render}path',
-      xtype: 'textfield'
+      xtype: 'textarea',
+      width: {$field_width},
+      height : 150
    }
 ];
 
@@ -527,6 +533,8 @@ var {$render}Command_dynFieldset =  new Ext.form.FieldSet({
 });
 
 
+
+
 /**** DEFINE FUNCTIONS FOR REFRESH FIEDLSET AND RET CHECK GRID ****/
 function {$render}Command_refreshDynFieldset(val) {
    {$render}Command_dynFieldset.removeAll();
@@ -534,22 +542,6 @@ function {$render}Command_refreshDynFieldset(val) {
 
    switch(val) {
       case 'PluginFusinvdeployAction_Command':
-         /*var form = {$render}actionForm.getForm().getValues();
-         console.log(form.installid.length);
-         if (form.installid.length == 0) {
-            Ext.Ajax.request({
-               url : '../ajax/package_action.save.php?package_id={$id}&render={$render}',
-               method: 'POST',
-               params : {
-                  itemtype : 'PluginFusinvdeployAction_Command',
-                  exec : '',
-                  id : '',
-               },
-               success: function ( result, request ) {
-                  console.log(Ext.util.JSON.decode(result.responseText).newId);
-               }
-            });
-         }*/
          {$render}Command_dynFieldset.add({$render}Command_fieldset_item_PluginFusinvdeployAction_Command);
          break;
       case 'PluginFusinvdeployAction_Move':
@@ -585,7 +577,6 @@ function refreshRetChecks() {
    var commandId = {$render}actionForm.getForm().findField('{$render}id').getValue();
    if (commandId != '') {
       {$render}ActionGridRetChecks = new {$render}actionGridRetChecksConfig;
-      //{$render}ActionGridRetChecks.store = new Ext.data.Store({$render}ActionStoreConfigRetChecks);
       {$render}actionForm.add({$render}ActionGridRetChecks);
 
       {$render}ActionGridRetChecks.store.proxy.setApi(
@@ -596,58 +587,10 @@ function refreshRetChecks() {
    }
 }
 
+
+
+
 /**** DEFINE GENERAL FORM ****/
-function {$render}actionFormSave() {
-   if ({$render}actionForm.record == null) {
-      Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
-      return;
-   }
-   if (!{$render}actionForm.getForm().isValid()) {
-      Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
-      return false;
-   }
-
-   var action_id = {$render}actionForm.record.data.{$render}id;
-
-   {$render}actionForm.getForm().updateRecord({$render}actionForm.record);
-   {$render}actionForm.getForm().submit({
-      url : '../ajax/package_action.save.php?package_id={$id}&render={$render}',
-      waitMsg: '{$LANG['plugin_fusinvdeploy']['form']['message'][2]}',
-      success: function(fileForm, o){
-         {$render}actionGridStore.reload({
-            callback: function() {
-               var index = {$render}actionGrid.store.findExact('{$render}id', action_id);
-               if (index != -1) {$render}actionGrid.getSelectionModel().selectRow(index);
-               else {
-                  var mystoreItems = {$render}actionGrid.store.data.items;
-                  var indexes = new Array(mystoreItems.length);
-                  for (var i = 0; i <= mystoreItems.length-1; i++) {
-                     indexes[i] = mystoreItems[i].id;
-                  }
-                  indexes.sort();
-                  var row_id = indexes[mystoreItems.length-1];
-                  var record = {$render}actionGrid.store.getById(row_id);
-                  {$render}actionGrid.getSelectionModel().selectRecords([record]);
-               }
-            }
-         });
-      },
-      failure: function(fileForm, action){
-         switch (action.failureType) {
-            case Ext.form.Action.CLIENT_INVALID:
-               Ext.Msg.alert('Failure', 'Form fields may not be submitted with invalid values');
-               break;
-            case Ext.form.Action.CONNECT_FAILURE:
-               Ext.Msg.alert('Failure', 'Ajax communication failed');
-               break;
-            case Ext.form.Action.SERVER_INVALID:
-               Ext.Msg.alert('Failure', action.result.msg);
-         }
-
-      }
-   });
-}
-
 var {$render}actionForm = new Ext.FormPanel({
    disabled: true,
    hidden: true,
@@ -739,6 +682,83 @@ var {$render}actionForm = new Ext.FormPanel({
       }
    }
 });
+
+function {$render}actionFormSave() {
+   if ({$render}actionForm.record == null) {
+      Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
+      return;
+   }
+   if (!{$render}actionForm.getForm().isValid()) {
+      Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
+      return false;
+   }
+
+   //check if value fields don't exceed 250 char
+   {$render}checkActionValue({$render}actionForm.record.data);
+
+   var action_id = {$render}actionForm.record.data.{$render}id;
+
+   {$render}actionForm.getForm().updateRecord({$render}actionForm.record);
+   {$render}actionForm.getForm().submit({
+      url : '../ajax/package_action.save.php?package_id={$id}&render={$render}',
+      waitMsg: '{$LANG['plugin_fusinvdeploy']['form']['message'][2]}',
+      success: function(fileForm, o){
+         {$render}actionGridStore.reload({
+            callback: function() {
+               var index = {$render}actionGrid.store.findExact('{$render}id', action_id);
+               if (index != -1) {$render}actionGrid.getSelectionModel().selectRow(index);
+               else {
+                  var mystoreItems = {$render}actionGrid.store.data.items;
+                  var indexes = new Array(mystoreItems.length);
+                  for (var i = 0; i <= mystoreItems.length-1; i++) {
+                     indexes[i] = mystoreItems[i].id;
+                  }
+                  indexes.sort();
+                  var row_id = indexes[mystoreItems.length-1];
+                  var record = {$render}actionGrid.store.getById(row_id);
+                  {$render}actionGrid.getSelectionModel().selectRecords([record]);
+               }
+            }
+         });
+      },
+      failure: function(fileForm, action){
+         switch (action.failureType) {
+            case Ext.form.Action.CLIENT_INVALID:
+               Ext.Msg.alert('Failure', 'Form fields may not be submitted with invalid values');
+               break;
+            case Ext.form.Action.CONNECT_FAILURE:
+               Ext.Msg.alert('Failure', 'Ajax communication failed');
+               break;
+            case Ext.form.Action.SERVER_INVALID:
+               Ext.Msg.alert('Failure', action.result.msg);
+         }
+
+      }
+   });
+}
+
+//function to check if value fields don't exceed 250 char
+var {$render}checkActionValue = function(data) {
+   var alert_user = false;
+   //copy and move
+   if (data.{$render}from.length > 255
+      || data.{$render}to.length > 255
+      || data.{$render}path.length > 255
+   ) alert_user = true;
+
+   console.log(data.{$render}to.length);
+
+   //show alert
+   if (alert_user) {
+      Ext.MessageBox.alert("Attention", "Les chemins sous windows n'acceptent plus de 255 caracteres.");
+      return false;
+   }
+}
+
+
+
+
+
 
 //render grid and form in a border layout
 var {$render}ActionLayout = new Ext.Panel({
