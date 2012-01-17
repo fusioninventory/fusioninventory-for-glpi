@@ -746,8 +746,6 @@ var {$render}checkActionValue = function(data) {
       || data.{$render}path.length > 255
    ) alert_user = true;
 
-   console.log(data.{$render}to.length);
-
    //show alert
    if (alert_user) {
       Ext.MessageBox.alert("Attention", "Les chemins sous windows n'acceptent plus de 255 caracteres.");
