@@ -126,7 +126,9 @@ function plugin_init_fusinvdeploy() {
          }
          $PluginFusioninventoryConfiguration = new PluginFusioninventoryConfig();
          $a_tabs = $PluginFusioninventoryConfiguration->defineTabs();
-         $PLUGIN_HOOKS['config_page']['fusinvdeploy'] = '../fusioninventory/front/config.form.php?glpi_tab='.array_search($a_plugin['name'], $a_tabs);
+         $PLUGIN_HOOKS['config_page']['fusinvdeploy'] = "../fusioninventory/front/config.form.php"
+            ."?itemtype=pluginfusioninventoryconfig"
+            ."&glpi_tab=".array_search($a_plugin['name'], $a_tabs);
       }
    }
 
@@ -188,13 +190,14 @@ function plugin_init_fusinvdeploy() {
 // Name and Version of the plugin
 function plugin_version_fusinvdeploy() {
    global $LANG;
-   return array('name'           => $LANG['plugin_fusinvdeploy']['title'][0],
-                'shortname'      => 'fusinvdeploy',
-                'version'        => PLUGIN_FUSINVDEPLOY_VERSION,
-                'license'        => 'AGPLv3+',
-                'author'         => "<a href='http://www.teclib.com'>TECLIB'</a>",
-                'homepage'       => 'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/',
-                'minGlpiVersion' => '0.83'
+   return array(
+      'name'           => $LANG['plugin_fusinvdeploy']['title'][0],
+      'shortname'      => 'fusinvdeploy',
+      'version'        => PLUGIN_FUSINVDEPLOY_VERSION,
+      'license'        => 'AGPLv3+',
+      'author'         => "<a href='http://www.teclib.com'>TECLIB'</a>",
+      'homepage'       => 'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/',
+      'minGlpiVersion' => '0.83'
    );
 }
 
