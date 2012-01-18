@@ -67,7 +67,18 @@ function pluginFusinvdeployGetCurrentVersion($version) {
 
 function pluginFusinvdeployUpdate($current_version, $migrationname='Migration') {
 
+   //1.0->1.1
    $DB->runFile(GLPI_ROOT ."/plugins/fusinvdeploy/install/mysql/plugin_fusinvdeploy-0.80+1.1-update.sql");
+
+   //add alert_winpatch config field
+   if (!FieldExists('glpi_plugin_fusioninventory_configs', 'alert_winpath')) {
+      $FI_Config = new PluginFusioninventoryConfig();
+      $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
+      $insert = array(
+         'alert_winpath'     => 1
+      );
+      $FI_Config->initConfig($plugins_id, $insert);
+   }
 
 }
 ?>

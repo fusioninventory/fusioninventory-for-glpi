@@ -28,14 +28,14 @@
    ------------------------------------------------------------------------
 
    @package   FusionInventory
-   @author    Tomas Abad 
+   @author    Tomas Abad
    @copyright Copyright (c) 2010-2011 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2011
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -98,6 +98,7 @@ $LANG['plugin_fusinvdeploy']['deploystatus'][5]="El agente está procesando el t
 
 $LANG['plugin_fusinvdeploy']['config'][0]="Dirección del servidor GLPI (omita http(s)://)";
 $LANG['plugin_fusinvdeploy']['config'][1]="Directorio raíz para el envío de ficheros desde el servidor";
+$LANG['plugin_fusinvdeploy']['config'][2]="Activar las alertas en el tamaño de MS rutas de Windows?";
 
 $LANG['plugin_fusinvdeploy']['setup'][17]="Para instalar o activar ".$title." es necesario que FusionInventory este activado previamente.";
 $LANG['plugin_fusinvdeploy']['setup'][18]="Para desinstalar ".$title." es necesario que FusionInventory esté activado previamente.";
@@ -168,6 +169,12 @@ $LANG['plugin_fusinvdeploy']['form']['message'][0] = "Formulario vacio";
 $LANG['plugin_fusinvdeploy']['form']['message'][1] = "Formulario inválido";
 $LANG['plugin_fusinvdeploy']['form']['message'][2] = "Cargando...";
 $LANG['plugin_fusinvdeploy']['form']['message'][3] = "El fichero ya existe";
+$LANG['plugin_fusinvdeploy']['form']['message'][4] = "MS rutas de Windows no aceptan más de 255 caracteres, "
+."el valor que ha introducido sobrepasa el límite.<br />"
+."<br /><b>¿Desea continuar?</b><br />"
+."<br /><div class='message_smalltext right'>Puede desactivar este mensaje en la "
+."<a href='##URL##'>configuración del plugin</a></div>";
+$LANG['plugin_fusinvdeploy']['form']['message'][5] = "Atención";
 
 $LANG['plugin_fusinvdeploy']['form']['check'][0] = "Clave de registro existente";
 $LANG['plugin_fusinvdeploy']['form']['check'][1] = "Clave de registro ausente";

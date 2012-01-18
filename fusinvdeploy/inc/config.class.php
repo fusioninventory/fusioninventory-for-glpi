@@ -56,15 +56,17 @@ class PluginFusinvdeployConfig extends CommonDBTM {
       $a_plugin = plugin_version_fusinvdeploy();
 
       //init variables
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+      $FI_Config = new PluginFusioninventoryConfig();
 
       $root_doc = str_replace("/front/plugin.php", "", $_SERVER['SCRIPT_FILENAME']);
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
-      $insert = array(  'glpi_path'          => str_replace("http://", "", $Config->fields['url_base']),
-                        'server_upload_path' => $root_doc . '/files/_plugins/' .
-                                                   $a_plugin['shortname'] . '/upload');
-      $PluginFusioninventoryConfig->initConfig($plugins_id, $insert);
+      $insert = array(
+         'glpi_path'          => str_replace("http://", "", $Config->fields['url_base']),
+         'server_upload_path' => $root_doc.'/files/_plugins/'.$a_plugin['shortname'].'/upload',
+         'alert_winpath'     => 1
+      );
+      $FI_Config->initConfig($plugins_id, $insert);
    }
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
@@ -90,18 +92,18 @@ class PluginFusinvdeployConfig extends CommonDBTM {
 
    function putForm($p_post) {
 
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
+      $config = new PluginFusioninventoryConfig;
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
-      $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'glpi_path', $p_post['glpi_path']);
-      $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'server_upload_path', $p_post['server_upload_path']);
+      $config->updateConfigType($plugins_id, 'glpi_path', $p_post['glpi_path']);
+      $config->updateConfigType($plugins_id, 'server_upload_path', $p_post['server_upload_path']);
+      $config->updateConfigType($plugins_id, 'alert_winpath', $p_post['alert_winpath']);
    }
 
    function showForm($options=array()) {
       global $LANG,$CFG_GLPI;
 
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
-
+      $config = new PluginFusioninventoryConfig;
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
 
       echo "<form name='form' method='post' action='".$this->getFormURL()."'>";
@@ -111,9 +113,9 @@ class PluginFusinvdeployConfig extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusinvdeploy']["config"][0]."&nbsp;:</td>";
       echo "<td>";
-      Html::autocompletionTextField($PluginFusioninventoryConfig, 'glpi_path', array(
+      Html::autocompletionTextField($config, 'glpi_path', array(
          'name'   => 'glpi_path',
-         'value'  => $PluginFusioninventoryConfig->getValue($plugins_id, 'glpi_path'),
+         'value'  => $config->getValue($plugins_id, 'glpi_path'),
          'size'   => '100%'
       ));
       echo "</td>";
@@ -123,11 +125,22 @@ class PluginFusinvdeployConfig extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusinvdeploy']['config'][1]."&nbsp;:</td>";
       echo "<td>";
-      Html::autocompletionTextField($PluginFusioninventoryConfig, 'server_upload_path', array(
+      Html::autocompletionTextField($config, 'server_upload_path', array(
          'name'   => 'server_upload_path',
-         'value'  => $PluginFusioninventoryConfig->getValue($plugins_id, 'server_upload_path'),
+         'value'  => $config->getValue($plugins_id, 'server_upload_path'),
          'size'   => '100%'
       ));
+      echo "</td>";
+      echo "<td colspan='2'></td>";;
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusinvdeploy']['config'][2]."&nbsp;</td>";
+      echo "<td>";
+      Dropdown::showYesNo(
+         'alert_winpath',
+         $config->getValue($plugins_id, 'alert_winpath')
+      );
       echo "</td>";
       echo "<td colspan='2'></td>";;
       echo "</tr>";

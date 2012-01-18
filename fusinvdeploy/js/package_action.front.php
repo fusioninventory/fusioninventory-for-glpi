@@ -62,6 +62,20 @@ $field_width = 215;
 $field_height = 40;
 // END - Size of div/form/label...
 
+//config
+$config = new PluginFusioninventoryConfig;
+$plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
+$alert_winpath = ($config->getValue($plugins_id, 'alert_winpath')?'true':'false');
+
+//messages
+$form_message4 = str_replace(
+   '##URL##',
+   GLPI_ROOT."/plugins/fusioninventory/front/config.form.php"
+            ."?itemtype=pluginfusioninventoryconfig"
+            ."&glpi_tab=PluginFusinvdeployConfig$1",
+   $LANG['plugin_fusinvdeploy']['form']['message'][4]
+);
+
 // Render div
 if(isset($_POST["glpi_tab"])) {
    switch($_POST["glpi_tab"]){
@@ -683,7 +697,7 @@ var {$render}actionForm = new Ext.FormPanel({
    }
 });
 
-function {$render}actionFormSave() {
+var {$render}actionFormSave = function() {
    if ({$render}actionForm.record == null) {
       Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
       return;
@@ -693,12 +707,18 @@ function {$render}actionFormSave() {
       return false;
    }
 
-   //check if value fields don't exceed 250 char
-   {$render}checkActionValue({$render}actionForm.record.data);
+   {$render}actionForm.getForm().updateRecord({$render}actionForm.record);
 
+   //check if value fields don't exceed 250 char
+   if (!{$render}checkActionValue({$render}actionForm.record.data)) return false;
+
+   //if no error : submit
+   {$render}actionFormSubmit();
+}
+
+var {$render}actionFormSubmit = function() {
    var action_id = {$render}actionForm.record.data.{$render}id;
 
-   {$render}actionForm.getForm().updateRecord({$render}actionForm.record);
    {$render}actionForm.getForm().submit({
       url : '../ajax/package_action.save.php?package_id={$id}&render={$render}',
       waitMsg: '{$LANG['plugin_fusinvdeploy']['form']['message'][2]}',
@@ -740,6 +760,7 @@ function {$render}actionFormSave() {
 //function to check if value fields don't exceed 250 char
 var {$render}checkActionValue = function(data) {
    var alert_user = false;
+
    //copy and move
    if (data.{$render}from.length > 255
       || data.{$render}to.length > 255
@@ -747,18 +768,26 @@ var {$render}checkActionValue = function(data) {
    ) alert_user = true;
 
    //show alert
-   if (alert_user) {
-      Ext.MessageBox.alert("Attention", "Les chemins sous windows n'acceptent plus de 255 caracteres.");
+   if (alert_user && {$alert_winpath}) {
+      Ext.Msg.show({
+         title: "{$LANG['plugin_fusinvdeploy']['form']['message'][5]}",
+         msg: "{$form_message4}",
+         buttons: Ext.Msg.YESNO,
+         icon: Ext.MessageBox.WARNING,
+         minWidth: 350,
+         fn: function(btn, text) {
+            //send data in db if user accept the alert
+            if (btn == 'yes') {$render}actionFormSubmit();
+         }
+      });
       return false;
-   }
+   } else return true;
 }
 
 
 
 
-
-
-//render grid and form in a border layout
+/**** RENDER GRID AND FORM IN A BORDER LAYOUT *****/
 var {$render}ActionLayout = new Ext.Panel({
    layout: 'border',
    renderTo: '{$render}Action',

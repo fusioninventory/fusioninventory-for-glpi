@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    Mathieu Simon
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2011 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -99,6 +99,7 @@ $LANG['plugin_fusinvdeploy']['deploystatus'][5]="The agent is processing the job
 
 $LANG['plugin_fusinvdeploy']['config'][0]="Adresse des GLPI-Servers (ohne http://)";
 $LANG['plugin_fusinvdeploy']['config'][1]="Root folder for sending file from server";
+$LANG['plugin_fusinvdeploy']['config'][2]="Aktivieren Sie Warnungen auf die Größe des MS Windows-Pfade?";
 
 $LANG['plugin_fusinvdeploy']['setup'][17]="Das Plugin ".$title." benötigt ein aktiviertes FusionInventory Plugin um selber aktiviert zu werden.";
 $LANG['plugin_fusinvdeploy']['setup'][18]="Das Plugin ".$title." benötigt ein aktiviertes FusionInventory Plugin um selber deinstalliert werden zu können.";
@@ -169,6 +170,12 @@ $LANG['plugin_fusinvdeploy']['form']['message'][0] = "Empty form";
 $LANG['plugin_fusinvdeploy']['form']['message'][1] = "Invalid form";
 $LANG['plugin_fusinvdeploy']['form']['message'][2] = "Loading...";
 $LANG['plugin_fusinvdeploy']['form']['message'][3] = "File already exist";
+$LANG['plugin_fusinvdeploy']['form']['message'][4] = "MS Windows-Pfade nicht akzeptieren mehr als 255 Zeichen, "
+."der Wert, den Sie eingegeben haben diesen Grenzwert überschreitet.<br />"
+."<br /><b>Wollen Sie fortfahren?</b><br />"
+."<br /><div class='message_smalltext right'>vSie können diese Meldung in der "
+."<a href='##URL##'>Plugin-Konfiguration</a> deaktivieren</div>";
+$LANG['plugin_fusinvdeploy']['form']['message'][5] = "Achtung";
 
 $LANG['plugin_fusinvdeploy']['form']['check'][0] = "Register key exist";
 $LANG['plugin_fusinvdeploy']['form']['check'][1] = "Register key missing";

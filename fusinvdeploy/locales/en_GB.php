@@ -36,7 +36,7 @@
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -99,6 +99,7 @@ $LANG['plugin_fusinvdeploy']['deploystatus'][5]="The agent is processing the job
 
 $LANG['plugin_fusinvdeploy']['config'][0]="Address of the GLPI server (without http://)";
 $LANG['plugin_fusinvdeploy']['config'][1]="Root folder for sending files from server";
+$LANG['plugin_fusinvdeploy']['config'][2]="Enable alerts on the size of MS Windows paths?";
 
 $LANG['plugin_fusinvdeploy']['setup'][17]="Plugin ".$title." needs FusionInventory plugin activated before activation.";
 $LANG['plugin_fusinvdeploy']['setup'][18]="Plugin ".$title." needs FusionInventory plugin activated before uninstall.";
@@ -169,6 +170,12 @@ $LANG['plugin_fusinvdeploy']['form']['message'][0] = "Empty form";
 $LANG['plugin_fusinvdeploy']['form']['message'][1] = "Invalid form";
 $LANG['plugin_fusinvdeploy']['form']['message'][2] = "Loading...";
 $LANG['plugin_fusinvdeploy']['form']['message'][3] = "File already exist";
+$LANG['plugin_fusinvdeploy']['form']['message'][4] = "Paths on MS Windows do not accept more than 255 characters, "
+."the value you entered exceeds the limit.<br />"
+."<br /><b>Do you want to continue?</b><br />"
+."<br /><div class='message_smalltext right'>You can disable this message in the "
+."<a href='##URL##'>plugin configuration</a></div>";
+$LANG['plugin_fusinvdeploy']['form']['message'][5] = "Attention";
 
 $LANG['plugin_fusinvdeploy']['form']['check'][0] = "Register key exist";
 $LANG['plugin_fusinvdeploy']['form']['check'][1] = "Register key missing";
