@@ -36,12 +36,12 @@
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
 function pluginFusinvdeployGetCurrentVersion($version) {
-   
+
    if (TableExists("glpi_plugin_fusioninventory_config")) {
       if (!class_exists('PluginFusioninventoryConfig')) { // if plugin is unactive
          include(GLPI_ROOT . "/plugins/fusioninventory/inc/config.class.php");
@@ -66,6 +66,8 @@ function pluginFusinvdeployGetCurrentVersion($version) {
 
 
 function pluginFusinvdeployUpdate($current_version, $migrationname='Migration') {
+
+   $DB->runFile(GLPI_ROOT ."/plugins/fusinvdeploy/install/mysql/plugin_fusinvdeploy-0.80+1.1-update.sql");
 
 }
 ?>
