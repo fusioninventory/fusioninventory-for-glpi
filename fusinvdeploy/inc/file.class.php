@@ -71,6 +71,18 @@ class PluginFusinvdeployFile extends CommonDBTM {
       return $input;
    }
 
+   static function getExtensionsWithAutoAction() {
+      $ext = array();
+
+      $ext['msi']['install']     = "install msiexec /qb /i ##FILENAME## REBOOT=ReallySuppress";
+      $ext['msi']['uninstall']   = "uninstall msiexec /qb /x ##FILENAME## REBOOT=ReallySuppress";
+
+      $ext['deb']['install']     = "dpkg -i ##FILENAME## ; apt-get install -f";
+      $ext['deb']['uninstall']   = "";
+
+      return $ext;
+   }
+
    static function cleanForPackage($orders_id) {
       global $DB;
       $query = "DELETE FROM `glpi_plugin_fusinvdeploy_files`

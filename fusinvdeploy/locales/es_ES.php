@@ -175,6 +175,7 @@ $LANG['plugin_fusinvdeploy']['form']['message'][4] = "MS rutas de Windows no ace
 ."<br /><div class='message_smalltext right'>Puede desactivar este mensaje en la "
 ."<a href='##URL##'>configuración del plugin</a></div>";
 $LANG['plugin_fusinvdeploy']['form']['message'][5] = "Atención";
+$LANG['plugin_fusinvdeploy']['form']['message'][6] = "Desea que el comando para instalar y desinstalar se añade automáticamente a su archivo?";
 
 $LANG['plugin_fusinvdeploy']['form']['check'][0] = "Clave de registro existente";
 $LANG['plugin_fusinvdeploy']['form']['check'][1] = "Clave de registro ausente";

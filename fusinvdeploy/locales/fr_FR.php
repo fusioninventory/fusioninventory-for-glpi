@@ -176,6 +176,7 @@ $LANG['plugin_fusinvdeploy']['form']['message'][4] = "Les chemins sous MS Window
 ."<br /><div class='message_smalltext right'>vous pouvez desactiver ce message dans la "
 ."<a href='##URL##'>configuration du plugin</a></div>";
 $LANG['plugin_fusinvdeploy']['form']['message'][5] = "Attention";
+$LANG['plugin_fusinvdeploy']['form']['message'][6] = "Souhaitez vous que la commande d'installation et de désinstallation soit automatiquement ajouté pour votre fichier ? ";
 
 $LANG['plugin_fusinvdeploy']['form']['check'][0] = "Clef de registre existe";
 $LANG['plugin_fusinvdeploy']['form']['check'][1] = "Clef de registre n\'existe pas";

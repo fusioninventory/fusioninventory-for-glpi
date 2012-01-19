@@ -176,6 +176,7 @@ $LANG['plugin_fusinvdeploy']['form']['message'][4] = "MS Windows-Pfade nicht akz
 ."<br /><div class='message_smalltext right'>vSie können diese Meldung in der "
 ."<a href='##URL##'>Plugin-Konfiguration</a> deaktivieren</div>";
 $LANG['plugin_fusinvdeploy']['form']['message'][5] = "Achtung";
+$LANG['plugin_fusinvdeploy']['form']['message'][6] = "Möchten Sie den Befehl zur Installation und Deinstallation wird automatisch zu Ihrer Datei hinzugefügt?";
 
 $LANG['plugin_fusinvdeploy']['form']['check'][0] = "Register key exist";
 $LANG['plugin_fusinvdeploy']['form']['check'][1] = "Register key missing";

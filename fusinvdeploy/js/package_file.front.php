@@ -62,6 +62,9 @@ $label_width = 120;
 //get max upload file size
 $maxUpload = PluginFusinvdeployFile::getMaxUploadSize();
 
+//get the file extensions that have an action to automatically add
+$files_autoactions = json_encode(PluginFusinvdeployFile::getExtensionsWithAutoAction());
+
 
 // Render div
 if(isset($_POST["glpi_tab"])) {
@@ -91,15 +94,6 @@ var {$render}msg = function(title, msg){
    });
 };
 
-var {$render}ToggleUncompress = function(filename) {
-   {$render}fileForm.getForm().findField('{$render}uncompress').hide();
-   if (
-      filename.indexOf('.zip') != -1
-      || filename.indexOf('.gz') != -1
-      || filename.indexOf('.bz2') != -1
-      ||filename.indexOf('.tar') != -1
-   ) {$render}fileForm.getForm().findField('{$render}uncompress').show();
-}
 
 //define colums for grid
 var {$render}fileColumns =  [{
@@ -201,16 +195,18 @@ var {$render}fileStore = new Ext.data.GroupingStore({
 });
 
 
-//define grid
+
+
+/***** DEFINE GRID ****/
 var {$render}fileGrid = new Ext.grid.GridPanel({
-   disabled: {$disabled},
+   disabled: $disabled,
    region: 'center',
    margins: '0 0 0 5',
    store: {$render}fileStore,
    columns: {$render}fileColumns,
    stripeRows: true,
-   height: {$height_left},
-   width: {$width_left},
+   height: $height_left,
+   width: $width_left,
    style:'margin-bottom:5px',
    title: '{$LANG['plugin_fusinvdeploy']['form']['title'][3]}',
    stateId: '{$render}fileGrid',
@@ -323,14 +319,14 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
 
 
 
-//define form
+/***** DEFINE FORM ****/
 var {$render}fileForm = new Ext.FormPanel({
    disabled: true,
    hidden : true,
    collapsible: true,
    collapsed: true,
    region: 'east',
-   labelWidth: {$label_width},
+   labelWidth: $label_width,
    fileUpload        : true,
    method            :'POST',
    enctype           :'multipart/form-data',
@@ -338,8 +334,8 @@ var {$render}fileForm = new Ext.FormPanel({
    title: '{$LANG['plugin_fusinvdeploy']['form']['title'][5]}',
    bodyStyle:' padding:5px 5px 0',
    style:'margin-left:5px;margin-bottom:5px',
-   width: {$width_right},
-   height: {$height_right},
+   width: $width_right,
+   height: $height_right,
    defaultType: 'textfield',
    items: [{
          name: '{$render}id',
@@ -388,14 +384,14 @@ var {$render}fileForm = new Ext.FormPanel({
          },
          listeners: {
             'fileselected': function(fb, v){
-               var uncompress_field = {$render}fileForm.getForm().findField('{$render}uncompress');
-               {$render}ToggleUncompress(uncompress_field);
+               {$render}ToggleUncompress(v);
+               {$render}AddActionsAuto(v);
             }
          }
       }), {
          id: '{$render}file_info_maxfilesize',
          name: '{$render}file_info_maxfilesize',
-         value: '{$maxUpload}',
+         value: '$maxUpload',
          xtype: 'displayfield',
          allowBlank: false,
          hidden:true,
@@ -422,6 +418,7 @@ var {$render}fileForm = new Ext.FormPanel({
             chooser.show(this, function(el, data) {
                el.setValue(data);
                {$render}ToggleUncompress(data);
+               {$render}AddActionsAuto(data);
             });
          }
       }, {
@@ -515,43 +512,43 @@ var {$render}fileForm = new Ext.FormPanel({
       id : '{$render}updatebtn',
       hidden : true,
       handler: function(btn, ev) {
-         Ext.MessageBox.alert('Erreur', "update");
-         if ({$render}fileForm.record == null) {
-            Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
-            return;
-         }
-         if (!{$render}fileForm.getForm().isValid()) {
-            Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
-            return false;
-         }
-         {$render}fileForm.getForm().updateRecord({$render}fileForm.record);
-
-         {$render}fileForm.getForm().submit({
-            url : '../ajax/package_file.update.php?package_id={$id}&render={$render}',
-            waitMsg: 'Chargement du fichier...',
-            success: function(form, o){
-               {$render}msg('Traitement du fichier',o.result.msg);
-               {$render}fileStore.reload();
-               {$render}fileForm.newFileMode(false);
-               form.reset();
-               {$render}fileGrid.getSelectionModel().clearSelections();
-
-            },
-            failure: function({$render}fileForm, action){
-               switch (action.failureType) {
-                  case Ext.form.Action.CLIENT_INVALID:
-                     Ext.Msg.alert('Failure', 'Form fields may not be submitted with invalid values');
-                     break;
-                  case Ext.form.Action.CONNECT_FAILURE:
-                     Ext.Msg.alert('Failure', 'Ajax communication failed');
-                     break;
-                  case Ext.form.Action.SERVER_INVALID:
-                     Ext.Msg.alert('Failure', action.result.msg);
-               }
-
+            Ext.MessageBox.alert('Erreur', "update");
+            if ({$render}fileForm.record == null) {
+               Ext.MessageBox.alert('Erreur 1 ', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
+               return;
             }
-         });
-      }
+            if (!{$render}fileForm.getForm().isValid()) {
+               Ext.MessageBox.alert('Erreur 2', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
+               return false;
+            }
+            {$render}fileForm.getForm().updateRecord({$render}fileForm.record);
+
+            {$render}fileForm.getForm().submit({
+               url : '../ajax/package_file.update.php?package_id={$id}&render={$render}',
+               waitMsg: 'Chargement du fichier...',
+               success: function(form, o){
+                  {$render}msg('Traitement du fichier',o.result.msg);
+                  {$render}fileStore.reload();
+                  {$render}fileForm.newFileMode(false);
+                  form.reset();
+                  {$render}fileGrid.getSelectionModel().clearSelections();
+
+               },
+               failure: function({$render}fileForm, action){
+                  switch (action.failureType) {
+                     case Ext.form.Action.CLIENT_INVALID:
+                        Ext.Msg.alert('Failure 1', 'Form fields may not be submitted with invalid values');
+                        break;
+                     case Ext.form.Action.CONNECT_FAILURE:
+                        Ext.Msg.alert('Failure 2', 'Ajax communication failed');
+                        break;
+                     case Ext.form.Action.SERVER_INVALID:
+                        Ext.Msg.alert('Failure 3', action.result.msg);
+                  }
+
+               }
+            });
+         }
    }, {
       text: '{$LANG['buttons'][34]}',
       iconCls: 'exticon-cancel',
@@ -607,13 +604,82 @@ var {$render}fileForm = new Ext.FormPanel({
    }
 });
 
+var {$render}ToggleUncompress = function(filename) {
+   {$render}fileForm.getForm().findField('{$render}uncompress').hide();
+   if (
+      filename.indexOf('.zip') != -1
+      || filename.indexOf('.gz') != -1
+      || filename.indexOf('.bz2') != -1
+      ||filename.indexOf('.tar') != -1
+   ) {$render}fileForm.getForm().findField('{$render}uncompress').show();
+}
+
+
+var files_autoactions = $files_autoactions;
+var {$render}AddActionsAuto = function(filename) {
+   //clean filename (remove path)
+   filename = filename.replace(/^.*[\\\/]/, '')
+
+   //get file extension
+   var ext = filename.substr(filename.lastIndexOf('.') + 1);
+
+   if (ext in files_autoactions) {
+      //show question to automatically add actions for this file
+      Ext.Msg.show({
+         title: "{$LANG['plugin_fusinvdeploy']['form']['message'][5]}",
+         msg: "{$LANG['plugin_fusinvdeploy']['form']['message'][6]}",
+         buttons: Ext.Msg.YESNO,
+         icon: Ext.MessageBox.QUESTION,
+         minWidth: 350,
+         fn: function(btn, text) {
+            //send data in db if user accept the alert
+            if (btn == 'yes') {
+
+               //get scripts
+               var install_a = files_autoactions[ext].install.replace("##FILENAME##", filename);
+               var uninstall_a = files_autoactions[ext].uninstall.replace("##FILENAME##", filename);
+
+               //send scripts
+               //-> install
+               Ext.Ajax.request({
+                  url: '../ajax/package_action.save.php?package_id={$_REQUEST["id"]}&render=install',
+                  params: {
+                     installexec: install_a,
+                     installitemtype: 'PluginFusinvdeployAction_Command',
+                     installid: ''
+                  },
+                  success: function(){
+                     //-> uninstall
+                     Ext.Ajax.request({
+                        url: '../ajax/package_action.save.php?package_id={$_REQUEST["id"]}&render=uninstall',
+                        params: {
+                           uninstallexec: uninstall_a,
+                           uninstallitemtype: 'PluginFusinvdeployAction_Command',
+                           uninstallid: ''
+                        },
+                        success: function(){
+                           installactionGrid.store.reload();
+                           installactionGrid.store.reload();
+
+                           //click submit button
+                           myButton = {$render}fileForm.getForm().buttons[0];
+                           myButton.handler.call(myButton.scope, myButton, Ext.EventObject);
+                        }
+                     });
+                  }
+               })
+            }
+         }
+      });
+   }
+}
 
 //render grid and form in a border layout
 var {$render}FileLayout = new Ext.Panel({
    layout: 'border',
    renderTo: '{$render}File',
-   height: {$height_layout},
-   width: {$width_layout},
+   height: $height_layout,
+   width: $width_layout,
    defaults: {
       split: true,
    },

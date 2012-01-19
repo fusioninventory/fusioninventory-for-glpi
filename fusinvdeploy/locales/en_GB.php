@@ -176,6 +176,7 @@ $LANG['plugin_fusinvdeploy']['form']['message'][4] = "Paths on MS Windows do not
 ."<br /><div class='message_smalltext right'>You can disable this message in the "
 ."<a href='##URL##'>plugin configuration</a></div>";
 $LANG['plugin_fusinvdeploy']['form']['message'][5] = "Attention";
+$LANG['plugin_fusinvdeploy']['form']['message'][6] = "Wish to the command to install and uninstall is automatically added for your file?";
 
 $LANG['plugin_fusinvdeploy']['form']['check'][0] = "Register key exist";
 $LANG['plugin_fusinvdeploy']['form']['check'][1] = "Register key missing";
