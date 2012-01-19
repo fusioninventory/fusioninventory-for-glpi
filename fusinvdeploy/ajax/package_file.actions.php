@@ -48,6 +48,9 @@ define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
 Session::checkLoginUser();
 
+header("Content-Type: text/html; charset=UTF-8");
+Html::header_nocache();
+
 // Turn off error reporting
 error_reporting(0);
 
