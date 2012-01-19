@@ -80,6 +80,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
          $this->addStandardTab('PluginFusinvdeployInstall', $ong, $options);
          $this->addStandardTab('PluginFusinvdeployUninstall', $ong, $options);
       }
+      $ong['no_all_tab'] = true;
       return $ong;
    }
 
