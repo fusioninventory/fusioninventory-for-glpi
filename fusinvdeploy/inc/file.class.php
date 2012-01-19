@@ -78,7 +78,10 @@ class PluginFusinvdeployFile extends CommonDBTM {
       $ext['msi']['uninstall']   = "uninstall msiexec /qb /x ##FILENAME## REBOOT=ReallySuppress";
 
       $ext['deb']['install']     = "dpkg -i ##FILENAME## ; apt-get install -f";
-      $ext['deb']['uninstall']   = "";
+      $ext['deb']['uninstall']   = "dpkg -P ##FILENAME## ; apt-get install -f";
+
+      $ext['rpm']['install']     = "rpm -Uvh ##FILENAME##";
+      $ext['rpm']['install']     = "rpm -ev ##FILENAME##";
 
       return $ext;
    }
