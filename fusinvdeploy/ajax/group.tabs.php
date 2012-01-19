@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    Alexandre Delaunay
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2011 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -45,31 +45,15 @@ include (GLPI_ROOT . "/inc/includes.php");
 Session::checkLoginUser();
 
 header("Content-Type: text/html; charset=UTF-8");
-header_nocache();
+Html::header_nocache();
 
 if(!isset($_POST["id"])) {
    exit();
 }
 
 $group = new PluginFusinvdeployGroup();
+CommonGLPI::displayStandardTab($group, $_REQUEST['glpi_tab']);
 
-switch($_POST['glpi_tab']) {
-   case 2;
-      $group->getFromDB($_POST['id']);
-      $group->showStaticForm();
-      break;
-   case 3;
-      $group->getFromDB($_POST['id']);
-      $group->showDynamicForm();
-      break;
-   case 4;
-      $group->showList();
-      break;
-   default :
-      break;
-}
-
-
-ajaxFooter();
+Html::ajaxFooter();
 
 ?>

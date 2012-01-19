@@ -29,24 +29,27 @@
 
    @package   FusionInventory
    @author    Alexandre Delaunay
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2011 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
 // Start the session for this page
-session_start();
+//session_start();
 header("Cache-control: private");
 
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
 Session::checkLoginUser();
+
+header("Content-Type: text/html; charset=UTF-8");
+Html::header_nocache();
 
 // Turn off error reporting
 error_reporting(0);
