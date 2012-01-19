@@ -395,7 +395,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
                                                          :$new_package->getLink());
 
       // Do not display quotes
-      addMessageAfterRedirect($LANG['common'][70]."&nbsp;: ".stripslashes($display));
+      Session::addMessageAfterRedirect($LANG['common'][70]."&nbsp;: ".stripslashes($display));
 
       unset($_SESSION['tmp_clone_package']);
 
