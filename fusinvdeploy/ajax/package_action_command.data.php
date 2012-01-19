@@ -47,8 +47,6 @@ Session::checkLoginUser();
 header("Content-Type: text/html; charset=UTF-8");
 Html::header_nocache();
 
-global $DB;
-
 if(isset($_GET['package_id'])){
    $package_id = $_GET['package_id'];
    $render = $_GET['render'];

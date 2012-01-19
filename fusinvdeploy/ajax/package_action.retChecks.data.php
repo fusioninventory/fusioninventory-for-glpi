@@ -47,8 +47,6 @@ Session::checkLoginUser();
 header("Content-Type: text/html; charset=UTF-8");
 Html::header_nocache();
 
-global $DB,$LANG;
-
 if(isset($_GET['CommandId'])){
    $CommandId = $_GET['CommandId'];
    $render = $_GET['render'];
