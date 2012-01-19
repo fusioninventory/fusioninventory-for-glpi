@@ -135,6 +135,7 @@ $LANG['plugin_fusinvdeploy']['form']['label'][19] = "Descomprimir";
 $LANG['plugin_fusinvdeploy']['form']['label'][20] = "Error de transmisión: el tamaño del fichero es demasiado grande";
 $LANG['plugin_fusinvdeploy']['form']['label'][21] = "Tamaño del fichero";
 $LANG['plugin_fusinvdeploy']['form']['label'][22] = "Error al copiar el fichero";
+$LANG['plugin_fusinvdeploy']['form']['label'][23] = "Extraiga el archivo después de la descarga";
 
 $LANG['plugin_fusinvdeploy']['form']['action'][0] = "Añadir";
 $LANG['plugin_fusinvdeploy']['form']['action'][1] = "Eliminar";

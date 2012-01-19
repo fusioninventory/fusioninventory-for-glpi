@@ -136,6 +136,7 @@ $LANG['plugin_fusinvdeploy']['form']['label'][19] = "Uncompress";
 $LANG['plugin_fusinvdeploy']['form']['label'][20] = "Transfer error: the file size is too big";
 $LANG['plugin_fusinvdeploy']['form']['label'][21] = "Filesize";
 $LANG['plugin_fusinvdeploy']['form']['label'][22] = "Failed to copy file";
+$LANG['plugin_fusinvdeploy']['form']['label'][23] = "Extract the file after the download";
 
 $LANG['plugin_fusinvdeploy']['form']['action'][0] = "Add";
 $LANG['plugin_fusinvdeploy']['form']['action'][1] = "Delete";

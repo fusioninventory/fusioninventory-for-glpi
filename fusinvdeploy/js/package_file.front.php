@@ -446,7 +446,7 @@ var {$render}fileForm = new Ext.FormPanel({
          width: 50,
          hidden: true
       }), {
-         fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][19]}',
+         fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][23]}',
          name: '{$render}uncompress',
          id: '{$render}uncompress',
          allowBlank: false,
