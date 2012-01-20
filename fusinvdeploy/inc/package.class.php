@@ -269,7 +269,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
          $tasks_url = substr($tasks_url, 0, -2);
 
 
-         addMessageAfterRedirect(str_replace('#task#',
+         Session::addMessageAfterRedirect(str_replace('#task#',
                $tasks_url, $LANG['plugin_fusinvdeploy']['package'][23]));
          Html::redirect(GLPI_ROOT."/plugins/fusinvdeploy/front/package.form.php?id="
                .$this->getField('id'));
