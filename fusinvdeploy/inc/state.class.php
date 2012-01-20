@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    Alexandre Delaunay
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2011 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -99,7 +99,7 @@ class PluginFusinvdeployState extends CommonDBTM {
       return json_encode($res);
    }
 
-   public static function processComment($state, $comment) {
+   static function processComment($state, $comment) {
       global $LANG;
       if ($comment == "") {
          switch ($state) {
@@ -162,7 +162,7 @@ class PluginFusinvdeployState extends CommonDBTM {
       return json_encode($res);
    }
 
-   public static function getTaskJobLogsDatasTreeNode($params) {
+   static function getTaskJobLogsDatasTreeNode($params) {
       global $DB, $LANG;
 
       $res = array();

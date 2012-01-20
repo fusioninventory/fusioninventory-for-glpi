@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    Alexandre Delaunay
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2011 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -74,7 +74,7 @@ class PluginFusinvdeployAction extends CommonDBTM {
       return $actions;
    }
 
-   public function getAllDatas($params) {
+   function getAllDatas($params) {
       global $DB, $LANG;
 
       $package_id = $params['package_id'];
@@ -156,7 +156,7 @@ class PluginFusinvdeployAction extends CommonDBTM {
       return json_encode($res);
    }
 
-   public function getData($params) {
+   function getData($params) {
       global $DB, $LANG;
 
       $id = $params['id'];
@@ -235,7 +235,7 @@ class PluginFusinvdeployAction extends CommonDBTM {
       return json_encode(array('data' => $row));
    }
 
-   public function createData($params) {
+   function createData($params) {
       global $DB;
 
       $package_id = $params['package_id'];
@@ -305,7 +305,7 @@ class PluginFusinvdeployAction extends CommonDBTM {
       return $res;
    }
 
-   public function saveData($params) {
+   function saveData($params) {
       global $DB, $LANG;
 
       $package_id = $params['package_id'];

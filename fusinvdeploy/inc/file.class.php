@@ -380,7 +380,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
       echo "{success:true}";
    }
 
-   public static function getMaxUploadSize() {
+   static function getMaxUploadSize() {
       global $LANG;
 
       $max_upload = (int)(ini_get('upload_max_filesize'));
@@ -482,7 +482,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
       print "{success:false, file:'none',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][15]}\"}";
    }
 
-   public function uploadFileFromServer() {
+   function uploadFileFromServer() {
       global $LANG;
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
@@ -529,7 +529,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
       } print "{success:false, file:'none',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][15]}\"}";
    }
 
-   public static function processFilesize($filesize) {
+   static function processFilesize($filesize) {
       if ($filesize >= (1024 * 1024 * 1024)) {
          $filesize = round($filesize / (1024 * 1024 * 1024), 1)."GiB";
       } elseif ($filesize >= 1024 * 1024) {

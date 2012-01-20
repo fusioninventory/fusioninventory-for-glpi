@@ -279,7 +279,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       return true;
    }
 
-   public function package_clone($new_name = '') {
+   function package_clone($new_name = '') {
       global $LANG;
 
       if ($this->getField('id') < 0) return false;
@@ -403,7 +403,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
 
    }
 
-   public static function showEditDeniedMessage($id, $message) {
+   static function showEditDeniedMessage($id, $message) {
       global $CFG_GLPI, $CFG_GLPI;
 
       $task = new PluginFusinvdeployTask;
