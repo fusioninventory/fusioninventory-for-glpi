@@ -46,7 +46,7 @@ header("Cache-control: private");
 
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
-checkLoginUser();
+//checkLoginUser();
 
 // Turn off error reporting
 error_reporting(0);
@@ -74,7 +74,6 @@ if (isset($_REQUEST['directory']) && $_REQUEST['directory']) {
 } else {
    $directory = $server_upload_path;
 }
-
 switch ($_REQUEST['action']) {
    default:
       $dir = opendir($directory);
