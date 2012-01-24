@@ -1,26 +1,30 @@
-webservices/
 .svn
 .gitignore
-appliances
-archires
-barcode
-behaviors
+*~
 centraltabs
 diff_plugin_locale.php
 manufacturersimports
-monitoring
-pdf
 remove.txt
-reports
 resources
 updatelangfusion.sh
 wallboard
 wallboard_20111011.tar
-webservices
+
+# Plugins
+monitoring
+pdf
+reports
 xmlexport
 notification
 projet
-<<<<<<< HEAD
+order
+pdf
+racks
+archires
+domains
+immobilizationsheets
+webservices
+appliances
+barcode
+behaviors
 
-=======
->>>>>>> glpi0.80
