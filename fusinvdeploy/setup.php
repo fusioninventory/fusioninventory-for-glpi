@@ -36,104 +36,101 @@
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
-//include_once ("includes.php");
+define ("PLUGIN_FUSINVDEPLOY_VERSION","0.83+1.0");
+
+include_once ("includes.php");
 
 // Init the hooks of fusinvdeploy
 function plugin_init_fusinvdeploy() {
-   global $PLUGIN_HOOKS,$LANG;
+   global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
 
    // ##### 1. Stop if fusioninventory not activated #####
 
-   $plugin = new Plugin;
+   $plugin = new Plugin();
    if (!$plugin->isActivated("fusioninventory")) {
-//      if (isset($_GET['id'])
-//         && isset($_GET['action'])
-//            && strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
-//         switch ($_GET['action']) {
-//            case 'activate':
-//               addMessageAfterRedirect($LANG['plugin_fusinvdeploy']["setup"][17]);
-//               break;
-//            case 'uninstall':
-//               addMessageAfterRedirect($LANG['plugin_fusinvdeploy']["setup"][18]);
-//               Html::redirect($CFG_GLPI["root_doc"]."/front/plugin.php");
-//               break;
-//         }
-//      }
+      if (isset($_GET['id']) AND isset($_GET['action'])
+            AND strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
+         switch ($_GET['action']) {
+            case 'activate':
+                Session::addMessageAfterRedirect($LANG['plugin_fusinvdeploy']['setup'][17]);
+               break;
+            case 'uninstall':
+                Session::addMessageAfterRedirect($LANG['plugin_fusinvdeploy']['setup'][18]);
+               Html::redirect($CFG_GLPI["root_doc"]."/front/plugin.php");
+               break;
+         }
+      }
       return false;
    }
+
+   if (!$plugin->isActivated("webservices")) {
+      if (isset($_GET['id']) AND isset($_GET['action'])
+            AND strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
+         switch ($_GET['action']) {
+            case 'activate':
+                Session::addMessageAfterRedirect($LANG['plugin_fusinvdeploy']['setup'][19]);
+               break;
+            case 'uninstall':
+                Session::addMessageAfterRedirect($LANG['plugin_fusinvdeploy']['setup'][20]);
+               Html::redirect($CFG_GLPI["root_doc"]."/front/plugin.php");
+               break;
+         }
+      }
+      return false;
+   }
+
    if (!$plugin->isActivated("fusinvinventory")) {
-//      if (isset($_GET['id'])
-//         && isset($_GET['action'])
-//            && strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
-//         switch ($_GET['action']) {
-//            case 'activate':
-//               addMessageAfterRedirect($LANG['plugin_fusinvdeploy']["setup"][21]);
-//               break;
-//         }
-//      }
-      return false;
-   }
-   if (!$plugin->isInstalled("webservices")) {
-//      if (isset($_GET['id'])
-//         && isset($_GET['action'])
-//            && strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
-//         switch ($_GET['action']) {
-//            case 'activate':
-//               addMessageAfterRedirect($LANG['plugin_fusinvdeploy']["setup"][19]);
-//               break;
-//            case 'uninstall':
-//               addMessageAfterRedirect($LANG['plugin_fusinvdeploy']["setup"][20]);
-//               Html::redirect($CFG_GLPI["root_doc"]."/front/plugin.php");
-//               break;
-//         }
-//      }
+      if (isset($_GET['id']) AND isset($_GET['action'])
+            AND strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
+         switch ($_GET['action']) {
+            case 'activate':
+                Session::addMessageAfterRedirect($LANG['plugin_fusinvdeploy']['setup'][21]);
+               break;
+            case 'uninstall':
+                Session::addMessageAfterRedirect($LANG['plugin_fusinvdeploy']['setup'][22]);
+               Html::redirect($CFG_GLPI["root_doc"]."/front/plugin.php");
+               break;
+         }
+      }
       return false;
    }
 
    // ##### 2. register classes #####
 
-/*
-   Plugin::registerClass('PluginFusinvDeployConfig');
-   Plugin::registerClass('PluginFusinvdeployJob');
-   Plugin::registerClass('PluginFusinvdeployPackage');
-   Plugin::registerClass('PluginFusinvdeployPackage');
-   Plugin::registerClass('PluginFusinvdeployInstall');
-   Plugin::registerClass('PluginFusinvdeployUninstall');
-*/
    // ##### 3. get informations of the plugin #####
 
    $a_plugin = plugin_version_fusinvdeploy();
-   if (!class_exists('PluginFusioninventoryModule')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
-   }
    $moduleId = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
 
    // ##### 4. Set in session module_id #####
 
    $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = $moduleId;
 
-
-   if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvdeploy'][$LANG['plugin_fusinvdeploy']["title"][0]])) {
-      $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvdeploy'][$LANG['plugin_fusinvdeploy']["title"][0]] =
-                                             array('class'        => 'PluginFusinvdeployConfig',
-                                                   'submitbutton' => 'plugin_fusinvdeploy_config_set',
-                                                   'submitmethod' => 'putForm');
+   if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']
+                           ['fusinvdeploy'][$LANG['plugin_fusinvdeploy']['title'][0]])) {
+      $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']
+                           ['fusinvdeploy'][$LANG['plugin_fusinvdeploy']['title'][0]] =
+                              array('class'        => 'PluginFusinvdeployConfig',
+                                    'submitbutton' => 'plugin_fusinvdeploy_config_set',
+                                    'submitmethod' => 'putForm');
    }
 
    if (isset($_SESSION["glpiID"])) {
 
-      if (haveRight("configuration", "r") || haveRight("profile", "w")) {// Config page
-         if (!class_exists('PluginFusioninventoryConfiguration')) { // if plugin is unactive
-            include(GLPI_ROOT . "/plugins/fusioninventory/inc/configuration.class.php");
+      if (Session::haveRight("configuration", "r") || Session::haveRight("profile", "w")) {// Config page
+         if (!class_exists('PluginFusioninventoryConfig')) { // if plugin is unactive
+            include(GLPI_ROOT . "/plugins/fusioninventory/inc/config.class.php");
          }
-         $PluginFusioninventoryConfiguration = new PluginFusioninventoryConfiguration();
+         $PluginFusioninventoryConfiguration = new PluginFusioninventoryConfig();
          $a_tabs = $PluginFusioninventoryConfiguration->defineTabs();
-         $PLUGIN_HOOKS['config_page']['fusinvdeploy'] = '../fusioninventory/front/configuration.form.php?glpi_tab='.array_search($a_plugin['name'], $a_tabs);
+         $PLUGIN_HOOKS['config_page']['fusinvdeploy'] = "../fusioninventory/front/config.form.php"
+            ."?itemtype=pluginfusioninventoryconfig"
+            ."&glpi_tab=".array_search($a_plugin['name'], $a_tabs);
       }
-	}
+   }
 
    if (!class_exists('PluginFusioninventoryProfile')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
@@ -158,31 +155,31 @@ function plugin_init_fusinvdeploy() {
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['group'] =
       '../fusinvdeploy/front/group.php';
 
-	// Breadcrumbs
-	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['packages']['title'] = 
-		$LANG['plugin_fusinvdeploy']['menu'][1];
-	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['packages']['page'] = 
-		'/plugins/fusinvdeploy/front/package.php';
+   // Breadcrumbs
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['packages']['title'] =
+      $LANG['plugin_fusinvdeploy']['menu'][1];
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['packages']['page'] =
+      '/plugins/fusinvdeploy/front/package.php';
 
-	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['mirror']['title'] = 
-		$LANG['plugin_fusinvdeploy']['menu'][2];
-	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['mirror']['page'] = 
-		'/plugins/fusinvdeploy/front/mirror.php';
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['mirror']['title'] =
+      $LANG['plugin_fusinvdeploy']['menu'][2];
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['mirror']['page'] =
+      '/plugins/fusinvdeploy/front/mirror.php';
 
-	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['task']['title'] = 
-		$LANG['plugin_fusinvdeploy']['menu'][3];
-	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['task']['page'] = 
-		'/plugins/fusinvdeploy/front/task.php';
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['task']['title'] =
+      $LANG['plugin_fusinvdeploy']['menu'][3];
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['task']['page'] =
+      '/plugins/fusinvdeploy/front/task.php';
 
-	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['group']['title'] = 
-		$LANG['plugin_fusinvdeploy']['menu'][4];
-	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['group']['page'] = 
-		'/plugins/fusinvdeploy/front/group.php';
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['group']['title'] =
+      $LANG['plugin_fusinvdeploy']['menu'][4];
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['group']['page'] =
+      '/plugins/fusinvdeploy/front/group.php';
 
-	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['deploy']['title'] = 
-		$LANG['plugin_fusinvdeploy']['menu'][5];
-	$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['deploy']['page'] = 
-		'/plugins/fusinvdeploy/front/deploystate.php';
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['deploy']['title'] =
+      $LANG['plugin_fusinvdeploy']['menu'][5];
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['deploy']['page'] =
+      '/plugins/fusinvdeploy/front/deploystate.php';
 
    $PLUGIN_HOOKS['add_css']['fusinvdeploy'] = "css/style.css";
 
@@ -193,13 +190,14 @@ function plugin_init_fusinvdeploy() {
 // Name and Version of the plugin
 function plugin_version_fusinvdeploy() {
    global $LANG;
-   return array('name'           => $LANG['plugin_fusinvdeploy']['title'][0],
-                'shortname'      => 'fusinvdeploy',
-                'version'        => '0.83+1.0',
-                'license'        => 'AGPLv3+',
-                'author'         => "<a href='http://www.teclib.com'>TECLIB'</a>",
-                'homepage'       => 'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/',
-                'minGlpiVersion' => '0.78' // For compatibility / no install in version < 0.78
+   return array(
+      'name'           => $LANG['plugin_fusinvdeploy']['title'][0],
+      'shortname'      => 'fusinvdeploy',
+      'version'        => PLUGIN_FUSINVDEPLOY_VERSION,
+      'license'        => 'AGPLv3+',
+      'author'         => "<a href='http://www.teclib.com'>TECLIB'</a>",
+      'homepage'       => 'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/',
+      'minGlpiVersion' => '0.83'
    );
 }
 
@@ -208,8 +206,8 @@ function plugin_fusinvdeploy_check_prerequisites() {
    global $LANG;
    if (version_compare('0.78',GLPI_VERSION) < 0) {
       $plugin = new Plugin;
-      if ($plugin->isInstalled("fusioninventory")) {
-        return true;
+      if (!$plugin->isInstalled("fusioninventory")) {
+        return false;
       }
       if (!$plugin->isActivated("fusioninventory")) {
          print $LANG['plugin_fusinvdeploy']["setup"][17]."<br />\n";

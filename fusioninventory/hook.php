@@ -191,8 +191,9 @@ function cron_plugin_fusioninventory() {
 
 
 function plugin_fusioninventory_install() {
+   global $DB;
 
-   include (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
+   include_once (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
    $version_detected = pluginFusioninventoryGetCurrentVersion(PLUGIN_FUSIONINVENTORY_VERSION);
    
    if ((isset($version_detected)) 
@@ -202,7 +203,7 @@ function plugin_fusioninventory_install() {
    } else if ((isset($version_detected)) AND ($version_detected == PLUGIN_FUSIONINVENTORY_VERSION)) {
 
    } else {
-      include (GLPI_ROOT . "/plugins/fusioninventory/install/install.php");
+      include_once (GLPI_ROOT . "/plugins/fusioninventory/install/install.php");
       pluginFusioninventoryInstall(PLUGIN_FUSIONINVENTORY_VERSION);
    }
 

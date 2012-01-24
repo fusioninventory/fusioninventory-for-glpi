@@ -28,14 +28,14 @@
    ------------------------------------------------------------------------
 
    @package   FusionInventory
-   @author    Tomas Abad 
+   @author    Tomas Abad
    @copyright Copyright (c) 2010-2011 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2011
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -98,12 +98,14 @@ $LANG['plugin_fusinvdeploy']['deploystatus'][5]="El agente está procesando el t
 
 $LANG['plugin_fusinvdeploy']['config'][0]="Dirección del servidor GLPI (omita http(s)://)";
 $LANG['plugin_fusinvdeploy']['config'][1]="Directorio raíz para el envío de ficheros desde el servidor";
+$LANG['plugin_fusinvdeploy']['config'][2]="Activar las alertas en el tamaño de MS rutas de Windows?";
 
 $LANG['plugin_fusinvdeploy']['setup'][17]="Para instalar o activar ".$title." es necesario que FusionInventory este activado previamente.";
 $LANG['plugin_fusinvdeploy']['setup'][18]="Para desinstalar ".$title." es necesario que FusionInventory esté activado previamente.";
 $LANG['plugin_fusinvdeploy']['setup'][19]="Para activar ".$title." es necesario contar con Webservices (>= 1.2.0) instalado previamente.";
-$LANG['plugin_fusinvdeploy']['setup'][20]="Plugin desinstalar ".$title." es necesario contar con Webservices (>= 1.2.0) instalado previamente.";
+$LANG['plugin_fusinvdeploy']['setup'][20]="Para desinstalar ".$title." es necesario contar con Webservices (>= 1.2.0) instalado previamente.";
 $LANG['plugin_fusinvdeploy']['setup'][21]="Para instalar o activar ".$title." es necesario que FusionInventory INVENTORY este activado previamente.";
+$LANG['plugin_fusinvdeploy']['setup'][22]="Para desinstalar ".$title." es necesario contar con FusionInventory INVENTORY instalado previamente.";
 
 $LANG['plugin_fusinvdeploy']['profile'][1]="$title";
 $LANG['plugin_fusinvdeploy']['profile'][2]="Gestión de paquetes";
@@ -133,6 +135,7 @@ $LANG['plugin_fusinvdeploy']['form']['label'][19] = "Descomprimir";
 $LANG['plugin_fusinvdeploy']['form']['label'][20] = "Error de transmisión: el tamaño del fichero es demasiado grande";
 $LANG['plugin_fusinvdeploy']['form']['label'][21] = "Tamaño del fichero";
 $LANG['plugin_fusinvdeploy']['form']['label'][22] = "Error al copiar el fichero";
+$LANG['plugin_fusinvdeploy']['form']['label'][23] = "Extraiga el archivo después de la descarga";
 
 $LANG['plugin_fusinvdeploy']['form']['action'][0] = "Añadir";
 $LANG['plugin_fusinvdeploy']['form']['action'][1] = "Eliminar";
@@ -167,6 +170,13 @@ $LANG['plugin_fusinvdeploy']['form']['message'][0] = "Formulario vacio";
 $LANG['plugin_fusinvdeploy']['form']['message'][1] = "Formulario inválido";
 $LANG['plugin_fusinvdeploy']['form']['message'][2] = "Cargando...";
 $LANG['plugin_fusinvdeploy']['form']['message'][3] = "El fichero ya existe";
+$LANG['plugin_fusinvdeploy']['form']['message'][4] = "MS rutas de Windows no aceptan más de 255 caracteres, "
+."el valor que ha introducido sobrepasa el límite.<br />"
+."<br /><b>¿Desea continuar?</b><br />"
+."<br /><div class='message_smalltext right'>Puede desactivar este mensaje en la "
+."<a href='##URL##'>configuración del plugin</a></div>";
+$LANG['plugin_fusinvdeploy']['form']['message'][5] = "Atención";
+$LANG['plugin_fusinvdeploy']['form']['message'][6] = "Desea que el comando para instalar y desinstalar se añade automáticamente a su archivo?";
 
 $LANG['plugin_fusinvdeploy']['form']['check'][0] = "Clave de registro existente";
 $LANG['plugin_fusinvdeploy']['form']['check'][1] = "Clave de registro ausente";

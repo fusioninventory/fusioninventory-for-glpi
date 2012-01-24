@@ -152,6 +152,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    function defineTabs($options=array()){
       global $LANG,$CFG_GLPI;
 
+		$plugin = new Plugin;
+
       $ong = array();
       $moduleTabs = array();
       $this->addStandardTab("PluginFusioninventoryConfig", $ong, $options);
@@ -161,8 +163,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
          $fusionTabs = $ong;
          $moduleTabForms = $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'];
          if (count($moduleTabForms)) {
-            foreach ($moduleTabForms as $module=>$form) {
-               $plugin = new Plugin;
+            foreach ($moduleTabForms as $module=>$form) {               
                if ($plugin->isActivated($module)) {
                   $this->addStandardTab($form[key($form)]['class'], $ong, $options);
                }

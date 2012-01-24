@@ -157,13 +157,13 @@ if (isset($_POST["add"])) {
    Html::back();
 
 } else {
-   commonHeader($LANG['plugin_fusinvdeploy']["title"][0],$_SERVER["PHP_SELF"],"plugins",
+   Html::header($LANG['plugin_fusinvdeploy']["title"][0],$_SERVER["PHP_SELF"],"plugins",
    "fusioninventory","group");
 
    PluginFusioninventoryMenu::displayMenu("mini");
 
    $group->showForm($_REQUEST["id"]);
-   commonFooter();
+	Html::footer();
 }
 
 ?>

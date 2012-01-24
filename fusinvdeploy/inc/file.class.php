@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    Alexandre Delaunay
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2011 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -69,6 +69,21 @@ class PluginFusinvdeployFile extends CommonDBTM {
          $tmp['p2p-retention-duration'] = 0;
       }
       return $input;
+   }
+
+   static function getExtensionsWithAutoAction() {
+      $ext = array();
+
+      $ext['msi']['install']     = "install msiexec /qb /i ##FILENAME## REBOOT=ReallySuppress";
+      $ext['msi']['uninstall']   = "uninstall msiexec /qb /x ##FILENAME## REBOOT=ReallySuppress";
+
+      $ext['deb']['install']     = "dpkg -i ##FILENAME## ; apt-get install -f";
+      $ext['deb']['uninstall']   = "dpkg -P ##FILENAME## ; apt-get install -f";
+
+      $ext['rpm']['install']     = "rpm -Uvh ##FILENAME##";
+      $ext['rpm']['install']     = "rpm -ev ##FILENAME##";
+
+      return $ext;
    }
 
    static function cleanForPackage($orders_id) {
@@ -237,10 +252,10 @@ class PluginFusinvdeployFile extends CommonDBTM {
       $sha512 = hash_file('sha512', $file_tmp_name);
       $short_sha512 = substr($sha512, 0, 6);
 
-		if($this->checkPresenceFile($short_sha512)) {
+      if($this->checkPresenceFile($sha512, $order_id)) {
          print "{success:false, file:'{$filename}',msg:\"File already exists.\"}";
          exit;
-		}
+      }
 
       $data = array(
          'name' => $filename,
@@ -299,18 +314,15 @@ class PluginFusinvdeployFile extends CommonDBTM {
       return $file_id;
    }
 
-   function checkPresenceFile($hash) {
+   function checkPresenceFile($sha512, $order_id) {
       global $DB;
 
-      if (strlen($hash) > 10) {
-         return false;
-      }
-
-      $query = "SELECT id, shortsha512 FROM ".$this->getTable()." WHERE shortsha512 = '".substr($hash, 0, 6 )."'";
-      $res = $DB->query($query);
-      $result = $DB->fetch_array($res);
-      if ($hash == $result["shortsha512"]) {
-        return $result["id"];
+      $rows = $this->find("plugin_fusinvdeploy_orders_id = '$order_id'
+            AND shortsha512 = '".substr($sha512, 0, 6 )."'
+            AND sha512 = '$sha512'"
+      );
+      if (count($rows) > 0) {
+        return true;
       }
 
       return false;
@@ -390,9 +402,6 @@ class PluginFusinvdeployFile extends CommonDBTM {
          $new_key         = preg_replace('#^'.$render.'#','',$POST_key);
          $_POST[$new_key] = $POST_value;
       }
-
-      #logDebug($_POST);
-      #logDebug($_FILES);
 
       //if file sent is from server
       if (isset($_POST['itemtype']) && $_POST['itemtype'] == 'fileserver') return $this->uploadFileFromServer();

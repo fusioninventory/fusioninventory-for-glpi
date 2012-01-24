@@ -80,14 +80,10 @@ function pluginFusinvdeployInstall($version, $migration='') {
       $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
       PluginFusioninventoryProfile::initProfile($a_plugin['shortname'], $plugins_id);
       PluginFusioninventoryProfile::changeProfile($plugins_id);
-
-      $config = new PluginFusioninventoryConfig;
-
-      $insert = array(
-         'glpi_path' => '',
-         'server_upload_path' => $_SERVER['DOCUMENT_ROOT'].'/files/_plugins/'.$a_plugin['shortname'].'/upload'
-      );
-      $config->initConfig($plugins_id, $insert);
+	
+	   // Create configuration
+	   $PluginFusinvdeployConfig = new PluginFusinvdeployConfig();
+	   $PluginFusinvdeployConfig->initConfigModule();
 
       $agentmodule         = new PluginFusioninventoryAgentmodule;
       $input               = array();

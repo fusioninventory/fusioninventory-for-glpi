@@ -29,20 +29,22 @@
 
    @package   FusionInventory
    @author    Alexandre Delaunay
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2011 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
+
+include_once(GLPI_ROOT . "/plugins/fusioninventory/inc/task.class.php");
 
 class PluginFusinvdeployTask extends PluginFusioninventoryTask {
 
@@ -68,34 +70,33 @@ class PluginFusinvdeployTask extends PluginFusioninventoryTask {
 
       $ong = array();
 
-      if ($this->fields['id'] > 0) {
-         $ong[3] = $LANG['plugin_fusinvdeploy']['task'][13];
-      } elseif ($this->fields['id'] == -1) {
-         $ong[2] = $LANG['plugin_fusinvdeploy']['task'][1];
-         $ong['no_all_tab']=true;
-      } else { // New item
-         $ong[1] = $LANG['plugin_fusinvdeploy']['task'][3];
+      if ($this->fields['id'] > 0){
+         $this->addStandardTab(__CLASS__, $ong, $options);
       }
 
       return $ong;
    }
 
-   function showMenu($options=array())  {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $LANG;
 
-      $this->displaylist = false;
+      switch(get_class($item)) {
+         case __CLASS__: return $LANG['plugin_fusinvdeploy']['task'][13];
+      }
+   }
 
-      $this->fields['id'] = -1;
-      $this->showTabs($options);
-      $this->addDivForTabs();
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+      switch(get_class($item)) {
+         case __CLASS__:
+            $obj = new self;
+            $obj->showActions($_POST["id"]);
+            break;
+      }
    }
 
    function showList() {
-      echo "<table class='tab_cadre_navigation'><tr><td>";
-
       self::title();
       Search::show('PluginFusinvdeployTask');
-
-      echo "</td></tr></table>";
    }
 
    function title() {
@@ -109,7 +110,7 @@ class PluginFusinvdeployTask extends PluginFusioninventoryTask {
          $title = "";
       }
 
-      displayTitle($CFG_GLPI["root_doc"] . "/plugins/fusinvdeploy/pics/task.png", $title, $title, $buttons);
+      Html::displayTitle($CFG_GLPI["root_doc"] . "/plugins/fusinvdeploy/pics/task.png", $title, $title, $buttons);
    }
 
 
@@ -156,7 +157,7 @@ class PluginFusinvdeployTask extends PluginFusioninventoryTask {
 
       //if task active, delete denied
       if ($this->getField('is_active') == 1) {
-         addMessageAfterRedirect($LANG['plugin_fusinvdeploy']['task'][20]);
+         Session::addMessageAfterRedirect($LANG['plugin_fusinvdeploy']['task'][20]);
          Html::redirect(GLPI_ROOT."/plugins/fusinvdeploy/front/task.form.php?id=".$this->getField('id'));
          return false;
       }

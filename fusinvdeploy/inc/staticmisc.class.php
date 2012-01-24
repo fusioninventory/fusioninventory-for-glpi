@@ -36,7 +36,7 @@
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -81,13 +81,13 @@ class PluginFusinvdeployStaticmisc {
 
    static function getDefinitionType() {
       global $LANG;
-      return array(0 => DROPDOWN_EMPTY_VALUE,
+      return array(0 => Dropdown::EMPTY_VALUE,
                    'PluginFusinvdeployPackage' => $LANG['plugin_fusinvdeploy']['package'][7]);
    }
 
    static function getActionType() {
       global $LANG;
-      return array(0 => DROPDOWN_EMPTY_VALUE,
+      return array(0 => Dropdown::EMPTY_VALUE,
                    'PluginFusinvdeployGroup' => $LANG['plugin_fusinvdeploy']['group'][3],
                    'Computer' => $LANG['Menu'][0],
                    'Group' => $LANG['common'][35]
