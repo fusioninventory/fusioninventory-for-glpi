@@ -74,7 +74,6 @@ if (isset($_REQUEST['directory']) && $_REQUEST['directory']) {
 } else {
    $directory = $server_upload_path;
 }
-
 switch ($_REQUEST['action']) {
    default:
       $dir = opendir($directory);
