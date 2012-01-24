@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    Alexandre Delaunay
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2011 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -70,47 +70,55 @@ class PluginFusinvdeployGroup extends CommonDBTM {
    }
 
    function showList() {
-      echo "<table class='tab_cadre_navigation'><tr><td>";
-
       self::title();
       Search::show('PluginFusinvdeployGroup');
-
-      echo "</td></tr></table>";
    }
 
    function defineTabs($options=array()) {
       global $LANG;
 
       $ong = array();
-
-      if ($this->fields['id'] > 0) {
-         switch($this->fields['type']) {
-            case "STATIC":
-               $ong[2] = $LANG['plugin_fusinvdeploy']['group'][1];
-               break;
-            case "DYNAMIC":
-               $ong[3] = $LANG['plugin_fusinvdeploy']['group'][2];
-               break;
-         }
-      }
-      elseif ($this->fields['id'] == -1) {
-         $ong[4] = $LANG['plugin_fusinvdeploy']['group'][0];
-         $ong['no_all_tab']=true;
-      } else { // New item
-         $ong[1] = $LANG['plugin_fusinvdeploy']['group'][4];
+      if ($this->fields['id'] > 0){
+         $this->addStandardTab(__CLASS__, $ong, $options);
       }
 
       return $ong;
    }
 
-   function showMenu($options=array())  {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $LANG;
 
-      $this->displaylist = false;
-
-      $this->fields['id'] = -1;
-      $this->showTabs($options);
-      $this->addDivForTabs();
+      switch(get_class($item)) {
+         case __CLASS__:
+            switch($item->fields['type']) {
+               case "STATIC":
+                  return $LANG['plugin_fusinvdeploy']['group'][1];
+                  break;
+               case "DYNAMIC":
+                  return $LANG['plugin_fusinvdeploy']['group'][2];
+                  break;
+            }
+            break;
+      }
    }
+
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+      switch(get_class($item)) {
+         case __CLASS__:
+            $obj = new self;
+            $obj->getFromDB($_POST["id"]);
+            switch($obj->fields['type']) {
+               case "STATIC":
+                  $obj->showStaticForm();
+                  break;
+               case "DYNAMIC":
+                  $obj->showDynamicForm();
+                  break;
+            }
+            break;
+      }
+   }
+
 
    function title() {
       global $LANG;
@@ -123,11 +131,11 @@ class PluginFusinvdeployGroup extends CommonDBTM {
          $title = "";
       }
 
-      displayTitle(GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_group.png", $title, $title, $buttons);
+      Html::displayTitle(GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_group.png", $title, $title, $buttons);
    }
 
    function getSearchURL($full=true) {
-      return getItemTypeSearchURL('PluginFusinvdeployTask', $full);
+      return Toolbox::getItemTypeSearchURL('PluginFusinvdeployTask', $full);
    }
 
    function showForm($ID, $options = array()) {
@@ -178,7 +186,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       return true;
    }
 
-   public function showStaticForm() {
+   function showStaticForm() {
       global $DB, $CFG_GLPI, $LANG;
 
       $groupID = $this->fields['id'];
@@ -297,9 +305,9 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       if ($canedit && $totalnb > 0) {
          echo "</table>";
 
-         openArrowMassives("group_form$rand", true);
+         Html::openArrowMassives("group_form$rand", true);
          echo "<input type='hidden' name='groups_id' value='$groupID'>";
-         closeArrowMassives(array('deleteitem' => $LANG['buttons'][6]));
+         Html::closeArrowMassives(array('deleteitem' => $LANG['buttons'][6]));
 
       } else {
          echo "</table>";
@@ -328,7 +336,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       echo "</form>";
    }
 
-   public function showDynamicForm() {
+   function showDynamicForm() {
       global $DB, $CFG_GLPI, $LANG;
 
       $groupID = $this->fields['id'];
@@ -477,17 +485,17 @@ class PluginFusinvdeployGroup extends CommonDBTM {
                              'table'      => 'glpi_operatingsystems',
                              'value'      => $fields['operatingsystems_id']);
 
-      ajaxUpdateItemOnInputTextEvent("search_operatingsystems_id", "operatingsystems_dropdown",
+      Ajax::updateItemOnInputTextEvent("search_operatingsystems_id", "operatingsystems_dropdown",
                                      $CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/ajax/dropdown_operatingsystems.php",
-                                     $params_os, false);
+                                     $params_os);
 
       //load default operatingsystems_dropdown
-      ajaxUpdateItem("operatingsystems_dropdown",
+      Ajax::updateItem("operatingsystems_dropdown",
                                      $CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/ajax/dropdown_operatingsystems.php",
-                                     $params_os, false, "search_operatingsystems_id");
+                                     $params_os, /*false,*/ "search_operatingsystems_id");
 
       echo "<span id='operatingsystems_dropdown'>";
-      echo "<select name='operatingsystems_id' id='operatingsystems_id'><option value='0'>".DROPDOWN_EMPTY_VALUE."</option></select>";
+      echo "<select name='operatingsystems_id' id='operatingsystems_id'><option value='0'>".Dropdown::EMPTY_VALUE."</option></select>";
       echo "</span>\n";
 
       Html::showToolTip("* ".$LANG['search'][1]."<br />".$LANG['plugin_fusinvdeploy']['group'][5]);
@@ -613,7 +621,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       }
 
       echo "<td width='50%' class='tab_bg_2'>";
-      printPagerForm();
+      Html::printPagerForm();
       echo "</td>";
 
       // Print the "where am I?"
@@ -697,10 +705,10 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       echo "</table>";
 
       if ($type == 'static') {
-         openArrowMassives("group_search");
+         Html::openArrowMassives("group_search");
          echo "<input type='submit' class='submit' value="
             .$LANG['buttons'][8]." name='additem' />";
-         closeArrowMassives();
+         Html::closeArrowMassives(array());
       } else echo "<br />";
 
       self::printGroupPager('', $params['start'], $nb_items);

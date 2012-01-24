@@ -28,51 +28,33 @@
    ------------------------------------------------------------------------
 
    @package   FusionInventory
-   @author    Alexandre Delaunay
-   @co-author
+   @author    David Durieux
+   @co-author François Legastelois
    @copyright Copyright (c) 2010-2011 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
-
+ 
    ------------------------------------------------------------------------
  */
 
 define('GLPI_ROOT', '../../..');
+
 include (GLPI_ROOT."/inc/includes.php");
-Session::checkLoginUser();
 
-header("Content-Type: text/html; charset=UTF-8");
-Html::header_nocache();
+Session::checkRight("config","w");
 
-if(isset($_GET['package_id'])){
-   $package_id = $_GET['package_id'];
-   $render = $_GET['render'];
-} else {
-   exit;
+Html::header($LANG['plugin_fusioninventory']['functionalities'][0], $_SERVER["PHP_SELF"], 
+             "plugins", "fusinvdeploy", "configuration");
+
+if (isset($_POST['plugin_fusinvdeploy_config_set'])) {
+   $pfConfig = new PluginFusinvdeployConfig();
+   $pfConfig->putForm($_POST);
+   Html::back();
 }
 
-$render_type   = PluginFusinvdeployOrder::getRender($render);
-$order_id      = PluginFusinvdeployOrder::getIdForPackage($package_id,$render_type);
+Html::footer();
 
-$sql = " SELECT `glpi_plugin_fusinvdeploy_actions_commands`.id as {$render}commands_id,
-                `glpi_plugin_fusinvdeploy_actions_commands`.exec as {$render}commands_name
-         FROM `glpi_plugin_fusinvdeploy_actions` as `glpi_plugin_fusinvdeploy_actions`
-         INNER JOIN `glpi_plugin_fusinvdeploy_actions_commands`
-                        as `glpi_plugin_fusinvdeploy_actions_commands`
-               ON    `glpi_plugin_fusinvdeploy_actions_commands`.id
-               =     `glpi_plugin_fusinvdeploy_actions`.items_id
-         WHERE `glpi_plugin_fusinvdeploy_actions`.plugin_fusinvdeploy_orders_id = '$order_id'";
-
-$qry  = $DB->query($sql);
-
-$nb   = $DB->numrows($qry);
-$res  = array();
-while($row = $DB->fetch_array($qry)) {
-   $res[$render.'commands'][] = $row;
-}
-
-echo json_encode($res);
 ?>

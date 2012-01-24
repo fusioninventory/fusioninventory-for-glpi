@@ -36,7 +36,7 @@
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -50,6 +50,23 @@ class PluginFusinvdeployInstall extends CommonDBTM {
       global $LANG;
 
       return $LANG['plugin_fusinvdeploy']['package'][14];
+   }
+
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $LANG;
+
+      switch(get_class($item)) {
+         case 'PluginFusinvdeployPackage': return $LANG['plugin_fusinvdeploy']['package'][14];
+      }
+   }
+
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+      switch(get_class($item)) {
+         case 'PluginFusinvdeployPackage':
+            $obj = new self;
+            $obj->showForm($_POST['id']);
+            break;
+      }
    }
 
    static function showForm($id){

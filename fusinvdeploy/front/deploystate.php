@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 include (GLPI_ROOT."/inc/includes.php");
 Session::checkLoginUser();
 
-commonHeader($LANG['plugin_fusinvdeploy']['deploystatus'][0],$_SERVER["PHP_SELF"],"plugins",
+Html::header($LANG['plugin_fusinvdeploy']['deploystatus'][0],$_SERVER["PHP_SELF"],"plugins",
              "fusioninventory","deploy");
 
 
@@ -63,6 +63,6 @@ Search::show('PluginFusinvdeployTaskjob');*/
 PluginFusinvdeployState::showTasks();
 
 
-commonFooter();
+Html::footer();
 
 ?>

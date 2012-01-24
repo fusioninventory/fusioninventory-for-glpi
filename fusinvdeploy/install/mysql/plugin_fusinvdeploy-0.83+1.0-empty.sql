@@ -18,7 +18,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_actions_commands`;
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_commands` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `exec` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `exec` varchar(1024) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (  `id` )
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
@@ -28,7 +28,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_actions_deletes`;
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_deletes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `path` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `path` varchar(1024) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
 
@@ -38,7 +38,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_actions_mkdirs`;
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_mkdirs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `path` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `path` varchar(1024) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
 
@@ -48,8 +48,8 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_actions_moves`;
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_moves` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `from` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `to` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `from` varchar(1024) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `to` varchar(1024) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
@@ -59,8 +59,8 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_actions_copies`;
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_copies` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `from` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `to` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `from` varchar(1024) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `to` varchar(1024) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
@@ -97,7 +97,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_checks`;
 CREATE TABLE `glpi_plugin_fusinvdeploy_checks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT  'winkeyExists, winkeyEquals, winkeyMissing, fileExists, fileMissing, fileSize, fileSHA512, freespaceGreater',
-  `path` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `path` varchar(1024) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `ranking` int(11) DEFAULT NULL,
   `plugin_fusinvdeploy_orders_id` int(11) NOT NULL DEFAULT '0',
@@ -220,7 +220,7 @@ CREATE TABLE `glpi_plugin_fusinvdeploy_actions_messages` (
 
 DROP VIEW IF EXISTS `glpi_plugin_fusinvdeploy_tasks`;
 
-CREATE VIEW `glpi_plugin_fusinvdeploy_tasks` 
+CREATE VIEW `glpi_plugin_fusinvdeploy_tasks`
 AS SELECT * FROM glpi_plugin_fusioninventory_tasks;
 
 

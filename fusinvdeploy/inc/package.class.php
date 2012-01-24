@@ -36,7 +36,7 @@
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -49,7 +49,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
    static function getTypeName() {
       global $LANG;
 
-      return $LANG['plugin_fusinvdeploy']['package'][8];
+      return $LANG['plugin_fusinvdeploy']['package'][5];
    }
 
    function canCreate() {
@@ -72,26 +72,22 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       return true;
    }
 
-
-
    function defineTabs($options=array()){
       global $LANG,$CFG_GLPI;
 
       $ong = array();
       if ($this->fields['id'] > 0){
-         //$ong[1]  = $LANG['plugin_fusinvdeploy']['package'][5];
-         $ong[2]  = $LANG['plugin_fusinvdeploy']['package'][14];
-         $ong[3]  = $LANG['plugin_fusinvdeploy']['package'][15];
-         $ong['no_all_tab'] = true;
-      } elseif ($this->fields['id'] == -1) {
-         $ong[4] = $LANG['plugin_fusinvdeploy']['package'][5];
-         $ong['no_all_tab']=true;
-      } else { // New item
-         $ong[1] = $LANG['plugin_fusinvdeploy']['package'][26];
+         $this->addStandardTab('PluginFusinvdeployInstall', $ong, $options);
+         $this->addStandardTab('PluginFusinvdeployUninstall', $ong, $options);
       }
+      $ong['no_all_tab'] = true;
       return $ong;
    }
 
+   function showList() {
+      self::title();
+      Search::show('PluginFusinvdeployPackage');
+   }
 
    function getSearchOptions() {
       global $LANG;
@@ -166,33 +162,18 @@ class PluginFusinvdeployPackage extends CommonDBTM {
          $title = "";
       }
 
-      displayTitle(GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_mini_package.png", $title, $title, $buttons);
+      Html::displayTitle(GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_mini_package.png", $title, $title, $buttons);
    }
 
-   function showMenu($options=array())  {
 
-      $this->displaylist = false;
-
-      $this->fields['id'] = -1;
-      $this->showTabs($options);
-      $this->addDivForTabs();
-   }
-
-   function showList() {
-      echo "<table class='tab_cadre_navigation'><tr><td>";
-
-      self::title();
-      Search::show('PluginFusinvdeployPackage');
-
-      echo "</td></tr></table>";
-   }
-
-   function showForm($id, $options=array()) {
+   function showForm($ID, $options=array()) {
       global $DB,$CFG_GLPI,$LANG;
 
-      if ($id!='') {
-         $this->getFromDB($id);
+
+      if ($ID > 0) {
+         $this->check($ID,'r');
       } else {
+         $this->check(-1,'w');
          $this->getEmpty();
       }
 
@@ -414,7 +395,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
                                                          :$new_package->getLink());
 
       // Do not display quotes
-      addMessageAfterRedirect($LANG['common'][70]."&nbsp;: ".stripslashes($display));
+      Session::addMessageAfterRedirect($LANG['common'][70]."&nbsp;: ".stripslashes($display));
 
       unset($_SESSION['tmp_clone_package']);
 

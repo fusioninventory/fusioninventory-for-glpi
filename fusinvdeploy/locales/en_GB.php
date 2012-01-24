@@ -36,7 +36,7 @@
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -99,12 +99,14 @@ $LANG['plugin_fusinvdeploy']['deploystatus'][5]="The agent is processing the job
 
 $LANG['plugin_fusinvdeploy']['config'][0]="Address of the GLPI server (without http://)";
 $LANG['plugin_fusinvdeploy']['config'][1]="Root folder for sending files from server";
+$LANG['plugin_fusinvdeploy']['config'][2]="Enable alerts on the size of MS Windows paths?";
 
 $LANG['plugin_fusinvdeploy']['setup'][17]="Plugin ".$title." needs FusionInventory plugin activated before activation.";
 $LANG['plugin_fusinvdeploy']['setup'][18]="Plugin ".$title." needs FusionInventory plugin activated before uninstall.";
 $LANG['plugin_fusinvdeploy']['setup'][19]="Plugin ".$title." needs Webservices plugin (>= 1.2.0) installed before activation.";
 $LANG['plugin_fusinvdeploy']['setup'][20]="Plugin ".$title." needs Webservices plugin (>= 1.2.0) installed before uninstall.";
-$LANG['plugin_fusinvdeploy']['setup'][21]="Plugin ".$title." needs FusionInventory INVENTORY plugin installed before uninstall.";
+$LANG['plugin_fusinvdeploy']['setup'][21]="Plugin ".$title." needs FusionInventory INVENTORY plugin installed before activation.";
+$LANG['plugin_fusinvdeploy']['setup'][22]="Plugin ".$title." needs FusionInventory INVENTORY plugin installed before uninstall.";
 
 $LANG['plugin_fusinvdeploy']['profile'][1]="$title";
 $LANG['plugin_fusinvdeploy']['profile'][2]="Manage packages";
@@ -134,6 +136,7 @@ $LANG['plugin_fusinvdeploy']['form']['label'][19] = "Uncompress";
 $LANG['plugin_fusinvdeploy']['form']['label'][20] = "Transfer error: the file size is too big";
 $LANG['plugin_fusinvdeploy']['form']['label'][21] = "Filesize";
 $LANG['plugin_fusinvdeploy']['form']['label'][22] = "Failed to copy file";
+$LANG['plugin_fusinvdeploy']['form']['label'][23] = "Extract the file after the download";
 
 $LANG['plugin_fusinvdeploy']['form']['action'][0] = "Add";
 $LANG['plugin_fusinvdeploy']['form']['action'][1] = "Delete";
@@ -168,6 +171,13 @@ $LANG['plugin_fusinvdeploy']['form']['message'][0] = "Empty form";
 $LANG['plugin_fusinvdeploy']['form']['message'][1] = "Invalid form";
 $LANG['plugin_fusinvdeploy']['form']['message'][2] = "Loading...";
 $LANG['plugin_fusinvdeploy']['form']['message'][3] = "File already exist";
+$LANG['plugin_fusinvdeploy']['form']['message'][4] = "Paths on MS Windows do not accept more than 255 characters, "
+."the value you entered exceeds the limit.<br />"
+."<br /><b>Do you want to continue?</b><br />"
+."<br /><div class='message_smalltext right'>You can disable this message in the "
+."<a href='##URL##'>plugin configuration</a></div>";
+$LANG['plugin_fusinvdeploy']['form']['message'][5] = "Attention";
+$LANG['plugin_fusinvdeploy']['form']['message'][6] = "Wish to the command to install and uninstall is automatically added for your file?";
 
 $LANG['plugin_fusinvdeploy']['form']['check'][0] = "Register key exist";
 $LANG['plugin_fusinvdeploy']['form']['check'][1] = "Register key missing";

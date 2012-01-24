@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    Alexandre Delaunay
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2011 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -64,16 +64,14 @@ $label_width = 95;
 // END - Size of div/form/label...
 
 // Render div
+
 if(isset($_POST["glpi_tab"])) {
-   switch($_POST["glpi_tab"]){
-      case 2 :
-         $render = "install";
-         $title2 = $LANG['plugin_fusinvdeploy']['form']['title'][17];
-         break;
-      case 3 :
-         $render = "uninstall";
-         $title2 = $LANG['plugin_fusinvdeploy']['form']['title'][18];
-         break;
+   if (strpos($_POST["glpi_tab"], 'PluginFusinvdeployInstall') !== false) {
+      $render = "install";
+      $title2 = $LANG['plugin_fusinvdeploy']['form']['title'][17];
+   } elseif (strpos($_POST["glpi_tab"], 'PluginFusinvdeployUninstall') !== false) {
+      $render = "uninstall";
+      $title2 = $LANG['plugin_fusinvdeploy']['form']['title'][18];
    }
 }
 // END - Render div
