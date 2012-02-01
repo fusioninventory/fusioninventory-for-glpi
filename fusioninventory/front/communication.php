@@ -104,19 +104,19 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    $_SESSION['glpiID'] = $users_id;
    $_SESSION['glpiactiveprofile'] = array();
    $_SESSION['glpiactiveprofile']['interface'] = '';
-      $plugin = new Plugin();
-      $plugin->init();
-      $LOADED_PLUGINS = array();
-      if (isset($_SESSION["glpi_plugins"]) && is_array($_SESSION["glpi_plugins"])) {
-         //doHook("config");
-         if (count($_SESSION["glpi_plugins"])) {
-            foreach ($_SESSION["glpi_plugins"] as $name) {
-               Plugin::load($name);
-            }
+   $plugin = new Plugin();
+   $plugin->init();
+   $LOADED_PLUGINS = array();
+   if (isset($_SESSION["glpi_plugins"]) && is_array($_SESSION["glpi_plugins"])) {
+      //doHook("config");
+      if (count($_SESSION["glpi_plugins"])) {
+         foreach ($_SESSION["glpi_plugins"] as $name) {
+            Plugin::load($name);
          }
-         // For plugins which require action after all plugin init
-         Plugin::doHook("post_init");
       }
+      // For plugins which require action after all plugin init
+      Plugin::doHook("post_init");
+   }
    ob_end_clean();
 
    // Get compression of XML
