@@ -116,34 +116,33 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
 
    $communication  = new PluginFusioninventoryCommunication();
 
-   // Get compression of XML
+   // identify message compression algorithm
    $xml = '';
    $taskjob = new PluginFusioninventoryTaskjob();
    $taskjob->disableDebug();
-   $xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
-   $taskjob->reenableusemode();
-   $compressmode = 'none';
-   if ($xml) {
+   if ($xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]) {
       header("Content-Type: application/x-compress-compress");
       $compressmode = "gzcompress";
    } else if ($xml = $communication->gzdecode($GLOBALS["HTTP_RAW_POST_DATA"])) {
-      // ** If agent use gzip
       header("Content-Type: application/x-compress-encode");
       $compressmode = "gzencode";
    } else if ($xml = gzinflate (substr($GLOBALS["HTTP_RAW_POST_DATA"], 2))) {
-      // ** OCS agent 2.0 Compatibility, but return in gzcompress
-      $compressmode = "gzdeflate";
+      // accept deflate for OCS agent 2.0 compatibility,
+      // but use compress for answer
       if (strstr($xml, "<QUERY>PROLOG</QUERY>")
               AND !strstr($xml, "<TOKEN>")) {
          header("Content-Type: application/x-compress-compress");
          $compressmode = "gzcompress";
       } else {
          header("Content-Type: application/x-compress-deflate");
+         $compressmode = "gzdeflate";
       } 
    } else {
-      header("Content-Type: application/xml");
       $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
+      header("Content-Type: application/xml");
+      $compressmode = 'none';
    }
+   $taskjob->reenableusemode();
 
    // check if we are in ssl only mode
    $ssl = $config->getValue($module_id, 'ssl_only', '');
