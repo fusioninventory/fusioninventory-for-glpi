@@ -52,12 +52,6 @@ if (session_id()=="") {
    session_start();
 }
 
-$loadplugins = 0;
-if (!isset($_SESSION["glpi_plugins"])) {
-   $loadplugins = 1;
-}
-$loadplugins = 1;
-
 $_SESSION['glpi_use_mode'] = 2;
 include_once(GLPI_ROOT."/inc/includes.php");
 if (!isset($_SESSION['glpilanguage'])) {
@@ -106,26 +100,23 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    
    $fusioninventoryModule_id    = $pfModule->getModuleId("fusioninventory");
    ob_start();
-   if ($loadplugins == '1') {
-      $users_id = $pfConfig->getValue($fusioninventoryModule_id, 'users_id');
-      $_SESSION['glpiID'] = $users_id;
-      $_SESSION['glpiactiveprofile'] = array();
-      $_SESSION['glpiactiveprofile']['interface'] = '';
-         $plugin = new Plugin();
-         $plugin->init();
-         $LOADED_PLUGINS = array();
-         if (isset($_SESSION["glpi_plugins"]) && is_array($_SESSION["glpi_plugins"])) {
-            //doHook("config");
-            if (count($_SESSION["glpi_plugins"])) {
-               foreach ($_SESSION["glpi_plugins"] as $name) {
-                  Plugin::load($name);
-               }
+   $users_id = $pfConfig->getValue($fusioninventoryModule_id, 'users_id');
+   $_SESSION['glpiID'] = $users_id;
+   $_SESSION['glpiactiveprofile'] = array();
+   $_SESSION['glpiactiveprofile']['interface'] = '';
+      $plugin = new Plugin();
+      $plugin->init();
+      $LOADED_PLUGINS = array();
+      if (isset($_SESSION["glpi_plugins"]) && is_array($_SESSION["glpi_plugins"])) {
+         //doHook("config");
+         if (count($_SESSION["glpi_plugins"])) {
+            foreach ($_SESSION["glpi_plugins"] as $name) {
+               Plugin::load($name);
             }
-            // For plugins which require action after all plugin init
-            Plugin::doHook("post_init");
          }
-         }
-   }
+         // For plugins which require action after all plugin init
+         Plugin::doHook("post_init");
+      }
    ob_end_clean();
 
    // Get compression of XML
