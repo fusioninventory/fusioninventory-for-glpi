@@ -100,31 +100,33 @@ class PluginFusioninventoryCommunication {
 
    
    /**
-    * Get data ready to be send (gzcompressed)
+    * Send data, using given compression algorithm
     * 
-    * @return data ready to be send
     **/
-   function getSend($compressmode = 'none') {
+   function send($compressmode = 'none') {
+
       switch($compressmode) {
-         
          case 'none':
-            return $this->sxml->asXML();
+            header("Content-Type: application/xml");
+            echo $this->sxml->asXML();
             break;
          
          case 'zlib':
-            return gzcompress($this->sxml->asXML());
+            header("Content-Type: application/x-compress-zlib");
+            echo gzcompress($this->sxml->asXML());
             break;
          
          case 'gzip':
-            return gzencode($this->sxml->asXML());
+            header("Content-Type: application/x-compress-gzip");
+            echo gzencode($this->sxml->asXML());
             break;
          
          case 'deflate':
-            return gzdeflate($this->sxml->asXML());
+            header("Content-Type: application/x-compress-deflate");
+            echo gzdeflate($this->sxml->asXML());
             break;
          
       }
-      return $this->sxml->asXML();
    }
 
 
@@ -241,7 +243,7 @@ class PluginFusioninventoryCommunication {
    function noSSL($compressmode) {
       $this->sxml->addAttribute('RESPONSE', "ERROR : SSL REQUIRED BY SERVER");
       $this->setXML($this->getXML());
-      echo $this->getSend($compressmode);
+      $this->send($compressmode);
    }
 
 
@@ -252,7 +254,7 @@ class PluginFusioninventoryCommunication {
    **/
    function emptyAnswer($compressmode) {
       $this->setXML($this->getXML());
-      echo $this->getSend($compressmode);
+      $this->send($compressmode);
    }
 
 
@@ -504,6 +506,7 @@ class PluginFusioninventoryCommunication {
       }
       return $xml;
    }
+
 }
 
 ?>
