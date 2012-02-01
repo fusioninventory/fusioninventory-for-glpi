@@ -90,8 +90,6 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    //$GLOBALS["HTTP_RAW_POST_DATA"] = gzcompress('');
    // ********** End ********** //
 
-   // Get conf to know if are in SSL only mode
-
    $config = new PluginFusioninventoryConfig();
    $module = new PluginFusioninventoryModule();
    
@@ -147,11 +145,13 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
    }
 
+   // check if we are in ssl only mode
    $ssl = $config->getValue($module_id, 'ssl_only', '');
-   if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"))
-       OR ($ssl == "0")) {
-      // echo "On continue";
-   } else {
+   if (
+      $ssl == "1"
+         AND
+      (!isset($_SERVER["HTTPS"]) OR $_SERVER["HTTPS"] != "on")
+   ) {
       $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
 </REPLY>");
