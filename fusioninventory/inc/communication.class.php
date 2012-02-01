@@ -111,15 +111,15 @@ class PluginFusioninventoryCommunication {
             return $this->sxml->asXML();
             break;
          
-         case 'gzcompress':
+         case 'zlib':
             return gzcompress($this->sxml->asXML());
             break;
          
-         case 'gzencode':
+         case 'gzip':
             return gzencode($this->sxml->asXML());
             break;
          
-         case 'gzdeflate':
+         case 'deflate':
             return gzdeflate($this->sxml->asXML());
             break;
          
