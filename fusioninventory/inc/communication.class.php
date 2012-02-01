@@ -234,31 +234,6 @@ class PluginFusioninventoryCommunication {
       return $this->sxml->asXML();
    }
 
-
-
-   /**
-    * Return error to agent because SSL is required
-    *
-   **/
-   function noSSL($compressmode) {
-      $this->sxml->addAttribute('RESPONSE', "ERROR : SSL REQUIRED BY SERVER");
-      $this->setXML($this->getXML());
-      $this->send($compressmode);
-   }
-
-
-   
-   /**
-    * Return an empty answer to agent if nothing to import
-    *
-   **/
-   function emptyAnswer($compressmode) {
-      $this->setXML($this->getXML());
-      $this->send($compressmode);
-   }
-
-
-   
    /**
     * Add logs
     *
