@@ -90,7 +90,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       PluginFusioninventoryRestCommunication::sendError();
    }
 //Only go there if agent is using the old XML protocol
-} else {
+} else if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
    
    $communication  = new PluginFusioninventoryCommunication();
    $pta            = new PluginFusioninventoryAgent();
@@ -98,139 +98,137 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    // ***** For debug only ***** //
    //$GLOBALS["HTTP_RAW_POST_DATA"] = gzcompress('');
    // ********** End ********** //
-   
-   if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
-      // Get conf to know if are in SSL only mode
-   
-      $pfConfig      = new PluginFusioninventoryConfig();
-      $pfModule = new PluginFusioninventoryModule();
-      
-      $fusioninventoryModule_id    = $pfModule->getModuleId("fusioninventory");
-      ob_start();
-      if ($loadplugins == '1') {
-         $users_id = $pfConfig->getValue($fusioninventoryModule_id, 'users_id');
-         $_SESSION['glpiID'] = $users_id;
-         $_SESSION['glpiactiveprofile'] = array();
-         $_SESSION['glpiactiveprofile']['interface'] = '';
-            $plugin = new Plugin();
-            $plugin->init();
-            $LOADED_PLUGINS = array();
-            if (isset($_SESSION["glpi_plugins"]) && is_array($_SESSION["glpi_plugins"])) {
-               //doHook("config");
-               if (count($_SESSION["glpi_plugins"])) {
-                  foreach ($_SESSION["glpi_plugins"] as $name) {
-                     Plugin::load($name);
-                  }
-               }
-               // For plugins which require action after all plugin init
-               Plugin::doHook("post_init");
-            }
-      }
-      ob_end_clean();
 
-      // Get compression of XML
-      $xml = '';
-      $pfTaskjob = new PluginFusioninventoryTaskjob();
-      $pfTaskjob->disableDebug();
-      $xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
-      $pfTaskjob->reenableusemode();
-      $compressmode = 'none';
-      if ($xml) {
+   // Get conf to know if are in SSL only mode
+
+   $pfConfig      = new PluginFusioninventoryConfig();
+   $pfModule = new PluginFusioninventoryModule();
+   
+   $fusioninventoryModule_id    = $pfModule->getModuleId("fusioninventory");
+   ob_start();
+   if ($loadplugins == '1') {
+      $users_id = $pfConfig->getValue($fusioninventoryModule_id, 'users_id');
+      $_SESSION['glpiID'] = $users_id;
+      $_SESSION['glpiactiveprofile'] = array();
+      $_SESSION['glpiactiveprofile']['interface'] = '';
+         $plugin = new Plugin();
+         $plugin->init();
+         $LOADED_PLUGINS = array();
+         if (isset($_SESSION["glpi_plugins"]) && is_array($_SESSION["glpi_plugins"])) {
+            //doHook("config");
+            if (count($_SESSION["glpi_plugins"])) {
+               foreach ($_SESSION["glpi_plugins"] as $name) {
+                  Plugin::load($name);
+               }
+            }
+            // For plugins which require action after all plugin init
+            Plugin::doHook("post_init");
+         }
+         }
+   }
+   ob_end_clean();
+
+   // Get compression of XML
+   $xml = '';
+   $pfTaskjob = new PluginFusioninventoryTaskjob();
+   $pfTaskjob->disableDebug();
+   $xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
+   $pfTaskjob->reenableusemode();
+   $compressmode = 'none';
+   if ($xml) {
+      header("Content-Type: application/x-compress-compress");
+      $compressmode = "gzcompress";
+   } else if ($xml = $communication->gzdecode($GLOBALS["HTTP_RAW_POST_DATA"])) {
+      // ** If agent use gzip
+      header("Content-Type: application/x-compress-encode");
+      $compressmode = "gzencode";
+   } else if ($xml = gzinflate (substr($GLOBALS["HTTP_RAW_POST_DATA"], 2))) {
+      // ** OCS agent 2.0 Compatibility, but return in gzcompress
+      $compressmode = "gzdeflate";
+      if (strstr($xml, "<QUERY>PROLOG</QUERY>")
+              AND !strstr($xml, "<TOKEN>")) {
          header("Content-Type: application/x-compress-compress");
          $compressmode = "gzcompress";
-      } else if ($xml = $communication->gzdecode($GLOBALS["HTTP_RAW_POST_DATA"])) {
-         // ** If agent use gzip
-         header("Content-Type: application/x-compress-encode");
-         $compressmode = "gzencode";
-      } else if ($xml = gzinflate (substr($GLOBALS["HTTP_RAW_POST_DATA"], 2))) {
-         // ** OCS agent 2.0 Compatibility, but return in gzcompress
-         $compressmode = "gzdeflate";
-         if (strstr($xml, "<QUERY>PROLOG</QUERY>")
-                 AND !strstr($xml, "<TOKEN>")) {
-            header("Content-Type: application/x-compress-compress");
-            $compressmode = "gzcompress";
-         } else {
-            header("Content-Type: application/x-compress-deflate");
-         } 
       } else {
-         header("Content-Type: application/xml");
-         $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
-      }
+         header("Content-Type: application/x-compress-deflate");
+      } 
+   } else {
+      header("Content-Type: application/xml");
+      $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
+   }
 
-      $ssl = $pfConfig->getValue($fusioninventoryModule_id, 'ssl_only');
-      if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"))
-          OR ($ssl == "0")) {
-         // echo "On continue";
-      } else {
-         $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
-   <REPLY>
-   </REPLY>");
-         $communication->noSSL($compressmode);
-         session_destroy();
-         exit();
-      }
+   $ssl = $pfConfig->getValue($fusioninventoryModule_id, 'ssl_only');
+   if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"))
+       OR ($ssl == "0")) {
+      // echo "On continue";
+   } else {
+      $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
+<REPLY>
+</REPLY>");
+      $communication->noSSL($compressmode);
+      session_destroy();
+      exit();
+   }
 
-      // Check XML integrity
-      $pfCommunication = new PluginFusioninventoryCommunication();
-      if (PluginFusioninventoryConfig::isExtradebugActive()) {
-         file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".uniqid(), $xml);
-      }
-      $pxml = '';
-      if ($pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA)) {
+   // Check XML integrity
+   $pfCommunication = new PluginFusioninventoryCommunication();
+   if (PluginFusioninventoryConfig::isExtradebugActive()) {
+      file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".uniqid(), $xml);
+   }
+   $pxml = '';
+   if ($pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA)) {
 
-      } else if ($pxml = @simplexml_load_string(utf8_encode($xml),'SimpleXMLElement', LIBXML_NOCDATA)) {
-         $xml = utf8_encode($xml);
-      } else {
-         $xml = preg_replace ('/<FOLDER>.*?<\/SOURCE>/', '', $xml);
-         $pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA);
+   } else if ($pxml = @simplexml_load_string(utf8_encode($xml),'SimpleXMLElement', LIBXML_NOCDATA)) {
+      $xml = utf8_encode($xml);
+   } else {
+      $xml = preg_replace ('/<FOLDER>.*?<\/SOURCE>/', '', $xml);
+      $pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA);
 
-         if (!$pxml) {
-            $pfCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
+      if (!$pxml) {
+         $pfCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
 <ERROR>XML not well formed!</ERROR>
 </REPLY>");
-            $pfCommunication->emptyAnswer($compressmode);
-            session_destroy();
-            exit();
-         }
+         $pfCommunication->emptyAnswer($compressmode);
+         session_destroy();
+         exit();
       }
+   }
+
+   // Clean for XSS and other in XML
+   $pxml = $communication->cleanXML($pxml);
+                     
+   $agents_id = $pta->importToken($pxml);
+   $_SESSION['plugin_fusioninventory_agents_id'] = $agents_id;
    
-      // Clean for XSS and other in XML
-      $pxml = $communication->cleanXML($pxml);
-                        
-      $agents_id = $pta->importToken($pxml);
-      $_SESSION['plugin_fusioninventory_agents_id'] = $agents_id;
-      
-      $top0 = 0;
-      $top0 = gettimeofday();
-      if (!$communication->import($pxml)) {
-   
-         if (isset($pxml->DEVICEID)) {
-   
-            $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
-<REPLY>
-</REPLY>");
-   
-            $a_agent = $pta->InfosByKey(Toolbox::addslashes_deep($pxml->DEVICEID));
-            
-            // Get taskjob in waiting
-            $communication->getTaskAgent($a_agent['id']);
-            // ******** Send XML
-   
-            $communication->addInventory($a_agent['id']);
-            $communication->addProlog();
-            $communication->setXML($communication->getXML());
-   
-            echo $communication->getSend($compressmode);
-         }
-      } else {
+   $top0 = 0;
+   $top0 = gettimeofday();
+   if (!$communication->import($pxml)) {
+
+      if (isset($pxml->DEVICEID)) {
+
          $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
 </REPLY>");
-         $communication->emptyAnswer($compressmode);
+
+         $a_agent = $pta->InfosByKey(Toolbox::addslashes_deep($pxml->DEVICEID));
+         
+         // Get taskjob in waiting
+         $communication->getTaskAgent($a_agent['id']);
+         // ******** Send XML
+
+         $communication->addInventory($a_agent['id']);
+         $communication->addProlog();
+         $communication->setXML($communication->getXML());
+
+         echo $communication->getSend($compressmode);
       }
+   } else {
+      $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
+<REPLY>
+</REPLY>");
+      $communication->emptyAnswer($compressmode);
    }
-   
 }
 session_destroy();
 
