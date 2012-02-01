@@ -92,12 +92,12 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
 
    // Get conf to know if are in SSL only mode
 
-   $pfConfig      = new PluginFusioninventoryConfig();
-   $pfModule = new PluginFusioninventoryModule();
+   $config = new PluginFusioninventoryConfig();
+   $module = new PluginFusioninventoryModule();
    
    ob_start();
-   $fusioninventoryModule_id    = $pfModule->getModuleId("fusioninventory");
-   $users_id = $pfConfig->getValue($fusioninventoryModule_id, 'users_id');
+   $module_id = $module->getModuleId("fusioninventory");
+   $users_id  = $config->getValue($module_id, 'users_id', '');
    $_SESSION['glpiID'] = $users_id;
    $_SESSION['glpiactiveprofile'] = array();
    $_SESSION['glpiactiveprofile']['interface'] = '';
@@ -120,10 +120,10 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
 
    // Get compression of XML
    $xml = '';
-   $pfTaskjob = new PluginFusioninventoryTaskjob();
-   $pfTaskjob->disableDebug();
+   $taskjob = new PluginFusioninventoryTaskjob();
+   $taskjob->disableDebug();
    $xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
-   $pfTaskjob->reenableusemode();
+   $taskjob->reenableusemode();
    $compressmode = 'none';
    if ($xml) {
       header("Content-Type: application/x-compress-compress");
@@ -147,7 +147,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
    }
 
-   $ssl = $pfConfig->getValue($fusioninventoryModule_id, 'ssl_only');
+   $ssl = $config->getValue($module_id, 'ssl_only', '');
    if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"))
        OR ($ssl == "0")) {
       // echo "On continue";
@@ -174,12 +174,12 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       $pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA);
 
       if (!$pxml) {
-         $pfCommunication = new PluginFusioninventoryCommunication();
-         $pfCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
+         $communication = new PluginFusioninventoryCommunication();
+         $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
 <ERROR>XML not well formed!</ERROR>
 </REPLY>");
-         $pfCommunication->emptyAnswer($compressmode);
+         $communication->emptyAnswer($compressmode);
          session_destroy();
          exit();
       }
@@ -188,8 +188,8 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    // Clean for XSS and other in XML
    $pxml = $communication->cleanXML($pxml);
                      
-   $pta = new PluginFusioninventoryAgent();
-   $agents_id = $pta->importToken($pxml);
+   $agent = new PluginFusioninventoryAgent();
+   $agents_id = $agent->importToken($pxml);
    $_SESSION['plugin_fusioninventory_agents_id'] = $agents_id;
    
    $top0 = 0;
@@ -202,7 +202,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
 <REPLY>
 </REPLY>");
 
-         $a_agent = $pta->InfosByKey(Toolbox::addslashes_deep($pxml->DEVICEID));
+         $a_agent = $agent->InfosByKey(Toolbox::addslashes_deep($pxml->DEVICEID));
          
          // Get taskjob in waiting
          $communication->getTaskAgent($a_agent['id']);
