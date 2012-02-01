@@ -192,8 +192,6 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    $agents_id = $agent->importToken($pxml);
    $_SESSION['plugin_fusioninventory_agents_id'] = $agents_id;
    
-   $top0 = 0;
-   $top0 = gettimeofday();
    if (!$communication->import($pxml)) {
 
       if (isset($pxml->DEVICEID)) {
