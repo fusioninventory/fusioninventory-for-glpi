@@ -86,9 +86,6 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
 } else if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
    // old XML protocol
    
-   $communication  = new PluginFusioninventoryCommunication();
-   $pta            = new PluginFusioninventoryAgent();
-   
    // ***** For debug only ***** //
    //$GLOBALS["HTTP_RAW_POST_DATA"] = gzcompress('');
    // ********** End ********** //
@@ -98,8 +95,8 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    $fusioninventory_config      = new PluginFusioninventoryConfig();
    $PluginFusioninventoryModule = new PluginFusioninventoryModule();
    
-   $fusioninventoryModule_id    = $PluginFusioninventoryModule->getModuleId("fusioninventory");
    ob_start();
+   $fusioninventoryModule_id    = $PluginFusioninventoryModule->getModuleId("fusioninventory");
    $users_id = $fusioninventory_config->getValue($fusioninventoryModule_id, 'users_id', '');
    $_SESSION['glpiID'] = $users_id;
    $_SESSION['glpiactiveprofile'] = array();
@@ -118,6 +115,8 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       Plugin::doHook("post_init");
    }
    ob_end_clean();
+
+   $communication  = new PluginFusioninventoryCommunication();
 
    // Get compression of XML
    $xml = '';
@@ -162,7 +161,6 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    }
 
    // Check XML integrity
-   $PluginFusioninventoryCommunication = new PluginFusioninventoryCommunication();
    if (PluginFusioninventoryConfig::isExtradebugActive()) {
       file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".uniqid(), $xml);
    }
@@ -176,6 +174,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       $pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA);
 
       if (!$pxml) {
+         $PluginFusioninventoryCommunication = new PluginFusioninventoryCommunication();
          $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
 <ERROR>XML not well formed!</ERROR>
@@ -189,6 +188,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    // Clean for XSS and other in XML
    $pxml = $communication->cleanXML($pxml);
                      
+   $pta = new PluginFusioninventoryAgent();
    $agents_id = $pta->importToken($pxml);
    $_SESSION['plugin_fusioninventory_agents_id'] = $agents_id;
    
