@@ -159,10 +159,11 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       exit();
    }
 
-   // Check XML integrity
    if (PluginFusioninventoryConfig::isExtradebugActive()) {
       file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".uniqid(), $xml);
    }
+
+   // Check XML integrity
    $pxml = '';
    if ($pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA)) {
 
