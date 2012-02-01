@@ -166,8 +166,10 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    ) {
       $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
+<ERROR>SSL REQUIRED BY SERVER</ERROR>
 </REPLY>");
-      $communication->noSSL($compressmode);
+      $communication->setXML($communication->getXML());
+      $communication->send($compressmode);
       session_destroy();
       exit();
    }
@@ -192,7 +194,8 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
 <REPLY>
 <ERROR>XML not well formed!</ERROR>
 </REPLY>");
-         $communication->emptyAnswer($compressmode);
+         $communication->setXML($communication->getXML());
+         $communication->send($compressmode);
          session_destroy();
          exit();
       }
@@ -229,7 +232,8 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
 </REPLY>");
-      $communication->emptyAnswer($compressmode);
+      $communication->setXML($communication->getXML());
+      $communication->send($compressmode);
    }
 }
 session_destroy();
