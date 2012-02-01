@@ -112,18 +112,21 @@ class PluginFusioninventoryCommunication {
             break;
          
          case 'zlib':
+            # rfc 1950
             header("Content-Type: application/x-compress-zlib");
             echo gzcompress($this->sxml->asXML());
             break;
          
-         case 'gzip':
-            header("Content-Type: application/x-compress-gzip");
-            echo gzencode($this->sxml->asXML());
-            break;
-         
          case 'deflate':
+            # rfc 1951
             header("Content-Type: application/x-compress-deflate");
             echo gzdeflate($this->sxml->asXML());
+            break;
+
+         case 'gzip':
+            # rfc 1952
+            header("Content-Type: application/x-compress-gzip");
+            echo gzencode($this->sxml->asXML());
             break;
          
       }
