@@ -121,21 +121,25 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    $taskjob = new PluginFusioninventoryTaskjob();
    $taskjob->disableDebug();
    if ($xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]) {
-      header("Content-Type: application/x-compress-compress");
-      $compressmode = "gzcompress";
+      # rfc 1950
+      header("Content-Type: application/x-compress-zlib");
+      $compressmode = "zlib";
    } else if ($xml = $communication->gzdecode($GLOBALS["HTTP_RAW_POST_DATA"])) {
-      header("Content-Type: application/x-compress-encode");
-      $compressmode = "gzencode";
+      # rfc 1952
+      header("Content-Type: application/x-compress-gzip");
+      $compressmode = "gzip";
    } else if ($xml = gzinflate (substr($GLOBALS["HTTP_RAW_POST_DATA"], 2))) {
       // accept deflate for OCS agent 2.0 compatibility,
-      // but use compress for answer
+      // but use zlib for answer
       if (strstr($xml, "<QUERY>PROLOG</QUERY>")
               AND !strstr($xml, "<TOKEN>")) {
-         header("Content-Type: application/x-compress-compress");
-         $compressmode = "gzcompress";
+         # rfc 1950
+         header("Content-Type: application/x-compress-zlib");
+         $compressmode = "zlib";
       } else {
+         # rfc 1951
          header("Content-Type: application/x-compress-deflate");
-         $compressmode = "gzdeflate";
+         $compressmode = "deflate";
       } 
    } else {
       $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
