@@ -78,7 +78,7 @@ if (!class_exists("PluginFusioninventoryConfig")) {
    <ERROR>Plugin FusionInventory not installed!</ERROR>
 </REPLY>";
    session_destroy();
-   exit;
+   exit();
 }
 
 //Agent communication using REST protocol
