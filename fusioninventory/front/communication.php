@@ -75,16 +75,16 @@ if (!class_exists("PluginFusioninventoryConfig")) {
    exit();
 }
 
-//Agent communication using REST protocol
 if (isset($_GET['action']) && isset($_GET['machineid'])) {
+   // new REST protocol
    $response = PluginFusioninventoryCommunicationRest::communicate($_GET);
    if ($response) {
       echo json_encode($response);
    } else {
       PluginFusioninventoryCommunicationRest::sendError();
    }
-//Only go there if agent is using the old XML protocol
 } else if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
+   // old XML protocol
    
    $communication  = new PluginFusioninventoryCommunication();
    $pta            = new PluginFusioninventoryAgent();
