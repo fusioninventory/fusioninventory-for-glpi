@@ -123,26 +123,21 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    if ($_SERVER['CONTENT_TYPE'] == "application/x-compress-zlib") {
          # rfc 1950
          $xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
-         header("Content-Type: application/x-compress-zlib");
          $compressmode = "zlib";
    } else if ($_SERVER['CONTENT_TYPE'] == "application/x-compress-gzip") {
          # rfc 1952
          $xml = $communication->gzdecode($GLOBALS["HTTP_RAW_POST_DATA"]);
-         header("Content-Type: application/x-compress-gzip");
          $compressmode = "gzip";
    } else if ($_SERVER['CONTENT_TYPE'] == "application/xml") {
          $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
-         header("Content-Type: application/xml");
          $compressmode = 'none';
    } else {
       # try each algorithm successively
       if ($xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]) {
          # rfc 1950
-         header("Content-Type: application/x-compress-zlib");
          $compressmode = "zlib";
       } else if ($xml = $communication->gzdecode($GLOBALS["HTTP_RAW_POST_DATA"])) {
          # rfc 1952
-         header("Content-Type: application/x-compress-gzip");
          $compressmode = "gzip";
       } else if ($xml = gzinflate (substr($GLOBALS["HTTP_RAW_POST_DATA"], 2))) {
          // accept deflate for OCS agent 2.0 compatibility,
@@ -150,16 +145,13 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          if (strstr($xml, "<QUERY>PROLOG</QUERY>")
                  AND !strstr($xml, "<TOKEN>")) {
             # rfc 1950
-            header("Content-Type: application/x-compress-zlib");
             $compressmode = "zlib";
          } else {
             # rfc 1951
-            header("Content-Type: application/x-compress-deflate");
             $compressmode = "deflate";
          } 
       } else {
          $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
-         header("Content-Type: application/xml");
          $compressmode = 'none';
       }
    }
@@ -231,7 +223,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          $communication->addProlog();
          $communication->setXML($communication->getXML());
 
-         echo $communication->getSend($compressmode);
+         $communication->send($compressmode);
       }
    } else {
       $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
