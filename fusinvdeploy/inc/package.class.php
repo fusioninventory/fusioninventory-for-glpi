@@ -269,7 +269,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
          $tasks_url = substr($tasks_url, 0, -2);
 
 
-         addMessageAfterRedirect(str_replace('#task#',
+         Session::addMessageAfterRedirect(str_replace('#task#',
                $tasks_url, $LANG['plugin_fusinvdeploy']['package'][23]));
          Html::redirect(GLPI_ROOT."/plugins/fusinvdeploy/front/package.form.php?id="
                .$this->getField('id'));
@@ -279,7 +279,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       return true;
    }
 
-   public function package_clone($new_name = '') {
+   function package_clone($new_name = '') {
       global $LANG;
 
       if ($this->getField('id') < 0) return false;
@@ -403,7 +403,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
 
    }
 
-   public static function showEditDeniedMessage($id, $message) {
+   static function showEditDeniedMessage($id, $message) {
       global $CFG_GLPI, $CFG_GLPI;
 
       $task = new PluginFusinvdeployTask;

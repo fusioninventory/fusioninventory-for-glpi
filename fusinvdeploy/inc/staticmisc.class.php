@@ -123,7 +123,7 @@ class PluginFusinvdeployStaticmisc {
       global $LANG;
 
       $options['entity']      = $_SESSION['glpiactive_entity'];
-      $options['entity_sons'] = haveAccessToEntity($_SESSION['glpiactive_entity'],1);
+      $options['entity_sons'] = Session::haveAccessToEntity($_SESSION['glpiactive_entity'],1);
       $options['name']        = 'actionselectiontoadd';
       return Dropdown::show("Computer", $options);
    }*/
