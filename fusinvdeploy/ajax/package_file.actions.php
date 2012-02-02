@@ -49,7 +49,6 @@ include (GLPI_ROOT . "/inc/includes.php");
 Session::checkLoginUser();
 
 header("Content-Type: text/html; charset=UTF-8");
-Html::header_nocache();
 
 // Turn off error reporting
 error_reporting(0);
@@ -77,7 +76,6 @@ if (isset($_REQUEST['directory']) && $_REQUEST['directory']) {
 } else {
    $directory = $server_upload_path;
 }
-
 switch ($_REQUEST['action']) {
    default:
       $dir = opendir($directory);

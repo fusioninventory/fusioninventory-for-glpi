@@ -63,8 +63,9 @@ function get_directory_contents($directory) {
                'text' => $temp,
                'url' => str_replace(DIRECTORY, "", $directory . "/" . $temp)
                );
-         if (count($children) > 0) $tmp['children'] = $children;
-         else {
+         if (count($children) > 0) {
+            $tmp['children'] = $children;
+         } else {
             $tmp['leaf'] = 'true';
             $tmp['children'] = array();
          }
