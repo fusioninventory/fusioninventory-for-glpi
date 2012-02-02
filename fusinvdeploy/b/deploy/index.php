@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    Walid Nouh
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2011 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -74,7 +74,11 @@ if ($plugin->isActivated('fusinvdeploy')) {
          $options = 0;
          if (version_compare(PHP_VERSION, '5.3.3') >= 0) $options = $options | JSON_NUMERIC_CHECK;
          if (version_compare(PHP_VERSION, '5.4.0') >= 0) $options = $options | JSON_UNESCAPED_SLASHES;
-         $json_response = json_encode($response, $options);
+         
+
+         //the option parameter of json_encode function added in php 5.3
+         if (version_compare(PHP_VERSION, '5.3.0') >= 0) $json_response = json_encode($response, $options);
+         else $json_response = json_encode($response);
 
          if (isset($_GET['debug'])) $json_response = PluginFusinvdeployStaticmisc::json_indent($json_response);
 
