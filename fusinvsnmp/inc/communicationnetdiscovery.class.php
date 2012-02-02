@@ -279,7 +279,9 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             if (Dropdown::getDropdownName("glpi_autoupdatesystems", $class->fields['autoupdatesystems_id']) != 'FusionInventory') {
                if (isset($xml->WORKGROUP)) {
                   $domain = new Domain();
-                  $input['domains_id'] = $domain->import(array('name'=>(string)$xml->WORKGROUP));
+                  if (!in_array('domains_id', $a_lockable)) {
+                     $input['domains_id'] = $domain->import(array('name'=>(string)$xml->WORKGROUP));
+                  }
                }
                $class->update($input);
                //Manage IP and Mac address
