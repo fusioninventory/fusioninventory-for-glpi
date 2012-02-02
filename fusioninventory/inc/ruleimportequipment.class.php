@@ -425,7 +425,7 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
                break;
             
             case 'ip' :
-               $sql_where .= " AND `glpi_networkports`.`ip` IN ";
+               $sql_where .= " AND `glpi_networkports`.`ip` IN ('";
                $sql_where_networkequipment .= " AND `[typetable]`.`ip` IN ('";
                if (is_array($input['ip'])) {
                   $sql_where .= implode("', '",$input['ip']);
@@ -434,8 +434,8 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
                   $sql_where .= $input['ip'];
                   $sql_where_networkequipment .= $input['ip'];
                }
-               $sql_where .= ")";
-               $sql_where_networkequipment .= ")";
+               $sql_where .= "')";
+               $sql_where_networkequipment .= "')";
                break;
 
             case 'serial' :
