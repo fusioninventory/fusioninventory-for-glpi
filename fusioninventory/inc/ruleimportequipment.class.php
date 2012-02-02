@@ -439,7 +439,18 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
                break;
 
             case 'serial' :
-               $sql_where_temp = " AND `[typetable]`.`serial`='".$input["serial"]."'";
+               if (isset($input['itemtype'])
+                       AND $input['itemtype'] == 'Computer'
+                       AND preg_match("/^s/", $input['serial'])) {
+                  
+                  $serial2 = preg_replace("/^s/", "", $input['serial']);
+                  $sql_where_temp = " AND (`[typetable]`.`serial`='".$input["serial"]."'
+                     OR `[typetable]`.`serial`='".$serial2."')";
+                  $_SESSION["plugin_fusioninventory_serialHP"] = $serial2;
+                  
+               } else {
+                  $sql_where_temp = " AND `[typetable]`.`serial`='".$input["serial"]."'";
+               }
 
                $sql_where .= $sql_where_temp;
                $sql_where_networkequipment .= $sql_where_temp;

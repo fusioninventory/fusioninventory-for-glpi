@@ -192,7 +192,11 @@ class PluginFusinvinventoryLibhook {
                }
                if (isset($dataSection['SSN']))
                   if (!in_array('serial', $a_lockable)) {
-                     $inputC['serial'] = $dataSection['SSN'];
+                     if (isset($_SESSION["plugin_fusioninventory_serialHP"])) {
+                        $inputC['serial'] = $_SESSION["plugin_fusioninventory_serialHP"];
+                     } else {
+                        $inputC['serial'] = $dataSection['SSN'];
+                     }
                   }
                // * Type of computer
                $computerType = new ComputerType();
@@ -842,7 +846,11 @@ class PluginFusinvinventoryLibhook {
                   }
                   if (isset($dataSection['SSN']))
                      if (!in_array('serial', $a_lockable)) {
-                        $inputC['serial'] = $dataSection['SSN'];
+                        if (isset($_SESSION["plugin_fusioninventory_serialHP"])) {
+                           $inputC['serial'] = $_SESSION["plugin_fusioninventory_serialHP"];
+                        } else {
+                           $inputC['serial'] = $dataSection['SSN'];
+                        }
                      }
                   // Update type of computer
                   $computerType = new ComputerType();
