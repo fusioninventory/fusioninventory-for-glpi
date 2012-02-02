@@ -441,9 +441,9 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
             case 'serial' :
                if (isset($input['itemtype'])
                        AND $input['itemtype'] == 'Computer'
-                       AND preg_match("/^s/", $input['serial'])) {
+                       AND preg_match("/^[sS]/", $input['serial'])) {
                   
-                  $serial2 = preg_replace("/^s/", "", $input['serial']);
+                  $serial2 = preg_replace("/^[sS]/", "", $input['serial']);
                   $sql_where_temp = " AND (`[typetable]`.`serial`='".$input["serial"]."'
                      OR `[typetable]`.`serial`='".$serial2."')";
                   $_SESSION["plugin_fusioninventory_serialHP"] = $serial2;
