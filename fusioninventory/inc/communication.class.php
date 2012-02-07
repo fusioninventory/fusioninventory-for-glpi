@@ -170,9 +170,8 @@ class PluginFusioninventoryCommunication {
       }
 
 
-      if (!$PluginFusioninventoryAgentmodule->getAgentsCanDo($xmltag, $agent['id'])) {
+      if (!$PluginFusioninventoryAgentmodule->getAgentCanDo($xmltag, $agent['id'])) {
          return true;
-
       }
 
       if (isset($_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"])) {
@@ -324,7 +323,7 @@ class PluginFusioninventoryCommunication {
     **/
    function addInventory($items_id) {
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
-      if ($PluginFusioninventoryAgentmodule->getAgentsCanDo('INVENTORY', $items_id)) {
+      if ($PluginFusioninventoryAgentmodule->getAgentCanDo('INVENTORY', $items_id)) {
          $this->sxml->addChild('RESPONSE', "SEND");
       }
    }

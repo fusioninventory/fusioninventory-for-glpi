@@ -253,7 +253,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    *
    **/
    function getActivationExceptions($module_name) {
-      $a_modules = $this->find("`modulename`='".$module_name."' ");
+      $a_modules = $this->find("`modulename`='".$module_name."'", "", 1);
       return current($a_modules);
    }
 
@@ -263,12 +263,11 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    * Get agents can do a "module name"
    *
    * @param $module_name value Name of the module
-   * @param $items_id integer id of the agent or if 0, search in all agents
    *
-   * @return bool or array if have many agents
+   * @return array of agents
    *
    **/
-   function getAgentsCanDo($module_name, $items_id=0) {
+   function getAgentsCanDo($module_name) {
 
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
 
@@ -285,11 +284,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             $i = 0;
             $sep  = '';
             foreach ($a_agentList as $agent_id) {
-               if (($items_id != '0') AND ($items_id == $agent_id)) {
-                  return true;
-               } else if ($items_id != '0') {
-                  return array();  
-               }
                if ($i> 0) {
                   $sep  = ',';
                }
@@ -303,17 +297,11 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          }
       } else {
          $a_agentList = importArrayFromDB($agentModule['exceptions']);
-
          if (count($a_agentList) > 0) {
             $where = " `id` NOT IN (";
             $i = 0;
             $sep  = '';
             foreach ($a_agentList as $agent_id) {
-               if (($items_id != '0') AND ($items_id == $agent_id)) {
-                  return true;
-               } else if ($items_id != '0') {
-                  return array();  
-               }
                if ($i> 0) {
                   $sep  = ',';
                }
@@ -323,22 +311,47 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             $where .= ") ";
             $where .= getEntitiesRestrictRequest("AND", $PluginFusioninventoryAgent->getTable());
          }
-         if ($items_id != '0') {
-            $a_agents = $PluginFusioninventoryAgent->find($where);
-            if(array_key_exists($items_id, $a_agents)) {
-               return true;
-            }
-         }
       }
-
-      if ($items_id == '0') {
-         $a_agents = $PluginFusioninventoryAgent->find($where);
-         return $a_agents;
-      } else {
-         return false;
-      }
+      $a_agents = array();
+      $a_agents = $PluginFusioninventoryAgent->find($where);
+      return $a_agents;
    }
 
+   
+   
+   /**
+   * Get if agent allowed to do this TASK
+   *
+   * @param $module_name value Name of the module
+   * @param $items_id integer id of the agent
+   *
+   * @return bool
+   *
+   **/
+   function getAgentCanDo($module_name, $items_id) {
+
+      if ($module_name == 'SNMPINVENTORY') {
+         $module_name = 'SNMPQUERY';
+      }
+      $agentModule = $this->getActivationExceptions($module_name);
+
+      if ($agentModule['is_active'] == 0) {
+         $a_agentList = importArrayFromDB($agentModule['exceptions']);
+         if (isset($a_agentList[$items_id])) {
+            return true;
+         } else {
+            return false;
+         } 
+      } else {
+         $a_agentList = importArrayFromDB($agentModule['exceptions']);
+         if (isset($a_agentList[$items_id])) {
+            return false;
+         } else {
+            return true;
+         } 
+      }
+   }
+   
 
 
    /**
