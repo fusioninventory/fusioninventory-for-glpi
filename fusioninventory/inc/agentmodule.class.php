@@ -337,7 +337,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    *
    **/
    function getAgentCanDo($module_name, $items_id) {
-
+      
       if ($module_name == 'SNMPINVENTORY') {
          $module_name = 'SNMPQUERY';
       }
@@ -345,14 +345,14 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
       if ($agentModule['is_active'] == 0) {
          $a_agentList = importArrayFromDB($agentModule['exceptions']);
-         if (isset($a_agentList[$items_id])) {
+         if (in_array($items_id, $a_agentList)) {
             return true;
          } else {
             return false;
          } 
       } else {
          $a_agentList = importArrayFromDB($agentModule['exceptions']);
-         if (isset($a_agentList[$items_id])) {
+         if (in_array($items_id, $a_agentList)) {
             return false;
          } else {
             return true;
