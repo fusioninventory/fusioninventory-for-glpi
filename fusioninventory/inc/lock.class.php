@@ -554,7 +554,8 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
       for ($i=0; $i < count($a_fieldList); $i++) {
          foreach ($a_mapping as $datas) {
-            if (($item->fields['tablename'] == getTableForItemType($datas['glpiItemtype']))
+            if (isset($item->fields['tablename'])
+                  AND ($item->fields['tablename'] == getTableForItemType($datas['glpiItemtype']))
                   AND ($a_fieldList[$i] == $datas['glpiField'])) {
 
                // Get serialization
@@ -625,13 +626,18 @@ class PluginFusioninventoryLock extends CommonDBTM{
                               $input[$datas['glpiField']] = $ComputerModel->importExternal($mmodel);
                            }
                         } else {
-                        $libunserialized = unserialize($infoSections["sections"][$datas['xmlSection']."/".$item->fields['items_id']]);
-                        if ($datas['xmlSectionChild'] == "TYPE") {
-                           if ($libunserialized[$datas['xmlSectionChild']] != "") {
-                              $vallib = Dropdown::importExternal($itemtypeLink,$libunserialized[$datas['xmlSectionChild']]);
-                           } else {
-                              $vallib = Dropdown::importExternal($itemtypeLink,$libunserialized["MMODEL"]);
+                           $libunserialized = unserialize($infoSections["sections"][$datas['xmlSection']."/".$item->fields['items_id']]);
+                           if ($datas['xmlSectionChild'] == "TYPE") {
+                              if ($libunserialized[$datas['xmlSectionChild']] != "") {
+                                 $vallib = Dropdown::importExternal($itemtypeLink,$libunserialized[$datas['xmlSectionChild']]);
+                              } else {
+                                 $vallib = Dropdown::importExternal($itemtypeLink,$libunserialized["MMODEL"]);
                               }
+                           } else {
+                              $itemdr = new $itemtypeLink();
+                              $computer = new Computer();
+                              $computer->getFromDB($item->fields['items_id']);
+                              $vallib = $itemdr->importExternal($libunserialized[$datas['xmlSectionChild']], $computer->fields['entities_id']);
                            }
                            $input[$datas['glpiField']] = $vallib;
                         }
