@@ -61,7 +61,7 @@ class PluginFusinvinventoryImport_Storage extends CommonDBTM {
    **/
    function AddUpdateItem($type, $items_id, $dataSection) {
 
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+      $pfConfig = new PluginFusioninventoryConfig();
       
       $type_tmp = "";
       $drive_idfield = "";
@@ -71,7 +71,7 @@ class PluginFusinvinventoryImport_Storage extends CommonDBTM {
       $type_tmp = $this->getTypeDrive($dataSection);
       if ($type_tmp == "Drive") {
          // it's cd-rom / dvd
-         if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+         if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
               "component_drive") == '0') {
             return;
          }
@@ -81,7 +81,7 @@ class PluginFusinvinventoryImport_Storage extends CommonDBTM {
          $drive_idfield = 'devicedrives_id';
       } else {
          // it's harddisk
-         if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+         if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
               "component_harddrive") == '0') {
             return;
          }

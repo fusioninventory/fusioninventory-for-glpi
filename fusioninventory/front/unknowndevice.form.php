@@ -44,7 +44,7 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-$PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+$pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
 $ptt  = new PluginFusioninventoryTask();
 
 Html::header($LANG['plugin_fusioninventory']['title'][0], $_SERVER["PHP_SELF"], "plugins", "fusioninventory","unknown");
@@ -63,41 +63,41 @@ if (isset ($_POST["add"])) {
           AND ($_POST['items_id'] != "0") AND ($_POST['items_id'] != "")) {
       $_POST['itemtype'] = '1';
    }
-   $PluginFusioninventoryUnknownDevice->add($_POST);
+   $pfUnknownDevice->add($_POST);
    Html::back();
 } else if (isset($_POST["delete"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "unknowndevice","w");
 
-   $PluginFusioninventoryUnknownDevice->check($_POST['id'],'w');
+   $pfUnknownDevice->check($_POST['id'],'w');
 
-   $PluginFusioninventoryUnknownDevice->delete($_POST);
+   $pfUnknownDevice->delete($_POST);
 
-   $PluginFusioninventoryUnknownDevice->redirectToList();
+   $pfUnknownDevice->redirectToList();
 } else if (isset($_POST["restore"])) {
    
-   $PluginFusioninventoryUnknownDevice->check($_POST['id'],'d');
+   $pfUnknownDevice->check($_POST['id'],'d');
 
-   if ($PluginFusioninventoryUnknownDevice->restore($_POST)) {
+   if ($pfUnknownDevice->restore($_POST)) {
       Event::log($_POST["id"],"PluginFusioninventoryUnknownDevice", 4, "inventory",
-               $_SESSION["glpiname"]." ".$LANG['log'][23]." ".$PluginFusioninventoryUnknownDevice->getField('name'));
+               $_SESSION["glpiname"]." ".$LANG['log'][23]." ".$pfUnknownDevice->getField('name'));
    }
-   $PluginFusioninventoryUnknownDevice->redirectToList();
+   $pfUnknownDevice->redirectToList();
 
 } else if (isset($_POST["purge"]) || isset($_GET["purge"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "unknowndevice","w");
 
-   $PluginFusioninventoryUnknownDevice->check($_POST['id'],'w');
+   $pfUnknownDevice->check($_POST['id'],'w');
 
-   $PluginFusioninventoryUnknownDevice->delete($_POST,1);
-   $PluginFusioninventoryUnknownDevice->redirectToList();
+   $pfUnknownDevice->delete($_POST,1);
+   $pfUnknownDevice->redirectToList();
 } else if (isset($_POST["update"])) {
-   $PluginFusioninventoryUnknownDevice->check($_POST['id'],'w');
-   $PluginFusioninventoryUnknownDevice->update($_POST);
+   $pfUnknownDevice->check($_POST['id'],'w');
+   $pfUnknownDevice->update($_POST);
    Html::back();
 } else if (isset($_POST["import"])) {
    $Import = 0;
    $NoImport = 0;
-   list($Import, $NoImport) = $PluginFusioninventoryUnknownDevice->import($_POST['id'],$Import,$NoImport);
+   list($Import, $NoImport) = $pfUnknownDevice->import($_POST['id'],$Import,$NoImport);
     Session::addMessageAfterRedirect($LANG['plugin_fusioninventory']['discovery'][5]." : ".$Import);
     Session::addMessageAfterRedirect($LANG['plugin_fusioninventory']['discovery'][9]." : ".$NoImport);
    if ($Import == "0") {
@@ -107,7 +107,7 @@ if (isset ($_POST["add"])) {
    }
 }
 
-$PluginFusioninventoryUnknownDevice->showForm($id);
+$pfUnknownDevice->showForm($id);
 
 Html::footer();
 

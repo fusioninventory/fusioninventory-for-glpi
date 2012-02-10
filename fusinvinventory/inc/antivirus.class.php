@@ -220,11 +220,11 @@ class PluginFusinvinventoryAntivirus extends CommonDBTM {
    *
    **/
    static function cleanComputer($items_id) {
-      $PluginFusinvinventoryAntivirus = new PluginFusinvinventoryAntivirus();
-      $a_antivirus = $PluginFusinvinventoryAntivirus->find("`computers_id`='".$items_id."'");
+      $pfAntivirus = new PluginFusinvinventoryAntivirus();
+      $a_antivirus = $pfAntivirus->find("`computers_id`='".$items_id."'");
       if (count($a_antivirus) > 0) {
          $input = current($a_antivirus);
-         $PluginFusinvinventoryAntivirus->delete($input);
+         $pfAntivirus->delete($input);
       }
    }
 }

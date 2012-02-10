@@ -81,14 +81,14 @@ class PluginFusinvsnmpAgentconfig extends CommonDBTM {
          }
       } else {
          $this->getEmpty();
-         $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+         $pfConfig = new PluginFusioninventoryConfig();
          $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
          unset($this->fields['id']);
          $this->fields['plugin_fusioninventory_agents_id'] = $agents_id;
          $this->fields['threads_netdiscovery'] =
-                 $PluginFusioninventoryConfig->getValue($plugins_id, 'threads_netdiscovery');
+                 $pfConfig->getValue($plugins_id, 'threads_netdiscovery');
          $this->fields['threads_snmpquery'] =
-                 $PluginFusioninventoryConfig->getValue($plugins_id, 'threads_snmpquery');
+                 $pfConfig->getValue($plugins_id, 'threads_snmpquery');
          $this->fields['senddico'] = 0;
          $this->add($this->fields);
       }
@@ -131,13 +131,13 @@ class PluginFusinvsnmpAgentconfig extends CommonDBTM {
       }
       // If we are here, agentconfig has been not found
       $this->getEmpty();
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+      $pfConfig = new PluginFusioninventoryConfig();
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
       $this->fields['plugin_fusioninventory_agents_id'] = $agents_id;
       $this->fields['threads_netdiscovery'] =
-              $PluginFusioninventoryConfig->getValue($plugins_id, 'threads_netdiscovery');
+              $pfConfig->getValue($plugins_id, 'threads_netdiscovery');
       $this->fields['threads_snmpquery'] =
-              $PluginFusioninventoryConfig->getValue($plugins_id, 'threads_snmpquery');
+              $pfConfig->getValue($plugins_id, 'threads_snmpquery');
       $this->fields['senddico'] = 0;
       unset($this->fields['id']);
       $this->add($this->fields);

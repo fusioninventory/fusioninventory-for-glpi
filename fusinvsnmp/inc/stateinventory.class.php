@@ -62,9 +62,9 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
    function display() {
       global $DB,$LANG,$CFG_GLPI;
 
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
-      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pfAgent = new PluginFusioninventoryAgent();
+      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
 
       $start = 0;
       if (isset($_REQUEST["start"])) {
@@ -109,16 +109,16 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
       while ($data=$DB->fetch_array($result)) {
          echo "<tr class='tab_bg_1'>";
          echo "<td>".$data['uniqid']."</td>";
-         $PluginFusioninventoryAgent->getFromDB($data['plugin_fusioninventory_agents_id']);
-         echo "<td>".$PluginFusioninventoryAgent->getLink(1)."</td>";
+         $pfAgent->getFromDB($data['plugin_fusioninventory_agents_id']);
+         echo "<td>".$pfAgent->getLink(1)."</td>";
          $nb_query = 0;
          $nb_threads = 0;
          $start_date = "";
          $end_date = "";
          $nb_errors = 0;
-         $a_taskjobstatus = $PluginFusioninventoryTaskjobstatus->find("`uniqid`='".$data['uniqid']."'");
+         $a_taskjobstatus = $pfTaskjobstatus->find("`uniqid`='".$data['uniqid']."'");
          foreach ($a_taskjobstatus as $datastatus) {
-            $a_taskjoblog = $PluginFusioninventoryTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$datastatus['id']."'");
+            $a_taskjoblog = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$datastatus['id']."'");
             foreach($a_taskjoblog as $taskjoblog) {
                if (strstr($taskjoblog['comment'], " ==fusinvsnmp::1==")) {
                   $nb_query += str_replace(" ==fusinvsnmp::1==", "", $taskjoblog['comment']);

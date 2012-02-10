@@ -61,8 +61,8 @@ class PluginFusinvinventoryImport_Sound extends CommonDBTM {
    **/
    function AddUpdateItem($type, $items_id, $dataSection) {
 
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
-      if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+      $pfConfig = new PluginFusioninventoryConfig();
+      if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
               "component_soundcard") == '0') {
          return;
       }

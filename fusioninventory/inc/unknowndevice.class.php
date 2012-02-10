@@ -647,7 +647,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
       $Netport = new NetworkPort();
       $nn = new NetworkPort_NetworkPort();
-      //$PluginFusionInventoryAgentsProcesses = new PluginFusionInventoryAgentsProcesses;
+      //$pfAgentsProcesses = new PluginFusionInventoryAgentsProcesses;
 
       // Find in the mac connected to the if they are in hub without link port connected
       foreach ($p_oPort->getMacsToConnect() as $ifmac) {
@@ -667,7 +667,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                         } else {
                            // We have founded a hub orphelin
                            if ($nn->add(array('networkports_id_1'=> $p_oPort->getValue('id'), 'networkports_id_2' => $dataLink['id']))) {
-//                              $PluginFusionInventoryAgentsProcesses->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
+//                              $pfAgentsProcesses->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
 //                                          array('query_nb_connections_created' => '1'));
 //                              plugin_fusioninventory_addLogConnection("make",$p_oPort->getValue('ID'));
                            }
@@ -703,7 +703,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $this->disconnectDB($p_oPort->getValue('id'));
       $this->disconnectDB($port_id);
       if ($nn->add(array('networkports_id_1'=> $p_oPort->getValue('id'), 'networkports_id_2' => $port_id))) {
-//         $PluginFusionInventoryAgentsProcesses->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
+//         $pfAgentsProcesses->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
 //                     array('query_nb_connections_created' => '1'));
 //         plugin_fusioninventory_addLogConnection("make",$p_oPort->getValue('ID'));
       }
@@ -884,8 +884,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
             // Import SNMP if enable
             if (PluginFusioninventoryModule::getModuleId("fusinvsnmp")) {
-               $PluginFusinvsnmpUnknownDevice = new PluginFusinvsnmpUnknownDevice();
-               $PluginFusinvsnmpUnknownDevice->import($items_id, $printer_id, 'Printer');
+               $pfUnknownDevice = new PluginFusinvsnmpUnknownDevice();
+               $pfUnknownDevice->import($items_id, $printer_id, 'Printer');
             }
 
             $this->deleteFromDB($items_id,1);
@@ -918,8 +918,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
             // Import SNMP if enable
             if (PluginFusioninventoryModule::getModuleId("fusinvsnmp")) {
-               $PluginFusinvsnmpUnknownDevice = new PluginFusinvsnmpUnknownDevice();
-               $PluginFusinvsnmpUnknownDevice->import($items_id, $NetworkEquipment_id, 'NetworkEquipment');
+               $pfUnknownDevice = new PluginFusinvsnmpUnknownDevice();
+               $pfUnknownDevice->import($items_id, $NetworkEquipment_id, 'NetworkEquipment');
             }
 
             $this->deleteFromDB($items_id,1);

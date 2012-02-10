@@ -43,8 +43,8 @@
 function pluginFusinvinventoryGetCurrentVersion($version) {
    global $DB;
 
-   $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
-   $version_installed = $PluginFusioninventoryConfig->getValue(PluginFusioninventoryModule::getModuleId("fusinvinventory"),
+   $pfConfig = new PluginFusioninventoryConfig();
+   $version_installed = $pfConfig->getValue(PluginFusioninventoryModule::getModuleId("fusinvinventory"),
                                              "version");
    
    $versionconfig = '';
@@ -54,7 +54,7 @@ function pluginFusinvinventoryGetCurrentVersion($version) {
       $pFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
       $a_findmodule = current($pFusioninventoryAgentmodule->find("`modulename`='INVENTORY'", "", 1));
       if (isset($a_findmodule['plugins_id'])) {
-         $versionconfig = $PluginFusioninventoryConfig->getValue($a_findmodule['plugins_id'], "version");
+         $versionconfig = $pfConfig->getValue($a_findmodule['plugins_id'], "version");
          if (PluginFusioninventoryModule::getModuleId("fusinvinventory") != $a_findmodule['plugins_id']) {
             $query = "UPDATE `glpi_plugin_fusioninventory_configs`
                SET `plugins_id`='".PluginFusioninventoryModule::getModuleId("fusinvinventory")."' 

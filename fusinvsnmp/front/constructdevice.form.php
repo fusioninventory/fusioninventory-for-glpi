@@ -44,7 +44,7 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-$PluginFusinvsnmpConstructDevice = new PluginFusinvsnmpConstructDevice();
+$pfConstructDevice = new PluginFusinvsnmpConstructDevice();
 
 Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","constructdevice");
 Session::checkLoginUser();
@@ -63,7 +63,7 @@ if (isset($_GET['vlan_update'])) {
       WHERE sysdescr='".$_POST['sysdescr']."' ";
    $result = $DB->query($query);
    if ($DB->numrows($result) == '0') {
-      $PluginFusinvsnmpConstructDevice->add($_POST);
+      $pfConstructDevice->add($_POST);
    } else {
       $_SESSION["MESSAGE_AFTER_REDIRECT"] = "Déjà existant";
    }
@@ -107,10 +107,10 @@ if (isset($_GET['vlan_update'])) {
    }
    Html::back();
 } else if (isset ($_POST["update"])) {
-	$PluginFusinvsnmpConstructDevice->update($_POST);
+	$pfConstructDevice->update($_POST);
 	Html::back();
 } else if (isset ($_POST["delete"])) {
-	$PluginFusinvsnmpConstructDevice->delete($_POST);
+	$pfConstructDevice->delete($_POST);
 	Html::redirect("construct_device.php");
 }
 
@@ -119,8 +119,8 @@ if (isset($_GET["id"])) {
    $id = $_GET["id"];
 }
 
-$PluginFusinvsnmpConstructDevice->showForm($id);
-$PluginFusinvsnmpConstructDevice->manageWalks($_SERVER["PHP_SELF"], $id);
+$pfConstructDevice->showForm($id);
+$pfConstructDevice->manageWalks($_SERVER["PHP_SELF"], $id);
 
 Html::footer();
 

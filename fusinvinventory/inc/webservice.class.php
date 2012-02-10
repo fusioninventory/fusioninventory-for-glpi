@@ -69,8 +69,8 @@ class PluginFusinvinventoryWebservice {
 
       $content = base64_decode($params['base64']);
 
-      $PluginFusinvinventoryImportXML = new PluginFusinvinventoryImportXML();
-      $PluginFusinvinventoryImportXML->importXMLContent($content);
+      $pfImportXML = new PluginFusinvinventoryImportXML();
+      $pfImportXML->importXMLContent($content);
 
       $msg = $LANG['plugin_fusinvinventory']['importxml'][1];
       return PluginWebservicesMethodCommon::Error($protocol, WEBSERVICES_ERROR_FAILED, '', $msg);

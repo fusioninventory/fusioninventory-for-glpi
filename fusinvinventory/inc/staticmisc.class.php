@@ -252,8 +252,8 @@ class PluginFusinvinventoryStaticmisc {
    static function task_actionselection_PluginFusioninventoryAgent_ESX() {
       
       $array = array();
-      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
-      $array1 = $PluginFusioninventoryAgentmodule->getAgentsCanDo(strtoupper("ESX"));
+      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+      $array1 = $pfAgentmodule->getAgentsCanDo(strtoupper("ESX"));
       foreach ($array1 as $id => $data) {
          $array[$id] = $data['name'];
       }

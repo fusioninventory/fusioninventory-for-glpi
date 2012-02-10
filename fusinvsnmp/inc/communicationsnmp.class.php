@@ -55,42 +55,42 @@ class PluginFusinvsnmpCommunicationSNMP {
     *@return nothing
     **/
    function addAuth($p_sxml_node, $p_id) {
-      $PluginFusinvsnmpConfigSecurity = new PluginFusinvsnmpConfigSecurity();
-      $PluginFusinvsnmpConfigSecurity->getFromDB($p_id);
+      $pfConfigSecurity = new PluginFusinvsnmpConfigSecurity();
+      $pfConfigSecurity->getFromDB($p_id);
 
       $sxml_authentication = $p_sxml_node->addChild('AUTHENTICATION');
          $sxml_authentication->addAttribute('ID', $p_id);
-         $sxml_authentication->addAttribute('COMMUNITY', $PluginFusinvsnmpConfigSecurity->fields['community']);
+         $sxml_authentication->addAttribute('COMMUNITY', $pfConfigSecurity->fields['community']);
          $sxml_authentication->addAttribute('VERSION',
-                           $PluginFusinvsnmpConfigSecurity->getSNMPVersion($PluginFusinvsnmpConfigSecurity->fields['snmpversion']));
-         $sxml_authentication->addAttribute('USERNAME', $PluginFusinvsnmpConfigSecurity->fields['username']);
-         if ($PluginFusinvsnmpConfigSecurity->fields['authentication'] == '0') {
+                           $pfConfigSecurity->getSNMPVersion($pfConfigSecurity->fields['snmpversion']));
+         $sxml_authentication->addAttribute('USERNAME', $pfConfigSecurity->fields['username']);
+         if ($pfConfigSecurity->fields['authentication'] == '0') {
             $sxml_authentication->addAttribute('AUTHPROTOCOL', '');
          } else {
             $sxml_authentication->addAttribute('AUTHPROTOCOL',
-                           $PluginFusinvsnmpConfigSecurity->getSNMPAuthProtocol($PluginFusinvsnmpConfigSecurity->fields['authentication']));
+                           $pfConfigSecurity->getSNMPAuthProtocol($pfConfigSecurity->fields['authentication']));
          }
-         $sxml_authentication->addAttribute('AUTHPASSPHRASE', $PluginFusinvsnmpConfigSecurity->fields['auth_passphrase']);
-         if ($PluginFusinvsnmpConfigSecurity->fields['encryption'] == '0') {
+         $sxml_authentication->addAttribute('AUTHPASSPHRASE', $pfConfigSecurity->fields['auth_passphrase']);
+         if ($pfConfigSecurity->fields['encryption'] == '0') {
             $sxml_authentication->addAttribute('PRIVPROTOCOL', '');
          } else {
             $sxml_authentication->addAttribute('PRIVPROTOCOL',
-                           $PluginFusinvsnmpConfigSecurity->getSNMPEncryption($PluginFusinvsnmpConfigSecurity->fields['encryption']));
+                           $pfConfigSecurity->getSNMPEncryption($pfConfigSecurity->fields['encryption']));
          }
-         $sxml_authentication->addAttribute('PRIVPASSPHRASE', $PluginFusinvsnmpConfigSecurity->fields['priv_passphrase']);
+         $sxml_authentication->addAttribute('PRIVPASSPHRASE', $pfConfigSecurity->fields['priv_passphrase']);
    }
 
 
 
    function addModel($p_sxml_node, $p_id) {
-      $PluginFusinvsnmpModel = new PluginFusinvsnmpModel();
-      $PluginFusinvsnmpModelMib = new PluginFusinvsnmpModelMib();
+      $pfModel = new PluginFusinvsnmpModel();
+      $pfModelMib = new PluginFusinvsnmpModelMib();
 
-      $PluginFusinvsnmpModel->getFromDB($p_id);
+      $pfModel->getFromDB($p_id);
       $sxml_model = $p_sxml_node->addChild('MODEL');
          $sxml_model->addAttribute('ID', $p_id);
-         $sxml_model->addAttribute('NAME', $PluginFusinvsnmpModel->fields['name']);
-         $PluginFusinvsnmpModelMib->oidList($sxml_model,$p_id);
+         $sxml_model->addAttribute('NAME', $pfModel->fields['name']);
+         $pfModelMib->oidList($sxml_model,$p_id);
    }
 
 

@@ -162,8 +162,8 @@ class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
     */
    function run($a_Taskjobstatus, $response) {
       $response      = array();
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
-      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $credential    = new PluginFusioninventoryCredential();
       $credentialip  = new PluginFusioninventoryCredentialIp();
       
@@ -177,8 +177,8 @@ class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
          $responsetmp['password']    = $credential->fields['password'];
          $response['jobs'][] = $responsetmp;
          
-         $PluginFusioninventoryTaskjobstatus->changeStatus($taskjobstatusdatas['id'], 1);
-         $PluginFusioninventoryTaskjoblog->addTaskjoblog($taskjobstatusdatas['id'],
+         $pfTaskjobstatus->changeStatus($taskjobstatusdatas['id'], 1);
+         $pfTaskjoblog->addTaskjoblog($taskjobstatusdatas['id'],
                                  '0',
                                  'PluginFusioninventoryAgent',
                                  '1',

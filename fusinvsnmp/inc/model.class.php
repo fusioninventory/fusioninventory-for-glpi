@@ -235,35 +235,35 @@ class PluginFusinvsnmpModel extends CommonDBTM {
          switch($type) {
 
             case 'NetworkEquipment':
-               $PluginFusinvsnmpNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
+               $pfNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
                $NetworkEquipment = new NetworkEquipment();
                if($NetworkEquipment->getFromDB($device_id)) {
                   $NetworkEquipment->check($device_id,'r');
-                  $a_data = $PluginFusinvsnmpNetworkEquipment->find("`networkequipments_id`='".$device_id."'", "", "1");
+                  $a_data = $pfNetworkEquipment->find("`networkequipments_id`='".$device_id."'", "", "1");
                   $data = current($a_data);
                   $sysdescr = $data["sysdescr"];
                } else {
                   // Delete, device deleted
-                  $a_data = $PluginFusinvsnmpNetworkEquipment->find("`networkequipments_id`='".$device_id."'", "", "1");
+                  $a_data = $pfNetworkEquipment->find("`networkequipments_id`='".$device_id."'", "", "1");
                   $data = current($a_data);
-                  $PluginFusinvsnmpNetworkEquipment->delete($data);
+                  $pfNetworkEquipment->delete($data);
                   $sysdescr = '';
                }
                break;
 
             case 'Printer':
-               $PluginFusinvsnmpPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
+               $pfPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
                $Printer = new Printer();
                if($Printer->getFromDB($device_id)) {
                   $Printer->check($device_id,'r');
-                  $a_data = $PluginFusinvsnmpPrinter->find("`printers_id`='".$device_id."'", "", "1");
+                  $a_data = $pfPrinter->find("`printers_id`='".$device_id."'", "", "1");
                   $data = current($a_data);
                   $sysdescr = $data["sysdescr"];
                } else {
                   // Delete, device deleted
-                  $a_data = $PluginFusinvsnmpPrinter->find("`printers_id`='".$device_id."'", "", "1");
+                  $a_data = $pfPrinter->find("`printers_id`='".$device_id."'", "", "1");
                   $data = current($a_data);
-                  $PluginFusinvsnmpPrinter->delete($data);
+                  $pfPrinter->delete($data);
                   $sysdescr = ''; 
                }
                break;
@@ -359,11 +359,11 @@ class PluginFusinvsnmpModel extends CommonDBTM {
 
 
       // Delete old models
-      $PluginFusinvsnmpModel = new PluginFusinvsnmpModel();
-      $a_models = $PluginFusinvsnmpModel->find("");
+      $pfModel = new PluginFusinvsnmpModel();
+      $a_models = $pfModel->find("");
       foreach ($a_models as $a_model) {
          if (!isset($NewModelList[$a_model['name'].".xml"])) {
-            $PluginFusinvsnmpModel->delete($a_model, 1);
+            $pfModel->delete($a_model, 1);
          }
       }
 
@@ -399,13 +399,13 @@ class PluginFusinvsnmpModel extends CommonDBTM {
       $networkequipmentext = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
       $a_networkequipments = $networkequipmentext->find("`sysdescr`!=''");
       foreach ($a_networkequipments as $a_networkequipment) {
-         $PluginFusinvsnmpModel->getrightmodel($a_networkequipment['networkequipments_id'], "NetworkEquipment");
+         $pfModel->getrightmodel($a_networkequipment['networkequipments_id'], "NetworkEquipment");
       }
       // Reload model for printers have sysdescr
       $printerext = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
       $a_printers = $printerext->find("`sysdescr`!=''");
       foreach ($a_printers as $a_printer) {
-         $PluginFusinvsnmpModel->getrightmodel($a_printer['printers_id'], "Printer");
+         $pfModel->getrightmodel($a_printer['printers_id'], "Printer");
       }
    }
 

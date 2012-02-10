@@ -104,9 +104,9 @@ function pluginFusinvsnmpGetCurrentVersion($version) {
          include(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
       }
       
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+      $pfConfig = new PluginFusioninventoryConfig();
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
-      $versionconfig = $PluginFusioninventoryConfig->getValue($plugins_id, "version");
+      $versionconfig = $pfConfig->getValue($plugins_id, "version");
       if ((isset($versionconfig)) AND (!empty($versionconfig))) {
          if ($versionconfig == '2.2.1'
                  AND TableExists("glpi_plugin_fusinvsnmp_configlogfields")) {
@@ -117,7 +117,7 @@ function pluginFusinvsnmpGetCurrentVersion($version) {
          $pFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
          $a_findmodule = current($pFusioninventoryAgentmodule->find("`modulename`='NETDISCOVERY'", "", 1));
          if (isset($a_findmodule['plugins_id'])) {
-            $versionconfig = $PluginFusioninventoryConfig->getValue($a_findmodule['plugins_id'], "version");
+            $versionconfig = $pfConfig->getValue($a_findmodule['plugins_id'], "version");
             if ((isset($versionconfig)) AND (!empty($versionconfig))) {
                if ($versionconfig == '2.2.1'
                        AND TableExists("glpi_plugin_fusinvsnmp_configlogfields")) {

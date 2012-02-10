@@ -58,38 +58,38 @@ class Plugins_Fusioninventory_generalCheck extends PHPUnit_Framework_TestCase {
         plugin_init_fusinvinventory();
         plugin_init_fusinvsnmp();
 
-      $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
       $input = array();
       $input['name'] = '';
-      $new_id = $PluginFusioninventoryUnknownDevice->add($input);
+      $new_id = $pfUnknownDevice->add($input);
       if (!isset($new_id)) {
          $this->assertEquals(0, 1, 'Creation of unknown device not work (01)');
       }
-      $PluginFusioninventoryUnknownDevice->getFromDB($new_id);
-      $this->assertEquals($PluginFusioninventoryUnknownDevice->fields['name'],
+      $pfUnknownDevice->getFromDB($new_id);
+      $this->assertEquals($pfUnknownDevice->fields['name'],
                '', 'Unknwon device not added correctly (name field) (01)');
       // *** NAME + Accepted
       $input['accepted'] = 1;
-      $new_id = $PluginFusioninventoryUnknownDevice->add($input);
+      $new_id = $pfUnknownDevice->add($input);
       if (!isset($new_id)) {
          $this->assertEquals(0, 1, 'Creation of unknown device not work (02)');
       }
-      $PluginFusioninventoryUnknownDevice->getFromDB($new_id);
-      $this->assertEquals($PluginFusioninventoryUnknownDevice->fields['name'],
+      $pfUnknownDevice->getFromDB($new_id);
+      $this->assertEquals($pfUnknownDevice->fields['name'],
                '', 'Unknwon device not added correctly (name field) (02)');
-      $this->assertEquals($PluginFusioninventoryUnknownDevice->fields['accepted'],
+      $this->assertEquals($pfUnknownDevice->fields['accepted'],
                1, 'Unknwon device not added correctly (accepted field) (02)');
       // *** NAME + Accepted + hub
       $input['hub'] = 1;
       $input['name'] = 'hub';
-      $new_id = $PluginFusioninventoryUnknownDevice->add($input);
+      $new_id = $pfUnknownDevice->add($input);
       if (!isset($new_id)) {
          $this->assertEquals(0, 1, 'Creation of unknown device not work (03)');
       }
-      $PluginFusioninventoryUnknownDevice->getFromDB($new_id);
-      $this->assertEquals($PluginFusioninventoryUnknownDevice->fields['name'],
+      $pfUnknownDevice->getFromDB($new_id);
+      $this->assertEquals($pfUnknownDevice->fields['name'],
                'hub', 'Unknwon device not added correctly (name field) (03)');
-      $this->assertEquals($PluginFusioninventoryUnknownDevice->fields['accepted'],
+      $this->assertEquals($pfUnknownDevice->fields['accepted'],
                1, 'Unknwon device not added correctly (accepted field) (03)');
 
       // *** Add port on this unknwon device
@@ -101,19 +101,19 @@ class Plugins_Fusioninventory_generalCheck extends PHPUnit_Framework_TestCase {
       $this->assertEquals(is_numeric($port_id), true, 'Creation of network port of
             unknown device (id '.$new_id.') fail');
       // Add SNMP Informations
-      $PluginFusinvsnmpUnknownDevice = new PluginFusinvsnmpUnknownDevice();
+      $pfUnknownDevice = new PluginFusinvsnmpUnknownDevice();
       $input = array();
       $input['plugin_fusioninventory_unknowndevices_id'] = $new_id;
       $input['sysdescr'] = 'Procurve';
-      $snmp_id = $PluginFusinvsnmpUnknownDevice->add($input);
-      $PluginFusinvsnmpUnknownDevice->getFromDB($snmp_id);
-      $this->assertEquals($PluginFusinvsnmpUnknownDevice->fields['plugin_fusioninventory_unknowndevices_id'],
+      $snmp_id = $pfUnknownDevice->add($input);
+      $pfUnknownDevice->getFromDB($snmp_id);
+      $this->assertEquals($pfUnknownDevice->fields['plugin_fusioninventory_unknowndevices_id'],
                $new_id, 'Unknown device SNMP not added correctly (plugin_fusioninventory_unknowndevices_id field) (03)');
-      $this->assertEquals($PluginFusinvsnmpUnknownDevice->fields['sysdescr'],
+      $this->assertEquals($pfUnknownDevice->fields['sysdescr'],
                'Procurve', 'Unknown device SNMP not added correctly (sysdescr field) (03)');
       // Write XML
       $xml = "<xml>test</xml>";
-      $PluginFusioninventoryUnknownDevice->writeXML($new_id, $xml);
+      $pfUnknownDevice->writeXML($new_id, $xml);
       $folder = substr($new_id,0,-1);
       if (empty($folder)) {
          $folder = '0';
@@ -121,17 +121,17 @@ class Plugins_Fusioninventory_generalCheck extends PHPUnit_Framework_TestCase {
       $this->assertTrue(file_exists(GLPI_ROOT."/files/_plugins/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".$new_id),
               'XML of Unknown device not created successfully ('.GLPI_ROOT.'/files/_plugins/fusioninventory/xml/PluginFusioninventoryUnknownDevice/'.$folder.'/'.$new_id.')');
       // *** Delete Unknwon device
-      $PluginFusioninventoryUnknownDevice->delete($PluginFusioninventoryUnknownDevice->fields);
-      $PluginFusioninventoryUnknownDevice->getFromDB($new_id);
-      $this->assertEquals($PluginFusioninventoryUnknownDevice->fields['is_deleted'],
+      $pfUnknownDevice->delete($pfUnknownDevice->fields);
+      $pfUnknownDevice->getFromDB($new_id);
+      $this->assertEquals($pfUnknownDevice->fields['is_deleted'],
                1, 'Unknown device not deleted correctly (03)');
       $this->assertTrue($NetworkPort->getFromDB($port_id), 'Network port of unknown device must be present');
-      $this->assertTrue($PluginFusinvsnmpUnknownDevice->getFromDB($snmp_id), 'SNMP informations of unknown device muste be present');
+      $this->assertTrue($pfUnknownDevice->getFromDB($snmp_id), 'SNMP informations of unknown device muste be present');
       // *** Purge unknown device
-      $PluginFusioninventoryUnknownDevice->delete($PluginFusioninventoryUnknownDevice->fields, 1);
-      $this->assertFalse($PluginFusioninventoryUnknownDevice->getFromDB($new_id),
+      $pfUnknownDevice->delete($pfUnknownDevice->fields, 1);
+      $this->assertFalse($pfUnknownDevice->getFromDB($new_id),
                'Unknown device not purged correctly (03)');
-      $this->assertFalse($PluginFusinvsnmpUnknownDevice->getFromDB($snmp_id),
+      $this->assertFalse($pfUnknownDevice->getFromDB($snmp_id),
             'SNMP of unknown device purged not purged correctly (id '.$snmp_id.')');
       $this->assertFalse(file_exists(GLPI_ROOT."/files/_plugins/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".$new_id),
               'XML of Unknown device not deleted successfully (03)');

@@ -58,7 +58,7 @@ class PluginFusinvinventoryLock {
    static function deleteLock($item) {
       global $DB;
 
-      $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
+      $pfLib = new PluginFusinvinventoryLib();
 
       // Get mapping
       $a_mapping = PluginFusinvinventoryLibhook::getMapping();
@@ -91,7 +91,7 @@ class PluginFusinvinventoryLock {
                if ($result) {
                   if ($DB->numrows($result) == '1') {
                      $a_serialized = $DB->fetch_assoc($result);
-                     $infoSections = $PluginFusinvinventoryLib->_getInfoSections($a_serialized['internal_id']);
+                     $infoSections = $pfLib->_getInfoSections($a_serialized['internal_id']);
 
                      // Modify fields
                      $table = getTableNameForForeignKeyField($datas['glpiField']);
@@ -204,7 +204,7 @@ class PluginFusinvinventoryLock {
    function importFromOcs() {
       global $DB;
 
-      $PluginFusioninventoryLock = new PluginFusioninventoryLock();
+      $pfLock = new PluginFusioninventoryLock();
 
       $sql = "SELECT * FROM `glpi_ocslinks`";
       $result=$DB->query($sql);
@@ -219,7 +219,7 @@ class PluginFusinvinventoryLock {
             }
          }
          if (count($a_fields) > 0) {
-            $PluginFusioninventoryLock->addLocks("Computer", $data['computers_id'], $a_fields);
+            $pfLock->addLocks("Computer", $data['computers_id'], $a_fields);
          }
       }
    }

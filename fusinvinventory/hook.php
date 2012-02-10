@@ -177,8 +177,8 @@ function plugin_pre_item_purge_fusinvinventory($item) {
    switch (get_class($item)) {
 
       case 'Computer' :
-         $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
-         $PluginFusinvinventoryLib->removeExternalid($item->getField('id'));
+         $pfLib = new PluginFusinvinventoryLib();
+         $pfLib->removeExternalid($item->getField('id'));
          // Remove antivirus if set
          PluginFusinvinventoryAntivirus::cleanComputer($item->getField('id'));
          break;

@@ -122,8 +122,8 @@ function update232to240() {
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
    $insert = array('threads_netdiscovery' => 1,
                    'threads_snmpquery'    => 1);
-   $pluginFusioninventoryConfig = new PluginFusioninventoryConfig();
-   $pluginFusioninventoryConfig->initConfig($plugins_id, $insert);
+   $pfConfig = new PluginFusioninventoryConfig();
+   $pfConfig->initConfig($plugins_id, $insert);
    
    // Update mapping:
    $query ="INSERT INTO `glpi_plugin_fusioninventory_mappings`

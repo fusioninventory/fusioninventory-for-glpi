@@ -50,30 +50,30 @@ PluginFusioninventoryProfile::checkRight("fusinvinventory", "blacklist","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-$PluginFusinvinventoryBlacklist = new PluginFusinvinventoryBlacklist();
+$pfBlacklist = new PluginFusinvinventoryBlacklist();
 
 if (isset ($_POST["add"])) {
    PluginFusioninventoryProfile::checkRight("fusinvinventory", "blacklist","w");
    if (!empty($_POST['value'])) {
-      $PluginFusinvinventoryBlacklist->add($_POST);
+      $pfBlacklist->add($_POST);
    } else {
       //TODO message
    }
    Html::back();
 } else if (isset ($_POST["update"])) {
    PluginFusioninventoryProfile::checkRight("fusinvinventory", "blacklist","w");
-   $PluginFusinvinventoryBlacklist->update($_POST);
+   $pfBlacklist->update($_POST);
    Html::back();
 } else if (isset ($_POST["delete"])) {
    PluginFusioninventoryProfile::checkRight("fusinvinventory", "blacklist","w");
-   $PluginFusinvinventoryBlacklist->delete($_POST);
+   $pfBlacklist->delete($_POST);
    Html::redirect("blacklist.php");
 }
 
 if (isset($_GET["id"])) {
-   $PluginFusinvinventoryBlacklist->showForm($_GET["id"]);
+   $pfBlacklist->showForm($_GET["id"]);
 } else {
-   $PluginFusinvinventoryBlacklist->showForm("");
+   $pfBlacklist->showForm("");
 }
 
 Html::footer();

@@ -186,8 +186,8 @@ function pluginFusioninventoryInstall($version, $migration='') {
    }
 
    // glpi_plugin_fusioninventory_configs
-   $PluginFusioninventorySetup = new PluginFusioninventorySetup();
-   $users_id = $PluginFusioninventorySetup->createFusionInventoryUser();
+   $pfSetup = new PluginFusioninventorySetup();
+   $users_id = $pfSetup->createFusionInventoryUser();
    $query = "INSERT INTO `glpi_plugin_fusioninventory_configs`
                          (`type`, `value`, `plugins_id`)
              VALUES ('version', '".$version."', '".$plugins_id."'),
@@ -200,13 +200,13 @@ function pluginFusioninventoryInstall($version, $migration='') {
    $DB->query($query);
 
    PluginFusioninventoryProfile::changeProfile($plugins_id);
-   $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+   $pfAgentmodule = new PluginFusioninventoryAgentmodule();
    $input = array();
    $input['plugins_id'] = $plugins_id;
    $input['modulename'] = "WAKEONLAN";
    $input['is_active']  = 0;
    $input['exceptions'] = exportArrayToDB(array());
-   $PluginFusioninventoryAgentmodule->add($input);
+   $pfAgentmodule->add($input);
 
    CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '60', 
                       array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30));
@@ -215,8 +215,8 @@ function pluginFusioninventoryInstall($version, $migration='') {
 
 
    $migration->displayMessage("Create rules");
-   $PluginFusioninventorySetup = new PluginFusioninventorySetup();
-   $PluginFusioninventorySetup->initRules();
+   $pfSetup = new PluginFusioninventorySetup();
+   $pfSetup->initRules();
 }
 
 ?>

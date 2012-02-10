@@ -51,8 +51,8 @@ PluginFusioninventoryProfile::checkRight("fusioninventory", "task","r");
 PluginFusioninventoryMenu::displayMenu("mini");
 
 
-$PluginFusinvsnmpStateInventory = new PluginFusinvsnmpStateInventory();
-$PluginFusinvsnmpStateInventory->display();
+$pfStateInventory = new PluginFusinvsnmpStateInventory();
+$pfStateInventory->display();
 
 Html::footer();
 

@@ -806,8 +806,8 @@ return namelist;
       $array = array();
       $array[".1"] = " ".$LANG['plugin_fusioninventory']['agents'][32];
       $array[".2"] = " ".$LANG['plugin_fusioninventory']['agents'][33];
-      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
-      $array1 = $PluginFusioninventoryAgentmodule->getAgentsCanDo(strtoupper($module));
+      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+      $array1 = $pfAgentmodule->getAgentsCanDo(strtoupper($module));
       foreach ($array1 as $id => $data) {
          $array[$id] = $data['name'];
       }
@@ -826,48 +826,48 @@ return namelist;
    static function cronTaskscheduler() {
       global $DB;
 
-      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-      $PluginFusioninventoryTask = new PluginFusioninventoryTask();
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTask = new PluginFusioninventoryTask();
 
       // Detect if running task have a problem
-      $PluginFusioninventoryTaskjob->CronCheckRunnningJobs();
+      $pfTaskjob->CronCheckRunnningJobs();
 
       $_SESSION['glpi_plugin_fusioninventory']['agents'] = array();
 
       // *** Search task ready
       $dateNow = date("U");
 
-      $query = "SELECT `".$PluginFusioninventoryTaskjob->getTable()."`.*,
+      $query = "SELECT `".$pfTaskjob->getTable()."`.*,
      `glpi_plugin_fusioninventory_tasks`.`communication`,
      `glpi_plugin_fusioninventory_tasks`.`execution_id`,
       UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp,
       CASE
-         WHEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_type` = 'minutes'
-            THEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_count` *60
-         WHEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_type` = 'hours'
-            THEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_count` *60 *60
-         WHEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_type` = 'days'
-            THEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_count` *60 *60 *24
-         WHEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_type` = 'months'
-            THEN `".$PluginFusioninventoryTaskjob->getTable()."`.`periodicity_count` *60 *60 *24 *30
+         WHEN `".$pfTaskjob->getTable()."`.`periodicity_type` = 'minutes'
+            THEN `".$pfTaskjob->getTable()."`.`periodicity_count` *60
+         WHEN `".$pfTaskjob->getTable()."`.`periodicity_type` = 'hours'
+            THEN `".$pfTaskjob->getTable()."`.`periodicity_count` *60 *60
+         WHEN `".$pfTaskjob->getTable()."`.`periodicity_type` = 'days'
+            THEN `".$pfTaskjob->getTable()."`.`periodicity_count` *60 *60 *24
+         WHEN `".$pfTaskjob->getTable()."`.`periodicity_type` = 'months'
+            THEN `".$pfTaskjob->getTable()."`.`periodicity_count` *60 *60 *24 *30
          ELSE 0
       END AS timing,
       CASE
-         WHEN `".$PluginFusioninventoryTask->getTable()."`.`periodicity_type` = 'minutes'
-            THEN `".$PluginFusioninventoryTask->getTable()."`.`periodicity_count` *60
-         WHEN `".$PluginFusioninventoryTask->getTable()."`.`periodicity_type` = 'hours'
-            THEN `".$PluginFusioninventoryTask->getTable()."`.`periodicity_count` *60 *60
-         WHEN `".$PluginFusioninventoryTask->getTable()."`.`periodicity_type` = 'days'
-            THEN `".$PluginFusioninventoryTask->getTable()."`.`periodicity_count` *60 *60 *24
-         WHEN `".$PluginFusioninventoryTask->getTable()."`.`periodicity_type` = 'months'
-            THEN `".$PluginFusioninventoryTask->getTable()."`.`periodicity_count` *60 *60 *24 *30
+         WHEN `".$pfTask->getTable()."`.`periodicity_type` = 'minutes'
+            THEN `".$pfTask->getTable()."`.`periodicity_count` *60
+         WHEN `".$pfTask->getTable()."`.`periodicity_type` = 'hours'
+            THEN `".$pfTask->getTable()."`.`periodicity_count` *60 *60
+         WHEN `".$pfTask->getTable()."`.`periodicity_type` = 'days'
+            THEN `".$pfTask->getTable()."`.`periodicity_count` *60 *60 *24
+         WHEN `".$pfTask->getTable()."`.`periodicity_type` = 'months'
+            THEN `".$pfTask->getTable()."`.`periodicity_count` *60 *60 *24 *30
          ELSE 0
       END AS timing_task
-      FROM ".$PluginFusioninventoryTaskjob->getTable()."
+      FROM ".$pfTaskjob->getTable()."
       LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
       WHERE `is_active`='1'
          AND `status` = '0'
-         AND `".$PluginFusioninventoryTaskjob->getTable()."`.`execution_id`=`glpi_plugin_fusioninventory_tasks`.`execution_id`
+         AND `".$pfTaskjob->getTable()."`.`execution_id`=`glpi_plugin_fusioninventory_tasks`.`execution_id`
          AND UNIX_TIMESTAMP(date_scheduled) <= '".$dateNow."' ";
       $result = $DB->query($query);
       $return = 0;
@@ -888,7 +888,7 @@ return namelist;
             }
 
             if ($pass == '1') {
-               $return = $PluginFusioninventoryTaskjob->prepareRunTaskjob($data);
+               $return = $pfTaskjob->prepareRunTaskjob($data);
                if ($return > 0) {
 
                   $return = 1;
@@ -897,15 +897,15 @@ return namelist;
          }
       }
       // Get taskjobs in retry mode
-      $query = "SELECT `".$PluginFusioninventoryTaskjob->getTable()."`.*,
+      $query = "SELECT `".$pfTaskjob->getTable()."`.*,
      `glpi_plugin_fusioninventory_tasks`.`communication`,
      `glpi_plugin_fusioninventory_tasks`.`execution_id`,
      `glpi_plugin_fusioninventory_tasks`.`date_scheduled`
-      FROM ".$PluginFusioninventoryTaskjob->getTable()."
+      FROM ".$pfTaskjob->getTable()."
       LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
       WHERE `is_active`='1'
          AND `status` = '0'
-         AND `".$PluginFusioninventoryTaskjob->getTable()."`.`execution_id`=`glpi_plugin_fusioninventory_tasks`.`execution_id` + 1
+         AND `".$pfTaskjob->getTable()."`.`execution_id`=`glpi_plugin_fusioninventory_tasks`.`execution_id` + 1
          ";
       $result = $DB->query($query);
       while ($data=$DB->fetch_array($result)) {
@@ -926,12 +926,12 @@ return namelist;
          
          if ($nb_retry > 0) {
             $period = 0;
-            $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp(
+            $period = $pfTaskjob->periodicityToTimestamp(
                     $data['periodicity_type'], 
                     $data['periodicity_count']);
 
             if (($date_last + ($data['retry_time'] * 60)) < date('U')) {
-               $return = $PluginFusioninventoryTaskjob->prepareRunTaskjob($data);
+               $return = $pfTaskjob->prepareRunTaskjob($data);
                if ($return > 0) {
 
                   $return = 1;
@@ -944,12 +944,12 @@ return namelist;
       
       // Start agents must start in push mode
       foreach($_SESSION['glpi_plugin_fusioninventory']['agents'] as $agent_id=>$num) {
-         $PluginFusioninventoryTaskjob->startAgentRemotly($agent_id);
+         $pfTaskjob->startAgentRemotly($agent_id);
       }
       unset($_SESSION['glpi_plugin_fusioninventory']['agents']);
 
       // Detect if running task have a problem
-      $PluginFusioninventoryTaskjob->CronCheckRunnningJobs();
+      $pfTaskjob->CronCheckRunnningJobs();
 
       return $return;
    }
@@ -967,27 +967,27 @@ return namelist;
    function reinitializeTaskjobs($tasks_id, $disableTimeVerification = 0) {
       global $DB;
       
-      $PluginFusioninventoryTask = new PluginFusioninventoryTask();
-      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
-      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pfTask = new PluginFusioninventoryTask();
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $query = "SELECT *, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp
-            FROM `".$PluginFusioninventoryTask->getTable()."`
+            FROM `".$pfTask->getTable()."`
          WHERE `id`='".$tasks_id."' 
             LIMIT 1";
       $result = $DB->query($query);
       $data = $DB->fetch_assoc($result);
 
-      $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp($data['periodicity_type'], $data['periodicity_count']);
+      $period = $pfTaskjob->periodicityToTimestamp($data['periodicity_type'], $data['periodicity_count']);
 
       // Calculate next execution from last
-      $queryJob = "SELECT * FROM `".$PluginFusioninventoryTaskjob->getTable()."`
+      $queryJob = "SELECT * FROM `".$pfTaskjob->getTable()."`
          WHERE `plugin_fusioninventory_tasks_id`='".$tasks_id."'
          ORDER BY `id` DESC";
       $resultJob = $DB->query($queryJob);
       $nb_taskjobs = $DB->numrows($resultJob);
       // get only with execution_id (same +1) as task 
-      $queryJob = "SELECT * FROM `".$PluginFusioninventoryTaskjob->getTable()."`
+      $queryJob = "SELECT * FROM `".$pfTaskjob->getTable()."`
          WHERE `plugin_fusioninventory_tasks_id`='".$tasks_id."'
             AND `execution_id`='".($data['execution_id'] + 1)."'
          ORDER BY `id` DESC";
@@ -995,14 +995,14 @@ return namelist;
       $resultJob = $DB->query($queryJob);
       $nb_finished = 0;
       while ($dataJob=$DB->fetch_array($resultJob)) {
-         $a_taskjobstatusuniqs = $PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$dataJob['id']."'", 'id DESC', 1);
+         $a_taskjobstatusuniqs = $pfTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$dataJob['id']."'", 'id DESC', 1);
          $a_taskjobstatusuniq = current($a_taskjobstatusuniqs);
-         $a_taskjobstatus = $PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$dataJob['id']."'
+         $a_taskjobstatus = $pfTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$dataJob['id']."'
             AND `uniqid`='".$a_taskjobstatusuniq['uniqid']."'");
          $taskjobstatusfinished = 0;
          
          foreach ($a_taskjobstatus as $statusdata) {
-            $a_joblog = $PluginFusioninventoryTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$statusdata['id']."'
+            $a_joblog = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$statusdata['id']."'
                AND (`state`='2' OR `state`='4' OR `state`='5')");
             if (count($a_joblog) > 0) {
                $taskjobstatusfinished++;
@@ -1020,7 +1020,7 @@ return namelist;
       }
       if ($nb_finished != $nb_taskjobs) {
          if ($disableTimeVerification == '1') { // Forcerun
-            $queryJob2 = "SELECT * FROM `".$PluginFusioninventoryTaskjob->getTable()."`
+            $queryJob2 = "SELECT * FROM `".$pfTaskjob->getTable()."`
             WHERE `plugin_fusioninventory_tasks_id`='".$tasks_id."'
                AND `execution_id`='".$data['execution_id']."'
             ORDER BY `id` DESC";
@@ -1040,7 +1040,7 @@ return namelist;
          $exe = $data['execution_id'];
          unset($data['execution_id']);
 
-         $queryUpdate = "UPDATE `".$PluginFusioninventoryTaskjob->getTable()."`
+         $queryUpdate = "UPDATE `".$pfTaskjob->getTable()."`
             SET `status`='0'
             WHERE `plugin_fusioninventory_tasks_id`='".$data['id']."'";
          $DB->query($queryUpdate);
@@ -1064,7 +1064,7 @@ return namelist;
             }
          }
          $data['execution_id'] = $exe + 1;
-         $PluginFusioninventoryTask->update($data);
+         $pfTask->update($data);
          return true;
       } else {
          return false;
@@ -1087,13 +1087,13 @@ return namelist;
       $uniqid = '';
 
       if ($this->reinitializeTaskjobs($tasks_id, 1)) {
-         $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+         $pfTaskjob = new PluginFusioninventoryTaskjob();
          $_SESSION['glpi_plugin_fusioninventory']['agents'] = array();
 
-         $query = "SELECT `".$PluginFusioninventoryTaskjob->getTable()."`.*,
+         $query = "SELECT `".$pfTaskjob->getTable()."`.*,
                `glpi_plugin_fusioninventory_tasks`.`communication`, 
                UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp
-            FROM ".$PluginFusioninventoryTaskjob->getTable()."
+            FROM ".$pfTaskjob->getTable()."
             LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
             WHERE `is_active`='1'
                AND `status` = '0' 
@@ -1103,12 +1103,12 @@ return namelist;
             $plugin = new Plugin();
             $plugin->getFromDB($data['plugins_id']);
             if ($plugin->fields['state'] == Plugin::ACTIVATED) {
-               $uniqid = $PluginFusioninventoryTaskjob->prepareRunTaskjob($data);
+               $uniqid = $pfTaskjob->prepareRunTaskjob($data);
             }
          }
          
          foreach($_SESSION['glpi_plugin_fusioninventory']['agents'] as $agent_id=>$num) {
-            $PluginFusioninventoryTaskjob->startAgentRemotly($agent_id);
+            $pfTaskjob->startAgentRemotly($agent_id);
          }
          unset($_SESSION['glpi_plugin_fusioninventory']['agents']);         
       } else {
@@ -1456,12 +1456,12 @@ return namelist;
    **/
    function manageTasksByObject($itemtype='', $items_id=0) {
       // See task runing
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
-      $PluginFusioninventoryTaskjobstatus->stateTaskjobItem($items_id, $itemtype, 'running');
+      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTaskjobstatus->stateTaskjobItem($items_id, $itemtype, 'running');
       // see tasks finished
-      $PluginFusioninventoryTaskjobstatus->stateTaskjobItem($items_id, $itemtype, 'nostarted');
+      $pfTaskjobstatus->stateTaskjobItem($items_id, $itemtype, 'nostarted');
       // see tasks finished
-      $PluginFusioninventoryTaskjobstatus->stateTaskjobItem($items_id, $itemtype, 'finished');
+      $pfTaskjobstatus->stateTaskjobItem($items_id, $itemtype, 'finished');
    }
 
 
@@ -1470,10 +1470,10 @@ return namelist;
       global $DB;
 
       // Get all taskjobstatus running
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
-      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
 
-      $a_taskjobstatus = $PluginFusioninventoryTaskjobstatus->find("`state`='0'
+      $a_taskjobstatus = $pfTaskjobstatus->find("`state`='0'
                                                       OR `state`='1'
                                                       OR `state`='2'
                                                       GROUP BY uniqid, plugin_fusioninventory_agents_id");
@@ -1488,7 +1488,7 @@ return namelist;
             if ($DB->numrows($result) != 0) {
                $task = $DB->fetch_assoc($result);
                if ($task['communication'] == 'push') {
-                  $a_valid = $PluginFusioninventoryTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$data['id']."'
+                  $a_valid = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$data['id']."'
                            AND (`date`+240) < (NOW() + 0)", "", "1");
 
                   if (count($a_valid) == '1') {
@@ -1499,11 +1499,11 @@ return namelist;
 
                         case 'waiting':
                            // token is bad and must force cancel task in server
-                           $a_statustmp = $PluginFusioninventoryTaskjobstatus->find("`uniqid`='".$data['uniqid']."'
+                           $a_statustmp = $pfTaskjobstatus->find("`uniqid`='".$data['uniqid']."'
                                                       AND `plugin_fusioninventory_agents_id`='".$data['plugin_fusioninventory_agents_id']."'
                                                       AND (`state`='2' OR `state`='1' OR `state`='0') ");
                            foreach($a_statustmp as $datatmp) {
-                              $PluginFusioninventoryTaskjobstatus->changeStatusFinish($datatmp['id'],
+                              $pfTaskjobstatus->changeStatusFinish($datatmp['id'],
                                                                     0,
                                                                     '',
                                                                     1,
@@ -1518,11 +1518,11 @@ return namelist;
 
                         case 'noanswer':
                            // agent crash or computer is shutdown and force cancel task in server
-                           $a_statustmp = $PluginFusioninventoryTaskjobstatus->find("`uniqid`='".$data['uniqid']."'
+                           $a_statustmp = $pfTaskjobstatus->find("`uniqid`='".$data['uniqid']."'
                                                       AND `plugin_fusioninventory_agents_id`='".$data['plugin_fusioninventory_agents_id']."'
                                                       AND (`state`='2' OR `state`='1') ");
                            foreach($a_statustmp as $datatmp) {
-                              $PluginFusioninventoryTaskjobstatus->changeStatusFinish($datatmp['id'],
+                              $pfTaskjobstatus->changeStatusFinish($datatmp['id'],
                                                                   0,
                                                                   '',
                                                                   1,
@@ -1615,17 +1615,17 @@ return namelist;
 
    static function purgeTaskjob($parm) {
       // $parm["id"]
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
-      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
 
       // all taskjobs
-      $a_taskjobstatuss = $PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$parm->fields["id"]."'");
+      $a_taskjobstatuss = $pfTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$parm->fields["id"]."'");
       foreach($a_taskjobstatuss as $a_taskjobstatus) {
-         $a_taskjoblogs = $PluginFusioninventoryTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$a_taskjobstatus['id']."'");
+         $a_taskjoblogs = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$a_taskjobstatus['id']."'");
          foreach($a_taskjoblogs as $a_taskjoblog) {
-            $PluginFusioninventoryTaskjoblog->delete($a_taskjoblog, 1);
+            $pfTaskjoblog->delete($a_taskjoblog, 1);
          }
-         $PluginFusioninventoryTaskjobstatus->delete($a_taskjobstatus, 1);
+         $pfTaskjobstatus->delete($a_taskjobstatus, 1);
       }
    }
 
@@ -1664,10 +1664,10 @@ return namelist;
    static function quickList($method) {
       global $LANG;
 
-      $pluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-      $pluginFusioninventoryTask = new PluginFusioninventoryTask();
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTask = new PluginFusioninventoryTask();
 
-      $a_list = $pluginFusioninventoryTaskjob->find("`method`='".$method."'");
+      $a_list = $pfTaskjob->find("`method`='".$method."'");
 
       echo "<table class='tab_cadrehov' style='width:950px'>";
       echo "<tr class='tab_bg_1'>";
@@ -1680,35 +1680,35 @@ return namelist;
       echo "</tr>";
 
       foreach ($a_list as $data) {
-         $pluginFusioninventoryTaskjob->getFromDB($data['id']);
-         $pluginFusioninventoryTask->getFromDB($data['plugin_fusioninventory_tasks_id']);
+         $pfTaskjob->getFromDB($data['id']);
+         $pfTask->getFromDB($data['plugin_fusioninventory_tasks_id']);
          echo "<tr class='tab_bg_1'>";
-         $link_item = $pluginFusioninventoryTaskjob->getFormURL();
+         $link_item = $pfTaskjob->getFormURL();
          $link  = $link_item;
-         $link .= (strpos($link,'?') ? '&amp;':'?').'id=' . $pluginFusioninventoryTaskjob->fields['id'];
-         echo "<td><a href='".$link."'>".$pluginFusioninventoryTaskjob->getNameID(1)."</a></td>";
-         echo "<td>".Dropdown::getYesNo($pluginFusioninventoryTask->fields['is_active'])."</td>";
-         echo "<td>".$pluginFusioninventoryTask->fields['date_scheduled']."</td>";
+         $link .= (strpos($link,'?') ? '&amp;':'?').'id=' . $pfTaskjob->fields['id'];
+         echo "<td><a href='".$link."'>".$pfTaskjob->getNameID(1)."</a></td>";
+         echo "<td>".Dropdown::getYesNo($pfTask->fields['is_active'])."</td>";
+         echo "<td>".$pfTask->fields['date_scheduled']."</td>";
          $a_time = '';
-         switch ($pluginFusioninventoryTask->fields['periodicity_type']) {
+         switch ($pfTask->fields['periodicity_type']) {
 
             case 'minutes':
-               $a_time = $pluginFusioninventoryTask->fields['periodicity_count']." ".
+               $a_time = $pfTask->fields['periodicity_count']." ".
                strtolower($LANG['job'][22]);
                break;
 
             case 'hours':
-               $a_time = $pluginFusioninventoryTask->fields['periodicity_count']." ".
+               $a_time = $pfTask->fields['periodicity_count']." ".
                     strtolower($LANG['gmt'][1]);
                break;
 
             case 'days':
-               $a_time = $pluginFusioninventoryTask->fields['periodicity_count']." ".
+               $a_time = $pfTask->fields['periodicity_count']." ".
                     $LANG['calendar'][12];
                break;
 
             case 'months':
-               $a_time = $pluginFusioninventoryTask->fields['periodicity_count']." ".
+               $a_time = $pfTask->fields['periodicity_count']." ".
                     $LANG['plugin_fusioninventory']['task'][38];
                break;
          }
@@ -1760,13 +1760,13 @@ return namelist;
    function showQuickForm($id, $method) {
       global $LANG, $CFG_GLPI;
 
-      $pluginFusioninventoryTask = new PluginFusioninventoryTask();
+      $pfTask = new PluginFusioninventoryTask();
       if (($id!='') AND ($id != '0')) {
          $this->getFromDB($id);
-         $pluginFusioninventoryTask->getFromDB($this->fields['plugin_fusioninventory_tasks_id']);
+         $pfTask->getFromDB($this->fields['plugin_fusioninventory_tasks_id']);
       } else {
          $this->getEmpty();
-         $pluginFusioninventoryTask->getEmpty();
+         $pfTask->getEmpty();
       }
 
       if (strstr($_SERVER['PHP_SELF'], 'wizard')) {
@@ -1795,7 +1795,7 @@ return namelist;
       echo "<td><input type='text' name='name' value='".$this->fields['name']."' /></td>";
       echo "<td>".$LANG['common'][60]."&nbsp;:</td>";
       echo "<td>";
-      Dropdown::showYesNo("is_active", $pluginFusioninventoryTask->fields['is_active']);
+      Dropdown::showYesNo("is_active", $pfTask->fields['is_active']);
       echo "</td>";
       echo "</tr>";
 
@@ -1812,18 +1812,18 @@ return namelist;
       $com = array();
       $com['push'] = $LANG['plugin_fusioninventory']['task'][41];
       $com['pull'] = $LANG['plugin_fusioninventory']['task'][42];
-      Dropdown::showFromArray("communication", $com, array('value'=>$pluginFusioninventoryTask->fields["communication"]));
+      Dropdown::showFromArray("communication", $com, array('value'=>$pfTask->fields["communication"]));
       echo "</td>";
       echo "<td>".$LANG['plugin_fusioninventory']['task'][17]."&nbsp;:</td>";
       echo "<td>";
-      Dropdown::showInteger("periodicity_count", $pluginFusioninventoryTask->fields['periodicity_count'], 0, 300);
+      Dropdown::showInteger("periodicity_count", $pfTask->fields['periodicity_count'], 0, 300);
       $a_time = array();
       $a_time[] = "------";
       $a_time['minutes'] = $LANG['job'][22];
       $a_time['hours'] = ucfirst($LANG['gmt'][1]);
       $a_time['days'] = ucfirst($LANG['calendar'][12]);
       $a_time['months'] = ucfirst($LANG['calendar'][14]);
-      Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$pluginFusioninventoryTask->fields['periodicity_type']));
+      Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$pfTask->fields['periodicity_type']));
       echo "</td>";
       echo "</tr>";
 
@@ -1857,8 +1857,8 @@ return namelist;
    static function listToForcerun($method) {
       global $LANG;
 
-      $pluginFusioninventoryTaskjob = new self();
-      $a_list = $pluginFusioninventoryTaskjob->find("`method`='".$method."'");
+      $pfTaskjob = new self();
+      $a_list = $pfTaskjob->find("`method`='".$method."'");
 
       echo "<form name='form_ic' method='post' action='".Toolbox::deleteDir(__CLASS__)."'>";
       echo "<table class='tab_cadre_fixe' style='width:500px'>";
@@ -1868,13 +1868,13 @@ return namelist;
       echo "</tr>";
       
       foreach ($a_list as $data) {
-         $pluginFusioninventoryTaskjob->getFromDB($data['id']);
+         $pfTaskjob->getFromDB($data['id']);
          echo "<tr class='tab_bg_1'>";
          echo "<td><input type='checkbox' name='taskjobstoforcerun[]' value='".$data['id']."' /></td>";
-         $link_item = $pluginFusioninventoryTaskjob->getFormURL();
+         $link_item = $pfTaskjob->getFormURL();
          $link  = $link_item;
-         $link .= (strpos($link,'?') ? '&amp;':'?').'id=' . $pluginFusioninventoryTaskjob->fields['id'];
-         echo "<td><a href='".$link."'>".$pluginFusioninventoryTaskjob->getNameID(1)."</a></td>";
+         $link .= (strpos($link,'?') ? '&amp;':'?').'id=' . $pfTaskjob->fields['id'];
+         echo "<td><a href='".$link."'>".$pfTaskjob->getNameID(1)."</a></td>";
          echo "<tr class='tab_bg_1'>";
       }
 
@@ -1896,21 +1896,21 @@ return namelist;
     */
    static function quickListLogs() {
 
-      $pluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      $pluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
 
       if (isset($_SESSION["plugin_fusioninventory_forcerun"])) {
          foreach ($_SESSION["plugin_fusioninventory_forcerun"] as $taskjobs_id=>$uniqid) {
-            $pluginFusioninventoryTaskjob->getFromDB($taskjobs_id);
+            $pfTaskjob->getFromDB($taskjobs_id);
 
             echo "<table class='tab_cadrehov' style='width:950px'>";
             echo "<tr class='tab_bg_1'>";
-            echo "<th>".$pluginFusioninventoryTaskjob->getLink(1)."</th>";
+            echo "<th>".$pfTaskjob->getLink(1)."</th>";
             echo "</tr>";
 
             echo "<tr class='tab_bg_1'>";
             echo "<td>";
-            $pluginFusioninventoryTaskjoblog->showHistory($taskjobs_id, 950, array('uniqid'=>$uniqid));
+            $pfTaskjoblog->showHistory($taskjobs_id, 950, array('uniqid'=>$uniqid));
             echo "</td>";
 
             echo "</table><br/>";

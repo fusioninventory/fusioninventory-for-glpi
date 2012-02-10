@@ -223,11 +223,11 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
     *@return nothing
     **/
    function PortUnknownConnection($p_mac, $p_ip) {
-      $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
       $unknown_infos = array();
       $unknown_infos["name"] = '';
       $unknown_infos['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
-      $newID=$PluginFusioninventoryUnknownDevice->add($unknown_infos);
+      $newID=$pfUnknownDevice->add($unknown_infos);
       // Add networking_port
       $NetworkPort =new NetworkPort();
       $port_add = array();

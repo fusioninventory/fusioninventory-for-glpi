@@ -64,8 +64,8 @@ function update232to240() {
    
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
    $config = new PluginFusioninventoryConfig();
-   $PluginFusioninventorySetup = new PluginFusioninventorySetup();
-   $users_id = $PluginFusioninventorySetup->createFusionInventoryUser();
+   $pfSetup = new PluginFusioninventorySetup();
+   $users_id = $pfSetup->createFusionInventoryUser();
    if (!PluginFusioninventoryConfig::getValue($plugins_id, "users_id")) {
        $config->initConfig($plugins_id, array("users_id" => $users_id));
    }

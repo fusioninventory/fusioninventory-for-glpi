@@ -119,12 +119,12 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
       // Add a networkquipment with a CDP in a connection yet created in unkniwn device.
       // Goal is to not have 2 times with device
 
-      $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
       $NetworkPort = new NetworkPort();
       $a_networkport = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
          AND `name` like 'GigabitEthernet%'", 'id', '1');
       $datas = current($a_networkport);
-      $PluginFusioninventoryUnknownDevice->getFromDB($datas['items_id']);
+      $pfUnknownDevice->getFromDB($datas['items_id']);
       
       $xml = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><REQUEST></REQUEST>");
       $xml->addChild('DEVICEID', 'AnotherSwitch.toto.local');
@@ -161,7 +161,7 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
       $itemtype = $array[1];
       $unknown  = $array[2];
       
-      $a_unknown = $PluginFusioninventoryUnknownDevice->find("`ip` = '172.25.22.10'");
+      $a_unknown = $pfUnknownDevice->find("`ip` = '172.25.22.10'");
 
       $this->assertEquals(count($a_unknown), 1, 'Unknwon CDP has been added in GLPI not 1 times ('.count($a_unknown).')');
 
@@ -175,12 +175,12 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
       // Add a networkequipment which are already created but in unknwon device
       global $DB;
 
-      $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
       $NetworkPort = new NetworkPort();
       $a_networkport = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
          AND `name` like 'GigabitEthernet%'", 'id', '1');
       $datas = current($a_networkport);
-      $PluginFusioninventoryUnknownDevice->getFromDB($datas['items_id']);
+      $pfUnknownDevice->getFromDB($datas['items_id']);
       $xml = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><REQUEST></REQUEST>");
       $xml->addChild('DEVICEID', 'testCDP.toto.local');
       $xml->addChild('QUERY', 'SNMPQUERY');
@@ -191,7 +191,7 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
       $xml_info->addChild('SERIAL', 'GTFD6IYJHGTFTY7');
       $xml_info->addChild('TYPE', 'NETWORKING');
       $xml_ips = $xml_info->addChild('IPS');
-      $xml_ips->addChild('IP', $PluginFusioninventoryUnknownDevice->fields['ip']);
+      $xml_ips->addChild('IP', $pfUnknownDevice->fields['ip']);
 
       $xml_ports = $xml_device->addChild('PORTS');
 
@@ -227,7 +227,7 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
       $itemtype = $array[1];
       $unknown  = $array[2];
 
-      $a_unknown = $PluginFusioninventoryUnknownDevice->find("`id` = '".$datas['items_id']."'");
+      $a_unknown = $pfUnknownDevice->find("`id` = '".$datas['items_id']."'");
 
       $this->assertEquals(count($a_unknown), 0, 'Switch has been added in GLPI but unknown device with CDP yet added is not fusionned with switch (unknown id : '.$datas['items_id'].')');
 
@@ -252,11 +252,11 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
     */
    function testDisconnectPortHub() {
       // Get a hub with 3 ports mini
-      $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
       $NetworkPort_NetworkPort = new NetworkPort_NetworkPort();
       $NetworkPort = new NetworkPort();
 
-      $a_hub = $PluginFusioninventoryUnknownDevice->find("`hub`='1'");
+      $a_hub = $pfUnknownDevice->find("`hub`='1'");
       $hub_found = 0;
       $port_id = 0;
       $port_count = 0;
@@ -450,8 +450,8 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
       $unknown = 0;
       if (count($a_devices) == 0) {
          // Search in unknown device
-         $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
-         $a_devices = $PluginFusioninventoryUnknownDevice->find("`name`='".$name."'");
+         $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
+         $a_devices = $pfUnknownDevice->find("`name`='".$name."'");
          $unknown = 1;
       }
       $this->assertEquals(count($a_devices), 1 , 'Problem on creation device, not created ('.$xmlFile.')');
@@ -480,8 +480,8 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
          }
       }
 
-      $PluginFusinvsnmpNetworkEquipmentIP = new PluginFusinvsnmpNetworkEquipmentIP();
-      $a_ips = $PluginFusinvsnmpNetworkEquipmentIP->find("`networkequipments_id`='".$items_id."'");
+      $pfNetworkEquipmentIP = new PluginFusinvsnmpNetworkEquipmentIP();
+      $a_ips = $pfNetworkEquipmentIP->find("`networkequipments_id`='".$items_id."'");
       $this->assertEquals(count($a_ips), $count_ips , 'Problem on manage IPs of the switch, '.count($a_ips).' instead '.$count_ips.' ['.$xmlFile.']');
    }
 
@@ -494,10 +494,10 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
       }
 
       $NetworkPort = new NetworkPort();
-      $PluginFusinvsnmpNetworkPort = new PluginFusinvsnmpNetworkPort($itemtype);
+      $pfNetworkPort = new PluginFusinvsnmpNetworkPort($itemtype);
       $count_ports = 0;
       foreach ($xml->PORTS->PORT as $child) {
-         if ($PluginFusinvsnmpNetworkPort->isReal($child->IFTYPE)) {
+         if ($pfNetworkPort->isReal($child->IFTYPE)) {
             $count_ports++;
          }
       }
@@ -515,7 +515,7 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
       }
 
       $NetworkPort = new NetworkPort();
-      $PluginFusinvsnmpNetworkPort = new PluginFusinvsnmpNetworkPort();
+      $pfNetworkPort = new PluginFusinvsnmpNetworkPort();
 
       if ((string)$xml->INFO->TYPE == 'NETWORKING') {
          foreach ($xml->PORTS->children() as $name=>$child) {
@@ -642,7 +642,7 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
       }
 
       $NetworkPort = new NetworkPort();
-      $PluginFusinvsnmpNetworkPort = new PluginFusinvsnmpNetworkPort();
+      $pfNetworkPort = new PluginFusinvsnmpNetworkPort();
       $NetworkPort_NetworkPort = new NetworkPort_NetworkPort();
 
       foreach ($xml->PORTS->children() as $name=>$child) {

@@ -49,14 +49,14 @@ class PluginFusinvsnmpConfig extends CommonDBTM {
 
    function initConfigModule() {
 
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+      $pfConfig = new PluginFusioninventoryConfig();
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
       $insert = array('storagesnmpauth'      => 'DB',
                       'version'              => PLUGIN_FUSINVSNMP_VERSION,
                       'threads_netdiscovery' => 1,
                       'threads_snmpquery'    => 1);
-      $PluginFusioninventoryConfig->initConfig($plugins_id, $insert);
+      $pfConfig->initConfig($plugins_id, $insert);
    }
 
    
@@ -89,14 +89,14 @@ class PluginFusinvsnmpConfig extends CommonDBTM {
    
    function putForm($p_post) {
 
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+      $pfConfig = new PluginFusioninventoryConfig();
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
-      $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'storagesnmpauth', 
+      $pfConfig->updateConfigType($plugins_id, 'storagesnmpauth', 
                                                      $p_post['storagesnmpauth']);
-      $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'threads_netdiscovery',
+      $pfConfig->updateConfigType($plugins_id, 'threads_netdiscovery',
                                                      $p_post['threads_netdiscovery']);
-      $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'threads_snmpquery',
+      $pfConfig->updateConfigType($plugins_id, 'threads_snmpquery',
                                                      $p_post['threads_snmpquery']);
    }
 
@@ -105,7 +105,7 @@ class PluginFusinvsnmpConfig extends CommonDBTM {
    function showForm($options=array()) {
       global $LANG,$CFG_GLPI;
 
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+      $pfConfig = new PluginFusioninventoryConfig();
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
 
@@ -120,7 +120,7 @@ class PluginFusinvsnmpConfig extends CommonDBTM {
       $ArrayValues['DB']= $LANG['plugin_fusioninventory']['functionalities'][17];
       $ArrayValues['file']= $LANG['plugin_fusioninventory']['functionalities'][18];
       Dropdown::showFromArray('storagesnmpauth', $ArrayValues,
-                              array('value'=>$PluginFusioninventoryConfig->getValue($plugins_id, 'storagesnmpauth')));
+                              array('value'=>$pfConfig->getValue($plugins_id, 'storagesnmpauth')));
       echo "</td>";
       echo "<td colspan='2'></td>";
       echo "</tr>";
@@ -128,11 +128,11 @@ class PluginFusinvsnmpConfig extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusinvsnmp']['agents'][24]."&nbsp;(".strtolower($LANG['plugin_fusinvsnmp']['config'][4]).")&nbsp;:</td>";
       echo "<td align='center'>";
-      Dropdown::showInteger("threads_netdiscovery", $PluginFusioninventoryConfig->getValue($plugins_id, 'threads_netdiscovery'),1,400);
+      Dropdown::showInteger("threads_netdiscovery", $pfConfig->getValue($plugins_id, 'threads_netdiscovery'),1,400);
       echo "</td>";
       echo "<td>".$LANG['plugin_fusinvsnmp']['agents'][24]."&nbsp;(".strtolower($LANG['plugin_fusinvsnmp']['config'][3]).")&nbsp;:</td>";
       echo "<td align='center'>";
-      Dropdown::showInteger("threads_snmpquery", $PluginFusioninventoryConfig->getValue($plugins_id, 'threads_snmpquery'),1,400);
+      Dropdown::showInteger("threads_snmpquery", $pfConfig->getValue($plugins_id, 'threads_snmpquery'),1,400);
       echo "</td>";
       echo "</tr>";
 
@@ -145,8 +145,8 @@ class PluginFusinvsnmpConfig extends CommonDBTM {
       echo "</table>";
       echo "</form><br/>";
 
-      $PluginFusinvsnmpConfigLogField = new PluginFusinvsnmpConfigLogField();
-      $PluginFusinvsnmpConfigLogField->showForm(array('target'=>$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/functionalities.form.php"));
+      $pfConfigLogField = new PluginFusinvsnmpConfigLogField();
+      $pfConfigLogField->showForm(array('target'=>$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/functionalities.form.php"));
 
       return true;
    }

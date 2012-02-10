@@ -54,8 +54,8 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
          break;
 
       case "glpi_plugin_fusioninventory_taskjobs.status":
-         $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
-         return $PluginFusioninventoryTaskjobstatus->stateTaskjob($data['id'], '200', 'htmlvar', 'simple');
+         $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
+         return $pfTaskjobstatus->stateTaskjob($data['id'], '200', 'htmlvar', 'simple');
          break;
 
       case "glpi_plugin_fusioninventory_agents.version":
@@ -78,8 +78,8 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
    }
    
    if ($table == "glpi_plugin_fusioninventory_agentmodules") {
-      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
-      $a_modules = $PluginFusioninventoryAgentmodule->find();
+      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+      $a_modules = $pfAgentmodule->find();
       foreach ($a_modules as $data2) {
          if ($table.".".$field == "glpi_plugin_fusioninventory_agentmodules.".$data2['modulename']) {
             if (strstr($data["ITEM_".$num."_0"], '"'.$data['id'].'"')) {
@@ -286,13 +286,13 @@ function plugin_headings_fusioninventory_tasks($item, $itemtype='', $items_id=0)
       // Possibility to remote agent
       $allowed = PluginFusioninventoryTaskjob::getAllowurlfopen(1);
       if (isset($allowed)) {
-         $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-         $PluginFusioninventoryAgent->forceRemoteAgent();
+         $pfAgent = new PluginFusioninventoryAgent();
+         $pfAgent->forceRemoteAgent();
       }
    }
 
-   $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-   $PluginFusioninventoryTaskjob->manageTasksByObject($itemtype, $items_id);
+   $pfTaskjob = new PluginFusioninventoryTaskjob();
+   $pfTaskjob->manageTasksByObject($itemtype, $items_id);
 
 }
 
@@ -305,11 +305,11 @@ function plugin_headings_fusioninventory($item, $withtemplate=0) {
    switch (get_class($item)) {
       case 'Profile' :
 
-         $PluginFusioninventoryProfile = new PluginFusioninventoryProfile();
+         $pfProfile = new PluginFusioninventoryProfile();
 //         if (!$prof->GetfromDB($id)) {
 //            PluginFusioninventoryDb::createaccess($id);
 //         }
-         $PluginFusioninventoryProfile->showProfileForm($item->getField('id'), $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/profile.php");
+         $pfProfile->showProfileForm($item->getField('id'), $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/profile.php");
       break;
    }
 }
@@ -372,8 +372,8 @@ function plugin_fusioninventory_MassiveActions($type) {
          break;
 
       case 'PluginFusioninventoryAgent';
-         $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
-         $a_modules = $PluginFusioninventoryAgentmodule->find();
+         $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+         $a_modules = $pfAgentmodule->find();
          $array = array();
          foreach ($a_modules as $data) {
             $array["plugin_fusioninventory_agentmodule".$data["modulename"]] = $LANG['plugin_fusioninventory']['task'][26]." - ".$data['modulename'];
@@ -425,8 +425,8 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
 //   switch ($table) {
 //
 //      case 'glpi_plugin_fusioninventory_agentmodules':
-//         $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
-//         $a_modules = $PluginFusioninventoryAgentmodule->find();
+//         $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+//         $a_modules = $pfAgentmodule->find();
 //         foreach ($a_modules as $data) {
 //            if ($table.".".$field == "glpi_plugin_fusioninventory_agentmodules.".$data['modulename']) {
 //               Dropdown::showYesNo($field);
@@ -474,8 +474,8 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
 
       case 'PluginFusioninventoryAgent':
          if (strstr($options['action'], 'plugin_fusioninventory_agentmodule')) {
-            $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
-            $a_modules = $PluginFusioninventoryAgentmodule->find();
+            $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+            $a_modules = $pfAgentmodule->find();
             foreach ($a_modules as $data) {
                if ($options['action'] == "plugin_fusioninventory_agentmodule".$data['modulename']) {
                   Dropdown::showYesNo($options['action']);
@@ -537,10 +537,10 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
          if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","w")) {
             $Import = 0;
             $NoImport = 0;
-            $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+            $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
             foreach ($data['item'] as $key => $val) {
                if ($val == 1) {
-                  list($Import, $NoImport) = $PluginFusioninventoryUnknownDevice->import($key,$Import,$NoImport);
+                  list($Import, $NoImport) = $pfUnknownDevice->import($key,$Import,$NoImport);
                }
             }
              Session::addMessageAfterRedirect($LANG['plugin_fusioninventory']["discovery"][5]." : ".$Import);
@@ -553,32 +553,32 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
             foreach ($data["item"] as $key => $val) {
                if ($val == 1) {
                   
-                  $pluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-                  if ($pluginFusioninventoryAgent->getFromDB($key)) {
+                  $pfAgent = new PluginFusioninventoryAgent();
+                  if ($pfAgent->getFromDB($key)) {
                      $input = array();
                      $input['id'] = $key;
                      $input['entities_id'] = $data['entities_id'];
-                     $pluginFusioninventoryAgent->update($input);
+                     $pfAgent->update($input);
                   }
                }
             }
          } else if ($data['itemtype'] == 'PluginFusioninventoryTask') {
-            $pluginFusioninventoryTask = new PluginFusioninventoryTask();
-            $pluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+            $pfTask = new PluginFusioninventoryTask();
+            $pfTaskjob = new PluginFusioninventoryTaskjob();
             foreach ($data["item"] as $key => $val) {
                if ($val == 1) {
-                  if ($pluginFusioninventoryTask->getFromDB($key)) {
-                     $a_taskjobs = $pluginFusioninventoryTaskjob->find("`plugin_fusioninventory_tasks_id`='".$key."'");
+                  if ($pfTask->getFromDB($key)) {
+                     $a_taskjobs = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$key."'");
                      foreach ($a_taskjobs as $data1) {
                         $input = array();
                         $input['id'] = $data1['id'];
                         $input['entities_id'] = $data['entities_id'];
-                        $pluginFusioninventoryTaskjob->update($input); 
+                        $pfTaskjob->update($input); 
                      }
                      $input = array();
                      $input['id'] = $key;
                      $input['entities_id'] = $data['entities_id'];
-                     $pluginFusioninventoryTask->update($input);
+                     $pfTask->update($input);
                   }
                }
             }
@@ -589,8 +589,8 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
    }
 
    if (strstr($data['action'], 'plugin_fusioninventory_agentmodule')) {
-      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
-      $a_modules = $PluginFusioninventoryAgentmodule->find();
+      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+      $a_modules = $pfAgentmodule->find();
       foreach ($a_modules as $data2) {
          if ($data['action'] == "plugin_fusioninventory_agentmodule".$data2['modulename']) {
             foreach ($data['item'] as $items_id => $val) {
@@ -614,7 +614,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
                   $data2['exceptions'] = exportArrayToDB($a_exceptions);
                }
             }
-            $PluginFusioninventoryAgentmodule->update($data2);
+            $pfAgentmodule->update($data2);
          }
       }
    }
@@ -699,8 +699,8 @@ function plugin_fusioninventory_addSelect($type,$id,$num) {
 
       case 'PluginFusioninventoryAgent':
 
-         $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
-         $a_modules = $PluginFusioninventoryAgentmodule->find();
+         $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+         $a_modules = $pfAgentmodule->find();
          foreach ($a_modules as $data) {
             if ($table.".".$field == "glpi_plugin_fusioninventory_agentmodules.".$data['modulename']) {
                return " `FUSION_".$data['modulename']."`.`is_active` AS ITEM_$num, `FUSION_".$data['modulename']."`.`exceptions`  AS ITEM_".$num."_0,";
@@ -725,8 +725,8 @@ function plugin_fusioninventory_addLeftJoin($itemtype,$ref_table,$new_table,$lin
    switch ($itemtype) {
 
       case 'PluginFusioninventoryAgent':
-         $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
-         $a_modules = $PluginFusioninventoryAgentmodule->find();
+         $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+         $a_modules = $pfAgentmodule->find();
          foreach ($a_modules as $data) {
             if ($new_table.".".$linkfield == "glpi_plugin_fusioninventory_agentmodules.".$data['modulename']) {
                return " LEFT JOIN `glpi_plugin_fusioninventory_agentmodules` AS FUSION_".$data['modulename']."
@@ -765,8 +765,8 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$id,$val) {
    switch ($type) {
 
       case 'PluginFusioninventoryAgent':
-         $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
-         $a_modules = $PluginFusioninventoryAgentmodule->find();
+         $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+         $a_modules = $pfAgentmodule->find();
          foreach ($a_modules as $data) {
             if ($table.".".$field == "glpi_plugin_fusioninventory_agentmodules.".$data['modulename']) {
                if (($data['exceptions'] != "[]") AND ($data['exceptions'] != "")) {
@@ -874,7 +874,7 @@ function plugin_item_purge_fusioninventory($parm) {
          // If remove connection of a hub port (unknown device), we must delete this port too
          $NetworkPort = new NetworkPort();
          $NetworkPort_Vlan = new NetworkPort_Vlan();
-         $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+         $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
          $networkPort_NetworkPort = new NetworkPort_NetworkPort();
 
          $a_hubs = array();
@@ -882,16 +882,16 @@ function plugin_item_purge_fusioninventory($parm) {
          $port_id = $NetworkPort->getContact($parm->getField('networkports_id_1'));
          $NetworkPort->getFromDB($parm->getField('networkports_id_1'));
          if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
-            $PluginFusioninventoryUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
-            if ($PluginFusioninventoryUnknownDevice->fields['hub'] == '1') {
+            $pfUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
+            if ($pfUnknownDevice->fields['hub'] == '1') {
                $a_hubs[$NetworkPort->fields['items_id']] = 1;
                $NetworkPort->delete($NetworkPort->fields);
             }
          }
          $NetworkPort->getFromDB($port_id);
          if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
-            $PluginFusioninventoryUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
-            if ($PluginFusioninventoryUnknownDevice->fields['hub'] == '1') {
+            $pfUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
+            if ($pfUnknownDevice->fields['hub'] == '1') {
                $a_hubs[$NetworkPort->fields['items_id']] = 1;
             }
          }
@@ -899,8 +899,8 @@ function plugin_item_purge_fusioninventory($parm) {
          $port_id = $NetworkPort->getContact($parm->getField('networkports_id_2'));
          $NetworkPort->getFromDB($parm->getField('networkports_id_2'));
          if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
-            if ($PluginFusioninventoryUnknownDevice->getFromDB($NetworkPort->fields['items_id'])) {
-               if ($PluginFusioninventoryUnknownDevice->fields['hub'] == '1') {
+            if ($pfUnknownDevice->getFromDB($NetworkPort->fields['items_id'])) {
+               if ($pfUnknownDevice->fields['hub'] == '1') {
                   $a_vlans = $NetworkPort_Vlan->getVlansForNetworkPort($NetworkPort->fields['id']);
                   foreach ($a_vlans as $vlan_id) {
                      $NetworkPort_Vlan->unassignVlan($NetworkPort->fields['id'], $vlan_id);
@@ -912,8 +912,8 @@ function plugin_item_purge_fusioninventory($parm) {
          } 
          $NetworkPort->getFromDB($port_id);
          if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
-            $PluginFusioninventoryUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
-            if ($PluginFusioninventoryUnknownDevice->fields['hub'] == '1') {
+            $pfUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
+            if ($pfUnknownDevice->fields['hub'] == '1') {
                $a_hubs[$NetworkPort->fields['items_id']] = 1;
             }
          }
@@ -923,7 +923,7 @@ function plugin_item_purge_fusioninventory($parm) {
             $a_networkports = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
                AND `items_id`='".$unkowndevice_id."' ");
             if (count($a_networkports) < 2) {
-               $PluginFusioninventoryUnknownDevice->delete(array('id'=>$unkowndevice_id), 1);
+               $pfUnknownDevice->delete(array('id'=>$unkowndevice_id), 1);
             } else if (count($a_networkports) == '2') {
                $switchPorts_id = 0;
                $otherPorts_id  = 0;
@@ -935,8 +935,8 @@ function plugin_item_purge_fusioninventory($parm) {
                   }
                }
 
-               $PluginFusioninventoryUnknownDevice->disconnectDB($switchPorts_id); // disconnect this port
-               $PluginFusioninventoryUnknownDevice->disconnectDB($otherPorts_id);     // disconnect destination port
+               $pfUnknownDevice->disconnectDB($switchPorts_id); // disconnect this port
+               $pfUnknownDevice->disconnectDB($otherPorts_id);     // disconnect destination port
                
                $networkPort_NetworkPort->add(array('networkports_id_1'=> $switchPorts_id,
                                                        'networkports_id_2' => $otherPorts_id));
@@ -955,13 +955,13 @@ function plugin_item_transfer_fusioninventory($parm) {
    switch ($parm['type']) {
 
       case 'Computer':
-         $pluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+         $pfAgent = new PluginFusioninventoryAgent();
 
-         if ($agent_id = $pluginFusioninventoryAgent->getAgentWithComputerid($parm['id'])) {
+         if ($agent_id = $pfAgent->getAgentWithComputerid($parm['id'])) {
             $input = array();
             $input['id'] = $agent_id;
             $input['entities_id'] = $_POST['to_entity'];
-            $pluginFusioninventoryAgent->update($input);
+            $pfAgent->update($input);
          }
 
          break;

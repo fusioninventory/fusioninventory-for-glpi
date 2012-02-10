@@ -59,15 +59,15 @@ if (!isset($_POST["withtemplate"])) {
    $_POST["withtemplate"] = "";
 }
 
-$PluginFusinvinventoryBlacklist = new PluginFusinvinventoryBlacklist();
-$PluginFusinvinventoryCriteria = new PluginFusinvinventoryCriteria();
-$fields = $PluginFusinvinventoryCriteria->find("");
+$pfBlacklist = new PluginFusinvinventoryBlacklist();
+$pfCriteria = new PluginFusinvinventoryCriteria();
+$fields = $pfCriteria->find("");
 
 foreach ($fields as $id=>$data) {
    if (($id == $_POST['glpi_tab']) OR ($_POST['glpi_tab'] == "-1")) {
-      //$PluginFusinvinventoryBlacklist->showArray($id);
+      //$pfBlacklist->showArray($id);
       echo "<br/>";
-      $PluginFusinvinventoryBlacklist->addForm($id);
+      $pfBlacklist->addForm($id);
    }
 }
 

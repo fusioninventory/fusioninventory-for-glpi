@@ -51,7 +51,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 Session::checkCentralAccess();
-$PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
-$PluginFusioninventoryTaskjob->dropdownDefinition("DefinitionList", $_POST['DefinitionType'], $_POST['method'], $_POST['deftypeid'], $_POST['taskjobs_id']);
+$pfTaskjob = new PluginFusioninventoryTaskjob;
+$pfTaskjob->dropdownDefinition("DefinitionList", $_POST['DefinitionType'], $_POST['method'], $_POST['deftypeid'], $_POST['taskjobs_id']);
 
 ?>

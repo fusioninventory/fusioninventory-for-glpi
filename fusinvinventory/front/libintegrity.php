@@ -48,16 +48,16 @@ include (GLPI_ROOT."/inc/includes.php");
 
 PluginFusioninventoryProfile::checkRight("fusinvinventory", "importxml","w");
 
-$PluginFusinvinventoryLibintegrity = new PluginFusinvinventoryLibintegrity();
+$pfLibintegrity = new PluginFusinvinventoryLibintegrity();
 if (!empty($_POST)) {
    if (isset($_POST['reimport'])) {
       foreach($_POST['reimport'] as $infos=>$num) {
-         $PluginFusinvinventoryLibintegrity->Import($infos);
+         $pfLibintegrity->Import($infos);
       }
    }
    if (isset($_POST['glpidelete'])) {
       foreach($_POST['glpidelete'] as $infos=>$num) {
-         $PluginFusinvinventoryLibintegrity->deleteGLPI($infos);
+         $pfLibintegrity->deleteGLPI($infos);
       }
    }
    Html::back();
@@ -67,7 +67,7 @@ Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"p
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-$PluginFusinvinventoryLibintegrity->showForm();
+$pfLibintegrity->showForm();
 
 Html::footer();
 

@@ -50,14 +50,14 @@ PluginFusioninventoryProfile::checkRight("fusinvinventory", "importxml","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-$PluginFusinvinventoryImportXML = new PluginFusinvinventoryImportXML();
+$pfImportXML = new PluginFusinvinventoryImportXML();
 
 if (isset($_FILES['importfile']['tmp_name'])) {
    PluginFusioninventoryProfile::checkRight("fusinvinventory", "importxml","w");
 
    if ($_FILES['importfile']['tmp_name'] != '') {
       $_SESSION["plugin_fusioninventory_disablelocks"] = 1;
-      if ($PluginFusinvinventoryImportXML->importXMLFile($_FILES['importfile']['tmp_name'])) {
+      if ($pfImportXML->importXMLFile($_FILES['importfile']['tmp_name'])) {
          $_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusinvinventory']['importxml'][1];
       } else {
          $_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusinvinventory']['importxml'][3];
@@ -69,7 +69,7 @@ if (isset($_FILES['importfile']['tmp_name'])) {
 	Html::back();
 }
 
-$PluginFusinvinventoryImportXML->showForm();
+$pfImportXML->showForm();
 
 Html::footer();
 

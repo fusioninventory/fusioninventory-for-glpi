@@ -102,13 +102,13 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
       // Get conf to know if are in SSL only mode
    
-      $fusioninventory_config      = new PluginFusioninventoryConfig();
-      $PluginFusioninventoryModule = new PluginFusioninventoryModule();
+      $pfConfig      = new PluginFusioninventoryConfig();
+      $pfModule = new PluginFusioninventoryModule();
       
-      $fusioninventoryModule_id    = $PluginFusioninventoryModule->getModuleId("fusioninventory");
+      $fusioninventoryModule_id    = $pfModule->getModuleId("fusioninventory");
       ob_start();
       if ($loadplugins == '1') {
-         $users_id = $fusioninventory_config->getValue($fusioninventoryModule_id, 'users_id');
+         $users_id = $pfConfig->getValue($fusioninventoryModule_id, 'users_id');
          $_SESSION['glpiID'] = $users_id;
          $_SESSION['glpiactiveprofile'] = array();
          $_SESSION['glpiactiveprofile']['interface'] = '';
@@ -130,10 +130,10 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
 
       // Get compression of XML
       $xml = '';
-      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-      $PluginFusioninventoryTaskjob->disableDebug();
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTaskjob->disableDebug();
       $xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
-      $PluginFusioninventoryTaskjob->reenableusemode();
+      $pfTaskjob->reenableusemode();
       $compressmode = 'none';
       if ($xml) {
          header("Content-Type: application/x-compress-compress");
@@ -157,7 +157,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
       }
 
-      $ssl = $fusioninventory_config->getValue($fusioninventoryModule_id, 'ssl_only');
+      $ssl = $pfConfig->getValue($fusioninventoryModule_id, 'ssl_only');
       if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"))
           OR ($ssl == "0")) {
          // echo "On continue";
@@ -171,7 +171,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       }
 
       // Check XML integrity
-      $PluginFusioninventoryCommunication = new PluginFusioninventoryCommunication();
+      $pfCommunication = new PluginFusioninventoryCommunication();
       if (PluginFusioninventoryConfig::isExtradebugActive()) {
          file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".uniqid(), $xml);
       }
@@ -185,11 +185,11 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          $pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA);
 
          if (!$pxml) {
-            $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
+            $pfCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
 <ERROR>XML not well formed!</ERROR>
 </REPLY>");
-            $PluginFusioninventoryCommunication->emptyAnswer($compressmode);
+            $pfCommunication->emptyAnswer($compressmode);
             session_destroy();
             exit();
          }

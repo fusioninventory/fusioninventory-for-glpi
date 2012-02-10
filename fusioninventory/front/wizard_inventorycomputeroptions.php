@@ -51,14 +51,14 @@ Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"p
 Session::checkLoginUser();
 //PluginFusioninventoryMenu::displayMenu("mini");
 
-$PluginFusioninventoryWizard = new PluginFusioninventoryWizard();
+$pfWizard = new PluginFusioninventoryWizard();
 
 $a_button = array('name' => 'Suivant',
                   'link' => $CFG_GLPI['root_doc'].'/plugins/fusioninventory/front/wizard_inventorycomputeroptions.php');
 
 
-$PluginFusioninventoryWizard->displayShowForm($a_button,
-                                             $PluginFusioninventoryWizard->filInventoryComputer(),
+$pfWizard->displayShowForm($a_button,
+                                             $pfWizard->filInventoryComputer(),
                                              "PluginFusinvinventoryConfig");
 
 Html::footer();

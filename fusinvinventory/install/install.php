@@ -80,14 +80,14 @@ function pluginFusinvinventoryInstall($version, $migration='') {
    PluginFusioninventoryProfile::initProfile($a_plugin['shortname'], $plugins_id);
    PluginFusioninventoryProfile::changeProfile($plugins_id);
 
-   $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
+   $pfAgentmodule = new PluginFusioninventoryAgentmodule;
    $input = array();
    $input['plugins_id'] = $plugins_id;
    $input['modulename'] = "INVENTORY";
    $input['is_active']  = 1;
    $input['exceptions'] = exportArrayToDB(array());
    $input['url']        = '';
-   $PluginFusioninventoryAgentmodule->add($input);
+   $pfAgentmodule->add($input);
 
    $input['modulename'] = "ESX";
    $input['is_active']  = 0;
@@ -98,12 +98,12 @@ function pluginFusinvinventoryInstall($version, $migration='') {
    $input['url'] = PluginFusioninventoryRestCommunication::getDefaultRestURL($url, 
                                                                              'fusinvinventory', 
                                                                              'esx');
-   $PluginFusioninventoryAgentmodule->add($input);
+   $pfAgentmodule->add($input);
 
     include(GLPI_ROOT . "/plugins/fusinvinventory/inc/config.class.php");
    // Create configuration
-   $PluginFusinvinventoryConfig = new PluginFusinvinventoryConfig();
-   $PluginFusinvinventoryConfig->initConfigModule();
+   $pfConfig = new PluginFusinvinventoryConfig();
+   $pfConfig->initConfigModule();
 
    // Récupérer la config des entités des regles OCS
    if (!class_exists('PluginFusinvinventoryRuleEntityCollection')) { // if plugin is unactive
@@ -184,8 +184,8 @@ function pluginFusinvinventoryInstall($version, $migration='') {
    include_once GLPI_ROOT . "/plugins/fusinvinventory/inc/lock.class.php";
    include_once GLPI_ROOT . "/plugins/fusinvinventory/inc/lib.class.php";
    include_once GLPI_ROOT . "/plugins/fusinvinventory/inc/libhook.class.php";
-   $PluginFusinvinventoryLock = new PluginFusinvinventoryLock();
-   $PluginFusinvinventoryLock->importFromOcs();
+   $pfLock = new PluginFusinvinventoryLock();
+   $pfLock->importFromOcs();
 }
 
 
@@ -195,35 +195,35 @@ function pluginFusinvinventoryUninstall() {
    // Get informations of plugin
    $a_plugin = plugin_version_fusinvinventory();
 
-   $PluginFusioninventorySetup = new PluginFusioninventorySetup();
+   $pfSetup = new PluginFusioninventorySetup();
 
    if (file_exists(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'])) {
-      $PluginFusioninventorySetup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
+      $pfSetup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
    }
    // Delete files of lib
    if (file_exists(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/DataFilter')) {
-      $PluginFusioninventorySetup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/DataFilter');
+      $pfSetup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/DataFilter');
    }
    if (file_exists(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/criterias')) {
-      $PluginFusioninventorySetup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/criterias');
+      $pfSetup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/criterias');
    }
    if (file_exists(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/machines')) {
-      $PluginFusioninventorySetup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/machines');
+      $pfSetup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/machines');
    }
 
    PluginFusioninventoryTask::cleanTasksbyMethod('inventory');
 
    // Delete config
-   $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
+   $pfConfig = new PluginFusioninventoryConfig;
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
-   $PluginFusioninventoryConfig->cleanConfig($plugins_id);
+   $pfConfig->cleanConfig($plugins_id);
 
 
    PluginFusioninventoryProfile::cleanProfile($a_plugin['shortname']);
 
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
-   $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
-   $PluginFusioninventoryAgentmodule->deleteModule($plugins_id);
+   $pfAgentmodule = new PluginFusioninventoryAgentmodule;
+   $pfAgentmodule->deleteModule($plugins_id);
 
    // Delete rules
    $Rule = new Rule();

@@ -41,30 +41,30 @@ class Plugins_Fusioninventory_Agent extends PHPUnit_Framework_TestCase {
       $return_xml = $emulatorAgent->sendProlog($input_xml);
       print_r($return_xml);
 
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
-      $a_agent = $PluginFusioninventoryAgent->find("`device_id`='agenttest-2010-03-09-09-41-28'
+      $pfAgent = new PluginFusioninventoryAgent;
+      $a_agent = $pfAgent->find("`device_id`='agenttest-2010-03-09-09-41-28'
                                                       AND token='NTMXKUBJ'
                                                       AND name='agenttest-2010-03-09-09-41-28'
                                                       AND last_contact IS NOT NULL");
-      $this->assertEquals(count($a_agent), 1, 'Problem on creation agent (have '.count($a_agent).' times in DB), code is '.$code);
+      $this->assertEquals(count($a_agent), 1, 'Problem on creation agent (have '.count($a_agent).' times in DB), code is ');
 
    }
 
    
 
    public function testAgentDelete() {
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
-      $a_agent = $PluginFusioninventoryAgent->find("`device_id`='agenttest-2010-03-09-09-41-28'
+      $pfAgent = new PluginFusioninventoryAgent;
+      $a_agent = $pfAgent->find("`device_id`='agenttest-2010-03-09-09-41-28'
                                                       AND token='NTMXKUBJ'
                                                       AND name='agenttest-2010-03-09-09-41-28'
                                                       AND last_contact IS NOT NULL");
       $this->assertEquals(count($a_agent), 1, 'Problem find agent (have '.count($a_agent).' times in DB)');
       if (count($a_agent) == '1') {
-         foreach ($a_agent as $id=>$data) {
-            $PluginFusioninventoryAgent->delete($data);
+         foreach ($a_agent as $data) {
+            $pfAgent->delete($data);
          }
       }
-      $a_agent = $PluginFusioninventoryAgent->find("`device_id`='agenttest-2010-03-09-09-41-28'
+      $a_agent = $pfAgent->find("`device_id`='agenttest-2010-03-09-09-41-28'
                                                       AND token='NTMXKUBJ'
                                                       AND name='agenttest-2010-03-09-09-41-28'
                                                       AND last_contact IS NOT NULL");

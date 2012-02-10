@@ -89,14 +89,14 @@ class PluginFusinvinventoryImportXML extends CommonDBTM  {
    *
    **/
    function importXMLFile($file) {
-      $PluginFusinvinventoryInventory = new PluginFusinvinventoryInventory();
+      $pfInventory = new PluginFusinvinventoryInventory();
       $p_xml = file_get_contents($file);
       libxml_use_internal_errors(true);
       if ($pxml = simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA)) {
          libxml_clear_errors();
          $communication  = new PluginFusioninventoryCommunication();
          $pxml = $communication->cleanXML($pxml);
-         $PluginFusinvinventoryInventory->sendCriteria("", "", $pxml);
+         $pfInventory->sendCriteria("", "", $pxml);
          return true;
       } else {
          libxml_clear_errors();
@@ -115,11 +115,11 @@ class PluginFusinvinventoryImportXML extends CommonDBTM  {
    *
    **/
    function importXMLContent($p_xml) {
-      $PluginFusinvinventoryInventory = new PluginFusinvinventoryInventory();
+      $pfInventory = new PluginFusinvinventoryInventory();
       libxml_use_internal_errors(true);
       if (simplexml_load_string($p_xml)) {
          libxml_clear_errors();
-         $PluginFusinvinventoryInventory->sendCriteria("", "", $p_xml);
+         $pfInventory->sendCriteria("", "", $p_xml);
       } else {
          libxml_clear_errors();
       }

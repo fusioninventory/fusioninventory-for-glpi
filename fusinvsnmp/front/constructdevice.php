@@ -53,22 +53,22 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 $_GET['target']="construct_device.php";
 
-$PluginFusinvsnmpConstructDevice = new PluginFusinvsnmpConstructDevice();
+$pfConstructDevice = new PluginFusinvsnmpConstructDevice();
 
 if (isset($_GET['generatemodels']) AND $_GET['generatemodels'] == '1') {
-   $PluginFusinvsnmpConstructDevice->generatemodels();
+   $pfConstructDevice->generatemodels();
    Html::back();
 } else if (isset($_GET['generatediscover']) AND $_GET['generatediscover'] == '1') {
-   $PluginFusinvsnmpConstructDevice->generateDiscovery();
+   $pfConstructDevice->generateDiscovery();
    Html::back();
 } else if (isset($_GET['cleanmodels']) AND $_GET['cleanmodels'] == '1') {
-   $PluginFusinvsnmpConstructDevice->cleanmodels();
+   $pfConstructDevice->cleanmodels();
    Html::back();
 } else if (isset($_GET['exportmodels']) AND $_GET['exportmodels'] == '1') {
-   $PluginFusinvsnmpConstructDevice->exportmodels();
+   $pfConstructDevice->exportmodels();
    Html::back();
 } else if (isset($_GET['generatecomments']) AND $_GET['generatecomments'] == '1') {
-   $PluginFusinvsnmpConstructDevice->generatecomments();
+   $pfConstructDevice->generatecomments();
    Html::back();
 }
 

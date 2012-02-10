@@ -46,7 +46,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","r");
 
-$PluginFusinvsnmpConfigSecurity = new PluginFusinvsnmpConfigSecurity();
+$pfConfigSecurity = new PluginFusinvsnmpConfigSecurity();
 $config = new PluginFusioninventoryConfig();
 
 Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","configsecurity");
@@ -59,18 +59,18 @@ if (isset ($_POST["add"])) {
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
    $new_ID = 0;
    if ($config->getValue($plugins_id, "storagesnmpauth") == "file") {
-      $new_ID = $PluginFusinvsnmpConfigSecurity->add_xml();
+      $new_ID = $pfConfigSecurity->add_xml();
    } else if ($config->getValue($plugins_id, "storagesnmpauth") == "DB") {
-      $new_ID = $PluginFusinvsnmpConfigSecurity->add($_POST);
+      $new_ID = $pfConfigSecurity->add($_POST);
    }
    Html::back();
 } else if (isset ($_POST["update"])) {
 	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","w");
-	$PluginFusinvsnmpConfigSecurity->update($_POST);
+	$pfConfigSecurity->update($_POST);
 	Html::back();
 } else if (isset ($_POST["delete"])) {
    PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","w");
-   $PluginFusinvsnmpConfigSecurity->delete($_POST);
+   $pfConfigSecurity->delete($_POST);
    Html::redirect("configsecurity.php");
 }
 
@@ -83,7 +83,7 @@ if (strstr($_SERVER['HTTP_REFERER'], "wizard.php")) {
    Html::redirect($_SERVER['HTTP_REFERER']."&id=".$id);
 }
 
-$PluginFusinvsnmpConfigSecurity->showForm($id);
+$pfConfigSecurity->showForm($id);
 
 Html::footer();
 

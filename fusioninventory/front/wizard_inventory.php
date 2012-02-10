@@ -51,7 +51,7 @@ Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"p
 Session::checkLoginUser();
 //PluginFusioninventoryMenu::displayMenu("mini");
 
-$PluginFusioninventoryWizard = new PluginFusioninventoryWizard();
+$pfWizard = new PluginFusioninventoryWizard();
 
 $a_buttons = array(array('Des ordinateurs et leur périphériques',
                          $CFG_GLPI['root_doc'].'/plugins/fusioninventory/front/wizard_inventorycomputeroptions.php',
@@ -66,7 +66,7 @@ $a_ariane = array("choix de l'action"=>$CFG_GLPI['root_doc']."/plugins/fusioninv
 
 echo "<center>Quels types matériel voulez-vous inventorier  ?</center><br/>";
 
-$PluginFusioninventoryWizard->displayButtons($a_buttons, $a_ariane);
+$pfWizard->displayButtons($a_buttons, $a_ariane);
 
 Html::footer();
 

@@ -90,11 +90,11 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
    
    function defineTabs($options=array()){
 
-      $PluginFusinvinventoryCriteria = new PluginFusinvinventoryCriteria();
+      $pfCriteria = new PluginFusinvinventoryCriteria();
 
       $ong = array();
       $i = 1;
-      $fields = $PluginFusinvinventoryCriteria->find("");
+      $fields = $pfCriteria->find("");
       foreach($fields as $data) {
          $ong[$i] = $data['name'];
          $i++;
@@ -158,8 +158,8 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
          $xml->CONTENT->BIOS->SSN = trim($xml->CONTENT->BIOS->SSN);
       }
 
-      $PluginFusinvinventoryCriteria = new PluginFusinvinventoryCriteria();
-      $fields = $PluginFusinvinventoryCriteria->find("");
+      $pfCriteria = new PluginFusinvinventoryCriteria();
+      $fields = $pfCriteria->find("");
       
       foreach($fields as $id=>$data) {
 

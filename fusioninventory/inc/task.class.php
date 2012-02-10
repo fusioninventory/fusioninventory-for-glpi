@@ -280,12 +280,12 @@ class PluginFusioninventoryTask extends CommonDBTM {
    **/
    static function purgeTask($parm) {
       // $parm["id"]
-      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
 
       // all taskjobs
-      $a_taskjobs = $PluginFusioninventoryTaskjob->find("`plugin_fusioninventory_tasks_id`='".$parm->fields["id"]."'");
+      $a_taskjobs = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$parm->fields["id"]."'");
       foreach($a_taskjobs as $a_taskjob) {
-         $PluginFusioninventoryTaskjob->delete($a_taskjob, 1);
+         $pfTaskjob->delete($a_taskjob, 1);
       }
    }
 
@@ -300,20 +300,20 @@ class PluginFusioninventoryTask extends CommonDBTM {
    *
    **/
    static function cleanTasksbyMethod($method) {
-      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-      $PluginFusioninventoryTask = new PluginFusioninventoryTask();
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTask = new PluginFusioninventoryTask();
 
-      $a_taskjobs = $PluginFusioninventoryTaskjob->find("`method`='".$method."'");
+      $a_taskjobs = $pfTaskjob->find("`method`='".$method."'");
       $task_id = 0;
       foreach($a_taskjobs as $a_taskjob) {
-         $PluginFusioninventoryTaskjob->delete($a_taskjob, 1);
+         $pfTaskjob->delete($a_taskjob, 1);
          if (($task_id != $a_taskjob['plugin_fusioninventory_tasks_id'])
             AND ($task_id != '0')) {
 
             // Search if this task have other taskjobs, if not, we will delete it
-            $findtaskjobs = $PluginFusioninventoryTaskjob->find("`plugin_fusioninventory_tasks_id`='".$task_id."'");
+            $findtaskjobs = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$task_id."'");
             if (count($findtaskjobs) == '0') {
-               $PluginFusioninventoryTask->delete(array('id'=>$task_id), 1);
+               $pfTask->delete(array('id'=>$task_id), 1);
             }
          }
          $task_id = $a_taskjob['plugin_fusioninventory_tasks_id'];         
@@ -321,9 +321,9 @@ class PluginFusioninventoryTask extends CommonDBTM {
       if ($task_id != '0') {
 
          // Search if this task have other taskjobs, if not, we will delete it
-         $findtaskjobs = $PluginFusioninventoryTaskjob->find("`plugin_fusioninventory_tasks_id`='".$task_id."'");
+         $findtaskjobs = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$task_id."'");
          if (count($findtaskjobs) == '0') {
-            $PluginFusioninventoryTask->delete(array('id'=>$task_id), 1);
+            $pfTask->delete(array('id'=>$task_id), 1);
          }
       }
    }
@@ -379,7 +379,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
    function displayTaks($condition) {
       global $DB,$LANG;
 
-      $pluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
       
       echo "<table class='tab_cadrehov'>";
       
@@ -452,10 +452,10 @@ class PluginFusioninventoryTask extends CommonDBTM {
             Html::showToolTip($LANG['plugin_fusioninventory']['task'][42]);
          }
          echo ")<br/>&nbsp;";
-         $a_taskjobs = $pluginFusioninventoryTaskjob->find("`plugin_fusioninventory_tasks_id`='".$data_task['id']."'");
+         $a_taskjobs = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$data_task['id']."'");
          foreach ($a_taskjobs as $data_taskjob) {
-            $pluginFusioninventoryTaskjob->getFromDB($data_taskjob['id']);
-            echo "| ".$pluginFusioninventoryTaskjob->getLink(1)." ";
+            $pfTaskjob->getFromDB($data_taskjob['id']);
+            echo "| ".$pfTaskjob->getLink(1)." ";
          }
          if (count($a_taskjobs) > 0) {
             echo "|";

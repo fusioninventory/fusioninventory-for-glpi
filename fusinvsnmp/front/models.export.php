@@ -50,7 +50,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","r");
 
-$PluginFusinvsnmpImportExport = new PluginFusinvsnmpImportExport();
+$pfImportExport = new PluginFusinvsnmpImportExport();
 
 header("Expires: 0");
 header("Cache-control: private");
@@ -59,6 +59,6 @@ header("Content-Description: File Transfer");
 header('Content-type: application/xml; charset="utf-8"',true);
 header("Content-disposition: attachment; filename=export.xml");
 
-echo $PluginFusinvsnmpImportExport->export($_GET["model"]);
+echo $pfImportExport->export($_GET["model"]);
 
 ?>

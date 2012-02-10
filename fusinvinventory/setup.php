@@ -116,8 +116,8 @@ function plugin_init_fusinvinventory() {
          if (!class_exists('PluginFusioninventoryConfig')) { // if plugin is unactive
             include(GLPI_ROOT . "/plugins/fusioninventory/inc/config.class.php");
          }
-         $PluginFusioninventoryConfiguration = new PluginFusioninventoryConfig();
-         $a_tabs = $PluginFusioninventoryConfiguration->defineTabs();
+         $pfConfiguration = new PluginFusioninventoryConfig();
+         $a_tabs = $pfConfiguration->defineTabs();
          $PLUGIN_HOOKS['config_page']['fusinvinventory'] = '../fusioninventory/front/config.form.php?glpi_tab='.array_search($a_plugin['name'], $a_tabs);
       }
 

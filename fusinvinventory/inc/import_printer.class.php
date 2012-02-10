@@ -61,10 +61,10 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
    **/
    function AddUpdateItem($type, $items_id, $dataSection) {
 
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+      $pfConfig = new PluginFusioninventoryConfig();
       $Computer_Item = new Computer_Item();
       
-      if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+      if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
               "import_printer") == '0') {
          return;
       }
@@ -78,7 +78,7 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
          $a_printer = $printer->getFromDB($Computer_Item->fields['items_id']);
       } else {
          // Search if a printer yet exist
-         if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+         if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                  "import_printer") == '2') {
 
             if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
@@ -89,7 +89,7 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
                   }
                }
             }
-         } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+         } else if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                  "import_printer") == '3') {
 
             if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
@@ -102,7 +102,7 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
             } else {
                return;
             }
-         } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+         } else if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                  "import_printer") == '1') {
             // Global
             if ((isset($dataSection['NAME'])) AND (!empty($dataSection['NAME']))) {
@@ -149,7 +149,7 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
       
       $printer_id = 0;
       if (!isset($a_printer['id'])) {
-         if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+         if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                  "import_printer") == '1') {
             $a_printer['is_global'] = 1;
          }
@@ -185,8 +185,8 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
    *
    **/
    function deleteItem($items_id, $idmachine) {
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
-      if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+      $pfConfig = new PluginFusioninventoryConfig();
+      if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                  "import_printer") != '0') {
          $Computer_Item = new Computer_Item();
          $Computer_Item->getFromDB($items_id);
