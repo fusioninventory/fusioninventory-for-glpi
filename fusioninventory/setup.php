@@ -74,8 +74,7 @@ function plugin_init_fusioninventory() {
               array('addtabon' => array('PluginFusioninventoryAgent', 
                                         'PluginFusioninventoryUnknownDevice',
                                         'Printer',
-                                        'NetworkEquipment',
-                                        'Computer')));   
+                                        'NetworkEquipment')));   
       
       //Classes for rulesengine
       Plugin::registerClass('PluginFusioninventoryRuleImportEquipment');
