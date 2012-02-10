@@ -3580,6 +3580,35 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    changeDisplayPreference("5162", "PluginFusinvsnmpNetworkPortLog");
    changeDisplayPreference("5167", "PluginFusinvsnmpConstructDevice");
    changeDisplayPreference("5168", "PluginFusinvsnmpPrinterLog");
+   
+   /*
+    * Modify displaypreference for PluginFusinvsnmpPrinterLogReport
+    */
+   if (!class_exists('PluginFusinvsnmpPrinterLogReport')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/printerlogreport.class.php");
+   }
+   $pfPrinterLogReport = new PluginFusinvsnmpPrinterLogReport();
+   $a_searchoptions = $pfPrinterLogReport->getSearchOptions();
+   $query = "SELECT * FROM `glpi_displaypreferences` 
+   WHERE `itemtype` = 'PluginFusinvsnmpPrinterLogReport'";
+   $result=$DB->query($query);
+   if ($DB->numrows($result) == '0') {
+      $query = "INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) 
+                  VALUES (NULL,'PluginFusinvsnmpPrinterLogReport', '2', '1', '0'),
+          (NULL,'PluginFusinvsnmpPrinterLogReport', '18', '2', '0'),
+          (NULL,'PluginFusinvsnmpPrinterLogReport', '20', '3', '0'),
+          (NULL,'PluginFusinvsnmpPrinterLogReport', '5', '4', '0'),
+          (NULL,'PluginFusinvsnmpPrinterLogReport', '6', '5', '0')";
+      $DB->query($query);
+   } else {   
+      while ($data=$DB->fetch_array($result)) {
+         if (!isset($a_searchoptions[$data['num']])) {
+            $queryd = "DELETE FROM `glpi_displaypreferences`
+               WHERE `id`='".$data['id']."'";
+            $DB->query($queryd);
+         }
+      }
+   }  
 
 
    $config->updateConfigType($plugins_id, 'version', PLUGIN_FUSINVSNMP_VERSION);

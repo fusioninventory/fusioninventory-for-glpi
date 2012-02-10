@@ -472,7 +472,13 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
           (NULL,'PluginFusinvsnmpStateDiscovery', '9', '7', '0'),
           (NULL,'PluginFusinvsnmpStateDiscovery', '10', '8', '0'),
           (NULL,'PluginFusinvsnmpStateDiscovery', '11', '9', '0'),
-          (NULL,'PluginFusinvsnmpStateDiscovery', '12', '10', '0');
+          (NULL,'PluginFusinvsnmpStateDiscovery', '12', '10', '0'),
+
+          (NULL,'PluginFusinvsnmpPrinterLogReport', '2', '1', '0'),
+          (NULL,'PluginFusinvsnmpPrinterLogReport', '18', '2', '0'),
+          (NULL,'PluginFusinvsnmpPrinterLogReport', '20', '3', '0'),
+          (NULL,'PluginFusinvsnmpPrinterLogReport', '5', '4', '0'),
+          (NULL,'PluginFusinvsnmpPrinterLogReport', '6', '5', '0');
 
 
 ## glpi_plugin_fusioninventory_mappings
