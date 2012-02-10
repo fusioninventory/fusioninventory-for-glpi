@@ -49,7 +49,7 @@ class PluginFusinvinventoryRuleEntity extends Rule {
    // From Rule
    public $right='rule_ocs';
    public $can_sort=true;
-   public $specific_parameters = true;
+   public $specific_parameters = false;
 
    function getTitle() {
       global $LANG;

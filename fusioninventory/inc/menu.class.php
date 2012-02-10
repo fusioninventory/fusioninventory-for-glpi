@@ -76,7 +76,7 @@ class PluginFusioninventoryMenu {
          $a_menu[0]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryAgent');
       }
 
-      if(PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","r")) {
+      if(PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
          $a_menu[2]['name'] = $LANG['plugin_fusioninventory']['task'][1];
          $a_menu[2]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_task.png";
          $a_menu[2]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryTask');

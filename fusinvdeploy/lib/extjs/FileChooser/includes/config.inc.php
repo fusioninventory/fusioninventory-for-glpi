@@ -1,7 +1,9 @@
 <?php
-/*define('GLPI_ROOT', '../../..');
+if (!defined('GLPI_ROOT')) {
+   define('GLPI_ROOT', '../../..');
+}
 
-include (GLPI_ROOT."/inc/includes.php");*/
+include (GLPI_ROOT."/inc/includes.php");
 
 $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
 $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
