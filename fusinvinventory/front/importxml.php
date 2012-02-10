@@ -46,7 +46,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","fusinvinventory-importxmlfile");
 
-PluginFusioninventoryProfile::checkRight("fusinvinventory", "importxml","r");
+PluginFusioninventoryProfile::checkRight("fusinvinventory", "importxml","w");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
