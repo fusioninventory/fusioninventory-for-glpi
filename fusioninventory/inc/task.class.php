@@ -178,9 +178,17 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
       echo "</td>";
 
-      echo "<td>".$LANG['common'][60]."&nbsp;:</td>";
+      $pfTaskjob = new PluginFusioninventoryTaskjob;
+      $a_taskjob = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$id."'", "id");
       echo "<td>";
-      Dropdown::showYesNo("is_active",$this->fields["is_active"]);
+      if (count($a_taskjob) > 0) {
+         echo $LANG['common'][60]."&nbsp;:";
+      }
+      echo "</td>";
+      echo "<td>";
+      if (count($a_taskjob) > 0) {
+         Dropdown::showYesNo("is_active",$this->fields["is_active"]);
+      }
       echo "</td>";
       echo "<th rowspan='2'>";
       if ($this->fields["is_active"]) {
