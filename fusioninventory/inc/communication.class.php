@@ -175,7 +175,7 @@ class PluginFusioninventoryCommunication {
          $pfAgent->setAgentVersions($agent['id'], $xmltag, $version);
       }
 
-      if (!$pfAgentmodule->getAgentsCanDo($xmltag, $agent['id'])) {
+      if (!$pfAgentmodule->getAgentCanDo($xmltag, $agent['id'])) {
          return true;
       }
 
@@ -303,7 +303,7 @@ class PluginFusioninventoryCommunication {
     **/
    function addInventory($items_id) {
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
-      if ($pfAgentmodule->getAgentsCanDo('INVENTORY', $items_id)) {
+      if ($pfAgentmodule->getAgentCanDo('INVENTORY', $items_id)) {
          $this->sxml->addChild('RESPONSE', "SEND");
       }
    }
