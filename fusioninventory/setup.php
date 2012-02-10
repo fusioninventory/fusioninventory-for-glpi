@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION","0.80+1.1");
+define ("PLUGIN_FUSIONINVENTORY_VERSION","0.80+1.2");
 
 include_once(GLPI_ROOT."/inc/includes.php");
 
