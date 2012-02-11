@@ -551,7 +551,7 @@ function appear_array(id){
          foreach($matches[0] as $num=>$commentvalue) {
             $datas['comment'] = str_replace($commentvalue, $LANG['plugin_'.$matches[1][$num]]["codetasklog"][$matches[2][$num]], $datas['comment']);
          }
-
+         $datas['comment'] = str_replace(",[", "<br/>[", $datas['comment']);
          $text .= $datas['comment'];
          $text .= "</td>";
       }
