@@ -80,6 +80,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       global $DB,$CFG_GLPI,$LANG;
 
       $this->javascriptHistory();
+      $a_uniqid = array();
 
       $start = 0;
       if (isset($_REQUEST["start"])) {
@@ -134,6 +135,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
             echo "</tr>";
             while ($data=$DB->fetch_array($result)) {
                $this->showHistoryLines($data['id'], 1, 0, 7);
+               $a_uniqid[] = $data['uniqid'];
             }
             echo "</table>";
          }
@@ -144,6 +146,15 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
 
       // ***** Display for statusjob OK
+      if (count($a_uniqid) > 0) {
+         $where .= " AND `uniqid` NOT IN ('".implode("','", $a_uniqid)."')";
+         $query = 'SELECT * FROM `glpi_plugin_fusioninventory_taskjobstatus`
+            WHERE `plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"
+               AND `state`!="3"
+               '.$where.'
+            GROUP BY uniqid,plugin_fusioninventory_agents_id
+            ORDER BY `id` DESC';
+      }
       $querycount = 'SELECT count(*) AS cpt FROM `glpi_plugin_fusioninventory_taskjobstatus`
             WHERE `plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"
                AND `state`="3"
