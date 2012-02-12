@@ -233,4 +233,5 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    
 }
 session_destroy();
+
 ?>
