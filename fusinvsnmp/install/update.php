@@ -3633,7 +3633,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
       foreach ($a_check as $num=>$rank) {
          $query = "SELECT * FROM `glpi_displaypreferences` 
          WHERE `itemtype` = 'PluginFusinvsnmpNetworkEquipment'
-         AND 'num'='".$num."'
+         AND `num`='".$num."'
             AND `users_id`='0'";
          $result=$DB->query($query);
          if ($DB->numrows($result) == '0') {
