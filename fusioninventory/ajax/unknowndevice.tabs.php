@@ -55,34 +55,34 @@ if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 
 $pfia = new PluginFusioninventoryAgent;
 $pfit = new PluginFusioninventoryTask;
-$PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice;
-$PluginFusioninventoryUnknownDevice->getFromDB($_POST['id']);
+$pfUnknownDevice = new PluginFusioninventoryUnknownDevice;
+$pfUnknownDevice->getFromDB($_POST['id']);
 
 switch($_POST['glpi_tab']) {
    case -1 :
-      NetworkPort::showForItem($PluginFusioninventoryUnknownDevice);
-      $PluginFusioninventoryUnknownDevice->importForm($CFG_GLPI['root_doc'] . '/plugins/fusioninventory/front/unknowndevice.form.php?id='.$_POST["id"],$_POST["id"]);
-      Log::showForItem($PluginFusioninventoryUnknownDevice);
-      CommonGLPI::displayStandardTab($PluginFusioninventoryUnknownDevice, $_REQUEST['glpi_tab']);
+      NetworkPort::showForItem($pfUnknownDevice);
+      $pfUnknownDevice->importForm($CFG_GLPI['root_doc'] . '/plugins/fusioninventory/front/unknowndevice.form.php?id='.$_POST["id"],$_POST["id"]);
+      Log::showForItem($pfUnknownDevice);
+      CommonGLPI::displayStandardTab($pfUnknownDevice, $_REQUEST['glpi_tab']);
       break;
 
    case 1 :
-      NetworkPort::showForItem($PluginFusioninventoryUnknownDevice);
+      NetworkPort::showForItem($pfUnknownDevice);
       break;
 
    case 2 :
-      $PluginFusioninventoryUnknownDevice->importForm($CFG_GLPI['root_doc'] . '/plugins/fusioninventory/front/unknowndevice.form.php?id='.$_POST["id"],$_POST["id"]);
+      $pfUnknownDevice->importForm($CFG_GLPI['root_doc'] . '/plugins/fusioninventory/front/unknowndevice.form.php?id='.$_POST["id"],$_POST["id"]);
       break;
 
    case 3 :
       break;
 
    case 4 :
-      Log::showForItem($PluginFusioninventoryUnknownDevice);
+      Log::showForItem($pfUnknownDevice);
       break;
 
    default :
-      CommonGLPI::displayStandardTab($PluginFusioninventoryUnknownDevice, $_REQUEST['glpi_tab']);
+      CommonGLPI::displayStandardTab($pfUnknownDevice, $_REQUEST['glpi_tab']);
       break;
 }
 

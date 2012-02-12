@@ -61,27 +61,27 @@ if (isset($_POST['update'])) {
          break;
 
       case 'history' :
-         $PluginFusinvsnmpConfigLogField = new PluginFusinvsnmpConfigLogField();
+         $pfConfigLogField = new PluginFusinvsnmpConfigLogField();
          foreach ($_POST as $key=>$val) {
             $split = explode("-", $key);
             if (isset($split[1]) AND is_numeric($split[1])) {
-               $PluginFusinvsnmpConfigLogField->getFromDB($split[1]);
+               $pfConfigLogField->getFromDB($split[1]);
                $input = array();
-               $input['id'] = $PluginFusinvsnmpConfigLogField->fields['id'];
+               $input['id'] = $pfConfigLogField->fields['id'];
                $input['days'] = $val;
-               $PluginFusinvsnmpConfigLogField->update($input);
+               $pfConfigLogField->update($input);
             }
          }
          break;
 
    }
-   if (isset($PluginFusioninventoryConfig)) {
-      $PluginFusioninventoryConfig->update($_POST);
+   if (isset($pfConfig)) {
+      $pfConfig->update($_POST);
    }
    Html::back();
 } else if ((isset($_POST['Clean_history']))) {
-   $PluginFusinvsnmpNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
-   $PluginFusinvsnmpNetworkPortLog->cronCleannetworkportlogs();
+   $pfNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
+   $pfNetworkPortLog->cronCleannetworkportlogs();
    Html::back();
 }
 

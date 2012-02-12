@@ -47,7 +47,7 @@ include (GLPI_ROOT."/inc/includes.php");
 Session::checkRight("printer","r");
 PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printer","r");
 
-$PluginFusinvsnmpPrinterLog = new PluginFusinvsnmpPrinterLog();
+$pfPrinterLog = new PluginFusinvsnmpPrinterLog();
 print_r($_POST);
 exit;
 if ((isset($_POST['delete']))) {
@@ -61,7 +61,7 @@ if ((isset($_POST['delete']))) {
             if (isset($_POST["ID_$i"])) {
                $input['id'] = $_POST["ID_$i"];
             }
-            $PluginFusinvsnmpPrinterLog->delete($input);
+            $pfPrinterLog->delete($input);
          }
       }
    }

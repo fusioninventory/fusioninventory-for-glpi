@@ -215,8 +215,8 @@ class PluginFusioninventoryInventoryComputerLibhook {
                }
                
                if (isset($dataSection['SKUNUMBER'])) {
-                  $PluginFusinvinventoryLibhook = new PluginFusioninventoryInventoryComputerLibhook();
-                  $PluginFusinvinventoryLibhook->Suppliertag($idmachine, $dataSection['SKUNUMBER']);
+                  $pfInventoryComputerLibhook = new PluginFusioninventoryInventoryComputerLibhook();
+                  $pfInventoryComputerLibhook->Suppliertag($idmachine, $dataSection['SKUNUMBER']);
                }
                if (isset($dataSection['BDATE'])) {
                   $a_split = explode("/", $dataSection['BDATE']);
@@ -379,8 +379,8 @@ class PluginFusioninventoryInventoryComputerLibhook {
          switch ($section['sectionName']) {
 
             case 'CPUS':
-               $PluginFusinvinventoryImport_Processor = new PluginFusioninventoryInventoryComputerImport_Processor();
-               $id_processor = $PluginFusinvinventoryImport_Processor->AddUpdateItem("add", $idmachine, $dataSection);
+               $pfInventoryComputerImport_Processor = new PluginFusioninventoryInventoryComputerImport_Processor();
+               $id_processor = $pfInventoryComputerImport_Processor->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_processor)) {
                   $id_processor = $j;
                   $j--;
@@ -389,8 +389,8 @@ class PluginFusioninventoryInventoryComputerLibhook {
                break;
 
             case 'DRIVES':
-               $PluginFusinvinventoryImport_Drive = new PluginFusioninventoryInventoryComputerImport_Drive();
-               $id_disk = $PluginFusinvinventoryImport_Drive->AddUpdateItem("add", $idmachine, $dataSection);
+               $pfInventoryComputerImport_Drive = new PluginFusioninventoryInventoryComputerImport_Drive();
+               $id_disk = $pfInventoryComputerImport_Drive->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_disk)) {
                   $id_disk = $j;
                   $j--;
@@ -401,8 +401,8 @@ class PluginFusioninventoryInventoryComputerLibhook {
             case 'CONTROLLERS':
                $id_controller = '';
                if ((isset($dataSection["NAME"])) AND (!isset($ignore_controllers[$dataSection["NAME"]]))) {
-                  $PluginFusinvinventoryImport_Controller = new PluginFusioninventoryInventoryComputerImport_Controller();
-                  $id_controller = $PluginFusinvinventoryImport_Controller->AddUpdateItem("add", $idmachine, $dataSection);
+                  $pfInventoryComputerImport_Controller = new PluginFusioninventoryInventoryComputerImport_Controller();
+                  $id_controller = $pfInventoryComputerImport_Controller->AddUpdateItem("add", $idmachine, $dataSection);
                }
                if (empty($id_controller)) {
                   $id_controller = $j;
@@ -412,8 +412,8 @@ class PluginFusioninventoryInventoryComputerLibhook {
                break;
 
             case 'SOUNDS':
-               $PluginFusinvinventoryImport_Sound = new PluginFusioninventoryInventoryComputerImport_Sound();
-               $id_sound = $PluginFusinvinventoryImport_Sound->AddUpdateItem("add", $idmachine, $dataSection);
+               $pfInventoryComputerImport_Sound = new PluginFusioninventoryInventoryComputerImport_Sound();
+               $id_sound = $pfInventoryComputerImport_Sound->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_sound)) {
                   $id_sound = $j;
                   $j--;
@@ -422,8 +422,8 @@ class PluginFusioninventoryInventoryComputerLibhook {
                break;
 
             case 'VIDEOS':
-               $PluginFusinvinventoryImport_Graphiccard = new PluginFusioninventoryInventoryComputerImport_Graphiccard();
-               $id_graphiccard = $PluginFusinvinventoryImport_Graphiccard->AddUpdateItem("add", $idmachine, $dataSection);
+               $pfInventoryComputerImport_Graphiccard = new PluginFusioninventoryInventoryComputerImport_Graphiccard();
+               $id_graphiccard = $pfInventoryComputerImport_Graphiccard->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_graphiccard)) {
                   $id_graphiccard = $j;
                   $j--;
@@ -432,8 +432,8 @@ class PluginFusioninventoryInventoryComputerLibhook {
                break;
 
             case 'MEMORIES':
-               $PluginFusinvinventoryImport_Memory = new PluginFusioninventoryInventoryComputerImport_Memory();
-               $id_memory = $PluginFusinvinventoryImport_Memory->AddUpdateItem("add", $idmachine, $dataSection);
+               $pfInventoryComputerImport_Memory = new PluginFusioninventoryInventoryComputerImport_Memory();
+               $id_memory = $pfInventoryComputerImport_Memory->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_memory)) {
                   $id_memory = $j;
                   $j--;
@@ -442,8 +442,8 @@ class PluginFusioninventoryInventoryComputerLibhook {
                break;
 
             case 'NETWORKS':
-               $PluginFusinvinventoryImport_Networkport = new PluginFusioninventoryInventoryComputerImport_Networkport();
-               $id_network = $PluginFusinvinventoryImport_Networkport->AddUpdateItem("add", $idmachine, $dataSection);
+               $pfInventoryComputerImport_Networkport = new PluginFusioninventoryInventoryComputerImport_Networkport();
+               $id_network = $pfInventoryComputerImport_Networkport->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_network)) {
                   $id_network = $j;
                   $j--;
@@ -459,17 +459,17 @@ class PluginFusioninventoryInventoryComputerLibhook {
                // Add software name
                // Add version of software
                // link version with computer : glpi_computers_softwareversions
-               $PluginFusinvinventoryImport_Software = new PluginFusioninventoryInventoryComputerImport_Software();
+               $pfInventoryComputerImport_Software = new PluginFusioninventoryInventoryComputerImport_Software();
                if (!isset($dataSection['PUBLISHER'])) {
                   $dataSection['PUBLISHER'] = NULL;
                }
 
                if (isset($dataSection['VERSION'])) {
-                  $Computer_SoftwareVersion_id = $PluginFusinvinventoryImport_Software->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
+                  $Computer_SoftwareVersion_id = $pfInventoryComputerImport_Software->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
                                                                               'version'=>$dataSection['VERSION'],
                                                                               'PUBLISHER'=>$dataSection['PUBLISHER']));
                } else {
-                  $Computer_SoftwareVersion_id = $PluginFusinvinventoryImport_Software->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
+                  $Computer_SoftwareVersion_id = $pfInventoryComputerImport_Software->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
                                                                               'version'=>NOT_AVAILABLE,
                                                                               'PUBLISHER'=>$dataSection['PUBLISHER']));
                }
@@ -482,16 +482,16 @@ class PluginFusioninventoryInventoryComputerLibhook {
 
 //            case 'VERSIONCLIENT':
 //               // Verify agent is created
-//               $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
-//               $a_agent = $PluginFusioninventoryAgent->InfosByKey($section['sectionName']);
+//               $pfAgent = new PluginFusioninventoryAgent;
+//               $a_agent = $pfAgent->InfosByKey($section['sectionName']);
 //               if (count($a_agent) == '0') {
 //                  // TODO : Create agent
 //
 //               }
-//               $PluginFusioninventoryAgent->getFromDB($a_agent['id']);
-//               $PluginFusioninventoryAgent->fields['items_id'] = $idmachine;
-//               $PluginFusioninventoryAgent->fields['itemtype'] = 'Computer';
-//               $PluginFusioninventoryAgent->update($PluginFusioninventoryAgent->fields);
+//               $pfAgent->getFromDB($a_agent['id']);
+//               $pfAgent->fields['items_id'] = $idmachine;
+//               $pfAgent->fields['itemtype'] = 'Computer';
+//               $pfAgent->update($pfAgent->fields);
 //               break;
 
             case 'BIOS':
@@ -508,8 +508,8 @@ class PluginFusioninventoryInventoryComputerLibhook {
                if ((isset($dataSection['SERIAL'])) AND (isset($ignore_USB[$dataSection['SERIAL']]))) {
                   // Ignore
                } else {
-                  $PluginFusinvinventoryImport_Peripheral =  new PluginFusioninventoryInventoryComputerImport_Peripheral();
-                  $id_peripheral = $PluginFusinvinventoryImport_Peripheral->AddUpdateItem("add", $idmachine, $dataSection);
+                  $pfInventoryComputerImport_Peripheral =  new PluginFusioninventoryInventoryComputerImport_Peripheral();
+                  $id_peripheral = $pfInventoryComputerImport_Peripheral->AddUpdateItem("add", $idmachine, $dataSection);
                }
                
                if (!isset($id_peripheral)) {
@@ -521,8 +521,8 @@ class PluginFusioninventoryInventoryComputerLibhook {
                break;
 
             case 'PRINTERS':
-               $PluginFusinvinventoryImport_Printer =  new PluginFusioninventoryInventoryComputerImport_Printer();
-               $id_printer = $PluginFusinvinventoryImport_Printer->AddUpdateItem("add", $idmachine, $dataSection);
+               $pfInventoryComputerImport_Printer =  new PluginFusioninventoryInventoryComputerImport_Printer();
+               $id_printer = $pfInventoryComputerImport_Printer->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_printer)) {
                   $id_printer = $j;
                   $j--;
@@ -531,8 +531,8 @@ class PluginFusioninventoryInventoryComputerLibhook {
                break;
 
             case 'MONITORS':
-               $PluginFusinvinventoryImport_Monitor =  new PluginFusioninventoryInventoryComputerImport_Monitor();
-               $id_monitor = $PluginFusinvinventoryImport_Monitor->AddUpdateItem("add", $idmachine, $dataSection);
+               $pfInventoryComputerImport_Monitor =  new PluginFusioninventoryInventoryComputerImport_Monitor();
+               $id_monitor = $pfInventoryComputerImport_Monitor->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_monitor)) {
                   $id_monitor = $j;
                   $j--;
@@ -541,8 +541,8 @@ class PluginFusioninventoryInventoryComputerLibhook {
                break;
 
             case 'STORAGES':
-               $PluginFusinvinventoryImport_Storage =  new PluginFusioninventoryInventoryComputerImport_Storage();
-               $id_storage = $PluginFusinvinventoryImport_Storage->AddUpdateItem("add", $idmachine, $dataSection);
+               $pfInventoryComputerImport_Storage =  new PluginFusioninventoryInventoryComputerImport_Storage();
+               $id_storage = $pfInventoryComputerImport_Storage->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_storage)) {
                   $id_storage = $j;
                   $j--;
@@ -551,8 +551,8 @@ class PluginFusioninventoryInventoryComputerLibhook {
                break;
 
             case 'ANTIVIRUS':
-               $PluginFusinvinventoryImport_Antivirus =  new PluginFusioninventoryInventoryComputerImport_Antivirus();
-               $id_antivirus = $PluginFusinvinventoryImport_Antivirus->AddUpdateItem("add", $idmachine, $dataSection);
+               $pfInventoryComputerImport_Antivirus =  new PluginFusioninventoryInventoryComputerImport_Antivirus();
+               $id_antivirus = $pfInventoryComputerImport_Antivirus->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_antivirus)) {
                   $id_antivirus = $j;
                   $j--;
@@ -561,8 +561,8 @@ class PluginFusioninventoryInventoryComputerLibhook {
                break;
 
             case 'VIRTUALMACHINES':
-               $PluginFusinvinventoryImport_Virtualmachine = new PluginFusioninventoryInventoryComputerImport_Virtualmachine();
-               $id_vm = $PluginFusinvinventoryImport_Virtualmachine->addUpdateItem("add",$idmachine,$dataSection);
+               $pfInventoryComputerImport_Virtualmachine = new PluginFusioninventoryInventoryComputerImport_Virtualmachine();
+               $id_vm = $pfInventoryComputerImport_Virtualmachine->addUpdateItem("add",$idmachine,$dataSection);
                if (empty($id_storage)) {
                   $id_vm = $j;
                   $j--;
@@ -571,8 +571,8 @@ class PluginFusioninventoryInventoryComputerLibhook {
                break;
 
             case 'USERS':
-               $PluginFusinvinventoryImport_User = new PluginFusioninventoryInventoryComputerImport_User();
-               $id_user = $PluginFusinvinventoryImport_User->AddUpdateItem("add", $idmachine, $dataSection);
+               $pfInventoryComputerImport_User = new PluginFusioninventoryInventoryComputerImport_User();
+               $id_user = $pfInventoryComputerImport_User->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_user)) {
                   $id_user = $j;
                   $j--;
@@ -629,68 +629,68 @@ class PluginFusioninventoryInventoryComputerLibhook {
                switch ($sectionName) {
 
                   case 'CPUS':
-                     $PluginFusinvinventoryImport_Processor = new PluginFusioninventoryInventoryComputerImport_Processor();
-                     $PluginFusinvinventoryImport_Processor->deleteItem($items_id, $idmachine);
+                     $pfInventoryComputerImport_Processor = new PluginFusioninventoryInventoryComputerImport_Processor();
+                     $pfInventoryComputerImport_Processor->deleteItem($items_id, $idmachine);
                      break;
 
                   case 'DRIVES':
-                     $PluginFusinvinventoryImport_Drive = new PluginFusioninventoryInventoryComputerImport_Drive();
-                     $PluginFusinvinventoryImport_Drive->deleteItem($items_id, $idmachine);
+                     $pfInventoryComputerImport_Drive = new PluginFusioninventoryInventoryComputerImport_Drive();
+                     $pfInventoryComputerImport_Drive->deleteItem($items_id, $idmachine);
                      break;
 
                   case 'CONTROLLERS':
-                     $PluginFusinvinventoryImport_Controller = new PluginFusioninventoryInventoryComputerImport_Controller();
-                     $PluginFusinvinventoryImport_Controller->deleteItem($items_id, $idmachine);
+                     $pfInventoryComputerImport_Controller = new PluginFusioninventoryInventoryComputerImport_Controller();
+                     $pfInventoryComputerImport_Controller->deleteItem($items_id, $idmachine);
                      break;
 
                   case 'SOUNDS':
-                     $PluginFusinvinventoryImport_Sound = new PluginFusioninventoryInventoryComputerImport_Sound();
-                     $PluginFusinvinventoryImport_Sound->deleteItem($items_id, $idmachine);
+                     $pfInventoryComputerImport_Sound = new PluginFusioninventoryInventoryComputerImport_Sound();
+                     $pfInventoryComputerImport_Sound->deleteItem($items_id, $idmachine);
                      break;
 
                   case 'VIDEOS':
-                     $PluginFusinvinventoryImport_Graphiccard = new PluginFusioninventoryInventoryComputerImport_Graphiccard();
-                     $PluginFusinvinventoryImport_Graphiccard->deleteItem($items_id, $idmachine);
+                     $pfInventoryComputerImport_Graphiccard = new PluginFusioninventoryInventoryComputerImport_Graphiccard();
+                     $pfInventoryComputerImport_Graphiccard->deleteItem($items_id, $idmachine);
                      break;
 
                   case 'MEMORIES':
-                     $PluginFusinvinventoryImport_Memory = new PluginFusioninventoryInventoryComputerImport_Memory();
-                     $PluginFusinvinventoryImport_Memory->deleteItem($items_id, $idmachine);
+                     $pfInventoryComputerImport_Memory = new PluginFusioninventoryInventoryComputerImport_Memory();
+                     $pfInventoryComputerImport_Memory->deleteItem($items_id, $idmachine);
                      break;
 
                   case 'NETWORKS':
-                     $PluginFusinvinventoryImport_Networkport = new PluginFusioninventoryInventoryComputerImport_Networkport();
-                     $PluginFusinvinventoryImport_Networkport->deleteItem($items_id, $idmachine);
+                     $pfInventoryComputerImport_Networkport = new PluginFusioninventoryInventoryComputerImport_Networkport();
+                     $pfInventoryComputerImport_Networkport->deleteItem($items_id, $idmachine);
                      break;
 
                   case 'SOFTWARES':
-                     $PluginFusinvinventoryImport_Software = new PluginFusioninventoryInventoryComputerImport_Software();
-                     $PluginFusinvinventoryImport_Software->deleteItem($items_id, $idmachine);
+                     $pfInventoryComputerImport_Software = new PluginFusioninventoryInventoryComputerImport_Software();
+                     $pfInventoryComputerImport_Software->deleteItem($items_id, $idmachine);
                      break;
 
                   case 'USBDEVICES':
-                     $PluginFusinvinventoryImport_Peripheral =  new PluginFusioninventoryInventoryComputerImport_Peripheral();
-                     $PluginFusinvinventoryImport_Peripheral->deleteItem($items_id, $idmachine);
+                     $pfInventoryComputerImport_Peripheral =  new PluginFusioninventoryInventoryComputerImport_Peripheral();
+                     $pfInventoryComputerImport_Peripheral->deleteItem($items_id, $idmachine);
                      break;
 
                   case 'PRINTERS':
-                     $PluginFusinvinventoryImport_Printer =  new PluginFusioninventoryInventoryComputerImport_Printer();
-                     $PluginFusinvinventoryImport_Printer->deleteItem($items_id, $idmachine);
+                     $pfInventoryComputerImport_Printer =  new PluginFusioninventoryInventoryComputerImport_Printer();
+                     $pfInventoryComputerImport_Printer->deleteItem($items_id, $idmachine);
                      break;
 
                   case 'MONITORS':
-                     $PluginFusinvinventoryImport_Monitor =  new PluginFusioninventoryInventoryComputerImport_Monitor();
-                     $PluginFusinvinventoryImport_Monitor->deleteItem($items_id, $idmachine);
+                     $pfInventoryComputerImport_Monitor =  new PluginFusioninventoryInventoryComputerImport_Monitor();
+                     $pfInventoryComputerImport_Monitor->deleteItem($items_id, $idmachine);
                      break;
 
                   case 'STORAGES':
-                     $PluginFusinvinventoryImport_Storage = new PluginFusioninventoryInventoryComputerImport_Storage();
-                     $PluginFusinvinventoryImport_Storage->deleteItem($items_id, $idmachine, $sectiondetail[$section]);
+                     $pfInventoryComputerImport_Storage = new PluginFusioninventoryInventoryComputerImport_Storage();
+                     $pfInventoryComputerImport_Storage->deleteItem($items_id, $idmachine, $sectiondetail[$section]);
                      break;
 
                   case 'ANTIVIRUS':
-                     $PluginFusinvinventoryImport_Antivirus =  new PluginFusioninventoryInventoryComputerImport_Antivirus();
-                     $PluginFusinvinventoryImport_Antivirus->deleteItem($items_id, $idmachine);
+                     $pfInventoryComputerImport_Antivirus = new PluginFusioninventoryInventoryComputerImport_Antivirus();
+                     $pfInventoryComputerImport_Antivirus->deleteItem($items_id, $idmachine);
                      break;
 
                   case 'VIRTUALMACHINES':
@@ -699,8 +699,8 @@ class PluginFusioninventoryInventoryComputerLibhook {
                      break;
 
                   case 'USERS':
-                     $PluginFusinvinventoryImport_User = new PluginFusioninventoryInventoryComputerImport_User();
-                     $PluginFusinvinventoryImport_User->deleteItem($items_id, $idmachine);
+                     $pfInventoryComputerImport_User = new PluginFusioninventoryInventoryComputerImport_User();
+                     $pfInventoryComputerImport_User->deleteItem($items_id, $idmachine);
                      break;
 
                }
@@ -766,39 +766,39 @@ class PluginFusioninventoryInventoryComputerLibhook {
             switch ($sectionName) {
 
                case 'CPUS':
-                  $PluginFusinvinventoryImport_Processor = new PluginFusioninventoryInventoryComputerImport_Processor();
-                  $PluginFusinvinventoryImport_Processor->AddUpdateItem("update", $items_id, $dataSection);
+                  $pfInventoryComputerImport_Processor = new PluginFusioninventoryInventoryComputerImport_Processor();
+                  $pfInventoryComputerImport_Processor->AddUpdateItem("update", $items_id, $dataSection);
                   break;
                
                case 'DRIVES':
-                  $PluginFusinvinventoryImport_Drive = new PluginFusioninventoryInventoryComputerImport_Drive();
-                  $PluginFusinvinventoryImport_Drive->AddUpdateItem("update", $items_id, $dataSection);
+                  $pfInventoryComputerImport_Drive = new PluginFusioninventoryInventoryComputerImport_Drive();
+                  $pfInventoryComputerImport_Drive->AddUpdateItem("update", $items_id, $dataSection);
                   break;
 
                case 'CONTROLLERS':
                   $id_controller = '';
-                  $PluginFusinvinventoryImport_Controller = new PluginFusioninventoryInventoryComputerImport_Controller();
-                  $id_controller = $PluginFusinvinventoryImport_Controller->AddUpdateItem("update", $items_id, $dataSection);
+                  $pfInventoryComputerImport_Controller = new PluginFusioninventoryInventoryComputerImport_Controller();
+                  $id_controller = $pfInventoryComputerImport_Controller->AddUpdateItem("update", $items_id, $dataSection);
                   break;
 
               case 'SOUNDS':
-                  $PluginFusinvinventoryImport_Sound = new PluginFusioninventoryInventoryComputerImport_Sound();
-                  $PluginFusinvinventoryImport_Sound->AddUpdateItem("update", $items_id, $dataSection);
+                  $pfInventoryComputerImport_Sound = new PluginFusioninventoryInventoryComputerImport_Sound();
+                  $pfInventoryComputerImport_Sound->AddUpdateItem("update", $items_id, $dataSection);
                   break;
 
                case 'VIDEOS':
-                  $PluginFusinvinventoryImport_Graphiccard = new PluginFusioninventoryInventoryComputerImport_Graphiccard();
-                  $PluginFusinvinventoryImport_Graphiccard->AddUpdateItem("update", $items_id, $dataSection);
+                  $pfInventoryComputerImport_Graphiccard = new PluginFusioninventoryInventoryComputerImport_Graphiccard();
+                  $pfInventoryComputerImport_Graphiccard->AddUpdateItem("update", $items_id, $dataSection);
                   break;
 
                case 'MEMORIES':
-                  $PluginFusinvinventoryImport_Memory = new PluginFusioninventoryInventoryComputerImport_Memory();
-                  $PluginFusinvinventoryImport_Memory->AddUpdateItem("update", $items_id, $dataSection);
+                  $pfInventoryComputerImport_Memory = new PluginFusioninventoryInventoryComputerImport_Memory();
+                  $pfInventoryComputerImport_Memory->AddUpdateItem("update", $items_id, $dataSection);
                   break;
 
                case 'NETWORKS' :
-                  $PluginFusinvinventoryImport_Networkport = new PluginFusioninventoryInventoryComputerImport_Networkport();
-                  $PluginFusinvinventoryImport_Networkport->AddUpdateItem("update", $items_id, $dataSection);
+                  $pfInventoryComputerImport_Networkport = new PluginFusioninventoryInventoryComputerImport_Networkport();
+                  $pfInventoryComputerImport_Networkport->AddUpdateItem("update", $items_id, $dataSection);
                   break;
 
                case 'SOFTWARES':
@@ -868,8 +868,8 @@ class PluginFusioninventoryInventoryComputerLibhook {
                      }
                   }
                   if (isset($dataSection['SKUNUMBER'])) {
-                     $PluginFusinvinventoryLibhook = new PluginFusioninventoryInventoryComputerLibhook();
-                     $PluginFusinvinventoryLibhook->Suppliertag($idmachine, $dataSection['SKUNUMBER']);
+                     $pfInventoryComputerLibhook = new PluginFusioninventoryInventoryComputerLibhook();
+                     $pfInventoryComputerLibhook->Suppliertag($idmachine, $dataSection['SKUNUMBER']);
                   }
                   $Computer->update($inputC);
                   
@@ -993,18 +993,18 @@ class PluginFusioninventoryInventoryComputerLibhook {
                   break;
 
                case 'STORAGES':
-                  $PluginFusinvinventoryImport_Storage = new PluginFusioninventoryInventoryComputerImport_Storage();
-                  $PluginFusinvinventoryImport_Storage->AddUpdateItem("update", $items_id, $dataSection);
+                  $pfInventoryComputerImport_Storage = new PluginFusioninventoryInventoryComputerImport_Storage();
+                  $pfInventoryComputerImport_Storage->AddUpdateItem("update", $items_id, $dataSection);
                   break;
 
                case 'ANTIVIRUS':
-                  $PluginFusinvinventoryImport_Antivirus =  new PluginFusioninventoryInventoryComputerImport_Antivirus();
-                  $PluginFusinvinventoryImport_Antivirus->AddUpdateItem("update", $items_id, $dataSection);
+                  $pfInventoryComputerImport_Antivirus =  new PluginFusioninventoryInventoryComputerImport_Antivirus();
+                  $pfInventoryComputerImport_Antivirus->AddUpdateItem("update", $items_id, $dataSection);
                   break;
 
                case 'VIRTUALMACHINES':
-                  $PluginFusinvinventoryImport_Virtualmachine =  new PluginFusioninventoryInventoryComputerImport_Virtualmachine();
-                  $PluginFusinvinventoryImport_Virtualmachine->AddUpdateItem("update", $items_id, $dataSection);
+                  $pfInventoryComputerImport_Virtualmachine =  new PluginFusioninventoryInventoryComputerImport_Virtualmachine();
+                  $pfInventoryComputerImport_Virtualmachine->AddUpdateItem("update", $items_id, $dataSection);
                   break;
 
                case 'USERS':

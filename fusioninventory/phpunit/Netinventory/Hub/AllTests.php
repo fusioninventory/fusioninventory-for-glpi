@@ -74,20 +74,20 @@ class Hub extends PHPUnit_Framework_TestCase {
 
    public function testSendinventories() {
       // Add task and taskjob
-      $pluginFusioninventoryTask = new PluginFusioninventoryTask();
-      $pluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-      $pluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTask = new PluginFusioninventoryTask();
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
 
       $input = array();
       $input['entities_id'] = '0';
       $input['name'] = 'snmpquery';
-      $tasks_id = $pluginFusioninventoryTask->add($input);
+      $tasks_id = $pfTask->add($input);
 
       $input = array();
       $input['plugin_fusioninventory_tasks_id'] = $tasks_id;
       $input['method'] = 'snmpquery';
       $input['status'] = 1;
-      $taskjobs_id = $pluginFusioninventoryTaskjob->add($input);
+      $taskjobs_id = $pfTaskjob->add($input);
 
       $input = array();
       $input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
@@ -95,9 +95,9 @@ class Hub extends PHPUnit_Framework_TestCase {
       $input['items_id'] = '1';
       $input['state'] = 1;
       $input['plugin_fusioninventory_agents_id'] = 1;
-      $pluginFusioninventoryTaskjobstatus->add($input);
+      $pfTaskjobstatus->add($input);
       $input['items_id'] = '2';
-      $pluginFusioninventoryTaskjobstatus->add($input);
+      $pfTaskjobstatus->add($input);
 
       $switch1 = '<?xml version="1.0" encoding="UTF-8"?>
 <REQUEST>
@@ -220,8 +220,8 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
   <QUERY>SNMPQUERY</QUERY>
 </REQUEST>';
 
-      $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
-      $pluginFusinvsnmpNetworkPortConnectionLog = new PluginFusinvsnmpNetworkPortConnectionLog();
+      $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $pfTinvsnmpNetworkPortConnectionLog = new PluginFusinvsnmpNetworkPortConnectionLog();
       $networkEquipment = new NetworkEquipment();
       $networkPort = new NetworkPort();
       $networkPort_NetworkPort = new NetworkPort_NetworkPort();
@@ -240,15 +240,15 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          $contactport_id = $networkPort->getContact($a_port['id']);
          $networkPort->getFromDB($contactport_id);
          if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
-            $pluginFusioninventoryUnknownDevice->getFromDB($networkPort->fields['items_id']);
-            $this->assertEquals($pluginFusioninventoryUnknownDevice->fields['hub'],
+            $pfUnknownDevice->getFromDB($networkPort->fields['items_id']);
+            $this->assertEquals($pfUnknownDevice->fields['hub'],
                               '1', 'No hub connected on port fa0/1 of switch 1');
          } else {
             $t = 0;
             $this->assertEquals($t, '1', 'No hub port connected on port fa0/1 of switch 1');
          }
          // CHECK 2 : Verify number of networkportconnectionslog
-         $a_conn = $pluginFusinvsnmpNetworkPortConnectionLog->find("`creation` = '1'");
+         $a_conn = $pfTinvsnmpNetworkPortConnectionLog->find("`creation` = '1'");
          $this->assertEquals(count($a_conn), '1', '(1) Connections logs not equal to 1 ('.count($a_conn).')');
       
       $switch1 = str_replace("            <CONNECTION>
@@ -266,8 +266,8 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          $contactport_id = $networkPort->getContact($a_port['id']);
          $networkPort->getFromDB($contactport_id);
          if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
-            $pluginFusioninventoryUnknownDevice->getFromDB($networkPort->fields['items_id']);
-            $this->assertEquals($pluginFusioninventoryUnknownDevice->fields['hub'],
+            $pfUnknownDevice->getFromDB($networkPort->fields['items_id']);
+            $this->assertEquals($pfUnknownDevice->fields['hub'],
                               '1', '(2)No hub connected on port fa0/1 of switch 1');
          } else {
             $t = 0;
@@ -279,7 +279,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          $this->assertEquals(count($a_portshub),
                            '4', '(2)Don\'t have the 4 ports connected to hub');
          // CHECK 3 : Verify number of networkportconnectionslog
-         $a_conn = $pluginFusinvsnmpNetworkPortConnectionLog->find("`creation` = '1'");
+         $a_conn = $pfTinvsnmpNetworkPortConnectionLog->find("`creation` = '1'");
          $this->assertEquals(count($a_conn), '1', '(2) Connections logs not equal to 1 ('.count($a_conn).')');
  
 
@@ -302,8 +302,8 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          $contactport_id = $networkPort->getContact($a_port['id']);
          $networkPort->getFromDB($contactport_id);
          if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
-            $pluginFusioninventoryUnknownDevice->getFromDB($networkPort->fields['items_id']);
-            $this->assertEquals($pluginFusioninventoryUnknownDevice->fields['hub'],
+            $pfUnknownDevice->getFromDB($networkPort->fields['items_id']);
+            $this->assertEquals($pfUnknownDevice->fields['hub'],
                               '1', '(3)No hub connected on port fa0/1 of switch 1');
          } else {
             $t = 0;
@@ -329,7 +329,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
             $this->assertEquals($t, '1', '(3)port with mac 00:23:18:cf:0d:93 not connected to a switch');
          }
          // CHECK 4 : Verify number of networkportconnectionslog
-         $a_conn = $pluginFusinvsnmpNetworkPortConnectionLog->find("`creation` = '1'");
+         $a_conn = $pfTinvsnmpNetworkPortConnectionLog->find("`creation` = '1'");
          $this->assertEquals(count($a_conn), '2', '(3) Connections logs not equal to 2 ('.count($a_conn).')');
          
          
@@ -350,8 +350,8 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          $contactport_id = $networkPort->getContact($a_port['id']);
          $networkPort->getFromDB($contactport_id);
          if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
-            $pluginFusioninventoryUnknownDevice->getFromDB($networkPort->fields['items_id']);
-            $this->assertEquals($pluginFusioninventoryUnknownDevice->fields['hub'],
+            $pfUnknownDevice->getFromDB($networkPort->fields['items_id']);
+            $this->assertEquals($pfUnknownDevice->fields['hub'],
                               '0', '(4)Hub connected on port fa0/1 of switch 1');
          }
          // CHECK 2 : verify port 1 of the switch don't have 2 connections
@@ -372,7 +372,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
       //$this->testSendinventory("toto", $switch1);
       $this->testSendinventory("toto", $switch2);
          // CHECK 1 : verify hub deleted
-         $a_list_hub = $pluginFusioninventoryUnknownDevice->find("`hub`='1'");
+         $a_list_hub = $pfUnknownDevice->find("`hub`='1'");
          $this->assertEquals(count($a_list_hub),
                               '0', '(5) Hub not deleted');
          // CHECK 2 : verify port 1 of the switch don't have 2 connections
@@ -390,10 +390,10 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          // TODO: Verify port connected to port 2 of switch 2
          
          // CHECK 4 : Verify number of networkportconnectionslog
-         $a_conn = $pluginFusinvsnmpNetworkPortConnectionLog->find("`creation` = '1'");
+         $a_conn = $pfTinvsnmpNetworkPortConnectionLog->find("`creation` = '1'");
          $this->assertEquals(count($a_conn), '4', '(5) Connections logs not equal to 4 ('.count($a_conn).')');
          // CHECK 5 : Verify number of networkportconnectionslog
-         $a_conn = $pluginFusinvsnmpNetworkPortConnectionLog->find("`creation` = '0'");
+         $a_conn = $pfTinvsnmpNetworkPortConnectionLog->find("`creation` = '0'");
          $this->assertEquals(count($a_conn), '1', '(5) Connections logs not equal to 1 ('.count($a_conn).')');
 
 
@@ -411,8 +411,8 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          $contactport_id = $networkPort->getContact($a_port['id']);
          $networkPort->getFromDB($contactport_id);
          if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
-            $pluginFusioninventoryUnknownDevice->getFromDB($networkPort->fields['items_id']);
-            $this->assertEquals($pluginFusioninventoryUnknownDevice->fields['hub'],
+            $pfUnknownDevice->getFromDB($networkPort->fields['items_id']);
+            $this->assertEquals($pfUnknownDevice->fields['hub'],
                               '1', '(6) Hub not connected on port fa0/1 of switch 1');
          } else {
             $t = 0;
@@ -447,8 +447,8 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          $contactport_id = $networkPort->getContact($a_port['id']);
          $networkPort->getFromDB($contactport_id);
          if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
-            $pluginFusioninventoryUnknownDevice->getFromDB($networkPort->fields['items_id']);
-            $this->assertEquals($pluginFusioninventoryUnknownDevice->fields['hub'],
+            $pfUnknownDevice->getFromDB($networkPort->fields['items_id']);
+            $this->assertEquals($pfUnknownDevice->fields['hub'],
                               '0', '(7) Hub connected on port fa0/1 of switch 1');
          }
 
@@ -477,8 +477,8 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          $contactport_id = $networkPort->getContact($a_port['id']);
          $networkPort->getFromDB($contactport_id);
          if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
-            $pluginFusioninventoryUnknownDevice->getFromDB($networkPort->fields['items_id']);
-            $this->assertEquals($pluginFusioninventoryUnknownDevice->fields['hub'],
+            $pfUnknownDevice->getFromDB($networkPort->fields['items_id']);
+            $this->assertEquals($pfUnknownDevice->fields['hub'],
                               '0', '(8) Hub connected on port fa0/1 of switch 1');
          }
          

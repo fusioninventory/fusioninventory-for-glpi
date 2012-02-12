@@ -2331,8 +2331,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       if (!class_exists('PluginFusioninventorySetup')) { // if plugin is unactive
          include(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
       }
-      $PluginFusioninventorySetup = new PluginFusioninventorySetup();
-      $PluginFusioninventorySetup->initRules();
+      $pfSetup = new PluginFusioninventorySetup();
+      $pfSetup->initRules();
    }   
    
 
@@ -2373,8 +2373,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       if (!class_exists('PluginFusioninventorySetup')) { // if plugin is unactive
          include(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
       }
-      $PluginFusioninventorySetup = new PluginFusioninventorySetup();
-      $users_id = $PluginFusioninventorySetup->createFusionInventoryUser();
+      $pfSetup = new PluginFusioninventorySetup();
+      $users_id = $pfSetup->createFusionInventoryUser();
       $query = "UPDATE `glpi_plugin_fusioninventory_configs`
                          SET `value`='".$users_id."'
                   WHERE `type`='users_id'";

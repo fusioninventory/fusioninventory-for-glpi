@@ -44,13 +44,13 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-$PluginFusinvsnmpAgentconfig = new PluginFusinvsnmpAgentconfig();
+$pfAgentconfig = new PluginFusinvsnmpAgentconfig();
 
 PluginFusioninventoryProfile::checkRight("fusioninventory", "agent","r");
 
 if (isset ($_POST["update"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "agent","w");
-   $PluginFusinvsnmpAgentconfig->update($_POST);
+   $pfAgentconfig->update($_POST);
    Html::back();
 }
 

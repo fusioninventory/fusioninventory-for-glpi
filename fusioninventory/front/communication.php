@@ -118,8 +118,8 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
 
    // identify message compression algorithm
    $xml = '';
-   $taskjob = new PluginFusioninventoryTaskjob();
-   $taskjob->disableDebug();
+   $pfTaskjob = new PluginFusioninventoryTaskjob();
+   $pfTaskjob->disableDebug();
    if ($_SERVER['CONTENT_TYPE'] == "application/x-compress-zlib") {
          $xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
          $compressmode = "zlib";
@@ -131,11 +131,11 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          $compressmode = 'none';
    } else {
       # try each algorithm successively
-      if ($xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]) {
+      if ($xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"])) {
          $compressmode = "zlib";
-      } else if ($xml = $communication->gzdecode($GLOBALS["HTTP_RAW_POST_DATA"])) {
+      } else if ($xml = gzdecode($GLOBALS["HTTP_RAW_POST_DATA"])) {
          $compressmode = "gzip";
-      } else if ($xml = gzinflate (substr($GLOBALS["HTTP_RAW_POST_DATA"], 2))) {
+      } else if ($xml = gzinflate(substr($GLOBALS["HTTP_RAW_POST_DATA"], 2))) {
          // accept deflate for OCS agent 2.0 compatibility,
          // but use zlib for answer
          if (strstr($xml, "<QUERY>PROLOG</QUERY>")
@@ -231,4 +231,5 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    }
 }
 session_destroy();
+
 ?>

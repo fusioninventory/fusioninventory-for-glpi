@@ -55,9 +55,9 @@ PluginFusioninventoryMenu::displayMenu("mini");
 PluginFusioninventoryTaskjob::getAllowurlfopen();
 echo "<br/>";
 
-$pluginFusioninventoryTask = new PluginFusioninventoryTask();
-$pluginFusioninventoryTask->taskMenu();
-$pluginFusioninventoryTask->displayTaks($_GET['see']);
+$pfTask = new PluginFusioninventoryTask();
+$pfTask->taskMenu();
+$pfTask->displayTaks($_GET['see']);
 
 //$_GET['target']="task.php";
 //

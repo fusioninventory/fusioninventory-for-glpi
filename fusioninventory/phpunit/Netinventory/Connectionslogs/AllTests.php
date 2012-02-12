@@ -71,20 +71,20 @@ class Connectionslogs extends PHPUnit_Framework_TestCase {
       global $DB;
       
       // Add task and taskjob
-      $pluginFusioninventoryTask = new PluginFusioninventoryTask();
-      $pluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-      $pluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTask = new PluginFusioninventoryTask();
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
 
       $input = array();
       $input['entities_id'] = '0';
       $input['name'] = 'snmpquery';
-      $tasks_id = $pluginFusioninventoryTask->add($input);
+      $tasks_id = $pfTask->add($input);
 
       $input = array();
       $input['plugin_fusioninventory_tasks_id'] = $tasks_id;
       $input['method'] = 'snmpquery';
       $input['status'] = 1;
-      $taskjobs_id = $pluginFusioninventoryTaskjob->add($input);
+      $taskjobs_id = $pfTaskjob->add($input);
 
       $input = array();
       $input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
@@ -92,9 +92,9 @@ class Connectionslogs extends PHPUnit_Framework_TestCase {
       $input['items_id'] = '1';
       $input['state'] = 1;
       $input['plugin_fusioninventory_agents_id'] = 1;
-      $pluginFusioninventoryTaskjobstatus->add($input);
+      $pfTaskjobstatus->add($input);
       $input['items_id'] = '2';
-      $pluginFusioninventoryTaskjobstatus->add($input);
+      $pfTaskjobstatus->add($input);
 
       $switch1 = '<?xml version="1.0" encoding="UTF-8"?>
 <REQUEST>
@@ -216,7 +216,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
 
       $networkPort = new NetworkPort();
       $networkPort_NetworkPort = new NetworkPort_NetworkPort();
-      $pluginFusinvsnmpNetworkPortConnectionLog = new PluginFusinvsnmpNetworkPortConnectionLog();
+      $pfNetworkPortConnectionLog = new PluginFusinvsnmpNetworkPortConnectionLog();
 
       // * 1. Create switch 1 with a connection
       $this->testSendinventory("toto", $switch1, 1);
@@ -229,7 +229,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          // Check 2 : Get if portconnectionlog is added
          $a_ports = $networkPort->find("`mac`='00:23:18:cf:0d:93'");
          $a_uport = current($a_ports);
-         $a_logs = $pluginFusinvsnmpNetworkPortConnectionLog->find("
+         $a_logs = $pfNetworkPortConnectionLog->find("
             `creation`=1 
             AND ((`networkports_id_source`='".$a_port['id']."'
                   AND `networkports_id_destination`='".$a_uport['id']."')
@@ -248,7 +248,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          $this->assertEquals(count($a_ports), 1, '(2) switch 2 have not port created in GLPI');
          $a_port1sw2 = current($a_ports);
          // CHECK 2 : Get if (remove) portconnectionlog is added
-         $a_logs = $pluginFusinvsnmpNetworkPortConnectionLog->find("
+         $a_logs = $pfNetworkPortConnectionLog->find("
             `creation`=0 
             AND ((`networkports_id_source`='".$a_port['id']."'
                   AND `networkports_id_destination`='".$a_uport['id']."')
@@ -256,7 +256,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
                   AND `networkports_id_destination`='".$a_port['id']."'))");
          $this->assertEquals(count($a_logs), 1, '(2) Remove connection log not created');
          // CHECK 3 : Get connection created in GLPI
-         $a_logs = $pluginFusinvsnmpNetworkPortConnectionLog->find("
+         $a_logs = $pfNetworkPortConnectionLog->find("
             `creation`=1 
             AND ((`networkports_id_source`='".$a_port1sw2['id']."'
                   AND `networkports_id_destination`='".$a_uport['id']."')

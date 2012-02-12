@@ -44,11 +44,11 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-$PluginFusinvsnmpUnknownDevice = new PluginFusinvsnmpUnknownDevice();
+$pfUnknownDevice = new PluginFusinvsnmpUnknownDevice();
 
 if (isset($_POST["update"])) {
-   $PluginFusinvsnmpUnknownDevice->check($_POST['id'],'w');
-   $PluginFusinvsnmpUnknownDevice->update($_POST);
+   $pfUnknownDevice->check($_POST['id'],'w');
+   $pfUnknownDevice->update($_POST);
 
 } 
 Html::back();

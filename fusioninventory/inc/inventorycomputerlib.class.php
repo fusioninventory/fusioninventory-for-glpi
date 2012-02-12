@@ -77,12 +77,12 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if ($_SESSION["plugin_fusinvinventory_entity"] == NOT_AVAILABLE) {
             $_SESSION["plugin_fusinvinventory_entity"] = $Computer->fields['entities_id'];
          }
-         $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+         $pfConfig = new PluginFusioninventoryConfig();
          if ($Computer->getEntityID() != $_SESSION["plugin_fusinvinventory_entity"]) {
             $Transfer = new Transfer();
             // get value in Config ($config['transfers_id_auto'])
             $Transfer->getFromDB(
-                $PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                $pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                                                        'transfers_id_auto', 'inventory'));
 
             $item_to_transfer = array("Computer" => array($items_id=>$items_id));
@@ -109,24 +109,24 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $internalId = $a_serialized['internal_id'];
          } else {
             // load GLPI data in the XML
-            $PluginFusinvinventoryInventory = new PluginFusioninventoryInventoryComputerInventory();
-            $PluginFusinvinventoryInventory->createMachineInLib($items_id, $internalId);
+            $pfInventoryComputerInventory = new PluginFusioninventoryInventoryComputerInventory();
+            $pfInventoryComputerInventory->createMachineInLib($items_id, $internalId);
          }
 
          // Link computer to agent FusionInventory
-         $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-         $PluginFusioninventoryAgent->setAgentWithComputerid($items_id, $xml->DEVICEID);
+         $pfAgent = new PluginFusioninventoryAgent();
+         $pfAgent->setAgentWithComputerid($items_id, $xml->DEVICEID);
 
          // Transfer agent entity
-         $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-         $agent_id = $PluginFusioninventoryAgent->getAgentWithComputerid($items_id);
+         $pfAgent = new PluginFusioninventoryAgent();
+         $agent_id = $pfAgent->getAgentWithComputerid($items_id);
          if ($agent_id) {
-            $PluginFusioninventoryAgent->getFromDB($agent_id);
-            if ($PluginFusioninventoryAgent->getEntityID() != $_SESSION["plugin_fusinvinventory_entity"]) {
+            $pfAgent->getFromDB($agent_id);
+            if ($pfAgent->getEntityID() != $_SESSION["plugin_fusinvinventory_entity"]) {
                $input = array();
-               $input['id'] = $PluginFusioninventoryAgent->fields['id'];
+               $input['id'] = $pfAgent->fields['id'];
                $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
-               $PluginFusioninventoryAgent->update($input);
+               $pfAgent->update($input);
             }
          }
 
@@ -134,8 +134,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $xmlSections = $this->_getXMLSections($xml);
          $this->updateLibMachine($xmlSections, $internalId);
 
-         $PluginFusinvinventoryLibhook = new PluginFusioninventoryInventoryComputerLibhook();
-         $PluginFusinvinventoryLibhook->writeXMLFusion($items_id, $xml->asXML());
+         $pfInventoryComputerLibhook = new PluginFusioninventoryInventoryComputerLibhook();
+         $pfInventoryComputerLibhook->writeXMLFusion($items_id, $xml->asXML());
       } else {
          // New Computer
          if ($_SESSION["plugin_fusinvinventory_entity"] == NOT_AVAILABLE) {
@@ -147,29 +147,29 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $internalId = uniqid("", true);
 
          try {
-            $PluginFusinvinventoryLibhook = new PluginFusioninventoryInventoryComputerLibhook();
-            $PluginFusinvinventoryLibhook->createMachine($items_id);
+            $pfInventoryComputerLibhook = new PluginFusioninventoryInventoryComputerLibhook();
+            $pfInventoryComputerLibhook->createMachine($items_id);
             
             // Link computer to agent FusionInventory
-            $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-            $PluginFusioninventoryAgent->setAgentWithComputerid($items_id, $xml->DEVICEID);
+            $pfAgent = new PluginFusioninventoryAgent();
+            $pfAgent->setAgentWithComputerid($items_id, $xml->DEVICEID);
 
             // Transfer agent entity
-            $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-            $agent_id = $PluginFusioninventoryAgent->getAgentWithComputerid($items_id);
+            $pfAgent = new PluginFusioninventoryAgent();
+            $agent_id = $pfAgent->getAgentWithComputerid($items_id);
             if ($agent_id) {
-               $PluginFusioninventoryAgent->getFromDB($agent_id);
-               if ($PluginFusioninventoryAgent->getEntityID() 
+               $pfAgent->getFromDB($agent_id);
+               if ($pfAgent->getEntityID() 
                      != $_SESSION["plugin_fusinvinventory_entity"]) {
-                  $PluginFusioninventoryAgent->fields['entities_id'] 
+                  $pfAgent->fields['entities_id'] 
                      = $_SESSION["plugin_fusinvinventory_entity"];
-                  $PluginFusioninventoryAgent->update($PluginFusioninventoryAgent->fields);
+                  $pfAgent->update($pfAgent->fields);
                }
             }
 
             $this->addLibMachine($internalId, $items_id);
             
-            $PluginFusinvinventoryLibhook->writeXMLFusion($items_id, $xml->asXML());
+            $pfLibhook->writeXMLFusion($items_id, $xml->asXML());
 
             $this->updateLibMachine($xmlSections, $internalId);
 
@@ -192,7 +192,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    private function _getXMLSections($simpleXMLObj) {
 
       $xmlSections = array();
-      $PluginFusinvinventoryLibfilter = new PluginFusioninventoryInventoryComputerLibfilter();
+      $pfInventoryComputerLibfilter = new PluginFusioninventoryInventoryComputerLibfilter();
 
       $sectionsToFilter = array();
       array_push ($sectionsToFilter,
@@ -203,7 +203,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       foreach($simpleXMLObj->CONTENT->children() as $section) {
 
          if(in_array($section->getName(), $sectionsToFilter)) {
-            $nofilter = $PluginFusinvinventoryLibfilter->filter($section);
+            $nofilter = $pfInventoryComputerLibfilter->filter($section);
             //if the folder for the filter doesn't exist, delete this element from array.
             if($nofilter){
                foreach($sectionsToFilter as $fKey => $fValue) {

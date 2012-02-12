@@ -99,20 +99,20 @@ function pluginFusinvsnmpInstall($version, $migrationname='Migration') {
    //      PluginFusioninventoryConfig::add($modules_id, type, value);
 
       PluginFusioninventoryProfile::changeProfile($plugins_id);
-      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
+      $pfAgentmodule = new PluginFusioninventoryAgentmodule;
       $input = array();
       $input['plugins_id'] = $plugins_id;
       $input['modulename'] = "SNMPQUERY";
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());
-      $PluginFusioninventoryAgentmodule->add($input);
+      $pfAgentmodule->add($input);
 
       $input = array();
       $input['plugins_id'] = $plugins_id;
       $input['modulename'] = "NETDISCOVERY";
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());
-      $PluginFusioninventoryAgentmodule->add($input);
+      $pfAgentmodule->add($input);
 
       Crontask::Register('PluginFusinvsnmpNetworkPortLog', 'cleannetworkportlogs', (3600 * 24), array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
    }
@@ -125,10 +125,10 @@ function pluginFusinvsnmpUninstall() {
    // Get informations of plugin
    $a_plugin = plugin_version_fusinvsnmp();
 
-   $PluginFusioninventorySetup = new PluginFusioninventorySetup();
+   $pfSetup = new PluginFusioninventorySetup();
 
    if (file_exists(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'])) {
-      $PluginFusioninventorySetup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
+      $pfSetup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
    }
 
    PluginFusioninventoryProfile::cleanProfile($a_plugin['shortname']);
@@ -156,8 +156,8 @@ function pluginFusinvsnmpUninstall() {
 
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
 
-   $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
-   $PluginFusioninventoryAgentmodule->deleteModule($plugins_id);
+   $pfAgentmodule = new PluginFusioninventoryAgentmodule;
+   $pfAgentmodule->deleteModule($plugins_id);
 
    // Clean mapping
    $query = "DELETE FROM `glpi_plugin_fusioninventory_mappings`

@@ -50,18 +50,18 @@ Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"p
 
 PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","r");
 
-$PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+$pfConfig = new PluginFusioninventoryConfig();
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
 $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
 // Forms for FILE
-if ($PluginFusioninventoryConfig->getValue($plugins_id, "storagesnmpauth") == "file") {
+if ($pfConfig->getValue($plugins_id, "storagesnmpauth") == "file") {
    if (!isset($_GET["id"])) {
-      $PluginFusinvsnmpConfigSecurity = new PluginFusinvsnmpConfigSecurity();
-      echo $PluginFusinvsnmpConfigSecurity->plugin_fusioninventory_snmp_connections();
+      $pfConfigSecurity = new PluginFusinvsnmpConfigSecurity();
+      echo $pfConfigSecurity->plugin_fusioninventory_snmp_connections();
    }
-} else if ($PluginFusioninventoryConfig->getValue($plugins_id, "storagesnmpauth") == "DB") {
+} else if ($pfConfig->getValue($plugins_id, "storagesnmpauth") == "DB") {
    // Forms for DB
    
    $_GET['target']="configsecurity.php";

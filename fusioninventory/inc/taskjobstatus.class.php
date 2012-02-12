@@ -130,11 +130,11 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
    function stateTaskjobItem($items_id, $itemtype, $state='all') {
       global $DB,$LANG, $CFG_GLPI;
 
-      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $icon = "";
       $title = "";
 
-      $PluginFusioninventoryTaskjoblog->javascriptHistory();
+      $pfTaskjoblog->javascriptHistory();
 
       switch ($state) {
 
@@ -205,7 +205,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
          }
          echo "</tr>";
          foreach ($a_taskjobs as $data) {
-            $PluginFusioninventoryTaskjoblog->showHistoryLines($data['id'], 0, 1, $nb_td);
+            $pfTaskjoblog->showHistoryLines($data['id'], 0, 1, $nb_td);
          }
          echo "</table>";
       }
@@ -248,7 +248,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
    **/
    function getTaskjobsAgent($agent_id) {
 
-      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
 
       $moduleRun = array();
 
@@ -256,11 +256,11 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
                                      "' AND `state`='".self::PREPARED."'");
       foreach ($a_taskjobstatus as $data) {
          // Get job and data to send to agent
-         $PluginFusioninventoryTaskjob->getFromDB($data['plugin_fusioninventory_taskjobs_id']);
+         $pfTaskjob->getFromDB($data['plugin_fusioninventory_taskjobs_id']);
 
-         $pluginName = PluginFusioninventoryModule::getModuleName($PluginFusioninventoryTaskjob->fields['plugins_id']);
+         $pluginName = PluginFusioninventoryModule::getModuleName($pfTaskjob->fields['plugins_id']);
          if ($pluginName) {
-            $className = "Plugin".ucfirst($pluginName).ucfirst($PluginFusioninventoryTaskjob->fields['method']);
+            $className = "Plugin".ucfirst($pluginName).ucfirst($pfTaskjob->fields['method']);
             $moduleRun[$className][] = $data;
          }         
       }
@@ -285,8 +285,8 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
    function changeStatusFinish($taskjobstatus, $items_id, $itemtype, $error=0, $message='', $unknown=0, $reinitialize=1) {
       global $DB;
       
-      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
       $pFusioninventoryTask = new PluginFusioninventoryTask();
 
       $this->getFromDB($taskjobstatus);
@@ -300,16 +300,16 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
          $a_input['state'] = 5;
       } else if ($error == "1") {
          // Check if we have retry
-         $PluginFusioninventoryTaskjob->getFromDB($this->fields['plugin_fusioninventory_taskjobs_id']);
-         if($PluginFusioninventoryTaskjob->fields['retry_nb'] > 0) {
+         $pfTaskjob->getFromDB($this->fields['plugin_fusioninventory_taskjobs_id']);
+         if($pfTaskjob->fields['retry_nb'] > 0) {
             // 1. Calculate start timeof the task
             $period = 0;
-            $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp(
-                    $PluginFusioninventoryTaskjob->fields['periodicity_type'], 
-                    $PluginFusioninventoryTaskjob->fields['periodicity_count']);
+            $period = $pfTaskjob->periodicityToTimestamp(
+                    $pfTaskjob->fields['periodicity_type'], 
+                    $pfTaskjob->fields['periodicity_count']);
             $query = "SELECT *, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp
                   FROM `".$pFusioninventoryTask->getTable()."`
-               WHERE `id`='".$PluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']."' 
+               WHERE `id`='".$pfTaskjob->fields['plugin_fusioninventory_tasks_id']."' 
                   LIMIT 1";
             $result = $DB->query($query);
             $data_task = $DB->fetch_assoc($result);
@@ -323,7 +323,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
                      AND `uniqid` != '".$this->fields['uniqid']."'
                GROUP BY `uniqid`";
             $result = $DB->query($query);
-            if ($DB->numrows($result) >= ($PluginFusioninventoryTaskjob->fields['retry_nb'] - 1)) {
+            if ($DB->numrows($result) >= ($pfTaskjob->fields['retry_nb'] - 1)) {
                $a_input['state'] = 4;
             } else {
                // Replanification
@@ -340,15 +340,15 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       $a_input['itemtype'] = $itemtype;
       $a_input['date'] = date("Y-m-d H:i:s");
       $a_input['comment'] = $message;
-      $PluginFusioninventoryTaskjoblog->add($a_input);
+      $pfTaskjoblog->add($a_input);
 
-      $PluginFusioninventoryTaskjob->getFromDB($this->fields['plugin_fusioninventory_taskjobs_id']);
+      $pfTaskjob->getFromDB($this->fields['plugin_fusioninventory_taskjobs_id']);
       $input = array();
       $input['id'] = $this->fields['plugin_fusioninventory_taskjobs_id'];
       $input['status'] = 0;
-      $PluginFusioninventoryTaskjob->update($input);
+      $pfTaskjob->update($input);
       if ($reinitialize == '1') {
-         $PluginFusioninventoryTaskjob->reinitializeTaskjobs($PluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']);
+         $pfTaskjob->reinitializeTaskjobs($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
       }
    }
 
@@ -363,15 +363,15 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       global $DB;
 
       $retentiontime = PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'delete_task', '');
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $sql = "SELECT * FROM `glpi_plugin_fusioninventory_taskjoblogs`
          WHERE  `date` < date_add(now(),interval -".$retentiontime." day)
          GROUP BY `plugin_fusioninventory_taskjobstatus_id`";
       $result=$DB->query($sql);
       if ($result) {
          while ($data=$DB->fetch_array($result)) {
-            $PluginFusioninventoryTaskjobstatus->getFromDB($data['plugin_fusioninventory_taskjobstatus_id']);
-            $PluginFusioninventoryTaskjobstatus->delete($PluginFusioninventoryTaskjobstatus->fields, 1);
+            $pfTaskjobstatus->getFromDB($data['plugin_fusioninventory_taskjobstatus_id']);
+            $pfTaskjobstatus->delete($pfTaskjobstatus->fields, 1);
             $sql_delete = "DELETE FROM `glpi_plugin_fusioninventory_taskjoblogs`
                WHERE `plugin_fusioninventory_taskjobstatus_id` = '".$data['plugin_fusioninventory_taskjobstatus_id']."'";
             $DB->query($sql_delete);

@@ -72,18 +72,18 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->import().');
 
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfAgent = new PluginFusioninventoryAgent();
+      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
 
-      $this->agent = $PluginFusioninventoryAgent->InfosByKey($p_DEVICEID);
+      $this->agent = $pfAgent->InfosByKey($p_DEVICEID);
 
       $this->sxml = simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA);
       $errors = '';
 
       $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $p_CONTENT->PROCESSNUMBER;
-      if ($PluginFusioninventoryTaskjobstatus->getFromDB($p_CONTENT->PROCESSNUMBER)) {
-         if ($PluginFusioninventoryTaskjobstatus->fields['state'] != "3") {
-            $PluginFusioninventoryTaskjobstatus->changeStatus($p_CONTENT->PROCESSNUMBER, 2);
+      if ($pfTaskjobstatus->getFromDB($p_CONTENT->PROCESSNUMBER)) {
+         if ($pfTaskjobstatus->fields['state'] != "3") {
+            $pfTaskjobstatus->changeStatus($p_CONTENT->PROCESSNUMBER, 2);
             if ((!isset($p_CONTENT->AGENT->START)) AND (!isset($p_CONTENT->AGENT->END))) {
                $nb_devices = 0;
                $segs=$p_CONTENT->xpath('//DEVICE');
@@ -102,8 +102,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             if ($errors != '') {
                if (isset($_SESSION['glpi_plugin_fusioninventory_processnumber'])) {
                   $result=true;
-      //            $PluginFusioninventoryAgentp = new PluginFusioninventoryAgentProcess();
-      //            $PluginFusioninventoryAgentp->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
+      //            $pfAgentp = new PluginFusioninventoryAgentProcess();
+      //            $pfAgentp->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
       //                                 array('comment' => $errors));
 
                } else {
@@ -112,7 +112,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                }
             }
             if (isset($p_CONTENT->AGENT->END)) {
-               $PluginFusioninventoryTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
+               $pfTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
                                                          $this->agent['id'],
                                                          'PluginFusioninventoryAgent');
             }
@@ -142,8 +142,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->importContent().');
-      //$PluginFusioninventoryAgentp = new PluginFusioninventoryAgentProcess;
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+      //$pfAgentp = new PluginFusioninventoryAgentProcess;
+      $pfAgent = new PluginFusioninventoryAgent();
       
       $errors='';
       $nbDevices = 0;
@@ -183,21 +183,21 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
             case 'AGENT' :
                if (isset($this->sxml->CONTENT->AGENT->START)) {
-//                  $PluginFusioninventoryAgentp->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
+//                  $pfAgentp->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
 //                                       array('start_time_query' => date("Y-m-d H:i:s")));
                } else if (isset($this->sxml->CONTENT->AGENT->END)) {
-//                  $PluginFusioninventoryAgentp->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
+//                  $pfAgentp->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
 //                                       array('end_time_query' => date("Y-m-d H:i:s")));
                } else if (isset($this->sxml->CONTENT->AGENT->EXIT)) {
-//                  $PluginFusioninventoryAgentp->endProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
+//                  $pfAgentp->endProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
 //                                       date("Y-m-d H:i:s"));
                }
                if (isset($this->sxml->CONTENT->AGENT->AGENTVERSION)) {
-                  $agent = $PluginFusioninventoryAgent->InfosByKey($this->sxml->DEVICEID);
+                  $agent = $pfAgent->InfosByKey($this->sxml->DEVICEID);
                   $agent['fusioninventory_agent_version'] = $this->sxml->CONTENT->AGENT->AGENTVERSION;
                   $agent['last_agent_update'] = date("Y-m-d H:i:s");
                   //$p_xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
-                  $PluginFusioninventoryAgent->update($agent);
+                  $pfAgent->update($agent);
                }
                break;
 
@@ -524,8 +524,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       global $LANG;
 
       $errors='';
-      $PluginFusinvsnmpNetworkEquipmentIP = new PluginFusinvsnmpNetworkEquipmentIP();
-      $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $pfNetworkEquipmentIP = new PluginFusinvsnmpNetworkEquipmentIP();
+      $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
       foreach ($p_ips->children() as $child) {
          switch ($child->getName()) {
             case 'IP' :
@@ -533,15 +533,15 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   $ifaddrIndex = $this->ptd->getIfaddrIndex((string)$child);
                   if (is_int($ifaddrIndex)) {
                      $oldIfaddr = $this->ptd->getIfaddr($ifaddrIndex);
-                     $PluginFusinvsnmpNetworkEquipmentIP->load($oldIfaddr->getValue('id'));
+                     $pfNetworkEquipmentIP->load($oldIfaddr->getValue('id'));
                   } else {
-                     $PluginFusinvsnmpNetworkEquipmentIP->load();
+                     $pfNetworkEquipmentIP->load();
                   }
-                  $PluginFusinvsnmpNetworkEquipmentIP->setValue('ip', (string)$child);
-                  $this->ptd->addIfaddr(clone $PluginFusinvsnmpNetworkEquipmentIP, $ifaddrIndex);
+                  $pfNetworkEquipmentIP->setValue('ip', (string)$child);
+                  $this->ptd->addIfaddr(clone $pfNetworkEquipmentIP, $ifaddrIndex);
                   // Search in unknown device if device with IP (CDP) is yet added, in this case,
                   // we get id of this unknown device
-                  $a_unknown = $PluginFusioninventoryUnknownDevice->find("`ip`='".(string)$child."'");
+                  $a_unknown = $pfUnknownDevice->find("`ip`='".(string)$child."'");
                   if (count($a_unknown) > 0) {
                      foreach ($a_unknown as $datas) {
                      }
@@ -631,8 +631,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                     "`itemtype`='PluginFusioninventoryUnknownDevice'
                         AND `items_id`='".$this->unknownDeviceCDP."'");
             if ($nbelements == '0') {
-               $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
-               $PluginFusioninventoryUnknownDevice->delete(array('id'=>$this->unknownDeviceCDP), 1);
+               $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
+               $pfUnknownDevice->delete(array('id'=>$this->unknownDeviceCDP), 1);
                $this->unknownDeviceCDP = 0;
             }
          }
@@ -798,10 +798,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    function importCartridges($p_cartridges) {
       global $LANG;
 
-      $PluginFusioninventoryMapping = new PluginFusioninventoryMapping();
+      $pfMapping = new PluginFusioninventoryMapping();
       $errors='';
       foreach ($p_cartridges->children() as $name=>$child) {
-         if ($plugin_fusioninventory_mappings = $PluginFusioninventoryMapping->get("Printer", strtolower($name)) ) {
+         if ($plugin_fusioninventory_mappings = $pfMapping->get("Printer", strtolower($name)) ) {
             $ptc = new PluginFusinvsnmpPrinterCartridge('glpi_plugin_fusinvsnmp_printercartridges');
             $cartridgeIndex = $this->ptd->getCartridgeIndex($name);
             if (is_int($cartridgeIndex)) {
@@ -996,10 +996,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                }
                if (!isset($macNotPhone_id)) {
                   // Create unknown ports
-                  $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+                  $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
                   $unknown_infos = array();
                   $unknown_infos["name"] = '';
-                  $newID=$PluginFusioninventoryUnknownDevice->add($unknown_infos);
+                  $newID=$pfUnknownDevice->add($unknown_infos);
                   // Add networking_port
                   $NetworkPort =new NetworkPort();
                   $port_add = array();
@@ -1030,9 +1030,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             $id = $networkPort->getContact($p_oPort->getValue('id'));
             if ($id) {
                $networkPort->getFromDB($id);
-               $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
-               if ($networkPort->fields["itemtype"] == $pluginFusioninventoryUnknownDevice->getType()) {
-                  $pluginFusioninventoryUnknownDevice->getFromDB($networkPort->fields["items_id"]);
+               $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
+               if ($networkPort->fields["itemtype"] == $pfUnknownDevice->getType()) {
+                  $pfUnknownDevice->getFromDB($networkPort->fields["items_id"]);
                   if ($this->fields["hub"] == "1") {
                      $hub = 1;
                   }
@@ -1072,7 +1072,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $sysdescr = '';
       $sysname = '';
       $model = '';
-      $PluginFusinvsnmpSNMP = new PluginFusinvsnmpSNMP();
+      $pfSNMP = new PluginFusinvsnmpSNMP();
       if ($p_cdp==1) {
          $ifdescr='';
          foreach ($p_connection->children() as $child) {
@@ -1113,14 +1113,14 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             }
          }
          if ($ip != '' AND $ifdescr!='') {
-            $portID=$PluginFusinvsnmpSNMP->getPortIDfromDeviceIP(
+            $portID=$pfSNMP->getPortIDfromDeviceIP(
                                    $ip, 
                                    $ifdescr,
                                    $sysdescr,
                                    $sysname,
                                    $model);
          } else if($sysmac != '' AND $ifnumber!='') {
-            $portID=$PluginFusinvsnmpSNMP->getPortIDfromSysmacandPortnumber($sysmac, $ifnumber);
+            $portID=$pfSNMP->getPortIDfromSysmacandPortnumber($sysmac, $ifnumber);
          }
       } else {
          foreach ($p_connection->children() as $child) {
@@ -1128,7 +1128,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                
                case 'MAC' :
                   $mac=strval($child);
-                  $portID=$PluginFusinvsnmpSNMP->getPortIDfromDeviceMAC($child, $p_oPort->getValue('id'));
+                  $portID=$pfSNMP->getPortIDfromDeviceMAC($child, $p_oPort->getValue('id'));
                   $p_oPort->addMac($mac);
                   break;
                
@@ -1463,8 +1463,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
    function addtaskjoblog() {
 
-      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      $PluginFusioninventoryTaskjoblog->addTaskjoblog(
+      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pfTaskjoblog->addTaskjoblog(
                      $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'],
                      $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'],
                      $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'],

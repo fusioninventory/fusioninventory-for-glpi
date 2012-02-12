@@ -59,8 +59,8 @@ class PluginFusioninventoryInventoryComputerImport_Software extends CommonDBTM  
    function addSoftware($idmachine, $array) {
       global $DB;
 
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
-      if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+      $pfConfig = new PluginFusioninventoryConfig();
+      if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
               "import_software", 'inventory') == '0') {
          return;
       }

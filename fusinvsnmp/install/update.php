@@ -104,9 +104,9 @@ function pluginFusinvsnmpGetCurrentVersion($version) {
          include(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
       }
       
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+      $pfConfig = new PluginFusioninventoryConfig();
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
-      $versionconfig = $PluginFusioninventoryConfig->getValue($plugins_id, "version");
+      $versionconfig = $pfConfig->getValue($plugins_id, "version");
       if ((isset($versionconfig)) AND (!empty($versionconfig))) {
          if ($versionconfig == '2.2.1'
                  AND TableExists("glpi_plugin_fusinvsnmp_configlogfields")) {
@@ -117,7 +117,7 @@ function pluginFusinvsnmpGetCurrentVersion($version) {
          $pFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
          $a_findmodule = current($pFusioninventoryAgentmodule->find("`modulename`='NETDISCOVERY'", "", 1));
          if (isset($a_findmodule['plugins_id'])) {
-            $versionconfig = $PluginFusioninventoryConfig->getValue($a_findmodule['plugins_id'], "version");
+            $versionconfig = $pfConfig->getValue($a_findmodule['plugins_id'], "version");
             if ((isset($versionconfig)) AND (!empty($versionconfig))) {
                if ($versionconfig == '2.2.1'
                        AND TableExists("glpi_plugin_fusinvsnmp_configlogfields")) {
@@ -3581,6 +3581,81 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    changeDisplayPreference("5162", "PluginFusinvsnmpNetworkPortLog");
    changeDisplayPreference("5167", "PluginFusinvsnmpConstructDevice");
    changeDisplayPreference("5168", "PluginFusinvsnmpPrinterLog");
+   
+   /*
+    * Modify displaypreference for PluginFusinvsnmpPrinterLogReport
+    */
+      if (!class_exists('PluginFusinvsnmpPrinterLogReport')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/printerlogreport.class.php");
+      }
+      $pfPrinterLogReport = new PluginFusinvsnmpPrinterLogReport();
+      $a_searchoptions = $pfPrinterLogReport->getSearchOptions();
+      $query = "SELECT * FROM `glpi_displaypreferences` 
+      WHERE `itemtype` = 'PluginFusinvsnmpPrinterLogReport'
+         AND `users_id`='0'";
+      $result=$DB->query($query);
+      if ($DB->numrows($result) == '0') {
+         $query = "INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) 
+                     VALUES (NULL,'PluginFusinvsnmpPrinterLogReport', '2', '1', '0'),
+             (NULL,'PluginFusinvsnmpPrinterLogReport', '18', '2', '0'),
+             (NULL,'PluginFusinvsnmpPrinterLogReport', '20', '3', '0'),
+             (NULL,'PluginFusinvsnmpPrinterLogReport', '5', '4', '0'),
+             (NULL,'PluginFusinvsnmpPrinterLogReport', '6', '5', '0')";
+         $DB->query($query);
+      } else {   
+         while ($data=$DB->fetch_array($result)) {
+            if (!isset($a_searchoptions[$data['num']])) {
+               $queryd = "DELETE FROM `glpi_displaypreferences`
+                  WHERE `id`='".$data['id']."'";
+               $DB->query($queryd);
+            }
+         }
+      }
+   
+   
+   /*
+    * Modify displaypreference for PluginFusinvsnmpNetworkEquipment
+    */
+      $a_check = array();
+      $a_check["2"] = 1;
+      $a_check["3"] = 2;
+      $a_check["4"] = 3;
+      $a_check["5"] = 4;
+      $a_check["6"] = 5;
+      $a_check["7"] = 6;
+      $a_check["8"] = 7;
+      $a_check["9"] = 8;
+      $a_check["10"] = 9;
+      $a_check["11"] = 10;
+      $a_check["14"] = 11;
+      $a_check["12"] = 12;
+      $a_check["13"] = 13;
+      
+      foreach ($a_check as $num=>$rank) {
+         $query = "SELECT * FROM `glpi_displaypreferences` 
+         WHERE `itemtype` = 'PluginFusinvsnmpNetworkEquipment'
+         AND `num`='".$num."'
+            AND `users_id`='0'";
+         $result=$DB->query($query);
+         if ($DB->numrows($result) == '0') {
+            $query = "INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) 
+                        VALUES (NULL,'PluginFusinvsnmpNetworkEquipment', '".$num."', '".$rank."', '0')";
+            $DB->query($query);
+         }
+      }
+      $query = "SELECT * FROM `glpi_displaypreferences` 
+      WHERE `itemtype` = 'PluginFusinvsnmpNetworkEquipment'
+         AND `users_id`='0'";
+      $result=$DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         if (!isset($a_check[$data['num']])) {
+            $queryd = "DELETE FROM `glpi_displaypreferences`
+               WHERE `id`='".$data['id']."'";
+            $DB->query($queryd);
+         }
+      }
+
+      
 
 
    $config->updateConfigType($plugins_id, 'version', PLUGIN_FUSINVSNMP_VERSION);

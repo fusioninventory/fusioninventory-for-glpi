@@ -54,8 +54,8 @@ if (isset($_POST['value'])) {
    $value = $_POST['value'];
 }
 
-$PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
-$PluginFusioninventoryTaskjob->deleteitemtodefatc($_POST['type'], 
+$pfTaskjob = new PluginFusioninventoryTaskjob;
+$pfTaskjob->deleteitemtodefatc($_POST['type'], 
                                                $_POST[$_POST['type'].'item'], 
                                                $_POST['taskjobs_id']);
 

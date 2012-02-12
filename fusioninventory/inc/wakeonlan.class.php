@@ -50,25 +50,25 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
    function prepareRun($taskjobs_id) {
       global $DB;
 
-      $PluginFusioninventoryTask = new PluginFusioninventoryTask();
-      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
-      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pfTask = new PluginFusioninventoryTask();
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       
       $uniqid = uniqid();
 
-      $PluginFusioninventoryTaskjob->getFromDB($taskjobs_id);
-      $PluginFusioninventoryTask->getFromDB($PluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']);
+      $pfTaskjob->getFromDB($taskjobs_id);
+      $pfTask->getFromDB($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
 
-      $communication = $PluginFusioninventoryTask->fields['communication'];
-      $a_definitions = importArrayFromDB($PluginFusioninventoryTaskjob->fields['definition']);
+      $communication = $pfTask->fields['communication'];
+      $a_definitions = importArrayFromDB($pfTaskjob->fields['definition']);
 
-      $a_actions = importArrayFromDB($PluginFusioninventoryTaskjob->fields['action']);
+      $a_actions = importArrayFromDB($pfTaskjob->fields['action']);
 
       $a_agentList = array();
       
-      if ((!strstr($PluginFusioninventoryTaskjob->fields['action'], '".1"'))
-            AND (!strstr($PluginFusioninventoryTaskjob->fields['action'], '".2"'))) {
+      if ((!strstr($pfTaskjob->fields['action'], '".1"'))
+            AND (!strstr($pfTaskjob->fields['action'], '".2"'))) {
 
          foreach($a_actions as $a_action) {
             if ((!in_array('.1', $a_action))
@@ -83,7 +83,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                if ($result) {
                   while ($data=$DB->fetch_array($result)) {
                      if ($communication == 'push') {
-                        $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent(1, $data['a_id']);
+                        $agentStatus = $pfTaskjob->getStateAgent(1, $data['a_id']);
                         if ($agentStatus ==  true) {
                            $a_agentList[] = $data['a_id'];
                         }
@@ -98,7 +98,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
       /*
        * Case 3 : dynamic agent
        */
-      else if (strstr($PluginFusioninventoryTaskjob->fields['action'], '".1"')) {
+      else if (strstr($pfTaskjob->fields['action'], '".1"')) {
          $a_agentList = $this->getAgentsSubnet(count($a_definitions), $communication);
       }
       /*
@@ -131,14 +131,14 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
          $a_input['itemtype'] = 'Computer';
          $a_input['items_id'] = 0;
          $a_input['uniqid'] = $uniqid;
-         $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
+         $Taskjobstatus_id = $pfTaskjobstatus->add($a_input);
             //Add log of taskjob
             $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
             $a_input['state'] = 7;
             $a_input['date'] = date("Y-m-d H:i:s");
-            $PluginFusioninventoryTaskjoblog->add($a_input);
+            $pfTaskjoblog->add($a_input);
 
-         $PluginFusioninventoryTaskjobstatus->changeStatusFinish($Taskjobstatus_id,
+         $pfTaskjobstatus->changeStatusFinish($Taskjobstatus_id,
                                                                  0,
                                                                  'Computer',
                                                                  1,
@@ -157,12 +157,12 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
             for ($i=0; $i < $nb_computers; $i++) {
                 //Add jobstatus and put status
                 $a_input['items_id'] = current(array_pop($a_definitions));
-                $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
+                $Taskjobstatus_id = $pfTaskjobstatus->add($a_input);
                   //Add log of taskjob
                   $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
                   $a_input['state'] = 7;
                   $a_input['date'] = date("Y-m-d H:i:s");
-                  $PluginFusioninventoryTaskjoblog->add($a_input);
+                  $pfTaskjoblog->add($a_input);
                   unset($a_input['state']);
                   if ($communication == "push") {
                      $_SESSION['glpi_plugin_fusioninventory']['agents'][$agent_id] = 1;
@@ -170,8 +170,8 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
             }
          }
       }
-      $PluginFusioninventoryTaskjob->fields['status'] = 1;
-      $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
+      $pfTaskjob->fields['status'] = 1;
+      $pfTaskjob->update($pfTaskjob->fields);
 
       return $uniqid;
    }
@@ -183,8 +183,8 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
     */
    function run($a_Taskjobstatus) {
 
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
-      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $NetworkPort                        = new NetworkPort();
 
       $sxml_option = $this->sxml->addChild('OPTION');
@@ -202,15 +202,15 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                $sxml_param->addAttribute('IP', $datanetwork['ip']);
 
                if ($changestatus == '0') {
-                  $PluginFusioninventoryTaskjobstatus->changeStatus($data['id'], 1);
-                  $PluginFusioninventoryTaskjoblog->addTaskjoblog($data['id'],
+                  $pfTaskjobstatus->changeStatus($data['id'], 1);
+                  $pfTaskjoblog->addTaskjoblog($data['id'],
                                           '0',
                                           'Computer',
                                           '1',
                                           '');
-                  $changestatus = $PluginFusioninventoryTaskjobstatus->fields['id'];
+                  $changestatus = $pfTaskjobstatus->fields['id'];
                } else {
-                  $PluginFusioninventoryTaskjobstatus->changeStatusFinish($data['id'],
+                  $pfTaskjobstatus->changeStatusFinish($data['id'],
                                                                     $data['items_id'],
                                                                     $data['itemtype'],
                                                                     0,
@@ -218,7 +218,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                }
 
                // Update taskjobstatus (state = 3 : finish); Because we haven't return of agent on this action
-               $PluginFusioninventoryTaskjobstatus->changeStatusFinish($data['id'],
+               $pfTaskjobstatus->changeStatusFinish($data['id'],
                                                                      $data['items_id'],
                                                                      $data['itemtype'],
                                                                      0,
@@ -227,7 +227,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
             }
          }
          if ($computerip == '0') {
-            $PluginFusioninventoryTaskjobstatus->changeStatusFinish($data['id'],
+            $pfTaskjobstatus->changeStatusFinish($data['id'],
                                                                     $data['items_id'],
                                                                     $data['itemtype'],
                                                                     1,
@@ -236,7 +236,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
          }
       }
 //      if ($changestatus == '0') {
-//         $PluginFusioninventoryTaskjobstatus->changeStatusFinish($taskjobs_id,
+//         $pfTaskjobstatus->changeStatusFinish($taskjobs_id,
 //                                                                 0,
 //                                                                 '',
 //                                                                 1,
@@ -249,8 +249,8 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
    function getAgentsSubnet($nb_computers, $communication, $subnet='') {
       global $DB;
 
-      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
       $OperatingSystem = new OperatingSystem();
 
       // Number of computers min by agent
@@ -289,7 +289,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
          if ($subnet != '') {
             $subnet = " AND subnet='".$subnet."' ";
          }
-         $a_agents = $PluginFusioninventoryAgentmodule->getAgentsCanDo('WAKEONLAN');
+         $a_agents = $pfAgentmodule->getAgentsCanDo('WAKEONLAN');
          $a_agentsid = array();
          foreach($a_agents as $a_agent) {
             $a_agentsid[] = $a_agent['id'];
@@ -313,7 +313,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
          if ($result = $DB->query($query)) {
             while ($data=$DB->fetch_array($result)) {
                if ($communication == 'push') {
-                  $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent(1, $data['a_id']);
+                  $agentStatus = $pfTaskjob->getStateAgent(1, $data['a_id']);
                   if ($agentStatus ==  true) {
                      if (!in_array($a_agentList,$data['a_id'])) {
                         $a_agentList[] = $data['a_id'];

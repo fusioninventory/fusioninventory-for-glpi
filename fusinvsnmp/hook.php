@@ -74,11 +74,11 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
       //$sopt[101]['datatype'] = 'itemlink';
       //$sopt[101]['itemlink_type'] = 'PluginFusinvsnmpModel';
 
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+      $pfConfig = new PluginFusioninventoryConfig();
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
 
-      if ($PluginFusioninventoryConfig->getValue($plugins_id, "storagesnmpauth") == "file") {
+      if ($pfConfig->getValue($plugins_id, "storagesnmpauth") == "file") {
          $sopt[102]['table'] = 'glpi_plugin_fusinvsnmp_printers';
          $sopt[102]['field'] = 'plugin_fusinvsnmp_configsecurities_id';
          $sopt[102]['linkfield'] = '';
@@ -135,11 +135,11 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
       $sopt[5190]['massiveaction'] = false;
 
 
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+      $pfConfig = new PluginFusioninventoryConfig();
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
 
-      if ($PluginFusioninventoryConfig->getValue($plugins_id, "storagesnmpauth") == "file") {
+      if ($pfConfig->getValue($plugins_id, "storagesnmpauth") == "file") {
          $sopt[5191]['table'] = 'glpi_plugin_fusinvsnmp_printers';
          $sopt[5191]['field'] = 'plugin_fusinvsnmp_configsecurities_id';
          $sopt[5191]['linkfield'] = 'id';
@@ -179,11 +179,11 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
          $LANG['plugin_fusinvsnmp']['model_info'][4];
       $sopt[5190]['massiveaction'] = false;
 
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+      $pfConfig = new PluginFusioninventoryConfig();
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
 
-      if ($PluginFusioninventoryConfig->getValue($plugins_id, "storagesnmpauth") == "file") {
+      if ($pfConfig->getValue($plugins_id, "storagesnmpauth") == "file") {
          $sopt[5191]['table'] = 'glpi_plugin_fusinvsnmp_networkequipments';
          $sopt[5191]['field'] = 'plugin_fusinvsnmp_configsecurities_id';
          $sopt[5191]['linkfield'] = '';
@@ -853,13 +853,13 @@ function plugin_headings_fusinvsnmp_printerInfo($type, $id) {
                array('target'=>$CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/printer_info.form.php'));
    echo '<div id="overDivYFix" STYLE="visibility:hidden">fusinvsnmp_1</div>';
 
-   $PluginFusinvsnmpPrinterCartridge = 
+   $pfPrinterCartridge = 
       new PluginFusinvsnmpPrinterCartridge('glpi_plugin_fusinvsnmp_printercartridges');
-   $PluginFusinvsnmpPrinterCartridge->showForm($_POST['id'],
+   $pfPrinterCartridge->showForm($_POST['id'],
                array('target'=>$CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/printer_info.form.php'));
 
-   $PluginFusinvsnmpPrinterLog = new PluginFusinvsnmpPrinterLog;
-   $PluginFusinvsnmpPrinterLog->showGraph($_POST['id'],
+   $pfPrinterLog = new PluginFusinvsnmpPrinterLog;
+   $pfPrinterLog->showGraph($_POST['id'],
                array('target'=>$CFG_GLPI['root_doc'] . '/plugins/fusinvsnmp/front/printer_info.form.php'));
 
 }
@@ -882,14 +882,14 @@ function plugin_headings_fusinvsnmp_networkingInfo($type, $id) {
 
 
 function plugin_headings_fusinvsnmp_agents($type,$id) {
-   $PluginFusinvsnmpAgentconfig = new PluginFusinvsnmpAgentconfig;
-   $PluginFusinvsnmpAgentconfig->showForm($_POST['id']);
+   $pfAgentconfig = new PluginFusinvsnmpAgentconfig;
+   $pfAgentconfig->showForm($_POST['id']);
 }
 
 
 function plugin_headings_fusinvsnmp_unknowndevices($type,$id) {
-   $PluginFusinvsnmpUnknownDevice = new PluginFusinvsnmpUnknownDevice();
-   $PluginFusinvsnmpUnknownDevice->showForm($_POST['id']);
+   $pfUnknownDevice = new PluginFusinvsnmpUnknownDevice();
+   $pfUnknownDevice->showForm($_POST['id']);
 }
 
 
@@ -1049,15 +1049,15 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
          if ($data['itemtype'] == NETWORKING_TYPE) {
             foreach ($data['item'] as $key => $val) {
                if ($val == 1) {
-                  $PluginFusinvsnmpModel = new PluginFusinvsnmpModel;
-                  $PluginFusinvsnmpModel->getrightmodel($key, NETWORKING_TYPE);
+                  $pfModel = new PluginFusinvsnmpModel;
+                  $pfModel->getrightmodel($key, NETWORKING_TYPE);
                }
             }
          } else if($data['itemtype'] == PRINTER_TYPE) {
             foreach ($data['item'] as $key => $val) {
                if ($val == 1) {
-                  $PluginFusinvsnmpModel = new PluginFusinvsnmpModel;
-                  $PluginFusinvsnmpModel->getrightmodel($key, PRINTER_TYPE);
+                  $pfModel = new PluginFusinvsnmpModel;
+                  $pfModel->getrightmodel($key, PRINTER_TYPE);
                }
             }
          }
@@ -1067,57 +1067,57 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
          if ($data['itemtype'] == 'NetworkEquipment') {
             foreach ($data['item'] as $items_id => $val) {
                if ($val == 1) {
-                  $PluginFusinvsnmpNetworkEquipment = 
+                  $pfNetworkEquipment = 
                      new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
                   $a_networkequipments = 
-                     $PluginFusinvsnmpNetworkEquipment->find("`networkequipments_id`='".$items_id."'");
+                     $pfNetworkEquipment->find("`networkequipments_id`='".$items_id."'");
                   $input = array();
                   if (count($a_networkequipments) > 0) {
                      $a_networkequipment = current($a_networkequipments);
-                     $PluginFusinvsnmpNetworkEquipment->getFromDB($a_networkequipment['id']);
-                     $input['id'] = $PluginFusinvsnmpNetworkEquipment->fields['id'];
+                     $pfNetworkEquipment->getFromDB($a_networkequipment['id']);
+                     $input['id'] = $pfNetworkEquipment->fields['id'];
                      $input['plugin_fusinvsnmp_models_id'] = $data['snmp_model'];
-                     $PluginFusinvsnmpNetworkEquipment->update($input);
+                     $pfNetworkEquipment->update($input);
                   } else {
                      $input['networkequipments_id'] = $items_id;
                      $input['plugin_fusinvsnmp_models_id'] = $data['snmp_model'];
-                     $PluginFusinvsnmpNetworkEquipment->add($input);
+                     $pfNetworkEquipment->add($input);
                   }
                }
             }
          } else if($data['itemtype'] == 'Printer') {
             foreach ($data['item'] as $items_id => $val) {
                if ($val == 1) {
-                  $PluginFusinvsnmpPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
-                  $a_printers = $PluginFusinvsnmpPrinter->find("`printers_id`='".$items_id."'");
+                  $pfPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
+                  $a_printers = $pfPrinter->find("`printers_id`='".$items_id."'");
                   $input = array();
                   if (count($a_printers) > 0) {
                      $a_printer = current($a_printers);
-                     $PluginFusinvsnmpPrinter->getFromDB($a_printer['id']);
-                     $input['id'] = $PluginFusinvsnmpPrinter->fields['id'];
+                     $pfPrinter->getFromDB($a_printer['id']);
+                     $input['id'] = $pfPrinter->fields['id'];
                      $input['plugin_fusinvsnmp_models_id'] = $data['snmp_model'];
-                     $PluginFusinvsnmpPrinter->update($input);
+                     $pfPrinter->update($input);
                   } else {
                      $input['printers_id'] = $items_id;
                      $input['plugin_fusinvsnmp_models_id'] = $data['snmp_model'];
-                     $PluginFusinvsnmpPrinter->add($input);
+                     $pfPrinter->add($input);
                   }
                }
             }
          } else if($data['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
             foreach ($data['item'] as $items_id => $val) {
                if ($val == 1) {
-                  $PluginFusinvsnmpUnknownDevice = new PluginFusinvsnmpUnknownDevice();
-                  $a_snmps = $PluginFusinvsnmpUnknownDevice->find("`plugin_fusioninventory_unknowndevices_id`='".$items_id."'");
+                  $pfUnknownDevice = new PluginFusinvsnmpUnknownDevice();
+                  $a_snmps = $pfUnknownDevice->find("`plugin_fusioninventory_unknowndevices_id`='".$items_id."'");
                   $input = array();
                   if (count($a_snmps) > 0) {
                      $input = current($a_snmps);
                      $input['plugin_fusinvsnmp_models_id'] = $data['snmp_model'];
-                     $PluginFusinvsnmpUnknownDevice->update($input);
+                     $pfUnknownDevice->update($input);
                   } else {
                      $input['plugin_fusioninventory_unknowndevices_id'] = $items_id;
                      $input['plugin_fusinvsnmp_models_id'] = $data['snmp_model'];
-                     $PluginFusinvsnmpUnknownDevice->add($input);
+                     $pfUnknownDevice->add($input);
                   }
                }
             }
@@ -1128,55 +1128,55 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
          if ($data['itemtype'] == 'NetworkEquipment') {
             foreach ($data['item'] as $items_id => $val) {
                if ($val == 1) {
-                  $PluginFusinvsnmpNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
-                  $a_networkequipments = $PluginFusinvsnmpNetworkEquipment->find("`networkequipments_id`='".$items_id."'");
+                  $pfNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
+                  $a_networkequipments = $pfNetworkEquipment->find("`networkequipments_id`='".$items_id."'");
                   $input = array();
                   if (count($a_networkequipments) > 0) {
                      $a_networkequipment = current($a_networkequipments);
-                     $PluginFusinvsnmpNetworkEquipment->getFromDB($a_networkequipment['id']);
-                     $input['id'] = $PluginFusinvsnmpNetworkEquipment->fields['id'];
+                     $pfNetworkEquipment->getFromDB($a_networkequipment['id']);
+                     $input['id'] = $pfNetworkEquipment->fields['id'];
                      $input['plugin_fusinvsnmp_configsecurities_id'] = $data['plugin_fusinvsnmp_configsecurities_id'];
-                     $PluginFusinvsnmpNetworkEquipment->update($input);
+                     $pfNetworkEquipment->update($input);
                   } else {
                      $input['networkequipments_id'] = $items_id;
                      $input['plugin_fusinvsnmp_configsecurities_id'] = $data['plugin_fusinvsnmp_configsecurities_id'];
-                     $PluginFusinvsnmpNetworkEquipment->add($input);
+                     $pfNetworkEquipment->add($input);
                   }
                }
             }
          } else if($data['itemtype'] == 'Printer') {
             foreach ($data['item'] as $items_id => $val) {
                if ($val == 1) {
-                  $PluginFusinvsnmpPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
-                  $a_printers = $PluginFusinvsnmpPrinter->find("`printers_id`='".$items_id."'");
+                  $pfPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
+                  $a_printers = $pfPrinter->find("`printers_id`='".$items_id."'");
                   $input = array();
                   if (count($a_printers) > 0) {
                      $a_printer = current($a_printers);
-                     $PluginFusinvsnmpPrinter->getFromDB($a_printer['id']);
-                     $input['id'] = $PluginFusinvsnmpPrinter->fields['id'];
+                     $pfPrinter->getFromDB($a_printer['id']);
+                     $input['id'] = $pfPrinter->fields['id'];
                      $input['plugin_fusinvsnmp_configsecurities_id'] = $data['plugin_fusinvsnmp_configsecurities_id'];
-                     $PluginFusinvsnmpPrinter->update($input);
+                     $pfPrinter->update($input);
                   } else {
                      $input['printers_id'] = $items_id;
                      $input['plugin_fusinvsnmp_configsecurities_id'] = $data['plugin_fusinvsnmp_configsecurities_id'];
-                     $PluginFusinvsnmpPrinter->add($input);
+                     $pfPrinter->add($input);
                   }
                 }
             }
          } else if($data['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
             foreach ($data['item'] as $items_id => $val) {
                if ($val == 1) {
-                  $PluginFusinvsnmpUnknownDevice = new PluginFusinvsnmpUnknownDevice();
-                  $a_snmps = $PluginFusinvsnmpUnknownDevice->find("`plugin_fusioninventory_unknowndevices_id`='".$items_id."'");
+                  $pfUnknownDevice = new PluginFusinvsnmpUnknownDevice();
+                  $a_snmps = $pfUnknownDevice->find("`plugin_fusioninventory_unknowndevices_id`='".$items_id."'");
                   $input = array();
                   if (count($a_snmps) > 0) {
                      $input = current($a_snmps);
                      $input['plugin_fusinvsnmp_configsecurities_id'] = $data['plugin_fusinvsnmp_configsecurities_id'];
-                     $PluginFusinvsnmpUnknownDevice->update($input);
+                     $pfUnknownDevice->update($input);
                   } else {
                      $input['plugin_fusioninventory_unknowndevices_id'] = $items_id;
                      $input['plugin_fusinvsnmp_configsecurities_id'] = $data['plugin_fusinvsnmp_configsecurities_id'];
-                     $PluginFusinvsnmpUnknownDevice->add($input);
+                     $pfUnknownDevice->add($input);
                   }
                 }
             }
@@ -1186,17 +1186,17 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
       case "plugin_fusinvsnmp_set_discovery_threads" :
          foreach ($data['item'] as $items_id => $val) {
             if ($val == 1) {
-               $PluginFusinvsnmpAgentconfig = new PluginFusinvsnmpAgentconfig();
-               $a_agents = $PluginFusinvsnmpAgentconfig->find("`plugin_fusioninventory_agents_id`='".$items_id."'");
+               $pfAgentconfig = new PluginFusinvsnmpAgentconfig();
+               $a_agents = $pfAgentconfig->find("`plugin_fusioninventory_agents_id`='".$items_id."'");
                $input = array();
                if (count($a_agents) > 0) {
                   $input = current($a_agents);
                   $input['threads_netdiscovery'] = $data['threads_netdiscovery'];
-                  $PluginFusinvsnmpAgentconfig->update($input);
+                  $pfAgentconfig->update($input);
                } else {
                   $input['plugin_fusioninventory_agents_id'] = $items_id;
                   $input['threads_netdiscovery'] = $data['threads_netdiscovery'];
-                  $PluginFusinvsnmpAgentconfig->add($input);
+                  $pfAgentconfig->add($input);
                }
             }
          }
@@ -1205,17 +1205,17 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
       case "plugin_fusinvsnmp_set_snmpinventory_threads" :
          foreach ($data['item'] as $items_id => $val) {
             if ($val == 1) {
-               $PluginFusinvsnmpAgentconfig = new PluginFusinvsnmpAgentconfig();
-               $a_agents = $PluginFusinvsnmpAgentconfig->find("`plugin_fusioninventory_agents_id`='".$items_id."'");
+               $pfAgentconfig = new PluginFusinvsnmpAgentconfig();
+               $a_agents = $pfAgentconfig->find("`plugin_fusioninventory_agents_id`='".$items_id."'");
                $input = array();
                if (count($a_agents) > 0) {
                   $input = current($a_agents);
                   $input['threads_snmpquery'] = $data['threads_snmpquery'];
-                  $PluginFusinvsnmpAgentconfig->update($input);
+                  $pfAgentconfig->update($input);
                } else {
                   $input['plugin_fusioninventory_agents_id'] = $items_id;
                   $input['threads_snmpquery'] = $data['threads_snmpquery'];
-                  $PluginFusinvsnmpAgentconfig->add($input);
+                  $pfAgentconfig->add($input);
                }
             }
          }
@@ -1309,8 +1309,8 @@ function plugin_fusinvsnmp_MassiveActionsFieldsDisplay($options=array()) {
          break;
 
       case 'glpi_plugin_fusinvsnmp_discovery.plugin_fusinvsnmp_snmpauths_id' :
-         $PluginFusinvsnmpConfigSecurity = new PluginFusinvsnmpConfigSecurity();
-         echo $PluginFusinvsnmpConfigSecurity->selectbox();
+         $pfConfigSecurity = new PluginFusinvsnmpConfigSecurity();
+         echo $pfConfigSecurity->selectbox();
          return true;
          break;
 

@@ -54,7 +54,7 @@ if (isset($_POST['value'])) {
    $value = $_POST['value'];
 }
 
-$PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
-$PluginFusioninventoryTaskjob->dropdownType($_POST['typename'], $_POST['method'], $value, $_POST['taskjobs_id'], "");
+$pfTaskjob = new PluginFusioninventoryTaskjob;
+$pfTaskjob->dropdownType($_POST['typename'], $_POST['method'], $value, $_POST['taskjobs_id'], "");
 
 ?>

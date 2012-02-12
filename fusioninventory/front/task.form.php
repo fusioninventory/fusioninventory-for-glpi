@@ -54,8 +54,8 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 if (isset($_POST['forcestart'])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task","w");
-   $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-   $PluginFusioninventoryTaskjob->forceRunningTask($_POST['id']);
+   $pfTaskjob = new PluginFusioninventoryTaskjob();
+   $pfTaskjob->forceRunningTask($_POST['id']);
 
    Html::back();
 } else if (isset($_POST['reset'])) {

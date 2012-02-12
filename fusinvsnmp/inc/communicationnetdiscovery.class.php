@@ -60,10 +60,9 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
     * 
     **/
    function import($p_DEVICEID, $p_CONTENT, $p_xml) {
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
-      $PluginFusioninventoryAgent  = new PluginFusioninventoryAgent();
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-      $PluginFusinvsnmpAgentconfig = new PluginFusinvsnmpAgentconfig();
+      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgentconfig = new PluginFusinvsnmpAgentconfig();
 
 
       PluginFusioninventoryCommunication::addLog(
@@ -71,12 +70,12 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
       $errors = '';
 
-      $a_agent = $PluginFusioninventoryAgent->InfosByKey($p_DEVICEID);
+      $a_agent = $pfAgent->InfosByKey($p_DEVICEID);
       if (isset($p_CONTENT->PROCESSNUMBER)) {
          $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $p_CONTENT->PROCESSNUMBER;
-         if ($PluginFusioninventoryTaskjobstatus->getFromDB($p_CONTENT->PROCESSNUMBER)) {
-            if ($PluginFusioninventoryTaskjobstatus->fields['state'] != "3") {
-               $PluginFusioninventoryTaskjobstatus->changeStatus($p_CONTENT->PROCESSNUMBER, 2);
+         if ($pfTaskjobstatus->getFromDB($p_CONTENT->PROCESSNUMBER)) {
+            if ($pfTaskjobstatus->fields['state'] != "3") {
+               $pfTaskjobstatus->changeStatus($p_CONTENT->PROCESSNUMBER, 2);
                if ((!isset($p_CONTENT->AGENT->START)) AND (!isset($p_CONTENT->AGENT->END))) {
                   $nb_devices = 0;
                   $segs=$p_CONTENT->xpath('//DEVICE');
@@ -93,27 +92,27 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
          }
       }
 
-      if ($PluginFusioninventoryTaskjobstatus->getFromDB($p_CONTENT->PROCESSNUMBER)) {
-         if ($PluginFusioninventoryTaskjobstatus->fields['state'] != "3") {
-            $PluginFusinvsnmpImportExport = new PluginFusinvsnmpImportExport();
-            $errors.=$PluginFusinvsnmpImportExport->import_netdiscovery($p_CONTENT, $p_DEVICEID);
+      if ($pfTaskjobstatus->getFromDB($p_CONTENT->PROCESSNUMBER)) {
+         if ($pfTaskjobstatus->fields['state'] != "3") {
+            $pfImportExport = new PluginFusinvsnmpImportExport();
+            $errors.=$pfImportExport->import_netdiscovery($p_CONTENT, $p_DEVICEID);
             if (isset($p_CONTENT->AGENT->END)) {
                if ((isset($p_CONTENT->DICO)) AND ($p_CONTENT->DICO == "REQUEST")) {
-                  $PluginFusioninventoryAgent->getFromDB($PluginFusioninventoryTaskjobstatus->fields["plugin_fusioninventory_agents_id"]);
-                  $PluginFusinvsnmpAgentconfig->loadAgentconfig($PluginFusioninventoryAgent->fields['id']);
+                  $pfAgent->getFromDB($pfTaskjobstatus->fields["plugin_fusioninventory_agents_id"]);
+                  $pfAgentconfig->loadAgentconfig($pfAgent->fields['id']);
                   $input = array();
-                  $input['id'] = $PluginFusinvsnmpAgentconfig->fields['id'];
+                  $input['id'] = $pfAgentconfig->fields['id'];
                   $input["senddico"] = "1";
-                  $PluginFusinvsnmpAgentconfig->update($input);
+                  $pfAgentconfig->update($input);
 
-                  $PluginFusioninventoryTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
+                  $pfTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
                                                                           $a_agent['id'],
                                                                           'PluginFusioninventoryAgent',
                                                                           '1',
                                                                           '==fusinvsnmp::3==');
                } else {
 
-                  $PluginFusioninventoryTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
+                  $pfTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
                                                                        $a_agent['id'],
                                                                        'PluginFusioninventoryAgent');
                }
@@ -442,29 +441,29 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             }
 
             // Add informations for SNMP
-            $PluginFusinvsnmpUnknownDevice = new PluginFusinvsnmpUnknownDevice();
-            $a_devices = $PluginFusinvsnmpUnknownDevice->find("`plugin_fusioninventory_unknowndevices_id`='".$items_id."'");
+            $pfUnknownDevice = new PluginFusinvsnmpUnknownDevice();
+            $a_devices = $pfUnknownDevice->find("`plugin_fusioninventory_unknowndevices_id`='".$items_id."'");
             if (count($a_devices) > 0) {
                foreach ($a_devices as $data) {
-                  $PluginFusinvsnmpUnknownDevice->getFromDB($data['id']);
+                  $pfUnknownDevice->getFromDB($data['id']);
                }
             } else {
                $input = array();
                $input['plugin_fusioninventory_unknowndevices_id'] = $items_id;
-               $device_id = $PluginFusinvsnmpUnknownDevice->add($input);
-               $PluginFusinvsnmpUnknownDevice->getFromDB($device_id);
+               $device_id = $pfUnknownDevice->add($input);
+               $pfUnknownDevice->getFromDB($device_id);
             }
             $input = array();
-            $input['id'] = $PluginFusinvsnmpUnknownDevice->fields['id'];
+            $input['id'] = $pfUnknownDevice->fields['id'];
             if (isset($xml->DESCRIPTION) AND !empty($xml->DESCRIPTION)) {
                $input['sysdescr'] = $xml->DESCRIPTION;
             }
             // <MODELSNMP>Printer0093</MODELSNMP>
             if (isset($xml->MODELSNMP) AND !empty($xml->MODELSNMP)) {
-               $PluginFusinvsnmpModel = new PluginFusinvsnmpModel();
-               $model_id = $PluginFusinvsnmpModel->getModelByKey($xml->MODELSNMP);
+               $pfModel = new PluginFusinvsnmpModel();
+               $model_id = $pfModel->getModelByKey($xml->MODELSNMP);
                if (($model_id == '0') AND (isset($xml->DESCRIPTION)) AND (!empty($xml->DESCRIPTION))) {
-                  $model_id = $PluginFusinvsnmpModel->getModelBySysdescr($xml->DESCRIPTION);
+                  $model_id = $pfModel->getModelBySysdescr($xml->DESCRIPTION);
                }
                if ($model_id != '0') {
                   $input['plugin_fusinvsnmp_models_id'] = $model_id;
@@ -474,7 +473,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             if (isset($xml->AUTHSNMP) AND !empty($xml->AUTHSNMP)) {
                $input['plugin_fusinvsnmp_configsecurities_id'] = $xml->AUTHSNMP;
             }
-            $PluginFusinvsnmpUnknownDevice->update($input);
+            $pfUnknownDevice->update($input);
             break;
          
          case 'NetworkEquipment':
@@ -492,34 +491,34 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             $class->update($input);
 
             // Update SNMP informations
-            $PluginFusinvsnmpNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
-            $a_snmpnetworkequipments = $PluginFusinvsnmpNetworkEquipment->find("`networkequipments_id`='".$items_id."'");
+            $pfNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
+            $a_snmpnetworkequipments = $pfNetworkEquipment->find("`networkequipments_id`='".$items_id."'");
             if (count($a_snmpnetworkequipments) > 0) {
                $a_snmpnetworkequipment = current($a_snmpnetworkequipments);
-               $PluginFusinvsnmpNetworkEquipment->load($a_snmpnetworkequipment['id']);
-               $PluginFusinvsnmpNetworkEquipment->setValue('id', $a_snmpnetworkequipment['id']);
+               $pfNetworkEquipment->load($a_snmpnetworkequipment['id']);
+               $pfNetworkEquipment->setValue('id', $a_snmpnetworkequipment['id']);
             } else {
-               $PluginFusinvsnmpNetworkEquipment->load();
-               $PluginFusinvsnmpNetworkEquipment->setValue('networkequipments_id', $items_id);
+               $pfNetworkEquipment->load();
+               $pfNetworkEquipment->setValue('networkequipments_id', $items_id);
             }
             // Write XML file
             if (isset($_SESSION['SOURCE_XMLDEVICE'])
-                    AND is_null($PluginFusinvsnmpNetworkEquipment->getValue('last_fusioninventory_update', $items_id))) {
+                    AND is_null($pfNetworkEquipment->getValue('last_fusioninventory_update', $items_id))) {
                PluginFusioninventoryUnknownDevice::writeXML($input['id'], 
                                           $_SESSION['SOURCE_XMLDEVICE'],
                                           "fusinvsnmp",
                                           "NetworkEquipment");
             }
-            $PluginFusinvsnmpNetworkEquipment->setValue('sysdescr', $xml->DESCRIPTION);
-            $PluginFusinvsnmpModel = new PluginFusinvsnmpModel();
+            $pfNetworkEquipment->setValue('sysdescr', $xml->DESCRIPTION);
+            $pfModel = new PluginFusinvsnmpModel();
             if (isset($xml->MODELSNMP) AND !empty($xml->MODELSNMP)) {
-               $model_id = $PluginFusinvsnmpModel->getModelByKey($xml->MODELSNMP);
+               $model_id = $pfModel->getModelByKey($xml->MODELSNMP);
                if ($model_id != '0') {
-                  $PluginFusinvsnmpNetworkEquipment->setValue('plugin_fusinvsnmp_models_id', $model_id);
+                  $pfNetworkEquipment->setValue('plugin_fusinvsnmp_models_id', $model_id);
                }
             }
-            $PluginFusinvsnmpNetworkEquipment->setValue('plugin_fusinvsnmp_configsecurities_id', $xml->AUTHSNMP);
-            $PluginFusinvsnmpNetworkEquipment->updateDB();
+            $pfNetworkEquipment->setValue('plugin_fusinvsnmp_configsecurities_id', $xml->AUTHSNMP);
+            $pfNetworkEquipment->updateDB();
             break;
 
          case 'Printer':
@@ -567,34 +566,34 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             }
             
             // Update SNMP informations
-            $PluginFusinvsnmpPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
-            $a_snmpprinters = $PluginFusinvsnmpPrinter->find("`printers_id`='".$items_id."'");
+            $pfPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
+            $a_snmpprinters = $pfPrinter->find("`printers_id`='".$items_id."'");
             if (count($a_snmpprinters) > 0) {
                $a_snmpprinter = current($a_snmpprinters);
-               $PluginFusinvsnmpPrinter->load($a_snmpprinter['id']);
-               $PluginFusinvsnmpPrinter->setValue('id', $a_snmpprinter['id']);
+               $pfPrinter->load($a_snmpprinter['id']);
+               $pfPrinter->setValue('id', $a_snmpprinter['id']);
             } else {
-               $PluginFusinvsnmpPrinter->load();
-               $PluginFusinvsnmpPrinter->setValue('printers_id', $items_id);
+               $pfPrinter->load();
+               $pfPrinter->setValue('printers_id', $items_id);
             }
             // Write XML file
             if (isset($_SESSION['SOURCE_XMLDEVICE'])
-                    AND is_null($PluginFusinvsnmpPrinter->getValue('last_fusioninventory_update', $items_id))) {
+                    AND is_null($pfPrinter->getValue('last_fusioninventory_update', $items_id))) {
                PluginFusioninventoryUnknownDevice::writeXML($input['id'], 
                                           $_SESSION['SOURCE_XMLDEVICE'],
                                           "fusinvsnmp",
                                           "Printer");
             }
-            $PluginFusinvsnmpPrinter->setValue('sysdescr', $xml->DESCRIPTION);
+            $pfPrinter->setValue('sysdescr', $xml->DESCRIPTION);
             if (isset($xml->MODELSNMP) AND !empty($xml->MODELSNMP)) {
-               $PluginFusinvsnmpModel = new PluginFusinvsnmpModel();
-               $model_id = $PluginFusinvsnmpModel->getModelByKey($xml->MODELSNMP);
+               $pfModel = new PluginFusinvsnmpModel();
+               $model_id = $pfModel->getModelByKey($xml->MODELSNMP);
                if ($model_id != '0') {
-                  $PluginFusinvsnmpPrinter->setValue('plugin_fusinvsnmp_models_id', $model_id);
+                  $pfPrinter->setValue('plugin_fusinvsnmp_models_id', $model_id);
                }
             }
-            $PluginFusinvsnmpPrinter->setValue('plugin_fusinvsnmp_configsecurities_id', $xml->AUTHSNMP);
-            $PluginFusinvsnmpPrinter->updateDB();
+            $pfPrinter->setValue('plugin_fusinvsnmp_configsecurities_id', $xml->AUTHSNMP);
+            $pfPrinter->updateDB();
             break;
             
       }
@@ -603,8 +602,8 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
    function addtaskjoblog() {
 
-      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      $PluginFusioninventoryTaskjoblog->addTaskjoblog(
+      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pfTaskjoblog->addTaskjoblog(
                      $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'],
                      $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'],
                      $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'],

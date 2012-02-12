@@ -654,7 +654,11 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                   $output['action'] = self::LINK_RESULT_DENIED;
                   return $output;
                }
-
+            } else if ($action->fields['field'] == '_ignore_import') {
+               PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
+                                                            "value".$action->fields["value"]."\n");
+               $output['action'] = self::LINK_RESULT_DENIED;
+               return $output;
             } else {
                // no import
                $itemtype_found = 0;

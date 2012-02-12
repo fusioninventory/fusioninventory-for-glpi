@@ -108,10 +108,10 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
    function display() {
       global $DB,$LANG,$CFG_GLPI;
 
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
-      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      $PluginFusinvsnmpStateInventory = new PluginFusinvsnmpStateInventory();
+      $pfAgent = new PluginFusioninventoryAgent();
+      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pfStateInventory = new PluginFusinvsnmpStateInventory();
 
       $start = 0;
       if (isset($_REQUEST["start"])) {
@@ -159,8 +159,8 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
       while ($data=$DB->fetch_array($result)) {
          echo "<tr class='tab_bg_1'>";
          echo "<td>".$data['uniqid']."</td>";
-         $PluginFusioninventoryAgent->getFromDB($data['plugin_fusioninventory_agents_id']);
-         echo "<td>".$PluginFusioninventoryAgent->getLink(1)."</td>";
+         $pfAgent->getFromDB($data['plugin_fusioninventory_agents_id']);
+         echo "<td>".$pfAgent->getLink(1)."</td>";
          $nb_found = 0;
          $nb_threads = 0;
          $start_date = "";
@@ -168,9 +168,9 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
          $notimporteddevices= 0;
          $updateddevices = 0;
          $createddevices = 0;
-         $a_taskjobstatus = $PluginFusioninventoryTaskjobstatus->find("`uniqid`='".$data['uniqid']."'");
+         $a_taskjobstatus = $pfTaskjobstatus->find("`uniqid`='".$data['uniqid']."'");
          foreach ($a_taskjobstatus as $datastatus) {
-            $a_taskjoblog = $PluginFusioninventoryTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$datastatus['id']."'");
+            $a_taskjoblog = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$datastatus['id']."'");
             foreach($a_taskjoblog as $taskjoblog) {
                if (strstr($taskjoblog['comment'], " ==fusinvsnmp::2==")) {
                   $nb_found += str_replace(" ==fusinvsnmp::2==", "", $taskjoblog['comment']);
@@ -238,7 +238,7 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
                }
                echo "<td>".$display_date.$interval->s."s</td>";
             } else {
-               $interval = $PluginFusinvsnmpStateInventory->date_diff($start_date, $end_date);
+               $interval = $pfStateInventory->date_diff($start_date, $end_date);
             }
          }
          echo "<td>".$nb_found."</td>";

@@ -39,6 +39,7 @@
  
    ------------------------------------------------------------------------
  */
+
 define ("PLUGIN_FUSINVSNMP_VERSION","0.83+1.0");
 
 include_once ("includes.php");
@@ -117,8 +118,8 @@ function plugin_init_fusinvsnmp() {
 	if (isset($_SESSION["glpiID"])) {
 
 		if (Session::haveRight("configuration", "r") || Session::haveRight("profile", "w")) {// Config page
-         $PluginFusioninventoryConfiguration = new PluginFusioninventoryConfig();
-         $a_tabs = $PluginFusioninventoryConfiguration->defineTabs();
+         $pfConfiguration = new PluginFusioninventoryConfig();
+         $a_tabs = $pfConfiguration->defineTabs();
          $PLUGIN_HOOKS['config_page']['fusinvsnmp'] = '../fusioninventory/front/config.form.php?glpi_tab='.array_search($a_plugin['name'], $a_tabs);
       }
 

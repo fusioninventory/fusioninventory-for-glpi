@@ -59,8 +59,8 @@ class PluginFusioninventoryWizard {
 
       $a_list = array();
       if (method_exists("PluginFusioninventoryWizard", $ariane)) {
-         $pluginFusioninventoryWizard = new PluginFusioninventoryWizard();
-         $a_list = $pluginFusioninventoryWizard->$ariane();
+         $pfWizard = new PluginFusioninventoryWizard();
+         $a_list = $pfWizard->$ariane();
       } else {
          return;
       }
@@ -107,7 +107,7 @@ class PluginFusioninventoryWizard {
    static function displayButtons($a_buttons, $filariane) {
       global $CFG_GLPI;
 
-      $pluginFusioninventoryWizard = new PluginFusioninventoryWizard();
+      $pfWizard = new PluginFusioninventoryWizard();
 
       echo "<style type='text/css'>
       .bgout {
@@ -146,7 +146,7 @@ class PluginFusioninventoryWizard {
 
       echo "<tr>";
       echo "<td valign='top'>";
-      $pluginFusioninventoryWizard->filAriane($filariane);
+      $pfWizard->filAriane($filariane);
       echo "</td>";
       echo "</tr>";
 
@@ -167,7 +167,7 @@ class PluginFusioninventoryWizard {
    static function displayShowForm($filariane, $classname, $options = array()) {
       global $LANG,$CFG_GLPI;
 
-      $pluginFusioninventoryWizard = new PluginFusioninventoryWizard();
+      $pfWizard = new PluginFusioninventoryWizard();
 
       echo "<style type='text/css'>
       .bgout {
@@ -217,7 +217,7 @@ class PluginFusioninventoryWizard {
 
       echo "</td>";
       echo "<td valign='top' style='background-color: #e1cc7b;'>";
-      $pluginFusioninventoryWizard->filAriane($filariane);
+      $pfWizard->filAriane($filariane);
       echo "</td>";
       echo "</tr>";
 
@@ -256,8 +256,8 @@ class PluginFusioninventoryWizard {
     **/
    static function getNextStep($ariane) {
       if (method_exists("PluginFusioninventoryWizard", $ariane)) {
-         $pluginFusioninventoryWizard = new PluginFusioninventoryWizard();
-         $a_list = $pluginFusioninventoryWizard->$ariane();
+         $pfWizard = new PluginFusioninventoryWizard();
+         $a_list = $pfWizard->$ariane();
 
          $find = 0;
          foreach ($a_list as $link) {
@@ -285,8 +285,8 @@ class PluginFusioninventoryWizard {
     **/
    static function getPreviousStep($ariane) {
       if (method_exists("PluginFusioninventoryWizard", $ariane)) {
-         $pluginFusioninventoryWizard = new PluginFusioninventoryWizard();
-         $a_list = $pluginFusioninventoryWizard->$ariane();
+         $pfWizard = new PluginFusioninventoryWizard();
+         $a_list = $pfWizard->$ariane();
 
          $find = 0;
          $p_link = '';

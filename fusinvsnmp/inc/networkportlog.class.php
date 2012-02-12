@@ -197,14 +197,14 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
    static function cronCleannetworkportlogs() {
       global $DB;
 
-      $PluginFusinvsnmpConfigLogField = new PluginFusinvsnmpConfigLogField();
-      $PluginFusinvsnmpNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
+      $pfConfigLogField = new PluginFusinvsnmpConfigLogField();
+      $pfNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
       
-      $a_list = $PluginFusinvsnmpConfigLogField->find();
+      $a_list = $pfConfigLogField->find();
       if (count($a_list)){
          foreach ($a_list as $data){
 
-            $query_delete = "DELETE FROM `".$PluginFusinvsnmpNetworkPortLog->getTable()."`
+            $query_delete = "DELETE FROM `".$pfNetworkPortLog->getTable()."`
                WHERE `plugin_fusioninventory_mappings_id`='".$data['plugin_fusioninventory_mappings_id']."' ";
 
             switch($data['days']) {
@@ -232,7 +232,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
    static function addLog($port,$field,$value_old,$value_new,$mapping,$plugin_fusioninventory_agentprocesses_id=0) {
       global $DB;
 
-      $PluginFusinvsnmpNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
+      $pfNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
       $doHistory = 1;
       if ($mapping != "") {
          $query = "SELECT *
@@ -252,7 +252,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
          $array["value_new"] = $value_new;
 
          // Ajouter en DB
-         $PluginFusinvsnmpNetworkPortLog->insert_connection("field",$array,$plugin_fusioninventory_agentprocesses_id);
+         $pfNetworkPortLog->insert_connection("field",$array,$plugin_fusioninventory_agentprocesses_id);
       }
    }
 
@@ -260,9 +260,9 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
    static function networkport_addLog($port_id, $value_new, $field) {
       $ptp = new PluginFusinvsnmpNetworkPort;
-      $PluginFusinvsnmpNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
-      $PluginFusinvsnmpConfigLogField = new PluginFusinvsnmpConfigLogField();
-      $PluginFusioninventoryMapping = new PluginFusioninventoryMapping();
+      $pfNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
+      $pfConfigLogField = new PluginFusinvsnmpConfigLogField();
+      $pfMapping = new PluginFusioninventoryMapping();
 
 
       $db_field = $field;
@@ -299,9 +299,9 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       $ptp->load($port_id);
       //echo $ptp->getValue($db_field);
       if ($ptp->getValue($db_field) != $value_new) {
-         $a_mapping = $PluginFusioninventoryMapping->get('NetworkEquipment', $field);
+         $a_mapping = $pfMapping->get('NetworkEquipment', $field);
 
-         $days = $PluginFusinvsnmpConfigLogField->getValue($a_mapping['id']);
+         $days = $pfConfigLogField->getValue($a_mapping['id']);
 
          if ((isset($days)) AND ($days != '-1')) {
             $array = array();
@@ -309,7 +309,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
             $array["plugin_fusioninventory_mappings_id"] = $a_mapping['id'];
             $array["value_old"] = $ptp->getValue($db_field);
             $array["value_new"] = $value_new;
-            $PluginFusinvsnmpNetworkPortLog->insert_connection("field",$array,$_SESSION['glpi_plugin_fusioninventory_processnumber']);
+            $pfNetworkPortLog->insert_connection("field",$array,$_SESSION['glpi_plugin_fusioninventory_processnumber']);
          }
       }
    }
@@ -319,7 +319,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
    // $status = connection or disconnection
    static function addLogConnection($status,$port,$plugin_fusioninventory_agentprocesses_id=0) {
 
-      $PluginFusinvsnmpNetworkPortConnectionLog = new PluginFusinvsnmpNetworkPortConnectionLog;
+      $pfNetworkPortConnectionLog = new PluginFusinvsnmpNetworkPortConnectionLog;
       $NetworkPort_NetworkPort=new NetworkPort_NetworkPort();
 
       $input = array();
@@ -342,7 +342,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
          $input['creation'] = 1;
       }
 
-      $PluginFusinvsnmpNetworkPortConnectionLog->add($input);
+      $pfNetworkPortConnectionLog->add($input);
    }
 
 

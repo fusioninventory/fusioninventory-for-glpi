@@ -46,18 +46,18 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","fusinvinventory-importxmlfile");
 
-PluginFusioninventoryProfile::checkRight("fusioninventory", "importxmlcomputer","r");
+PluginFusioninventoryProfile::checkRight("fusioninventory", "importxmlcomputer","w");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-$PluginFusinvinventoryImportXML = new PluginFusioninventoryInventoryComputerImportXML();
+$pfInventoryComputerImportXML = new PluginFusioninventoryInventoryComputerImportXML();
 
 if (isset($_FILES['importfile']['tmp_name'])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "importxmlcomputer","w");
 
    if ($_FILES['importfile']['tmp_name'] != '') {
       $_SESSION["plugin_fusioninventory_disablelocks"] = 1;
-      if ($PluginFusinvinventoryImportXML->importXMLFile($_FILES['importfile']['tmp_name'])) {
+      if ($pfInventoryComputerImportXML->importXMLFile($_FILES['importfile']['tmp_name'])) {
          $_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusionvinventory']['importxml'][1];
       } else {
          $_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusioninventory']['importxml'][3];
@@ -69,7 +69,7 @@ if (isset($_FILES['importfile']['tmp_name'])) {
 	Html::back();
 }
 
-$PluginFusinvinventoryImportXML->showForm();
+$pfImportXML->showForm();
 
 Html::footer();
 

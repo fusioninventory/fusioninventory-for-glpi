@@ -61,20 +61,20 @@ class PluginFusioninventoryInventoryComputerImport_Antivirus extends CommonDBTM 
    **/
    function AddUpdateItem($type, $items_id, $dataSection) {
 
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
-      if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"], 
+      $pfConfig = new PluginFusioninventoryConfig();
+      if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"], 
               "import_antivirus", 'inventory') == '0') {
          return;
       }
 
-      $PluginFusinvinventoryAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
+      $pfAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
 
       $antivirus=array();
       $id_antivirus = 0;
       if ($type == "update") {
          $id_antivirus = $items_id;
-         $PluginFusinvinventoryAntivirus->getFromDB($items_id);
-         $antivirus = $PluginFusinvinventoryAntivirus->fields;
+         $pfAntivirus->getFromDB($items_id);
+         $antivirus = $pfAntivirus->fields;
       } else if ($type == "add") {
          $id_antivirus = 0;
          $antivirus=array();
@@ -99,12 +99,12 @@ class PluginFusioninventoryInventoryComputerImport_Antivirus extends CommonDBTM 
 
       if (isset($antivirus['name']) && !empty($antivirus["name"])) {
          if ($type == "update") {
-            $id_antivirus = $PluginFusinvinventoryAntivirus->update($antivirus);
+            $id_antivirus = $pfAntivirus->update($antivirus);
          } else if ($type == "add") {
             if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
                $antivirus['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
             }
-            $id_antivirus = $PluginFusinvinventoryAntivirus->add($antivirus);
+            $id_antivirus = $pfAntivirus->add($antivirus);
          }
       }
       return $id_antivirus;
@@ -122,10 +122,10 @@ class PluginFusioninventoryInventoryComputerImport_Antivirus extends CommonDBTM 
    *
    **/
    function deleteItem($items_id, $idmachine) {
-      $PluginFusinvinventoryAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
-      $PluginFusinvinventoryAntivirus->getFromDB($items_id);
-      if ($PluginFusinvinventoryAntivirus->fields['computers_id'] == $idmachine) {
-         $PluginFusinvinventoryAntivirus->delete(array("id" => $items_id), 0, $_SESSION["plugin_fusinvinventory_history_add"]);
+      $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
+      $pfInventoryComputerAntivirus->getFromDB($items_id);
+      if ($pfInventoryComputerAntivirus->fields['computers_id'] == $idmachine) {
+         $pfInventoryComputerAntivirus->delete(array("id" => $items_id), 0, $_SESSION["plugin_fusinvinventory_history_add"]);
       }
    }
 }

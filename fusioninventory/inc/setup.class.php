@@ -52,10 +52,10 @@ class PluginFusioninventorySetup {
 
       CronTask::Unregister('fusioninventory');
       
-      $PluginFusioninventorySetup  = new PluginFusioninventorySetup();
-      $PluginFusioninventoryModule = new PluginFusioninventoryModule();
+      $pfSetup  = new PluginFusioninventorySetup();
+      $pfModule = new PluginFusioninventoryModule();
       $user = new User();
-      $plugins_id = $PluginFusioninventoryModule->getModuleId("fusioninventory");
+      $plugins_id = $pfModule->getModuleId("fusioninventory");
 
       if (class_exists('PluginFusioninventoryConfig')) {
          $fusioninventory_config      = new PluginFusioninventoryConfig();
@@ -64,7 +64,7 @@ class PluginFusioninventorySetup {
       }
 
       if (file_exists(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
-         $PluginFusioninventorySetup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
+         $pfSetup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
       }
 
       $query = "SHOW TABLES;";
@@ -104,14 +104,14 @@ class PluginFusioninventorySetup {
     * @param type $dir name of the directory
     */
    function rrmdir($dir) {
-      $PluginFusioninventorySetup = new PluginFusioninventorySetup();
+      $pfSetup = new PluginFusioninventorySetup();
 
       if (is_dir($dir)) {
         $objects = scandir($dir);
         foreach ($objects as $object) {
           if ($object != "." && $object != "..") {
             if (filetype($dir."/".$object) == "dir") {
-               $PluginFusioninventorySetup->rrmdir($dir."/".$object);
+               $pfSetup->rrmdir($dir."/".$object);
             } else {
                unlink($dir."/".$object);
             }

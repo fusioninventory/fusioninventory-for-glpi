@@ -61,8 +61,8 @@ class PluginFusioninventoryInventoryComputerImport_Graphiccard extends CommonDBT
    **/
    function AddUpdateItem($type, $items_id, $dataSection) {
 
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
-      if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+      $pfConfig = new PluginFusioninventoryConfig();
+      if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
               "component_graphiccard", 'inventory') == '0') {
          return;
       }

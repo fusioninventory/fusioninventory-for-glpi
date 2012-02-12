@@ -80,6 +80,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       global $DB,$CFG_GLPI,$LANG;
 
       $this->javascriptHistory();
+      $a_uniqid = array();
 
       $start = 0;
       if (isset($_REQUEST["start"])) {
@@ -134,6 +135,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
             echo "</tr>";
             while ($data=$DB->fetch_array($result)) {
                $this->showHistoryLines($data['id'], 1, 0, 7);
+               $a_uniqid[] = $data['uniqid'];
             }
             echo "</table>";
          }
@@ -144,6 +146,15 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
 
       // ***** Display for statusjob OK
+      if (count($a_uniqid) > 0) {
+         $where .= " AND `uniqid` NOT IN ('".implode("','", $a_uniqid)."')";
+         $query = 'SELECT * FROM `glpi_plugin_fusioninventory_taskjobstatus`
+            WHERE `plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"
+               AND `state`!="3"
+               '.$where.'
+            GROUP BY uniqid,plugin_fusioninventory_agents_id
+            ORDER BY `id` DESC';
+      }
       $querycount = 'SELECT count(*) AS cpt FROM `glpi_plugin_fusioninventory_taskjobstatus`
             WHERE `plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"
                AND `state`="3"
@@ -244,46 +255,46 @@ function appear_array(id){
    function showHistoryLines($taskjobstatus_id, $displayprocess = 1, $displaytaskjob=0, $nb_td='5') {
       global $LANG,$CFG_GLPI;
       
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
-      $PluginFusioninventoryTaskjobstatus->getFromDB($taskjobstatus_id);
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTaskjobstatus->getFromDB($taskjobstatus_id);
+      $pfAgent = new PluginFusioninventoryAgent();
       
       $displayforceend = 0;
-      $a_history = $this->find('`plugin_fusioninventory_taskjobstatus_id` = "'.$PluginFusioninventoryTaskjobstatus->fields['id'].'"', 
+      $a_history = $this->find('`plugin_fusioninventory_taskjobstatus_id` = "'.$pfTaskjobstatus->fields['id'].'"', 
                                'id DESC',
                                '1');
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td width='40' id='plusmoins".$PluginFusioninventoryTaskjobstatus->fields["id"]."'><img src='".$CFG_GLPI['root_doc'].
-               "/plugins/fusioninventory/pics/expand.png' onClick='document.getElementById(\"viewfollowup".$PluginFusioninventoryTaskjobstatus->fields["id"].
-               "\").show();close_array(".$PluginFusioninventoryTaskjobstatus->fields["id"].");' /></td>";
+      echo "<td width='40' id='plusmoins".$pfTaskjobstatus->fields["id"]."'><img src='".$CFG_GLPI['root_doc'].
+               "/plugins/fusioninventory/pics/expand.png' onClick='document.getElementById(\"viewfollowup".$pfTaskjobstatus->fields["id"].
+               "\").show();close_array(".$pfTaskjobstatus->fields["id"].");' /></td>";
       
       echo "<td>";
-      echo $PluginFusioninventoryTaskjobstatus->fields['uniqid'];
+      echo $pfTaskjobstatus->fields['uniqid'];
       echo "</td>";
       if ($displayprocess == '1') {
          echo "<td>";
-         echo $PluginFusioninventoryTaskjobstatus->fields['id'];
+         echo $pfTaskjobstatus->fields['id'];
          echo "</td>";
       }
       if ($displaytaskjob == '1') {
-         $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-         $PluginFusioninventoryTask = new PluginFusioninventoryTask();
-         $PluginFusioninventoryTaskjob->getFromDB($PluginFusioninventoryTaskjobstatus->fields['plugin_fusioninventory_taskjobs_id']);
-         $PluginFusioninventoryTask->getFromDB($PluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']);
+         $pfTaskjob = new PluginFusioninventoryTaskjob();
+         $pfTask = new PluginFusioninventoryTask();
+         $pfTaskjob->getFromDB($pfTaskjobstatus->fields['plugin_fusioninventory_taskjobs_id']);
+         $pfTask->getFromDB($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
          echo "<td>";
-         echo $PluginFusioninventoryTaskjob->getLink(1)." (".$PluginFusioninventoryTask->getLink().")";
+         echo $pfTaskjob->getLink(1)." (".$pfTask->getLink().")";
          echo "</td>";
       }
       echo "<td>";
-      $PluginFusioninventoryAgent->getFromDB($PluginFusioninventoryTaskjobstatus->fields['plugin_fusioninventory_agents_id']);
-      echo $PluginFusioninventoryAgent->getLink(1);
+      $pfAgent->getFromDB($pfTaskjobstatus->fields['plugin_fusioninventory_agents_id']);
+      echo $pfAgent->getLink(1);
       
-      Ajax::UpdateItemOnEvent('plusmoins'.$PluginFusioninventoryTaskjobstatus->fields["id"],
-                      'viewfollowup'.$PluginFusioninventoryTaskjobstatus->fields["id"],
+      Ajax::UpdateItemOnEvent('plusmoins'.$pfTaskjobstatus->fields["id"],
+                      'viewfollowup'.$pfTaskjobstatus->fields["id"],
                       $CFG_GLPI['root_doc']."/plugins/fusioninventory/ajax/showtaskjoblogdetail.php",
-                      array('agents_id' => $PluginFusioninventoryTaskjobstatus->fields['plugin_fusioninventory_agents_id'],
-                          'uniqid' => $PluginFusioninventoryTaskjobstatus->fields['uniqid']),
+                      array('agents_id' => $pfTaskjobstatus->fields['plugin_fusioninventory_agents_id'],
+                          'uniqid' => $pfTaskjobstatus->fields['uniqid']),
                       array("click"));
       
       echo "</td>";
@@ -295,8 +306,8 @@ function appear_array(id){
       if ($displayforceend == "0") {
          echo "<td align='center'>";
          echo "<form name='form' method='post' action='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjob.form.php'>";
-         echo "<input type='hidden' name='taskjobstatus_id' value='".$PluginFusioninventoryTaskjobstatus->fields['id']."' />";
-         echo "<input type='hidden' name='taskjobs_id' value='".$PluginFusioninventoryTaskjobstatus->fields['plugin_fusioninventory_taskjobs_id']."' />";
+         echo "<input type='hidden' name='taskjobstatus_id' value='".$pfTaskjobstatus->fields['id']."' />";
+         echo "<input type='hidden' name='taskjobs_id' value='".$pfTaskjobstatus->fields['plugin_fusioninventory_taskjobs_id']."' />";
          echo '<input name="forceend" value="'.$LANG['plugin_fusioninventory']['task'][32].'"
              class="submit" type="submit">';
          echo "</form>";
@@ -304,7 +315,7 @@ function appear_array(id){
       }      
       echo "</tr>";
 
-      echo "<tr><td colspan='".$nb_td."' style='display: none;' id='viewfollowup".$PluginFusioninventoryTaskjobstatus->fields["id"]."' class='tab_bg_4'>";
+      echo "<tr><td colspan='".$nb_td."' style='display: none;' id='viewfollowup".$pfTaskjobstatus->fields["id"]."' class='tab_bg_4'>";
 
       echo "</td></tr>";
    }
@@ -324,12 +335,12 @@ function appear_array(id){
    function showHistoryInDetail($agents_id, $uniqid, $width="950") {
       global $CFG_GLPI,$LANG;
 
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfAgent = new PluginFusioninventoryAgent();
 
       $text = "<center><table class='tab_cadrehov' style='width: ".$width."px'>";
 
-      $a_jobstatus = $PluginFusioninventoryTaskjobstatus->find('`plugin_fusioninventory_agents_id`="'.$agents_id.'" AND `uniqid`="'.$uniqid.'"', '`id` DESC');
+      $a_jobstatus = $pfTaskjobstatus->find('`plugin_fusioninventory_agents_id`="'.$agents_id.'" AND `uniqid`="'.$uniqid.'"', '`id` DESC');
       $a_devices_merged = array();
 
       foreach ($a_jobstatus as $data) {
@@ -367,8 +378,8 @@ function appear_array(id){
 
             $text .= "<tr class='tab_bg_1'>";
             $text .= "<td colspan='2'>";
-            $PluginFusioninventoryAgent->getFromDB($data['plugin_fusioninventory_agents_id']);
-            $text .= $PluginFusioninventoryAgent->getLink(1);
+            $pfAgent->getFromDB($data['plugin_fusioninventory_agents_id']);
+            $text .= $pfAgent->getLink(1);
             $text .= "</td>";
             $a_return = $this->displayHistoryDetail(array_shift($a_history));
             $count = $a_return[0];
@@ -540,7 +551,7 @@ function appear_array(id){
          foreach($matches[0] as $num=>$commentvalue) {
             $datas['comment'] = str_replace($commentvalue, $LANG['plugin_'.$matches[1][$num]]["codetasklog"][$matches[2][$num]], $datas['comment']);
          }
-
+         $datas['comment'] = str_replace(",[", "<br/>[", $datas['comment']);
          $text .= $datas['comment'];
          $text .= "</td>";
       }

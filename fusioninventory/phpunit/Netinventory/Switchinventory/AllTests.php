@@ -64,20 +64,20 @@ class Switchinventory extends PHPUnit_Framework_TestCase {
       global $DB;
       
       // Add task and taskjob
-      $pluginFusioninventoryTask = new PluginFusioninventoryTask();
-      $pluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-      $pluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTask = new PluginFusioninventoryTask();
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
 
       $input = array();
       $input['entities_id'] = '0';
       $input['name'] = 'snmpquery';
-      $tasks_id = $pluginFusioninventoryTask->add($input);
+      $tasks_id = $pfTask->add($input);
 
       $input = array();
       $input['plugin_fusioninventory_tasks_id'] = $tasks_id;
       $input['method'] = 'snmpquery';
       $input['status'] = 1;
-      $taskjobs_id = $pluginFusioninventoryTaskjob->add($input);
+      $taskjobs_id = $pfTaskjob->add($input);
 
       $input = array();
       $input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
@@ -85,9 +85,9 @@ class Switchinventory extends PHPUnit_Framework_TestCase {
       $input['items_id'] = '1';
       $input['state'] = 1;
       $input['plugin_fusioninventory_agents_id'] = 1;
-      $pluginFusioninventoryTaskjobstatus->add($input);
+      $pfTaskjobstatus->add($input);
       $input['items_id'] = '2';
-      $pluginFusioninventoryTaskjobstatus->add($input);
+      $pfTaskjobstatus->add($input);
 
       $switch1 = '<?xml version="1.0" encoding="UTF-8"?>
 <REQUEST>
@@ -314,7 +314,7 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team</COMMENTS>
       }
 
       $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/fusion0.80/plugins/fusioninventory/front/communication.php";
+      $emulatorAgent->server_urlpath = "/fusion0.83/plugins/fusioninventory/front/communication.php";
       if (empty($xmlstring)) {
          $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
       } else {

@@ -50,30 +50,30 @@ PluginFusioninventoryProfile::checkRight("fusinvinventory", "blacklist","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-$PluginFusinvinventoryBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
+$pfInventoryComputerBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
 
 if (isset ($_POST["add"])) {
    PluginFusioninventoryProfile::checkRight("fusinvinventory", "blacklist","w");
    if (!empty($_POST['value'])) {
-      $PluginFusinvinventoryBlacklist->add($_POST);
+      $pfInventoryComputerBlacklist->add($_POST);
    } else {
       //TODO message
    }
    Html::back();
 } else if (isset ($_POST["update"])) {
    PluginFusioninventoryProfile::checkRight("fusinvinventory", "blacklist","w");
-   $PluginFusinvinventoryBlacklist->update($_POST);
+   $pfInventoryComputerBlacklist->update($_POST);
    Html::back();
 } else if (isset ($_POST["delete"])) {
    PluginFusioninventoryProfile::checkRight("fusinvinventory", "blacklist","w");
-   $PluginFusinvinventoryBlacklist->delete($_POST);
+   $pfInventoryComputerBlacklist->delete($_POST);
    Html::redirect("blacklist.php");
 }
 
 if (isset($_GET["id"])) {
-   $PluginFusinvinventoryBlacklist->showForm($_GET["id"]);
+   $pfInventoryComputerBlacklist->showForm($_GET["id"]);
 } else {
-   $PluginFusinvinventoryBlacklist->showForm("");
+   $pfInventoryComputerBlacklist->showForm("");
 }
 
 Html::footer();

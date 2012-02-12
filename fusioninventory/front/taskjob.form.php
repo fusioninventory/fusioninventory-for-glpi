@@ -133,11 +133,11 @@ if (isset($_POST['definition_add'])) {
    $mytaskjob->update($input);
    Html::back();
 } else if (isset($_POST['quickform'])) {
-   $pluginFusioninventoryTask = new PluginFusioninventoryTask();
+   $pfTask = new PluginFusioninventoryTask();
 
    if (isset($_POST['update'])) {
       $mytaskjob->getFromDB($_POST['id']);
-      $pluginFusioninventoryTask->getFromDB($mytaskjob->fields['plugin_fusioninventory_tasks_id']);
+      $pfTask->getFromDB($mytaskjob->fields['plugin_fusioninventory_tasks_id']);
    }
    
    $inputtaskjob = array();
@@ -148,7 +148,7 @@ if (isset($_POST['definition_add'])) {
    }
 
    $inputtaskjob['name'] = $_POST['name'];
-   if (isset($_POST['add']) OR $pluginFusioninventoryTask->fields['name'] == '') {
+   if (isset($_POST['add']) OR $pfTask->fields['name'] == '') {
       $inputtask['name'] = $_POST['name'];
    }
    $inputtask['is_active'] = $_POST['is_active'];
@@ -162,7 +162,7 @@ if (isset($_POST['definition_add'])) {
 
    if (isset($_POST['update'])) {
       $mytaskjob->update($inputtaskjob);
-      $pluginFusioninventoryTask->update($inputtask);
+      $pfTask->update($inputtask);
       Html::back();
    } else if (isset($_POST['add'])) {
       if (!isset($_POST['entities_id'])) {
@@ -170,15 +170,15 @@ if (isset($_POST['definition_add'])) {
       }
       // Get entity of task
       if (isset($_POST['plugin_fusioninventory_tasks_id'])) {
-         $pluginFusioninventoryTask = new PluginFusioninventoryTask();
-         $pluginFusioninventoryTask->getFromDB($_POST['plugin_fusioninventory_tasks_id']);
-         $entities_list = getSonsOf('glpi_entities', $pluginFusioninventoryTask->fields['entities_id']);
+         $pfTask = new PluginFusioninventoryTask();
+         $pfTask->getFromDB($_POST['plugin_fusioninventory_tasks_id']);
+         $entities_list = getSonsOf('glpi_entities', $pfTask->fields['entities_id']);
          if (!in_array($_POST['entities_id'], $entities_list)) {
-            $_POST['entities_id'] = $pluginFusioninventoryTask->fields['entities_id'];
+            $_POST['entities_id'] = $pfTask->fields['entities_id'];
          }
       } else {
          $inputtask['date_scheduled'] = date("Y-m-d H:i:s");
-         $task_id = $pluginFusioninventoryTask->add($inputtask);
+         $task_id = $pfTask->add($inputtask);
          $inputtaskjob['plugin_fusioninventory_tasks_id'] = $task_id;
       }
       if (isset($_POST['method_id'])) {
@@ -194,11 +194,11 @@ if (isset($_POST['definition_add'])) {
 } else if (isset($_POST['taskjobstoforcerun'])) {
    // * Force running many tasks (wizard)
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task","w");
-   $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+   $pfTaskjob = new PluginFusioninventoryTaskjob();
    $_SESSION["plugin_fusioninventory_forcerun"] = array();
    foreach ($_POST['taskjobstoforcerun'] as $taskjobs_id) {
-      $PluginFusioninventoryTaskjob->getFromDB($taskjobs_id);
-      $uniqid = $PluginFusioninventoryTaskjob->forceRunningTask($PluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']);
+      $pfTaskjob->getFromDB($taskjobs_id);
+      $uniqid = $pfTaskjob->forceRunningTask($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
       $_SESSION["plugin_fusioninventory_forcerun"][$taskjobs_id] = $uniqid;
    }
    unset($_SESSION["MESSAGE_AFTER_REDIRECT"]);
@@ -217,13 +217,13 @@ if (isset($_POST['definition_add'])) {
          $_POST['entities_id'] = $_SESSION['glpidefault_entity'];
       }
       // Get entity of task
-      $pluginFusioninventoryTask = new PluginFusioninventoryTask();
-      $pluginFusioninventoryTask->getFromDB($_POST['plugin_fusioninventory_tasks_id']);
-      $entities_list = getSonsOf('glpi_entities', $pluginFusioninventoryTask->fields['entities_id']);
+      $pfTask = new PluginFusioninventoryTask();
+      $pfTask->getFromDB($_POST['plugin_fusioninventory_tasks_id']);
+      $entities_list = getSonsOf('glpi_entities', $pfTask->fields['entities_id']);
       if (!in_array($_POST['entities_id'], $entities_list)) {
-         $_POST['entities_id'] = $pluginFusioninventoryTask->fields['entities_id'];
+         $_POST['entities_id'] = $pfTask->fields['entities_id'];
       }
-      $_POST['execution_id'] = $pluginFusioninventoryTask->fields['execution_id'];
+      $_POST['execution_id'] = $pfTask->fields['execution_id'];
       $mytaskjob->add($_POST);
    } else {
       $mytaskjob->update($_POST);

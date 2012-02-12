@@ -398,13 +398,13 @@ function update221to230($migrationname) {
    if (!class_exists('PluginFusioninventoryAgentmodule')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
    }
-   $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+   $pfAgentmodule = new PluginFusioninventoryAgentmodule();
    $input = array();
    $input['plugins_id'] = $plugins_id;
    $input['modulename'] = "WAKEONLAN";
    $input['is_active']  = 0;
    $input['exceptions'] = exportArrayToDB(array());
-   $PluginFusioninventoryAgentmodule->add($input);
+   $pfAgentmodule->add($input);
 
    $sql = "SELECT * FROM `glpi_plugin_fusioninventory_agents`";
    $result=$DB->query($sql);
@@ -424,12 +424,12 @@ function update221to230($migrationname) {
       $DB->query($sql_ins);
 
       if ($data['module_wakeonlan'] == '1') {
-         $a_modules = $PluginFusioninventoryAgentmodule->find("`modulename`='WAKEONLAN'");
+         $a_modules = $pfAgentmodule->find("`modulename`='WAKEONLAN'");
          $a_module = current($a_modules);
          $a_exceptions = importArrayFromDB($a_module['exceptions']);
          $a_exceptions[] = $data['ID'];
          $a_module['exceptions'] = exportArrayToDB($a_exceptions);
-         $PluginFusioninventoryAgentmodule->update($a_module);
+         $pfAgentmodule->update($a_module);
       }      
    }
    $sql = "ALTER TABLE `glpi_plugin_fusioninventory_agents`
@@ -1525,8 +1525,8 @@ function update221to230($migrationname) {
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/inventoryruleimport.class.php");
    }
 
-   $PluginFusioninventorySetup = new PluginFusioninventorySetup();
-   $PluginFusioninventorySetup->initRules();
+   $pfSetup = new PluginFusioninventorySetup();
+   $pfSetup->initRules();
 
    // Put fusinvsnmp into state "to update"
    $Plugin = new Plugin();

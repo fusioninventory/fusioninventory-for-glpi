@@ -277,7 +277,7 @@ function pluginFusioninventoryInstall($version, $migration='') {
       $PluginFusioninventoryAgentmodule->add($input);
    
    
-   
+      
    /*
     * Add cron task
     */
@@ -308,6 +308,7 @@ function pluginFusioninventoryInstall($version, $migration='') {
       $PluginFusioninventoryLock = new PluginFusioninventoryLock();
       $PluginFusioninventoryLock->importFromOcs();
       
+
 }
 
 ?>

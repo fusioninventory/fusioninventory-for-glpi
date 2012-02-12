@@ -110,7 +110,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
    function showForm($computers_id = 0) {
       global $DB,$LANG,$CFG_GLPI;
 
-      $PluginFusinvinventoryLib = new PluginFusioninventoryInventoryComputerLib();
+      $pfInventoryComputerLib = new PluginFusioninventoryInventoryComputerLib();
       $Computer = new Computer();
 
       $start = 0;
@@ -179,7 +179,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
       $result=$DB->query($query);
       while ($a_computerlib=$DB->fetch_array($result)) {
          $computer_id = $a_computerlib['computers_id'];
-         $a_sections = $PluginFusinvinventoryLib->_getInfoSections($a_computerlib['internal_id']);
+         $a_sections = $pfInventoryComputerLib->_getInfoSections($a_computerlib['internal_id']);
          $Computer->getFromDB($computer_id);
          $text = "";
          $a_sections_lib = array();
@@ -274,8 +274,8 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
 
                   case 'STORAGES':
                      $array_section = unserialize($section);
-                     $PluginFusinvinventoryImport_Storage = new PluginFusioninventoryInventoryComputerImport_Storage();
-                     $type_tmp = $PluginFusinvinventoryImport_Storage->getTypeDrive($array_section);
+                     $pfInventoryComputerImport_Storage = new PluginFusioninventoryInventoryComputerImport_Storage();
+                     $type_tmp = $pfInventoryComputerImport_Storage->getTypeDrive($array_section);
                      if ($type_tmp == "Drive") {
                         $DeviceDrive = new Computer_Device('DeviceDrive');
                         $split[1] = str_replace("d", "", $split[1]);
@@ -363,8 +363,8 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                   case 'MONITORS':
                      // Monitors must be created  but not created (in case
                      // of changes configuration of monitor import)
-                     $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
-                     if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                     $pfConfig = new PluginFusioninventoryConfig();
+                     if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                              "import_monitor", 'inventory') == '3') { //Import on serial number
 
                         $unserializedsection = unserialize($section);
@@ -383,7 +383,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                               }
                            }
                         }
-                     } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                     } else if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                              "import_monitor", 'inventory') == '2') { //Import on serial number
 
                         // Search in DB if exist
@@ -403,8 +403,8 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                   case 'PRINTERS':
                      // Printers must be created  but not created (in case
                      // of changes configuration of printer import)
-                     $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
-                     if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                     $pfConfig = new PluginFusioninventoryConfig();
+                     if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                              "import_printer", 'inventory') == '3') { //Import on serial number
 
                         $unserializedsection = unserialize($section);
@@ -423,7 +423,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                               }
                            }
                         }
-                     } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                     } else if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                              "import_printer", 'inventory') == '2') { //Import on serial number
 
                         // Search in DB if exist
@@ -443,8 +443,8 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                   case 'USBDEVICES':
                      // Printers must be created  but not created (in case
                      // of changes configuration of printer import)
-                     $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
-                     if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                     $pfConfig = new PluginFusioninventoryConfig();
+                     if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                              "import_peripheral", 'inventory') == '3') { //Import on serial number
 
                         $unserializedsection = unserialize($section);
@@ -463,7 +463,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                               }
                            }
                         }
-                     } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                     } else if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                              "import_periheral", 'inventory') == '2') { //Import on serial number
 
                         // Search in DB if exist
@@ -780,7 +780,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
    function Import($import) {
       global $DB;
 
-      $PluginFusinvinventoryLib = new PluginFusioninventoryInventoryComputerLib();
+      $pfInventoryComputerLib = new PluginFusioninventoryInventoryComputerLib();
 
       $split = explode("/", $import);
       $computers_id = $split[0];
@@ -792,7 +792,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
          LIMIT 1";
       $result = $DB->query($query);
       $data = $DB->fetch_assoc($result);
-      $a_sections = $PluginFusinvinventoryLib->_getInfoSections($data['internal_id']);
+      $a_sections = $pfInventoryComputerLib->_getInfoSections($data['internal_id']);
 
       $a_sectionadd = array();
       $a_sectionadd[0]['sectionName'] = $sectionname;
@@ -812,7 +812,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
 ";
                  }
       }
-      $PluginFusinvinventoryLib->_serializeIntoDB($data['internal_id'], $serializedSections);
+      $pfLib->_serializeIntoDB($data['internal_id'], $serializedSections);
    }
 
 

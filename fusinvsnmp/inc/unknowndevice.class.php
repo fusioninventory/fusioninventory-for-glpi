@@ -72,8 +72,8 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
    function showForm($id, $options=array()) {
       global $LANG;
 
-      $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
-      $PluginFusioninventoryUnknownDevice->getFromDB($id);
+      $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $pfUnknownDevice->getFromDB($id);
 
       $a_devices = $this->find("`plugin_fusioninventory_unknowndevices_id`='".$id."'");
       if (count($a_devices) > 0) {
@@ -98,12 +98,12 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
 
       echo "<td align='center'>".$LANG['plugin_fusinvsnmp']['model_info'][4]."&nbsp;:</td>";
       echo "<td align='center'>";
-      if (!empty($PluginFusioninventoryUnknownDevice->fields['item_type'])) {
+      if (!empty($pfUnknownDevice->fields['item_type'])) {
          Dropdown::show("PluginFusinvsnmpModel",
                      array('name'=>"plugin_fusinvsnmp_models_id",
                            'value'=>$this->fields['plugin_fusinvsnmp_models_id'],
                            'comment'=>1,
-                           'condition'=>"`itemtype`='".$PluginFusioninventoryUnknownDevice->fields['item_type']."'"));
+                           'condition'=>"`itemtype`='".$pfUnknownDevice->fields['item_type']."'"));
       }
       echo "</td>";
       echo "</tr>";
@@ -145,8 +145,8 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
    function import($unknown_id, $items_id, $item_type) {
       global $DB;
 
-      $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
-      $PluginFusioninventoryUnknownDevice->getFromDB($unknown_id);
+      $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $pfUnknownDevice->getFromDB($unknown_id);
 
       $a_devices = $this->find("`plugin_fusioninventory_unknowndevices_id`='".$unknown_id."'");
       if (count($a_devices) == 0) {
@@ -157,7 +157,7 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
       switch ($item_type) {
 
          case 'Printer':
-            $PluginFusinvsnmpPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
+            $pfPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
             $_SESSION['glpi_plugins_fusinvsnmp_table'] = "glpi_plugin_fusinvsnmp_printers";
             $query = "SELECT *
                       FROM `glpi_plugin_fusinvsnmp_printers`
@@ -174,15 +174,15 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
 
             if ($DB->numrows($result) == 0) {
                $data['printers_id'] = $items_id;
-               $PluginFusinvsnmpPrinter->add($data);
+               $pfPrinter->add($data);
             } else {
-               $PluginFusinvsnmpPrinter->update($data);
+               $pfPrinter->update($data);
             }
             $this->delete($snmp_device);
             break;
          
          case 'NetworkEquipment':
-            $PluginFusinvsnmpNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
+            $pfNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
             $_SESSION['glpi_plugins_fusinvsnmp_table'] = "glpi_plugin_fusinvsnmp_networkequipments";
             $query = "SELECT *
                       FROM `glpi_plugin_fusinvsnmp_networkequipments`
@@ -198,9 +198,9 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
 
             if ($DB->numrows($result) == 0) {
                $data['networkequipments_id'] = $items_id;
-               $PluginFusinvsnmpNetworkEquipment->add($data);
+               $pfNetworkEquipment->add($data);
             } else {
-               $PluginFusinvsnmpNetworkEquipment->update($data);
+               $pfNetworkEquipment->update($data);
             }
             $this->delete($snmp_device);
             break;

@@ -49,13 +49,13 @@ class Plugins_Fusioninventory_InventorySNMPModels extends PHPUnit_Framework_Test
    public function testModels() {
       global $DB;
       
-      $pluginFusinvsnmpModel = new PluginFusinvsnmpModel();
+      $pfModel = new PluginFusinvsnmpModel();
       
       $xml = simplexml_load_file("../../../fusinvsnmp/tool/discovery.xml");
 
       foreach ($xml as $device) {
          if (isset($device->MODELSNMP) AND (string)$device->MODELSNMP != '') {
-            $a_list = $pluginFusinvsnmpModel->find("`discovery_key`='".(string)$device->MODELSNMP."'");
+            $a_list = $pfModel->find("`discovery_key`='".(string)$device->MODELSNMP."'");
             $this->assertEquals(count($a_list), '1', 'Discovery key not foudn 1 time ('.count($a_list).') :
                  '.(string)$device->MODELSNMP);
          }         

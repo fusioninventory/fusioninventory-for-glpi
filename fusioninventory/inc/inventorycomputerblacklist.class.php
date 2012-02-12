@@ -90,11 +90,11 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
    
    function defineTabs($options=array()){
 
-      $PluginFusinvinventoryCriteria = new PluginFusioninventoryInventoryComputerCriteria();
+      $pfInventoryComputerCriteria = new PluginFusioninventoryInventoryComputerCriteria();
 
       $ong = array();
       $i = 1;
-      $fields = $PluginFusinvinventoryCriteria->find("");
+      $fields = $pfInventoryComputerCriteria->find("");
       foreach($fields as $data) {
          $ong[$i] = $data['name'];
          $i++;
@@ -158,8 +158,8 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
          $xml->CONTENT->BIOS->SSN = trim($xml->CONTENT->BIOS->SSN);
       }
 
-      $PluginFusinvinventoryCriteria = new PluginFusioninventoryInventoryComputerCriteria();
-      $fields = $PluginFusinvinventoryCriteria->find("");
+      $pfInventoryComputerCriteria = new PluginFusioninventoryInventoryComputerCriteria();
+      $fields = $pfInventoryComputerCriteria->find("");
       
       foreach($fields as $id=>$data) {
 

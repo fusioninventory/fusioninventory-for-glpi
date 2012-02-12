@@ -56,11 +56,11 @@ class InventoryComputer extends PHPUnit_Framework_TestCase {
 
 
          // Add in blacklit : 30003000000000000000000000300000000000000000000000000000000000000000000000000000000000
-         $PluginFusinvinventoryBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
+         $pfBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
          $input = array();
          $input['plugin_fusioninventory_criterium_id'] = '1';
          $input['value'] = '30003000000000000000000000300000000000000000000000000000000000000000000000000000000000';
-         $PluginFusinvinventoryBlacklist->add($input);
+         $pfBlacklist->add($input);
 
 
         // set in config module inventory = yes by default
@@ -74,8 +74,8 @@ class InventoryComputer extends PHPUnit_Framework_TestCase {
          $data = $plugin->find("`name` = 'FusionInventory'");
          $fields = current($data);
          $plugins_id = $fields['id'];
-         $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
-         $PluginFusioninventoryConfig->updateConfigType($plugins_id, "extradebug", "1");
+         $pfConfig = new PluginFusioninventoryConfig();
+         $pfConfig->updateConfigType($plugins_id, "extradebug", "1");
        
     }
 
@@ -197,8 +197,8 @@ echo "# testHardwareModifications\n";
       $emulatorAgent = new emulatorAgent;
       $emulatorAgent->server_urlpath = "/fusion0.84/plugins/fusioninventory/";
       $prologXML = $emulatorAgent->sendProlog($inputXML);
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-      $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".$deviceID."'");
+      $pfAgent = new PluginFusioninventoryAgent();
+      $a_agent = $pfAgent->find("`device_id`='".$deviceID."'");
       $this->assertEquals(count($a_agent), 1, 'Problem on prolog, agent ('.$deviceID.') not right created!');
 
       $this->assertEquals(preg_match("/<RESPONSE>SEND<\/RESPONSE>/", $prologXML), 1, 'Prolog not send to agent!');
@@ -238,8 +238,8 @@ echo "# testHardwareModifications\n";
       $unknown = 0;
       if (count($a_computers) == 0) {
          // Search in unknown device
-         $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
-         $a_computers = $PluginFusioninventoryUnknownDevice->find("`name`='".$xml->CONTENT->HARDWARE->NAME."'");
+         $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
+         $a_computers = $pfUnknownDevice->find("`name`='".$xml->CONTENT->HARDWARE->NAME."'");
          $unknown = 1;
       }
       $this->assertEquals(count($a_computers), 1, 'Problem on creation computer, not created ('.$xmlFile.')');

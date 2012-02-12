@@ -56,11 +56,11 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    switch ($_GET['action']) {
       case 'getJobs':
          //Specific to ESX
-         $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-         $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+         $pfAgent = new PluginFusioninventoryAgent();
+         $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
          
-         $a_agent = $PluginFusioninventoryAgent->InfosByKey(Toolbox::addslashes_deep($_GET['machineid']));
-         $moduleRun = $PluginFusioninventoryTaskjobstatus->getTaskjobsAgent($a_agent['id']);
+         $a_agent = $pfAgent->InfosByKey(Toolbox::addslashes_deep($_GET['machineid']));
+         $moduleRun = $pfTaskjobstatus->getTaskjobsAgent($a_agent['id']);
          foreach ($moduleRun as $className => $array) {
             if (class_exists($className)) {
                if ($className == "PluginFusioninventoryInventoryComputerESX") {
