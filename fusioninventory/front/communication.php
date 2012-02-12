@@ -133,7 +133,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       # try each algorithm successively
       if ($xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"])) {
          $compressmode = "zlib";
-      } else if ($xml = gzdecode($GLOBALS["HTTP_RAW_POST_DATA"])) {
+      } else if ($xml = $communication->gzdecode($GLOBALS["HTTP_RAW_POST_DATA"])) {
          $compressmode = "gzip";
       } else if ($xml = gzinflate(substr($GLOBALS["HTTP_RAW_POST_DATA"], 2))) {
          // accept deflate for OCS agent 2.0 compatibility,
