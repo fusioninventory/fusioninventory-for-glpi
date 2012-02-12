@@ -796,12 +796,8 @@ class Rules extends PHPUnit_Framework_TestCase {
    public function testImportComputerwithTypeOnly() {
       global $DB, $XML;
       
-      Config::detectRootDoc();
+//      Config::detectRootDoc();
       loadLanguage("en_GB");
-      
-      if (!class_exists('PluginFusioninventoryRuleImportEquipmentCollection')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/ruleimportequipmentcollection.class.php");
-      }
       
       // Add the rule with criterial only if type = Computer
       $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
