@@ -77,6 +77,7 @@ if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration'])) {
 $configuration = new PluginFusioninventoryConfiguration();
 if (isset($_GET['glpi_tab'])) {
    $_SESSION['glpi_tabs']['pluginfusioninventoryconfiguration'] = $_GET['glpi_tab'];
+   glpi_header(getItemTypeFormURL($configuration->getType()));
 }
 $configuration->showForm();
 unset($_SESSION['glpi_tabs']['pluginfusioninventoryconfiguration']);
