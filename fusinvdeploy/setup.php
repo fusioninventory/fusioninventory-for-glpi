@@ -195,7 +195,7 @@ function plugin_version_fusinvdeploy() {
       'shortname'      => 'fusinvdeploy',
       'version'        => PLUGIN_FUSINVDEPLOY_VERSION,
       'license'        => 'AGPLv3+',
-      'author'         => "<a href='http://www.teclib.com'>TECLIB'</a>",
+      'author'         => "<a href='http://www.teclib.com'>TECLIB'</a> and the FusionInventory team",
       'homepage'       => 'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/',
       'minGlpiVersion' => '0.83'
    );
