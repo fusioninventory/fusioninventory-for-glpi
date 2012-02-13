@@ -140,7 +140,6 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
       $c_input['state']                              = 0;
       $c_input['plugin_fusioninventory_agents_id']   = 0;
 
-
       foreach($computers as $computer_id) {
          $uniqid= uniqid();
 
@@ -151,7 +150,8 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
          $c_input['uniqid'] = $uniqid;
 
          //get agent if for this computer
-         if(!$agents_id = $agent->getAgentWithComputerid($computer_id)) {
+         $agents_id = $agent->getAgentWithComputerid($computer_id);
+         if($agents_id === false) {
             $jobstatus_id= $jobstatus->add($c_input);
             $jobstatus->changeStatusFinish($jobstatus_id,
                                                   0,
@@ -162,6 +162,11 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
                                                   0);
          } else {
             $c_input['plugin_fusioninventory_agents_id'] = $agents_id;
+
+            # Push the agent, in the stack of agent to awake
+            if ($communication == "push") {
+               $_SESSION['glpi_plugin_fusioninventory']['agents'][$agents_id] = 1;
+            }
 
             $jobstatus_id= $jobstatus->add($c_input);
 

@@ -238,7 +238,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
       $short_sha512 = substr($sha512, 0, 6);
 
       if($this->checkPresenceFile($sha512, $order_id)) {
-         print "{success:false, file:'{$filename}',msg:\"File already exists.\"}";
+         print "{\"success\": \"false\", \"file\": \"{$filename}\", \"msg\": \"File already exists.\"}";
          exit;
       }
 
