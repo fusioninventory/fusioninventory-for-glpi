@@ -86,6 +86,7 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
    global $DB;
    
    ini_set("max_execution_time", "0");
+   ini_set("memory_limit", "-1");
 
    $migration = new $migrationname($current_version);
    $config = new PluginFusioninventoryConfig();
