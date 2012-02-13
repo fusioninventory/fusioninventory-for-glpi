@@ -196,7 +196,7 @@ function plugin_version_fusinvdeploy() {
    return array('name'           => $LANG['plugin_fusinvdeploy']['title'][0],
                 'shortname'      => 'fusinvdeploy',
                 'version'        => '0.80+1.1',
-                'author'         => "<a href='http://www.teclib.com'>TECLIB'</a>",
+                'author'         => "<a href='http://www.teclib.com'>TECLIB'</a> and the FusionInventory team",
                 'homepage'       => 'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/',
                 'minGlpiVersion' => '0.78' // For compatibility / no install in version < 0.78
    );
