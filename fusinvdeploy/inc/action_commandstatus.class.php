@@ -62,11 +62,17 @@ class PluginFusinvdeployAction_Commandstatus extends CommonDBTM {
 
    static function getForCommand($commands_id) {
       $response = array();
+
+      $codeMatrice['RETURNCODE_OK'] = 'okCode';
+      $codeMatrice['RETURNCODE_KO'] = 'errorCode';
+      $codeMatrice['REGEX_OK'] = 'okPattern';
+      $codeMatrice['REGEX_KO'] = 'errorPattern';
+
       $commands = getAllDatasFromTable('glpi_plugin_fusinvdeploy_actions_commandstatus',
                                        "`plugin_fusinvdeploy_commands_id`='$commands_id'");
       foreach ($commands as $command) {
-         $response[] = array( 'type' => $command['type'], 
-                              'value' => $command['value']);
+         $response[] = array( 'type' => $codeMatrice[$command['type']],
+                              'values' => array ( $command['value'] ) );
       }
       return $response;
    }
