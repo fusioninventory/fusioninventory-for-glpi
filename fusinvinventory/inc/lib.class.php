@@ -753,9 +753,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          $matches = array();
          $matches1 = array();
          preg_match("/(a:\d+:)\{(.*)\}(\w+)/sm", $value, $matches1);
-         if (!isset($matches1[2])) {
-            echo "<pre>".$value."<br/>".print_r($matches1)."<hr/>";
-         }
+         
          preg_match_all('/s:\d+:"(.*?)";/sm', $matches1[2], $matches);
          $constuctArray = array();
          $i = 0;
