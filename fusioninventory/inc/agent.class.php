@@ -604,7 +604,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       $a_ips = $PluginFusioninventoryAgent->getIPs($agent_id);
       foreach ($a_ips as $ip) {
-         array_push($ret, "http://".$ip.":".$config->getValue($plugins_id, 'agent_port'));
+         if ($ip != '') {
+            array_push($ret, "http://".$ip.":".$config->getValue($plugins_id, 'agent_port'));
+         }
       }
 
       return $ret;
