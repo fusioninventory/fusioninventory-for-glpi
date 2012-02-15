@@ -488,10 +488,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             echo $LANG['plugin_fusioninventory']['agents'][30];
             break;
 
-         case 'noanswer':
-            echo $LANG['plugin_fusioninventory']['agents'][40];
-            break;
-
          case 'waiting':
             $waiting = 1;
             echo $LANG['plugin_fusioninventory']['agents'][38];

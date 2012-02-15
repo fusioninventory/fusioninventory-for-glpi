@@ -985,11 +985,13 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    
    // $items_id = agent id
    function getRealStateAgent($items_id) {
-
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-
-      $this->disableDebug();
-      ini_set("allow_url_fopen", "-1");
+      
+      ini_set('display_errors','On');
+      error_reporting(E_ALL | E_STRICT);
+      set_error_handler('userErrorHandlerDebug');
+      
+      ob_start();
+      ini_set("allow_url_fopen", "1");
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
@@ -1007,6 +1009,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             break;
          }
       }
+      $error = ob_get_contents();
+      ob_end_clean();
       $this->reenableusemode();
 
       $ret = '';
@@ -1016,6 +1020,10 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $ret="running";
       }
 
+      if ($str == '' AND !strstr($error, "failed to open stream: Permission denied")) {
+         $ret = "noanswer";
+      }
+      
       return $ret;
    }
    
@@ -1069,9 +1077,14 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    **/
    function reenableusemode() {
       if ($_SESSION['glpi_use_mode'] == DEBUG_MODE){
-         ini_set('display_errors', 'On');
+         ini_set('display_errors','On');
+         // Recommended development settings
          error_reporting(E_ALL | E_STRICT);
-         set_error_handler("userErrorHandler");
+         set_error_handler('userErrorHandlerDebug');
+      } else {
+         ini_set('display_errors','Off');
+         error_reporting(E_ALL);
+         set_error_handler('userErrorHandlerNormal');
       }
 
    }
