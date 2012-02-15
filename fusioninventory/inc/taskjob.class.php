@@ -989,6 +989,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
 
       $this->disableDebug();
+      ini_set("allow_url_fopen", "-1");
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
@@ -1001,7 +1002,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       $str="noanswer";
       foreach(PluginFusioninventoryAgent::getAgentStatusURLs($plugins_id, $items_id) as $url) {
-         $str = @file_get_contents($url, 0, $ctx);
+         $str = @file_get_contents($url, false, $ctx);
          if ($str !== false) {
             break;
          }
