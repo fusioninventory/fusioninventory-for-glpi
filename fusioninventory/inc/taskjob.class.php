@@ -196,7 +196,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td height='18'>".$LANG['common'][16]."&nbsp;:</td>";
       echo "<td align='center'>";
-      echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
+      echo "<input type='text' name='name' size='41' value='".$this->fields["name"]."'/>";
       echo "</td>";
       echo "<td height='18'>".$LANG['plugin_fusioninventory']['task'][26]."&nbsp;:</td>";
       echo "<td align='center'>";
