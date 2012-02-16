@@ -1033,7 +1033,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
                if ($networkPort->fields["itemtype"] == $pluginFusioninventoryUnknownDevice->getType()) {
                   $pluginFusioninventoryUnknownDevice->getFromDB($networkPort->fields["items_id"]);
-                  if ($this->fields["hub"] == "1") {
+                  if ($pluginFusioninventoryUnknownDevice->fields["hub"] == "1") {
                      $hub = 1;
                   }
                }
