@@ -179,7 +179,7 @@ class PluginFusioninventoryMenu {
     *@return $width_status integer total width used by menu
     **/
    static function htmlMenu($plugin_name, $a_menu = array(), $type = "big", $width_status='300') {
-      global $LANG;
+      global $LANG,$CFG_GLPI;
 
       $width_max = 950;
 
@@ -206,7 +206,10 @@ class PluginFusioninventoryMenu {
 
       echo "<tr>";
       echo "<th colspan='".count($a_menu)."' nowrap width='".$width."'>
-         &nbsp;".str_replace("FusionInventory ","",$LANG['plugin_'.$plugin_name]['title'][0])."&nbsp;</th>";
+         <img src='".$CFG_GLPI["root_doc"]."/pics/deplier_down.png' />
+         &nbsp;".str_replace("FusionInventory ","",$LANG['plugin_'.$plugin_name]['title'][0])."&nbsp;
+         <img src='".$CFG_GLPI["root_doc"]."/pics/deplier_down.png' />
+      </th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1' id='menu".$plugin_name."' style='display:none'>";
