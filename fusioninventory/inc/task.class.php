@@ -107,12 +107,17 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $sopt[6]['linkfield']      = '';
       $sopt[6]['name']           = $LANG['plugin_fusioninventory']['task'][33];
 
-      $sopt[7]['table']          = $this->getTable();
-      $sopt[7]['field']          = 'permanent';
-      $sopt[7]['linkfield']      = '';
-      $sopt[7]['name']           = $LANG['plugin_fusioninventory']['task'][34];
-      $sopt[7]['datatype']       = 'bool';
+//      $sopt[7]['table']          = $this->getTable();
+//      $sopt[7]['field']          = 'permanent';
+//      $sopt[7]['linkfield']      = '';
+//      $sopt[7]['name']           = $LANG['plugin_fusioninventory']['task'][34];
+//      $sopt[7]['datatype']       = 'bool';
 
+      $sopt[8]['table']          = $this->getTable();
+      $sopt[8]['field']          = 'state';
+      $sopt[8]['linkfield']      = '';
+      $sopt[8]['name']           = 'Running';
+      
       $sopt[30]['table']          = $this->getTable();
       $sopt[30]['field']          = 'id';
       $sopt[30]['linkfield']      = '';
@@ -340,46 +345,94 @@ class PluginFusioninventoryTask extends CommonDBTM {
    
    function taskMenu() {
       global $DB;
-      
+
       if (!isset($_GET['see'])) {
          $_GET['see'] = 'next';
       }
+      
+      Session::initNavigateListItems($this->getType());
+
+//      echo "<pre>";
+//      print_r($_GET);
+      if ($_GET['see'] == 'actives') {
+         $_GET['field'] = array('5');
+         $_GET['searchtype'] = array('equals');
+         $_GET['contains'] = array('1');
+         $_GET['itemtype'] = array('PluginFusioninventoryTask');
+      } else if ($_GET['see'] == 'inactives') {
+         $_GET['field'] = array('5');
+         $_GET['searchtype'] = array('equals');
+         $_GET['contains'] = array('0');
+         $_GET['itemtype'] = array('PluginFusioninventoryTask');
+      } else {
+         unset($_GET['field']);
+         unset($_GET['searchtype']);
+         unset($_GET['contains']);
+         unset($_GET['itemtype']);
+      }
+      
+      Search::manageGetValues($this->getType());
+      //Search::showGenericSearch($this->getType(), $_GET);
+
       
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
       
       // ** Get task in next execution
-      $result = $this->getTasksPlanned();      
-      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=next'>Planned for running<sup>(".
-              $DB->numrows($result).")</sup></a></th>";
+      $result = $this->getTasksPlanned();
+      $cell = 'td';
+      if ($_GET['see'] == 'next') {
+         $cell = 'th';
+      }
+      echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=next'>Planned for running<sup>(".
+              $DB->numrows($result).")</sup></a></".$cell.">";
 
       // ** Get task running
       $result = $this->getTasksRunning(); 
-      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=running'>Running<sup>(".
-              $DB->numrows($result).")</sup></a></th>";
+      $cell = 'td';
+      if ($_GET['see'] == 'running') {
+         $cell = 'th';
+      }
+      echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=running'>Running<sup>(".
+              $DB->numrows($result).")</sup></a></".$cell.">";
             
       // ** Get task in error
-      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=inerror'>In error</a></th>";
+      $cell = 'td';
+      if ($_GET['see'] == 'inerror') {
+         $cell = 'th';
+      }
+      echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=inerror'>In error</a></".$cell.">";
       $a_tasks = $this->find(getEntitiesRestrictRequest("", 'glpi_plugin_fusioninventory_tasks'));
 
       // ** Get task active
+      $cell = 'td';
+      if ($_GET['see'] == 'actives') {
+         $cell = 'th';
+      }
       $a_tasks = $this->find("`is_active` = '1' ".getEntitiesRestrictRequest("AND", 'glpi_plugin_fusioninventory_tasks'));
-      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=actives'>Actives<sup>(".
-              count($a_tasks).")</sup></a></th>";
+      echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=actives'>Actives<sup>(".
+              count($a_tasks).")</sup></a></".$cell.">";
       
       // ** Get task inactive
+      $cell = 'td';
+      if ($_GET['see'] == 'inactives') {
+         $cell = 'th';
+      }
       $a_tasks = $this->find("`is_active` = '0' ".getEntitiesRestrictRequest("AND", 'glpi_plugin_fusioninventory_tasks'));
-      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=inactives'>Inactives<sup>(".
-              count($a_tasks).")</sup></a></th>";
+      echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=inactives'>Inactives<sup>(".
+              count($a_tasks).")</sup></a></".$cell.">";
       
       // ** Get all task
+      $cell = 'td';
+      if ($_GET['see'] == 'all') {
+         $cell = 'th';
+      }
       $a_tasks = $this->find(getEntitiesRestrictRequest("", 'glpi_plugin_fusioninventory_tasks'));
-      echo "<th><a href='".$_SERVER['PHP_SELF']."?see=all'>All<sup>(".
-              count($a_tasks).")</sup></a></th>";
+      echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=all'>All<sup>(".
+              count($a_tasks).")</sup></a></".$cell.">";
       
       echo "</tr>";
       echo "</table><br/>";
-
    }
 
    
@@ -427,6 +480,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       }
       while ($data_task=$DB->fetch_array($result)) {
          $this->getFromDB($data_task['id']);
+         Session::addToNavigateListItems($this->getType(), $data_task['id']);
          echo "<tr class='tab_bg_1'>";
          echo "<td width='32'>";
          $conditionpic = $condition;
@@ -512,7 +566,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
             LIMIT 1"; 
       }
       $where .= getEntitiesRestrictRequest("AND", 'task');
-      
+
       $query = "SELECT * FROM `glpi_plugin_fusioninventory_tasks` as task
          WHERE execution_id = 
             (SELECT execution_id FROM glpi_plugin_fusioninventory_taskjobs as taskjob
@@ -525,6 +579,32 @@ class PluginFusioninventoryTask extends CommonDBTM {
             AND `periodicity_type` != '0' ".$where;
       return $DB->query($query);
    }
+   
+   
+   
+   function menuTasksLogs() {
+      
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<tr class='tab_bg_1'>";
+      $cell = 'td';
+      if (strstr($_SERVER['PHP_SELF'],'/task.')) {
+         $cell ='th';
+      }
+      echo "<".$cell." align='center' width='50%'>";
+      echo "<a href=''>Taches</a>"; // TODO
+      echo "</".$cell.">";
+      $cell = 'td';
+      if (strstr($_SERVER['PHP_SELF'],'/tasklog.')) {
+         $cell ='th';
+      }
+      echo "<".$cell." align='center'>";
+      echo "<a href=''>Logs</a>"; // TODO
+      echo "</".$cell.">";
+      echo "</tr>";
+      echo "</table>";
+      
+   }
+   
 }
 
 ?>

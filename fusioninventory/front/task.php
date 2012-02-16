@@ -56,6 +56,8 @@ PluginFusioninventoryTaskjob::getAllowurlfopen();
 echo "<br/>";
 
 $pfTask = new PluginFusioninventoryTask();
+$pfTask->menuTasksLogs();
+
 $pfTask->taskMenu();
 $pfTask->displayTaks($_GET['see']);
 
