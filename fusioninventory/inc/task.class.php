@@ -344,7 +344,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
    
    
    function taskMenu() {
-      global $DB;
+      global $DB,$CFG_GLPI;
 
       if (!isset($_GET['see'])) {
          $_GET['see'] = 'next';
@@ -352,8 +352,11 @@ class PluginFusioninventoryTask extends CommonDBTM {
       
       Session::initNavigateListItems($this->getType());
 
-//      echo "<pre>";
-//      print_r($_GET);
+      unset($_GET['field']);
+      unset($_GET['searchtype']);
+      unset($_GET['contains']);
+      unset($_GET['itemtype']);
+      $_GET['reset'] = 'reset';
       if ($_GET['see'] == 'actives') {
          $_GET['field'] = array('5');
          $_GET['searchtype'] = array('equals');
@@ -364,11 +367,6 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $_GET['searchtype'] = array('equals');
          $_GET['contains'] = array('0');
          $_GET['itemtype'] = array('PluginFusioninventoryTask');
-      } else {
-         unset($_GET['field']);
-         unset($_GET['searchtype']);
-         unset($_GET['contains']);
-         unset($_GET['itemtype']);
       }
       
       Search::manageGetValues($this->getType());
@@ -377,6 +375,13 @@ class PluginFusioninventoryTask extends CommonDBTM {
       
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
+      
+      echo '<th width="19">';
+         echo "<a href=\"javascript:showHideDiv('searchform','tabsbodyimg','".$CFG_GLPI["root_doc"].
+                    "/pics/deplier_down.png','".$CFG_GLPI["root_doc"]."/pics/deplier_down.png')\">";
+         echo "<img alt='' name='tabsbodyimg' src=\"".$CFG_GLPI["root_doc"]."/pics/deplier_down.png\">";
+         echo "</a>";
+      echo '</th>';
       
       // ** Get task in next execution
       $result = $this->getTasksPlanned();
@@ -433,6 +438,10 @@ class PluginFusioninventoryTask extends CommonDBTM {
       
       echo "</tr>";
       echo "</table><br/>";
+      
+      echo "<div class='center' id='searchform' style='display:none'>";
+      Search::showGenericSearch($this->getType(), $_GET);
+      echo "</div>";
    }
 
    
