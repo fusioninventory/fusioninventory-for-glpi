@@ -53,10 +53,10 @@ if(!isset($_POST["sort"])) $_POST["sort"] = "";
 if(!isset($_POST["order"])) $_POST["order"] = "";
 if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 
-$pft = new PluginFusioninventoryTask;
-$pfTaskjoblog = new PluginFusioninventoryTaskjoblog;
+$pft = new PluginFusioninventoryTask();
+$pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
 
-$pftj = new PluginFusioninventoryTaskjob;
+$pftj = new PluginFusioninventoryTaskjob();
 $a_taskjob = $pftj->find("`plugin_fusioninventory_tasks_id`='".$_POST["id"]."'
       AND `rescheduled_taskjob_id`='0' ", "id");
 $i = 1;
@@ -83,7 +83,11 @@ switch($_POST['glpi_tab']) {
       break;
 
    case 1 :
-//      $pfia->showFormAdvancedOptions($_POST["id"]);
+      $pft->getFromDB($_POST["id"]);
+      if ($pft->fields['is_advancedmode'] == '0') {
+         $taskjob = current($a_taskjob);
+         $pftj->showForm($taskjob["id"]);
+      }
       break;
 }
 

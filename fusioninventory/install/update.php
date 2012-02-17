@@ -1102,46 +1102,52 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->changeField($newTable,
                                  "execution_id",
                                  "execution_id",
-                                 "bigint(20) NOT NULL DEFAULT '0'");
-         
+                                 "bigint(20) NOT NULL DEFAULT '0'");         
+         $migration->changeField($newTable,
+                                 "is_advancedmode",
+                                 "is_advancedmode",
+                                 "tinyint(1) NOT NULL DEFAULT '0'");
       $migration->migrationOneTable($newTable);
 
          $migration->addField($newTable,
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
+                              "id",
+                              "int(11) NOT NULL AUTO_INCREMENT");
          $migration->addField($newTable,
-                                 "entities_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
+                              "entities_id",
+                              "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
-                                 "name",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                              "name",
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
          $migration->addField($newTable,
-                                 "date_creation",
-                                 "datetime DEFAULT NULL");
+                              "date_creation",
+                              "datetime DEFAULT NULL");
          $migration->addField($newTable,
-                                 "comment",
-                                 "text DEFAULT NULL COLLATE utf8_unicode_ci");
+                              "comment",
+                              "text DEFAULT NULL COLLATE utf8_unicode_ci");
          $migration->addField($newTable,
-                                 "is_active",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
+                              "is_active",
+                              "tinyint(1) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
-                                 "communication",
-                                 "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'push'");
+                              "communication",
+                              "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'push'");
          $migration->addField($newTable,
-                                 "permanent",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                              "permanent",
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
          $migration->addField($newTable,
-                                 "date_scheduled",
-                                 "datetime DEFAULT NULL");
+                              "date_scheduled",
+                              "datetime DEFAULT NULL");
          $migration->addField($newTable,
-                                 "periodicity_count",
-                                 "int(6) NOT NULL DEFAULT '0'");
+                              "periodicity_count",
+                              "int(6) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
-                                 "periodicity_type",
-                                 "varchar(255) DEFAULT NULL");
+                              "periodicity_type",
+                              "varchar(255) DEFAULT NULL");
          $migration->addField($newTable,
-                                 "execution_id",
-                                 "bigint(20) NOT NULL DEFAULT '0'");
+                              "execution_id",
+                              "bigint(20) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                              "is_advancedmode",
+                              "tinyint(1) NOT NULL DEFAULT '0'");
          $migration->addKey($newTable,
                             "entities_id");
          $migration->addKey($newTable,

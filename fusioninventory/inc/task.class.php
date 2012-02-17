@@ -135,17 +135,19 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $ong[1] = $LANG['title'][26];
 
       if ($this->fields['id'] > 0) {
-         $pft = new PluginFusioninventoryTaskjob;
-         $a_taskjob = $pft->find("`plugin_fusioninventory_tasks_id`='".$_GET['id']."'
-               AND `rescheduled_taskjob_id`='0' ", "id");
-         $i = 1;
-         foreach($a_taskjob as $datas) {
-            $i++;
-            $ong[$i] = $LANG['plugin_fusioninventory']['task'][2]." ".($i-1);
-         }
+         if ($this->fields["is_advancedmode"] == '1') {
+            $pft = new PluginFusioninventoryTaskjob;
+            $a_taskjob = $pft->find("`plugin_fusioninventory_tasks_id`='".$_GET['id']."'
+                  AND `rescheduled_taskjob_id`='0' ", "id");
+            $i = 1;
+            foreach($a_taskjob as $datas) {
+               $i++;
+               $ong[$i] = $LANG['plugin_fusioninventory']['task'][2]." ".($i-1);
+            }
 
-         $i++;
-         $ong[$i] = $LANG['plugin_fusioninventory']['task'][15]." <img src='".$CFG_GLPI['root_doc']."/pics/add_dropdown.png'/>";
+            $i++;
+            $ong[$i] = $LANG['plugin_fusioninventory']['task'][15]." <img src='".$CFG_GLPI['root_doc']."/pics/add_dropdown.png'/>";
+         }
       }
       return $ong;
    }
@@ -193,7 +195,6 @@ class PluginFusioninventoryTask extends CommonDBTM {
          Dropdown::showYesNo("is_active",$this->fields["is_active"]);
       }
       echo "</td>";
-
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
@@ -262,9 +263,6 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $com['pull'] = $LANG['plugin_fusioninventory']['task'][42];
       Dropdown::showFromArray("communication", $com, array('value'=>$this->fields["communication"]));
       echo "</td>";
-      
-
-
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
@@ -278,6 +276,14 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $a_time['days'] = ucfirst($LANG['calendar'][12]);
       $a_time['months'] = ucfirst($LANG['calendar'][14]);
       Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$this->fields['periodicity_type']));
+      echo "</td>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td colspan='2'></td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][49]."&nbsp;:</td>";
+      echo "<td>";
+      Dropdown::showYesNo("is_advancedmode",$this->fields["is_advancedmode"]);
       echo "</td>";
       echo "</tr>";
       

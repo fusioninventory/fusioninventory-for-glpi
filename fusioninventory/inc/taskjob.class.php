@@ -151,12 +151,17 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    function showForm($id, $options=array()) {
       global $CFG_GLPI,$LANG;
 
-      if ($id != '') {
-         $this->verifyDefinitionActions($id);
-      }
+      $pfTask = new PluginFusioninventoryTask();
+      $pfTask->getFromDB($_POST['id']);
 
       if ($id!='') {
-         $this->getFromDB($id);
+         if ($this->getFromDB($id)) {
+            $this->verifyDefinitionActions($id);
+            $this->getFromDB($id);
+         } else {
+            $id = '';
+            $this->getEmpty();
+         }
       } else {
          $this->getEmpty();
       }
@@ -184,10 +189,10 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       } else {
          if ($ismultientities) {
-            echo $LANG['job'][46]."&nbsp;:&nbsp;".
+            echo $LANG['plugin_fusioninventory']['task'][15]."&nbsp;:&nbsp;".
                  Dropdown::getDropdownName("glpi_entities", $this->fields['entities_id']);
          } else {
-            echo $LANG['job'][13];
+            echo $LANG['plugin_fusioninventory']['task'][15];
          }
       }
       echo '</th>';
@@ -196,6 +201,11 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td height='18'>".$LANG['common'][16]."&nbsp;:</td>";
       echo "<td align='center'>";
+      if ($pfTask->fields["is_advancedmode"] == '0'
+              AND $this->fields["name"] == '') {
+      
+         $this->fields["name"] = $pfTask->fields["name"];
+      }
       echo "<input type='text' name='name' size='41' value='".$this->fields["name"]."'/>";
       echo "</td>";
       echo "<td height='18'>".$LANG['plugin_fusioninventory']['task'][26]."&nbsp;:</td>";
@@ -232,45 +242,53 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td height='18'>".$LANG['plugin_fusioninventory']['task'][31]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      Dropdown::showInteger("periodicity_count", $this->fields['periodicity_count'], 0, 300);
-      $a_time = array();
-      $a_time[] = "------";
-      $a_time['minutes'] = strtolower($LANG['job'][22]);
-      $a_time['hours'] = strtolower($LANG['gmt'][1]);
-      $a_time['days'] = $LANG['calendar'][12];
-      $a_time['months'] = $LANG['plugin_fusioninventory']['task'][38];
-      Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$this->fields['periodicity_type']));
-      echo "</td>";
+      $rowspan = 4;
+      if ($pfTask->fields["is_advancedmode"] == '1') {
+         echo "<td height='18'>".$LANG['plugin_fusioninventory']['task'][31]."&nbsp;:</td>";
+         echo "<td align='center'>";
+         Dropdown::showInteger("periodicity_count", $this->fields['periodicity_count'], 0, 300);
+         $a_time = array();
+         $a_time[] = "------";
+         $a_time['minutes'] = strtolower($LANG['job'][22]);
+         $a_time['hours'] = strtolower($LANG['gmt'][1]);
+         $a_time['days'] = $LANG['calendar'][12];
+         $a_time['months'] = $LANG['plugin_fusioninventory']['task'][38];
+         Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$this->fields['periodicity_type']));
+         echo "</td>";
+      } else {
+         echo "<td colspan='2'></td>";
+         $rowspan = 1;
+      }
       // ** Definitions
-      echo "<td rowspan='4' valign='top'>";
+      echo "<td rowspan='".$rowspan."' valign='top'>";
       $this->showTaskjobItems('definition', $randmethod, $id);
       echo "</td>";
       
       // ** Actions
-      echo "<td rowspan='4' valign='top'>";
+      echo "<td rowspan='".$rowspan."' valign='top'>";
       $this->showTaskjobItems('action', $randmethod, $id);
       echo "</td>";
       echo "</tr>";
       
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['task'][24]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      Dropdown::showInteger("retry_nb", $this->fields["retry_nb"], 0, 30);
-      echo "</td>";
-      echo "</tr>";
+      if ($pfTask->fields["is_advancedmode"] == '1') {
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>".$LANG['plugin_fusioninventory']['task'][24]."&nbsp;:</td>";
+         echo "<td align='center'>";
+         Dropdown::showInteger("retry_nb", $this->fields["retry_nb"], 0, 30);
+         echo "</td>";
+         echo "</tr>";
       
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['task'][25]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      Dropdown::showInteger("retry_time", $this->fields["retry_time"], 0, 360);
-      echo "</td>";
-      echo "</tr>";
-      
-      echo "<tr>";
-      echo "<td colspan='2'></td>";
-      echo "</tr>";
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>".$LANG['plugin_fusioninventory']['task'][25]."&nbsp;:</td>";
+         echo "<td align='center'>";
+         Dropdown::showInteger("retry_time", $this->fields["retry_time"], 0, 360);
+         echo "</td>";
+         echo "</tr>";
+         
+         echo "<tr>";
+         echo "<td colspan='2'></td>";
+         echo "</tr>";
+      }
       
       echo "<tr>";
       if ($id<=0) {

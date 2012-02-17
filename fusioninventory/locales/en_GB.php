@@ -186,6 +186,7 @@ $LANG['plugin_fusioninventory']['task'][45]="Advanced options";
 $LANG['plugin_fusioninventory']['task'][46]="Reinitialization";
 $LANG['plugin_fusioninventory']['task'][47]="Unique id";
 $LANG['plugin_fusioninventory']['task'][48]="To inventory";
+$LANG['plugin_fusioninventory']['task'][49]="Advanced mode";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Started";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";
