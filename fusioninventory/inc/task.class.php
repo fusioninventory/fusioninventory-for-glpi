@@ -376,13 +376,6 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
       
-      echo '<th width="19">';
-         echo "<a href=\"javascript:showHideDiv('searchform','tabsbodyimg','".$CFG_GLPI["root_doc"].
-                    "/pics/deplier_down.png','".$CFG_GLPI["root_doc"]."/pics/deplier_down.png')\">";
-         echo "<img alt='' name='tabsbodyimg' src=\"".$CFG_GLPI["root_doc"]."/pics/deplier_down.png\">";
-         echo "</a>";
-      echo '</th>';
-      
       // ** Get task in next execution
       $result = $this->getTasksPlanned();
       $cell = 'td';
@@ -436,8 +429,16 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=all'>All<sup>(".
               count($a_tasks).")</sup></a></".$cell.">";
       
+      
+      echo '<th width="19">';
+         echo "<a href=\"javascript:showHideDiv('searchform','tabsbodyimg','".$CFG_GLPI["root_doc"].
+                    "/pics/deplier_down.png','".$CFG_GLPI["root_doc"]."/pics/deplier_down.png')\">";
+         echo "<img alt='' name='tabsbodyimg' src=\"".$CFG_GLPI["root_doc"]."/pics/deplier_down.png\">";
+         echo "</a>";
+      echo '</th>';
+      
       echo "</tr>";
-      echo "</table><br/>";
+      echo "</table>";
       
       echo "<div class='center' id='searchform' style='display:none'>";
       Search::showGenericSearch($this->getType(), $_GET);
