@@ -186,9 +186,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $pfTaskjob = new PluginFusioninventoryTaskjob;
       $a_taskjob = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$id."'", "id");
       echo "<td>";
-      if (count($a_taskjob) > 0) {
-         echo $LANG['common'][60]."&nbsp;:";
-      }
+      echo $LANG['common'][60]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       if (count($a_taskjob) > 0) {
