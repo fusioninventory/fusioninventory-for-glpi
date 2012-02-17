@@ -28,7 +28,7 @@
    ------------------------------------------------------------------------
 
    @package   FusionInventory
-   @author    Vincent Mazzoni
+   @author    David Durieux
    @co-author 
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
@@ -40,11 +40,34 @@
    ------------------------------------------------------------------------
  */
 
-define('GLPI_ROOT', '../../..');
-include (GLPI_ROOT . "/inc/includes.php");
-Session::checkLoginUser();
-Plugin::load('fusioninventory',true);
+// Update from 2.1.1 to 2.1.2
+function update211to212() {
+   global $DB,$LANG;
 
-$dropdown = new PluginFusinvsnmpMibOid();
-include (GLPI_ROOT . "/front/dropdown.common.form.php");
+   echo "<strong>Update 2.1.1 to 2.1.2</strong><br/>";
+   echo "</td>";
+   echo "</tr>";
+
+   echo "<tr class='tab_bg_1'>";
+   echo "<td align='center'>";
+
+   plugin_fusioninventory_displayMigrationMessage("212"); // Start
+
+   plugin_fusioninventory_displayMigrationMessage("212", $LANG['update'][141]); // Updating schema
+
+
+   $DB->query("UPDATE `glpi_plugin_tracker_config`
+               SET `version` = '2.1.2'
+               WHERE `ID`=1
+               LIMIT 1 ;");
+   
+   plugin_fusioninventory_displayMigrationMessage("212"); // End
+
+   echo "</td>";
+   echo "</tr>";
+
+   echo "<tr class='tab_bg_1'>";
+   echo "<td align='center'>";
+}
+
 ?>

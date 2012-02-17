@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -295,7 +295,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       $infoSections = $this->_getInfoSections($internalId);
       // Retrieve all sections from xml file
       $serializedSectionsFromXML = array();
-
+      
       foreach($xmlSections as $xmlSection) {
          array_push($serializedSectionsFromXML, $xmlSection["sectionDatawName"]);
       }
@@ -733,7 +733,9 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          $arraySerializedSectionsTemp = explode("<<=>>", $valeur); // For each line, we create a table with data separated
          if (isset($arraySerializedSectionsTemp[0]) AND isset($arraySerializedSectionsTemp[1])) {
             if ($arraySerializedSectionsTemp[0] != "" && $arraySerializedSectionsTemp[1] != "") { // that is added to infosections
-               $infoSections["sections"][$arraySerializedSectionsTemp[0]] = $arraySerializedSectionsTemp[1];
+               if (!preg_match("/}$/", $arraySerializedSectionsTemp[1])) {
+                  $infoSections["sections"][$arraySerializedSectionsTemp[0]] = $arraySerializedSectionsTemp[1];
+               }
             }
             $previous_infosection = $arraySerializedSectionsTemp[0];
          } else if ($valeur != '') {
@@ -750,9 +752,9 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       foreach ($infoSections as $key=>$value) {
          $matches = array();
          $matches1 = array();
-         preg_match("/(a:\d+:)\{(.*)\}(\w+)/m", $value, $matches1);
+         preg_match("/(a:\d+:)\{(.*)\}(\w+)/sm", $value, $matches1);
          
-         preg_match_all('/s:\d+:"(.*?)";/m', $matches1[2], $matches);
+         preg_match_all('/s:\d+:"(.*?)";/sm', $matches1[2], $matches);
          $constuctArray = array();
          $i = 0;
          $size = count($matches[1]);

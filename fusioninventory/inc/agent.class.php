@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -490,15 +490,15 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             echo $LANG['plugin_fusioninventory']['agents'][30];
             break;
 
-         case 'noanswer':
-            echo $LANG['plugin_fusioninventory']['agents'][40];
-            break;
-
          case 'waiting':
             $waiting = 1;
             echo $LANG['plugin_fusioninventory']['agents'][38];
             echo "<input type='hidden' name='ip' value='".$ip."' />";
             echo "<input type='hidden' name='agent_id' value='".$agent_id."' />";
+            break;
+         
+         case '':
+            echo "SELinux problem, do 'setsebool -P httpd_can_network_connect on'";
             break;
 
       }
@@ -607,7 +607,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       $a_ips = $pfAgent->getIPs($agent_id);
       foreach ($a_ips as $ip) {
-         array_push($ret, "http://".$ip.":".$config->getValue($plugins_id, 'agent_port'));
+         if ($ip != '') {
+            array_push($ret, "http://".$ip.":".$config->getValue($plugins_id, 'agent_port'));
+         }
       }
 
       return $ret;

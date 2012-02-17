@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -1198,8 +1198,13 @@ return namelist;
    
    // $items_id = agent id
    function getRealStateAgent($items_id) {
-
-      $this->disableDebug();
+      
+      ini_set('display_errors','On');
+      error_reporting(E_ALL | E_STRICT);
+      set_error_handler('userErrorHandlerDebug');
+      
+      ob_start();
+      ini_set("allow_url_fopen", "1");
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
@@ -1212,11 +1217,13 @@ return namelist;
 
       $str="noanswer";
       foreach(PluginFusioninventoryAgent::getAgentStatusURLs($plugins_id, $items_id) as $url) {
-         $str = @file_get_contents($url, 0, $ctx);
+         $str = @file_get_contents($url, false, $ctx);
          if ($str !== false) {
             break;
          }
       }
+      $error = ob_get_contents();
+      ob_end_clean();
       $this->reenableusemode();
 
       $ret = '';
@@ -1226,6 +1233,10 @@ return namelist;
          $ret="running";
       }
 
+      if ($str == '' AND !strstr($error, "failed to open stream: Permission denied")) {
+         $ret = "noanswer";
+      }
+      
       return $ret;
    }
    
@@ -1280,8 +1291,13 @@ return namelist;
    function reenableusemode() {
       if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE){
          ini_set('display_errors', 'On');
+         // Recommended development settings
          error_reporting(E_ALL | E_STRICT);
-         set_error_handler("userErrorHandler");
+         set_error_handler('userErrorHandlerDebug');
+      } else {
+         ini_set('display_errors','Off');
+         error_reporting(E_ALL);
+         set_error_handler('userErrorHandlerNormal');
       }
 
    }
