@@ -195,7 +195,11 @@ class PluginFusioninventoryTask extends CommonDBTM {
          Dropdown::showYesNo("is_active",$this->fields["is_active"]);
       }
       echo "</td>";
-      echo "<th rowspan='2'>";
+
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      $display_but = 0;
       if ($this->fields["is_active"]) {
          if ($id!='') {
             $forcerundisplay = 1;
@@ -207,41 +211,15 @@ class PluginFusioninventoryTask extends CommonDBTM {
                }
             }
             if ($forcerundisplay == '1') {
+               echo '<th colspan="2">';
                echo '<input name="forcestart" value="'.$LANG['plugin_fusioninventory']['task'][40].'"
                       class="submit" type="submit">';
+               echo '</th>';
+               $display_but = 1;
             }
          }
-      }
-      echo "</th>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td rowspan='2'>".$LANG['common'][25]."&nbsp;:</td>";
-      echo "<td rowspan='2'>";
-      echo "<textarea cols='39' rows='2' name='comment' >".$this->fields["comment"]."</textarea>";
-      echo "</td>";
-      echo "<td>".$LANG['plugin_fusioninventory']['task'][14]."&nbsp;:</td>";
-      echo "<td>";
-      if ($id) {
-         Html::showDateTimeFormItem("date_scheduled",$this->fields["date_scheduled"],1,false);
-      } else {
-         Html::showDateTimeFormItem("date_scheduled",date("Y-m-d H:i:s"),1);
-      }
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['task'][33]."&nbsp;:</td>";
-      echo "<td>";
-      $com = array();
-      $com['push'] = $LANG['plugin_fusioninventory']['task'][41];
-      $com['pull'] = $LANG['plugin_fusioninventory']['task'][42];
-      Dropdown::showFromArray("communication", $com, array('value'=>$this->fields["communication"]));
-      echo "</td>";
-      
-
-      echo "<th rowspan='2'>";
-      if ($id!='') {
+         
+         // * Manage reset / reinitialization
          $reset = 0;
          $a_taskjobs = $pFusioninventoryTaskjob->find("`plugin_fusioninventory_tasks_id`='".$id."'");
          foreach ($a_taskjobs as $data) {
@@ -253,15 +231,45 @@ class PluginFusioninventoryTask extends CommonDBTM {
             }
          }
          if ($reset == '1') {
+            echo '<th colspan="2">';
             echo '<input name="reset" value="'.$LANG['plugin_fusioninventory']['task'][46].'"
                    class="submit" type="submit">';
+            echo '</th>';
+            $display_but = 1;
          }
       }
-      echo "</th>";
+      if ($display_but == '0') {
+         echo "<td colspan='2'></td>";
+      }
+      
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][14]."&nbsp;:</td>";
+      echo "<td>";
+      if ($id) {
+         Html::showDateTimeFormItem("date_scheduled",$this->fields["date_scheduled"],1,false);
+      } else {
+         Html::showDateTimeFormItem("date_scheduled",date("Y-m-d H:i:s"),1);
+      }
+      echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td colspan='2'></td>";
+      echo "<td rowspan='2'>".$LANG['common'][25]."&nbsp;:</td>";
+      echo "<td rowspan='2'>";
+      echo "<textarea cols='39' rows='2' name='comment' >".$this->fields["comment"]."</textarea>";
+      echo "</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][33]."&nbsp;:</td>";
+      echo "<td>";
+      $com = array();
+      $com['push'] = $LANG['plugin_fusioninventory']['task'][41];
+      $com['pull'] = $LANG['plugin_fusioninventory']['task'][42];
+      Dropdown::showFromArray("communication", $com, array('value'=>$this->fields["communication"]));
+      echo "</td>";
+      
+
+
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusioninventory']['task'][17]."&nbsp;:</td>";
       echo "<td>";
       Dropdown::showInteger("periodicity_count", $this->fields['periodicity_count'], 0, 300);
