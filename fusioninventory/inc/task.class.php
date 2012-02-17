@@ -179,7 +179,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['common'][16]."&nbsp;:</td>";
-      echo "<td align='center'>";
+      echo "<td>";
       echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
       echo "</td>";
 
@@ -217,7 +217,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td rowspan='2'>".$LANG['common'][25]."&nbsp;:</td>";
-      echo "<td align='center' rowspan='2'>";
+      echo "<td rowspan='2'>";
       echo "<textarea cols='39' rows='2' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "</td>";
       echo "<td>".$LANG['plugin_fusioninventory']['task'][14]."&nbsp;:</td>";
@@ -232,7 +232,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusioninventory']['task'][33]."&nbsp;:</td>";
-      echo "<td align='center'>";
+      echo "<td>";
       $com = array();
       $com['push'] = $LANG['plugin_fusioninventory']['task'][41];
       $com['pull'] = $LANG['plugin_fusioninventory']['task'][42];
