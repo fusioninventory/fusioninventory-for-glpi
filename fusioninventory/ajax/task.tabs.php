@@ -86,7 +86,14 @@ switch($_POST['glpi_tab']) {
       $pft->getFromDB($_POST["id"]);
       if ($pft->fields['is_advancedmode'] == '0') {
          $taskjob = current($a_taskjob);
-         $pftj->showForm($taskjob["id"]);
+         if (!isset($taskjob["id"])) {
+            $taskjobs_id = $pftj->add(array('name'=>$pft->fields['name'],
+                             'entities_id'=>$pft->fields['entities_id'],
+                             'plugin_fusioninventory_tasks_id'=>$_POST["id"]));
+            $pftj->showForm($taskjobs_id);
+         } else {
+            $pftj->showForm($taskjob["id"]);
+         }
       }
       break;
 }
