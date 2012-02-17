@@ -183,7 +183,7 @@ $LANG['plugin_fusioninventory']['task'][42]="Agent contacts the server (pull)";
 $LANG['plugin_fusioninventory']['task'][43]="Communication mode";
 $LANG['plugin_fusioninventory']['task'][44]="See all informations of task";
 $LANG['plugin_fusioninventory']['task'][45]="Advanced options";
-$LANG['plugin_fusioninventory']['task'][46]="Reset";
+$LANG['plugin_fusioninventory']['task'][46]="Reinitialization";
 $LANG['plugin_fusioninventory']['task'][47]="Unique id";
 $LANG['plugin_fusioninventory']['task'][48]="To inventory";
 
