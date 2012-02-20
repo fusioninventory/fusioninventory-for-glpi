@@ -42,6 +42,8 @@
 
 define ("PLUGIN_FUSIONINVENTORY_VERSION","0.80+1.2");
 
+define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE","0");
+
 include_once(GLPI_ROOT."/inc/includes.php");
 
 // Init the hooks of fusioninventory
