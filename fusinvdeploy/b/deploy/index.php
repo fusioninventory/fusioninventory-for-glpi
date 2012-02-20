@@ -77,8 +77,11 @@ if ($plugin->isActivated('fusinvdeploy')) {
          
 
          //the option parameter of json_encode function added in php 5.3
-         if (version_compare(PHP_VERSION, '5.3.0') >= 0) $json_response = json_encode($response, $options);
-         else $json_response = json_encode($response);
+         if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
+            $json_response = json_encode($response, $options);
+         } else {
+             $json_response = json_encode($response);
+         }
 
          if (isset($_GET['debug'])) $json_response = PluginFusinvdeployStaticmisc::json_indent($json_response);
 
