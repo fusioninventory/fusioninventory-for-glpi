@@ -120,6 +120,8 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
                      $row = $DB->fetch_assoc($res);
                      $fields_array = unserialize($row['fields_array']);
                      if ($fields_array['operatingsystems_id'] != 0) unset($fields_array['operatingsystem_name']);
+                     if ($fields_array['operatingsystems_id'] == 0) unset($fields_array['operatingsystems_id']);
+                     if ($fields_array['locations_id'] == 0) unset($fields_array['locations_id']);
                      foreach($fields_array as $key =>$field) {
                         if (trim($field) == '') unset($fields_array[$key]);
                      }
