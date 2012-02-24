@@ -137,21 +137,27 @@ class PluginFusinvdeployJob {
      $tmp['date']                                    = date("Y-m-d H:i:s");
      $tmp['comment']                                 = "";
      $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_RUNNING;
+
+     $options = 0;
+     if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
+        $options = ENT_IGNORE;
+     }
+
      // add log message
      if ($p['currentStep']) {
-        $tmp['comment'] = htmlentities($p['currentStep'], ENT_IGNORE, "UTF-8");
+        $tmp['comment'] = htmlentities($p['currentStep'], $options, "UTF-8");
      } elseif (is_array($p['msg'])) {
          if ($tmp['comment'] != "") {
             $tmp['comment'] .= "<br>";
         }
         foreach ($p['msg'] as $line) {
-            $tmp['comment'] .= htmlentities($line, ENT_IGNORE, "UTF-8")."<br>";
+            $tmp['comment'] .= htmlentities($line, $options, "UTF-8")."<br>";
         }
      } elseif ($p['msg'] != "") {
         if ($tmp['comment'] != "") {
             $tmp['comment'] .= "<br>";
         }
-        $tmp['comment'] .= htmlentities($p['msg'], ENT_IGNORE, "UTF-8");
+        $tmp['comment'] .= htmlentities($p['msg'], $options, "UTF-8");
      }
 
      if ($p['status'] == 'ko') {
