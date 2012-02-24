@@ -50,6 +50,10 @@ PluginFusioninventoryProfile::checkRight("fusinvinventory", "importxml","w");
 
 $PluginFusinvinventoryLibintegrity = new PluginFusinvinventoryLibintegrity();
 if (!empty($_POST)) {
+   if (isset($_POST['clean'])) {
+      $PluginFusinvinventoryLibintegrity->cleanGLPI();      
+   }
+   
    if (isset($_POST['reimport'])) {
       foreach($_POST['reimport'] as $infos=>$num) {
          $PluginFusinvinventoryLibintegrity->Import($infos);
