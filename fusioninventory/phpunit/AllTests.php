@@ -47,6 +47,18 @@ if (!defined('GLPI_ROOT')) {
    file_put_contents(GLPI_ROOT."/files/_log/sql-errors.log", '');
    file_put_contents(GLPI_ROOT."/files/_log/php-errors.log", '');
    
+   $dir = GLPI_ROOT."/files/_files/_plugins/fusioninventory";
+   $objects = scandir($dir);
+     foreach ($objects as $object) {
+       if ($object != "." && $object != "..") {
+         if (filetype($dir."/".$object) == "dir") {
+         } else {
+            unlink($dir."/".$object);
+         }
+       }
+     }
+   
+   
    include_once (GLPI_ROOT . "/inc/timer.class.php");
 
    include_once (GLPI_ROOT . "/inc/common.function.php");
