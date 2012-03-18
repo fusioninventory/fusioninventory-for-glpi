@@ -146,16 +146,18 @@ class PluginFusinvdeployJob {
      // add log message
      if ($p['currentStep']) {
         $tmp['comment'] = htmlentities($p['currentStep'], $options, "UTF-8");
-     } elseif (is_array($p['msg'])) {
+     } 
+
+     if (is_array($p['msg'])) {
          if ($tmp['comment'] != "") {
-            $tmp['comment'] .= "<br>";
+            $tmp['comment'] .= ":<br>";
         }
         foreach ($p['msg'] as $line) {
             $tmp['comment'] .= htmlentities($line, $options, "UTF-8")."<br>";
         }
      } elseif ($p['msg'] != "") {
         if ($tmp['comment'] != "") {
-            $tmp['comment'] .= "<br>";
+            $tmp['comment'] .= ":<br>";
         }
         $tmp['comment'] .= htmlentities($p['msg'], $options, "UTF-8");
      }
