@@ -316,7 +316,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             $a_input['device_id']    = $pxml->DEVICEID;
             $a_input['entities_id']  = 0;
             $a_input['last_contact'] = date("Y-m-d H:i:s");
-            $a_input['useragent']    = $_SERVER['HTTP_USER_AGENT'];
+            if (isset($_SERVER['HTTP_USER_AGENT'])) {
+               $a_input['useragent']    = $_SERVER['HTTP_USER_AGENT'];
+            }
             $pta->add($a_input);
             return;
          } else {
@@ -327,7 +329,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
                   $input['token'] = $pxml->TOKEN;
                }
                $input['last_contact'] = date("Y-m-d H:i:s");
-               $input['useragent']    = $_SERVER['HTTP_USER_AGENT'];
+               if (isset($_SERVER['HTTP_USER_AGENT'])) {
+                  $input['useragent']    = $_SERVER['HTTP_USER_AGENT'];
+               }
                $pta->update($input);
             }
          }

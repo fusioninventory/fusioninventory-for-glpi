@@ -796,6 +796,12 @@ class Rules extends PHPUnit_Framework_TestCase {
    public function testImportComputerwithTypeOnly() {
       global $DB, $XML;
       
+      
+      $plugin = new Plugin();
+      $plugin->getFromDBbyDir("fusioninventory");
+      $plugin->activate($plugin->fields['id']);
+      Plugin::load("fusioninventory");
+
 //      Config::detectRootDoc();
       loadLanguage("en_GB");
       
@@ -905,7 +911,12 @@ class Rules extends PHPUnit_Framework_TestCase {
    public function testImportComputerwithTypeAndNameExist() {
       global $DB, $XML;
       
-      Config::detectRootDoc();
+      $plugin = new Plugin();
+      $plugin->getFromDBbyDir("fusioninventory");
+      $plugin->activate($plugin->fields['id']);
+      Plugin::load("fusioninventory");
+      
+//      Config::detectRootDoc();
       loadLanguage("en_GB");
       
       // Add the rule with criterial only if type = Computer
@@ -1057,7 +1068,12 @@ class Rules extends PHPUnit_Framework_TestCase {
    public function testImportComputerwithTypeAndNameExistNamePresent() {
       global $DB, $XML;
       
-      Config::detectRootDoc();
+      $plugin = new Plugin();
+      $plugin->getFromDBbyDir("fusioninventory");
+      $plugin->activate($plugin->fields['id']);
+      Plugin::load("fusioninventory");
+      
+//      Config::detectRootDoc();
       loadLanguage("en_GB");
       
       // Add the rule with criterial only if type = Computer
@@ -1230,7 +1246,12 @@ class Rules extends PHPUnit_Framework_TestCase {
    public function testImportComputerCheckrulevalidationlocal_and_globalcriteria() {
       global $DB, $XML;
       
-      Config::detectRootDoc();
+      $plugin = new Plugin();
+      $plugin->getFromDBbyDir("fusioninventory");
+      $plugin->activate($plugin->fields['id']);
+      Plugin::load("fusioninventory");
+      
+//      Config::detectRootDoc();
       loadLanguage("en_GB");
       
       // Create computer only with serial and name;

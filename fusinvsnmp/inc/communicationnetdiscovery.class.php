@@ -228,6 +228,9 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
          $input = array();
          $input['date_mod'] = date("Y-m-d H:i:s");
          $input['entities_id'] = $entities_id;
+         if (!isset($_SESSION['glpiactiveentities_string'])) {
+            $_SESSION['glpiactiveentities_string'] = "'".$entities_id."'";
+         } 
          $items_id = $class->add($input);
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
                '[==fusinvsnmp::7==] ==fusinvsnmp::4== '.$class->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
@@ -269,7 +272,14 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       
       if (isset($xml->ENTITY) AND !empty($xml->ENTITY)) {
          $input['entities_id'] = $xml->ENTITY;
+         if (!isset($_SESSION['glpiactiveentities_string'])) {
+            $_SESSION['glpiactiveentities_string'] = "'".$xml->ENTITY."'";
+         }
+      }      
+      if (!isset($_SESSION['glpiactiveentities_string'])) {
+         $_SESSION['glpiactiveentities_string'] = "'".$class->fields['entities_id']."'";
       }
+      
       
       switch ($itemtype) {
          
@@ -470,7 +480,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             }
             // Write XML file
             if (isset($_SESSION['SOURCE_XMLDEVICE'])
-                    AND is_null($PluginFusinvsnmpNetworkEquipment->getValue('last_fusioninventory_update', $items_id))) {
+                    AND is_null($PluginFusinvsnmpNetworkEquipment->getValue('last_fusioninventory_update'))) {
                PluginFusioninventoryUnknownDevice::writeXML($input['id'], 
                                           $_SESSION['SOURCE_XMLDEVICE'],
                                           "fusinvsnmp",
@@ -545,8 +555,8 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             }
             // Write XML file
             if (isset($_SESSION['SOURCE_XMLDEVICE'])
-                    AND is_null($PluginFusinvsnmpPrinter->getValue('last_fusioninventory_update', $items_id))) {
-               PluginFusioninventoryUnknownDevice::writeXML($input['id'], 
+                    AND is_null($PluginFusinvsnmpPrinter->getValue('last_fusioninventory_update'))) {
+               PluginFusioninventoryUnknownDevice::writeXML($items_id, 
                                           $_SESSION['SOURCE_XMLDEVICE'],
                                           "fusinvsnmp",
                                           "Printer");

@@ -77,7 +77,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
       $this->agent = $PluginFusioninventoryAgent->InfosByKey($p_DEVICEID);
 
-      $this->sxml = simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA);
+      $this->sxml = $p_xml;
       $errors = '';
 
       $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $p_CONTENT->PROCESSNUMBER;
@@ -344,6 +344,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $this->ptd->load($this->deviceId);
 
       $_SESSION["plugin_fusinvinventory_entity"] = $this->ptd->getValue('entities_id');
+      if (!isset($_SESSION['glpiactiveentities_string'])) {
+         $_SESSION['glpiactiveentities_string'] = "'".$this->ptd->getValue('entities_id')."'";
+      }
 
       $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_networkequipments', $this->ptd->getValue('id'));
 
@@ -1386,6 +1389,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          } else {
             $input['entities_id'] = 0;
          }
+         if (!isset($_SESSION['glpiactiveentities_string'])) {
+            $_SESSION['glpiactiveentities_string'] = "'".$input['entities_id']."'";
+         }         
          $items_id = $class->add($input);
       }
       if ($itemtype == "PluginFusioninventoryUnknownDevice") {
