@@ -549,7 +549,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             // Write XML file
             if (isset($_SESSION['SOURCE_XMLDEVICE'])
                     AND is_null($PluginFusinvsnmpPrinter->getValue('last_fusioninventory_update'))) {
-               PluginFusioninventoryUnknownDevice::writeXML($input['id'], 
+               PluginFusioninventoryUnknownDevice::writeXML($items_id, 
                                           $_SESSION['SOURCE_XMLDEVICE'],
                                           "fusinvsnmp",
                                           "Printer");
