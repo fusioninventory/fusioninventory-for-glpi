@@ -1386,6 +1386,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          } else {
             $input['entities_id'] = 0;
          }
+         if (!isset($_SESSION['glpiactiveentities_string'])) {
+            $_SESSION['glpiactiveentities_string'] = "'".$input['entities_id']."'";
+         }         
          $items_id = $class->add($input);
       }
       if ($itemtype == "PluginFusioninventoryUnknownDevice") {
