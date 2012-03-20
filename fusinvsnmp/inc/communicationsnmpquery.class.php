@@ -77,7 +77,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
       $this->agent = $PluginFusioninventoryAgent->InfosByKey($p_DEVICEID);
 
-      $this->sxml = simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA);
+      $this->sxml = $p_xml;
       $errors = '';
 
       $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $p_CONTENT->PROCESSNUMBER;
