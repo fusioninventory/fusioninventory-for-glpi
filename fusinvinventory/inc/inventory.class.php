@@ -265,7 +265,9 @@ class PluginFusinvinventoryInventory {
 
           PluginFusioninventoryConfig::logIfExtradebug("pluginFusinvinventory-entityrules", 
                                                    print_r($dataEntity, true));
-
+         if (!isset($_SESSION['glpiactiveentities_string'])) {
+            $_SESSION['glpiactiveentities_string'] = "'".$_SESSION["plugin_fusinvinventory_entity"]."'";
+         }
          if ($items_id == '0') {
             if ($_SESSION["plugin_fusinvinventory_entity"] == NOT_AVAILABLE) {
                $_SESSION["plugin_fusinvinventory_entity"] = 0;
