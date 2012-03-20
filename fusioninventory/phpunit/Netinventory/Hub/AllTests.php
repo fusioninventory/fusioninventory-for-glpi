@@ -75,6 +75,12 @@ class Hub extends PHPUnit_Framework_TestCase {
 
 
    public function testSendinventories() {
+      
+      $plugin = new Plugin();
+      $plugin->getFromDBbyDir("fusioninventory");
+      $plugin->activate($plugin->fields['id']);
+      Plugin::load("fusioninventory");
+      
       // Add task and taskjob
       $pluginFusioninventoryTask = new PluginFusioninventoryTask();
       $pluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
