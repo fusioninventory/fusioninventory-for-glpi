@@ -272,7 +272,14 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       
       if (isset($xml->ENTITY) AND !empty($xml->ENTITY)) {
          $input['entities_id'] = $xml->ENTITY;
+         if (!isset($_SESSION['glpiactiveentities_string'])) {
+            $_SESSION['glpiactiveentities_string'] = "'".$xml->ENTITY."'";
+         }
+      }      
+      if (!isset($_SESSION['glpiactiveentities_string'])) {
+         $_SESSION['glpiactiveentities_string'] = "'".$class->fields['entities_id']."'";
       }
+      
       
       switch ($itemtype) {
          
