@@ -303,6 +303,7 @@ class PluginFusinvinventoryInventory {
             $items_id = $class->add($input);
          }
          $class->getFromDB($items_id);
+         $_SESSION["plugin_fusinvinventory_entity"] = $class->fields['entities_id'];
          $input = array();
          $input['id'] = $class->fields['id'];
          
