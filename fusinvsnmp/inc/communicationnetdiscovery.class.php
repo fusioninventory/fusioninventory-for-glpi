@@ -221,7 +221,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
                                                    "Rule passed : ".$items_id.", ".$itemtype."\n");
       PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationSNMPQuery->rulepassed().');
+              'Function PluginFusinvsnmpCommunicationNetDiscovery->rulepassed().');
 
       $class = new $itemtype();
       if ($items_id == "0") {
@@ -246,6 +246,9 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
 
    function importDevice($itemtype, $items_id) {
+      
+      PluginFusioninventoryCommunication::addLog(
+              'Function PluginFusinvsnmpCommunicationNetDiscovery->importDevice().');      
       
       $xml = simplexml_load_string($_SESSION['SOURCE_XMLDEVICE'],'SimpleXMLElement', LIBXML_NOCDATA);
       $class = new $itemtype();
