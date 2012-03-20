@@ -46,6 +46,11 @@ class Netdiscovery extends PHPUnit_Framework_TestCase {
    public function testCountDevicesTasklog() {
       global $DB,$CFG_GLPI;
       
+      $plugin = new Plugin();
+      $plugin->getFromDBbyDir("fusioninventory");
+      $plugin->activate($plugin->fields['id']);
+      Plugin::load("fusioninventory");
+      
       loadLanguage("en_GB");
 
       $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.80/";
