@@ -62,6 +62,7 @@ class PluginFusinvsnmpCommonDBTM extends CommonDBTM {
          $p_table = $_SESSION['glpi_plugins_fusinvsnmp_table'];
       }
       $this->table=$p_table;
+      $_SESSION['glpi_plugins_fusinvsnmp_table'] = $p_table;
    }
 
    /**
