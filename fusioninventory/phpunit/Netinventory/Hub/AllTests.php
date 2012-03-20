@@ -46,11 +46,6 @@ class Hub extends PHPUnit_Framework_TestCase {
    public function testSetModuleInventoryOff() {
       global $DB;
       
-      $GLPIInstall = new GLPIInstall();
-      $Install = new Install();
-      $GLPIInstall->testInstall();
-      $Install->testInstall(0);
-      
       Config::detectRootDoc();
 
      // set in config module inventory = yes by default
@@ -555,6 +550,11 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
 class Hub_AllTests  {
 
    public static function suite() {
+      
+      $GLPIInstall = new GLPIInstall();
+      $Install = new Install();
+      $GLPIInstall->testInstall();
+      $Install->testInstall(0);
 
       $suite = new PHPUnit_Framework_TestSuite('Hub');
       return $suite;
