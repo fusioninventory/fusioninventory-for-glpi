@@ -228,6 +228,9 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
          $input = array();
          $input['date_mod'] = date("Y-m-d H:i:s");
          $input['entities_id'] = $entities_id;
+         if (!isset($_SESSION['glpiactiveentities_string'])) {
+            $_SESSION['glpiactiveentities_string'] = "'".$entities_id."'";
+         } 
          $items_id = $class->add($input);
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
                '[==fusinvsnmp::7==] ==fusinvsnmp::4== '.$class->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
