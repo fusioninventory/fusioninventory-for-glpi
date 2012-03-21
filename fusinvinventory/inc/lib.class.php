@@ -412,10 +412,47 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                            break;
                            
                         case "MONITORS":
-                           if (isset($arrSectionToAdd["DESCRIPTION"]) AND isset($arrSectionToRemove["DESCRIPTION"])
-                                 AND $arrSectionToAdd["DESCRIPTION"] == $arrSectionToRemove["DESCRIPTION"]) {
-                              $boolUpdate = true;
+                           $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+                           if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                                                                      "import_monitor") == '0') {
+                              // Monitors not managed
+                           } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                                                                              "import_monitor") == '2') {
+                              // Unique import
+                              if (((isset($arrSectionToAdd["SERIAL"])) AND (isset($arrSectionToRemove["SERIAL"]))
+                                    AND ($arrSectionToAdd["SERIAL"] == $arrSectionToRemove["SERIAL"]))                                 
+                                 AND (isset($arrSectionToAdd["DESCRIPTION"]) AND isset($arrSectionToRemove["DESCRIPTION"])
+                                    AND $arrSectionToAdd["DESCRIPTION"] == $arrSectionToRemove["DESCRIPTION"])) {
+                                 
+                                 $boolUpdate = true;
+                              } else if (((!isset($arrSectionToAdd["SERIAL"])) AND (!isset($arrSectionToRemove["SERIAL"])))
+                                 AND (isset($arrSectionToAdd["DESCRIPTION"]) AND isset($arrSectionToRemove["DESCRIPTION"])
+                                    AND $arrSectionToAdd["DESCRIPTION"] == $arrSectionToRemove["DESCRIPTION"])) {
+                                 
+                                 $boolUpdate = true;
+                              } 
+                           } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                                                                             "import_monitor") == '3') {
+                              // Import only with serial number
+                              if ((isset($arrSectionToAdd["SERIAL"])) AND (isset($arrSectionToRemove["SERIAL"]))
+                                    AND ($arrSectionToAdd["SERIAL"] == $arrSectionToRemove["SERIAL"])) {
+                                 
+                                 $boolUpdate = true;
+                              }
+                           } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                                                                             "import_monitor") == '1') {
+                              // GLOBAL
+                              if ((isset($arrSectionToAdd["CAPTION"])) AND (isset($arrSectionToRemove["CAPTION"]))
+                                    AND ($arrSectionToAdd["CAPTION"] == $arrSectionToRemove["CAPTION"])) {
+                                 
+                                 $boolUpdate = true;
+                              }
                            }
+                           
+                           
+                              
+                              
+                     
                            break;
                            
                         case "NETWORKS":
