@@ -463,13 +463,18 @@ class PluginFusinvinventoryLibhook {
                if (!isset($dataSection['PUBLISHER'])) {
                   $dataSection['PUBLISHER'] = NULL;
                }
-
+               $name = '';
+               if (isset($dataSection['NAME'])) {
+                  $name = $dataSection['NAME'];
+               } else {
+                  $name = $dataSection['GUID'];
+               }
                if (isset($dataSection['VERSION'])) {
-                  $Computer_SoftwareVersion_id = $PluginFusinvinventoryImport_Software->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
+                  $Computer_SoftwareVersion_id = $PluginFusinvinventoryImport_Software->addSoftware($idmachine, array('name'=>$name,
                                                                               'version'=>$dataSection['VERSION'],
                                                                               'PUBLISHER'=>$dataSection['PUBLISHER']));
                } else {
-                  $Computer_SoftwareVersion_id = $PluginFusinvinventoryImport_Software->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
+                  $Computer_SoftwareVersion_id = $PluginFusinvinventoryImport_Software->addSoftware($idmachine, array('name'=>$name,
                                                                               'version'=>NOT_AVAILABLE,
                                                                               'PUBLISHER'=>$dataSection['PUBLISHER']));
                }
