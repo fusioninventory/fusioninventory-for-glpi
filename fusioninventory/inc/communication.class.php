@@ -506,8 +506,7 @@ class PluginFusioninventoryCommunication {
 //            }
 //         }      
 //      }
-      
-   }
+
       $nodes = array();
       foreach ($xml->children() as $key=>$value) {
         if (!isset($nodes[$key])) {
