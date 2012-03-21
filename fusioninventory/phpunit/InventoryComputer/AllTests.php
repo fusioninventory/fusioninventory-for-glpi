@@ -723,6 +723,11 @@ echo "# testHardwareModifications\n";
 
       $xml = simplexml_load_file($xmlFile, 'SimpleXMLElement', LIBXML_NOCDATA);
 
+      $sxml_soft = $xml->CONTENT->addChild('SOFTWARES');
+      $sxml_soft->addChild('COMMENTS', (string)$xml->CONTENT->HARDWARE->OSCOMMENTS);
+      $sxml_soft->addChild('NAME', (string)$xml->CONTENT->HARDWARE->OSNAME);
+      $sxml_soft->addChild('VERSION', (string)$xml->CONTENT->HARDWARE->OSVERSION);
+      
       if (!isset($xml->CONTENT->SOFTWARES)) {
          return;
       }
@@ -766,7 +771,7 @@ echo "# testHardwareModifications\n";
       $diff = print_r($a_diff, 1);
       $a_diff2 = array_diff_key($dbsofts,$soft);
       $diff2 = print_r($a_diff2, 1);
-      $this->assertEquals($DB->numrows($result), (count($a_softwareXML) + 1), 'Difference of Softwares, created '.$DB->numrows($result).' times instead '.(count($a_softwareXML) + 1).' ['.$xmlFile.']'.$diff.' or '.$diff2);
+      $this->assertEquals($DB->numrows($result), (count($a_softwareXML)), 'Difference of Softwares, created '.$DB->numrows($result).' times instead '.(count($a_softwareXML)).' ['.$xmlFile.']'.$diff.' or '.$diff2);
 
       // Verify fields in GLPI
       foreach($xml->CONTENT->SOFTWARES as $child) {
