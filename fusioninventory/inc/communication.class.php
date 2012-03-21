@@ -491,20 +491,50 @@ class PluginFusioninventoryCommunication {
       
 
    function cleanXML($xml) {
+//      foreach ($xml->children() as $key=>$value) {
+//         if (count($value->children()) > 0) {
+//            $value = $this->cleanXML($value);
+//         } else {       
+//            if (count($value) > 1) {
+//               for($i=count($value)-1;$i>=0;$i--){
+//                  $value2 = clean_cross_side_scripting_deep(addslashes_deep($value[$i]));
+//                  $xml->$key->$value[$i] = $value2;
+//               }
+//            } else {
+//               $value = clean_cross_side_scripting_deep(addslashes_deep($value));
+//               $xml->$key = $value;
+//            }
+//         }      
+//      }
+      
+      $nodes = 0;
+      $previous = '';
       foreach ($xml->children() as $key=>$value) {
-         if (count($value->children()) > 0) {
-            $value = $this->cleanXML($value);
-         } else {       
-            if (count($value) > 1) {
-               for($i=count($value)-1;$i>=0;$i--){
-                  $value2 = clean_cross_side_scripting_deep(addslashes_deep($value[$i]));
-                  $xml->$key->$value[$i] = $value2;
+         if ($key == $previous) {
+            $nodes++;
+         }
+         $previous = $key;
+      }
+      if (count($xml) > 0) {
+         if ($nodes == 0) {
+            foreach ($xml->children() as $key=>$value) {
+               if (count($value->children()) > 0) {
+                  $this->cleanXML($value);
+               } else {
+                  $xml->$key = clean_cross_side_scripting_deep(addslashes_deep($value));
                }
-            } else {
-               $value = clean_cross_side_scripting_deep(addslashes_deep($value));
-               $xml->$key = $value;
             }
-         }      
+         } else {
+            $i = 0;
+            foreach ($xml->children() as $key=>$value) {
+               if (count($value->children()) > 0) {
+                  $this->cleanXML($value);
+               } else {
+                  $xml->$key->$i = clean_cross_side_scripting_deep(addslashes_deep($value));
+                  $i++;
+               }
+            }
+         }
       }
       return $xml;
    }
