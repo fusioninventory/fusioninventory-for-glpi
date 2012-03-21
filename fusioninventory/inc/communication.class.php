@@ -507,35 +507,34 @@ class PluginFusioninventoryCommunication {
 //         }      
 //      }
       
-      $nodes = 0;
-      $previous = '';
+   }
+      $nodes = array();
       foreach ($xml->children() as $key=>$value) {
-         if ($key == $previous) {
-            $nodes++;
-         }
-         $previous = $key;
+        if (!isset($nodes[$key])) {
+           $nodes[$key] = 0;
+        }
+         $nodes[$key]++;
       }
+      foreach ($nodes as $key=>$nb) {
+         if ($nb < 2) {
+            unset($nodes[$key]);
+         }
+      }
+
       if (count($xml) > 0) {
-         if ($nodes == 0) {
-            foreach ($xml->children() as $key=>$value) {
-               if (count($value->children()) > 0) {
-                  $this->cleanXML($value);
-               } else {
-                  $xml->$key = clean_cross_side_scripting_deep(addslashes_deep($value));
-               }
-            }
-         } else {
-            $i = 0;
-            foreach ($xml->children() as $key=>$value) {
-               if (count($value->children()) > 0) {
-                  $this->cleanXML($value);
-               } else {
-                  $xml->$key->$i = clean_cross_side_scripting_deep(addslashes_deep($value));
-                  $i++;
-               }
+         $i = 0;
+         foreach ($xml->children() as $key=>$value) {
+            if (count($value->children()) > 0) {
+               $this->cleanXML($value);
+            } else if (isset($nodes[$key])) {
+               $xml->$key->$i = clean_cross_side_scripting_deep(addslashes_deep($value));
+               $i++;
+            } else {
+               $xml->$key = clean_cross_side_scripting_deep(addslashes_deep($value));
             }
          }
       }
+
       return $xml;
    }
 
