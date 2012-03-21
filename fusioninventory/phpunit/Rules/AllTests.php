@@ -635,6 +635,14 @@ class Rules extends PHPUnit_Framework_TestCase {
       $GLPIInstall->testInstall();
       $Install->testInstall(0);
       
+      $plugin = new Plugin();
+      $plugin->getFromDBbyDir("fusioninventory");
+      $plugin->activate($plugin->fields['id']);
+      Plugin::load("fusioninventory");
+      $plugin->getFromDBbyDir("fusinvinventory");
+      $plugin->activate($plugin->fields['id']);
+      Plugin::load("fusinvinventory");
+      
       Config::detectRootDoc();
       loadLanguage("en_GB");
       
