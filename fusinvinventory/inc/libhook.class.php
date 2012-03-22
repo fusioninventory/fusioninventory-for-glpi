@@ -348,17 +348,14 @@ class PluginFusinvinventoryLibhook {
                if (isset($dataSection['NAME'])) {
                   $ignore_controllers[$dataSection['NAME']] = 1;
                }
-               if (isset($dataSection['MANUFACTURER'])) { // OCS inventory
-                  $ignore_controllers[$dataSection['MANUFACTURER']] = 1;
-               }
                break;
 
             case 'VIDEOS':
                if (isset($dataSection['NAME'])) {
                   $ignore_controllers[$dataSection['NAME']] = 1;
                }
-               if (isset($dataSection['MANUFACTURER'])) { // OCS inventory
-                  $ignore_controllers[$dataSection['MANUFACTURER']] = 1;
+               if (isset($dataSection['CHIPSET'])) {
+                  $ignore_controllers[$dataSection['CHIPSET']] = 1;
                }
                break;
 
@@ -406,10 +403,7 @@ class PluginFusinvinventoryLibhook {
 
             case 'CONTROLLERS':
                $id_controller = '';
-               if (((isset($dataSection["NAME"])) AND (isset($ignore_controllers[$dataSection["NAME"]])))
-                     OR (isset($dataSection["MANUFACTURER"]) AND isset($ignore_controllers[$dataSection["MANUFACTURER"]]))) {
-                  
-               } else {
+               if ((isset($dataSection["NAME"])) AND (!isset($ignore_controllers[$dataSection["NAME"]]))) {
                   $PluginFusinvinventoryImport_Controller = new PluginFusinvinventoryImport_Controller();
                   $id_controller = $PluginFusinvinventoryImport_Controller->AddUpdateItem("add", $idmachine, $dataSection);
                }
