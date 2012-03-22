@@ -120,7 +120,6 @@ class PluginFusinvinventoryLibhook {
          $_SESSION["plugin_fusinvinventory_no_history_add"] = false;
       }
 
-      $ignore_controllers = array();
       $ignore_USB = array();
 
       $i = -1;
@@ -344,21 +343,6 @@ class PluginFusinvinventoryLibhook {
                }
                break;
 
-            case 'SOUNDS':
-               if (isset($dataSection['NAME'])) {
-                  $ignore_controllers[$dataSection['NAME']] = 1;
-               }
-               break;
-
-            case 'VIDEOS':
-               if (isset($dataSection['NAME'])) {
-                  $ignore_controllers[$dataSection['NAME']] = 1;
-               }
-               if (isset($dataSection['CHIPSET'])) {
-                  $ignore_controllers[$dataSection['CHIPSET']] = 1;
-               }
-               break;
-
             case 'PRINTERS':
                if (isset($dataSection['SERIAL'])) {
                   $ignore_USB[$dataSection['SERIAL']] = 1;
@@ -403,7 +387,7 @@ class PluginFusinvinventoryLibhook {
 
             case 'CONTROLLERS':
                $id_controller = '';
-               if ((isset($dataSection["NAME"])) AND (!isset($ignore_controllers[$dataSection["NAME"]]))) {
+               if ((isset($dataSection["NAME"])) AND (!isset($_SESSION["plugin_fusinvinventory_ignorecontrollers"][$dataSection["NAME"]]))) {
                   $PluginFusinvinventoryImport_Controller = new PluginFusinvinventoryImport_Controller();
                   $id_controller = $PluginFusinvinventoryImport_Controller->AddUpdateItem("add", $idmachine, $dataSection);
                }

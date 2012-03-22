@@ -62,6 +62,20 @@ class PluginFusinvinventoryLib extends CommonDBTM {
    function startAction($xml, $items_id, $new=0) {
       global $DB;
 
+      if (isset($_SESSION["plugin_fusinvinventory_ignorecontrollers"])) {
+         unset($_SESSION["plugin_fusinvinventory_ignorecontrollers"]);
+      }
+      foreach ($xml->CONTENT->VIDEOS as $child) {
+         $_SESSION["plugin_fusinvinventory_ignorecontrollers"]["'".$child->NAME."'"] = 1;
+         if (isset($child->CHIPSET)) {
+            $_SESSION["plugin_fusinvinventory_ignorecontrollers"]["'".$child->CHIPSET."'"] = 1;
+         }
+      }
+      foreach ($xml->CONTENT->SOUNDS as $child) {
+         $_SESSION["plugin_fusinvinventory_ignorecontrollers"]["'".$child->NAME."'"] = 1;
+      }
+      
+      
       if ($new == "0") {
          // Transfer if entity is different
          $Computer = new Computer();
