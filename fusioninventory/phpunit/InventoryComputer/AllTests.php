@@ -385,7 +385,7 @@ echo "# testHardwareModifications\n";
       foreach ($xml->CONTENT->MONITORS as $child) {
          if (isset($child->SERIAL)) {
             $a_monitor = $Monitor->find("`serial`='".$child->SERIAL."'");
-            $this->assertEquals(count($a_monitor), 1, 'Problem on monitors, monitor created "'.count($a_monitor).'" instead 1 times');
+            $this->assertEquals(count($a_monitor), 1, 'Problem on monitors, monitor created "'.count($a_monitor).'" instead 1 times [serial:'.$child->SERIAL.']');
          }
       }
 
