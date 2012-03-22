@@ -383,7 +383,8 @@ echo "# testHardwareModifications\n";
 
       // Verify not have 2 monitor in DB with same printer serial
       foreach ($xml->CONTENT->MONITORS as $child) {
-         if (isset($child->SERIAL)) {
+         if (isset($child->SERIAL)
+                 AND (string)$child->SERIAL != '') {
             $a_monitor = $Monitor->find("`serial`='".$child->SERIAL."'");
             $this->assertEquals(count($a_monitor), 1, 'Problem on monitors, monitor created "'.count($a_monitor).'" instead 1 times [serial:'.$child->SERIAL.']');
          }
