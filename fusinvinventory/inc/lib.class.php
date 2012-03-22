@@ -314,8 +314,12 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          array_push($serializedSectionsFromXML, $xmlSection["sectionDatawName"]);
       }
       //Retrieve changes, sections to Add and sections to Remove
-      $sectionsToAdd    = array_diff($serializedSectionsFromXML, $infoSections["sections"]);
-      $sectionsToRemove = array_diff($infoSections["sections"], $serializedSectionsFromXML);
+      // *** array_diff not work nicely in this case
+//         $sectionsToAdd    = array_diff($serializedSectionsFromXML, $infoSections["sections"]);
+//         $sectionsToRemove = array_diff($infoSections["sections"], $serializedSectionsFromXML);
+       
+      $sectionsToAdd    = $this->diffArray($serializedSectionsFromXML, $infoSections["sections"]);
+      $sectionsToRemove = $this->diffArray($infoSections["sections"], $serializedSectionsFromXML);
 
       $classhook = "PluginFusinvinventoryLibhook";
 
@@ -333,7 +337,6 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                      $boolUpdate = false;
                      $arrSectionToAdd = unserialize($serializedSectionToAdd);
                      $arrSectionToRemove = unserialize($serializedSectionToRemove);
-                     
                      //TODO: Traiter les notices sur les indices de tableau qui n'existent pas.
                      switch($sectionName) {
 
@@ -901,6 +904,28 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       $this->_serializeIntoDB($internal_id, $serializedSections);
    }
 
+   
+   
+   function diffArray($array1, $array2) {
+
+      $a_return = array();
+      foreach ($array1 as $key=>$value) {
+         $find = '';
+         foreach ($array2 as $key2=>$value2) {
+            if ($value == $value2) {
+               $find = 1;
+               unset($array2[$key2]);
+               break;
+            }
+         }
+         if ($find == '') {
+            $a_return[$key] = $value;
+         }
+      }
+      return $a_return;
+      
+   }
+   
 }
 
 ?>
