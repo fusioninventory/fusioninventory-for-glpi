@@ -343,11 +343,15 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                            
                         case "SOFTWARES":
                            if ((isset($arrSectionToAdd["GUID"]) AND isset($arrSectionToRemove["GUID"])
+                                 AND preg_match('/^[[:xdigit:]]+$/i', $arrSectionToAdd["GUID"])
+                                 AND preg_match('/^[[:xdigit:]]+$/i', $arrSectionToRemove["GUID"])
                                  AND ($arrSectionToAdd["GUID"] == $arrSectionToRemove["GUID"])
                                  AND isset($arrSectionToAdd["VERSION"]) AND isset($arrSectionToRemove["VERSION"])
                                  AND $arrSectionToAdd["VERSION"] == $arrSectionToRemove["VERSION"])
 
                               OR (isset($arrSectionToAdd["GUID"]) AND isset($arrSectionToRemove["GUID"])
+                                 AND preg_match('/^[[:xdigit:]]+$/i', $arrSectionToAdd["GUID"])
+                                 AND preg_match('/^[[:xdigit:]]+$/i', $arrSectionToRemove["GUID"])
                                  AND ($arrSectionToAdd["GUID"] == $arrSectionToRemove["GUID"])
                                  AND !isset($arrSectionToAdd["VERSION"]))
 
@@ -355,6 +359,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                                  AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]
                                  AND isset($arrSectionToAdd["VERSION"]) AND isset($arrSectionToRemove["VERSION"])
                                  AND $arrSectionToAdd["VERSION"] == $arrSectionToRemove["VERSION"])
+                                   
                               OR (isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
                                  AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]
                                  AND !isset($arrSectionToAdd["VERSION"]))) {
