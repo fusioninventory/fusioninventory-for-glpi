@@ -525,6 +525,7 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
    $input['00:50:56:C0:00:03'] = '3';
    $input['00:50:56:C0:00:04'] = '3';
    $input['00:50:56:C0:00:08'] = '3';
+   $input['FE:FF:FF:FF:FF:FF'] = '3';
    $input['MB-1234567890'] = '1';
    foreach ($input as $value=>$type) {
       $query = "SELECT * FROM `glpi_plugin_fusinvinventory_blacklists`
