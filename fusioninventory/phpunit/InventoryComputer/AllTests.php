@@ -512,16 +512,25 @@ echo "# testHardwareModifications\n";
       $ignore_controllers = array();
       foreach ($xml->CONTENT->VIDEOS as $child) {
          $ignore_controllers["'".$child->NAME."'"] = 1;
+         if (isset($child->MANUFACTURER)) {
+            $ignore_controllers["'".$child->MANUFACTURER."'"] = 1;
+         }
       }
       foreach ($xml->CONTENT->SOUNDS as $child) {
          $ignore_controllers["'".$child->NAME."'"] = 1;
+         if (isset($child->MANUFACTURER)) {
+            $ignore_controllers["'".$child->MANUFACTURER."'"] = 1;
+         }
       }
 
       $a_controllerXML = array();
       $i = 0;
       foreach ($xml->CONTENT->CONTROLLERS as $child) {
          if ((isset($child->NAME)) 
-                 AND (!isset($ignore_controllers["'".$child->NAME."'"]))) {
+                    AND (isset($ignore_controllers["'".$child->NAME."'"]))
+                 OR (isset($child->MANUFACTURER)) 
+                    AND (isset($ignore_controllers["'".$child->MANUFACTURER."'"]))) {
+         } else {
             if (!(isset($child->NAME)
                     AND isset($child->CAPTION)
                     AND isset($child->TYPE)
