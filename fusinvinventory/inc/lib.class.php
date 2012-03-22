@@ -562,10 +562,17 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                             break;
 
                         case "CPUS":
-                           if (isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
-                                 AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]
-                                 AND isset($arrSectionToAdd['MANUFACTURER']) AND isset($arrSectionToRemove['MANUFACTURER'])
-                                 AND isset($arrSectionToAdd['MANUFACTURER']) == isset($arrSectionToRemove['MANUFACTURER'])) {
+                           if ((isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
+                                    AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]
+                                    AND isset($arrSectionToAdd['MANUFACTURER']) AND isset($arrSectionToRemove['MANUFACTURER'])
+                                    AND isset($arrSectionToAdd['MANUFACTURER']) == isset($arrSectionToRemove['MANUFACTURER']))
+                                   
+                                 OR ((!isset($arrSectionToAdd["NAME"]) OR !isset($arrSectionToRemove["NAME"]))
+                                    AND isset($arrSectionToAdd["TYPE"]) AND isset($arrSectionToRemove["TYPE"])
+                                    AND $arrSectionToAdd["TYPE"] == $arrSectionToRemove["TYPE"]
+                                    AND isset($arrSectionToAdd['MANUFACTURER']) AND isset($arrSectionToRemove['MANUFACTURER'])
+                                    AND isset($arrSectionToAdd['MANUFACTURER']) == isset($arrSectionToRemove['MANUFACTURER']))) {
+                              
                               $boolUpdate = true;
                            }
                            break;
