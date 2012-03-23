@@ -335,7 +335,8 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                   $splitid = explode("/", $arrayId);
                   
                   if ($xmlSections[$arrayId]['sectionName'] == $sectionName
-                       AND isset($splitid[1]) AND is_numeric($splitid[1]) AND $splitid[1] > 0) {
+                       AND ((isset($splitid[1]) AND is_numeric($splitid[1]) AND $splitid[1] > 0)
+                              OR (!isset($splitid[1])))) {
                      //Finally, we have to determine if it's an update or not
                      $boolUpdate = false;
                      $arrSectionToAdd = unserialize($serializedSectionToAdd);
