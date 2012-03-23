@@ -332,7 +332,10 @@ class PluginFusinvinventoryLib extends CommonDBTM {
             if (in_array($sectionName, $a_sections)) {
                foreach($sectionsToAdd as $arrayId => $serializedSectionToAdd) {
                   //check if we have the same section Name for an sectionToRemove and an sectionToAdd
-                  if($xmlSections[$arrayId]['sectionName'] == $sectionName) {
+                  $splitid = explode("/", $arrayId);
+                  
+                  if ($xmlSections[$arrayId]['sectionName'] == $sectionName
+                       AND is_numeric($splitid[1]) AND $splitid[1] > 0) {
                      //Finally, we have to determine if it's an update or not
                      $boolUpdate = false;
                      $arrSectionToAdd = unserialize($serializedSectionToAdd);
@@ -472,11 +475,6 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                                  $boolUpdate = true;
                               }
                            }
-                           
-                           
-                              
-                              
-                     
                            break;
                            
                         case "NETWORKS":
