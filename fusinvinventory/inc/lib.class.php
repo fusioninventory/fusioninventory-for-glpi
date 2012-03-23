@@ -332,7 +332,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
             if (in_array($sectionName, $a_sections)) {
                foreach($sectionsToAdd as $arrayId => $serializedSectionToAdd) {
                   //check if we have the same section Name for an sectionToRemove and an sectionToAdd
-                  $splitid = explode("/", $arrayId);
+                  $splitid = explode("/", $sectionId);
                   
                   if ($xmlSections[$arrayId]['sectionName'] == $sectionName
                        AND ((isset($splitid[1]) AND is_numeric($splitid[1]) AND $splitid[1] > 0)
