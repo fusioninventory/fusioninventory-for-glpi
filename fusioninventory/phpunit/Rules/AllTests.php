@@ -810,7 +810,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $plugin->activate($plugin->fields['id']);
       Plugin::load("fusioninventory");
 
-//      Config::detectRootDoc();
+      Config::detectRootDoc();
       loadLanguage("en_GB");
       
       // Add the rule with criterial only if type = Computer
