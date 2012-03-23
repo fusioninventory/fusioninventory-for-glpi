@@ -239,7 +239,7 @@ echo "# testHardwareModifications\n";
             $xml->CONTENT->BIOS->SSN = trim($xml->CONTENT->BIOS->SSN);
          }
       }
-      $serial = "`serial` IS NULL";
+      $serial = "(`serial` IS NULL OR `serial`='')";
       if ((isset($xml->CONTENT->BIOS->SSN)) AND (!empty($xml->CONTENT->BIOS->SSN))) {
          $serial = "`serial`='".$xml->CONTENT->BIOS->SSN."'";
       }
