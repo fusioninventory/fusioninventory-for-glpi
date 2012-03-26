@@ -207,7 +207,7 @@ function plugin_version_fusinvdeploy() {
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_fusinvdeploy_check_prerequisites() {
    global $LANG;
-   if (version_compare('0.78',GLPI_VERSION) < 0) {
+   if (version_compare('0.80',GLPI_VERSION) < 0) {
       $plugin = new Plugin;
       if (!$plugin->isInstalled("fusioninventory")) {
         return false;
