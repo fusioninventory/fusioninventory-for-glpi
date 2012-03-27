@@ -46,5 +46,7 @@ checkLoginUser();
 
 $package = new PluginFusinvdeployPackage();
 
-print $package->getAllDatas();
-?>
+//print $package->getAllDatas();
+
+print( json_encode($package->find() , JSON_PRETTY_PRINT) );
+
