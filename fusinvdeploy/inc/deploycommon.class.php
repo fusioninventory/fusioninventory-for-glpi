@@ -84,7 +84,7 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
 
                //find computers by user associated with this group
                $group_users = new Group_User;
-               $users_id_a = array_keys($group_users->find("groups_id = '$items_id"));
+               $users_id_a = array_keys($group_users->find("groups_id = '$items_id'"));
                $computers_a_1 = array();
                foreach ($users_id_a as $users_id) {
                   $computers_a_1 = array_keys($computer->find("users_id = '$users_id'"));

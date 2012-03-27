@@ -85,13 +85,13 @@ class PluginFusinvdeployConfig extends CommonDBTM {
       echo "<div class='center' id='tabsbody'>";
       echo "<table class='tab_cadre_fixe'>";
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusinvdeploy']["config"][0]."&nbsp;:</td>";
-      echo "<td>";
-      echo "<input type='text' name='glpi_path' value='".$PluginFusioninventoryConfig->getValue($plugins_id, 'glpi_path')."' />";
-      echo "</td>";
-      echo "<td colspan='2'></td>";;
-      echo "</tr>";
+#      echo "<tr class='tab_bg_1'>";
+#      echo "<td>".$LANG['plugin_fusinvdeploy']['config'][0]."&nbsp;:</td>";
+#      echo "<td>";
+#      echo "<input type='text' name='glpi_path' value='".$PluginFusioninventoryConfig->getValue($plugins_id, 'glpi_path')."' />";
+#      echo "</td>";
+#      echo "<td colspan='2'></td>";;
+#      echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusinvdeploy']['config'][1]."&nbsp;:</td>";

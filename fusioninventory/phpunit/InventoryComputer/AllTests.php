@@ -46,6 +46,15 @@ class InventoryComputer extends PHPUnit_Framework_TestCase {
     public function testSetModuleInventoryOff() {
        global $DB,$LANG,$CFG_GLPI;
        
+       $plugin = new Plugin();
+       $plugin->getFromDBbyDir("fusioninventory");
+       $plugin->activate($plugin->fields['id']);
+       Plugin::load("fusioninventory");
+       $plugin->getFromDBbyDir("fusinvinventory");
+       $plugin->activate($plugin->fields['id']);
+       Plugin::load("fusinvinventory");
+
+       
        loadLanguage("en_GB");
 
        $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.80/";
@@ -230,7 +239,7 @@ echo "# testHardwareModifications\n";
             $xml->CONTENT->BIOS->SSN = trim($xml->CONTENT->BIOS->SSN);
          }
       }
-      $serial = "`serial` IS NULL";
+      $serial = "(`serial` IS NULL OR `serial`='')";
       if ((isset($xml->CONTENT->BIOS->SSN)) AND (!empty($xml->CONTENT->BIOS->SSN))) {
          $serial = "`serial`='".$xml->CONTENT->BIOS->SSN."'";
       }
@@ -374,9 +383,10 @@ echo "# testHardwareModifications\n";
 
       // Verify not have 2 monitor in DB with same printer serial
       foreach ($xml->CONTENT->MONITORS as $child) {
-         if (isset($child->SERIAL)) {
+         if (isset($child->SERIAL)
+                 AND (string)$child->SERIAL != '') {
             $a_monitor = $Monitor->find("`serial`='".$child->SERIAL."'");
-            $this->assertEquals(count($a_monitor), 1, 'Problem on monitors, monitor created "'.count($a_monitor).'" instead 1 times');
+            $this->assertEquals(count($a_monitor), 1, 'Problem on monitors, monitor created "'.count($a_monitor).'" instead 1 times [serial:'.$child->SERIAL.']');
          }
       }
 
@@ -502,6 +512,9 @@ echo "# testHardwareModifications\n";
       $ignore_controllers = array();
       foreach ($xml->CONTENT->VIDEOS as $child) {
          $ignore_controllers["'".$child->NAME."'"] = 1;
+         if (isset($child->CHIPSET)) {
+            $ignore_controllers["'".$child->CHIPSET."'"] = 1;
+         }
       }
       foreach ($xml->CONTENT->SOUNDS as $child) {
          $ignore_controllers["'".$child->NAME."'"] = 1;
@@ -723,6 +736,11 @@ echo "# testHardwareModifications\n";
 
       $xml = simplexml_load_file($xmlFile, 'SimpleXMLElement', LIBXML_NOCDATA);
 
+      $sxml_soft = $xml->CONTENT->addChild('SOFTWARES');
+      $sxml_soft->addChild('COMMENTS', (string)$xml->CONTENT->HARDWARE->OSCOMMENTS);
+      $sxml_soft->addChild('NAME', (string)$xml->CONTENT->HARDWARE->OSNAME);
+      $sxml_soft->addChild('VERSION', (string)$xml->CONTENT->HARDWARE->OSVERSION);
+      
       if (!isset($xml->CONTENT->SOFTWARES)) {
          return;
       }
@@ -764,25 +782,34 @@ echo "# testHardwareModifications\n";
       }
       $a_diff = array_diff_key($soft, $dbsofts);
       $diff = print_r($a_diff, 1);
-      $this->assertEquals($DB->numrows($result), (count($a_softwareXML) + 1), 'Difference of Softwares, created '.$DB->numrows($result).' times instead '.(count($a_softwareXML) + 1).' ['.$xmlFile.']'.$diff);
+      $a_diff2 = array_diff_key($dbsofts,$soft);
+      $diff2 = print_r($a_diff2, 1);
+      $this->assertEquals($DB->numrows($result), (count($a_softwareXML)), 'Difference of Softwares, created '.$DB->numrows($result).' times instead '.(count($a_softwareXML)).' ['.$xmlFile.']'.$diff.' or '.$diff2);
 
       // Verify fields in GLPI
       foreach($xml->CONTENT->SOFTWARES as $child) {
          if (!isset($child->VERSION)) {
             $child->VERSION = 'N/A';
          }
-         // Search in GLPI if it's ok
-         $query = "SELECT * FROM `glpi_computers_softwareversions`
-            LEFT JOIN `glpi_softwareversions` ON `softwareversions_id`=`glpi_softwareversions`.`id`
-            LEFT JOIN `glpi_softwares` ON `glpi_softwareversions`.`softwares_id` = `glpi_softwares`.`id`
-            WHERE `computers_id`='".$items_id."'
-               AND `glpi_softwareversions`.`name` = '".$child->VERSION."'
-               AND `glpi_softwares`.`name` = '".addslashes_deep($child->NAME)."'
-                  LIMIT 1";
-         $result=$DB->query($query);
+         $name = '';
+         if (isset($child->NAME)) {
+            $name = $child->NAME;
+         } else if (isset($child->GUID)) {
+            $name = $child->GUID;
+         }
+         if ($name != '') {
+            // Search in GLPI if it's ok
+            $query = "SELECT * FROM `glpi_computers_softwareversions`
+               LEFT JOIN `glpi_softwareversions` ON `softwareversions_id`=`glpi_softwareversions`.`id`
+               LEFT JOIN `glpi_softwares` ON `glpi_softwareversions`.`softwares_id` = `glpi_softwares`.`id`
+               WHERE `computers_id`='".$items_id."'
+                  AND `glpi_softwareversions`.`name` = '".$child->VERSION."'
+                  AND `glpi_softwares`.`name` = '".addslashes_deep($name)."'
+                     LIMIT 1";
+            $result=$DB->query($query);
 
-         $this->assertEquals($DB->numrows($result), 1, 'Software not find in GLPI '.$DB->numrows($result).' times instead 1 ('.addslashes_deep($child->NAME).') ['.$xmlFile.']');
-
+            $this->assertEquals($DB->numrows($result), 1, 'Software not find in GLPI '.$DB->numrows($result).' times instead 1 ('.addslashes_deep($child->NAME).'/'.addslashes_deep($child->GUID).') ['.$xmlFile.']');
+         }
       }
 
 

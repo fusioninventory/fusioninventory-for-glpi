@@ -121,6 +121,20 @@ class PluginFusinvinventoryInventory {
             }
          }
       // End hack
+         
+      // Know if computer is HP to remove S in prefix of serial number
+         if ((isset($p_xml->CONTENT->BIOS->SMANUFACTURER))
+               AND (strstr($p_xml->CONTENT->BIOS->SMANUFACTURER, "ewlett"))) {
+
+            $_SESSION["plugin_fusioninventory_manufacturerHP"] = 1;
+         } else {
+            if (isset($_SESSION["plugin_fusioninventory_manufacturerHP"])) {
+               unset($_SESSION["plugin_fusioninventory_manufacturerHP"]);
+            }
+         }
+         
+         
+      // End code for HP computers
       
       $PluginFusinvinventoryBlacklist = new PluginFusinvinventoryBlacklist();
       $p_xml = $PluginFusinvinventoryBlacklist->cleanBlacklist($p_xml);

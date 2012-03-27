@@ -120,7 +120,6 @@ class PluginFusinvinventoryLibhook {
          $_SESSION["plugin_fusinvinventory_no_history_add"] = false;
       }
 
-      $ignore_controllers = array();
       $ignore_USB = array();
 
       $i = -1;
@@ -344,18 +343,6 @@ class PluginFusinvinventoryLibhook {
                }
                break;
 
-            case 'SOUNDS':
-               if (isset($dataSection['NAME'])) {
-                  $ignore_controllers[$dataSection['NAME']] = 1;
-               }
-               break;
-
-            case 'VIDEOS':
-               if (isset($dataSection['NAME'])) {
-                  $ignore_controllers[$dataSection['NAME']] = 1;
-               }
-               break;
-
             case 'PRINTERS':
                if (isset($dataSection['SERIAL'])) {
                   $ignore_USB[$dataSection['SERIAL']] = 1;
@@ -400,7 +387,7 @@ class PluginFusinvinventoryLibhook {
 
             case 'CONTROLLERS':
                $id_controller = '';
-               if ((isset($dataSection["NAME"])) AND (!isset($ignore_controllers[$dataSection["NAME"]]))) {
+               if ((isset($dataSection["NAME"])) AND (!isset($_SESSION["plugin_fusinvinventory_ignorecontrollers"][$dataSection["NAME"]]))) {
                   $PluginFusinvinventoryImport_Controller = new PluginFusinvinventoryImport_Controller();
                   $id_controller = $PluginFusinvinventoryImport_Controller->AddUpdateItem("add", $idmachine, $dataSection);
                }
@@ -463,13 +450,20 @@ class PluginFusinvinventoryLibhook {
                if (!isset($dataSection['PUBLISHER'])) {
                   $dataSection['PUBLISHER'] = NULL;
                }
-
-               if (isset($dataSection['VERSION'])) {
-                  $Computer_SoftwareVersion_id = $PluginFusinvinventoryImport_Software->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
+               $name = '';
+               if (isset($dataSection['NAME'])) {
+                  $name = $dataSection['NAME'];
+               } else if (isset($dataSection['GUID'])) {
+                  $name = $dataSection['GUID'];
+               }
+               $Computer_SoftwareVersion_id = '';
+               if (isset($dataSection['VERSION'])
+                       AND $name != '') {
+                  $Computer_SoftwareVersion_id = $PluginFusinvinventoryImport_Software->addSoftware($idmachine, array('name'=>$name,
                                                                               'version'=>$dataSection['VERSION'],
                                                                               'PUBLISHER'=>$dataSection['PUBLISHER']));
-               } else {
-                  $Computer_SoftwareVersion_id = $PluginFusinvinventoryImport_Software->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
+               } else if ($name != '') {
+                  $Computer_SoftwareVersion_id = $PluginFusinvinventoryImport_Software->addSoftware($idmachine, array('name'=>$name,
                                                                               'version'=>NOT_AVAILABLE,
                                                                               'PUBLISHER'=>$dataSection['PUBLISHER']));
                }
@@ -618,6 +612,9 @@ class PluginFusinvinventoryLibhook {
       $Computer->getFromDB($idmachine);
       $_SESSION["plugin_fusinvinventory_entity"] = $Computer->fields['entities_id'];
 
+      $_SESSION["plugin_fusinvinventory_history_add"] = true;
+      $_SESSION["plugin_fusinvinventory_no_history_add"] = false;
+      
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusinvinventory-removesection", 
                                                    "[".$idmachine."] ".print_r($idsections, true));
         

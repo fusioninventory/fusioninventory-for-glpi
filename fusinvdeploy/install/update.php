@@ -41,8 +41,12 @@
  */
 
 function pluginFusinvdeployGetCurrentVersion($version) {
+
+   if (!TableExists("glpi_plugin_fusinvdeploy_files")) {
+      return false;
+   }
    
-   if (TableExists("glpi_plugin_fusioninventory_config")) {
+   if (TableExists("glpi_plugin_fusioninventory_configs")) {
       if (!class_exists('PluginFusioninventoryConfig')) { // if plugin is unactive
          include(GLPI_ROOT . "/plugins/fusioninventory/inc/config.class.php");
       }
@@ -56,16 +60,29 @@ function pluginFusinvdeployGetCurrentVersion($version) {
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
       $versionconfig = $PluginFusioninventoryConfig->getValue($plugins_id, "version");
       if (empty($versionconfig)) {
-         return;
+         return "";
       }
       return $versionconfig;
    } else {
-      return;
+      return false;
    }
 }
 
 
 function pluginFusinvdeployUpdate($current_version, $migrationname='Migration') {
 
+
+   if ($current_version == "") {
+      $config = new PluginFusioninventoryConfig;
+      $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
+      $a_plugin = plugin_version_fusinvdeploy();
+      $params = array(
+         'type'         => "version",
+         'value'        => $a_plugin['version'],
+         'plugins_id'   => $plugins_id
+      );
+      $config->add($params);
+
+   }
 }
 ?>

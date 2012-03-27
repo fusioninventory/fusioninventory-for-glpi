@@ -62,6 +62,20 @@ class PluginFusinvinventoryLib extends CommonDBTM {
    function startAction($xml, $items_id, $new=0) {
       global $DB;
 
+      if (isset($_SESSION["plugin_fusinvinventory_ignorecontrollers"])) {
+         unset($_SESSION["plugin_fusinvinventory_ignorecontrollers"]);
+      }
+      foreach ($xml->CONTENT->VIDEOS as $child) {
+         $_SESSION["plugin_fusinvinventory_ignorecontrollers"][(string)$child->NAME] = 1;
+         if (isset($child->CHIPSET)) {
+            $_SESSION["plugin_fusinvinventory_ignorecontrollers"][(string)$child->CHIPSET] = 1;
+         }
+      }
+      foreach ($xml->CONTENT->SOUNDS as $child) {
+         $_SESSION["plugin_fusinvinventory_ignorecontrollers"][(string)$child->NAME] = 1;
+      }
+      
+      
       if ($new == "0") {
          // Transfer if entity is different
          $Computer = new Computer();
@@ -300,8 +314,12 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          array_push($serializedSectionsFromXML, $xmlSection["sectionDatawName"]);
       }
       //Retrieve changes, sections to Add and sections to Remove
-      $sectionsToAdd    = array_diff($serializedSectionsFromXML, $infoSections["sections"]);
-      $sectionsToRemove = array_diff($infoSections["sections"], $serializedSectionsFromXML);
+      // *** array_diff not work nicely in this case
+//         $sectionsToAdd    = array_diff($serializedSectionsFromXML, $infoSections["sections"]);
+//         $sectionsToRemove = array_diff($infoSections["sections"], $serializedSectionsFromXML);
+       
+      $sectionsToAdd    = $this->diffArray($serializedSectionsFromXML, $infoSections["sections"]);
+      $sectionsToRemove = $this->diffArray($infoSections["sections"], $serializedSectionsFromXML);
 
       $classhook = "PluginFusinvinventoryLibhook";
 
@@ -314,12 +332,15 @@ class PluginFusinvinventoryLib extends CommonDBTM {
             if (in_array($sectionName, $a_sections)) {
                foreach($sectionsToAdd as $arrayId => $serializedSectionToAdd) {
                   //check if we have the same section Name for an sectionToRemove and an sectionToAdd
-                  if($xmlSections[$arrayId]['sectionName'] == $sectionName) {
+                  $splitid = explode("/", $sectionId);
+                  
+                  if ($xmlSections[$arrayId]['sectionName'] == $sectionName
+                       AND ((isset($splitid[1]) AND is_numeric($splitid[1]) AND $splitid[1] > 0)
+                              OR (!isset($splitid[1])))) {
                      //Finally, we have to determine if it's an update or not
                      $boolUpdate = false;
                      $arrSectionToAdd = unserialize($serializedSectionToAdd);
                      $arrSectionToRemove = unserialize($serializedSectionToRemove);
-                     
                      //TODO: Traiter les notices sur les indices de tableau qui n'existent pas.
                      switch($sectionName) {
 
@@ -343,11 +364,15 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                            
                         case "SOFTWARES":
                            if ((isset($arrSectionToAdd["GUID"]) AND isset($arrSectionToRemove["GUID"])
+                                 AND preg_match('/^[[:xdigit:]]+$/i', $arrSectionToAdd["GUID"])
+                                 AND preg_match('/^[[:xdigit:]]+$/i', $arrSectionToRemove["GUID"])
                                  AND ($arrSectionToAdd["GUID"] == $arrSectionToRemove["GUID"])
                                  AND isset($arrSectionToAdd["VERSION"]) AND isset($arrSectionToRemove["VERSION"])
                                  AND $arrSectionToAdd["VERSION"] == $arrSectionToRemove["VERSION"])
 
                               OR (isset($arrSectionToAdd["GUID"]) AND isset($arrSectionToRemove["GUID"])
+                                 AND preg_match('/^[[:xdigit:]]+$/i', $arrSectionToAdd["GUID"])
+                                 AND preg_match('/^[[:xdigit:]]+$/i', $arrSectionToRemove["GUID"])
                                  AND ($arrSectionToAdd["GUID"] == $arrSectionToRemove["GUID"])
                                  AND !isset($arrSectionToAdd["VERSION"]))
 
@@ -355,6 +380,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                                  AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]
                                  AND isset($arrSectionToAdd["VERSION"]) AND isset($arrSectionToRemove["VERSION"])
                                  AND $arrSectionToAdd["VERSION"] == $arrSectionToRemove["VERSION"])
+                                   
                               OR (isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
                                  AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]
                                  AND !isset($arrSectionToAdd["VERSION"]))) {
@@ -365,20 +391,22 @@ class PluginFusinvinventoryLib extends CommonDBTM {
 
                         case "CONTROLLERS":
                            if ((isset($arrSectionToAdd["PCIID"]) AND isset($arrSectionToRemove["PCIID"])
-                                 AND $arrSectionToAdd["PCIID"] == $arrSectionToRemove["PCIID"]
-                                 AND isset($arrSectionToAdd["PCISLOT"]) AND isset($arrSectionToRemove["PCISLOT"])
-                                 AND $arrSectionToAdd["PCISLOT"] == $arrSectionToRemove["PCISLOT"])
-                               OR (!isset($arrSectionToRemove["PCIID"])
-                                 AND isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
-                                 AND isset($arrSectionToAdd["NAME"]) == isset($arrSectionToRemove["NAME"])
-                                 AND isset($arrSectionToAdd['MANUFACTURER']) AND isset($arrSectionToRemove['MANUFACTURER'])
-                                 AND isset($arrSectionToAdd['MANUFACTURER']) == isset($arrSectionToRemove['MANUFACTURER'])
-                                 AND isset($arrSectionToAdd['CAPTION']) AND isset($arrSectionToRemove['CAPTION'])
-                                 AND isset($arrSectionToAdd['CAPTION']) == isset($arrSectionToRemove['CAPTION']))
-                               OR (!isset($arrSectionToRemove["PCIID"])
-                                 AND isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
-                                 AND isset($arrSectionToAdd["NAME"]) == isset($arrSectionToRemove["NAME"])
-                                 AND !isset($arrSectionToRemove['MANUFACTURER']))) {
+                                    AND $arrSectionToAdd["PCIID"] == $arrSectionToRemove["PCIID"]
+                                    AND isset($arrSectionToAdd["PCISLOT"]) AND isset($arrSectionToRemove["PCISLOT"])
+                                    AND $arrSectionToAdd["PCISLOT"] == $arrSectionToRemove["PCISLOT"])
+                               
+                                 OR (!isset($arrSectionToRemove["PCIID"])
+                                    AND isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
+                                    AND isset($arrSectionToAdd["NAME"]) == isset($arrSectionToRemove["NAME"])
+                                    AND isset($arrSectionToAdd['MANUFACTURER']) AND isset($arrSectionToRemove['MANUFACTURER'])
+                                    AND isset($arrSectionToAdd['MANUFACTURER']) == isset($arrSectionToRemove['MANUFACTURER'])
+                                    AND isset($arrSectionToAdd['CAPTION']) AND isset($arrSectionToRemove['CAPTION'])
+                                    AND isset($arrSectionToAdd['CAPTION']) == isset($arrSectionToRemove['CAPTION']))
+                               
+                                 OR (!isset($arrSectionToRemove["PCIID"])
+                                    AND isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
+                                    AND isset($arrSectionToAdd["NAME"]) == isset($arrSectionToRemove["NAME"])
+                                    AND !isset($arrSectionToRemove['MANUFACTURER']))) {
 
                               $boolUpdate = true;
                            }
@@ -412,9 +440,41 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                            break;
                            
                         case "MONITORS":
-                           if (isset($arrSectionToAdd["DESCRIPTION"]) AND isset($arrSectionToRemove["DESCRIPTION"])
-                                 AND $arrSectionToAdd["DESCRIPTION"] == $arrSectionToRemove["DESCRIPTION"]) {
-                              $boolUpdate = true;
+                           $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+                           if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                                                                      "import_monitor") == '0') {
+                              // Monitors not managed
+                           } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                                                                              "import_monitor") == '2') {
+                              // Unique import
+                              if (((isset($arrSectionToAdd["SERIAL"])) AND (isset($arrSectionToRemove["SERIAL"]))
+                                    AND ($arrSectionToAdd["SERIAL"] == $arrSectionToRemove["SERIAL"]))                                 
+                                 AND (isset($arrSectionToAdd["DESCRIPTION"]) AND isset($arrSectionToRemove["DESCRIPTION"])
+                                    AND $arrSectionToAdd["DESCRIPTION"] == $arrSectionToRemove["DESCRIPTION"])) {
+                                 
+                                 $boolUpdate = true;
+                              } else if (((!isset($arrSectionToAdd["SERIAL"])) AND (!isset($arrSectionToRemove["SERIAL"])))
+                                 AND (isset($arrSectionToAdd["DESCRIPTION"]) AND isset($arrSectionToRemove["DESCRIPTION"])
+                                    AND $arrSectionToAdd["DESCRIPTION"] == $arrSectionToRemove["DESCRIPTION"])) {
+                                 
+                                 $boolUpdate = true;
+                              } 
+                           } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                                                                             "import_monitor") == '3') {
+                              // Import only with serial number
+                              if ((isset($arrSectionToAdd["SERIAL"])) AND (isset($arrSectionToRemove["SERIAL"]))
+                                    AND ($arrSectionToAdd["SERIAL"] == $arrSectionToRemove["SERIAL"])) {
+                                 
+                                 $boolUpdate = true;
+                              }
+                           } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                                                                             "import_monitor") == '1') {
+                              // GLOBAL
+                              if ((isset($arrSectionToAdd["CAPTION"])) AND (isset($arrSectionToRemove["CAPTION"]))
+                                    AND ($arrSectionToAdd["CAPTION"] == $arrSectionToRemove["CAPTION"])) {
+                                 
+                                 $boolUpdate = true;
+                              }
                            }
                            break;
                            
@@ -520,11 +580,22 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                             break;
 
                         case "CPUS":
-                           if (isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
-                                 AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]
-                                 AND isset($arrSectionToAdd['MANUFACTURER']) AND isset($arrSectionToRemove['MANUFACTURER'])
-                                 AND isset($arrSectionToAdd['MANUFACTURER']) == isset($arrSectionToRemove['MANUFACTURER'])) {
-                              $boolUpdate = true;
+                           if ((isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
+                                    AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]
+                                    AND isset($arrSectionToAdd['MANUFACTURER']) AND isset($arrSectionToRemove['MANUFACTURER'])
+                                    AND isset($arrSectionToAdd['MANUFACTURER']) == isset($arrSectionToRemove['MANUFACTURER']))
+                                   
+                                 OR ((!isset($arrSectionToAdd["NAME"]) OR !isset($arrSectionToRemove["NAME"]))
+                                    AND isset($arrSectionToAdd["TYPE"]) AND isset($arrSectionToRemove["TYPE"])
+                                    AND $arrSectionToAdd["TYPE"] == $arrSectionToRemove["TYPE"]
+                                    AND isset($arrSectionToAdd['MANUFACTURER']) AND isset($arrSectionToRemove['MANUFACTURER'])
+                                    AND isset($arrSectionToAdd['MANUFACTURER']) == isset($arrSectionToRemove['MANUFACTURER']))) {
+                              
+                              if ((isset($arrSectionToAdd["SPEED"]) AND isset($arrSectionToRemove["SPEED"])
+                                      AND $arrSectionToAdd["SPEED"] == $arrSectionToRemove["SPEED"])
+                                   OR (!isset($arrSectionToAdd["SPEED"]) OR !isset($arrSectionToRemove["SPEED"]))) {
+                                 $boolUpdate = true;
+                               }
                            }
                            break;
                            
@@ -832,6 +903,28 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       $this->_serializeIntoDB($internal_id, $serializedSections);
    }
 
+   
+   
+   function diffArray($array1, $array2) {
+
+      $a_return = array();
+      foreach ($array1 as $key=>$value) {
+         $find = '';
+         foreach ($array2 as $key2=>$value2) {
+            if ($value == $value2) {
+               $find = 1;
+               unset($array2[$key2]);
+               break;
+            }
+         }
+         if ($find == '') {
+            $a_return[$key] = $value;
+         }
+      }
+      return $a_return;
+      
+   }
+   
 }
 
 ?>

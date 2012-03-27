@@ -635,6 +635,14 @@ class Rules extends PHPUnit_Framework_TestCase {
       $GLPIInstall->testInstall();
       $Install->testInstall(0);
       
+      $plugin = new Plugin();
+      $plugin->getFromDBbyDir("fusioninventory");
+      $plugin->activate($plugin->fields['id']);
+      Plugin::load("fusioninventory");
+      $plugin->getFromDBbyDir("fusinvinventory");
+      $plugin->activate($plugin->fields['id']);
+      Plugin::load("fusinvinventory");
+      
       Config::detectRootDoc();
       loadLanguage("en_GB");
       
@@ -802,7 +810,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $plugin->activate($plugin->fields['id']);
       Plugin::load("fusioninventory");
 
-//      Config::detectRootDoc();
+      Config::detectRootDoc();
       loadLanguage("en_GB");
       
       // Add the rule with criterial only if type = Computer
@@ -916,7 +924,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $plugin->activate($plugin->fields['id']);
       Plugin::load("fusioninventory");
       
-//      Config::detectRootDoc();
+      Config::detectRootDoc();
       loadLanguage("en_GB");
       
       // Add the rule with criterial only if type = Computer
@@ -1073,7 +1081,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $plugin->activate($plugin->fields['id']);
       Plugin::load("fusioninventory");
       
-//      Config::detectRootDoc();
+      Config::detectRootDoc();
       loadLanguage("en_GB");
       
       // Add the rule with criterial only if type = Computer
@@ -1251,7 +1259,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $plugin->activate($plugin->fields['id']);
       Plugin::load("fusioninventory");
       
-//      Config::detectRootDoc();
+      Config::detectRootDoc();
       loadLanguage("en_GB");
       
       // Create computer only with serial and name;
