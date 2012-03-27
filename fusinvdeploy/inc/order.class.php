@@ -96,6 +96,14 @@ class PluginFusinvdeployOrder extends CommonDBTM {
    }
 
    /**
+    * TODO:
+    * Create Orders from JSON format import/export
+    */
+   static function createOrdersFromJson($json) {
+
+   }
+
+   /**
     * Get order ID associated with a package, by type
     * @param packages_id the package ID
     * @param order_type can be self::INSTALLATION_ORDER or self::UNINSTALLATION_ORDER
@@ -159,6 +167,29 @@ class PluginFusinvdeployOrder extends CommonDBTM {
       if (!empty($orders)) $orders['uuid'] = $status['uniqid'];
 
       return $orders;
+   }
+
+   static function getOrderDetailsFromPackage($package_id = 0, $order_type = self::INSTALLATION_ORDER) {
+      $orders =  array();
+      if ($package_id != 0) $order_id = PluginFusinvdeployOrder::getIdForPackage($package_id,
+         $order_type);
+      if ( isset($order_id) ) {
+         
+         $related_classes = array('PluginFusinvdeployCheck'  => 'checks',
+                                  'PluginFusinvdeployFile'   => 'associatedFiles',
+                                  'PluginFusinvdeployAction' => 'actions');
+
+         foreach ($related_classes as $class => $key) {
+               $tmp            = call_user_func(array($class,'getForOrder'),$order_id);
+               if ($key == 'associatedFiles') $orders[$key] = PluginFusinvdeployFile::getAssociatedFilesForOrder($order_id);
+               else $orders[$key] = $tmp;
+         }
+      }
+
+#      if (!empty($orders)) $orders['uuid'] = $status['uniqid'];
+
+      return $orders;
+
    }
 }
 
