@@ -400,7 +400,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
 
    /**
-   * Make link between agent and computer
+   * Create links between agent and computer.
    *
    * @param $items_id integer ID of the computer
    * @param $device_id value of device_id from XML to identify agent
@@ -411,18 +411,35 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    function setAgentWithComputerid($items_id, $device_id) {
       global $DB;
 
-      // Reset if computer connected with an other agent
-      $query = "UPDATE `".$this->getTable()."`
-                SET `items_id`='0'
-                WHERE `items_id`='".$items_id."'
-                   AND `device_id`!='".$device_id."' ";
-      $DB->query($query);
+      $a_agent = $this->find("`items_id`='".$items_id."'", "", 1);
+# Is this computer already linked to an agent?
+      if ($agent = array_shift($a_agent)) {
 
-      // Link agent with computer
-      $agent = $this->InfosByKey($device_id);
-      if (isset($agent['id'])) {
-         $agent['items_id'] = $items_id;
-         $this->update($agent);
+         # relation
+	 if ($agent['device_id'] != $device_id) {
+            $agent['device_id'] = $device_id;
+            $this->update($agent);
+	 }
+
+
+# Clean up the agent list
+         $oldAgent = $this->find(
+# computer linked to the wrong agent
+            "(`items_id`='".$items_id."' AND `device_id` <> '".$device_id."')".
+            " OR ".
+# the same device_id but linked on the wrong computer 
+            "(`device_id`='".$device_id."' AND `items_id`<>'".$items_id."')"
+	 );
+         foreach ($oldAgent as $id => $agent) {
+            $this->delete($agent);
+         }
+      } else { # This is a new computer
+          // Link agent with computer
+          $agent = $this->InfosByKey($device_id);
+          if (isset($agent['id'])) {
+             $agent['items_id'] = $items_id;
+             $this->update($agent);
+          }
       }
    }
 
