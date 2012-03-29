@@ -606,7 +606,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $errors='';
       $ptp = new PluginFusinvsnmpNetworkPort("NetworkEquipment", $this->logFile);
       $ifType = $p_port->IFTYPE;
-      if ( $ptp->isReal($ifType) ) { // not virtual port
+      // not virtual port and not name is Vl1 (problem on Cisco routers)
+      if ( $ptp->isReal($ifType)
+              AND $p_port->IFNAME != 'Vl1') { 
          // Get port of unknown device CDP if exist
          $portloaded = 0;
          $portIndex  = 0;
