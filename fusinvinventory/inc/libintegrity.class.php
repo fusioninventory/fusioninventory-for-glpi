@@ -827,6 +827,9 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
    function cleanGLPI() {
       global $DB;
       
+      ini_set("max_execution_time", "0");
+      ini_set("memory_limit", "-1");
+      
       $computer = new Computer();
       $pfLib    = new PluginFusinvinventoryLib();
       
