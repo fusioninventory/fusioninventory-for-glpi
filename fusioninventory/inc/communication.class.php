@@ -49,36 +49,36 @@ if (!defined('GLPI_ROOT')) {
  **/
 class PluginFusioninventoryCommunication {
    private $deviceId, $ptd, $type='';
-   protected $sxml;
+   protected $message;
 
    
    function __construct() {
-      $this->sxml = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><REPLY></REPLY>");
+      $this->message = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><REPLY></REPLY>");
       PluginFusioninventoryCommunication::addLog('New PluginFusioninventoryCommunication object.');
    }
 
 
    
    /**
-    * Get readable XML code (add carriage returns)
+    * Get readable XML message (add carriage returns)
     *
-    * @return readable XML code
+    * @return readable XML message
     **/
-   function getXML() {
-      return $this->formatXmlString();
+   function getMessage() {
+      return $this->formatMessage();
    }
 
 
    
    /**
-    * Set XML code
+    * Set XML message
     *
-    * @param $p_xml XML code
+    * @param $message XML message
     * 
     * @return nothing
     **/
-   function setXML($p_xml) {
-      $this->sxml = @simplexml_load_string($p_xml,'SimpleXMLElement', 
+   function setMessage($message) {
+      $this->message = @simplexml_load_string($message,'SimpleXMLElement', 
                                            LIBXML_NOCDATA); // @ to avoid xml warnings
    }
 
@@ -86,36 +86,36 @@ class PluginFusioninventoryCommunication {
     * Send data, using given compression algorithm
     * 
     **/
-   function send($compressmode = 'none') {
+   function sendMessage($compressmode = 'none') {
       switch($compressmode) {
          
          case 'none':
             header("Content-Type: application/xml");
-            echo $this->sxml->asXML();
+            echo $this->message->asXML();
             break;
          
          case 'zlib':
             # rfc 1950
             header("Content-Type: application/x-compress-zlib");
-            echo gzcompress($this->sxml->asXML());
+            echo gzcompress($this->message->asXML());
             break;
          
          case 'deflate':
             # rfc 1951
             header("Content-Type: application/x-compress-deflate");
-            echo gzdeflate($this->sxml->asXML());
+            echo gzdeflate($this->message->asXML());
             break;
 
          case 'gzip':
             # rfc 1952
             header("Content-Type: application/x-compress-gzip");
-            echo gzencode($this->sxml->asXML());
+            echo gzencode($this->message->asXML());
             break;
          
       }
 
       header("Content-Type: application/xml");
-      echo $this->sxml->asXML();
+      echo $this->message->asXML();
    }
 
 
@@ -139,11 +139,11 @@ class PluginFusioninventoryCommunication {
       // Do not manage <REQUEST> element (always the same)
       
       $_SESSION["plugin_fusioninventory_disablelocks"] = 1;
-      $this->sxml = $p_xml;
+      $this->message = $p_xml;
       $errors = '';
 
-      $xmltag = (string)$this->sxml->QUERY;
-      $agent = $pfAgent->InfosByKey($this->sxml->DEVICEID);
+      $xmltag = (string)$this->message->QUERY;
+      $agent = $pfAgent->InfosByKey($this->message->DEVICEID);
       if ($xmltag == "PROLOG") {
          return false;
       }
@@ -151,10 +151,10 @@ class PluginFusioninventoryCommunication {
          return true;
       }
 
-      if (isset($this->sxml->CONTENT->MODULEVERSION)) {
-         $pfAgent->setAgentVersions($agent['id'], $xmltag, (string)$this->sxml->CONTENT->MODULEVERSION);
-      } else if (isset($this->sxml->CONTENT->VERSIONCLIENT)) {
-         $version = str_replace("FusionInventory-Agent_", "", (string)$this->sxml->CONTENT->VERSIONCLIENT);
+      if (isset($this->message->CONTENT->MODULEVERSION)) {
+         $pfAgent->setAgentVersions($agent['id'], $xmltag, (string)$this->message->CONTENT->MODULEVERSION);
+      } else if (isset($this->message->CONTENT->VERSIONCLIENT)) {
+         $version = str_replace("FusionInventory-Agent_", "", (string)$this->message->CONTENT->VERSIONCLIENT);
          $pfAgent->setAgentVersions($agent['id'], $xmltag, $version);
       }
 
@@ -165,8 +165,8 @@ class PluginFusioninventoryCommunication {
       if (isset($_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"])) {
          $moduleClass = $_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"];
          $moduleCommunication = new $moduleClass();
-         $errors.=$moduleCommunication->import($this->sxml->DEVICEID, 
-                 $this->sxml->CONTENT, 
+         $errors.=$moduleCommunication->import($this->message->DEVICEID, 
+                 $this->message->CONTENT, 
                  $p_xml);
       } else {
          $errors.=$LANG['plugin_fusioninventory']['errors'][22].' QUERY : *'.$xmltag."*\n";
@@ -191,8 +191,8 @@ class PluginFusioninventoryCommunication {
     *
     * @return XML
     **/
-   function formatXmlString() {
-      $xml = str_replace("><", ">\n<", $this->sxml->asXML());
+   function formatMessage() {
+      $xml = str_replace("><", ">\n<", $this->message->asXML());
       $token      = strtok($xml, "\n");
       $result     = '';
       $pad        = 0;
@@ -219,8 +219,8 @@ class PluginFusioninventoryCommunication {
          $pad    += $indent;
          $indent = 0;
       }
-      $this->setXML($result);
-      return $this->sxml->asXML();
+      $this->setMessage($result);
+      return $this->message->asXML();
    }
 
    /**
@@ -258,7 +258,7 @@ class PluginFusioninventoryCommunication {
             if ($className != "PluginFusioninventoryInventoryComputerESX") {
                $class = new $className();
                $sxml_temp = $class->run($array);
-               $this->append_simplexml($this->sxml, $sxml_temp);
+               $this->append_simplexml($this->message, $sxml_temp);
             }
          }
       }
@@ -273,7 +273,7 @@ class PluginFusioninventoryCommunication {
    function addProlog() {
       $pfConfig = new PluginFusioninventoryConfig();
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
-      $this->sxml->addChild('PROLOG_FREQ', $PluginFusioninventoryConfig->getValue($plugins_id, "inventory_frequence", ''));
+      $this->message->addChild('PROLOG_FREQ', $PluginFusioninventoryConfig->getValue($plugins_id, "inventory_frequence", ''));
    }
 
 
@@ -287,7 +287,7 @@ class PluginFusioninventoryCommunication {
    function addInventory($items_id) {
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
       if ($pfAgentmodule->getAgentCanDo('INVENTORY', $items_id)) {
-         $this->sxml->addChild('RESPONSE', "SEND");
+         $this->message->addChild('RESPONSE', "SEND");
       }
    }
 
