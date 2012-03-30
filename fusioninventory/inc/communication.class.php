@@ -304,18 +304,6 @@ class PluginFusioninventoryCommunication {
    }
 
    
-   
-   /**
-    * Tells if fopen is allowed or not on this server
-    * 
-    * @return true if allowed, false if not
-    */
-   static function isFopenAllowed() {
-      return ini_get('allow_url_fopen');
-   }
-   
-   
-   
    /** Fonction get on http://www.php.net/manual/en/function.gzdecode.php#82930
     *  used to uncompress gzip string
     *

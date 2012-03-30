@@ -210,7 +210,7 @@ class PluginFusioninventoryRestCommunication {
    static function testRestURL($url) {
       
       //If fopen is not allowed, we cannot check and then return true...
-      if (!PluginFusioninventoryCommunication::isFopenAllowed()) {
+      if (!ini_get('allow_url_fopen')) {
          return true;
       }
       
