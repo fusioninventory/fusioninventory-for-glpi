@@ -168,9 +168,10 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       exit();
    }
 
-   if (PluginFusioninventoryConfig::isExtradebugActive()) {
-      file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".uniqid(), $xml);
-   }
+   PluginFusioninventoryConfig::logIfExtradebug(
+      GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".uniqid(),
+      $xml
+   );
 
    // Check XML integrity
    $pxml = '';
