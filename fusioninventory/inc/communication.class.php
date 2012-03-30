@@ -60,12 +60,12 @@ class PluginFusioninventoryCommunication {
 
    
    /**
-    * Get readable XML message (add carriage returns)
+    * Get XML message
     *
-    * @return readable XML message
+    * @return XML message
     **/
    function getMessage() {
-      return $this->formatMessage();
+      return $this->message;
    }
 
 
@@ -187,9 +187,8 @@ class PluginFusioninventoryCommunication {
 
    
    /**
-    * Add indent in XML to have nice XML format
+    * format message for pretty printing
     *
-    * @return XML
     **/
    function formatMessage() {
       $xml = str_replace("><", ">\n<", $this->message->asXML());
@@ -220,7 +219,6 @@ class PluginFusioninventoryCommunication {
          $indent = 0;
       }
       $this->setMessage($result);
-      return $this->message->asXML();
    }
 
    /**

@@ -162,7 +162,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
 <REPLY>
 <ERROR>SSL REQUIRED BY SERVER</ERROR>
 </REPLY>");
-      $communication->setMessage($communication->getMessage());
+      $communication->formatMessage();
       $communication->sendMessage($compressmode);
       session_destroy();
       exit();
@@ -188,7 +188,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
 <REPLY>
 <ERROR>XML not well formed!</ERROR>
 </REPLY>");
-         $communication->setMessage($communication->getMessage());
+         $communication->formatMessage();
          $communication->sendMessage($compressmode);
          session_destroy();
          exit();
@@ -218,7 +218,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
 
          $communication->addInventory($a_agent['id']);
          $communication->addProlog();
-         $communication->setMessage($communication->getMessage());
+         $communication->formatMessage();
 
          $communication->sendMessage($compressmode);
       }
@@ -226,7 +226,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
 </REPLY>");
-      $communication->setMessage($communication->getMessage());
+      $communication->formatMessage();
       $communication->sendMessage($compressmode);
    }
 }
