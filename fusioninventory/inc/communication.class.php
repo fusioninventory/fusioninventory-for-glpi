@@ -82,23 +82,6 @@ class PluginFusioninventoryCommunication {
                                            LIBXML_NOCDATA); // @ to avoid xml warnings
    }
 
-
-   
-   /**
-    * Get XML code
-    *
-    * @return XML code
-    **/
-   function get() {
-      if ($GLOBALS["HTTP_RAW_POST_DATA"] == '') {
-         return '';
-      } else {
-         return gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
-      }
-   }
-
-
-   
    /**
     * Send data, using given compression algorithm
     * 
