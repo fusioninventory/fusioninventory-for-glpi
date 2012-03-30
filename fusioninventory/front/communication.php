@@ -124,7 +124,9 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          $xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
          $compressmode = "zlib";
    } else if ($_SERVER['CONTENT_TYPE'] == "application/x-compress-gzip") {
-         $xml = $communication->gzdecode($GLOBALS["HTTP_RAW_POST_DATA"]);
+      $xml = PluginFusioninventoryToolbox::gzdecode(
+         $GLOBALS["HTTP_RAW_POST_DATA"]
+      );
          $compressmode = "gzip";
    } else if ($_SERVER['CONTENT_TYPE'] == "application/xml") {
          $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
@@ -133,7 +135,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       # try each algorithm successively
       if ($xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"])) {
          $compressmode = "zlib";
-      } else if ($xml = $communication->gzdecode($GLOBALS["HTTP_RAW_POST_DATA"])) {
+      } else if ($xml = PluginFusioninventoryToolbox::gzdecode($GLOBALS["HTTP_RAW_POST_DATA"])) {
          $compressmode = "gzip";
       } else if ($xml = gzinflate(substr($GLOBALS["HTTP_RAW_POST_DATA"], 2))) {
          // accept deflate for OCS agent 2.0 compatibility,
@@ -197,7 +199,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    }
 
    // Clean for XSS and other in XML
-   $pxml = $communication->cleanXML($pxml);
+   $pxml = PluginFusioninventoryToolbox::cleanXML($pxml);
                      
    $agent = new PluginFusioninventoryAgent();
    $agents_id = $agent->importToken($pxml);
