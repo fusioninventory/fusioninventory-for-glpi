@@ -158,12 +158,12 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          AND
       (!isset($_SERVER["HTTPS"]) OR $_SERVER["HTTPS"] != "on")
    ) {
-      $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
+      $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
 <ERROR>SSL REQUIRED BY SERVER</ERROR>
 </REPLY>");
-      $communication->setXML($communication->getXML());
-      $communication->send($compressmode);
+      $communication->setMessage($communication->getMessage());
+      $communication->sendMessage($compressmode);
       session_destroy();
       exit();
    }
@@ -184,12 +184,12 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
 
       if (!$pxml) {
          $communication = new PluginFusioninventoryCommunication();
-         $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
+         $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
 <ERROR>XML not well formed!</ERROR>
 </REPLY>");
-         $communication->setXML($communication->getXML());
-         $communication->send($compressmode);
+         $communication->setMessage($communication->getMessage());
+         $communication->sendMessage($compressmode);
          session_destroy();
          exit();
       }
@@ -206,7 +206,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
 
       if (isset($pxml->DEVICEID)) {
 
-         $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
+         $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
 </REPLY>");
 
@@ -218,16 +218,16 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
 
          $communication->addInventory($a_agent['id']);
          $communication->addProlog();
-         $communication->setXML($communication->getXML());
+         $communication->setMessage($communication->getMessage());
 
-         $communication->send($compressmode);
+         $communication->sendMessage($compressmode);
       }
    } else {
-      $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
+      $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
 </REPLY>");
-      $communication->setXML($communication->getXML());
-      $communication->send($compressmode);
+      $communication->setMessage($communication->getMessage());
+      $communication->sendMessage($compressmode);
    }
 }
 session_destroy();
