@@ -54,7 +54,7 @@ class PluginFusioninventoryCommunication {
    
    function __construct() {
       $this->message = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><REPLY></REPLY>");
-      PluginFusioninventoryCommunication::addLog('New PluginFusioninventoryCommunication object.');
+      $this->addLog('New PluginFusioninventoryCommunication object.');
    }
 
 
@@ -134,7 +134,7 @@ class PluginFusioninventoryCommunication {
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
       $pfAgent = new PluginFusioninventoryAgent();
 
-      PluginFusioninventoryCommunication::addLog('Function import().');
+      $this->addLog('Function import().');
       // TODO : gérer l'encodage, la version
       // Do not manage <REQUEST> element (always the same)
       
@@ -228,7 +228,7 @@ class PluginFusioninventoryCommunication {
     * 
     * @return nothing (write text in log file)
     **/
-   static function addLog($p_logs) {
+   function addLog($p_logs) {
 
       if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
          if (PluginFusioninventoryConfig::isExtradebugActive()) {
