@@ -54,7 +54,11 @@ class PluginFusioninventoryCommunication {
    
    function __construct() {
       $this->message = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><REPLY></REPLY>");
-      $this->addLog('New PluginFusioninventoryCommunication object.');
+
+      PluginFusioninventoryConfig::logIfExtradebug(
+         GLPI_LOG_DIR.'/pluginFusioninventory-communication.log',
+         'New PluginFusioninventoryCommunication object.'
+      );
    }
 
 
@@ -134,7 +138,10 @@ class PluginFusioninventoryCommunication {
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
       $pfAgent = new PluginFusioninventoryAgent();
 
-      $this->addLog('Function import().');
+      PluginFusioninventoryConfig::logIfExtradebug(
+         GLPI_LOG_DIR.'/pluginFusioninventory-communication.log',
+         'Function import().'
+      );
       // TODO : gérer l'encodage, la version
       // Do not manage <REQUEST> element (always the same)
       
@@ -220,26 +227,6 @@ class PluginFusioninventoryCommunication {
       }
       $this->setMessage($result);
    }
-
-   /**
-    * Add logs
-    *
-    * @param $p_logs logs to write
-    * 
-    * @return nothing (write text in log file)
-    **/
-   function addLog($p_logs) {
-
-      if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
-         if (PluginFusioninventoryConfig::isExtradebugActive()) {
-            file_put_contents(GLPI_LOG_DIR.'/pluginFusioninventory-communication.log',
-                              "\n".time().' : '.$p_logs,
-                              FILE_APPEND);
-         }
-      }
-   }
-
-   
 
    /**
     * Get all tasks prepared for this agent
