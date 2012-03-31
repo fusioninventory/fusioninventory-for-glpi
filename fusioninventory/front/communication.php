@@ -170,7 +170,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       exit();
    }
 
-   PluginFusioninventoryConfig::logIfExtradebug(
+   PluginFusioninventoryToolbox::logIfExtradebug(
       GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".uniqid(),
       $xml
    );

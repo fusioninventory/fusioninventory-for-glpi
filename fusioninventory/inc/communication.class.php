@@ -55,7 +55,7 @@ class PluginFusioninventoryCommunication {
    function __construct() {
       $this->message = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><REPLY></REPLY>");
 
-      PluginFusioninventoryConfig::logIfExtradebug(
+      PluginFusioninventoryToolbox::logIfExtradebug(
          GLPI_LOG_DIR.'/pluginFusioninventory-communication.log',
          'New PluginFusioninventoryCommunication object.'
       );
@@ -141,7 +141,7 @@ class PluginFusioninventoryCommunication {
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
       $pfAgent = new PluginFusioninventoryAgent();
 
-      PluginFusioninventoryConfig::logIfExtradebug(
+      PluginFusioninventoryToolbox::logIfExtradebug(
          GLPI_LOG_DIR.'/pluginFusioninventory-communication.log',
          'Function import().'
       );

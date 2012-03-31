@@ -98,7 +98,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
     **/
     public static function addSections($data, $idmachine) {
 
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusinvinventory-addsection", 
+      PluginFusioninventoryToolbox::logIfExtradebug("pluginFusinvinventory-addsection", 
                                                    "[".$idmachine."] ".print_r($data, true));
        
       $Computer = new Computer();
@@ -618,7 +618,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
       $Computer->getFromDB($idmachine);
       $_SESSION["plugin_fusinvinventory_entity"] = $Computer->fields['entities_id'];
 
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusinvinventory-removesection", 
+      PluginFusioninventoryToolbox::logIfExtradebug("pluginFusinvinventory-removesection", 
                                                    "[".$idmachine."] ".print_r($idsections, true));
         
         foreach ($idsections as $section) {
@@ -1028,7 +1028,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
             }
          }
       }
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusinvinventory-updatesection", 
+      PluginFusioninventoryConfig::ToolboxIfExtradebug("pluginFusinvinventory-updatesection", 
                                                    "[".$idmachine."] ".print_r($data, true));
     }
 

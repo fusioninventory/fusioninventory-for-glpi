@@ -48,6 +48,15 @@ if (!defined('GLPI_ROOT')) {
  * Toolbox of various utility methods
  **/
 class PluginFusioninventoryToolbox {
+
+   /**
+    * Log when extra-debug is activated
+    */
+   static function logIfExtradebug($file, $message) {
+      if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug', '')) {
+         Toolbox::logInFile($file, $message);
+      }
+   }
    
    /** Fonction get on http://www.php.net/manual/en/function.gzdecode.php#82930
     *  used to uncompress gzip string

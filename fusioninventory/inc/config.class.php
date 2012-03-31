@@ -404,15 +404,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       return $DB->query($delete);
    }
 
-   /**
-    * Log when extra-debug is activated
-    */
-   static function logIfExtradebug($file, $message) {
-      if (self::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug', '')) {
-         Toolbox::logInFile($file, $message);
-      }
-   }
-   
    function showFormInventory($options=array()) {
       global $LANG;
 
