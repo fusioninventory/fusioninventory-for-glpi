@@ -198,7 +198,7 @@ class PluginFusioninventoryToolbox {
             $simplexml_temp->addAttribute($attr_key, $attr_value);
          }
          $firstLoop=false;
-         PluginFusioninventoryToolbox::append_simplexml($simplexml_temp, $simplexml_child);
+         self::append_simplexml($simplexml_temp, $simplexml_child);
       }
       unset($firstLoop);
    }
@@ -213,7 +213,7 @@ class PluginFusioninventoryToolbox {
    static function cleanXML($xml) {
       foreach ($xml->children() as $key=>$value) {
          if (count($value->children()) > 0) {
-            $value = PluginFusioninventoryToolbox::cleanXML($value);
+            $value = self::cleanXML($value);
          } else {         
             $value = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep($value));
             $xml->$key = $value;
