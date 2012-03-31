@@ -99,7 +99,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
     public static function addSections($data, $idmachine) {
 
       PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusinvinventory-addsection", 
+         "pluginFusioninventory-addsection", 
          "[".$idmachine."] ".print_r($data, true)
       );
        
@@ -621,7 +621,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
       $_SESSION["plugin_fusinvinventory_entity"] = $Computer->fields['entities_id'];
 
       PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusinvinventory-removesection", 
+         "pluginFusioninventory-removesection", 
          "[".$idmachine."] ".print_r($idsections, true)
       );
         

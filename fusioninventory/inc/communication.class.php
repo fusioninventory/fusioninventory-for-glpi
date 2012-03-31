@@ -56,7 +56,7 @@ class PluginFusioninventoryCommunication {
       $this->message = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><REPLY></REPLY>");
 
       PluginFusioninventoryToolbox::logIfExtradebug(
-         GLPI_LOG_DIR.'/pluginFusioninventory-communication.log',
+         'pluginFusioninventory-communication',
          'New PluginFusioninventoryCommunication object.'
       );
    }
@@ -142,7 +142,7 @@ class PluginFusioninventoryCommunication {
       $pfAgent = new PluginFusioninventoryAgent();
 
       PluginFusioninventoryToolbox::logIfExtradebug(
-         GLPI_LOG_DIR.'/pluginFusioninventory-communication.log',
+         'pluginFusioninventory-communication',
          'Function import().'
       );
       // TODO : gérer l'encodage, la version

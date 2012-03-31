@@ -305,7 +305,7 @@ class PluginFusioninventoryInventoryComputerInventory {
             
 
             PluginFusioninventoryToolbox::logIfExtradebug(
-               "pluginFusinvinventory-entityrules", 
+               "pluginFusioninventory-entityrules", 
                print_r($dataEntity, true)
             );
 
