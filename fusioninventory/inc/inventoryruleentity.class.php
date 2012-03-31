@@ -68,23 +68,29 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
 
    function executeActions($output,$params) {
 
-      PluginFusioninventoryToolbox::logIfExtradebug("pluginFusinvinventory-entityrules", 
-                                                   "execute action\n");
+      PluginFusioninventoryToolbox::logIfExtradebug(
+         "pluginFusinvinventory-entityrules", 
+         "execute action\n"
+      );
 
       if (count($this->actions)) {
          foreach ($this->actions as $action) {
             switch ($action->fields["action_type"]) {
                case "assign" :
-                  PluginFusioninventoryToolbox::logIfExtradebug("pluginFusinvinventory-entityrules", 
-                                                               "value ".$action->fields["value"]."\n");
+                  PluginFusioninventoryToolbox::logIfExtradebug(
+                     "pluginFusinvinventory-entityrules", 
+                     "value ".$action->fields["value"]."\n"
+                  );
                   $output[$action->fields["field"]] = $action->fields["value"];
                   break;
 
                case "regex_result" :
                   //Assign entity using the regex's result
                   if ($action->fields["field"] == "_affect_entity_by_tag") {
-                     PluginFusioninventoryToolbox::logIfExtradebug("pluginFusinvinventory-entityrules", 
-                                                                  "value ".$action->fields["value"]."\n");
+                     PluginFusioninventoryToolbox::logIfExtradebug(
+                        "pluginFusinvinventory-entityrules", 
+                        "value ".$action->fields["value"]."\n"
+                     );
                      //Get the TAG from the regex's results
                      $res = RuleAction::getRegexResultById($action->fields["value"],
                                                            $this->regex_results[0]);

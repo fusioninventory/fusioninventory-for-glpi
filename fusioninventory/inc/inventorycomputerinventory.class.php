@@ -198,8 +198,10 @@ class PluginFusioninventoryInventoryComputerInventory {
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
       $data = array();
       $data = $rule->processAllRules($input, array());
-      PluginFusioninventoryToolbox::logIfExtradebug("pluginFusioninventory-rules", 
-                                                   print_r($data, true));
+      PluginFusioninventoryToolbox::logIfExtradebug(
+         "pluginFusioninventory-rules", 
+         print_r($data, true)
+      );
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
          $this->rulepassed(0, "Computer");
       } else if (!isset($data['found_equipment'])) {
@@ -246,8 +248,10 @@ class PluginFusioninventoryInventoryComputerInventory {
    *
    **/
    function rulepassed($items_id, $itemtype) {
-      PluginFusioninventoryToolbox::logIfExtradebug("pluginFusioninventory-rules", 
-                                                   "Rule passed : ".$items_id.", ".$itemtype."\n");
+      PluginFusioninventoryToolbox::logIfExtradebug(
+         "pluginFusioninventory-rules", 
+         "Rule passed : ".$items_id.", ".$itemtype."\n"
+      );
       //$xml = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
       $xml = $_SESSION['SOURCEXML'];
       
@@ -300,8 +304,10 @@ class PluginFusioninventoryInventoryComputerInventory {
             }
             
 
-          PluginFusioninventoryToolbox::logIfExtradebug("pluginFusinvinventory-entityrules", 
-                                                   print_r($dataEntity, true));
+            PluginFusioninventoryToolbox::logIfExtradebug(
+               "pluginFusinvinventory-entityrules", 
+               print_r($dataEntity, true)
+            );
 
          if ($items_id == '0') {
             if ($_SESSION["plugin_fusinvinventory_entity"] == NOT_AVAILABLE) {
