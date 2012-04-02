@@ -210,10 +210,10 @@ class PluginFusioninventoryToolbox {
       
 
    /**
-    * Clean XML, ie convert to be insert without problem into MySQL DB
+    * Clean XML, ie convert to be inserted without problem into MySQL DB
     *
-    * @param type $xml
-    * @return type 
+    * @param $xml simplexml object
+    * @return simplexml object
     */
    static function cleanXML($xml) {
       foreach ($xml->children() as $key=>$value) {
@@ -225,6 +225,44 @@ class PluginFusioninventoryToolbox {
          }      
       }
       return $xml;
+   }
+
+   /**
+    * Format XML, ie indent it for pretty printing
+    *
+    * @param $xml simplexml object
+    * @return string
+    **/
+   static function formatXML($xml) {
+      $string     = str_replace("><", ">\n<", $xml->asXML());
+      $token      = strtok($string, "\n");
+      $result     = '';
+      $pad        = 0;
+      $matches    = array();
+      $indent     = 0;
+
+      while ($token !== false) {
+         // 1. open and closing tags on same line - no change
+         if (preg_match('/.+<\/\w[^>]*>$/', $token, $matches)) {
+            $indent=0;
+         // 2. closing tag - outdent now
+         } else if (preg_match('/^<\/\w/', $token, $matches)) {
+            $pad = $pad-3;
+         // 3. opening tag - don't pad this one, only subsequent tags
+         } else if (preg_match('/^<\w[^>]*[^\/]>.*$/', $token, $matches)) {
+            $indent=3;
+         } else {
+            $indent = 0;
+         }
+
+         $line    = Toolbox::str_pad($token, strlen($token)+$pad, '  ', STR_PAD_LEFT);
+         $result .= $line . "\n";
+         $token   = strtok("\n");
+         $pad    += $indent;
+         $indent = 0;
+      }
+
+      return $result;
    }
 
 }

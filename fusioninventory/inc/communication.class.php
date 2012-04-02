@@ -98,31 +98,37 @@ class PluginFusioninventoryCommunication {
          
          case 'none':
             header("Content-Type: application/xml");
-            echo $this->message->asXML();
+            echo PluginFusioninventoryToolbox::formatXML($this->message);
             break;
          
          case 'zlib':
             # rfc 1950
             header("Content-Type: application/x-compress-zlib");
-            echo gzcompress($this->message->asXML());
+            echo gzcompress(
+               PluginFusioninventoryToolbox::formatXML($this->message)
+            );
             break;
          
          case 'deflate':
             # rfc 1951
             header("Content-Type: application/x-compress-deflate");
-            echo gzdeflate($this->message->asXML());
+            echo gzdeflate(
+               PluginFusioninventoryToolbox::formatXML($this->message)
+            );
             break;
 
          case 'gzip':
             # rfc 1952
             header("Content-Type: application/x-compress-gzip");
-            echo gzencode($this->message->asXML());
+            echo gzencode(
+               PluginFusioninventoryToolbox::formatXML($this->message)
+            );
             break;
          
       }
 
       header("Content-Type: application/xml");
-      echo $this->message->asXML();
+      echo PluginFusioninventoryToolbox::formatXML($this->message);
    }
 
 
@@ -192,43 +198,6 @@ class PluginFusioninventoryCommunication {
          }
       }
       return $result;
-   }
-
-
-   
-   /**
-    * format message for pretty printing
-    *
-    **/
-   function formatMessage() {
-      $xml = str_replace("><", ">\n<", $this->message->asXML());
-      $token      = strtok($xml, "\n");
-      $result     = '';
-      $pad        = 0;
-      $matches    = array();
-      $indent     = 0;
-
-      while ($token !== false) {
-         // 1. open and closing tags on same line - no change
-         if (preg_match('/.+<\/\w[^>]*>$/', $token, $matches)) {
-            $indent=0;
-         // 2. closing tag - outdent now
-         } else if (preg_match('/^<\/\w/', $token, $matches)) {
-            $pad = $pad-3;
-         // 3. opening tag - don't pad this one, only subsequent tags
-         } else if (preg_match('/^<\w[^>]*[^\/]>.*$/', $token, $matches)) {
-            $indent=3;
-         } else {
-            $indent = 0;
-         }
-
-         $line    = Toolbox::str_pad($token, strlen($token)+$pad, '  ', STR_PAD_LEFT);
-         $result .= $line . "\n";
-         $token   = strtok("\n");
-         $pad    += $indent;
-         $indent = 0;
-      }
-      $this->setMessage($result);
    }
 
    /**
