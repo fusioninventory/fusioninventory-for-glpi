@@ -231,10 +231,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    * 
    * @return value or this field or false
    **/
-   static function getValue($p_plugins_id, $p_type, $module) {
+   function getValue($p_plugins_id, $p_type, $module) {
 
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
-      $config = current($PluginFusioninventoryConfig->find("`plugins_id`='".$p_plugins_id."'
+      $config = current($this->find("`plugins_id`='".$p_plugins_id."'
                           AND `type`='".$p_type."'
                           AND `module`='".$module."'"));
       if (isset($config['value'])) {

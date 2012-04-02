@@ -56,7 +56,9 @@ class PluginFusioninventoryToolbox {
       if ($_ENV['GLPI_ROOT']) {
          return;
       }
-      if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug', '')) {
+
+      $config = new PluginFusioninventoryConfig();
+      if ($config->getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug', '')) {
          Toolbox::logInFile($file, $message);
       }
    }
