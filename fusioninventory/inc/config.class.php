@@ -172,10 +172,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    * 
    * @return value or this field or false
    **/
-   static function getValue($p_plugins_id, $p_type) {
+   function getValue($p_plugins_id, $p_type) {
 
-      $pfConfig = new PluginFusioninventoryConfig();
-      $config = current($pfConfig->find("`plugins_id`='".$p_plugins_id."'
+      $config = current($this->find("`plugins_id`='".$p_plugins_id."'
                           AND `type`='".$p_type."'"));
       if (isset($config['value'])) {
          return $config['value'];
@@ -268,7 +267,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @return integer the new id of the added item (or false if fail)
     **/
    function addConfig($p_plugins_id, $p_type, $p_value) {
-      $existing_value = self::getValue($p_plugins_id, $p_type); 
+      $existing_value = $this->getValue($p_plugins_id, $p_type); 
       if (!is_null($existing_value)) {
          return $existing_value;
       } else {

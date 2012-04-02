@@ -243,12 +243,13 @@ class PluginFusinvinventoryLibhook {
                        AND isset($dataSection['KEYNAME'])
                        AND $dataSection['KEYNAME'] == 'TAG') {
 
-                  if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusinvinventory_moduleid"], 'location') == '1') {
+                  $config = new PluginFusioninventoryConfig();
+                  if ($config->getValue($_SESSION["plugin_fusinvinventory_moduleid"], 'location') == '1') {
                      $Computer->fields['locations_id'] = Dropdown::importExternal('Location',
                                                                                   $dataSection['KEYVALUE'],
                                                                                   $_SESSION["plugin_fusinvinventory_entity"]);
                   }
-                  if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusinvinventory_moduleid"], 'group') == '1') {
+                  if ($config->getValue($_SESSION["plugin_fusinvinventory_moduleid"], 'group') == '1') {
                      $Computer->fields['groups_id'] = PluginFusinvinventoryLibhook::importGroup($dataSection['KEYVALUE'], $_SESSION["plugin_fusinvinventory_entity"]);
                   }
                }
@@ -903,13 +904,14 @@ class PluginFusinvinventoryLibhook {
                           AND isset($dataSection['KEYNAME'])
                           AND $dataSection['KEYNAME'] == 'TAG') {
                           
-                     if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusinvinventory_moduleid"], 'location') == 1) {
+                     $config = new PluginFusioninventoryConfig();
+                     if ($config->getValue($_SESSION["plugin_fusinvinventory_moduleid"], 'location') == 1) {
                         $Computer->fields['locations_id'] = Dropdown::importExternal('Location',
                                                                                      $dataSection['KEYVALUE'],
                                                                                      $_SESSION["plugin_fusinvinventory_entity"]);
                         $Computer->update($Computer->fields);
                      }
-                     if (PluginFusioninventoryConfig::getValue($_SESSION["plugin_fusinvinventory_moduleid"], 'group') == 1) {
+                     if ($config->getValue($_SESSION["plugin_fusinvinventory_moduleid"], 'group') == 1) {
                         $Computer->fields['groups_id'] = PluginFusinvinventoryLibhook::importGroup($dataSection['KEYVALUE'], $_SESSION["plugin_fusinvinventory_entity"]);
                         $Computer->update($Computer->fields);
                      }
