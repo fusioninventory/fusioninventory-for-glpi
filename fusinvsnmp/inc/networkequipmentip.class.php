@@ -154,12 +154,12 @@ class PluginFusinvsnmpNetworkEquipmentIP extends CommonDBTM {
          } else {
             $this->delete(array('id' => $id));
          }
-         foreach ($this->ifaddrsPresent as $ip => $id) {
-            $input = array();
-            $input['networkequipments_id'] = $networkequipments_id;
-            $input['ip'] = $ip;
-            $this->add($input);
-         }
+      }
+      foreach ($this->ifaddrsPresent as $ip => $id) {
+         $input = array();
+         $input['networkequipments_id'] = $networkequipments_id;
+         $input['ip'] = $ip;
+         $this->add($input);
       }
    }   
 }
