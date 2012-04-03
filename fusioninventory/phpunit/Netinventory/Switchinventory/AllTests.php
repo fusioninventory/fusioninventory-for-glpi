@@ -328,11 +328,13 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team</COMMENTS>
               WHERE `networkequipments_id`='".$a_switch['id']."'";
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 3, 'May have 3 IPs for this switch');
+      
       $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
               WHERE `networkequipments_id`='".$a_switch['id']."'
                  AND `ip`='172.27.2.22'";
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, 'IP 172.27.2.22 may be here 1 time');
+      
       $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
               WHERE `networkequipments_id`='".$a_switch['id']."'
                  AND `ip`='212.99.4.74'";
