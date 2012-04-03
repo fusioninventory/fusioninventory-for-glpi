@@ -47,10 +47,9 @@ if (!defined('GLPI_ROOT')) {
 require_once(GLPI_ROOT.'/plugins/fusinvsnmp/inc/commondbtm.class.php');
 
 class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
-   private $ports=array(), $ifaddrs=array();
+   private $ports=array();
    private $oFusionInventory_networkequipment;
    private $newPorts=array(), $updatesPorts=array();
-   private $newIfaddrs=array(), $updatesIfaddrs=array();
 
    function __construct() {
       parent::__construct("glpi_networkequipments");
@@ -73,7 +72,6 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       global $DB;
 
       parent::load($p_id);
-      $this->ifaddrs = $this->getIfaddrsDB();
       $this->ports = $this->getPortsDB();
 
       $query = "SELECT `id`
@@ -179,24 +177,6 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 
 
 
-   /**
-    * Get index of ip object
-    *
-    *@param $p_ip='' IP address
-    *@return Index of ip object in ifaddrs array or '' if not found
-    **/
-   function getIfaddrIndex($p_ip) {
-      $ifaddrIndex = '';
-      foreach ($this->ifaddrs as $index => $oIfaddr) {
-         if (is_object($oIfaddr)) { // should always be true
-            if ($oIfaddr->getValue('ip')==$p_ip) {
-               $ifaddrIndex = $index;
-               break;
-            }
-         }
-      }
-      return $ifaddrIndex;
-   }
 
 
 
@@ -239,33 +219,6 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 
 
    /**
-    * Save ifadddrs
-    *
-    *@return nothing
-    **/
-   function saveIfaddrs() {
-      global $CFG_GLPI;
-      
-      $CFG_GLPI["deleted_tables"][]="glpi_plugin_fusinvsnmp_networkequipmentips"; // TODO : to clean
-
-      $pti = new PluginFusinvsnmpNetworkEquipmentIP();
-      foreach ($this->ifaddrs as $index=>$pti) {
-         if (!in_array($index, $this->updatesIfaddrs)) {
-            $pti->deleteDB();
-         }
-      }
-      foreach ($this->newIfaddrs as $pti) {
-         if ($pti->getValue('id')=='') {
-            $pti->addDB($this->getValue('id'));
-         } else {
-            $pti->updateDB();
-         }
-      }
-   }
-
-
-
-   /**
     * Add new port
     *
     *@param $p_oPort port object
@@ -276,67 +229,6 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       $this->newPorts[]=$p_oPort;
       if (is_int($p_portIndex)) {
          $this->updatesPorts[]=$p_portIndex;
-      }
-   }
-
-
-
-   /**
-    * Get ips
-    *
-    *@return Array of ips instances
-    **/
-   private function getIfaddrsDB() {
-      global $DB;
-
-      $pti = new PluginFusinvsnmpNetworkEquipmentIp();
-      $query = "SELECT `id`
-                FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
-                WHERE `networkequipments_id` = '".$this->getValue('id')."';";
-      $ifaddrsIds = array();
-      $result = $DB->query($query);
-      if ($result) {
-         if ($DB->numrows($result) != 0) {
-            while ($ip = $DB->fetch_assoc($result)) {
-               $pti->load($ip['id']);
-               $ifaddrsIds[] = clone $pti;
-            }
-         }
-      }
-      return $ifaddrsIds;
-   }
-
-
-
-   /**
-    * Get ip object
-    *
-    *@param $p_index Index of ip object in $ifaddrs
-    *@return Ifaddr object in ifaddrs array
-    **/
-   function getIfaddr($p_index) {
-      return $this->ifaddrs[$p_index];
-   }
-
-
-
-   /**
-    * Add IP
-    *
-    *@param $p_oIfaddr Ifaddr object
-    *@param $p_ifaddrIndex='' index of ip in $ifaddrs if already exists
-    *@return nothing
-    **/
-   function addIfaddr($p_oIfaddr, $p_ifaddrIndex='') {
-      if (count($this->newIfaddrs)==0) { // the first IP goes in glpi_networkequipments.ip
-         $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_networkequipments', $p_oIfaddr->getValue('networkequipments_id'));
-         if (!in_array('ip', $a_lockable)) {
-            $this->setValue('ip', $p_oIfaddr->getValue('ip'));
-         }
-      }
-      $this->newIfaddrs[]=$p_oIfaddr;
-      if (is_int($p_ifaddrIndex)) {
-         $this->updatesIfaddrs[]=$p_ifaddrIndex;
       }
    }
 

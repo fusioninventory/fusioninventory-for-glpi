@@ -417,7 +417,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $this->ptd->setValue('uptime', $p_info->UPTIME[0]);
                break;
             case 'IPS' :
-               $errors.=$this->importIps($child);
+               $errors.=$this->importIps($child, $this->ptd->getValue('id'));
                break;
             default :
                $errors.=$LANG['plugin_fusioninventory']['errors'][22].' INFO : '.$child->getName()."\n";
@@ -519,29 +519,25 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
    /**
     * Import IPS
-    *@param $p_ips IPS code to import
+    * @param $p_ips IPS code to import
+    * @param $networkequipments_id id of network equipment
     *
-    *@return errors string to be alimented if import ko / '' if ok
+    * @return errors string to be alimented if import ko / '' if ok
     **/
-   function importIps($p_ips) {
+   function importIps($p_ips, $networkequipments_id) {
       global $LANG;
 
       $errors='';
       $PluginFusinvsnmpNetworkEquipmentIP = new PluginFusinvsnmpNetworkEquipmentIP();
       $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      
+      $PluginFusinvsnmpNetworkEquipmentIP->loadIPs($networkequipments_id);
+      
       foreach ($p_ips->children() as $child) {
          switch ($child->getName()) {
             case 'IP' :
                if ((string)$child != "127.0.0.1") {
-                  $ifaddrIndex = $this->ptd->getIfaddrIndex((string)$child);
-                  if (is_int($ifaddrIndex)) {
-                     $oldIfaddr = $this->ptd->getIfaddr($ifaddrIndex);
-                     $PluginFusinvsnmpNetworkEquipmentIP->load($oldIfaddr->getValue('id'));
-                  } else {
-                     $PluginFusinvsnmpNetworkEquipmentIP->load();
-                  }
-                  $PluginFusinvsnmpNetworkEquipmentIP->setValue('ip', (string)$child);
-                  $this->ptd->addIfaddr(clone $PluginFusinvsnmpNetworkEquipmentIP, $ifaddrIndex);
+                  $PluginFusinvsnmpNetworkEquipmentIP->setIP((string)$child);
                   // Search in unknown device if device with IP (CDP) is yet added, in this case,
                   // we get id of this unknown device
                   $a_unknown = $PluginFusioninventoryUnknownDevice->find("`ip`='".(string)$child."'");
@@ -556,7 +552,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $errors.=$LANG['plugin_fusioninventory']['errors'][22].' IPS : '.$child->getName()."\n";
          }
       }
-      $this->ptd->saveIfaddrs();
+      $PluginFusinvsnmpNetworkEquipmentIP->saveIPs($networkequipments_id);
       return $errors;
    }
 

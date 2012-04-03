@@ -117,7 +117,7 @@ class PluginFuvinvsnmpDb extends CommonDBTM {
                        WHERE `glpi_networkequipments`.`id` IS NULL";
       $result=$DB->query($query_select);
       while ($data=$DB->fetch_array($result)) {
-         $pti->deleteFromDB($data["id"],1);
+         $pti->delete(array('id' => $data["id"]));
       }
 
       // * Clean glpi_plugin_fusinvsnmp_networkequipments
