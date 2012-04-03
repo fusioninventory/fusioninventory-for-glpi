@@ -93,8 +93,8 @@ class PluginFusioninventoryCommunication {
     * 
     **/
    function sendMessage($compressmode = 'none') {
+
       switch($compressmode) {
-         
          case 'none':
             header("Content-Type: application/xml");
             echo PluginFusioninventoryToolbox::formatXML($this->message);
@@ -125,9 +125,6 @@ class PluginFusioninventoryCommunication {
             break;
          
       }
-
-      header("Content-Type: application/xml");
-      echo PluginFusioninventoryToolbox::formatXML($this->message);
    }
 
 
