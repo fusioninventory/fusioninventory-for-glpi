@@ -73,20 +73,20 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    
    
    /**
-    * Init config
+    * add multiple configuration values
     *
     * @param $plugin_id plugin id
     * @param $values array of configuration values, indexed by name
     * 
     * @return nothing
     **/
-   function initConfig($plugin_id, $values) {
+   function addValues($plugin_id, $values) {
 
       foreach ($values as $name => $value) {
          if (is_null($this->getValue($plugin_id, $name))) {
-            $this->addConfig($plugin_id, $name, $value);
+            $this->addValue($plugin_id, $name, $value);
          } else {
-            $this->updateConfigType($plugin_id, $name, $value);
+            $this->updateValue($plugin_id, $name, $value);
          }         
       }
    }
@@ -165,7 +165,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
    
    /**
-   * Get value of a configuration field
+   * Get configuration value
    *
    * @param $plugin_id plugin id
    * @param $name field name
@@ -260,7 +260,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
    
    /**
-    * Add config
+    * Add configuration value, if not already present
     *
     * @param $plugin_id plugin id
     * @param $name field name
@@ -269,7 +269,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * 
     * @return integer the new id of the added item (or false if fail)
     **/
-   function addConfig($plugin_id, $name, $value) {
+   function addValue($plugin_id, $name, $value) {
       $existing_value = $this->getValue($plugin_id, $name); 
       if (!is_null($existing_value)) {
          return $existing_value;
@@ -282,7 +282,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
    /**
-    * Update config field
+    * Update configuration value
     *
     * @param $plugin_id plugin id
     * @param $name field name
@@ -291,7 +291,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * 
     * @return boolean : true on success
     **/
-   function updateConfigType($plugin_id, $name, $value) {
+   function updateValue($plugin_id, $name, $value, $module) {
       $config = current($this->find("`plugins_id`='".$plugin_id."'
                           AND `type`='".$name."'"));
       if (isset($config['id'])) {

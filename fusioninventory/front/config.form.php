@@ -52,11 +52,11 @@ Html::header($LANG['plugin_fusioninventory']['functionalities'][0], $_SERVER["PH
 if (isset($_POST['update'])) {
    $config = new PluginFusioninventoryConfig();
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
-   $config->updateConfigType($plugins_id, 'ssl_only', $_POST['ssl_only']);
-   $config->updateConfigType($plugins_id, 'inventory_frequence', $_POST['inventory_frequence']);
-   $config->updateConfigType($plugins_id, 'delete_task', $_POST['delete_task']);
-   $config->updateConfigType($plugins_id, 'agent_port', $_POST['agent_port']);
-   $config->updateConfigType($plugins_id, 'extradebug', $_POST['extradebug']);
+   $config->updateValue($plugins_id, 'ssl_only', $_POST['ssl_only']);
+   $config->updateValue($plugins_id, 'inventory_frequence', $_POST['inventory_frequence']);
+   $config->updateValue($plugins_id, 'delete_task', $_POST['delete_task']);
+   $config->updateValue($plugins_id, 'agent_port', $_POST['agent_port']);
+   $config->updateValue($plugins_id, 'extradebug', $_POST['extradebug']);
    Html::back();
 }
 
