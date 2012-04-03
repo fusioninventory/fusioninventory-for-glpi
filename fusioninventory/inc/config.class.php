@@ -281,21 +281,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    }
 
 
-   
-   /**
-    * Update configuration field
-    *
-    * @param $field_id field id
-    * @param $value field value
-    * 
-    * @return boolean : true on success
-    **/
-   function updateConfig($field_id, $value) {
-      return $this->update(array('id'=>$field_id, 'value'=>$value));
-   }
-
-
-   
    /**
     * Update config field
     *
@@ -310,7 +295,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $config = current($this->find("`plugins_id`='".$plugin_id."'
                           AND `type`='".$name."'"));
       if (isset($config['id'])) {
-         return $this->updateConfig($config['id'], $value);
+         return $this->update(array('id'=> $config['id'], 'value'=>$value));
       }
       return false;
    }
