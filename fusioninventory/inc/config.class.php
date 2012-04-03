@@ -194,7 +194,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    *
    * @return true for an existing field, false otherwise
    **/
-   function is_active($plugin_id, $name) {
+   function isActive($plugin_id, $name) {
       if (!($this->getValue($plugin_id, $name))) {
          return false;
       } else {
@@ -220,7 +220,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][27]."&nbsp;:</td>";
       echo "<td width='20%'>";
-      Dropdown::showYesNo("ssl_only", $this->is_active($plugin_id, 'ssl_only'));
+      Dropdown::showYesNo("ssl_only", $this->isActive($plugin_id, 'ssl_only'));
       echo "</td>";
       echo "<td>".$LANG['plugin_fusioninventory']['config'][0]."&nbsp;:</td>";
       echo "<td width='20%'>";
@@ -246,7 +246,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][76]." :</td>";
       echo "<td>";
-      Dropdown::showYesNo("extradebug", $this->is_active($plugin_id, 'extradebug'));
+      Dropdown::showYesNo("extradebug", $this->isActive($plugin_id, 'extradebug'));
       echo "</td>";
       echo "<td colspan='2'></td>";
       echo "</tr>";
