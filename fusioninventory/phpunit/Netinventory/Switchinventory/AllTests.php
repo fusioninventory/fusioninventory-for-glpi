@@ -307,6 +307,37 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team</COMMENTS>
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
+      
+      
+      // Test modifications of IP of the switch
+      
+      //           <IP>172.27.2.22</IP>
+//          <IP>212.99.4.74</IP>
+//          <IP>212.99.4.73</IP>
+      $switch1bis = str_replace('<IP>172.27.2.22</IP>', '', $switch1);
+      $this->testSendinventory("toto", $switch1bis, 1);
+      
+      $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
+              WHERE `networkequipments_id`='".$a_port['items_id']."'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrow($result), 3, 'May have 3 IPs for this switch');
+
+      $switch1bis = str_replace('<IP>212.99.4.74</IP>', '', $switch1);
+      $this->testSendinventory("toto", $switch1bis, 1);      
+      $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
+              WHERE `networkequipments_id`='".$a_port['items_id']."'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrow($result), 3, 'May have 3 IPs for this switch');
+      $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
+              WHERE `networkequipments_id`='".$a_port['items_id']."'
+                 AND `ip`='172.27.2.22'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrow($result), 1, 'IP 172.27.2.22 may be here 1 time');
+      $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
+              WHERE `networkequipments_id`='".$a_port['items_id']."'
+                 AND `ip`='212.99.4.74'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrow($result), 0, 'IP 212.99.4.74 may be here 0 time');
    }
 
 
