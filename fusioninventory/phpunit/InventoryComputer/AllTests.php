@@ -75,7 +75,7 @@ class InventoryComputer extends PHPUnit_Framework_TestCase {
          $fields = current($data);
          $plugins_id = $fields['id'];
          $pfConfig = new PluginFusioninventoryConfig();
-         $pfConfig->updateConfigType($plugins_id, "extradebug", "1");
+         $pfConfig->updateValue($plugins_id, "extradebug", "1");
        
     }
 
