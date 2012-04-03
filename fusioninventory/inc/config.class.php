@@ -75,18 +75,18 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    /**
     * Init config
     *
-    * @param $p_plugins_id Plugin id
-    * @param $p_insert Array('type'=>'value')
+    * @param $plugin_id plugin id
+    * @param $values array of configuration values, indexed by name
     * 
     * @return nothing
     **/
-   function initConfig($plugins_id, $p_insert) {
+   function initConfig($plugin_id, $values) {
 
-      foreach ($p_insert as $type=>$value) {
-         if (is_null($this->getValue($plugins_id, $type))) {
-            $this->addConfig($plugins_id, $type, $value);
+      foreach ($values as $name => $value) {
+         if (is_null($this->getValue($plugin_id, $name))) {
+            $this->addConfig($plugin_id, $name, $value);
          } else {
-            $this->updateConfigType($plugins_id, $type, $value);
+            $this->updateConfigType($plugin_id, $name, $value);
          }         
       }
    }
@@ -165,17 +165,18 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
    
    /**
-   * Get value of a config field for a fusioninventory plugin
+   * Get value of a configuration field
    *
-   * @param $p_plugins_id integer id of the plugin
-   * @param $p_type value name of the config field to retrieve
+   * @param $plugin_id plugin id
+   * @param $name field name
+   * @param $module ?
    * 
-   * @return value or this field or false
+   * @return field value for an existing field, false otherwise
    **/
-   function getValue($p_plugins_id, $p_type) {
+   function getValue($plugin_id, $name) {
 
-      $config = current($this->find("`plugins_id`='".$p_plugins_id."'
-                          AND `type`='".$p_type."'"));
+      $config = current($this->find("`plugins_id`='".$plugin_id."'
+                          AND `type`='".$name."'"));
       if (isset($config['value'])) {
          return $config['value'];
       }
@@ -187,13 +188,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    /**
    * give state of a config field for a fusioninventory plugin
    *
-   * @param $p_plugins_id integer id of the plugin
-   * @param $p_type value name of the config field to retrieve
+   * @param $plugin_id plugin id
+   * @param $name field name
+   * @param $module ?
    *
-   * @return bool true if field is active or false
+   * @return true for an existing field, false otherwise
    **/
-   function is_active($p_plugins_id, $p_type) {
-      if (!($this->getValue($p_plugins_id, $p_type))) {
+   function is_active($plugin_id, $name) {
+      if (!($this->getValue($plugin_id, $name))) {
          return false;
       } else {
          return true;
@@ -211,19 +213,19 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    function showForm($options=array()) {
       global $LANG;
 
-      $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
+      $plugin_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][27]."&nbsp;:</td>";
       echo "<td width='20%'>";
-      Dropdown::showYesNo("ssl_only", $this->is_active($plugins_id, 'ssl_only'));
+      Dropdown::showYesNo("ssl_only", $this->is_active($plugin_id, 'ssl_only'));
       echo "</td>";
       echo "<td>".$LANG['plugin_fusioninventory']['config'][0]."&nbsp;:</td>";
       echo "<td width='20%'>";
       Dropdown::showInteger("inventory_frequence",
-                            $this->getValue($plugins_id, 'inventory_frequence'),1,240);
+                            $this->getValue($plugin_id, 'inventory_frequence'),1,240);
       echo "</td>";
       echo "</tr>";
 
@@ -231,20 +233,20 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][32]." :</td>";
       echo "<td>";
       Dropdown::showInteger("delete_task",
-                            $this->getValue($plugins_id, 'delete_task'),1,240);
+                            $this->getValue($plugin_id, 'delete_task'),1,240);
       echo " ".strtolower($LANG['calendar'][12]);
       echo "</td>";
 
       echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][8]." :</td>";
       echo "<td>";
-      echo "<input type='text' name='agent_port' value='".$this->getValue($plugins_id, 'agent_port')."'/>";
+      echo "<input type='text' name='agent_port' value='".$this->getValue($plugin_id, 'agent_port')."'/>";
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][76]." :</td>";
       echo "<td>";
-      Dropdown::showYesNo("extradebug", $this->is_active($plugins_id, 'extradebug'));
+      Dropdown::showYesNo("extradebug", $this->is_active($plugin_id, 'extradebug'));
       echo "</td>";
       echo "<td colspan='2'></td>";
       echo "</tr>";
@@ -260,53 +262,55 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    /**
     * Add config
     *
-    * @param $p_plugins_id Plugin id
-    * @param $p_type Config type ('ssl_only', 'URL_agent_conf'...)
-    * @param $p_value Value value of the type
+    * @param $plugin_id plugin id
+    * @param $name field name
+    * @param $value field value
+    * @param $module ?
     * 
     * @return integer the new id of the added item (or false if fail)
     **/
-   function addConfig($p_plugins_id, $p_type, $p_value) {
-      $existing_value = $this->getValue($p_plugins_id, $p_type); 
+   function addConfig($plugin_id, $name, $value) {
+      $existing_value = $this->getValue($plugin_id, $name); 
       if (!is_null($existing_value)) {
          return $existing_value;
       } else {
-         return $this->add(array('plugins_id' => $p_plugins_id, 
-                                 'type'       => $p_type,
-                                 'value'      => $p_value));
+         return $this->add(array('plugins_id' => $plugin_id, 
+                                 'type'       => $name,
+                                 'value'      => $value));
       }
    }
 
 
    
    /**
-    * Update config
+    * Update configuration field
     *
-    * @param $p_id Config id
-    * @param $p_value Value
+    * @param $field_id field id
+    * @param $value field value
     * 
     * @return boolean : true on success
     **/
-   function updateConfig($p_id, $p_value) {
-      return $this->update(array('id'=>$p_id, 'value'=>$p_value));
+   function updateConfig($field_id, $value) {
+      return $this->update(array('id'=>$field_id, 'value'=>$value));
    }
 
 
    
    /**
-    * Update config type
+    * Update config field
     *
-    * @param $p_plugins_id Plugin id
-    * @param $p_type Config type ('ssl_only', 'URL_agent_conf'...)
-    * @param $p_value Value
+    * @param $plugin_id plugin id
+    * @param $name field name
+    * @param $value field value
+    * @param $module ?
     * 
     * @return boolean : true on success
     **/
-   function updateConfigType($p_plugins_id, $p_type, $p_value) {
-      $config = current($this->find("`plugins_id`='".$p_plugins_id."'
-                          AND `type`='".$p_type."'"));
+   function updateConfigType($plugin_id, $name, $value) {
+      $config = current($this->find("`plugins_id`='".$plugin_id."'
+                          AND `type`='".$name."'"));
       if (isset($config['id'])) {
-         return $this->updateConfig($config['id'], $p_value);
+         return $this->updateConfig($config['id'], $value);
       }
       return false;
    }
@@ -314,14 +318,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
    
    /**
-    * Delete config
+    * Delete configuration field
     *
-    * @param $p_id Config id
+    * @param $field_id field id
     * 
     * @return boolean : true on success
     **/
-   function deleteConfig($p_id) {
-      return $this->delete(array('id'=>$p_id));
+   function deleteConfig($field_id) {
+      return $this->delete(array('id'=>$field_id));
    }
 
 
@@ -329,15 +333,15 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    /**
     * Clean config
     *
-    * @param $p_plugins_id Plugin id
+    * @param $plugin_id Plugin id
     * 
     * @return boolean : true on success
     **/
-   function cleanConfig($p_plugins_id) {
+   function cleanConfig($plugin_id) {
       global $DB;
 
       $delete = "DELETE FROM `".$this->getTable()."`
-                 WHERE `plugins_id`='".$p_plugins_id."';";
+                 WHERE `plugins_id`='".$plugin_id."';";
       return $DB->query($delete);
    }
 
@@ -357,7 +361,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
 
-      $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
+      $plugin_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
 
       $this->fields['id'] = 1;
       $this->showFormHeader($options);
@@ -379,7 +383,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $array[3] = $LANG['plugin_fusioninventory']['setup'][27];
       Dropdown::showFromArray("import_monitor", $array, 
                               array('value' => 
-                                 $PluginFusioninventoryConfig->getValue($plugins_id, 
+                                 $PluginFusioninventoryConfig->getValue($plugin_id, 
                                                                         'import_monitor', 'inventory')));
       echo "&nbsp;";
       $text = "* ".$LANG['plugin_fusioninventory']['setup'][23]."&nbsp;:&nbsp;".
@@ -409,7 +413,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $array[3] = $LANG['plugin_fusioninventory']['setup'][27];
       Dropdown::showFromArray("import_printer", $array, 
                               array('value' => 
-                                 $PluginFusioninventoryConfig->getValue($plugins_id, 
+                                 $PluginFusioninventoryConfig->getValue($plugin_id, 
                                                                         'import_printer', 'inventory')));
       echo "&nbsp;";
       Html::showToolTip($text);
@@ -419,7 +423,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_processor", 
-                          $PluginFusioninventoryConfig->getValue($plugins_id, 
+                          $PluginFusioninventoryConfig->getValue($plugin_id, 
                                                                 'component_processor', 'inventory'));
       echo "</td>";
       echo "</tr>";
@@ -436,7 +440,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $array[3] = $LANG['plugin_fusioninventory']['setup'][27];
       Dropdown::showFromArray("import_peripheral", $array, 
                               array('value' => 
-                                       $PluginFusioninventoryConfig->getValue($plugins_id, 
+                                       $PluginFusioninventoryConfig->getValue($plugin_id, 
                                                                               'import_peripheral', 'inventory')));
       echo "&nbsp;";
       Html::showToolTip($text);
@@ -446,7 +450,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_memory", 
-                          $PluginFusioninventoryConfig->getValue($plugins_id, 'component_memory', 'inventory'));
+                          $PluginFusioninventoryConfig->getValue($plugin_id, 'component_memory', 'inventory'));
       echo "</td>";
       echo "</tr>";
 
@@ -456,14 +460,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("import_software", 
-                          $PluginFusioninventoryConfig->getValue($plugins_id, 'import_software', 'inventory'));
+                          $PluginFusioninventoryConfig->getValue($plugin_id, 'import_software', 'inventory'));
       echo "</td>";
       echo "<td>";
       echo $LANG['devices'][1]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_harddrive", 
-                          $PluginFusioninventoryConfig->getValue($plugins_id, 'component_harddrive', 'inventory'));
+                          $PluginFusioninventoryConfig->getValue($plugin_id, 'component_harddrive', 'inventory'));
       echo "</td>";
       echo "</tr>";
 
@@ -473,14 +477,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("import_volume", 
-                          $PluginFusioninventoryConfig->getValue($plugins_id, 'import_volume', 'inventory'));
+                          $PluginFusioninventoryConfig->getValue($plugin_id, 'import_volume', 'inventory'));
       echo "</td>";
       echo "<td>";
       echo $LANG['devices'][3]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_networkcard", 
-                          $PluginFusioninventoryConfig->getValue($plugins_id, 'component_networkcard', 'inventory'));
+                          $PluginFusioninventoryConfig->getValue($plugin_id, 'component_networkcard', 'inventory'));
       echo "</td>";
       echo "</tr>";
 
@@ -490,14 +494,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("import_antivirus", 
-                          $PluginFusioninventoryConfig->getValue($plugins_id, 'import_antivirus', 'inventory'));
+                          $PluginFusioninventoryConfig->getValue($plugin_id, 'import_antivirus', 'inventory'));
       echo "</td>";
       echo "<td>";
       echo $LANG['plugin_fusioninventory']['setup'][31]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_networkcardvirtual", 
-                          $PluginFusioninventoryConfig->getValue($plugins_id, 'component_networkcardvirtual', 'inventory'));
+                          $PluginFusioninventoryConfig->getValue($plugin_id, 'component_networkcardvirtual', 'inventory'));
       echo "</td>";
       echo "</tr>";
       
@@ -507,14 +511,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>";
 //      Dropdown::showYesNo("import_registry", 
-//                          $PluginFusioninventoryConfig->getValue($plugins_id, 'import_registry'));
+//                          $PluginFusioninventoryConfig->getValue($plugin_id, 'import_registry'));
       echo "</td>";
       echo "<td>";
       echo $LANG['devices'][2]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_graphiccard", 
-                          $PluginFusioninventoryConfig->getValue($plugins_id, 'component_graphiccard', 'inventory'));
+                          $PluginFusioninventoryConfig->getValue($plugin_id, 'component_graphiccard', 'inventory'));
       echo "</td>";
       echo "</tr>";
       
@@ -524,14 +528,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>";
 //      Dropdown::showYesNo("import_process", 
-//                          $PluginFusioninventoryConfig->getValue($plugins_id, 'import_process'));
+//                          $PluginFusioninventoryConfig->getValue($plugin_id, 'import_process'));
       echo "</td>";
       echo "<td>";
       echo $LANG['devices'][7]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_soundcard", 
-                          $PluginFusioninventoryConfig->getValue($plugins_id, 'component_soundcard', 'inventory'));
+                          $PluginFusioninventoryConfig->getValue($plugin_id, 'component_soundcard', 'inventory'));
       echo "</td>";
       echo "</tr>";
 
@@ -541,14 +545,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("import_vm", 
-                          $PluginFusioninventoryConfig->getValue($plugins_id, 'import_vm', 'inventory'));
+                          $PluginFusioninventoryConfig->getValue($plugin_id, 'import_vm', 'inventory'));
       echo "</td>";
       echo "<td>";
       echo $LANG['devices'][19]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_drive", 
-                          $PluginFusioninventoryConfig->getValue($plugins_id, 'component_drive', 'inventory'));
+                          $PluginFusioninventoryConfig->getValue($plugin_id, 'component_drive', 'inventory'));
       echo "</td>";
       echo "</tr>";
 
@@ -560,7 +564,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       Dropdown::showFromArray("location",
                               array("0"=>"------",
                                     "1"=>$LANG['plugin_fusioninventory']['rule'][28]),
-                              array('value'=>$PluginFusioninventoryConfig->getValue($plugins_id, 'location', 'inventory')));
+                              array('value'=>$PluginFusioninventoryConfig->getValue($plugin_id, 'location', 'inventory')));
 
       echo "</td>";
       echo "<td>";
@@ -568,7 +572,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_networkdrive",
-                          $PluginFusioninventoryConfig->getValue($plugins_id, 'component_networkdrive', 'inventory'));
+                          $PluginFusioninventoryConfig->getValue($plugin_id, 'component_networkdrive', 'inventory'));
       echo "</td>";
       echo "</tr>";
 
@@ -580,14 +584,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       Dropdown::showFromArray("group",
                               array("0"=>"------",
                                     "1"=>$LANG['plugin_fusioninventory']['rule'][28]),
-                              array('value'=>$PluginFusioninventoryConfig->getValue($plugins_id, 'group', 'inventory')));
+                              array('value'=>$PluginFusioninventoryConfig->getValue($plugin_id, 'group', 'inventory')));
       echo "</td>";
       echo "<td>";
       echo $LANG['devices'][20]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_control",
-                          $PluginFusioninventoryConfig->getValue($plugins_id,
+                          $PluginFusioninventoryConfig->getValue($plugin_id,
                                                                  'component_control', 'inventory'));
       echo "</td>";
       echo "</tr>";
@@ -597,7 +601,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::show('State',
                      array('name'   => 'states_id_default',
-                           'value'  => $PluginFusioninventoryConfig->getValue($plugins_id,
+                           'value'  => $PluginFusioninventoryConfig->getValue($plugin_id,
                                                                               'states_id_default', 'inventory')));
       echo "</td>";
       echo "<td colspan='2'></td>";
@@ -615,7 +619,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td colspan='2'>";
       Dropdown::show("Transfer",
                      array('name'=>"transfers_id_auto",
-                           'value'=>$PluginFusioninventoryConfig->getValue($plugins_id, 
+                           'value'=>$PluginFusioninventoryConfig->getValue($plugin_id, 
                                                                            'transfers_id_auto', 'inventory'),
                            'comment'=>0));
       echo "</td>";
@@ -627,7 +631,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       return true;
    }   
 
->>>>>>> fa4f337... no need for two methods
 }
 
 ?>
