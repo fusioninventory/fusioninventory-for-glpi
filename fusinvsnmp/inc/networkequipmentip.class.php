@@ -148,20 +148,18 @@ class PluginFusinvsnmpNetworkEquipmentIP extends CommonDBTM {
    
    
    function saveIPs($networkequipments_id) {
-      foreach ($this->ifaddrsPresent as $ip=>$id) {
-         if (isset($this->ifaddrs[$ip])) {
-            unset($this->ifaddrs[$ip]);
+      foreach ($this->ifaddrs as $ip=>$id) {
+         if (isset($this->ifaddrsPresent[$ip])) {
             unset($this->ifaddrsPresent[$ip]);
          } else {
+            $this->delete(array('id' => $id));
+         }
+         foreach ($this->ifaddrsPresent as $ip => $id) {
             $input = array();
             $input['networkequipments_id'] = $networkequipments_id;
             $input['ip'] = $ip;
             $this->add($input);
-            unset($this->ifaddrsPresent[$ip]);
          }
-      }
-      foreach ($this->ifaddrs as $ip=>$ip) {
-         $this->delete(array('id' => $id));
       }
    }   
 }
