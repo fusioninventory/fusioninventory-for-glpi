@@ -48,7 +48,6 @@ if (!defined('GLPI_ROOT')) {
  * Class to communicate with agents using XML
  **/
 class PluginFusioninventoryCommunication {
-   private $deviceId, $ptd, $type='';
    protected $message;
 
    
