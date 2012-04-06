@@ -76,15 +76,25 @@ if (!class_exists("PluginFusioninventoryConfig")) {
 }
 
 if (isset($_GET['action']) && isset($_GET['machineid'])) {
-   // new REST protocol
+   handleFusionCommunication()
+} else if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
+   handleOCSCommunication()
+}
+
+session_destroy();
+
+// new REST protocol
+function handleFusionCommunication() {
    $response = PluginFusioninventoryRestCommunication::communicate($_GET);
    if ($response) {
       echo json_encode($response);
    } else {
       PluginFusioninventoryRestCommunication::sendError();
    }
-} else if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
-   // old XML protocol
+}
+
+// old POST protocol
+function handleOCSCommunication() {
    
    // ***** For debug only ***** //
    //$GLOBALS["HTTP_RAW_POST_DATA"] = gzcompress('');
@@ -226,6 +236,5 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       $communication->sendMessage($compressmode);
    }
 }
-session_destroy();
 
 ?>
