@@ -192,7 +192,6 @@ function handleOCSCommunication() {
       $pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA);
 
       if (!$pxml) {
-         $communication = new PluginFusioninventoryCommunication();
          $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
 <ERROR>XML not well formed!</ERROR>
