@@ -123,11 +123,10 @@ class PluginFusioninventoryCommunication {
     * Import data
     *
     * @param $p_xml XML code to import
-    * @param &$p_errors errors string to be alimented if import ko
     * 
     * @return true (import ok) / false (import ko)
     **/
-   function import($p_xml, &$p_errors='') {
+   function import($p_xml) {
       global $LANG;
       
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
