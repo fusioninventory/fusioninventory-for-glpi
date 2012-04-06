@@ -52,7 +52,6 @@ class PluginFusioninventoryCommunication {
 
    
    function __construct() {
-      $this->message = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><REPLY></REPLY>");
 
       PluginFusioninventoryToolbox::logIfExtradebug(
          'pluginFusioninventory-communication',
@@ -93,6 +92,10 @@ class PluginFusioninventoryCommunication {
     * 
     **/
    function sendMessage($compressmode = 'none') {
+
+      if (!$this->message) {
+         return;
+      }
 
       switch($compressmode) {
          case 'none':

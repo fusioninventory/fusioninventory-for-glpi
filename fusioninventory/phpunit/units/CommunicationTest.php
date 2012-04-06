@@ -12,8 +12,10 @@ ob_start();
 
 class CommunicationTest extends PHPUnit_Framework_TestCase {
 
-   private $output = '<?xml version="1.0" encoding="UTF-8"?>
-<REPLY/>
+   private $output = '<?xml version="1.0"?>
+<foo>
+   <bar/>
+</foo>
 ';
 
    public function testNew() {
@@ -21,19 +23,11 @@ class CommunicationTest extends PHPUnit_Framework_TestCase {
       $this->assertInstanceOf(
          'PluginFusioninventoryCommunication', $communication
       );
-      $this->assertObjectHasAttribute('message', $communication);
 
       return $communication;
    }
 
    public function testGetMessage() {
-      $communication = new PluginFusioninventoryCommunication();
-      $message = $communication->getMessage();
-      $this->assertInstanceOf('SimpleXMLElement', $message);
-      $this->assertXMLStringEqualsXMLString('<REPLY></REPLY>', $message->asXML());
-   }
-
-   public function testSetMessage() {
       $communication = new PluginFusioninventoryCommunication();
       $communication->setMessage('<foo><bar/></foo>');
       $message = $communication->getMessage();
@@ -43,6 +37,8 @@ class CommunicationTest extends PHPUnit_Framework_TestCase {
 
    public function testSendMessage() {
       $communication = new PluginFusioninventoryCommunication();
+      $communication->setMessage('<foo><bar/></foo>');
+
       $this->expectOutputString($this->output);
       $communication->sendMessage();
       $headers = xdebug_get_headers();
@@ -51,6 +47,8 @@ class CommunicationTest extends PHPUnit_Framework_TestCase {
 
    public function testSendMessageNoCompression() {
       $communication = new PluginFusioninventoryCommunication();
+      $communication->setMessage('<foo><bar/></foo>');
+
       $this->expectOutputString($this->output);
       $communication->sendMessage('none');
       $headers = xdebug_get_headers();
@@ -59,6 +57,8 @@ class CommunicationTest extends PHPUnit_Framework_TestCase {
 
    public function testSendMessageZlibCompression() {
       $communication = new PluginFusioninventoryCommunication();
+      $communication->setMessage('<foo><bar/></foo>');
+
       $this->expectOutputString(gzcompress($this->output));
       $communication->sendMessage('zlib');
       $headers = xdebug_get_headers();
@@ -67,6 +67,8 @@ class CommunicationTest extends PHPUnit_Framework_TestCase {
 
    public function testSendMessageDeflate() {
       $communication = new PluginFusioninventoryCommunication();
+      $communication->setMessage('<foo><bar/></foo>');
+
       $this->expectOutputString(gzdeflate($this->output));
       $communication->sendMessage('deflate');
       $headers = xdebug_get_headers();
@@ -75,6 +77,8 @@ class CommunicationTest extends PHPUnit_Framework_TestCase {
 
    public function testSendMessageGzipCompression() {
       $communication = new PluginFusioninventoryCommunication();
+      $communication->setMessage('<foo><bar/></foo>');
+
       $this->expectOutputString(gzencode($this->output));
       $communication->sendMessage('gzip');
       $headers = xdebug_get_headers();
