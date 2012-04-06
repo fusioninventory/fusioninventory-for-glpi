@@ -173,8 +173,7 @@ function handleOCSCommunication() {
 <ERROR>SSL REQUIRED BY SERVER</ERROR>
 </REPLY>");
       $communication->sendMessage($compressmode);
-      session_destroy();
-      exit();
+      return;
    }
 
    PluginFusioninventoryConfig::logIfExtradebug(
@@ -199,8 +198,7 @@ function handleOCSCommunication() {
 <ERROR>XML not well formed!</ERROR>
 </REPLY>");
          $communication->sendMessage($compressmode);
-         session_destroy();
-         exit();
+         return;
       }
    }
 
