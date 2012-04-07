@@ -753,10 +753,10 @@ echo "# testHardwareModifications\n";
             $child->VERSION = "N/A";
          }         
          if (isset($child->NAME)) {
-            if (!isset($soft[(string)$child->NAME."-".(string)$child->VERSION])) {
+            if (!isset($soft[strtolower((string)$child->NAME."-".(string)$child->VERSION)])) {
                $a_softwareXML["'".$i."-".(string)$child->NAME."'"] = 1;
                $i++;
-               $soft[(string)$child->NAME."-".(string)$child->VERSION] = 1;
+               $soft[strtolower((string)$child->NAME."-".(string)$child->VERSION)] = 1;
             }
          } else if (isset($child->GUID)) {
             if (!isset($soft[(string)$child->GUID."-".(string)$child->VERSION])) {
