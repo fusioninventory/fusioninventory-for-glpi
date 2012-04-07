@@ -685,6 +685,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
             OR ($p_type == "fastEther(62)")
             OR ($p_type == "fastEther")
             OR ($p_type == "62")
+            OR ($p_type == "169")
+            OR ($p_type == "shdsl")
          ) { // not virtual port
          $real = true;
       }
