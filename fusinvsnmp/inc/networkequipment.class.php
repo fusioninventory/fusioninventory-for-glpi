@@ -410,7 +410,11 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 // ********************************************************************************************** //
 // *********************************** METTRE TABLEAU DES PORTS ********************************* //
 // ********************************************************************************************** //
-
+      $monitoring = 0;
+      if (class_exists("PluginMonitoringNetworkport")) {
+         $monitoring = 1;
+      }
+      
       $query = "
       SELECT *,glpi_plugin_fusinvsnmp_networkports.mac as ifmacinternal
 
@@ -444,8 +448,16 @@ function appear_legend(id){
       </script>";
       echo "<script type='text/javascript' src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/prototype.js'></script>";
       echo "<script type='text/javascript' src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/effects.js'></script>";
-      
-      echo "<table class='tab_cadre' cellpadding='5' width='1100'>";
+      $nbcol = 5;
+      if ($monitoring == '1') {
+         if (PluginMonitoringProfile::haveRight("componentscatalog", 'r')) {
+            echo "<form name='form' method='post' action='".$CFG_GLPI['root_doc']."/plugins/monitoring/front/networkport.form.php'>";
+            echo "<input type='hidden' name='items_id' value='".$id."' />";
+            echo "<input type='hidden' name='itemtype' value='NetworkEquipment' />";
+         }
+         $nbcol++;
+      }
+      echo "<table class='tab_cadre' cellpadding='".$nbcol."' width='1100'>";
 
       echo "<tr class='tab_bg_1'>";
       $query_array = "SELECT *
@@ -493,6 +505,9 @@ function appear_legend(id){
 //                        '/front/popup.php?popup=search_config&itemtype=PluginFusinvsnmpNetworkEquipment\',\'glpipopup\',
 //                        \'height=400, width=1000, top=100, left=100, scrollbars=yes\' ); w.focus();"></th>';
       echo "<th>".$LANG["common"][16]."</th>";
+      if ($monitoring == '1') {
+         echo "<th>".$LANG['plugin_monitoring']['title'][0]."</th>";
+      }
 
       $query_array = "SELECT *
                       FROM `glpi_displaypreferences`
@@ -586,6 +601,21 @@ function appear_legend(id){
                      $data["name"]."</a>";
             echo "</td>";
 
+            if ($monitoring == '1') {
+               echo "<td>";
+               $state = PluginMonitoringNetworkport::isMonitoredNetworkport($data['id']);
+               if (PluginMonitoringProfile::haveRight("componentscatalog", 'w')) {
+                  $checked = '';
+                  if ($state) {
+                     $checked = 'checked';
+                  }
+                  echo "<input type='checkbox' name='networkports_id[]' value='".$data['id']."' ".$checked."/>";
+               } else if (PluginMonitoringProfile::haveRight("componentscatalog", 'r')) {
+                  echo Dropdown::getYesNo($state);
+               }
+               echo "</td>";
+            }
+            
             $query_array = "SELECT *
                             FROM `glpi_displaypreferences`
                             WHERE `itemtype`='PluginFusinvsnmpNetworkEquipment'
@@ -796,7 +826,23 @@ function appear_legend(id){
             ";
          }
       }
+      if ($monitoring == '1') {
+         if (PluginMonitoringProfile::haveRight("componentscatalog", 'w')) {
+            echo "<tr>";
+            echo "<td colspan='2'></td>";
+            echo "<td class='center'>";
+            echo "<input type='submit' class='submit' name='update' value='update'/>";
+            echo "</td>";
+            echo "<td colspan='".($nbcol - 3)."'></td>";
+            echo "</tr>";
+         }
+      }
       echo "</table>";
+      if ($monitoring == '1') {
+         if (PluginMonitoringProfile::haveRight("componentscatalog", 'w')) {
+            echo "</form>";
+         }
+      }
    }
 
    private function byteSize($bytes,$sizeoct=1024) {
