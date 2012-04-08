@@ -637,8 +637,13 @@ echo "# testHardwareModifications\n";
       $a_memoryXML = array();
       $i = 0;
       foreach ($xml->CONTENT->MEMORIES as $child) {
+         if (isset($child->CAPACITY)
+                 AND (string)$child->CAPACITY == 'No') {
+            $child->CAPACITY = 0;
+         }
+         
          if (isset($child->CAPTION)
-                 AND ctype_digit((string)$child->CAPACITY)
+                 AND preg_match("/^[0-9]+$/i", (string)$child->CAPACITY)
                  AND (isset($child->TYPE)
                          AND !preg_match('/Flash/', (string)$child->TYPE))) {
             $a_memoryXML["'".$i."-".$child->CAPTION."'"] = 1;
