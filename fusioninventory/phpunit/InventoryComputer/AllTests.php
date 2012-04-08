@@ -803,17 +803,20 @@ echo "# testHardwareModifications\n";
             $name = $child->GUID;
          }
          if ($name != '') {
-            // Search in GLPI if it's ok
-            $query = "SELECT * FROM `glpi_computers_softwareversions`
-               LEFT JOIN `glpi_softwareversions` ON `softwareversions_id`=`glpi_softwareversions`.`id`
-               LEFT JOIN `glpi_softwares` ON `glpi_softwareversions`.`softwares_id` = `glpi_softwares`.`id`
-               WHERE `computers_id`='".$items_id."'
-                  AND `glpi_softwareversions`.`name` = '".$child->VERSION."'
-                  AND `glpi_softwares`.`name` = '".addslashes_deep($name)."'
-                     LIMIT 1";
-            $result=$DB->query($query);
+            if (!(isset($child->VERSION)
+                    AND strstr($child->VERSION, '"'))) {
+               // Search in GLPI if it's ok
+               $query = "SELECT * FROM `glpi_computers_softwareversions`
+                  LEFT JOIN `glpi_softwareversions` ON `softwareversions_id`=`glpi_softwareversions`.`id`
+                  LEFT JOIN `glpi_softwares` ON `glpi_softwareversions`.`softwares_id` = `glpi_softwares`.`id`
+                  WHERE `computers_id`='".$items_id."'
+                     AND `glpi_softwareversions`.`name` = '".$child->VERSION."'
+                     AND `glpi_softwares`.`name` = '".addslashes_deep($name)."'
+                        LIMIT 1";
+               $result=$DB->query($query);
 
-            $this->assertEquals($DB->numrows($result), 1, 'Software not find in GLPI '.$DB->numrows($result).' times instead 1 ('.addslashes_deep($child->NAME).'/'.addslashes_deep($child->GUID).') ['.$xmlFile.']');
+               $this->assertEquals($DB->numrows($result), 1, 'Software not find in GLPI '.$DB->numrows($result).' times instead 1 ('.addslashes_deep($child->NAME).'/'.addslashes_deep($child->GUID).') ['.$xmlFile.']');
+            }
          }
       }
 
