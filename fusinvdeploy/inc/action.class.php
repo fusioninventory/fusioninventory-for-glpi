@@ -315,7 +315,7 @@ class PluginFusinvdeployAction extends CommonDBTM {
 
       foreach($params as $param_key => $param_value) {
          $new_key         = preg_replace('#^'.$render.'#','',$param_key);
-         $params[$new_key] = mysql_escape_string($param_value);
+         $params[$new_key] = mysql_real_escape_string($param_value);
       }
 
       $render_type   = PluginFusinvdeployOrder::getRender($render);
