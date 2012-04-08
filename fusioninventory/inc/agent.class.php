@@ -710,6 +710,27 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "</tr>";
       echo "</table>";
    }   
+   
+   
+   
+   /**
+    * Disable data to put in table glpi_logs
+    * 
+    */   
+   function pre_updateInDB() {
+      if (isset($this->updates['version'])
+              AND isset($this->oldvalues['version'])
+              AND $this->updates['version'] == $this->oldvalues['version']) {
+         unset($this->updates['version']);
+         unset($this->oldvalues['version']);
+      }
+      if (isset($this->oldvalues['last_contact'])) {
+         unset($this->oldvalues['last_contact']);
+      }
+      if (isset($this->oldvalues['token'])) {
+         unset($this->oldvalues['token']);
+      }
+   }
 }
 
 ?>
