@@ -412,34 +412,45 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       global $DB;
 
       $a_agent = $this->find("`items_id`='".$items_id."'", "", 1);
-# Is this computer already linked to an agent?
+      // Is this computer already linked to an agent?
       if ($agent = array_shift($a_agent)) {
 
-         # relation
-	 if ($agent['device_id'] != $device_id) {
-            $agent['device_id'] = $device_id;
-            $this->update($agent);
-	 }
+         // relation
+         if ($agent['device_id'] != $device_id) {
+            $input = array();
+            $input['id'] = $agent['id'];
+            $input['device_id'] = $device_id;
+            $this->update($input);
+         }
 
-
-# Clean up the agent list
-         $oldAgent = $this->find(
-# computer linked to the wrong agent
-            "(`items_id`='".$items_id."' AND `device_id` <> '".$device_id."')".
-            " OR ".
-# the same device_id but linked on the wrong computer 
-            "(`device_id`='".$device_id."' AND `items_id`<>'".$items_id."')"
-	 );
-         foreach ($oldAgent as $id => $agent) {
-            $this->delete($agent);
+         // Clean up the agent list
+         $oldAgents = $this->find(
+            // computer linked to the wrong agent
+            "(`items_id`='".$items_id."' AND `device_id` <> '".$device_id."')");
+         foreach ($oldAgents as $oldAgent) {
+            $this->delete($oldAgent);
+         }
+         $oldAgents = $this->find(
+            // the same device_id but linked on the wrong computer 
+            "(`device_id`='".$device_id."' AND `items_id`<>'".$items_id."')");
+         foreach ($oldAgents as $oldAgent) {
+            $input = array();
+            $input['id'] = $agent['id'];
+            $input['last_contact'] = $oldAgent['last_contact'];
+            $input['version'] = $oldAgent['version'];
+            $input['name'] = $oldAgent['name'];
+            $input['useragent'] = $oldAgent['useragent'];
+            $input['token'] = $oldAgent['token'];
+            $this->update($input);            
+            $this->delete($oldAgent);
          }
       } else { # This is a new computer
-          // Link agent with computer
-          $agent = $this->InfosByKey($device_id);
-          if (isset($agent['id'])) {
+         // Link agent with computer
+         $agent = $this->InfosByKey($device_id);
+         if (isset($agent['id'])) {
              $agent['items_id'] = $items_id;
              $this->update($agent);
-          }
+         }
       }
    }
 
