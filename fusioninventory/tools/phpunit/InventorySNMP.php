@@ -494,7 +494,7 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
       }
 
       $NetworkPort = new NetworkPort();
-      $PluginFusinvsnmpNetworkPort = new PluginFusinvsnmpNetworkPort($itemtype);
+      $PluginFusinvsnmpNetworkPort = new PluginFusinvsnmpNetworkPort();
       $count_ports = 0;
       foreach ($xml->PORTS->PORT as $child) {
          if ($PluginFusinvsnmpNetworkPort->isReal($child->IFTYPE)) {
@@ -532,8 +532,7 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
                foreach ($a_ports as $id => $data) {
 
                }
-               $oFusioninventory_networkport = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkports");
-               $a_portsExt = $oFusioninventory_networkport->find("`networkports_id`='".$id."'");
+               $a_portsExt = $PluginFusinvsnmpNetworkPort->find("`networkports_id`='".$id."'");
                $dataExt = array();
                foreach ($a_portsExt as $idExt => $dataExt) {
 
@@ -642,7 +641,6 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
       }
 
       $NetworkPort = new NetworkPort();
-      $PluginFusinvsnmpNetworkPort = new PluginFusinvsnmpNetworkPort();
       $NetworkPort_NetworkPort = new NetworkPort_NetworkPort();
 
       foreach ($xml->PORTS->children() as $name=>$child) {

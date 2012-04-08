@@ -322,10 +322,14 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
                 FROM `glpi_networkports`
                 WHERE (`mac` = '".$p_mac."' OR
                                   `mac` = '".strtoupper($p_mac)."')
-                      AND `id`!='".$p_fromPortID."';"; // do not get the link port
+                      AND `id`!='".$p_fromPortID."'
+                LIMI 1"; // do not get the link port
       $result = $DB->query($query);
-      $data = $DB->fetch_assoc($result);
-      return($data["id"]);
+      if ($DB->numrows($result) > 0) {
+         $data = $DB->fetch_assoc($result);
+         return($data["id"]);
+      }
+      return false;
    }
 
 

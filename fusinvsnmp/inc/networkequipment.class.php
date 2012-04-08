@@ -47,7 +47,6 @@ if (!defined('GLPI_ROOT')) {
 require_once(GLPI_ROOT.'/plugins/fusinvsnmp/inc/commondbtm.class.php');
 
 class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
-   private $ports=array();
    private $oFusionInventory_networkequipment;
    private $newPorts=array(), $updatesPorts=array();
 
@@ -72,7 +71,6 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       global $DB;
 
       parent::load($p_id);
-      $this->ports = $this->getPortsDB();
 
       $query = "SELECT `id`
                 FROM `glpi_plugin_fusinvsnmp_networkequipments`
@@ -110,126 +108,6 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       // update last_fusioninventory_update even if no other update
       $this->setValue('last_fusioninventory_update', date("Y-m-d H:i:s"));
       $this->oFusionInventory_networkequipment->updateDB();
-      // ports
-      $this->savePorts();
-   }
-
-
-
-   /**
-    * Get ports
-    *
-    *@return Array of ports instances
-    **/
-   private function getPortsDB() {
-      global $DB;
-
-      $ptp = new PluginFusinvsnmpNetworkPort();
-      $query = "SELECT `id`
-                FROM `glpi_networkports`
-                WHERE `items_id` = '".$this->getValue('id')."'
-                      AND `itemtype` = '".NETWORKING_TYPE."';";
-      $portsIds = array();
-      $result = $DB->query($query);
-      if ($result) {
-         if ($DB->numrows($result) != 0) {
-            while ($port = $DB->fetch_assoc($result)) {
-               $ptp->load($port['id']);
-               $portsIds[] = clone $ptp;
-            }
-         }
-      }
-      return $portsIds;
-   }
-
-
-
-   /**
-    * Get ports
-    *
-    *@return Array of ports id
-    **/
-   function getPorts() {
-      return $this->ports;
-   }
-
-
-
-   /**
-    * Get index of port object
-    *
-    *@param $p_mac MAC address
-    *@param $p_ip='' IP address
-    *@return Index of port object in ports array or '' if not found
-    **/
-   function getPortIndex($p_ifnumber, $p_ip='') {
-      $portIndex = '';
-      foreach ($this->ports as $index => $oPort) {
-         if (is_object($oPort)) { // should always be true
-            if ($oPort->getValue('logical_number')==$p_ifnumber) {
-               $portIndex = $index;
-               break;
-            }
-         }
-      }
-      return $portIndex;
-   }
-
-
-
-
-
-
-   /**
-    * Get port object
-    *
-    *@param $p_index Index of port object in $ports
-    *@return Port object in ports array
-    **/
-   function getPort($p_index) {
-      return $this->ports[$p_index];
-   }
-
-
-
-   /**
-    * Save new ports
-    *
-    *@return nothing
-    **/
-   function savePorts() {
-      global $CFG_GLPI;
-      
-      $CFG_GLPI["deleted_tables"][]="glpi_networkports"; // TODO : to clean
-      
-      foreach ($this->ports as $index=>$ptp) {
-         if (!in_array($index, $this->updatesPorts)) { // delete ports which don't exist any more
-            $ptp->deleteDB();
-         }
-      }
-      foreach ($this->newPorts as $ptp) {
-         if ($ptp->getValue('id')=='') {               // create existing ports
-            $ptp->addDB($this->getValue('id'), true);
-         } else {                                      // update existing ports
-            $ptp->updateDB();
-         }
-      }
-   }
-
-
-
-   /**
-    * Add new port
-    *
-    *@param $p_oPort port object
-    *@param $p_portIndex='' index of port in $ports if already exists
-    *@return nothing
-    **/
-   function addPort($p_oPort, $p_portIndex='') {
-      $this->newPorts[]=$p_oPort;
-      if (is_int($p_portIndex)) {
-         $this->updatesPorts[]=$p_portIndex;
-      }
    }
 
 
