@@ -432,8 +432,11 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                                  AND $arrSectionToAdd["SERIALNUMBER"] == $arrSectionToRemove["SERIALNUMBER"])
                               OR (!isset($arrSectionToRemove["SERIALNUMBER"])
                                  AND isset($arrSectionToAdd["DESCRIPTION"]) AND isset($arrSectionToRemove["DESCRIPTION"])
+                                 AND isset($arrSectionToAdd["DESCRIPTION"]) == isset($arrSectionToRemove["DESCRIPTION"])
                                  AND isset($arrSectionToAdd["CAPACITY"]) AND isset($arrSectionToRemove["CAPACITY"])
-                                 AND isset($arrSectionToAdd["SPEED"]) AND isset($arrSectionToRemove["SPEED"]))) {
+                                 AND isset($arrSectionToAdd["CAPACITY"]) == isset($arrSectionToRemove["CAPACITY"])
+                                 AND isset($arrSectionToAdd["SPEED"]) AND isset($arrSectionToRemove["SPEED"])
+                                 AND isset($arrSectionToAdd["SPEED"]) == isset($arrSectionToRemove["SPEED"]))) {
 
                               $boolUpdate = true;
                            }
