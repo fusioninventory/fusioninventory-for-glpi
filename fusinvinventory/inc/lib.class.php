@@ -510,11 +510,44 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                            break;
                            
                         case "PRINTERS":
-                           if ((isset($arrSectionToAdd["DESCRIPTION"]) AND isset($arrSectionToRemove["DESCRIPTION"])
-                                 AND $arrSectionToAdd["DESCRIPTION"] == $arrSectionToRemove["DESCRIPTION"])
-                              OR (isset($arrSectionToAdd["PORT"]) AND isset($arrSectionToRemove["PORT"])
-                                 AND $arrSectionToAdd["PORT"] == $arrSectionToRemove["PORT"])) {
-                              $boolUpdate = true;
+                           
+                           $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+                           if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                                                                      "import_printer") == '0') {
+                              // Printers not managed
+                           } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                                                                              "import_printer") == '2') {
+                              // Unique import
+                              if (((isset($arrSectionToAdd["SERIAL"])) AND (isset($arrSectionToRemove["SERIAL"]))
+                                    AND ($arrSectionToAdd["SERIAL"] == $arrSectionToRemove["SERIAL"]))                                 
+                                 AND (isset($arrSectionToAdd["DESCRIPTION"]) AND isset($arrSectionToRemove["DESCRIPTION"])
+                                    AND $arrSectionToAdd["DESCRIPTION"] == $arrSectionToRemove["DESCRIPTION"])) {
+                                 
+                                 $boolUpdate = true;
+                              } else if (((!isset($arrSectionToAdd["SERIAL"])) AND (!isset($arrSectionToRemove["SERIAL"])))
+                                 AND (isset($arrSectionToAdd["DESCRIPTION"]) AND isset($arrSectionToRemove["DESCRIPTION"])
+                                    AND $arrSectionToAdd["DESCRIPTION"] == $arrSectionToRemove["DESCRIPTION"])) {
+                                 
+                                 $boolUpdate = true;
+                              } 
+                           } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                                                                             "import_printer") == '3') {
+                              // Import only with serial number
+                              if ((isset($arrSectionToAdd["SERIAL"])) AND (isset($arrSectionToRemove["SERIAL"]))
+                                    AND ($arrSectionToAdd["SERIAL"] == $arrSectionToRemove["SERIAL"])) {
+                                 
+                                 $boolUpdate = true;
+                              }
+                           } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                                                                             "import_printer") == '1') {
+                              // GLOBAL
+                              if ((isset($arrSectionToAdd["DESCRIPTION"]) AND isset($arrSectionToRemove["DESCRIPTION"])
+                                    AND $arrSectionToAdd["DESCRIPTION"] == $arrSectionToRemove["DESCRIPTION"])
+                                 OR (isset($arrSectionToAdd["PORT"]) AND isset($arrSectionToRemove["PORT"])
+                                    AND $arrSectionToAdd["PORT"] == $arrSectionToRemove["PORT"])) {
+                                 
+                                 $boolUpdate = true;
+                              }
                            }
                            break;
                            
