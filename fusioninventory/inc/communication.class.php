@@ -65,7 +65,7 @@ class PluginFusioninventoryCommunication {
     * @return readable XML message
     **/
    function getMessage() {
-      return $this->formatMessage();
+      return $this->message;
    }
 
 
@@ -90,25 +90,25 @@ class PluginFusioninventoryCommunication {
       switch($compressmode) {
          case 'none':
             header("Content-Type: application/xml");
-            echo $this->message->asXML();
+            echo $this->formatXML($this->message);
             break;
          
          case 'zlib':
             # rfc 1950
             header("Content-Type: application/x-compress-zlib");
-            echo gzcompress($this->message->asXML());
+            echo gzcompress($this->formatXML($this->message));
             break;
          
          case 'deflate':
             # rfc 1951
             header("Content-Type: application/x-compress-deflate");
-            echo gzdeflate($this->message->asXML());
+            echo gzdeflate($this->formatXML($this->message));
             break;
 
          case 'gzip':
             # rfc 1952
             header("Content-Type: application/x-compress-gzip");
-            echo gzencode($this->message->asXML());
+            echo gzencode($this->formatXML($this->message));
             break;
          
       }
@@ -185,11 +185,12 @@ class PluginFusioninventoryCommunication {
    /**
     * Add indent in XML to have nice XML format
     *
-    * @return XML
+    * @param $xml SimpleXMLElement object
+    * @return XML string
     **/
-   function formatMessage() {
-      $xml = str_replace("><", ">\n<", $this->message->asXML());
-      $token      = strtok($xml, "\n");
+   function formatXML($xml) {
+      $string     = str_replace("><", ">\n<", $xml->asXML());
+      $token      = strtok($string, "\n");
       $result     = '';
       $pad        = 0;
       $matches    = array();
@@ -215,8 +216,7 @@ class PluginFusioninventoryCommunication {
          $pad    += $indent;
          $indent = 0;
       }
-      $this->setMessage($result);
-      return $this->message->asXML();
+      return $result;
    }
 
    /**
@@ -452,8 +452,8 @@ class PluginFusioninventoryCommunication {
    /**
     * Clean XML, ie convert to be insert without problem into MySQL DB
     *
-    * @param type $xml
-    * @return type 
+    * @param $xml SimpleXMLElement object
+    * @return SimpleXMLElement object
     */
    function cleanXML($xml) {
       foreach ($xml->children() as $key=>$value) {
