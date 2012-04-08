@@ -90,6 +90,10 @@ class PluginFusinvinventoryImport_Memory extends CommonDBTM {
          }
          $memory["designation"] .= $dataSection["DESCRIPTION"];
       }
+      if (isset($dataSection["CAPACITY"])
+              AND $dataSection["CAPACITY"] == 'No') {
+         $dataSection["CAPACITY"] = 0;
+      }
       if ((!isset($dataSection["CAPACITY"])) 
               OR ((isset($dataSection["CAPACITY"])) 
                       AND (!ctype_digit($dataSection["CAPACITY"])))) {
