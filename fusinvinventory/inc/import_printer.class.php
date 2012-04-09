@@ -169,6 +169,14 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
       if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
          $array['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
       }
+      if ($type == "add") { // Case where have same printer xx times
+         $a_find = $Computer_Item->find("`computers_id`='".$items_id."'
+            AND `itemtype` = 'Printer'
+            AND `items_id`='".$printer_id."'");
+         if (count($a_find) > 0) {
+            return;
+         }
+      }
       $devID = $Computer_Item->add($array, array(), $_SESSION["plugin_fusinvinventory_history_add"]);
       return $devID;
    }
