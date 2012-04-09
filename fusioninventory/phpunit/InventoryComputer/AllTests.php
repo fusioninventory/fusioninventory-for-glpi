@@ -435,6 +435,7 @@ echo "# testHardwareModifications\n";
       }
 
       $a_cpuXML = array();
+      $a_speed = array();
       $i = 0;
       foreach ($xml->CONTENT->CPUS as $child) {
          if (isset($child->NAME)) {
@@ -444,6 +445,12 @@ echo "# testHardwareModifications\n";
             $a_cpuXML["'".$i."-".$child->TYPE."'"] = 1;
             $i++;
          }
+         if (isset($child->SPEED)) {
+            if (!isset($a_speed[(string)$child->SPEED])) {
+               $a_speed[(string)$child->SPEED] = 0;
+            }
+            $a_speed[(string)$child->SPEED]++;
+         }
       }
 
       $Computer = new Computer();
@@ -452,6 +459,15 @@ echo "# testHardwareModifications\n";
       $result=$DB->query($query);
 
       $this->assertEquals($DB->numrows($result), count($a_cpuXML), 'Difference of CPUs, created '.$DB->numrows($result).' times instead '.count($a_cpuXML).' ['.$xmlFile.']');
+      
+      foreach ($a_speed as $speed=>$nb) {
+         $query = "SELECT * FROM `glpi_computers_deviceprocessors`
+            WHERE `computers_id`='".$items_id."' 
+               AND `specificity`='".$speed."'";
+         $result=$DB->query($query);
+         $this->assertEquals($DB->numrows($result), $nb, 'Difference of Processor speed '.$speed.' ['.$xmlFile.']');
+      }
+      
    }
 
 
