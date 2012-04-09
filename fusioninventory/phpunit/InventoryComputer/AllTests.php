@@ -616,8 +616,9 @@ echo "# testHardwareModifications\n";
       $this->assertEquals($DB->numrows($result), count($a_videoXML), 'Difference of Videos, created '.$DB->numrows($result).' times instead '.count($a_videoXML).' ['.$xmlFile.']');
    }
 
+   
 
-  function testMemory($xmlFile='', $items_id=0, $unknown=0) {
+   function testMemory($xmlFile='', $items_id=0, $unknown=0) {
       global $DB;
 
       if (empty($xmlFile)) {
@@ -635,6 +636,7 @@ echo "# testHardwareModifications\n";
       }
 
       $a_memoryXML = array();
+      $a_capacity = array();
       $i = 0;
       foreach ($xml->CONTENT->MEMORIES as $child) {
          if (isset($child->CAPACITY)
@@ -648,6 +650,10 @@ echo "# testHardwareModifications\n";
                          AND !preg_match('/Flash/', (string)$child->TYPE))) {
             $a_memoryXML["'".$i."-".$child->CAPTION."'"] = 1;
             $i++;
+            if (!isset($a_capacity[(string)$child->CAPACITY])) {
+               $a_capacity[(string)$child->CAPACITY] = 0;
+            }
+            $a_capacity[(string)$child->CAPACITY]++;
          }
       }
 
@@ -657,6 +663,14 @@ echo "# testHardwareModifications\n";
       $result=$DB->query($query);
 
       $this->assertEquals($DB->numrows($result), count($a_memoryXML), 'Difference of Memories, created '.$DB->numrows($result).' times instead '.count($a_memoryXML).' ['.$xmlFile.']');
+      
+      foreach ($a_capacity as $capacity=>$nb) {
+         $query = "SELECT * FROM `glpi_computers_devicememories`
+            WHERE `computers_id`='".$items_id."' 
+               AND `specificity`='".$capacity."'";
+         $result=$DB->query($query);
+         $this->assertEquals($DB->numrows($result), $nb, 'Difference of Memories capacity for capacity '.$capacity.' ['.$xmlFile.']');
+      }
    }
 
 
