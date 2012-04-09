@@ -82,6 +82,10 @@ class PluginFusinvinventoryImport_Memory extends CommonDBTM {
          $computer_memory = $CompDevice->fields;
          if (count($dataSection) == '1'
                  AND isset($dataSection['CAPACITY'])) {
+            if ($dataSection['CAPACITY'] == '0') {
+               $CompDevice->delete(array('id' => $items_id));
+               return;
+            }
             $array = array();
             $array['_itemtype'] = 'DeviceMemory';
             $array['specificity'] = $dataSection["CAPACITY"];
