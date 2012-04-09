@@ -667,10 +667,12 @@ echo "# testHardwareModifications\n";
                          AND !preg_match('/Flash/', (string)$child->TYPE))) {
             $a_memoryXML["'".$i."-".$child->CAPTION."'"] = 1;
             $i++;
-            if (!isset($a_capacity[(string)$child->CAPACITY])) {
-               $a_capacity[(string)$child->CAPACITY] = 0;
+            if ((string)$child->CAPACITY != '0') {
+               if (!isset($a_capacity[(string)$child->CAPACITY])) {
+                  $a_capacity[(string)$child->CAPACITY] = 0;
+               }
+               $a_capacity[(string)$child->CAPACITY]++;
             }
-            $a_capacity[(string)$child->CAPACITY]++;
          }
       }
 
