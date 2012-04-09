@@ -441,17 +441,25 @@ echo "# testHardwareModifications\n";
          if (isset($child->NAME)) {
             $a_cpuXML["'".$i."-".$child->NAME."'"] = 1;
             $i++;
+            if (isset($child->SPEED)
+                    AND count($child) > 1) {
+               if (!isset($a_speed[(string)$child->SPEED])) {
+                  $a_speed[(string)$child->SPEED] = 0;
+               }
+               $a_speed[(string)$child->SPEED]++;
+            }
          } else if (isset($child->TYPE)) {
             $a_cpuXML["'".$i."-".$child->TYPE."'"] = 1;
             $i++;
-         }
-         if (isset($child->SPEED)
-                 AND count($child) > 1) {
-            if (!isset($a_speed[(string)$child->SPEED])) {
-               $a_speed[(string)$child->SPEED] = 0;
+            if (isset($child->SPEED)
+                    AND count($child) > 1) {
+               if (!isset($a_speed[(string)$child->SPEED])) {
+                  $a_speed[(string)$child->SPEED] = 0;
+               }
+               $a_speed[(string)$child->SPEED]++;
             }
-            $a_speed[(string)$child->SPEED]++;
          }
+
       }
 
       $Computer = new Computer();
