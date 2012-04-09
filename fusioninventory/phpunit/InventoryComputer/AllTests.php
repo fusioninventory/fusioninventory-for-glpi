@@ -445,7 +445,8 @@ echo "# testHardwareModifications\n";
             $a_cpuXML["'".$i."-".$child->TYPE."'"] = 1;
             $i++;
          }
-         if (isset($child->SPEED)) {
+         if (isset($child->SPEED)
+                 AND count($child) > 1) {
             if (!isset($a_speed[(string)$child->SPEED])) {
                $a_speed[(string)$child->SPEED] = 0;
             }
