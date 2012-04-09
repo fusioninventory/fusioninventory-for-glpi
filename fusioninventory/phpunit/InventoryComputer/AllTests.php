@@ -881,6 +881,13 @@ echo "# testHardwareModifications\n";
                $addm = 1;
             }
          }
+         if (isset($child->SMODEL)) {
+            $a_found = $pfBlacklist->find("`value`='".(string)$child->SMODEL."'
+               AND `plugin_fusioninventory_criterium_id`='5'");
+            if (count($a_found) > 0) {
+               $child->SMODEL = 0;
+            } 
+         }
          if (isset($child->SMODEL)
                  AND (string)$child->SMODEL!='') {
             $ComputerModel = new ComputerModel;
