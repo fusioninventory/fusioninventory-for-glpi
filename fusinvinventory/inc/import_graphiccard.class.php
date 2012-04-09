@@ -75,6 +75,15 @@ class PluginFusinvinventoryImport_Graphiccard extends CommonDBTM {
          $devID = $items_id;
          $CompDevice->getFromDB($items_id);
          $computer_graphiccard = $CompDevice->fields;
+         if (count($dataSection) == '1'
+                 AND isset($dataSection['MEMORY'])) {
+            $array = array();
+            $array['_itemtype'] = 'DeviceGraphicCard';
+            $array['specificity'] = $dataSection["MEMORY"];
+            $array['id'] = $items_id;
+            $CompDevice->update($array);
+            return;
+         }
       } else if ($type == "add") {
          $devID = 0;
       }

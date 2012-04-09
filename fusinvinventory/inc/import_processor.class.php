@@ -76,6 +76,15 @@ class PluginFusinvinventoryImport_Processor extends CommonDBTM {
          $devID = $items_id;
          $CompDevice->getFromDB($items_id);
          $specificity = $CompDevice->fields['specificity'];
+         if (count($dataSection) == '1'
+                 AND isset($dataSection['SPEED'])) {
+            $array = array();
+            $array['_itemtype'] = 'DeviceProcessor';
+            $array['specificity'] = $dataSection["SPEED"];
+            $array['id'] = $items_id;
+            $CompDevice->update($array);
+            return;
+         }
       } else if ($type == "add") {
          $devID = 0;
       }
