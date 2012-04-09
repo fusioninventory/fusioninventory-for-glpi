@@ -75,6 +75,15 @@ class PluginFusinvinventoryImport_Memory extends CommonDBTM {
          $devID = $items_id;
          $CompDevice->getFromDB($items_id);
          $computer_memory = $CompDevice->fields;
+         if (count($dataSection) == '1'
+                 AND isset($dataSection['CAPACITY'])) {
+            $array = array();
+            $array['_itemtype'] = 'DeviceMemory';
+            $array['specificity'] = $dataSection["CAPACITY"];
+            $array['id'] = $items_id;
+            $CompDevice->update($array);
+            return;
+         }
       } else if ($type == "add") {
          $devID = 0;
       }
