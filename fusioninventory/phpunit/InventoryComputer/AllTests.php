@@ -826,6 +826,8 @@ echo "# testHardwareModifications\n";
 
    function testHardware($xmlFile='', $items_id=0, $unknown=0) {
       global $DB;
+      
+      Config::detectRootDoc();
 
       if (empty($xmlFile)) {
          echo "testHardware with no arguments...\n";
