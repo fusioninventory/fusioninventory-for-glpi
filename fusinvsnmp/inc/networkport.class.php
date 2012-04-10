@@ -129,7 +129,7 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
    /**
     * Disconnect a port in DB
     *
-    *@param $p_port='' Port id to disconnect
+    *@param $p_port Port id to disconnect
     *@return nothing
     **/
    function disconnectDB($p_port) {
