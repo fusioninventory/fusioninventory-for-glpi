@@ -936,14 +936,15 @@ function plugin_item_purge_fusioninventory($parm) {
                }
             }
          }
-         $NetworkPort->getFromDB($port_id);
-         if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
-            $PluginFusioninventoryUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
-            if ($PluginFusioninventoryUnknownDevice->fields['hub'] == '1') {
-               $a_hubs[$NetworkPort->fields['items_id']] = 1;
+         if ($port_id) {
+            $NetworkPort->getFromDB($port_id);
+            if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+               $PluginFusioninventoryUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
+               if ($PluginFusioninventoryUnknownDevice->fields['hub'] == '1') {
+                  $a_hubs[$NetworkPort->fields['items_id']] = 1;
+               }
             }
          }
-
          $port_id = $NetworkPort->getContact($parm->getField('networkports_id_2'));
          if ($NetworkPort->getFromDB($parm->getField('networkports_id_2'))) {
             if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
@@ -959,11 +960,13 @@ function plugin_item_purge_fusioninventory($parm) {
                }
             } 
          }
-         $NetworkPort->getFromDB($port_id);
-         if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
-            $PluginFusioninventoryUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
-            if ($PluginFusioninventoryUnknownDevice->fields['hub'] == '1') {
-               $a_hubs[$NetworkPort->fields['items_id']] = 1;
+         if ($port_id) {
+            $NetworkPort->getFromDB($port_id);
+            if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+               $PluginFusioninventoryUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
+               if ($PluginFusioninventoryUnknownDevice->fields['hub'] == '1') {
+                  $a_hubs[$NetworkPort->fields['items_id']] = 1;
+               }
             }
          }
 
