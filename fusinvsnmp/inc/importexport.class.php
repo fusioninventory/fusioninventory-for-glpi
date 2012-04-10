@@ -44,9 +44,17 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-//class PluginFusinvsnmpImportExport extends CommonDBTM {
 class PluginFusinvsnmpImportExport extends CommonGLPI {
 
+   
+   /**
+    * Export a SNMP model in a XML
+    * 
+    * @global object $DB
+    * @param integer $ID_model idof the SNMP model
+    * 
+    * @return string XML 
+    */
    function export($ID_model) {
       global $DB;
 
@@ -192,7 +200,6 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
             break;
 
       }
-
 
       // Verify same model exist
       $query = "SELECT id
@@ -369,7 +376,6 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
                $mappings_id = '0';
             }
 
-
             $query = "INSERT INTO `glpi_plugin_fusinvsnmp_modelmibs`
                                   (`plugin_fusinvsnmp_models_id`,`plugin_fusinvsnmp_miboids_id`,`plugin_fusinvsnmp_mibobjects_id`,`oid_port_counter`,
                                    `oid_port_dyn`,`plugin_fusioninventory_mappings_id`,`vlan`,`is_active`)
@@ -387,6 +393,9 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
 
 
+   /**
+    * This function is used to import in one time all SNMP model in folder fusinvsnmp/models/
+    */
    function importMass() {
       ini_set("max_execution_time", "0");
       foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) $this->import($file,0,1);

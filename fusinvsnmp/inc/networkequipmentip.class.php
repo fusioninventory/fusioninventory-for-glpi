@@ -48,21 +48,8 @@ class PluginFusinvsnmpNetworkEquipmentIP extends CommonDBTM {
    private $ifaddrs=array();
    private $ifaddrsPresent=array();
 
-   /**
-    * Add a new ip with the instance values
-    *
-    *@param $p_id Networking id
-    *@return nothing
-    **/
-   function addDB($p_id) {
-      if (count($this->ptcdUpdates)) {
-         $this->ptcdUpdates['networkequipments_id']=$p_id;
-         $this->add($this->ptcdUpdates);
-      }
-   }
-
-
-
+   
+   
    // Get all IP of the switch
    function getIP($items_id) {
       $a_ips = $this->find("`networkequipments_id`='".$items_id."'");

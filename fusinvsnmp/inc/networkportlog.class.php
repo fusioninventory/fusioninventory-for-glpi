@@ -209,7 +209,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
             switch($data['days']) {
 
-               case '-1';
+               case '-1':
                   $DB->query($query_delete);
                   break;
 
@@ -267,6 +267,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
       $db_field = $field;
       switch ($field) {
+         
          case 'ifname':
             $db_field = 'name';
             $field = 'ifName';

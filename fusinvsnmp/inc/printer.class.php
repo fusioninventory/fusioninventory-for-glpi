@@ -49,6 +49,8 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
    private $oFusionInventory_printer_history;
    private $cartridges=array(), $newCartridges=array(), $updatesCartridges=array();
 
+   
+   
    function __construct() {
       parent::__construct("glpi_printers");
       $this->dohistory=true;
@@ -58,11 +60,13 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       $this->oFusionInventory_printer->type = 'PluginFusinvsnmpPrinter';
    }
 
+   
 
    static function getTypeName() {
 
    }
 
+   
 
    function getType() {
       return "Printer";
@@ -177,7 +181,6 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       }
       return $cartridgeIndex;
    }
-
 
 
 

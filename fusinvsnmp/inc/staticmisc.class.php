@@ -131,10 +131,6 @@ class PluginFusinvsnmpStaticmisc {
 
 
 
-
-
-
-
    // ===============
 
 
@@ -163,7 +159,6 @@ class PluginFusinvsnmpStaticmisc {
 
 
 
-
    # Selection type for actions
    static function task_selection_type_snmpinventory($itemtype) {
       $selection_type = '';
@@ -185,8 +180,6 @@ class PluginFusinvsnmpStaticmisc {
 
 
 
-
-
    static function task_selection_type_netdiscovery($itemtype) {
       $selection_type = '';
       switch ($itemtype) {
@@ -201,6 +194,8 @@ class PluginFusinvsnmpStaticmisc {
 
       return $selection_type;
    }
+   
+   
 
    static function displayMenu() {
       global $LANG,$CFG_GLPI;
@@ -254,7 +249,6 @@ class PluginFusinvsnmpStaticmisc {
       $a_profil[] = array('profil'  => 'reportnetworkequipment',
                           'name'    => $LANG['plugin_fusinvsnmp']['profile'][9]);
       return $a_profil;
-   }
-   
+   }   
 }
 ?>

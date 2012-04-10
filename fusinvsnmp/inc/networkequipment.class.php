@@ -57,6 +57,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       $this->oFusionInventory_networkequipment->type = 'PluginFusinvsnmpNetworkEquipment';
    }
 
+   
    function getType() {
       return "NetworkEquipment";
    }
@@ -376,12 +377,6 @@ function appear_legend(id){
       echo "<tr class='tab_bg_1'>";
 
       echo '<th>';
-//      echo '<img alt="'.$LANG['setup'][252].'"
-//                     title="'.$LANG['setup'][252].'"
-//                     src="'.$CFG_GLPI['root_doc'].'/pics/options_search.png" class="pointer"
-//                     onclick="var w = window.open(\''.$CFG_GLPI['root_doc'].
-//                        '/front/popup.php?popup=search_config&itemtype=PluginFusinvsnmpNetworkEquipment\',\'glpipopup\',
-//                        \'height=400, width=1000, top=100, left=100, scrollbars=yes\' ); w.focus();"></th>';
       echo "<th>".$LANG["common"][16]."</th>";
       if ($monitoring == '1') {
          echo "<th>".$LANG['plugin_monitoring']['title'][0]."</th>";
@@ -723,6 +718,16 @@ function appear_legend(id){
       }
    }
 
+   
+   
+   /**
+    * Convert size of octets
+    * 
+    * @param number $bytes
+    * @param number $sizeoct
+    * 
+    * @return better size format 
+    */
    private function byteSize($bytes,$sizeoct=1024) {
       $size = $bytes / $sizeoct;
       if ($size < $sizeoct) {
