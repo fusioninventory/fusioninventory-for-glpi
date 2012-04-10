@@ -132,13 +132,14 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
     *@param $p_port='' Port id to disconnect
     *@return nothing
     **/
-   function disconnectDB($p_port='') {
+   function disconnectDB($p_port) {
       if ($p_port=='') {
-         $p_port=$this->getValue('id');
+         return;
       }
       $nn = new NetworkPort_NetworkPort();
 
-      if ($nn->getOppositeContact($p_port) AND $nn->getFromDBForNetworkPort($nn->getOppositeContact($p_port))) {
+      $contact_id = $nn->getOppositeContact($p_port);
+      if ($contact_id AND $nn->getFromDBForNetworkPort($contact_id)) {
          $nn->delete($nn->fields,1);
       }
       if ($nn->getFromDBForNetworkPort($p_port)) {
