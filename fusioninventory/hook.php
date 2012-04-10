@@ -889,13 +889,14 @@ function plugin_item_purge_fusioninventory($parm) {
             }
          }
          $NetworkPort->getFromDB($port_id);
-         if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
-            $pfUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
-            if ($pfUnknownDevice->fields['hub'] == '1') {
-               $a_hubs[$NetworkPort->fields['items_id']] = 1;
+         if ($port_id) {
+            if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+               $pfUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
+               if ($pfUnknownDevice->fields['hub'] == '1') {
+                  $a_hubs[$NetworkPort->fields['items_id']] = 1;
+               }
             }
          }
-
          $port_id = $NetworkPort->getContact($parm->getField('networkports_id_2'));
          $NetworkPort->getFromDB($parm->getField('networkports_id_2'));
          if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
@@ -908,13 +909,15 @@ function plugin_item_purge_fusioninventory($parm) {
                   $a_hubs[$NetworkPort->fields['items_id']] = 1;
                   $NetworkPort->delete($NetworkPort->fields);
                }
-            }
-         } 
-         $NetworkPort->getFromDB($port_id);
-         if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
-            $pfUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
-            if ($pfUnknownDevice->fields['hub'] == '1') {
-               $a_hubs[$NetworkPort->fields['items_id']] = 1;
+            } 
+         }
+         if ($port_id) {
+            $NetworkPort->getFromDB($port_id);
+            if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+               $pfUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
+               if ($pfUnknownDevice->fields['hub'] == '1') {
+                  $a_hubs[$NetworkPort->fields['items_id']] = 1;
+               }
             }
          }
 
@@ -930,8 +933,10 @@ function plugin_item_purge_fusioninventory($parm) {
                foreach ($a_networkports as $data) {
                   if ($data['name'] == 'Link') {
                      $switchPorts_id = $NetworkPort->getContact($data['id']);
-                  } else {
+                  } else if ($otherPorts_id == '0') {
                      $otherPorts_id = $NetworkPort->getContact($data['id']);
+                  } else {
+                     $switchPorts_id = $NetworkPort->getContact($data['id']);
                   }
                }
 
@@ -939,8 +944,7 @@ function plugin_item_purge_fusioninventory($parm) {
                $pfUnknownDevice->disconnectDB($otherPorts_id);     // disconnect destination port
                
                $networkPort_NetworkPort->add(array('networkports_id_1'=> $switchPorts_id,
-                                                       'networkports_id_2' => $otherPorts_id));
-
+                                                   'networkports_id_2' => $otherPorts_id));
             }
          }
 
@@ -968,7 +972,5 @@ function plugin_item_transfer_fusioninventory($parm) {
    }
    return false;
 }
-
-
 
 ?>

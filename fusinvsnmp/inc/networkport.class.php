@@ -127,26 +127,21 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
    /**
     * Disconnect a port in DB
     *
-    *@param $p_port='' Port id to disconnect
+    *@param $p_port Port id to disconnect
     *@return nothing
     **/
-   function disconnectDB($p_port='') {
+   function disconnectDB($p_port) {
       if ($p_port=='') {
-         $p_port=$this->getValue('id');
+         return;
       }
       $nn = new NetworkPort_NetworkPort();
 
-      if ($nn->getOppositeContact($p_port) AND $nn->getFromDBForNetworkPort($nn->getOppositeContact($p_port))) {
-         $purge = $nn->delete($nn->fields,1);
-         if ($purge) {
-            plugin_item_purge_fusioninventory($nn);
-         }
+      $contact_id = $nn->getOppositeContact($p_port);
+      if ($contact_id AND $nn->getFromDBForNetworkPort($contact_id)) {
+         $nn->delete($nn->fields,1);
       }
       if ($nn->getFromDBForNetworkPort($p_port)) {
-         $purge = $nn->delete($nn->fields,1);
-         if ($purge) {
-            plugin_item_purge_fusioninventory($nn);
-         }
+         $nn->delete($nn->fields,1);
       }
    }
 
@@ -382,7 +377,7 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
    
    
    function connectPorts() {      
-      $wire = new NetworkPort_NetworkPort;
+      $wire = new NetworkPort_NetworkPort();
       $networkPort = new NetworkPort();
       
       $networkports_id = $this->portModif['networkports_id'];
@@ -419,6 +414,8 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
             $contact_id = $wire->getOppositeContact($networkports_id);
             if (!($contact_id
                     AND $contact_id == $portID)) {
+               $this->disconnectDB($networkports_id);
+               $this->disconnectDB($portID);
                $wire->add(array('networkports_id_1'=> $networkports_id,
                                'networkports_id_2' => $portID));
             }   
@@ -447,7 +444,7 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
                if ($phonecase == '1') {
                   $wire->add(array('networkports_id_1'=> $networkports_id,
                                    'networkports_id_2' => $phonePort_id));
-                  $NntworkPort->getFromDB($phonePort_id);
+                  $networkPort->getFromDB($phonePort_id);
                   $Phone = new Phone();
                   $Phone->getFromDB($networkPort->fields['items_id']);
                   $a_portsPhone = $networkPort->find("`items_id`='".$networkPort->fields['items_id']."'
@@ -490,26 +487,27 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
                                    'networkports_id_2' => $macNotPhone_id));
                } else {
                   $pfiud = new PluginFusioninventoryUnknownDevice;
-                  $pfiud->hubNetwork($p_oPort, $this->agent);
+                  $pfiud->hubNetwork($this);
                }
             } else if ($count > 1) { // MultipleMac
                $pfiud = new PluginFusioninventoryUnknownDevice;
-               $pfiud->hubNetwork($p_oPort, $this->agent);
+               $pfiud->hubNetwork($this);
             } else { // One mac on port
                foreach ($this->portMacs as $ifmac) { //Only 1 time
                   $a_ports = $networkPort->find("`mac`='".$ifmac."'","", 1);
                   if (count($a_ports) > 0) {
                      $a_port = current($a_ports);
-                     $id = $networkPort->getContact($networkports_id);
+                     $id = $networkPort->getContact($a_port['id']);
                      if ($id AND $id != $networkports_id) {
                         $this->disconnectDB($networkports_id); // disconnect this port
-                        $this->disconnectDB($id);     // disconnect destination port
+                        $this->disconnectDB($a_port['id']);     // disconnect destination port
                         $wire->add(array('networkports_id_1'=> $networkports_id,
                                          'networkports_id_2' => $a_port['id']));
                      } else if ($id) {
                         // Yet connected                        
                      } else {
                         // Not connected
+                        $this->disconnectDB($networkports_id); // disconnect this port
                         $wire->add(array('networkports_id_1'=> $networkports_id,
                                          'networkports_id_2' => $a_port['id']));
                      }
@@ -522,6 +520,7 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
                      $input['items_id'] = $newID;
                      $input['mac'] = $ifmac;
                      $newPortID = $networkPort->add($input);
+                     $this->disconnectDB($networkports_id); // disconnect this port
                      $wire->add(array('networkports_id_1'=> $networkports_id,
                                       'networkports_id_2' => $newPortID));
                   }

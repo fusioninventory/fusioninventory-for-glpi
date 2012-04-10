@@ -541,6 +541,10 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
       $input_xml = $xml->asXML();
       $code = $emulatorAgent->sendProlog($input_xml);
       echo $code."\n";
+      $this->assertEquals($code, '<?xml version="1.0" encoding="UTF-8"?>
+<REPLY>
+</REPLY>
+', 'Return code not right');
       
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
