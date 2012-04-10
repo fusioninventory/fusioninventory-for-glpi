@@ -492,11 +492,11 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
                                    'networkports_id_2' => $macNotPhone_id));
                } else {
                   $pfiud = new PluginFusioninventoryUnknownDevice;
-                  $pfiud->hubNetwork($this, $this->agent);
+                  $pfiud->hubNetwork($this);
                }
             } else if ($count > 1) { // MultipleMac
                $pfiud = new PluginFusioninventoryUnknownDevice;
-               $pfiud->hubNetwork($this, $this->agent);
+               $pfiud->hubNetwork($this);
             } else { // One mac on port
                foreach ($this->portMacs as $ifmac) { //Only 1 time
                   $a_ports = $networkPort->find("`mac`='".$ifmac."'","", 1);

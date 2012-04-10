@@ -439,12 +439,11 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    * Manage a hub (many mac on a port mean you have a hub)
    *
    * @param $pfNetworkport object Informations of the network port (switch port)
-   * @param $agent_id integer id of the agent
    *
    * @return bool
    *
    **/
-   function hubNetwork($pfNetworkport, $agent_id) {
+   function hubNetwork($pfNetworkport) {
 
       $nn = new NetworkPort_NetworkPort();
       $Netport = new NetworkPort();
@@ -462,16 +461,16 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             } else {
                // It's a direct connection, so disconnect and create a hub
                $this->disconnectDB($ID);
-               $hub_id = $this->createHub($pfNetworkport, $agent_id);
+               $hub_id = $this->createHub($pfNetworkport);
             }
          } else {
             // It's a direct connection, so disconnect and create a hub
             $this->disconnectDB($ID);
-            $hub_id = $this->createHub($pfNetworkport, $agent_id);
+            $hub_id = $this->createHub($pfNetworkport);
          }
       } else {
          // No connections found and create a hub
-         $hub_id = $this->createHub($pfNetworkport, $agent_id);
+         $hub_id = $this->createHub($pfNetworkport);
       }
       // State : Now we have hub and it's id
       
@@ -638,12 +637,11 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    * Creation of a hub 
    *
    * @param $pfNetworkport object Informations of the network port
-   * @param $agent_id integer id of the agent
    *
    * @return id of the hub (unknowndevice)
    *
    **/
-   function createHub($pfNetworkport, $agent_id) {
+   function createHub($pfNetworkport) {
 
       $Netport = new NetworkPort();
       $nn = new NetworkPort_NetworkPort();
