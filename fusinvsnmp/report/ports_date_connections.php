@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -145,7 +145,7 @@ function displaySearchForm() {
    echo "<td>";
    //Add parameters to uri to be saved as bookmarks
    $_SERVER["REQUEST_URI"] = buildBookmarkUrl($_SERVER["REQUEST_URI"],$_GET);
-   Bookmark::showSaveButton(BOOKMARK_SEARCH,'PluginFusioninventoryNetworkport2');
+   Bookmark::showSaveButton(Bookmark::SEARCH,'PluginFusioninventoryNetworkport2');
    echo "</td>";
 
    echo "<td>";

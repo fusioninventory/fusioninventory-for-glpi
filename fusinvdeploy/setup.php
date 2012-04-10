@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author Alexandre Delaunay
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -42,6 +42,8 @@
 define ("PLUGIN_FUSINVDEPLOY_VERSION","0.83+1.0");
 
 include_once ("includes.php");
+
+define ("PLUGIN_FUSINVDEPLOY_VERSION","0.80+1.2");
 
 // Init the hooks of fusinvdeploy
 function plugin_init_fusinvdeploy() {
@@ -190,6 +192,7 @@ function plugin_init_fusinvdeploy() {
 // Name and Version of the plugin
 function plugin_version_fusinvdeploy() {
    global $LANG;
+
    return array(
       'name'           => $LANG['plugin_fusinvdeploy']['title'][0],
       'shortname'      => 'fusinvdeploy',
@@ -204,7 +207,7 @@ function plugin_version_fusinvdeploy() {
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_fusinvdeploy_check_prerequisites() {
    global $LANG;
-   if (version_compare('0.78',GLPI_VERSION) < 0) {
+   if (version_compare('0.80',GLPI_VERSION) < 0) {
       $plugin = new Plugin;
       if (!$plugin->isInstalled("fusioninventory")) {
         return false;

@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -168,6 +168,14 @@ class PluginFusioninventoryInventoryComputerImport_Printer extends CommonDBTM {
       $array['items_id'] = $printer_id;
       if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
          $array['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
+      }
+      if ($type == "add") { // Case where have same printer xx times
+         $a_find = $Computer_Item->find("`computers_id`='".$items_id."'
+            AND `itemtype` = 'Printer'
+            AND `items_id`='".$printer_id."'");
+         if (count($a_find) > 0) {
+            return;
+         }
       }
       $devID = $Computer_Item->add($array, array(), $_SESSION["plugin_fusinvinventory_history_add"]);
       return $devID;

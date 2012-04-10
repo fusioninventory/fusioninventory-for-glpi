@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    Walid Nouh
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -55,7 +55,7 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
     * @return uniqid value
     */
    function prepareRun($taskjobs_id) {
-   
+
       $task       = new PluginFusioninventoryTask();
       $job        = new PluginFusioninventoryTaskjob();
       $joblog     = new PluginFusioninventoryTaskjoblog();
@@ -108,12 +108,14 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
                $a_input['date']  = date("Y-m-d H:i:s");
                $joblog->add($a_input);
 
-               $jobstatus->changeStatusFinish($jobstatus_id, 0, 'PluginFusioninventoryInventoryComputerESX', 1, 
+               $jobstatus->changeStatusFinish($jobstatus_id, 
+                                              0, 
+                                              'PluginFusioninventoryInventoryComputerESX', 
+                                              1, 
                                               "Unable to find agent to run this job");
-
             }
          }
-         $job->fields['status']= 1;
+//         $job->fields['status']= 1;
          $job->update($job->fields);
       } else {
          foreach($agent_actions as $targets) {

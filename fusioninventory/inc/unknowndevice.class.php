@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -438,19 +438,18 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    /**
    * Manage a hub (many mac on a port mean you have a hub)
    *
-   * @param $p_oPort object Informations of the network port (switch port)
-   * @param $agent_id integer id of the agent
+   * @param $pfNetworkport object Informations of the network port (switch port)
    *
    * @return bool
    *
    **/
-   function hubNetwork($p_oPort, $agent_id) {
+   function hubNetwork($pfNetworkport) {
 
       $nn = new NetworkPort_NetworkPort();
       $Netport = new NetworkPort();
       // Get port connected on switch port
       $hub_id = 0;
-      $ID = $nn->getOppositeContact($p_oPort->getValue('id'));
+      $ID = $nn->getOppositeContact($pfNetworkport->getNetworkPorts_id());
       if ($ID) {
          $Netport->getFromDB($ID);
          if ($Netport->fields["itemtype"] == $this->getType()) {
@@ -462,23 +461,23 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             } else {
                // It's a direct connection, so disconnect and create a hub
                $this->disconnectDB($ID);
-               $hub_id = $this->createHub($p_oPort, $agent_id);
+               $hub_id = $this->createHub($pfNetworkport);
             }
          } else {
             // It's a direct connection, so disconnect and create a hub
             $this->disconnectDB($ID);
-            $hub_id = $this->createHub($p_oPort, $agent_id);
+            $hub_id = $this->createHub($pfNetworkport);
          }
       } else {
          // No connections found and create a hub
-         $hub_id = $this->createHub($p_oPort, $agent_id);
+         $hub_id = $this->createHub($pfNetworkport);
       }
       // State : Now we have hub and it's id
       
       // Add source port id in comment of hub
       $h_input = array();
       $h_input['id'] = $hub_id;
-      $h_input['comment'] = "Port : ".$p_oPort->getValue('id');
+      $h_input['comment'] = "Port : ".$pfNetworkport->getNetworkPorts_id();
       $this->update($h_input);
       
 
@@ -493,7 +492,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          }
       }
 
-      foreach ($p_oPort->getMacsToConnect() as $ifmac) {
+      foreach ($pfNetworkport->getMacsToConnect() as $ifmac) {
          $a_ports = $Netport->find("`mac`='".$ifmac."'", "", 1);
          if (count($a_ports) == "1") {
             if (!$this->searchIfmacOnHub($a_ports, $a_portglpi)) {
@@ -588,7 +587,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          $freeport_id = $Netport->add($input);
       }
       $this->disconnectDB($freeport_id);
-      $nn->add(array('networkports_id_1'=> $data['id'], 'networkports_id_2' => $freeport_id));
+      $nn->add(array('networkports_id_1'=> $data['id'], 
+                     'networkports_id_2' => $freeport_id));
 
       //plugin_fusioninventory_addLogConnection("make",$port_id);
       return $freeport_id;
@@ -637,23 +637,22 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    /**
    * Creation of a hub 
    *
-   * @param $p_oPort object Informations of the network port
-   * @param $agent_id integer id of the agent
+   * @param $pfNetworkport object Informations of the network port
    *
    * @return id of the hub (unknowndevice)
    *
    **/
-   function createHub($p_oPort, $agent_id) {
+   function createHub($pfNetworkport) {
 
       $Netport = new NetworkPort();
       $nn = new NetworkPort_NetworkPort();
       //$pfAgentsProcesses = new PluginFusionInventoryAgentsProcesses;
 
       // Find in the mac connected to the if they are in hub without link port connected
-      foreach ($p_oPort->getMacsToConnect() as $ifmac) {
+      foreach ($pfNetworkport->getMacsToConnect() as $ifmac) {
          $a_ports = $Netport->find("`mac`='".$ifmac."'");
          foreach ($a_ports as $data) {
-            $ID = $nn->getOppositeContact($p_oPort->getValue('id'));
+            $ID = $nn->getOppositeContact($pfNetworkport->getNetworkPorts_id());
             if ($ID) {
                $Netport->getFromDB($ID);
                if ($Netport->fields["itemtype"] == $this->getType()) {
@@ -666,12 +665,15 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
                         } else {
                            // We have founded a hub orphelin
-                           if ($nn->add(array('networkports_id_1'=> $p_oPort->getValue('id'), 'networkports_id_2' => $dataLink['id']))) {
-//                              $pfAgentsProcesses->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
+                           $this->disconnectDB($pfNetworkport->getNetworkPorts_id());
+                           $this->disconnectDB($dataLink['id']);
+                           if ($nn->add(array('networkports_id_1'=> $pfNetworkport->getNetworkPorts_id(), 
+                                              'networkports_id_2' => $dataLink['id']))) {
+//                              $PluginFusionInventoryAgentsProcesses->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
 //                                          array('query_nb_connections_created' => '1'));
 //                              plugin_fusioninventory_addLogConnection("make",$p_oPort->getValue('ID'));
                            }
-                           $this->releaseHub($this->fields['id'], $p_oPort);
+                           $this->releaseHub($this->fields['id'], $pfNetworkport);
                            return $this->fields['id'];
                         }
                      }
@@ -700,9 +702,10 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $input["itemtype"] = $this->getType();
       $input["name"] = "Link";
       $port_id = $Netport->add($input);
-      $this->disconnectDB($p_oPort->getValue('id'));
+      $this->disconnectDB($pfNetworkport->getNetworkPorts_id());
       $this->disconnectDB($port_id);
-      if ($nn->add(array('networkports_id_1'=> $p_oPort->getValue('id'), 'networkports_id_2' => $port_id))) {
+      if ($nn->add(array('networkports_id_1'=> $pfNetworkport->getNetworkPorts_id(), 
+                         'networkports_id_2' => $port_id))) {
 //         $pfAgentsProcesses->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
 //                     array('query_nb_connections_created' => '1'));
 //         plugin_fusioninventory_addLogConnection("make",$p_oPort->getValue('ID'));
@@ -716,18 +719,18 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    * Remove all connections on a hub
    *
    * @param $hub_id integer id of the hub
-   * @param $p_oPort object Informations of the network port
+   * @param $pfNetworkport object Informations of the network port
    *
    * @return nothing
    *
    **/
-   function releaseHub($hub_id, $p_oPort) {
+   function releaseHub($hub_id, $pfNetworkport) {
 
       $Netport = new NetworkPort();
       $nn = new NetworkPort_NetworkPort();
 
       $a_macOnSwitch = array();
-      foreach ($p_oPort->getMacsToConnect() as $ifmac) {
+      foreach ($pfNetworkport->getMacsToConnect() as $ifmac) {
          $a_macOnSwitch["$ifmac"] = 1;
       }
 

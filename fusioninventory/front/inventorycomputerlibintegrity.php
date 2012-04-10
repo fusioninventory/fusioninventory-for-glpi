@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -50,6 +50,10 @@ PluginFusioninventoryProfile::checkRight("fusinvinventory", "importxml","w");
 
 $pfInventoryComputerLibintegrity = new PluginFusioninventoryInventoryComputerLibintegrity();
 if (!empty($_POST)) {
+   if (isset($_POST['clean'])) {
+      $PluginFusinvinventoryLibintegrity->cleanGLPI();      
+   }
+   
    if (isset($_POST['reimport'])) {
       foreach($_POST['reimport'] as $infos=>$num) {
          $pfInventoryComputerLibintegrity->Import($infos);

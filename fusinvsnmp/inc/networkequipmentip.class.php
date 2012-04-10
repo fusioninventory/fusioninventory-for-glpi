@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    Vincent Mazzoni
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -44,13 +44,9 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-class PluginFusinvsnmpNetworkEquipmentIP extends PluginFusinvsnmpCommonDBTM {
-
-   function __construct() {
-      parent::__construct("glpi_plugin_fusinvsnmp_networkequipmentips");
-   }
-
-
+class PluginFusinvsnmpNetworkEquipmentIP extends CommonDBTM {
+   private $ifaddrs=array();
+   private $ifaddrsPresent=array();
 
    /**
     * Add a new ip with the instance values
@@ -124,6 +120,48 @@ class PluginFusinvsnmpNetworkEquipmentIP extends PluginFusinvsnmpCommonDBTM {
       echo "</table>";
    }
    
+   
+
+   function loadIPs($networkequipments_id) {
+      global $DB;
+      
+      $query = "SELECT * FROM `".$this->getTable()."`
+              WHERE `networkequipments_id`='".$networkequipments_id."'";
+      $result = $DB->query($query);
+      $this->ifaddrs = array();
+      $this->ifaddrsPresent = array();
+      while ($data=$DB->fetch_array($result)) {
+         if (isset($this->ifaddrs[$data['ip']])) {
+            $this->delete($data);            
+         } else {
+            $this->ifaddrs[$data['ip']] = $data['id'];
+         }      
+      }
+   }
+
+   
+   
+   function setIP($ip) {
+      $this->ifaddrsPresent[$ip] = 0;
+   }
+
+   
+   
+   function saveIPs($networkequipments_id) {
+      foreach ($this->ifaddrs as $ip=>$id) {
+         if (isset($this->ifaddrsPresent[$ip])) {
+            unset($this->ifaddrsPresent[$ip]);
+         } else {
+            $this->delete(array('id' => $id));
+         }
+      }
+      foreach ($this->ifaddrsPresent as $ip => $id) {
+         $input = array();
+         $input['networkequipments_id'] = $networkequipments_id;
+         $input['ip'] = $ip;
+         $this->add($input);
+      }
+   }   
 }
 
 ?>

@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -969,13 +969,14 @@ function plugin_item_purge_fusioninventory($parm) {
             }
          }
          $NetworkPort->getFromDB($port_id);
-         if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
-            $pfUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
-            if ($pfUnknownDevice->fields['hub'] == '1') {
-               $a_hubs[$NetworkPort->fields['items_id']] = 1;
+         if ($port_id) {
+            if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+               $pfUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
+               if ($pfUnknownDevice->fields['hub'] == '1') {
+                  $a_hubs[$NetworkPort->fields['items_id']] = 1;
+               }
             }
          }
-
          $port_id = $NetworkPort->getContact($parm->getField('networkports_id_2'));
          $NetworkPort->getFromDB($parm->getField('networkports_id_2'));
          if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
@@ -988,13 +989,15 @@ function plugin_item_purge_fusioninventory($parm) {
                   $a_hubs[$NetworkPort->fields['items_id']] = 1;
                   $NetworkPort->delete($NetworkPort->fields);
                }
-            }
-         } 
-         $NetworkPort->getFromDB($port_id);
-         if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
-            $pfUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
-            if ($pfUnknownDevice->fields['hub'] == '1') {
-               $a_hubs[$NetworkPort->fields['items_id']] = 1;
+            } 
+         }
+         if ($port_id) {
+            $NetworkPort->getFromDB($port_id);
+            if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+               $pfUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
+               if ($pfUnknownDevice->fields['hub'] == '1') {
+                  $a_hubs[$NetworkPort->fields['items_id']] = 1;
+               }
             }
          }
 
@@ -1010,8 +1013,10 @@ function plugin_item_purge_fusioninventory($parm) {
                foreach ($a_networkports as $data) {
                   if ($data['name'] == 'Link') {
                      $switchPorts_id = $NetworkPort->getContact($data['id']);
-                  } else {
+                  } else if ($otherPorts_id == '0') {
                      $otherPorts_id = $NetworkPort->getContact($data['id']);
+                  } else {
+                     $switchPorts_id = $NetworkPort->getContact($data['id']);
                   }
                }
 
@@ -1019,8 +1024,7 @@ function plugin_item_purge_fusioninventory($parm) {
                $pfUnknownDevice->disconnectDB($otherPorts_id);     // disconnect destination port
                
                $networkPort_NetworkPort->add(array('networkports_id_1'=> $switchPorts_id,
-                                                       'networkports_id_2' => $otherPorts_id));
-
+                                                   'networkports_id_2' => $otherPorts_id));
             }
          }
 
@@ -1033,14 +1037,14 @@ function plugin_item_purge_fusioninventory($parm) {
 
 function plugin_item_transfer_fusioninventory($parm) {
    switch ($parm['type']) {
-
+      
       case 'Computer':
          $pfAgent = new PluginFusioninventoryAgent();
 
          if ($agent_id = $pfAgent->getAgentWithComputerid($parm['id'])) {
             $input = array();
             $input['id'] = $agent_id;
-            $input['entities_id'] = $_POST['to_entity'];
+            $input['entities_id'] = $parm->fields['entities_id'];
             $pfAgent->update($input);
          }
 

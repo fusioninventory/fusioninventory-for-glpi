@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -1497,7 +1497,7 @@ function update221to230($migrationname) {
    $sql_query = fread($DBf_handle, filesize($DB_file));
    fclose($DBf_handle);
    foreach ( explode(";\n", "$sql_query") as $sql_line) {
-      if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
+      if (Toolbox::get_magic_quotes_runtime()) $sql_line=Toolbox::stripslashes_deep($sql_line);
       if (!empty($sql_line)) $DB->query($sql_line)/* or die($DB->error())*/;
    }
 

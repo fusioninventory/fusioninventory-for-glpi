@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -50,6 +50,7 @@ class Hub extends PHPUnit_Framework_TestCase {
       $Install->testInstall(0);
       
       $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
+//      Config::detectRootDoc();
 
      // set in config module inventory = yes by default
      $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
@@ -73,6 +74,12 @@ class Hub extends PHPUnit_Framework_TestCase {
 
 
    public function testSendinventories() {
+      
+      $plugin = new Plugin();
+      $plugin->getFromDBbyDir("fusioninventory");
+      $plugin->activate($plugin->fields['id']);
+      Plugin::load("fusioninventory");
+      
       // Add task and taskjob
       $pfTask = new PluginFusioninventoryTask();
       $pfTaskjob = new PluginFusioninventoryTaskjob();
@@ -534,6 +541,10 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
       $input_xml = $xml->asXML();
       $code = $emulatorAgent->sendProlog($input_xml);
       echo $code."\n";
+      $this->assertEquals($code, '<?xml version="1.0" encoding="UTF-8"?>
+<REPLY>
+</REPLY>
+', 'Return code not right');
       
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
@@ -547,6 +558,11 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
 class Hub_AllTests  {
 
    public static function suite() {
+      
+      $GLPIInstall = new GLPIInstall();
+      $Install = new Install();
+      $GLPIInstall->testInstall();
+      $Install->testInstall(0);
 
       $suite = new PHPUnit_Framework_TestSuite('Hub');
       return $suite;

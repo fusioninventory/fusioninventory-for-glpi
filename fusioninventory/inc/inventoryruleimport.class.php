@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -245,10 +245,9 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       switch ($condition) {
 
          case Rule::PATTERN_EXISTS:
-            echo Dropdown::showYesNo($name, 1, 0);
-            return true;
-
          case Rule::PATTERN_DOES_NOT_EXISTS:
+         case Rule::PATTERN_FIND:
+         case PluginFusioninventoryRuleImportEquipment::PATTERN_IS_EMPTY:
             echo Dropdown::showYesNo($name, 1, 0);
             return true;
            
@@ -443,6 +442,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             case 'serial' :
                if (isset($input['itemtype'])
                        AND $input['itemtype'] == 'Computer'
+                       AND isset($_SESSION["plugin_fusioninventory_manufacturerHP"])
                        AND preg_match("/^[sS]/", $input['serial'])) {
                   
                   $serial2 = preg_replace("/^[sS]/", "", $input['serial']);

@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -41,6 +41,8 @@
  */
 
 define ("PLUGIN_FUSIONINVENTORY_VERSION","0.84+1.0");
+
+define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE","0");
 
 include_once(GLPI_ROOT."/inc/includes.php");
 
@@ -110,7 +112,6 @@ function plugin_init_fusioninventory() {
       $_SESSION['glpi_plugin_fusioninventory']['xmltags']['INVENTORY']
                                  = 'PluginFusioninventoryInventoryComputerInventory';
 
-      //$PLUGIN_HOOKS['init_session']['fusioninventory'] = array('Profile', 'initSession');
       $PLUGIN_HOOKS['change_profile']['fusioninventory'] =
          PluginFusioninventoryProfile::changeprofile($moduleId);
 

@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    Alexandre Delaunay
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -62,11 +62,17 @@ class PluginFusinvdeployAction_Commandstatus extends CommonDBTM {
 
    static function getForCommand($commands_id) {
       $response = array();
+
+      $codeMatrice['RETURNCODE_OK'] = 'okCode';
+      $codeMatrice['RETURNCODE_KO'] = 'errorCode';
+      $codeMatrice['REGEX_OK'] = 'okPattern';
+      $codeMatrice['REGEX_KO'] = 'errorPattern';
+
       $commands = getAllDatasFromTable('glpi_plugin_fusinvdeploy_actions_commandstatus',
                                        "`plugin_fusinvdeploy_commands_id`='$commands_id'");
       foreach ($commands as $command) {
-         $response[] = array( 'type' => $command['type'], 
-                              'value' => $command['value']);
+         $response[] = array( 'type' => $codeMatrice[$command['type']],
+                              'values' => array ( $command['value'] ) );
       }
       return $response;
    }

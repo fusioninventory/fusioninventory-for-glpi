@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author Alexandre Delaunay
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -186,7 +186,7 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
                case 'Computer':
                   $query = "SELECT id, name FROM glpi_computers";
                   if (isset($params['query'])) {
-                     $like = mysql_escape_string($params['query']);
+                     $like = mysql_real_escape_string($params['query']);
                      $query .= " WHERE name LIKE '%$like'";
                   }
                   $query .= " ORDER BY name ASC";
@@ -203,7 +203,7 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
                case 'Group':
                   $like = "1";
                   if (isset($params['query'])) {
-                     $like = "name LIKE '%".mysql_escape_string($params['query'])."'";
+                     $like = "name LIKE '%".mysql_real_escape_string($params['query'])."'";
                   }
                   $group = new Group;
                   $group_datas = $group->find($like);

@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -113,6 +113,19 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
       $pfInventoryComputerLib = new PluginFusioninventoryInventoryComputerLib();
       $Computer = new Computer();
 
+      echo "<table width='950' align='center'>";
+      echo "<tr>";      
+      echo "<td align='left'>";
+      echo "<form method='post' action=''>";
+      echo "<input type='hidden' name='clean' value='1'/>";
+      echo "<input type='submit' class='submit' value='".$LANG['buttons'][53]."'/>";
+      echo "</form>";
+      echo "</td>";
+      echo "</tr>";
+      echo "</table>";
+      echo "<br/>";
+      
+      
       $start = 0;
       if (isset($_REQUEST["start"])) {
          $start = $_REQUEST["start"];
@@ -836,6 +849,201 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
          $class = new $itemtype();
          $class->delete(array('id'=>$items_id), 1);
       }
+   }
+   
+   
+   
+   /**
+    * This fonction is used to clean data in GLPI when not in last XML/libserialization
+    */
+   function cleanGLPI() {
+      global $DB;
+      
+      ini_set("max_execution_time", "0");
+      ini_set("memory_limit", "-1");
+      
+      $computer = new Computer();
+      $pfLib    = new PluginFusinvinventoryLib();
+      
+      $computerDeviceControl     = new Computer_Device('DeviceControl');
+      $computerDeviceProcessor   = new Computer_Device('DeviceProcessor');
+      $ComputerDisk              = new ComputerDisk();
+      $computerDeviceMemory      = new Computer_Device('DeviceMemory');
+      $NetworkPort               = new NetworkPort();         
+      $Computer_SoftwareVersion  = new Computer_SoftwareVersion();
+      $computerDeviceSoundCard   = new Computer_Device('DeviceSoundCard');
+      $computerDeviceHardDrive   = new Computer_Device('DeviceHardDrive');
+      $computerDeviceGraphicCard = new Computer_Device('DeviceGraphicCard');
+      $Computer_Item             = new Computer_Item();
+      
+      $query = "SELECT * 
+            FROM `glpi_plugin_fusinvinventory_libserialization`";
+      $result=$DB->query($query);
+      while ($a_computerlib=$DB->fetch_array($result)) {
+         if (!$computer->getFromDB($a_computerlib['computers_id'])) {
+            $query = "DELETE FROM `glpi_plugin_fusinvinventory_libserialization`
+               WHERE `internal_id`='".$a_computerlib['internal_id']."'";
+            $DB->query($query);
+         } else {
+            $a_sections = $pfLib->_getInfoSections($a_computerlib['internal_id']);
+            $clean_sections = array();
+            foreach ($a_sections['sections'] as $infos=>$datatmp) {
+               $a_split = explode("/", $infos);
+               if ($a_split[1] > 0) {
+                  $clean_sections[$a_split[0]][$a_split[1]] = $a_split[1];
+               }               
+            }
+            // Check now sections in GLPI ant not in lib
+           
+            $a_itemtypes = array();
+            $a_itemtypes[] = 'CONTROLLERS';
+            $a_itemtypes[] = 'CPUS';
+            $a_itemtypes[] = 'DRIVES';
+            $a_itemtypes[] = 'MEMORIES';
+            $a_itemtypes[] = 'NETWORKS';
+            $a_itemtypes[] = 'SOFTWARES';
+            $a_itemtypes[] = 'SOUNDS';
+            $a_itemtypes[] = 'Drive';
+            $a_itemtypes[] = 'STORAGES';
+            $a_itemtypes[] = 'VIDEOS';
+            $a_itemtypes[] = 'MONITORS';
+            $a_itemtypes[] = 'PRINTERS';
+            $a_itemtypes[] = 'USBDEVICES';
+            $a_sectionsGLPI = array();
+
+            foreach($a_itemtypes as $sectionName) {
+
+               switch ($sectionName) {
+
+                  case "CONTROLLERS":
+                     $a_sectionsGLPI = $computerDeviceControl->find("`computers_id`='".$a_computerlib['computers_id']."'");
+                     foreach ($a_sectionsGLPI as $items_id=>$dataC) {
+                        if (!isset($clean_sections['CONTROLLERS'][$items_id])) {
+                           $computerDeviceControl->delete(array('id'=>$items_id,
+                                                                "_itemtype" => 'DeviceControl'), 1);
+                        }
+                     }
+                     break;
+
+                  case 'CPUS':
+                     $a_sectionsGLPI = $computerDeviceProcessor->find("`computers_id`='".$a_computerlib['computers_id']."'");
+                     foreach ($a_sectionsGLPI as $items_id=>$dataC) {
+                        if (!isset($clean_sections['CPUS'][$items_id])) {
+                           $computerDeviceProcessor->delete(array('id'=>$items_id,
+                                                                "_itemtype" => 'DeviceProcessor'), 1);
+                        }
+                     }
+                     break;
+
+                  case 'DRIVES':
+                     $a_sectionsGLPI = $ComputerDisk->find("`computers_id`='".$a_computerlib['computers_id']."'");
+                     foreach ($a_sectionsGLPI as $items_id=>$dataC) {
+                        if (!isset($clean_sections['DRIVES'][$items_id])) {
+                           $ComputerDisk->delete(array('id'=>$items_id), 1);
+                        }
+                     }
+                     break;
+
+                  case 'MEMORIES':
+                     $a_sectionsGLPI = $computerDeviceMemory->find("`computers_id`='".$a_computerlib['computers_id']."'");
+                     foreach ($a_sectionsGLPI as $items_id=>$dataC) {
+                        if (!isset($clean_sections['MEMORIES'][$items_id])) {
+                           $computerDeviceMemory->delete(array('id'=>$items_id,
+                                                               "_itemtype" => 'DeviceMemory'), 1);
+                        }
+                     }
+                     break;
+
+                  case 'NETWORKS':
+                     $a_sectionsGLPI = $NetworkPort->find("`items_id`='".$a_computerlib['computers_id']."'
+                                                AND `itemtype`='Computer'");
+                     foreach ($a_sectionsGLPI as $items_id=>$dataC) {
+                        if (!isset($clean_sections['NETWORKS'][$items_id])) {
+                           $NetworkPort->delete(array('id'=>$items_id), 1);
+                        }
+                     }
+                     break;
+
+                  case 'SOFTWARES':
+                     $a_sectionsGLPI = $Computer_SoftwareVersion->find("`computers_id`='".$a_computerlib['computers_id']."'");
+                     foreach ($a_sectionsGLPI as $items_id=>$dataC) {
+                        if (!isset($clean_sections['SOFTWARES'][$items_id])) {
+                           $Computer_SoftwareVersion->delete(array('id'=>$items_id), 1);
+                        }
+                     }
+                     break;
+
+                  case 'SOUNDS':
+                     $a_sectionsGLPI = $computerDeviceSoundCard->find("`computers_id`='".$a_computerlib['computers_id']."'");
+                     foreach ($a_sectionsGLPI as $items_id=>$dataC) {
+                        if (!isset($clean_sections['SOUNDS'][$items_id])) {
+                           $computerDeviceSoundCard->delete(array('id'=>$items_id,
+                                                                  "_itemtype" => 'DeviceSoundCard'), 1);
+                        }
+                     }
+                     break;
+
+//                  case 'Drive':
+//                     $a_sectionsGLPI = $computerDeviceDrive->find("`computers_id`='".$a_computerlib['computers_id']."'");
+//
+//                     break;
+
+                  case 'STORAGES':
+                     $a_sectionsGLPI = $computerDeviceHardDrive->find("`computers_id`='".$a_computerlib['computers_id']."'");
+                     foreach ($a_sectionsGLPI as $items_id=>$dataC) {
+                        if (!isset($clean_sections['STORAGES'][$items_id])) {
+                           $computerDeviceHardDrive->delete(array('id'=>$items_id,
+                                                                  "_itemtype" => 'DeviceHardDrive'), 1);
+                        }
+                     }
+                     break;
+
+                  case 'VIDEOS':
+                     $a_sectionsGLPI = $computerDeviceGraphicCard->find("`computers_id`='".$a_computerlib['computers_id']."'");
+                     foreach ($a_sectionsGLPI as $items_id=>$dataC) {
+                        if (!isset($clean_sections['VIDEOS'][$items_id])) {
+                           $computerDeviceGraphicCard->delete(array('id'=>$items_id,
+                                                                    "_itemtype" => 'DeviceGraphicCard'), 1);
+                        }
+                     }
+                     break;
+
+                  case 'MONITORS':
+                     $a_sectionsGLPI = $Computer_Item->find("`computers_id`='".$a_computerlib['computers_id']."'
+                                                   AND `itemtype`='Monitor'");
+                     foreach ($a_sectionsGLPI as $items_id=>$dataC) {
+                        if (!isset($clean_sections['MONITORS'][$items_id])) {
+                           $Computer_Item->delete(array('id'=>$items_id), 1);
+                        }
+                     }
+                     break;
+
+                  case "PRINTERS":
+                     $a_sectionsGLPI = $Computer_Item->find("`computers_id`='".$a_computerlib['computers_id']."'
+                                                   AND `itemtype`='Printer'");
+                     foreach ($a_sectionsGLPI as $items_id=>$dataC) {
+                        if (!isset($clean_sections['PRINTERS'][$items_id])) {
+                           $Computer_Item->delete(array('id'=>$items_id), 1);
+                        }
+                     }
+                     break;
+
+                  case 'USBDEVICES':
+                     $a_sectionsGLPI = $Computer_Item->find("`computers_id`='".$a_computerlib['computers_id']."'
+                                                   AND `itemtype`='Peripheral'");
+                     foreach ($a_sectionsGLPI as $items_id=>$dataC) {
+                        if (!isset($clean_sections['USBDEVICES'][$items_id])) {
+                           $Computer_Item->delete(array('id'=>$items_id), 1);
+                        }
+                     }
+                     break;
+
+               }
+            }
+         }         
+      }
+      
+      
    }
    
 }

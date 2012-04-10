@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -51,7 +51,9 @@ if (!defined('GLPI_ROOT')) {
 }
 
 Session::checkCentralAccess();
-$pfTaskjob = new PluginFusioninventoryTaskjob;
-$pfTaskjob->dropdownValue($_POST['myname'], $_POST[$_POST['myname']], $_POST['method'], $_POST[$_POST['name'].'typeid'], $_POST['taskjobs_id']);
+if ($_POST[$_POST['myname']] != '') {
+   $pfTaskjob = new PluginFusioninventoryTaskjob;
+   $pfTaskjob->dropdownValue($_POST['myname'], $_POST[$_POST['myname']], $_POST['method'], $_POST[$_POST['name'].'typeid'], $_POST['taskjobs_id']);
+}
 
 ?>

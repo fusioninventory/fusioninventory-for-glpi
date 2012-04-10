@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -259,11 +259,10 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
    
 
    static function networkport_addLog($port_id, $value_new, $field) {
-      $ptp = new PluginFusinvsnmpNetworkPort;
+      $pfNetworkPort = new PluginFusinvsnmpNetworkPort;
       $pfNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
       $pfConfigLogField = new PluginFusinvsnmpConfigLogField();
       $pfMapping = new PluginFusioninventoryMapping();
-
 
       $db_field = $field;
       switch ($field) {
@@ -296,9 +295,9 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
       }
 
-      $ptp->load($port_id);
+      $pfNetworkPort->loadNetworkport($port_id);
       //echo $ptp->getValue($db_field);
-      if ($ptp->getValue($db_field) != $value_new) {
+      if ($pfNetworkPort->getValue($db_field) != $value_new) {
          $a_mapping = $pfMapping->get('NetworkEquipment', $field);
 
          $days = $pfConfigLogField->getValue($a_mapping['id']);
@@ -307,7 +306,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
             $array = array();
             $array["networkports_id"] = $port_id;
             $array["plugin_fusioninventory_mappings_id"] = $a_mapping['id'];
-            $array["value_old"] = $ptp->getValue($db_field);
+            $array["value_old"] = $pfNetworkPort->getValue($db_field);
             $array["value_new"] = $value_new;
             $pfNetworkPortLog->insert_connection("field",$array,$_SESSION['glpi_plugin_fusioninventory_processnumber']);
          }

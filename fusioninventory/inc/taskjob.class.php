@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -151,12 +151,17 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    function showForm($id, $options=array()) {
       global $CFG_GLPI,$LANG;
 
-      if ($id != '') {
-         $this->verifyDefinitionActions($id);
-      }
+      $pfTask = new PluginFusioninventoryTask();
+      $pfTask->getFromDB($_POST['id']);
 
       if ($id!='') {
-         $this->getFromDB($id);
+         if ($this->getFromDB($id)) {
+            $this->verifyDefinitionActions($id);
+            $this->getFromDB($id);
+         } else {
+            $id = '';
+            $this->getEmpty();
+         }
       } else {
          $this->getEmpty();
       }
@@ -184,10 +189,10 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       } else {
          if ($ismultientities) {
-            echo $LANG['job'][46]."&nbsp;:&nbsp;".
+            echo $LANG['plugin_fusioninventory']['task'][15]."&nbsp;:&nbsp;".
                  Dropdown::getDropdownName("glpi_entities", $this->fields['entities_id']);
          } else {
-            echo $LANG['job'][13];
+            echo $LANG['plugin_fusioninventory']['task'][15];
          }
       }
       echo '</th>';
@@ -196,7 +201,12 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td height='18'>".$LANG['common'][16]."&nbsp;:</td>";
       echo "<td align='center'>";
-      echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
+      if ($pfTask->fields["is_advancedmode"] == '0'
+              AND $this->fields["name"] == '') {
+      
+         $this->fields["name"] = $pfTask->fields["name"];
+      }
+      echo "<input type='text' name='name' size='41' value='".$this->fields["name"]."'/>";
       echo "</td>";
       echo "<td height='18'>".$LANG['plugin_fusioninventory']['task'][26]."&nbsp;:</td>";
       echo "<td align='center'>";
@@ -232,45 +242,53 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td height='18'>".$LANG['plugin_fusioninventory']['task'][31]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      Dropdown::showInteger("periodicity_count", $this->fields['periodicity_count'], 0, 300);
-      $a_time = array();
-      $a_time[] = "------";
-      $a_time['minutes'] = strtolower($LANG['job'][22]);
-      $a_time['hours'] = strtolower($LANG['gmt'][1]);
-      $a_time['days'] = $LANG['calendar'][12];
-      $a_time['months'] = $LANG['plugin_fusioninventory']['task'][38];
-      Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$this->fields['periodicity_type']));
-      echo "</td>";
+      $rowspan = 4;
+      if ($pfTask->fields["is_advancedmode"] == '1') {
+         echo "<td height='18'>".$LANG['plugin_fusioninventory']['task'][31]."&nbsp;:</td>";
+         echo "<td align='center'>";
+         Dropdown::showInteger("periodicity_count", $this->fields['periodicity_count'], 0, 300);
+         $a_time = array();
+         $a_time[] = "------";
+         $a_time['minutes'] = strtolower($LANG['job'][22]);
+         $a_time['hours'] = strtolower($LANG['gmt'][1]);
+         $a_time['days'] = $LANG['calendar'][12];
+         $a_time['months'] = $LANG['plugin_fusioninventory']['task'][38];
+         Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$this->fields['periodicity_type']));
+         echo "</td>";
+      } else {
+         echo "<td colspan='2'></td>";
+         $rowspan = 1;
+      }
       // ** Definitions
-      echo "<td rowspan='4' valign='top'>";
+      echo "<td rowspan='".$rowspan."' valign='top'>";
       $this->showTaskjobItems('definition', $randmethod, $id);
       echo "</td>";
       
       // ** Actions
-      echo "<td rowspan='4' valign='top'>";
+      echo "<td rowspan='".$rowspan."' valign='top'>";
       $this->showTaskjobItems('action', $randmethod, $id);
       echo "</td>";
       echo "</tr>";
       
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['task'][24]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      Dropdown::showInteger("retry_nb", $this->fields["retry_nb"], 0, 30);
-      echo "</td>";
-      echo "</tr>";
+      if ($pfTask->fields["is_advancedmode"] == '1') {
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>".$LANG['plugin_fusioninventory']['task'][24]."&nbsp;:</td>";
+         echo "<td align='center'>";
+         Dropdown::showInteger("retry_nb", $this->fields["retry_nb"], 0, 30);
+         echo "</td>";
+         echo "</tr>";
       
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['task'][25]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      Dropdown::showInteger("retry_time", $this->fields["retry_time"], 0, 360);
-      echo "</td>";
-      echo "</tr>";
-      
-      echo "<tr>";
-      echo "<td colspan='2'></td>";
-      echo "</tr>";
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>".$LANG['plugin_fusioninventory']['task'][25]."&nbsp;:</td>";
+         echo "<td align='center'>";
+         Dropdown::showInteger("retry_time", $this->fields["retry_time"], 0, 360);
+         echo "</td>";
+         echo "</tr>";
+         
+         echo "<tr>";
+         echo "<td colspan='2'></td>";
+         echo "</tr>";
+      }
       
       echo "<tr>";
       if ($id<=0) {
@@ -485,7 +503,12 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             'method'=>$method,
             $myname.'typeid'=>'dropdown_'.ucfirst($myname).'Type'.$rand,
             'taskjobs_id'=>$taskjobs_id);
-      Ajax::UpdateItemOnSelectEvent('dropdown_'.ucfirst($myname).'Type'.$rand,"show_".ucfirst($myname)."List",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowntypelist.php",$params);
+
+      Ajax::updateItemOnEvent(
+              'dropdown_'.ucfirst($myname).'Type'.$rand,
+              "show_".ucfirst($myname)."List",
+              $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowntypelist.php",
+              $params);
 
       return $rand;
    }
@@ -529,21 +552,27 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $rand = Dropdown::showFromArray($_POST['name'].'selectiontoadd', $a_data);
       }
 
-      echo "<br/><center><input type='button' id='add".$_POST['name']."' name='add".$_POST['name']."' value=\"".$LANG['buttons'][8]."\" class='submit'></center>";
-      $params = array('items_id' => '__VALUE0__',
+      echo "<br/><center><input type='button' id='add_button_".$_POST['name']."' name='add_button_".$_POST['name']."' value=\"".$LANG['buttons'][8]."\" class='submit'></center>";
+      $params = array('items_id'  => '__VALUE0__',
+                      'add_button_'.$_POST['name'] => '__VALUE1__',
                       'itemtype'  => $definitiontype,
                       'rand'      => $rand,
-                      'myname'    => 'method',
+                      'myname'    => 'items_id',
                       'type'      => $_POST['name'],
                       'taskjobs_id'=>$taskjobs_id);
-      Ajax::updateItemOnEvent(array("dropdown_".$_POST['name']."selectiontoadd".$rand, "add".$_POST['name']),
+      Ajax::updateItemOnEvent("add_button_".$_POST['name'],
                               "Additem_$rand",
                               $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/taskjobaddtype.php",
                               $params,
                               array("click"),
                               "-1",
                               array($LANG['buttons'][8]));
-      echo "<span id='Additem_$rand'>&nbsp;</span>";
+//      echo "<span id='Additem_$rand'>&nbsp;oo</span>";
+
+
+echo "<span id='Additem_$rand'>&nbsp;oo</span>";
+//echo "<div id='Additem_$rand'>&nbsp;oo</div>";
+
    }
 
 
@@ -587,21 +616,21 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       if ($nb > 0) {
          echo "<center><input type='button' id='delete".$name."' name='delete".$name."' value=\"".$LANG['buttons'][6]."\" class='submit'></center>";
-      }
-      $params = array($name.'item' => '__CHECKBOX__',
-                      'type'      => $name,
-                      'taskjobs_id'=>$id);
 
-      $toobserve = "delete".$name;
-      $toupdate = "Deleteitem";
-      $url = $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/taskjobdeletetype.php";
-      $parameters=$params;
-      $events=array("click");
-      $minsize = -1;
-      $forceloadfor=array($LANG['buttons'][6]);
-      echo "<script type='text/javascript'>";
-     
-      echo "function checkboxvalues(item) {
+         $params = array($name.'item' => '__CHECKBOX__',
+                         'type'      => $name,
+                         'taskjobs_id'=>$id);
+
+         $toobserve = "delete".$name;
+         $toupdate = "Deleteitem";
+         $url = $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/taskjobdeletetype.php";
+         $parameters=$params;
+         $events=array("click");
+         $minsize = -1;
+         $forceloadfor=array($LANG['buttons'][6]);
+         echo "<script type='text/javascript'>";
+
+         echo "function checkboxvalues(item) {
 var inputs = document.getElementsByName(item);
 var namelist = '';
 for(var i = 0; i < inputs.length; i++){
@@ -612,77 +641,78 @@ for(var i = 0; i < inputs.length; i++){
 return namelist;
 
 }";
-      $zones = array($toobserve);
-      if (is_array($toobserve)) {
-         $zones = $toobserve;
-      }
+         $zones = array($toobserve);
+         if (is_array($toobserve)) {
+            $zones = $toobserve;
+         }
 
-      foreach ($zones as $zone) {
-         foreach ($events as $event) {
-            echo "
-               Ext.get('$zone').on(
-                '$event',
-                function() {";
-                  $condition = '';
-                  if ($minsize >= 0) {
-                     $condition = " Ext.get('$zone').getValue().length >= $minsize ";
-                  }
-                  if (count($forceloadfor)) {
-                     foreach ($forceloadfor as $value) {
-                        if (!empty($condition)) {
-                           $condition .= " || ";
-                        }
-                        $condition .= "Ext.get('$zone').getValue() == '$value'";
+         foreach ($zones as $zone) {
+            foreach ($events as $event) {
+               echo "
+                  Ext.get('$zone').on(
+                   '$event',
+                   function() {";
+                     $condition = '';
+                     if ($minsize >= 0) {
+                        $condition = " Ext.get('$zone').getValue().length >= $minsize ";
                      }
-                  }
-                  if (!empty($condition)) {
-                     echo "if ($condition) {";
-                  }
-                  //self::updateItemJsCode($toupdate, $url, $parameters, $toobserve);
-                  
-                  // Get it from a Ext.Element object
-                  $out = "Ext.get('$toupdate').load({
-                      url: '$url',
-                      scripts: true";
-
-                  if (count($parameters)) {
-                     $out .= ",
-                         params:'";
-                     $first = true;
-                     foreach ($parameters as $key => $val) {
-                        if ($first) {
-                           $first = false;
-                        } else {
-                           $out .= "&";
+                     if (count($forceloadfor)) {
+                        foreach ($forceloadfor as $value) {
+                           if (!empty($condition)) {
+                              $condition .= " || ";
+                           }
+                           $condition .= "Ext.get('$zone').getValue() == '$value'";
                         }
+                     }
+                     if (!empty($condition)) {
+                        echo "if ($condition) {";
+                     }
+                     //self::updateItemJsCode($toupdate, $url, $parameters, $toobserve);
 
-                        $out .= $key."=";
+                     // Get it from a Ext.Element object
+                     $out = "Ext.get('$toupdate').load({
+                         url: '$url',
+                         scripts: true";
 
-                        if ($val==="__CHECKBOX__") {
-                           $out .=  "'+checkboxvalues('".$key."')+'";
-
-                        } else {
-                           if (preg_match("/'/",$val)) {
-                              $out .=  rawurlencode($val);
+                     if (count($parameters)) {
+                        $out .= ",
+                            params:'";
+                        $first = true;
+                        foreach ($parameters as $key => $val) {
+                           if ($first) {
+                              $first = false;
                            } else {
-                              $out .=  $val;
+                              $out .= "&";
+                           }
+
+                           $out .= $key."=";
+
+                           if ($val==="__CHECKBOX__") {
+                              $out .=  "'+checkboxvalues('".$key."')+'";
+
+                           } else {
+                              if (preg_match("/'/",$val)) {
+                                 $out .=  rawurlencode($val);
+                              } else {
+                                 $out .=  $val;
+                              }
                            }
                         }
+                        echo $out."'\n";
                      }
-                     echo $out."'\n";
-                  }
-                  echo "});";
-                  
-                  
-                  if (!empty($condition)) {
-                     echo "}";
-                  }
+                     echo "});";
 
-          echo "});\n";
+
+                     if (!empty($condition)) {
+                        echo "}";
+                     }
+
+             echo "});\n";
+            }
          }
-      }
-      echo "</script>";
-      echo "<span id='Deleteitem'>&nbsp;</span>";
+         echo "</script>";
+         echo "<span id='Deleteitem'>&nbsp;</span>";
+      }      
    }
    
    
@@ -1198,8 +1228,13 @@ return namelist;
    
    // $items_id = agent id
    function getRealStateAgent($items_id) {
-
-      $this->disableDebug();
+      
+      ini_set('display_errors','On');
+      error_reporting(E_ALL | E_STRICT);
+      set_error_handler('userErrorHandlerDebug');
+      
+      ob_start();
+      ini_set("allow_url_fopen", "1");
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
@@ -1212,11 +1247,13 @@ return namelist;
 
       $str="noanswer";
       foreach(PluginFusioninventoryAgent::getAgentStatusURLs($plugins_id, $items_id) as $url) {
-         $str = @file_get_contents($url, 0, $ctx);
+         $str = @file_get_contents($url, false, $ctx);
          if ($str !== false) {
             break;
          }
       }
+      $error = ob_get_contents();
+      ob_end_clean();
       $this->reenableusemode();
 
       $ret = '';
@@ -1226,6 +1263,10 @@ return namelist;
          $ret="running";
       }
 
+      if ($str == '' AND !strstr($error, "failed to open stream: Permission denied")) {
+         $ret = "noanswer";
+      }
+      
       return $ret;
    }
    
@@ -1280,8 +1321,13 @@ return namelist;
    function reenableusemode() {
       if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE){
          ini_set('display_errors', 'On');
+         // Recommended development settings
          error_reporting(E_ALL | E_STRICT);
-         set_error_handler("userErrorHandler");
+         set_error_handler('userErrorHandlerDebug');
+      } else {
+         ini_set('display_errors','Off');
+         error_reporting(E_ALL);
+         set_error_handler('userErrorHandlerNormal');
       }
 
    }
@@ -2003,6 +2049,7 @@ return namelist;
       }
    }
 
+   
    
    function showTaskjobItems($name, $randmethod, $id) {
       global $LANG,$CFG_GLPI;

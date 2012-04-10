@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author Mathieu Simon
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -178,15 +178,16 @@ $LANG['plugin_fusioninventory']['task'][36]="hours";
 $LANG['plugin_fusioninventory']['task'][37]="days";
 $LANG['plugin_fusioninventory']['task'][38]="months";
 $LANG['plugin_fusioninventory']['task'][39]="Unable to run task because some jobs is running yet!";
-$LANG['plugin_fusioninventory']['task'][40]="Force running";
+$LANG['plugin_fusioninventory']['task'][40]="Force start";
 $LANG['plugin_fusioninventory']['task'][41]="Server contacts the agent (push)";
 $LANG['plugin_fusioninventory']['task'][42]="Agent contacts the server (pull)";
 $LANG['plugin_fusioninventory']['task'][43]="Communication mode";
 $LANG['plugin_fusioninventory']['task'][44]="See all informations of task";
 $LANG['plugin_fusioninventory']['task'][45]="Advanced options";
-$LANG['plugin_fusioninventory']['task'][46]="Reset";
+$LANG['plugin_fusioninventory']['task'][46]="Reinitialization";
 $LANG['plugin_fusioninventory']['task'][47]="Unique id";
 $LANG['plugin_fusioninventory']['task'][48]="To inventory";
+$LANG['plugin_fusioninventory']['task'][49]="Advanced mode";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Started";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";

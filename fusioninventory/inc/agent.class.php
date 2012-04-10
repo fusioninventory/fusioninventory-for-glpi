@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -318,7 +318,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             $a_input['device_id']    = $pxml->DEVICEID;
             $a_input['entities_id']  = 0;
             $a_input['last_contact'] = date("Y-m-d H:i:s");
-            $a_input['useragent']    = $_SERVER['HTTP_USER_AGENT'];
+            if (isset($_SERVER['HTTP_USER_AGENT'])) {
+               $a_input['useragent']    = $_SERVER['HTTP_USER_AGENT'];
+            }
             return $pta->add($a_input);
          } else {
             foreach ($a_agent as $data) {
@@ -328,7 +330,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
                   $input['token'] = $pxml->TOKEN;
                }
                $input['last_contact'] = date("Y-m-d H:i:s");
-               $input['useragent']    = $_SERVER['HTTP_USER_AGENT'];
+               if (isset($_SERVER['HTTP_USER_AGENT'])) {
+                  $input['useragent']    = $_SERVER['HTTP_USER_AGENT'];
+               }
                $pta->update($input);
                return $data['id'];
             }
@@ -398,7 +402,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
 
    /**
-   * Make link between agent and computer
+   * Create links between agent and computer.
    *
    * @param $items_id integer ID of the computer
    * @param $device_id value of device_id from XML to identify agent
@@ -409,18 +413,46 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    function setAgentWithComputerid($items_id, $device_id) {
       global $DB;
 
-      // Reset if computer connected with an other agent
-      $query = "UPDATE `".$this->getTable()."`
-                SET `items_id`='0'
-                WHERE `items_id`='".$items_id."'
-                   AND `device_id`!='".$device_id."' ";
-      $DB->query($query);
+      $a_agent = $this->find("`items_id`='".$items_id."'", "", 1);
+      // Is this computer already linked to an agent?
+      if ($agent = array_shift($a_agent)) {
 
-      // Link agent with computer
-      $agent = $this->InfosByKey($device_id);
-      if (isset($agent['id'])) {
-         $agent['items_id'] = $items_id;
-         $this->update($agent);
+         // relation
+         if ($agent['device_id'] != $device_id) {
+            $input = array();
+            $input['id'] = $agent['id'];
+            $input['device_id'] = $device_id;
+            $this->update($input);
+         }
+
+         // Clean up the agent list
+         $oldAgents = $this->find(
+            // computer linked to the wrong agent
+            "(`items_id`='".$items_id."' AND `device_id` <> '".$device_id."')");
+         foreach ($oldAgents as $oldAgent) {
+            $this->delete($oldAgent);
+         }
+         $oldAgents = $this->find(
+            // the same device_id but linked on the wrong computer 
+            "(`device_id`='".$device_id."' AND `items_id`<>'".$items_id."')");
+         foreach ($oldAgents as $oldAgent) {
+            $input = array();
+            $input['id'] = $agent['id'];
+            $input['last_contact'] = $oldAgent['last_contact'];
+            $input['version'] = $oldAgent['version'];
+            $input['name'] = $oldAgent['name'];
+            $input['useragent'] = $oldAgent['useragent'];
+            $input['token'] = $oldAgent['token'];
+            $this->update($input);            
+            $this->delete($oldAgent);
+         }
+      } else { # This is a new computer
+         // Link agent with computer
+         $agent = $this->InfosByKey($device_id);
+         if (isset($agent['id'])) {
+             $agent['items_id'] = $items_id;
+             $this->update($agent);
+         }
       }
    }
 
@@ -490,15 +522,15 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             echo $LANG['plugin_fusioninventory']['agents'][30];
             break;
 
-         case 'noanswer':
-            echo $LANG['plugin_fusioninventory']['agents'][40];
-            break;
-
          case 'waiting':
             $waiting = 1;
             echo $LANG['plugin_fusioninventory']['agents'][38];
             echo "<input type='hidden' name='ip' value='".$ip."' />";
             echo "<input type='hidden' name='agent_id' value='".$agent_id."' />";
+            break;
+         
+         case '':
+            echo "SELinux problem, do 'setsebool -P httpd_can_network_connect on'";
             break;
 
       }
@@ -607,7 +639,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       $a_ips = $pfAgent->getIPs($agent_id);
       foreach ($a_ips as $ip) {
-         array_push($ret, "http://".$ip.":".$config->getValue($plugins_id, 'agent_port', ''));
+         if ($ip != '') {
+            array_push($ret, "http://".$ip.":".$config->getValue($plugins_id, 'agent_port', ''));
+         }
       }
 
       return $ret;
@@ -685,6 +719,27 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "</tr>";
       echo "</table>";
    }   
+   
+   
+   
+   /**
+    * Disable data to put in table glpi_logs
+    * 
+    */   
+   function pre_updateInDB() {
+      if (isset($this->updates['version'])
+              AND isset($this->oldvalues['version'])
+              AND $this->updates['version'] == $this->oldvalues['version']) {
+         unset($this->updates['version']);
+         unset($this->oldvalues['version']);
+      }
+      if (isset($this->oldvalues['last_contact'])) {
+         unset($this->oldvalues['last_contact']);
+      }
+      if (isset($this->oldvalues['token'])) {
+         unset($this->oldvalues['token']);
+      }
+   }
 }
 
 ?>

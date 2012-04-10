@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    Alexandre Delaunay
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -84,7 +84,7 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
 
                //find computers by user associated with this group
                $group_users = new Group_User;
-               $users_id_a = array_keys($group_users->find("groups_id = '$items_id"));
+               $users_id_a = array_keys($group_users->find("groups_id = '$items_id'"));
                $computers_a_1 = array();
                foreach ($users_id_a as $users_id) {
                   $computers_a_1 = array_keys($computer->find("users_id = '$users_id'"));
@@ -120,6 +120,8 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
                      $row = $DB->fetch_assoc($res);
                      $fields_array = unserialize($row['fields_array']);
                      if ($fields_array['operatingsystems_id'] != 0) unset($fields_array['operatingsystem_name']);
+                     if ($fields_array['operatingsystems_id'] == 0) unset($fields_array['operatingsystems_id']);
+                     if ($fields_array['locations_id'] == 0) unset($fields_array['locations_id']);
                      foreach($fields_array as $key =>$field) {
                         if (trim($field) == '') unset($fields_array[$key]);
                      }

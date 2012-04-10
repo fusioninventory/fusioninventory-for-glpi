@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    Vincent Mazzoni
    @co-author Alexandre Delaunay
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -110,17 +110,17 @@ class PluginFusinvdeployConfig extends CommonDBTM {
       echo "<div class='center' id='tabsbody'>";
       echo "<table class='tab_cadre_fixe'>";
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusinvdeploy']["config"][0]."&nbsp;:</td>";
-      echo "<td>";
-      Html::autocompletionTextField($config, 'glpi_path', array(
-         'name'   => 'glpi_path',
-         'value'  => $config->getValue($plugins_id, 'glpi_path'),
-         'size'   => '100%'
-      ));
-      echo "</td>";
-      echo "<td colspan='2'></td>";;
-      echo "</tr>";
+//      echo "<tr class='tab_bg_1'>";
+//      echo "<td>".$LANG['plugin_fusinvdeploy']["config"][0]."&nbsp;:</td>";
+//      echo "<td>";
+//      Html::autocompletionTextField($config, 'glpi_path', array(
+//         'name'   => 'glpi_path',
+//         'value'  => $config->getValue($plugins_id, 'glpi_path'),
+//         'size'   => '100%'
+//      ));
+//      echo "</td>";
+//      echo "<td colspan='2'></td>";;
+//      echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusinvdeploy']['config'][1]."&nbsp;:</td>";

@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -57,14 +57,14 @@ class PluginFusioninventoryMenu {
    static function displayMenu($type = "big") {
       global $LANG,$CFG_GLPI;
 
-      // FOR THE BETA/RC
-      echo "<center>"; 
-      echo "<a href='http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/wiki/Beta_test'>";
-      echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/beta_1.png'/></a>";
-      echo "&nbsp;<a href='https://www.transifex.net/projects/p/FusionInventory/'>";
-      echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/Translate.png'/></a>"; 
-      echo "</center><br/>";
-      // END FOR THE BETA
+      if (PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE != 1) {
+         echo "<center>";
+         echo "<a href='http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/wiki/Beta_test'>";
+         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/beta_1.png'/></a>";
+         echo "&nbsp;<a href='https://www.transifex.net/projects/p/FusionInventory/'>";
+         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/Translate.png'/></a>";
+         echo "</center><br/>";
+      }
 
 
       $width_status = 0;
@@ -204,7 +204,7 @@ class PluginFusioninventoryMenu {
     *@return $width_status integer total width used by menu
     **/
    static function htmlMenu($plugin_name, $a_menu = array(), $type = "big", $width_status='300') {
-      global $LANG;
+      global $LANG,$CFG_GLPI;
 
       $width_max = 950;
 
@@ -231,7 +231,10 @@ class PluginFusioninventoryMenu {
 
       echo "<tr>";
       echo "<th colspan='".count($a_menu)."' nowrap width='".$width."'>
-         &nbsp;".str_replace("FusionInventory ","",$LANG['plugin_'.$plugin_name]['title'][0])."&nbsp;</th>";
+         <img src='".$CFG_GLPI["root_doc"]."/pics/deplier_down.png' />
+         &nbsp;".str_replace("FusionInventory ","",$LANG['plugin_'.$plugin_name]['title'][0])."&nbsp;
+         <img src='".$CFG_GLPI["root_doc"]."/pics/deplier_down.png' />
+      </th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1' id='menu".$plugin_name."' style='display:none'>";

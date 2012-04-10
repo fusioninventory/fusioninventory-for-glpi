@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -53,10 +53,10 @@ if(!isset($_POST["sort"])) $_POST["sort"] = "";
 if(!isset($_POST["order"])) $_POST["order"] = "";
 if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 
-$pft = new PluginFusioninventoryTask;
-$pfTaskjoblog = new PluginFusioninventoryTaskjoblog;
+$pft = new PluginFusioninventoryTask();
+$pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
 
-$pftj = new PluginFusioninventoryTaskjob;
+$pftj = new PluginFusioninventoryTaskjob();
 $a_taskjob = $pftj->find("`plugin_fusioninventory_tasks_id`='".$_POST["id"]."'
       AND `rescheduled_taskjob_id`='0' ", "id");
 $i = 1;
@@ -83,7 +83,18 @@ switch($_POST['glpi_tab']) {
       break;
 
    case 1 :
-//      $pfia->showFormAdvancedOptions($_POST["id"]);
+      $pft->getFromDB($_POST["id"]);
+      if ($pft->fields['is_advancedmode'] == '0') {
+         $taskjob = current($a_taskjob);
+         if (!isset($taskjob["id"])) {
+            $taskjobs_id = $pftj->add(array('name'=>$pft->fields['name'],
+                             'entities_id'=>$pft->fields['entities_id'],
+                             'plugin_fusioninventory_tasks_id'=>$_POST["id"]));
+            $pftj->showForm($taskjobs_id);
+         } else {
+            $pftj->showForm($taskjob["id"]);
+         }
+      }
       break;
 }
 

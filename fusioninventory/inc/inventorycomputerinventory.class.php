@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -121,6 +121,20 @@ class PluginFusioninventoryInventoryComputerInventory {
             }
          }
       // End hack
+         
+      // Know if computer is HP to remove S in prefix of serial number
+         if ((isset($p_xml->CONTENT->BIOS->SMANUFACTURER))
+               AND (strstr($p_xml->CONTENT->BIOS->SMANUFACTURER, "ewlett"))) {
+
+            $_SESSION["plugin_fusioninventory_manufacturerHP"] = 1;
+         } else {
+            if (isset($_SESSION["plugin_fusioninventory_manufacturerHP"])) {
+               unset($_SESSION["plugin_fusioninventory_manufacturerHP"]);
+            }
+         }
+         
+         
+      // End code for HP computers
       
       $pfBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
       $p_xml = $pfBlacklist->cleanBlacklist($p_xml);
@@ -308,7 +322,9 @@ class PluginFusioninventoryInventoryComputerInventory {
                "pluginFusioninventory-entityrules", 
                print_r($dataEntity, true)
             );
-
+         if (!isset($_SESSION['glpiactiveentities_string'])) {
+            $_SESSION['glpiactiveentities_string'] = "'".$_SESSION["plugin_fusinvinventory_entity"]."'";
+         }
          if ($items_id == '0') {
             if ($_SESSION["plugin_fusinvinventory_entity"] == NOT_AVAILABLE) {
                $_SESSION["plugin_fusinvinventory_entity"] = 0;
@@ -374,6 +390,7 @@ class PluginFusioninventoryInventoryComputerInventory {
             }
          }
          $class->getFromDB($items_id);
+         $_SESSION["plugin_fusinvinventory_entity"] = $class->fields['entities_id'];
          $input = array();
          $input['id'] = $class->fields['id'];
          

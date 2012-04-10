@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    Vincent Mazzoni
    @co-author David Durieux
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -63,8 +63,13 @@ if (isset($_POST['update'])) {
 $pfConfig = new PluginFusioninventoryConfig();
 
 $pfConfig->getFromDB(1);
+if (isset($_GET['glpi_tab'])) {
+   $_SESSION['glpi_tabs']['pluginfusioninventoryconfiguration'] = $_GET['glpi_tab'];
+   Html::redirect(Toolbox::getItemTypeFormURL($pfConfig->getType()));
+}
 $pfConfig->showTabs(array());
 $pfConfig->addDivForTabs();
+unset($_SESSION['glpi_tabs']['pluginfusioninventoryconfiguration']);
 
 Html::footer();
 

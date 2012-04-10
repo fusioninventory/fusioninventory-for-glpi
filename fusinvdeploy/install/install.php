@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author Alexandre Delaunay
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -47,10 +47,10 @@ function pluginFusinvdeployInstall($version, $migration='') {
    $a_plugin = plugin_version_fusinvdeploy();
 
    include_once (GLPI_ROOT . "/plugins/fusinvdeploy/install/update.php");
-   $version_detected = pluginfusinvdeployGetCurrentVersion($a_plugin['version']);
-   if ((isset($version_detected)) && ($version_detected != $a_plugin['version'])) {
+   $version_detected = pluginFusinvdeployGetCurrentVersion($a_plugin['version']);
+   if ($version_detected !== false && ($version_detected != $a_plugin['version'])) {
       // Update
-      pluginFusinvdeployUpdate($version_detected);
+      return pluginFusinvdeployUpdate($version_detected);
    } else {
       // Installation
       if ($migration == '') {

@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -29,8 +29,8 @@
 
    @package   FusionInventory
    @author    Alexandre Delaunay
-   @co-author
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @co-author 
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -398,7 +398,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
             'limit'                 => '',
             'serial'                => '',
             'otherserial'           => '',
-            'locations'             => '',
+            'locations_id'          => '',
             'operatingsystems_id'   => '0',
             'operatingsystem_name'  => '',
             'room'                  => '',
@@ -425,8 +425,8 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       echo "<td>";
       $rand_location = '';
       Dropdown::show('Location', array(
-         'value'  => $fields['locations'],
-         'name'   => 'locations',
+         'value'  => $fields['locations_id'],
+         'name'   => 'locations_id',
          'rand'   => $rand_location
       ));
       echo "</td>";
@@ -521,7 +521,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
          $CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/ajax/group_results.php",
          array(
             'itemtype'              => 'group_search_itemtype',
-            'location_id'           => 'dropdown_locations',
+            'locations_id'          => 'dropdown_locations_id',
             'operatingsystem_name'  => 'search_operatingsystems_id',
             'operatingsystems_id'   => 'operatingsystems_id',
             'serial'                => 'group_search_serial',
@@ -649,11 +649,10 @@ class PluginFusinvdeployGroup extends CommonDBTM {
 
       if(isset($params['type'])) $type  = $params['type'];
       else exit;
-
       $options = array(
          'type'                  => $type,
          'itemtype'              => $params['itemtype'],
-         'location_id'           => $params['location_id'],
+         'locations_id'          => $params['locations_id'],
          'serial'                => $params['serial'],
          'operatingsystems_id'   => $params['operatingsystems_id'],
          'operatingsystem_name'  => $params['operatingsystem_name'],
@@ -663,7 +662,8 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       );
 
       if ($options['operatingsystems_id'] != 0) unset($options['operatingsystem_name']);
-
+      if ($options['operatingsystems_id'] == 0) unset($options['operatingsystems_id']);
+      if ($options['locations_id'] == 0) unset($options['locations_id']);
       $nb_items = count(PluginWebservicesMethodInventaire::methodListInventoryObjects($options, ''));
 
       $options['limit'] = 50;

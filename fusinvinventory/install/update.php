@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -521,8 +521,16 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
    $input['33:50:6f:45:30:30'] = '3';
    $input['0a:00:27:00:00:00'] = '3';
    $input['00:50:56:C0:00:01'] = '3';
+   $input['00:50:56:C0:00:02'] = '3';
+   $input['00:50:56:C0:00:03'] = '3';
+   $input['00:50:56:C0:00:04'] = '3';
    $input['00:50:56:C0:00:08'] = '3';
+   $input['FE:FF:FF:FF:FF:FF'] = '3';
+   $input['00:00:00:00:00:00'] = '3';
+   $input['00:0b:ca:fe:00:00'] = '3';
    $input['MB-1234567890'] = '1';
+   $input['Not Specified'] = '1';
+   $input['OEM_Serial'] = '1';
    foreach ($input as $value=>$type) {
       $query = "SELECT * FROM `glpi_plugin_fusinvinventory_blacklists`
          WHERE `plugin_fusioninventory_criterium_id`='".$type."'

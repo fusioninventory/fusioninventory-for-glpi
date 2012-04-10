@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -632,6 +632,14 @@ class Rules extends PHPUnit_Framework_TestCase {
       $Install = new Install();
       $Install->testInstall(0);
       
+      $plugin = new Plugin();
+      $plugin->getFromDBbyDir("fusioninventory");
+      $plugin->activate($plugin->fields['id']);
+      Plugin::load("fusioninventory");
+      $plugin->getFromDBbyDir("fusinvinventory");
+      $plugin->activate($plugin->fields['id']);
+      Plugin::load("fusinvinventory");
+      
       $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
       Session::loadLanguage("en_GB");
       
@@ -793,6 +801,11 @@ class Rules extends PHPUnit_Framework_TestCase {
    public function testImportComputerwithTypeOnly() {
       global $DB,$XML,$CFG_GLPI;
       
+      $plugin = new Plugin();
+      $plugin->getFromDBbyDir("fusioninventory");
+      $plugin->activate($plugin->fields['id']);
+      Plugin::load("fusioninventory");
+
       $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
       Session::loadLanguage("en_GB");
       
@@ -901,6 +914,11 @@ class Rules extends PHPUnit_Framework_TestCase {
     */
    public function testImportComputerwithTypeAndNameExist() {
       global $DB,$XML,$CFG_GLPI;
+      
+      $plugin = new Plugin();
+      $plugin->getFromDBbyDir("fusioninventory");
+      $plugin->activate($plugin->fields['id']);
+      Plugin::load("fusioninventory");
       
       $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
       Session::loadLanguage("en_GB");
@@ -1053,6 +1071,11 @@ class Rules extends PHPUnit_Framework_TestCase {
     */
    public function testImportComputerwithTypeAndNameExistNamePresent() {
       global $DB,$XML,$CFG_GLPI;
+      
+      $plugin = new Plugin();
+      $plugin->getFromDBbyDir("fusioninventory");
+      $plugin->activate($plugin->fields['id']);
+      Plugin::load("fusioninventory");
       
       $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
       Session::loadLanguage("en_GB");
@@ -1226,6 +1249,11 @@ class Rules extends PHPUnit_Framework_TestCase {
    
    public function testImportComputerCheckrulevalidationlocal_and_globalcriteria() {
       global $DB,$XML,$CFG_GLPI;
+      
+      $plugin = new Plugin();
+      $plugin->getFromDBbyDir("fusioninventory");
+      $plugin->activate($plugin->fields['id']);
+      Plugin::load("fusioninventory");
       
       $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
       Session::loadLanguage("en_GB");

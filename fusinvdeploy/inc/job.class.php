@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    Walid Nouh
    @co-author
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -137,21 +137,29 @@ class PluginFusinvdeployJob {
      $tmp['date']                                    = date("Y-m-d H:i:s");
      $tmp['comment']                                 = "";
      $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_RUNNING;
+
+     $options = 0;
+     if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
+        $options = ENT_IGNORE;
+     }
+
      // add log message
      if ($p['currentStep']) {
-        $tmp['comment'] = htmlentities($p['currentStep'], ENT_IGNORE, "UTF-8");
-     } elseif (is_array($p['msg'])) {
+        $tmp['comment'] = htmlentities($p['currentStep'], $options, "UTF-8");
+     } 
+
+     if (is_array($p['msg'])) {
          if ($tmp['comment'] != "") {
-            $tmp['comment'] .= "<br>";
+            $tmp['comment'] .= ":<br>";
         }
         foreach ($p['msg'] as $line) {
-            $tmp['comment'] .= htmlentities($line, ENT_IGNORE, "UTF-8")."<br>";
+            $tmp['comment'] .= htmlentities($line, $options, "UTF-8")."<br>";
         }
      } elseif ($p['msg'] != "") {
         if ($tmp['comment'] != "") {
-            $tmp['comment'] .= "<br>";
+            $tmp['comment'] .= ":<br>";
         }
-        $tmp['comment'] .= htmlentities($p['msg'], ENT_IGNORE, "UTF-8");
+        $tmp['comment'] .= htmlentities($p['msg'], $options, "UTF-8");
      }
 
      if ($p['status'] == 'ko') {

@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author Alexandre Delaunay
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -165,6 +165,24 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       Html::displayTitle(GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_mini_package.png", $title, $title, $buttons);
    }
 
+   function showMenu($options=array())  {
+      
+      $this->displaylist = false;
+   
+      $this->fields['id'] = -1;
+      $this->showList();
+   }
+
+   function showList() {
+      echo "<center>";
+      echo "<table class='tab_cadre_navigation'><tr><td>";
+
+      self::title();
+      Search::show('PluginFusinvdeployPackage');
+
+      echo "</td></tr></table>";
+      echo "</center>";
+   }
 
    function showForm($ID, $options=array()) {
       global $DB,$CFG_GLPI,$LANG;

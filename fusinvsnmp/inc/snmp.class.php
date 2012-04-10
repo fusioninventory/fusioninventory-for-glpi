@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -322,10 +322,14 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
                 FROM `glpi_networkports`
                 WHERE (`mac` = '".$p_mac."' OR
                                   `mac` = '".strtoupper($p_mac)."')
-                      AND `id`!='".$p_fromPortID."';"; // do not get the link port
+                      AND `id`!='".$p_fromPortID."'
+                LIMI 1"; // do not get the link port
       $result = $DB->query($query);
-      $data = $DB->fetch_assoc($result);
-      return($data["id"]);
+      if ($DB->numrows($result) > 0) {
+         $data = $DB->fetch_assoc($result);
+         return($data["id"]);
+      }
+      return false;
    }
 
 

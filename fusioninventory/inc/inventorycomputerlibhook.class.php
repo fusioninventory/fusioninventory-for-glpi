@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author 
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -122,7 +122,6 @@ class PluginFusioninventoryInventoryComputerLibhook {
          $_SESSION["plugin_fusinvinventory_no_history_add"] = false;
       }
 
-      $ignore_controllers = array();
       $ignore_USB = array();
 
       $i = -1;
@@ -347,18 +346,6 @@ class PluginFusioninventoryInventoryComputerLibhook {
                }
                break;
 
-            case 'SOUNDS':
-               if (isset($dataSection['NAME'])) {
-                  $ignore_controllers[$dataSection['NAME']] = 1;
-               }
-               break;
-
-            case 'VIDEOS':
-               if (isset($dataSection['NAME'])) {
-                  $ignore_controllers[$dataSection['NAME']] = 1;
-               }
-               break;
-
             case 'PRINTERS':
                if (isset($dataSection['SERIAL'])) {
                   $ignore_USB[$dataSection['SERIAL']] = 1;
@@ -403,7 +390,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
 
             case 'CONTROLLERS':
                $id_controller = '';
-               if ((isset($dataSection["NAME"])) AND (!isset($ignore_controllers[$dataSection["NAME"]]))) {
+               if ((isset($dataSection["NAME"])) AND (!isset($_SESSION["plugin_fusinvinventory_ignorecontrollers"][$dataSection["NAME"]]))) {
                   $pfInventoryComputerImport_Controller = new PluginFusioninventoryInventoryComputerImport_Controller();
                   $id_controller = $pfInventoryComputerImport_Controller->AddUpdateItem("add", $idmachine, $dataSection);
                }
@@ -466,13 +453,20 @@ class PluginFusioninventoryInventoryComputerLibhook {
                if (!isset($dataSection['PUBLISHER'])) {
                   $dataSection['PUBLISHER'] = NULL;
                }
-
-               if (isset($dataSection['VERSION'])) {
-                  $Computer_SoftwareVersion_id = $pfInventoryComputerImport_Software->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
+               $name = '';
+               if (isset($dataSection['NAME'])) {
+                  $name = $dataSection['NAME'];
+               } else if (isset($dataSection['GUID'])) {
+                  $name = $dataSection['GUID'];
+               }
+               $Computer_SoftwareVersion_id = '';
+               if (isset($dataSection['VERSION'])
+                       AND $name != '') {
+                  $Computer_SoftwareVersion_id = $pfInventoryComputerImport_Software->addSoftware($idmachine, array('name'=>$name,
                                                                               'version'=>$dataSection['VERSION'],
                                                                               'PUBLISHER'=>$dataSection['PUBLISHER']));
-               } else {
-                  $Computer_SoftwareVersion_id = $pfInventoryComputerImport_Software->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
+               } else if ($name != '') {
+                  $Computer_SoftwareVersion_id = $pfInventoryComputerImport_Software->addSoftware($idmachine, array('name'=>$name,
                                                                               'version'=>NOT_AVAILABLE,
                                                                               'PUBLISHER'=>$dataSection['PUBLISHER']));
                }
@@ -621,11 +615,14 @@ class PluginFusioninventoryInventoryComputerLibhook {
       $Computer->getFromDB($idmachine);
       $_SESSION["plugin_fusinvinventory_entity"] = $Computer->fields['entities_id'];
 
+      $_SESSION["plugin_fusinvinventory_history_add"] = true;
+      $_SESSION["plugin_fusinvinventory_no_history_add"] = false;
+      
       PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-removesection", 
          "[".$idmachine."] ".print_r($idsections, true)
       );
-        
+      
         foreach ($idsections as $section) {
             $split = explode("/", $section);
             $sectionName = $split[0];
