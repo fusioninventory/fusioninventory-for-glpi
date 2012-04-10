@@ -140,15 +140,15 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
 
       if ($nn->getOppositeContact($p_port) AND $nn->getFromDBForNetworkPort($nn->getOppositeContact($p_port))) {
          $purge = $nn->delete($nn->fields,1);
-         if ($purge) {
-            plugin_item_purge_fusioninventory($nn);
-         }
+//         if ($purge) {
+//            plugin_item_purge_fusioninventory($nn);
+//         }
       }
       if ($nn->getFromDBForNetworkPort($p_port)) {
          $purge = $nn->delete($nn->fields,1);
-         if ($purge) {
-            plugin_item_purge_fusioninventory($nn);
-         }
+//         if ($purge) {
+//            plugin_item_purge_fusioninventory($nn);
+//         }
       }
    }
 
