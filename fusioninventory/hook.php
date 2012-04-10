@@ -982,8 +982,10 @@ function plugin_item_purge_fusioninventory($parm) {
                foreach ($a_networkports as $data) {
                   if ($data['name'] == 'Link') {
                      $switchPorts_id = $NetworkPort->getContact($data['id']);
-                  } else {
+                  } else if ($otherPorts_id == '0') {
                      $otherPorts_id = $NetworkPort->getContact($data['id']);
+                  } else {
+                     $switchPorts_id = $NetworkPort->getContact($data['id']);
                   }
                }
 
@@ -992,7 +994,6 @@ function plugin_item_purge_fusioninventory($parm) {
                
                $networkPort_NetworkPort->add(array('networkports_id_1'=> $switchPorts_id,
                                                    'networkports_id_2' => $otherPorts_id));
-
             }
          }
 
