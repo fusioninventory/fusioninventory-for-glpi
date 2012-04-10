@@ -503,7 +503,12 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             'method'=>$method,
             $myname.'typeid'=>'dropdown_'.ucfirst($myname).'Type'.$rand,
             'taskjobs_id'=>$taskjobs_id);
-      Ajax::UpdateItemOnSelectEvent('dropdown_'.ucfirst($myname).'Type'.$rand,"show_".ucfirst($myname)."List",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowntypelist.php",$params);
+
+      Ajax::updateItemOnEvent(
+              'dropdown_'.ucfirst($myname).'Type'.$rand,
+              "show_".ucfirst($myname)."List",
+              $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowntypelist.php",
+              $params);
 
       return $rand;
    }
@@ -547,21 +552,27 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $rand = Dropdown::showFromArray($_POST['name'].'selectiontoadd', $a_data);
       }
 
-      echo "<br/><center><input type='button' id='add".$_POST['name']."' name='add".$_POST['name']."' value=\"".$LANG['buttons'][8]."\" class='submit'></center>";
-      $params = array('items_id' => '__VALUE0__',
+      echo "<br/><center><input type='button' id='add_button_".$_POST['name']."' name='add_button_".$_POST['name']."' value=\"".$LANG['buttons'][8]."\" class='submit'></center>";
+      $params = array('items_id'  => '__VALUE0__',
+                      'add_button_'.$_POST['name'] => '__VALUE1__',
                       'itemtype'  => $definitiontype,
                       'rand'      => $rand,
-                      'myname'    => 'method',
+                      'myname'    => 'items_id',
                       'type'      => $_POST['name'],
                       'taskjobs_id'=>$taskjobs_id);
-      Ajax::updateItemOnEvent(array("dropdown_".$_POST['name']."selectiontoadd".$rand, "add".$_POST['name']),
+      Ajax::updateItemOnEvent("add_button_".$_POST['name'],
                               "Additem_$rand",
                               $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/taskjobaddtype.php",
                               $params,
                               array("click"),
                               "-1",
                               array($LANG['buttons'][8]));
-      echo "<span id='Additem_$rand'>&nbsp;</span>";
+//      echo "<span id='Additem_$rand'>&nbsp;oo</span>";
+
+
+echo "<span id='Additem_$rand'>&nbsp;oo</span>";
+//echo "<div id='Additem_$rand'>&nbsp;oo</div>";
+
    }
 
 
@@ -605,21 +616,21 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       if ($nb > 0) {
          echo "<center><input type='button' id='delete".$name."' name='delete".$name."' value=\"".$LANG['buttons'][6]."\" class='submit'></center>";
-      }
-      $params = array($name.'item' => '__CHECKBOX__',
-                      'type'      => $name,
-                      'taskjobs_id'=>$id);
 
-      $toobserve = "delete".$name;
-      $toupdate = "Deleteitem";
-      $url = $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/taskjobdeletetype.php";
-      $parameters=$params;
-      $events=array("click");
-      $minsize = -1;
-      $forceloadfor=array($LANG['buttons'][6]);
-      echo "<script type='text/javascript'>";
-     
-      echo "function checkboxvalues(item) {
+         $params = array($name.'item' => '__CHECKBOX__',
+                         'type'      => $name,
+                         'taskjobs_id'=>$id);
+
+         $toobserve = "delete".$name;
+         $toupdate = "Deleteitem";
+         $url = $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/taskjobdeletetype.php";
+         $parameters=$params;
+         $events=array("click");
+         $minsize = -1;
+         $forceloadfor=array($LANG['buttons'][6]);
+         echo "<script type='text/javascript'>";
+
+         echo "function checkboxvalues(item) {
 var inputs = document.getElementsByName(item);
 var namelist = '';
 for(var i = 0; i < inputs.length; i++){
@@ -630,77 +641,78 @@ for(var i = 0; i < inputs.length; i++){
 return namelist;
 
 }";
-      $zones = array($toobserve);
-      if (is_array($toobserve)) {
-         $zones = $toobserve;
-      }
+         $zones = array($toobserve);
+         if (is_array($toobserve)) {
+            $zones = $toobserve;
+         }
 
-      foreach ($zones as $zone) {
-         foreach ($events as $event) {
-            echo "
-               Ext.get('$zone').on(
-                '$event',
-                function() {";
-                  $condition = '';
-                  if ($minsize >= 0) {
-                     $condition = " Ext.get('$zone').getValue().length >= $minsize ";
-                  }
-                  if (count($forceloadfor)) {
-                     foreach ($forceloadfor as $value) {
-                        if (!empty($condition)) {
-                           $condition .= " || ";
-                        }
-                        $condition .= "Ext.get('$zone').getValue() == '$value'";
+         foreach ($zones as $zone) {
+            foreach ($events as $event) {
+               echo "
+                  Ext.get('$zone').on(
+                   '$event',
+                   function() {";
+                     $condition = '';
+                     if ($minsize >= 0) {
+                        $condition = " Ext.get('$zone').getValue().length >= $minsize ";
                      }
-                  }
-                  if (!empty($condition)) {
-                     echo "if ($condition) {";
-                  }
-                  //self::updateItemJsCode($toupdate, $url, $parameters, $toobserve);
-                  
-                  // Get it from a Ext.Element object
-                  $out = "Ext.get('$toupdate').load({
-                      url: '$url',
-                      scripts: true";
-
-                  if (count($parameters)) {
-                     $out .= ",
-                         params:'";
-                     $first = true;
-                     foreach ($parameters as $key => $val) {
-                        if ($first) {
-                           $first = false;
-                        } else {
-                           $out .= "&";
+                     if (count($forceloadfor)) {
+                        foreach ($forceloadfor as $value) {
+                           if (!empty($condition)) {
+                              $condition .= " || ";
+                           }
+                           $condition .= "Ext.get('$zone').getValue() == '$value'";
                         }
+                     }
+                     if (!empty($condition)) {
+                        echo "if ($condition) {";
+                     }
+                     //self::updateItemJsCode($toupdate, $url, $parameters, $toobserve);
 
-                        $out .= $key."=";
+                     // Get it from a Ext.Element object
+                     $out = "Ext.get('$toupdate').load({
+                         url: '$url',
+                         scripts: true";
 
-                        if ($val==="__CHECKBOX__") {
-                           $out .=  "'+checkboxvalues('".$key."')+'";
-
-                        } else {
-                           if (preg_match("/'/",$val)) {
-                              $out .=  rawurlencode($val);
+                     if (count($parameters)) {
+                        $out .= ",
+                            params:'";
+                        $first = true;
+                        foreach ($parameters as $key => $val) {
+                           if ($first) {
+                              $first = false;
                            } else {
-                              $out .=  $val;
+                              $out .= "&";
+                           }
+
+                           $out .= $key."=";
+
+                           if ($val==="__CHECKBOX__") {
+                              $out .=  "'+checkboxvalues('".$key."')+'";
+
+                           } else {
+                              if (preg_match("/'/",$val)) {
+                                 $out .=  rawurlencode($val);
+                              } else {
+                                 $out .=  $val;
+                              }
                            }
                         }
+                        echo $out."'\n";
                      }
-                     echo $out."'\n";
-                  }
-                  echo "});";
-                  
-                  
-                  if (!empty($condition)) {
-                     echo "}";
-                  }
+                     echo "});";
 
-          echo "});\n";
+
+                     if (!empty($condition)) {
+                        echo "}";
+                     }
+
+             echo "});\n";
+            }
          }
-      }
-      echo "</script>";
-      echo "<span id='Deleteitem'>&nbsp;</span>";
+         echo "</script>";
+         echo "<span id='Deleteitem'>&nbsp;</span>";
+      }      
    }
    
    
@@ -2037,6 +2049,7 @@ return namelist;
       }
    }
 
+   
    
    function showTaskjobItems($name, $randmethod, $id) {
       global $LANG,$CFG_GLPI;

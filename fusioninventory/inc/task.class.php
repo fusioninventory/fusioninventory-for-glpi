@@ -537,12 +537,14 @@ class PluginFusioninventoryTask extends CommonDBTM {
          }
          echo ")<br/>&nbsp;";
          $a_taskjobs = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$data_task['id']."'");
-         foreach ($a_taskjobs as $data_taskjob) {
-            $pfTaskjob->getFromDB($data_taskjob['id']);
-            echo "| ".$pfTaskjob->getLink(1)." ";
-         }
-         if (count($a_taskjobs) > 0) {
-            echo "|";
+         if (count($a_taskjobs) > 1) {
+            foreach ($a_taskjobs as $data_taskjob) {
+               $pfTaskjob->getFromDB($data_taskjob['id']);
+               echo "| ".$pfTaskjob->getLink(1)." ";
+            }
+            if (count($a_taskjobs) > 0) {
+               echo "|";
+            }
          }
          echo "</td>";
          
