@@ -438,7 +438,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    /**
    * Manage a hub (many mac on a port mean you have a hub)
    *
-   * @param $p_oPort object Informations of the network port (switch port)
+   * @param $pfNetworkport object Informations of the network port (switch port)
    * @param $agent_id integer id of the agent
    *
    * @return bool
@@ -637,7 +637,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    /**
    * Creation of a hub 
    *
-   * @param $p_oPort object Informations of the network port
+   * @param $pfNetworkport object Informations of the network port
    * @param $agent_id integer id of the agent
    *
    * @return id of the hub (unknowndevice)
@@ -650,7 +650,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       //$PluginFusionInventoryAgentsProcesses = new PluginFusionInventoryAgentsProcesses;
 
       // Find in the mac connected to the if they are in hub without link port connected
-      foreach ($p_oPort->getMacsToConnect() as $ifmac) {
+      foreach ($pfNetworkport->getMacsToConnect() as $ifmac) {
          $a_ports = $Netport->find("`mac`='".$ifmac."'");
          foreach ($a_ports as $data) {
             $ID = $nn->getOppositeContact($pfNetworkport->getNetworkPorts_id());
@@ -716,7 +716,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    * Remove all connections on a hub
    *
    * @param $hub_id integer id of the hub
-   * @param $p_oPort object Informations of the network port
+   * @param $pfNetworkport object Informations of the network port
    *
    * @return nothing
    *
