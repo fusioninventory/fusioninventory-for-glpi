@@ -390,7 +390,6 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
       $networkports_id = $this->portModif['networkports_id'];
       $portID = 0;
       if ($this->cdp) { // DCP, get device
-         logInFile("KOIN", print_r($this->portIps, true));
          $pfSNMP = new PluginFusinvsnmpSNMP();
          $a_cdp = current($this->portIps);
          if (isset($a_cdp['ip'])) {
