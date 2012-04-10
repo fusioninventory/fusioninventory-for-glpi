@@ -439,11 +439,11 @@ class PluginFusioninventoryCommunication {
 //         } else {       
 //            if (count($value) > 1) {
 //               for($i=count($value)-1;$i>=0;$i--){
-//                  $value2 = clean_cross_side_scripting_deep(addslashes_deep($value[$i]));
+//                  $value2 = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep($value[$i]));
 //                  $xml->$key->$value[$i] = $value2;
 //               }
 //            } else {
-//               $value = clean_cross_side_scripting_deep(addslashes_deep($value));
+//               $value = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep($value));
 //               $xml->$key = $value;
 //            }
 //         }      

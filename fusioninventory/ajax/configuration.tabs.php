@@ -43,9 +43,9 @@
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
 header("Content-Type: text/html; charset=UTF-8");
-header_nocache();
+Html::header_nocache();
 
-checkRight("config","w");
+Session::checkRight("config","w");
 
 if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "r")) {
    switch($_POST['glpi_tab']) {
@@ -110,6 +110,6 @@ if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", 
 } else {
    echo $LANG['common'][83]."<br/>";
 }
-ajaxFooter();
+Html::ajaxFooter();
 
 ?>

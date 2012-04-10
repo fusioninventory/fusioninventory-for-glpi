@@ -42,10 +42,10 @@
 
 define('GLPI_ROOT','../../..');
 include (GLPI_ROOT . "/inc/includes.php");
-checkLoginUser();
+Session::checkLoginUser();
 
 header("Content-Type: text/html; charset=UTF-8");
-header_nocache();
+Html::header_nocache();
 
 $taskjobs = new PluginFusioninventoryTaskjob;
 $jobs = $taskjobs->find("plugin_fusioninventory_tasks_id = '".$_POST['__VALUE__']."'");

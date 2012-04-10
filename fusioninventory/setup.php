@@ -96,7 +96,6 @@ function plugin_init_fusioninventory() {
 
       $_SESSION['glpi_plugin_fusioninventory']['xmltags']['WAKEONLAN'] = '';
 
-      //$PLUGIN_HOOKS['init_session']['fusioninventory'] = array('Profile', 'initSession');
       $PLUGIN_HOOKS['change_profile']['fusioninventory'] =
          PluginFusioninventoryProfile::changeprofile($moduleId);
 
@@ -309,7 +308,7 @@ function plugin_init_fusioninventory() {
 //            }
 //         }
 //         // For plugins which require action after all plugin init
-//         doHook("post_init");
+//         Plugin::doHook("post_init");
 //      }
 //      
 //      include_once(GLPI_ROOT ."/plugins/fusioninventory/front/communication.php");

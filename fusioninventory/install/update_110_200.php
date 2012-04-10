@@ -49,7 +49,7 @@ function update110to200() {
    $sql_query = fread($DBf_handle, filesize($DB_file));
    fclose($DBf_handle);
    foreach ( explode(";\n", "$sql_query") as $sql_line) {
-      if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
+      if (Toolbox::get_magic_quotes_runtime()) $sql_line=Toolbox::stripslashes_deep($sql_line);
       if (!empty($sql_line)) {
          $DB->query($sql_line);
       }

@@ -58,8 +58,8 @@ class InventoryComputer extends PHPUnit_Framework_TestCase {
        Session::loadLanguage("en_GB");
 
        $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
-         //deleteDir(GLPI_ROOT."/files/_plugins/fusioninventory/criterias");
-         //deleteDir(GLPI_ROOT."/files/_plugins/fusioninventory/machines");
+         //Toolbox::deleteDir(GLPI_ROOT."/files/_plugins/fusioninventory/criterias");
+         //Toolbox::deleteDir(GLPI_ROOT."/files/_plugins/fusioninventory/machines");
          system("rm -fr ".GLPI_ROOT."/files/_plugins/fusioninventory/criterias");
          system("rm -fr ".GLPI_ROOT."/files/_plugins/fusioninventory/machines");
 
@@ -853,11 +853,11 @@ echo "# testHardwareModifications\n";
                   LEFT JOIN `glpi_softwares` ON `glpi_softwareversions`.`softwares_id` = `glpi_softwares`.`id`
                   WHERE `computers_id`='".$items_id."'
                      AND `glpi_softwareversions`.`name` = '".$child->VERSION."'
-                     AND `glpi_softwares`.`name` = '".addslashes_deep($name)."'
+                     AND `glpi_softwares`.`name` = '".Toolbox::addslashes_deep($name)."'
                         LIMIT 1";
                $result=$DB->query($query);
 
-               $this->assertEquals($DB->numrows($result), 1, 'Software not find in GLPI '.$DB->numrows($result).' times instead 1 ('.addslashes_deep($child->NAME).'/'.addslashes_deep($child->GUID).') ['.$xmlFile.']');
+               $this->assertEquals($DB->numrows($result), 1, 'Software not find in GLPI '.$DB->numrows($result).' times instead 1 ('.Toolbox::addslashes_deep($child->NAME).'/'.Toolbox::addslashes_deep($child->GUID).') ['.$xmlFile.']');
             }
          }
       }
