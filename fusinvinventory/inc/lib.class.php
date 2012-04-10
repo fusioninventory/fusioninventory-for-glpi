@@ -105,8 +105,6 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                                  $Transfer->fields);
          }
 
-
-      //if ($internalId = $this->isMachineExist()) {
          // Get internal ID with $items_id
          $a_serialized = array();
          $query = "SELECT internal_id FROM `glpi_plugin_fusinvinventory_libserialization`
@@ -314,10 +312,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          array_push($serializedSectionsFromXML, $xmlSection["sectionDatawName"]);
       }
       //Retrieve changes, sections to Add and sections to Remove
-      // *** array_diff not work nicely in this case
-//         $sectionsToAdd    = array_diff($serializedSectionsFromXML, $infoSections["sections"]);
-//         $sectionsToRemove = array_diff($infoSections["sections"], $serializedSectionsFromXML);
-       
+      // *** array_diff not work nicely so use own function
       $sectionsToAdd    = $this->diffArray($serializedSectionsFromXML, $infoSections["sections"]);
       $sectionsToRemove = $this->diffArray($infoSections["sections"], $serializedSectionsFromXML);
 
@@ -662,10 +657,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                         //Delete this section from sectionToRemove and sectionToAdd
                         unset($sectionsToRemove[$sectionId]);
                         unset($sectionsToAdd[$arrayId]);
-//                        array_push($datasToUpdate, array(
-//                                     "sectionId"=>$sectionId,
-//                                     "dataSection"=>$xmlSections[$arrayId]['sectionData']));
-                        
+
                         $arraydiff = array();
                         foreach($arrSectionToRemove as $key=>$value) {
                            if (isset($arrSectionToAdd[$key])
@@ -758,8 +750,6 @@ class PluginFusinvinventoryLib extends CommonDBTM {
 ";
          }
       }
-      //$externalId=$infoSections["externalId"];
-
       $this->_serializeIntoDB($internalId, $serializedSections);
    }
 
@@ -840,7 +830,6 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       $rowSelect = mysql_fetch_row($resultSelect);
       $infoSections["externalId"] = $rowSelect[0];
       $serializedSections = $rowSelect[1].$rowSelect[2].$rowSelect[3];
-//      $serializedSections = str_replace("\t", "", $serializedSections); // To remove the indentation at beginning of line
       $arraySerializedSections = explode("\n", $serializedSections); // Recovering a table with one line per entry
       $previous_infosection = array();
       foreach ($arraySerializedSections as $valeur) {
@@ -965,10 +954,8 @@ class PluginFusinvinventoryLib extends CommonDBTM {
             $a_return[$key] = $value;
          }
       }
-      return $a_return;
-      
-   }
-   
+      return $a_return;      
+   }   
 }
 
 ?>

@@ -64,14 +64,12 @@ class PluginFusinvinventoryStaticmisc {
                           'name'           => $LANG['Menu'][38],
                           'use_rest'       => false);
                           
-     //if (PluginFusioninventoryCredential::hasAlLeastOneType()) {
      $methods[] = array('module'         => 'fusinvinventory',
                         'method'         => 'ESX',
                         'selection_type' => 'devices',
                         'name'           => $LANG['plugin_fusinvinventory']['title'][2],
                         'use_rest'       => true);
-        //}
-        return $methods;
+     return $methods;
    }
 
    

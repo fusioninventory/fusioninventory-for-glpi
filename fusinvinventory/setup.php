@@ -119,7 +119,6 @@ function plugin_init_fusinvinventory() {
                                                                  'PluginFusioninventoryLock' => array('PluginFusinvinventoryLock', 'deleteLock'));
       $PLUGIN_HOOKS['pre_item_update']['fusinvinventory'] = array('PluginFusioninventoryLock' => array('PluginFusinvinventoryLock', 'deleteLock'));
       $PLUGIN_HOOKS['item_update']['fusinvinventory'] = array('PluginFusinvinventoryAntivirus' => array('PluginFusinvinventoryAntivirus', 'addhistory'));
-      
    }
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['fusinvinventory-ruleentity']

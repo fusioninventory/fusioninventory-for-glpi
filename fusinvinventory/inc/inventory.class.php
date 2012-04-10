@@ -346,17 +346,24 @@ class PluginFusinvinventoryInventory {
    
    
 
+   /**
+    * Get default value for state of devices (monitor, printer...)
+    * 
+    * @param type $input
+    * @param type $check_management
+    * @param type $management_value 
+    * 
+    */
    static function addDefaultStateIfNeeded(&$input, $check_management = false, $management_value = 0) {
       $config = new PluginFusioninventoryConfig();
       $state = $config->getValue($_SESSION["plugin_fusinvinventory_moduleid"], "states_id_default");
       if ($state) {
          if (!$check_management || ($check_management && !$management_value)) {
-            $input['states_id'] = $state;
-         
-         }
-      
+            $input['states_id'] = $state;         
+         }      
       }
    }
+   
    
 
    /**
@@ -457,7 +464,6 @@ class PluginFusinvinventoryInventory {
          }
          $xml_controller->addChild("NAME", $DeviceControl->fields['designation']);
       }
-
 
       // ** CPUS
       $CompDeviceProcessor = new Computer_Device('DeviceProcessor');

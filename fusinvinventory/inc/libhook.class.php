@@ -474,24 +474,9 @@ class PluginFusinvinventoryLibhook {
                array_push($sectionsId,$section['sectionName']."/".$Computer_SoftwareVersion_id);
                break;
 
-//            case 'VERSIONCLIENT':
-//               // Verify agent is created
-//               $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
-//               $a_agent = $PluginFusioninventoryAgent->InfosByKey($section['sectionName']);
-//               if (count($a_agent) == '0') {
-//                  // TODO : Create agent
-//
-//               }
-//               $PluginFusioninventoryAgent->getFromDB($a_agent['id']);
-//               $PluginFusioninventoryAgent->fields['items_id'] = $idmachine;
-//               $PluginFusioninventoryAgent->fields['itemtype'] = 'Computer';
-//               $PluginFusioninventoryAgent->update($PluginFusioninventoryAgent->fields);
-//               break;
-
             case 'BIOS':
                array_push($sectionsId,$section['sectionName']."/".$idmachine);
                break;
-
 
             case 'HARDWARE':
                array_push($sectionsId,$section['sectionName']."/".$idmachine);
@@ -731,7 +716,7 @@ class PluginFusinvinventoryLibhook {
       $_SESSION["plugin_fusinvinventory_history_add"] = true;
       $_SESSION["plugin_fusinvinventory_no_history_add"] = false;
 
-      // Pre-get HARDWARE/CHASSIS_TYPE (type of computer
+      // Pre-get HARDWARE/CHASSIS_TYPE (type of computer)
       $computer_type = '';
       foreach($data as $section) {
          $array = explode("/", $section['sectionId']);
@@ -753,7 +738,6 @@ class PluginFusinvinventoryLibhook {
          $inputCext['computers_id'] = $idmachine;
       }
       foreach($data as $section) {
-//         $dataSection = unserialize($section['dataSection']);
          $dataSection = $section['dataSection'];
          $array = explode("/", $section['sectionId']);
          $items_id = $array[1];
@@ -1031,7 +1015,6 @@ class PluginFusinvinventoryLibhook {
 
 
 
-
    /**
    * Write XML file into files/_plugins/fusinvinventory
    *
@@ -1182,11 +1165,14 @@ class PluginFusinvinventoryLibhook {
          $a_partnumber = explode("#", $partnumber);
          $Plugin = new Plugin();
          if ($Plugin->isActivated('manufacturersimports')) {
-            $PluginManufacturersimportsModel = new PluginManufacturersimportsModel();
-            $PluginManufacturersimportsModel->addModel($items_id, 'Computer', $a_partnumber[0]);
+            if (class_exists("PluginManufacturersimportsModel")) {
+               $PluginManufacturersimportsModel = new PluginManufacturersimportsModel();
+               $PluginManufacturersimportsModel->addModel($items_id, 'Computer', $a_partnumber[0]);
+            }
          }
       }
     }
+    
     
     
    static function importGroup($value, $entities_id) {
@@ -1204,14 +1190,14 @@ class PluginFusinvinventoryLibhook {
 
       if ($DB->numrows($result2) == 0) {
          $group                = new Group();
+         $input = array();
          $input["name"]        = $value;
          $input["entities_id"] = $entities_id;
          return $group->add($input);
       }
       $line2 = $DB->fetch_array($result2);
       return $line2["id"];
-   }
-    
+   }    
 }
 
 ?>

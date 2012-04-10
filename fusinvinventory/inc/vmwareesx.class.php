@@ -45,6 +45,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusinvinventoryVmwareESX {
+   
 }
 
 ?>
