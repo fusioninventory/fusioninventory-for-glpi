@@ -587,7 +587,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          $freeport_id = $Netport->add($input);
       }
       $this->disconnectDB($freeport_id);
-      $nn->add(array('networkports_id_1'=> $data['id'], 'networkports_id_2' => $freeport_id));
+      $nn->add(array('networkports_id_1'=> $data['id'], 
+                     'networkports_id_2' => $freeport_id));
 
       //plugin_fusioninventory_addLogConnection("make",$port_id);
       return $freeport_id;
@@ -664,7 +665,10 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
                         } else {
                            // We have founded a hub orphelin
-                           if ($nn->add(array('networkports_id_1'=> $pfNetworkport->getNetworkPorts_id(), 'networkports_id_2' => $dataLink['id']))) {
+                           $this->disconnectDB($pfNetworkport->getNetworkPorts_id());
+                           $this->disconnectDB($dataLink['id']);
+                           if ($nn->add(array('networkports_id_1'=> $pfNetworkport->getNetworkPorts_id(), 
+                                              'networkports_id_2' => $dataLink['id']))) {
 //                              $PluginFusionInventoryAgentsProcesses->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
 //                                          array('query_nb_connections_created' => '1'));
 //                              plugin_fusioninventory_addLogConnection("make",$p_oPort->getValue('ID'));
@@ -700,7 +704,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $port_id = $Netport->add($input);
       $this->disconnectDB($pfNetworkport->getNetworkPorts_id());
       $this->disconnectDB($port_id);
-      if ($nn->add(array('networkports_id_1'=> $pfNetworkport->getNetworkPorts_id(), 'networkports_id_2' => $port_id))) {
+      if ($nn->add(array('networkports_id_1'=> $pfNetworkport->getNetworkPorts_id(), 
+                         'networkports_id_2' => $port_id))) {
 //         $PluginFusionInventoryAgentsProcesses->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
 //                     array('query_nb_connections_created' => '1'));
 //         plugin_fusioninventory_addLogConnection("make",$p_oPort->getValue('ID'));

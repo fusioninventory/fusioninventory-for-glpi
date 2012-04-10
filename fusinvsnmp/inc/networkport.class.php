@@ -379,7 +379,7 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
    
    
    function connectPorts() {      
-      $wire = new NetworkPort_NetworkPort;
+      $wire = new NetworkPort_NetworkPort();
       $networkPort = new NetworkPort();
       
       $networkports_id = $this->portModif['networkports_id'];
@@ -416,6 +416,8 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
             $contact_id = $wire->getOppositeContact($networkports_id);
             if (!($contact_id
                     AND $contact_id == $portID)) {
+               $this->disconnectDB($networkports_id);
+               $this->disconnectDB($portID);
                $wire->add(array('networkports_id_1'=> $networkports_id,
                                'networkports_id_2' => $portID));
             }   
