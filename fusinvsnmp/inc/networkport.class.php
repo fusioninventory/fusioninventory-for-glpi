@@ -444,7 +444,7 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
                if ($phonecase == '1') {
                   $wire->add(array('networkports_id_1'=> $networkports_id,
                                    'networkports_id_2' => $phonePort_id));
-                  $NntworkPort->getFromDB($phonePort_id);
+                  $networkPort->getFromDB($phonePort_id);
                   $Phone = new Phone();
                   $Phone->getFromDB($networkPort->fields['items_id']);
                   $a_portsPhone = $networkPort->find("`items_id`='".$networkPort->fields['items_id']."'
@@ -507,6 +507,7 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
                         // Yet connected                        
                      } else {
                         // Not connected
+                        $this->disconnectDB($networkports_id); // disconnect this port
                         $wire->add(array('networkports_id_1'=> $networkports_id,
                                          'networkports_id_2' => $a_port['id']));
                      }
@@ -519,6 +520,7 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
                      $input['items_id'] = $newID;
                      $input['mac'] = $ifmac;
                      $newPortID = $networkPort->add($input);
+                     $this->disconnectDB($networkports_id); // disconnect this port
                      $wire->add(array('networkports_id_1'=> $networkports_id,
                                       'networkports_id_2' => $newPortID));
                   }
