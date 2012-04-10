@@ -502,10 +502,10 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
                   $a_ports = $networkPort->find("`mac`='".$ifmac."'","", 1);
                   if (count($a_ports) > 0) {
                      $a_port = current($a_ports);
-                     $id = $networkPort->getContact($networkports_id);
+                     $id = $networkPort->getContact($a_port['id']);
                      if ($id AND $id != $networkports_id) {
                         $this->disconnectDB($networkports_id); // disconnect this port
-                        $this->disconnectDB($id);     // disconnect destination port
+                        $this->disconnectDB($a_port['id']);     // disconnect destination port
                         $wire->add(array('networkports_id_1'=> $networkports_id,
                                          'networkports_id_2' => $a_port['id']));
                      } else if ($id) {
