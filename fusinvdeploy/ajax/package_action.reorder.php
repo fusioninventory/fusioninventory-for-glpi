@@ -54,3 +54,4 @@ $res = $action->update_ranking($_REQUEST);
 
 echo $res;
 
+?>

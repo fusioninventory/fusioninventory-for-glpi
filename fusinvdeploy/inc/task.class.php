@@ -193,3 +193,5 @@ class PluginFusinvdeployTask extends PluginFusioninventoryTask {
       $this->update($options);
    }
 }
+
+?>

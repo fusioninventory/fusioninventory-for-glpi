@@ -46,3 +46,5 @@ checkLoginUser();
 
 $_SESSION['groupSearchResults'] = $_REQUEST;
 PluginFusinvdeployGroup::showSearchResults($_REQUEST);
+
+?>

@@ -48,4 +48,5 @@ $package = new PluginFusinvdeployPackage;
 $res = $package->getAllDatas($_REQUEST);
 
 echo $res;
+
 ?>

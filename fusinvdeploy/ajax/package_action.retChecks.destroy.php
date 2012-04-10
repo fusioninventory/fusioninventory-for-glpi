@@ -62,4 +62,5 @@ $data = array('id'=>$id);
 if ($commandstatus->delete($data)) {
    echo "{success:true}";
 }
+
 ?>

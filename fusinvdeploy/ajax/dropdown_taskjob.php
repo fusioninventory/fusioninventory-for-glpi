@@ -52,3 +52,5 @@ $jobs = $taskjobs->find("plugin_fusioninventory_tasks_id = '".$_POST['__VALUE__'
 foreach($jobs as $job) {
    echo "<option value='".$job['id']."'>".$job['name']."</option>";
 }
+
+?>

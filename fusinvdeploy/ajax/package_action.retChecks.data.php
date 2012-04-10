@@ -70,6 +70,6 @@ while($row = $DB->fetch_array($qry)) {
    $res[$render.'retChecks'][] = $row;
 }
 
-
 echo json_encode($res);
+
 ?>

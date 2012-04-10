@@ -489,3 +489,5 @@ class PluginFusinvdeployState extends CommonDBTM {
       return ceil($percent)."%";
    }
 }
+
+?>

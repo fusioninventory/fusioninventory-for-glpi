@@ -95,4 +95,5 @@ if ($plugin->isActivated('fusinvdeploy')) {
    //Send an error if Fusinvdeploy plugin is not activated !
    header("HTTP/1.1 500");
 }
+
 ?>

@@ -175,4 +175,5 @@ function plugin_fusinvdeploy_MassiveActionsProcess($data) {
          break;
    }
 }
+
 ?>

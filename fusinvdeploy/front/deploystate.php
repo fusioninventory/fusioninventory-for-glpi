@@ -62,7 +62,6 @@ $_GET['target']="task.php";
 Search::show('PluginFusinvdeployTaskjob');*/
 PluginFusinvdeployState::showTasks();
 
-
 commonFooter();
 
 ?>

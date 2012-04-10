@@ -70,4 +70,5 @@ class PluginFusinvdeployFile_Mirror extends CommonDBTM {
    }
 
 }
+
 ?>

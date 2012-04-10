@@ -47,4 +47,5 @@ checkLoginUser();
 $res = PluginFusinvdeployTaskjob::getActions($_REQUEST);
 
 echo $res;
+
 ?>
