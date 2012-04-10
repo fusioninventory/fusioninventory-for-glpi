@@ -2337,11 +2337,11 @@ function plugin_item_add_fusinvsnmp($parm) {
       case 'NetworkPort_NetworkPort':
       $networkPort = new NetworkPort();
       $networkPort->getFromDB($parm->fields['networkports_id_1']);
-      if (($networkPort->fields['itemtype']) == 'NetworkEquipment') {
+      if ($networkPort->fields['itemtype'] == 'NetworkEquipment') {
          PluginFusinvsnmpNetworkPortLog::addLogConnection("make",$parm->fields['networkports_id_1']);
       } else {
          $networkPort->getFromDB($parm->fields['networkports_id_2']);
-         if (($networkPort->fields['itemtype']) == 'NetworkEquipment') {
+         if ($networkPort->fields['itemtype'] == 'NetworkEquipment') {
             PluginFusinvsnmpNetworkPortLog::addLogConnection("make",$parm->fields['networkports_id_2']);
          }
       }
