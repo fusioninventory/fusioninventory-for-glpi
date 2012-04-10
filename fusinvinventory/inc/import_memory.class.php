@@ -69,12 +69,30 @@ class PluginFusinvinventoryImport_Memory extends CommonDBTM {
       
       $CompDevice = new Computer_Device('DeviceMemory');
 
+      if (isset($dataSection["CAPACITY"])
+              AND $dataSection["CAPACITY"] == 'No') {
+         $dataSection["CAPACITY"] = 0;
+      }
+      
       $devID = 0;
       $computer_memory = array();
       if ($type == "update") {
          $devID = $items_id;
          $CompDevice->getFromDB($items_id);
          $computer_memory = $CompDevice->fields;
+         if (count($dataSection) == '1'
+                 AND isset($dataSection['CAPACITY'])) {
+            if ($dataSection['CAPACITY'] == '0') {
+               $CompDevice->delete(array('id' => $items_id));
+               return;
+            }
+            $array = array();
+            $array['_itemtype'] = 'DeviceMemory';
+            $array['specificity'] = $dataSection["CAPACITY"];
+            $array['id'] = $items_id;
+            $CompDevice->update($array);
+            return;
+         }
       } else if ($type == "add") {
          $devID = 0;
       }
@@ -90,11 +108,17 @@ class PluginFusinvinventoryImport_Memory extends CommonDBTM {
          }
          $memory["designation"] .= $dataSection["DESCRIPTION"];
       }
+      
       if ((!isset($dataSection["CAPACITY"])) 
-              OR ((isset($dataSection["CAPACITY"])) 
-                      AND (!ctype_digit($dataSection["CAPACITY"])))) {
+              OR ((isset($dataSection["CAPACITY"]))
+                      AND (!preg_match("/^[0-9]+$/i", $dataSection["CAPACITY"])))) {
          return;
          //$dataSection["CAPACITY"]=0;
+      }
+      // Not add when = 0
+      if (isset($dataSection["CAPACITY"])
+                      AND ($dataSection["CAPACITY"]) == '0') {
+         return;
       }
 
       $memory["specif_default"] = $dataSection["CAPACITY"];

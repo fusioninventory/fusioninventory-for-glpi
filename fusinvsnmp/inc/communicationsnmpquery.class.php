@@ -47,6 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusinvsnmpCommunicationSNMPQuery {
 //   private $sxml, $deviceId, $ptd, $type='', $logFile;
    private $sxml, $ptd, $logFile, $agent, $unknownDeviceCDP;
+   private $a_ports = array();
 
    function __construct() {
       if (PluginFusioninventoryConfig::isExtradebugActive()) {
@@ -417,7 +418,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $this->ptd->setValue('uptime', $p_info->UPTIME[0]);
                break;
             case 'IPS' :
-               $errors.=$this->importIps($child);
+               $errors.=$this->importIps($child, $this->ptd->getValue('id'));
                break;
             default :
                $errors.=$LANG['plugin_fusioninventory']['errors'][22].' INFO : '.$child->getName()."\n";
@@ -519,29 +520,25 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
    /**
     * Import IPS
-    *@param $p_ips IPS code to import
+    * @param $p_ips IPS code to import
+    * @param $networkequipments_id id of network equipment
     *
-    *@return errors string to be alimented if import ko / '' if ok
+    * @return errors string to be alimented if import ko / '' if ok
     **/
-   function importIps($p_ips) {
+   function importIps($p_ips, $networkequipments_id) {
       global $LANG;
 
       $errors='';
       $PluginFusinvsnmpNetworkEquipmentIP = new PluginFusinvsnmpNetworkEquipmentIP();
       $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      
+      $PluginFusinvsnmpNetworkEquipmentIP->loadIPs($networkequipments_id);
+      
       foreach ($p_ips->children() as $child) {
          switch ($child->getName()) {
             case 'IP' :
                if ((string)$child != "127.0.0.1") {
-                  $ifaddrIndex = $this->ptd->getIfaddrIndex((string)$child);
-                  if (is_int($ifaddrIndex)) {
-                     $oldIfaddr = $this->ptd->getIfaddr($ifaddrIndex);
-                     $PluginFusinvsnmpNetworkEquipmentIP->load($oldIfaddr->getValue('id'));
-                  } else {
-                     $PluginFusinvsnmpNetworkEquipmentIP->load();
-                  }
-                  $PluginFusinvsnmpNetworkEquipmentIP->setValue('ip', (string)$child);
-                  $this->ptd->addIfaddr(clone $PluginFusinvsnmpNetworkEquipmentIP, $ifaddrIndex);
+                  $PluginFusinvsnmpNetworkEquipmentIP->setIP((string)$child);
                   // Search in unknown device if device with IP (CDP) is yet added, in this case,
                   // we get id of this unknown device
                   $a_unknown = $PluginFusioninventoryUnknownDevice->find("`ip`='".(string)$child."'");
@@ -556,7 +553,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $errors.=$LANG['plugin_fusioninventory']['errors'][22].' IPS : '.$child->getName()."\n";
          }
       }
-      $this->ptd->saveIfaddrs();
+      $PluginFusinvsnmpNetworkEquipmentIP->saveIPs($networkequipments_id);
       return $errors;
    }
 
@@ -587,6 +584,15 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $errors.=$LANG['plugin_fusioninventory']['errors'][22].' PORTS : '.$child->getName()."\n";
          }
       }
+      // Remove ports may not in XML and must be deleted
+      $networkPort = new NetworkPort();
+      $a_portsDB = $networkPort->find("`itemtype` = '".$this->type."'
+                                       AND `items_id`='".$this->deviceId."'");      
+      foreach ($a_portsDB as $data) {
+         if (!isset($this->a_ports[$data['id']])) {
+            $networkPort->delete($data);
+         }
+      }
       return $errors;
    }
 
@@ -604,20 +610,20 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->importPortNetworking().');
       $errors='';
-      $ptp = new PluginFusinvsnmpNetworkPort("NetworkEquipment", $this->logFile);
+      $pfNetworkPort = new PluginFusinvsnmpNetworkPort("NetworkEquipment");
       $ifType = $p_port->IFTYPE;
       // not virtual port and not name is Vl1 (problem on Cisco routers)
-      if ( $ptp->isReal($ifType)
-              AND $p_port->IFNAME != 'Vl1') { 
+      if ($pfNetworkPort->isReal($ifType)
+              AND $p_port->IFNAME != 'Vl1') {
          // Get port of unknown device CDP if exist
          $portloaded = 0;
          $portIndex  = 0;
          if (!empty($this->unknownDeviceCDP)) {
             $NetworkPort = new NetworkPort();
             $a_unknownPorts = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
-                     AND `items_id`='".$this->unknownDeviceCDP."'", 
-                 '',
-                  1);
+                                                   AND `items_id`='".$this->unknownDeviceCDP."'", 
+                                                   '',
+                                                   1);
             if (count($a_unknownPorts) > 0) {
                $dataport = current($a_unknownPorts);
                if ((isset($p_port->IFNAME))
@@ -627,7 +633,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   $dataport['itemtype'] = 'NetworkEquipment';
                   $dataport['items_id'] = $this->ptd->getValue('id');
                   $NetworkPort->update($dataport);
-                  $ptp->load($dataport['id']);
+                  $pfNetworkPort->loadNetworkport($dataport['id']);
                   $portloaded = 1;
                   $portIndex = $p_port->IFNUMBER;
                }
@@ -642,91 +648,93 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             }
          }
          if ($portloaded == '0') {
-            $portIndex = $this->ptd->getPortIndex($p_port->IFNUMBER, $this->getConnectionIP($p_port));
-            if (is_int($portIndex)) {
-               $oldPort = $this->ptd->getPort($portIndex);
-               $ptp->load($oldPort->getValue('id'));
-            } else {
-               $ptp->addDB($this->deviceId, TRUE);
+            $oldport = false;
+            $oldport = $pfNetworkPort->getPortIdWithLogicialNumber($p_port->IFNUMBER, $this->deviceId);
+            if ($oldport) {
+               $pfNetworkPort->loadNetworkport($oldport);
             }
          }
 
+         $pfNetworkPort->setValue('entities_id', $this->ptd->fields['entities_id']);
          $trunk = 0;
          foreach ($p_port->children() as $name=>$child) {
-            $ptp->setValue('entities_id', $this->ptd->fields['entities_id']);
-            $trunk = 0;
             switch ($name) {
                
-               case 'CONNECTIONS' :
-                  $errors.=$this->importConnections($child, $ptp);
+               case 'CONNECTIONS':
+                  $errors.=$this->importConnections($child, $pfNetworkPort);
                   break;
                
-               case 'VLANS' :
-                  $errors.=$this->importVlans($child, $ptp);
+               case 'VLANS':
+                  $errors.=$this->importVlans($child, $pfNetworkPort);
                   break;
                
-               case 'IFNAME' :
-                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
-                  $ptp->setValue('name', $child);
+               case 'IFNAME':
+                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
+                  $pfNetworkPort->setValue('name', (string)$child);
                   break;
                
-               case 'MAC' :
-                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
-                  if (!strstr($child, '00:00:00')) {
-                     $ptp->setValue('mac', $child);
+               case 'MAC':
+                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
+                  if (!strstr($child, '00:00:00:00:00:00')) {
+                     $pfNetworkPort->setValue('mac', (string)$child);
                   }
                   break;
                   
-               case 'IFNUMBER' :
-                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
-                  $ptp->setValue('logical_number', $child);
+               case 'IFNUMBER':
+                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
+                  $pfNetworkPort->setValue('logical_number', (string)$child);
                   break;
                
-               case 'IFTYPE' : // already managed
+               case 'IFTYPE': // already managed
                   break;
                
-               case 'TRUNK' :
+               case 'TRUNK':
                   if ((string)$child == '1') {
-                     PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
-                     $ptp->setValue('trunk', 1);
+                     PluginFusinvsnmpNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
+                     $pfNetworkPort->setValue('trunk', 1);
                      $trunk = 1;
                   }
                   break;
 
-               case 'IFDESCR' :
+               case 'IFDESCR':
                   if (!isset($p_port->IFNAME)) {
-                     $ptp->setValue('name', $p_port->IFDESCR);
+                     $pfNetworkPort->setValue('name', (string)$p_port->IFDESCR);
                   }
-                  $ptp->setValue(strtolower($name), $p_port->$name);
+                  $pfNetworkPort->setValue(strtolower($name), (string)$p_port->$name);
                   break;
                   
-               case 'IFINERRORS' :
-               case 'IFINOCTETS' :
-               case 'IFINTERNALSTATUS' :
-               case 'IFLASTCHANGE' :
-               case 'IFMTU' :
-               case 'IFOUTERRORS' :
-               case 'IFOUTOCTETS' :
-               case 'IFSPEED' :
-               case 'IFSTATUS' :
-                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
-                  $ptp->setValue(strtolower($name), $p_port->$name);
+               case 'IFINERRORS':
+               case 'IFINOCTETS':
+               case 'IFINTERNALSTATUS':
+               case 'IFLASTCHANGE':
+               case 'IFMTU':
+               case 'IFOUTERRORS':
+               case 'IFOUTOCTETS':
+               case 'IFSPEED':
+               case 'IFSTATUS':
+                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
+                  $pfNetworkPort->setValue(strtolower($name), (string)$p_port->$name);
                   break;
                
-               default :
+               default:
                   $errors.=$LANG['plugin_fusioninventory']['errors'][22].' PORT : '.$name."\n";
             }
          }
          if ($trunk == "0") {
-            if ($ptp->getValue('trunk') == '1') {
-               PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), '0', 'trunk');
-               $ptp->setValue('trunk', 0);
+            if ($pfNetworkPort->getValue('trunk') == '1') {
+               PluginFusinvsnmpNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), '0', 'trunk');
+               $pfNetworkPort->setValue('trunk', 0);
             }
          }
-         $this->ptd->addPort($ptp, $portIndex);
+         $pfNetworkPort->savePort("NetworkEquipment", $this->deviceId);
+         $this->a_ports[$pfNetworkPort->getValue("networkports_id")] = $pfNetworkPort->getValue("networkports_id");
+         $pfNetworkPort->connectPorts();
       } else { // virtual port : do not import but delete if exists
-         if (is_numeric($ptp->getValue('id'))) {
-            $ptp->deleteDB();
+         $oldport = false;
+         $oldport = $pfNetworkPort->getPortIdWithLogicialNumber($p_port->IFNUMBER, $this->deviceId);
+         if ($oldport) {
+            $NetworkPort = new NetworkPort();
+            $NetworkPort->delete(array('id' => $oldport));
          }
       }
       return $errors;
@@ -745,38 +753,60 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       global $LANG;
 
       $errors='';
-      $ptp = new PluginFusinvsnmpNetworkPort('Printer');
+      $pfNetworkPort = new PluginFusinvsnmpNetworkPort('Printer');
+      $networkPort = new NetworkPort();
       $ifType = $p_port->IFTYPE;
-      if ( $ptp->isReal($ifType) ) { // not virtual port
-         $portIndex = $this->ptd->getPortIndex($p_port->MAC, $p_port->IP);
-         if (is_int($portIndex)) {
-            $oldPort = $this->ptd->getPort($portIndex);
-            $ptp->load($oldPort->getValue('id'));
-         } else {
-            $ptp->addDB($this->deviceId, TRUE);
+      $portDB = $networkPort->getEmpty();
+      $portModif = array();
+      if ($pfNetworkPort->isReal($ifType) ) { // not virtual port
+         $a_ports = $networkPort->find("`itemtype`='Printer'
+                                          AND `items_id`='".$this->deviceId."'
+                                          AND `mac`='".(string)$p_port->MAC."'",
+                                       "",
+                                       1);
+         if (count($a_ports) == '0'
+                 AND $p_port->IP != '') {
+            $a_ports = $networkPort->find("`itemtype`='Printer'
+                                             AND `items_id`='".$this->deviceId."'
+                                             AND `ip`='".(string)$p_port->IP."'",
+                                          "",
+                                          1);
+         }
+         if (count($a_ports) > 0) {
+            $portDB = current($a_ports);
+         }
+         if ($portDB['entities_id'] != $this->ptd->fields['entities_id']) {
+            $portModif['entities_id'] = $this->ptd->fields['entities_id'];
          }
          foreach ($p_port->children() as $name=>$child) {
-            $ptp->setValue('entities_id', $this->ptd->fields['entities_id']);
             switch ($name) {
                
                case 'IFNAME' :
-                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
-                  $ptp->setValue('name', $child);
+                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($portDB['id'], $child, strtolower($name));
+                  if ($portDB['name'] != (string)$child) {
+                     $portModif['name'] = (string)$child;
+                  }
                   break;
                
                case 'MAC' :
-                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
-                  $ptp->setValue('mac', $child);
+                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($portDB['id'], $child, strtolower($name));
+                  if ($portDB['mac'] != (string)$child) {
+                     $portModif['mac'] = (string)$child;
+                  }
                   break;
                
                case 'IP' :
-                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
-                  $ptp->setValue('ip', $child);
+                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($portDB['id'], $child, strtolower($name));
+                  if ($portDB['ip'] != (string)$child) {
+                     $portModif['ip'] = (string)$child;
+                  }
                   break;
                
                case 'IFNUMBER' :
-                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
-                  $ptp->setValue('logical_number', $child);
+                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($portDB['id'], $child, strtolower($name));
+                  if ($portDB['logical_number'] != (string)$child) {
+                     $portModif['logical_number'] = (string)$child;
+                  }
                   break;
                
                case 'IFTYPE' : // already managed
@@ -786,8 +816,16 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   $errors.=$LANG['plugin_fusioninventory']['errors'][22].' PORT : '.$name."\n";
             }
          }
-         $this->ptd->addPort($ptp, $portIndex);
-      }
+         // Update
+         if ($portDB['id'] > 0) {
+            $portModif['id'] = $portDB['id'];
+            $networkPort->update($portModif);
+            $this->a_ports[$portDB['id']] = $portDB['id'];
+         } else {
+            $newID = $networkPort->add($portModif);
+            $this->a_ports[$newID] = $newID;
+         }
+      }      
       return $errors;
    }
 
@@ -902,11 +940,11 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    /**
     * Import CONNECTIONS
     *@param $p_connections CONNECTIONS code to import
-    *@param $p_oPort Port object to connect
+    *@param $pfNetworkPort Port object to connect
     *
     *@return errors string to be alimented if import ko / '' if ok
     **/
-   function importConnections($p_connections, $p_oPort) {
+   function importConnections($p_connections, $pfNetworkPort) {
       global $LANG;
 
       PluginFusioninventoryCommunication::addLog(
@@ -916,7 +954,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       if (isset($p_connections->CDP)) {
          $cdp = $p_connections->CDP;
          if ($cdp==1) {
-            $p_oPort->setCDP();
+            $pfNetworkPort->setCDP();
          } else {
             $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CONNECTIONS : CDP='.$cdp."\n";
          }
@@ -926,10 +964,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       foreach ($p_connections->children() as $child) {
          switch ($child->getName()) {
             
-            case 'CDP' : // already managed
+            case 'CDP': // already managed
                break;
             
-            case 'CONNECTION' :
+            case 'CONNECTION':
                $continue = 1;
                if (isset($child->MAC)) {
                   if (isset($a_macsFound[(string)$child->MAC])) {
@@ -940,117 +978,13 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                }
                if ($continue == '1') {
                   $count++;
-                  $errors.=$this->importConnection($child, $p_oPort, $cdp);
+                  $errors.=$this->importConnection($child, $pfNetworkPort, $cdp);
                }
                break;
                
             default :
                $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CONNECTIONS : '
                         .$child->getName()."\n";
-         }
-      }
-      if ($p_oPort->getValue('trunk')!=1) {
-          if ($count == '2') {
-            // detect if phone IP is one of the 2 devices
-            $phonecase = 0;
-            $NetworkPort = new NetworkPort();
-            $macNotPhone_id = 0;
-            $macNotPhone = '';
-            $phonePort_id = 0;
-            foreach ($p_oPort->getMacsToConnect() as $ifmac) {
-               $a_ports = $NetworkPort->find("`mac`='".$ifmac."'");
-               $a_port = current($a_ports);
-               if ($a_port['itemtype'] == 'Phone') {
-                  // Connect phone on switch port and other (computer..) in this phone
-                  $phonePort_id = $a_port['id'];
-                  $phonecase++;
-               } else {
-                  $a_ports = $NetworkPort->find("`mac`='".$ifmac."'");
-                  $a_port = current($a_ports);
-                  $macNotPhone_id = $a_port['id'];
-                  $macNotPhone = $ifmac;
-               }
-            }
-            if ($phonecase == '1') {
-               $NetworkPort->getFromDB($phonePort_id);
-               $Phone = new Phone();
-               $Phone->getFromDB($NetworkPort->fields['items_id']);
-               $a_portsPhone = $NetworkPort->find("`items_id`='".$NetworkPort->fields['items_id']."'
-                                                AND `itemtype`='Phone'
-                                                AND `name`='Link'", '', 1);
-               $portLink_id = 0;
-               if (count($a_portsPhone) == '1') {
-                  $a_portPhone = current($a_portsPhone);
-                  $portLink_id = $a_portPhone['id'];
-               } else {
-                  // Create Port Link
-                  $input = array();
-                  $input['name'] = 'Link';
-                  $input['itemtype'] = 'Phone';
-                  $input['items_id'] = $Phone->fields['id'];
-                  $input['entities_id'] = $Phone->fields['entities_id'];
-                  $portLink_id = $NetworkPort->add($input);
-               }
-               $NetworkPort_NetworkPort = new NetworkPort_NetworkPort();
-               $opposite_id = false;
-               if ($opposite_id == $NetworkPort_NetworkPort->getOppositeContact($portLink_id)) {
-                  if ($opposite_id != $macNotPhone_id) {
-                     $p_oPort->disconnectDB($portLink_id); // disconnect this port
-                     $p_oPort->disconnectDB($macNotPhone_id);     // disconnect destination port
-                  }
-               }
-               if (!isset($macNotPhone_id)) {
-                  // Create unknown ports
-                  $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
-                  $unknown_infos = array();
-                  $unknown_infos["name"] = '';
-                  $newID=$PluginFusioninventoryUnknownDevice->add($unknown_infos);
-                  // Add networking_port
-                  $NetworkPort =new NetworkPort();
-                  $port_add = array();
-                  $port_add["items_id"] = $newID;
-                  $port_add["itemtype"] = 'PluginFusioninventoryUnknownDevice';
-                  $port_add['mac'] = $macNotPhone;
-                  $macNotPhone_id = $NetworkPort->add($port_add);
-               }
-               $NetworkPort_NetworkPort->add(array('networkports_id_1'=> $portLink_id,
-                               'networkports_id_2' => $macNotPhone_id));
-               $p_oPort->deleteMacToConnect($macNotPhone, $macNotPhone_id);
-               if (!$p_oPort->getNoTrunk()) {
-                  $p_oPort->setValue('trunk', 0);
-               }
-            } else {
-               $p_oPort->setNoTrunk();
-               $pfiud = new PluginFusioninventoryUnknownDevice;
-               $pfiud->hubNetwork($p_oPort, $this->agent);
-            }
-         } else if ($count > 1) { // MultipleMac
-            $p_oPort->setNoTrunk();
-            $pfiud = new PluginFusioninventoryUnknownDevice;
-            $pfiud->hubNetwork($p_oPort, $this->agent);
-         } else { // One mac on port
-            // If port connected to hub
-            $hub = 0;
-            $networkPort = new NetworkPort();
-            $id = $networkPort->getContact($p_oPort->getValue('id'));
-            if ($id) {
-               $networkPort->getFromDB($id);
-               $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
-               if ($networkPort->fields["itemtype"] == $pluginFusioninventoryUnknownDevice->getType()) {
-                  $pluginFusioninventoryUnknownDevice->getFromDB($networkPort->fields["items_id"]);
-                  if ($pluginFusioninventoryUnknownDevice->fields["hub"] == "1") {
-                     $hub = 1;
-                  }
-               }
-            }
-            if ($hub == '1') {
-               $p_oPort->setNoTrunk();
-            } else {
-               // else manage it one port connected on switch port
-               if (!$p_oPort->getNoTrunk()) {
-                  $p_oPort->setValue('trunk', 0);
-               }
-            }
          }
       }
       return $errors;
@@ -1062,101 +996,63 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     * Import CONNECTION
     *
     * @param $p_connection CONNECTION code to import
-    * @param $p_oPort Port object to connect
+    * @param $pfNetworkPort Port object to connect
     * @param $p_cdp CDP value (1 or <>1)
     *
     * @return errors string to be alimented if import ko / '' if ok
     **/
-   function  importConnection($p_connection, $p_oPort, $p_cdp) {
+   function  importConnection($p_connection, $pfNetworkPort, $p_cdp) {
       global $LANG;
 
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->importConnection().');
-      $errors='';
-      $portID=''; $mac=''; $ip=''; $sysmac=''; $ifnumber='';
-      $sysdescr = '';
-      $sysname = '';
-      $model = '';
-      $PluginFusinvsnmpSNMP = new PluginFusinvsnmpSNMP();
+      $errors  = '';
       if ($p_cdp==1) {
-         $ifdescr='';
+         $a_ip = array();
          foreach ($p_connection->children() as $child) {
             switch ($child->getName()) {
                
                case 'IP' :
-                  $ip=(string)$child;
-                  $p_oPort->addIp($ip);
-                  break;
-
-               case 'IFDESCR' :
-                  $ifdescr=(string)$child;
-                  break;
-
+               case 'IFDESCR':
                case 'SYSMAC': // LLDP Nortel
-                  $sysmac=(string)$child;
-                  break;
-
                case 'IFNUMBER': // LLDP Nortel
-                  $ifnumber=(string)$child;
+               case 'SYSDESCR': // CDP or LLDP
+               case 'SYSNAME': // CDP or LLDP
+               case 'MODEL': // CDP or LLDP
+                  $a_ip[strtolower($child->getName())] = (string)$child;
                   break;
 
-               case 'SYSDESCR': // CDP or LLDP
-                  $sysdescr = (string)$child;
-                  break;
-               
-               case 'SYSNAME': // CDP or LLDP
-                  $sysname = (string)$child;
-                  break;
-               
-               case 'MODEL': // CDP or LLDP
-                  $model = (string)$child;
-                  break;
-               
                default :
                   $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CONNECTION (CDP='.$p_cdp.') : '
                            .$child->getName()."\n";
-            }
+                  
+            }             
          }
-         if ($ip != '' AND $ifdescr!='') {
-            $portID=$PluginFusinvsnmpSNMP->getPortIDfromDeviceIP(
-                                   $ip, 
-                                   $ifdescr,
-                                   $sysdescr,
-                                   $sysname,
-                                   $model);
-         } else if($sysmac != '' AND $ifnumber!='') {
-            $portID=$PluginFusinvsnmpSNMP->getPortIDfromSysmacandPortnumber($sysmac, $ifnumber);
+         if (isset($a_ip['ip'])) {
+            $pfNetworkPort->addIp($a_ip);
+         } else if (isset($a_ip['sysmac'])
+                 AND isset($a_ip['ifnumber'])) {
+            $pfNetworkPort->addMac($a_ip);
          }
       } else {
          foreach ($p_connection->children() as $child) {
+
             switch ($child->getName()) {
                
-               case 'MAC' :
-                  $mac=strval($child);
-                  $portID=$PluginFusinvsnmpSNMP->getPortIDfromDeviceMAC($child, $p_oPort->getValue('id'));
-                  $p_oPort->addMac($mac);
+               case 'MAC':
+                  $pfNetworkPort->addMac(strval($child));
                   break;
                
-               case 'IP' ://TODO : si ip ajouter une tache de decouverte sur l'ip pour recup autre info // utile seulement si mac inconnu dans glpi
-                  $ip=strval($child);
-                  $p_oPort->addIp($ip);
+               case 'IP':
+                  $pfNetworkPort->addIP(strval($child));
                   break;
                
                default :
                   $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CONNECTION (CDP='.$p_cdp.') : '
                            .$child->getName()."\n";
+                  
             }
-
          }
-      }
-      if ($portID != '') {
-         $p_oPort->addConnection($portID);
-//         if ($ip != '') {
-            //$p_oPort->setValue('ip', $ip);
-//         }
-      } else {
-         $p_oPort->addUnknownConnection($mac, $ip);
-         //TODO : si ip ajouter une tache de decouverte sur l'ip pour recup autre info
       }
       return $errors;
    }
@@ -1166,21 +1062,24 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    /**
     * Import VLANS
     *@param $p_vlans VLANS code to import
-    *@param $p_oPort Port object to connect
+    *@param $pfNetworkPort Port object to connect
     *
     *@return errors string to be alimented if import ko / '' if ok
     **/
-   function importVlans($p_vlans, $p_oPort) {
+   function importVlans($p_vlans, $pfNetworkPort) {
       global $LANG;
 
       $errors='';
       foreach ($p_vlans->children() as $child) {
          switch ($child->getName()) {
+            
             case 'VLAN' :
-               $errors.=$this->importVlan($child, $p_oPort);
+               $errors.=$this->importVlan($child, $pfNetworkPort);
                break;
+            
             default :
                $errors.=$LANG['plugin_fusioninventory']['errors'][22].' VLANS : '.$child->getName()."\n";
+               
          }
       }
       return $errors;
@@ -1194,27 +1093,28 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     *@param $p_oPort Port object to connect
     *@return errors string to be alimented if import ko / '' if ok
     **/
-   function importVlan($p_vlan, $p_oPort) {
+   function importVlan($p_vlan, $pfNetworkPort) {
       global $LANG;
 
       $errors='';
-      $number=''; $name='';
+      $number=''; 
+      $name='';
       foreach ($p_vlan->children() as $child) {
          switch ($child->getName()) {
             
             case 'NUMBER' :
-               $number=$child;
+               $number=(string)$child;
                break;
             
             case 'NAME' :
-               $name=$child;
+               $name=(string)$child;
                break;
             
             default :
                $errors.=$LANG['plugin_fusioninventory']['errors'][22].' VLAN : '.$child->getName()."\n";
          }
       }
-      $p_oPort->addVlan($number, $name);
+      $pfNetworkPort->addVlan($number, $name);
       return $errors;
    }
 

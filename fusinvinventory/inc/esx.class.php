@@ -55,7 +55,7 @@ class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
     * @return uniqid value
     */
    function prepareRun($taskjobs_id) {
-   
+
       $task       = new PluginFusioninventoryTask();
       $job        = new PluginFusioninventoryTaskjob();
       $joblog     = new PluginFusioninventoryTaskjoblog();
@@ -108,12 +108,14 @@ class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
                $a_input['date']  = date("Y-m-d H:i:s");
                $joblog->add($a_input);
 
-               $jobstatus->changeStatusFinish($jobstatus_id, 0, 'PluginFusinvinventoryESX', 1, 
+               $jobstatus->changeStatusFinish($jobstatus_id, 
+                                              0, 
+                                              'PluginFusinvinventoryESX', 
+                                              1, 
                                               "Unable to find agent to run this job");
-
             }
          }
-         $job->fields['status']= 1;
+//         $job->fields['status']= 1;
          $job->update($job->fields);
       } else {
          foreach($agent_actions as $targets) {

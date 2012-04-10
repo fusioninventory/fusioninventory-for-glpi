@@ -1836,6 +1836,25 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       Crontask::Register('PluginFusioninventoryTaskjobstatus', 'cleantaskjob', (3600 * 24), 
                          array('mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30));
    }
+   
+   // Delete data in glpi_logs (agent problem => ticket http://forge.fusioninventory.org/issues/1546)
+   // ** Token
+   $query = "DELETE FROM `glpi_logs`
+      WHERE `itemtype`='PluginFusioninventoryAgent'
+         AND `id_search_option`='9'";
+   $DB->query($query);
+   // ** Last contact
+   $query = "DELETE FROM `glpi_logs`
+      WHERE `itemtype`='PluginFusioninventoryAgent'
+         AND `id_search_option`='4'";
+   $DB->query($query);
+   // ** Version
+   $query = "DELETE FROM `glpi_logs`
+      WHERE `itemtype`='PluginFusioninventoryAgent'
+         AND `id_search_option`='8'
+         AND `old_value`=`new_value`";
+   $DB->query($query);
+   
 }
 
 

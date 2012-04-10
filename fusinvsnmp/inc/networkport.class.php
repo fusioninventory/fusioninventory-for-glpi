@@ -44,35 +44,22 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
-   private $oFusioninventory_networkport; // link fusioninventory table object
-   private $fusinvsnmp_networkports_id; // id in link fusioninventory table
-   private $portsToConnect=array(); // id of known connected ports
-   private $connectedPort=''; // id of connected ports
-   private $unknownDevicesToConnect=array(); // IP and/or MAC addresses of unknown connected ports
-   private $portVlans=array(); // number and name for each vlan
+class PluginFusinvsnmpNetworkPort extends CommonDBTM {
+   private $glpi_type = "NetworkEquipment"; // NetworkEquipment, Printer...
+   private $portDB = array();
+   private $portModif = array();
+   private $plugin_fusinvsnmp_networkports_id = 0;
+   private $cdp=false; // true if CDP=1
    private $portMacs=array();  // MAC addresses
    private $portIps=array();   // IP addresses
-   private $cdp=false; // true if CDP=1
-   private $noTrunk=false; // true if call to setNoTrunk()
-   private $glpi_type=NETWORKING_TYPE; // NETWORKING_TYPE, PRINTER_TYPE...
+   private $portVlans=array(); // number and name for each vlan
 
-   function __construct($p_type=NULL, $p_logFile='') {
-
-      $logFile = '';
-      if ($p_logFile != '') {
-         $logFile = $p_logFile;
-      } else {
-         $logFile = GLPI_PLUGIN_DOC_DIR.'/fusioninventory/communication_port_'.
-                              time().'_'.rand(1,1000);
-      }
-      parent::__construct("glpi_networkports", $logFile);
-      $this->oFusioninventory_networkport =
-              new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkports");
+   
+   
+   function __construct($p_type=NULL) {
       if ($p_type!=NULL) {
          $this->glpi_type = $p_type;
       }
-      $this->type='PluginFusinvsnmpNetworkPort';
    }
 
 
@@ -82,199 +69,27 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
     *
     *@return nothing
     **/
-   function load($p_id='') {
+   function loadNetworkport($networkports_id) {
       global $DB;
 
-      parent::load($p_id);
-      if (is_numeric($p_id)) { // port exists
-         $query = "SELECT `id`
-                   FROM `glpi_plugin_fusinvsnmp_networkports`
-                   WHERE `networkports_id` = '".$p_id."';";
-         if ($result = $DB->query($query)) {
-            if ($DB->numrows($result) != 0) {
-               $portFusionInventory = $DB->fetch_assoc($result);
-               $this->fusinvsnmp_networkports_id = $portFusionInventory['id'];
-               $this->oFusioninventory_networkport->load($this->fusinvsnmp_networkports_id);
-               $this->ptcdLinkedObjects[]=$this->oFusioninventory_networkport;
+      $networkport = new NetworkPort();
+      $networkport->getFromDB($networkports_id);
+      $this->portDB = $networkport->fields;
+      
+      $a_fusports = $this->find("`networkports_id`='".$networkports_id."'", "", 1);
+      if (count($a_fusports) > 0) {
+         $a_fusport = current($a_fusports);
+         foreach ($a_fusport as $key=>$value) {
+            if ($key == 'id') {
+               $this->plugin_fusinvsnmp_networkports_id = $value;
             } else {
-               $this->fusinvsnmp_networkports_id = NULL;
-               $this->oFusioninventory_networkport->load();
-               $this->ptcdLinkedObjects[]=$this->oFusioninventory_networkport;
-               $this->oFusioninventory_networkport->setValue('networkports_id', $p_id);
-//               $this->fusinvsnmp_networkports_id = $this->addDBFusionInventory();
-//               $this->oFusioninventory_networkport->load($this->fusinvsnmp_networkports_id);
-//               $this->ptcdLinkedObjects[]=$this->oFusioninventory_networkport;
-            }
-         }
-      } else {
-         $this->fusinvsnmp_networkports_id = NULL;
-         $this->oFusioninventory_networkport->load();
-         $this->ptcdLinkedObjects[]=$this->oFusioninventory_networkport;
-      }
-   }
-
-
-   
-   /**
-    * Update an existing preloaded port with the instance values
-    *
-    *@return nothing
-    **/
-   function updateDB() {
-      parent::updateDB(); // update core
-      if ($this->glpi_type == 'NetworkEquipment') {
-         $this->oFusioninventory_networkport->updateDB(); // update fusioninventory
-      }
-      $this->connect(); // update connections
-      $this->assignVlans(); // update vlans
-   }
-
-
-
-   /**
-    * Add a new port with the instance values
-    *
-    *@param $p_id Networking id
-    *@param $p_force=FALSE Force add even if no updates where done
-    *@return nothing
-    **/
-   function addDB($p_id, $p_force=FALSE) {
-      if (count($this->ptcdUpdates) OR $p_force) {
-         // update core
-         $this->ptcdUpdates['items_id']=$p_id;
-         $this->ptcdUpdates['itemtype']=$this->glpi_type;
-
-         $portID=parent::add($this->ptcdUpdates);
-         $this->load($portID);
-         // update fusioninventory
-         if ($this->glpi_type == 'NetworkEquipment') {
-         if (count($this->oFusioninventory_networkport->ptcdUpdates) OR $p_force) {
-//            $this->oFusioninventory_networkport->ptcdUpdates['networkports_id']=$this->getValue('id');
-//            $this->oFusioninventory_networkport->add($this->oFusioninventory_networkport->ptcdUpdates);
-            $this->fusinvsnmp_networkports_id = $this->addDBFusionInventory();
-         }
-         }
-         $this->load($portID);
-         $this->connect();       // update connections
-         $this->assignVlans();   // update vlans
-      }
-   }
-
-
-
-   /**
-    * Add a new FusionInventory port with the instance values
-    *
-    *@return FusionInventory networking port id
-    **/
-   function addDBFusionInventory() {
-      $this->oFusioninventory_networkport->ptcdUpdates['networkports_id']=$this->getValue('id');
-      $fusinvsnmp_networkports_id = $this->oFusioninventory_networkport->add($this->oFusioninventory_networkport->ptcdUpdates);
-      return $fusinvsnmp_networkports_id;
-   }
-
-
-
-   /**
-    * Delete a loaded port
-    *
-    *@param $p_id Port id
-    *@return nothing
-    **/
-   function deleteDB() {
-      $this->cleanVlan('', $this->getValue('id'));
-      $this->disconnectDB($this->getValue('id'));
-      $this->oFusioninventory_networkport->deleteDB(); // fusioninventory
-      parent::deleteDB(); // core
-   }
-
-
-
-   /**
-    * Add connection
-    *
-    *@param $p_port Port id
-    *@return nothing
-    **/
-   function addConnection($p_port) {
-      $this->portsToConnect[]=$p_port;
-   }
-
-
-
-   /**
-    * Add connection to unknown device
-    *
-    *@param $p_mac MAC address
-    *@param $p_ip IP address
-    *@return nothing
-    **/
-   function addUnknownConnection($p_mac, $p_ip) {
-      $this->unknownDevicesToConnect[]=array('mac'=>$p_mac, 'ip'=>$p_ip);
-   }
-
-
-
-   /**
-    * Manage connection to unknown device
-    *
-    *@param $p_mac MAC address
-    *@param $p_ip IP address
-    *@return nothing
-    **/
-   function PortUnknownConnection($p_mac, $p_ip) {
-      $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
-      $unknown_infos = array();
-      $unknown_infos["name"] = '';
-      $unknown_infos['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
-      $newID=$PluginFusioninventoryUnknownDevice->add($unknown_infos);
-      // Add networking_port
-      $NetworkPort =new NetworkPort();
-      $port_add = array();
-      $port_add["items_id"] = $newID;
-      $port_add["itemtype"] = 'PluginFusioninventoryUnknownDevice';
-      $port_add["ip"] = $p_ip;
-      $port_add['mac'] = $p_mac;
-      $dport = $NetworkPort->add($port_add);
-      $this->connectDB($dport);
-   }
-
-
-   
-   /**
-    * Connect this port to another one in DB
-    *
-    *@param $destination_port id of destination port
-    *@return nothing
-    **/
-   function connect() {
-      if (count($this->portsToConnect)+count($this->unknownDevicesToConnect)==0) {
-         // no connections --> don't delete existing connections :
-         // the connected device may be powered off
-      } else {
-         if ($this->getCDP() 
-             OR count($this->portsToConnect)+count($this->unknownDevicesToConnect)==1) {
-            // only one connection
-            if (count($this->portsToConnect)) { // this connection is not on an unknown device
-               $this->connectedPort = $this->portsToConnect[0];
-               $this->connectDB($this->connectedPort);
-            }
-         } else {
-            $index = $this->getConnectionToSwitchIndex();
-            if ($index != '') {
-               $this->connectedPort = $this->portsToConnect[$index];
-               $this->connectDB($this->connectedPort);
-            }
-         }
-         // update connections to unknown devices
-         if (!count($this->portsToConnect)) { // if no known connection
-            if (count($this->unknownDevicesToConnect)==1) { // if only one unknown connection
-               $uConnection = $this->unknownDevicesToConnect[0];
-               $this->PortUnknownConnection($uConnection['mac'], $uConnection['ip']);
+               $this->portDB[$key] = $value;
             }
          }
       }
    }
+
+
 
 
    
@@ -347,7 +162,7 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
     *@return nothing
     **/
    function addVlan($p_number, $p_name) {
-      $this->portVlans[]=array('number'=>$p_number, 'name'=>$p_name);
+      $this->portVlans[$p_number] = $p_name;
    }
 
 
@@ -359,7 +174,15 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
     *@return nothing
     **/
    function addMac($p_mac) {
-      $this->portMacs[]=$p_mac;
+      if (is_array($p_mac)) {
+         if (isset($p_mac['sysmac'])) {
+            $this->portMacs[$p_mac['sysmac']] = $p_mac;
+         } else {
+            $this->portMacs[$p_mac['mac']] = $p_mac;
+         }
+      } else {
+         $this->portMacs[$p_mac] = $p_mac;
+      }
    }
 
    
@@ -367,219 +190,11 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
    /**
     * Add IP address
     *
-    *@param $p_ip IP address
+    *@param $p_ip array with IP address...
     *@return nothing
     **/
    function addIp($p_ip) {
       $this->portIps[]=$p_ip;
-   }
-
-   
-
-   /**
-    * Assign vlans to this port
-    *
-    *@return nothing
-    **/
-   function assignVlans() {
-      global $DB;
-      
-      if ($this->connectedPort=='') {
-         // no connection to set check existing in DB
-         $this->connectedPort=$this->getConnectedPortInDB($this->getValue('id'));
-      }
-      $vlans = array();
-      foreach ($this->portVlans as $vlan) {
-         $vlans[] = Dropdown::importExternal("Vlan", $vlan['number'], 0, array(), $vlan['name']);
-      }
-      if (count($vlans)) { // vlans to add/update
-         $ports = array();
-         $ports[] = $this->getValue('id');
-         if ($this->connectedPort != '') $ports[] = $this->connectedPort;
-         foreach ($ports AS $num=>$tmp_port) {
-            if ($num==1) { // connected port
-               $ptpConnected = new PluginFusinvsnmpNetworkPort();
-               $ptpConnected->load($tmp_port);
-               if ($ptpConnected->fields['itemtype']==NETWORKING_TYPE) {
-                  break; // don't update if port on a switch
-               }
-            }
-            $query = "SELECT *
-                      FROM `glpi_networkports_vlans`
-                           LEFT JOIN `glpi_vlans`
-                              ON `glpi_networkports_vlans`.`vlans_id`=`glpi_vlans`.`id`
-                      WHERE `networkports_id`='$tmp_port'";
-            if ($result=$DB->query($query)) {
-               if ($DB->numrows($result) == "0") { // this port has no vlan
-                  foreach ($vlans as $vlans_id) {
-                     $this->assignVlan($tmp_port, $vlans_id);
-                  }
-               } else { // this port has one or more vlans
-                  $vlansDB = array();
-                  $vlansDBnumber = array();
-                  $vlansToAssign = array();
-                  while ($vlanDB=$DB->fetch_assoc($result)) {
-                     $vlansDBnumber[] = $vlanDB['name'];
-                     $vlansDB[] = array('number'=>$vlanDB['name'], 'name'=>$vlanDB['comment'],
-                                        'id'=>$vlanDB['id']);
-                  }
-
-                  foreach ($this->portVlans as $portVlan) {
-                     $key='';
-                     foreach ($vlansDBnumber as $vlanKey=>$vlanDBnumber) {
-                        if ($vlanDBnumber==$portVlan['number']) {
-                           $key=$vlanKey;
-                        }
-                     }
-                     if ($key !== '') {
-                        unset($vlansDB[$key]);
-                        unset($vlansDBnumber[$key]);
-                     } else {
-                        $vlansToAssign[] = $portVlan;
-                     }
-                  }
-                  foreach ($vlansDB as $vlanToUnassign) {
-                     $this->cleanVlan($vlanToUnassign['id'], $tmp_port);
-                  }
-                  foreach ($vlansToAssign as $vlanToAssign) {
-                     $vlans_id = Dropdown::importExternal("Vlan",
-                                                       $vlanToAssign['number'], 0, array(),
-                                                       $vlanToAssign['name']);
-                     $this->assignVlan($tmp_port, $vlans_id);
-                  }
-               }
-            }
-         }
-      } else { // no vlan to add/update --> delete existing
-         $query = "SELECT *
-                   FROM `glpi_networkports_vlans`
-                   WHERE `networkports_id`='".$this->getValue('id')."'";
-         if ($result=$DB->query($query)) {
-            if ($DB->numrows($result) > 0) {// this port has one or more vlan
-               $this->cleanVlan('', $this->getValue('id'));
-               if ($this->connectedPort != '') {
-                  $ptpConnected = new PluginFusinvsnmpNetworkPort();
-                  $ptpConnected->load($this->connectedPort);
-                  if ($ptpConnected->fields['itemtype'] != NETWORKING_TYPE) {
-                     // don't update vlan on connected port if connected port on a switch
-                     $this->cleanVlan('', $this->connectedPort);
-                  }
-               }
-            }
-         }
-      }
-   }
-
-
-
-   /**
-    * Assign vlan
-    *
-    *@param $p_port Port id
-    *@param $p_vlan Vlan id
-    *@return nothing
-    **/
-   function assignVlan($p_port, $p_vlan) {
-      global $DB;
-
-      $query = "INSERT INTO glpi_networkports_vlans (networkports_id,vlans_id)
-                VALUES ('$p_port','$p_vlan')";
-      $DB->query($query);
-      $array = Dropdown::getDropdownName("glpi_vlans", $p_vlan, 1);
-      PluginFusinvsnmpNetworkPortLog::networkport_addLog($p_port, $array['name']." [".$array['comment']."]", 'vmvlan');
-   }
-
-
-
-   /**
-    * Clean vlan
-    *
-    *@param $p_vlan Vlan id
-    *@param $p_port='' Port id
-    *@return nothing
-    **/
-   function cleanVlan($p_vlan, $p_port='') {
-      global $DB;
-
-      if ($p_vlan != '') {
-         if ($p_port != '') { // delete this vlan for this port
-            $query="DELETE FROM `glpi_networkports_vlans`
-                    WHERE `vlans_id`='$p_vlan'
-                          AND `networkports_id`='$p_port';";
-         } else { // delete this vlan for all ports
-            $query="DELETE FROM `glpi_networkports_vlans`
-                    WHERE `vlans_id`='$p_vlan';";
-            // do not remove vlan in glpi_vlans : manual remove
-         }
-      } else { // delete all vlans for this port
-         $query="DELETE FROM `glpi_networkports_vlans`
-                 WHERE `networkports_id`='$p_port';";
-      }
-      PluginFusinvsnmpNetworkPortLog::networkport_addLog($p_port, '', 'vmvlan');
-      $DB->query($query);
-   }
-
-
-
-   /**
-    * Get index of connection to switch
-    *
-    *@return index of connection in $this->portsToConnect
-    **/
-   private function getConnectionToSwitchIndex() {
-      global $DB;
-
-      $macs='';
-      $ptp = new PluginFusinvsnmpNetworkPort;
-      $mac = array();
-      foreach($this->portsToConnect as $index=>$portConnection) {
-         if ($macs!='') { 
-            $macs.=', ';
-         }
-         $ptp->load($portConnection);
-         $macs.="'".$ptp->getValue('mac')."'";
-         $mac[$index]=$ptp->getValue('mac');
-      }
-      if ($macs!='') {
-         $where = "`mac` = '";
-         $where .= implode("' OR `mac` = '", $mac); 
-         $where .= "'";
-         $query = "SELECT `mac`
-                   FROM `glpi_networkequipments`
-                   WHERE (".$where.");";
-         $result=$DB->query($query);
-         if ($DB->numrows($result) == 1) {
-            $switch = $DB->fetch_assoc($result);
-            return array_search($switch['mac'], $mac);
-         }
-      }
-      return '';
-   }
-
-
-
-   /**
-    * Get connected port in DB
-    *
-    *@param $p_portID Port id of first port
-    *@return Port id of connected port or '' if no connection
-    **/
-   function getConnectedPortInDB($p_portID) {
-      global $DB;
-
-      $query = "SELECT `networkports_id_1` AS `id`
-                FROM `glpi_networkports_networkports`
-                WHERE `networkports_id_2`='".$p_portID."'
-                UNION
-                SELECT `networkports_id_2` AS `id`
-                FROM `glpi_networkports_networkports`
-                WHERE `networkports_id_1`='".$p_portID."';";
-      $result=$DB->query($query);
-      if ($DB->numrows($result) == 1) {
-         $port = $DB->fetch_assoc($result);
-         return $port['id'];
-      }
-      return '';
    }
 
 
@@ -598,20 +213,12 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
    /**
     *
     */
-   function deleteMacToConnect($mac, $items_id) {
+   function deleteMacToConnect($mac) {
       foreach ($this->portMacs as $num=>$macaddress) {
          if ($mac == $macaddress) {
             unset($this->portMacs[$num]);
          }
       }
-      $array = array();
-      foreach ($this->portsToConnect as $num=>$ports_id) {
-         if ($items_id != $ports_id) {
-            $array[] = $ports_id;
-         }
-      }
-      $this->portsToConnect = array();
-      $this->portsToConnect = $array;
     }
 
 
@@ -623,43 +230,6 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
     **/
    function setCDP() {
       $this->cdp=true;
-   }
-
-
-
-   /**
-    * Get CDP
-    *
-    *@return true/false
-    **/
-   function getCDP() {
-      return $this->cdp;
-   }
-
-
-
-   /**
-    * Get noTrunk
-    *
-    *@return true/false
-    **/
-   function getNoTrunk() {
-      return $this->noTrunk;
-   }
-
-
-
-   /**
-    * Set no trunk
-    *
-    *@return nothing
-    **/
-   function setNoTrunk() {
-      $this->portsToConnect=array(); // no connection
-      $this->unknownDevicesToConnect=array(); // no connection
-
-      $this->noTrunk = true;
-      $this->setValue('trunk', 0);
    }
 
 
@@ -685,6 +255,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
             OR ($p_type == "fastEther(62)")
             OR ($p_type == "fastEther")
             OR ($p_type == "62")
+            OR ($p_type == "169")
+            OR ($p_type == "shdsl")
          ) { // not virtual port
          $real = true;
       }
@@ -719,6 +291,272 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       }
       return($array);
    }
+   
+   
+   
+   function setValue($name, $value) {
+      if (!(isset($this->portDB[$name])
+              AND $this->portDB[$name] == $value)) {
+         $this->portModif[$name] = $value;
+      }
+   }
+   
+   
+   
+   function getValue($name) {
+      if (isset($this->portModif[$name])) {
+         return $this->portModif[$name];
+      } else if (isset($this->portDB[$name])) {
+         return $this->portDB[$name];
+      }
+      return '';
+   }
+   
+   
+   
+   function getNetworkPorts_id() {
+      if (isset($this->portDB['id'])) {
+         return $this->portDB['id'];
+      } else if (isset($this->portModif['id'])) {
+         return $this->portModif['id'];
+      }
+      return 0;
+   }
+   
+   
+   
+   function savePort($itemtype, $items_id) {
+
+      $networkPort = new NetworkPort();
+      if (!isset($this->portDB['id'])
+              OR $this->portDB['id'] < 1) {
+         $this->portModif['itemtype'] = $itemtype;
+         $this->portModif['items_id'] = $items_id;
+         $newID = $networkPort->add($this->portModif);
+         $this->portModif['id'] = $newID;
+         $this->portDB['id'] = $newID;
+      } else {
+         $this->portModif['id'] = $this->portDB['id'];
+         $networkPort->update($this->portModif);
+      }
+      // Update this table fusinvsnmpnetworkport
+      $this->portModif['networkports_id'] = $this->portModif['id'];
+      unset($this->portModif['id']);
+      if ($this->plugin_fusinvsnmp_networkports_id == '0') {
+         $this->add($this->portModif);
+      } else {
+         $this->portModif['id'] = $this->plugin_fusinvsnmp_networkports_id;
+         $this->update($this->portModif);
+      }
+      
+      // ** save VLAN
+      $vlan = new Vlan();
+      $vlanfound = array();
+      foreach ($this->portVlans as $number=>$name) {
+         $a_vlans = $vlan->find("`name`='".$number."'");
+         if (count($a_vlans) > 0) {
+            $a_vlan = current($a_vlans);
+            $vlanfound[$a_vlan['id']] = $a_vlan['id'];
+         } else {
+            $input = array();
+            $input['name'] = $number;
+            $input['comment'] = $name;
+            $newID = $vlan->add($input);
+            $vlanfound[$newID] = $newID;
+         }
+      }
+      $networkPort_Vlan = new NetworkPort_Vlan();
+      $vlanDB = $networkPort_Vlan->getVlansForNetworkPort($this->portModif['networkports_id']);
+      foreach ($vlanDB as $vlans_id) {
+         if (!isset($vlanfound[$vlans_id])) {
+            $networkPort_Vlan->unassignVlan($this->portModif['networkports_id'], $vlans_id);
+            PluginFusinvsnmpNetworkPortLog::networkport_addLog($this->portModif['networkports_id'], '', 'vmvlan');
+         }
+      }
+      foreach ($vlanfound as $vlans_id) {
+         if (!isset($vlanDB[$vlans_id])) {
+            $networkPort_Vlan->assignVlan($this->portModif['networkports_id'], $vlans_id);
+            PluginFusinvsnmpNetworkPortLog::networkport_addLog($this->portModif['networkports_id'], $number." [".$name."]", 'vmvlan');
+         }
+      }
+   }
+   
+   
+   
+   function connectPorts() {      
+      $wire = new NetworkPort_NetworkPort;
+      $networkPort = new NetworkPort();
+      
+      $networkports_id = $this->portModif['networkports_id'];
+      $portID = 0;
+      if ($this->cdp) { // DCP, get device
+         logInFile("KOIN", print_r($this->portIps, true));
+         $pfSNMP = new PluginFusinvsnmpSNMP();
+         $a_cdp = current($this->portIps);
+         if (isset($a_cdp['ip'])) {
+            $param = array();
+            $param['ifdescr']    = '';
+            $param['sysdescr']   = '';
+            $param['sysname']    = '';
+            $param['model']      = '';
+            foreach ($a_cdp as $key=>$value) {
+               $param[$key] = $value;
+            }
+            $portID = $pfSNMP->getPortIDfromDeviceIP($a_cdp['ip'], 
+                                                     $param['ifdescr'], 
+                                                     $param['sysdescr'], 
+                                                     $param['sysname'], 
+                                                     $param['model']);
+            
+
+         } else {
+            $a_cdp = current($this->portMacs);
+            if (isset($a_cdp['sysmac'])) {
+               $ifnumber = $a_cdp['ifnumber'];
+               $portID = $pfSNMP->getPortIDfromSysmacandPortnumber($a_cdp['sysmac'], 
+                                                                   $ifnumber);     
+            }
+         }
+         if ($portID
+                 AND $portID > 0) {
+            $contact_id = $wire->getOppositeContact($networkports_id);
+            if (!($contact_id
+                    AND $contact_id == $portID)) {
+               $wire->add(array('networkports_id_1'=> $networkports_id,
+                               'networkports_id_2' => $portID));
+            }   
+         }         
+      } else {
+         $count = count($this->portMacs);
+         if ($this->getValue('trunk') != '1') {
+            if ($count == '2') {
+               // detect if phone IP is one of the 2 devices
+               $phonecase = 0;
+               $macNotPhone_id = 0;
+               $macNotPhone = '';
+               $phonePort_id = 0;
+               foreach ($this->portMacs as $ifmac) {
+                  $a_ports = $networkPort->find("`mac`='".$ifmac."'","", 1);
+                  $a_port = current($a_ports);
+                  if ($a_port['itemtype'] == 'Phone') {
+                     // Connect phone on switch port and other (computer..) in this phone
+                     $phonePort_id = $a_port['id'];
+                     $phonecase++;
+                  } else {
+                     $macNotPhone_id = $a_port['id'];
+                     $macNotPhone = $ifmac;
+                  }
+               }
+               if ($phonecase == '1') {
+                  $wire->add(array('networkports_id_1'=> $networkports_id,
+                                   'networkports_id_2' => $phonePort_id));
+                  $NntworkPort->getFromDB($phonePort_id);
+                  $Phone = new Phone();
+                  $Phone->getFromDB($networkPort->fields['items_id']);
+                  $a_portsPhone = $networkPort->find("`items_id`='".$networkPort->fields['items_id']."'
+                                                   AND `itemtype`='Phone'
+                                                   AND `name`='Link'", '', 1);
+                  $portLink_id = 0;
+                  if (count($a_portsPhone) == '1') {
+                     $a_portPhone = current($a_portsPhone);
+                     $portLink_id = $a_portPhone['id'];
+                  } else {
+                     // Create Port Link
+                     $input = array();
+                     $input['name'] = 'Link';
+                     $input['itemtype'] = 'Phone';
+                     $input['items_id'] = $Phone->fields['id'];
+                     $input['entities_id'] = $Phone->fields['entities_id'];
+                     $portLink_id = $networkPort->add($input);
+                  }
+                  $opposite_id = false;
+                  if ($opposite_id == $wire->getOppositeContact($portLink_id)) {
+                     if ($opposite_id != $macNotPhone_id) {
+                        $this->disconnectDB($portLink_id); // disconnect this port
+                        $this->disconnectDB($macNotPhone_id);     // disconnect destination port
+                     }
+                  }
+                  if (!isset($macNotPhone_id)) {
+                     // Create unknown ports
+                     $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+                     $unknown_infos = array();
+                     $unknown_infos["name"] = '';
+                     $newID=$PluginFusioninventoryUnknownDevice->add($unknown_infos);
+                     // Add networking_port
+                     $port_add = array();
+                     $port_add["items_id"] = $newID;
+                     $port_add["itemtype"] = 'PluginFusioninventoryUnknownDevice';
+                     $port_add['mac'] = $macNotPhone;
+                     $macNotPhone_id = $networkPort->add($port_add);
+                  }
+                  $wire->add(array('networkports_id_1'=> $portLink_id,
+                                   'networkports_id_2' => $macNotPhone_id));
+               } else {
+                  $pfiud = new PluginFusioninventoryUnknownDevice;
+                  $pfiud->hubNetwork($p_oPort, $this->agent);
+               }
+            } else if ($count > 1) { // MultipleMac
+               $pfiud = new PluginFusioninventoryUnknownDevice;
+               $pfiud->hubNetwork($p_oPort, $this->agent);
+            } else { // One mac on port
+               foreach ($this->portMacs as $ifmac) { //Only 1 time
+                  $a_ports = $networkPort->find("`mac`='".$ifmac."'","", 1);
+                  if (count($a_ports) > 0) {
+                     $a_port = current($a_ports);
+                     $id = $networkPort->getContact($networkports_id);
+                     if ($id AND $id != $networkports_id) {
+                        $this->disconnectDB($networkports_id); // disconnect this port
+                        $this->disconnectDB($id);     // disconnect destination port
+                        $wire->add(array('networkports_id_1'=> $networkports_id,
+                                         'networkports_id_2' => $a_port['id']));
+                     } else if ($id) {
+                        // Yet connected                        
+                     } else {
+                        // Not connected
+                        $wire->add(array('networkports_id_1'=> $networkports_id,
+                                         'networkports_id_2' => $a_port['id']));
+                     }
+                  } else {
+                     // Create unknown device
+                     $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+                     $input = array();
+                     $newID = $pluginFusioninventoryUnknownDevice->add($input);
+                     $input['itemtype'] = "PluginFusioninventoryUnknownDevice";
+                     $input['items_id'] = $newID;
+                     $input['mac'] = $ifmac;
+                     $newPortID = $networkPort->add($input);
+                     $wire->add(array('networkports_id_1'=> $networkports_id,
+                                      'networkports_id_2' => $newPortID));
+                  }
+               }
+            }
+         }
+      }
+   }
+   
+
+
+   /**
+    * Get index of port object
+    *
+    *@param $p_mac MAC address
+    *@param $p_ip='' IP address
+    *@return Index of port object in ports array or '' if not found
+    **/
+   function getPortIdWithLogicialNumber($p_ifnumber, $items_id) {
+      
+      $networkPort= new NetworkPort();
+      $a_ports = $networkPort->find("`logical_number`='".$p_ifnumber."'
+         AND `itemtype`='NetworkEquipment'
+         AND`items_id`='".$items_id."'", "", 1);
+      
+      if (count($a_ports) > 0) {
+         $a_port = current($a_ports);
+         return $a_port['id'];
+      }
+      return false;
+   }
+   
 }
 
 ?>

@@ -400,7 +400,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
 
    /**
-   * Make link between agent and computer
+   * Create links between agent and computer.
    *
    * @param $items_id integer ID of the computer
    * @param $device_id value of device_id from XML to identify agent
@@ -411,18 +411,46 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    function setAgentWithComputerid($items_id, $device_id) {
       global $DB;
 
-      // Reset if computer connected with an other agent
-      $query = "UPDATE `".$this->getTable()."`
-                SET `items_id`='0'
-                WHERE `items_id`='".$items_id."'
-                   AND `device_id`!='".$device_id."' ";
-      $DB->query($query);
+      $a_agent = $this->find("`items_id`='".$items_id."'", "", 1);
+      // Is this computer already linked to an agent?
+      if ($agent = array_shift($a_agent)) {
 
-      // Link agent with computer
-      $agent = $this->InfosByKey($device_id);
-      if (isset($agent['id'])) {
-         $agent['items_id'] = $items_id;
-         $this->update($agent);
+         // relation
+         if ($agent['device_id'] != $device_id) {
+            $input = array();
+            $input['id'] = $agent['id'];
+            $input['device_id'] = $device_id;
+            $this->update($input);
+         }
+
+         // Clean up the agent list
+         $oldAgents = $this->find(
+            // computer linked to the wrong agent
+            "(`items_id`='".$items_id."' AND `device_id` <> '".$device_id."')");
+         foreach ($oldAgents as $oldAgent) {
+            $this->delete($oldAgent);
+         }
+         $oldAgents = $this->find(
+            // the same device_id but linked on the wrong computer 
+            "(`device_id`='".$device_id."' AND `items_id`<>'".$items_id."')");
+         foreach ($oldAgents as $oldAgent) {
+            $input = array();
+            $input['id'] = $agent['id'];
+            $input['last_contact'] = $oldAgent['last_contact'];
+            $input['version'] = $oldAgent['version'];
+            $input['name'] = $oldAgent['name'];
+            $input['useragent'] = $oldAgent['useragent'];
+            $input['token'] = $oldAgent['token'];
+            $this->update($input);            
+            $this->delete($oldAgent);
+         }
+      } else { # This is a new computer
+         // Link agent with computer
+         $agent = $this->InfosByKey($device_id);
+         if (isset($agent['id'])) {
+             $agent['items_id'] = $items_id;
+             $this->update($agent);
+         }
       }
    }
 
@@ -682,6 +710,27 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "</tr>";
       echo "</table>";
    }   
+   
+   
+   
+   /**
+    * Disable data to put in table glpi_logs
+    * 
+    */   
+   function pre_updateInDB() {
+      if (isset($this->updates['version'])
+              AND isset($this->oldvalues['version'])
+              AND $this->updates['version'] == $this->oldvalues['version']) {
+         unset($this->updates['version']);
+         unset($this->oldvalues['version']);
+      }
+      if (isset($this->oldvalues['last_contact'])) {
+         unset($this->oldvalues['last_contact']);
+      }
+      if (isset($this->oldvalues['token'])) {
+         unset($this->oldvalues['token']);
+      }
+   }
 }
 
 ?>

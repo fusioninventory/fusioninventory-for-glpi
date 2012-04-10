@@ -435,15 +435,31 @@ echo "# testHardwareModifications\n";
       }
 
       $a_cpuXML = array();
+      $a_speed = array();
       $i = 0;
       foreach ($xml->CONTENT->CPUS as $child) {
          if (isset($child->NAME)) {
             $a_cpuXML["'".$i."-".$child->NAME."'"] = 1;
             $i++;
+            if (isset($child->SPEED)
+                    AND count($child) > 1) {
+               if (!isset($a_speed[(string)$child->SPEED])) {
+                  $a_speed[(string)$child->SPEED] = 0;
+               }
+               $a_speed[(string)$child->SPEED]++;
+            }
          } else if (isset($child->TYPE)) {
             $a_cpuXML["'".$i."-".$child->TYPE."'"] = 1;
             $i++;
+            if (isset($child->SPEED)
+                    AND count($child) > 1) {
+               if (!isset($a_speed[(string)$child->SPEED])) {
+                  $a_speed[(string)$child->SPEED] = 0;
+               }
+               $a_speed[(string)$child->SPEED]++;
+            }
          }
+
       }
 
       $Computer = new Computer();
@@ -452,6 +468,15 @@ echo "# testHardwareModifications\n";
       $result=$DB->query($query);
 
       $this->assertEquals($DB->numrows($result), count($a_cpuXML), 'Difference of CPUs, created '.$DB->numrows($result).' times instead '.count($a_cpuXML).' ['.$xmlFile.']');
+      
+      foreach ($a_speed as $speed=>$nb) {
+         $query = "SELECT * FROM `glpi_computers_deviceprocessors`
+            WHERE `computers_id`='".$items_id."' 
+               AND `specificity`='".$speed."'";
+         $result=$DB->query($query);
+         $this->assertEquals($DB->numrows($result), $nb, 'Difference of Processor speed '.$speed.' ['.$xmlFile.']');
+      }
+      
    }
 
 
@@ -616,8 +641,9 @@ echo "# testHardwareModifications\n";
       $this->assertEquals($DB->numrows($result), count($a_videoXML), 'Difference of Videos, created '.$DB->numrows($result).' times instead '.count($a_videoXML).' ['.$xmlFile.']');
    }
 
+   
 
-  function testMemory($xmlFile='', $items_id=0, $unknown=0) {
+   function testMemory($xmlFile='', $items_id=0, $unknown=0) {
       global $DB;
 
       if (empty($xmlFile)) {
@@ -635,14 +661,26 @@ echo "# testHardwareModifications\n";
       }
 
       $a_memoryXML = array();
+      $a_capacity = array();
       $i = 0;
       foreach ($xml->CONTENT->MEMORIES as $child) {
+         if (isset($child->CAPACITY)
+                 AND (string)$child->CAPACITY == 'No') {
+            $child->CAPACITY = 0;
+         }
+         
          if (isset($child->CAPTION)
-                 AND ctype_digit((string)$child->CAPACITY)
+                 AND preg_match("/^[0-9]+$/i", (string)$child->CAPACITY)
                  AND (isset($child->TYPE)
                          AND !preg_match('/Flash/', (string)$child->TYPE))) {
-            $a_memoryXML["'".$i."-".$child->CAPTION."'"] = 1;
-            $i++;
+            if ((string)$child->CAPACITY != '0') {
+               $a_memoryXML["'".$i."-".$child->CAPTION."'"] = 1;
+               $i++;
+               if (!isset($a_capacity[(string)$child->CAPACITY])) {
+                  $a_capacity[(string)$child->CAPACITY] = 0;
+               }
+               $a_capacity[(string)$child->CAPACITY]++;
+            }
          }
       }
 
@@ -652,6 +690,14 @@ echo "# testHardwareModifications\n";
       $result=$DB->query($query);
 
       $this->assertEquals($DB->numrows($result), count($a_memoryXML), 'Difference of Memories, created '.$DB->numrows($result).' times instead '.count($a_memoryXML).' ['.$xmlFile.']');
+      
+      foreach ($a_capacity as $capacity=>$nb) {
+         $query = "SELECT * FROM `glpi_computers_devicememories`
+            WHERE `computers_id`='".$items_id."' 
+               AND `specificity`='".$capacity."'";
+         $result=$DB->query($query);
+         $this->assertEquals($DB->numrows($result), $nb, 'Difference of Memories capacity for capacity '.$capacity.' ['.$xmlFile.']');
+      }
    }
 
 
@@ -753,10 +799,10 @@ echo "# testHardwareModifications\n";
             $child->VERSION = "N/A";
          }         
          if (isset($child->NAME)) {
-            if (!isset($soft[(string)$child->NAME."-".(string)$child->VERSION])) {
+            if (!isset($soft[strtolower((string)$child->NAME."-".(string)$child->VERSION)])) {
                $a_softwareXML["'".$i."-".(string)$child->NAME."'"] = 1;
                $i++;
-               $soft[(string)$child->NAME."-".(string)$child->VERSION] = 1;
+               $soft[strtolower((string)$child->NAME."-".(string)$child->VERSION)] = 1;
             }
          } else if (isset($child->GUID)) {
             if (!isset($soft[(string)$child->GUID."-".(string)$child->VERSION])) {
@@ -798,17 +844,20 @@ echo "# testHardwareModifications\n";
             $name = $child->GUID;
          }
          if ($name != '') {
-            // Search in GLPI if it's ok
-            $query = "SELECT * FROM `glpi_computers_softwareversions`
-               LEFT JOIN `glpi_softwareversions` ON `softwareversions_id`=`glpi_softwareversions`.`id`
-               LEFT JOIN `glpi_softwares` ON `glpi_softwareversions`.`softwares_id` = `glpi_softwares`.`id`
-               WHERE `computers_id`='".$items_id."'
-                  AND `glpi_softwareversions`.`name` = '".$child->VERSION."'
-                  AND `glpi_softwares`.`name` = '".addslashes_deep($name)."'
-                     LIMIT 1";
-            $result=$DB->query($query);
+            if (!(isset($child->VERSION)
+                    AND strstr($child->VERSION, '"'))) {
+               // Search in GLPI if it's ok
+               $query = "SELECT * FROM `glpi_computers_softwareversions`
+                  LEFT JOIN `glpi_softwareversions` ON `softwareversions_id`=`glpi_softwareversions`.`id`
+                  LEFT JOIN `glpi_softwares` ON `glpi_softwareversions`.`softwares_id` = `glpi_softwares`.`id`
+                  WHERE `computers_id`='".$items_id."'
+                     AND `glpi_softwareversions`.`name` = '".$child->VERSION."'
+                     AND `glpi_softwares`.`name` = '".addslashes_deep($name)."'
+                        LIMIT 1";
+               $result=$DB->query($query);
 
-            $this->assertEquals($DB->numrows($result), 1, 'Software not find in GLPI '.$DB->numrows($result).' times instead 1 ('.addslashes_deep($child->NAME).'/'.addslashes_deep($child->GUID).') ['.$xmlFile.']');
+               $this->assertEquals($DB->numrows($result), 1, 'Software not find in GLPI '.$DB->numrows($result).' times instead 1 ('.addslashes_deep($child->NAME).'/'.addslashes_deep($child->GUID).') ['.$xmlFile.']');
+            }
          }
       }
 
@@ -818,6 +867,8 @@ echo "# testHardwareModifications\n";
 
    function testHardware($xmlFile='', $items_id=0, $unknown=0) {
       global $DB;
+      
+      Config::detectRootDoc();
 
       if (empty($xmlFile)) {
          echo "testHardware with no arguments...\n";
@@ -870,6 +921,13 @@ echo "# testHardwareModifications\n";
                $this->assertEquals($Computer->fields['manufacturers_id'], Dropdown::importExternal('Manufacturer', (string)$child->BMANUFACTURER), 'Difference of Hardware manufacturer, have '.$Computer->fields['manufacturers_id'].' instead '.Dropdown::importExternal('Manufacturer', (string)$child->BMANUFACTURER).' ['.$xmlFile.']');
                $addm = 1;
             }
+         }
+         if (isset($child->SMODEL)) {
+            $a_found = $pfBlacklist->find("`value`='".(string)$child->SMODEL."'
+               AND `plugin_fusioninventory_criterium_id`='5'");
+            if (count($a_found) > 0) {
+               $child->SMODEL = '';
+            } 
          }
          if (isset($child->SMODEL)
                  AND (string)$child->SMODEL!='') {

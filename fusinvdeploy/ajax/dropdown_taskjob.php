@@ -28,58 +28,27 @@
    ------------------------------------------------------------------------
 
    @package   FusionInventory
-   @author    Walid Nouh
-   @co-author 
+   @author
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
-//This call is to check that the ESX inventory service is up and running
-if (isset($_GET['status'])) {
-   return 'ok';
+define('GLPI_ROOT','../../..');
+include (GLPI_ROOT . "/inc/includes.php");
+checkLoginUser();
+
+header("Content-Type: text/html; charset=UTF-8");
+header_nocache();
+
+$taskjobs = new PluginFusioninventoryTaskjob;
+$jobs = $taskjobs->find("plugin_fusioninventory_tasks_id = '".$_POST['__VALUE__']."'");
+foreach($jobs as $job) {
+   echo "<option value='".$job['id']."'>".$job['name']."</option>";
 }
-
-if(!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', '../../../..');
-}
-include (GLPI_ROOT."/inc/includes.php");
-
-$response = false;
-//Agent communication using REST protocol
-if (isset($_GET['action']) && isset($_GET['machineid'])) {
-   switch ($_GET['action']) {
-      case 'getJobs':
-         //Specific to ESX
-         $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
-         $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
-         
-         $a_agent = $PluginFusioninventoryAgent->InfosByKey(addslashes_deep($_GET['machineid']));
-         $moduleRun = $PluginFusioninventoryTaskjobstatus->getTaskjobsAgent($a_agent['id']);
-         foreach ($moduleRun as $className => $array) {
-            if (class_exists($className)) {
-               if ($className == "PluginFusinvinventoryESX") {
-                  $class = new $className();
-                  $response = $class->run($array, $response);
-               }
-            }
-         }
-         break;
-      case 'setLog':
-         //Generic method to update logs
-         PluginFusioninventoryRestCommunication::updateLog($_GET);
-         break;
-   }
-   
-   if ($response) {
-      echo json_encode($response);
-    }
-
-}
-
-?>

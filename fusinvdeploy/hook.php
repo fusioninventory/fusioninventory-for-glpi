@@ -82,9 +82,6 @@ function plugin_fusinvdeploy_MassiveActions($type) {
    global $LANG;
 
    switch ($type) {
-      case 'PluginFusinvdeployPackage' :
-         return array('plugin_fusinvdeploy_duplicatePackage' => $LANG['buttons'][54]);
-         break;
       case 'Computer':
          return array('plugin_fusinvdeploy_targetDeployTask'
                   => $LANG['plugin_fusinvdeploy']['massiveactions'][0]
@@ -98,28 +95,25 @@ function plugin_fusinvdeploy_MassiveActionsDisplay($options=array()) {
    global $LANG;
 
    switch ($options['itemtype']) {
-      case 'PluginFusinvdeployPackage' :
-         switch ($options['action']) {
-            case 'plugin_fusinvdeploy_duplicatePackage' :
-               echo $LANG['plugin_fusinvdeploy']['package'][25].
-                     ":&nbsp;<input type='text' name='newname' value=''>";
-               echo "&nbsp;<input type='submit' name='massiveaction' class='submit' value='".
-                     $LANG['buttons'][2]."'>&nbsp;";
-            break;
-         }
-         break;
       case 'Computer' :
          switch ($options['action']) {
-            case 'plugin_fusinvdeploy_targetDeployTask' :
-               echo $LANG['plugin_fusinvdeploy']['task'][5].":&nbsp;";
-               Dropdown::show('PluginFusinvdeployTask', array(
+             case 'plugin_fusinvdeploy_targetDeployTask' :
+                echo $LANG['plugin_fusinvdeploy']['task'][5].":&nbsp;";
+               $rand = mt_rand();
+                Dropdown::show('PluginFusinvdeployTask', array(
                      'name'      => "tasks_id",
-                     'condition' => "is_active = 0"
-               ));
-               echo "&nbsp;".$LANG['plugin_fusinvdeploy']['package'][7].":&nbsp;";
-               Dropdown::show('PluginFusinvdeployPackage', array(
-                     'name'      => "packages_id"
-               ));
+                     'condition' => "is_active = 0",
+                     'toupdate'  => array(
+                           'value_fieldname' => "__VALUE__",
+                           'to_update'       => "dropdown_PluginFusioninventoryTaskjobs_id$rand",
+                           'url'             => GLPI_ROOT."/plugins/fusinvdeploy/ajax/dropdown_taskjob.php"
+                     )
+                ));
+                echo "&nbsp;".$LANG['plugin_fusinvdeploy']['package'][7].":&nbsp;";
+               Dropdown::show('PluginFusioninventoryTaskjob', array(
+                     'name'      => "PluginFusioninventoryTaskjobs_id",
+                     'rand'      => $rand
+                ));
                echo "&nbsp;<input type='submit' name='massiveaction' class='submit' value='".
                      $LANG['buttons'][2]."'>&nbsp;";
             break;
@@ -133,19 +127,6 @@ function plugin_fusinvdeploy_MassiveActionsProcess($data) {
    global $DB;
 
    switch ($data['action']) {
-      case 'plugin_fusinvdeploy_duplicatePackage' :
-         if ($data['itemtype'] == 'PluginFusinvdeployPackage') {
-            $package = new PluginFusinvdeployPackage;
-            foreach ($data['item'] as $key => $val) {
-               if ($val == 1) {
-                  if ($package->getFromDB($key)) {
-                     $package->package_clone($data['newname']);
-                  }
-               }
-            }
-
-         }
-         break;
       case 'plugin_fusinvdeploy_targetDeployTask' :
          if ($data['itemtype'] == 'Computer') {
             $taskjob = new PluginFusinvdeployTaskjob;

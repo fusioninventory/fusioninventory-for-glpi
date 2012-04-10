@@ -169,6 +169,14 @@ class PluginFusinvinventoryImport_Monitor extends CommonDBTM {
       if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
          $array['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
       }
+      if ($type == "add") { // Case where have same monitor xx times
+         $a_find = $Computer_Item->find("`computers_id`='".$items_id."'
+            AND `itemtype` = 'Monitor'
+            AND `items_id`='".$monitor_id."'");
+         if (count($a_find) > 0) {
+            return;
+         }
+      }
       $devID = $Computer_Item->add($array);
       return $devID;
    }
