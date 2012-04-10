@@ -56,6 +56,5 @@ include ("../lib/extjs/FileChooser/includes/functions.inc.php");
 $data = get_directory_contents(DIRECTORY);
 # Add the root directory
 array_push($data, array('id' => '/', 'text' => '', 'url' => '/', 'leaf' => 'true'));
-error_log(print_r($data, 1));
 print json_encode($data);
 ?>

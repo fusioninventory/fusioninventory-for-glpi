@@ -47,10 +47,8 @@ if (!defined('GLPI_ROOT')) {
 require_once(GLPI_ROOT.'/plugins/fusinvsnmp/inc/commondbtm.class.php');
 
 class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
-   private $ports=array(), $ifaddrs=array();
    private $oFusionInventory_networkequipment;
    private $newPorts=array(), $updatesPorts=array();
-   private $newIfaddrs=array(), $updatesIfaddrs=array();
 
    function __construct() {
       parent::__construct("glpi_networkequipments");
@@ -73,8 +71,6 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       global $DB;
 
       parent::load($p_id);
-      $this->ifaddrs = $this->getIfaddrsDB();
-      $this->ports = $this->getPortsDB();
 
       $query = "SELECT `id`
                 FROM `glpi_plugin_fusinvsnmp_networkequipments`
@@ -112,232 +108,6 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       // update last_fusioninventory_update even if no other update
       $this->setValue('last_fusioninventory_update', date("Y-m-d H:i:s"));
       $this->oFusionInventory_networkequipment->updateDB();
-      // ports
-      $this->savePorts();
-   }
-
-
-
-   /**
-    * Get ports
-    *
-    *@return Array of ports instances
-    **/
-   private function getPortsDB() {
-      global $DB;
-
-      $ptp = new PluginFusinvsnmpNetworkPort();
-      $query = "SELECT `id`
-                FROM `glpi_networkports`
-                WHERE `items_id` = '".$this->getValue('id')."'
-                      AND `itemtype` = '".NETWORKING_TYPE."';";
-      $portsIds = array();
-      $result = $DB->query($query);
-      if ($result) {
-         if ($DB->numrows($result) != 0) {
-            while ($port = $DB->fetch_assoc($result)) {
-               $ptp->load($port['id']);
-               $portsIds[] = clone $ptp;
-            }
-         }
-      }
-      return $portsIds;
-   }
-
-
-
-   /**
-    * Get ports
-    *
-    *@return Array of ports id
-    **/
-   function getPorts() {
-      return $this->ports;
-   }
-
-
-
-   /**
-    * Get index of port object
-    *
-    *@param $p_mac MAC address
-    *@param $p_ip='' IP address
-    *@return Index of port object in ports array or '' if not found
-    **/
-   function getPortIndex($p_ifnumber, $p_ip='') {
-      $portIndex = '';
-      foreach ($this->ports as $index => $oPort) {
-         if (is_object($oPort)) { // should always be true
-            if ($oPort->getValue('logical_number')==$p_ifnumber) {
-               $portIndex = $index;
-               break;
-            }
-         }
-      }
-      return $portIndex;
-   }
-
-
-
-   /**
-    * Get index of ip object
-    *
-    *@param $p_ip='' IP address
-    *@return Index of ip object in ifaddrs array or '' if not found
-    **/
-   function getIfaddrIndex($p_ip) {
-      $ifaddrIndex = '';
-      foreach ($this->ifaddrs as $index => $oIfaddr) {
-         if (is_object($oIfaddr)) { // should always be true
-            if ($oIfaddr->getValue('ip')==$p_ip) {
-               $ifaddrIndex = $index;
-               break;
-            }
-         }
-      }
-      return $ifaddrIndex;
-   }
-
-
-
-   /**
-    * Get port object
-    *
-    *@param $p_index Index of port object in $ports
-    *@return Port object in ports array
-    **/
-   function getPort($p_index) {
-      return $this->ports[$p_index];
-   }
-
-
-
-   /**
-    * Save new ports
-    *
-    *@return nothing
-    **/
-   function savePorts() {
-      global $CFG_GLPI;
-      
-      $CFG_GLPI["deleted_tables"][]="glpi_networkports"; // TODO : to clean
-      
-      foreach ($this->ports as $index=>$ptp) {
-         if (!in_array($index, $this->updatesPorts)) { // delete ports which don't exist any more
-            $ptp->deleteDB();
-         }
-      }
-      foreach ($this->newPorts as $ptp) {
-         if ($ptp->getValue('id')=='') {               // create existing ports
-            $ptp->addDB($this->getValue('id'), true);
-         } else {                                      // update existing ports
-            $ptp->updateDB();
-         }
-      }
-   }
-
-
-
-   /**
-    * Save ifadddrs
-    *
-    *@return nothing
-    **/
-   function saveIfaddrs() {
-      global $CFG_GLPI;
-      
-      $CFG_GLPI["deleted_tables"][]="glpi_plugin_fusinvsnmp_networkequipmentips"; // TODO : to clean
-
-      $pti = new PluginFusinvsnmpNetworkEquipmentIP();
-      foreach ($this->ifaddrs as $index=>$pti) {
-         if (!in_array($index, $this->updatesIfaddrs)) {
-            $pti->deleteDB();
-         }
-      }
-      foreach ($this->newIfaddrs as $pti) {
-         if ($pti->getValue('id')=='') {
-            $pti->addDB($this->getValue('id'));
-         } else {
-            $pti->updateDB();
-         }
-      }
-   }
-
-
-
-   /**
-    * Add new port
-    *
-    *@param $p_oPort port object
-    *@param $p_portIndex='' index of port in $ports if already exists
-    *@return nothing
-    **/
-   function addPort($p_oPort, $p_portIndex='') {
-      $this->newPorts[]=$p_oPort;
-      if (is_int($p_portIndex)) {
-         $this->updatesPorts[]=$p_portIndex;
-      }
-   }
-
-
-
-   /**
-    * Get ips
-    *
-    *@return Array of ips instances
-    **/
-   private function getIfaddrsDB() {
-      global $DB;
-
-      $pti = new PluginFusinvsnmpNetworkEquipmentIp();
-      $query = "SELECT `id`
-                FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
-                WHERE `networkequipments_id` = '".$this->getValue('id')."';";
-      $ifaddrsIds = array();
-      $result = $DB->query($query);
-      if ($result) {
-         if ($DB->numrows($result) != 0) {
-            while ($ip = $DB->fetch_assoc($result)) {
-               $pti->load($ip['id']);
-               $ifaddrsIds[] = clone $pti;
-            }
-         }
-      }
-      return $ifaddrsIds;
-   }
-
-
-
-   /**
-    * Get ip object
-    *
-    *@param $p_index Index of ip object in $ifaddrs
-    *@return Ifaddr object in ifaddrs array
-    **/
-   function getIfaddr($p_index) {
-      return $this->ifaddrs[$p_index];
-   }
-
-
-
-   /**
-    * Add IP
-    *
-    *@param $p_oIfaddr Ifaddr object
-    *@param $p_ifaddrIndex='' index of ip in $ifaddrs if already exists
-    *@return nothing
-    **/
-   function addIfaddr($p_oIfaddr, $p_ifaddrIndex='') {
-      if (count($this->newIfaddrs)==0) { // the first IP goes in glpi_networkequipments.ip
-         $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_networkequipments', $p_oIfaddr->getValue('networkequipments_id'));
-         if (!in_array('ip', $a_lockable)) {
-            $this->setValue('ip', $p_oIfaddr->getValue('ip'));
-         }
-      }
-      $this->newIfaddrs[]=$p_oIfaddr;
-      if (is_int($p_ifaddrIndex)) {
-         $this->updatesIfaddrs[]=$p_ifaddrIndex;
-      }
    }
 
 
@@ -518,7 +288,11 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 // ********************************************************************************************** //
 // *********************************** METTRE TABLEAU DES PORTS ********************************* //
 // ********************************************************************************************** //
-
+      $monitoring = 0;
+      if (class_exists("PluginMonitoringNetworkport")) {
+         $monitoring = 1;
+      }
+      
       $query = "
       SELECT *,glpi_plugin_fusinvsnmp_networkports.mac as ifmacinternal
 
@@ -552,8 +326,16 @@ function appear_legend(id){
       </script>";
       echo "<script type='text/javascript' src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/prototype.js'></script>";
       echo "<script type='text/javascript' src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/effects.js'></script>";
-      
-      echo "<table class='tab_cadre' cellpadding='5' width='1100'>";
+      $nbcol = 5;
+      if ($monitoring == '1') {
+         if (PluginMonitoringProfile::haveRight("componentscatalog", 'r')) {
+            echo "<form name='form' method='post' action='".$CFG_GLPI['root_doc']."/plugins/monitoring/front/networkport.form.php'>";
+            echo "<input type='hidden' name='items_id' value='".$id."' />";
+            echo "<input type='hidden' name='itemtype' value='NetworkEquipment' />";
+         }
+         $nbcol++;
+      }
+      echo "<table class='tab_cadre' cellpadding='".$nbcol."' width='1100'>";
 
       echo "<tr class='tab_bg_1'>";
       $query_array = "SELECT *
@@ -601,6 +383,9 @@ function appear_legend(id){
 //                        '/front/popup.php?popup=search_config&itemtype=PluginFusinvsnmpNetworkEquipment\',\'glpipopup\',
 //                        \'height=400, width=1000, top=100, left=100, scrollbars=yes\' ); w.focus();"></th>';
       echo "<th>".$LANG["common"][16]."</th>";
+      if ($monitoring == '1') {
+         echo "<th>".$LANG['plugin_monitoring']['title'][0]."</th>";
+      }
 
       $query_array = "SELECT *
                       FROM `glpi_displaypreferences`
@@ -694,6 +479,21 @@ function appear_legend(id){
                      $data["name"]."</a>";
             echo "</td>";
 
+            if ($monitoring == '1') {
+               echo "<td>";
+               $state = PluginMonitoringNetworkport::isMonitoredNetworkport($data['id']);
+               if (PluginMonitoringProfile::haveRight("componentscatalog", 'w')) {
+                  $checked = '';
+                  if ($state) {
+                     $checked = 'checked';
+                  }
+                  echo "<input type='checkbox' name='networkports_id[]' value='".$data['id']."' ".$checked."/>";
+               } else if (PluginMonitoringProfile::haveRight("componentscatalog", 'r')) {
+                  echo Dropdown::getYesNo($state);
+               }
+               echo "</td>";
+            }
+            
             $query_array = "SELECT *
                             FROM `glpi_displaypreferences`
                             WHERE `itemtype`='PluginFusinvsnmpNetworkEquipment'
@@ -904,7 +704,23 @@ function appear_legend(id){
             ";
          }
       }
+      if ($monitoring == '1') {
+         if (PluginMonitoringProfile::haveRight("componentscatalog", 'w')) {
+            echo "<tr>";
+            echo "<td colspan='2'></td>";
+            echo "<td class='center'>";
+            echo "<input type='submit' class='submit' name='update' value='update'/>";
+            echo "</td>";
+            echo "<td colspan='".($nbcol - 3)."'></td>";
+            echo "</tr>";
+         }
+      }
       echo "</table>";
+      if ($monitoring == '1') {
+         if (PluginMonitoringProfile::haveRight("componentscatalog", 'w')) {
+            echo "</form>";
+         }
+      }
    }
 
    private function byteSize($bytes,$sizeoct=1024) {

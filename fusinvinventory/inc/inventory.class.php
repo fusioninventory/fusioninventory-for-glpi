@@ -121,6 +121,20 @@ class PluginFusinvinventoryInventory {
             }
          }
       // End hack
+         
+      // Know if computer is HP to remove S in prefix of serial number
+         if ((isset($p_xml->CONTENT->BIOS->SMANUFACTURER))
+               AND (strstr($p_xml->CONTENT->BIOS->SMANUFACTURER, "ewlett"))) {
+
+            $_SESSION["plugin_fusioninventory_manufacturerHP"] = 1;
+         } else {
+            if (isset($_SESSION["plugin_fusioninventory_manufacturerHP"])) {
+               unset($_SESSION["plugin_fusioninventory_manufacturerHP"]);
+            }
+         }
+         
+         
+      // End code for HP computers
       
       $pfBlacklist = new PluginFusinvinventoryBlacklist();
       $p_xml = $pfBlacklist->cleanBlacklist($p_xml);
@@ -302,7 +316,9 @@ class PluginFusinvinventoryInventory {
 
           PluginFusioninventoryConfig::logIfExtradebug("pluginFusinvinventory-entityrules", 
                                                    print_r($dataEntity, true));
-
+         if (!isset($_SESSION['glpiactiveentities_string'])) {
+            $_SESSION['glpiactiveentities_string'] = "'".$_SESSION["plugin_fusinvinventory_entity"]."'";
+         }
          if ($items_id == '0') {
             if ($_SESSION["plugin_fusinvinventory_entity"] == NOT_AVAILABLE) {
                $_SESSION["plugin_fusinvinventory_entity"] = 0;
@@ -368,6 +384,7 @@ class PluginFusinvinventoryInventory {
             }
          }
          $class->getFromDB($items_id);
+         $_SESSION["plugin_fusinvinventory_entity"] = $class->fields['entities_id'];
          $input = array();
          $input['id'] = $class->fields['id'];
          

@@ -96,6 +96,11 @@ class PluginFusinvdeployCheck extends CommonDBTM {
          if ($result['type'] != "")    $tmp['type'] = $result['type'];
 
          $tmp['return'] = "error";
+
+	 if ($tmp['type'] == "fileSizeGreater" || $tmp['type'] == "fileSizeLess" || $tmp['type'] == "fileSizeEquals") {
+# according to the requirment, We want Bytes!
+             $tmp['value'] *= 1024 * 1024;
+	 }
          $checks[] = $tmp;
       }
 

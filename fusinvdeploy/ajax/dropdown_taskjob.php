@@ -28,51 +28,27 @@
    ------------------------------------------------------------------------
 
    @package   FusionInventory
-   @author    David Durieux
-   @co-author 
+   @author
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', '../../..');
+define('GLPI_ROOT','../../..');
+include (GLPI_ROOT . "/inc/includes.php");
+checkLoginUser();
+
+header("Content-Type: text/html; charset=UTF-8");
+header_nocache();
+
+$taskjobs = new PluginFusioninventoryTaskjob;
+$jobs = $taskjobs->find("plugin_fusioninventory_tasks_id = '".$_POST['__VALUE__']."'");
+foreach($jobs as $job) {
+   echo "<option value='".$job['id']."'>".$job['name']."</option>";
 }
-
-include (GLPI_ROOT."/inc/includes.php");
-
-PluginFusioninventoryProfile::checkRight("fusinvinventory", "importxml","w");
-
-$pfLibintegrity = new PluginFusinvinventoryLibintegrity();
-if (!empty($_POST)) {
-   if (isset($_POST['clean'])) {
-      $PluginFusinvinventoryLibintegrity->cleanGLPI();      
-   }
-   
-   if (isset($_POST['reimport'])) {
-      foreach($_POST['reimport'] as $infos=>$num) {
-         $pfLibintegrity->Import($infos);
-      }
-   }
-   if (isset($_POST['glpidelete'])) {
-      foreach($_POST['glpidelete'] as $infos=>$num) {
-         $pfLibintegrity->deleteGLPI($infos);
-      }
-   }
-   Html::back();
-}
-
-Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","libintegrity");
-
-PluginFusioninventoryMenu::displayMenu("mini");
-
-$pfLibintegrity->showForm();
-
-Html::footer();
-
-?>

@@ -188,24 +188,13 @@ class PluginFusinvdeployStaticmisc {
          $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/package.php";
       }
 
-
       $a_menu[1]['name'] = $LANG['plugin_fusinvdeploy']['form']['mirror'][1];
       $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_files.png";
       $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/mirror.php";
 
-      $a_menu[2]['name'] = $LANG['plugin_fusinvdeploy']['task'][0];
-      $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_task.png";
-      $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/task.php";
-
-      $a_menu[3]['name'] = $LANG['plugin_fusinvdeploy']['group'][0];
-      $a_menu[3]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_group.png";
-      $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/group.php";
-
-      if (PluginFusioninventoryProfile::haveRight("fusinvdeploy", "status", "r")) {
-         $a_menu[4]['name'] = $LANG['plugin_fusinvdeploy']["deploystatus"][0];
-         $a_menu[4]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_deploy_status.png";
-         $a_menu[4]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/deploystate.php";
-      }
+      $a_menu[2]['name'] = $LANG['plugin_fusinvdeploy']['group'][0];
+      $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_group.png";
+      $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/group.php";
 
       return $a_menu;
    }

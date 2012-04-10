@@ -43,6 +43,8 @@ define ("PLUGIN_FUSINVDEPLOY_VERSION","0.83+1.0");
 
 include_once ("includes.php");
 
+define ("PLUGIN_FUSINVDEPLOY_VERSION","0.80+1.2");
+
 // Init the hooks of fusinvdeploy
 function plugin_init_fusinvdeploy() {
    global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
@@ -190,6 +192,7 @@ function plugin_init_fusinvdeploy() {
 // Name and Version of the plugin
 function plugin_version_fusinvdeploy() {
    global $LANG;
+
    return array(
       'name'           => $LANG['plugin_fusinvdeploy']['title'][0],
       'shortname'      => 'fusinvdeploy',
@@ -204,7 +207,7 @@ function plugin_version_fusinvdeploy() {
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_fusinvdeploy_check_prerequisites() {
    global $LANG;
-   if (version_compare('0.78',GLPI_VERSION) < 0) {
+   if (version_compare('0.80',GLPI_VERSION) < 0) {
       $plugin = new Plugin;
       if (!$plugin->isInstalled("fusioninventory")) {
         return false;

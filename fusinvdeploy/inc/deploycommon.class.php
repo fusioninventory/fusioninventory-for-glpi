@@ -84,7 +84,7 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
 
                //find computers by user associated with this group
                $group_users = new Group_User;
-               $users_id_a = array_keys($group_users->find("groups_id = '$items_id"));
+               $users_id_a = array_keys($group_users->find("groups_id = '$items_id'"));
                $computers_a_1 = array();
                foreach ($users_id_a as $users_id) {
                   $computers_a_1 = array_keys($computer->find("users_id = '$users_id'"));
@@ -120,6 +120,8 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
                      $row = $DB->fetch_assoc($res);
                      $fields_array = unserialize($row['fields_array']);
                      if ($fields_array['operatingsystems_id'] != 0) unset($fields_array['operatingsystem_name']);
+                     if ($fields_array['operatingsystems_id'] == 0) unset($fields_array['operatingsystems_id']);
+                     if ($fields_array['locations_id'] == 0) unset($fields_array['locations_id']);
                      foreach($fields_array as $key =>$field) {
                         if (trim($field) == '') unset($fields_array[$key]);
                      }

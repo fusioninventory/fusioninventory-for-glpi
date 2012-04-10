@@ -45,7 +45,7 @@ $version="2.3.0-1";
 
 $LANG['plugin_fusinvdeploy']['title'][0]="$title";
 
-$LANG['plugin_fusinvdeploy']['massiveactions'][0]="Cibler une tâche de télédeploiement";
+$LANG['plugin_fusinvdeploy']['massiveactions'][0]="Associer une tâche";
 
 $LANG['plugin_fusinvdeploy']['package'][0]="Actions";
 $LANG['plugin_fusinvdeploy']['package'][1]="Exécuter une commande";

@@ -85,7 +85,8 @@ class PluginFusinvinventoryImport_Networkport extends CommonDBTM {
 
       if ($type == 'update') {
          $NetworkPort->getFromDB($items_id);
-         $a_NetworkPort = $NetworkPort->fields;
+         $a_NetworkPort = array();
+         $a_NetworkPort['id'] = $NetworkPort->fields['id'];
       } else {
          $a_NetworkPort['items_id']=$items_id;
       }

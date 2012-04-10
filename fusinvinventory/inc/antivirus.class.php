@@ -109,7 +109,7 @@ class PluginFusinvinventoryAntivirus extends CommonDBTM {
    
    
    
-   function addHistory($item){
+   static function addHistory($item){
       
       foreach ($item->oldvalues as $field=>$old_value) {
          $changes = array();

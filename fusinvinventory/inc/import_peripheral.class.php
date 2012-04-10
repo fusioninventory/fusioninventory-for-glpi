@@ -176,6 +176,14 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
       if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
          $array['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
       }
+      if ($type == "add") { // Case where have same peripheral xx times
+         $a_find = $Computer_Item->find("`computers_id`='".$items_id."'
+            AND `itemtype` = 'Peripheral'
+            AND `items_id`='".$peripheral_id."'");
+         if (count($a_find) > 0) {
+            return;
+         }
+      }
       $devID = $Computer_Item->add($array);
       return $devID;
    }
@@ -196,15 +204,16 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
       if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                  "import_peripheral") != '0') {
          $Computer_Item = new Computer_Item();
-         $Computer_Item->getFromDB($items_id);
-         if ($Computer_Item->fields['computers_id'] == $idmachine) {
-            $input = array();
-            $input['id'] = $items_id;
-//            $input['itemtype'] = "Peripheral";
-            if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
-               $input['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
+         if ($Computer_Item->getFromDB($items_id)) {
+            if ($Computer_Item->fields['computers_id'] == $idmachine) {
+               $input = array();
+               $input['id'] = $items_id;
+   //            $input['itemtype'] = "Peripheral";
+               if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
+                  $input['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
+               }
+               $Computer_Item->delete($input, 0, $_SESSION["plugin_fusinvinventory_history_add"]);
             }
-            $Computer_Item->delete($input, 0, $_SESSION["plugin_fusinvinventory_history_add"]);
          }
       }
    }

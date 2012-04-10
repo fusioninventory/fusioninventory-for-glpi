@@ -259,11 +259,10 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
    
 
    static function networkport_addLog($port_id, $value_new, $field) {
-      $ptp = new PluginFusinvsnmpNetworkPort;
+      $pfNetworkPort = new PluginFusinvsnmpNetworkPort;
       $pfNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
       $pfConfigLogField = new PluginFusinvsnmpConfigLogField();
       $pfMapping = new PluginFusioninventoryMapping();
-
 
       $db_field = $field;
       switch ($field) {
@@ -296,9 +295,9 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
       }
 
-      $ptp->load($port_id);
+      $pfNetworkPort->loadNetworkport($port_id);
       //echo $ptp->getValue($db_field);
-      if ($ptp->getValue($db_field) != $value_new) {
+      if ($pfNetworkPort->getValue($db_field) != $value_new) {
          $a_mapping = $pfMapping->get('NetworkEquipment', $field);
 
          $days = $pfConfigLogField->getValue($a_mapping['id']);
@@ -307,7 +306,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
             $array = array();
             $array["networkports_id"] = $port_id;
             $array["plugin_fusioninventory_mappings_id"] = $a_mapping['id'];
-            $array["value_old"] = $ptp->getValue($db_field);
+            $array["value_old"] = $pfNetworkPort->getValue($db_field);
             $array["value_new"] = $value_new;
             $pfNetworkPortLog->insert_connection("field",$array,$_SESSION['glpi_plugin_fusioninventory_processnumber']);
          }

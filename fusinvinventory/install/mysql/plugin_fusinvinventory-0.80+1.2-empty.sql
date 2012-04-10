@@ -143,8 +143,15 @@ INSERT INTO `glpi_plugin_fusinvinventory_blacklists` (`id`, `plugin_fusioninvent
 (54, 3, '33:50:6f:45:30:30'),
 (55, 3, '0a:00:27:00:00:00'),
 (56, 3, '00:50:56:C0:00:01'),
-(57, 3, '00:50:56:C0:00:08'),
-(58, 1, 'MB-1234567890');
+(57, 3, '00:50:56:C0:00:02'),
+(58, 3, '00:50:56:C0:00:03'),
+(59, 3, '00:50:56:C0:00:04'),
+(60, 3, '00:50:56:C0:00:08'),
+(61, 3, 'FE:FF:FF:FF:FF:FF'),
+(62, 3, '00:00:00:00:00:00'),
+(63, 3, '00:0b:ca:fe:00:00'),
+(64, 1, 'MB-1234567890'),
+(65, 1, 'Not Specified');
 
 INSERT INTO `glpi_displaypreferences` (`itemtype`, `num`, `rank`, `users_id`) VALUES
 ('PluginFusinvinventoryBlacklist', 2, 1, 0);

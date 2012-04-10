@@ -50,6 +50,7 @@ class Hub extends PHPUnit_Framework_TestCase {
       $Install->testInstall(0);
       
       $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
+//      Config::detectRootDoc();
 
      // set in config module inventory = yes by default
      $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
@@ -73,6 +74,12 @@ class Hub extends PHPUnit_Framework_TestCase {
 
 
    public function testSendinventories() {
+      
+      $plugin = new Plugin();
+      $plugin->getFromDBbyDir("fusioninventory");
+      $plugin->activate($plugin->fields['id']);
+      Plugin::load("fusioninventory");
+      
       // Add task and taskjob
       $pfTask = new PluginFusioninventoryTask();
       $pfTaskjob = new PluginFusioninventoryTaskjob();
@@ -547,6 +554,11 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
 class Hub_AllTests  {
 
    public static function suite() {
+      
+      $GLPIInstall = new GLPIInstall();
+      $Install = new Install();
+      $GLPIInstall->testInstall();
+      $Install->testInstall(0);
 
       $suite = new PHPUnit_Framework_TestSuite('Hub');
       return $suite;

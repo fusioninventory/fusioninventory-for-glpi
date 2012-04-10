@@ -165,6 +165,24 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       Html::displayTitle(GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_mini_package.png", $title, $title, $buttons);
    }
 
+   function showMenu($options=array())  {
+      
+      $this->displaylist = false;
+   
+      $this->fields['id'] = -1;
+      $this->showList();
+   }
+
+   function showList() {
+      echo "<center>";
+      echo "<table class='tab_cadre_navigation'><tr><td>";
+
+      self::title();
+      Search::show('PluginFusinvdeployPackage');
+
+      echo "</td></tr></table>";
+      echo "</center>";
+   }
 
    function showForm($ID, $options=array()) {
       global $DB,$CFG_GLPI,$LANG;

@@ -113,6 +113,19 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       $pfLib = new PluginFusinvinventoryLib();
       $Computer = new Computer();
 
+      echo "<table width='950' align='center'>";
+      echo "<tr>";      
+      echo "<td align='left'>";
+      echo "<form method='post' action=''>";
+      echo "<input type='hidden' name='clean' value='1'/>";
+      echo "<input type='submit' class='submit' value='".$LANG['buttons'][53]."'/>";
+      echo "</form>";
+      echo "</td>";
+      echo "</tr>";
+      echo "</table>";
+      echo "<br/>";
+      
+      
       $start = 0;
       if (isset($_REQUEST["start"])) {
          $start = $_REQUEST["start"];
@@ -845,6 +858,9 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
    function cleanGLPI() {
       global $DB;
       
+      ini_set("max_execution_time", "0");
+      ini_set("memory_limit", "-1");
+      
       $computer = new Computer();
       $pfLib    = new PluginFusinvinventoryLib();
       
@@ -859,7 +875,7 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       $computerDeviceGraphicCard = new Computer_Device('DeviceGraphicCard');
       $Computer_Item             = new Computer_Item();
       
-      $query = "SELECT `glpi_plugin_fusinvinventory_libserialization`.* 
+      $query = "SELECT * 
             FROM `glpi_plugin_fusinvinventory_libserialization`";
       $result=$DB->query($query);
       while ($a_computerlib=$DB->fetch_array($result)) {

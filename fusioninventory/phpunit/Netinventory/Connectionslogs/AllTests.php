@@ -70,6 +70,11 @@ class Connectionslogs extends PHPUnit_Framework_TestCase {
    public function testSendinventories() {
       global $DB;
       
+      $plugin = new Plugin();
+      $plugin->getFromDBbyDir("fusioninventory");
+      $plugin->activate($plugin->fields['id']);
+      Plugin::load("fusioninventory");
+      
       // Add task and taskjob
       $pfTask = new PluginFusioninventoryTask();
       $pfTaskjob = new PluginFusioninventoryTaskjob();

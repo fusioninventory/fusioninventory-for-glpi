@@ -95,6 +95,17 @@ class PluginFusinvinventoryImport_Storage extends CommonDBTM {
          $items_id = str_replace("d", "", $items_id);
          $devID = $items_id;
          $CompDevice->getFromDB($items_id);
+         if ($type_tmp != "Drive") {
+            if (count($dataSection) == '1'
+                    AND isset($dataSection['DISKSIZE'])) {
+               $array = array();
+               $array['_itemtype'] = $DeviceDrive->getType();
+               $array['specificity'] = $dataSection["DISKSIZE"];
+               $array['id'] = $items_id;
+               $CompDevice->update($array);
+               return;
+            }
+         }
       } else if ($type == "add") {
          $devID = 0;
       }

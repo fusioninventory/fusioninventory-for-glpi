@@ -103,7 +103,7 @@ if (isset($_POST["add"])) {
          'limit'                 => $_REQUEST['limit'],*/
          'serial'                => $_REQUEST['serial'],
          'otherserial'           => $_REQUEST['otherserial'],
-         'locations'             => $_REQUEST['locations'],
+         'locations_id'          => $_REQUEST['locations_id'],
          'operatingsystems_id'   => $_REQUEST['operatingsystems_id'],
          'operatingsystem_name'  => $_REQUEST['____data_operatingsystems_id'],
          'room'                  => $_REQUEST['room'],
@@ -126,7 +126,7 @@ if (isset($_POST["add"])) {
          'limit'                 => $_REQUEST['limit'],*/
          'serial'                => $_REQUEST['serial'],
          'otherserial'           => $_REQUEST['otherserial'],
-         'locations'             => $_REQUEST['locations'],
+         'locations_id'          => $_REQUEST['locations_id'],
          'operatingsystems_id'   => $_REQUEST['operatingsystems_id'],
          'operatingsystem_name'  => $_REQUEST['____data_operatingsystems_id'],
          'room'                  => $_REQUEST['room'],
