@@ -441,7 +441,11 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                               if (!(isset($arrSectionToAdd["SERIALNUMBER"])
                                       AND $arrSectionToAdd["SERIALNUMBER"] == 'FFFFFFFF')) {
                                  
-                                 $boolUpdate = true;
+                                 if (!(isset($arrSectionToAdd["CAPACITY"])
+                                         AND ($arrSectionToAdd["CAPACITY"] == '0'
+                                                 OR $arrSectionToAdd["CAPACITY"] == 'no'))) {
+                                    $boolUpdate = true;
+                                 }
                               }
                            }
                            break;
