@@ -203,8 +203,9 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
                            'comment'=>false,
                            'used'=>$exclude_models));
       echo "</td>";
-      echo "<td colspan='2'>";
-
+      echo "<td align='center'>".$LANG['plugin_fusinvsnmp']['model_info'][3]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      PluginFusinvsnmpSNMP::auth_dropdown($this->oFusionInventory_printer->fields["plugin_fusinvsnmp_configsecurities_id"]);
       echo "</td>";
       echo "</tr>";
 
@@ -212,15 +213,6 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       echo "<td align='center'>";
       echo "<input type='submit' name='GetRightModel'
               value='".$LANG['plugin_fusinvsnmp']['model_info'][13]."' class='submit'/>";
-      echo "</td>";
-      echo "<td colspan='2'>";
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>".$LANG['plugin_fusinvsnmp']['model_info'][3]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      PluginFusinvsnmpSNMP::auth_dropdown($this->oFusionInventory_printer->fields["plugin_fusinvsnmp_configsecurities_id"]);
       echo "</td>";
       echo "<td colspan='2'>";
       echo "</td>";

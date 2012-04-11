@@ -895,7 +895,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $pfPrinterCartridge->add($input);               
             }            
          } else {
-            $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CARTRIDGES : '.$name."\n";
+            $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] '.$LANG['plugin_fusioninventory']['errors'][22].' CARTRIDGES : '.$name;
+            $this->addtaskjoblog();
          }
       }
       return $errors;
