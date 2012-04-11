@@ -85,8 +85,6 @@ function plugin_init_fusioninventory() {
       $PLUGIN_HOOKS['change_profile']['fusioninventory'] =
          PluginFusioninventoryProfile::changeprofile($moduleId);
 
-//      $PLUGIN_HOOKS['cron']['fusioninventory'] = 20*MINUTE_TIMESTAMP; // All 20 minutes
-
       $PLUGIN_HOOKS['add_javascript']['fusioninventory']="script.js";
 
 
@@ -122,7 +120,7 @@ function plugin_init_fusioninventory() {
 
 
          $PLUGIN_HOOKS['item_transfer']['fusioninventory'] = 'plugin_item_transfer_fusioninventory';
-   //      $PLUGIN_HOOKS['item_add']['fusioninventory'] = 'plugin_item_add_fusioninventory';
+
          $Plugin = new Plugin();
          if ($Plugin->isActivated('fusioninventory')) {
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agents", "r")
@@ -157,17 +155,13 @@ function plugin_init_fusioninventory() {
 
 
          if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agent","r")) {
-
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agents","w")) {
-   //               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['agents'] = 'front/agent.form.php?add=1';
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['agents'] = 'front/agent.php';
             }
 
-   //         if (PluginFusioninventoryProfile::haveRight($_SESSION["plugin_".$a_plugin['shortname']."_moduleid"], "configuration","r")) {
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "r")) {// Config page
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['config'] = 'front/configuration.form.php';
             }
-   //         }
          }
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']
             ["<img  src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/books.png'
@@ -258,49 +252,6 @@ function plugin_init_fusioninventory() {
 
    // Add unknown devices in list of devices with networport
    $CFG_GLPI["netport_types"][] = "PluginFusioninventoryUnknownDevice";
-
-/*
- * This not works
- */
-//   //Redect to FusionInventort communication.php only if user agent is ocs or fusion and if
-//   //agent url is http://ip/glpi/
-//   $plugin = new Plugin();
-//   if ($plugin->isInstalled('fusioninventory')
-//      && $plugin->isActivated('fusioninventory')
-//         //If getConfig is called on /plugins/fusioninventory/index.php, do not check user agent 
-//         //(need for debug and dev)
-//         && ((isset($_GET['action']) 
-//            && $_GET['action'] == 'getConfig') 
-//               && preg_match("/plugins\/fusioninventory\/index.php/", $_SERVER['PHP_SELF']))
-//                  //For production : if useraget is fusioninventory or ocs, 
-//                  //then redirect to the right communication page
-//                  || (isset($_SERVER['HTTP_USER_AGENT'])
-//                     && isFusioninventoryUserAgent($_SERVER['HTTP_USER_AGENT'])
-//                        && ((preg_match("/plugins\/fusioninventory\/index.php/", $_SERVER['PHP_SELF']))
-//                           || !preg_match("/fus(ion|inv).*/", $_SERVER['PHP_SELF'])))) {
-//
-//      //Load all plugins
-//      $plugin = new Plugin();
-//      if (!isset($_SESSION["glpi_plugins"])) {
-//         $plugin->init();
-//      }
-//      
-//      if (isset($_SESSION["glpi_plugins"]) && is_array($_SESSION["glpi_plugins"])) {
-//         if (count($_SESSION["glpi_plugins"])) {
-//            foreach ($_SESSION["glpi_plugins"] as $name) {
-//               if ($name != 'fusioninventory') {
-//                  Plugin::load($name);
-//               }
-//            }
-//         }
-//         // For plugins which require action after all plugin init
-//         doHook("post_init");
-//      }
-//      
-//      include_once(GLPI_ROOT ."/plugins/fusioninventory/front/communication.php");
-//      exit();
-//   }
-
 }
 
 
@@ -319,6 +270,7 @@ function plugin_version_fusioninventory() {
 }
 
 
+
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_fusioninventory_check_prerequisites() {
    global $LANG;
@@ -330,6 +282,8 @@ function plugin_fusioninventory_check_prerequisites() {
    return true;
 }
 
+
+
 /**
  * Check if HTTP request comes from an inventory agent (Fusion or legacy OCS)
  * @param useragent the user agent coming from $_SERVER
@@ -340,9 +294,13 @@ function isFusioninventoryUserAgent($useragent = '') {
    return (preg_match("/(fusioninventory|ocsinventory|ocs-ng)/i",$useragent));
 }
 
+
+
 function plugin_fusioninventory_check_config() {
    return true;
 }
+
+
 
 function plugin_fusioninventory_haveTypeRight($type,$right) {
    return true;

@@ -151,7 +151,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $tab[$i]['massiveaction'] = false;
          $i++;
       }
-
       return $tab;
    }
 
@@ -527,7 +526,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             echo "<input type='hidden' name='agent_id' value='".$agent_id."' />";
             break;
          
-         case '':
+         default:
             echo "SELinux problem, do 'setsebool -P httpd_can_network_connect on'";
             break;
 
@@ -630,6 +629,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       # Guess the machine name from the DEVICEID,
       # useful when Windows domain != DNS domain
+      $stack = array();
       if(preg_match('/(\S+)-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}$/', $PluginFusioninventoryAgent->fields['name'], $stack)) {
          array_push($ret, "http://".$stack[1].":".$config->getValue($plugins_id, 'agent_port'));
       }
@@ -640,7 +640,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             array_push($ret, "http://".$ip.":".$config->getValue($plugins_id, 'agent_port'));
          }
       }
-
       return $ret;
    }
 

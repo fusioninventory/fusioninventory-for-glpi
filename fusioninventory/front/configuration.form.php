@@ -63,8 +63,8 @@ if (isset($_POST['plugin_fusioninventory_config_set'])) {
 
 // modules
 if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration'])) {
-   foreach($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'] as $module=>$form) {
-      foreach($form as $title=>$code) {
+   foreach($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'] as $form) {
+      foreach($form as $code) {
          if (isset($_POST[$code['submitbutton']])) {
             $obj = new $code['class'];
             $obj->$code['submitmethod']($_POST);

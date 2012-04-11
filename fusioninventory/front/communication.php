@@ -221,8 +221,9 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
 </REPLY>");
          $communication->emptyAnswer($compressmode);
       }
-   }
-   
+   }   
 }
+
 session_destroy();
+
 ?>

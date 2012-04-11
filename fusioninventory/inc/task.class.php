@@ -327,7 +327,6 @@ class PluginFusioninventoryTask extends CommonDBTM {
          }
       }
    }
-
 }
 
 ?>

@@ -51,14 +51,6 @@ if (!defined('GLPI_ROOT')) {
 }
 checkCentralAccess();
 
-//
-//echo "<script type='text/javascript'>
-//var deftype = document.getElementById('".$_POST['defselectadd']."');
-//alert(deftype.options[deftype.selectedIndex].text);
-// </script>";
-
-
-
 echo "<script type='text/javascript'>
 var select = document.getElementById('definitionlist');
 var obj = document.getElementById('".$_POST['defselectadd']."');

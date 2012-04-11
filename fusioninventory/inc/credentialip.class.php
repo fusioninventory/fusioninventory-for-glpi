@@ -45,7 +45,6 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusioninventoryCredentialIp extends CommonDropdown {
-
    public $first_level_menu  = "plugins";
    public $second_level_menu = "fusioninventory";
 
@@ -150,8 +149,7 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
       
       //Fusioninventory menu
       PluginFusioninventoryMenu::displayMenu("mini");
-   }
-   
+   }   
 }
 
 ?>

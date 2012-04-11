@@ -49,7 +49,8 @@ checkRight("config","w");
 
 if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "r")) {
    switch($_POST['glpi_tab']) {
-      case -1 : // All
+      
+      case -1: // All
          $config = new PluginFusioninventoryConfig;
          $config->showForm(array('target'=>$_POST['target']));
 
@@ -59,7 +60,6 @@ if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", 
          if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration'])) {
             $sessionConfig = $_SESSION['glpi_plugin_fusioninventory']['configuration'];
             if (isset($sessionConfig['moduletabs'])) {
-               $pluginsTabs = $sessionConfig['moduletabs'];
                $plugin = new Plugin;
                foreach($sessionConfig['moduletabforms'] as $module=>$form) {
                   if ($plugin->isActivated($module)) {
@@ -84,7 +84,7 @@ if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", 
          $PluginFusioninventoryAgentmodule->showForm();
          break;
 
-      default :
+      default:
          if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration'])) {
             $sessionConfig = $_SESSION['glpi_plugin_fusioninventory']['configuration'];
             if (isset($sessionConfig['moduletabs'])) {

@@ -53,4 +53,5 @@ checkRight('rule_ocs','r');
 
 $rule = new PluginFusioninventoryRuleImportEquipment();
 include (GLPI_ROOT."/ajax/rule.common.tabs.php");
+
 ?>

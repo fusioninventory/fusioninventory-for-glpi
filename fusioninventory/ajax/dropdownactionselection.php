@@ -51,8 +51,6 @@ if (!defined('GLPI_ROOT')) {
 }
 checkCentralAccess();
 
-
-
 echo "<script type='text/javascript'>
 var select = document.getElementById('actionlist');
 var obj = document.getElementById('".$_POST['actionselectadd']."');

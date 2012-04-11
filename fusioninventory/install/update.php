@@ -179,10 +179,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    
    $migration->displayMessage("Update of plugin FusionInventory");
    
-   // TODO remove
-//   $migration = new Migration($current_version);
-   // END TODO remove
-   
    /*
     * CHeck if folders are right created
     */
@@ -192,7 +188,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp')) {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp');
    }
-      
       
 
       
@@ -1006,6 +1001,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                               "profiles_id", 
                               "int(11) NOT NULL DEFAULT '0'");
       $migration->migrationOneTable($newTable);
+      
          // Remove multiple lines can have problem with unicity
          $query = "SELECT * , count(`id`) AS cnt
             FROM `glpi_plugin_fusioninventory_profiles`
@@ -1607,7 +1603,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                             "date_mod");
       $migration->migrationOneTable($newTable);
-      
    
       
       
@@ -1706,6 +1701,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    }
    
    
+   
    /*
     * Update networports to convert itemtype 5153 to PluginFusioninventoryUnknownDevice
     */
@@ -1736,7 +1732,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $sql = "DELETE FROM `glpi_displaypreferences`
       WHERE `itemtype`='5165' ";
    $DB->query($sql);
-
    
 
    
