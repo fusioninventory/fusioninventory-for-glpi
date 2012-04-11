@@ -46,7 +46,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
    private $oFusionInventory_printer;
-   private $oFusionInventory_printer_history;
 
    
    
@@ -54,8 +53,6 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       parent::__construct("glpi_printers");
       $this->dohistory=true;
       $this->oFusionInventory_printer = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
-      $this->oFusionInventory_printer_history =
-                        new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printerlogs");
       $this->oFusionInventory_printer->type = 'PluginFusinvsnmpPrinter';
    }
 
@@ -118,22 +115,6 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
             $this->oFusionInventory_printer->setValue('printers_id', $this->getValue('id'));
             $this->ptcdLinkedObjects[]=$this->oFusionInventory_printer;
          }
-
-         $query = "SELECT *
-                   FROM `glpi_plugin_fusinvsnmp_printerlogs`
-                   WHERE `printers_id` = '".$this->getValue('id')."'
-                         AND LEFT(`date`, 10)='".date("Y-m-d")."';";
-         $result = $DB->query($query);
-         if ($result) {
-            if ($DB->numrows($result) != 0) {
-               $history = $DB->fetch_assoc($result);
-               $this->oFusionInventory_printer_history->load($history['id']);
-            } else {
-               $this->oFusionInventory_printer_history->load();
-               $this->oFusionInventory_printer_history->setValue('printers_id', $this->getValue('id'));
-               $this->oFusionInventory_printer_history->setValue('date', date("Y-m-d H:i:s"));
-            }
-         } 
       }
    }
 
@@ -150,25 +131,6 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       // update last_fusioninventory_update even if no other update
       $this->setValue('last_fusioninventory_update', date("Y-m-d H:i:s"));
       $this->oFusionInventory_printer->updateDB();
-       // history
-      if (is_null($this->oFusionInventory_printer_history->getValue('id'))) {
-         // update only if counters not already set for today
-         $this->oFusionInventory_printer_history->updateDB();
-      }
-   }
-
-
-
-   /**
-    * Add new page counter
-    *
-    *@param $p_name Counter name
-    *@param $p_state Counter state
-    *@return nothing
-    **/
-   function addPageCounter($p_name, $p_state) {
-         $this->oFusionInventory_printer_history->setValue($p_name, $p_state,
-                                                   $this->oFusionInventory_printer_history, 0);
    }
 
 

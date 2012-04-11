@@ -857,7 +857,7 @@ function plugin_headings_fusinvsnmp_printerInfo($type, $id) {
    $pfPrinterCartridge->showForm($_POST['id'],
                array('target'=>$CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/printer_info.form.php'));
 
-   $PluginFusinvsnmpPrinterLog = new PluginFusinvsnmpPrinterLog;
+   $PluginFusinvsnmpPrinterLog = new PluginFusinvsnmpPrinterLog();
    $PluginFusinvsnmpPrinterLog->showGraph($_POST['id'],
                array('target'=>$CFG_GLPI['root_doc'] . '/plugins/fusinvsnmp/front/printer_info.form.php'));
 
@@ -866,7 +866,7 @@ function plugin_headings_fusinvsnmp_printerInfo($type, $id) {
 function plugin_headings_fusinvsnmp_printerHistory($type, $id) {
    global $CFG_GLPI;
    
-   $print_history = new PluginFusinvsnmpPrinterLog;
+   $print_history = new PluginFusinvsnmpPrinterLog();
    $print_history->showForm($_GET["id"],
                array('target'=>$CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/printer_history.form.php'));
 }

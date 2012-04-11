@@ -912,56 +912,72 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    function importPageCounters($p_pagecounters) {
       global $LANG;
 
+      $pfPrinterLog = new PluginFusinvsnmpPrinterLog();
+      //See if have an entry today
+      $a_entires = $pfPrinterLog->find("`printers_id`='".$this->deviceId."'
+         AND LEFT(`date`, 10)='".date("Y-m-d")."'", "", 1);
+      if (count($a_entires) > 0) {
+         return '';
+      }
+      $input = array();
+      $input['printers_id'] = $this->deviceId;
+      $input['date'] = date("Y-m-d H:i:s");
+            
       $errors='';
       foreach ($p_pagecounters->children() as $name=>$child) {
-         switch ($child->getName()) {
+         $childname = $child->getName();
+         
+         if ((string)$child == '') {
+            $child = 0;
+         }
+         switch ($childname) {
             
             case 'TOTAL':
-               $errors.=$this->ptd->addPageCounter('pages_total', $child);
+               $input['pages_total'] = (string)$child;
                break;
             
             case 'BLACK':
-               $errors.=$this->ptd->addPageCounter('pages_n_b', $child);
+               $input['pages_n_b'] = (string)$child;
                break;
             
             case 'COLOR':
-               $errors.=$this->ptd->addPageCounter('pages_color', $child);
+               $input['pages_color'] = (string)$child;
                break;
             
             case 'RECTOVERSO':
-               $errors.=$this->ptd->addPageCounter('pages_recto_verso', $child);
+               $input['pages_recto_verso'] = (string)$child;
                break;
             
             case 'SCANNED':
-               $errors.=$this->ptd->addPageCounter('scanned', $child);
+               $input['scanned'] = (string)$child;
                break;
             
             case 'PRINTTOTAL':
-               $errors.=$this->ptd->addPageCounter('pages_total_print', $child);
+               $input['pages_total_print'] = (string)$child;
                break;
             
             case 'PRINTBLACK':
-               $errors.=$this->ptd->addPageCounter('pages_n_b_print', $child);
+               $input['pages_n_b_print'] = (string)$child;
                break;
             
             case 'PRINTCOLOR':
-               $errors.=$this->ptd->addPageCounter('pages_color_print', $child);
+               $input['pages_color_print'] = (string)$child;
                break;
             
             case 'COPYTOTAL':
-               $errors.=$this->ptd->addPageCounter('pages_total_copy', $child);
+               $input['pages_total_copy'] = (string)$child;
                break;
             
             case 'COPYBLACK':
-               $errors.=$this->ptd->addPageCounter('pages_n_b_copy', $child);
+               $input['pages_n_b_copy'] = (string)$child;
                break;
             
             case 'COPYCOLOR':
-               $errors.=$this->ptd->addPageCounter('pages_color_copy', $child);
+               $input['pages_color_copy'] = (string)$child;
                break;
             
             case 'FAXTOTAL':
-               $errors.=$this->ptd->addPageCounter('pages_total_fax', $child);
+               $input['pages_total_fax'] = (string)$child;
                break;
             
             default:
@@ -969,6 +985,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                
          }
       }
+      $pfPrinterLog->add($input);
       return $errors;
    }
 
