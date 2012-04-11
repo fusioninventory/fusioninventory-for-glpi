@@ -47,7 +47,6 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
    private $oFusionInventory_printer;
    private $oFusionInventory_printer_history;
-   private $cartridges=array(), $newCartridges=array(), $updatesCartridges=array();
 
    
    
@@ -104,7 +103,6 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       global $DB;
 
       parent::load($p_id);
-      $this->cartridges = $this->getCartridgesDB();
 
       $query = "SELECT `id`
                 FROM `glpi_plugin_fusinvsnmp_printers`
@@ -152,114 +150,10 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       // update last_fusioninventory_update even if no other update
       $this->setValue('last_fusioninventory_update', date("Y-m-d H:i:s"));
       $this->oFusionInventory_printer->updateDB();
-      // cartridges
-      $this->saveCartridges();
-      // history
+       // history
       if (is_null($this->oFusionInventory_printer_history->getValue('id'))) {
          // update only if counters not already set for today
          $this->oFusionInventory_printer_history->updateDB();
-      }
-   }
-
-
-
-   /**
-    * Get index of cartridge object
-    *
-    *@param $p_name Cartridge name
-    *@return Index of cartridge object in cartridges array or '' if not found
-    **/
-   function getCartridgeIndex($p_name) {
-      $cartridgeIndex = '';
-      foreach ($this->cartridges as $index => $oCartridge) {
-         if (is_object($oCartridge)) { // should always be true
-            if ($oCartridge->getValue('object_name')==$p_name) {
-               $cartridgeIndex = $index;
-               break;
-            }
-         }
-      }
-      return $cartridgeIndex;
-   }
-
-
-
-   /**
-    * Get cartridge object
-    *
-    *@param $p_index Index of cartridge object in $cartridges
-    *@return Cartridge object in cartridges array
-    **/
-   function getCartridge($p_index) {
-      return $this->cartridges[$p_index];
-   }
-
-
-
-   /**
-    * Save new cartridges
-    *
-    *@return nothing
-    **/
-   function saveCartridges() {
-      global $CFG_GLPI;
-      
-      $CFG_GLPI["deleted_tables"][]="glpi_plugin_fusinvsnmp_printercartridges"; // TODO : to clean
-
-      foreach ($this->cartridges as $index=>$ptc) {
-         if (!in_array($index, $this->updatesCartridges)) { // delete cartridges which don't exist any more
-            $ptc->deleteDB();
-         }
-      }
-      foreach ($this->newCartridges as $ptc) {
-         if ($ptc->getValue('id')=='') {               // create existing cartridges
-            $ptc->addCommon();
-         } else {                                      // update existing cartridges
-            $ptc->updateDB();
-         }
-      }
-   }
-
-
-
-   /**
-    * Get cartridges
-    *
-    *@return Array of cartridges
-    **/
-   private function getCartridgesDB() {
-      global $DB;
-
-      $ptc = new PluginFusinvsnmpPrinterCartridge('glpi_plugin_fusinvsnmp_printercartridges');
-      $query = "SELECT `id`
-                FROM `glpi_plugin_fusinvsnmp_printercartridges`
-                WHERE `printers_id` = '".$this->getValue('id')."';";
-      $cartridgesIds = array();
-      $result = $DB->query($query);
-      if ($result) {
-         if ($DB->numrows($result) != 0) {
-            while ($cartridge = $DB->fetch_assoc($result)) {
-               $ptc->load($cartridge['id']);
-               $cartridgesIds[] = clone $ptc;
-            }
-         }
-      }
-      return $cartridgesIds;
-   }
-
-
-
-   /**
-    * Add new cartridge
-    *
-    *@param $p_oCartridge Cartridge object
-    *@param $p_cartridgeIndex='' index of cartridge in $cartridges if already exists
-    *@return nothing
-    **/
-   function addCartridge($p_oCartridge, $p_cartridgeIndex='') {
-      $this->newCartridges[]=$p_oCartridge;
-      if (is_int($p_cartridgeIndex)) {
-         $this->updatesCartridges[]=$p_cartridgeIndex;
       }
    }
 

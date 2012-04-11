@@ -853,9 +853,8 @@ function plugin_headings_fusinvsnmp_printerInfo($type, $id) {
                array('target'=>$CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/printer_info.form.php'));
    echo '<div id="overDivYFix" STYLE="visibility:hidden">fusinvsnmp_1</div>';
 
-   $PluginFusinvsnmpPrinterCartridge = 
-      new PluginFusinvsnmpPrinterCartridge('glpi_plugin_fusinvsnmp_printercartridges');
-   $PluginFusinvsnmpPrinterCartridge->showForm($_POST['id'],
+   $pfPrinterCartridge = new PluginFusinvsnmpPrinterCartridge();
+   $pfPrinterCartridge->showForm($_POST['id'],
                array('target'=>$CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/printer_info.form.php'));
 
    $PluginFusinvsnmpPrinterLog = new PluginFusinvsnmpPrinterLog;

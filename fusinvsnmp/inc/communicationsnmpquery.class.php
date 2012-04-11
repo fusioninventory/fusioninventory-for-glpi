@@ -872,18 +872,28 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       foreach ($p_cartridges->children() as $name=>$child) {
          $plugin_fusioninventory_mappings = $PluginFusioninventoryMapping->get("Printer", strtolower($name));
          if ($plugin_fusioninventory_mappings) {
-            $ptc = new PluginFusinvsnmpPrinterCartridge('glpi_plugin_fusinvsnmp_printercartridges');
-            $cartridgeIndex = $this->ptd->getCartridgeIndex($name);
-            if (is_int($cartridgeIndex)) {
-               $oldCartridge = $this->ptd->getCartridge($cartridgeIndex); //TODO ???
-               $ptc->load($oldCartridge->getValue('id'));
-            } else {
-               $ptc->addCommon(TRUE); //TODO ???
-               $ptc->setValue('printers_id', $this->deviceId);
+            $pfPrinterCartridge = new PluginFusinvsnmpPrinterCartridge();
+            $a_cartridges = $pfPrinterCartridge->find("`printers_id`='".$this->deviceId."'
+               AND `plugin_fusioninventory_mappings_id`='".$plugin_fusioninventory_mappings['id']."'",
+               "", 1);
+            if (!is_numeric((string)$child)) {
+               $child = 0;
             }
-            $ptc->setValue('plugin_fusioninventory_mappings_id', $plugin_fusioninventory_mappings['id']);
-            $ptc->setValue('state', $child, $ptc, 0);
-            $this->ptd->addCartridge($ptc, $cartridgeIndex);
+            if (count($a_cartridges) > 0) {
+               // Udpate
+               $a_cartridge = current($a_cartridges);
+               $input = array();
+               $input['id'] = $a_cartridge['id'];
+               $input['state'] = (string)$child;
+               $pfPrinterCartridge->update($input);
+            } else {
+               // Add 
+               $input = array();
+               $input['printers_id'] = $this->deviceId;
+               $input['plugin_fusioninventory_mappings_id'] = $plugin_fusioninventory_mappings['id'];
+               $input['state'] = (string)$child;
+               $pfPrinterCartridge->add($input);               
+            }            
          } else {
             $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CARTRIDGES : '.$name."\n";
          }
