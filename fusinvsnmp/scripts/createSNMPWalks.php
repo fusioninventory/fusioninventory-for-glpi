@@ -29,7 +29,7 @@ $sql = "SELECT ip,mac,sysdescr,snmpversion,community FROM  glpi_plugin_fusinvsnm
 $result = $DB->query($sql);
 while ($host=$DB->fetch_array($result)) {
 
-   $filePath = sprintf("%s/%s.walk", $outputDir, preg_replace('/[^a-zA-Z0-9,_-]/', '_', $host['sysdescr']));
+   $filePath = sprintf("%s/%s.walk", $outputDir, $host['ip']);
 
    switch ($host['snmpversion']) {
       case 1:
@@ -43,7 +43,7 @@ while ($host=$DB->fetch_array($result)) {
          continue;
    }
 
-   $cmd = sprintf("%s -v %s -Cc -c %s %s", $snmpwalkCmd, $snmpversion, $host['community'], $host['ip']);
+   $cmd = sprintf("%s -v %s -Cc -c %s %s .1", $snmpwalkCmd, $snmpversion, $host['community'], $host['ip']);
 #   print $cmd."\n";
    printf("---\nscanning %s\n", $host['ip']);
 
