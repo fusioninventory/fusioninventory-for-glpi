@@ -152,7 +152,8 @@ INSERT INTO `glpi_plugin_fusinvinventory_blacklists` (`id`, `plugin_fusioninvent
 (63, 3, '00:0b:ca:fe:00:00'),
 (64, 1, 'MB-1234567890'),
 (65, 1, 'Not Specified'),
-(66, 1, 'OEM_Serial');
+(66, 1, 'OEM_Serial'),
+(67, 1, 'SystemSerialNumb');
 
 INSERT INTO `glpi_displaypreferences` (`itemtype`, `num`, `rank`, `users_id`) VALUES
 ('PluginFusinvinventoryBlacklist', 2, 1, 0);
