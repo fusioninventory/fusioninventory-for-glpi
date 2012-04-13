@@ -25,7 +25,7 @@ if (!strncmp("/NET-SNMP/", $t, 7)) {
    exit(1);
 }
 
-$sql = "SELECT ip,mac,sysdescr,snmpversion,community FROM  glpi_plugin_fusinvsnmp_unknowndevices, glpi_networkports,glpi_plugin_fusinvsnmp_configsecurities WHERE plugin_fusinvsnmp_models_id<1 AND sysdescr IS NOT NULL AND itemtype='PluginFusioninventoryUnknownDevice' AND glpi_networkports.items_id=plugin_fusioninventory_unknowndevices_id AND length(ip)>1 AND glpi_plugin_fusinvsnmp_configsecurities.id=plugin_fusinvsnmp_configsecurities_id";
+$sql = "SELECT DISTINCT(ip),sysdescr,snmpversion,community FROM  glpi_plugin_fusinvsnmp_unknowndevices, glpi_networkports,glpi_plugin_fusinvsnmp_configsecurities WHERE plugin_fusinvsnmp_models_id<1 AND sysdescr IS NOT NULL AND itemtype='PluginFusioninventoryUnknownDevice' AND glpi_networkports.items_id=plugin_fusioninventory_unknowndevices_id AND length(ip)>1 AND glpi_plugin_fusinvsnmp_configsecurities.id=plugin_fusinvsnmp_configsecurities_id";
 $result = $DB->query($sql);
 while ($host=$DB->fetch_array($result)) {
 
