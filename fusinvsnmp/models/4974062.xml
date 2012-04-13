@@ -2,7 +2,9 @@
 	<name><![CDATA[4974062]]></name>
 	<type>3</type>
 	<key>Printer0491</key>
-	<comments><![CDATA[OKI OkiLAN 8300e Rev.04.55 10/100BASE Ethernet PrintServer: Attached to C5700 Rev.D2.12 : (C)2005 Oki Data Corporation
+	<comments><![CDATA[OKI OkiLAN 8200e Rev.03.B7 10/100BASE Ethernet PrintServer: Attached to C9600 Rev.01.58 : (C)2004 Oki Data Corporation
+
+OKI OkiLAN 8300e Rev.04.55 10/100BASE Ethernet PrintServer: Attached to C5700 Rev.D2.12 : (C)2005 Oki Data Corporation
 
 ]]></comments>
 	<oidlist>

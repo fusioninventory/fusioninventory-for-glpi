@@ -18,16 +18,6 @@ Xerox Phaser 4510N; OS 8.60, PS 4.11.2, Eng 3.00.00.00, Net 40.52.06.01.2009, Ad
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.3.6.1.2.1.2.1.0</oid>
-			<portcounter>1</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>0</mapping_type>
- 			<mapping_name></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
 			<oid>.1.3.6.1.2.1.1.1.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
@@ -173,6 +163,16 @@ Xerox Phaser 4510N; OS 8.60, PS 4.11.2, Eng 3.00.00.00, Net 40.52.06.01.2009, Ad
 			<dynamicport>0</dynamicport>
 			<mapping_type>3</mapping_type>
  			<mapping_name>tonerblack</mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid>.1.3.6.1.2.1.2.1.0</oid>
+			<portcounter>1</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>0</mapping_type>
+ 			<mapping_name></mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>

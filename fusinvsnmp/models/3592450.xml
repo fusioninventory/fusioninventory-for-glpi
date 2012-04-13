@@ -4,6 +4,8 @@
 	<key>Networking0152</key>
 	<comments><![CDATA[BD6808 - Version 7.2.0 (Build 25) by Release_Master 03/23/04 15:55:45
 
+EMC DS-24M2 Model 001 Fibre Channel Switch, firmware 09.09.09 2
+
 GS724T
 
 Optical Access OptiSwitch-200. classifier version 3.68
@@ -12,16 +14,6 @@ Optical Access OptiSwitch-400 classifier version 3.61
 
 ]]></comments>
 	<oidlist>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.3.6.1.2.1.2.1.0</oid>
-			<portcounter>1</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>0</mapping_type>
- 			<mapping_name></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
 			<oid>.1.3.6.1.2.1.1.1.0</oid>
@@ -189,6 +181,16 @@ Optical Access OptiSwitch-400 classifier version 3.61
 			<dynamicport>0</dynamicport>
 			<mapping_type>2</mapping_type>
  			<mapping_name>uptime</mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid>.1.3.6.1.2.1.2.1.0</oid>
+			<portcounter>1</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>0</mapping_type>
+ 			<mapping_name></mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>

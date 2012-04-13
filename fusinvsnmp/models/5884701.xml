@@ -2,7 +2,12 @@
 	<name><![CDATA[5884701]]></name>
 	<type>2</type>
 	<key>Networking1958</key>
-	<comments><![CDATA[Cisco IOS Software, CBS31X0 Software (CBS31X0-UNIVERSALK9-M), Version 12.2(55)SE, RELEASE SOFTWARE (fc2)^M
+	<comments><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 15.0(1)SE2, RELEASE SOFTWARE (fc3)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2011 by Cisco Systems, Inc.^M
+Compiled Thu 22-Dec-11 00:33 by prod_rel_team
+
+Cisco IOS Software, CBS31X0 Software (CBS31X0-UNIVERSALK9-M), Version 12.2(55)SE, RELEASE SOFTWARE (fc2)^M
 Technical Support: http://www.cisco.com/techsupport^M
 Copyright (c) 1986-2010 by Cisco Systems, Inc.^M
 Compiled Sun 08-Aug-10 01:16 by prod_rel_team
