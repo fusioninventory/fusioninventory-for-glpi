@@ -57,14 +57,15 @@ $pFusioninventoryAgent = new PluginFusioninventoryAgent;
 $pFusioninventoryAgent->getFromDB($_POST["id"]);
 
 switch($_POST['glpi_tab']) {
-   case -1 :
+   
+   case -1:
       $pFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
       $pFusioninventoryAgentmodule->showFormAgentException($_POST["id"]);
       Plugin::displayAction($pFusioninventoryAgentmodule, $_REQUEST['glpi_tab']);
       Log::showForItem($pFusioninventoryAgent);
       break;
 
-   case 1 :
+   case 1:
       //$PluginFusioninventoryAgent->showFormAdvancedOptions($_POST["id"]);
       break;
 
@@ -76,7 +77,7 @@ switch($_POST['glpi_tab']) {
    case 3:
       Log::showForItem($pFusioninventoryAgent);
 
-   default :
+   default:
       Plugin::displayAction($pFusioninventoryAgent, $_REQUEST['glpi_tab']);
       break;
 }

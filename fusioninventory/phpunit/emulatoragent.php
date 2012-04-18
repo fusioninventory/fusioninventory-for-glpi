@@ -59,6 +59,9 @@ class emulatorAgent {
          }
 
          fclose($fp);
+         if (!gzuncompress($zipped)) {
+            echo $zipped;
+         }
          return gzuncompress($zipped);
       }  
    }

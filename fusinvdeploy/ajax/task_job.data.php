@@ -50,4 +50,5 @@ $taskjob = new PluginFusinvdeployTaskjob;
 $res = $taskjob->getAllDatas($_REQUEST);
 
 echo $res;
+
 ?>

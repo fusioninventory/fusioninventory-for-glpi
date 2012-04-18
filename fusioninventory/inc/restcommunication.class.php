@@ -185,6 +185,7 @@ class PluginFusioninventoryRestCommunication {
       global $DB;
       
       $task = strtolower($task);
+      $values = array();
       if (preg_match("/(.*)\/(plugins|front)/",$url,$values)) {
          return $values[1].'/plugins/'.$plugin.'/b/'.$task.'/';
       } else {
@@ -220,8 +221,7 @@ class PluginFusioninventoryRestCommunication {
          fclose($handle);
          return true;
       }
-   }
-   
+   }   
 }
 
 ?>

@@ -71,5 +71,4 @@ if ($commandstatus->update($data)) {
    echo "{success:true}";
 }
 
-
 ?>

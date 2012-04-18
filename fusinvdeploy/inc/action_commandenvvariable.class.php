@@ -71,4 +71,5 @@ class PluginFusinvdeployAction_Commandenvvariable extends CommonDBTM {
       return $response;
    }
 }
+
 ?>

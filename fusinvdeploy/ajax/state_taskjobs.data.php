@@ -45,4 +45,5 @@ include (GLPI_ROOT."/inc/includes.php");
 checkLoginUser();
 
 echo PluginFusinvdeployState::getTaskjobsDatas($_REQUEST);
+
 ?>

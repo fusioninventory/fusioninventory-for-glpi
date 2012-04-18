@@ -2,13 +2,204 @@
 	<name><![CDATA[8900584]]></name>
 	<type>2</type>
 	<key>Networking1956</key>
-	<comments><![CDATA[Cisco IOS Software, C2970 Software (C2970-LANBASE-M), Version 12.2(25)SEB1, RELEASE SOFTWARE (fc1)^M
+	<comments><![CDATA[Cisco Internetwork Operating System Software ^M
+IOS (tm) C3560 Software (C3560-I9-M), Version 12.2(20)SE4, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2005 by cisco Systems, Inc.^M
+Compiled Sat 08-Jan-05 23:06 by antonino
+
+Cisco Internetwork Operating System Software ^M
+IOS (tm) C3750 Software (C3750-I5K91-M), Version 12.2(20)SE, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2004 by cisco Systems, Inc.^M
+Compiled Wed 19-May-04 12:48 by yenanh
+
+Cisco Internetwork Operating System Software ^M
+IOS (tm) C3750 Software (C3750-I9-M), Version 12.1(19)EA1d, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2004 by cisco Systems, Inc.^M
+Compiled Mon 05-Apr-04 22:40 by antonino
+
+Cisco Internetwork Operating System Software ^M  
+IOS (tm) C2970 Software (C2970-I6L2-M), Version 12.1(19)EA1c, RELEASE SOFTWARE (fc2)^M  
+Copyright (c) 1986-2004 by cisco Systems, Inc.^M  
+Compiled Tue 03-Feb-04 02:14 by yenanh
+
+Cisco Internetwork Operating System Software ^M  
+IOS (tm) C3750 Software (C3750-I9-M), Version 12.2(20)SE4, RELEASE SOFTWARE (fc1)^M  
+Copyright (c) 1986-2005 by cisco Systems, Inc.^M  
+Compiled Sun 09-Jan-05 00:09 by antonino
+
+Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(25)FX, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2005 by Cisco Systems, Inc.^M
+Compiled Wed 12-Oct-05 22:05 by yenanh
+
+Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(25)SEE1, RELEASE SOFTWARE (fc1)
+Copyright (c) 1986-2006 by Cisco Systems, Inc.
+Compiled Sun 21-May-06 21:33 by yenanh
+
+Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(25)SEE2, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2006 by Cisco Systems, Inc.^M
+Compiled Fri 28-Jul-06 04:33 by yenanh
+
+Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(35)SE5, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2007 by Cisco Systems, Inc.^M
+Compiled Thu 19-Jul-07 20:06 by nachen
+
+Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(44)SE6, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
+Compiled Mon 09-Mar-09 13:49 by gereddy
+
+Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(44)SE2, RELEASE SOFTWARE (fc2)^M
+Copyright (c) 1986-2008 by Cisco Systems, Inc.^M
+Compiled Thu 01-May-08 15:55 by antonino
+
+Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(44)SE3, RELEASE SOFTWARE (fc2)^M
+Copyright (c) 1986-2008 by Cisco Systems, Inc.^M
+Compiled Mon 29-Sep-08 00:59 by nachen
+
+Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(44)SE6, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
+Compiled Mon 09-Mar-09 18:10 by gereddy
+
+Cisco IOS Software, C2960 Software (C2960-LANLITE-M), Version 12.2(37)EY, RELEASE SOFTWARE (fc2)^M
+Copyright (c) 1986-2007 by Cisco Systems, Inc.^M
+Compiled Thu 28-Jun-07 18:07 by antonino
+
+Cisco IOS Software, C2970 Software (C2970-LANBASE-M), Version 12.2(25)SEB1, RELEASE SOFTWARE (fc1)^M
 Copyright (c) 1986-2005 by Cisco Systems, Inc.^M
 Compiled Fri 29-Apr-05 20:25 by yenanh
+
+Cisco IOS Software, C2970 Software (C2970-LANBASE-M), Version 12.2(25)SEC, RELEASE SOFTWARE (fc2)
+Copyright (c) 1986-2005 by Cisco Systems, Inc.
+Compiled Thu 14-Jul-05 19:15 by antonino
+
+Cisco IOS Software, C2970 Software (C2970-LANBASE-M), Version 12.2(44)SE6, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
+Compiled Mon 09-Mar-09 14:11 by gereddy
+
+Cisco IOS Software, C2970 Software (C2970-LANBASEK9-M), Version 12.2(25)SEE2, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2006 by Cisco Systems, Inc.^M
+Compiled Fri 28-Jul-06 12:08 by yenanh
+
+Cisco IOS Software, C2970 Software (C2970-LANBASEK9-M), Version 12.2(40)SE, RELEASE SOFTWARE (fc3)^M
+Copyright (c) 1986-2007 by Cisco Systems, Inc.^M
+Compiled Fri 24-Aug-07 02:04 by myl
+
+Cisco IOS Software, C2970 Software (C2970-LANBASEK9-M), Version 12.2(44)SE2, RELEASE SOFTWARE (fc2)^M
+Copyright (c) 1986-2008 by Cisco Systems, Inc.^M
+Compiled Thu 01-May-08 16:04 by antonino
+
+Cisco IOS Software, C2970 Software (C2970-LANBASEK9-M), Version 12.2(44)SE6, RELE
+Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
+Compiled Mon 09-Mar-09 18:27 by gereddy
+
+Cisco IOS Software, C2970 Software (C2970-LANBASEK9-M), Version 12.2(44)SE6, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
+Compiled Mon 09-Mar-09 18:27 by gereddy
+
+Cisco IOS Software, C3560 Software (C3560-ADVIPSERVICESK9-M), Version 12.2(46)SE, RELEASE SOFTWARE (fc2)^M
+Copyright (c) 1986-2008 by Cisco Systems, Inc.^M
+Compiled Thu 21-Aug-08 15:26 by nachen
+
+Cisco IOS Software, C3560 Software (C3560-I9K91-M), Version 12.2(25)SEA, RELEASE SOFTWARE (fc)^M
+Copyright (c) 1986-2005 by Cisco Systems, Inc.^M
+Compiled Wed 26-Jan-05 00:47 by antonino
+
+Cisco IOS Software, C3560 Software (C3560-IPBASE-M), Version 12.2(25)SEB4, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2005 by Cisco Systems, Inc.^M
+Compiled Tue 30-Aug-05 14:19 by yenanh
+
+Cisco IOS Software, C3560 Software (C3560-IPBASE-M), Version 12.2(25)SEE1, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2006 by Cisco Systems, Inc.^M
+Compiled Mon 22-May-06 01:45 by yenanh
+
+Cisco IOS Software, C3560 Software (C3560-IPBASE-M), Version 12.2(35)SE5, RELEASE SOFTWARE (fc1)
+Copyright (c) 1986-2007 by Cisco Systems, Inc.
+Compiled Thu 19-Jul-07 18:15 by nachen
+
+Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 12.2(25)SEE1, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2006 by Cisco Systems, Inc.^M
+Compiled Mon 22-May-06 08:25 by yenanh
+
+Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 12.2(25)SEE2, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2006 by Cisco Systems, Inc.^M
+Compiled Fri 28-Jul-06 12:34 by yenanh
+
+Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 12.2(44)SE2, RELEASE SOFTWARE (fc2)^M
+Copyright (c) 1986-2008 by Cisco Systems, Inc.^M
+Compiled Thu 01-May-08 15:28 by antonino
+
+Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 12.2(44)SE6, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
+Compiled Mon 09-Mar-09 17:42 by gereddy
+
+Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 12.2(46)SE, RELEASE SOFTWARE (fc2)^M
+Copyright (c) 1986-2008 by Cisco Systems, Inc.^M
+Compiled Thu 21-Aug-08 15:26 by nachen
+
+Cisco IOS Software, C3560 Software (C3560-IPSERVICESK9-M), Version 12.2(25)SEB4, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2005 by Cisco Systems, Inc.^M
+Compiled Tue 30-Aug-05 17:56 by yenanh
+
+Cisco IOS Software, C3560 Software (C3560-IPSERVICESK9-M), Version 12.2(37)SE, RELEASE SOFTWARE (fc2) Copyright (c) 1986-2007 by Cisco Systems, Inc. Compiled Thu 10-May-07 16:19 by antonino
+
+Cisco IOS Software, C3560 Software (C3560-IPSERVICESK9-M), Version 12.2(44)SE5, RELEASE SOFTWARE (fc2)^M
+Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
+Compiled Thu 22-Jan-09 05:47 by gereddy
 
 Cisco IOS Software, C3560E Software (C3560E-UNIVERSAL-M), Version 12.2(35)SE5, RELEASE SOFTWARE (fc1)^M
 Copyright (c) 1986-2007 by Cisco Systems, Inc.^M
 Compiled Thu 19-Jul-07 17:18 by nachen
+
+Cisco IOS Software, C3750 Software (C3750-ADVIPSERVICESK9-M), Version 12.2(25)SEE4, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2007 by Cisco Systems, Inc.^M
+Compiled Mon 16-Jul-07 03:24 by myl
+
+Cisco IOS Software, C3750 Software (C3750-I5-M), Version 12.2(25)SEA, RELEASE SOFTWARE (fc)^
+Copyright (c) 1986-2005 by Cisco Systems, Inc.^M
+Compiled Tue 25-Jan-05 20:26 by antonino
+
+Cisco IOS Software, C3750 Software (C3750-IPBASE-M), Version 12.2(25)SEB2, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2005 by Cisco Systems, Inc.^M
+Compiled Wed 08-Jun-05 01:19 by yenanh
+
+Cisco IOS Software, C3750 Software (C3750-IPBASE-M), Version 12.2(25)SEB4, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2005 by Cisco Systems, Inc.^M
+Compiled Tue 30-Aug-05 15:47 by yenanh
+
+Cisco IOS Software, C3750 Software (C3750-IPBASE-M), Version 12.2(25)SEE2, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2006 by Cisco Systems, Inc.^M
+Compiled Fri 28-Jul-06 08:46 by yenanh
+
+Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 12.2(25)SEE2, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2006 by Cisco Systems, Inc.^M
+Compiled Fri 28-Jul-06 12:55 by yenanh
+
+Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 12.2(40)SE, RELEASE SOFTWARE (fc3)^M
+Copyright (c) 1986-2007 by Cisco Systems, Inc.^M
+Compiled Fri 24-Aug-07 00:53 by myl
+
+Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 12.2(44)SE2, RELEASE SOFTWARE (fc2)^M
+Copyright (c) 1986-2008 by Cisco Systems, Inc.^M
+Compiled Thu 01-May-08 15:42 by antonino
+
+Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 12.2(46)SE, RELEASE SOFTWARE (fc2)^M
+Copyright (c) 1986-2008 by Cisco Systems, Inc.^M
+Compiled Thu 21-Aug-08 15:43 by nachen
+
+Cisco IOS Software, C3750 Software (C3750-IPSERVICES-M), Version 12.2(25)SEB4, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2005 by Cisco Systems, Inc.^M
+Compiled Tue 30-Aug-05 15:47 by yenanh
+
+Cisco IOS Software, C3750E Software (C3750E-UNIVERSAL-M), Version 12.2(35)SE5, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2007 by Cisco Systems, Inc.^M
+Compiled Thu 19-Jul-07 16:17 by nachen
+
+Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M), Version 12.2(46)SE, RELEASE SOFTWARE (fc2)^M
+Copyright (c) 1986-2008 by Cisco Systems, Inc.^M
+Compiled Thu 21-Aug-08 14:49 by nachen
+
+Cisco IOS Software, CBS31X0 Software (CBS31X0-UNIVERSAL-M), Version 12.2(40)EX2, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2008 by Cisco Systems, Inc.^M
+Compiled Wed 16-Apr-08 20:32 by myl
 
 ]]></comments>
 	<oidlist>

@@ -44,6 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 checkLoginUser();
+
 $rule = $rulecollection->getRuleClass();
 
 if (!isset($_GET["id"])) {
@@ -193,5 +194,7 @@ commonHeader($LANG['rulesengine'][17], $_SERVER['PHP_SELF'], "admin", $rulecolle
    createAjaxTabs('tabspanel','tabcontent',$tabs,$rulecollection->getRuleClassName());
    echo "<div id='tabcontent'>&nbsp;</div>";
    echo "<script type='text/javascript'>loadDefaultTab();</script>";
+   
 commonFooter();
+
 ?>

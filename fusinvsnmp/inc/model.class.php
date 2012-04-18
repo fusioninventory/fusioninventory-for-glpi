@@ -344,6 +344,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
       }
       return 0;
    }
+   
 
 
    static function importAllModels() {
@@ -407,7 +408,6 @@ class PluginFusinvsnmpModel extends CommonDBTM {
          $PluginFusinvsnmpModel->getrightmodel($a_printer['printers_id'], "Printer");
       }
    }
-
 }
 
 ?>

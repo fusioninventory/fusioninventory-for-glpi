@@ -853,12 +853,11 @@ function plugin_headings_fusinvsnmp_printerInfo($type, $id) {
                array('target'=>$CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/printer_info.form.php'));
    echo '<div id="overDivYFix" STYLE="visibility:hidden">fusinvsnmp_1</div>';
 
-   $PluginFusinvsnmpPrinterCartridge = 
-      new PluginFusinvsnmpPrinterCartridge('glpi_plugin_fusinvsnmp_printercartridges');
-   $PluginFusinvsnmpPrinterCartridge->showForm($_POST['id'],
+   $pfPrinterCartridge = new PluginFusinvsnmpPrinterCartridge();
+   $pfPrinterCartridge->showForm($_POST['id'],
                array('target'=>$CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/printer_info.form.php'));
 
-   $PluginFusinvsnmpPrinterLog = new PluginFusinvsnmpPrinterLog;
+   $PluginFusinvsnmpPrinterLog = new PluginFusinvsnmpPrinterLog();
    $PluginFusinvsnmpPrinterLog->showGraph($_POST['id'],
                array('target'=>$CFG_GLPI['root_doc'] . '/plugins/fusinvsnmp/front/printer_info.form.php'));
 
@@ -867,7 +866,7 @@ function plugin_headings_fusinvsnmp_printerInfo($type, $id) {
 function plugin_headings_fusinvsnmp_printerHistory($type, $id) {
    global $CFG_GLPI;
    
-   $print_history = new PluginFusinvsnmpPrinterLog;
+   $print_history = new PluginFusinvsnmpPrinterLog();
    $print_history->showForm($_GET["id"],
                array('target'=>$CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/printer_history.form.php'));
 }
@@ -2237,13 +2236,14 @@ function plugin_pre_item_purge_fusinvsnmp($parm) {
    
       case 'NetworkPort_NetworkPort':
       $networkPort = new NetworkPort();
-      $networkPort->getFromDB($parm->fields['networkports_id_1']);
-      if (($networkPort->fields['itemtype']) == 'NetworkEquipment') {
-         PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$parm->fields['networkports_id_1']);
-      } else {
-         $networkPort->getFromDB($parm->fields['networkports_id_2']);
+      if ($networkPort->getFromDB($parm->fields['networkports_id_1'])) {
          if (($networkPort->fields['itemtype']) == 'NetworkEquipment') {
-            PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$parm->fields['networkports_id_2']);
+            PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$parm->fields['networkports_id_1']);
+         } else {
+            $networkPort->getFromDB($parm->fields['networkports_id_2']);
+            if (($networkPort->fields['itemtype']) == 'NetworkEquipment') {
+               PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$parm->fields['networkports_id_2']);
+            }
          }
       }
       break;
@@ -2336,11 +2336,11 @@ function plugin_item_add_fusinvsnmp($parm) {
       case 'NetworkPort_NetworkPort':
       $networkPort = new NetworkPort();
       $networkPort->getFromDB($parm->fields['networkports_id_1']);
-      if (($networkPort->fields['itemtype']) == 'NetworkEquipment') {
+      if ($networkPort->fields['itemtype'] == 'NetworkEquipment') {
          PluginFusinvsnmpNetworkPortLog::addLogConnection("make",$parm->fields['networkports_id_1']);
       } else {
          $networkPort->getFromDB($parm->fields['networkports_id_2']);
-         if (($networkPort->fields['itemtype']) == 'NetworkEquipment') {
+         if ($networkPort->fields['itemtype'] == 'NetworkEquipment') {
             PluginFusinvsnmpNetworkPortLog::addLogConnection("make",$parm->fields['networkports_id_2']);
          }
       }

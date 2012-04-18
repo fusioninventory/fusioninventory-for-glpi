@@ -271,7 +271,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
          logInFile($file, $message);
       }
    }
-
 }
 
 ?>

@@ -49,4 +49,5 @@ if (strpos($_SERVER['PHP_SELF'],"dropdownCredentials.php")) {
 
 PluginFusioninventoryProfile::checkRight('fusioninventory', 'credential', 'r');
 PluginFusioninventoryCredential::dropdownCredentialsForItemtype($_POST);
+
 ?>

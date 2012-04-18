@@ -59,6 +59,7 @@ if (isset($_POST['update'])) {
       
       case 'config' :
          $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+         $PluginFusioninventoryConfig->update($_POST);
          break;
 
       case 'history' :
@@ -75,9 +76,6 @@ if (isset($_POST['update'])) {
          }
          break;
 
-   }
-   if (isset($PluginFusioninventoryConfig)) {
-      $PluginFusioninventoryConfig->update($_POST);
    }
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if ((isset($_POST['Clean_history']))) {

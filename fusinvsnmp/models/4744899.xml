@@ -12,16 +12,6 @@ Brother NC-6800h, Firmware Ver.1.01  (08.12.12),MID 84UB03
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.3.6.1.2.1.2.1.0</oid>
-			<portcounter>1</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>0</mapping_type>
- 			<mapping_name></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
 			<oid>.1.3.6.1.2.1.1.1.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
@@ -197,6 +187,16 @@ Brother NC-6800h, Firmware Ver.1.01  (08.12.12),MID 84UB03
 			<dynamicport>0</dynamicport>
 			<mapping_type>3</mapping_type>
  			<mapping_name>tonerblack2</mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid>.1.3.6.1.2.1.2.1.0</oid>
+			<portcounter>1</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>0</mapping_type>
+ 			<mapping_name></mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>

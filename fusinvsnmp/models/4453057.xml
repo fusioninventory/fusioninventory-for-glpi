@@ -10,20 +10,8 @@ OKI OkiLAN 8450e Rev.08.01 10/100BASE Ethernet PrintServer: Attached to C5650 Re
 
 OKI OkiLAN 8450g Rev.07.01 10/100BASE Ethernet PrintServer: Attached to C9650 Rev.M1.03 : Copyright (c) 2007 Oki Data Corporation. All rights reserved.
 
-OKI OkiLAN 9100e Rev.05.02 10/100BASE Ethernet PrintServer: Attached to C3450 RevB1.04 : (C)2005 Oki Data Corporation
-
 ]]></comments>
 	<oidlist>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.3.6.1.2.1.2.1.0</oid>
-			<portcounter>1</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>0</mapping_type>
- 			<mapping_name></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
 			<oid>.1.3.6.1.2.1.1.1.0</oid>
@@ -251,6 +239,16 @@ OKI OkiLAN 9100e Rev.05.02 10/100BASE Ethernet PrintServer: Attached to C3450 Re
 			<dynamicport>0</dynamicport>
 			<mapping_type>3</mapping_type>
  			<mapping_name>wastetoner</mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid>.1.3.6.1.2.1.2.1.0</oid>
+			<portcounter>1</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>0</mapping_type>
+ 			<mapping_name></mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>

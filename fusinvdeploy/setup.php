@@ -242,4 +242,5 @@ function plugin_fusinvdeploy_check_prerequisites() {
 function plugin_fusinvdeploy_check_config() {
    return true;
 }
+
 ?>

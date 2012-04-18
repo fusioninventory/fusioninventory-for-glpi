@@ -56,5 +56,4 @@ if (isset($_POST['value'])) {
 $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
 $PluginFusioninventoryTaskjob->dropdownActionType("ActionType", $_POST['method_id'], $value, "");
 
-
 ?>

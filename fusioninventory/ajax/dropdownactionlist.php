@@ -51,7 +51,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 checkCentralAccess();
-$PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
+$PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
 $PluginFusioninventoryTaskjob->dropdownAction("ActionList", $_POST['ActionType'], $_POST['method'], $_POST['actiontypeid']);
 
 ?>

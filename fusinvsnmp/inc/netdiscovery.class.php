@@ -111,6 +111,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
          foreach($a_agents as $data) {
             if (($count_ip / 10) >= count($a_agentlist)) {
                $PluginFusioninventoryAgent->getFromDB($data['id']);
+               $a_ip = $PluginFusioninventoryAgent->getIPs($data['id']);
                foreach($a_ip as $ip) {
                   if ($PluginFusioninventoryTask->fields['communication'] == 'push') {
                      $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent('1',$data['id']);

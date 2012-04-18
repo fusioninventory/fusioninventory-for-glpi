@@ -81,3 +81,5 @@ class DeploystateTest extends PHPUnit_Framework_TestCase
       $res = $DB->query($query);*/
    }
 }
+
+?>

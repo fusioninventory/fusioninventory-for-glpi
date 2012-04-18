@@ -51,21 +51,28 @@ class PluginFusinvinventoryRuleEntity extends Rule {
    public $can_sort=true;
    public $specific_parameters = false;
 
+   
+   
    function getTitle() {
       global $LANG;
       return $LANG['plugin_fusinvinventory']['rule'][100];
    }
 
+   
+   
    function preProcessPreviewResults($output) {
       return $output;
    }
 
 
+   
    function maxActionsCount() {
       // Unlimited
       return 2;
    }
 
+   
+   
    function executeActions($output,$params) {
 
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusinvinventory-entityrules", 
@@ -103,6 +110,8 @@ class PluginFusinvinventoryRuleEntity extends Rule {
       return $output;
    }
 
+   
+   
    function getCriterias() {
       global $LANG;
       
@@ -129,6 +138,8 @@ class PluginFusinvinventoryRuleEntity extends Rule {
       return $criterias;
    }
 
+   
+   
    function getActions() {
       global $LANG;
       
@@ -151,6 +162,7 @@ class PluginFusinvinventoryRuleEntity extends Rule {
       return $actions;
    }
 
+   
 
    function displayAdditionalRuleCondition($condition, $criteria, $name, $value, $test=false) {
       if ($test) {
@@ -173,11 +185,11 @@ class PluginFusinvinventoryRuleEntity extends Rule {
          case Rule::PATTERN_DOES_NOT_EXISTS:
             echo Dropdown::showYesNo($name, 1, 0);
             return true;
+            
       }
 
       return false;
    }
-
 }
 
 ?>

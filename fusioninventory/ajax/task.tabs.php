@@ -62,7 +62,8 @@ $a_taskjob = $pftj->find("`plugin_fusioninventory_tasks_id`='".$_POST["id"]."'
 $i = 1;
 
 switch($_POST['glpi_tab']) {
-   case -1 :
+   
+   case -1:
       foreach($a_taskjob as $taskjob_id=>$datas) {
          $pftj->showForm($taskjob_id);
          $PluginFusioninventoryTaskjoblog->showHistory($taskjob_id);
@@ -82,9 +83,10 @@ switch($_POST['glpi_tab']) {
       }
       break;
 
-   case 1 :
+   case 1:
 //      $pfia->showFormAdvancedOptions($_POST["id"]);
       break;
+   
 }
 
 if ($_POST['glpi_tab'] > 1) {

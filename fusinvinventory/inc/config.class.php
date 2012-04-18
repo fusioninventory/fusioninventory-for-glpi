@@ -274,12 +274,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       echo "</tr>";
       
       echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-//      echo $LANG['plugin_fusinvinventory']['setup'][25]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-//      Dropdown::showYesNo("import_registry", 
-//                          $PluginFusioninventoryConfig->getValue($plugins_id, 'import_registry'));
+      echo "<td colspan='2'>";
       echo "</td>";
       echo "<td>";
       echo $LANG['devices'][2]."&nbsp;:";
@@ -291,12 +286,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       echo "</tr>";
       
       echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-//      echo $LANG['plugin_fusinvinventory']['setup'][26]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-//      Dropdown::showYesNo("import_process", 
-//                          $PluginFusioninventoryConfig->getValue($plugins_id, 'import_process'));
+      echo "<td colspan='2'>";
       echo "</td>";
       echo "<td>";
       echo $LANG['devices'][7]."&nbsp;:";

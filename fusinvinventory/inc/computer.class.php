@@ -61,6 +61,12 @@ class PluginFusinvinventoryComputer extends CommonDBTM {
    }
 
    
+   /**
+    * Display informations about computer (bios...) 
+    * 
+    * @global type $LANG
+    * @param type $computers_id 
+    */   
    function showForm($computers_id) {
       global $LANG;
       
@@ -106,11 +112,8 @@ class PluginFusinvinventoryComputer extends CommonDBTM {
       echo '</tr>';
             
       echo '</table>';
-      echo '</div>';
-      
-   }
-   
-   
+      echo '</div>';      
+   }   
 }
 
 ?>

@@ -47,4 +47,5 @@ checkLoginUser();
 $res = PluginFusinvdeployGroup::getAllDatas();
 
 echo $res;
+
 ?>

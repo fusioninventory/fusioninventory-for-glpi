@@ -727,8 +727,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          }
       }
       
-      
-      
       // Start agents must start in push mode
       foreach($_SESSION['glpi_plugin_fusioninventory']['agents'] as $agent_id=>$num) {
          $PluginFusioninventoryTaskjob->startAgentRemotly($agent_id);
@@ -1364,6 +1362,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    }
 
 
+   
    /**
     * Verify if definition or action not deleted
     *
@@ -1720,6 +1719,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          }
       }
    }
+   
    
    
    function prepareRunTaskjob($a_taskjob) {

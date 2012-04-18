@@ -66,3 +66,5 @@ class PluginFusinvdeployGroup_Staticdata extends CommonDBRelation{
       return parent::can($ID,$right,$input);
    }
 }
+
+?>

@@ -109,6 +109,8 @@ function plugin_fusinvinventory_getAddSearchOptions($itemtype) {
    return $sopt;
 }
 
+
+
 function plugin_fusinvinventory_install() {
 
    $a_plugin = plugin_version_fusinvinventory();
@@ -181,9 +183,8 @@ function plugin_get_headings_fusinvinventory($item,$withtemplate) {
          }
          return $array;
          break;
+         
    }
-
-
 }
 
 
@@ -192,6 +193,7 @@ function plugin_get_headings_fusinvinventory($item,$withtemplate) {
 function plugin_headings_actions_fusinvinventory($item) {
 
    switch (get_class($item)) {
+      
       case 'Computer' :
          $array = array ();
          $array[1] = "plugin_headings_fusinvinventory_xml";
@@ -200,8 +202,10 @@ function plugin_headings_actions_fusinvinventory($item) {
          $array[4] = "plugin_headings_fusinvinventory_bios";
          return $array;
          break;
+      
       case 'PluginFusioninventoryCredentialIp':
          return array(1 => "plugin_headings_fusinvinventory_credentialip");
+         
    }
 
 }
@@ -261,16 +265,13 @@ function plugin_headings_fusinvinventory_integrity($item) {
 }
 
 
+
 function plugin_headings_fusinvinventory_bios($item) {
    $pFusinvinventoryComputer = new PluginFusinvinventoryComputer();
    $pFusinvinventoryComputer->showForm($item->fields['id']);
 }
 
 
-
-function plugin_headings_fusinvinventory($type,$id,$withtemplate=0) {
-
-}
 
 function plugin_fusinvinventory_addLeftJoin($itemtype, $ref_table, $new_table, $linkfield, 
                                             &$already_link_tables) {
@@ -294,8 +295,9 @@ function plugin_pre_item_purge_fusinvinventory($item) {
          break;
 
    }
-
 }
+
+
 
 function plugin_fusinvinventory_registerMethods() {
    global $WEBSERVICES_METHOD;

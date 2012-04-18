@@ -163,7 +163,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
 
 
-   function defineTabs($options=array()){
+   function defineTabs($options=array()) {
       global $LANG;
 
 
@@ -238,8 +238,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          echo "</td>";
          echo "<td align='center'></td>";
          echo "</tr>";
-         echo "</tr>";
-         
+         echo "</tr>";         
       }
 
       echo "<tr class='tab_bg_1'>";
@@ -438,19 +437,18 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    /**
    * Manage a hub (many mac on a port mean you have a hub)
    *
-   * @param $p_oPort object Informations of the network port (switch port)
-   * @param $agent_id integer id of the agent
+   * @param $pfNetworkport object Informations of the network port (switch port)
    *
    * @return bool
    *
    **/
-   function hubNetwork($p_oPort, $agent_id) {
+   function hubNetwork($pfNetworkport) {
 
       $nn = new NetworkPort_NetworkPort();
       $Netport = new NetworkPort();
       // Get port connected on switch port
       $hub_id = 0;
-      $ID = $nn->getOppositeContact($p_oPort->getValue('id'));
+      $ID = $nn->getOppositeContact($pfNetworkport->getNetworkPorts_id());
       if ($ID) {
          $Netport->getFromDB($ID);
          if ($Netport->fields["itemtype"] == $this->getType()) {
@@ -462,23 +460,23 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             } else {
                // It's a direct connection, so disconnect and create a hub
                $this->disconnectDB($ID);
-               $hub_id = $this->createHub($p_oPort, $agent_id);
+               $hub_id = $this->createHub($pfNetworkport);
             }
          } else {
             // It's a direct connection, so disconnect and create a hub
             $this->disconnectDB($ID);
-            $hub_id = $this->createHub($p_oPort, $agent_id);
+            $hub_id = $this->createHub($pfNetworkport);
          }
       } else {
          // No connections found and create a hub
-         $hub_id = $this->createHub($p_oPort, $agent_id);
+         $hub_id = $this->createHub($pfNetworkport);
       }
       // State : Now we have hub and it's id
       
       // Add source port id in comment of hub
       $h_input = array();
       $h_input['id'] = $hub_id;
-      $h_input['comment'] = "Port : ".$p_oPort->getValue('id');
+      $h_input['comment'] = "Port : ".$pfNetworkport->getNetworkPorts_id();
       $this->update($h_input);
       
 
@@ -493,7 +491,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          }
       }
 
-      foreach ($p_oPort->getMacsToConnect() as $ifmac) {
+      foreach ($pfNetworkport->getMacsToConnect() as $ifmac) {
          $a_ports = $Netport->find("`mac`='".$ifmac."'", "", 1);
          if (count($a_ports) == "1") {
             if (!$this->searchIfmacOnHub($a_ports, $a_portglpi)) {
@@ -588,7 +586,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          $freeport_id = $Netport->add($input);
       }
       $this->disconnectDB($freeport_id);
-      $nn->add(array('networkports_id_1'=> $data['id'], 'networkports_id_2' => $freeport_id));
+      $nn->add(array('networkports_id_1'=> $data['id'], 
+                     'networkports_id_2' => $freeport_id));
 
       //plugin_fusioninventory_addLogConnection("make",$port_id);
       return $freeport_id;
@@ -637,23 +636,22 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    /**
    * Creation of a hub 
    *
-   * @param $p_oPort object Informations of the network port
-   * @param $agent_id integer id of the agent
+   * @param $pfNetworkport object Informations of the network port
    *
    * @return id of the hub (unknowndevice)
    *
    **/
-   function createHub($p_oPort, $agent_id) {
+   function createHub($pfNetworkport) {
 
       $Netport = new NetworkPort();
       $nn = new NetworkPort_NetworkPort();
       //$PluginFusionInventoryAgentsProcesses = new PluginFusionInventoryAgentsProcesses;
 
       // Find in the mac connected to the if they are in hub without link port connected
-      foreach ($p_oPort->getMacsToConnect() as $ifmac) {
+      foreach ($pfNetworkport->getMacsToConnect() as $ifmac) {
          $a_ports = $Netport->find("`mac`='".$ifmac."'");
          foreach ($a_ports as $data) {
-            $ID = $nn->getOppositeContact($p_oPort->getValue('id'));
+            $ID = $nn->getOppositeContact($pfNetworkport->getNetworkPorts_id());
             if ($ID) {
                $Netport->getFromDB($ID);
                if ($Netport->fields["itemtype"] == $this->getType()) {
@@ -666,12 +664,11 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
                         } else {
                            // We have founded a hub orphelin
-                           if ($nn->add(array('networkports_id_1'=> $p_oPort->getValue('id'), 'networkports_id_2' => $dataLink['id']))) {
-//                              $PluginFusionInventoryAgentsProcesses->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
-//                                          array('query_nb_connections_created' => '1'));
-//                              plugin_fusioninventory_addLogConnection("make",$p_oPort->getValue('ID'));
-                           }
-                           $this->releaseHub($this->fields['id'], $p_oPort);
+                           $this->disconnectDB($pfNetworkport->getNetworkPorts_id());
+                           $this->disconnectDB($dataLink['id']);
+                           $nn->add(array('networkports_id_1'=> $pfNetworkport->getNetworkPorts_id(), 
+                                           'networkports_id_2' => $dataLink['id']));
+                           $this->releaseHub($this->fields['id'], $pfNetworkport);
                            return $this->fields['id'];
                         }
                      }
@@ -687,12 +684,6 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
          $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
       }
-//      $input["plugin_fusioninventory_agents_id"] = $agent_id;
-         // get source entity :
-//         $datas = $Netport->getDeviceData($p_oPort->getValue("items_id"),$p_oPort->getValue("itemtype"));
-//         if (isset($Netport->entities_id)) {
-//            $input['entities_id'] = $Netport->entities_id;
-//         }
       $hub_id = $this->add($input);
 
       $input = array();
@@ -700,13 +691,10 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $input["itemtype"] = $this->getType();
       $input["name"] = "Link";
       $port_id = $Netport->add($input);
-      $this->disconnectDB($p_oPort->getValue('id'));
+      $this->disconnectDB($pfNetworkport->getNetworkPorts_id());
       $this->disconnectDB($port_id);
-      if ($nn->add(array('networkports_id_1'=> $p_oPort->getValue('id'), 'networkports_id_2' => $port_id))) {
-//         $PluginFusionInventoryAgentsProcesses->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
-//                     array('query_nb_connections_created' => '1'));
-//         plugin_fusioninventory_addLogConnection("make",$p_oPort->getValue('ID'));
-      }
+      $nn->add(array('networkports_id_1'=> $pfNetworkport->getNetworkPorts_id(), 
+                      'networkports_id_2' => $port_id));
       return $hub_id;
    }
 
@@ -716,18 +704,18 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    * Remove all connections on a hub
    *
    * @param $hub_id integer id of the hub
-   * @param $p_oPort object Informations of the network port
+   * @param $pfNetworkport object Informations of the network port
    *
    * @return nothing
    *
    **/
-   function releaseHub($hub_id, $p_oPort) {
+   function releaseHub($hub_id, $pfNetworkport) {
 
       $Netport = new NetworkPort();
       $nn = new NetworkPort_NetworkPort();
 
       $a_macOnSwitch = array();
-      foreach ($p_oPort->getMacsToConnect() as $ifmac) {
+      foreach ($pfNetworkport->getMacsToConnect() as $ifmac) {
          $a_macOnSwitch["$ifmac"] = 1;
       }
 
@@ -780,6 +768,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       }
    }
 
+   
    
 // *************************** end hub management ****************************** //
 
@@ -998,54 +987,6 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             break;
 
          default:
-//            // GENERIC OBJECT : Search types in generic object
-//            $typeimported = 0;
-//            $plugin = new Plugin;
-//            if ($plugin->isActivated('genericobject')) {
-//               if (TableExists("glpi_plugin_genericobject_types")) {
-//                  $query = "SELECT * FROM `glpi_plugin_genericobject_types`
-//                     WHERE `status`='1' ";
-//                  if ($result=$DB->query($query)) {
-//                     while ($data=$DB->fetch_array($result)) {
-//                        if ($this->fields['type'] == $data['itemtype']) {
-//                           $Netdevice = new Netdevice;
-//                           $pgo = new PluginGenericObject;
-//                           $pgo->setType($data['itemtype']);
-//
-//                           $data["entities_id"] = $this->fields["entities_id"];
-//                           if (!empty($this->fields["name"])) {
-//                              $data["name"] = $this->fields["name"];
-//                           } else {
-//                              $data["name"] = $this->fields["dnsname"];
-//                           }
-//                           $data["location"] = $this->fields["location"];
-//                           $data["serial"] = $this->fields["serial"];
-//                           $data["otherserial"] = $this->fields["otherserial"];
-//                           $data["contact"] = $this->fields["contact"];
-//                           $data["domain"] = $this->fields["domain"];
-//                           $data["comment"] = $this->fields["comment"];
-//                           $ID_Device = $pgo->add($data);
-//
-//                           if ($pgo->canUseNetworkPorts()) {
-//                              $data_Port = $NetworkPort->fields;
-//                              $data_Port['items_id'] = $ID_Device;
-//                              $data_Port['itemtype'] = $this->fields['itemtype'];
-//                              $NetworkPort->update($data_Port);
-//                           } else {
-//                              $NetworkPort->deleteFromDB($NetworkPort->fields['id']);
-//                           }
-//
-//                           $this->deleteFromDB($items_id,1);
-//                           $Import++;
-//                           $typeimported++;
-//                        }
-//                     }
-//                  }
-//               }
-//            }
-//            // END GENERIC OBJECT
-
-//            if ($typeimported == "0") {
             $NoImport++;
             break;
             
@@ -1056,12 +997,9 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    
 
    function cleanDBonPurge() {
-
       $networkPort= new NetworkPort();
       $networkPort->cleanDBonItemDelete($this->getType(), $this->fields['id']);
-
    }
-
 }
 
 ?>

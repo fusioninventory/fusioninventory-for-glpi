@@ -50,6 +50,15 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusinvinventoryImport_Virtualmachine extends CommonDBTM {
 
 
+   /**
+   * Add VirtualMachine
+   *
+   * @param $type value "add" or "update"
+   * @param $items_id integer id of the computer
+   * @param $dataSection array all values of the section
+   *
+   * @return id of the VM or false
+   **/
    function AddUpdateItem($type, $items_id, $dataSection) {
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
@@ -124,6 +133,15 @@ class PluginFusinvinventoryImport_Virtualmachine extends CommonDBTM {
 
 
    
+   /**
+   * Delete virtual machine
+   *
+   * @param $items_id integer id of the user or -username
+   * @param $idmachine integer id of the computer
+   *
+   * @return nothing
+   *
+   **/
    function deleteItem($items_id, $idmachine) {
       $virtualmachine = new ComputerVirtualMachine();
       $virtualmachine->getFromDB($items_id);
@@ -131,7 +149,6 @@ class PluginFusinvinventoryImport_Virtualmachine extends CommonDBTM {
          $virtualmachine->delete(array("id" => $items_id), 0, $_SESSION["plugin_fusinvinventory_history_add"]);
       }
    }
-
 }
 
 ?>

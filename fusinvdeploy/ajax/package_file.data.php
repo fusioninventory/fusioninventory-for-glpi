@@ -48,5 +48,4 @@ checkLoginUser();
 $file = new PluginFusinvdeployFile;
 echo $file->getDatas($_REQUEST);
 
-
 ?>

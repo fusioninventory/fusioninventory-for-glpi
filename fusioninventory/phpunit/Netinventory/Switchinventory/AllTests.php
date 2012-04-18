@@ -72,6 +72,7 @@ class Switchinventory extends PHPUnit_Framework_TestCase {
       $pluginFusioninventoryTask = new PluginFusioninventoryTask();
       $pluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $pluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $networkPort_NetworkPort = new NetworkPort_NetworkPort();
 
       $input = array();
       $input['entities_id'] = '0';
@@ -307,6 +308,11 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team</COMMENTS>
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
+      
+      // Verify not have networkport_networkport with networkports_id = 0
+      $zombieConnect = $networkPort_NetworkPort->find("`networkports_id_1`='0'
+         OR `networkports_id_2`='0'");
+      $this->assertEquals(count($zombieConnect), 0, 'Zombie connections detected : '.print_r($zombieConnect, true));
       
       
       // Test modifications of IP of the switch

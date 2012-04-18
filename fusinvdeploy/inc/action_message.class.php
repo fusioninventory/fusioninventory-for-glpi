@@ -69,4 +69,5 @@ class PluginFusinvdeployAction_Message extends CommonDBTM {
       return $response;
    }
 }
+
 ?>

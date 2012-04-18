@@ -91,12 +91,17 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
    }
 
 
-   
+
+   /**
+    * Get the value of a field in configlog
+    *
+    * @global object $DB
+    * @param $field name of the field
+    * 
+    * @return value or false
+    */
    function getValue($field) {
       global $DB;
-
-      // Get mapping
-      //    plugin_fusioninventory_mappings_id
 
       $query = "SELECT days
                 FROM ".$this->getTable()."
@@ -164,7 +169,6 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
          }
       }
 
-//      $this->showFormButtons($options);
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "w")) {
          echo "<tr class='tab_bg_2'><td align='center' colspan='4'>
                <input type='hidden' name='tabs' value='history'/>

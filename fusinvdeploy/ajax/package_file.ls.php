@@ -54,4 +54,5 @@ $data = get_directory_contents(DIRECTORY);
 # Add the root directory
 array_push($data, array('id' => '/', 'text' => '', 'url' => '/', 'leaf' => 'true'));
 print json_encode($data);
+
 ?>

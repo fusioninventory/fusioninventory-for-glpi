@@ -77,6 +77,7 @@ function pluginFusinvsnmpGetCurrentVersion($version) {
          } else if (TableExists("glpi_plugin_fusioninventory_config")) {
             $query = "SELECT version FROM glpi_plugin_fusioninventory_config LIMIT 1";
          }
+         $data = array();
          if ($query != "") {
             if ($result=$DB->query($query)) {
                if ($DB->numrows($result) == "1") {
@@ -167,9 +168,6 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    
    $configSNMP = new PluginFusinvSNMPConfig;
    $configSNMP->initConfigModule();
-   
-   $prepare_task = array();
-   $prepare_rangeip = array();
    
    /*
     * Add SNMPQUERY module if not present 
@@ -1374,10 +1372,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->changeField($newTable,
                                  "comment",
                                  "comment",
-                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");
-      
-      $migration->migrationOneTable($newTable);
-            
+                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");      
+      $migration->migrationOneTable($newTable);            
          $migration->changeField($newTable,
                                  "ID",
                                  "id",
@@ -1385,10 +1381,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->changeField($newTable,
                                  "comments",
                                  "comment",
-                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");
-         
+                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");         
       $migration->migrationOneTable($newTable);
-
          $migration->addField($newTable,
                                  "id",
                                  "int(11) NOT NULL AUTO_INCREMENT");
@@ -1398,6 +1392,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->addField($newTable,
                                  "comment",
                                  "text COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->migrationOneTable($newTable);
  
       
    /*
@@ -1424,10 +1419,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->changeField($newTable,
                                  "comment",
                                  "comment",
-                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");
-      
-      $migration->migrationOneTable($newTable);
-            
+                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");      
+      $migration->migrationOneTable($newTable);            
          $migration->changeField($newTable,
                                  "ID",
                                  "id",
@@ -1435,10 +1428,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->changeField($newTable,
                                  "comments",
                                  "comment",
-                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");
-         
+                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");         
       $migration->migrationOneTable($newTable);
-
          $migration->addField($newTable,
                                  "id",
                                  "int(11) NOT NULL AUTO_INCREMENT");
@@ -1448,7 +1439,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->addField($newTable,
                                  "comment",
                                  "text COLLATE utf8_unicode_ci DEFAULT NULL");
-      
+      $migration->migrationOneTable($newTable);
          
       
    /*
@@ -1475,10 +1466,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->changeField($newTable,
                                  "comment",
                                  "comment",
-                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");
-      
-      $migration->migrationOneTable($newTable);
-            
+                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");      
+      $migration->migrationOneTable($newTable);            
          $migration->changeField($newTable,
                                  "ID",
                                  "id",
@@ -1496,10 +1485,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->dropField($newTable,
                                "itemtype");
          $migration->dropField($newTable,
-                               "vlan");
-         
+                               "vlan");         
       $migration->migrationOneTable($newTable);
-
          $migration->addField($newTable,
                                  "id",
                                  "int(11) NOT NULL AUTO_INCREMENT");
@@ -1509,7 +1496,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->addField($newTable,
                                  "comment",
                                  "text COLLATE utf8_unicode_ci DEFAULT NULL");
-
+      $migration->migrationOneTable($newTable);
+         
       
    /*
     * glpi_plugin_fusinvsnmp_configlogfields
@@ -1551,10 +1539,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->changeField($newTable,
                                  "days",
                                  "days",
-                                 "int(255) NOT NULL DEFAULT '-1'");
-         
-      $migration->migrationOneTable($newTable);      
-      
+                                 "int(255) NOT NULL DEFAULT '-1'");         
+      $migration->migrationOneTable($newTable);            
          $migration->changeField($newTable,
                                  "ID",
                                  "id",
@@ -1562,10 +1548,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->changeField($newTable,
                                  "field",
                                  "plugin_fusioninventory_mappings_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-      
-      $migration->migrationOneTable($newTable); 
-            
+                                 "int(11) NOT NULL DEFAULT '0'");      
+      $migration->migrationOneTable($newTable);             
          $migration->addField($newTable,
                                  "id",
                                  "int(8) NOT NULL AUTO_INCREMENT");
@@ -1577,6 +1561,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                                  "int(255) NOT NULL DEFAULT '-1'");
          $migration->addKey($newTable,
                             "plugin_fusioninventory_mappings_id");
+      $migration->migrationOneTable($newTable);
       
       
    /*
@@ -1621,10 +1606,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->changeField($newTable,
                                  "plugin_fusinvsnmp_models_id",
                                  "plugin_fusinvsnmp_models_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         
-   $migration->migrationOneTable($newTable);
-      
+                                 "int(11) NOT NULL DEFAULT '0'");         
+   $migration->migrationOneTable($newTable);      
       $migration->addField($newTable, 
                            "manufacturers_id", 
                            "int(11) NOT NULL DEFAULT '0'");   
@@ -1667,6 +1650,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
       $migration->addField($newTable, 
                            "releasedsnmpmodel_id", 
                            "int(11) NOT NULL DEFAULT '0'");
+   $migration->migrationOneTable($newTable);
    
    
    /*
@@ -1691,10 +1675,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->changeField($newTable,
                                  "log",
                                  "log",
-                                 "text DEFAULT NULL");
-         
-      $migration->migrationOneTable($newTable);
-      
+                                 "text DEFAULT NULL");         
+      $migration->migrationOneTable($newTable);      
          $migration->addField($newTable,
                                  "id",
                                  "int(11) NOT NULL AUTO_INCREMENT");
@@ -1704,7 +1686,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->addField($newTable,
                                  "log",
                                  "text DEFAULT NULL");
-      
+      $migration->migrationOneTable($newTable);
       
       
    /*
@@ -1742,10 +1724,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                                  "mapping_name",
                                  "plugin_fusioninventory_mappings_id",
                                  "int(11) NOT NULL DEFAULT '0'");
-      }
-   
+      }   
    $migration->migrationOneTable($newTable);
-   
       if (!TableExists($newTable)) {
          $query = "CREATE TABLE `".$newTable."` (
                      `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1784,10 +1764,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->changeField($newTable,
                                  "vlan",
                                  "vlan",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-  
-      $migration->migrationOneTable($newTable);
-      
+                                 "tinyint(1) NOT NULL DEFAULT '0'");  
+      $migration->migrationOneTable($newTable);      
          $migration->addField($newTable,
                                  "id",
                                  "int(11) NOT NULL AUTO_INCREMENT");
@@ -1816,6 +1794,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                             array("plugin_fusinvsnmp_miboids_id", "plugin_fusinvsnmp_constructdevices_id", "plugin_fusioninventory_mappings_id"),
                             "unicity",
                             "UNIQUE");
+      $migration->migrationOneTable($newTable);
          
    
    /*
@@ -1851,10 +1830,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->changeField($newTable,
                               "plugin_fusioninventory_agentprocesses_id",
                               "plugin_fusioninventory_agentprocesses_id",
-                              "int(11) NOT NULL DEFAULT '0'");
-      
-      $migration->migrationOneTable($newTable);
-      
+                              "int(11) NOT NULL DEFAULT '0'");      
+      $migration->migrationOneTable($newTable);      
          $migration->addField($newTable, 
                               "id", 
                               "int(11) NOT NULL AUTO_INCREMENT");      
@@ -1943,10 +1920,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->changeField($newTable,
                                  "is_active",
                                  "is_active",
-                                 "tinyint(1) NOT NULL DEFAULT '1'");
-      
-      $migration->migrationOneTable($newTable);
-      
+                                 "tinyint(1) NOT NULL DEFAULT '1'");      
+      $migration->migrationOneTable($newTable);      
          $migration->changeField($newTable,
                                  "ID",
                                  "id",
@@ -1977,8 +1952,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                                  "tinyint(1) NOT NULL DEFAULT '0'");
          $migration->addField($newTable, 
                               "plugin_fusioninventory_mappings_id", 
-                              "int(11) NOT NULL DEFAULT '0'");
-         
+                              "int(11) NOT NULL DEFAULT '0'");         
       $migration->migrationOneTable($newTable);
       
          // Update with mapping
@@ -2034,10 +2008,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->dropKey($newTable, 
                              "oid_port_dyn");
          $migration->dropKey($newTable, 
-                             "activation");
-      
-      $migration->migrationOneTable($newTable);
-      
+                             "activation");      
+      $migration->migrationOneTable($newTable);      
          $migration->addField($newTable,
                                  "id",
                                  "int(11) NOT NULL AUTO_INCREMENT");
@@ -2085,6 +2057,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                             "is_active"); 
          $migration->addKey($newTable,
                             "plugin_fusioninventory_mappings_id");
+      $migration->migrationOneTable($newTable);
 
 
    /*
@@ -2116,10 +2089,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->changeField($newTable, 
                                  "comment", 
                                  "comment", 
-                                 "text COLLATE utf8_unicode_ci");      
-      
+                                 "text COLLATE utf8_unicode_ci");            
       $migration->migrationOneTable($newTable);
-
          $migration->addField($newTable, 
                               "id", 
                               "int(11) NOT NULL AUTO_INCREMENT");
@@ -2138,7 +2109,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->addKey($newTable,
                             "name");      
          $migration->addKey($newTable,
-                            "itemtype");      
+                            "itemtype");   
+      $migration->migrationOneTable($newTable);
       
       
    /*
@@ -2192,10 +2164,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->changeField($newTable,
                                  "last_PID_update",
                                  "last_PID_update",
-                                 "int(11) NOT NULL DEFAULT '0'");
-      
-      $migration->migrationOneTable($newTable);      
-      
+                                 "int(11) NOT NULL DEFAULT '0'");      
+      $migration->migrationOneTable($newTable);            
          $migration->changeField($newTable,
                                  "ID",
                                  "id",
@@ -2219,10 +2189,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->dropKey($newTable, 
                              "FK_networking");
          $migration->dropKey($newTable, 
-                             "FK_model_infos");
-         
-      $migration->migrationOneTable($newTable);
-      
+                             "FK_model_infos");         
+      $migration->migrationOneTable($newTable);      
          $migration->addField($newTable,
                                  "id",
                                  "int(11) NOT NULL AUTO_INCREMENT");
@@ -2258,6 +2226,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->addKey($newTable,
                             array("plugin_fusinvsnmp_models_id", "plugin_fusinvsnmp_configsecurities_id"),
                             "plugin_fusinvsnmp_models_id");
+      $migration->migrationOneTable($newTable);
       
       
    /*
@@ -2283,10 +2252,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->changeField($newTable,
                                  "ip",
                                  "ip",
-                                 "varchar(255) DEFAULT NULL");
-      
-      $migration->migrationOneTable($newTable);
-      
+                                 "varchar(255) DEFAULT NULL");      
+      $migration->migrationOneTable($newTable);      
          $migration->changeField($newTable,
                                  "ID",
                                  "id",
@@ -2300,10 +2267,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                                  "ip",
                                  "varchar(255) DEFAULT NULL");
          $migration->dropKey($newTable, 
-                             "ifaddr");
-         
-      $migration->migrationOneTable($newTable);
-         
+                             "ifaddr");         
+      $migration->migrationOneTable($newTable);         
          $migration->addField($newTable,
                                  "id",
                                  "int(11) NOT NULL AUTO_INCREMENT");
@@ -2317,6 +2282,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                             "ip");
          $migration->addKey($newTable,
                             "networkequipments_id");
+      $migration->migrationOneTable($newTable);
   
       
    /*
@@ -2398,10 +2364,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->changeField($newTable,
                                  "lastup",
                                  "lastup",
-                                 "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
-      
-      $migration->migrationOneTable($newTable);
-      
+                                 "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");      
+      $migration->migrationOneTable($newTable);      
          $migration->changeField($newTable,
                                  "ID",
                                  "id",
@@ -2415,10 +2379,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                                  "mac",
                                  "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
          $migration->dropKey($newTable, 
-                             "FK_networking_ports");
-         
-      $migration->migrationOneTable($newTable);
-         
+                             "FK_networking_ports");         
+      $migration->migrationOneTable($newTable);         
          $migration->addField($newTable,
                                  "id",
                                  "int(11) NOT NULL AUTO_INCREMENT");
@@ -2472,6 +2434,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                                  "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");         
          $migration->addKey($newTable,
                             "networkports_id");
+      $migration->migrationOneTable($newTable);
       
       
    /*
@@ -2545,10 +2508,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->changeField($newTable,
                                  "pages_total_fax",
                                  "pages_total_fax",
-                                 "int(11) NOT NULL DEFAULT '0'");
-      
-      $migration->migrationOneTable($newTable);       
-      
+                                 "int(11) NOT NULL DEFAULT '0'");      
+      $migration->migrationOneTable($newTable);             
          $migration->changeField($newTable,
                                  "ID",
                                  "id",
@@ -2556,10 +2517,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->changeField($newTable,
                                  "FK_printers",
                                  "printers_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         
-      $migration->migrationOneTable($newTable); 
-      
+                                 "int(11) NOT NULL DEFAULT '0'");         
+      $migration->migrationOneTable($newTable);       
          $migration->addField($newTable,
                                  "id",
                                  "int(11) NOT NULL AUTO_INCREMENT");
@@ -2608,6 +2567,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->addKey($newTable,
                             array("printers_id", "date"),
                             "printers_id");
+      $migration->migrationOneTable($newTable);
       
       
    /*
@@ -2649,10 +2609,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->changeField($newTable,
                                  "last_fusioninventory_update",
                                  "last_fusioninventory_update",
-                                 "datetime DEFAULT NULL");
-      
-      $migration->migrationOneTable($newTable);      
-      
+                                 "datetime DEFAULT NULL");      
+      $migration->migrationOneTable($newTable);            
          $migration->changeField($newTable,
                                  "ID",
                                  "id",
@@ -2676,10 +2634,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->dropKey($newTable, 
                              "FK_printers");
          $migration->dropKey($newTable, 
-                             "FK_snmp_connection");
-         
-      $migration->migrationOneTable($newTable);
-      
+                             "FK_snmp_connection");         
+      $migration->migrationOneTable($newTable);      
          $migration->addField($newTable,
                                  "id",
                                  "int(11) NOT NULL AUTO_INCREMENT");      
@@ -2707,6 +2663,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                             "printers_id");
          $migration->addKey($newTable,
                             "plugin_fusinvsnmp_models_id");
+      $migration->migrationOneTable($newTable);
    
       
    /*
@@ -2741,9 +2698,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                                  "state",
                                  "state",
                                  "int(3) NOT NULL DEFAULT '100'");
-
-      $migration->migrationOneTable($newTable);
-      
+      $migration->migrationOneTable($newTable);      
          $migration->changeField($newTable,
                                  "ID",
                                  "id",
@@ -2755,8 +2710,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->changeField($newTable,
                                  "FK_cartridges",
                                  "cartridges_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-      
+                                 "int(11) NOT NULL DEFAULT '0'");      
          $migration->addField($newTable, 
                               "plugin_fusioninventory_mappings_id", 
                               "int(11) NOT NULL DEFAULT '0'");
@@ -2777,10 +2731,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
             }
          }
          $migration->dropField($newTable,
-                               "object_name");
-      
-      $migration->migrationOneTable($newTable);
-      
+                               "object_name");      
+      $migration->migrationOneTable($newTable);      
          $migration->addField($newTable,
                                  "id",
                                  "bigint(100) NOT NULL AUTO_INCREMENT");
@@ -2802,6 +2754,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                             "plugin_fusioninventory_mappings_id");
          $migration->addKey($newTable,
                             "cartridges_id");
+      $migration->migrationOneTable($newTable);
       
       
    /*
@@ -2856,10 +2809,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->changeField($newTable,
                                  "is_deleted",
                                  "is_deleted",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-      
-      $migration->migrationOneTable($newTable);
-      
+                                 "tinyint(1) NOT NULL DEFAULT '0'");      
+      $migration->migrationOneTable($newTable);      
          $migration->changeField($newTable,
                                  "ID",
                                  "id",
@@ -2879,10 +2830,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->dropField($newTable,
                                "priv_protocol");
          $migration->dropField($newTable,
-                               "deleted");
-         
+                               "deleted");         
       $migration->migrationOneTable($newTable);
-
          $migration->addField($newTable,
                                  "id",
                                  "int(11) NOT NULL AUTO_INCREMENT"); 
@@ -2917,7 +2866,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                             "snmpversion");
          $migration->addKey($newTable,
                             "is_deleted");
-         
+      $migration->migrationOneTable($newTable);
          
          
       
@@ -3062,11 +3011,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->changeField($newTable,
                                  "plugin_fusioninventory_agentprocesses_id",
                                  "plugin_fusioninventory_agentprocesses_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-      
+                                 "int(11) NOT NULL DEFAULT '0'");      
       $migration->migrationOneTable($newTable);
-      
-      
          $migration->changeField($newTable,
                                  "ID",
                                  "id",
@@ -3077,8 +3023,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable, 
                               "plugin_fusioninventory_mappings_id",
-                              "int(11) NOT NULL DEFAULT '0'");
-         
+                              "int(11) NOT NULL DEFAULT '0'");         
       $migration->migrationOneTable($newTable);
       
          // Update with mapping
@@ -3118,10 +3063,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                                  "plugin_fusioninventory_agentprocesses_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->dropKey($newTable, 
-                             "FK_ports");
-         
-      $migration->migrationOneTable($newTable);  
-         
+                             "FK_ports");         
+      $migration->migrationOneTable($newTable);
          $migration->addField($newTable,
                                  "id",
                                  "int(11) NOT NULL AUTO_INCREMENT");
@@ -3152,7 +3095,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                             "plugin_fusioninventory_agentprocesses_id");
          $migration->addKey($newTable,
                             "date_mod");
-
+      $migration->migrationOneTable($newTable);
 
       
    /*
@@ -3185,10 +3128,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->changeField($newTable,
                                  "plugin_fusinvsnmp_configsecurities_id",
                                  "plugin_fusinvsnmp_configsecurities_id",
-                                 "int(11) NOT NULL DEFAULT '0'");        
-      
+                                 "int(11) NOT NULL DEFAULT '0'");  
       $migration->migrationOneTable($newTable);
-
          $migration->addField($newTable,
                                  "id",
                                  "int(11) NOT NULL AUTO_INCREMENT");
@@ -3206,6 +3147,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->addKey($newTable,
                             "plugin_fusioninventory_unknowndevices_id");
+      $migration->migrationOneTable($newTable);
          
       
       
@@ -3247,9 +3189,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                                  "senddico",
                                  "senddico",
                                  "tinyint(1) NOT NULL DEFAULT '0'");
-
-      $migration->migrationOneTable($newTable);
-   
+      $migration->migrationOneTable($newTable);   
          $migration->addField($newTable,
                                  "id",
                                  "int(11) NOT NULL AUTO_INCREMENT");
@@ -3273,6 +3213,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                                  "tinyint(1) NOT NULL DEFAULT '0'");
          $migration->addKey($newTable, 
                             "plugin_fusioninventory_agents_id");
+      $migration->migrationOneTable($newTable);
    
       
    /*
@@ -3332,10 +3273,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->changeField($newTable,
                                  "nb_import",
                                  "nb_import",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         
-      $migration->migrationOneTable($newTable);
- 
+                                 "int(11) NOT NULL DEFAULT '0'");         
+      $migration->migrationOneTable($newTable); 
          $migration->addField($newTable,
                                  "id",
                                  "int(11) NOT NULL AUTO_INCREMENT");
@@ -3372,7 +3311,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->addField($newTable,
                                  "nb_import",
                                  "int(11) NOT NULL DEFAULT '0'");
-         
+      $migration->migrationOneTable($newTable);
       
       
    /*
