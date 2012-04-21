@@ -628,7 +628,6 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "</table>";
       
    }
-   
 }
 
 ?>

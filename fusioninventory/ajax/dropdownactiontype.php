@@ -56,5 +56,4 @@ if (isset($_POST['value'])) {
 $pfTaskjob = new PluginFusioninventoryTaskjob;
 $pfTaskjob->dropdownActionType("ActionType", $_POST['method'], $value, "");
 
-
 ?>

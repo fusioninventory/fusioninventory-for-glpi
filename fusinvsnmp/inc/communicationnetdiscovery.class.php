@@ -122,7 +122,13 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       return $errors;
    }
 
+   
 
+   /**
+    * Prepare data and send them to rule engine
+    * 
+    * @param type $p_xml simpleXML object
+    */
    function sendCriteria($p_xml) {
       
       PluginFusioninventoryCommunication::addLog(
@@ -234,6 +240,13 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
 
 
+   /**
+    * After rule engine passed, update task (log) and create item if required
+    * 
+    * @param type $items_id
+    * @param type $itemtype
+    * @param type $entities_id 
+    */
    function rulepassed($items_id, $itemtype, $entities_id=0) {
 
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
@@ -280,6 +293,11 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
 
 
+   /**
+    * Import discovered device (add / update data in GLPI DB)
+    * 
+    * @param object $item 
+    */
    function importDevice($item) {
       
       PluginFusioninventoryCommunication::addLog(
@@ -314,8 +332,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       }      
       if (!isset($_SESSION['glpiactiveentities_string'])) {
          $_SESSION['glpiactiveentities_string'] = "'".$item->fields['entities_id']."'";
-      }
-      
+      }      
       
       switch ($item->getType()) {
          
@@ -613,6 +630,10 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
    }
 
 
+   
+   /**
+    * Used to add log in the task
+    */
    function addtaskjoblog() {
 
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();

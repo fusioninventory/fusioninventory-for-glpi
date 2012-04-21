@@ -56,6 +56,7 @@ if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 $iprange = new PluginFusioninventoryIPRange();
 
 switch($_POST['glpi_tab']) {
+   
    case -1:
       $pfTaskjob = new PluginFusioninventoryTaskjob();
       $pfTaskjob->manageTasksByObject("PluginFusioninventoryIPRange", $_POST['id']);
@@ -69,6 +70,7 @@ switch($_POST['glpi_tab']) {
    default :
       CommonGLPI::displayStandardTab($iprange, $_REQUEST['glpi_tab']);
       break;
+   
 }
 
 Html::ajaxFooter();

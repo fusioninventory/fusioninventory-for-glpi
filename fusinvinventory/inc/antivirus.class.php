@@ -140,10 +140,10 @@ class PluginFusinvinventoryAntivirus extends CommonDBTM {
 
       $a_antivirus = $this->find("`computers_id`='".$items_id."'");
       $antivirusData = array();
-      foreach ($a_antivirus as $antivirusData) {
-
+      if (count($a_antivirus) > 0) {
+         $antivirusData = current($a_antivirus);
       }
-
+      
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
  
       if (count($antivirusData) == '0') {

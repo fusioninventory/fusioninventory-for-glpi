@@ -41,3 +41,5 @@ foreach ($itr as $filePath => $fileInfo) {
       unlink($fileInfo->getPathname());
    }
 }
+
+?>

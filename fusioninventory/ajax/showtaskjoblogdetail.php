@@ -51,8 +51,8 @@ if (!defined('GLPI_ROOT')) {
 }
 
 Session::checkCentralAccess();
-//echo "<td colspan='8'>";
+
 $pftaskjoblog = new PluginFusioninventoryTaskjoblog();
 echo $pftaskjoblog->showHistoryInDetail($_POST["agents_id"], $_POST["uniqid"], "900")."</td>";
-//echo "</td>";
+
 ?>

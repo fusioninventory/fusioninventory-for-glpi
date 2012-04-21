@@ -59,6 +59,7 @@ $pfUnknownDevice = new PluginFusioninventoryUnknownDevice;
 $pfUnknownDevice->getFromDB($_POST['id']);
 
 switch($_POST['glpi_tab']) {
+   
    case -1 :
       NetworkPort::showForItem($pfUnknownDevice);
       $pfUnknownDevice->importForm($CFG_GLPI['root_doc'] . '/plugins/fusioninventory/front/unknowndevice.form.php?id='.$_POST["id"],$_POST["id"]);
@@ -74,7 +75,7 @@ switch($_POST['glpi_tab']) {
       $pfUnknownDevice->importForm($CFG_GLPI['root_doc'] . '/plugins/fusioninventory/front/unknowndevice.form.php?id='.$_POST["id"],$_POST["id"]);
       break;
 
-   case 3 :
+   case 3:
       break;
 
    case 4 :
@@ -84,6 +85,7 @@ switch($_POST['glpi_tab']) {
    default :
       CommonGLPI::displayStandardTab($pfUnknownDevice, $_REQUEST['glpi_tab']);
       break;
+   
 }
 
 Html::ajaxFooter();

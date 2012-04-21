@@ -433,22 +433,6 @@ class PluginFusioninventoryCommunication {
     * @return SimpleXMLElement object
     */
    function cleanXML($xml) {
-//      foreach ($xml->children() as $key=>$value) {
-//         if (count($value->children()) > 0) {
-//            $value = $this->cleanXML($value);
-//         } else {       
-//            if (count($value) > 1) {
-//               for($i=count($value)-1;$i>=0;$i--){
-//                  $value2 = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep($value[$i]));
-//                  $xml->$key->$value[$i] = $value2;
-//               }
-//            } else {
-//               $value = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep($value));
-//               $xml->$key = $value;
-//            }
-//         }      
-//      }
-
       $nodes = array();
       foreach ($xml->children() as $key=>$value) {
         if (!isset($nodes[$key])) {
@@ -475,10 +459,8 @@ class PluginFusioninventoryCommunication {
             }
          }
       }
-
       return $xml;
    }
-
 }
 
 ?>

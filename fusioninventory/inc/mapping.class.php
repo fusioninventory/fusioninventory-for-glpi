@@ -69,7 +69,6 @@ class PluginFusioninventoryMapping extends CommonDBTM {
     * @param $parm
     */
    function set($parm) {
-//      $p_itemtype, $p_name, $p_table, $p_tablefield, $p_locale, $p_shortlocale) {
       global $DB;
       
       $data = current(getAllDatasFromTable("glpi_plugin_fusioninventory_mappings", 

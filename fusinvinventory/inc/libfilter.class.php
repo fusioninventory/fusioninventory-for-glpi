@@ -155,7 +155,7 @@ class PluginFusinvinventoryLibfilter extends CommonDBTM {
          }
       }
       return array($vendors_name, $devices_name);
-    }
+   }
 }
 
 ?>

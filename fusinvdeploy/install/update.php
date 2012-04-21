@@ -84,4 +84,5 @@ function pluginFusinvdeployUpdate($current_version, $migrationname='Migration') 
 
    }
 }
+
 ?>

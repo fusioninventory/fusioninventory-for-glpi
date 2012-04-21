@@ -269,9 +269,8 @@ class PluginFusioninventoryWizard {
                }
             }
          }
-      } else {
-         return;
       }
+      return;
    }
 
 
@@ -299,11 +298,12 @@ class PluginFusioninventoryWizard {
             }
             $p_link = $link;
          }
-      } else {
-         return;
       }
+      return;
    }
 
+   
+   
   // **************************************************************//
   // ********************* Define fil ariane **********************//
   // **************************************************************//
@@ -418,6 +418,7 @@ class PluginFusioninventoryWizard {
       $LANG['plugin_fusioninventory']['wizard'][8]   => "w_taskslog");
    }
 
+   
    
   // **************************************************************//
   // ********************* All wizard display **********************//
@@ -549,8 +550,6 @@ class PluginFusioninventoryWizard {
    }
 
    
-
-
 
    /**
     * Manage credential for ESX servers
@@ -725,6 +724,7 @@ class PluginFusioninventoryWizard {
       }
       return $method;
    }
+   
    
    
    static function addButton() {

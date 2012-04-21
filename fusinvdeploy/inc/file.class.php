@@ -542,4 +542,5 @@ class PluginFusinvdeployFile extends CommonDBTM {
    }
 
 }
+
 ?>

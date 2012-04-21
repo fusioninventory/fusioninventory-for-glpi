@@ -55,7 +55,6 @@ if (isset($_GET["popup"])) {
 if (isset($_SESSION["glpipopup"]["name"])) {
    switch ($_SESSION["glpipopup"]["name"]) {
 
-
       case "test_rule" :
          Html::popHeader($LANG['buttons'][50],$_SERVER['PHP_SELF']);
          include "rule.test.php";

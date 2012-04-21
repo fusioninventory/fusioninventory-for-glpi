@@ -115,7 +115,6 @@ class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
                                               "Unable to find agent to run this job");
             }
          }
-//         $job->fields['status']= 1;
          $job->update($job->fields);
       } else {
          foreach($agent_actions as $targets) {

@@ -279,4 +279,5 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
       return $this->sxml;
    }
 }
+
 ?>

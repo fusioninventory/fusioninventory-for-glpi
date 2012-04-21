@@ -53,4 +53,5 @@ $action = new PluginFusinvdeployAction;
 $res = $action->getAllDatas($_REQUEST);
 
 echo $res;
+
 ?>

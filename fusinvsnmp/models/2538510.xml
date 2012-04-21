@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[2538510]]></name>
-	<type>Printer</type>
+	<type>3</type>
 	<key>Printer0369</key>
 	<comments><![CDATA[Xerox WorkCentre 7425;System 75.1.0,ESS PS1.222.3,IOT 41.1.0,FIN A8.1.0,IIT 22.13.1,ADF 20.0.0,SJFI3.0.12,SSMI1.11.1
 
@@ -15,7 +15,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.1.1.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>comments</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -25,7 +25,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.1.6.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>location</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -45,7 +45,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.1.5.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>name</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -55,7 +55,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.43.11.1.1.8.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>tonerblackmax</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -65,7 +65,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.43.11.1.1.9.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>tonerblackremaining</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -75,7 +75,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.4.1.2699.1.2.1.2.1.1.2.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>model</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -85,7 +85,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.43.10.2.1.4.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>pagecountertotalpages</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -95,7 +95,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.25.2.3.1.5.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>memory</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -105,7 +105,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.43.8.2.1.14.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>enterprise</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -115,7 +115,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.43.11.1.1.8.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>toneryellowmax</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -125,7 +125,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.43.11.1.1.9.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>toneryellowremaining</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -135,7 +135,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.43.11.1.1.8.1.3</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>tonermagentamax</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -145,7 +145,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.43.11.1.1.9.1.3</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>tonermagentaremaining</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -155,7 +155,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.43.11.1.1.8.1.4</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>tonercyanmax</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -165,7 +165,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.43.11.1.1.9.1.4</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>tonercyanremaining</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -175,7 +175,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.43.11.1.1.9.1.5</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>wastetonerremaining</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -185,7 +185,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.43.11.1.1.9.1.6</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>drumblackremaining</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -195,7 +195,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.43.5.1.1.17.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>serial</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -205,7 +205,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.43.11.1.1.6.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>tonerblack</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -215,7 +215,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.43.11.1.1.6.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>toneryellow</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -225,7 +225,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.43.11.1.1.6.1.3</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>tonermagenta</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -235,7 +235,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.43.11.1.1.6.1.4</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>tonercyan</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -245,7 +245,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.43.11.1.1.6.1.5</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>wastetoner</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -255,7 +255,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.43.11.1.1.6.1.6</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>drumblack</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -265,7 +265,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.43.11.1.1.6.1.7</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>drumyellow</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -275,7 +275,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.43.11.1.1.6.1.8</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>drummagenta</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -285,7 +285,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.43.11.1.1.6.1.9</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>drumcyan</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -295,7 +295,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.43.11.1.1.8.1.5</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>wastetonermax</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -305,7 +305,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.43.11.1.1.8.1.6</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>drumblackmax</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -315,7 +315,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.4.1.253.8.53.13.2.1.8.1.20.34</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>pagecounterblackpages</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -325,7 +325,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.4.1.253.8.53.13.2.1.8.103.20.3</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>pagecounterblackpages_copy</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -335,7 +335,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.2.2.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>ifName</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -345,7 +345,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.2.2.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>ifIndex</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -355,7 +355,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.2.2.1.6</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>ifPhysAddress</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -365,7 +365,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.2.2.1.3</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>ifType</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -375,7 +375,7 @@ Xerox WorkCentre 7435;System 75.3.1,ESS PS1.222.18,IOT 41.1.0,FIN A7.2.0,IIT 22.
 			<oid>.1.3.6.1.2.1.4.20.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>ifaddr</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>

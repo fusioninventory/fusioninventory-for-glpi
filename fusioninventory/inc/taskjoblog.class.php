@@ -238,8 +238,6 @@ function appear_array(id){
      
       echo "<script type='text/javascript' src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/prototype.js'></script>";
       echo "<script type='text/javascript' src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/effects.js'></script>";
-
-      
    }
 
 
@@ -488,41 +486,41 @@ function appear_array(id){
 
       switch ($datas['state']) {
 
-         case 7 :
+         case 7:
             $text .= "<td align='center'>";
             $text .= $LANG['plugin_fusioninventory']['taskjoblog'][7];
             break;
 
-         case 1 :
+         case 1:
             $text .= "<td align='center'>";
             $text .= $LANG['plugin_fusioninventory']['taskjoblog'][1];
             break;
 
-         case 2 :
+         case 2:
             $text .= "<td style='background-color: rgb(0, 255, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>";
             $text .= "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][2]."</strong>";
             $finish++;
             break;
 
-         case 3 :
+         case 3:
             $text .= "<td style='background-color: rgb(255, 120, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>";
             $text .= "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][3]."</strong>";
             $finish++;
             break;
 
-         case 4 :
+         case 4:
             $text .= "<td style='background-color: rgb(255, 0, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>";
             $text .= "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][4]."</strong>";
             $finish++;
             break;
 
-         case 5 :
+         case 5:
             $text .= "<td style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>";
             $text .= "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][5]."</strong>";
             $finish++;
             break;
 
-         case 6 :
+         case 6:
             $text .= "<td style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>";
             $text .= "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][6]."</strong>";
             break;

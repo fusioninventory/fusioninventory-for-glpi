@@ -221,8 +221,7 @@ class PluginFusioninventoryRestCommunication {
          fclose($handle);
          return true;
       }
-   }
-   
+   }   
 }
 
 ?>

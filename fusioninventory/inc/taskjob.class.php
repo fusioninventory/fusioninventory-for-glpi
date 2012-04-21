@@ -970,8 +970,6 @@ return namelist;
          }
       }
       
-      
-      
       // Start agents must start in push mode
       foreach($_SESSION['glpi_plugin_fusioninventory']['agents'] as $agent_id=>$num) {
          $pfTaskjob->startAgentRemotly($agent_id);
@@ -1607,6 +1605,7 @@ return namelist;
    }
 
 
+   
    /**
     * Verify if definition or action not deleted
     *
@@ -1965,6 +1964,7 @@ return namelist;
    }
    
    
+
    /**
     * Function used to add item in definition or action of a taskjob
     *    and hide add form 
@@ -2089,7 +2089,7 @@ return namelist;
    }
    
    
-      
+
    function prepareRunTaskjob($a_taskjob) {
       $pFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       

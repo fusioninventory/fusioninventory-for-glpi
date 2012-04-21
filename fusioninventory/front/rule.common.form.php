@@ -43,7 +43,9 @@
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
+
 Session::checkLoginUser();
+
 $rule = $rulecollection->getRuleClass();
 $rulecollection->checkGlobal('r');
 
@@ -128,6 +130,7 @@ Html::header($LANG['common'][12], $_SERVER['PHP_SELF'], "admin",
              $rulecollection->menu_type, $rulecollection->menu_option);
 
 $rule->showForm($_GET["id"]);
+
 Html::footer();
 
 ?>

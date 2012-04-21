@@ -157,7 +157,6 @@ function plugin_init_fusinvsnmp() {
          $PLUGIN_HOOKS['headings']['fusinvsnmp'] = 'plugin_get_headings_fusinvsnmp';
          $PLUGIN_HOOKS['headings_action']['fusinvsnmp'] = 'plugin_headings_actions_fusinvsnmp';
 
-//         if (PluginFusinvsnmpAuth::haveRight("models","r")
          if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","r")
             OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity","r")
             //OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "iprange","r")
@@ -187,13 +186,6 @@ function plugin_init_fusinvsnmp() {
             $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['rulesnmpinventory']
                = '../fusinvsnmp/front/ruleinventory.php';
 
-/*
-            if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "iprange","w")) {
-//               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['iprange'] = 'front/iprange.form.php?add=1';
-               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['iprange'] = '../fusinvsnmp/front/iprange.form.php?add=1';
-               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['iprange'] = '../fusinvsnmp/front/iprange.php';
-            }
-*/
 			}
 
          // Fil ariane
@@ -211,6 +203,8 @@ function plugin_init_fusinvsnmp() {
 	}
 }
 
+
+
 // Name and Version of the plugin
 function plugin_version_fusinvsnmp() {
 	return array('name'           => 'FusionInventory SNMP',
@@ -223,6 +217,8 @@ function plugin_version_fusinvsnmp() {
                 'minGlpiVersion' => '0.80'// For compatibility / no install in version < 0.78
    );
 }
+
+
 
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_fusinvsnmp_check_prerequisites() {

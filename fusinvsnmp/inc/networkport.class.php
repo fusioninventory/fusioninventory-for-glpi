@@ -515,6 +515,7 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
                      // Create unknown device
                      $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
                      $input = array();
+                     $input['name'] = '';
                      $newID = $pluginFusioninventoryUnknownDevice->add($input);
                      $input['itemtype'] = "PluginFusioninventoryUnknownDevice";
                      $input['items_id'] = $newID;

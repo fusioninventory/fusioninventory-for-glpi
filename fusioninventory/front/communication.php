@@ -234,4 +234,6 @@ function handleOCSCommunication() {
    }
 }
 
+session_destroy();
+        
 ?>

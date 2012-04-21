@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[2768460]]></name>
-	<type>NetworkEquipment</type>
+	<type>2</type>
 	<key>Networking1701</key>
 	<comments><![CDATA[FSM7352PS 48+4 Enhanced L3 Stackable Switch with POE
 
@@ -11,28 +11,8 @@
 			<oid>.1.3.6.1.2.1.1.1.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>NetworkEquipment</mapping_type>
+			<mapping_type>2</mapping_type>
  			<mapping_name>comments</mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.0.8802.1.1.2.1.5.4795.1.2.7.0</oid>
-			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>NetworkEquipment</mapping_type>
- 			<mapping_name>entPhysicalModelName</mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.0.8802.1.1.2.1.5.4795.1.2.4.0</oid>
-			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>NetworkEquipment</mapping_type>
- 			<mapping_name>firmware</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>
@@ -41,7 +21,7 @@
 			<oid>.1.3.6.1.2.1.2.2.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>NetworkEquipment</mapping_type>
+			<mapping_type>2</mapping_type>
  			<mapping_name>ifdescr</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -51,7 +31,7 @@
 			<oid>.1.3.6.1.2.1.2.2.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>NetworkEquipment</mapping_type>
+			<mapping_type>2</mapping_type>
  			<mapping_name>ifIndex</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -61,7 +41,7 @@
 			<oid>.1.3.6.1.2.1.2.2.1.14</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>NetworkEquipment</mapping_type>
+			<mapping_type>2</mapping_type>
  			<mapping_name>ifinerrors</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -71,7 +51,7 @@
 			<oid>.1.3.6.1.2.1.2.2.1.10</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>NetworkEquipment</mapping_type>
+			<mapping_type>2</mapping_type>
  			<mapping_name>ifinoctets</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -81,7 +61,7 @@
 			<oid>.1.3.6.1.2.1.2.2.1.7</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>NetworkEquipment</mapping_type>
+			<mapping_type>2</mapping_type>
  			<mapping_name>ifinternalstatus</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -91,7 +71,7 @@
 			<oid>.1.3.6.1.2.1.2.2.1.9</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>NetworkEquipment</mapping_type>
+			<mapping_type>2</mapping_type>
  			<mapping_name>iflastchange</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -101,7 +81,7 @@
 			<oid>.1.3.6.1.2.1.2.2.1.4</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>NetworkEquipment</mapping_type>
+			<mapping_type>2</mapping_type>
  			<mapping_name>ifmtu</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -111,7 +91,7 @@
 			<oid>.1.3.6.1.2.1.2.2.1.20</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>NetworkEquipment</mapping_type>
+			<mapping_type>2</mapping_type>
  			<mapping_name>ifouterrors</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -121,7 +101,7 @@
 			<oid>.1.3.6.1.2.1.2.2.1.16</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>NetworkEquipment</mapping_type>
+			<mapping_type>2</mapping_type>
  			<mapping_name>ifoutoctets</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -131,7 +111,7 @@
 			<oid>.1.3.6.1.2.1.2.2.1.6</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>NetworkEquipment</mapping_type>
+			<mapping_type>2</mapping_type>
  			<mapping_name>ifPhysAddress</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -141,7 +121,7 @@
 			<oid>.1.3.6.1.2.1.2.2.1.5</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>NetworkEquipment</mapping_type>
+			<mapping_type>2</mapping_type>
  			<mapping_name>ifspeed</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -151,7 +131,7 @@
 			<oid>.1.3.6.1.2.1.2.2.1.8</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>NetworkEquipment</mapping_type>
+			<mapping_type>2</mapping_type>
  			<mapping_name>ifstatus</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -161,58 +141,8 @@
 			<oid>.1.3.6.1.2.1.2.2.1.3</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>NetworkEquipment</mapping_type>
+			<mapping_type>2</mapping_type>
  			<mapping_name>ifType</mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.3.6.1.2.1.4.20.1.1</oid>
-			<portcounter>0</portcounter>
-			<dynamicport>1</dynamicport>
-			<mapping_type>NetworkEquipment</mapping_type>
- 			<mapping_name>ipAdEntAddr</mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.3.6.1.2.1.4.22.1.2</oid>
-			<portcounter>0</portcounter>
-			<dynamicport>1</dynamicport>
-			<mapping_type>NetworkEquipment</mapping_type>
- 			<mapping_name>ipNetToMediaPhysAddress</mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.0.8802.1.1.2.1.3.2.0</oid>
-			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>NetworkEquipment</mapping_type>
- 			<mapping_name>lldpLocChassisId</mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.0.8802.1.1.2.1.4.1.1.5</oid>
-			<portcounter>0</portcounter>
-			<dynamicport>1</dynamicport>
-			<mapping_type>NetworkEquipment</mapping_type>
- 			<mapping_name>lldpRemChassisId</mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.0.8802.1.1.2.1.4.1.1.7</oid>
-			<portcounter>0</portcounter>
-			<dynamicport>1</dynamicport>
-			<mapping_type>NetworkEquipment</mapping_type>
- 			<mapping_name>lldpRemPortId</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>
@@ -221,28 +151,8 @@
 			<oid>.1.3.6.1.2.1.1.6.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>NetworkEquipment</mapping_type>
+			<mapping_type>2</mapping_type>
  			<mapping_name>location</mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.3.6.1.2.1.1.5.0</oid>
-			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>NetworkEquipment</mapping_type>
- 			<mapping_name>name</mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.0.8802.1.1.2.1.5.4795.1.2.5.0</oid>
-			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>NetworkEquipment</mapping_type>
- 			<mapping_name>serial</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>
@@ -251,7 +161,7 @@
 			<oid>.1.3.6.1.2.1.1.3.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>NetworkEquipment</mapping_type>
+			<mapping_type>2</mapping_type>
  			<mapping_name>uptime</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -263,6 +173,96 @@
 			<dynamicport>0</dynamicport>
 			<mapping_type>0</mapping_type>
  			<mapping_name></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid>.1.3.6.1.2.1.4.20.1.1</oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name>ipAdEntAddr</mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid>.1.3.6.1.2.1.4.22.1.2</oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name>ipNetToMediaPhysAddress</mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid>.1.3.6.1.2.1.1.5.0</oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name>name</mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid>.1.0.8802.1.1.2.1.4.1.1.5</oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name>lldpRemChassisId</mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid>.1.0.8802.1.1.2.1.4.1.1.7</oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name>lldpRemPortId</mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid>.1.0.8802.1.1.2.1.3.2.0</oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name>lldpLocChassisId</mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid>.1.0.8802.1.1.2.1.5.4795.1.2.4.0</oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name>firmware</mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid>.1.0.8802.1.1.2.1.5.4795.1.2.5.0</oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name>serial</mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid>.1.0.8802.1.1.2.1.5.4795.1.2.7.0</oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name>entPhysicalModelName</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>

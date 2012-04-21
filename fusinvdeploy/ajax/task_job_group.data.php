@@ -50,4 +50,5 @@ Html::header_nocache();
 $res = PluginFusinvdeployGroup::getAllDatas();
 
 echo $res;
+
 ?>

@@ -50,4 +50,5 @@ if ($_REQUEST['parent_type'] == '')
    echo PluginFusinvdeployState::getTaskjobsAllDatasTree($_REQUEST);
 else
    echo PluginFusinvdeployState::getTaskjobsDatasTreenode($_REQUEST);
+
 ?>

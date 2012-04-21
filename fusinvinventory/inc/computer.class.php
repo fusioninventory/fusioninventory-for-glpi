@@ -60,7 +60,7 @@ class PluginFusinvinventoryComputer extends CommonDBTM {
       return Session::haveRight('computer', 'r');
    }
 
-   
+
    
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       global $LANG;
@@ -110,6 +110,12 @@ class PluginFusinvinventoryComputer extends CommonDBTM {
    
    
    
+   /**
+    * Display informations about computer (bios...) 
+    * 
+    * @global type $LANG
+    * @param type $computers_id 
+    */   
    function showForm($computers_id) {
       global $LANG;
       
@@ -211,7 +217,6 @@ class PluginFusinvinventoryComputer extends CommonDBTM {
          echo "</table>";
       }
    }
-   
 }
 
 ?>

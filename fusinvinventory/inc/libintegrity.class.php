@@ -125,7 +125,6 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       echo "</table>";
       echo "<br/>";
       
-      
       $start = 0;
       if (isset($_REQUEST["start"])) {
          $start = $_REQUEST["start"];
@@ -196,7 +195,6 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
          $text = "";
          $a_sections_lib = array();
          foreach($a_sections['sections'] as $name=>$section) {
-            //echo $name."<br/>";
             $split = explode("/", $name);
             if (($split[1] > 0) OR (strstr($split[1], 'd'))) {
                $a_sectiontmp = unserialize($section);
@@ -707,13 +705,11 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
                         }
                         break;
                       
-                  }
-                   
+                  }                   
                   $text .= $this->displaySectionNotValid($computer_id, $itemtype, $name, $rname, $section_id);
                }
             }
          }
-
          echo "<tr>";
          echo "<th colspan='4'>";
          echo $Computer->getLink(1);
@@ -757,6 +753,18 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
 
 
    
+   /**
+    * Set text to display when section is not valid between last inventory
+    * and GLPI DB
+    * 
+    * @param type $computers_id
+    * @param type $sectionname
+    * @param type $name
+    * @param type $value
+    * @param type $onlyGLPI
+    * 
+    * @return string (text to display)
+    */
    function displaySectionNotValid($computers_id, $sectionname, $name, $value='',$onlyGLPI = 0) {
       $text = "<tr class='tab_bg_1'>";
       $text .= "<td>";
@@ -982,11 +990,6 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
                      }
                      break;
 
-//                  case 'Drive':
-//                     $a_sectionsGLPI = $computerDeviceDrive->find("`computers_id`='".$a_computerlib['computers_id']."'");
-//
-//                     break;
-
                   case 'STORAGES':
                      $a_sectionsGLPI = $computerDeviceHardDrive->find("`computers_id`='".$a_computerlib['computers_id']."'");
                      foreach ($a_sectionsGLPI as $items_id=>$dataC) {
@@ -1041,10 +1044,7 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
             }
          }         
       }
-      
-      
    }
-   
 }
 
 ?>

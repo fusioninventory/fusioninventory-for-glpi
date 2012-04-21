@@ -235,16 +235,10 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
 
          }
       }
-//      if ($changestatus == '0') {
-//         $pfTaskjobstatus->changeStatusFinish($taskjobs_id,
-//                                                                 0,
-//                                                                 '',
-//                                                                 1,
-//                                                                 "No IP found on the computer");
-//      }
       return $this->sxml;
    }
 
+   
 
    function getAgentsSubnet($nb_computers, $communication, $subnet='') {
       global $DB;

@@ -45,4 +45,5 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 $dropdown = new PluginFusioninventoryCredentialIp();
 include (GLPI_ROOT . "/ajax/dropdown.common.tabs.php");
+
 ?>

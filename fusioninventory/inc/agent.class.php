@@ -529,7 +529,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             echo "<input type='hidden' name='agent_id' value='".$agent_id."' />";
             break;
          
-         case '':
+         default:
             echo "SELinux problem, do 'setsebool -P httpd_can_network_connect on'";
             break;
 
@@ -643,7 +643,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             array_push($ret, "http://".$ip.":".$config->getValue($plugins_id, 'agent_port'));
          }
       }
-
       return $ret;
    }
 

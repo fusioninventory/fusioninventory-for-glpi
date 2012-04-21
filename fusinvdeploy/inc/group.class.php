@@ -748,3 +748,5 @@ class PluginFusinvdeployGroup extends CommonDBTM {
              $CFG_GLPI["ajax_wildcard"]."';\" id='search_$id' name='____data_$id' size='$size'>\n";
    }
 }
+
+?>

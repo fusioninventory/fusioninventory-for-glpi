@@ -1,8 +1,10 @@
 <model>
 	<name><![CDATA[4974062]]></name>
-	<type>Printer</type>
+	<type>3</type>
 	<key>Printer0491</key>
-	<comments><![CDATA[OKI OkiLAN 8300e Rev.04.55 10/100BASE Ethernet PrintServer: Attached to C5700 Rev.D2.12 : (C)2005 Oki Data Corporation
+	<comments><![CDATA[OKI OkiLAN 8200e Rev.03.B7 10/100BASE Ethernet PrintServer: Attached to C9600 Rev.01.58 : (C)2004 Oki Data Corporation
+
+OKI OkiLAN 8300e Rev.04.55 10/100BASE Ethernet PrintServer: Attached to C5700 Rev.D2.12 : (C)2005 Oki Data Corporation
 
 ]]></comments>
 	<oidlist>
@@ -11,7 +13,7 @@
 			<oid>.1.3.6.1.2.1.1.1.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>comments</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -21,7 +23,7 @@
 			<oid>.1.3.6.1.2.1.2.2.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>ifName</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -31,7 +33,7 @@
 			<oid>.1.3.6.1.2.1.2.2.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>ifIndex</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -41,7 +43,7 @@
 			<oid>.1.3.6.1.2.1.2.2.1.6</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>ifPhysAddress</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -51,7 +53,7 @@
 			<oid>.1.3.6.1.2.1.2.2.1.3</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>ifType</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -61,7 +63,7 @@
 			<oid>.1.3.6.1.2.1.1.6.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>location</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -81,7 +83,7 @@
 			<oid>.1.3.6.1.2.1.1.5.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>name</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -91,7 +93,7 @@
 			<oid>.1.3.6.1.2.1.43.10.2.1.4.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>pagecountertotalpages</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -101,7 +103,7 @@
 			<oid>.1.3.6.1.2.1.25.3.2.1.3.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>model</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -111,7 +113,7 @@
 			<oid>.1.3.6.1.2.1.25.2.3.1.5.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>memory</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -121,7 +123,7 @@
 			<oid>.1.3.6.1.2.1.43.8.2.1.14.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>enterprise</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -131,7 +133,7 @@
 			<oid>.1.3.6.1.4.1.2001.1.1.1.1.11.1.10.45.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>serial</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -141,7 +143,7 @@
 			<oid>.1.3.6.1.2.1.43.11.1.1.6.1.11</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>wastetoner</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -151,7 +153,7 @@
 			<oid>.1.3.6.1.4.1.11.2.3.9.1.1.7.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>informations</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>

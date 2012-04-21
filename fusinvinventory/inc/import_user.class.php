@@ -124,7 +124,6 @@ class PluginFusinvinventoryImport_User extends CommonDBTM {
       $input['id'] = $Computer->fields['id'];
       if (!strstr($items_id, "-")) {
          $User->getFromDB($items_id);
-         //$Computer->fields["users_id"] = 0;
          $_SESSION["plugin_fusinvinventory_userdefined"] = 0;
       }
       $username = preg_replace("/^-/", "", $items_id);

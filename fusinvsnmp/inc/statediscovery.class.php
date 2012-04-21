@@ -249,7 +249,6 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
       }
       echo "</table>";
    }
-
 }
 
 ?>

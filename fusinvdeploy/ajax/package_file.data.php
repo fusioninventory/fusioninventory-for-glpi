@@ -51,5 +51,4 @@ Html::header_nocache();
 $file = new PluginFusinvdeployFile;
 echo $file->getDatas($_REQUEST);
 
-
 ?>

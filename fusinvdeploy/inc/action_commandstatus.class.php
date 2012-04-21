@@ -77,4 +77,5 @@ class PluginFusinvdeployAction_Commandstatus extends CommonDBTM {
       return $response;
    }
 }
+
 ?>

@@ -109,6 +109,8 @@ function plugin_fusinvinventory_getAddSearchOptions($itemtype) {
    return $sopt;
 }
 
+
+
 function plugin_fusinvinventory_install() {
 
    $a_plugin = plugin_version_fusinvinventory();
@@ -184,8 +186,9 @@ function plugin_pre_item_purge_fusinvinventory($item) {
          break;
 
    }
-
 }
+
+
 
 function plugin_fusinvinventory_registerMethods() {
    global $WEBSERVICES_METHOD;
