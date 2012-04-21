@@ -420,6 +420,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
 
       return true;
    }
+
 }
 
 ?>
