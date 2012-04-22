@@ -328,7 +328,7 @@ class PluginFusinvsnmpNetworkporttype extends CommonDBTM {
       
       $a_ports = $this->find("(`number`='".$type."'
          OR `name`='".$type."'
-         OR `othername='".$type."')
+         OR `othername`='".$type."')
          AND `import`='1'");
       if (count($a_ports) > 0) {
          return true;
