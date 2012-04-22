@@ -299,7 +299,23 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
       $pfMapping = new PluginFusioninventoryMapping();
 
-      $type = '';
+      $type = (string)$xml->key;
+      switch ($type) {
+         
+         case '1':
+            $type = "Computer";
+            break;
+
+         case '2':
+            $type = "NetworkEquipment";
+            break;
+
+         case '3':
+            $type = "Printer";
+            break;
+         
+      }
+      
       
       $query = "INSERT INTO `glpi_plugin_fusinvsnmp_models`
 	 (
