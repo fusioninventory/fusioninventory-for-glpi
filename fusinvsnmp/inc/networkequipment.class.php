@@ -656,8 +656,10 @@ function appear_legend(id){
                         echo "<table cellpadding='0' cellspacing='0'>";
                         while ($line = $DB->fetch_array($result_vlan)) {
                            $used[]=$line["vlans_id"];
+                           $vlan = new Vlan();
+                           $vlan->getFromDB($line["vlans_id"]);
                            $a_vlan = Dropdown::getDropdownName("glpi_vlans", $line["vlans_id"],1);
-                           echo "<tr><td>" . $a_vlan['name']." [".$a_vlan['comment']."]";
+                           echo "<tr><td>" . $vlan->fields['name']." [".$vlan->fields['tag']."]";
                            echo "</td><td>";
                            if ($canedit) {
                               echo "<a href='" . $CFG_GLPI["root_doc"] . "/front/networkport.form.php?unassign_vlan=unassigned&amp;id=" . $line["id"] . "'>";
