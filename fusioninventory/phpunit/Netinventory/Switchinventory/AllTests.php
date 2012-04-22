@@ -185,6 +185,28 @@ Compiled Wed 18-Aug-10 04:40 by prod_rel_team</COMMENTS>
           <IFTYPE>6</IFTYPE>
           <MAC>00:1b:54:99:62:44</MAC>
         </PORT>
+        <PORT>
+          <VLANS>
+            <VLAN>
+               <NUMBER>10</NUMBER>
+               <NAME>Servers</NAME>
+            </VLAN>
+          </VLANS>
+          <IFDESCR>FastEthernet0/12</IFDESCR>
+          <IFINERRORS>232</IFINERRORS>
+          <IFINOCTETS>4006858975</IFINOCTETS>
+          <IFINTERNALSTATUS>1</IFINTERNALSTATUS>
+          <IFLASTCHANGE>15.23 seconds</IFLASTCHANGE>
+          <IFMTU>1500</IFMTU>
+          <IFNAME>Fa0/12</IFNAME>
+          <IFNUMBER>12</IFNUMBER>
+          <IFOUTERRORS>0</IFOUTERRORS>
+          <IFOUTOCTETS>1553256247</IFOUTOCTETS>
+          <IFSPEED>100000000</IFSPEED>
+          <IFSTATUS>1</IFSTATUS>
+          <IFTYPE>6</IFTYPE>
+          <MAC>00:1b:54:99:62:52</MAC>
+        </PORT>
       </PORTS>
     </DEVICE>
     <MODULEVERSION>1.3</MODULEVERSION>
@@ -326,6 +348,18 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team</COMMENTS>
          // Verify have only 2 switches
          $this->assertEquals(count($networkEquipment->find()), 2, '[1] May have 2 switches created');
       
+         // verify Vlan
+         $vlan = new Vlan();
+         $networkPort_Vlan = new NetworkPort_Vlan();
+         $a_vlans = $vlan->find("`tag`='10' AND `name`='Servers'");
+         $this->assertEquals(count($a_vlans), 1, 'Vlan 10 not created');
+         $a_vlan = current($a_vlans);
+         $a_ports12 = $networkPort->find("`name`='Fa0/12'");
+         $a_port12 = current($a_ports12);
+         $a_np_vlans = $networkPort_Vlan->find("`networkports_id`='".$a_port12['id']."'
+            AND `vlans_id`='".$a_vlan['id']."'");
+         $this->assertEquals(count($a_np_vlans), 1, 'Vlan not assigned to port Fa0/12');
+         
       // * Test modifications of IP of the switch
       $networkEquipment = new NetworkEquipment();
       $a_switches = $networkEquipment->find("`serial`='FCZ11161074'");
@@ -367,6 +401,24 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team</COMMENTS>
          
          $GLPIlog->testSQLlogs();
          $GLPIlog->testPHPlogs();
+         
+      // Modify vlan
+      $switch1bis = str_replace('<NUMBER>10</NUMBER>', '<NUMBER>20</NUMBER>', $switch1);
+      $this->testSendinventory("toto", $switch1bis);
+         
+         // verify Vlan
+         $vlan = new Vlan();
+         $networkPort_Vlan = new NetworkPort_Vlan();
+         $a_vlans = $vlan->find("`tag`='20' AND `name`='Servers'");
+         $this->assertEquals(count($a_vlans), 1, 'Vlan 20 not created');
+         $a_vlan = current($a_vlans);
+         $a_ports12 = $networkPort->find("`name`='Fa0/12'");
+         $a_port12 = current($a_ports12);
+         $a_np_vlans = $networkPort_Vlan->find("`networkports_id`='".$a_port12['id']."'
+            AND `vlans_id`='".$a_vlan['id']."'");
+         $this->assertEquals(count($a_np_vlans), 1, 'Vlan 20 not assigned to port Fa0/12');
+         $a_np_vlans = $networkPort_Vlan->find("`networkports_id`='".$a_port12['id']."'");
+         $this->assertEquals(count($a_np_vlans), 1, 'Port Fa0/12 may have only 1 vlan');
    }
 
 
