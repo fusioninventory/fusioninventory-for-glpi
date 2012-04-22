@@ -550,6 +550,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $errors='';
       $pfNetworkEquipmentIP = new PluginFusinvsnmpNetworkEquipmentIP();
       $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      
+      $pfNetworkEquipmentIP->loadIPs($networkequipments_id);
+      
       foreach ($p_ips->children() as $child) {
          switch ($child->getName()) {
             
