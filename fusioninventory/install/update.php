@@ -1739,8 +1739,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addField($newTable,
                                  "method",
                                  "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->migrationOneTable($newTable);
          
-         
+      
          
    /*
     * Table glpi_plugin_fusioninventory_rulematchedlogs
@@ -1778,7 +1779,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addField($newTable,
                                  "method",
                                  "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         
+      $migration->migrationOneTable($newTable);
          
          
       
