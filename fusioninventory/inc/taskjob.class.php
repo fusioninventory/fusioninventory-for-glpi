@@ -541,15 +541,18 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       
       $rand = '';
       $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($module);
-
+      $iddropdown = '';
       if (is_callable(array($class, "task_".$_POST['name']."selection_".$definitiontype."_".$method))) {
          $rand = call_user_func(array($class, 
                                       "task_".$_POST['name']."selection_".$definitiontype."_".$method), 
                                 $title);
+
+         $iddropdown = "dropdown_".$_POST['name']."selectiontoadd";
       } else {
          $a_data = $this->get_agents($method);
 
          $rand = Dropdown::showFromArray($_POST['name'].'selectiontoadd', $a_data);
+         $iddropdown = "dropdown_".$_POST['name']."selectiontoadd";
       }
 
       echo "<br/><center><input type='button' id='add_button_".$_POST['name']."' name='add_button_".$_POST['name']."' value=\"".$LANG['buttons'][8]."\" class='submit'></center>";
@@ -560,19 +563,15 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                       'myname'    => 'items_id',
                       'type'      => $_POST['name'],
                       'taskjobs_id'=>$taskjobs_id);
-      Ajax::updateItemOnEvent("add_button_".$_POST['name'],
+      Ajax::updateItemOnEvent(array($iddropdown.$rand ,"add_button_".$_POST['name']),
                               "Additem_$rand",
                               $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/taskjobaddtype.php",
                               $params,
                               array("click"),
                               "-1",
                               array($LANG['buttons'][8]));
-//      echo "<span id='Additem_$rand'>&nbsp;oo</span>";
 
-
-echo "<span id='Additem_$rand'>&nbsp;oo</span>";
-//echo "<div id='Additem_$rand'>&nbsp;oo</div>";
-
+      echo "<span id='Additem_$rand'></span>";
    }
 
 
