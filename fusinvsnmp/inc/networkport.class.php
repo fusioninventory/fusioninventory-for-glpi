@@ -227,37 +227,6 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
 
 
 
-   /**
-    * Is real port (not virtual or loopback)
-    *
-    *@return true/false
-    **/
-   function isReal($p_type) {
-      $real = false;
-      if ( (strstr($p_type, "ethernetCsmacd"))
-            OR ($p_type == "6")
-            OR ($p_type == "ethernet-csmacd(6)")
-            OR (strstr($p_type, "iso88023Csmacd"))
-            OR ($p_type == "7")
-            OR ($p_type == "ieee80211(71)")        // wifi
-            OR ($p_type == "ieee80211")            // wifi
-            OR ($p_type == "71")                   // wifi
-            OR ($p_type == "gigabitEthernet(117)")
-            OR ($p_type == "gigabitEthernet")
-            OR ($p_type == "117")
-            OR ($p_type == "fastEther(62)")
-            OR ($p_type == "fastEther")
-            OR ($p_type == "62")
-            OR ($p_type == "169")
-            OR ($p_type == "shdsl")
-         ) { // not virtual port
-         $real = true;
-      }
-      return $real;
-   }
-
-
-
    static function getUniqueObjectfieldsByportID($id) {
       global $DB;
 

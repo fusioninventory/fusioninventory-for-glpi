@@ -349,6 +349,19 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_networkportlogs` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_networkporttypes`;
+
+CREATE TABLE `glpi_plugin_fusinvsnmp_networkporttypes` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `name` varchar(255) DEFAULT NULL,
+   `number` int(4) NOT NULL DEFAULT '0',
+   `othername` varchar(255) DEFAULT NULL,
+   `import` tinyint(1) NOT NULL DEFAULT '0',
+   PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
 DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_unknowndevices`;
 
 CREATE TABLE `glpi_plugin_fusinvsnmp_unknowndevices` (

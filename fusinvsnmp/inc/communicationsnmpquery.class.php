@@ -637,10 +637,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
               'Function PluginFusinvsnmpCommunicationSNMPQuery->importPortNetworking().');
       $errors='';
       $pfNetworkPort = new PluginFusinvsnmpNetworkPort("NetworkEquipment");
+      $pfNetworkporttype = new PluginFusinvsnmpNetworkporttype();
       $ifType = $p_port->IFTYPE;
-      // not virtual port and not name is Vl1 (problem on Cisco routers)
-      if ($pfNetworkPort->isReal($ifType)
-              AND $p_port->IFNAME != 'Vl1') {
+      // not virtual port
+      if ($pfNetworkporttype->isImportType($ifType)) {
          // Get port of unknown device CDP if exist
          $portloaded = 0;
          $portIndex  = 0;
@@ -784,7 +784,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $ifType = $p_port->IFTYPE;
       $portDB = $networkPort->getEmpty();
       $portModif = array();
-      if ($pfNetworkPort->isReal($ifType) ) { // not virtual port
+      if ($pfNetworkporttype->isImportType($ifType)) { // not virtual port
          $a_ports = $networkPort->find("`itemtype`='Printer'
                                           AND `items_id`='".$this->deviceId."'
                                           AND `mac`='".(string)$p_port->MAC."'",

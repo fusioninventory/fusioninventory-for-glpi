@@ -3098,6 +3098,55 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
       $migration->migrationOneTable($newTable);
 
       
+      
+   /*
+    * Table glpi_plugin_fusinvsnmp_networkporttypes
+    */
+      $newTable = "glpi_plugin_fusinvsnmp_networkporttypes";
+      if (!TableExists($newTable)) {
+         $query = "CREATE TABLE `".$newTable."` (
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                      PRIMARY KEY (`id`)
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+         $DB->query($query);
+      }      
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "name",
+                                 "name",
+                                 "varchar(255) DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "number",
+                                 "number",
+                                 "int(4) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "othername",
+                                 "othername",
+                                 "varchar(255) DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "import",
+                                 "import",
+                                 "tinyint(1) NOT NULL DEFAULT '0'");
+      $migration->migrationOneTable($newTable);
+         $migration->addField($newTable,
+                              "name",
+                              "varchar(255) DEFAULT NULL");
+         $migration->addField($newTable,
+                              "number",
+                              "int(4) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                              "othername",
+                              "varchar(255) DEFAULT NULL");
+         $migration->addField($newTable,
+                              "import",
+                              "tinyint(1) NOT NULL DEFAULT '0'");
+      $migration->migrationOneTable($newTable);
+      
+      
+      
    /*
     * Table glpi_plugin_fusinvsnmp_unknowndevices
     */
@@ -3684,6 +3733,11 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
       include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/commondbtm.class.php");
    }
    PluginFusinvsnmpModel::importAllModels();
+   
+   
+   // Update networkports types
+   $pfNetworkporttype = new PluginFusinvsnmpNetworkporttype();
+   $pfNetworkporttype->init();
    
    /*
     * Add Crontask if not exist
