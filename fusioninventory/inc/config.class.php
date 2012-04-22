@@ -330,19 +330,19 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    }
 
    
+   
    /**
     * Log when extra-debug is activated
     */
    static function logIfExtradebug($file, $message) {
-      if (self::getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug', '')) {
+      $pfConfig = new self();
+      
+      if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug') == 1) {
          Toolbox::logInFile($file, $message);
       }
    }
    
    
-
-
-
 
    /**
     * Update configuration field

@@ -89,23 +89,23 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
    ini_set("memory_limit", "-1");
 
    $migration = new $migrationname($current_version);
-   $config = new PluginFusioninventoryConfig();
+   $pfConfig = new PluginFusioninventoryConfig();
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');   
    
-   if (!PluginFusioninventoryConfig::getValue($plugins_id, 'states_id_default')) {
-      $config->addValues($plugins_id, array('states_id_default' => 0));
+   if (!$pfConfig->getValue($plugins_id, 'states_id_default')) {
+      $pfConfig->addValues($plugins_id, array('states_id_default' => 0));
    }
-   if (!PluginFusioninventoryConfig::getValue($plugins_id, "import_vm")) {
-       $config->addValues($plugins_id, array("import_vm" => "1"));
+   if (!$pfConfig->getValue($plugins_id, "import_vm")) {
+       $pfConfig->addValues($plugins_id, array("import_vm" => "1"));
    }
-   if (!PluginFusioninventoryConfig::getValue($plugins_id, "component_networkdrive")) {
-       $config->addValues($plugins_id, array("component_networkdrive" => "1"));
+   if (!$pfConfig->getValue($plugins_id, "component_networkdrive")) {
+       $pfConfig->addValues($plugins_id, array("component_networkdrive" => "1"));
    }
-   if (!PluginFusioninventoryConfig::getValue($plugins_id, "group")) {
-       $config->addValues($plugins_id, array("group" => "0"));
+   if (!$pfConfig->getValue($plugins_id, "group")) {
+       $pfConfig->addValues($plugins_id, array("group" => "0"));
    }
-   if (!PluginFusioninventoryConfig::getValue($plugins_id, "component_networkcardvirtual")) {
-       $config->addValues($plugins_id, array("component_networkcardvirtual" => "1"));
+   if (!$pfConfig->getValue($plugins_id, "component_networkcardvirtual")) {
+       $pfConfig->addValues($plugins_id, array("component_networkcardvirtual" => "1"));
    }
    
    if (TableExists("glpi_plugin_fusinvinventory_computers")
@@ -544,7 +544,7 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
       }
    }
    
-   $config->updateConfigType($plugins_id, 'version', PLUGIN_FUSINVINVENTORY_VERSION);
+   $pfConfig->updateConfigType($plugins_id, 'version', PLUGIN_FUSINVINVENTORY_VERSION);
 }
 
 ?>
