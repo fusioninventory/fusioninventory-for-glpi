@@ -617,8 +617,8 @@ class PluginFusioninventoryCommunication {
          if (isset($pxml->DEVICEID)) {
 
             $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
-   <REPLY>
-   </REPLY>");
+<REPLY>
+</REPLY>");
 
             $a_agent = $agent->InfosByKey(Toolbox::addslashes_deep($pxml->DEVICEID));
 
@@ -632,8 +632,8 @@ class PluginFusioninventoryCommunication {
          }
       } else {
          $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
-   <REPLY>
-   </REPLY>");
+<REPLY>
+</REPLY>");
          $communication->sendMessage($compressmode);
       }
    }
