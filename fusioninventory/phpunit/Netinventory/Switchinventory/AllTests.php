@@ -275,6 +275,10 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team</COMMENTS>
 
       $networkPort = new NetworkPort();
       $networkEquipment = new NetworkEquipment();
+      $a_networkequipments = $networkEquipment->find();
+      foreach ($a_networkequipments as $data) {
+         $networkEquipment->delete($data, 1);
+      }
       
       // * 1. Create switch 1
       $this->testSendinventory("toto", $switch1, 1);
