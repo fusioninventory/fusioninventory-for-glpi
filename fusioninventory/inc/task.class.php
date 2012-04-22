@@ -607,6 +607,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
    
    
    function menuTasksLogs() {
+      global $CFG_GLPI;
       
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
@@ -622,7 +623,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $cell ='th';
       }
       echo "<".$cell." align='center'>";
-      echo "<a href=''>Logs</a>"; // TODO
+      echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php'>Logs</a>"; // TODO
       echo "</".$cell.">";
       echo "</tr>";
       echo "</table>";

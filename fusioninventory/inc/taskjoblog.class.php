@@ -64,6 +64,77 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
    const TASK_RUNNING            = 6;
    const TASK_PREPARED           = 7;
 
+   
+   
+   function getSearchOptions() {
+      global $LANG;
+
+      $sopt = array();
+
+      $sopt['common'] = "Logs";
+
+      $sopt[1]['table']          = 'glpi_plugin_fusioninventory_tasks';
+      $sopt[1]['field']          = 'name';
+      $sopt[1]['linkfield']      = 'name';
+      $sopt[1]['name']           = $LANG['plugin_fusioninventory']['task'][18];
+      $sopt[1]['datatype']       = 'itemlink';
+
+      $sopt[2]['table']          = 'glpi_plugin_fusioninventory_taskjobs';
+      $sopt[2]['field']          = 'name';
+      $sopt[2]['linkfield']      = 'name';
+      $sopt[2]['name']           = $LANG['plugin_fusioninventory']['task'][2];
+      $sopt[2]['datatype']       = 'itemlink';
+      
+//
+//
+//      $sopt[2]['table']          = $this->getTable();
+//      $sopt[2]['field']          = 'date_scheduled';
+//      $sopt[2]['linkfield']      = 'date_scheduled';
+//      $sopt[2]['name']           = $LANG['plugin_fusioninventory']['task'][14];
+//      $sopt[2]['datatype']       = 'datetime';
+//
+//      $sopt[3]['table']          = 'glpi_entities';
+//      $sopt[3]['field']          = 'completename';
+//      $sopt[3]['linkfield']      = 'entities_id';
+//      $sopt[3]['name']           = $LANG['entity'][0];
+//  
+//      $sopt[4]['table']          = $this->getTable();
+//      $sopt[4]['field']          = 'comment';
+//      $sopt[4]['linkfield']      = 'comment';
+//      $sopt[4]['name']           = $LANG['common'][25];
+//
+//      $sopt[5]['table']          = $this->getTable();
+//      $sopt[5]['field']          = 'is_active';
+//      $sopt[5]['linkfield']      = 'is_active';
+//      $sopt[5]['name']           = $LANG['common'][60];
+//      $sopt[5]['datatype']       = 'bool';
+//
+//      $sopt[6]['table']          = $this->getTable();
+//      $sopt[6]['field']          = 'communication';
+//      $sopt[6]['linkfield']      = '';
+//      $sopt[6]['name']           = $LANG['plugin_fusioninventory']['task'][33];
+//
+////      $sopt[7]['table']          = $this->getTable();
+////      $sopt[7]['field']          = 'permanent';
+////      $sopt[7]['linkfield']      = '';
+////      $sopt[7]['name']           = $LANG['plugin_fusioninventory']['task'][34];
+////      $sopt[7]['datatype']       = 'bool';
+//
+//      $sopt[8]['table']          = $this->getTable();
+//      $sopt[8]['field']          = 'state';
+//      $sopt[8]['linkfield']      = '';
+//      $sopt[8]['name']           = 'Running';
+//      
+//      $sopt[30]['table']          = $this->getTable();
+//      $sopt[30]['field']          = 'id';
+//      $sopt[30]['linkfield']      = '';
+//      $sopt[30]['name']           = $LANG['common'][2];
+
+      return $sopt;
+   }
+   
+   
+   
    /**
    * Display history of taskjob
    *
