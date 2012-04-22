@@ -287,11 +287,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @param $plugin_id plugin id
     * @param $name field name
     * @param $value field value
-    * @param $module ?
     * 
     * @return boolean : true on success
     **/
-   function updateValue($plugin_id, $name, $value, $module) {
+   function updateValue($plugin_id, $name, $value) {
       $config = current($this->find("`plugins_id`='".$plugin_id."'
                           AND `type`='".$name."'"));
       if (isset($config['id'])) {
