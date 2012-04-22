@@ -335,6 +335,75 @@ class PluginFusinvsnmpNetworkporttype extends CommonDBTM {
       }
       return false;
    }
+   
+   
+   
+   function showNetworkporttype() {
+      global $LANG;
+
+      $a_notimports = $this->find("`import` = '0'");
+      $a_imports = $this->find("`import` = '1'");
+      
+      echo "<form name='form' method='post' action='".$this->getFormURL()."'>";
+      
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='3'>".$LANG['plugin_fusinvsnmp']['config'][10]."</th>";
+      echo "</tr>";
+      echo "<tr class='tab_bg_1'>";
+      
+      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "w")) {
+
+
+         echo "<td class='right'>";
+ 
+         if (count($a_notimports) > 0) {
+            echo "<select name='type_to_add[]' multiple size='5'>";
+
+            foreach ($a_notimports as $key => $data) {
+               echo "<option value='$key'>".$data['othername']."</option>";
+            }
+
+            echo "</select>";
+         }
+
+         echo "</td><td class='center'>";
+
+         if (count($a_notimports)) {
+            echo "<input type='submit' class='submit' name='type_add' value='".
+                  $LANG['buttons'][8]." >>'>";
+         }
+         echo "<br><br>";
+         
+         
+
+         if (count($a_imports)) {
+            echo "<input type='submit' class='submit' name='type_delete' value='<< ".
+                  $LANG['buttons'][6]."'>";
+         }
+         echo "</td><td>";
+
+      } else {
+         echo "<td colspan='2'></td>";
+         echo "<td class='center'>";
+      }
+
+      if (count($a_imports)) {
+         echo "<select name='type_to_delete[]' multiple size='5'>";
+         foreach($a_imports as $key => $data) {
+            echo "<option value='$key'>".$data['othername']."</option>";
+         }
+         echo "</select>";
+      } else {
+         echo "&nbsp;";
+      }
+      echo "</td>";
+      echo "</tr>";
+      echo "</table>";
+      
+      echo "</form>";
+      
+   }
 }
 
 ?>

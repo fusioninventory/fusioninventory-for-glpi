@@ -3736,6 +3736,9 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    
    
    // Update networkports types
+   if (!class_exists('PluginFusinvsnmpNetworkporttype')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/networkporttype.class.php");
+   }
    $pfNetworkporttype = new PluginFusinvsnmpNetworkporttype();
    $pfNetworkporttype->init();
    

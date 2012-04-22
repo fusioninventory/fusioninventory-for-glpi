@@ -148,6 +148,9 @@ class PluginFusinvsnmpConfig extends CommonDBTM {
       $pfConfigLogField = new PluginFusinvsnmpConfigLogField();
       $pfConfigLogField->showForm(array('target'=>$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/functionalities.form.php"));
 
+      $pfNetworkporttype = new PluginFusinvsnmpNetworkporttype();
+      $pfNetworkporttype->showNetworkporttype();
+      
       return true;
    }
 }

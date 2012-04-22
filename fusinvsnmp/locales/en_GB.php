@@ -52,6 +52,7 @@ $LANG['plugin_fusinvsnmp']['config'][3] = "Network inventory (SNMP)";
 $LANG['plugin_fusinvsnmp']['config'][4] = "Network discovery";
 $LANG['plugin_fusinvsnmp']['config'][8] = "Never";
 $LANG['plugin_fusinvsnmp']['config'][9] = "Always";
+$LANG['plugin_fusinvsnmp']['config'][10] = "Ports types to import (for network equipments)";
 
 $LANG['plugin_fusinvsnmp']['profile'][2]="Configuration";
 $LANG['plugin_fusinvsnmp']['profile'][4]="IP Range";
