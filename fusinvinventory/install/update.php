@@ -93,19 +93,19 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');   
    
    if (!PluginFusioninventoryConfig::getValue($plugins_id, 'states_id_default')) {
-      $config->initConfig($plugins_id, array('states_id_default' => 0));
+      $config->addValues($plugins_id, array('states_id_default' => 0));
    }
    if (!PluginFusioninventoryConfig::getValue($plugins_id, "import_vm")) {
-       $config->initConfig($plugins_id, array("import_vm" => "1"));
+       $config->addValues($plugins_id, array("import_vm" => "1"));
    }
    if (!PluginFusioninventoryConfig::getValue($plugins_id, "component_networkdrive")) {
-       $config->initConfig($plugins_id, array("component_networkdrive" => "1"));
+       $config->addValues($plugins_id, array("component_networkdrive" => "1"));
    }
    if (!PluginFusioninventoryConfig::getValue($plugins_id, "group")) {
-       $config->initConfig($plugins_id, array("group" => "0"));
+       $config->addValues($plugins_id, array("group" => "0"));
    }
    if (!PluginFusioninventoryConfig::getValue($plugins_id, "component_networkcardvirtual")) {
-       $config->initConfig($plugins_id, array("component_networkcardvirtual" => "1"));
+       $config->addValues($plugins_id, array("component_networkcardvirtual" => "1"));
    }
    
    if (TableExists("glpi_plugin_fusinvinventory_computers")

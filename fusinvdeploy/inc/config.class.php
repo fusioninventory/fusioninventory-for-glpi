@@ -66,7 +66,7 @@ class PluginFusinvdeployConfig extends CommonDBTM {
          'server_upload_path' => $root_doc.'/files/_plugins/'.$a_plugin['shortname'].'/upload',
          'alert_winpath'     => 1
       );
-      $FI_Config->initConfig($plugins_id, $insert);
+      $FI_Config->addValues($plugins_id, $insert);
    }
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {

@@ -1983,7 +1983,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       if (is_null($config->getValue($plugins_id, "users_id"))) {
          $a_input['users_id'] = 0;
       }
-      $config->initConfig($plugins_id, $a_input);
+      $config->addValues($plugins_id, $a_input);
       
       if (!class_exists('PluginFusioninventorySetup')) { // if plugin is unactive
          include(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");

@@ -56,7 +56,7 @@ class PluginFusinvsnmpConfig extends CommonDBTM {
                       'version'              => PLUGIN_FUSINVSNMP_VERSION,
                       'threads_netdiscovery' => 1,
                       'threads_snmpquery'    => 1);
-      $pfConfig->initConfig($plugins_id, $insert);
+      $pfConfig->addValues($plugins_id, $insert);
    }
 
    

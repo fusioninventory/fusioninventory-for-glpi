@@ -96,7 +96,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       $input['component_networkcardvirtual'] = 1;
 
       foreach ($input as $key => $value) {
-         $pfConfig->initConfig($plugins_id, array($key => $value));
+         $pfConfig->addValues($plugins_id, array($key => $value));
       }
    }
 
