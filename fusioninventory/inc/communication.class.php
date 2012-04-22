@@ -120,6 +120,26 @@ class PluginFusioninventoryCommunication {
          
       }
    }
+   
+   
+   
+   /**
+    * Add logs
+    *
+    * @param $p_logs logs to write
+    * 
+    * @return nothing (write text in log file)
+    **/
+   static function addLog($p_logs) {
+
+      if ($_SESSION['glpi_use_mode']==DEBUG_MODE) {
+         if (PluginFusioninventoryConfig::isExtradebugActive()) {
+            file_put_contents(GLPI_LOG_DIR.'/pluginFusioninventory-communication.log',
+                              "\n".time().' : '.$p_logs,
+                              FILE_APPEND);
+         }
+      }
+   }
 
 
   
@@ -513,6 +533,7 @@ class PluginFusioninventoryCommunication {
       $xml = '';
       $taskjob = new PluginFusioninventoryTaskjob();
       $taskjob->disableDebug();
+      $compressmode = '';
       if ($_SERVER['CONTENT_TYPE'] == "application/x-compress-zlib") {
             $xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
             $compressmode = "zlib";
