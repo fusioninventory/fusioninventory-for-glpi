@@ -472,6 +472,7 @@ function appear_legend(id){
             echo "</td>";
             echo "<td><a href='networkport.form.php?id=".$data["id"]."'>".
                      $data["name"]."</a>";
+            Html::showToolTip($data['ifdescr']);        
             echo "</td>";
 
             if ($monitoring == '1') {
