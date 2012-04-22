@@ -259,7 +259,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
          $input = array();
          $input['date_mod'] = date("Y-m-d H:i:s");
          $input['entities_id'] = $entities_id;
-         $items_id = $class->add($input);
+         $items_id = $item->add($input);
          if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
             $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
             $inputrulelog = array();
