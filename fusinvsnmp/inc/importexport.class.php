@@ -326,7 +326,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 	 )
 	 VALUES(
 	    '".(string)$xml->name."',
-	    '".(string)$xml->type."',
+	    '".$type."',
 	    '".(string)$xml->key."',
 	    '".(string)$xml->comments."'
 	 );";
