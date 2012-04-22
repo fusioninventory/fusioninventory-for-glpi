@@ -274,6 +274,7 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team</COMMENTS>
 </REQUEST>';
 
       $networkPort = new NetworkPort();
+      $networkEquipment = new NetworkEquipment();
       
       // * 1. Create switch 1
       $this->testSendinventory("toto", $switch1, 1);
@@ -305,17 +306,19 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team</COMMENTS>
          $this->assertEquals($a_port['ip'], "", 'IP of port Gi1/0/22 not right');
          $this->assertEquals($a_port['mac'], "00:1b:2b:20:40:96", 'MAC of port Gi1/0/22 not right');
          
-      $GLPIlog = new GLPIlogs();
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
+         $GLPIlog = new GLPIlogs();
+         $GLPIlog->testSQLlogs();
+         $GLPIlog->testPHPlogs();
+
+         // Verify not have networkport_networkport with networkports_id = 0
+         $zombieConnect = $networkPort_NetworkPort->find("`networkports_id_1`='0'
+            OR `networkports_id_2`='0'");
+         $this->assertEquals(count($zombieConnect), 0, 'Zombie connections detected : '.print_r($zombieConnect, true));
       
-      // Verify not have networkport_networkport with networkports_id = 0
-      $zombieConnect = $networkPort_NetworkPort->find("`networkports_id_1`='0'
-         OR `networkports_id_2`='0'");
-      $this->assertEquals(count($zombieConnect), 0, 'Zombie connections detected : '.print_r($zombieConnect, true));
+         // Verify have only 2 switches
+         $this->assertEquals(count($networkEquipment->find()), 2, '[1] May have 2 switches created');
       
-      
-      // Test modifications of IP of the switch
+      // * Test modifications of IP of the switch
       $networkEquipment = new NetworkEquipment();
       $a_switches = $networkEquipment->find("`serial`='FCZ11161074'");
       $a_switch = current($a_switches);
@@ -323,32 +326,39 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team</COMMENTS>
       $switch1bis = str_replace('<IP>172.27.2.22</IP>', '', $switch1);
       $this->testSendinventory("toto", $switch1bis, 1);
       
-      $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
-              WHERE `networkequipments_id`='".$a_switch['id']."'";
-      $result = $DB->query($query);
-      $this->assertEquals($DB->numrows($result), 3, 'May have 3 IPs for this switch');
-
+         $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
+                 WHERE `networkequipments_id`='".$a_switch['id']."'";
+         $result = $DB->query($query);
+         $this->assertEquals($DB->numrows($result), 3, 'May have 3 IPs for this switch');
+         
+         // Verify have only 2 switches
+         $this->assertEquals(count($networkEquipment->find()), 2, '[2] May have 2 switches created');
+      
       $switch1bis = str_replace('<IP>212.99.4.74</IP>', '', $switch1);
       $this->testSendinventory("toto", $switch1bis, 1);      
-      $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
-              WHERE `networkequipments_id`='".$a_switch['id']."'";
-      $result = $DB->query($query);
-      $this->assertEquals($DB->numrows($result), 3, 'May have 3 IPs for this switch');
+         $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
+                 WHERE `networkequipments_id`='".$a_switch['id']."'";
+         $result = $DB->query($query);
+         $this->assertEquals($DB->numrows($result), 3, 'May have 3 IPs for this switch');
+
+         $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
+                 WHERE `networkequipments_id`='".$a_switch['id']."'
+                    AND `ip`='172.27.2.22'";
+         $result = $DB->query($query);
+         $this->assertEquals($DB->numrows($result), 1, 'IP 172.27.2.22 may be here 1 time');
+
+         $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
+                 WHERE `networkequipments_id`='".$a_switch['id']."'
+                    AND `ip`='212.99.4.74'";
+         $result = $DB->query($query);
+         $this->assertEquals($DB->numrows($result), 0, 'IP 212.99.4.74 may be here 0 time');
+
+         // Verify have only 2 switches
+         $this->assertEquals(count($networkEquipment->find()), 2, '[3] May have 2 switches created');
       
-      $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
-              WHERE `networkequipments_id`='".$a_switch['id']."'
-                 AND `ip`='172.27.2.22'";
-      $result = $DB->query($query);
-      $this->assertEquals($DB->numrows($result), 1, 'IP 172.27.2.22 may be here 1 time');
-      
-      $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
-              WHERE `networkequipments_id`='".$a_switch['id']."'
-                 AND `ip`='212.99.4.74'";
-      $result = $DB->query($query);
-      $this->assertEquals($DB->numrows($result), 0, 'IP 212.99.4.74 may be here 0 time');
-      
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
+         
+         $GLPIlog->testSQLlogs();
+         $GLPIlog->testPHPlogs();
    }
 
 
