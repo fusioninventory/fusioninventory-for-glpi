@@ -164,7 +164,6 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
          $query .= " AND inet_aton(`ip`)
                          BETWEEN inet_aton('".$pfIPRange->fields['ip_start']."')
                          AND inet_aton('".$pfIPRange->fields['ip_end']."') ";
-               Toolbox::logInFile("SQLKOIN", $query);
         $result=$DB->query($query);
         while ($data=$DB->fetch_array($result)) {
            $a_NetworkEquipment[] = $data['gID'];
