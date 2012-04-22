@@ -321,7 +321,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       $input['name']          = (string)$xml->name;
       $input['itemtype']      = $type;
       $input['discovery_key'] = (string)$xml->key;
-      $input['comment']       = (string)$xml->comments;
+      $input['comment']       = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep((string)$xml->comments));
       $plugin_fusinvsnmp_models_id = $pfModel->add($input);
 
       foreach($xml->oidlist->oidobject as $child) {
