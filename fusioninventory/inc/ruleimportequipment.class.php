@@ -527,6 +527,10 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
             }
          }
 
+         if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
+            $sql_where_temp .= " AND `[typetable]`.`entities_id`='".$_SESSION['plugin_fusioninventory_entityrestrict']."'";
+         }
+         
          $item = new $itemtype();
          $sql_glpi = "SELECT `[typetable]`.`id`
                       FROM $sql_from_temp

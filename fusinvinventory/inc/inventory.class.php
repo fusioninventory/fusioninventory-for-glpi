@@ -143,7 +143,7 @@ class PluginFusinvinventoryInventory {
 
       $xml = $p_xml;
       $input = array();
-
+      
       // Global criterias
 
          if ((isset($xml->CONTENT->BIOS->SSN)) AND (!empty($xml->CONTENT->BIOS->SSN))) {
@@ -208,6 +208,28 @@ class PluginFusinvinventoryInventory {
             $input['name'] = '';
          }
          $input['itemtype'] = "Computer";
+         
+         // If transfer is disable, get entity and search only on this entity (see http://forge.fusioninventory.org/issues/1503)
+         $pfConfig = new PluginFusioninventoryConfig();
+         $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
+
+         if ($pfConfig->getValue($plugins_id, 'transfers_id_auto') == '0') {
+            $inputent = $input;
+            if ((isset($xml->CONTENT->HARDWARE->WORKGROUP)) AND (!empty($xml->CONTENT->HARDWARE->WORKGROUP))) {
+               $inputent['domain'] = Toolbox::addslashes_deep((string)$xml->CONTENT->HARDWARE->WORKGROUP);
+            }
+            if (isset($inputent['serial'])) {
+               $inputent['serialnumber'] = $inputent['serial'];
+            }
+            $ruleEntity = new PluginFusinvinventoryRuleEntityCollection();
+            $dataEntity = array ();
+            $dataEntity = $ruleEntity->processAllRules($inputent, array());
+            if (isset($dataEntity['entities_id'])) {
+               $_SESSION['plugin_fusioninventory_entityrestrict'] = $dataEntity['entities_id'];
+            }
+         }
+         // End transfer disabled
+         
       $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusinvinventoryInventory";
       $rule = new PluginFusioninventoryRuleImportEquipmentCollection();
       $data = array();
@@ -229,11 +251,13 @@ class PluginFusinvinventoryInventory {
          if (isset($input['serial'])) {
             $input['serialnumber'] = $input['serial'];
          }
-         $ruleEntity = new PluginFusinvinventoryRuleEntityCollection();
-         $dataEntity = array ();
-         $dataEntity = $ruleEntity->processAllRules($input, array());
-         if (isset($dataEntity['entities_id'])) {
-            $inputdb['entities_id'] = $dataEntity['entities_id'];
+         if ($pfConfig->getValue($plugins_id, 'transfers_id_auto') != '0') {
+            $ruleEntity = new PluginFusinvinventoryRuleEntityCollection();
+            $dataEntity = array ();
+            $dataEntity = $ruleEntity->processAllRules($input, array());
+            if (isset($dataEntity['entities_id'])) {
+               $inputdb['entities_id'] = $dataEntity['entities_id'];
+            }
          }
          
          if (isset($input['ip'])) {
