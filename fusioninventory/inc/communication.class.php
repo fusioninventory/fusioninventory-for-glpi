@@ -52,7 +52,7 @@ class PluginFusioninventoryCommunication {
 
    
    function __construct() {
-
+      $this->message = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><REPLY></REPLY>");
       PluginFusioninventoryConfig::logIfExtradebug(
          'pluginFusioninventory-communication',
          'New PluginFusioninventoryCommunication object.'
