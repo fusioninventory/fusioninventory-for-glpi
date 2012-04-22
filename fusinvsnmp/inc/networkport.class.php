@@ -352,8 +352,8 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
             $vlanfound[$a_vlan['id']] = $a_vlan['id'];
          } else {
             $input = array();
-            $input['name'] = $number;
-            $input['comment'] = $name;
+            $input['tag'] = $number;
+            $input['name'] = $name;
             $newID = $vlan->add($input);
             $vlanfound[$newID] = $newID;
          }
