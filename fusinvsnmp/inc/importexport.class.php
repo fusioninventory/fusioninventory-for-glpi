@@ -298,6 +298,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       global $DB,$LANG;
 
       $pfMapping = new PluginFusioninventoryMapping();
+      $pfModel = new PluginFusinvsnmpModel();
 
       $type = (string)$xml->type;
       switch ($type) {
@@ -316,22 +317,12 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
          
       }
       
-      
-      $query = "INSERT INTO `glpi_plugin_fusinvsnmp_models`
-	 (
-	    `name`,
-	    `itemtype`,
-	    `discovery_key`,
-	    `comment`
-	 )
-	 VALUES(
-	    '".(string)$xml->name."',
-	    '".$type."',
-	    '".(string)$xml->key."',
-	    '".(string)$xml->comments."'
-	 );";
-      $DB->query($query);
-      $plugin_fusinvsnmp_models_id = $DB->insert_id();
+      $input = array();
+      $input['name']          = (string)$xml->name;
+      $input['itemtype']      = $type;
+      $input['discovery_key'] = (string)$xml->key;
+      $input['comment']       = (string)$xml->comments;
+      $plugin_fusinvsnmp_models_id = $pfModel->add($input);
 
       foreach($xml->oidlist->oidobject as $child) {
          $plugin_fusinvsnmp_mibobjects_id = 0;
