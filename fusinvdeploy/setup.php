@@ -39,11 +39,10 @@
 
    ------------------------------------------------------------------------
  */
-define ("PLUGIN_FUSINVDEPLOY_VERSION","0.83+1.0");
 
 include_once ("includes.php");
 
-define ("PLUGIN_FUSINVDEPLOY_VERSION","0.80+1.2");
+define ("PLUGIN_FUSINVDEPLOY_VERSION","0.83+1.0");
 
 // Init the hooks of fusinvdeploy
 function plugin_init_fusinvdeploy() {
