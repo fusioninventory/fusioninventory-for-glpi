@@ -299,7 +299,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
       $pfMapping = new PluginFusioninventoryMapping();
 
-      $type = (string)$xml->key;
+      $type = (string)$xml->type;
       switch ($type) {
          
          case '1':
