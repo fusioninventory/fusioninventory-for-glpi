@@ -276,7 +276,7 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
     *
     */
    function run($itemtype) {
-      return $this->sxml;
+      return $this->message;
    }
 }
 

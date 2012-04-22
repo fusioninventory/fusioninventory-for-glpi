@@ -508,7 +508,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
       $pfAgent->getFromDB($current['plugin_fusioninventory_agents_id']);
 
       $pfAgentconfig->loadAgentconfig($pfAgent->fields['id']);
-      $sxml_option = $this->sxml->addChild('OPTION');
+      $sxml_option = $this->message->addChild('OPTION');
       $sxml_option->addChild('NAME', 'SNMPQUERY');
       $sxml_param = $sxml_option->addChild('PARAM');
          $sxml_param->addAttribute('CORE_QUERY', "1");
@@ -588,7 +588,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
             }
          }
       }
-      return $this->sxml;
+      return $this->message;
    }
 
 

@@ -187,7 +187,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $NetworkPort                        = new NetworkPort();
 
-      $sxml_option = $this->sxml->addChild('OPTION');
+      $sxml_option = $this->message->addChild('OPTION');
       $sxml_option->addChild('NAME', 'WAKEONLAN');
       
       $changestatus = 0;
@@ -235,7 +235,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
 
          }
       }
-      return $this->sxml;
+      return $this->message;
    }
 
    
