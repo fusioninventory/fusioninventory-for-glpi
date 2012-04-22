@@ -291,7 +291,7 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team</COMMENTS>
       $this->testSendinventory("toto", $switch2, 1);
       
       // * 3. update switch 1
-      $this->testSendinventory("toto", $switch1, 1);
+      $this->testSendinventory("toto", $switch1);
          
          // CHECK 1 : Check ip of ports
          $a_ports = $networkPort->find("`name`='Fa0/1'");
@@ -332,7 +332,7 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team</COMMENTS>
       $a_switch = current($a_switches);
       
       $switch1bis = str_replace('<IP>172.27.2.22</IP>', '', $switch1);
-      $this->testSendinventory("toto", $switch1bis, 1);
+      $this->testSendinventory("toto", $switch1bis);
       
          $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
                  WHERE `networkequipments_id`='".$a_switch['id']."'";
@@ -343,7 +343,7 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team</COMMENTS>
          $this->assertEquals(count($networkEquipment->find()), 2, '[2] May have 2 switches created');
       
       $switch1bis = str_replace('<IP>212.99.4.74</IP>', '', $switch1);
-      $this->testSendinventory("toto", $switch1bis, 1);      
+      $this->testSendinventory("toto", $switch1bis);      
          $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
                  WHERE `networkequipments_id`='".$a_switch['id']."'";
          $result = $DB->query($query);
