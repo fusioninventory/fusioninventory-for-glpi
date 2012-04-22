@@ -498,6 +498,7 @@ class PluginFusioninventoryCommunication {
    
 // old POST protocol
    function handleOCSCommunication() {
+      global $LOADED_PLUGINS;
 
       // ***** For debug only ***** //
       //$GLOBALS["HTTP_RAW_POST_DATA"] = gzcompress('');
