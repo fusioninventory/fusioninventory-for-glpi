@@ -79,6 +79,7 @@ class Hub extends PHPUnit_Framework_TestCase {
       $plugin->getFromDBbyDir("fusioninventory");
       $plugin->activate($plugin->fields['id']);
       Plugin::load("fusioninventory");
+      $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
       
       // Add task and taskjob
       $pfTask = new PluginFusioninventoryTask();
