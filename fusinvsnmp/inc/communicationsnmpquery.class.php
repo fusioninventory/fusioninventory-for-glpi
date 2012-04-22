@@ -555,7 +555,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             
             case 'IP':
                if ((string)$child != "127.0.0.1") {
-                  $PluginFusinvsnmpNetworkEquipmentIP->setIP((string)$child);
+                  $pfNetworkEquipmentIP->setIP((string)$child);
                   // Search in unknown device if device with IP (CDP) is yet added, in this case,
                   // we get id of this unknown device
                   $a_unknown = $pfUnknownDevice->find("`ip`='".(string)$child."'");
@@ -572,7 +572,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                
          }
       }
-      $PluginFusinvsnmpNetworkEquipmentIP->saveIPs($networkequipments_id);
+      $pfNetworkEquipmentIP->saveIPs($networkequipments_id);
       return $errors;
    }
 
