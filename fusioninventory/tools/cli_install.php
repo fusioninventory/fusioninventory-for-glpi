@@ -136,6 +136,7 @@ if (!isset($_SERVER['argv'][1])) {
 
    // To prevent problem of execution time
    ini_set("max_execution_time", "0");
+   ini_set("memory_limit", "-1");
 
    $mess = '';
    if (($current_version != PLUGIN_FUSIONINVENTORY_VERSION)
