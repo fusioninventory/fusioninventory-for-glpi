@@ -46,19 +46,9 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpCommunicationSNMPQuery {
 //   private $sxml, $deviceId, $ptd, $type='', $logFile;
-   private $sxml, $ptd, $logFile, $agent, $unknownDeviceCDP;
+   private $sxml, $ptd, $agent, $unknownDeviceCDP;
    private $a_ports = array();
 
-   
-   
-   function __construct() {
-      if (PluginFusioninventoryConfig::isExtradebugActive()) {
-         $this->logFile = GLPI_LOG_DIR.'/fusioninventorycommunication.log';
-      }
-   }
-
-
-   
    /**
     * Import data
     *
