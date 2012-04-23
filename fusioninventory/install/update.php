@@ -190,6 +190,24 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    }
       
 
+   // * Rename tables from old version of FuionInventory (2.2.1 for example)
+   $migration->renameTable("glpi_plugin_fusioninventory_rangeip", "glpi_plugin_fusioninventory_ipranges");
+   $migration->renameTable("glpi_plugin_fusioninventory_lock", "glpi_plugin_fusioninventory_locks");
+      
+   $migration->renameTable("glpi_plugin_fusioninventory_networking_ports", "glpi_plugin_fusinvsnmp_networkports"); 
+   $migration->renameTable("glpi_plugin_fusioninventory_connection_history", "glpi_plugin_fusinvsnmp_networkportconnectionlogs");
+   $migration->renameTable("glpi_plugin_fusioninventory_construct_device", "glpi_plugin_fusinvsnmp_constructdevices");
+   $migration->renameTable("glpi_plugin_fusioninventory_construct_mibs", "glpi_plugin_fusinvsnmp_constructdevice_miboids");
+   $migration->renameTable("glpi_plugin_fusioninventory_construct_walks", "glpi_plugin_fusinvsnmp_constructdevicewalks");
+   $migration->renameTable("glpi_plugin_fusioninventory_networking", "glpi_plugin_fusinvsnmp_networkequipments");
+   $migration->renameTable("glpi_plugin_fusioninventory_networking_ifaddr", "glpi_plugin_fusinvsnmp_networkequipmentips");
+   $migration->renameTable("glpi_plugin_fusioninventory_printers", "glpi_plugin_fusinvsnmp_printers");
+   $migration->renameTable("glpi_plugin_fusioninventory_printers_cartridges", "glpi_plugin_fusinvsnmp_printercartridges");
+   $migration->renameTable("glpi_plugin_fusioninventory_printers_history", "glpi_plugin_fusinvsnmp_printerlogs");
+   $migration->renameTable("glpi_plugin_fusioninventory_model_infos", "glpi_plugin_fusinvsnmp_models");
+   $migration->renameTable("glpi_plugin_fusioninventory_mib_networking", "glpi_plugin_fusinvsnmp_modelmibs");
+   $migration->renameTable("glpi_plugin_fusioninventory_snmp_connection", "glpi_plugin_fusinvsnmp_configsecurities");
+   
       
    /*
     * Table glpi_plugin_fusioninventory_agentmodules
