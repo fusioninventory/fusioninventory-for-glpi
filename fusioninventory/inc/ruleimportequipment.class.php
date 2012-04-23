@@ -295,8 +295,10 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
    function findWithGlobalCriteria($input) {
       global $DB, $CFG_GLPI;
 
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
-                                                   print_r($input, true));
+      PluginFusioninventoryLogger::logIfExtradebug(
+         "pluginFusioninventory-rules",
+         print_r($input, true)
+      );
       $complex_criterias = array();
       $sql_where         = '';
       $sql_from          = '';
@@ -509,8 +511,10 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
 
       // Suivant le / les types, on cherche dans un ou plusieurs / tous les types
       $found = 0;
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
-                                                   "===============\n");
+      PluginFusioninventoryLogger::logIfExtradebug(
+         "pluginFusioninventory-rules",
+         "===============\n"
+      );
 
       foreach ($itemtypeselected as $itemtype) {
          $sql_from_temp = "";
@@ -546,8 +550,10 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
             $sql_glpi = str_replace("[typetable]", $item->getTable(), $sql_glpi);
             $sql_glpi = str_replace("[typename]", $itemtype, $sql_glpi);
 
-            PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
-                                                          $sql_glpi."\n");
+            PluginFusioninventoryLogger::logIfExtradebug(
+               "pluginFusioninventory-rules",
+               $sql_glpi."\n"
+            );
             $result_glpi = $DB->query($sql_glpi);
 
             if ($DB->numrows($result_glpi) > 0) {
@@ -591,14 +597,18 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
          $inputrulelog['plugin_fusioninventory_agents_id'] = $_SESSION['plugin_fusioninventory_agents_id'];
       }
       
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
-                                                   "execute action\n");
+      PluginFusioninventoryLogger::logIfExtradebug(
+         "pluginFusioninventory-rules",
+         "execute action\n"
+      );
 
       if (count($this->actions)) {
          foreach ($this->actions as $action) {
             if ($action->fields['field'] == '_fusion') {
-               PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
-                                                            "value".$action->fields["value"]."\n");
+               PluginFusioninventoryLogger::logIfExtradebug(
+                  "pluginFusioninventory-rules",
+                  "value".$action->fields["value"]."\n"
+               );
 
                if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_CREATE
                        OR $action->fields["value"] == self::RULE_ACTION_LINK_OR_NO_CREATE) {
@@ -657,8 +667,10 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
                   return $output;
                }
             } else if ($action->fields['field'] == '_ignore_import') {
-               PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
-                                                            "value".$action->fields["value"]."\n");
+               PluginFusioninventoryLogger::logIfExtradebug(
+                  "pluginFusioninventory-rules",
+                  "value".$action->fields["value"]."\n"
+               );
                $output['action'] = self::LINK_RESULT_DENIED;
                return $output;
             } else {

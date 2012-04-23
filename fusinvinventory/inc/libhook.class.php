@@ -98,8 +98,10 @@ class PluginFusinvinventoryLibhook {
     **/
     public static function addSections($data, $idmachine) {
 
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusinvinventory-addsection", 
-                                                   "[".$idmachine."] ".print_r($data, true));
+      PluginFusioninventoryLogger::logIfExtradebug(
+         "pluginFusinvinventory-addsection",
+         "[".$idmachine."] ".print_r($data, true)
+      );
        
       $Computer = new Computer();
 
@@ -602,8 +604,10 @@ class PluginFusinvinventoryLibhook {
       $_SESSION["plugin_fusinvinventory_history_add"] = true;
       $_SESSION["plugin_fusinvinventory_no_history_add"] = false;
       
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusinvinventory-removesection", 
-                                                   "[".$idmachine."] ".print_r($idsections, true));
+      PluginFusioninventoryLogger::logIfExtradebug(
+         "pluginFusinvinventory-removesection",
+         "[".$idmachine."] ".print_r($idsections, true)
+      );
         
         foreach ($idsections as $section) {
             $split = explode("/", $section);
@@ -1012,8 +1016,10 @@ class PluginFusinvinventoryLibhook {
             }
          }
       }
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusinvinventory-updatesection", 
-                                                   "[".$idmachine."] ".print_r($data, true));
+      PluginFusioninventoryLogger::logIfExtradebug(
+         "pluginFusinvinventory-updatesection",
+         "[".$idmachine."] ".print_r($data, true)
+      );
     }
 
 

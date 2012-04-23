@@ -62,8 +62,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
       $result = false;
 
-      PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationSNMPQuery->import().');
+      PluginFusioninventoryLogger::logIfExtradebugAndDebugMode(
+         'fusioninventorycommunication',
+         'Function PluginFusinvsnmpCommunicationSNMPQuery->import().'
+      );
 
       $pfAgent = new PluginFusioninventoryAgent();
       $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
@@ -129,15 +131,20 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    function importContent($p_content) {
       global $LANG;
 
-      PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationSNMPQuery->importContent().');
+      PluginFusioninventoryLogger::logIfExtradebugAndDebugMode(
+         'fusioninventorycommunication',
+         'Function PluginFusinvsnmpCommunicationSNMPQuery->importContent().'
+      );
       $pfAgent = new PluginFusioninventoryAgent();
       
       $errors='';
       $nbDevices = 0;
 
       foreach ($p_content->children() as $child) {
-         PluginFusioninventoryCommunication::addLog($child->getName());
+         PluginFusioninventoryLogger::logIfExtradebugAndDebugMode(
+            'fusioninventorycommunication',
+            $child->getName()
+         );
          switch ($child->getName()) {
             
             case 'DEVICE' :
@@ -206,8 +213,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    function importDevice($itemtype, $items_id) {
       global $LANG;
 
-      PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationSNMPQuery->importDevice().');
+      PluginFusioninventoryLogger::logIfExtradebugAndDebugMode(
+         'fusioninventorycommunication',
+         'Function PluginFusinvsnmpCommunicationSNMPQuery->importDevice().'
+      );
 
       $p_xml = simplexml_load_string($_SESSION['SOURCE_XMLDEVICE'],'SimpleXMLElement', LIBXML_NOCDATA);
 
@@ -291,8 +300,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     */
    function importInfo($itemtype, $items_id) {
 
-      PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationSNMPQuery->importInfo().');
+      PluginFusioninventoryLogger::logIfExtradebugAndDebugMode(
+         'fusioninventorycommunication',
+         'Function PluginFusinvsnmpCommunicationSNMPQuery->importInfo().'
+      );
       $errors='';
       $xml = simplexml_load_string($_SESSION['SOURCE_XMLDEVICE'],'SimpleXMLElement', LIBXML_NOCDATA);
       if ($itemtype == 'NetworkEquipment') {
@@ -434,8 +445,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    function importInfoPrinter($p_info) {
       global $LANG;
 
-      PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationSNMPQuery->importInfoPrinter().');
+      PluginFusioninventoryLogger::logIfExtradebugAndDebugMode(
+         'fusioninventorycommunication',
+         'Function PluginFusinvsnmpCommunicationSNMPQuery->importInfoPrinter().'
+      );
 
       $errors='';
       $this->ptd = new PluginFusinvsnmpPrinter();
@@ -581,8 +594,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    function importPorts($p_ports) {
       global $LANG;
 
-      PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationSNMPQuery->importPorts().');
+      PluginFusioninventoryLogger::logIfExtradebugAndDebugMode(
+         'fusioninventorycommunication',
+         'Function PluginFusinvsnmpCommunicationSNMPQuery->importPorts().'
+      );
       $errors='';
       foreach ($p_ports->children() as $child) {
          switch ($child->getName()) {
@@ -623,8 +638,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     **/
    function importPortNetworking($p_port) {
       global $LANG;
-      PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationSNMPQuery->importPortNetworking().');
+      PluginFusioninventoryLogger::logIfExtradebugAndDebugMode(
+         'fusioninventorycommunication',
+         'Function PluginFusinvsnmpCommunicationSNMPQuery->importPortNetworking().'
+      );
       $errors='';
       $pfNetworkPort = new PluginFusinvsnmpNetworkPort("NetworkEquipment");
       $pfNetworkporttype = new PluginFusinvsnmpNetworkporttype();
@@ -993,8 +1010,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    function importConnections($p_connections, $pfNetworkPort) {
       global $LANG;
 
-      PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationSNMPQuery->importConnections().');
+      PluginFusioninventoryLogger::logIfExtradebugAndDebugMode(
+         'fusioninventorycommunication',
+         'Function PluginFusinvsnmpCommunicationSNMPQuery->importConnections().'
+      );
       $errors='';
       $cdp = 0;
       if (isset($p_connections->CDP)) {
@@ -1050,8 +1069,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    function  importConnection($p_connection, $pfNetworkPort, $p_cdp) {
       global $LANG;
 
-      PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationSNMPQuery->importConnection().');
+      PluginFusioninventoryLogger::logIfExtradebugAndDebugMode(
+         'fusioninventorycommunication',
+         'Function PluginFusinvsnmpCommunicationSNMPQuery->importConnection().'
+      );
 
       $errors  = '';
       if ($p_cdp==1) {
@@ -1219,8 +1240,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     */
    function sendCriteria($p_DEVICEID, $p_CONTENT) {
 
-      PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationSNMPQuery->sendCriteria().');
+      PluginFusioninventoryLogger::logIfExtradebugAndDebugMode(
+         'fusioninventorycommunication',
+         'Function PluginFusinvsnmpCommunicationSNMPQuery->sendCriteria().'
+      );
 
       $errors = '';
       
@@ -1268,11 +1291,15 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusinvsnmpCommunicationSNMPQuery";
       $rule = new PluginFusioninventoryRuleImportEquipmentCollection();
       $data = array();
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
-                                                   "Input data : ".print_r($input, true));
+      PluginFusioninventoryLogger::logIfExtradebug(
+         "pluginFusioninventory-rules",
+         "Input data : ".print_r($input, true)
+      );
       $data = $rule->processAllRules($input, array());
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
-                                                   print_r($data, true));
+      PluginFusioninventoryLogger::logIfExtradebug(
+         "pluginFusioninventory-rules",
+         print_r($data, true)
+      );
       if (isset($data['action'])
               AND ($data['action'] == PluginFusioninventoryRuleImportEquipment::LINK_RESULT_DENIED)) {
 
@@ -1341,10 +1368,14 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     */
    function rulepassed($items_id, $itemtype) {
       
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
-                                                   "Rule passed : ".$items_id.", ".$itemtype."\n");
-      PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationSNMPQuery->rulepassed().');
+      PluginFusioninventoryLogger::logIfExtradebug(
+         "pluginFusioninventory-rules",
+         "Rule passed : ".$items_id.", ".$itemtype."\n"
+      );
+      PluginFusioninventoryLogger::logIfExtradebugAndDebugMode(
+         'fusioninventorycommunication'
+         'Function PluginFusinvsnmpCommunicationSNMPQuery->rulepassed().'
+      );
 
       $xml = simplexml_load_string($_SESSION['SOURCE_XMLDEVICE'],'SimpleXMLElement', LIBXML_NOCDATA);
 

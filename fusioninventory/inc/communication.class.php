@@ -53,7 +53,7 @@ class PluginFusioninventoryCommunication {
    
    function __construct() {
       $this->message = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><REPLY></REPLY>");
-      PluginFusioninventoryConfig::logIfExtradebug(
+      PluginFusioninventoryLogger::logIfExtradebug(
          'pluginFusioninventory-communication',
          'New PluginFusioninventoryCommunication object.'
       );
@@ -121,28 +121,6 @@ class PluginFusioninventoryCommunication {
       }
    }
    
-   
-   
-   /**
-    * Add logs
-    *
-    * @param $p_logs logs to write
-    * 
-    * @return nothing (write text in log file)
-    **/
-   static function addLog($p_logs) {
-
-      if ($_SESSION['glpi_use_mode']==DEBUG_MODE) {
-         if (PluginFusioninventoryConfig::isExtradebugActive()) {
-            file_put_contents(GLPI_LOG_DIR.'/pluginFusioninventory-communication.log',
-                              "\n".time().' : '.$p_logs,
-                              FILE_APPEND);
-         }
-      }
-   }
-
-
-  
    /**
     * Import data
     *
@@ -156,7 +134,7 @@ class PluginFusioninventoryCommunication {
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
       $pfAgent = new PluginFusioninventoryAgent();
 
-      PluginFusioninventoryConfig::logIfExtradebug(
+      PluginFusioninventoryLogger::logIfExtradebug(
          'pluginFusioninventory-communication',
          'Function import().'
       );
@@ -581,7 +559,7 @@ class PluginFusioninventoryCommunication {
          return;
       }
 
-      PluginFusioninventoryConfig::logIfExtradebug(
+      PluginFusioninventoryLogger::logIfExtradebug(
          'pluginFusioninventory-dial' . uniqid(),
          $xml
       );
