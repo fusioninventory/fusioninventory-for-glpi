@@ -906,9 +906,15 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "items_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
+                                 "fields",
+                                 "tablefields",
+                                 "text DEFAULT NULL");
+         $migration->changeField($newTable,
                                  "tablefields",
                                  "tablefields",
                                  "text DEFAULT NULL");
+      $migration->migrationOneTable($newTable);
+         $migration->dropField($newTable, "itemtype");
       $migration->migrationOneTable($newTable);
          $migration->addField($newTable,
                               "id",
