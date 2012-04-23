@@ -214,35 +214,35 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    
    
    $newTable = "glpi_plugin_fusioninventory_agents_inventory_state";
-   if (!TableExists($newTable)) {
+   if (TableExists($newTable)) {
       $DB->query("DROP TABLE `".$newTable."`");
    }
    $newTable = "glpi_plugin_fusioninventory_config_modules";
-   if (!TableExists($newTable)) {
+   if (TableExists($newTable)) {
       $DB->query("DROP TABLE `".$newTable."`");
    }
    $newTable = "glpi_plugin_fusioninventory_connection_stats";
-   if (!TableExists($newTable)) {
+   if (TableExists($newTable)) {
       $DB->query("DROP TABLE `".$newTable."`");
    }
    $newTable = "glpi_plugin_fusioninventory_discovery";
-   if (!TableExists($newTable)) {
+   if (TableExists($newTable)) {
       $DB->query("DROP TABLE `".$newTable."`");
    }
    $newTable = "glpi_plugin_fusioninventory_errors";
-   if (!TableExists($newTable)) {
+   if (TableExists($newTable)) {
       $DB->query("DROP TABLE `".$newTable."`");
    }
    $newTable = "glpi_plugin_fusioninventory_lockable";
-   if (!TableExists($newTable)) {
+   if (TableExists($newTable)) {
       $DB->query("DROP TABLE `".$newTable."`");
    }
    $newTable = "glpi_plugin_fusioninventory_connection_history";
-   if (!TableExists($newTable)) {
+   if (TableExists($newTable)) {
       $DB->query("DROP TABLE `".$newTable."`");
    }
    $newTable = "glpi_plugin_fusioninventory_walks";
-   if (!TableExists($newTable)) {
+   if (TableExists($newTable)) {
       $DB->query("DROP TABLE `".$newTable."`");
    }
    
