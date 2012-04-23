@@ -1360,7 +1360,11 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                       PRIMARY KEY (`id`)
                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
          $DB->query($query);
-      }      
+      }   
+         $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT"); 
          $migration->changeField($newTable,
                                  "id",
                                  "id",
@@ -1409,6 +1413,10 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $DB->query($query);
       }      
          $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT"); 
+         $migration->changeField($newTable,
                                  "id",
                                  "id",
                                  "int(11) NOT NULL AUTO_INCREMENT");
@@ -1455,6 +1463,10 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
          $DB->query($query);
       }      
+         $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT"); 
          $migration->changeField($newTable,
                                  "id",
                                  "id",
@@ -1529,6 +1541,10 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $DB->query($query);
       }
          $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT"); 
+         $migration->changeField($newTable,
                                  "id",
                                  "id",
                                  "int(8) NOT NULL AUTO_INCREMENT");
@@ -1575,6 +1591,10 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
          $DB->query($query);
       }
+         $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT"); 
          $migration->changeField($newTable,
                                  "have_someinformations",
                                  "have_someinformations",
@@ -1664,6 +1684,11 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
          $DB->query($query);
       }
+         
+         $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT"); 
          $migration->changeField($newTable,
                                  "id",
                                  "id",
@@ -1675,17 +1700,17 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->changeField($newTable,
                                  "log",
                                  "log",
-                                 "text DEFAULT NULL");         
-      $migration->migrationOneTable($newTable);      
+                                 "text DEFAULT NULL");          
+      $migration->migrationOneTable($newTable);
          $migration->addField($newTable,
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
+                              "id",
+                              "int(11) NOT NULL AUTO_INCREMENT");
          $migration->addField($newTable,
-                                 "plugin_fusinvsnmp_constructdevices_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
+                              "plugin_fusinvsnmp_constructdevices_id",
+                              "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
-                                 "log",
-                                 "text DEFAULT NULL");
+                              "log",
+                              "text DEFAULT NULL");
       $migration->migrationOneTable($newTable);
       
       
@@ -1733,6 +1758,10 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
          $DB->query($query);
       }
+         $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
          $migration->changeField($newTable,
                                  "id",
                                  "id",
@@ -1807,6 +1836,10 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                         PRIMARY KEY (`id`)
                      ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
       }
+         $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT"); 
          $migration->changeField($newTable,
                               "id",
                               "id",
@@ -1889,6 +1922,10 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                         PRIMARY KEY (`id`)
                      ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
       }
+         $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT"); 
          $migration->changeField($newTable,
                                  "id",
                                  "id",
@@ -2070,6 +2107,10 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                         PRIMARY KEY (`id`)
                      ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
       }
+         $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT"); 
          $migration->changeField($newTable, 
                                  "id", 
                                  "id",
