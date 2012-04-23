@@ -245,6 +245,18 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    if (TableExists($newTable)) {
       $DB->query("DROP TABLE `".$newTable."`");
    }
+   $newTable = "glpi_plugin_fusioninventory_config_snmp_history";
+   if (TableExists($newTable)) {
+      $DB->query("DROP TABLE `".$newTable."`");
+   }
+   $newTable = "glpi_plugin_fusioninventory_config_snmp_networking";
+   if (TableExists($newTable)) {
+      $DB->query("DROP TABLE `".$newTable."`");
+   }
+   $newTable = "glpi_plugin_fusioninventory_task";
+   if (TableExists($newTable)) {
+      $DB->query("DROP TABLE `".$newTable."`");
+   }
    
    
       
