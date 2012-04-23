@@ -156,15 +156,16 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
    * @return bool true if form is ok
    *
    **/
-   function showForm($options=array()) {
+   static function showForm($options=array()) {
       global $LANG;
 
       $pfConfig = new PluginFusioninventoryConfig();
+      $pfsnmpConfig = new self();
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
 
-      $this->fields['id'] = 1;
-      $this->showFormHeader($options);
+      $pfsnmpConfig->fields['id'] = 1;
+      $pfsnmpConfig->showFormHeader($options);
  
       echo "<tr>";
       echo "<th colspan='4'>".$LANG['plugin_fusinvinventory']['setup'][20];
@@ -416,7 +417,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       echo "</tr>";
       
       $options['candel'] = false;
-      $this->showFormButtons($options);
+      $pfsnmpConfig->showFormButtons($options);
 
       return true;
    }
