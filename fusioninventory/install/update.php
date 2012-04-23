@@ -193,9 +193,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    // * Rename tables from old version of FuionInventory (2.2.1 for example)
    $migration->renameTable("glpi_plugin_fusioninventory_rangeip", "glpi_plugin_fusioninventory_ipranges");
    $migration->renameTable("glpi_plugin_fusioninventory_lock", "glpi_plugin_fusioninventory_locks");
-      
+   $migration->renameTable("glpi_plugin_fusioninventory_unknown_device", "glpi_plugin_fusioninventory_unknowndevices");
+   $migration->renameTable("glpi_plugin_fusioninventory_config", "glpi_plugin_fusioninventory_configs");
+   
    $migration->renameTable("glpi_plugin_fusioninventory_networking_ports", "glpi_plugin_fusinvsnmp_networkports"); 
-   $migration->renameTable("glpi_plugin_fusioninventory_connection_history", "glpi_plugin_fusinvsnmp_networkportconnectionlogs");
    $migration->renameTable("glpi_plugin_fusioninventory_construct_device", "glpi_plugin_fusinvsnmp_constructdevices");
    $migration->renameTable("glpi_plugin_fusioninventory_construct_mibs", "glpi_plugin_fusinvsnmp_constructdevice_miboids");
    $migration->renameTable("glpi_plugin_fusioninventory_construct_walks", "glpi_plugin_fusinvsnmp_constructdevicewalks");
@@ -207,6 +208,44 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $migration->renameTable("glpi_plugin_fusioninventory_model_infos", "glpi_plugin_fusinvsnmp_models");
    $migration->renameTable("glpi_plugin_fusioninventory_mib_networking", "glpi_plugin_fusinvsnmp_modelmibs");
    $migration->renameTable("glpi_plugin_fusioninventory_snmp_connection", "glpi_plugin_fusinvsnmp_configsecurities");
+   $migration->renameTable("glpi_plugin_fusioninventory_snmp_history", "glpi_plugin_fusinvsnmp_networkportlogs");
+   $migration->renameTable("glpi_plugin_fusioninventory_snmp_history_connections", "glpi_plugin_fusinvsnmp_networkportconnectionlogs");
+   
+   
+   
+   $newTable = "glpi_plugin_fusioninventory_agents_inventory_state";
+   if (!TableExists($newTable)) {
+      $DB->query("DROP TABLE `".$newTable."`");
+   }
+   $newTable = "glpi_plugin_fusioninventory_config_modules";
+   if (!TableExists($newTable)) {
+      $DB->query("DROP TABLE `".$newTable."`");
+   }
+   $newTable = "glpi_plugin_fusioninventory_connection_stats";
+   if (!TableExists($newTable)) {
+      $DB->query("DROP TABLE `".$newTable."`");
+   }
+   $newTable = "glpi_plugin_fusioninventory_discovery";
+   if (!TableExists($newTable)) {
+      $DB->query("DROP TABLE `".$newTable."`");
+   }
+   $newTable = "glpi_plugin_fusioninventory_errors";
+   if (!TableExists($newTable)) {
+      $DB->query("DROP TABLE `".$newTable."`");
+   }
+   $newTable = "glpi_plugin_fusioninventory_lockable";
+   if (!TableExists($newTable)) {
+      $DB->query("DROP TABLE `".$newTable."`");
+   }
+   $newTable = "glpi_plugin_fusioninventory_connection_history";
+   if (!TableExists($newTable)) {
+      $DB->query("DROP TABLE `".$newTable."`");
+   }
+   $newTable = "glpi_plugin_fusioninventory_walks";
+   if (!TableExists($newTable)) {
+      $DB->query("DROP TABLE `".$newTable."`");
+   }
+   
    
       
    /*
