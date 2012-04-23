@@ -580,6 +580,21 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  'plugins_id', 
                                  "int(11) NOT NULL DEFAULT '0'");         
       $migration->migrationOneTable($newTable);
+         $migration->dropField($newTable, "version");
+         $migration->dropField($newTable, "URL_agent_conf");
+         $migration->dropField($newTable, "ssl_only");
+         $migration->dropField($newTable, "authsnmp");
+         $migration->dropField($newTable, "inventory_frequence");
+         $migration->dropField($newTable, "criteria1_ip");
+         $migration->dropField($newTable, "criteria1_name");
+         $migration->dropField($newTable, "criteria1_serial");
+         $migration->dropField($newTable, "criteria1_macaddr");
+         $migration->dropField($newTable, "criteria2_ip");
+         $migration->dropField($newTable, "criteria2_name");
+         $migration->dropField($newTable, "criteria2_serial");
+         $migration->dropField($newTable, "criteria2_macaddr");
+         $migration->dropField($newTable, "delete_agent_process");
+      $migration->migrationOneTable($newTable);
          $migration->addField($newTable, 
                               'id', 
                               "int(1) NOT NULL AUTO_INCREMENT");
