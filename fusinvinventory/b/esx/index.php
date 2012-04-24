@@ -72,7 +72,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          break;
       case 'setLog':
          //Generic method to update logs
-         PluginFusioninventoryRestCommunication::updateLog($_GET);
+         PluginFusioninventoryFusionCommunication::updateLog($_GET);
          break;
    }
    

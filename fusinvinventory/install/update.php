@@ -148,7 +148,7 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
       if (isset($_SERVER['HTTP_REFERER'])) {
          $url = $_SERVER['HTTP_REFERER'];
       }
-      $input['url'] = PluginFusioninventoryRestCommunication::getDefaultRestURL($url, 
+      $input['url'] = PluginFusioninventoryFusionCommunication::getDefaultRestURL($url, 
                                                                                 'fusinvinventory', 
                                                                                 'esx');
       $agentmodule->add($input);
