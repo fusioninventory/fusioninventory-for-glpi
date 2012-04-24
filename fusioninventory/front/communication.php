@@ -75,12 +75,10 @@ if (!class_exists("PluginFusioninventoryConfig")) {
    exit();
 }
 
-$pfCommunication  = new PluginFusioninventoryOCSCommunication();
-
 if (isset($_GET['action']) && isset($_GET['machineid'])) {
-   $pfCommunication->handleFusionCommunication();
+   PluginFusioninventoryFusionCommunication::run();
 } else if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
-   $pfCommunication->handleOCSCommunication();
+   PluginFusioninventoryOCSCommunication::run();
 }
 
 session_destroy();

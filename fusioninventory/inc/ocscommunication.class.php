@@ -45,7 +45,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 /**
- * Class to communicate with agents using XML
+ * Class to communicate with agents with old OCS protocol
  **/
 class PluginFusioninventoryOCSCommunication {
    protected $message;
@@ -460,22 +460,7 @@ class PluginFusioninventoryOCSCommunication {
       return $xml;
    }
    
-   
-   
-   // new REST protocol
-   function handleFusionCommunication() {
-      $response = PluginFusioninventoryRestCommunication::communicate($_GET);
-      if ($response) {
-         echo json_encode($response);
-      } else {
-         PluginFusioninventoryRestCommunication::sendError();
-      }
-   }
-   
-   
-   
-// old POST protocol
-   function handleOCSCommunication() {
+   function run() {
       global $LOADED_PLUGINS;
 
       // ***** For debug only ***** //

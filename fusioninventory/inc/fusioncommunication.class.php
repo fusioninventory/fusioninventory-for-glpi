@@ -225,6 +225,14 @@ class PluginFusioninventoryFusionCommunication {
       }
    }   
 
+   function run() {
+      $response = PluginFusioninventoryFusionCommunication::communicate($_GET);
+      if ($response) {
+         echo json_encode($response);
+      } else {
+         PluginFusioninventoryFusionCommunication::sendError();
+      }
+   }
 }
 
 ?>
