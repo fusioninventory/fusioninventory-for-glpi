@@ -1878,6 +1878,24 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     */
       include_once(GLPI_ROOT."/plugins/fusioninventory/inc/config.class.php");
       $config = new PluginFusioninventoryConfig();
+      if (!class_exists('PluginFusioninventorySetup')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
+      }
+      $PluginFusioninventorySetup = new PluginFusioninventorySetup();
+      $users_id = $PluginFusioninventorySetup->createFusionInventoryUser();
+      $a_input = array();
+      $a_input['ssl_only'] = 0;
+      $a_input['delete_task'] = 20;
+      $a_input['inventory_frequence'] = 24;
+      $a_input['agent_port'] = 62354;
+      $a_input['extradebug'] = 0;
+      $a_input['users_id'] = $users_id;
+      foreach ($a_input as $type=>$value) {
+         if (is_null($config->getValue($plugins_id, $type))) {
+            $config->initConfig($plugins_id, array($type=>$value));
+         }
+      }
+      
       $a_input = array();
       $a_input['version'] = PLUGIN_FUSIONINVENTORY_VERSION;
       if (!$config->getValue($plugins_id, "ssl_only")) {
