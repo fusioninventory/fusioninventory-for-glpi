@@ -561,10 +561,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   $PluginFusinvsnmpNetworkEquipmentIP->setIP((string)$child);
                   // Search in unknown device if device with IP (CDP) is yet added, in this case,
                   // we get id of this unknown device
-                  $a_unknown = $PluginFusioninventoryUnknownDevice->find("`ip`='".(string)$child."'");
+                  $a_unknown = $PluginFusioninventoryUnknownDevice->find("`ip`='".(string)$child."'", "", 1);
                   if (count($a_unknown) > 0) {
-                     foreach ($a_unknown as $datas) {
-                     }
+                     $datas= current($a_unknown);
                      $this->unknownDeviceCDP = $datas['id'];
                   }
                }
