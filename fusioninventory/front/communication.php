@@ -75,7 +75,7 @@ if (!class_exists("PluginFusioninventoryConfig")) {
    exit();
 }
 
-$pfCommunication  = new PluginFusioninventoryCommunication();
+$pfCommunication  = new PluginFusioninventoryOCSCommunication();
 
 if (isset($_GET['action']) && isset($_GET['machineid'])) {
    $pfCommunication->handleFusionCommunication();

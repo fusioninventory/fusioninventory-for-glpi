@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class to communicate with agents using XML
  **/
-class PluginFusioninventoryCommunication {
+class PluginFusioninventoryOCSCommunication {
    protected $message;
 
    
@@ -55,7 +55,7 @@ class PluginFusioninventoryCommunication {
       $this->message = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><REPLY></REPLY>");
       PluginFusioninventoryLogger::logIfExtradebug(
          'pluginFusioninventory-communication',
-         'New PluginFusioninventoryCommunication object.'
+         'New PluginFusioninventoryOCSCommunication object.'
       );
    }
 
@@ -506,7 +506,7 @@ class PluginFusioninventoryCommunication {
       }
       ob_end_clean();
 
-      $communication  = new PluginFusioninventoryCommunication();
+      $communication  = new PluginFusioninventoryOCSCommunication();
 
       // identify message compression algorithm
       $xml = '';

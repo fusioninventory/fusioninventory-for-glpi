@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
+class PluginFusinvinventoryESX extends PluginFusioninventoryOCSCommunication {
 
    /**
     * Get all devices and put in taskjobstatus each task for

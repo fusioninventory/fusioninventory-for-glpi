@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication {
+class PluginFusioninventoryWakeonlan extends PluginFusioninventoryOCSCommunication {
 
    // Get all devices and put in taskjobstatus each task for each device for each agent
    function prepareRun($taskjobs_id) {
