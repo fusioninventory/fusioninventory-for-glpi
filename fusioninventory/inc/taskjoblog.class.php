@@ -459,6 +459,7 @@ function appear_array(id){
             $text .= "<tr class='tab_bg_1'>";
             $text .= "<th colspan='2'>";
             $text .= $LANG['plugin_fusioninventory']['task'][27];
+            $text .= "<sup>(".(count($a_devices_merged) + 1).")</sup>";
             $text .= "</th>";
             $a_return = $this->displayHistoryDetail(array_shift($a_history));
             $count = $a_return[0];
