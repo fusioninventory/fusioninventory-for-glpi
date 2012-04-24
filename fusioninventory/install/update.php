@@ -193,9 +193,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    // * Rename tables from old version of FuionInventory (2.2.1 for example)
    $migration->renameTable("glpi_plugin_fusioninventory_rangeip", "glpi_plugin_fusioninventory_ipranges");
    $migration->renameTable("glpi_plugin_fusioninventory_lock", "glpi_plugin_fusioninventory_locks");
-      
+   $migration->renameTable("glpi_plugin_fusioninventory_unknown_device", "glpi_plugin_fusioninventory_unknowndevices");
+   $migration->renameTable("glpi_plugin_fusioninventory_config", "glpi_plugin_fusioninventory_configs");
+   
    $migration->renameTable("glpi_plugin_fusioninventory_networking_ports", "glpi_plugin_fusinvsnmp_networkports"); 
-   $migration->renameTable("glpi_plugin_fusioninventory_connection_history", "glpi_plugin_fusinvsnmp_networkportconnectionlogs");
    $migration->renameTable("glpi_plugin_fusioninventory_construct_device", "glpi_plugin_fusinvsnmp_constructdevices");
    $migration->renameTable("glpi_plugin_fusioninventory_construct_mibs", "glpi_plugin_fusinvsnmp_constructdevice_miboids");
    $migration->renameTable("glpi_plugin_fusioninventory_construct_walks", "glpi_plugin_fusinvsnmp_constructdevicewalks");
@@ -207,6 +208,55 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $migration->renameTable("glpi_plugin_fusioninventory_model_infos", "glpi_plugin_fusinvsnmp_models");
    $migration->renameTable("glpi_plugin_fusioninventory_mib_networking", "glpi_plugin_fusinvsnmp_modelmibs");
    $migration->renameTable("glpi_plugin_fusioninventory_snmp_connection", "glpi_plugin_fusinvsnmp_configsecurities");
+   $migration->renameTable("glpi_plugin_fusioninventory_snmp_history", "glpi_plugin_fusinvsnmp_networkportlogs");
+   $migration->renameTable("glpi_plugin_fusioninventory_snmp_history_connections", "glpi_plugin_fusinvsnmp_networkportconnectionlogs");
+   
+   
+   
+   $newTable = "glpi_plugin_fusioninventory_agents_inventory_state";
+   if (TableExists($newTable)) {
+      $DB->query("DROP TABLE `".$newTable."`");
+   }
+   $newTable = "glpi_plugin_fusioninventory_config_modules";
+   if (TableExists($newTable)) {
+      $DB->query("DROP TABLE `".$newTable."`");
+   }
+   $newTable = "glpi_plugin_fusioninventory_connection_stats";
+   if (TableExists($newTable)) {
+      $DB->query("DROP TABLE `".$newTable."`");
+   }
+   $newTable = "glpi_plugin_fusioninventory_discovery";
+   if (TableExists($newTable)) {
+      $DB->query("DROP TABLE `".$newTable."`");
+   }
+   $newTable = "glpi_plugin_fusioninventory_errors";
+   if (TableExists($newTable)) {
+      $DB->query("DROP TABLE `".$newTable."`");
+   }
+   $newTable = "glpi_plugin_fusioninventory_lockable";
+   if (TableExists($newTable)) {
+      $DB->query("DROP TABLE `".$newTable."`");
+   }
+   $newTable = "glpi_plugin_fusioninventory_connection_history";
+   if (TableExists($newTable)) {
+      $DB->query("DROP TABLE `".$newTable."`");
+   }
+   $newTable = "glpi_plugin_fusioninventory_walks";
+   if (TableExists($newTable)) {
+      $DB->query("DROP TABLE `".$newTable."`");
+   }
+   $newTable = "glpi_plugin_fusioninventory_config_snmp_history";
+   if (TableExists($newTable)) {
+      $DB->query("DROP TABLE `".$newTable."`");
+   }
+   $newTable = "glpi_plugin_fusioninventory_config_snmp_networking";
+   if (TableExists($newTable)) {
+      $DB->query("DROP TABLE `".$newTable."`");
+   }
+   $newTable = "glpi_plugin_fusioninventory_task";
+   if (TableExists($newTable)) {
+      $DB->query("DROP TABLE `".$newTable."`");
+   }
    
       
    /*
@@ -566,6 +616,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $DB->query($query);
       }
          $migration->changeField($newTable, 
+                                 'ID', 
+                                 'id', 
+                                 "int(1) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable, 
                                  'id', 
                                  'id', 
                                  "int(1) NOT NULL AUTO_INCREMENT");
@@ -581,6 +635,21 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  'plugins_id', 
                                  'plugins_id', 
                                  "int(11) NOT NULL DEFAULT '0'");         
+      $migration->migrationOneTable($newTable);
+         $migration->dropField($newTable, "version");
+         $migration->dropField($newTable, "URL_agent_conf");
+         $migration->dropField($newTable, "ssl_only");
+         $migration->dropField($newTable, "authsnmp");
+         $migration->dropField($newTable, "inventory_frequence");
+         $migration->dropField($newTable, "criteria1_ip");
+         $migration->dropField($newTable, "criteria1_name");
+         $migration->dropField($newTable, "criteria1_serial");
+         $migration->dropField($newTable, "criteria1_macaddr");
+         $migration->dropField($newTable, "criteria2_ip");
+         $migration->dropField($newTable, "criteria2_name");
+         $migration->dropField($newTable, "criteria2_serial");
+         $migration->dropField($newTable, "criteria2_macaddr");
+         $migration->dropField($newTable, "delete_agent_process");
       $migration->migrationOneTable($newTable);
          $migration->addField($newTable, 
                               'id', 
@@ -893,9 +962,15 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "items_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
+                                 "fields",
+                                 "tablefields",
+                                 "text DEFAULT NULL");
+         $migration->changeField($newTable,
                                  "tablefields",
                                  "tablefields",
                                  "text DEFAULT NULL");
+      $migration->migrationOneTable($newTable);
+         $migration->dropField($newTable, "itemtype");
       $migration->migrationOneTable($newTable);
          $migration->addField($newTable,
                               "id",
@@ -1979,6 +2054,24 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     */
       include_once(GLPI_ROOT."/plugins/fusioninventory/inc/config.class.php");
       $config = new PluginFusioninventoryConfig();
+      if (!class_exists('PluginFusioninventorySetup')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
+      }
+      $PluginFusioninventorySetup = new PluginFusioninventorySetup();
+      $users_id = $PluginFusioninventorySetup->createFusionInventoryUser();
+      $a_input = array();
+      $a_input['ssl_only'] = 0;
+      $a_input['delete_task'] = 20;
+      $a_input['inventory_frequence'] = 24;
+      $a_input['agent_port'] = 62354;
+      $a_input['extradebug'] = 0;
+      $a_input['users_id'] = $users_id;
+      foreach ($a_input as $type=>$value) {
+         if (is_null($config->getValue($plugins_id, $type))) {
+            $config->initConfig($plugins_id, array($type=>$value));
+         }
+      }
+      
       $a_input = array();
       $a_input['version'] = PLUGIN_FUSIONINVENTORY_VERSION;
       if (is_null($config->getValue($plugins_id, "ssl_only"))) {
