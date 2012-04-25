@@ -695,7 +695,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                
                case 'IFNAME':
                   PluginFusinvsnmpNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
-                  $pfNetworkPort->setValue('name', (string)$child);
+                  if ((string)$child != '') {
+                     $pfNetworkPort->setValue('name', (string)$child);
+                  }
                   break;
                
                case 'MAC':
@@ -722,7 +724,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   break;
 
                case 'IFDESCR':
-                  if (!isset($p_port->IFNAME)) {
+                  if (!isset($p_port->IFNAME)
+                          OR (string)$p_port->IFNAME == '') {
                      $pfNetworkPort->setValue('name', (string)$p_port->IFDESCR);
                   }
                   $pfNetworkPort->setValue(strtolower($name), (string)$p_port->$name);
