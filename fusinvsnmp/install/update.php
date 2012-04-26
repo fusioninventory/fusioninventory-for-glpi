@@ -2151,6 +2151,10 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                                  "name", 
                                  "varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
          $migration->changeField($newTable, 
+                                 "device_type", 
+                                 "itemtype", 
+                                 "varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+         $migration->changeField($newTable, 
                                  "itemtype", 
                                  "itemtype", 
                                  "varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
@@ -2159,9 +2163,17 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                                  "discovery_key", 
                                  "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
          $migration->changeField($newTable, 
+                                 "comments", 
+                                 "comment", 
+                                 "text COLLATE utf8_unicode_ci"); 
+         $migration->changeField($newTable, 
                                  "comment", 
                                  "comment", 
-                                 "text COLLATE utf8_unicode_ci");            
+                                 "text COLLATE utf8_unicode_ci"); 
+      $migration->migrationOneTable($newTable);
+         $migration->dropField($newTable, "deleted");
+         $migration->dropField($newTable, "FK_entities");
+         $migration->dropField($newTable, "activation");
       $migration->migrationOneTable($newTable);
          $migration->addField($newTable, 
                               "id", 
