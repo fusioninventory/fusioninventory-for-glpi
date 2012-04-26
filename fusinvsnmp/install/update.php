@@ -46,7 +46,8 @@ function pluginFusinvsnmpGetCurrentVersion($version) {
    if ((!TableExists("glpi_plugin_tracker_config")) &&
       (!TableExists("glpi_plugin_fusioninventory_config")) &&
       (!TableExists("glpi_plugin_fusinvsnmp_agentconfigs")) &&
-      (!TableExists("glpi_plugin_fusinvsnmp_tmp_configs"))) {
+      (!TableExists("glpi_plugin_fusinvsnmp_tmp_configs")) &&
+      (!TableExists("glpi_plugin_fusinvsnmp_networkports"))) {
       return '0';
    } else if ((TableExists("glpi_plugin_tracker_config")) ||
          (TableExists("glpi_plugin_fusioninventory_config"))) {
@@ -92,7 +93,9 @@ function pluginFusinvsnmpGetCurrentVersion($version) {
          } else {
             return $data['version'];
          }
-      }      
+      }
+   } else if (FieldExists("glpi_plugin_fusinvsnmp_networkports", "FK_networking_ports")) {
+      return "2.2.1";
    } else {
       if (!class_exists('PluginFusioninventoryConfig')) { // if plugin is unactive
          include(GLPI_ROOT . "/plugins/fusioninventory/inc/config.class.php");

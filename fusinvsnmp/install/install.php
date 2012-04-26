@@ -54,6 +54,7 @@ function pluginFusinvsnmpInstall($version, $migrationname='Migration') {
 
    include_once (GLPI_ROOT . "/plugins/fusinvsnmp/install/update.php");
    $version_detected = pluginfusinvsnmpGetCurrentVersion($a_plugin['version']);
+
    if ((isset($version_detected))
            AND ($version_detected != $a_plugin['version'])
            AND $version_detected!='0') {
