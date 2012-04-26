@@ -1876,6 +1876,10 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                               "id",
                               "int(11) NOT NULL AUTO_INCREMENT");
          $migration->changeField($newTable,
+                              "date",
+                              "date_mod",
+                              "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
+         $migration->changeField($newTable,
                               "date_mod",
                               "date_mod",
                               "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
@@ -1884,13 +1888,25 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                               "creation",
                               "tinyint(1) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
+                              "FK_port_source",
+                              "networkports_id_source",
+                              "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
                               "networkports_id_source",
                               "networkports_id_source",
+                              "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                              "FK_port_destination",
+                              "networkports_id_destination",
                               "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
                               "networkports_id_destination",
                               "networkports_id_destination",
                               "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                              "process_number",
+                              "plugin_fusioninventory_agentprocesses_id",
+                              "int(11) NOT NULL DEFAULT '0'"); 
          $migration->changeField($newTable,
                               "plugin_fusioninventory_agentprocesses_id",
                               "plugin_fusioninventory_agentprocesses_id",
