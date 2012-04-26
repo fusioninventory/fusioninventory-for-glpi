@@ -1918,6 +1918,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             $config->initConfig($plugins_id, array($type=>$value));
          }
       }
+     $DB->query("DELETE * FROM `glpi_plugin_fusioninventory_configs`
+        WHERE `plugins_id`='0'");
+      
       
       $a_input = array();
       $a_input['version'] = PLUGIN_FUSIONINVENTORY_VERSION;
