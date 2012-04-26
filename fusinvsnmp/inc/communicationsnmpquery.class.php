@@ -1022,6 +1022,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          switch ($child->getName()) {
             
             case 'CDP': // already managed
+               if ($pfNetworkPort->getValue('trunk') != '1') {
+                  $pfNetworkPort->setValue('trunk', 0);
+               }
                break;
             
             case 'CONNECTION':
@@ -1033,6 +1036,14 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                      $continue = 0;
                   } else {
                      $a_macsFound[(string)$child->MAC] = 1;
+                  }
+                  
+                  if (count($child) > 1
+                          AND $pfNetworkPort->getValue('trunk') != '1') {
+                     
+                     $pfNetworkPort->setValue('trunk', -1);
+                  } else if ($pfNetworkPort->getValue('trunk') != '1') {
+                     $pfNetworkPort->setValue('trunk', 0);
                   }
                }
                if ($continue == '1') {
