@@ -295,12 +295,36 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
                `glpi_networkports`.`id`
          WHERE `glpi_networkports`.`mac`='".$sysmac."'
             AND `glpi_networkports`.`itemtype`='NetworkEquipment'
-            AND `logical_number`='".$ifnumber."'";
+            AND `logical_number`='".$ifnumber."'
+         LIMIT 1";
       $resultPort = $DB->query($queryPort);
       $dataPort = $DB->fetch_assoc($resultPort);
       if ($DB->numrows($resultPort) == "1") {
          $PortID = $dataPort['networkports_id'];
       }
+      
+      if ($PortID == '') {
+         // case where macc is of switch and not of the port (like Procurve)
+         $queryPort = "SELECT *
+            FROM `glpi_plugin_fusinvsnmp_networkports`
+            LEFT JOIN `glpi_networkports`
+               ON `glpi_plugin_fusinvsnmp_networkports`.`networkports_id`=
+                  `glpi_networkports`.`id`
+            LEFT JOIN `glpi_networkequipments`
+               ON `glpi_networkports`.`items_id`=
+                  `glpi_networkequipments`.`id`
+            WHERE `glpi_networkequipments`.`mac`='".$sysmac."'
+               AND `glpi_networkports`.`itemtype`='NetworkEquipment'
+               AND `logical_number`='".$ifnumber."'
+            LIMIT 1";
+         $resultPort = $DB->query($queryPort);
+         $dataPort = $DB->fetch_assoc($resultPort);
+         if ($DB->numrows($resultPort) == "1") {
+            $PortID = $dataPort['networkports_id'];
+         }
+      }
+      
+      
       return($PortID);
       
    }
