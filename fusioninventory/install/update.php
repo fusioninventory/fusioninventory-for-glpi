@@ -1585,9 +1585,17 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  'domain', 
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable, 
+                                 'comments', 
+                                 'comment', 
+                                 "text DEFAULT NULL");
+         $migration->changeField($newTable, 
                                  'comment', 
                                  'comment', 
                                  "text DEFAULT NULL");
+         $migration->changeField($newTable, 
+                                 'type', 
+                                 'item_type', 
+                                 "varchar(255) DEFAULT NULL");
          $migration->changeField($newTable, 
                                  'item_type', 
                                  'item_type', 
@@ -1601,8 +1609,16 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  'plugin_fusioninventory_agents_id', 
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable, 
+                                 'ifaddr', 
+                                 'ip', 
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable, 
                                  'ip', 
                                  'ip', 
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable, 
+                                 'ifmac', 
+                                 'mac', 
                                  "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
          $migration->changeField($newTable, 
                                  'mac', 
@@ -1633,7 +1649,13 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  'deleted', 
                                  'is_deleted', 
                                  "tinyint(1) NOT NULL DEFAULT '0'");      
-      $migration->migrationOneTable($newTable);      
+      $migration->migrationOneTable($newTable);   
+         $migration->dropField($newTable, "dnsname");
+         $migration->dropField($newTable, "snmp");
+         $migration->dropField($newTable, "FK_model_infos");
+         $migration->dropField($newTable, "FK_snmp_connection");
+         $migration->dropField($newTable, "FK_agent");
+      $migration->migrationOneTable($newTable); 
          $migration->addField($newTable, 
                               'id', 
                               "int(11) NOT NULL AUTO_INCREMENT");
@@ -1697,6 +1719,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                             "date_mod");
       $migration->migrationOneTable($newTable);
+      
    
       
       
