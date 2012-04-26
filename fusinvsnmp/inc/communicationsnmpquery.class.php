@@ -1027,11 +1027,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             case 'CONNECTION':
                $continue = 1;
                if (isset($child->MAC)) {
-                  $macs = $child->xpath('//MAC');
-               
                   if (isset($a_macsFound[(string)$child->MAC])) {
                      $continue = 0;
-                  } else if (count($macs) > 50) {
+                  } else if (count($child) > 50) {
                      $continue = 0;
                   } else {
                      $a_macsFound[(string)$child->MAC] = 1;
