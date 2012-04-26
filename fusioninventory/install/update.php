@@ -2092,7 +2092,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_input['users_id'] = $users_id;
       foreach ($a_input as $type=>$value) {
          if (is_null($config->getValue($plugins_id, $type))) {
-            $config->initConfig($plugins_id, array($type=>$value));
+            $config->addValues($plugins_id, array($type=>$value));
          }
       }
      $DB->query("DELETE FROM `glpi_plugin_fusioninventory_configs`
