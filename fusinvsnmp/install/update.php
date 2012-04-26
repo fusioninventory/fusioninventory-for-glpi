@@ -1627,9 +1627,23 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                                  "released",
                                  "tinyint(1) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
+                                 "snmpmodel_id",
+                                 "plugin_fusinvsnmp_models_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
                                  "plugin_fusinvsnmp_models_id",
                                  "plugin_fusinvsnmp_models_id",
-                                 "int(11) NOT NULL DEFAULT '0'");         
+                                 "int(11) NOT NULL DEFAULT '0'"); 
+         $migration->changeField($newTable,
+                                 "FK_glpi_enterprise",
+                                 "manufacturers_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable, 
+                                 "type",
+                                 "itemtype", 
+                                 "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->dropField($newTable, "device");
+         $migration->dropField($newTable, "firmware");
    $migration->migrationOneTable($newTable);      
       $migration->addField($newTable, 
                            "manufacturers_id", 
