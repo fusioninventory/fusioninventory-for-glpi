@@ -1770,8 +1770,16 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                                  "id",
                                  "int(11) NOT NULL AUTO_INCREMENT");
          $migration->changeField($newTable,
+                                 "mib_oid_id",
+                                 "plugin_fusinvsnmp_miboids_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
                                  "plugin_fusinvsnmp_miboids_id",
                                  "plugin_fusinvsnmp_miboids_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "construct_device_id",
+                                 "plugin_fusinvsnmp_constructdevices_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
                                  "plugin_fusinvsnmp_constructdevices_id",
@@ -1796,7 +1804,9 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->changeField($newTable,
                                  "vlan",
                                  "vlan",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");  
+                                 "tinyint(1) NOT NULL DEFAULT '0'"); 
+      $migration->migrationOneTable($newTable);
+         $migration->dropField($newTable, "mapping_type");
       $migration->migrationOneTable($newTable);      
          $migration->addField($newTable,
                                  "id",
