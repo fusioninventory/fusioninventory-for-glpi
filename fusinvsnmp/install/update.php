@@ -1711,6 +1711,10 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                                  "id",
                                  "int(11) NOT NULL AUTO_INCREMENT");
          $migration->changeField($newTable,
+                                 "construct_device_id",
+                                 "plugin_fusinvsnmp_constructdevices_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
                                  "plugin_fusinvsnmp_constructdevices_id",
                                  "plugin_fusinvsnmp_constructdevices_id",
                                  "int(11) NOT NULL DEFAULT '0'");
