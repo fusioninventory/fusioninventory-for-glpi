@@ -184,6 +184,12 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
       $xml = simplexml_load_file($file,'SimpleXMLElement', LIBXML_NOCDATA);
 
+      // Clean
+      $query = "DELETE FROM `glpi_plugin_fusinvsnmp_modelmibs`
+         WHERE  `plugin_fusioninventory_mappings_id`='0'
+            AND `oid_port_counter`='0'";
+      $DB->query($query);
+      
       // check if the model already exists
       $query = "SELECT `id` FROM `glpi_plugin_fusinvsnmp_models`
          WHERE `name`='".(string)$xml->name."'
@@ -207,7 +213,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       if ($message == '1') {
          $_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusinvsnmp']['model_info'][8];
       }
-
+      
       // Update model oids
       // Get list of oids in DB
       $a_oidsDB = array();
@@ -265,13 +271,26 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 	         unset($mapping_type);
 	      }
 	      if (isset($child->mapping_type)) {
-	         $mapping_type = $child->mapping_type;
+            $mapping_type = '';
+            switch ($child->mapping_type) {
+
+               case '1':
+                  $mapping_type = "Computer";
+                  break;
+
+               case '2':
+                  $mapping_type = "NetworkEquipment";
+                  break;
+
+               case '3':
+                  $mapping_type = "Printer";
+                  break;
+
+            }
 	      }
 	      $input["plugin_fusioninventory_mappings_id"] = 0;
 	      if (isset($child->mapping_name)) {
-	         if ($child->mapping_name == '') {
-	            $input["plugin_fusioninventory_mappings_id"] = 0;
-	         } else {
+	         if ($child->mapping_name != '') {
 	            $a_mappings = $pfMapping->get($mapping_type, $child->mapping_name);
 	            $input["plugin_fusioninventory_mappings_id"] = $a_mappings['id'];
 	         }
@@ -350,6 +369,22 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
             $oid_port_dyn = $child->dynamicport;
          }
          if (isset($child->mapping_type)) {
+            $mapping_type = '';
+            switch ($child->mapping_type) {
+
+               case '1':
+                  $mapping_type = "Computer";
+                  break;
+
+               case '2':
+                  $mapping_type = "NetworkEquipment";
+                  break;
+
+               case '3':
+                  $mapping_type = "Printer";
+                  break;
+
+            }
             $mapping_type = $child->mapping_type;
          }
          if (isset($child->mapping_name)) {
