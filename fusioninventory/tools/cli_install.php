@@ -136,6 +136,7 @@ if (!isset($_SERVER['argv'][1])) {
 
    // To prevent problem of execution time
    ini_set("max_execution_time", "0");
+   ini_set("memory_limit", "-1");
 
    $mess = '';
    if (($current_version != PLUGIN_FUSIONINVENTORY_VERSION)
@@ -155,8 +156,8 @@ if (!isset($_SERVER['argv'][1])) {
    $plugin->load("fusioninventory");
    
    system("php -q cli_install.php fusinvsnmp");
-   system("php -q cli_install.php fusinvinventory");
-   
+//   system("php -q cli_install.php fusinvinventory");
+/*   
    include_once(GLPI_ROOT . "/plugins/webservices/hook.php");
    include (GLPI_ROOT . "/plugins/webservices/locales/en_GB.php");
    plugin_webservices_install();
@@ -165,7 +166,7 @@ if (!isset($_SERVER['argv'][1])) {
    $plugin->activate($plugin->fields['id']);
    $plugin->load("webservices");
    system("php -q cli_install.php fusinvdeploy");
-
+*/
 } else if ($_SERVER['argv'][1] == 'fusinvsnmp') {
    
    // ** Install / update too plugin fusinvsnmp

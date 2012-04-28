@@ -220,7 +220,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
          $pluginFusinvsnmpModel->getFromDB($models_data['id']);
          $input = array();
          $input['id'] = $pluginFusinvsnmpModel->fields['id'];
-         $input['comment'] = (string)$xml->comments;
+         $input['comment'] = clean_cross_side_scripting_deep(addslashes_deep((string)$xml->comments));
          $pluginFusinvsnmpModel->update($input);
 
          $a_oids = $PluginFusinvsnmpModelMib->find("`plugin_fusinvsnmp_models_id`='".$models_data['id']."'");
@@ -313,7 +313,8 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
          // Add new model
          $query = "INSERT INTO `glpi_plugin_fusinvsnmp_models`
                                (`name`,`itemtype`,`discovery_key`,`comment`)
-                   VALUES('".(string)$xml->name."','".$type."','".(string)$xml->key."','".(string)$xml->comments."');";
+                   VALUES('".(string)$xml->name."','".$type."','".(string)$xml->key."','".
+                 clean_cross_side_scripting_deep(addslashes_deep((string)$xml->comments))."');";
          $DB->query($query);
          $plugin_fusinvsnmp_models_id = $DB->insert_id();
 

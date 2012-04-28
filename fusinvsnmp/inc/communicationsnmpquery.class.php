@@ -561,10 +561,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   $PluginFusinvsnmpNetworkEquipmentIP->setIP((string)$child);
                   // Search in unknown device if device with IP (CDP) is yet added, in this case,
                   // we get id of this unknown device
-                  $a_unknown = $PluginFusioninventoryUnknownDevice->find("`ip`='".(string)$child."'");
+                  $a_unknown = $PluginFusioninventoryUnknownDevice->find("`ip`='".(string)$child."'", "", 1);
                   if (count($a_unknown) > 0) {
-                     foreach ($a_unknown as $datas) {
-                     }
+                     $datas= current($a_unknown);
                      $this->unknownDeviceCDP = $datas['id'];
                   }
                }
@@ -696,7 +695,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                
                case 'IFNAME':
                   PluginFusinvsnmpNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
-                  $pfNetworkPort->setValue('name', (string)$child);
+                  if ((string)$child != '') {
+                     $pfNetworkPort->setValue('name', (string)$child);
+                  }
                   break;
                
                case 'MAC':
@@ -723,7 +724,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   break;
 
                case 'IFDESCR':
-                  if (!isset($p_port->IFNAME)) {
+                  if (!isset($p_port->IFNAME)
+                          OR (string)$p_port->IFNAME == '') {
                      $pfNetworkPort->setValue('name', (string)$p_port->IFDESCR);
                   }
                   $pfNetworkPort->setValue(strtolower($name), (string)$p_port->$name);
@@ -1020,6 +1022,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          switch ($child->getName()) {
             
             case 'CDP': // already managed
+               if ($pfNetworkPort->getValue('trunk') != '1') {
+                  $pfNetworkPort->setValue('trunk', 0);
+               }
                break;
             
             case 'CONNECTION':
@@ -1027,8 +1032,18 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                if (isset($child->MAC)) {
                   if (isset($a_macsFound[(string)$child->MAC])) {
                      $continue = 0;
+                  } else if (count($child) > 50) {
+                     $continue = 0;
                   } else {
                      $a_macsFound[(string)$child->MAC] = 1;
+                  }
+                  
+                  if (count($child) > 1
+                          AND $pfNetworkPort->getValue('trunk') != '1') {
+                     
+                     $pfNetworkPort->setValue('trunk', -1);
+                  } else if ($pfNetworkPort->getValue('trunk') != '1') {
+                     $pfNetworkPort->setValue('trunk', 0);
                   }
                }
                if ($continue == '1') {

@@ -408,7 +408,8 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
             if (isset($a_cdp['sysmac'])) {
                $ifnumber = $a_cdp['ifnumber'];
                $portID = $pfSNMP->getPortIDfromSysmacandPortnumber($a_cdp['sysmac'], 
-                                                                   $ifnumber);     
+                                                                   $ifnumber,
+                                                                   $a_cdp);     
             }
          }
          if ($portID
