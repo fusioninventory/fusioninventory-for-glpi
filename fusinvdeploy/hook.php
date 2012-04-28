@@ -82,6 +82,7 @@ function plugin_fusinvdeploy_MassiveActions($type) {
    global $LANG;
 
    switch ($type) {
+      case 'PluginFusinvdeployGroup' :
       case 'Computer':
          //TODO: this should be renamed into targetTask and moved in FusionInventory hook
          return array('plugin_fusinvdeploy_targetDeployTask'
@@ -96,6 +97,7 @@ function plugin_fusinvdeploy_MassiveActionsDisplay($options=array()) {
    global $LANG;
 
    switch ($options['itemtype']) {
+      case 'PluginFusinvdeployGroup':
       case 'Computer' :
          switch ($options['action']) {
              case 'plugin_fusinvdeploy_targetDeployTask' :
@@ -116,10 +118,14 @@ function plugin_fusinvdeploy_MassiveActionsDisplay($options=array()) {
                         'name'      => "packages_id"
                ));
 
-               echo "<br/>".
-               "<input type='checkbox' name='separate_jobs' value='1'>".
-                  "&nbsp;".$LANG['plugin_fusinvdeploy']['massiveactions'][1]."&nbsp;".
-               "</input>";
+               echo "<br/>";
+               echo "<input type='checkbox' name='separate_jobs' value='1'>";
+               if ($options['itemtype'] == 'Computer') {
+                     echo "&nbsp;".$LANG['plugin_fusinvdeploy']['massiveactions'][1]."&nbsp;";
+               } else if ($options['itemtype'] == 'PluginFusinvdeployGroup') {
+                     echo "&nbsp;".$LANG['plugin_fusinvdeploy']['massiveactions'][2]."&nbsp;";
+               }
+               echo "</input>";
 
                echo "<br/>"."&nbsp;<input type='submit' name='massiveaction' class='submit' value='".
                      $LANG['buttons'][2]."'>&nbsp;";
@@ -135,15 +141,21 @@ function plugin_fusinvdeploy_MassiveActionsProcess($data) {
 
    switch ($data['action']) {
       case 'plugin_fusinvdeploy_targetDeployTask' :
-         if ($data['itemtype'] == 'Computer') {
-            $taskjob = new PluginFusinvdeployTaskjob;
-            $tasks = array();
+         $taskjob = new PluginFusinvdeployTaskjob;
+         $tasks = array();
 
-            logDebug("DEBUG MASSIVEACTION:\n" . print_r($data, true) . "\n");
-            //get old datas
-            $oldjobs = $taskjob->find("plugin_fusinvdeploy_tasks_id = '".$data['tasks_id']."'");
+         //get old datas
+         $oldjobs = $taskjob->find("plugin_fusinvdeploy_tasks_id = '".$data['tasks_id']."'");
 
+         switch($data['itemtype']) {
+            case 'PluginFusinvdeployGroup':
+            case 'Computer':
 
+               logDebug(
+                  "MASSIVEACTION DEBUG:\n".
+                  print_r($data,true).
+                  "\n"
+               );
             // TODO: rename 'tasks' variables into 'job'
             // The 'separate jobs' option allows to create a taskjob for each computer 
             // (I can't see the point but it may be
@@ -151,7 +163,7 @@ function plugin_fusinvdeploy_MassiveActionsProcess($data) {
             // single deployment package targetted ... i prefer not to comment
             // furthermore :) ).
 
-            if ($data['separate_jobs']) {
+            if (array_key_exists('separate_jobs', $data)) {
                foreach ($data['item'] as $key => $val) {
                   $task = new StdClass;
                   $task->package_id = $data['packages_id'];
@@ -159,7 +171,7 @@ function plugin_fusinvdeploy_MassiveActionsProcess($data) {
                   $task->retry_nb = 3;
                   $task->retry_time = 0;
                   //add new datas
-                  $task->action = array(array('Computer' => $key));
+                  $task->action = array(array($data['itemtype'] => $key));
                   $tasks[] = $task;
                }
             } else {
@@ -171,10 +183,13 @@ function plugin_fusinvdeploy_MassiveActionsProcess($data) {
                $task->action = array();
                //add new datas
                foreach ($data['item'] as $key => $val) {
-                  $task->action[] = array('Computer' => $key);
+                  $task->action[] = array($data['itemtype'] => $key);
                }
                $tasks[] = $task;
             }
+            break;
+
+         }
 
             $params = array(
                'tasks_id'        => $data['tasks_id'],
@@ -199,7 +214,6 @@ function plugin_fusinvdeploy_MassiveActionsProcess($data) {
 
                $DB->query($sql);
             }
-         }
          break;
    }
 }

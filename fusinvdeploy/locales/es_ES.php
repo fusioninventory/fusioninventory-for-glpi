@@ -46,6 +46,7 @@ $LANG['plugin_fusinvdeploy']['title'][0]="$title";
 
 $LANG['plugin_fusinvdeploy']['massiveactions'][0]="Target a deployment task";
 $LANG['plugin_fusinvdeploy']['massiveactions'][1]="Create a job for each computer";
+$LANG['plugin_fusinvdeploy']['massiveactions'][2]="Create a job for each group";
 
 $LANG['plugin_fusinvdeploy']['package'][0]="Acciones";
 $LANG['plugin_fusinvdeploy']['package'][1]="Ejecutar un comando";
