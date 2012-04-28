@@ -40,6 +40,9 @@
    ------------------------------------------------------------------------
  */
 
+/* TODO: This class should inherit the PluginFusioninventoryTaskjob
+ */
+
 class PluginFusinvdeployTaskjob extends CommonDBTM {
 
    function canCreate() {
@@ -112,6 +115,8 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
       $tasks_id = $params['tasks_id'];
       $tasks = json_decode($params['tasks']);
 
+      logDebug("Tasks Debug:\n" . print_r($tasks,true) . "\n");
+
       //remove old jobs from task
       $query = "DELETE FROM ".$this->getTable()."
       WHERE plugin_fusinvdeploy_tasks_id = '".$tasks_id."'";
@@ -130,7 +135,8 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
          $task = get_object_vars($task);
 
          //encode action and definition
-         $action = exportArrayToDB(array(array($task['action_type'] => $task['action_selection'])));
+         //$action = exportArrayToDB(array(array($task['action_type'] => $task['action_selection'])));
+         $action = exportArrayToDB($task['action']);
          $definition = exportArrayToDB(array(array('PluginFusinvdeployPackage' => $task['package_id'])));
 
          $sql_tasks[] = "INSERT INTO ".$this->getTable()."
