@@ -70,12 +70,14 @@ class PluginFusinvdeployGroup extends CommonDBTM {
    }
 
    function showList() {
+      echo "<center>";
       echo "<table class='tab_cadre_navigation'><tr><td>";
 
       self::title();
       Search::show('PluginFusinvdeployGroup');
 
       echo "</td></tr></table>";
+      echo "</center>";
    }
 
    function defineTabs($options=array()) {
@@ -108,8 +110,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       $this->displaylist = false;
 
       $this->fields['id'] = -1;
-      $this->showTabs($options);
-      $this->addDivForTabs();
+      $this->showList();
    }
 
    function title() {
