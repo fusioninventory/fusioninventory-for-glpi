@@ -45,7 +45,8 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusioninventoryConfig extends CommonDBTM {
-
+   public $displaylist = false;
+   
    
    /**
     * Display name of itemtype
