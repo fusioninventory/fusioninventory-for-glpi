@@ -299,7 +299,9 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
                $i++;
             }
             $where .= ") ";
-            $where .= getEntitiesRestrictRequest("AND", $PluginFusioninventoryAgent->getTable());
+            if (isset($_SESSION['glpiactiveentities_string'])) {
+               $where .= getEntitiesRestrictRequest("AND", $PluginFusioninventoryAgent->getTable());
+            }
          } else {
             return array();
          }
@@ -317,7 +319,9 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
                $i++;
             }
             $where .= ") ";
-            $where .= getEntitiesRestrictRequest("AND", $PluginFusioninventoryAgent->getTable());
+            if (isset($_SESSION['glpiactiveentities_string'])) {
+               $where .= getEntitiesRestrictRequest("AND", $PluginFusioninventoryAgent->getTable());
+            }
          }
       }
       $a_agents = array();
