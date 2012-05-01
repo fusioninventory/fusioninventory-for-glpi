@@ -3145,7 +3145,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                if ($mapping = $pFusioninventoryMapping->get("NetworkEquipment", $data['Field'])) {
                   $DB->query("UPDATE `".$newTable."` 
                      SET `plugin_fusioninventory_mappings_id`='".$mapping['id']."'
-                     WHERE `Field`='".$data['Field']."'");
+                     WHERE `Field`='".$data['Field']."'
+                        AND `plugin_fusioninventory_mappings_id`!='".$mapping['id']."'");
                }
             }
          }
