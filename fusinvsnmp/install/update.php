@@ -1742,7 +1742,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
 
       // Update with mapping
       if (TableExists($newTable)) {
-         if (FieldExists($newTable, "mapping_name")) {
+         if (FieldExists($newTable, "mapping_name")
+                 AND FieldExists($newTable, "itemtype")) {
             $query = "SELECT * FROM `".$newTable."`
                GROUP BY `itemtype`, `mapping_type`";
             $result=$DB->query($query);
