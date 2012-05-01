@@ -153,7 +153,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          if ($_SESSION["plugin_fusinvinventory_entity"] == NOT_AVAILABLE) {
             $_SESSION["plugin_fusinvinventory_entity"] = 0;
          }
-
+         
          //We launch CreateMachine() hook and provide an InternalId
          $xmlSections = $this->_getXMLSections($xml);
          $internalId = uniqid("", true);
