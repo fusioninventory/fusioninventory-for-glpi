@@ -717,18 +717,24 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     * 
     */   
    function pre_updateInDB() {
-      if (isset($this->updates['version'])
-              AND isset($this->oldvalues['version'])
-              AND $this->updates['version'] == $this->oldvalues['version']) {
-         unset($this->updates['version']);
+      if (isset($this->oldvalues['version'])
+              AND $this->input['version'] == $this->oldvalues['version']) {
+         
+         $key = array_search('version', $this->updates);
+         unset($this->updates[$key]);
          unset($this->oldvalues['version']);
       }
       if (isset($this->oldvalues['last_contact'])) {
+         $key = array_search('last_contact', $this->updates);
+         unset($this->updates[$key]);
          unset($this->oldvalues['last_contact']);
       }
       if (isset($this->oldvalues['token'])) {
+         $key = array_search('token', $this->updates);
+         unset($this->updates[$key]);
          unset($this->oldvalues['token']);
       }
+      logInFile("LOG", print_r($this, true));
    }
 }
 
