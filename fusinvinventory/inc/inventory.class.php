@@ -45,7 +45,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusinvinventoryInventory {
-   private $p_xml = '';
+   private $p_xml = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?>");
    
    /**
    * Import data
