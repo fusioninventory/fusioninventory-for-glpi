@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION","0.80+1.2");
+define ("PLUGIN_FUSIONINVENTORY_VERSION","0.80+1.3");
 
 define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE","0");
 
