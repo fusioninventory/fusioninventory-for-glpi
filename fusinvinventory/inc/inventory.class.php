@@ -205,7 +205,7 @@ class PluginFusinvinventoryInventory {
       $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusinvinventoryInventory";
       $rule = new PluginFusioninventoryRuleImportEquipmentCollection();
       $data = array();
-      $data = $rule->processAllRules($input, array('class'=>$this));
+      $data = $rule->processAllRules($input, array(), array('class'=>$this));
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
                                                    print_r($data, true));
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
