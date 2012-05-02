@@ -518,7 +518,7 @@ class PluginFusioninventoryCommunication {
          }
       }
       return $xml;
-   }
+   }      
 }
 
 ?>
