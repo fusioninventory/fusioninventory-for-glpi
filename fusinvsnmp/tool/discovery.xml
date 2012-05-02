@@ -5356,7 +5356,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software^M IOS (tm) C2900XL Software (C2900XL-C3H2S-M), Version 12.0(5)WC17, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2007 by cisco Systems, Inc.^MCompiled Tue 13-Feb-07 15:27 by antonino]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1792</MODELSNMP>
+      <MODELSNMP>Networking1921</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -5364,7 +5364,7 @@
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C2900XL Software (C2900XL-C3H2S-M), Version 12.0(5)WC17, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2007 by cisco Systems, Inc.Compiled Tue 13-Feb-07 15:27 by antonino]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1792</MODELSNMP>
+      <MODELSNMP>Networking1921</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -12449,14 +12449,14 @@
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex8208 internet router, kernel JUNOS 10.4R5.5 #0: 2011-06-14 03:40:39 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R5.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-06-14 02:59:54 UTC Copyright ]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1922</MODELSNMP>
+      <MODELSNMP>Networking2043</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex8208 internet router, kernel JUNOS 10.4R5.5 #0: 2011-06-14 03:40:39 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R5.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-06-14 02:59:54 UTC Copyright]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1922</MODELSNMP>
+      <MODELSNMP>Networking2043</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -13203,7 +13203,7 @@
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex4200-48t internet router, kernel JUNOS 10.4R4.5 #0: 2011-05-06 05:43:08 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R4.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-05-06 05:25:39 UTC Copyri]]></SYSDESCR>
       <MANUFACTURER>0</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1920</MODELSNMP>
+      <MODELSNMP>Networking2043</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -13391,77 +13391,77 @@
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex4200-48t internet router, kernel JUNOS 10.4R6.5 #0: 2011-07-23 10:41:45 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R6.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-07-23 10:19:14 UTC Copyri]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1922</MODELSNMP>
+      <MODELSNMP>Networking2043</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex2200-24p-4g internet router, kernel JUNOS 10.1R3.7 #0: 2010-07-10 04:59:51 UTC     builder@queth.juniper.net:/volume/build/junos/10.1/release/10.1R3.7/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2010-07-10 04:34:44 UTC Copyrig]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1924</MODELSNMP>
+      <MODELSNMP>Networking2044</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex2200-48p-4g internet router, kernel JUNOS 10.4R6.5 #0: 2011-07-23 09:59:51 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R6.5/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2011-07-23 09:39:20 UTC Copyrig]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1922</MODELSNMP>
+      <MODELSNMP>Networking2043</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex8208 internet router, kernel JUNOS 10.4R6.5 #0: 2011-07-23 10:41:45 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R6.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-07-23 10:19:14 UTC Copyright ]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1924</MODELSNMP>
+      <MODELSNMP>Networking2045</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex8208 internet router, kernel JUNOS 10.4R6.5 #0: 2011-07-23 10:41:45 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R6.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-07-23 10:19:14 UTC Copyright]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1924</MODELSNMP>
+      <MODELSNMP>Networking2045</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex2200-48p-4g internet router, kernel JUNOS 10.1R4.4 #0: 2010-11-12 18:07:04 UTC     builder@queth.juniper.net:/volume/build/junos/10.1/release/10.1R4.4/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2010-11-12 17:44:45 UTC Copyrig]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1925</MODELSNMP>
+      <MODELSNMP>Networking2046</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex2200-48p-4g internet router, kernel JUNOS 10.1R3.7 #0: 2010-07-10 04:59:51 UTC     builder@queth.juniper.net:/volume/build/junos/10.1/release/10.1R3.7/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2010-07-10 04:34:44 UTC Copyrig]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1924</MODELSNMP>
+      <MODELSNMP>Networking2044</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex2200-48p-4g internet router, kernel JUNOS 10.4R5.5 #0: 2011-06-14 02:01:48 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R5.5/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2011-06-14 01:35:26 UTC Copyrig]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1925</MODELSNMP>
+      <MODELSNMP>Networking2046</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex4200-48p internet router, kernel JUNOS 10.0S10.1 #0: 2010-11-08 21:23:50 UTC     builder@ormonth.juniper.net:/volume/build/junos/10.0/service/10.0S10.1/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-11-08 20:47:22 UTC Co]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1922</MODELSNMP>
+      <MODELSNMP>Networking2043</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex2200-48t-4g internet router, kernel JUNOS 10.4R6.5 #0: 2011-07-23 09:59:51 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R6.5/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2011-07-23 09:39:20 UTC Copyrig]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1922</MODELSNMP>
+      <MODELSNMP>Networking2043</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex2200-24p-4g internet router, kernel JUNOS 10.4R6.5 #0: 2011-07-23 09:59:51 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R6.5/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2011-07-23 09:39:20 UTC Copyrig]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1924</MODELSNMP>
+      <MODELSNMP>Networking2044</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -13474,63 +13474,63 @@
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex4200-48p internet router, kernel JUNOS 10.0S6.1 #0: 2010-06-08 21:41:37 UTC     builder@ormonth.juniper.net:/volume/build/junos/10.0/service/10.0S6.1/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-06-08 21:28:32 UTC Copy]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1924</MODELSNMP>
+      <MODELSNMP>Networking2044</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex2200-48p-4g internet router, kernel JUNOS 10.4R3.4 #0: 2011-03-19 21:28:55 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R3.4/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2011-03-19 21:09:28 UTC Copyrig]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1924</MODELSNMP>
+      <MODELSNMP>Networking2044</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex4200-24p internet router, kernel JUNOS 10.4R5.5 #0: 2011-06-14 03:40:39 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R5.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-06-14 02:59:54 UTC Copyri]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1922</MODELSNMP>
+      <MODELSNMP>Networking2043</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex4200-48p internet router, kernel JUNOS 10.4R5.5 #0: 2011-06-14 03:40:39 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R5.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-06-14 02:59:54 UTC Copyri]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1922</MODELSNMP>
+      <MODELSNMP>Networking2043</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex4200-24t internet router, kernel JUNOS 10.1S1.3 #0: 2010-03-31 20:03:32 UTC     builder@queth.juniper.net:/volume/build/junos/10.1/service/10.1S1.3/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-03-31 19:27:56 UTC Copyri]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1922</MODELSNMP>
+      <MODELSNMP>Networking2043</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex8208 internet router, kernel JUNOS 10.4S6.6 #0: 2011-08-24 06:20:03 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/service/10.4S6.6/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-08-24 05:54:50 UTC Copyright ]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1922</MODELSNMP>
+      <MODELSNMP>Networking2043</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex8208 internet router, kernel JUNOS 10.4S6.6 #0: 2011-08-24 06:20:03 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/service/10.4S6.6/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-08-24 05:54:50 UTC Copyright]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1922</MODELSNMP>
+      <MODELSNMP>Networking2043</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex4200-24t internet router, kernel JUNOS 10.0S10.1 #0: 2010-11-08 21:23:50 UTC     builder@ormonth.juniper.net:/volume/build/junos/10.0/service/10.0S10.1/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-11-08 20:47:22 UTC Co]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1922</MODELSNMP>
+      <MODELSNMP>Networking2043</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex2200-24p-4g internet router, kernel JUNOS 10.1R4.4 #0: 2010-11-12 18:07:04 UTC     builder@queth.juniper.net:/volume/build/junos/10.1/release/10.1R4.4/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2010-11-12 17:44:45 UTC Copyrig]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1922</MODELSNMP>
+      <MODELSNMP>Networking2043</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -13608,14 +13608,14 @@
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex3200-48p internet router, kernel JUNOS 10.3R1.9 #0: 2010-08-13 12:43:56 UTC     builder@zigeth.juniper.net:/volume/build/junos/10.3/release/10.3R1.9/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-08-13 12:28:47 UTC Copyr]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1932</MODELSNMP>
+      <MODELSNMP>Networking2043</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex4200-48p internet router, kernel JUNOS 10.2R1.8 #0: 2010-05-27 21:05:57 UTC     builder@shoth.juniper.net:/volume/build/junos/10.2/release/10.2R1.8/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-05-27 20:44:44 UTC Copyri]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1932</MODELSNMP>
+      <MODELSNMP>Networking2043</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -14948,7 +14948,7 @@
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex2200-48p-4g internet router, kernel JUNOS 10.4R7.5 #0: 2011-09-08 05:40:04 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R7.5/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2011-09-08 05:06:19 UTC Copyrig]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1924</MODELSNMP>
+      <MODELSNMP>Networking2044</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -14995,14 +14995,14 @@
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex4200-48p internet router, kernel JUNOS 10.4R7.5 #0: 2011-09-08 06:29:27 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R7.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-09-08 06:10:04 UTC Copyri]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1924</MODELSNMP>
+      <MODELSNMP>Networking2044</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex4200-24t internet router, kernel JUNOS 10.4R6.5 #0: 2011-07-23 10:41:45 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R6.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-07-23 10:19:14 UTC Copyri]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1922</MODELSNMP>
+      <MODELSNMP>Networking2043</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -15023,7 +15023,7 @@
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex8208 internet router, kernel JUNOS 10.0S10.1 #0: 2010-11-08 21:23:50 UTC     builder@ormonth.juniper.net:/volume/build/junos/10.0/service/10.0S10.1/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-11-08 20:47:22 UTC Copyri]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1922</MODELSNMP>
+      <MODELSNMP>Networking2043</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -15618,7 +15618,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960S Software (C2960S-UNIVERSALK9-M), Version 12.2(58)SE1, RELEASE SOFTWARE (fc1)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2011 by Cisco Systems, Inc.^MCompiled Thu 05-May-11 03:03 by prod_rel_team]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking2022</MODELSNMP>
+      <MODELSNMP>Networking2047</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -15626,7 +15626,7 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960S Software (C2960S-UNIVERSALK9-M), Version 12.2(58)SE1, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2011 by Cisco Systems, Inc.Compiled Thu 05-May-11 03:03 by prod_rel_team]]></SYSDESCR>
       <MANUFACTURER>50</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking2022</MODELSNMP>
+      <MODELSNMP>Networking2047</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -15692,7 +15692,7 @@
       <SYSDESCR><![CDATA[52-port Gigabit Managed Switch]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking2028</MODELSNMP>
+      <MODELSNMP>Networking0007</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -16141,28 +16141,28 @@
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex4200-24t internet router, kernel JUNOS 10.4R5.5 #0: 2011-06-14 03:40:39 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R5.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-06-14 02:59:54 UTC Copyri]]></SYSDESCR>
       <MANUFACTURER>0</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking2040</MODELSNMP>
+      <MODELSNMP>Networking2043</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex4200-24t internet router, kernel JUNOS 10.4R7.5 #0: 2011-09-08 06:29:27 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R7.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-09-08 06:10:04 UTC Copyri]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking2040</MODELSNMP>
+      <MODELSNMP>Networking2043</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex4200-24t internet router, kernel JUNOS 10.0R4.7 #0: 2010-08-22 02:54:43 UTC     builder@ormonth.juniper.net:/volume/build/junos/10.0/release/10.0R4.7/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-08-22 02:35:12 UTC Copy]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking2040</MODELSNMP>
+      <MODELSNMP>Networking2043</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex4200-24p internet router, kernel JUNOS 10.4R7.5 #0: 2011-09-08 06:29:27 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R7.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-09-08 06:10:04 UTC Copyri]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking2040</MODELSNMP>
+      <MODELSNMP>Networking2043</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -16177,7 +16177,7 @@
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex4200-24t internet router, kernel JUNOS 10.4R3.4 #0: 2011-03-19 22:06:32 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R3.4/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-03-19 21:51:24 UTC Copyri]]></SYSDESCR>
       <MANUFACTURER>-1</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking2040</MODELSNMP>
+      <MODELSNMP>Networking2043</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -16217,6 +16217,67 @@
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2041</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[ProCurve J9087A Switch 2610-24-PWR, revision R.11.63, ROM R.10.06 (/sw/code/build/nemo(R_ndx))]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2048</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[ProCurve J9087A Switch 2610-24-PWR, revision R.11.60, ROM R.10.06 (/sw/code/build/nemo(R_ndx))]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2049</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[BayStack 470 - 24T           HW:06       FW:3.0.0.5   SW:v3.1.2.06 ISVN:2]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2050</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Ethernet Routing Switch 5510-24T      HW:34       FW:5.0.0.4   SW:v5.1.0.014 BN:14 (c) Nortel Networks]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2050</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[ERS-8310 (4.2.3.2)]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2051</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[ERS-8610 (5.1.0.0)]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2052</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[3Com Baseline Switch 2948 Plus]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2053</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[DGS-1210-24          2.01.002]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0380</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
 </SNMPDISCOVERY>

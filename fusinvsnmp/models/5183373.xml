@@ -1,46 +1,10 @@
 <model>
-	<name><![CDATA[3282896]]></name>
+	<name><![CDATA[5183373]]></name>
 	<type>2</type>
-	<key>Networking0007</key>
-	<comments><![CDATA[24-Port Managed 10/100 Switch w/WebView
+	<key>Networking2046</key>
+	<comments><![CDATA[Juniper Networks, Inc. ex2200-48p-4g internet router, kernel JUNOS 10.1R4.4 #0: 2010-11-12 18:07:04 UTC     builder@queth.juniper.net:/volume/build/junos/10.1/release/10.1R4.4/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2010-11-12 17:44:45 UTC Copyrig
 
-52-port Gigabit Managed Switch
-
-Allied Telesis AT-9424Ts - ATS63 v3.0.0
-
-Allied Telesis AT-9448T/SP - ATS63 v3.0.0
-
-Allied Telesyn Ethernet Switch AT-8012M
-
-Allied Telesyn Ethernet Switch AT-8024
-
-Allied Telesyn Ethernet Switch AT-8524M - ATS62 v1.4.0
-
-Allied Telesyn Ethernet Switch AT-8524POE - ATS62 v1.3.0 NE
-
-Allied Telesyn Ethernet Switch AT-8524POE - ATS62 v1.4.0
-
-ERS-1648T (2.1.4.0)
-
-Ethernet Switch
-
-FS728TP
-
-HP VC Flex-10 Enet Module Virtual Connect 3.15
-
-HP VC Flex-10 Enet Module Virtual Connect 3.18
-
-HP VC FlexFabric 10Gb/24-Port Module Virtual Connect 3.15
-
-Nortel Application Switch 2208
-
-Nortel Application Switch 3408 E
-
-Nortel Networks Layer2-7 GbE Switch Module
-
-Passport-8606 (3.7.8.0)
-
-ProCurve Access Point 530 WW J8987A, revision WA.01.19, boot version WAB.01.00
+Juniper Networks, Inc. ex2200-48p-4g internet router, kernel JUNOS 10.4R5.5 #0: 2011-06-14 02:01:48 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R5.5/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2011-06-14 01:35:26 UTC Copyrig
 
 ]]></comments>
 	<oidlist>
@@ -56,31 +20,61 @@ ProCurve Access Point 530 WW J8987A, revision WA.01.19, boot version WAB.01.00
 		</oidobject>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
+			<oid>.1.3.6.1.2.1.17.1.1.0</oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name>macaddr</mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid>.1.3.6.1.2.1.1.6.0</oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name>location</mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid>.1.3.6.1.2.1.1.3.0</oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name>uptime</mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid>.1.3.6.1.2.1.2.1.0</oid>
+			<portcounter>1</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>0</mapping_type>
+ 			<mapping_name></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid>.1.3.6.1.2.1.1.5.0</oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name>name</mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
 			<oid>.1.3.6.1.2.1.17.1.4.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
 			<mapping_type>2</mapping_type>
  			<mapping_name>dot1dBasePortIfIndex</mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.3.6.1.2.1.17.4.3.1.1</oid>
-			<portcounter>0</portcounter>
-			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
- 			<mapping_name>dot1dTpFdbAddress</mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.3.6.1.2.1.17.4.3.1.2</oid>
-			<portcounter>0</portcounter>
-			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
- 			<mapping_name>dot1dTpFdbPort</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>
@@ -106,21 +100,11 @@ ProCurve Access Point 530 WW J8987A, revision WA.01.19, boot version WAB.01.00
 		</oidobject>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.3.6.1.2.1.2.2.1.1</oid>
+			<oid>.1.3.6.1.2.1.2.2.1.14</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
 			<mapping_type>2</mapping_type>
- 			<mapping_name>ifIndex</mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.3.6.1.2.1.2.2.1.1</oid>
-			<portcounter>0</portcounter>
-			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
- 			<mapping_name>ifIndex</mapping_name>
+ 			<mapping_name>ifinerrors</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>
@@ -166,11 +150,11 @@ ProCurve Access Point 530 WW J8987A, revision WA.01.19, boot version WAB.01.00
 		</oidobject>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.3.6.1.2.1.31.1.1.1.1</oid>
+			<oid>.1.3.6.1.2.1.2.2.1.20</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
 			<mapping_type>2</mapping_type>
- 			<mapping_name>ifName</mapping_name>
+ 			<mapping_name>ifouterrors</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>
@@ -226,6 +210,16 @@ ProCurve Access Point 530 WW J8987A, revision WA.01.19, boot version WAB.01.00
 		</oidobject>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
+			<oid>.1.3.6.1.2.1.31.1.1.1.1</oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name>ifName</mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
 			<oid>.1.3.6.1.2.1.4.20.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
@@ -246,51 +240,31 @@ ProCurve Access Point 530 WW J8987A, revision WA.01.19, boot version WAB.01.00
 		</oidobject>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.3.6.1.2.1.1.6.0</oid>
+			<oid>.1.3.6.1.2.1.17.7.1.4.3.1.1</oid>
 			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
+			<dynamicport>1</dynamicport>
 			<mapping_type>2</mapping_type>
- 			<mapping_name>location</mapping_name>
+ 			<mapping_name>vtpVlanName</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.3.6.1.2.1.17.1.1.0</oid>
+			<oid>.1.3.6.1.2.1.17.7.1.2.2.1.2</oid>
 			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
+			<dynamicport>1</dynamicport>
 			<mapping_type>2</mapping_type>
- 			<mapping_name>macaddr</mapping_name>
+ 			<mapping_name>dot1dTpFdbAddress</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.3.6.1.2.1.1.5.0</oid>
+			<oid>.1.3.6.1.2.1.17.1.4.1.1</oid>
 			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
+			<dynamicport>1</dynamicport>
 			<mapping_type>2</mapping_type>
- 			<mapping_name>name</mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.3.6.1.2.1.1.3.0</oid>
-			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>2</mapping_type>
- 			<mapping_name>uptime</mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.3.6.1.2.1.2.1.0</oid>
-			<portcounter>1</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>0</mapping_type>
- 			<mapping_name></mapping_name>
+ 			<mapping_name>dot1dTpFdbPort</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>
