@@ -307,26 +307,14 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       echo "<script  type='text/javascript'>
 function close_array(id){
    document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/collapse.png\''+
-      'onClick=\'Effect.Fade(\"viewfollowup'+id+'\");appear_array('+id+');\' />';
+      'onClick=\'Ext.get(\"viewfollowup'+id+'\").toggle();appear_array('+id+');\' />';
 }
 function appear_array(id){
    document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/expand.png\''+
-      'onClick=\'Effect.Appear(\"viewfollowup'+id+'\");close_array('+id+');\' id=\'plusmoinsl'+id+'\' />';
+      'onClick=\'Ext.get(\"viewfollowup'+id+'\").toggle();close_array('+id+');\' id=\'plusmoinsl'+id+'\' />';
 }
-
-function close_legend(id){
-   document.getElementById('legendlink').innerHTML = '<a '+
-   ' onClick=\'Effect.Fade(\"legend\");appear_legend();\'>[ ".$LANG['plugin_fusioninventory']['functionalities'][6]." ]</a>';
-}
-function appear_legend(id){
-   document.getElementById('legendlink').innerHTML = '<a '+
-   ' onClick=\'Effect.Appear(\"legend\");close_legend();\'>[ ".$LANG['plugin_fusioninventory']['functionalities'][6]." ]</a>';
-}
-
 
       </script>";
-      echo "<script type='text/javascript' src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/prototype.js'></script>";
-      echo "<script type='text/javascript' src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/effects.js'></script>";
       $nbcol = 5;
       if ($monitoring == '1') {
          if (PluginMonitoringProfile::haveRight("componentscatalog", 'r')) {
@@ -354,7 +342,7 @@ function appear_legend(id){
          $url_legend = "https://forge.indepnet.net/wiki/fusioninventory/Fr_VI_visualisationsdonnees_2_reseau";
       }
       echo "<a href='legend'></a>";
-      echo "<div id='legendlink'><a onClick='Effect.Appear(\"legend\");close_legend();'>[ ".$LANG['plugin_fusioninventory']['functionalities'][6]." ]</a></div>";
+      echo "<div id='legendlink'><a onClick='Ext.get(\"legend\").toggle();'>[ ".$LANG['plugin_fusioninventory']['functionalities'][6]." ]</a></div>";
       echo "</th>";
       echo "</tr>";
 
@@ -372,7 +360,7 @@ function appear_legend(id){
          <img src='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/pics/connected_trunk.png' width='750' />
          </td>
       </tr>";
-
+      echo "<script>Ext.get('legend').setVisibilityMode(Ext.Element.DISPLAY);</script>";
 
       echo "<tr class='tab_bg_1'>";
 
@@ -467,8 +455,8 @@ function appear_legend(id){
             }
             echo "<tr class='tab_bg_1 center' height='40'".$background_img.">";
             echo "<td id='plusmoins".$data["id"]."'><img src='".$CFG_GLPI['root_doc'].
-                     "/plugins/fusioninventory/pics/expand.png' onClick='Effect.Appear(\"viewfollowup".$data["id"].
-                     "\");close_array(".$data["id"].");' id='plusmoinsl".$data["id"]."'\'/>";
+                     "/plugins/fusioninventory/pics/expand.png' onClick='Ext.get(\"viewfollowup".$data["id"]."\").toggle();
+                     close_array(".$data["id"].");' id='plusmoinsl".$data["id"]."'\'/>";
             echo "</td>";
             echo "<td><a href='networkport.form.php?id=".$data["id"]."'>".
                      $data["name"]."</a>";
@@ -696,6 +684,7 @@ function appear_legend(id){
                                   array('ports_id' => $data["id"]),
                                   array("click"));
             echo "</tr>
+            <script>Ext.get('viewfollowup".$data["id"]."').setVisibilityMode(Ext.Element.DISPLAY);</script>
             ";
          }
       }
