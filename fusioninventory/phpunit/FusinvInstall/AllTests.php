@@ -259,7 +259,7 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
        * Verify config fields added
        */
       $plugin = new Plugin();
-      $data = $plugin->find("directory='".$p_name."'");
+      $data = $plugin->find("directory='fusioninventory'");
       $plugins_id = 0;
       if (count($data)) {
          $fields = current($data);
