@@ -3168,6 +3168,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                                "new_device_type");
          $migration->dropField($newTable,
                                "new_device_ID");
+         $migration->dropField($newTable, "FK_process");
          $migration->dropKey($newTable, "FK_process");
          $migration->dropKey($newTable, 
                              "FK_ports");         
