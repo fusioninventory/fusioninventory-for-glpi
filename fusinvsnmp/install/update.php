@@ -1581,6 +1581,13 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->addKey($newTable,
                             "plugin_fusioninventory_mappings_id");
       $migration->migrationOneTable($newTable);
+         if (!class_exists('PluginFusinvsnmpConfigLogField')) { // if plugin is unactive
+            include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/configlogfield.class.php");
+         }
+         $configLogField = new PluginFusinvsnmpConfigLogField();
+         $configLogField->initConfig();
+      
+      
       
       
    /*
