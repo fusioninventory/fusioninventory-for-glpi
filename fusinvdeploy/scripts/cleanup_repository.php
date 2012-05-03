@@ -1,3 +1,4 @@
+#!/usr/bin/php
 <?php
 // Drop unused files from the internal repository.
 //
@@ -41,5 +42,3 @@ foreach ($itr as $filePath => $fileInfo) {
       unlink($fileInfo->getPathname());
    }
 }
-
-?>

@@ -4,8 +4,6 @@
 	<key>Networking2028</key>
 	<comments><![CDATA[3Com CORP. SNMP agent for Switch 7700
 
-52-port Gigabit Managed Switch
-
 ]]></comments>
 	<oidlist>
 		<oidobject>

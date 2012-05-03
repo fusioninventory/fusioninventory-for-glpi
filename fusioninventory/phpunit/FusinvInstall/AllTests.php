@@ -257,12 +257,18 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
       /*
        * Verify config fields added
        */
-      $plugins_id = PluginFusioninventoryModule::getModuleId("fusioninventory");
+      $plugin = new Plugin();
+      $data = $plugin->find("directory='fusioninventory'");
+      $plugins_id = 0;
+      if (count($data)) {
+         $fields = current($data);
+         $plugins_id = $fields['id'];
+      }
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs` 
          WHERE `plugins_id`='".$plugins_id."'
             AND `type`='ssl_only'";
       $result = $DB->query($query);
-      $this->assertEquals($DB->numrows($result), 1, "type 'ssl_only' not added in config");
+      $this->assertEquals($DB->numrows($result), 1, "type 'ssl_only' not added in config for plugins ".$plugins_id);
 
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs` 
          WHERE `plugins_id`='".$plugins_id."'

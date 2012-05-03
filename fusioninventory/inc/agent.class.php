@@ -743,7 +743,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          unset($this->updates[$key]);
          unset($this->oldvalues['token']);
       }
-      logInFile("LOG", print_r($this, true));
    }
 }
 

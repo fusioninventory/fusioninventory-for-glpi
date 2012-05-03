@@ -65,16 +65,19 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       if (isset($_SESSION["plugin_fusinvinventory_ignorecontrollers"])) {
          unset($_SESSION["plugin_fusinvinventory_ignorecontrollers"]);
       }
-      foreach ($xml->CONTENT->VIDEOS as $child) {
-         $_SESSION["plugin_fusinvinventory_ignorecontrollers"][(string)$child->NAME] = 1;
-         if (isset($child->CHIPSET)) {
-            $_SESSION["plugin_fusinvinventory_ignorecontrollers"][(string)$child->CHIPSET] = 1;
+      if (isset($xml->CONTENT->VIDEOS)) {
+         foreach ($xml->CONTENT->VIDEOS as $child) {
+            $_SESSION["plugin_fusinvinventory_ignorecontrollers"][(string)$child->NAME] = 1;
+            if (isset($child->CHIPSET)) {
+               $_SESSION["plugin_fusinvinventory_ignorecontrollers"][(string)$child->CHIPSET] = 1;
+            }
          }
       }
-      foreach ($xml->CONTENT->SOUNDS as $child) {
-         $_SESSION["plugin_fusinvinventory_ignorecontrollers"][(string)$child->NAME] = 1;
+      if (isset($xml->CONTENT->SOUNDS)) {
+         foreach ($xml->CONTENT->SOUNDS as $child) {
+            $_SESSION["plugin_fusinvinventory_ignorecontrollers"][(string)$child->NAME] = 1;
+         }
       }
-      
       
       if ($new == "0") {
          // Transfer if entity is different

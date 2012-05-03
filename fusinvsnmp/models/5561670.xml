@@ -1,59 +1,13 @@
 <model>
-	<name><![CDATA[3282896]]></name>
+	<name><![CDATA[5561670]]></name>
 	<type>2</type>
-	<key>Networking0007</key>
-	<comments><![CDATA[24-Port Managed 10/100 Switch w/WebView
+	<key>Networking2050</key>
+	<comments><![CDATA[BayStack 470 - 24T           HW:06       FW:3.0.0.5   SW:v3.1.2.06 ISVN:2
 
-52-port Gigabit Managed Switch
-
-Allied Telesis AT-9424Ts - ATS63 v3.0.0
-
-Allied Telesis AT-9448T/SP - ATS63 v3.0.0
-
-Allied Telesyn Ethernet Switch AT-8012M
-
-Allied Telesyn Ethernet Switch AT-8024
-
-Allied Telesyn Ethernet Switch AT-8524M - ATS62 v1.4.0
-
-Allied Telesyn Ethernet Switch AT-8524POE - ATS62 v1.3.0 NE
-
-Allied Telesyn Ethernet Switch AT-8524POE - ATS62 v1.4.0
-
-ERS-1648T (2.1.4.0)
-
-Ethernet Switch
-
-FS728TP
-
-HP VC Flex-10 Enet Module Virtual Connect 3.15
-
-HP VC Flex-10 Enet Module Virtual Connect 3.18
-
-HP VC FlexFabric 10Gb/24-Port Module Virtual Connect 3.15
-
-Nortel Application Switch 2208
-
-Nortel Application Switch 3408 E
-
-Nortel Networks Layer2-7 GbE Switch Module
-
-Passport-8606 (3.7.8.0)
-
-ProCurve Access Point 530 WW J8987A, revision WA.01.19, boot version WAB.01.00
+Ethernet Routing Switch 5510-24T      HW:34       FW:5.0.0.4   SW:v5.1.0.014 BN:14 (c) Nortel Networks
 
 ]]></comments>
 	<oidlist>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.3.6.1.2.1.1.1.0</oid>
-			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>2</mapping_type>
- 			<mapping_name>comments</mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
 			<oid>.1.3.6.1.2.1.17.1.4.1.2</oid>
@@ -86,6 +40,26 @@ ProCurve Access Point 530 WW J8987A, revision WA.01.19, boot version WAB.01.00
 		</oidobject>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
+			<oid>.1.3.6.1.2.1.47.1.1.1.1.13.2</oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name>entPhysicalModelName</mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid>.1.3.6.1.2.1.47.1.1.1.1.9.22</oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name>firmware</mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
 			<oid>.1.3.6.1.2.1.2.2.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
@@ -106,21 +80,11 @@ ProCurve Access Point 530 WW J8987A, revision WA.01.19, boot version WAB.01.00
 		</oidobject>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.3.6.1.2.1.2.2.1.1</oid>
+			<oid>.1.3.6.1.2.1.2.2.1.14</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
 			<mapping_type>2</mapping_type>
- 			<mapping_name>ifIndex</mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.3.6.1.2.1.2.2.1.1</oid>
-			<portcounter>0</portcounter>
-			<dynamicport>1</dynamicport>
-			<mapping_type>2</mapping_type>
- 			<mapping_name>ifIndex</mapping_name>
+ 			<mapping_name>ifinerrors</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>
@@ -171,6 +135,16 @@ ProCurve Access Point 530 WW J8987A, revision WA.01.19, boot version WAB.01.00
 			<dynamicport>1</dynamicport>
 			<mapping_type>2</mapping_type>
  			<mapping_name>ifName</mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid>.1.3.6.1.2.1.2.2.1.20</oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name>ifouterrors</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>
@@ -271,6 +245,16 @@ ProCurve Access Point 530 WW J8987A, revision WA.01.19, boot version WAB.01.00
 			<dynamicport>0</dynamicport>
 			<mapping_type>2</mapping_type>
  			<mapping_name>name</mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid>.1.3.6.1.2.1.47.1.1.1.1.11.2</oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name>serial</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>

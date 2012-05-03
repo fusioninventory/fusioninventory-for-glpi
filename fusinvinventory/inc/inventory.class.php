@@ -45,7 +45,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusinvinventoryInventory {
-   private $p_xml = '';
+   private $p_xml;
    
    /**
    * Import data
@@ -235,7 +235,7 @@ class PluginFusinvinventoryInventory {
       $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusinvinventoryInventory";
       $rule = new PluginFusioninventoryRuleImportEquipmentCollection();
       $data = array();
-      $data = $rule->processAllRules($input, array());
+      $data = $rule->processAllRules($input, array(), array('class'=>$this));
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
                                                    print_r($data, true));
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {

@@ -1742,7 +1742,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
 
       // Update with mapping
       if (TableExists($newTable)) {
-         if (FieldExists($newTable, "mapping_name")) {
+         if (FieldExists($newTable, "mapping_name")
+                 AND FieldExists($newTable, "itemtype")) {
             $query = "SELECT * FROM `".$newTable."`
                GROUP BY `itemtype`, `mapping_type`";
             $result=$DB->query($query);
@@ -3144,7 +3145,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                if ($mapping = $pFusioninventoryMapping->get("NetworkEquipment", $data['Field'])) {
                   $DB->query("UPDATE `".$newTable."` 
                      SET `plugin_fusioninventory_mappings_id`='".$mapping['id']."'
-                     WHERE `Field`='".$data['Field']."'");
+                     WHERE `Field`='".$data['Field']."'
+                        AND `plugin_fusioninventory_mappings_id`!='".$mapping['id']."'");
                }
             }
          }
@@ -3166,6 +3168,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                                "new_device_type");
          $migration->dropField($newTable,
                                "new_device_ID");
+         $migration->dropField($newTable, "FK_process");
          $migration->dropKey($newTable, "FK_process");
          $migration->dropKey($newTable, 
                              "FK_ports");         
