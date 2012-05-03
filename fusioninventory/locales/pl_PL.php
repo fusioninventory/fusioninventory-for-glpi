@@ -180,7 +180,6 @@ $LANG['plugin_fusioninventory']['task'][30]="Wybrane";
 $LANG['plugin_fusioninventory']['task'][31]="Czas pomiędzy startem zadania a rozpoczęciem działania";
 $LANG['plugin_fusioninventory']['task'][32]="Zakończ teraz";
 $LANG['plugin_fusioninventory']['task'][33]="Rodzaj komunikacji";
-$LANG['plugin_fusioninventory']['task'][34]="Stały";
 $LANG['plugin_fusioninventory']['task'][35]="minut";
 $LANG['plugin_fusioninventory']['task'][36]="godzin";
 $LANG['plugin_fusioninventory']['task'][37]="dni";
