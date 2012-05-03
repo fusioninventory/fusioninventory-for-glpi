@@ -61,7 +61,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       global $LANG;
 
       if ($item->getType()=='PluginFusioninventoryConfig') {
-         return self::createTabEntry($LANG['plugin_fusioninventory']['agents'][27]);
          return $LANG['plugin_fusioninventory']['agents'][27];
       }
       return '';

@@ -137,7 +137,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       if ($item->getType()==__CLASS__) {
          
-         return self::createTabEntry($LANG['plugin_fusioninventory']['functionalities'][2]);
          return $LANG['plugin_fusioninventory']['functionalities'][2];
       }
       return '';
