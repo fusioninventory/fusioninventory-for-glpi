@@ -1288,9 +1288,11 @@ return namelist;
 
       $ctx = stream_context_create(array('http' => array('timeout' => 2)));
       foreach (PluginFusioninventoryAgent::getAgentRunURLs($plugins_id, $agent_id) as $runURL) {
-         if (@file_get_contents($runURL, 0, $ctx) !== false) {
-            $ret = true;
-            break;
+         if (!$ret) {
+            if (@file_get_contents($runURL, 0, $ctx) !== false) {
+               $ret = true;
+               break;
+            }
          }
       }
       $this->reenableusemode();
