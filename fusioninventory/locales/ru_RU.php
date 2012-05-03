@@ -180,7 +180,6 @@ $LANG['plugin_fusioninventory']['task'][30]="Выбор";
 $LANG['plugin_fusioninventory']['task'][31]="Время между началом задания и запуском действия";
 $LANG['plugin_fusioninventory']['task'][32]="Принудительное завершение";
 $LANG['plugin_fusioninventory']['task'][33]="Тип связей";
-$LANG['plugin_fusioninventory']['task'][34]="Постоянная";
 $LANG['plugin_fusioninventory']['task'][35]="минуты";
 $LANG['plugin_fusioninventory']['task'][36]="часы";
 $LANG['plugin_fusioninventory']['task'][37]="дни";

@@ -180,7 +180,6 @@ $LANG['plugin_fusioninventory']['task'][30]="Auswahl";
 $LANG['plugin_fusioninventory']['task'][31]="Zeitverzögerung zwischen Aufgabe und gewählter Aufgabe";
 $LANG['plugin_fusioninventory']['task'][32]="Beendigung erzwingen";
 $LANG['plugin_fusioninventory']['task'][33]="Kommunikationstyp";
-$LANG['plugin_fusioninventory']['task'][34]="dauerhaft";
 $LANG['plugin_fusioninventory']['task'][35]="Minuten";
 $LANG['plugin_fusioninventory']['task'][36]="Stunden";
 $LANG['plugin_fusioninventory']['task'][37]="Tage";
