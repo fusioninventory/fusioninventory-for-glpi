@@ -180,7 +180,6 @@ $LANG['plugin_fusioninventory']['task'][30]="Seleção";
 $LANG['plugin_fusioninventory']['task'][31]="Tempo entre a tarefa de iniciar e iniciar esta ação";
 $LANG['plugin_fusioninventory']['task'][32]="Força ao final";
 $LANG['plugin_fusioninventory']['task'][33]="Tipo de comunicação";
-$LANG['plugin_fusioninventory']['task'][34]="Permanente";
 $LANG['plugin_fusioninventory']['task'][35]="minutos";
 $LANG['plugin_fusioninventory']['task'][36]="horas";
 $LANG['plugin_fusioninventory']['task'][37]="dia";
