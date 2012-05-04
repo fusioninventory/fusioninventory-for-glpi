@@ -161,6 +161,13 @@ class PluginFusinvdeployStaticmisc {
       $options['name']        = 'actionselectiontoadd';
       return Dropdown::show("Computer", $options);
    }
+   static function task_definitionselection_Computer_deployuninstall() {
+      $options = array();
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name']        = 'actionselectiontoadd';
+      return Dropdown::show("Computer", $options);
+   }
 
    static function task_definitionselection_Group_deployinstall() {
       $options = array();
