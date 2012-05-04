@@ -1431,7 +1431,25 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       }
    }
 
+   function forceEnd() {
+      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
 
+      $a_taskjobstatuses =
+         $PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='". $this->fields["id"]."'");
+
+      //TODO: in order to avoid too many atomic operations on DB, convert the
+      //following into a massive prepared operation (ie. ids in one massive action)
+      foreach($a_taskjobstatuses as $a_taskjobstatus) {
+         $PluginFusioninventoryTaskjobstatus->getFromDB($a_taskjobstatus['id']);
+         if ($a_taskjobstatus['state'] != PluginFusioninventoryTaskjobstatus::FINISHED) {
+               $PluginFusioninventoryTaskjobstatus->changeStatusFinish(
+                     $a_taskjobstatus['id'], 0, '', 1, "Action cancelled by user", 0, 0
+               );
+         }
+      }
+      $this->reinitializeTaskjobs($this->fields['plugin_fusioninventory_tasks_id']);
+   }
    
    static function getAllowurlfopen($wakecomputer=0) {
       global $LANG;
