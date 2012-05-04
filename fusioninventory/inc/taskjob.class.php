@@ -882,7 +882,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
             WHERE `is_active`='1'
                AND `status` = '0' 
-               AND `glpi_plugin_fusioninventory_tasks`.`id`='".$tasks_id."'";
+               AND `glpi_plugin_fusioninventory_tasks`.`id`='".$tasks_id."'
+            ORDER BY `id`";
          $result = $DB->query($query);
          while ($data=$DB->fetch_array($result)) {
             $plugin = new Plugin();
