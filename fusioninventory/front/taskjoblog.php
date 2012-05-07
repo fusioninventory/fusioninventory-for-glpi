@@ -52,6 +52,9 @@ PluginFusioninventoryProfile::checkRight("fusioninventory", "task","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
+$pfTask = new PluginFusioninventoryTask();
+$pfTask->menuTasksLogs();
+
 Search::show('PluginFusioninventoryTaskjoblog');
 
 Html::footer();

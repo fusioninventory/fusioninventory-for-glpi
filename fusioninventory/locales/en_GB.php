@@ -195,6 +195,8 @@ $LANG['plugin_fusioninventory']['taskjoblog'][4]="Error";
 $LANG['plugin_fusioninventory']['taskjoblog'][5]="unknown";
 $LANG['plugin_fusioninventory']['taskjoblog'][6]="Running";
 $LANG['plugin_fusioninventory']['taskjoblog'][7]="Prepared";
+$LANG['plugin_fusioninventory']['taskjoblog'][8]="See all executions";
+$LANG['plugin_fusioninventory']['taskjoblog'][9]="View logs of this execution";
 
 $LANG['plugin_fusioninventory']['xml'][0]="XML";
 

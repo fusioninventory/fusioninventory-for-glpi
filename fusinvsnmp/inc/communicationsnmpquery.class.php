@@ -76,7 +76,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
               'Function PluginFusinvsnmpCommunicationSNMPQuery->import().');
 
       $pfAgent = new PluginFusioninventoryAgent();
-      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
 
       $this->agent = $pfAgent->InfosByKey($p_DEVICEID);
 
@@ -84,9 +84,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $errors = '';
 
       $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $p_CONTENT->PROCESSNUMBER;
-      if ($pfTaskjobstatus->getFromDB($p_CONTENT->PROCESSNUMBER)) {
-         if ($pfTaskjobstatus->fields['state'] != "3") {
-            $pfTaskjobstatus->changeStatus($p_CONTENT->PROCESSNUMBER, 2);
+      if ($pfTaskjobstate->getFromDB($p_CONTENT->PROCESSNUMBER)) {
+         if ($pfTaskjobstate->fields['state'] != "3") {
+            $pfTaskjobstate->changeStatus($p_CONTENT->PROCESSNUMBER, 2);
             if ((!isset($p_CONTENT->AGENT->START)) AND (!isset($p_CONTENT->AGENT->END))) {
                $nb_devices = 0;
                $segs=$p_CONTENT->xpath('//DEVICE');
@@ -111,7 +111,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                }
             }
             if (isset($p_CONTENT->AGENT->END)) {
-               $pfTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
+               $pfTaskjobstate->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
                                                          $this->agent['id'],
                                                          'PluginFusioninventoryAgent');
             }

@@ -53,7 +53,6 @@ PluginFusioninventoryProfile::checkRight("fusioninventory", "task","r");
 PluginFusioninventoryMenu::displayMenu("mini");
 
 PluginFusioninventoryTaskjob::getAllowurlfopen();
-echo "<br/>";
 
 $pfTask = new PluginFusioninventoryTask();
 $pfTask->menuTasksLogs();

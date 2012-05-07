@@ -73,7 +73,6 @@ switch($_POST['glpi_tab']) {
             if (!empty($a_taskjobreties)) {
                foreach($a_taskjobreties as $taskjob_id_next=>$datas2) {
                   $pfTaskjob->showForm($taskjob_id_next);
-                  $pfTaskjoblog->showHistory($taskjob_id_next);
                }
             } else {
                $j = 0;
@@ -94,7 +93,6 @@ switch($_POST['glpi_tab']) {
             $pfTaskjob->showForm($taskjobs_id);
          } else {
             $pfTaskjob->showForm($taskjob["id"]);
-            $pfTaskjoblog->showHistory($taskjob["id"]);
          }
       }
       break;

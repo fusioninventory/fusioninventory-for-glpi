@@ -210,7 +210,7 @@ function pluginFusioninventoryInstall($version, $migration='') {
 
    CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '60', 
                       array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30));
-   Crontask::Register('PluginFusioninventoryTaskjobstatus', 'cleantaskjob', (3600 * 24), 
+   Crontask::Register('PluginFusioninventoryTaskjobstate', 'cleantaskjob', (3600 * 24), 
                       array('mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30));
 
 

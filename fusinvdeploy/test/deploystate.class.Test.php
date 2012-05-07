@@ -54,7 +54,7 @@ class DeploystateTest extends PHPUnit_Framework_TestCase
          'action' => '[{"Computer":"1"}]'
       ));
 
-      //initialise status for taskjobs
+      //initialise state for taskjobs
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $PluginFusioninventoryTaskjob->forceRunningTask($task_id);
 

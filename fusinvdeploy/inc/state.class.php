@@ -84,7 +84,7 @@ class PluginFusinvdeployState extends CommonDBTM {
       FROM glpi_plugin_fusinvdeploy_taskjobs taskjobs
       INNER JOIN glpi_plugin_fusinvdeploy_tasks tasks
          ON tasks.id = taskjobs.plugin_fusinvdeploy_tasks_id
-      LEFT JOIN glpi_plugin_fusioninventory_taskjobstatus taskjobstatus
+      LEFT JOIN glpi_plugin_fusioninventory_taskjobstates taskjobstatus
          ON taskjobs.id = taskjobstatus.plugin_fusioninventory_taskjobs_id
       ";
       $query_res = $DB->query($query);
@@ -130,18 +130,18 @@ class PluginFusinvdeployState extends CommonDBTM {
       if (!isset($params['items_id'])) exit;
       if (!isset($params['taskjobs_id'])) exit;
 
-      $query = "SELECT DISTINCT plugin_fusioninventory_taskjobstatus_id, id, date, state, comment
+      $query = "SELECT DISTINCT plugin_fusioninventory_taskjobstates_id, id, date, state, comment
       FROM (
-         SELECT logs.plugin_fusioninventory_taskjobstatus_id, logs.id, logs.date, logs.state, logs.comment
+         SELECT logs.plugin_fusioninventory_taskjobstates_id, logs.id, logs.date, logs.state, logs.comment
          FROM glpi_plugin_fusioninventory_taskjoblogs logs
-         INNER JOIN glpi_plugin_fusioninventory_taskjobstatus status
-            ON status.id = logs.plugin_fusioninventory_taskjobstatus_id
+         INNER JOIN glpi_plugin_fusioninventory_taskjobstates status
+            ON status.id = logs.plugin_fusioninventory_taskjobstates_id
             AND status.plugin_fusioninventory_taskjobs_id = '".$params['taskjobs_id']."'
          WHERE status.items_id = '".$params['items_id']."'
             AND status.itemtype = 'Computer'
          ORDER BY logs.id DESC
       ) as t1
-      GROUP BY plugin_fusioninventory_taskjobstatus_id
+      GROUP BY plugin_fusioninventory_taskjobstates_id
       ORDER BY date ASC";
 
       $query_res = $DB->query($query);
@@ -155,7 +155,7 @@ class PluginFusinvdeployState extends CommonDBTM {
          $res[$i]['comment']     = $row['comment'];
          $res[$i]['state']       = $row['state'];
          $res[$i]['date']        = $row['date'];
-         $res[$i]['status_id']   = $row['plugin_fusioninventory_taskjobstatus_id'];
+         $res[$i]['status_id']   = $row['plugin_fusioninventory_taskjobstates_id'];
          $res[$i]['iconCls']     = "no-icon";
          $res[$i]['cls']         = "group";
          $i++;
@@ -173,7 +173,7 @@ class PluginFusinvdeployState extends CommonDBTM {
 
       $query = "SELECT id, state, comment, date
       FROM glpi_plugin_fusioninventory_taskjoblogs
-      WHERE plugin_fusioninventory_taskjobstatus_id = '".$params['status_id']."'
+      WHERE plugin_fusioninventory_taskjobstates_id = '".$params['status_id']."'
       ORDER BY id ASC";
       $query_res = $DB->query($query);
       $i = 0;
@@ -215,7 +215,7 @@ class PluginFusinvdeployState extends CommonDBTM {
          INNER JOIN glpi_plugin_fusinvdeploy_taskjobs jobs
             ON jobs.plugin_fusinvdeploy_tasks_id = tasks.id
             AND jobs.method = 'deployinstall' OR jobs.method = 'deployuninstall'
-         INNER JOIN glpi_plugin_fusioninventory_taskjobstatus status
+         INNER JOIN glpi_plugin_fusioninventory_taskjobstates status
             ON status.plugin_fusioninventory_taskjobs_id = jobs.id
          ORDER BY date DESC";
       $res_tasks = $DB->query($query_tasks);
@@ -247,7 +247,7 @@ class PluginFusinvdeployState extends CommonDBTM {
                $query_status = "SELECT id, items_id, state
                   FROM (
                      SELECT id, itemtype, items_id, state
-                     FROM glpi_plugin_fusioninventory_taskjobstatus
+                     FROM glpi_plugin_fusioninventory_taskjobstates
                      WHERE plugin_fusioninventory_taskjobs_id = '".$row_jobs['id']."'
                      ORDER BY id DESC
                   ) as t1
@@ -320,7 +320,7 @@ class PluginFusinvdeployState extends CommonDBTM {
                INNER JOIN glpi_plugin_fusinvdeploy_taskjobs jobs
                   ON jobs.plugin_fusinvdeploy_tasks_id = tasks.id
                   AND jobs.method = 'deployinstall' OR jobs.method = 'deployuninstall'
-               INNER JOIN glpi_plugin_fusioninventory_taskjobstatus status
+               INNER JOIN glpi_plugin_fusioninventory_taskjobstates status
                   ON status.plugin_fusioninventory_taskjobs_id = jobs.id
                ORDER BY date DESC";
             $res_tasks = $DB->query($query_tasks);
@@ -356,7 +356,7 @@ class PluginFusinvdeployState extends CommonDBTM {
                   $query_status = "SELECT id, items_id, state
                      FROM (
                         SELECT id, itemtype, items_id, state
-                        FROM glpi_plugin_fusioninventory_taskjobstatus
+                        FROM glpi_plugin_fusioninventory_taskjobstates
                         WHERE plugin_fusioninventory_taskjobs_id = '".$row_jobs['id']."'
                         ORDER BY id DESC
                      ) as t1
@@ -377,7 +377,7 @@ class PluginFusinvdeployState extends CommonDBTM {
                         //get last job state
                         $query_jobs_state = "SELECT state
                         FROM glpi_plugin_fusioninventory_taskjoblogs
-                        WHERE plugin_fusioninventory_taskjobstatus_id = '".$row_status['id']."'
+                        WHERE plugin_fusioninventory_taskjobstates_id = '".$row_status['id']."'
                         ORDER BY id DESC
                         LIMIT 1";
 
@@ -405,7 +405,7 @@ class PluginFusinvdeployState extends CommonDBTM {
                $query_status = "SELECT id, items_id, state
                   FROM (
                      SELECT id, itemtype, items_id, state
-                     FROM glpi_plugin_fusioninventory_taskjobstatus
+                     FROM glpi_plugin_fusioninventory_taskjobstates
                      WHERE plugin_fusioninventory_taskjobs_id = '$items_id'
                      ORDER BY id DESC
                   ) as t1
@@ -415,7 +415,7 @@ class PluginFusinvdeployState extends CommonDBTM {
                   //get last job state
                   $query_jobs_state = "SELECT state
                   FROM glpi_plugin_fusioninventory_taskjoblogs
-                  WHERE plugin_fusioninventory_taskjobstatus_id = '".$row_status['id']."'
+                  WHERE plugin_fusioninventory_taskjobstates_id = '".$row_status['id']."'
                   ORDER BY id DESC
                   LIMIT 1";
 
@@ -444,8 +444,8 @@ class PluginFusinvdeployState extends CommonDBTM {
    static function getTaskPercent($id, $type = 'task') {
       global $DB;
 
-      $taskjob = new PluginFusioninventoryTaskjob;
-      $taskjobstatus = new PluginFusioninventoryTaskjobstatus;
+      $taskjob = new PluginFusioninventoryTaskjob();
+      $taskjobstate = new PluginFusioninventoryTaskjobstate();
 
       if ($type == 'task') {
          $a_taskjobs = $taskjob->find("`plugin_fusioninventory_tasks_id`='".$id."'");
@@ -458,7 +458,7 @@ class PluginFusinvdeployState extends CommonDBTM {
             $query_status = "SELECT id, items_id, state
                FROM (
                   SELECT id, itemtype, items_id, state
-                  FROM glpi_plugin_fusioninventory_taskjobstatus
+                  FROM glpi_plugin_fusioninventory_taskjobstates
                   WHERE plugin_fusioninventory_taskjobs_id = '".$job['id']."'
                   ORDER BY id DESC
                ) as t1
@@ -468,7 +468,7 @@ class PluginFusinvdeployState extends CommonDBTM {
 
             $query_jobs_state = "SELECT state
                FROM glpi_plugin_fusioninventory_taskjoblogs
-               WHERE plugin_fusioninventory_taskjobstatus_id = '".$row_status['id']."'
+               WHERE plugin_fusioninventory_taskjobstates_id = '".$row_status['id']."'
                ORDER BY id DESC
                LIMIT 1";
             $res_jobs_state = $DB->query($query_jobs_state);
@@ -485,7 +485,7 @@ class PluginFusinvdeployState extends CommonDBTM {
          $taskjobs_id = $id;
       }
 
-      $percent = $taskjobstatus->stateTaskjob($taskjobs_id, 0, '');
+      $percent = $taskjobstate->stateTaskjob($taskjobs_id, 0, '');
       return ceil($percent)."%";
    }
 }

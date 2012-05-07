@@ -49,7 +49,7 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
    function __construct() {
       global $CFG_GLPI;
 
-      $CFG_GLPI['glpitablesitemtype']['PluginFusinvsnmpStateInventory'] = 'glpi_plugin_fusioninventory_taskjobstatus';
+      $CFG_GLPI['glpitablesitemtype']['PluginFusinvsnmpStateInventory'] = 'glpi_plugin_fusioninventory_taskjobstates';
    }
 
 
@@ -63,7 +63,7 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
       global $DB,$LANG,$CFG_GLPI;
 
       $pfAgent = new PluginFusioninventoryAgent();
-      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
 
       $start = 0;
@@ -72,7 +72,7 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
       }
 
       // Total Number of events
-      $querycount = "SELECT count(*) AS cpt FROM `glpi_plugin_fusioninventory_taskjobstatus`
+      $querycount = "SELECT count(*) AS cpt FROM `glpi_plugin_fusioninventory_taskjobstates`
          LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` on `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
          WHERE `method` = 'snmpinventory'
          GROUP BY `uniqid`
@@ -98,8 +98,8 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
       echo "<th>".$LANG['common'][63]."</th>";
       echo "</tr>";
 
-      $sql = "SELECT `glpi_plugin_fusioninventory_taskjobstatus`.*
-            FROM `glpi_plugin_fusioninventory_taskjobstatus`
+      $sql = "SELECT `glpi_plugin_fusioninventory_taskjobstates`.*
+            FROM `glpi_plugin_fusioninventory_taskjobstates`
          LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` on `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
          WHERE `method` = 'snmpinventory'
          GROUP BY `uniqid`
@@ -116,9 +116,9 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
          $start_date = "";
          $end_date = "";
          $nb_errors = 0;
-         $a_taskjobstatus = $pfTaskjobstatus->find("`uniqid`='".$data['uniqid']."'");
-         foreach ($a_taskjobstatus as $datastatus) {
-            $a_taskjoblog = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$datastatus['id']."'");
+         $a_taskjobstates = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'");
+         foreach ($a_taskjobstates as $datastate) {
+            $a_taskjoblog = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$datastate['id']."'");
             foreach($a_taskjoblog as $taskjoblog) {
                if (strstr($taskjoblog['comment'], " ==fusinvsnmp::1==")) {
                   $nb_query += str_replace(" ==fusinvsnmp::1==", "", $taskjoblog['comment']);

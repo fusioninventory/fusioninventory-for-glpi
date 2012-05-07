@@ -134,21 +134,21 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_taskjoblogs`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_taskjoblogs` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_taskjobstatus_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_taskjobstates_id` int(11) NOT NULL DEFAULT '0',
   `date` datetime DEFAULT NULL,
   `items_id` int(11) NOT NULL DEFAULT '0',
   `itemtype` varchar(100) DEFAULT NULL,
   `state` int(11) NOT NULL DEFAULT '0',
   `comment` text DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `plugin_fusioninventory_taskjobstatus_id` (`plugin_fusioninventory_taskjobstatus_id`,`state`)
+  KEY `plugin_fusioninventory_taskjobstates_id` (`plugin_fusioninventory_taskjobstates_id`,`state`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_taskjobstatus`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_taskjobstates`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_taskjobstatus` (
+CREATE TABLE `glpi_plugin_fusioninventory_taskjobstates` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `plugin_fusioninventory_taskjobs_id` int(11) NOT NULL DEFAULT '0',
   `items_id` int(11) NOT NULL DEFAULT '0',

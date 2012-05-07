@@ -78,7 +78,7 @@ class Connectionslogs extends PHPUnit_Framework_TestCase {
       // Add task and taskjob
       $pfTask = new PluginFusioninventoryTask();
       $pfTaskjob = new PluginFusioninventoryTaskjob();
-      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
 
       $input = array();
       $input['entities_id'] = '0';
@@ -97,9 +97,9 @@ class Connectionslogs extends PHPUnit_Framework_TestCase {
       $input['items_id'] = '1';
       $input['state'] = 1;
       $input['plugin_fusioninventory_agents_id'] = 1;
-      $pfTaskjobstatus->add($input);
+      $pfTaskjobstate->add($input);
       $input['items_id'] = '2';
-      $pfTaskjobstatus->add($input);
+      $pfTaskjobstate->add($input);
 
       $switch1 = '<?xml version="1.0" encoding="UTF-8"?>
 <REQUEST>

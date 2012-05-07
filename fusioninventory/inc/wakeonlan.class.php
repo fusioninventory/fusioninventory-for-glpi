@@ -46,13 +46,13 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication {
 
-   // Get all devices and put in taskjobstatus each task for each device for each agent
+   // Get all devices and put in taskjobstate each task for each device for each agent
    function prepareRun($taskjobs_id) {
       global $DB;
 
       $pfTask = new PluginFusioninventoryTask();
       $pfTaskjob = new PluginFusioninventoryTaskjob();
-      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       
       $uniqid = uniqid();
@@ -131,14 +131,14 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
          $a_input['itemtype'] = 'Computer';
          $a_input['items_id'] = 0;
          $a_input['uniqid'] = $uniqid;
-         $Taskjobstatus_id = $pfTaskjobstatus->add($a_input);
+         $Taskjobstates_id = $pfTaskjobstate->add($a_input);
             //Add log of taskjob
-            $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
+            $a_input['plugin_fusioninventory_taskjobstates_id'] = $Taskjobstates_id;
             $a_input['state'] = 7;
             $a_input['date'] = date("Y-m-d H:i:s");
             $pfTaskjoblog->add($a_input);
 
-         $pfTaskjobstatus->changeStatusFinish($Taskjobstatus_id,
+         $pfTaskjobstate->changeStatusFinish($Taskjobstates_id,
                                                                  0,
                                                                  'Computer',
                                                                  1,
@@ -155,11 +155,11 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
             $agent_id = array_pop($a_agentList);
             $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
             for ($i=0; $i < $nb_computers; $i++) {
-                //Add jobstatus and put status
+                //Add jobstate and put status
                 $a_input['items_id'] = current(array_pop($a_definitions));
-                $Taskjobstatus_id = $pfTaskjobstatus->add($a_input);
+                $Taskjobstates_id = $pfTaskjobstate->add($a_input);
                   //Add log of taskjob
-                  $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
+                  $a_input['plugin_fusioninventory_taskjobstates_id'] = $Taskjobstates_id;
                   $a_input['state'] = 7;
                   $a_input['date'] = date("Y-m-d H:i:s");
                   $pfTaskjoblog->add($a_input);
@@ -181,17 +181,17 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
    /**
     *  When agent contact server, this function send datas to agent
     */
-   function run($a_Taskjobstatus) {
+   function run($a_Taskjobstates) {
 
-      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $NetworkPort                        = new NetworkPort();
 
       $sxml_option = $this->message->addChild('OPTION');
       $sxml_option->addChild('NAME', 'WAKEONLAN');
       
-      $changestatus = 0;
-      foreach ($a_Taskjobstatus as $data) {
+      $changestate = 0;
+      foreach ($a_Taskjobstates as $data) {
          $a_networkPort = $NetworkPort->find("`itemtype`='Computer' AND `items_id`='".$data['items_id']."' ");
          $computerip = 0;
          foreach ($a_networkPort as $datanetwork) {
@@ -201,24 +201,24 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                $sxml_param->addAttribute('MAC', $datanetwork['mac']);
                $sxml_param->addAttribute('IP', $datanetwork['ip']);
 
-               if ($changestatus == '0') {
-                  $pfTaskjobstatus->changeStatus($data['id'], 1);
+               if ($changestate == '0') {
+                  $pfTaskjobstate->changeStatus($data['id'], 1);
                   $pfTaskjoblog->addTaskjoblog($data['id'],
                                           '0',
                                           'Computer',
                                           '1',
                                           '');
-                  $changestatus = $pfTaskjobstatus->fields['id'];
+                  $changestate = $pfTaskjobstate->fields['id'];
                } else {
-                  $pfTaskjobstatus->changeStatusFinish($data['id'],
+                  $pfTaskjobstate->changeStatusFinish($data['id'],
                                                                     $data['items_id'],
                                                                     $data['itemtype'],
                                                                     0,
-                                                                    "Merged with ".$changestatus);
+                                                                    "Merged with ".$changestate);
                }
 
-               // Update taskjobstatus (state = 3 : finish); Because we haven't return of agent on this action
-               $pfTaskjobstatus->changeStatusFinish($data['id'],
+               // Update taskjobstate (state = 3 : finish); Because we haven't return of agent on this action
+               $pfTaskjobstate->changeStatusFinish($data['id'],
                                                                      $data['items_id'],
                                                                      $data['itemtype'],
                                                                      0,
@@ -227,7 +227,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
             }
          }
          if ($computerip == '0') {
-            $pfTaskjobstatus->changeStatusFinish($data['id'],
+            $pfTaskjobstate->changeStatusFinish($data['id'],
                                                                     $data['items_id'],
                                                                     $data['itemtype'],
                                                                     1,
