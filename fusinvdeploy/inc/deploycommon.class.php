@@ -141,44 +141,49 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
       $c_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
       $c_input['state']                              = 0;
       $c_input['plugin_fusioninventory_agents_id']   = 0;
+      $package = new PluginFusinvdeployPackage();
 
       foreach($computers as $computer_id) {
+         //Unique Id match taskjobstatuses for an agent(computer)
          $uniqid= uniqid();
 
-         $c_input['state'] = 0;
-         $c_input['itemtype'] = 'Computer';
-         $c_input['items_id'] = $computer_id;
-         $c_input['date'] = date("Y-m-d H:i:s");
-         $c_input['uniqid'] = $uniqid;
+         foreach($definitions as $definition) {
+            $package->getFromDB($definition['PluginFusinvdeployPackage']);
 
-         //get agent if for this computer
-         $agents_id = $agent->getAgentWithComputerid($computer_id);
-         if($agents_id === false) {
-            $jobstates_id= $jobstate->add($c_input);
-            $jobstate->changeStatusFinish($jobstates_id,
-                                                  0,
-                                                  '',
-                                                  1,
-                                                  "No agent found for this computer",
-                                                  0,
-                                                  0);
-         } else {
-            $c_input['plugin_fusioninventory_agents_id'] = $agents_id;
+            $c_input['state'] = 0;
+            $c_input['itemtype'] = 'PluginFusinvdeployPackage';
+            $c_input['items_id'] = $package->fields['id'];
+            $c_input['date'] = date("Y-m-d H:i:s");
+            $c_input['uniqid'] = $uniqid;
 
-            # Push the agent, in the stack of agent to awake
-            if ($communication == "push") {
-               $_SESSION['glpi_plugin_fusioninventory']['agents'][$agents_id] = 1;
+            //get agent if for this computer
+            $agents_id = $agent->getAgentWithComputerid($computer_id);
+            if($agents_id === false) {
+               $jobstates_id= $jobstate->add($c_input);
+               $jobstate->changeStatusFinish($jobstates_id,
+                                                     0,
+                                                     '',
+                                                     1,
+                                                     "No agent found for this computer",
+                                                     0,
+                                                     0);
+            } else {
+               $c_input['plugin_fusioninventory_agents_id'] = $agents_id;
+
+               # Push the agent, in the stack of agent to awake
+               if ($communication == "push") {
+                  $_SESSION['glpi_plugin_fusioninventory']['agents'][$agents_id] = 1;
+               }
+
+               $jobstates_id= $jobstate->add($c_input);
+
+               //Add log of taskjob
+               $c_input['plugin_fusioninventory_taskjobstatus_id'] = $jobstates_id;
+               $c_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
+               $taskvalid++;
+               $joblog->add($c_input);
+               unset($c_input['state']);
             }
-
-            $jobstates_id= $jobstate->add($c_input);
-
-            //Add log of taskjob
-            $c_input['plugin_fusioninventory_taskjobstates_id'] = $jobstates_id;
-            $c_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
-
-            $taskvalid++;
-            $joblog->add($c_input);
-            unset($c_input['state']);
          }
       }
 
@@ -189,84 +194,6 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
          $job->reinitializeTaskjobs($job->fields['plugin_fusioninventory_tasks_id']);
       }
 
-      /*$agent_actionslist = array();
-      foreach($agent_actions as $targets) {
-         foreach ($targets as $itemtype => $items_id) {
-            $item = new $itemtype();
-            // Detect if agent exists
-            if($item->getFromDB($items_id)) {
-               $a_ip= $item->getIPs($items_id);
-               foreach($a_ip as $ip) {
-                  if($task->fields['communication'] == 'push') {
-                     $agentStatus= $job->getStateAgent($ip, 0);
-                     if($agentStatus) {
-                        $agent_actionslist[$items_id] = $ip;
-                     }
-                  } elseif($task->fields['communication'] == 'pull') {
-                     $agent_actionslist[$items_id] = 1;
-                  }
-               }
-            }
-         }
-      }
-
-      // *** Add jobstatus
-      if(empty($agent_actionslist)) {
-         $a_input= array();
-         $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
-         $a_input['state']                              = 0;
-         $a_input['plugin_fusioninventory_agents_id']   = 0;
-         $a_input['uniqid']                             = $uniqid;
-
-         foreach ($task_definitions as $task_definition) {
-            foreach ($task_definition as $task_itemtype => $task_items_id) {
-               $a_input['itemtype'] = $task_itemtype;
-               $a_input['items_id'] = $task_items_id;
-               $jobstatus_id= $jobstatus->add($a_input);
-            }
-         }
-         //Add log of taskjob
-         $a_input['plugin_fusioninventory_taskjobstatus_id']= $jobstatus_id;
-         $a_input['state'] = PluginFusioninventoryTaskjoblog::TASK_PREPARED;
-         $a_input['date']  = date("Y-m-d H:i:s");
-         $joblog->add($a_input);
-
-         $jobstatus->changeStatusFinish($jobstatus_id, 0, 'PluginFusinvdeployPackage', 1,
-                                        "Unable to find agent to run this job");
-         $job->fields['status']= 1;
-         $job->update($job->fields);
-      } else {
-         foreach($agent_actions as $targets) {
-            foreach ($targets as $itemtype => $items_id) {
-
-               if ($communication == "push") {
-                  $_SESSION['glpi_plugin_fusioninventory']['agents'][$items_id] = 1;
-               }
-
-               foreach ($task_definitions as $task_definition) {
-                  foreach ($task_definition as $task_itemtype => $task_items_id) {
-                     $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
-                     $a_input['state']                              = 0;
-                     $a_input['plugin_fusioninventory_agents_id']   = $items_id;
-                     $a_input['itemtype']                           = $task_itemtype;
-                     $a_input['items_id']                           = $task_items_id;
-                     $a_input['uniqid']                             = $uniqid;
-                     $a_input['date']                               = date("Y-m-d H:i:s");
-                     $jobstatus_id = $jobstatus->add($a_input);
-                     //Add log of taskjob
-                     $a_input['plugin_fusioninventory_taskjobstatus_id'] = $jobstatus_id;
-                     $a_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
-
-                     $joblog->add($a_input);
-                     unset($a_input['state']);
-                  }
-               }
-            }
-         }
-
-         $job->fields['status']= 1;
-         $job->update($job->fields);
-      }*/
    }
 
    // When agent contact server, this function send datas to agent

@@ -124,16 +124,17 @@ class PluginFusinvdeployJob {
         die;
       }
 
-     $jobstatus = PluginFusioninventoryTaskjoblog::getByUniqID($p['uuid']);
+     $jobstate = new PluginFusioninventoryTaskjobstate();
+     $jobstate->getFromDB($p['uuid']);
 
      /*if ($update_job) {
         $taskjob = new PluginFusioninventoryTaskjoblog();
         $taskjob->update($jobstatus);
      }*/
      $taskjoblog = new PluginFusioninventoryTaskjoblog();
-     $tmp['plugin_fusioninventory_taskjobstates_id'] = $jobstatus['id'];
-     $tmp['itemtype']                                = $jobstatus['itemtype'];
-     $tmp['items_id']                                = $jobstatus['items_id'];
+     $tmp['plugin_fusioninventory_taskjobstatus_id'] = $jobstate->fields['id'];
+     $tmp['itemtype']                                = $jobstate->fields['itemtype'];
+     $tmp['items_id']                                = $jobstate->fields['items_id'];
      $tmp['date']                                    = date("Y-m-d H:i:s");
      $tmp['comment']                                 = "";
      $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_RUNNING;
@@ -181,9 +182,9 @@ class PluginFusinvdeployJob {
         //set status to finished and reinit job
         $taskjobstate = new PluginFusioninventoryTaskjobstate();
         $taskjobstate->changeStatusFinish(
-           $jobstatus['id'],
-           $jobstatus['items_id'],
-           $jobstatus['itemtype'],
+           $jobstate->fields['id'],
+           $jobstate->fields['items_id'],
+           $jobstate->fields['itemtype'],
            $error
         );
      }
