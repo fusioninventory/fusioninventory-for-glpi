@@ -851,6 +851,38 @@ function appear_array(id){
       }
    }
    
+   
+   
+   /**
+    * Display last uniqid
+    *  
+    */
+   static function quickListLogs($tasks_id) {
+      global $DB;
+      
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_taskjobstates` 
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs`
+            ON `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
+         WHERE `plugin_fusioninventory_tasks_id`='".$tasks_id."'
+         ORDER BY uniqid DESC
+         LIMIT 1";
+      $result = $DB->query($query);
+      $uniqid = 0;
+      while ($data=$DB->fetch_array($result)) {
+         $uniqid = $data['uniqid'];
+      }
+      $params = array();
+      $params['field'][0] = '6';
+      $params['searchtype'][0] = 'contains';
+      $params['contains'][0] = $uniqid;
+      $params['itemtype'] = 'PluginFusioninventoryTaskjoblog';
+      $params['start'] = '0';
+      Search::manageGetValues('PluginFusioninventoryTaskjoblog');
+      Search::showList('PluginFusioninventoryTaskjoblog', $params);
+      
+      
+   }
+   
 }
 
 ?>

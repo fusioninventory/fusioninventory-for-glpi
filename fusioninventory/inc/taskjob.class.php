@@ -1912,22 +1912,36 @@ return namelist;
       $pfTaskjob = new self();
       $a_list = $pfTaskjob->find("`method`='".$method."'");
 
-      echo "<form name='form_ic' method='post' action='".Toolbox::deleteDir(__CLASS__)."'>";
+      echo "<form name='form_ic' method='post' action='".Toolbox::getItemTypeFormURL(__CLASS__)."'>";
       echo "<table class='tab_cadre_fixe' style='width:500px'>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='2' align='center'>".$LANG['plugin_fusioninventory']['task'][40]."</th>";
       echo "</tr>";
       
-      foreach ($a_list as $data) {
+      if (isset($_SESSION['plugin_fusioninventory_wizard'])
+              AND isset($_SESSION['plugin_fusioninventory_wizard']['tasks_id'])) {
+         $a_tasksjobs = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$_SESSION['plugin_fusioninventory_wizard']['tasks_id']."'");
+         $data = current($a_tasksjobs);
          $pfTaskjob->getFromDB($data['id']);
          echo "<tr class='tab_bg_1'>";
-         echo "<td><input type='checkbox' name='taskjobstoforcerun[]' value='".$data['id']."' /></td>";
+         echo "<td><input type='checkbox' name='taskjobstoforcerun[]' value='".$data['id']."' checked /></td>";
          $link_item = $pfTaskjob->getFormURL();
          $link  = $link_item;
          $link .= (strpos($link,'?') ? '&amp;':'?').'id=' . $pfTaskjob->fields['id'];
          echo "<td><a href='".$link."'>".$pfTaskjob->getNameID(1)."</a></td>";
-         echo "<tr class='tab_bg_1'>";
+         echo "<tr class='tab_bg_1'>";         
+      } else {
+         foreach ($a_list as $data) {
+            $pfTaskjob->getFromDB($data['id']);
+            echo "<tr class='tab_bg_1'>";
+            echo "<td><input type='checkbox' name='taskjobstoforcerun[]' value='".$data['id']."' /></td>";
+            $link_item = $pfTaskjob->getFormURL();
+            $link  = $link_item;
+            $link .= (strpos($link,'?') ? '&amp;':'?').'id=' . $pfTaskjob->fields['id'];
+            echo "<td><a href='".$link."'>".$pfTaskjob->getNameID(1)."</a></td>";
+            echo "<tr class='tab_bg_1'>";
+         }
       }
 
       echo "<tr class='tab_bg_1'>";
@@ -2118,6 +2132,37 @@ return namelist;
          }
          return $uniqid;
       }
+   }
+   
+   
+   
+   static function functionWizardEnd() {
+      global $LANG, $CFG_GLPI;
+      
+      echo "<form method='post' name='' id=''  action=\"".$CFG_GLPI['root_doc'] . 
+         "/plugins/fusioninventory/front/wizard.form.php\">";
+      
+      echo "<table class='tab_cadre' width='700'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='2'>".$LANG['plugin_fusioninventory']['task'][51]."</th>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td width='10'><input type='radio' name='endtask[]' value='finishdelete' /></td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][52]."</td>";         
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td><input type='radio' name='endtask[]' value='finish' /></td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][53]."</td>";         
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td><input type='radio' name='endtask[]' value='runagain' /></td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][54]."</td>";         
+      echo "</tr>";
+         
+      echo "</table>";
    }
 }
 

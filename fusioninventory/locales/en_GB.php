@@ -187,6 +187,11 @@ $LANG['plugin_fusioninventory']['task'][46]="Reinitialization";
 $LANG['plugin_fusioninventory']['task'][47]="Unique id";
 $LANG['plugin_fusioninventory']['task'][48]="To inventory";
 $LANG['plugin_fusioninventory']['task'][49]="Advanced mode";
+$LANG['plugin_fusioninventory']['task'][50]="End Task";
+$LANG['plugin_fusioninventory']['task'][51]="Action after finish running task";
+$LANG['plugin_fusioninventory']['task'][52]="Delete this task and finish";
+$LANG['plugin_fusioninventory']['task'][53]="Finish";
+$LANG['plugin_fusioninventory']['task'][54]="Run again this task";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Started";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";

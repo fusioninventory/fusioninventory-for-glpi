@@ -204,10 +204,15 @@ class PluginFusioninventoryWizard {
          }
 
       } else if (!empty($options)) {
-         if (!isset($options['noadditem'])) {
-            self::addButton();
+         if (isset($options['arg1'])) {
+            if (!isset($options['noadditem'])) {
+               self::addButton();
+            }
+            call_user_func(array($classname, $options['f']), $options['arg1']);
+         } else {
+            call_user_func(array($classname, $options['f']));
+            echo "<input type='hidden' name='nexturl' value='".PluginFusioninventoryWizard::getNextStep($filariane)."' />";
          }
-         call_user_func(array($classname, $options['f']), $options['arg1']);
 
       } else {
          self::addButton();
@@ -246,7 +251,7 @@ class PluginFusioninventoryWizard {
    }
 
 
-
+   
    /**
     * Get next page name wizard with help of breadcrumb
     *
@@ -360,11 +365,12 @@ class PluginFusioninventoryWizard {
       $LANG['plugin_fusioninventory']['wizard'][0]   => "w_start",
       $LANG['plugin_fusioninventory']['wizard'][1]   => "w_inventorychoice",
       $LANG['plugin_fusioninventory']['iprange'][2]  => "w_iprange",
-      $LANG['plugin_fusioninventory']['functionalities'][16]   => "w_authsnmp",
-      $LANG['plugin_fusioninventory']['rules'][2]    => "w_importrules",
-      $LANG['plugin_fusioninventory']['task'][1]     => "w_tasks",
+//      $LANG['plugin_fusioninventory']['functionalities'][16]   => "w_authsnmp",
+//      $LANG['plugin_fusioninventory']['rules'][2]    => "w_importrules",
+//      $LANG['plugin_fusioninventory']['task'][1]     => "w_tasks",
       $LANG['plugin_fusioninventory']['wizard'][7]   => "w_tasksforcerun",
-      $LANG['plugin_fusioninventory']['wizard'][8]   => "w_taskslog");
+      $LANG['plugin_fusioninventory']['wizard'][8]   => "w_taskslog",
+      $LANG['plugin_fusioninventory']['task'][50]    => "w_tasksend");
    }
 
 
@@ -411,11 +417,12 @@ class PluginFusioninventoryWizard {
 
       return array(
       $LANG['plugin_fusioninventory']['iprange'][2]  => "w_iprange",
-      $LANG['plugin_fusioninventory']['functionalities'][16]   => "w_authsnmp",
-      $LANG['plugin_fusioninventory']['rules'][2]    => "w_importrules",
-      $LANG['plugin_fusioninventory']['task'][1]     => "w_tasks",
+      //$LANG['plugin_fusioninventory']['functionalities'][16]   => "w_authsnmp",
+      //$LANG['plugin_fusioninventory']['rules'][2]    => "w_importrules",
+      //$LANG['plugin_fusioninventory']['task'][1]     => "w_tasks",
       $LANG['plugin_fusioninventory']['wizard'][7]   => "w_tasksforcerun",
-      $LANG['plugin_fusioninventory']['wizard'][8]   => "w_taskslog");
+      $LANG['plugin_fusioninventory']['wizard'][8]   => "w_taskslog",
+      $LANG['plugin_fusioninventory']['task'][50]    => "w_tasksend");
    }
 
    
@@ -435,6 +442,8 @@ class PluginFusioninventoryWizard {
       global $LANG;
 
       $plugin = new Plugin();
+      
+      $_SESSION['plugin_fusioninventory_wizard'] = array();
       
       $a_buttons = array();
       if ($plugin->isInstalled('fusinvsnmp')
@@ -520,7 +529,8 @@ class PluginFusioninventoryWizard {
     * @return Nothing (display)
     **/
    static function w_iprange($ariane='') {
-      PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusioninventoryIprange");
+      PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusioninventoryWizard", array('f'=>'setIprange'));
+      //PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusioninventoryIprange");
    }
    
 
@@ -610,11 +620,125 @@ class PluginFusioninventoryWizard {
     * @return Nothing (display)
     **/
    static function w_tasksforcerun($ariane='') {
+      global $DB;
+      
       if (isset($_SESSION["plugin_fusioninventory_forcerun"])) {
          Html::redirect($_SERVER["PHP_SELF"]."?wizz=".PluginFusioninventoryWizard::getNextStep($ariane));
          exit;
       }
 
+      if ($_GET['ariane'] == 'filNetDiscovery'
+              AND !isset($_SESSION['plugin_fusioninventory_wizard']['tasks_id'])) {
+      // * check if a wizard task with same parameters exist
+         $pfIPRange = new PluginFusioninventoryIPRange();
+         $pfIPRange->getFromDB($_SESSION['plugin_fusioninventory_wizard']['ipranges_id']);
+            
+         $query = "SELECT `glpi_plugin_fusioninventory_tasks`.* 
+               FROM `glpi_plugin_fusioninventory_taskjobstates` 
+            LEFT JOIN `glpi_plugin_fusioninventory_taskjobs`
+               ON `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
+            LEFT JOIN `glpi_plugin_fusioninventory_tasks`
+               ON `plugin_fusioninventory_tasks_id` = `glpi_plugin_fusioninventory_tasks`.`id`
+            WHERE `glpi_plugin_fusioninventory_tasks`.`name` = 'wizard - netdiscovery - ".$pfIPRange->fields['name']."'
+               AND `is_active`='1'
+               AND `definition`='".exportArrayToDB(array(array('PluginFusioninventoryIPRange' => $_SESSION['plugin_fusioninventory_wizard']['ipranges_id'])))."'
+            LIMIT 1";
+         $result = $DB->query($query);
+         if ($DB->numrows($result) > 0) {
+            $data = $DB->fetch_assoc($result);
+            $_SESSION['plugin_fusioninventory_wizard']['tasks_id'] = $data['id'];
+         } else {
+            // Create task 
+            $pfTask = new PluginFusioninventoryTask();
+            $pfTaskjob = new PluginFusioninventoryTaskjob();            
+            $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+
+            $input = array();
+            $input['entities_id'] = $_SESSION['glpiactive_entity'];
+            $input['name'] = 'wizard - netdiscovery - '.$pfIPRange->fields['name'];
+            $input['communication'] = 'push';
+            $input['date_scheduled'] = date('Y-m-d H:i:s');
+            $input['is_active'] = 0;
+            $tasks_id = $pfTask->add($input);
+
+            $input = array();
+            $input['entities_id'] = $_SESSION['glpiactive_entity'];
+            $input['plugin_fusioninventory_tasks_id'] = $tasks_id;
+            $input['name'] = 'wizard - netdiscovery - '.$pfIPRange->fields['name'];
+            $input['plugins_id'] = PluginFusioninventoryModule::getModuleId("fusinvsnmp");
+            $input['method'] = 'netdiscovery';
+            $input['definition'] = exportArrayToDB(array(array('PluginFusioninventoryIPRange' => $_SESSION['plugin_fusioninventory_wizard']['ipranges_id'])));
+            $a_agentscan = $pfAgentmodule->getAgentsCanDo('NETDISCOVERY');
+            $a_agents = array();
+            foreach ($a_agentscan as $data) {
+               $a_agents[] = array('PluginFusioninventoryAgent' => $data['id']);
+            }
+            $input['action'] = exportArrayToDB($a_agents);         
+            $pfTaskjob->add($input);
+
+            $input = array();
+            $input['id'] = $tasks_id;
+            $input['is_active'] = 1;
+            $pfTask->update($input);
+            $_SESSION['plugin_fusioninventory_wizard']['tasks_id'] = $tasks_id;
+         }
+      } else if ($_GET['ariane'] == 'filInventorySNMP'
+              AND !isset($_SESSION['plugin_fusioninventory_wizard']['tasks_id'])) {
+      // * check if a wizard task with same parameters exist
+         $pfIPRange = new PluginFusioninventoryIPRange();
+         $pfIPRange->getFromDB($_SESSION['plugin_fusioninventory_wizard']['ipranges_id']);
+            
+         $query = "SELECT `glpi_plugin_fusioninventory_tasks`.* 
+               FROM `glpi_plugin_fusioninventory_taskjobstates` 
+            LEFT JOIN `glpi_plugin_fusioninventory_taskjobs`
+               ON `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
+            LEFT JOIN `glpi_plugin_fusioninventory_tasks`
+               ON `plugin_fusioninventory_tasks_id` = `glpi_plugin_fusioninventory_tasks`.`id`
+            WHERE `glpi_plugin_fusioninventory_tasks`.`name` = 'wizard - netinventory - ".$pfIPRange->fields['name']."'
+               AND `is_active`='1'
+               AND `definition`='".exportArrayToDB(array(array('PluginFusioninventoryIPRange' => $_SESSION['plugin_fusioninventory_wizard']['ipranges_id'])))."'
+            LIMIT 1";
+         $result = $DB->query($query);
+         if ($DB->numrows($result) > 0) {
+            $data = $DB->fetch_assoc($result);
+            $_SESSION['plugin_fusioninventory_wizard']['tasks_id'] = $data['id'];
+         } else {
+            // Create task 
+            $pfTask = new PluginFusioninventoryTask();
+            $pfTaskjob = new PluginFusioninventoryTaskjob();            
+            $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+
+            $input = array();
+            $input['entities_id'] = $_SESSION['glpiactive_entity'];
+            $input['name'] = 'wizard - netinventory - '.$pfIPRange->fields['name'];
+            $input['communication'] = 'push';
+            $input['date_scheduled'] = date('Y-m-d H:i:s');
+            $input['is_active'] = 0;
+            $tasks_id = $pfTask->add($input);
+
+            $input = array();
+            $input['entities_id'] = $_SESSION['glpiactive_entity'];
+            $input['plugin_fusioninventory_tasks_id'] = $tasks_id;
+            $input['name'] = 'wizard - netinventory - '.$pfIPRange->fields['name'];
+            $input['plugins_id'] = PluginFusioninventoryModule::getModuleId("fusinvsnmp");
+            $input['method'] = 'snmpinventory';
+            $input['definition'] = exportArrayToDB(array(array('PluginFusioninventoryIPRange' => $_SESSION['plugin_fusioninventory_wizard']['ipranges_id'])));
+            $a_agentscan = $pfAgentmodule->getAgentsCanDo('SNMPINVENTORY');
+            $a_agents = array();
+            foreach ($a_agentscan as $data) {
+               $a_agents[] = array('PluginFusioninventoryAgent' => $data['id']);
+            }
+            $input['action'] = exportArrayToDB($a_agents);         
+            $pfTaskjob->add($input);
+
+            $input = array();
+            $input['id'] = $tasks_id;
+            $input['is_active'] = 1;
+            $pfTask->update($input);
+            $_SESSION['plugin_fusioninventory_wizard']['tasks_id'] = $tasks_id;
+         }
+      }
+      
       if (!isset($_GET['sort'])) {
          $_GET['sort'] = 6;
          $_GET['order'] = 'DESC';
@@ -641,15 +765,22 @@ class PluginFusioninventoryWizard {
     * @return Nothing (display)
     **/
    static function w_taskslog($ariane='') {
-      if (!isset($_GET['sort'])) {
-         $_GET['sort'] = 6;
-         $_GET['order'] = 'DESC';
-      }
-      $_GET['target']="task.php";
 
       PluginFusioninventoryWizard::displayShowForm($ariane,
-               "PluginFusioninventoryTaskjob",
+               "PluginFusioninventoryTaskjoblog",
                array("f"=>'quickListLogs',
+                     "arg1"=>$_SESSION['plugin_fusioninventory_wizard']['tasks_id'],
+                     "noadditem"=>1));
+
+   }
+   
+   
+   
+   static function w_tasksend($ariane='') {
+      
+      PluginFusioninventoryWizard::displayShowForm($ariane,
+               "PluginFusioninventoryTaskjob",
+               array("f"=>'functionWizardEnd',
                      "arg1"=>'',
                      "noadditem"=>1,
                      "finish"=>1));
@@ -676,7 +807,6 @@ class PluginFusioninventoryWizard {
               'noadditem'=>1));
       
    }
-
    
    
 
@@ -736,6 +866,67 @@ class PluginFusioninventoryWizard {
       echo "<a href='".$_SERVER["REQUEST_URI"]."&id=0'>".ucfirst($LANG['log'][98])."</a>";
       echo "</th>";
       echo "</tr>";
+      echo "</table>";
+   }
+   
+   
+   
+   /*
+    * Define iprange
+    * 
+    */
+   static function setIprange() {
+      global $LANG,$CFG_GLPI;
+      
+      $pfiprange = new PluginFusioninventoryIPRange();
+      
+      echo "<form method='post' name='' id=''  action=\"".$CFG_GLPI['root_doc'] . 
+         "/plugins/fusioninventory/front/wizard.form.php\">";
+      echo "<table class='tab_cadre' width='700'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='4'>".$LANG['plugin_fusioninventory']['iprange'][2]."</th>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<th></th>";
+      echo "<th>".$LANG['common'][16]."</th>";         
+      echo "<th>".$LANG['plugin_fusioninventory']['iprange'][0]."</th>";
+      echo "<th>".$LANG['plugin_fusioninventory']['iprange'][1]."</th>";
+      echo "</tr>";
+      
+      $a_ipranges = $pfiprange->find("`entities_id` IN (".$_SESSION['glpiactiveentities_string'].")");
+      foreach ($a_ipranges as $data) {
+         echo "<tr class='tab_bg_1'>";
+         echo "<td><input type='radio' name='iprange[]' value='".$data['id']."' /></td>";
+         echo "<td>".$data['name']."</td>";         
+         echo "<td>".$data['ip_start']."</td>";
+         echo "<td>".$data['ip_end']."</td>";
+         echo "</tr>";
+      }
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='4'>".$LANG['common'][30]."</th>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td><input type='radio' name='iprange[]' value='-1' /></td>";
+      echo "<td>";
+      echo "<input type='text' name='name' value=''/>";
+      echo "</td>";         
+      echo "<td>";
+      echo "<input type='text' value='' name='ip_start0' id='ip_start0' size='3' maxlength='3' >.";
+      echo "<input type='text' value='' name='ip_start1' id='ip_start1' size='3' maxlength='3' >.";
+      echo "<input type='text' value='' name='ip_start2' id='ip_start2' size='3' maxlength='3' >.";
+      echo "<input type='text' value='' name='ip_start3' id='ip_start3' size='3' maxlength='3' >";
+      echo "</td>";
+      echo "<td>";
+      echo "<input type='text' value='' name='ip_end0' id='ip_end0' size='3' maxlength='3' >.";
+      echo "<input type='text' value='' name='ip_end1' id='ip_end1' size='3' maxlength='3' >.";
+      echo "<input type='text' value='' name='ip_end2' id='ip_end2' size='3' maxlength='3' >.";
+      echo "<input type='text' value='' name='ip_end3' id='ip_end3' size='3' maxlength='3' >";
+      echo "</td>";
+      echo "</tr>";
+      
       echo "</table>";
    }
 }

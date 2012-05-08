@@ -50,22 +50,88 @@ Session::checkLoginUser();
 // ** Used for rules in the wizard
 
 if (!isset($_GET['wizz'])) {
-   $a_split = explode("?", $_SERVER['HTTP_REFERER']);
-   $a_vars = explode("&", $a_split[1]);
-   foreach($a_vars as $vars) {
-      $endsplit = explode("=", $vars);
-      $_GET[$endsplit[0]] = $endsplit[1];
-   }
-   $url = $_SERVER['PHP_SELF']."?";
-   $i = 0;
-   foreach($_GET as $key=>$value) {
-      if ($i > 0) {
-         $url .= "&";
+   if (isset($_POST)) {
+      if (isset($_POST['endtask'])) {
+         $action = current($_POST['endtask']);
+         switch ($action) {
+            
+            case 'finishdelete':
+               if (isset($_SESSION['plugin_fusioninventory_wizard']['ipranges_id'])) {
+                  $nb = countElementsInTable("glpi_plugin_fusioninventory_taskjobs", 
+                          "`definition` LIKE '%\"PluginFusioninventoryIPRange\":\"".$_SESSION['plugin_fusioninventory_wizard']['ipranges_id']."\"%'");
+                  if ($nb == 1) {
+                     // Delete iprange
+                     $pfIPRange = new PluginFusioninventoryIPRange();
+                     $pfIPRange->delete(array('id' => $_SESSION['plugin_fusioninventory_wizard']['ipranges_id']));
+                  }
+                  $pfTask = new PluginFusioninventoryTask();
+                  $pfTask->delete(array('id'=>$_SESSION['plugin_fusioninventory_wizard']['tasks_id']));
+               }
+              $url = $_SERVER['PHP_SELF']."?wizz=w_start";
+              $url = str_replace("wizard.form.php", "wizard.php", $url);
+              Html::redirect($url);
+              break;
+           
+           case 'finish':
+              $url = $_SERVER['PHP_SELF']."?wizz=w_start";
+              $url = str_replace("wizard.form.php", "wizard.php", $url);
+              Html::redirect($url);
+              break;
+           
+           case 'runagain':
+
+              break;
+            
+         }         
+      }      
+      if (isset($_POST['iprange'])
+              AND count($_POST['iprange'] > 0)) {
+         $ipranges_id = current($_POST['iprange']);
+         if ($ipranges_id == '-1') {
+            $pfIPRange = new PluginFusioninventoryIPRange();
+            if ($pfIPRange->checkip($_POST)) {
+               $_POST['ip_start']  = $_POST['ip_start0'].".".$_POST['ip_start1'].".";
+               $_POST['ip_start'] .= $_POST['ip_start2'].".".$_POST['ip_start3'];
+               $_POST['ip_end']    = $_POST['ip_end0'].".".$_POST['ip_end1'].".";
+               $_POST['ip_end']   .= $_POST['ip_end2'].".".$_POST['ip_end3'];
+               $ipranges_id = $pfIPRange->add($_POST);
+            } else {
+               $ipranges_id = 0;
+            }
+         }
+         if (!(isset($_SESSION['plugin_fusioninventory_wizard'])
+                 AND isset($_SESSION['plugin_fusioninventory_wizard']['ipranges_id'])
+                 AND $_SESSION['plugin_fusioninventory_wizard']['ipranges_id'] == $ipranges_id)) {
+            if (isset($_SESSION['plugin_fusioninventory_wizard']['tasks_id'])) {
+               unset($_SESSION['plugin_fusioninventory_wizard']['tasks_id']);
+            }
+         }
+         if (isset($_SESSION["plugin_fusioninventory_forcerun"])) {
+            unset($_SESSION["plugin_fusioninventory_forcerun"]);
+         }
+         $_SESSION['plugin_fusioninventory_wizard']['ipranges_id'] = $ipranges_id;
       }
-      $url .= $key."=".$value;
-      $i++;
+      $url = $_SERVER['PHP_SELF']."?wizz=".$_POST['nexturl'];
+      $url = str_replace("wizard.form.php", "wizard.php", $url);
+      Html::redirect($url);
+   } else {
+      $a_split = explode("?", $_SERVER['HTTP_REFERER']);
+      $a_vars = explode("&", $a_split[1]);
+      foreach($a_vars as $vars) {
+         $endsplit = explode("=", $vars);
+         $_GET[$endsplit[0]] = $endsplit[1];
+      }
+      $url = $_SERVER['PHP_SELF']."?";
+      $i = 0;
+      foreach($_GET as $key=>$value) {
+         if ($i > 0) {
+            $url .= "&";
+         }
+         $url .= $key."=".$value;
+         $i++;
+      }
+      Html::redirect($url);
    }
-   Html::redirect($url);
 } else {
    include (GLPI_ROOT . "/plugins/fusioninventory/front/wizard.php");
 }
