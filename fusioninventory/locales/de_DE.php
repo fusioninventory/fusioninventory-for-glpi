@@ -229,4 +229,8 @@ $LANG['plugin_fusioninventory']['wizard'][7]="Aufgaben ausführen";
 $LANG['plugin_fusioninventory']['wizard'][8]="Resultate von Taks";
 
 $LANG['plugin_fusioninventory']['xml'][0]="XML";
+
+$LANG['plugin_fusioninventory']['common'][0]="Unfold";
+$LANG['plugin_fusioninventory']['common'][1]="Collapse";
+$LANG['plugin_fusioninventory']['common'][2]="item(s)";
 ?>
