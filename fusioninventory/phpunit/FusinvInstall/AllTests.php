@@ -58,7 +58,7 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
          return;
       }
       
-       $comparaisonSQLFile = "plugin_".$pluginname."-0.80+1.2-empty.sql";
+       $comparaisonSQLFile = "plugin_".$pluginname."-0.80+1.3-empty.sql";
        // See http://joefreeman.co.uk/blog/2009/07/php-script-to-compare-mysql-database-schemas/
        
        $file_content = file_get_contents("../../".$pluginname."/install/mysql/".$comparaisonSQLFile);
@@ -258,12 +258,18 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
       /*
        * Verify config fields added
        */
-      $plugins_id = PluginFusioninventoryModule::getModuleId("fusioninventory");
+      $plugin = new Plugin();
+      $data = $plugin->find("directory='fusioninventory'");
+      $plugins_id = 0;
+      if (count($data)) {
+         $fields = current($data);
+         $plugins_id = $fields['id'];
+      }
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs` 
          WHERE `plugins_id`='".$plugins_id."'
             AND `type`='ssl_only'";
       $result = $DB->query($query);
-      $this->assertEquals($DB->numrows($result), 1, "type 'ssl_only' not added in config");
+      $this->assertEquals($DB->numrows($result), 1, "type 'ssl_only' not added in config for plugins ".$plugins_id);
 
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs` 
          WHERE `plugins_id`='".$plugins_id."'

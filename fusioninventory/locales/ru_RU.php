@@ -180,7 +180,6 @@ $LANG['plugin_fusioninventory']['task'][30]="Выбор";
 $LANG['plugin_fusioninventory']['task'][31]="Время между началом задания и запуском действия";
 $LANG['plugin_fusioninventory']['task'][32]="Принудительное завершение";
 $LANG['plugin_fusioninventory']['task'][33]="Тип связей";
-$LANG['plugin_fusioninventory']['task'][34]="Постоянная";
 $LANG['plugin_fusioninventory']['task'][35]="минуты";
 $LANG['plugin_fusioninventory']['task'][36]="часы";
 $LANG['plugin_fusioninventory']['task'][37]="дни";
@@ -230,4 +229,8 @@ $LANG['plugin_fusioninventory']['wizard'][7]="Запустить задачи";
 $LANG['plugin_fusioninventory']['wizard'][8]="Результат выполнения задач";
 
 $LANG['plugin_fusioninventory']['xml'][0]="XML";
+
+$LANG['plugin_fusioninventory']['common'][0]="Unfold";
+$LANG['plugin_fusioninventory']['common'][1]="Collapse";
+$LANG['plugin_fusioninventory']['common'][2]="item(s)";
 ?>

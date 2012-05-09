@@ -180,7 +180,6 @@ $LANG['plugin_fusioninventory']['task'][30]="Selection";
 $LANG['plugin_fusioninventory']['task'][31]="Time between task start and start this action";
 $LANG['plugin_fusioninventory']['task'][32]="Force the end";
 $LANG['plugin_fusioninventory']['task'][33]="Communication type";
-$LANG['plugin_fusioninventory']['task'][34]="Permanent";
 $LANG['plugin_fusioninventory']['task'][35]="dakika";
 $LANG['plugin_fusioninventory']['task'][36]="saat";
 $LANG['plugin_fusioninventory']['task'][37]="gün";
@@ -230,4 +229,8 @@ $LANG['plugin_fusioninventory']['wizard'][7]="Run tasks";
 $LANG['plugin_fusioninventory']['wizard'][8]="Tasks running result";
 
 $LANG['plugin_fusioninventory']['xml'][0]="XML";
+
+$LANG['plugin_fusioninventory']['common'][0]="Unfold";
+$LANG['plugin_fusioninventory']['common'][1]="Collapse";
+$LANG['plugin_fusioninventory']['common'][2]="item(s)";
 ?>

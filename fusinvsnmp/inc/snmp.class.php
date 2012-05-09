@@ -425,26 +425,25 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
          }
          // Add unknown device
          $input = array();
-         $input['ip'] = $IP;
-         if (strstr($model, "Phone")) {
-            $input['item_type'] = 'Phone';
-         }
-         if ($sysname != '') {
-            $input['name'] = $sysname;
+         $input['mac'] = $sysmac;
+         if (isset($params['sysname'])) {
+            $input['name'] = $params['sysname'];
          }
          $unkonwn_id = $PluginFusioninventoryUnknownDevice->add($input);
          // Add port
          $input = array();
          $input['items_id'] = $unkonwn_id;
          $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
-         $input['ip'] = $IP;
-         $input['name'] = $ifDescr;
+         $input['mac'] = $sysmac;
+         if (isset($params['ifdescr'])) {
+            $input['name'] = $params['ifdescr'];
+         }
          $PortID = $NetworkPort->add($input);
          // Add SNMP informations of unknown device
-         if ($sysdescr != '') {
+         if (isset($params['sysdescr'])) {
             $input = array();
             $input['plugin_fusioninventory_unknowndevices_id'] = $unkonwn_id;
-            $input['sysdescr'] = $sysdescr;
+            $input['sysdescr'] = $params['sysdescr'];
             $pluginFusinvsnmpUnknownDevice->add($input);
          }
          return($PortID);

@@ -180,7 +180,6 @@ $LANG['plugin_fusioninventory']['task'][30]="Selezione";
 $LANG['plugin_fusioninventory']['task'][31]="Tempo tra l'inizio del compito e l'inizio di questa azione";
 $LANG['plugin_fusioninventory']['task'][32]="Chiusura forzata";
 $LANG['plugin_fusioninventory']['task'][33]="Comunicazione";
-$LANG['plugin_fusioninventory']['task'][34]="Permanente";
 $LANG['plugin_fusioninventory']['task'][35]="minuti";
 $LANG['plugin_fusioninventory']['task'][36]="ore";
 $LANG['plugin_fusioninventory']['task'][37]="giorni";
@@ -230,4 +229,8 @@ $LANG['plugin_fusioninventory']['wizard'][7]="Esegui compiti";
 $LANG['plugin_fusioninventory']['wizard'][8]="Risultato compiti in esecuzione";
 
 $LANG['plugin_fusioninventory']['xml'][0]="XML";
+
+$LANG['plugin_fusioninventory']['common'][0]="Unfold";
+$LANG['plugin_fusioninventory']['common'][1]="Collapse";
+$LANG['plugin_fusioninventory']['common'][2]="item(s)";
 ?>

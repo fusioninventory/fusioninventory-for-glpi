@@ -68,7 +68,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     **/
    function import($p_DEVICEID, $p_CONTENT, $p_xml) {
 
-      $_SESSION['SOURCEXML'] = $p_xml;
+      //$_SESSION['SOURCEXML'] = $p_xml;
 
       $result = false;
 

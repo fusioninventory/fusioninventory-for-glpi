@@ -180,7 +180,6 @@ $LANG['plugin_fusioninventory']['task'][30]="Selección";
 $LANG['plugin_fusioninventory']['task'][31]="Tiempo entre el comienzo de la tarea y el comienzo de esta acción";
 $LANG['plugin_fusioninventory']['task'][32]="Forzar la parada";
 $LANG['plugin_fusioninventory']['task'][33]="Tipo de comunicación";
-$LANG['plugin_fusioninventory']['task'][34]="Permanente";
 $LANG['plugin_fusioninventory']['task'][35]="minutos";
 $LANG['plugin_fusioninventory']['task'][36]="horas";
 $LANG['plugin_fusioninventory']['task'][37]="días";
@@ -230,4 +229,8 @@ $LANG['plugin_fusioninventory']['wizard'][7]="Ejecutar tareas";
 $LANG['plugin_fusioninventory']['wizard'][8]="Resultado de las tareas en ejecución";
 
 $LANG['plugin_fusioninventory']['xml'][0]="XML";
+
+$LANG['plugin_fusioninventory']['common'][0]="Unfold";
+$LANG['plugin_fusioninventory']['common'][1]="Collapse";
+$LANG['plugin_fusioninventory']['common'][2]="item(s)";
 ?>
