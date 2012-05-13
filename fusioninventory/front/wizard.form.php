@@ -66,7 +66,18 @@ if (!isset($_GET['wizz'])) {
                   }
                   $pfTask = new PluginFusioninventoryTask();
                   $pfTask->delete(array('id'=>$_SESSION['plugin_fusioninventory_wizard']['tasks_id']));
-               }
+              }
+              if (isset($_SESSION['plugin_fusioninventory_wizard']['credentialips_id'])) {
+                  $nb = countElementsInTable("glpi_plugin_fusioninventory_taskjobs", 
+                          "`definition` LIKE '%\"PluginFusioninventoryCredentialIp\":\"".$_SESSION['plugin_fusioninventory_wizard']['credentialips_id']."\"%'");
+                  if ($nb == 1) {
+                     // Delete iprange
+                     $pfCredentialIp = new PluginFusioninventoryCredentialIp();
+                     $pfCredentialIp->delete(array('id' => $_SESSION['plugin_fusioninventory_wizard']['credentialips_id']));
+                  }
+                  $pfTask = new PluginFusioninventoryTask();
+                  $pfTask->delete(array('id'=>$_SESSION['plugin_fusioninventory_wizard']['tasks_id']));
+              }
               $url = $_SERVER['PHP_SELF']."?wizz=w_start";
               $url = str_replace("wizard.form.php", "wizard.php", $url);
               Html::redirect($url);
@@ -110,6 +121,47 @@ if (!isset($_GET['wizz'])) {
             unset($_SESSION["plugin_fusioninventory_forcerun"]);
          }
          $_SESSION['plugin_fusioninventory_wizard']['ipranges_id'] = $ipranges_id;
+      }
+      
+      if (isset($_POST['credentialip'])
+              AND count($_POST['credentialip'] > 0)) {
+         $credentialips_id = current($_POST['credentialip']);
+         $pfCredential = new PluginFusioninventoryCredential();
+         $pfCredentialIp = new PluginFusioninventoryCredentialIp();
+         if ($credentialips_id == '-1') {
+            if (!isset($_POST['credential'])
+                    OR (isset($_POST['credential'])
+                            AND count($_POST['credential']) == '0')) {
+               
+               Html::redirect($_SERVER['HTTP_REFERER']);
+            }
+            $credentials_id = current($_POST['credential']);
+            if ($credentials_id == '-1') {
+               $input = array();
+               $input['name'] = $_POST['name'];
+               $input['username'] = $_POST['username'];
+               $input['password'] = $_POST['password'];
+               $input['itemtype'] = 'PluginFusinvinventoryVmwareESX';
+               $credentials_id = $pfCredential->add($input);
+            }
+            $input = array();
+            $input['name'] = $_POST['cipname'];
+            $input['plugin_fusioninventory_credentials_id'] = $credentials_id;
+            $input['ip']  = $_POST['ip0'].".".$_POST['ip1'].".";
+            $input['ip'] .= $_POST['ip2'].".".$_POST['ip3'];
+            $credentialips_id = $pfCredentialIp->add($input);
+         }
+         if (!(isset($_SESSION['plugin_fusioninventory_wizard'])
+                 AND isset($_SESSION['plugin_fusioninventory_wizard']['credentialips_id'])
+                 AND $_SESSION['plugin_fusioninventory_wizard']['credentialips_id'] == $credentialips_id)) {
+            if (isset($_SESSION['plugin_fusioninventory_wizard']['tasks_id'])) {
+               unset($_SESSION['plugin_fusioninventory_wizard']['tasks_id']);
+            }
+         }
+         if (isset($_SESSION["plugin_fusioninventory_forcerun"])) {
+            unset($_SESSION["plugin_fusioninventory_forcerun"]);
+         }
+         $_SESSION['plugin_fusioninventory_wizard']['credentialips_id'] = $credentialips_id;
       }
       $url = $_SERVER['PHP_SELF']."?wizz=".$_POST['nexturl'];
       $url = str_replace("wizard.form.php", "wizard.php", $url);

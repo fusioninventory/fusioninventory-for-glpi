@@ -790,9 +790,13 @@ function appear_array(id){
          echo "</th>";
          echo $this->getDivState($state, 'td');
          echo "<td align='center'>";
-         echo $LANG['crontask'][40]." (".Html::convDateTime($date).") : ";
-         echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?field[0]=6&searchtype[0]=contains&contains[0]=".$uniqid."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
-            $LANG['plugin_fusioninventory']['taskjoblog'][9]."</a>";
+         if ($data == '') {
+            echo $LANG['crontask'][40]."&nbsp;:&nbsp;".$LANG['setup'][307];
+         } else {
+            echo $LANG['crontask'][40]." (".Html::convDateTime($date).") : ";
+            echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?field[0]=6&searchtype[0]=contains&contains[0]=".$uniqid."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
+               $LANG['plugin_fusioninventory']['taskjoblog'][9]."</a>";
+         }
          echo "</td>";
          echo "</tr>";
          echo "<tr class='tab_bg_3'>";
@@ -858,7 +862,7 @@ function appear_array(id){
     *  
     */
    static function quickListLogs($tasks_id) {
-      global $DB;
+      global $DB,$LANG;
       
       $query = "SELECT * FROM `glpi_plugin_fusioninventory_taskjobstates` 
          LEFT JOIN `glpi_plugin_fusioninventory_taskjobs`
@@ -868,19 +872,25 @@ function appear_array(id){
          LIMIT 1";
       $result = $DB->query($query);
       $uniqid = 0;
+      $action = '';
       while ($data=$DB->fetch_array($result)) {
          $uniqid = $data['uniqid'];
+         $action = $data['action'];
       }
-      $params = array();
-      $params['field'][0] = '6';
-      $params['searchtype'][0] = 'contains';
-      $params['contains'][0] = $uniqid;
-      $params['itemtype'] = 'PluginFusioninventoryTaskjoblog';
-      $params['start'] = '0';
-      Search::manageGetValues('PluginFusioninventoryTaskjoblog');
-      Search::showList('PluginFusioninventoryTaskjoblog', $params);
-      
-      
+      if ($uniqid == '0') {
+         if ($action == '') {
+            echo "<center><strong>".$LANG['plugin_fusioninventory']['task'][55]."</strong></center>";
+         }
+      } else {
+         $params = array();
+         $params['field'][0] = '6';
+         $params['searchtype'][0] = 'contains';
+         $params['contains'][0] = $uniqid;
+         $params['itemtype'] = 'PluginFusioninventoryTaskjoblog';
+         $params['start'] = '0';
+         Search::manageGetValues('PluginFusioninventoryTaskjoblog');
+         Search::showList('PluginFusioninventoryTaskjoblog', $params);
+      }      
    }
    
 }

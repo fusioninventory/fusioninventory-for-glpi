@@ -192,6 +192,7 @@ $LANG['plugin_fusioninventory']['task'][51]="Action after finish running task";
 $LANG['plugin_fusioninventory']['task'][52]="Delete this task and finish";
 $LANG['plugin_fusioninventory']['task'][53]="Finish";
 $LANG['plugin_fusioninventory']['task'][54]="Run again this task";
+$LANG['plugin_fusioninventory']['task'][55]="No agent allowed to run ESX inventory";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Started";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";
@@ -212,6 +213,7 @@ $LANG['plugin_fusioninventory']['codetasklog'][3]="Import denied";
 $LANG['plugin_fusioninventory']['credential'][1] = "Credential for remote inventory";
 $LANG['plugin_fusioninventory']['credential'][2] = "Remote device inventory";
 $LANG['plugin_fusioninventory']['credential'][3] = "Credentials";
+$LANG['plugin_fusioninventory']['credential'][4] = "Credential";
 
 $LANG['plugin_fusioninventory']['locks'][0]="Delete locks";
 $LANG['plugin_fusioninventory']['locks'][1]="Add locks";
@@ -241,5 +243,6 @@ $LANG['plugin_fusioninventory']['wizard'][14]="Welcome in FusionInventory. Begin
 $LANG['plugin_fusioninventory']['wizard'][15]="Computers and peripherals";
 $LANG['plugin_fusioninventory']['wizard'][16]="ESX servers";
 $LANG['plugin_fusioninventory']['wizard'][17]="Network devices and printers";
+$LANG['plugin_fusioninventory']['wizard'][18]="Wizard";
 
 ?>

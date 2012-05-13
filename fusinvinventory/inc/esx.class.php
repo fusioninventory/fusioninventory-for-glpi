@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
 
    /**
-    * Get all devices and put in taskjobstatus each task for
+    * Get all devices and put in taskjobstate each task for
     * each device for each agent
     * 
     * @param type $taskjobs_id id of taskjob esx
@@ -59,7 +59,7 @@ class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
       $task       = new PluginFusioninventoryTask();
       $job        = new PluginFusioninventoryTaskjob();
       $joblog     = new PluginFusioninventoryTaskjoblog();
-      $jobstatus  = new PluginFusioninventoryTaskjobstatus();
+      $jobstate  = new PluginFusioninventoryTaskjobstate();
    
       $uniqid= uniqid();
    
@@ -89,7 +89,7 @@ class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
          }
       }
 
-      // *** Add jobstatus
+      // *** Add jobstate
       if(empty($agent_actionslist)) {
          $a_input= array();
          $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
@@ -101,14 +101,14 @@ class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
             foreach ($task_definition as $task_itemtype => $task_items_id) {
                $a_input['itemtype'] = $task_itemtype;
                $a_input['items_id'] = $task_items_id;
-               $jobstatus_id= $jobstatus->add($a_input);
+               $jobstates_id= $jobstate->add($a_input);
                //Add log of taskjob
-               $a_input['plugin_fusioninventory_taskjobstatus_id']= $jobstatus_id;
+               $a_input['plugin_fusioninventory_taskjobstates_id']= $jobstates_id;
                $a_input['state'] = PluginFusioninventoryTaskjoblog::TASK_PREPARED;
                $a_input['date']  = date("Y-m-d H:i:s");
                $joblog->add($a_input);
 
-               $jobstatus->changeStatusFinish($jobstatus_id, 
+               $jobstate->changeStatusFinish($jobstates_id, 
                                               0, 
                                               'PluginFusinvinventoryESX', 
                                               1, 
@@ -134,9 +134,9 @@ class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
                      $a_input['items_id']                           = $task_items_id;
                      $a_input['uniqid']                             = $uniqid;
                      $a_input['date']                               = date("Y-m-d H:i:s");
-                     $jobstatus_id = $jobstatus->add($a_input);
+                     $jobstates_id = $jobstate->add($a_input);
                      //Add log of taskjob
-                     $a_input['plugin_fusioninventory_taskjobstatus_id'] = $jobstatus_id;
+                     $a_input['plugin_fusioninventory_taskjobstates_id'] = $jobstates_id;
                      $a_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
       
                      $joblog->add($a_input);

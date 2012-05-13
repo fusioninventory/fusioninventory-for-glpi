@@ -206,6 +206,9 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['ruleimportequipment']['title'] = $LANG['plugin_fusioninventory']['rules'][2];
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['ruleimportequipment']['page']  = '/plugins/fusioninventory/front/ruleimportequipment.php';
 
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['wizard-start']['title'] = $LANG['plugin_fusioninventory']['wizard'][18];
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['wizard-start']['page']  = '/plugins/fusioninventory/front/wizard.php';
+
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['iprange']['title'] = 
             $LANG['plugin_fusioninventory']['menu'][2];
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['iprange']['page']  = 

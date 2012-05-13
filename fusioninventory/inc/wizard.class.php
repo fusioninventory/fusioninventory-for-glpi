@@ -343,12 +343,10 @@ class PluginFusioninventoryWizard {
       return array(
       $LANG['plugin_fusioninventory']['wizard'][0]   => "w_start",
       $LANG['plugin_fusioninventory']['wizard'][1]   => "w_inventorychoice",
-      $LANG['plugin_fusioninventory']['wizard'][5]   => "w_credential",
       $LANG['plugin_fusioninventory']['wizard'][6]   => "w_remotedevices",
-      $LANG['plugin_fusioninventory']['rules'][2]    => "w_importrules",
-      $LANG['plugin_fusioninventory']['task'][1]     => "w_tasks",
       $LANG['plugin_fusioninventory']['wizard'][7]   => "w_tasksforcerun",
-      $LANG['plugin_fusioninventory']['wizard'][8]   => "w_taskslog");
+      $LANG['plugin_fusioninventory']['wizard'][8]   => "w_taskslog",
+      $LANG['plugin_fusioninventory']['task'][50]    => "w_tasksend");
    }
 
 
@@ -483,17 +481,17 @@ class PluginFusioninventoryWizard {
       if ($plugin->isInstalled('fusinvinventory')
          && $plugin->isActivated('fusinvinventory')) {
          
-         $a_buttons[] = array($LANG['plugin_fusioninventory']['wizard'][15],
-                               'w_importcomputeroptions',
-                               '',
-                               'filInventoryComputer');
-      }
+//         $a_buttons[] = array($LANG['plugin_fusioninventory']['wizard'][15],
+//                               'w_importcomputeroptions',
+//                               '',
+//                               'filInventoryComputer');
+
       
-      $a_buttons[] = array($LANG['plugin_fusioninventory']['wizard'][16],
-                            'w_credential',
-                            '',
-                            'filInventoryESX');
-     
+         $a_buttons[] = array($LANG['plugin_fusioninventory']['wizard'][16],
+                               'w_remotedevices',
+                               '',
+                               'filInventoryESX');
+      }
       if ($plugin->isInstalled('fusinvsnmp')
          && $plugin->isActivated('fusinvsnmp')) {
          
@@ -530,7 +528,6 @@ class PluginFusioninventoryWizard {
     **/
    static function w_iprange($ariane='') {
       PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusioninventoryWizard", array('f'=>'setIprange'));
-      //PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusioninventoryIprange");
    }
    
 
@@ -582,7 +579,7 @@ class PluginFusioninventoryWizard {
     * @return Nothing (display)
     **/
    static function w_remotedevices($ariane='') {
-      PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusioninventoryCredentialIp");
+      PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusioninventoryWizard", array('f'=>'setESX'));
    }
 
 
@@ -724,6 +721,61 @@ class PluginFusioninventoryWizard {
             $input['method'] = 'snmpinventory';
             $input['definition'] = exportArrayToDB(array(array('PluginFusioninventoryIPRange' => $_SESSION['plugin_fusioninventory_wizard']['ipranges_id'])));
             $a_agentscan = $pfAgentmodule->getAgentsCanDo('SNMPINVENTORY');
+            $a_agents = array();
+            foreach ($a_agentscan as $data) {
+               $a_agents[] = array('PluginFusioninventoryAgent' => $data['id']);
+            }
+            $input['action'] = exportArrayToDB($a_agents);         
+            $pfTaskjob->add($input);
+
+            $input = array();
+            $input['id'] = $tasks_id;
+            $input['is_active'] = 1;
+            $pfTask->update($input);
+            $_SESSION['plugin_fusioninventory_wizard']['tasks_id'] = $tasks_id;
+         }
+      } else if ($_GET['ariane'] == 'filInventoryESX'
+              AND !isset($_SESSION['plugin_fusioninventory_wizard']['tasks_id'])) {
+      // * check if a wizard task with same parameters exist
+         $pfCredentialIp = new PluginFusioninventoryCredentialIp();
+         $pfCredentialIp->getFromDB($_SESSION['plugin_fusioninventory_wizard']['credentialips_id']);
+            
+         $query = "SELECT `glpi_plugin_fusioninventory_tasks`.* 
+               FROM `glpi_plugin_fusioninventory_taskjobstates` 
+            LEFT JOIN `glpi_plugin_fusioninventory_taskjobs`
+               ON `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
+            LEFT JOIN `glpi_plugin_fusioninventory_tasks`
+               ON `plugin_fusioninventory_tasks_id` = `glpi_plugin_fusioninventory_tasks`.`id`
+            WHERE `glpi_plugin_fusioninventory_tasks`.`name` = 'wizard - esx - ".$pfCredentialIp->fields['name']."'
+               AND `is_active`='1'
+               AND `definition`='".exportArrayToDB(array(array('PluginFusioninventoryCredentialIp' => $_SESSION['plugin_fusioninventory_wizard']['credentialips_id'])))."'
+            LIMIT 1";
+         $result = $DB->query($query);
+         if ($DB->numrows($result) > 0) {
+            $data = $DB->fetch_assoc($result);
+            $_SESSION['plugin_fusioninventory_wizard']['tasks_id'] = $data['id'];
+         } else {
+            // Create task 
+            $pfTask = new PluginFusioninventoryTask();
+            $pfTaskjob = new PluginFusioninventoryTaskjob();            
+            $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+
+            $input = array();
+            $input['entities_id'] = $_SESSION['glpiactive_entity'];
+            $input['name'] = 'wizard - esx - '.$pfCredentialIp->fields['name'];
+            $input['communication'] = 'push';
+            $input['date_scheduled'] = date('Y-m-d H:i:s');
+            $input['is_active'] = 0;
+            $tasks_id = $pfTask->add($input);
+
+            $input = array();
+            $input['entities_id'] = $_SESSION['glpiactive_entity'];
+            $input['plugin_fusioninventory_tasks_id'] = $tasks_id;
+            $input['name'] = 'wizard - esx - '.$pfCredentialIp->fields['name'];
+            $input['plugins_id'] = PluginFusioninventoryModule::getModuleId("fusinvinventory");
+            $input['method'] = 'ESX';
+            $input['definition'] = exportArrayToDB(array(array('PluginFusioninventoryCredentialIp' => $_SESSION['plugin_fusioninventory_wizard']['credentialips_id'])));
+            $a_agentscan = $pfAgentmodule->getAgentsCanDo('ESX');
             $a_agents = array();
             foreach ($a_agentscan as $data) {
                $a_agents[] = array('PluginFusioninventoryAgent' => $data['id']);
@@ -924,6 +976,84 @@ class PluginFusioninventoryWizard {
       echo "<input type='text' value='' name='ip_end1' id='ip_end1' size='3' maxlength='3' >.";
       echo "<input type='text' value='' name='ip_end2' id='ip_end2' size='3' maxlength='3' >.";
       echo "<input type='text' value='' name='ip_end3' id='ip_end3' size='3' maxlength='3' >";
+      echo "</td>";
+      echo "</tr>";
+      
+      echo "</table>";
+   }
+   
+   
+   
+   static function setESX() {
+      global $LANG,$CFG_GLPI;
+      
+      $pfCredential = new PluginFusioninventoryCredential();
+      $pfCredentialIp = new PluginFusioninventoryCredentialIp();
+      
+      echo "<form method='post' name='' id=''  action=\"".$CFG_GLPI['root_doc'] . 
+         "/plugins/fusioninventory/front/wizard.form.php\">";
+      echo "<table class='tab_cadre' width='800'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='5'>".$LANG['plugin_fusioninventory']['menu'][6]."</th>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<th></th>";
+      echo "<th>".$LANG['common'][16]."</th>";         
+      echo "<th>".$LANG['plugin_fusioninventory']['credential'][4]."</th>";
+      echo "<th colspan='2'>".$LANG['networking'][14]."</th>";
+      echo "</tr>";
+      
+      $a_credentialips = $pfCredentialIp->find("`entities_id` IN (".$_SESSION['glpiactiveentities_string'].")");
+      foreach ($a_credentialips as $data) {
+         echo "<tr class='tab_bg_1'>";
+         echo "<td><input type='radio' name='credentialip[]' value='".$data['id']."' /></td>";
+         echo "<td>".$data['name']."</td>";
+         $pfCredential->getFromDB($data['plugin_fusioninventory_credentials_id']);
+         echo "<td>".$pfCredential->getLink(1)."</td>";
+         echo "<td colspan='2'>".$data['ip']."</td>";
+         echo "</tr>";
+      }
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='5'>".$LANG['common'][30]."</th>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td><input type='radio' name='credentialip[]' value='-1' /></td>";
+      echo "<td>";
+      echo "<input type='text' name='cipname' value=''/>";
+      echo "</td>";         
+      echo "<td colspan='3'>";
+      echo "<input type='text' value='' name='ip0' size='3' maxlength='3' >.";
+      echo "<input type='text' value='' name='ip1' size='3' maxlength='3' >.";
+      echo "<input type='text' value='' name='ip2' size='3' maxlength='3' >.";
+      echo "<input type='text' value='' name='ip3' size='3' maxlength='3' >";
+      echo "</td>";
+      echo "</tr>";
+
+      
+      $a_credentials = $pfCredential->find("`entities_id` IN (".$_SESSION['glpiactiveentities_string'].")");
+      foreach ($a_credentials as $data) {
+         echo "<tr class='tab_bg_1'>";
+         echo "<td colspan='2'></td>";
+         echo "<td><input type='radio' name='credential[]' value='".$data['id']."' />
+            &nbsp;".$data['name']."</td>";
+         echo "<td>".$data['username']."</td>";
+         echo "<td>".$data['password']."</td>";
+         echo "</tr>";
+      }
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td colspan='2'></td>";
+      echo "<td><input type='radio' name='credential[]' value='".$data['id']."' />";
+      echo "&nbsp;<input type='text' name='name' value=''/>";
+      echo "</td>";
+      echo "<td>";
+      echo "Login : <input type='text' name='username' value=''/>";
+      echo "</td>";         
+      echo "<td>";
+      echo "pass : <input type='text' name='password' value=''/>";
       echo "</td>";
       echo "</tr>";
       
