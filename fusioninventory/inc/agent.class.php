@@ -735,12 +735,10 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       }
       if (isset($this->oldvalues['last_contact'])) {
          $key = array_search('last_contact', $this->updates);
-         unset($this->updates[$key]);
          unset($this->oldvalues['last_contact']);
       }
       if (isset($this->oldvalues['token'])) {
          $key = array_search('token', $this->updates);
-         unset($this->updates[$key]);
          unset($this->oldvalues['token']);
       }
    }

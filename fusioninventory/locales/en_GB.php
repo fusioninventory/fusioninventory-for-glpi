@@ -171,7 +171,6 @@ $LANG['plugin_fusioninventory']['task'][30]="Selection";
 $LANG['plugin_fusioninventory']['task'][31]="Time between task start and start this action";
 $LANG['plugin_fusioninventory']['task'][32]="Force the end";
 $LANG['plugin_fusioninventory']['task'][33]="Communication type";
-$LANG['plugin_fusioninventory']['task'][34]="Permanent";
 $LANG['plugin_fusioninventory']['task'][35]="minutes";
 $LANG['plugin_fusioninventory']['task'][36]="hours";
 $LANG['plugin_fusioninventory']['task'][37]="days";

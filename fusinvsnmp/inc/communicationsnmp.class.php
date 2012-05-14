@@ -56,28 +56,29 @@ class PluginFusinvsnmpCommunicationSNMP {
     **/
    function addAuth($p_sxml_node, $p_id) {
       $pfConfigSecurity = new PluginFusinvsnmpConfigSecurity();
-      $pfConfigSecurity->getFromDB($p_id);
+      if ($pfConfigSecurity->getFromDB($p_id)) {
 
-      $sxml_authentication = $p_sxml_node->addChild('AUTHENTICATION');
-         $sxml_authentication->addAttribute('ID', $p_id);
-         $sxml_authentication->addAttribute('COMMUNITY', $pfConfigSecurity->fields['community']);
-         $sxml_authentication->addAttribute('VERSION',
-                           $pfConfigSecurity->getSNMPVersion($pfConfigSecurity->fields['snmpversion']));
-         $sxml_authentication->addAttribute('USERNAME', $pfConfigSecurity->fields['username']);
-         if ($pfConfigSecurity->fields['authentication'] == '0') {
-            $sxml_authentication->addAttribute('AUTHPROTOCOL', '');
-         } else {
-            $sxml_authentication->addAttribute('AUTHPROTOCOL',
-                           $pfConfigSecurity->getSNMPAuthProtocol($pfConfigSecurity->fields['authentication']));
-         }
-         $sxml_authentication->addAttribute('AUTHPASSPHRASE', $pfConfigSecurity->fields['auth_passphrase']);
-         if ($pfConfigSecurity->fields['encryption'] == '0') {
-            $sxml_authentication->addAttribute('PRIVPROTOCOL', '');
-         } else {
-            $sxml_authentication->addAttribute('PRIVPROTOCOL',
-                           $pfConfigSecurity->getSNMPEncryption($pfConfigSecurity->fields['encryption']));
-         }
-         $sxml_authentication->addAttribute('PRIVPASSPHRASE', $pfConfigSecurity->fields['priv_passphrase']);
+         $sxml_authentication = $p_sxml_node->addChild('AUTHENTICATION');
+            $sxml_authentication->addAttribute('ID', $p_id);
+            $sxml_authentication->addAttribute('COMMUNITY', $pfConfigSecurity->fields['community']);
+            $sxml_authentication->addAttribute('VERSION',
+                              $pfConfigSecurity->getSNMPVersion($pfConfigSecurity->fields['snmpversion']));
+            $sxml_authentication->addAttribute('USERNAME', $pfConfigSecurity->fields['username']);
+            if ($pfConfigSecurity->fields['authentication'] == '0') {
+               $sxml_authentication->addAttribute('AUTHPROTOCOL', '');
+            } else {
+               $sxml_authentication->addAttribute('AUTHPROTOCOL',
+                              $pfConfigSecurity->getSNMPAuthProtocol($pfConfigSecurity->fields['authentication']));
+            }
+            $sxml_authentication->addAttribute('AUTHPASSPHRASE', $pfConfigSecurity->fields['auth_passphrase']);
+            if ($pfConfigSecurity->fields['encryption'] == '0') {
+               $sxml_authentication->addAttribute('PRIVPROTOCOL', '');
+            } else {
+               $sxml_authentication->addAttribute('PRIVPROTOCOL',
+                              $pfConfigSecurity->getSNMPEncryption($pfConfigSecurity->fields['encryption']));
+            }
+            $sxml_authentication->addAttribute('PRIVPASSPHRASE', $pfConfigSecurity->fields['priv_passphrase']);
+      }
    }
 
 

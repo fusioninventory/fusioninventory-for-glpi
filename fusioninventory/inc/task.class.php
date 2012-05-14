@@ -107,12 +107,6 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $sopt[6]['linkfield']      = '';
       $sopt[6]['name']           = $LANG['plugin_fusioninventory']['task'][33];
 
-//      $sopt[7]['table']          = $this->getTable();
-//      $sopt[7]['field']          = 'permanent';
-//      $sopt[7]['linkfield']      = '';
-//      $sopt[7]['name']           = $LANG['plugin_fusioninventory']['task'][34];
-//      $sopt[7]['datatype']       = 'bool';
-
       $sopt[8]['table']          = $this->getTable();
       $sopt[8]['field']          = 'state';
       $sopt[8]['linkfield']      = '';

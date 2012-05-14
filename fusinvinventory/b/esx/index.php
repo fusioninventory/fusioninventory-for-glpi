@@ -58,14 +58,16 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          //Specific to ESX
          $pfAgent = new PluginFusioninventoryAgent();
          $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-         
+
          $a_agent = $pfAgent->InfosByKey(Toolbox::addslashes_deep($_GET['machineid']));
-         $moduleRun = $pfTaskjobstate->getTaskjobsAgent($a_agent['id']);
-         foreach ($moduleRun as $className => $array) {
-            if (class_exists($className)) {
-               if ($className == "PluginFusinvinventoryESX") {
-                  $class = new $className();
-                  $response = $class->run($array, $response);
+           if (count($a_agent)) {
+            $moduleRun = $pfTaskjobstate->getTaskjobsAgent($a_agent['id']);
+            foreach ($moduleRun as $className => $array) {
+               if (class_exists($className)) {
+                  if ($className == "PluginFusinvinventoryESX") {
+                     $class = new $className();
+                     $response = $class->run($array, $response);
+                  }
                }
             }
          }
