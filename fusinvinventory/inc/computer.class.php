@@ -98,11 +98,11 @@ class PluginFusinvinventoryComputer extends CommonDBTM {
          }
       }
       if ($tabnum == '1') {
-         if ($item->getID() > 0) {            
+         if ($item->getID() > 0) { 
+            $pfComputer->display_xml($item);
+            
             $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
             $pfRulematchedlog->showForm($item->getID(), 'Computer');
-            
-            $pfComputer->display_xml($item);
          }
       }
       return true;
