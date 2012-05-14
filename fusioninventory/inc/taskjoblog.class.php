@@ -790,7 +790,7 @@ function appear_array(id){
          echo "</th>";
          echo $this->getDivState($state, 'td');
          echo "<td align='center'>";
-         if ($data == '') {
+         if ($taskstates_id == '0') {
             echo $LANG['crontask'][40]."&nbsp;:&nbsp;".$LANG['setup'][307];
          } else {
             echo $LANG['crontask'][40]." (".Html::convDateTime($date).") : ";
