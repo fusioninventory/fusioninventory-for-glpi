@@ -564,11 +564,11 @@ class PluginFusioninventoryTask extends CommonDBTM {
       global $DB;
       
       $where = '';
+      $where .= getEntitiesRestrictRequest("AND", 'task');
       if ($tasks_id > 0) {
          $where = " AND task.`id`='".$tasks_id."'
-            LIMIT 1"; 
+            LIMIT 1 "; 
       }
-      $where .= getEntitiesRestrictRequest("AND", 'task');
       
       $query = "SELECT * FROM `glpi_plugin_fusioninventory_tasks` as task
          WHERE execution_id != 
@@ -585,11 +585,11 @@ class PluginFusioninventoryTask extends CommonDBTM {
       global $DB;
       
       $where = '';
+      $where .= getEntitiesRestrictRequest("AND", 'task');
       if ($tasks_id > 0) {
          $where = " AND task.`id`='".$tasks_id."'
-            LIMIT 1"; 
+            LIMIT 1 "; 
       }
-      $where .= getEntitiesRestrictRequest("AND", 'task');
 
       $query = "SELECT * FROM `glpi_plugin_fusioninventory_tasks` as task
          WHERE execution_id = 
