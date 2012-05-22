@@ -500,12 +500,41 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
                   $a_ports = $networkPort->find("`mac`='".$ifmac."'","", 1);
                   if (count($a_ports) > 0) {
                      $a_port = current($a_ports);
+                     $hub = 0;
+                     if ($a_port['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+                        $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+                        $PluginFusioninventoryUnknownDevice->getFromDB($a_port['items_id']);
+                        if ($PluginFusioninventoryUnknownDevice->fields['hub'] == '1') {
+                           $hub = 1;
+                        }
+                     }
                      $id = $networkPort->getContact($a_port['id']);
-                     if ($id AND $id != $networkports_id) {
+                     if ($id AND $id != $networkports_id
+                             AND $hub == '0') {
                         $this->disconnectDB($networkports_id); // disconnect this port
                         $this->disconnectDB($a_port['id']);     // disconnect destination port
                         $wire->add(array('networkports_id_1'=> $networkports_id,
                                          'networkports_id_2' => $a_port['id']));
+                     } else if ($id and $hub == '1') {
+                        // Check if this hub connected to the port
+                        $uports = $networkPort->find("`items_id`='".$a_port['items_id']."'
+                           AND `itemtype`='".$a_port['itemtype']."'
+                           AND `name`='Link'");
+                        $connect = 0;
+                        if (count($uports) > 0) {
+                           $uport = current($uports);
+                           $portsid = $networkPort->getContact($uport['id']);
+                           if ($portsid != $networkports_id) {
+                              $connect = 1;
+                           }
+                        } else {
+                           $connect = 1;
+                        }
+                        if ($connect == '1') {
+                           $this->disconnectDB($networkports_id); // disconnect this port
+                           $wire->add(array('networkports_id_1'=> $networkports_id,
+                                            'networkports_id_2' => $a_port['id']));
+                        }
                      } else if ($id) {
                         // Yet connected                        
                      } else {
