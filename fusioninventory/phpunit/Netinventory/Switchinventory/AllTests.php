@@ -445,7 +445,7 @@ Compiled Wed 18-Aug-10 04:40 by prod_rel_team</COMMENTS>
                              'Juniper Networks, Inc. ex2200-24t-4g , version 10.1R1.8 Build date: 2010-02-12 16:59:31 UTC ',
                              'Sysdescr not reight added in unknown device');
          
-         
+
    }
 
 
