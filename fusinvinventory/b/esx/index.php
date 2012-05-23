@@ -60,12 +60,14 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
          
          $a_agent = $PluginFusioninventoryAgent->InfosByKey(addslashes_deep($_GET['machineid']));
-         $moduleRun = $PluginFusioninventoryTaskjobstatus->getTaskjobsAgent($a_agent['id']);
-         foreach ($moduleRun as $className => $array) {
-            if (class_exists($className)) {
-               if ($className == "PluginFusinvinventoryESX") {
-                  $class = new $className();
-                  $response = $class->run($array, $response);
+         if (count($a_agent)) {
+            $moduleRun = $PluginFusioninventoryTaskjobstatus->getTaskjobsAgent($a_agent['id']);
+            foreach ($moduleRun as $className => $array) {
+               if (class_exists($className)) {
+                  if ($className == "PluginFusinvinventoryESX") {
+                     $class = new $className();
+                     $response = $class->run($array, $response);
+                  }
                }
             }
          }
