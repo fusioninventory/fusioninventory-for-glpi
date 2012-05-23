@@ -297,7 +297,184 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       return true;
    }
 
-   function package_clone($new_name = '') {
+   
+   
+   static function import_json($data = NULL) {
+      global $LANG;
+
+      if($data !== NULL) {
+
+         $d_package = $data->package;
+         $d_orders = array(
+            PluginFusinvdeployOrder::INSTALLATION_ORDER => $data->install,
+            PluginFusinvdeployOrder::UNINSTALLATION_ORDER => $data->uninstall
+         );
+         //Create Package
+         $o_package = new PluginFusinvdeployPackage();
+         $i_package = array();
+         $i_package['name'] = $d_package->name;
+         $i_package['comment'] = $d_package->comment;
+         $i_package['entities_id'] = $_SESSION['glpiactive_entity'];
+         $i_package['is_recursive'] = $d_package->is_recursive;
+         $i_package['date_mod'] = $d_package->date_mod;
+
+         if ($o_package->add($i_package)) {
+
+            //logDebug("Package ID : " . $o_package->fields['id'] . "\n");
+
+            //Create Orders(Install/Uninstall)
+            foreach( $d_orders as $order_type => $order_data) {
+               $o_order = new PluginFusinvdeployOrder();
+               $i_order = array();
+               $i_order['type'] = $order_type;
+               $i_order['plugin_fusinvdeploy_packages_id'] = $o_package->fields['id'];
+
+               if ($o_order->add($i_order)) {
+
+                  //Create Checks
+                  foreach( $order_data->checks as $check_idx => $d_check) {
+                     //logDebug("checks debug:\n" . $check_idx . "\n" . print_r($d_check,true) . "\n");
+                     $o_check = new PluginFusinvdeployCheck();
+                     $i_check = array();
+                     $i_check['type'] = mysql_real_escape_string($d_check->{'type'});
+                     $i_check['path'] = mysql_real_escape_string($d_check->{'path'});
+                     if ( isset( $d_check->{'value'} ) )
+                        $i_check['value'] = mysql_real_escape_string($d_check->{'value'});
+                     else
+                        $i_check['value'] = '';
+                     if (  $i_check['type'] == "fileSizeGreater" ||
+                           $i_check['type'] == "fileSizeLess" ||
+                           $i_check['type'] == "fileSizeEquals" ) {
+                     # according to the requirment, We want Bytes!
+                        $i_check['value'] /= 1024 * 1024;
+                     }
+                     $i_check['ranking'] = $check_idx;
+                     $i_check['plugin_fusinvdeploy_orders_id'] = $o_order->fields['id'];
+                     //logDebug(print_r($i_check,true));
+                     $o_check->add($i_check);
+                  }
+
+                  //Create Files
+                  //TODO(&COMMENTS): During import, associatedFiles should be retrieved from DB and rehashed if
+                  //they don't exist. This is the Order who should have a reference to the file and
+                  //not the opposite!!!!
+                  foreach( $order_data->associatedFiles as $file_idx => $d_file) {
+                     $o_file = new PluginFusinvdeployFile();
+                     //logDebug('file_idx : ' . $file_idx);
+                     $i_file = array();
+                     $i_file['name'] = $d_file->{'name'};
+                     $i_file['uncompress'] = $d_file->{'uncompress'};
+                     $i_file['is_p2p'] = $d_file->{'p2p'};
+                     $i_file['p2p_retention_days'] = $d_file->{'p2p-retention-duration'} / (24*3600);
+                     $i_file['mimetype'] = $d_file->{'mimetype'};
+                     $i_file['create_date'] = $d_file->{'create_date'};
+                     $i_file['filesize'] = $d_file->{'filesize'};
+                     $i_file['sha512'] = $file_idx;
+                     $i_file['shortsha512'] = substr($file_idx,0,6);
+
+                     $i_file['plugin_fusinvdeploy_orders_id'] = $o_order->fields['id'];
+                     $o_file->add($i_file);
+
+                     //Attach Multipart
+                     foreach( $d_file->multiparts as $part) {
+                        $o_filepart = new PluginFusinvdeployFilepart();
+                        //logDebug("File Part : " . print_r($part,true) . "\n");
+                        $i_filepart = array();
+                        $i_filepart['sha512'] = $part;
+                        $i_filepart['shortsha512'] = substr($part, 0, 6);
+                        $i_filepart['plugin_fusinvdeploy_orders_id'] = $o_order->fields['id'];
+                        $i_filepart['plugin_fusinvdeploy_files_id']  = $o_file->fields['id'];
+                     }
+                  }
+
+                  //Create Actions
+                  foreach( $order_data->actions as $action_idx => $action ) {
+                     //logDebug("actions Debug:\n" . $action_idx . "\n" . print_r($action,true) . "\n");
+                     //logDebug("actions properties " . print_r(array_keys(get_object_vars($action)),true) );
+                     $o_action = new PluginFusinvdeployAction();
+                     $i_action = array();
+                     $i_action['plugin_fusinvdeploy_orders_id'] = $o_order->fields['id'];
+                     $o_action->add($i_action);
+
+                     $d_action_props = array_keys(get_object_vars($action));
+
+                     if ($d_action_props !== NULL && !empty($d_action_props) ) {
+                        $d_action_sub = $action->{$d_action_props[0]};
+                        switch($d_action_props[0]) {
+                           case 'cmd':
+                              $o_action_sub = new PluginFusinvdeployAction_Command();
+                              $i_action_sub = array();
+                              $i_action_sub['exec'] = mysql_real_escape_string($d_action_sub->{'exec'});
+                              $o_action_sub->add($i_action_sub);
+                              if ( isset($d_action_sub->{'retChecks'}) && !empty($d_action_sub->{'retChecks'}) ){
+                                 # Create CommandStatus
+                                 foreach( $d_action_sub->{'retChecks'} as $retcheck_idx => $d_retcheck ) {
+                                    $o_retcheck = new PluginFusinvdeployAction_Commandstatus();
+                                    $i_retcheck = array();
+                                    switch( $d_retcheck->{'type'} ) {
+                                       case 'okCode':
+                                          $i_retcheck['type'] = 'RETURNCODE_OK';
+                                          break;
+                                       case 'errorCode':
+                                          $i_retcheck['type'] = 'RETURNCODE_KO';
+                                          break;
+                                       case 'okPattern':
+                                          $i_retcheck['type'] = 'REGEX_OK';
+                                          break;
+                                       case 'errorPattern':
+                                          $i_retcheck['type'] = 'REGEX_KO';
+                                          break;
+                                    }
+                                    $i_retcheck['value'] = $d_retcheck->{'values'}[0];
+                                    $i_retcheck['plugin_fusinvdeploy_commands_id'] = $o_action->fields['id'];
+                                    //logDebug("DEBUG Command Status : " . print_r($i_retcheck,true));
+                                    $o_retcheck->add($i_retcheck);
+                                 }
+                              }
+                              break;
+                           case 'delete':
+                              $o_action_sub = new PluginFusinvdeployAction_Delete();
+                              $i_action_sub = array();
+                              $i_action_sub['path'] = mysql_real_escape_string($d_action_sub->{'list'}[0]);
+                              $o_action_sub->add($i_action_sub);
+                              break;
+                           case 'move':
+                              $o_action_sub = new PluginFusinvdeployAction_Move();
+                              $i_action_sub = array();
+                              $i_action_sub['from'] = mysql_real_escape_string( $d_action_sub->{'from'} );
+                              $i_action_sub['to'] = mysql_real_escape_string( $d_action_sub->{'to'} );
+                              $o_action_sub->add($i_action_sub);
+                              break;
+                           case 'copy':
+                              $o_action_sub = new PluginFusinvdeployAction_Copy();
+                              $i_action_sub = array();
+                              $i_action_sub['from'] = mysql_real_escape_string( $d_action_sub->{'from'} );
+                              $i_action_sub['to'] = mysql_real_escape_string( $d_action_sub->{'to'} );
+                              $o_action_sub->add($i_action_sub);
+                              break;
+                           case 'mkdir':
+                              $o_action_sub = new PluginFusinvdeployAction_Mkdir();
+                              $i_action_sub = array();
+                              $i_action_sub['path'] = mysql_real_escape_string($d_action_sub->{'list'}[0]);
+                              $o_action_sub->add($i_action_sub);
+                              break;
+                        }
+                     }
+                     $i_action = array();
+                     $i_action['id'] = $o_action->fields['id'];
+                     $i_action['itemtype'] = get_class($o_action_sub) ;
+                     $i_action['items_id'] = $o_action_sub->fields['id'];
+                     $i_action['ranking'] = $action_idx;
+                     $i_action['plugin_fusinvdeploy_orders_id'] = $o_order->fields['id'];
+                     $o_action->update($i_action);
+                  }
+               }
+            }
+         }
+      }
+   }
+
+   public function package_clone($new_name = '') {
       global $LANG;
 
       if ($this->getField('id') < 0) return false;

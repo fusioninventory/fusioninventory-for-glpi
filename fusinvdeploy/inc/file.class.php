@@ -340,9 +340,12 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
       foreach ($results_files as $result_file) {
          $tmp = array();
-         $tmp['uncompress']                = $result_file['uncompress'];
-         $tmp['name']                      = $result_file['name'];
-         $tmp['p2p']                    = $result_file['is_p2p'];
+         $tmp['uncompress']   = $result_file['uncompress'];
+         $tmp['name']         = $result_file['name'];
+         $tmp['p2p']          = $result_file['is_p2p'];
+         $tmp['filesize']     = $result_file['filesize'];
+         $tmp['create_date']  = $result_file['create_date'];
+         $tmp['mimetype']     = $result_file['mimetype'];
 
          $mirrors = PluginFusinvdeployFile_Mirror::getList();
          $tmp['mirrors'] = $mirrors;
