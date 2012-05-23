@@ -61,6 +61,7 @@ class PluginFusinvdeployJob {
 
          //Get tasks associated with the agent
          $task_list = $taskjobstatus->getTaskjobsAgent($agents_id);
+
          foreach ($task_list as $itemtype => $status_list) {
 
             //Foreach task for this agent build the response array
@@ -124,16 +125,17 @@ class PluginFusinvdeployJob {
         die;
       }
 
-     $jobstatus = PluginFusioninventoryTaskjoblog::getByUniqID($p['uuid']);
+     $jobstatus = new PluginFusioninventoryTaskjobstatus();
+     $jobstatus->getFromDB($p['uuid']);
 
      /*if ($update_job) {
         $taskjob = new PluginFusioninventoryTaskjoblog();
         $taskjob->update($jobstatus);
      }*/
      $taskjoblog = new PluginFusioninventoryTaskjoblog();
-     $tmp['plugin_fusioninventory_taskjobstatus_id'] = $jobstatus['id'];
-     $tmp['itemtype']                                = $jobstatus['itemtype'];
-     $tmp['items_id']                                = $jobstatus['items_id'];
+     $tmp['plugin_fusioninventory_taskjobstatus_id'] = $jobstatus->fields['id'];
+     $tmp['itemtype']                                = $jobstatus->fields['itemtype'];
+     $tmp['items_id']                                = $jobstatus->fields['items_id'];
      $tmp['date']                                    = date("Y-m-d H:i:s");
      $tmp['comment']                                 = "";
      $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_RUNNING;
@@ -181,9 +183,9 @@ class PluginFusinvdeployJob {
         //set status to finished and reinit job
         $taskjobstatus = new PluginFusioninventoryTaskjobstatus;
         $taskjobstatus->changeStatusFinish(
-           $jobstatus['id'],
-           $jobstatus['items_id'],
-           $jobstatus['itemtype'],
+           $jobstatus->fields['id'],
+           $jobstatus->fields['items_id'],
+           $jobstatus->fields['itemtype'],
            $error
         );
      }

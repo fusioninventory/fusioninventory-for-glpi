@@ -118,28 +118,13 @@ class PluginFusinvdeployOrder extends CommonDBTM {
    static function getOrderDetails($status = array(), $order_type = self::INSTALLATION_ORDER) {
       $linked_types = array('PluginFusinvdeployCheck');
 
-      //get all packages id for this task
-      $packages_id = array();
-      $results_jobs = getAllDatasFromTable('glpi_plugin_fusinvdeploy_taskjobs',
-                                     "`id`='".$status['plugin_fusioninventory_taskjobs_id']."'");
 
-      foreach ($results_jobs as $jobs) {
-         $definitions = importArrayFromDB($jobs['definition']);
-         foreach($definitions as $key => $definition)
-            foreach($definition as $value) {
-               $packages_id[] = $value;
-            }
-      }
-
+      //get all jobstatus for this task
       $results = array();
-      foreach ($packages_id as $package_id) {
-         $tmp = getAllDatasFromTable('glpi_plugin_fusinvdeploy_orders',
-                                        "`plugin_fusinvdeploy_packages_id`='$package_id'" .
+      $package_id = $status['items_id'];
+      $results = getAllDatasFromTable('glpi_plugin_fusinvdeploy_orders',
+                                  "`plugin_fusinvdeploy_packages_id`='$package_id'" .
                                         " AND `type`='$order_type'");
-
-         $results = array_merge($results, $tmp);
-      }
-
 
       $orders =  array();
       if (!empty($results)) {
@@ -156,7 +141,8 @@ class PluginFusinvdeployOrder extends CommonDBTM {
          }
       }
 
-      if (!empty($orders)) $orders['uuid'] = $status['uniqid'];
+      //set uuid order to jobstatus[id]
+      if (!empty($orders)) $orders['uuid'] = $status['id'];
 
       return $orders;
    }
