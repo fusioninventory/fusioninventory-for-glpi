@@ -44,7 +44,22 @@ define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
 checkLoginUser();
 
-$data = json_decode(file_get_contents("php://input"));
-//TODO: need to verify data we are receiving
+$package = new PluginFusinvdeployPackage();
 
+if (! empty($_FILES)) {
+   if ($_FILES["file"]["error"] > 0) {
+      logDebug("Error: " . $_FILES["file"]["error"] . "\n");
+   } else {
+      //logDebug("Upload: " . $_FILES["file"]["name"] . "\n");
+      //logDebug("Type: " . $_FILES["file"]["type"] . "\n");
+      //logDebug("Size: " . ($_FILES["file"]["size"] / 1024) . " Kb\n");
+      //logDebug("Stored in: " . $_FILES["file"]["tmp_name"]);
+
+      $data = json_decode(file_get_contents($_FILES["file"]["tmp_name"]));
+      //logDebug("JSON DATA:\n" . print_r($data,true) . "\n");
+      PluginFusinvdeployPackage::import_json($data);
+
+   }
+}
+//TODO: need to verify data we are receiving
 

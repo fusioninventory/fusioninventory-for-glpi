@@ -66,8 +66,5 @@ $config['uninstall'] =
    );
 
 $json =
-   json_encode(
-      $config,
-      JSON_PRETTY_PRINT
-   );
+   json_encode( $config );
 print($json);
