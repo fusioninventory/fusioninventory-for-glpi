@@ -234,8 +234,8 @@ class PluginFusioninventoryOCSCommunication {
     **/
    function getTaskAgent($agent_id) {
 
-      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
-      $moduleRun = $pfTaskjobstatus->getTaskjobsAgent($agent_id);
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+      $moduleRun = $pfTaskjobstate->getTaskjobsAgent($agent_id);
       foreach ($moduleRun as $className => $array) {
          if (class_exists($className)) {
             if ($className != "PluginFusinvinventoryESX") {

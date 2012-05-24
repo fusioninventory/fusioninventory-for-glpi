@@ -91,8 +91,8 @@ class PluginFusinvinventoryImportXML extends CommonDBTM  {
    function importXMLFile($file) {
       $pfInventory = new PluginFusinvinventoryInventory();
       $p_xml = file_get_contents($file);
-      libxml_use_internal_errors(true);
-      if ($pxml = simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA)) {
+      libxml_use_internal_errors(true);      
+      if ($pxml = @simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA)) {
          libxml_clear_errors();
          $communication  = new PluginFusioninventoryOCSCommunication();
          $pxml = $communication->cleanXML($pxml);

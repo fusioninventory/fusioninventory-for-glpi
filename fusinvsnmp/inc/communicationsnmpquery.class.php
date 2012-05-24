@@ -58,7 +58,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     **/
    function import($p_DEVICEID, $p_CONTENT, $p_xml) {
 
-      $_SESSION['SOURCEXML'] = $p_xml;
+      //$_SESSION['SOURCEXML'] = $p_xml;
 
       $result = false;
 
@@ -68,7 +68,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       );
 
       $pfAgent = new PluginFusioninventoryAgent();
-      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
 
       $this->agent = $pfAgent->InfosByKey($p_DEVICEID);
 
@@ -76,9 +76,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $errors = '';
 
       $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $p_CONTENT->PROCESSNUMBER;
-      if ($pfTaskjobstatus->getFromDB($p_CONTENT->PROCESSNUMBER)) {
-         if ($pfTaskjobstatus->fields['state'] != "3") {
-            $pfTaskjobstatus->changeStatus($p_CONTENT->PROCESSNUMBER, 2);
+      if ($pfTaskjobstate->getFromDB($p_CONTENT->PROCESSNUMBER)) {
+         if ($pfTaskjobstate->fields['state'] != "3") {
+            $pfTaskjobstate->changeStatus($p_CONTENT->PROCESSNUMBER, 2);
             if ((!isset($p_CONTENT->AGENT->START)) AND (!isset($p_CONTENT->AGENT->END))) {
                $nb_devices = 0;
                $segs=$p_CONTENT->xpath('//DEVICE');
@@ -103,7 +103,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                }
             }
             if (isset($p_CONTENT->AGENT->END)) {
-               $pfTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
+               $pfTaskjobstate->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
                                                          $this->agent['id'],
                                                          'PluginFusioninventoryAgent');
             }
@@ -702,7 +702,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                
                case 'IFNAME':
                   PluginFusinvsnmpNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
-                  $pfNetworkPort->setValue('name', (string)$child);
+                  if ((string)$child != '') {
+                     $pfNetworkPort->setValue('name', (string)$child);
+                  }
                   break;
                
                case 'MAC':
@@ -729,7 +731,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   break;
 
                case 'IFDESCR':
-                  if (!isset($p_port->IFNAME)) {
+                  if (!isset($p_port->IFNAME)
+                          OR (string)$p_port->IFNAME == '') {
                      $pfNetworkPort->setValue('name', (string)$p_port->IFDESCR);
                   }
                   $pfNetworkPort->setValue(strtolower($name), (string)$p_port->$name);
@@ -1029,6 +1032,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          switch ($child->getName()) {
             
             case 'CDP': // already managed
+               if ($pfNetworkPort->getValue('trunk') != '1') {
+                  $pfNetworkPort->setValue('trunk', 0);
+               }
                break;
             
             case 'CONNECTION':
@@ -1036,8 +1042,18 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                if (isset($child->MAC)) {
                   if (isset($a_macsFound[(string)$child->MAC])) {
                      $continue = 0;
+                  } else if (count($child) > 50) {
+                     $continue = 0;
                   } else {
                      $a_macsFound[(string)$child->MAC] = 1;
+                  }
+                  
+                  if (count($child) > 1
+                          AND $pfNetworkPort->getValue('trunk') != '1') {
+                     
+                     $pfNetworkPort->setValue('trunk', -1);
+                  } else if ($pfNetworkPort->getValue('trunk') != '1') {
+                     $pfNetworkPort->setValue('trunk', 0);
                   }
                }
                if ($continue == '1') {

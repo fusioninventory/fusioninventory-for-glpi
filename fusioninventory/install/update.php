@@ -1466,7 +1466,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "bigint(20) NOT NULL AUTO_INCREMENT");
          $migration->changeField($newTable,
                                  "plugin_fusioninventory_taskjobstatus_id",
-                                 "plugin_fusioninventory_taskjobstatus_id",
+                                 "plugin_fusioninventory_taskjobstates_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
                                  "date",
@@ -1493,7 +1493,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                               "id",
                               "bigint(20) NOT NULL AUTO_INCREMENT");
          $migration->addField($newTable,
-                              "plugin_fusioninventory_taskjobstatus_id",
+                              "plugin_fusioninventory_taskjobstates_id",
                               "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
                               "date",
@@ -1511,16 +1511,19 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                               "comment",
                               "text DEFAULT NULL");
          $migration->addKey($newTable,
-                            array("plugin_fusioninventory_taskjobstatus_id", "state"),
-                            "plugin_fusioninventory_taskjobstatus_id");
+                            array("plugin_fusioninventory_taskjobstates_id", "state"),
+                            "plugin_fusioninventory_taskjobstates_id");
       $migration->migrationOneTable($newTable);
       
          
       
    /*
-    * Table glpi_plugin_fusioninventory_taskjobstatus
+    * Table glpi_plugin_fusioninventory_taskjobstates
     */
-      $newTable = "glpi_plugin_fusioninventory_taskjobstatus";
+      $newTable = "glpi_plugin_fusioninventory_taskjobstates";
+      if (TableExists("glpi_plugin_fusioninventory_taskjobstatus")) {
+         $migration->renameTable("glpi_plugin_fusioninventory_taskjobstatus", $newTable);
+      }
       if (!TableExists($newTable)) {
          $query = "CREATE TABLE `".$newTable."` (
                      `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -1648,9 +1651,17 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  'domain', 
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable, 
+                                 'comments', 
+                                 'comment', 
+                                 "text DEFAULT NULL");
+         $migration->changeField($newTable, 
                                  'comment', 
                                  'comment', 
                                  "text DEFAULT NULL");
+         $migration->changeField($newTable, 
+                                 'type', 
+                                 'item_type', 
+                                 "varchar(255) DEFAULT NULL");
          $migration->changeField($newTable, 
                                  'item_type', 
                                  'item_type', 
@@ -1664,8 +1675,16 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  'plugin_fusioninventory_agents_id', 
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable, 
+                                 'ifaddr', 
+                                 'ip', 
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable, 
                                  'ip', 
                                  'ip', 
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable, 
+                                 'ifmac', 
+                                 'mac', 
                                  "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
          $migration->changeField($newTable, 
                                  'mac', 
@@ -1696,7 +1715,13 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  'deleted', 
                                  'is_deleted', 
                                  "tinyint(1) NOT NULL DEFAULT '0'");      
-      $migration->migrationOneTable($newTable);      
+      $migration->migrationOneTable($newTable);   
+         $migration->dropField($newTable, "dnsname");
+         $migration->dropField($newTable, "snmp");
+         $migration->dropField($newTable, "FK_model_infos");
+         $migration->dropField($newTable, "FK_snmp_connection");
+         $migration->dropField($newTable, "FK_agent");
+      $migration->migrationOneTable($newTable); 
          $migration->addField($newTable, 
                               'id', 
                               "int(11) NOT NULL AUTO_INCREMENT");
@@ -1760,6 +1785,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                             "date_mod");
       $migration->migrationOneTable($newTable);
+      
    
       
          
@@ -2068,9 +2094,12 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_input['users_id'] = $users_id;
       foreach ($a_input as $type=>$value) {
          if (is_null($config->getValue($plugins_id, $type))) {
-            $config->initConfig($plugins_id, array($type=>$value));
+            $config->addValues($plugins_id, array($type=>$value));
          }
       }
+     $DB->query("DELETE FROM `glpi_plugin_fusioninventory_configs`
+        WHERE `plugins_id`='0'");
+      
       
       $a_input = array();
       $a_input['version'] = PLUGIN_FUSIONINVENTORY_VERSION;
@@ -2116,7 +2145,12 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                          array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30));
    }
    if (!$crontask->getFromDBbyName('PluginFusioninventoryTaskjobstatus', 'cleantaskjob')) {
-      Crontask::Register('PluginFusioninventoryTaskjobstatus', 'cleantaskjob', (3600 * 24), 
+      $query = "UPDATE `glpi_crontasks` SET `itemtype`='PluginFusioninventoryTaskjobstate'
+         WHERE `itemtype`='PluginFusioninventoryTaskjobstatus'";
+      $DB->query($query);
+   }
+   if (!$crontask->getFromDBbyName('PluginFusioninventoryTaskjobstate', 'cleantaskjob')) {
+      Crontask::Register('PluginFusioninventoryTaskjobstate', 'cleantaskjob', (3600 * 24), 
                          array('mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30));
    }
    

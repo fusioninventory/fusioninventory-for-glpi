@@ -49,14 +49,14 @@ require_once(GLPI_ROOT."/plugins/fusioninventory/inc/communication.class.php");
 
 class PluginFusinvdeployDeployCommon extends PluginFusioninventoryOCSCommunication {
 
-   // Get all devices and put in taskjobstatus each task for each device for each agent
+   // Get all devices and put in taskjobstate each task for each device for each agent
    function prepareRun($taskjobs_id) {
       global $DB;
 
       $task       = new PluginFusioninventoryTask();
       $job        = new PluginFusioninventoryTaskjob();
       $joblog     = new PluginFusioninventoryTaskjoblog();
-      $jobstatus  = new PluginFusioninventoryTaskjobstatus();
+      $jobstate  = new PluginFusioninventoryTaskjobstate();
       $agent      = new PluginFusioninventoryAgent();
 
       $uniqid= uniqid();
@@ -154,8 +154,8 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryOCSCommunicati
          //get agent if for this computer
          $agents_id = $agent->getAgentWithComputerid($computer_id);
          if($agents_id === false) {
-            $jobstatus_id= $jobstatus->add($c_input);
-            $jobstatus->changeStatusFinish($jobstatus_id,
+            $jobstates_id= $jobstate->add($c_input);
+            $jobstate->changeStatusFinish($jobstates_id,
                                                   0,
                                                   '',
                                                   1,
@@ -170,10 +170,10 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryOCSCommunicati
                $_SESSION['glpi_plugin_fusioninventory']['agents'][$agents_id] = 1;
             }
 
-            $jobstatus_id= $jobstatus->add($c_input);
+            $jobstates_id= $jobstate->add($c_input);
 
             //Add log of taskjob
-            $c_input['plugin_fusioninventory_taskjobstatus_id'] = $jobstatus_id;
+            $c_input['plugin_fusioninventory_taskjobstates_id'] = $jobstates_id;
             $c_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
 
             $taskvalid++;

@@ -60,7 +60,9 @@ class PluginFusinvinventoryLibfilter extends CommonDBTM {
 
                 if(isset($section->PCIID) AND $section->PCIID != '') {
                     $manufacturer = self::_getDataFromPCIID($section->PCIID);
-                    $section->MANUFACTURER = $manufacturer;
+                    if (!empty($manufacturer)) {
+                       $section->MANUFACTURER = $manufacturer;
+                    }
                 }
 
             break;
@@ -72,9 +74,15 @@ class PluginFusinvinventoryLibfilter extends CommonDBTM {
                     $dataArray = self::_getDataFromUSBID($section->VENDORID, $section->PRODUCTID);
 
                     $dataArray[0] = preg_replace('/&(?!\w+;)/', '&amp;', $dataArray[0]);
-                    $section->addChild('MANUFACTURER', $dataArray[0]);
+                    if (!empty($dataArray[0])
+                            AND !isset($section->MANUFACTURER)) {
+                       $section->addChild('MANUFACTURER', $dataArray[0]);
+                    }
                     $dataArray[1] = preg_replace('/&(?!\w+;)/', '&amp;', $dataArray[1]);
-                    $section->addChild('PRODUCTNAME', $dataArray[1]);
+                    if (!empty($dataArray[1])
+                            AND !isset($section->PRODUCTNAME)) {
+                       $section->addChild('PRODUCTNAME', $dataArray[1]);
+                    }
 
                 }
 

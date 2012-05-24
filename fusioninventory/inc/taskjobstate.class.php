@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
+class PluginFusioninventoryTaskjobstate extends CommonDBTM {
 
    /*
     * Define different state
@@ -77,12 +77,12 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       $state[1] = 0;
       $state[2] = 0;
       $state[3] = 0;
-      $a_taskjobstatus = $this->find("`plugin_fusioninventory_taskjobs_id`='".
+      $a_taskjobstates = $this->find("`plugin_fusioninventory_taskjobs_id`='".
                                         $taskjobs_id."' AND `state`!='".self::FINISHED."'");
       $total = 0;
-      if (count($a_taskjobstatus) > 0) {
+      if (count($a_taskjobstates) > 0) {
 
-         foreach ($a_taskjobstatus as $data) {
+         foreach ($a_taskjobstates as $data) {
             $total++;
             $state[$data['state']]++;
          }
@@ -223,7 +223,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
    /**
    * Change the state
    *
-   * @param $id integer id of the statusjobstatus
+   * @param $id integer id of the taskjobstate
    * @param $state value state to set
    *
    * @return nothing
@@ -252,9 +252,9 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
 
       $moduleRun = array();
 
-      $a_taskjobstatus = $this->find("`plugin_fusioninventory_agents_id`='".$agent_id.
+      $a_taskjobstates = $this->find("`plugin_fusioninventory_agents_id`='".$agent_id.
                                      "' AND `state`='".self::PREPARED."'");
-      foreach ($a_taskjobstatus as $data) {
+      foreach ($a_taskjobstates as $data) {
          // Get job and data to send to agent
          $pfTaskjob->getFromDB($data['plugin_fusioninventory_taskjobs_id']);
 
@@ -282,14 +282,14 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
    * @return nothing
    *
    **/
-   function changeStatusFinish($taskjobstatus, $items_id, $itemtype, $error=0, $message='', $unknown=0, $reinitialize=1) {
+   function changeStatusFinish($taskjobstates_id, $items_id, $itemtype, $error=0, $message='', $unknown=0, $reinitialize=1) {
       global $DB;
       
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $pfTaskjob = new PluginFusioninventoryTaskjob();
       $pFusioninventoryTask = new PluginFusioninventoryTask();
 
-      $this->getFromDB($taskjobstatus);
+      $this->getFromDB($taskjobstates_id);
       $input = array();
       $input['id'] = $this->fields['id'];
       $input['state'] = 3;
@@ -314,9 +314,9 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
             $result = $DB->query($query);
             $data_task = $DB->fetch_assoc($result);
             $start_taskjob = $data_task['date_scheduled_timestamp'] + $period;
-            // 2. See how errors in taskjobstatus
+            // 2. See how errors in taskjobstate
             $query = "SELECT * FROM `".$this->getTable()."`
-               LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` on `plugin_fusioninventory_taskjobstatus_id` = `".$this->getTable()."`.`id`
+               LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` on `plugin_fusioninventory_taskjobstates_id` = `".$this->getTable()."`.`id`
                WHERE `plugin_fusioninventory_taskjobs_id`='".$this->fields['plugin_fusioninventory_taskjobs_id']."'
                      AND `glpi_plugin_fusioninventory_taskjoblogs`.`state`='3'
                      AND `date`>='".date("Y-m-d H:i:s",$start_taskjob)."'
@@ -335,7 +335,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       } else {
          $a_input['state'] = 2;
       }
-      $a_input['plugin_fusioninventory_taskjobstatus_id'] = $taskjobstatus;
+      $a_input['plugin_fusioninventory_taskjobstates_id'] = $taskjobstates_id;
       $a_input['items_id'] = $items_id;
       $a_input['itemtype'] = $itemtype;
       $a_input['date'] = date("Y-m-d H:i:s");
@@ -364,17 +364,17 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
 
       $config = new PluginFusioninventoryConfig();
       $retentiontime = $config->getValue($_SESSION["plugin_fusioninventory_moduleid"], 'delete_task');
-      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $sql = "SELECT * FROM `glpi_plugin_fusioninventory_taskjoblogs`
          WHERE  `date` < date_add(now(),interval -".$retentiontime." day)
-         GROUP BY `plugin_fusioninventory_taskjobstatus_id`";
+         GROUP BY `plugin_fusioninventory_taskjobstates_id`";
       $result=$DB->query($sql);
       if ($result) {
          while ($data=$DB->fetch_array($result)) {
-            $pfTaskjobstatus->getFromDB($data['plugin_fusioninventory_taskjobstatus_id']);
-            $pfTaskjobstatus->delete($pfTaskjobstatus->fields, 1);
+            $pfTaskjobstate->getFromDB($data['plugin_fusioninventory_taskjobstates_id']);
+            $pfTaskjobstate->delete($pfTaskjobstate->fields, 1);
             $sql_delete = "DELETE FROM `glpi_plugin_fusioninventory_taskjoblogs`
-               WHERE `plugin_fusioninventory_taskjobstatus_id` = '".$data['plugin_fusioninventory_taskjobstatus_id']."'";
+               WHERE `plugin_fusioninventory_taskjobstates_id` = '".$data['plugin_fusioninventory_taskjobstates_id']."'";
             $DB->query($sql_delete);
          }
       }

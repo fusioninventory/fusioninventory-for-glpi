@@ -49,6 +49,7 @@ class PluginFusinvsnmpNetworkporttype extends CommonDBTM {
 
    
    function init() {
+      global $DB;
       
       $input = array();
       
@@ -288,17 +289,19 @@ class PluginFusinvsnmpNetworkporttype extends CommonDBTM {
       $input['234'] = 'atmbond';
       
       $install = 1;
-      $a_allowed = $this->find("`import`='1'");
-      if (count($a_allowed) > 0) {
+      $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkporttypes`
+         WHERE `import`='1'";
+      $result=$DB->query($query);
+      if ($DB->numrows($result) > 0) {
          $install = 0;
       }
       
       foreach ($input as $number=>$name) {
-         if (count($this->find("`number`='".$number."'")) == '0') {
-            $inp = array();
-            $inp['number'] = $number;
-            $inp['name'] = $name;
-            $inp['othername'] = $name.'('.$number.')';
+         $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkporttypes`
+            WHERE `number`='".$number."'";
+         $result=$DB->query($query);
+         if ($DB->numrows($result) == '0') {
+            $import = 0;
 
             if ($install == '1') {
                switch ($number) {
@@ -309,12 +312,15 @@ class PluginFusinvsnmpNetworkporttype extends CommonDBTM {
                   case '117':
                   case '62':
                   case '169':
-                     $inp['import'] = 1;
+                     $import = 1;
                      break;
 
                }
-            }         
-            $this->add($inp);
+            }
+            $queryi = "INSERT INTO `glpi_plugin_fusinvsnmp_networkporttypes`
+               (`id`, `name`, `number`, `othername`, `import`) 
+               VALUES (NULL, '".$name."', '".$number."', '".$name."(".$number.")', '".$import."')";
+            $DB->query($queryi);
          }
       }      
    }

@@ -61,8 +61,8 @@ if (isset($_POST['update'])) {
 }
 
 $pfConfig = new PluginFusioninventoryConfig();
-
-$pfConfig->getFromDB(1);
+$a_config = current($pfConfig->find("", "", 1));
+$pfConfig->getFromDB($a_config['id']);
 if (isset($_GET['glpi_tab'])) {
    $_SESSION['glpi_tabs']['pluginfusioninventoryconfiguration'] = $_GET['glpi_tab'];
    Html::redirect(Toolbox::getItemTypeFormURL($pfConfig->getType()));

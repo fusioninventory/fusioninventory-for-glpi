@@ -54,13 +54,13 @@ class PluginFusinvdeployJob {
 
       $response      = array();
       $taskjoblog    = new PluginFusioninventoryTaskjoblog();
-      $taskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $taskjobstate = new PluginFusioninventoryTaskjobstate();
 
       //Get the agent ID by his deviceid
       if ($agents_id = PluginFusinvdeployJob::getAgentByDeviceID($device_id)) {
 
          //Get tasks associated with the agent
-         $task_list = $taskjobstatus->getTaskjobsAgent($agents_id);
+         $task_list = $taskjobstate->getTaskjobsAgent($agents_id);
          foreach ($task_list as $itemtype => $status_list) {
 
             //Foreach task for this agent build the response array
@@ -131,7 +131,7 @@ class PluginFusinvdeployJob {
         $taskjob->update($jobstatus);
      }*/
      $taskjoblog = new PluginFusioninventoryTaskjoblog();
-     $tmp['plugin_fusioninventory_taskjobstatus_id'] = $jobstatus['id'];
+     $tmp['plugin_fusioninventory_taskjobstates_id'] = $jobstatus['id'];
      $tmp['itemtype']                                = $jobstatus['itemtype'];
      $tmp['items_id']                                = $jobstatus['items_id'];
      $tmp['date']                                    = date("Y-m-d H:i:s");
@@ -167,7 +167,7 @@ class PluginFusinvdeployJob {
      }
 
      $taskjoblog->addTaskjoblog(
-        $tmp['plugin_fusioninventory_taskjobstatus_id'],
+        $tmp['plugin_fusioninventory_taskjobstates_id'],
         $tmp['items_id'],
         $tmp['itemtype'],
         $tmp['state'],
@@ -179,8 +179,8 @@ class PluginFusinvdeployJob {
         $error = "0";
         if ($p['status'] == 'ko') $error = "1";
         //set status to finished and reinit job
-        $taskjobstatus = new PluginFusioninventoryTaskjobstatus;
-        $taskjobstatus->changeStatusFinish(
+        $taskjobstate = new PluginFusioninventoryTaskjobstate();
+        $taskjobstate->changeStatusFinish(
            $jobstatus['id'],
            $jobstatus['items_id'],
            $jobstatus['itemtype'],

@@ -45,6 +45,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusinvinventoryInventory {
+   private $p_xml;
    
    /**
    * Import data
@@ -139,7 +140,8 @@ class PluginFusinvinventoryInventory {
       $pfBlacklist = new PluginFusinvinventoryBlacklist();
       $p_xml = $pfBlacklist->cleanBlacklist($p_xml);
 
-      $_SESSION['SOURCEXML'] = $p_xml;
+      $this->p_xml = $p_xml;
+//      $_SESSION['SOURCEXML'] = $p_xml;
 
       $xml = $p_xml;
       $input = array();
@@ -233,11 +235,9 @@ class PluginFusinvinventoryInventory {
       $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusinvinventoryInventory";
       $rule = new PluginFusioninventoryRuleImportEquipmentCollection();
       $data = array();
-      $data = $rule->processAllRules($input, array());
-      PluginFusioninventoryLogger::logIfExtradebug(
-         "pluginFusioninventory-rules",
-         print_r($data, true)
-      );
+      $data = $rule->processAllRules($input, array(), array('class'=>$this));
+      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
+                                                   print_r($data, true));
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
          $this->rulepassed(0, "Computer");
       } else if (!isset($data['found_equipment'])) {
@@ -291,7 +291,8 @@ class PluginFusinvinventoryInventory {
          "Rule passed : ".$items_id.", ".$itemtype."\n"
       );
       //$xml = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
-      $xml = $_SESSION['SOURCEXML'];
+      //$xml = $_SESSION['SOURCEXML'];
+      $xml = $this->p_xml;
       
       if ($itemtype == 'Computer') {
          $pfLib = new PluginFusinvinventoryLib();

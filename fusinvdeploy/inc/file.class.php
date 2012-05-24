@@ -142,16 +142,16 @@ class PluginFusinvdeployFile extends CommonDBTM {
    static function getAssociatedFiles($device_id) {
       $files = array();
       $taskjoblog    = new PluginFusioninventoryTaskjoblog();
-      $taskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $taskjobstate = new PluginFusioninventoryTaskjobstate();
 
       //Get the agent ID by his deviceid
       if ($agents_id = PluginFusinvdeployJob::getAgentByDeviceID($device_id)) {
 
 
          //Get tasks associated with the agent
-         $tasks_list = $taskjobstatus->getTaskjobsAgent($agents_id);
-         foreach ($tasks_list as $itemtype => $status_list) {
-            foreach ($status_list as $status) {
+         $tasks_list = $taskjobstate->getTaskjobsAgent($agents_id);
+         foreach ($tasks_list as $itemtype => $states_list) {
+            foreach ($states_list as $status) {
                $results_jobs = getAllDatasFromTable('glpi_plugin_fusinvdeploy_taskjobs',
                                      "`id`='".$status['plugin_fusioninventory_taskjobs_id']."'");
 

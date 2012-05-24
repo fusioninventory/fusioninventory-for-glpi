@@ -70,8 +70,14 @@ class PluginFusinvdeployGroup extends CommonDBTM {
    }
 
    function showList() {
+      echo "<center>";
+      echo "<table class='tab_cadre_navigation'><tr><td>";
+
       self::title();
       Search::show('PluginFusinvdeployGroup');
+
+      echo "</td></tr></table>";
+      echo "</center>";
    }
 
    function defineTabs($options=array()) {
@@ -102,6 +108,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       }
    }
 
+
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       switch(get_class($item)) {
          case __CLASS__:
@@ -118,6 +125,15 @@ class PluginFusinvdeployGroup extends CommonDBTM {
             break;
       }
    }
+
+   function showMenu($options=array())  {
+
+      $this->displaylist = false;
+
+      $this->fields['id'] = -1;
+      $this->showList();
+   }
+
 
 
    function title() {

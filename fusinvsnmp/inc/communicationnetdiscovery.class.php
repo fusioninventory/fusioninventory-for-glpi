@@ -60,7 +60,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
     * 
     **/
    function import($p_DEVICEID, $p_CONTENT, $p_xml) {
-      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfAgent = new PluginFusioninventoryAgent();
       $pfAgentconfig = new PluginFusinvsnmpAgentconfig();
 
@@ -75,9 +75,9 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       $a_agent = $pfAgent->InfosByKey($p_DEVICEID);
       if (isset($p_CONTENT->PROCESSNUMBER)) {
          $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $p_CONTENT->PROCESSNUMBER;
-         if ($pfTaskjobstatus->getFromDB($p_CONTENT->PROCESSNUMBER)) {
-            if ($pfTaskjobstatus->fields['state'] != "3") {
-               $pfTaskjobstatus->changeStatus($p_CONTENT->PROCESSNUMBER, 2);
+         if ($pfTaskjobstate->getFromDB($p_CONTENT->PROCESSNUMBER)) {
+            if ($pfTaskjobstate->fields['state'] != "3") {
+               $pfTaskjobstate->changeStatus($p_CONTENT->PROCESSNUMBER, 2);
                if ((!isset($p_CONTENT->AGENT->START)) AND (!isset($p_CONTENT->AGENT->END))) {
                   $nb_devices = 0;
                   $segs=$p_CONTENT->xpath('//DEVICE');
@@ -94,27 +94,27 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
          }
       }
 
-      if ($pfTaskjobstatus->getFromDB($p_CONTENT->PROCESSNUMBER)) {
-         if ($pfTaskjobstatus->fields['state'] != "3") {
+      if ($pfTaskjobstate->getFromDB($p_CONTENT->PROCESSNUMBER)) {
+         if ($pfTaskjobstate->fields['state'] != "3") {
             $pfImportExport = new PluginFusinvsnmpImportExport();
             $errors.=$pfImportExport->import_netdiscovery($p_CONTENT, $p_DEVICEID);
             if (isset($p_CONTENT->AGENT->END)) {
                if ((isset($p_CONTENT->DICO)) AND ($p_CONTENT->DICO == "REQUEST")) {
-                  $pfAgent->getFromDB($pfTaskjobstatus->fields["plugin_fusioninventory_agents_id"]);
+                  $pfAgent->getFromDB($pfTaskjobstate->fields["plugin_fusioninventory_agents_id"]);
                   $pfAgentconfig->loadAgentconfig($pfAgent->fields['id']);
                   $input = array();
                   $input['id'] = $pfAgentconfig->fields['id'];
                   $input["senddico"] = "1";
                   $pfAgentconfig->update($input);
 
-                  $pfTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
+                  $pfTaskjobstate->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
                                                                           $a_agent['id'],
                                                                           'PluginFusioninventoryAgent',
                                                                           '1',
                                                                           '==fusinvsnmp::3==');
                } else {
 
-                  $pfTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
+                  $pfTaskjobstate->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
                                                                        $a_agent['id'],
                                                                        'PluginFusioninventoryAgent');
                }

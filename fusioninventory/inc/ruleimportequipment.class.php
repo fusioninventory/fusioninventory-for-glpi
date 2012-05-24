@@ -581,7 +581,9 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
     * @return the $output array modified
    **/
    function executeActions($output, $params) {
-      if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
+      if (isset($params['class'])) {
+         $class = $params['class'];
+      } else if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
          $classname = $_SESSION['plugin_fusioninventory_classrulepassed'];
          $class = new $classname();
       }

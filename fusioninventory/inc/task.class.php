@@ -107,12 +107,6 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $sopt[6]['linkfield']      = '';
       $sopt[6]['name']           = $LANG['plugin_fusioninventory']['task'][33];
 
-//      $sopt[7]['table']          = $this->getTable();
-//      $sopt[7]['field']          = 'permanent';
-//      $sopt[7]['linkfield']      = '';
-//      $sopt[7]['name']           = $LANG['plugin_fusioninventory']['task'][34];
-//      $sopt[7]['datatype']       = 'bool';
-
       $sopt[8]['table']          = $this->getTable();
       $sopt[8]['field']          = 'state';
       $sopt[8]['linkfield']      = '';
@@ -167,7 +161,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       global $LANG;
 
       $pFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-      $pFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       
       if ($id!='') {
          $this->getFromDB($id);
@@ -204,7 +198,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
             $forcerundisplay = 1;
             $a_taskjobs = $pFusioninventoryTaskjob->find("`plugin_fusioninventory_tasks_id`='".$id."'");
             foreach ($a_taskjobs as $data) {
-               $statejob = $pFusioninventoryTaskjobstatus->stateTaskjob($data['id'], '930', 'value');
+               $statejob = $pfTaskjobstate->stateTaskjob($data['id'], '930', 'value');
                if ($statejob != '') {
                   $forcerundisplay = 0;
                }
@@ -222,7 +216,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $reset = 0;
          $a_taskjobs = $pFusioninventoryTaskjob->find("`plugin_fusioninventory_tasks_id`='".$id."'");
          foreach ($a_taskjobs as $data) {
-            $statejob = $pFusioninventoryTaskjobstatus->stateTaskjob($data['id'], '930', 'value');
+            $statejob = $pfTaskjobstate->stateTaskjob($data['id'], '930', 'value');
             if ($statejob == '') {
                if ($data['execution_id'] != $this->fields['execution_id']) {
                   $reset = 1;
@@ -564,11 +558,11 @@ class PluginFusioninventoryTask extends CommonDBTM {
       global $DB;
       
       $where = '';
+      $where .= getEntitiesRestrictRequest("AND", 'task');
       if ($tasks_id > 0) {
          $where = " AND task.`id`='".$tasks_id."'
-            LIMIT 1"; 
+            LIMIT 1 "; 
       }
-      $where .= getEntitiesRestrictRequest("AND", 'task');
       
       $query = "SELECT * FROM `glpi_plugin_fusioninventory_tasks` as task
          WHERE execution_id != 
@@ -585,11 +579,11 @@ class PluginFusioninventoryTask extends CommonDBTM {
       global $DB;
       
       $where = '';
+      $where .= getEntitiesRestrictRequest("AND", 'task');
       if ($tasks_id > 0) {
          $where = " AND task.`id`='".$tasks_id."'
-            LIMIT 1"; 
+            LIMIT 1 "; 
       }
-      $where .= getEntitiesRestrictRequest("AND", 'task');
 
       $query = "SELECT * FROM `glpi_plugin_fusioninventory_tasks` as task
          WHERE execution_id = 
@@ -607,7 +601,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
    
    
    function menuTasksLogs() {
-      global $CFG_GLPI;
+      global $CFG_GLPI,$LANG;
       
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
@@ -616,14 +610,14 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $cell ='th';
       }
       echo "<".$cell." align='center' width='50%'>";
-      echo "<a href=''>Taches</a>"; // TODO
+      echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/task.php'>".$LANG['plugin_fusioninventory']['task'][1]."</a>";
       echo "</".$cell.">";
       $cell = 'td';
-      if (strstr($_SERVER['PHP_SELF'],'/tasklog.')) {
+      if (strstr($_SERVER['PHP_SELF'],'/taskjoblog.')) {
          $cell ='th';
       }
       echo "<".$cell." align='center'>";
-      echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php'>Logs</a>"; // TODO
+      echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php'>".$LANG['Menu'][30]."</a>";
       echo "</".$cell.">";
       echo "</tr>";
       echo "</table>";
