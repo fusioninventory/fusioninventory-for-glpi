@@ -49,11 +49,29 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
    function showForm($id, $data) {
       global $DB,$LANG;
 
+      $options = array();
 
-//echo "<pre>"; print_r($data);   
-      $this->manageWalks($data);
+      echo "<form name='form' method='post' action='".$this->getFormURL()."'>";
       
-      exit;
+      $this->manageWalks($data);
+
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<th align='center'>";
+      echo "<input type='submit' name='update' value=\"".$LANG['buttons'][7]."\" class='submit'>";
+      echo "</th>";
+      echo "</tr>";
+      echo "</table>";
+      
+      echo "</form>";
+      
+      return;
+      
+      
+      
+      
+      
+      
 //      if ($id!='') {
 //         $this->getFromDB($id);
 //      } else {
@@ -113,10 +131,9 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
-      $this->showFormButtons($options);
 
-      echo "<div id='tabcontent'></div>";
-      echo "<script type='text/javascript'>loadDefaultTab();</script>";
+//      echo "<div id='tabcontent'></div>";
+//      echo "<script type='text/javascript'>loadDefaultTab();</script>";
 
       return true;
    }
@@ -128,8 +145,6 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
 
       $snmpwalk = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/walks/file.log");
 
-      echo "<pre>";
-      $begin = date('U');
       $a_mapping = array();
       foreach ($json->mappings as $data) {
          $a_mapping[$data->order] = $data->id;
@@ -155,17 +170,14 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                $iso = preg_replace("/^.1./", "iso.", $iso);
                preg_match_all("/".$a_oids->numeric_oid."(\.\d+){".$a_oids->nboids_after."} = (.*\n)/", $snmpwalk, $found);
                if (isset($found[0][0])) {
-//                  $this->displayOid($a_oids, $found[0]);
                   $a_oidfound[$a_oids->id] = $found[0];
                } else {               
                   preg_match_all("/".$a_oids->mib_oid."(?:\.\d+){".$a_oids->nboids_after."} = (?:.*)\n/", $snmpwalk, $found);
                   if (isset($found[0][0])) {
-//                     $this->displayOid($a_oids, $found[0]);
                      $a_oidfound[$a_oids->id] = $found[0];
                   } else { 
                      preg_match_all("/".$iso."(\.\d+){".$a_oids->nboids_after."} = (.*\n)/", $snmpwalk, $found);
                      if (isset($found[0][0])) {
-//                        $this->displayOid($a_oids, $found[0]);
                         $a_oidfound[$a_oids->id] = $found[0];
                      }
                   }
@@ -183,267 +195,6 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          }
          echo "<br/>";
       }
-      echo (date('U') - $begin)."<br/>";
-      exit;
-//      
-//      
-//      
-//      
-//      $query = "SELECT * FROM glpi_plugin_fusinvsnmp_constructdevices
-//         WHERE id='".$id."'";
-//      $result = $DB->query($query);
-//      $a_device = $DB->fetch_assoc($result);
-//      $type_model = $a_device['type'];
-//
-//
-//      // Used mapping name :
-//      $a_mapping_used = array();
-//      $query = "SELECT `glpi_plugin_fusinvsnmp_constructdevice_miboids`.*,
-//             `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`
-//         FROM `glpi_plugin_fusinvsnmp_constructdevice_miboids`
-//            LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-//               ON `glpi_plugin_fusinvsnmp_constructdevice_miboids`.`plugin_fusioninventory_mappings_id`=
-//                  `glpi_plugin_fusioninventory_mappings`.`id`
-//         WHERE `plugin_fusinvsnmp_constructdevices_id`='".$id."'
-//            AND `mapping_name` != ''";
-//      if ($result = $DB->query($query)) {
-//         while ($data = $DB->fetch_array($result)) {
-//            $a_mapping_used[$data['itemtype']."||".$data['mapping_name']] =
-//                  $data['itemtype']."||".$data['mapping_name'];
-//         }
-//      }
-//
-//      $query = "SELECT * FROM glpi_plugin_fusinvsnmp_constructdevicewalks
-//         WHERE plugin_fusinvsnmp_constructdevices_id='".$id."'";
-//      echo "<div align='center'>
-//         <form method='post' name='' id=''  action='".$target."' >";
-//
-//      $a_oids = array();
-//      $a_oids1 = array();
-//      $a_oids2 = array();
-//      $a_mibs = array();
-//      if ($result = $DB->query($query)) {
-//         if ($data = $DB->fetch_array($result)) {
-//            $file_content = file(GLPI_PLUGIN_DOC_DIR."/fusioninventory/walks/".$data['log']);
-//            echo $data['log']."<br/>";
-//            $query_oid = "SELECT * FROM glpi_plugin_fusinvsnmp_miboids";
-//            $result_oid = $DB->query($query_oid);
-//            while ($fields_oid = $DB->fetch_array($result_oid)) {
-//               if ($fields_oid['comment'] != "") {
-//                  $a_oids[] = $fields_oid['comment'];
-//                  $a_oids1[] = $fields_oid['name'];
-//                  $a_oids2[] = $fields_oid['id'];
-//               }
-//            }
-//            $before = '';
-//            $oid_id_before = 0;
-//            foreach($file_content as $line){
-//                $i = 1;
-//               foreach($a_oids as $num=>$oid){
-//                  if ((strstr($line, $oid.".")) OR (strstr($line, $oid." "))) {
-//                     if (($i == '1') AND ($before != $a_oids1[$num])) {
-//                        if ($before != '') {
-//                           echo "</td>";
-//                           echo "</tr>";
-//                           echo "<tr>";
-//                           echo "<th>";
-//                           echo $LANG['plugin_fusioninventory']['mib'][9]." : ";
-//                           if (isset($a_mibs['id'])) {
-//                              if ($a_mibs["vlan"] == "1") {
-//                                 echo "<a href='".$target."?id=".$id."&vlan_update=".$oid_id_before."'>";
-//                                 echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-//                                 echo "</a>";
-//                              } else {
-//                                 echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark_off.png'/>";
-//                              }
-//                           } else {
-//                              if (isset($mapping_pre_vlan[$before])) {
-//                                 Dropdown::showYesNo("vlan_".$oid_id_before, 1);
-//                              } else {
-//                                 Dropdown::showYesNo("vlan_".$oid_id_before);
-//                              }
-//                           }
-//                           echo "</th>";
-//                           echo "<th>";
-//                           echo $LANG['plugin_fusioninventory']['mib'][6]." : ";
-//                           if (isset($a_mibs['id'])) {
-//                              if ($a_mibs["oid_port_counter"] == "1") {
-//                                 echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-//                              } else {
-//                                 echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark_off.png'/>";
-//                              }
-//                           } else {
-//                              Dropdown::showYesNo("oid_port_counter_".$oid_id_before);
-//                           }
-//                           echo "</th>";
-//                           echo "<th>";
-//                           echo $LANG['plugin_fusioninventory']['mib'][7]." : ";
-//                           if (isset($a_mibs['id'])) {
-//                              if ($a_mibs["oid_port_dyn"] == "1") {
-//                                 echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-//                              } else {
-//                                 echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark_off.png'/>";
-//                              }
-//                           } else {
-//                              Dropdown::showYesNo("oid_port_dyn_".$oid_id_before);
-//                           }
-//                           echo "</th>";
-//                           echo "</tr>";
-//                           echo "<tr>";
-//                           echo "<th colspan='3'>";
-//                           echo $LANG['plugin_fusioninventory']['mib'][8]." : ";
-//                           if (isset($a_mibs['id'])) {
-//                              if ($a_mibs["oid_port_counter"] == "0") {
-//                                 $mapping = new PluginFusioninventoryMapping();
-//                                 $mappings = $mapping->get($a_mibs['itemtype'], $a_mibs['mapping_name']);
-//                                 echo $LANG['plugin_fusinvsnmp']['mapping'][$mappings->fields['locale']]." ( ".$a_mibs["mapping_name"]." )";
-//                              }
-//                           } else {
-//                              $types = array();
-//                              $types[] = "-----";
-//
-//                              $map = new PluginFusioninventoryMapping();
-//                              $maps = $map->find();
-//                              foreach ($maps as $mapfields) {
-//                                 if (($type_model == $type) OR ($type_model == "0")) {
-//                                    $types[$type."||".$mapfields['name']]=
-//                                       $LANG['plugin_fusinvsnmp']['mapping']
-//                                          [$mapfields["locale"]].
-//                                       " (".$mapfields['name'].")";
-//                                 }
-//                              }
-//                              Dropdown::showFromArray("links_oid_fields_".$oid_id_before, $types,
-//                                                      array('value'=>$type_model."||".$mapping_pre[$type_model][$before],
-//                                                            'used'=>$a_mapping_used)); //,$linkoid_used
-//                           }
-//                           echo "</th>";
-//                           echo "</tr>";
-//                           echo "</table>";
-//                           echo "<br/>";
-//                        }
-//                        $query_oid_mib = "SELECT *
-//                           FROM glpi_plugin_fusinvsnmp_constructdevice_miboids
-//                           WHERE plugin_fusinvsnmp_constructdevices_id='".$id."'
-//                              AND plugin_fusinvsnmp_miboids_id='".$a_oids2[$num]."'";
-//                        $a_mibs = array();
-//                        $result_oid_mib = $DB->query($query_oid_mib);
-//                        if ($DB->numrows($result_oid_mib) != "0") {
-//                           $a_mibs = $DB->fetch_assoc($result_oid_mib);
-//                        }
-//                        echo "<table class='tab_cadre' cellpadding='5' width='950'>";
-//                        echo "<tr>";
-//                        echo "<th colspan='3'>";
-//                        if (isset($a_mibs['id'])) {
-//                           echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-//                           echo "&nbsp;<font>";
-//                        } else {
-//                           echo "<input type='checkbox' name='oidsselected[]' value='".$a_oids2[$num]."' />&nbsp;";
-//                           echo "&nbsp;<font color='#ff0000'>";
-//                        }
-//                        echo $a_oids1[$num]."</font>";
-//                        if (isset($a_mibs['id'])) {
-//                           //echo "&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/delete.png'/>";
-//                        }
-//                        echo "</th>";
-//                        echo "</tr>";
-//                        echo "<tr class='tab_bg_1 center'>";
-//                        echo "<td colspan='3'>";
-//                     }
-//                     if (!isset($a_mibs['id'])) {
-//                        echo $line."<br/>";
-//                     }
-//                     $before = $a_oids1[$num];
-//                     $oid_id_before = $a_oids2[$num];
-//                     $i = 2;
-//                  }
-//               }              
-//            }
-//            if ($before != '') {
-//               echo "</td>";
-//               echo "</tr>";
-//               echo "<tr>";
-//               echo "<th>";
-//               echo $LANG['plugin_fusioninventory']['mib'][9]." : ";
-//               if (isset($a_mibs['id'])) {
-//                  if ($a_mibs["vlan"] == "1") {
-//                     echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-//                  } else {
-//                     echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark_off.png'/>";
-//                  }
-//               } else {
-//                  if (isset($mapping_pre_vlan[$before])) {
-//                     Dropdown::showYesNo("vlan_".$oid_id_before, 1);
-//                  } else {
-//                     Dropdown::showYesNo("vlan_".$oid_id_before);
-//                  }
-//               }
-//               echo "</th>";
-//               echo "<th>";
-//               echo $LANG['plugin_fusioninventory']['mib'][6]." : ";
-//               Dropdown::showYesNo("oid_port_counter_".$oid_id_before);
-//               echo "</th>";
-//               echo "<th>";
-//               echo $LANG['plugin_fusioninventory']['mib'][7]." : ";
-//               Dropdown::showYesNo("oid_port_dyn_".$oid_id_before);
-//               echo "</th>";
-//               echo "</tr>";
-//               echo "<tr>";
-//               echo "<th colspan='3'>";
-//               echo $LANG['plugin_fusioninventory']['mib'][8]." : ";
-//               if (isset($a_mibs['id'])) {
-//                  if ($a_mibs["oid_port_counter"] == "0") {
-//                     $mapping = new PluginFusioninventoryMapping();
-//                     $mappings = $mapping->get($a_mibs['itemtype'], $a_mibs['mapping_name']);
-//                     if ($mappings) {
-//                        echo $LANG['plugin_fusinvsnmp']['mapping'][$mappings->fields['locale']];
-//                     }
-//                  }
-//               } else {
-//                  $types = array();
-//                  $types[] = "-----";
-//
-//                  $map = new PluginFusioninventoryMapping();
-//                  $maps = $map->find();
-//                  foreach ($maps as $mapfields) {
-//                     if (($type_model == $type) OR ($type_model == "0")) {
-//                        $types[$type."||".$mapfields['name']]=
-//                           $LANG['plugin_fusinvsnmp']['mapping']
-//                              [$mapfields["locale"]].
-//                           " (".$mapfields['name'].")";
-//                     }
-//                  }
-//                  Dropdown::showFromArray("links_oid_fields_".$oid_id_before, $types,
-//                                          array('value'=>$type_model."||".$mapping_pre[$type_model][$before],
-//                                                'used'=>$a_mapping_used)); //,$linkoid_used
-//               }
-//               echo "</th>";
-//               echo "</tr>";
-//               echo "</table>";
-//               echo "<br/>";
-//            }
-//         }
-//      }
-//      echo "<table class='tab_cadre' cellpadding='5' width='950'>";
-//      echo "<tr class='tab_bg_1 center'>";
-//      echo "<td>";
-//      echo "<input type='hidden' name='id' value='" . $id . "'/>";
-//      echo "&nbsp;<input type='submit' name='mib' value=\"" . $LANG["buttons"][7] . "\" class='submit' >";
-//      echo "</td>";
-//      echo "</tr>";
-//      echo "</table>";
-//      echo "</form><br/>";
-//
-//      echo "<form method='post' name='' id=''  action='".$target."' enctype=\"multipart/form-data\">";
-//      echo "<table class='tab_cadre' cellpadding='5' width='950'>";
-//      echo "<tr class='tab_bg_1 center'>";
-//      echo "<td>";
-//      echo "<input type='hidden' name='id' value='" . $id . "'/>";
-//      echo "<input type='file' name='walk'/>";
-//      echo "&nbsp;<input type='submit' name='addWalk' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
-//      echo "</td>";
-//      echo "</tr>";
-//      echo "</table>";
-//      echo "</form></div>";
    }
    
    
