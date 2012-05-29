@@ -50,7 +50,10 @@ function plugin_init_fusinvinventory() {
 
    $plugin = new Plugin;
    if (!$plugin->isActivated("fusioninventory")) {
-      if (isset($_GET['id']) AND isset($_GET['action'])
+      $plugin->getFromDBbyDir("fusinvsnmp");
+      if (isset($_GET['id']) 
+            AND isset($_GET['action'])
+            AND $_GET['id'] == $plugin->fields['id']
             AND strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
          switch ($_GET['action']) {
             case 'activate':
