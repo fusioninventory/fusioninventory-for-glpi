@@ -52,7 +52,11 @@ function plugin_init_fusinvsnmp() {
 
    $plugin = new Plugin();
    if (!$plugin->isActivated("fusioninventory")) {
-      if (isset($_GET['id']) AND isset($_GET['action'])
+      $plugin->getFromDBbyDir("fusinvsnmp");
+      // Check for uninstall
+      if (isset($_GET['id']) 
+            AND isset($_GET['action'])
+            AND $_GET['id'] == $plugin->fields['id']
             AND strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
          switch ($_GET['action']) {
             case 'activate':
