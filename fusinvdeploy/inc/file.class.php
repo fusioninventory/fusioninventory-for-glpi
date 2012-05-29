@@ -299,6 +299,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
       return $file_id;
    }
 
+   //TODO on 0.83 rename the function into "checkPresenceFileForOrder"
    function checkPresenceFile($sha512, $order_id) {
       global $DB;
 
@@ -313,11 +314,44 @@ class PluginFusinvdeployFile extends CommonDBTM {
       return false;
    }
 
+   static function getAssociatedFilesForOrder($order_id) {
+      global $DB;
+
+      $files=array();
+
+      $results_files = getAllDatasFromTable('glpi_plugin_fusinvdeploy_files',
+                          "`plugin_fusinvdeploy_orders_id`='".$order_id."' AND sha512 <> ''");
+
+
+      foreach ($results_files as $result_file) {
+         $tmp = array();
+         $tmp['uncompress']   = $result_file['uncompress'];
+         $tmp['name']         = $result_file['name'];
+         $tmp['p2p']          = $result_file['is_p2p'];
+         $tmp['filesize']     = $result_file['filesize'];
+         $tmp['create_date']  = $result_file['create_date'];
+         $tmp['mimetype']     = $result_file['mimetype'];
+
+         $mirrors = PluginFusinvdeployFile_Mirror::getList();
+         $tmp['mirrors'] = $mirrors;
+
+         $fileparts = PluginFusinvdeployFilepart::getForFile($result_file['id']);
+         $tmp['multiparts'] = $fileparts;
+
+         if (isset($result_file['p2p_retention_days'])) {
+            $tmp['p2p-retention-duration'] = $result_file['p2p_retention_days'] * 3600 * 24;
+         } else {
+            $tmp['p2p-retention-duration'] = 0;
+         }
+         $files[$result_file['sha512']]         = $tmp;
+      }
+
+      if (count($files) == 0) $files = new stdClass;
+      return $files;
+   }
 
    function removeFileInRepo($id) {
       global $DB;
-
-
 
       $repoPath = GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/repository/";
 

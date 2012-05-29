@@ -229,4 +229,8 @@ $LANG['plugin_fusioninventory']['wizard'][7]="Esegui compiti";
 $LANG['plugin_fusioninventory']['wizard'][8]="Risultato compiti in esecuzione";
 
 $LANG['plugin_fusioninventory']['xml'][0]="XML";
+
+$LANG['plugin_fusioninventory']['common'][0]="Unfold";
+$LANG['plugin_fusioninventory']['common'][1]="Collapse";
+$LANG['plugin_fusioninventory']['common'][2]="item(s)";
 ?>

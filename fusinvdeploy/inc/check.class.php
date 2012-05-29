@@ -86,6 +86,7 @@ class PluginFusinvdeployCheck extends CommonDBTM {
 
       $checks = array();
       foreach ($results as $result) {
+         $tmp = array();
          if (empty($result['type'])) continue;
 
          if (isset($result['match'])) {
