@@ -291,7 +291,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
 
          addMessageAfterRedirect(str_replace('#task#',
                $tasks_url, $LANG['plugin_fusinvdeploy']['package'][23]));
-         glpi_header(GLPI_ROOT."/plugins/fusinvdeploy/front/package.form.php?id="
+         glpi_header(GLPI_ROOT."/plugins/fusioninventory/front/task.form.php?id="
                .$this->getField('id'));
          return false;
       }
@@ -440,7 +440,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
             continue;
          }
          $task->getFromDB($job['plugin_fusinvdeploy_tasks_id']);
-         $tasks_url .= "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/front/task.form.php?id="
+         $tasks_url .= "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/task.form.php?id="
                .$job['plugin_fusinvdeploy_tasks_id']."'>".$task->fields['name']."</a>, ";
          $jobs_seen[$job['plugin_fusinvdeploy_tasks_id']]=1;
       }
