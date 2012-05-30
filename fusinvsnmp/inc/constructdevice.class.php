@@ -186,11 +186,11 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          }
          if (count($a_oidfound) == '1') {
             foreach ($a_oidfound as $oid_id => $a_found) {
-               $this->displayOid($json->oids->$oid_id, $a_found, "blue");
+               $this->displayOid($json->oids->$oid_id, $data->id, $a_found, "blue");
             }
          } else {
             foreach ($a_oidfound as $oid_id => $a_found) {
-               $this->displayOid($json->oids->$oid_id, $a_found);
+               $this->displayOid($json->oids->$oid_id, $data->id, $a_found);
             }
          }
          echo "<br/>";
@@ -199,9 +199,9 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
    
    
    
-   function displayOid($a_oid, $a_match, $color='red') {
+   function displayOid($a_oid, $mappings_id, $a_match, $color='red') {
       global $CFG_GLPI,$LANG;
-      
+
       $style = " style='border-color: #ff0000; border-width: 2px' ";
       $is_inDB = 0;
       $checked = '';
@@ -227,7 +227,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       echo "<th colspan='3'>";
 
       if ($is_inDB == 0) {
-         echo "<input type='checkbox' name='oidsselected[]' value='".$a_oid->id."' ".$checked."/>&nbsp;";
+         echo "<input type='checkbox' name='oidsselected[]' value='".$a_oid->id."-".$mappings_id."' ".$checked."/>&nbsp;";
          echo "&nbsp;<font color='#ff0000'>";
       } else {
          echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";

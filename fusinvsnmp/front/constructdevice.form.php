@@ -51,6 +51,23 @@ Session::checkLoginUser();
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
+if (isset($_POST['update'])) {
+   // Convert in nice array, cenvert to JSON and send to server
+   $a_json = array();
+   foreach($_POST['oidsselected'] as $num) {
+      $split = explode("-", $num);
+      $a_json['mapping'][$split[1]] = array('oid_id' => $split[0],
+                                 'vlan' => $_POST['vlan_'.$split[0]],
+                                 'oid_port_dyn' => $_POST['oid_port_dyn_'.$split[0]]); 
+   }
+   echo "<pre>";
+   print_r($a_json);
+   
+   
+}
+
+print_r($_POST);exit;
+
 if (isset($_GET['vlan_update'])) {
    $query_update = "UPDATE `glpi_plugin_fusinvsnmp_constructdevice_miboids`
          SET vlan=0
