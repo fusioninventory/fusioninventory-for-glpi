@@ -1291,9 +1291,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                $task = $DB->fetch_assoc($result);
                if ($task['communication'] == 'pull') {
                   $has_recent_log_entries = $PluginFusioninventoryTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$data['id']."'
-                           AND (`date` + INTERVAL 240 MINUTE) > NOW()", "", "1");
+                           AND (`date` + INTERVAL 240 MINUTE) < NOW()", "id desc", "1");
                   # No news from the agent since 1 hour. The agent is probably crached. Let's cancel the task
-                  if (count($has_recent_log_entries) == 0) {
+                  if (count($has_recent_log_entries) == 1) {
                         $a_statustmp = $PluginFusioninventoryTaskjobstatus->find("`uniqid`='".$data['uniqid']."'
                                                    AND `plugin_fusioninventory_agents_id`='".$data['plugin_fusioninventory_agents_id']."'
                                                    AND (`state`='2' OR `state`='1') ");
@@ -1308,7 +1308,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                } else if ($task['communication'] == 'push') {
 
                   $a_valid = $PluginFusioninventoryTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$data['id']."'
-                           AND (`date`+240) < (NOW() + 0)", "", "1");
+                           AND (`date`+240) < (NOW() + 0)", "id DESC", "1");
 
                   if (count($a_valid) == '1') {
                      // Get agent status
