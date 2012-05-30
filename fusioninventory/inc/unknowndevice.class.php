@@ -568,7 +568,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       // Search free port
       $query = "SELECT `glpi_networkports`.`id` FROM `glpi_networkports`
          LEFT JOIN `glpi_networkports_networkports`
-            ON `glpi_networkports`.`id` = `networkports_id_1` OR `glpi_networkports`.`id` = `networkports_id_2`
+            ON `glpi_networkports`.`id` = `networkports_id_2`
          WHERE `itemtype`='".$this->getType()."'
             AND `items_id`='".$hub_id."'
             AND `networkports_id_1` is null
