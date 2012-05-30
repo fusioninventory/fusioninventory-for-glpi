@@ -229,4 +229,8 @@ $LANG['plugin_fusioninventory']['wizard'][7]="Exécutions de tâches";
 $LANG['plugin_fusioninventory']['wizard'][8]="Résultats d'exécution des tâches";
 
 $LANG['plugin_fusioninventory']['xml'][0]="XML";
+
+$LANG['plugin_fusioninventory']['common'][0]="Déplier";
+$LANG['plugin_fusioninventory']['common'][1]="Replier";
+$LANG['plugin_fusioninventory']['common'][2]="élément(s)";
 ?>

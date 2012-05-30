@@ -230,4 +230,7 @@ $LANG['plugin_fusioninventory']['wizard'][15]="Computers and peripherals";
 $LANG['plugin_fusioninventory']['wizard'][16]="ESX servers";
 $LANG['plugin_fusioninventory']['wizard'][17]="Network devices and printers";
 
+$LANG['plugin_fusioninventory']['common'][0]="Unfold";
+$LANG['plugin_fusioninventory']['common'][1]="Collapse";
+$LANG['plugin_fusioninventory']['common'][2]="item(s)";
 ?>

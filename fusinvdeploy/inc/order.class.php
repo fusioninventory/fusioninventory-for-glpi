@@ -96,6 +96,14 @@ class PluginFusinvdeployOrder extends CommonDBTM {
    }
 
    /**
+    * TODO:
+    * Create Orders from JSON format import/export
+    */
+   static function createOrdersFromJson($json) {
+
+   }
+
+   /**
     * Get order ID associated with a package, by type
     * @param packages_id the package ID
     * @param order_type can be self::INSTALLATION_ORDER or self::UNINSTALLATION_ORDER
@@ -118,28 +126,13 @@ class PluginFusinvdeployOrder extends CommonDBTM {
    static function getOrderDetails($status = array(), $order_type = self::INSTALLATION_ORDER) {
       $linked_types = array('PluginFusinvdeployCheck');
 
-      //get all packages id for this task
-      $packages_id = array();
-      $results_jobs = getAllDatasFromTable('glpi_plugin_fusinvdeploy_taskjobs',
-                                     "`id`='".$status['plugin_fusioninventory_taskjobs_id']."'");
 
-      foreach ($results_jobs as $jobs) {
-         $definitions = importArrayFromDB($jobs['definition']);
-         foreach($definitions as $key => $definition)
-            foreach($definition as $value) {
-               $packages_id[] = $value;
-            }
-      }
-
+      //get all jobstatus for this task
       $results = array();
-      foreach ($packages_id as $package_id) {
-         $tmp = getAllDatasFromTable('glpi_plugin_fusinvdeploy_orders',
-                                        "`plugin_fusinvdeploy_packages_id`='$package_id'" .
+      $package_id = $status['items_id'];
+      $results = getAllDatasFromTable('glpi_plugin_fusinvdeploy_orders',
+                                  "`plugin_fusinvdeploy_packages_id`='$package_id'" .
                                         " AND `type`='$order_type'");
-
-         $results = array_merge($results, $tmp);
-      }
-
 
       $orders =  array();
       if (!empty($results)) {
@@ -156,9 +149,33 @@ class PluginFusinvdeployOrder extends CommonDBTM {
          }
       }
 
-      if (!empty($orders)) $orders['uuid'] = $status['uniqid'];
+      //set uuid order to jobstatus[id]
+      if (!empty($orders)) $orders['uuid'] = $status['id'];
 
       return $orders;
+   }
+
+   static function getOrderDetailsFromPackage($package_id = 0, $order_type = self::INSTALLATION_ORDER) {
+      $orders =  array();
+      if ($package_id != 0) $order_id = PluginFusinvdeployOrder::getIdForPackage($package_id,
+         $order_type);
+      if ( isset($order_id) ) {
+         
+         $related_classes = array('PluginFusinvdeployCheck'  => 'checks',
+                                  'PluginFusinvdeployFile'   => 'associatedFiles',
+                                  'PluginFusinvdeployAction' => 'actions');
+
+         foreach ($related_classes as $class => $key) {
+               $tmp            = call_user_func(array($class,'getForOrder'),$order_id);
+               if ($key == 'associatedFiles') $orders[$key] = PluginFusinvdeployFile::getAssociatedFilesForOrder($order_id);
+               else $orders[$key] = $tmp;
+         }
+      }
+
+#      if (!empty($orders)) $orders['uuid'] = $status['uniqid'];
+
+      return $orders;
+
    }
 }
 
