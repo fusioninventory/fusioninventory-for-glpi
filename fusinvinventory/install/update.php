@@ -532,6 +532,7 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
    $input['Not Specified'] = '1';
    $input['OEM_Serial'] = '1';
    $input['SystemSerialNumb'] = '1';
+   $input['Not'] = '2';
    foreach ($input as $value=>$type) {
       $query = "SELECT * FROM `glpi_plugin_fusinvinventory_blacklists`
          WHERE `plugin_fusioninventory_criterium_id`='".$type."'
