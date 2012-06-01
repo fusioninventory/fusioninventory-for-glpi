@@ -388,33 +388,60 @@ function appear_array(id){
             $text .= "<th style='vertical-align:top;width:30%;'>";
             $text .= "<img src='".$CFG_GLPI['root_doc']."/pics/puce.gif' />".$LANG['plugin_fusioninventory']['processes'][38]."&nbsp;: ".$data['id'];
             $text .= "<td colspan=2>";
-            $devices_column = min(count($a_devices_merged[$data['id']]) , 4);
+            $devices_column = min(count($a_devices_merged[$data['id']]) , 3);
             if ($devices_column < 1) $devices_column=1;
+            $j = 1;
             for ( $i=0; $i < count($a_devices_merged[$data['id']]); $i++ ) {
                   $device = $a_devices_merged[$data['id']][$i];
-                  if ($i < 4) {
+                  if ($j < 3) {
                      $text .= "<div style='width:".(100/$devices_column)."%;display:inline-block;text-align:center'>".$device."</div>";
+                     $j++;
                   } else {
-                     if ($i == 4) {
-                        $text .= "<span id='process_definitions_".$data['id']."' style='display:none'>";
-                     }
-
                      $text .= "<div style='width:25%;display:inline-block;text-align:center'>".$device."</div>";
-
-                     if ($i == ( count($a_devices_merged[$data['id']]) - 1 ) ) {
-                        $text .= "</span>";
-                        $text .= "<a class='tab_cadre' style='margin:2px 0;padding:2px;display:block'";
-                        $text .= "   onclick=\"expand_collapse_logdef('process_definitions_".$data['id']."')\">";
-                        $text .= "<div style='width:100%;text-align:center;margin:0'>";
-                        $text .= "&nbsp;<img name='process_definitions_".$data['id']."_img' src=\"".$CFG_GLPI["root_doc"]."/pics/deplier_down.png\">&nbsp;";
-                        //Unfold title
-                        $text .= "<span id='process_definitions_".$data['id']."_expand' style='display:inline'>".$LANG['plugin_fusioninventory']['common'][0]."</span>";
-                        //Collapse title
-                        $text .= "<span id='process_definitions_".$data['id']."_collapse' style='display:none'>".$LANG['plugin_fusioninventory']['common'][1]."</span>";
-                        $text .= "</div>";
-                        $text .= "</a>";
-                     }
+                     $j = 1;
                   }
+                  if ($i == '2') {
+                     $text .= "<span id='process_definitions_".$data['id']."' style='display:none'>";
+                  }
+                  if ($i == ( count($a_devices_merged[$data['id']]) - 1 ) 
+                          AND $i > 1) {
+                     $text .= "</span>";
+                     $text .= "<a class='tab_cadre' style='margin:2px 0;padding:2px;display:block'";
+                     $text .= "   onclick=\"expand_collapse_logdef('process_definitions_".$data['id']."')\">";
+                     $text .= "<div style='width:100%;text-align:center;margin:0'>";
+                     $text .= "&nbsp;<img name='process_definitions_".$data['id']."_img' src=\"".$CFG_GLPI["root_doc"]."/pics/deplier_down.png\">&nbsp;";
+                     //Unfold title
+                     $text .= "<span id='process_definitions_".$data['id']."_expand' style='display:inline'>".$LANG['plugin_fusioninventory']['common'][0]."</span>";
+                     //Collapse title
+                     $text .= "<span id='process_definitions_".$data['id']."_collapse' style='display:none'>".$LANG['plugin_fusioninventory']['common'][1]."</span>";
+                     $text .= "</div>";
+                     $text .= "</a>";
+                  }
+                  
+                  
+//                  if ($i < 3) {
+//                     $text .= "<div style='width:".(100/$devices_column)."%;display:inline-block;text-align:center'>".$device."</div>";
+//                  } else {
+//                     if ($i == 3) {
+//                        $text .= "<span id='process_definitions_".$data['id']."' style='display:none'>";
+//                     }
+//
+//                     $text .= "<div style='width:25%;display:inline-block;text-align:center'>".$device."</div>";
+//
+//                     if ($i == ( count($a_devices_merged[$data['id']]) - 1 ) ) {
+//                        $text .= "</span>";
+//                        $text .= "<a class='tab_cadre' style='margin:2px 0;padding:2px;display:block'";
+//                        $text .= "   onclick=\"expand_collapse_logdef('process_definitions_".$data['id']."')\">";
+//                        $text .= "<div style='width:100%;text-align:center;margin:0'>";
+//                        $text .= "&nbsp;<img name='process_definitions_".$data['id']."_img' src=\"".$CFG_GLPI["root_doc"]."/pics/deplier_down.png\">&nbsp;";
+//                        //Unfold title
+//                        $text .= "<span id='process_definitions_".$data['id']."_expand' style='display:inline'>".$LANG['plugin_fusioninventory']['common'][0]."</span>";
+//                        //Collapse title
+//                        $text .= "<span id='process_definitions_".$data['id']."_collapse' style='display:none'>".$LANG['plugin_fusioninventory']['common'][1]."</span>";
+//                        $text .= "</div>";
+//                        $text .= "</a>";
+//                     }
+//                  }
             }
             $text .= "</td>";
             $text .= "</tr>";
