@@ -1541,7 +1541,7 @@ return namelist;
                $task = $DB->fetch_assoc($result);
                if ($task['communication'] == 'pull') {
                   $has_recent_log_entries = $PluginFusioninventoryTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$data['id']."'
-                           AND (`date` + INTERVAL 240 MINUTE) < NOW()", "id desc", "1");
+                           AND ADDTIME(`date`, '04:00:00') < NOW()", "id DESC", "1");
                   # No news from the agent since 1 hour. The agent is probably crached. Let's cancel the task
                   if (count($has_recent_log_entries) == 1) {
                         $a_statustmp = $PluginFusioninventoryTaskjobstatus->find("`uniqid`='".$data['uniqid']."'
@@ -1556,9 +1556,8 @@ return namelist;
                         }
                   }
                } else if ($task['communication'] == 'push') {
-
                   $a_valid = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'
-                           AND (`date`+240) < (NOW() + 0)", "id DESC", "1");
+                           AND ADDTIME(`date`, '00:10:00') < NOW()", "id DESC", "1");
 
                   if (count($a_valid) == '1') {
                      // Get agent status
