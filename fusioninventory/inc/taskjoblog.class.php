@@ -334,6 +334,14 @@ function appear_array(id){
 
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+      
+      echo "<script type='text/javascript'>
+         function expand_collapse_logdef(id) {
+            showHideElement(id,'inline', id+'_img','".$CFG_GLPI["root_doc"]."/pics/deplier_down.png','".$CFG_GLPI["root_doc"]."/pics/deplier_up.png');
+            showHideElement(id+'_expand','inline', '','','');
+            showHideElement(id+'_collapse','inline', '','','');
+         }
+      </script>";
 
 //      $text = "<center><table class='tab_cadrehov' style='width: ".$width."px'>";
       $text = "<div style='text-align:center'><table class='tab_cadrehov' style='margin:5px; width:100%; position:relative'>";

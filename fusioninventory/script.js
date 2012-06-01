@@ -79,9 +79,3 @@ function showHideElement(id,display,img_name,img_src_close,img_src_open) {
 		}
 	}
 }
-
-function expand_collapse_logdef(id) {
-   showHideElement(id,'inline', id+'_img','/teclib/glpi-univ/pics/deplier_down.png','/teclib/glpi-univ/pics/deplier_up.png');
-   showHideElement(id+'_expand','inline', '','','');
-   showHideElement(id+'_collapse','inline', '','','');
-}
