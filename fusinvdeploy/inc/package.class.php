@@ -283,7 +283,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
                   "definition LIKE '%\"PluginFusinvdeployPackage\":\"".$this->getField('id')."%'");
          foreach($taskjobs as $job) {
             $task->getFromDB($job['plugin_fusinvdeploy_tasks_id']);
-            $tasks_url .= "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/front/task.form.php?id="
+            $tasks_url .= "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/task.form.php?id="
                   .$job['plugin_fusinvdeploy_tasks_id']."'>".$task->fields['name']."</a>, ";
          }
          $tasks_url = substr($tasks_url, 0, -2);
@@ -343,9 +343,9 @@ class PluginFusinvdeployPackage extends CommonDBTM {
                      else
                         $i_check['value'] = '';
                      if (  $i_check['type'] == "fileSizeGreater" ||
-                           $i_check['type'] == "fileSizeLess" ||
+                           $i_check['type'] == "fileSizeLower" ||
                            $i_check['type'] == "fileSizeEquals" ) {
-                     # according to the requirment, We want Bytes!
+                     # according to the requirement, We want Bytes!
                         $i_check['value'] /= 1024 * 1024;
                      }
                      $i_check['ranking'] = $check_idx;
