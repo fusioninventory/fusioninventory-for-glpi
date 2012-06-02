@@ -125,22 +125,7 @@ class PluginFusinvdeployConfig extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusinvdeploy']['config'][1]."&nbsp;:</td>";
       echo "<td>";
-      Html::autocompletionTextField($config, 'server_upload_path', array(
-         'name'   => 'server_upload_path',
-         'value'  => $config->getValue($plugins_id, 'server_upload_path'),
-         'size'   => '100%'
-      ));
-      echo "</td>";
-      echo "<td colspan='2'></td>";;
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusinvdeploy']['config'][2]."&nbsp;</td>";
-      echo "<td>";
-      Dropdown::showYesNo(
-         'alert_winpath',
-         $config->getValue($plugins_id, 'alert_winpath')
-      );
+      echo "<input type='text' name='server_upload_path' value='".$config->getValue($plugins_id, 'server_upload_path')."' size='60' />";
       echo "</td>";
       echo "<td colspan='2'></td>";;
       echo "</tr>";
