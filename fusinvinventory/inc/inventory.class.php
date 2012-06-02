@@ -246,6 +246,7 @@ class PluginFusinvinventoryInventory {
             $dataEntity = $ruleEntity->processAllRules($inputent, array());
             if (isset($dataEntity['entities_id'])) {
                $_SESSION['plugin_fusioninventory_entityrestrict'] = $dataEntity['entities_id'];
+               $input['entities_id'] = $dataEntity['entities_id'];
             }
          }
          // End transfer disabled
