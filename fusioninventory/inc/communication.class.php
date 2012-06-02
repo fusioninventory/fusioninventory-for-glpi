@@ -511,6 +511,8 @@ class PluginFusioninventoryCommunication {
       $module_id = $module->getModuleId("fusioninventory");
       $users_id  = $config->getValue($module_id, 'users_id');
       $_SESSION['glpiID'] = $users_id;
+      $user->getFromDB($users_id);
+      $_SESSION["glpiname"] = $user->fields['name'];
       $_SESSION['glpiactiveprofile'] = array();
       $_SESSION['glpiactiveprofile']['interface'] = '';
       $plugin = new Plugin();
