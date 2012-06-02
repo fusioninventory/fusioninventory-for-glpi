@@ -103,12 +103,15 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    
       $fusioninventory_config      = new PluginFusioninventoryConfig();
       $PluginFusioninventoryModule = new PluginFusioninventoryModule();
+      $user = new User();
       
       $fusioninventoryModule_id    = $PluginFusioninventoryModule->getModuleId("fusioninventory");
       ob_start();
       if ($loadplugins == '1') {
          $users_id = $fusioninventory_config->getValue($fusioninventoryModule_id, 'users_id');
          $_SESSION['glpiID'] = $users_id;
+         $user->getFromDB($users_id);
+         $_SESSION["glpiname"] = $user->fields['name'];
          $_SESSION['glpiactiveprofile'] = array();
          $_SESSION['glpiactiveprofile']['interface'] = '';
             $plugin = new Plugin();
