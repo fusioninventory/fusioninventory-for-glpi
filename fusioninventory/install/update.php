@@ -437,6 +437,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "useragent",
                                  "useragent",
                                  "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "tag",
+                                 "tag",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
       $migration->migrationOneTable($newTable);
          $migration->changeField($newTable,
                                  "ID",
@@ -523,6 +527,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                               "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
          $migration->addField($newTable, 
                               "useragent", 
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable, 
+                              "tag", 
                               "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
          $migration->addKey($newTable,
                             "name");

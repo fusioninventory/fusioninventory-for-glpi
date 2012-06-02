@@ -133,10 +133,28 @@ class PluginFusinvinventoryInventory {
                unset($_SESSION["plugin_fusioninventory_manufacturerHP"]);
             }
          }
-         
-         
+                  
       // End code for HP computers
       
+      // Get tag is defined and put it in fusioninventory_agent table
+         if (isset($p_xml->CONTENT->ACCOUNTINFO)) {
+            foreach($p_xml->CONTENT->ACCOUNTINFO as $tag) {
+               if (isset($tag->KEYNAME)
+                       AND $tag->KEYNAME == 'TAG') {
+                  if (isset($tag->KEYVALUE)
+                          AND $tag->KEYVALUE != '') {
+                     $pfAgent = new PluginFusioninventoryAgent();
+                     $input = array();
+                     $input['id'] = $_SESSION['plugin_fusioninventory_agents_id'];
+                     $input['tag'] = $tag->KEYVALUE;
+                     $pfAgent->update($input);
+                  }                  
+               }
+            }
+         }
+         
+         
+         
       $pfBlacklist = new PluginFusinvinventoryBlacklist();
       $p_xml = $pfBlacklist->cleanBlacklist($p_xml);
 
