@@ -1235,7 +1235,7 @@ return namelist;
       
       ini_set('display_errors','On');
       error_reporting(E_ALL | E_STRICT);
-      set_error_handler('userErrorHandlerDebug');
+      set_error_handler(array('Toolbox','userErrorHandlerDebug'));
       
       ob_start();
       ini_set("allow_url_fopen", "1");
@@ -1329,7 +1329,7 @@ return namelist;
          ini_set('display_errors', 'On');
          // Recommended development settings
          error_reporting(E_ALL | E_STRICT);
-         set_error_handler('userErrorHandlerDebug');
+         set_error_handler(array('Toolbox','userErrorHandlerDebug'));
       } else {
          ini_set('display_errors','Off');
          error_reporting(E_ALL);
