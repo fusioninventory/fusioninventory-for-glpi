@@ -506,6 +506,7 @@ class PluginFusioninventoryCommunication {
 
       $config = new PluginFusioninventoryConfig();
       $module = new PluginFusioninventoryModule();
+      $user   = new User();
 
       ob_start();
       $module_id = $module->getModuleId("fusioninventory");
