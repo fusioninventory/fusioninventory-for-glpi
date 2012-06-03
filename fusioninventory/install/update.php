@@ -1493,6 +1493,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "comment",
                                  "comment",
                                  "text DEFAULT NULL");
+         $migration->dropKey($newTable,
+                             "plugin_fusioninventory_taskjobstatus_id");
       $migration->migrationOneTable($newTable);
          $migration->addField($newTable,
                               "id",
@@ -1516,7 +1518,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                               "comment",
                               "text DEFAULT NULL");
          $migration->addKey($newTable,
-                            array("plugin_fusioninventory_taskjobstates_id", "state"),
+                            array("plugin_fusioninventory_taskjobstates_id", "state", "date"),
                             "plugin_fusioninventory_taskjobstates_id");
       $migration->migrationOneTable($newTable);
       
