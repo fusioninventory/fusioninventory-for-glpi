@@ -105,11 +105,13 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       $sopt[2]['field']          = 'name';
       $sopt[2]['name']           = $LANG['plugin_fusioninventory']['task'][18];
       $sopt[2]['datatype']       = 'itemlink';
+      $sopt[2]['itemlink_type']  = "PluginFusioninventoryTask";
 
       $sopt[3]['table']          = 'glpi_plugin_fusioninventory_taskjobs';
       $sopt[3]['field']          = 'name';
       $sopt[3]['name']           = $LANG['plugin_fusioninventory']['task'][2];
       $sopt[3]['datatype']       = 'itemlink';
+      $sopt[3]['itemlink_type']  = "PluginFusioninventoryTaskjob";
      
       $sopt[4]['table']          = $this->getTable();
       $sopt[4]['field']          = 'state';
