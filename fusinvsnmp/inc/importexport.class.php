@@ -385,7 +385,9 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
                   break;
 
             }
-            $mapping_type = $child->mapping_type;
+            if ($mapping_type == '') {
+               $mapping_type = $child->mapping_type;
+            }
          }
          if (isset($child->mapping_name)) {
             $mapping_name = $child->mapping_name;
