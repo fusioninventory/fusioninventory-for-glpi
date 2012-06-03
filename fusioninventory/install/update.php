@@ -13,7 +13,7 @@
    This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
+   it under the termas of the GNU Affero General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
 
@@ -459,10 +459,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "items_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
-                                 "device_type",
-                                 "itemtype",
-                                 "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
                                  "lock",
                                  "lock",
                                  "tinyint(1) NOT NULL DEFAULT '0'");
@@ -532,9 +528,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                             "name");
          $migration->addKey($newTable,
                             "device_id");
-         $migration->addKey($newTable,
-                            array("itemtype", "items_id"),
-                            "item");
          $migration->addKey($newTable,
                             "items_id");
 
