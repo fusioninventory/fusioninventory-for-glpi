@@ -161,25 +161,25 @@ class PluginFusinvinventoryESX extends PluginFusioninventoryCommunication {
     * 
     * @return $response array
     */
-   function run($a_Taskjobstatus, $response) {
+   function run($a_Taskjobstates, $response) {
       $response      = array();
-      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $credential    = new PluginFusioninventoryCredential();
       $credentialip  = new PluginFusioninventoryCredentialIp();
       
-      foreach ($a_Taskjobstatus as $taskjobstatusdatas) {
-         $credentialip->getFromDB($taskjobstatusdatas['items_id']);
+      foreach ($a_Taskjobstates as $taskjobstatedatas) {
+         $credentialip->getFromDB($taskjobstatedatas['items_id']);
          $credential->getFromDB($credentialip->fields['plugin_fusioninventory_credentials_id']);
          $responsetmp = array();
-         $responsetmp['uuid']        = $taskjobstatusdatas['id'];
+         $responsetmp['uuid']        = $taskjobstatedatas['id'];
          $responsetmp['host']        = $credentialip->fields['ip'];
          $responsetmp['user']        = $credential->fields['username'];
          $responsetmp['password']    = $credential->fields['password'];
          $response['jobs'][] = $responsetmp;
          
-         $pfTaskjobstatus->changeStatus($taskjobstatusdatas['id'], 1);
-         $pfTaskjoblog->addTaskjoblog($taskjobstatusdatas['id'],
+         $pfTaskjobstate->changeStatus($taskjobstatedatas['id'], 1);
+         $pfTaskjoblog->addTaskjoblog($taskjobstatedatas['id'],
                                  '0',
                                  'PluginFusioninventoryAgent',
                                  '1',

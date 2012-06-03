@@ -1540,15 +1540,15 @@ return namelist;
             if ($DB->numrows($result) != 0) {
                $task = $DB->fetch_assoc($result);
                if ($task['communication'] == 'pull') {
-                  $has_recent_log_entries = $PluginFusioninventoryTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$data['id']."'
+                  $has_recent_log_entries = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$data['id']."'
                            AND ADDTIME(`date`, '04:00:00') < NOW()", "id DESC", "1");
                   # No news from the agent since 1 hour. The agent is probably crached. Let's cancel the task
                   if (count($has_recent_log_entries) == 1) {
-                        $a_statustmp = $PluginFusioninventoryTaskjobstatus->find("`uniqid`='".$data['uniqid']."'
+                        $a_statustmp = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'
                                                    AND `plugin_fusioninventory_agents_id`='".$data['plugin_fusioninventory_agents_id']."'
                                                    AND (`state`='2' OR `state`='1') ");
                         foreach($a_statustmp as $datatmp) {
-                           $PluginFusioninventoryTaskjobstatus->changeStatusFinish($datatmp['id'],
+                           $pfTaskjobstate->changeStatusFinish($datatmp['id'],
                                                                0,
                                                                '',
                                                                1,
@@ -1698,25 +1698,28 @@ return namelist;
       }
    }
 
+   
+   
    function forceEnd() {
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
-      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
 
       $a_taskjobstatuses =
-         $PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='". $this->fields["id"]."'");
+         $pfTaskjobstate->find("`plugin_fusioninventory_taskjobs_id`='". $this->fields["id"]."'");
 
       //TODO: in order to avoid too many atomic operations on DB, convert the
       //following into a massive prepared operation (ie. ids in one massive action)
       foreach($a_taskjobstatuses as $a_taskjobstatus) {
-         $PluginFusioninventoryTaskjobstatus->getFromDB($a_taskjobstatus['id']);
-         if ($a_taskjobstatus['state'] != PluginFusioninventoryTaskjobstatus::FINISHED) {
-               $PluginFusioninventoryTaskjobstatus->changeStatusFinish(
+         $pfTaskjobstate->getFromDB($a_taskjobstatus['id']);
+         if ($a_taskjobstatus['state'] != PluginFusioninventoryTaskjobstate::FINISHED) {
+               $pfTaskjobstate->changeStatusFinish(
                      $a_taskjobstatus['id'], 0, '', 1, "Action cancelled by user", 0, 0
                );
          }
       }
       $this->reinitializeTaskjobs($this->fields['plugin_fusioninventory_tasks_id']);
    }
+   
+   
    
    static function getAllowurlfopen($wakecomputer=0) {
       global $LANG;
