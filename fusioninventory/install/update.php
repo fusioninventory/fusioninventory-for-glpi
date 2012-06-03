@@ -426,10 +426,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "items_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
-                                 "itemtype",
-                                 "itemtype",
-                                 "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
                                  "token",
                                  "token",
                                  "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
@@ -492,6 +488,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                "logs");
          $migration->dropField($newTable, 
                                "fragment");
+         $migration->dropField($newTable, 
+                               "itemtype");
+         $migration->dropField($newTable, 
+                               "device_type");
          $migration->dropKey($newTable, 
                              "key");
       $migration->migrationOneTable($newTable);
@@ -519,9 +519,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addField($newTable, 
                               "items_id", 
                               "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable, 
-                              "itemtype", 
-                              "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
          $migration->addField($newTable, 
                               "token", 
                               "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");

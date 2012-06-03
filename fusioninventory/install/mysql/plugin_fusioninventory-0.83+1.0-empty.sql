@@ -35,7 +35,6 @@ CREATE TABLE `glpi_plugin_fusioninventory_agents` (
    `lock` tinyint(1) NOT NULL DEFAULT '0',
    `device_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'XML <DEVICE_ID> TAG VALUE',
    `items_id` int(11) NOT NULL DEFAULT '0',
-   `itemtype` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
    `token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `useragent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `tag` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
