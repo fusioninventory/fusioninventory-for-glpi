@@ -163,8 +163,12 @@ if (!isset($_GET['wizz'])) {
          }
          $_SESSION['plugin_fusioninventory_wizard']['credentialips_id'] = $credentialips_id;
       }
-      $url = $_SERVER['PHP_SELF']."?wizz=".$_POST['nexturl'];
-      $url = str_replace("wizard.form.php", "wizard.php", $url);
+      if (isset($_POST['nexturl'])) {
+         $url = $_SERVER['PHP_SELF']."?wizz=".$_POST['nexturl'];
+         $url = str_replace("wizard.form.php", "wizard.php", $url);
+      } else {
+         $url = $_SERVER['PHP_SELF'];
+      }
       Html::redirect($url);
    } else {
       $a_split = explode("?", $_SERVER['HTTP_REFERER']);
