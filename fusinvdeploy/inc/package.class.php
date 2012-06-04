@@ -84,10 +84,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       return $ong;
    }
 
-//   function showList() {
-//      self::title();
-//      Search::show('PluginFusinvdeployPackage');
-//   }
+   
 
    function getSearchOptions() {
       global $LANG;
@@ -173,16 +170,20 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       $this->showList();
    }
 
-//   function showList() {
-//      echo "<center>";
-//      echo "<table class='tab_cadre_navigation'><tr><td>";
-//
-//      self::title();
-//      Search::show('PluginFusinvdeployPackage');
-//
-//      echo "</td></tr></table>";
-//      echo "</center>";
-//   }
+   
+   
+   function showList() {
+      echo "<center>";
+      echo "<table class='tab_cadre_navigation'><tr><td>";
+
+      self::title();
+      Search::show('PluginFusinvdeployPackage');
+
+      echo "</td></tr></table>";
+      echo "</center>";
+   }
+   
+   
 
    function showForm($ID, $options=array()) {
       global $DB,$CFG_GLPI,$LANG;
