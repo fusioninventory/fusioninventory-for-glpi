@@ -68,8 +68,6 @@ $LANG['plugin_fusioninventory']['agents'][45]="Ausnahmen";
 $LANG['plugin_fusioninventory']['agents'][4]="Letzter Kontakt";
 $LANG['plugin_fusioninventory']['agents'][6]="Deaktiviert";
 
-$LANG['plugin_fusioninventory']['buttons'][0]="Ende";
-
 $LANG['plugin_fusioninventory']['choice'][0]="Nein";
 $LANG['plugin_fusioninventory']['choice'][1]="Ja";
 $LANG['plugin_fusioninventory']['choice'][2]="oder";
@@ -143,7 +141,6 @@ $LANG['plugin_fusioninventory']['rules'][13]="Seriennummer Festplatte";
 $LANG['plugin_fusioninventory']['rules'][14]="Seriennummer Partition";
 $LANG['plugin_fusioninventory']['rules'][15]="UUID";
 $LANG['plugin_fusioninventory']['rules'][16]="FusionInventory Tag";
-$LANG['plugin_fusioninventory']['rules'][17]="Import nicht erlaubt";
 $LANG['plugin_fusioninventory']['rules'][18]="Gerät erstellt";
 $LANG['plugin_fusioninventory']['rules'][2]="Importregeln für Geräte";
 $LANG['plugin_fusioninventory']['rules'][3]="Durchsuche GLPI nach Material mit dem Status";

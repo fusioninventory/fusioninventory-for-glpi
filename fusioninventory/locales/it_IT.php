@@ -68,8 +68,6 @@ $LANG['plugin_fusioninventory']['agents'][45]="Eccezioni";
 $LANG['plugin_fusioninventory']['agents'][4]="Ultimo Contatto dell'agente";
 $LANG['plugin_fusioninventory']['agents'][6]="Disabilita";
 
-$LANG['plugin_fusioninventory']['buttons'][0]="Fine";
-
 $LANG['plugin_fusioninventory']['choice'][0]="No";
 $LANG['plugin_fusioninventory']['choice'][1]="Si";
 $LANG['plugin_fusioninventory']['choice'][2]="o";
@@ -143,7 +141,6 @@ $LANG['plugin_fusioninventory']['rules'][13]="Numero di serie del disco rigido";
 $LANG['plugin_fusioninventory']['rules'][14]="Numero di serie della partitione disco";
 $LANG['plugin_fusioninventory']['rules'][15]="uuid";
 $LANG['plugin_fusioninventory']['rules'][16]="Etichetta FusionInventory";
-$LANG['plugin_fusioninventory']['rules'][17]="Importo rifiutato";
 $LANG['plugin_fusioninventory']['rules'][18]="Dispositivo creato";
 $LANG['plugin_fusioninventory']['rules'][2]="Regole d'importo e di associazione dei materiali";
 $LANG['plugin_fusioninventory']['rules'][3]="Cerca hardware GLPI con lo stato";

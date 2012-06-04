@@ -68,8 +68,6 @@ $LANG['plugin_fusioninventory']['agents'][45]="Exceptions";
 $LANG['plugin_fusioninventory']['agents'][4]="Last contact";
 $LANG['plugin_fusioninventory']['agents'][6]="disable";
 
-$LANG['plugin_fusioninventory']['buttons'][0]="Finish";
-
 $LANG['plugin_fusioninventory']['choice'][0]="Hayır";
 $LANG['plugin_fusioninventory']['choice'][1]="Evet";
 $LANG['plugin_fusioninventory']['choice'][2]="veya";
@@ -143,7 +141,6 @@ $LANG['plugin_fusioninventory']['rules'][13]="Hard disk serial number";
 $LANG['plugin_fusioninventory']['rules'][14]="Partition serial number";
 $LANG['plugin_fusioninventory']['rules'][15]="UUID";
 $LANG['plugin_fusioninventory']['rules'][16]="FusionInventory tag";
-$LANG['plugin_fusioninventory']['rules'][17]="Import denied";
 $LANG['plugin_fusioninventory']['rules'][18]="Device created";
 $LANG['plugin_fusioninventory']['rules'][2]="Equipment import and link rules";
 $LANG['plugin_fusioninventory']['rules'][3]="Search GLPI equipment with the status";

@@ -68,8 +68,6 @@ $LANG['plugin_fusioninventory']['agents'][45]="Exceções";
 $LANG['plugin_fusioninventory']['agents'][4]="Último contato";
 $LANG['plugin_fusioninventory']['agents'][6]="desabilitar";
 
-$LANG['plugin_fusioninventory']['buttons'][0]="Pronto";
-
 $LANG['plugin_fusioninventory']['choice'][0]="Não";
 $LANG['plugin_fusioninventory']['choice'][1]="Sim";
 $LANG['plugin_fusioninventory']['choice'][2]="ou";
@@ -143,7 +141,6 @@ $LANG['plugin_fusioninventory']['rules'][13]="Número de série do disco rígido
 $LANG['plugin_fusioninventory']['rules'][14]="Número de série da partição";
 $LANG['plugin_fusioninventory']['rules'][15]="uuid";
 $LANG['plugin_fusioninventory']['rules'][16]="FusionInventory tag";
-$LANG['plugin_fusioninventory']['rules'][17]="Importação negada";
 $LANG['plugin_fusioninventory']['rules'][18]="Dispositivo criado";
 $LANG['plugin_fusioninventory']['rules'][2]="Importação de equipamentos e regras de ligação";
 $LANG['plugin_fusioninventory']['rules'][3]="Pesquisa equipamentos GLPI com o status";

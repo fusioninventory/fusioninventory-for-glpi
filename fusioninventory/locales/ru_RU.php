@@ -68,8 +68,6 @@ $LANG['plugin_fusioninventory']['agents'][45]="Исключения";
 $LANG['plugin_fusioninventory']['agents'][4]="Последняя связь";
 $LANG['plugin_fusioninventory']['agents'][6]="Oтключить";
 
-$LANG['plugin_fusioninventory']['buttons'][0]="Завершить";
-
 $LANG['plugin_fusioninventory']['choice'][0]="Нет";
 $LANG['plugin_fusioninventory']['choice'][1]="Да";
 $LANG['plugin_fusioninventory']['choice'][2]="или";
@@ -143,7 +141,6 @@ $LANG['plugin_fusioninventory']['rules'][13]="Серийный номер HDD";
 $LANG['plugin_fusioninventory']['rules'][14]="Серийный номер раздела";
 $LANG['plugin_fusioninventory']['rules'][15]="uuid";
 $LANG['plugin_fusioninventory']['rules'][16]="FusionInventory tag";
-$LANG['plugin_fusioninventory']['rules'][17]="Импорт запрещен";
 $LANG['plugin_fusioninventory']['rules'][18]="Устройство создано";
 $LANG['plugin_fusioninventory']['rules'][2]="Импорт оборудования и ссылок правил";
 $LANG['plugin_fusioninventory']['rules'][3]="Поиск GLPI оборудования со статусом";

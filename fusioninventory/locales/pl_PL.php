@@ -68,8 +68,6 @@ $LANG['plugin_fusioninventory']['agents'][45]="Wykluczenia";
 $LANG['plugin_fusioninventory']['agents'][4]="Ostatni kontakt";
 $LANG['plugin_fusioninventory']['agents'][6]="wyłączone";
 
-$LANG['plugin_fusioninventory']['buttons'][0]="Ukończone";
-
 $LANG['plugin_fusioninventory']['choice'][0]="Nie";
 $LANG['plugin_fusioninventory']['choice'][1]="Tak";
 $LANG['plugin_fusioninventory']['choice'][2]="lub";
@@ -143,7 +141,6 @@ $LANG['plugin_fusioninventory']['rules'][13]="Numer seryjny dysku twardego";
 $LANG['plugin_fusioninventory']['rules'][14]="Numer seryjny partycji";
 $LANG['plugin_fusioninventory']['rules'][15]="UUID";
 $LANG['plugin_fusioninventory']['rules'][16]="Tag z Fusioninventory";
-$LANG['plugin_fusioninventory']['rules'][17]="Import niemożliwy";
 $LANG['plugin_fusioninventory']['rules'][18]="Urządzenie utworzono";
 $LANG['plugin_fusioninventory']['rules'][2]="Reguły importu sprzętu i kojarzenia";
 $LANG['plugin_fusioninventory']['rules'][3]="Znajdź zasoby GLPI ze statusem";

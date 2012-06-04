@@ -68,8 +68,6 @@ $LANG['plugin_fusioninventory']['agents'][45]="Exceptions";
 $LANG['plugin_fusioninventory']['agents'][4]="Dernier contact de l'agent";
 $LANG['plugin_fusioninventory']['agents'][6]="Désactivé";
 
-$LANG['plugin_fusioninventory']['buttons'][0]="Fin";
-
 $LANG['plugin_fusioninventory']['choice'][0]="Non";
 $LANG['plugin_fusioninventory']['choice'][1]="Oui";
 $LANG['plugin_fusioninventory']['choice'][2]="ou";
@@ -143,7 +141,6 @@ $LANG['plugin_fusioninventory']['rules'][13]="Numéro de série du disque dur";
 $LANG['plugin_fusioninventory']['rules'][14]="Numéro de série de partition disque";
 $LANG['plugin_fusioninventory']['rules'][15]="uuid";
 $LANG['plugin_fusioninventory']['rules'][16]="Etiquette FusionInventory";
-$LANG['plugin_fusioninventory']['rules'][17]="Import refusé";
 $LANG['plugin_fusioninventory']['rules'][18]="Equipement créé";
 $LANG['plugin_fusioninventory']['rules'][19] = "Ignored import devices";
 $LANG['plugin_fusioninventory']['rules'][2]="Règles d'import et de liaison des matériels";

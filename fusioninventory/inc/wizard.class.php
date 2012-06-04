@@ -234,7 +234,7 @@ class PluginFusioninventoryWizard {
       echo "</td>";
       echo "<td align='right' style='background-color: #e1cc7b;' height='30'>";
       if (isset($options['finish'])) {
-         echo "<input class='submit' type='submit' name='next' value='".$LANG['plugin_fusioninventory']['buttons'][0]."'
+         echo "<input class='submit' type='submit' name='next' value='".$LANG['plugin_fusioninventory']['task'][53]."'
                onclick='window.location.href=\"".$CFG_GLPI['root_doc']."/plugins/fusioninventory/\"'/>";
 
       } else {

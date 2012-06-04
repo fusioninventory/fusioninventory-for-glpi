@@ -93,7 +93,6 @@ $LANG['plugin_fusioninventory']['rules'][13] = "Hard disk serial number";
 $LANG['plugin_fusioninventory']['rules'][14] = "Partition serial number";
 $LANG['plugin_fusioninventory']['rules'][15] = "UUID";
 $LANG['plugin_fusioninventory']['rules'][16] = "FusionInventory tag";
-$LANG['plugin_fusioninventory']['rules'][17] = "Import denied";
 $LANG['plugin_fusioninventory']['rules'][18] = "Device created";
 $LANG['plugin_fusioninventory']['rules'][19] = "Ignored import devices";
 $LANG['plugin_fusioninventory']['rules'][20] = "Rule import logs";
@@ -222,8 +221,6 @@ $LANG['plugin_fusioninventory']['iprange'][1]="End of IP range";
 $LANG['plugin_fusioninventory']['iprange'][2]="IP Ranges";
 $LANG['plugin_fusioninventory']['iprange'][3]="Query";
 $LANG['plugin_fusioninventory']['iprange'][7]="Bad IP";
-
-$LANG['plugin_fusioninventory']['buttons'][0]="Finish";
 
 $LANG['plugin_fusioninventory']['wizard'][0]="Action choice";
 $LANG['plugin_fusioninventory']['wizard'][1]="Type of device to inventory";

@@ -68,8 +68,6 @@ $LANG['plugin_fusioninventory']['agents'][45]="Excepciones";
 $LANG['plugin_fusioninventory']['agents'][4]="Último contacto";
 $LANG['plugin_fusioninventory']['agents'][6]="desactivado";
 
-$LANG['plugin_fusioninventory']['buttons'][0]="Terminado";
-
 $LANG['plugin_fusioninventory']['choice'][0]="No";
 $LANG['plugin_fusioninventory']['choice'][1]="Sí";
 $LANG['plugin_fusioninventory']['choice'][2]="o";
@@ -143,7 +141,6 @@ $LANG['plugin_fusioninventory']['rules'][13]="Número de serie del disco duro";
 $LANG['plugin_fusioninventory']['rules'][14]="Número de serie de la partición del disco";
 $LANG['plugin_fusioninventory']['rules'][15]="UUID";
 $LANG['plugin_fusioninventory']['rules'][16]="Etiqueta FusionInventory";
-$LANG['plugin_fusioninventory']['rules'][17]="Importación denegada";
 $LANG['plugin_fusioninventory']['rules'][18]="Dispositivo creado";
 $LANG['plugin_fusioninventory']['rules'][2]="Reglas de importación y actualización de bienes";
 $LANG['plugin_fusioninventory']['rules'][3]="Buscar equipo GLPI con estado";
