@@ -352,6 +352,12 @@ class PluginFusioninventoryTask extends CommonDBTM {
    function taskMenu() {
       global $DB,$CFG_GLPI;
 
+      $genericsearch = 0;
+      if (isset($_GET['field'])) {
+         $genericsearch = 1;
+         $gettemp = $_GET;
+      }
+      
       if (!isset($_GET['see'])) {
          $_GET['see'] = 'next';
       }
@@ -376,8 +382,6 @@ class PluginFusioninventoryTask extends CommonDBTM {
       }
       
       Search::manageGetValues($this->getType());
-      //Search::showGenericSearch($this->getType(), $_GET);
-
       
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
@@ -446,8 +450,25 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "</tr>";
       echo "</table>";
       
-      echo "<div class='center' id='searchform' style='display:none'>";
+
+      if ($genericsearch == '1') {
+         echo "<div class='center' id='searchform'>";
+         unset($_GET['view']);
+         $_GET = $gettemp;
+      } else {
+         echo "<div class='center' id='searchform' style='display:none'>";
+         $gettemp = $_GET;
+         unset($_GET);
+      }
+      
+//      Search::show($this->getType());
+      Search::manageGetValues($this->getType());
       Search::showGenericSearch($this->getType(), $_GET);
+      if ($genericsearch == '1') {
+         Search::showList($this->getType(), $_GET);
+      }
+      
+      $_GET = $gettemp;
       echo "</div>";
    }
 

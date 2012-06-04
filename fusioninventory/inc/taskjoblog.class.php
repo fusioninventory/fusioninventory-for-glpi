@@ -817,7 +817,7 @@ function appear_array(id){
    
    function getDivState($state, $type='div') {
       global $LANG;
-      
+
       switch ($state) {
 
          case 7:

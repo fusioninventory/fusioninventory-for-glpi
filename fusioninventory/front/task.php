@@ -58,7 +58,9 @@ $pfTask = new PluginFusioninventoryTask();
 $pfTask->menuTasksLogs();
 
 $pfTask->taskMenu();
-$pfTask->displayTaks($_GET['see']);
+if (isset($_GET['see'])) {
+   $pfTask->displayTaks($_GET['see']);
+}
 
 //$_GET['target']="task.php";
 //
