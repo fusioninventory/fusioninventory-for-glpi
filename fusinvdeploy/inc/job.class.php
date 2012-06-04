@@ -132,7 +132,7 @@ class PluginFusinvdeployJob {
         $taskjob->update($jobstatus);
      }*/
      $taskjoblog = new PluginFusioninventoryTaskjoblog();
-     $tmp['plugin_fusioninventory_taskjobstatus_id'] = $jobstate->fields['id'];
+     $tmp['plugin_fusioninventory_taskjobstates_id'] = $jobstate->fields['id'];
      $tmp['itemtype']                                = $jobstate->fields['itemtype'];
      $tmp['items_id']                                = $jobstate->fields['items_id'];
      $tmp['date']                                    = date("Y-m-d H:i:s");

@@ -178,7 +178,7 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
                $jobstates_id= $jobstate->add($c_input);
 
                //Add log of taskjob
-               $c_input['plugin_fusioninventory_taskjobstatus_id'] = $jobstates_id;
+               $c_input['plugin_fusioninventory_taskjobstates_id'] = $jobstates_id;
                $c_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
                $taskvalid++;
                $joblog->add($c_input);

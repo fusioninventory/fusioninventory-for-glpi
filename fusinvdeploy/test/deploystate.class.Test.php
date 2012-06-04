@@ -67,16 +67,16 @@ class DeploystateTest extends PHPUnit_Framework_TestCase
 
       //delete old taskjoblogs and taskjobstatus
       $query = "SELECT id
-         FROM glpi_plugin_fusioninventory_taskjobstatus
+         FROM glpi_plugin_fusioninventory_taskjobstates
          WHERE plugin_fusioninventory_taskjobs_id = '$taskjob_id'";
       $res = $DB->query($query);
       while ($row = $DB->fetch_assoc($res)) {
          $query_logs = "DELETE FROM glpi_plugin_fusioninventory_taskjoblogs
-            WHERE plugin_fusioninventory_taskjobstatus_id = '".$row['id']."'";
+            WHERE plugin_fusioninventory_taskjobstates_id = '".$row['id']."'";
          $res_logs = $DB->query($query_logs);
       }
 
-      $query = "DELETE FROM glpi_plugin_fusioninventory_taskjobstatus
+      $query = "DELETE FROM glpi_plugin_fusioninventory_taskjobstates
          WHERE plugin_fusioninventory_taskjobs_id = '$taskjob_id'";
       $res = $DB->query($query);*/
    }
