@@ -154,7 +154,7 @@ class PluginFusinvdeployStaticmisc {
       return self::getDeployActions();
    }
 
-   static function task_definitionselection_Computer_deployinstall() {
+   static function task_actionselection_Computer_deployinstall() {
       $options = array();
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
@@ -162,7 +162,7 @@ class PluginFusinvdeployStaticmisc {
       $options['condition']   = '`id` IN (SELECT `items_id` FROM `glpi_plugin_fusioninventory_agents`)';
       return Dropdown::show("Computer", $options);
    }
-   static function task_definitionselection_Computer_deployuninstall() {
+   static function task_actionselection_Computer_deployuninstall() {
       $options = array();
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
@@ -171,7 +171,7 @@ class PluginFusinvdeployStaticmisc {
       return Dropdown::show("Computer", $options);
    }
 
-   static function task_definitionselection_Group_deployinstall() {
+   static function task_actionselection_Group_deployinstall() {
       $options = array();
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
