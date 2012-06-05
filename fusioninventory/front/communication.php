@@ -148,9 +148,10 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       } else {
          $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
       }
+      
       $ssl = $fusioninventory_config->getValue($fusioninventoryModule_id, 'ssl_only');
-      if (((isset($_SERVER["HTTPS"])) and ($_SERVER["HTTPS"] == "on") and ($ssl == "1"))
-          or ($ssl == "0")) {
+      if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"))
+          OR ($ssl == "0")) {
          // echo "On continue";
       } else {
          logDebug(ob_get_contents());
