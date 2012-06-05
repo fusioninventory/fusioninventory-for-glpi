@@ -69,8 +69,6 @@ error_reporting(E_ALL | E_STRICT);
 set_error_handler('userErrorHandlerDebug');
 $_SESSION['glpi_use_mode'] = 2;
 
-ob_end_clean();
-
 if (!class_exists("PluginFusioninventoryConfig")) {
    echo "<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
@@ -106,7 +104,6 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       $user = new User();
       
       $fusioninventoryModule_id    = $PluginFusioninventoryModule->getModuleId("fusioninventory");
-      ob_start();
       if ($loadplugins == '1') {
          $users_id = $fusioninventory_config->getValue($fusioninventoryModule_id, 'users_id');
          $_SESSION['glpiID'] = $users_id;
@@ -128,7 +125,6 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
                doHook("post_init");
             }
       }
-      ob_end_clean();
       
       // Get compression of XML
       $xml = '';
@@ -152,12 +148,13 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       } else {
          $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
       }
-      
       $ssl = $fusioninventory_config->getValue($fusioninventoryModule_id, 'ssl_only');
-      if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"))
-          OR ($ssl == "0")) {
+      if (((isset($_SERVER["HTTPS"])) and ($_SERVER["HTTPS"] == "on") and ($ssl == "1"))
+          or ($ssl == "0")) {
          // echo "On continue";
       } else {
+         logDebug(ob_get_contents());
+         ob_end_clean();
          $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
    <REPLY>
    </REPLY>");
@@ -181,6 +178,8 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          $pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA);
 
          if (!$pxml) {
+            logDebug(ob_get_contents());
+            ob_end_clean();
             $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
 <ERROR>XML not well formed!</ERROR>
@@ -198,6 +197,9 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    
       $top0 = 0;
       $top0 = gettimeofday();
+
+      logDebug(ob_get_contents());
+      ob_end_clean();
       if (!$communication->import($pxml)) {
    
          if (isset($pxml->DEVICEID)) {
@@ -216,12 +218,16 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
             $communication->addProlog();
             $communication->setXML($communication->getXML());
    
+            logDebug(ob_get_contents());
+            ob_end_clean();
             echo $communication->getSend($compressmode);
          }
       } else {
          $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
 </REPLY>");
+         logDebug(ob_get_contents());
+         ob_end_clean();
          $communication->emptyAnswer($compressmode);
       }
    }   
