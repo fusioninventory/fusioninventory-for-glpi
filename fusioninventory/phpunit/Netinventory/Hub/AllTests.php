@@ -288,15 +288,15 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
  
 
       
-      $switch2 = str_replace("</CONNECTIONS>
+      $switch2bis = str_replace("</CONNECTIONS>
           <IFDESCR>FastEthernet0/1</IFDESCR>", "               <CONNECTION>
                <MAC>00:23:18:cf:0d:93</MAC>
                </CONNECTION>
             </CONNECTIONS>
-          <IFDESCR>FastEthernet0/1</IFDESCR>", $switch2);
+          <IFDESCR>FastEthernet0/1</IFDESCR>", $switch2bis);
 
       // * 3. Update switchs
-      $this->testSendinventory("toto", $switch2);
+      $this->testSendinventory("toto", $switch2bis);
          // CHECK 1 : verify hub always here and connected
          $a_ports = $networkPort->find("`itemtype`='NetworkEquipment'
                AND `items_id`='".$a_switch['id']."'");
@@ -368,15 +368,15 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
                                     count($a_list_connections).')');
 
       $switch2bis = $switch2;
-      $switch2 = str_replace("</CONNECTIONS>
+      $switch2bis = str_replace("</CONNECTIONS>
           <IFDESCR>FastEthernet0/2</IFDESCR>", "               <CONNECTION>
                <MAC>f0:ad:4e:00:19:f7</MAC>
                </CONNECTION>
             </CONNECTIONS>
-          <IFDESCR>FastEthernet0/2</IFDESCR>", $switch2);
+          <IFDESCR>FastEthernet0/2</IFDESCR>", $switch2bis);
       
       // * 5. Update switchs
-      $this->testSendinventory("toto", $switch2);
+      $this->testSendinventory("toto", $switch2bis);
          // CHECK 1 : verify hub deleted
          $a_list_hub = $pluginFusioninventoryUnknownDevice->find("`hub`='1'");
          $this->assertEquals(count($a_list_hub),
@@ -448,7 +448,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
             <CONNECTION>
               <IFDESCR>fa0/2</IFDESCR>
               <IP>192.168.30.51</IP>
-            </CONNECTION>", $switch1bis);
+            </CONNECTION>", $switch1);
       $this->testSendinventory("toto", $switch1biscdp);
         // CHECK 1 : Verify have no hub on port 1 of switch 1
          $a_ports = $networkPort->find("`itemtype`='NetworkEquipment'
