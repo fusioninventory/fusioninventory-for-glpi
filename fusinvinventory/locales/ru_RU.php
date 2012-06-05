@@ -43,7 +43,7 @@
 
 
 $LANG['plugin_fusinvinventory']['antivirus'][0]="Антивирус";
-$LANG['plugin_fusinvinventory']['antivirus'][1]="Нет антивируса на этом компьютере";
+$LANG['plugin_fusinvinventory']['antivirus'][1]="This computer is not a Windows Desktop >";
 $LANG['plugin_fusinvinventory']['antivirus'][2]="Версия";
 $LANG['plugin_fusinvinventory']['antivirus'][3]="Обновление";
 

@@ -43,7 +43,7 @@
 
 
 $LANG['plugin_fusinvinventory']['antivirus'][0]="Antivirus";
-$LANG['plugin_fusinvinventory']['antivirus'][1]="Nessun antivirus nel computer";
+$LANG['plugin_fusinvinventory']['antivirus'][1]="This computer is not a Windows Desktop >";
 $LANG['plugin_fusinvinventory']['antivirus'][2]="Versione";
 $LANG['plugin_fusinvinventory']['antivirus'][3]="Aggiornato";
 

@@ -55,6 +55,7 @@ $LANG['plugin_fusinvsnmp']['codetasklog'][5]="Update the item";
 $LANG['plugin_fusinvsnmp']['codetasklog'][6]="Inventory started";
 $LANG['plugin_fusinvsnmp']['codetasklog'][7]="Detaglio";
 
+$LANG['plugin_fusinvsnmp']['config'][10]="Ports types to import (for network equipments)";
 $LANG['plugin_fusinvsnmp']['config'][3]="Inventario di rete (SNMP)";
 $LANG['plugin_fusinvsnmp']['config'][4]="Scansione rete";
 $LANG['plugin_fusinvsnmp']['config'][8]="Mai";

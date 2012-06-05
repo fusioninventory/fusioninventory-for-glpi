@@ -43,7 +43,7 @@
 
 
 $LANG['plugin_fusinvinventory']['antivirus'][0]="Viirusetõrje";
-$LANG['plugin_fusinvinventory']['antivirus'][1]="No antivirus on this computer";
+$LANG['plugin_fusinvinventory']['antivirus'][1]="This computer is not a Windows Desktop >";
 $LANG['plugin_fusinvinventory']['antivirus'][2]="Versioon";
 $LANG['plugin_fusinvinventory']['antivirus'][3]="Ajakohane";
 
