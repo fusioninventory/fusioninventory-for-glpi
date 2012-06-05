@@ -348,13 +348,13 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
             </CONNECTION>", "", $switch1bis);
       
       $switch1bis = str_replace("<CONNECTION>
-              <MAC>f0:ad:4e:10:39:f9</MAC>
+              <MAC>00:23:18:cf:0d:93</MAC>
             </CONNECTION>", "", $switch1bis);
 
       // * 4. Update switchs
       $this->testSendinventory("toto", $switch1bis);
       //$this->testSendinventory("toto", $switch2);
-         // CHECK 1 : verify hub deleted and port 1 of switch 1 connected directly to port
+         // CHECK 1 : verify hub always on port 1 of switch 1 
          $a_ports = $networkPort->find("`itemtype`='NetworkEquipment'
                AND `items_id`='".$a_switch['id']."'");
          $this->assertEquals(count($a_ports), 1, '(4)switch 1 haven\'t port fa0/1 added in GLPI');
