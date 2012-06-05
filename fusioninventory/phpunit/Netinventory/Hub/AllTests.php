@@ -428,7 +428,8 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
             $pfUnknownDevice->getFromDB($networkPort->fields['items_id']);
             $this->assertEquals($pfUnknownDevice->fields['hub'],
-                              '1', '(6) Hub not connected on port fa0/1 of switch 1'.print_r($networkPort->fields, true));
+                              '1', '(6) Hub not connected on port fa0/1 of switch 1'.print_r($networkPort->fields, true)." , "
+                              .print_r($pfUnknownDevice->fields, true));
          } else {
             $t = 0;
             $this->assertEquals($t, '1', '(6) Hub not connected on port fa0/1 of switch 1, '.print_r($networkPort->fields, true));
