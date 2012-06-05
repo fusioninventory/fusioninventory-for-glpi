@@ -358,7 +358,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
             $pluginFusioninventoryUnknownDevice->getFromDB($networkPort->fields['items_id']);
             $this->assertEquals($pluginFusioninventoryUnknownDevice->fields['hub'],
-                              '1', '(4)Hub not connected on port fa0/1 of switch 1');
+                              '0', '(4)Hub not connected on port fa0/1 of switch 1');
          }
          // CHECK 2 : verify port 1 of the switch don't have 2 connections
          $a_list_connections = $networkPort_NetworkPort->find("`networkports_id_1`='1'");
@@ -406,6 +406,10 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
 
       // * 6. Update switchs
       // $switch1bis have 2 mac
+      $switch1bis = $switch1;
+      $switch1bis = str_replace("<CONNECTION>
+              <MAC>f0:ad:4e:00:19:f7</MAC>
+            </CONNECTION>", "", $switch1bis);
       $this->testSendinventory("toto", $switch1bis);
       $this->testSendinventory("toto", $switch2bis);
          // CHECK 1 : Verify have hub on port 1 of switch 1
