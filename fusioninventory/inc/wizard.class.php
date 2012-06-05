@@ -1035,12 +1035,13 @@ class PluginFusioninventoryWizard {
       
       $a_credentials = $pfCredential->find("`entities_id` IN (".$_SESSION['glpiactiveentities_string'].")");
       foreach ($a_credentials as $data) {
+         $pfCredential->getFromDB($data['id']);
          echo "<tr class='tab_bg_1'>";
          echo "<td colspan='2'></td>";
          echo "<td><input type='radio' name='credential[]' value='".$data['id']."' />
-            &nbsp;".$data['name']."</td>";
+            &nbsp;".$pfCredential->getLink(1)."</td>";
          echo "<td>".$data['username']."</td>";
-         echo "<td>".$data['password']."</td>";
+         echo "<td>******</td>";
          echo "</tr>";
       }
       
@@ -1053,7 +1054,7 @@ class PluginFusioninventoryWizard {
       echo "Login : <input type='text' name='username' value=''/>";
       echo "</td>";         
       echo "<td>";
-      echo "pass : <input type='text' name='password' value=''/>";
+      echo "pass : <input type='password' name='password' value=''/>";
       echo "</td>";
       echo "</tr>";
       
