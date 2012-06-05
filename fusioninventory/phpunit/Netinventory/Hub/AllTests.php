@@ -293,7 +293,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
                <MAC>00:23:18:cf:0d:93</MAC>
                </CONNECTION>
             </CONNECTIONS>
-          <IFDESCR>FastEthernet0/1</IFDESCR>", $switch2bis);
+          <IFDESCR>FastEthernet0/1</IFDESCR>", $switch2);
 
       // * 3. Update switchs
       $this->testSendinventory("toto", $switch2bis);
