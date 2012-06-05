@@ -542,7 +542,7 @@ class PluginFusinvinventoryLibhook {
             case 'VIRTUALMACHINES':
                $PluginFusinvinventoryImport_Virtualmachine = new PluginFusinvinventoryImport_Virtualmachine();
                $id_vm = $PluginFusinvinventoryImport_Virtualmachine->addUpdateItem("add",$idmachine,$dataSection);
-               if (empty($id_storage)) {
+               if (empty($id_vm)) {
                   $id_vm = $j;
                   $j--;
                }
