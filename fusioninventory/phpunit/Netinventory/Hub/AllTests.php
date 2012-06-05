@@ -75,6 +75,7 @@ class Hub extends PHPUnit_Framework_TestCase {
       $plugin->getFromDBbyDir("fusioninventory");
       $plugin->activate($plugin->fields['id']);
       Plugin::load("fusioninventory");
+      Config::detectRootDoc();
       
       // Add task and taskjob
       $pluginFusioninventoryTask = new PluginFusioninventoryTask();
