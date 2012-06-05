@@ -192,7 +192,7 @@ class PluginFusinvdeployStaticmisc {
 
       $a_menu = array();
       if (PluginFusioninventoryProfile::haveRight("fusinvdeploy", "packages", "r")) {
-         $a_menu[0]['name'] = $LANG['plugin_fusinvdeploy']["package"][6];
+         $a_menu[0]['name'] = $LANG['plugin_fusinvdeploy']['package'][6];
          $a_menu[0]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_package.png";
          $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/package.php";
       }
@@ -215,7 +215,7 @@ class PluginFusinvdeployStaticmisc {
       return array(array('profil'  => 'packages',
                          'name'    => $LANG['plugin_fusinvdeploy']['profile'][2]),
                    array('profil'  => 'status',
-                         'name'    => $LANG['plugin_fusinvdeploy']['profile'][3]));
+                         'name'    => $LANG['plugin_fusinvdeploy']['deploystatus'][0]));
    }
 
    static function task_deploy_getParameters() {

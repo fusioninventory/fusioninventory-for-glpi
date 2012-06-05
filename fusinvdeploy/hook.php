@@ -101,7 +101,7 @@ function plugin_fusinvdeploy_MassiveActionsDisplay($options=array()) {
       case 'Computer' :
          switch ($options['action']) {
              case 'plugin_fusinvdeploy_targetDeployTask' :
-               echo "<br/>". $LANG['plugin_fusinvdeploy']['task'][5].":&nbsp;";
+               echo "<br/>". $LANG['plugin_fusinvdeploy']['task'][1].":&nbsp;";
                $rand = mt_rand();
                Dropdown::show('PluginFusinvdeployTask', array(
                      'name'      => "tasks_id",

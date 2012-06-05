@@ -121,7 +121,7 @@ function {$render}renderType(val) {
       case '{$chkConst['FILE_EXISTS']}':
          return '{$LANG['plugin_fusinvdeploy']['form']['check'][3]}';
       case '{$chkConst['FILE_MISSING']}':
-         return '{$LANG['plugin_fusinvdeploy']['form']['check'][4]}';
+         return '{$LANG['plugin_fusinvdeploy']['form']['label'][15]}';
       case '{$chkConst['FILE_SIZEGREATER']}':
          return '{$LANG['plugin_fusinvdeploy']['form']['check'][5]}';
       case '{$chkConst['FILE_SIZEEQUAL']}':
@@ -459,7 +459,7 @@ var {$render}checkForm = new Ext.FormPanel({
             ['{$chkConst['WINKEY_MISSING']}',  '{$LANG['plugin_fusinvdeploy']['form']['check'][1]}'],
             ['{$chkConst['WINKEY_EQUAL']}',    '{$LANG['plugin_fusinvdeploy']['form']['check'][2]}'],
             ['{$chkConst['FILE_EXISTS']}',    '{$LANG['plugin_fusinvdeploy']['form']['check'][3]}'],
-            ['{$chkConst['FILE_MISSING']}',    '{$LANG['plugin_fusinvdeploy']['form']['check'][4]}'],
+            ['{$chkConst['FILE_MISSING']}',    '{$LANG['plugin_fusinvdeploy']['form']['label'][15]}'],
             ['{$chkConst['FILE_SIZEGREATER']}','{$LANG['plugin_fusinvdeploy']['form']['check'][5]}'],
             ['{$chkConst['FILE_SIZEEQUAL']}',  '{$LANG['plugin_fusinvdeploy']['form']['check'][8]}'],
             ['{$chkConst['FILE_SIZELOWER']}',  '{$LANG['plugin_fusinvdeploy']['form']['check'][9]}'],

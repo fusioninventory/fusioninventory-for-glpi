@@ -40,10 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-$title="FusionInventory DEPLOY";
-$version="2.3.0-1";
-
-$LANG['plugin_fusinvdeploy']['title'][0]="$title";
+$LANG['plugin_fusinvdeploy']['title'][0]="FusionInventory DEPLOY";
 
 $LANG['plugin_fusinvdeploy']['massiveactions'][0]="Target a task";
 $LANG['plugin_fusinvdeploy']['massiveactions'][1]="Create a job for each computer";
@@ -57,12 +54,10 @@ $LANG['plugin_fusinvdeploy']['package'][4]="Store";
 $LANG['plugin_fusinvdeploy']['package'][5]="Packages";
 $LANG['plugin_fusinvdeploy']['package'][6]="Package management";
 $LANG['plugin_fusinvdeploy']['package'][7]="Package";
-$LANG['plugin_fusinvdeploy']['package'][8]="Package management";
 $LANG['plugin_fusinvdeploy']['package'][9]="Number of fragments";
 $LANG['plugin_fusinvdeploy']['package'][10]="Module";
 $LANG['plugin_fusinvdeploy']['package'][11]="Audits";
 $LANG['plugin_fusinvdeploy']['package'][12]="Files";
-$LANG['plugin_fusinvdeploy']['package'][13]="Actions";
 $LANG['plugin_fusinvdeploy']['package'][14]="Installation";
 $LANG['plugin_fusinvdeploy']['package'][15]="Uninstallation";
 $LANG['plugin_fusinvdeploy']['package'][16]="Package deployment";
@@ -103,17 +98,14 @@ $LANG['plugin_fusinvdeploy']['config'][0]="Address of the GLPI server (without h
 $LANG['plugin_fusinvdeploy']['config'][1]="Root folder for sending files from server";
 $LANG['plugin_fusinvdeploy']['config'][2]="Enable alerts on the size of MS Windows paths?";
 
-$LANG['plugin_fusinvdeploy']['setup'][17]="Plugin ".$title." needs FusionInventory plugin activated before activation.";
-$LANG['plugin_fusinvdeploy']['setup'][18]="Plugin ".$title." needs FusionInventory plugin activated before uninstall.";
-$LANG['plugin_fusinvdeploy']['setup'][19]="Plugin ".$title." needs Webservices plugin (>= 1.2.0) installed before activation.";
-$LANG['plugin_fusinvdeploy']['setup'][20]="Plugin ".$title." needs Webservices plugin (>= 1.2.0) installed before uninstall.";
-$LANG['plugin_fusinvdeploy']['setup'][21]="Plugin ".$title." needs FusionInventory INVENTORY plugin installed before activation.";
-$LANG['plugin_fusinvdeploy']['setup'][22]="Plugin ".$title." needs FusionInventory INVENTORY plugin installed before uninstall.";
+$LANG['plugin_fusinvdeploy']['setup'][17]="Plugin FusionInventory DEPLOY needs FusionInventory plugin activated before activation.";
+$LANG['plugin_fusinvdeploy']['setup'][18]="Plugin FusionInventory DEPLOY needs FusionInventory plugin activated before uninstall.";
+$LANG['plugin_fusinvdeploy']['setup'][19]="Plugin FusionInventory DEPLOY needs Webservices plugin (1.2.0 minimum) installed before activation.";
+$LANG['plugin_fusinvdeploy']['setup'][20]="Plugin FusionInventory DEPLOY needs Webservices plugin (1.2.0 minimum) installed before uninstall.";
+$LANG['plugin_fusinvdeploy']['setup'][21]="Plugin FusionInventory DEPLOY needs FusionInventory INVENTORY plugin installed before activation.";
+$LANG['plugin_fusinvdeploy']['setup'][22]="Plugin FusionInventory DEPLOY needs FusionInventory INVENTORY plugin installed before uninstall.";
 
-$LANG['plugin_fusinvdeploy']['profile'][1]="$title";
 $LANG['plugin_fusinvdeploy']['profile'][2]="Manage packages";
-$LANG['plugin_fusinvdeploy']['profile'][3]="Deployment status";
-
 
 $LANG['plugin_fusinvdeploy']['form']['label'][0] = "Type";
 $LANG['plugin_fusinvdeploy']['form']['label'][1] = "Name";
@@ -159,9 +151,6 @@ $LANG['plugin_fusinvdeploy']['form']['title'][6] = "Add command";
 $LANG['plugin_fusinvdeploy']['form']['title'][7] = "Edit command";
 $LANG['plugin_fusinvdeploy']['form']['title'][8] = "Actions to achieve";
 $LANG['plugin_fusinvdeploy']['form']['title'][9] = "Delete a check";
-$LANG['plugin_fusinvdeploy']['form']['title'][10] = "Add order";
-$LANG['plugin_fusinvdeploy']['form']['title'][11] = "Delete order";
-$LANG['plugin_fusinvdeploy']['form']['title'][12] = "Edit order";
 $LANG['plugin_fusinvdeploy']['form']['title'][13] = "Delete file";
 $LANG['plugin_fusinvdeploy']['form']['title'][14] = "Delete command";
 $LANG['plugin_fusinvdeploy']['form']['title'][15] = "during installation";
@@ -173,11 +162,7 @@ $LANG['plugin_fusinvdeploy']['form']['message'][0] = "Empty form";
 $LANG['plugin_fusinvdeploy']['form']['message'][1] = "Invalid form";
 $LANG['plugin_fusinvdeploy']['form']['message'][2] = "Loading...";
 $LANG['plugin_fusinvdeploy']['form']['message'][3] = "File already exist";
-$LANG['plugin_fusinvdeploy']['form']['message'][4] = "Paths on MS Windows do not accept more than 255 characters, "
-."the value you entered exceeds the limit.<br />"
-."<br /><b>Do you want to continue?</b><br />"
-."<br /><div class='message_smalltext right'>You can disable this message in the "
-."<a href='##URL##'>plugin configuration</a></div>";
+$LANG['plugin_fusinvdeploy']['form']['message'][4] = "Paths on MS Windows do not accept more than 255 characters, the value you entered exceeds the limit.<br /><br /><b>Do you want to continue?</b><br /><br /><div class='message_smalltext right'>You can disable this message in the <a href='##URL##'>plugin configuration</a></div>";
 $LANG['plugin_fusinvdeploy']['form']['message'][5] = "Attention";
 $LANG['plugin_fusinvdeploy']['form']['message'][6] = "Wish to the command to install and uninstall is automatically added for your file?";
 
@@ -185,7 +170,6 @@ $LANG['plugin_fusinvdeploy']['form']['check'][0] = "Register key exist";
 $LANG['plugin_fusinvdeploy']['form']['check'][1] = "Register key missing";
 $LANG['plugin_fusinvdeploy']['form']['check'][2] = "Register key value";
 $LANG['plugin_fusinvdeploy']['form']['check'][3] = "File exist";
-$LANG['plugin_fusinvdeploy']['form']['check'][4] = "File missing";
 $LANG['plugin_fusinvdeploy']['form']['check'][5] = "File size greater";
 $LANG['plugin_fusinvdeploy']['form']['check'][6] = "SHA-512 hash value";
 $LANG['plugin_fusinvdeploy']['form']['check'][7] = "Free space";
@@ -193,12 +177,9 @@ $LANG['plugin_fusinvdeploy']['form']['check'][8] = "Filesize equal to";
 $LANG['plugin_fusinvdeploy']['form']['check'][9] = "Filesize lower than";
 
 $LANG['plugin_fusinvdeploy']['form']['mirror'][1] = "Mirror servers";
-$LANG['plugin_fusinvdeploy']['form']['mirror'][2] = "Mirror servers";
 $LANG['plugin_fusinvdeploy']['form']['mirror'][3] = "Mirror server address";
 
 $LANG['plugin_fusinvdeploy']['form']['command_status'][0] = "Make your choice...";
-$LANG['plugin_fusinvdeploy']['form']['command_status'][1] = "Type";
-$LANG['plugin_fusinvdeploy']['form']['command_status'][2] = "Value";
 $LANG['plugin_fusinvdeploy']['form']['command_status'][3] = "Expected return code";
 $LANG['plugin_fusinvdeploy']['form']['command_status'][4] = "Invalid return code";
 $LANG['plugin_fusinvdeploy']['form']['command_status'][5] = "Expected regular expression";
@@ -208,15 +189,12 @@ $LANG['plugin_fusinvdeploy']['form']['command_envvariable'][1] = "Environment va
 
 $LANG['plugin_fusinvdeploy']['form']['action_message'][1] = "Title";
 $LANG['plugin_fusinvdeploy']['form']['action_message'][2] = "Content";
-$LANG['plugin_fusinvdeploy']['form']['action_message'][3] = "Type";
 $LANG['plugin_fusinvdeploy']['form']['action_message'][4] = "Informations";
 $LANG['plugin_fusinvdeploy']['form']['action_message'][5] = "report of the install";
 
 $LANG['plugin_fusinvdeploy']['task'][0] = "Deployment tasks";
 $LANG['plugin_fusinvdeploy']['task'][1] = "Task";
 $LANG['plugin_fusinvdeploy']['task'][3] = "Add task";
-$LANG['plugin_fusinvdeploy']['task'][5] = "Task";
-$LANG['plugin_fusinvdeploy']['task'][7] = "Actions";
 $LANG['plugin_fusinvdeploy']['task'][8] = "Actions list";
 $LANG['plugin_fusinvdeploy']['task'][11] = "Edit task";
 $LANG['plugin_fusinvdeploy']['task'][12] = "Add a task";
@@ -236,9 +214,4 @@ $LANG['plugin_fusinvdeploy']['group'][3] = "Group of computers";
 $LANG['plugin_fusinvdeploy']['group'][4] = "Add group";
 $LANG['plugin_fusinvdeploy']['group'][5] = "If no line in the list is selected, the text fields on the left will be used for search.";
 
-$LANG['plugin_fusinvdeploy']['menu'][1] = "Package management";
-$LANG['plugin_fusinvdeploy']['menu'][2] = "Mirror servers";
-$LANG['plugin_fusinvdeploy']['menu'][3] = "Deployment tasks";
-$LANG['plugin_fusinvdeploy']['menu'][4] = "Groups of computers";
-$LANG['plugin_fusinvdeploy']['menu'][5] = "Deployment status";
 ?>

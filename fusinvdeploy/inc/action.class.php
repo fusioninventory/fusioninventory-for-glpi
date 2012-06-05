@@ -147,7 +147,7 @@ class PluginFusinvdeployAction extends CommonDBTM {
             $row[$render.'value'].= " <b>".$LANG['plugin_fusinvdeploy']['form']['action_message'][2].
                " : </b> ";
             $row[$render.'value'].= $action->getField('message');
-            $row[$render.'value'].= " <b>".$LANG['plugin_fusinvdeploy']['form']['action_message'][3].
+            $row[$render.'value'].= " <b>".$LANG['plugin_fusinvdeploy']['form']['label'][0].
                " : </b> ";
             $row[$render.'value'].= $action->getField('type');
 
@@ -229,7 +229,7 @@ class PluginFusinvdeployAction extends CommonDBTM {
          $row[$render.'value'].= " <b>".$LANG['plugin_fusinvdeploy']['form']['action_message'][2].
             " : </b> ";
          $row[$render.'value'].= $action->getField('message');
-         $row[$render.'value'].= " <b>".$LANG['plugin_fusinvdeploy']['form']['action_message'][3].
+         $row[$render.'value'].= " <b>".$LANG['plugin_fusinvdeploy']['form']['label'][0].
             " : </b> ";
          $row[$render.'value'].= $action->getField('type');
 

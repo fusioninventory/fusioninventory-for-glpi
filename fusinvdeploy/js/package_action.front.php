@@ -150,7 +150,7 @@ var {$render}actionColumns =  [{
 }, {
    id: '{$render}messagetype',
    hidden:true,
-   header: '{$LANG['plugin_fusinvdeploy']['form']['action_message'][3]}',
+   header: '{$LANG['plugin_fusinvdeploy']['form']['label'][0]}',
    width: {$column_width[12]},
    dataIndex: '{$render}messagetype'
 }, {
@@ -359,7 +359,7 @@ var {$render}actionGridProxyRetChecks = {
                dataIndex: 'id',
                hidden: true
             }, {
-               header: '{$LANG['plugin_fusinvdeploy']['form']['command_status'][1]}',
+               header: '{$LANG['plugin_fusinvdeploy']['form']['label'][0]}',
                dataIndex: 'type',
                width: 180,
                renderer: function(val) {
@@ -390,7 +390,7 @@ var {$render}actionGridProxyRetChecks = {
                   })
                })
             }, {
-               header: '{$LANG['plugin_fusinvdeploy']['form']['command_status'][2]}',
+               header: '{$LANG['plugin_fusinvdeploy']['form']['label'][2]}',
                dataIndex: 'value',
                allowBlank: false,
                width: 100,
@@ -509,7 +509,7 @@ var {$render}Command_fieldset_item_PluginFusinvdeployAction_Message = [{
       width: {$field_width},
       height : {$field_height}
    } , {
-      fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['action_message'][3]}',
+      fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][0]}',
       name: '{$render}messagetype',
       hiddenName : '{$render}messagetype',
       xtype : 'combo',

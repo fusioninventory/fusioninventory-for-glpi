@@ -236,7 +236,7 @@ var taskJobGrid = new Ext.grid.GridPanel({
       emptyGroupText: ''
    }),
    tbar: [{
-      text: '{$LANG['plugin_fusinvdeploy']['form']['title'][10]}',
+      text: '{$LANG['plugin_fusinvdeploy']['task'][15]}',
       iconCls: 'exticon-add',
       handler: function(btn,ev) {
          var u = new taskJobStore.recordType({
@@ -251,10 +251,10 @@ var taskJobGrid = new Ext.grid.GridPanel({
          });
          taskJobStore.insert(0,u);
          taskJobGrid.getSelectionModel().selectFirstRow();
-         taskJobForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][10]}');
+         taskJobForm.setTitle('{$LANG['plugin_fusinvdeploy']['task'][15]}');
       }
    }, '-', {
-      text: '{$LANG['plugin_fusinvdeploy']['form']['title'][11]}',
+      text: '{$LANG['plugin_fusinvdeploy']['task'][16]}',
       iconCls: 'exticon-delete',
       handler: function(btn,ev) {
          var selection = taskJobGrid.getSelectionModel().getSelections();
@@ -293,7 +293,7 @@ var taskJobGrid = new Ext.grid.GridPanel({
          rowselect: function(g,index,ev) {
             var rec = taskJobGrid.store.getAt(index);
             taskJobForm.loadData(rec);
-            taskJobForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][12]}');
+            taskJobForm.setTitle('{$LANG['plugin_fusinvdeploy']['task'][17]}');
             taskJobForm.buttons[0].setDisabled(false);
 
             taskJobForm.expand();

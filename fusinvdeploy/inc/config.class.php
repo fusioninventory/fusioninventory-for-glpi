@@ -111,7 +111,7 @@ class PluginFusinvdeployConfig extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
 
 //      echo "<tr class='tab_bg_1'>";
-//      echo "<td>".$LANG['plugin_fusinvdeploy']["config"][0]."&nbsp;:</td>";
+//      echo "<td>".$LANG['plugin_fusinvdeploy']['config'][0]."&nbsp;:</td>";
 //      echo "<td>";
 //      Html::autocompletionTextField($config, 'glpi_path', array(
 //         'name'   => 'glpi_path',

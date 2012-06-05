@@ -52,7 +52,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       global $LANG;
 
       if ($nb>1) {
-         return $LANG['plugin_fusinvdeploy']['task'][5];
+         return $LANG['plugin_fusinvdeploy']['task'][1];
       }
       return $LANG['plugin_fusinvdeploy']['group'][0];
    }

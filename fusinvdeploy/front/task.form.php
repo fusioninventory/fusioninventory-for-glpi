@@ -92,7 +92,7 @@ if (isset($_POST['forcestart'])) {
    Html::back();
 
 } else {
-   Html::header($LANG['plugin_fusinvdeploy']["title"][0],$_SERVER["PHP_SELF"],"plugins",
+   Html::header($LANG['plugin_fusinvdeploy']['title'][0],$_SERVER["PHP_SELF"],"plugins",
    "fusioninventory","task");
 
    PluginFusioninventoryMenu::displayMenu("mini");

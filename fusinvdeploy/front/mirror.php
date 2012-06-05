@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 include (GLPI_ROOT."/inc/includes.php");
 Session::checkLoginUser();
 
-Html::header($LANG['plugin_fusinvdeploy']['form']['mirror'][2],$_SERVER["PHP_SELF"],"plugins",
+Html::header($LANG['plugin_fusinvdeploy']['form']['mirror'][1],$_SERVER["PHP_SELF"],"plugins",
              "fusioninventory","mirror");
 
 //PluginFusioninventoryProfile::checkRight("Fusioninventory", "agents","r");
