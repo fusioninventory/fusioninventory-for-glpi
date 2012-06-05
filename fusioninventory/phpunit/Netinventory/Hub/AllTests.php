@@ -346,6 +346,10 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
       $switch1bis = str_replace("<CONNECTION>
               <MAC>f0:ad:4e:00:19:f7</MAC>
             </CONNECTION>", "", $switch1bis);
+      
+      $switch1bis = str_replace("<CONNECTION>
+              <MAC>f0:ad:4e:10:39:f9</MAC>
+            </CONNECTION>", "", $switch1bis);
 
       // * 4. Update switchs
       $this->testSendinventory("toto", $switch1bis);
@@ -360,7 +364,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
             $pfUnknownDevice->getFromDB($networkPort->fields['items_id']);
             $this->assertEquals($pfUnknownDevice->fields['hub'],
-                              '0', '(4)Hub connected on port fa0/1 of switch 1');
+                              '1', '(4)Hub connected on port fa0/1 of switch 1');
          }
          // CHECK 2 : verify port 1 of the switch don't have 2 connections
          $a_list_connections = $networkPort_NetworkPort->find("`networkports_id_1`='1'");
