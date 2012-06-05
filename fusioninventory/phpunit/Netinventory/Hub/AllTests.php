@@ -340,11 +340,15 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
       $switch1bis = str_replace("<CONNECTION>
               <MAC>f0:ad:4e:00:19:f7</MAC>
             </CONNECTION>", "", $switch1bis);
+      
+      $switch1bis = str_replace("<CONNECTION>
+              <MAC>00:23:18:cf:0d:93</MAC>
+            </CONNECTION>", "", $switch1bis);
 
       // * 4. Update switchs
       $this->testSendinventory("toto", $switch1bis);
       //$this->testSendinventory("toto", $switch2);
-         // CHECK 1 : verify hub deleted and port 1 of switch 1 connected directly to port
+         // CHECK 1 : verify hub always on port 1 of switch 1 
          $a_ports = $networkPort->find("`itemtype`='NetworkEquipment'
                AND `items_id`='".$a_switch['id']."'");
          $this->assertEquals(count($a_ports), 1, '(4)switch 1 haven\'t port fa0/1 added in GLPI');
@@ -354,7 +358,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
             $pluginFusioninventoryUnknownDevice->getFromDB($networkPort->fields['items_id']);
             $this->assertEquals($pluginFusioninventoryUnknownDevice->fields['hub'],
-                              '0', '(4)Hub connected on port fa0/1 of switch 1');
+                              '0', '(4)Hub not connected on port fa0/1 of switch 1');
          }
          // CHECK 2 : verify port 1 of the switch don't have 2 connections
          $a_list_connections = $networkPort_NetworkPort->find("`networkports_id_1`='1'");
@@ -402,6 +406,10 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
 
       // * 6. Update switchs
       // $switch1bis have 2 mac
+      $switch1bis = $switch1;
+      $switch1bis = str_replace("<CONNECTION>
+              <MAC>f0:ad:4e:00:19:f7</MAC>
+            </CONNECTION>", "", $switch1bis);
       $this->testSendinventory("toto", $switch1bis);
       $this->testSendinventory("toto", $switch2bis);
          // CHECK 1 : Verify have hub on port 1 of switch 1
