@@ -68,6 +68,8 @@ ini_set('display_errors','On');
 error_reporting(E_ALL | E_STRICT);
 set_error_handler('userErrorHandlerDebug');
 $_SESSION['glpi_use_mode'] = 2;
+logDebug(ob_get_contents());
+ob_end_clean();
 
 if (!class_exists("PluginFusioninventoryConfig")) {
    echo "<?xml version='1.0' encoding='UTF-8'?>
@@ -104,6 +106,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       $user = new User();
       
       $fusioninventoryModule_id    = $PluginFusioninventoryModule->getModuleId("fusioninventory");
+      ob_start();
       if ($loadplugins == '1') {
          $users_id = $fusioninventory_config->getValue($fusioninventoryModule_id, 'users_id');
          $_SESSION['glpiID'] = $users_id;
@@ -219,16 +222,12 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
             $communication->addProlog();
             $communication->setXML($communication->getXML());
    
-            logDebug(ob_get_contents());
-            ob_end_clean();
             echo $communication->getSend($compressmode);
          }
       } else {
          $communication->setXML("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
 </REPLY>");
-         logDebug(ob_get_contents());
-         ob_end_clean();
          $communication->emptyAnswer($compressmode);
       }
    }   
