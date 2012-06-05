@@ -156,7 +156,8 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
           OR ($ssl == "0")) {
          // echo "On continue";
       } else {
-         if (!empty(ob_get_contents())) {
+         if (isset(ob_get_contents())
+                 AND !empty(ob_get_contents())) {
             logDebug(ob_get_contents());
          }
          ob_end_clean();
@@ -183,7 +184,8 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          $pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA);
 
          if (!$pxml) {
-            if (!empty(ob_get_contents())) {
+            if (isset(ob_get_contents())
+                     AND !empty(ob_get_contents())) {
                logDebug(ob_get_contents());
             }
             ob_end_clean();
@@ -205,7 +207,8 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       $top0 = 0;
       $top0 = gettimeofday();
 
-      if (!empty(ob_get_contents())) {
+      if (isset(ob_get_contents())
+                 AND !empty(ob_get_contents())) {
          logDebug(ob_get_contents());
       }
       ob_end_clean();
