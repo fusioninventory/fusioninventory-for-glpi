@@ -364,7 +364,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
             $pfUnknownDevice->getFromDB($networkPort->fields['items_id']);
             $this->assertEquals($pfUnknownDevice->fields['hub'],
-                              '0', '(4)Hub not connected on port fa0/1 of switch 1');
+                              '1', '(4)Hub not connected on port fa0/1 of switch 1');
          }
          // CHECK 2 : verify port 1 of the switch don't have 2 connections
          $a_list_connections = $networkPort_NetworkPort->find("`networkports_id_1`='1'");
