@@ -231,12 +231,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
 
          $sectionData = array();
          foreach ($section->children() as $data) {
-            if ($section->getName() == "VIRTUALMACHINES"
-                    AND $data->getName() == "COMMENT") {
-               $sectionData[$data->getName()] = (string)$data;
-            } else {
-               $sectionData[$data->getName()] = (string)$data;
-            }
+            $sectionData[$data->getName()] = (string)$data;
          }
 
          //sectionId initialization, we will affect id after hook createSection return value.
