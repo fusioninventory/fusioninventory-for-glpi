@@ -506,15 +506,18 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
                            $directconnect = 1;
                         } else {
                            $networkPort->getFromDB($direct_id);
-                           if ($networkPort->fields['items_id'] == $id) {
+                           $ddirect = $networkPort->fields;
+                           $networkPort->getFromDB($id);
+                           if ($ddirect['items_id'] == $networkPort->fields['items_id']
+                                   AND $ddirect['itemtype'] == $networkPort->fields['itemtype']) {
                               // 1.The hub where this device is connected is yet connected to this switch port
                            
                               // => Do nothing
                            } else {
                               // 2. The hub where this device is connected to is not connected to this switch port
-                              if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+                              if ($ddirect['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
                                  // b. We have a hub connected to the switch port
-                                 $pfUnknownDevice->connectPortToHub(array($a_port), $networkPort->fields['items_id']);
+                                 $pfUnknownDevice->connectPortToHub(array($a_port), $ddirect['items_id']);
                               } else {
                                  // a. We have a direct connexion to another device (on the switch port)
                                  $directconnect = 1;                              
