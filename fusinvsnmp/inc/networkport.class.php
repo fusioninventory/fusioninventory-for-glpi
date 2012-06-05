@@ -468,14 +468,15 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
                   if (count($a_ports) > 0) {
                      $a_port = current($a_ports);
                      $hub = 0;
+                     $id = $networkPort->getContact($a_port['id']);
                      $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
-                     if ($a_port['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
-                        $pfUnknownDevice->getFromDB($a_port['items_id']);
+                     $networkPort->getFromDB($id);
+                     if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+                        $pfUnknownDevice->getFromDB($networkPort->fields['items_id']);
                         if ($pfUnknownDevice->fields['hub'] == '1') {
                            $hub = 1;
                         }
                      }
-                     $id = $networkPort->getContact($a_port['id']);
                      $direct_id = $networkPort->getContact($networkports_id);
                      if ($id AND $id != $networkports_id
                              AND $hub == '0') {
