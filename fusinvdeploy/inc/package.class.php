@@ -320,16 +320,22 @@ class PluginFusinvdeployPackage extends CommonDBTM {
 
          if ($o_package->add($i_package)) {
 
-            //logDebug("Package ID : " . $o_package->fields['id'] . "\n");
-
             //Create Orders(Install/Uninstall)
+            $o_order = new PluginFusinvdeployOrder();
             foreach( $d_orders as $order_type => $order_data) {
-               $o_order = new PluginFusinvdeployOrder();
-               $i_order = array();
-               $i_order['type'] = $order_type;
-               $i_order['plugin_fusinvdeploy_packages_id'] = $o_package->fields['id'];
-
-               if ($o_order->add($i_order)) {
+               //Find Orders created by Package object
+               $orders = $o_order->find(
+                  "`type` = " . $order_type .
+                  " AND `plugin_fusinvdeploy_packages_id` = " . $o_package->fields['id'],
+                  "",
+                  "1"
+               );
+               
+               if ( count($orders) == 1 ) {
+                  $order_id = array_shift($orders)['id'];
+               }
+               //Don't go further if there is no order
+               if( isset($order_id) && $o_order->getFromDB($order_id)) {
 
                   //Create Checks
                   foreach( $order_data->checks as $check_idx => $d_check) {
