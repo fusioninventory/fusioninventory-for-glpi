@@ -440,6 +440,9 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
        *    hub must be deconnected 
        */
       $switch1biscdp = str_replace("<CONNECTION>
+              <MAC>00:23:18:cf:0d:93</MAC>
+            </CONNECTION>
+            <CONNECTION>
               <MAC>f0:ad:4e:00:19:f7</MAC>
             </CONNECTION>
             <CONNECTION>
