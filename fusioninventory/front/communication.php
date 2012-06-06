@@ -200,7 +200,14 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
             exit();
          }
       }
-   
+      
+      $ob_content = ob_get_contents();
+      if (isset($ob_content)
+              AND !empty($ob_content)) {
+         logDebug($ob_content);
+      }
+      ob_end_clean();
+      
       // Clean for XSS and other in XML
       $pxml = $communication->cleanXML($pxml);
             
@@ -209,12 +216,6 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
       $top0 = 0;
       $top0 = gettimeofday();
 
-      $ob_content = ob_get_contents();
-      if (isset($ob_content)
-              AND !empty($ob_content)) {
-         logDebug($ob_content);
-      }
-      ob_end_clean();
       if (!$communication->import($pxml)) {
    
          if (isset($pxml->DEVICEID)) {

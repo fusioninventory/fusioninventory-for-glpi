@@ -440,6 +440,9 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
        *    hub must be deconnected 
        */
       $switch1biscdp = str_replace("<CONNECTION>
+              <MAC>00:23:18:cf:0d:93</MAC>
+            </CONNECTION>
+            <CONNECTION>
               <MAC>f0:ad:4e:00:19:f7</MAC>
             </CONNECTION>
             <CONNECTION>
@@ -470,6 +473,9 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
        */
       $this->testSendinventory("toto", $switch1bis);
       $switch1biscdp = str_replace("<CONNECTION>
+              <MAC>00:23:18:cf:0d:93</MAC>
+            </CONNECTION>
+            <CONNECTION>
               <MAC>f0:ad:4e:00:19:f7</MAC>
             </CONNECTION>
             <CONNECTION>
@@ -478,7 +484,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
             <CONNECTION>
               <IFDESCR>Fa0/3</IFDESCR>
               <IP>192.168.20.81</IP>
-            </CONNECTION>", $switch1bis);
+            </CONNECTION>", $switch1);
       $this->testSendinventory("toto", $switch1biscdp);
          // CHECK 1 : Verify have no hub on port 1 of switch 1
          $a_ports = $networkPort->find("`itemtype`='NetworkEquipment'
