@@ -44,11 +44,9 @@ define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
 checkLoginUser();
 
-$package = new PluginFusinvdeployPackage();
-
 if (! empty($_FILES)) {
    if ($_FILES["file"]["error"] > 0) {
-      logDebug("Error: " . $_FILES["file"]["error"] . "\n");
+      logDebug("Error on import: " . $_FILES["file"]["error"] . "\n");
    } else {
       //logDebug("Upload: " . $_FILES["file"]["name"] . "\n");
       //logDebug("Type: " . $_FILES["file"]["type"] . "\n");
