@@ -90,7 +90,9 @@ if (!isset($_GET['wizz'])) {
               break;
            
            case 'runagain':
-
+              $url = $_SERVER['HTTP_REFERER'];
+              $url = str_replace("w_tasksend", "w_tasksforcerun", $url);
+              Html::redirect($url);
               break;
             
          }         
