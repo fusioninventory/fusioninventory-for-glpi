@@ -292,12 +292,20 @@ function plugin_version_fusioninventory() {
 
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_fusioninventory_check_prerequisites() {
-   global $LANG;
+   global $LANG,$DB;
    
    if (version_compare(GLPI_VERSION,'0.83','lt') || version_compare(GLPI_VERSION,'0.84','ge')) {
       echo $LANG['plugin_fusioninventory']['errors'][50];
       return false;
    }
+   if (TableExists("glpi_plugin_fusioninventory_agents")
+           AND !FieldExists("glpi_plugin_fusioninventory_agents", "tag")) {
+      $DB->query("UPDATE `glpi_plugin_fusioninventory_configs` SET `value`='0.80+1.4' WHERE `type`='version'");
+      $DB->query("UPDATE `glpi_plugins` SET `version`='0.80+1.4' WHERE `directory` LIKE 'fusi%'");
+      $plugin = new Plugin();
+      $plugin->checkStates();
+   }
+   
    return true;
 }
 
