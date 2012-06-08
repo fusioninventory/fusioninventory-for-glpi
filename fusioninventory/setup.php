@@ -302,8 +302,6 @@ function plugin_fusioninventory_check_prerequisites() {
            AND !FieldExists("glpi_plugin_fusioninventory_agents", "tag")) {
       $DB->query("UPDATE `glpi_plugin_fusioninventory_configs` SET `value`='0.80+1.4' WHERE `type`='version'");
       $DB->query("UPDATE `glpi_plugins` SET `version`='0.80+1.4' WHERE `directory` LIKE 'fusi%'");
-      $plugin = new Plugin();
-      $plugin->checkStates();
    }
    
    return true;
