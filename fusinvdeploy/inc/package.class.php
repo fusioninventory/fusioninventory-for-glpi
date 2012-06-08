@@ -333,7 +333,8 @@ class PluginFusinvdeployPackage extends CommonDBTM {
                );
                
                if ( count($orders) == 1 ) {
-                  $order_id = array_shift($orders)['id'];
+                  $order = current($orders);
+                  $order_id = $order['id'];
                }
                //Don't go further if there is no order
                if( isset($order_id) && $o_order->getFromDB($order_id)) {
