@@ -107,47 +107,47 @@ class PluginFusinvdeployAction extends CommonDBTM {
          $action->getFromDB($row[$render.'items_id']);
 
          if($action instanceof PluginFusinvdeployAction_Command) {
-            $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['form']['label'][2]." : </b> ";
+            $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['label'][2]." : </b> ";
             $row[$render.'value'].= $action->getField('exec');
 
             $row[$render.'exec'] = $action->getField('exec');
 
          } else if($action instanceof PluginFusinvdeployAction_Move) {
-            $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['form']['label'][16]." : </b> ";
+            $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['label'][16]." : </b> ";
             $row[$render.'value'].= $action->getField('from');
-            $row[$render.'value'].= " <b>".$LANG['plugin_fusinvdeploy']['form']['label'][17]." : </b> ";
+            $row[$render.'value'].= " <b>".$LANG['plugin_fusinvdeploy']['label'][17]." : </b> ";
             $row[$render.'value'].= $action->getField('to');
 
             $row[$render.'from'] = $action->getField('from');
             $row[$render.'to']   = $action->getField('to');
 
          } else if($action instanceof PluginFusinvdeployAction_Copy) {
-            $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['form']['label'][16]." : </b> ";
+            $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['label'][16]." : </b> ";
             $row[$render.'value'].= $action->getField('from');
-            $row[$render.'value'].= " <b>".$LANG['plugin_fusinvdeploy']['form']['label'][17]." : </b> ";
+            $row[$render.'value'].= " <b>".$LANG['plugin_fusinvdeploy']['label'][17]." : </b> ";
             $row[$render.'value'].= $action->getField('to');
 
             $row[$render.'from'] = $action->getField('from');
             $row[$render.'to']   = $action->getField('to');
 
          }  else if($action instanceof PluginFusinvdeployAction_Delete) {
-            $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['form']['label'][2]." : </b> ";
+            $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['label'][2]." : </b> ";
             $row[$render.'value'].= $action->getField('path');
             $row[$render.'path']  = $action->getField('path');
 
          }  else if($action instanceof PluginFusinvdeployAction_Mkdir) {
-            $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['form']['label'][1]." : </b> ";
+            $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['label'][1]." : </b> ";
             $row[$render.'value'].= $action->getField('path');
             $row[$render.'path']  = $action->getField('path');
 
          }  else if($action instanceof PluginFusinvdeployAction_Message) {
-            $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['form']['action_message'][1].
+            $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['action_message'][1].
                " : </b> ";
             $row[$render.'value'].= $action->getField('name');
-            $row[$render.'value'].= " <b>".$LANG['plugin_fusinvdeploy']['form']['action_message'][2].
+            $row[$render.'value'].= " <b>".$LANG['plugin_fusinvdeploy']['action_message'][2].
                " : </b> ";
             $row[$render.'value'].= $action->getField('message');
-            $row[$render.'value'].= " <b>".$LANG['plugin_fusinvdeploy']['form']['label'][0].
+            $row[$render.'value'].= " <b>".$LANG['plugin_fusinvdeploy']['label'][0].
                " : </b> ";
             $row[$render.'value'].= $action->getField('type');
 
@@ -189,47 +189,47 @@ class PluginFusinvdeployAction extends CommonDBTM {
       $row[$render.'ranking'] = $action->getField('ranking');
 
       if($action instanceof PluginFusinvdeployAction_Command) {
-         $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['form']['label'][2]." : </b> ";
+         $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['label'][2]." : </b> ";
          $row[$render.'value'].= $action->getField('exec');
 
          $row[$render.'exec'] = $action->getField('exec');
 
       } else if($action instanceof PluginFusinvdeployAction_Move) {
-         $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['form']['label'][16]." : </b> ";
+         $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['label'][16]." : </b> ";
          $row[$render.'value'].= $action->getField('from');
-         $row[$render.'value'].= " <b>".$LANG['plugin_fusinvdeploy']['form']['label'][17]." : </b> ";
+         $row[$render.'value'].= " <b>".$LANG['plugin_fusinvdeploy']['label'][17]." : </b> ";
          $row[$render.'value'].= $action->getField('to');
 
          $row[$render.'from'] = $action->getField('from');
          $row[$render.'to']   = $action->getField('to');
 
       } else if($action instanceof PluginFusinvdeployAction_Copy) {
-         $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['form']['label'][16]." : </b> ";
+         $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['label'][16]." : </b> ";
          $row[$render.'value'].= $action->getField('from');
-         $row[$render.'value'].= " <b>".$LANG['plugin_fusinvdeploy']['form']['label'][17]." : </b> ";
+         $row[$render.'value'].= " <b>".$LANG['plugin_fusinvdeploy']['label'][17]." : </b> ";
          $row[$render.'value'].= $action->getField('to');
 
          $row[$render.'from'] = $action->getField('from');
          $row[$render.'to']   = $action->getField('to');
 
       }  else if($action instanceof PluginFusinvdeployAction_Delete) {
-         $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['form']['label'][2]." : </b> ";
+         $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['label'][2]." : </b> ";
          $row[$render.'value'].= $action->getField('path');
          $row[$render.'path']  = $action->getField('path');
 
       }  else if($action instanceof PluginFusinvdeployAction_Mkdir) {
-         $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['form']['label'][1]." : </b> ";
+         $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['label'][1]." : </b> ";
          $row[$render.'value'].= $action->getField('path');
          $row[$render.'path']  = $action->getField('path');
 
       }  else if($action instanceof PluginFusinvdeployAction_Message) {
-         $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['form']['action_message'][1].
+         $row[$render.'value'] = "<b>".$LANG['plugin_fusinvdeploy']['action_message'][1].
             " : </b> ";
          $row[$render.'value'].= $action->getField('name');
-         $row[$render.'value'].= " <b>".$LANG['plugin_fusinvdeploy']['form']['action_message'][2].
+         $row[$render.'value'].= " <b>".$LANG['plugin_fusinvdeploy']['action_message'][2].
             " : </b> ";
          $row[$render.'value'].= $action->getField('message');
-         $row[$render.'value'].= " <b>".$LANG['plugin_fusinvdeploy']['form']['label'][0].
+         $row[$render.'value'].= " <b>".$LANG['plugin_fusinvdeploy']['label'][0].
             " : </b> ";
          $row[$render.'value'].= $action->getField('type');
 

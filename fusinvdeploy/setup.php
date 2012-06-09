@@ -163,7 +163,7 @@ function plugin_init_fusinvdeploy() {
       '/plugins/fusinvdeploy/front/package.php';
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['mirror']['title'] =
-      $LANG['plugin_fusinvdeploy']['form']['mirror'][1];
+      $LANG['plugin_fusinvdeploy']['mirror'][1];
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['mirror']['page'] =
       '/plugins/fusinvdeploy/front/mirror.php';
 

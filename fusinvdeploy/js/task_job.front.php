@@ -430,7 +430,7 @@ var taskJobForm = new Ext.FormPanel({
       }
    ],
    buttons: [{
-      text: '{$LANG['plugin_fusinvdeploy']['form']['action'][2]}',
+      text: '{$LANG['plugin_fusinvdeploy']['action'][2]}',
       iconCls: 'exticon-save',
       disabled:true,
       handler: function(btn,ev) {
@@ -446,11 +446,11 @@ var taskJobForm = new Ext.FormPanel({
 
 function taskJobFormSave() {
    if (taskJobForm.record == null) {
-      Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
+      Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['message'][0]}');
       return;
    }
    if (!taskJobForm.getForm().isValid()) {
-      Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
+      Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['message'][0]}');
       return false;
    }
 

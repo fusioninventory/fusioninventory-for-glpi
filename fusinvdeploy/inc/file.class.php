@@ -467,7 +467,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
             switch ($_FILES['file']['error']) {
                case UPLOAD_ERR_INI_SIZE:
                case UPLOAD_ERR_FORM_SIZE:
-                  print "{success:false, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][20]}\"}";
+                  print "{success:false, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['label'][20]}\"}";
                   exit;
                case UPLOAD_ERR_PARTIAL:
                   print "{success:false, file:'{$filename}',msg:\"The uploaded file was only partially uploaded.\"}";
@@ -503,14 +503,14 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
          //Add file in repo
          if ($filename && $this->addFileInRepo($data)) {
-            print "{success:true, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['action'][4]}\"}";
+            print "{success:true, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['action'][4]}\"}";
             exit;
          } else {
-            print "{success:false, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][15]}\"}";
+            print "{success:false, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['label'][15]}\"}";
             exit;
          }
       }
-      print "{success:false, file:'none',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][15]}\"}";
+      print "{success:false, file:'none',msg:\"{$LANG['plugin_fusinvdeploy']['label'][15]}\"}";
    }
 
    function uploadFileFromServer() {
@@ -551,13 +551,13 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
          //Add file in repo
          if ($filename && $this->addFileInRepo($data)) {
-            print "{success:true, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['action'][4]}\"}";
+            print "{success:true, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['action'][4]}\"}";
             exit;
          } else {
-            print "{success:false, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][22]}\"}";
+            print "{success:false, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['label'][22]}\"}";
             exit;
          }
-      } print "{success:false, file:'none',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][15]}\"}";
+      } print "{success:false, file:'none',msg:\"{$LANG['plugin_fusinvdeploy']['label'][15]}\"}";
    }
 
    static function processFilesize($filesize) {

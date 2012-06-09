@@ -197,7 +197,7 @@ class PluginFusinvdeployStaticmisc {
          $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/package.php";
       }
 
-      $a_menu[1]['name'] = $LANG['plugin_fusinvdeploy']['form']['mirror'][1];
+      $a_menu[1]['name'] = $LANG['plugin_fusinvdeploy']['mirror'][1];
       $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_files.png";
       $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/mirror.php";
 
