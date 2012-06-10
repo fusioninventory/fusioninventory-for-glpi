@@ -113,7 +113,7 @@ $LANG['plugin_fusinvdeploy']['ftitle'][7]="Editer une action";
 $LANG['plugin_fusinvdeploy']['ftitle'][8]="Actions à réaliser";
 $LANG['plugin_fusinvdeploy']['ftitle'][9]="Supprimer contrôle";
 
-$LANG['plugin_fusinvdeploy']['group'][0]=" ";
+$LANG['plugin_fusinvdeploy']['group'][0]="Groupes d'ordinateurs";
 $LANG['plugin_fusinvdeploy']['group'][1]="Ensemble statique";
 $LANG['plugin_fusinvdeploy']['group'][2]="Ensemble dynamique";
 $LANG['plugin_fusinvdeploy']['group'][3]="Ensemble d'ordinateur";
