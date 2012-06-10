@@ -237,7 +237,7 @@ $LANG['plugin_fusioninventory']['wizard'][4]="Agent-Konfiguration";
 $LANG['plugin_fusioninventory']['wizard'][5]="Authentifizierungsverwaltung";
 $LANG['plugin_fusioninventory']['wizard'][6]="ESX-Server Verwaltung";
 $LANG['plugin_fusioninventory']['wizard'][7]="Aufgaben ausführen";
-$LANG['plugin_fusioninventory']['wizard'][8]="Resultate von Taks";
+$LANG['plugin_fusioninventory']['wizard'][8]="Resultat des Tasks";
 
 $LANG['plugin_fusioninventory']['xml'][0]="XML";
 ?>

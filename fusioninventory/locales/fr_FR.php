@@ -82,7 +82,7 @@ $LANG['plugin_fusioninventory']['config'][0]="Fréquence des inventaires (en heu
 $LANG['plugin_fusioninventory']['credential'][1]="Compte d'inventaire distant";
 $LANG['plugin_fusioninventory']['credential'][2]="Matériel distant à inventorier";
 $LANG['plugin_fusioninventory']['credential'][3]="Compte";
-$LANG['plugin_fusioninventory']['credential'][4]="Credential";
+$LANG['plugin_fusioninventory']['credential'][4]="Identification";
 
 $LANG['plugin_fusioninventory']['discovery'][5]="Nombre de matériels importés";
 $LANG['plugin_fusioninventory']['discovery'][9]="Nombre de matériels non importés car type non défini";
@@ -197,11 +197,11 @@ $LANG['plugin_fusioninventory']['task'][47]="id unique";
 $LANG['plugin_fusioninventory']['task'][48]="A inventorier";
 $LANG['plugin_fusioninventory']['task'][49]="Mode avancé";
 $LANG['plugin_fusioninventory']['task'][50]="Terminer la tâche";
-$LANG['plugin_fusioninventory']['task'][51]="Action after finish running task";
-$LANG['plugin_fusioninventory']['task'][52]="Delete this task and finish";
+$LANG['plugin_fusioninventory']['task'][51]="Action après la fin d'exécution de la tâche";
+$LANG['plugin_fusioninventory']['task'][52]="Supprimer cette tâche et fin";
 $LANG['plugin_fusioninventory']['task'][53]="Fin";
-$LANG['plugin_fusioninventory']['task'][54]="Run again this task";
-$LANG['plugin_fusioninventory']['task'][55]="No agent allowed to run ESX inventory";
+$LANG['plugin_fusioninventory']['task'][54]="Exécuter encore une fois cette tâche";
+$LANG['plugin_fusioninventory']['task'][55]="Pas d'agent autorisé à faire un inventaire ESX";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Démarré";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";
