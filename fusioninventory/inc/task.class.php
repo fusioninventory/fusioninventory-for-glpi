@@ -405,12 +405,13 @@ class PluginFusioninventoryTask extends CommonDBTM {
               $DB->numrows($result).")</sup></a></".$cell.">";
             
       // ** Get task in error
+      $result = $this->getTasksInerror();
       $cell = 'td';
       if ($_GET['see'] == 'inerror') {
          $cell = 'th';
       }
-      echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=inerror'>In error</a></".$cell.">";
-      $a_tasks = $this->find(getEntitiesRestrictRequest("", 'glpi_plugin_fusioninventory_tasks'));
+      echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=inerror'>In error<sup>(".
+              $DB->numrows($result).")</sup></a></".$cell.">";
 
       // ** Get task active
       $cell = 'td';
@@ -493,7 +494,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
             break;
          
          case 'inerror':
-            $where = "`is_active` = '1'";
+            $result = $this->getTasksInerror();
             break;
 
          case 'actives':
@@ -616,6 +617,30 @@ class PluginFusioninventoryTask extends CommonDBTM {
             AND `is_active`='1'
             AND `periodicity_count` > 0 
             AND `periodicity_type` != '0' ".$where;
+      return $DB->query($query);
+   }
+   
+   
+   
+   function getTasksInerror($tasks_id=0) {      
+      global $DB;
+      
+      $where = '';
+      $where .= getEntitiesRestrictRequest("AND", 'task');
+      if ($tasks_id > 0) {
+         $where = " AND task.`id`='".$tasks_id."'
+            LIMIT 1 "; 
+      }
+      
+      $query = "SELECT `glpi_plugin_fusioninventory_tasks`.*
+         FROM `glpi_plugin_fusioninventory_tasks`
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` ON `plugin_fusioninventory_tasks_id` = `glpi_plugin_fusioninventory_tasks`.`id`
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` ON `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` ON `plugin_fusioninventory_taskjobstates_id` = `glpi_plugin_fusioninventory_taskjobstates`.`id`
+         WHERE `glpi_plugin_fusioninventory_taskjoblogs`.`state`='4'
+         ".$where."
+         GROUP BY plugin_fusioninventory_tasks_id
+         ORDER BY `glpi_plugin_fusioninventory_taskjoblogs`.`date` DESC";
       return $DB->query($query);
    }
    
