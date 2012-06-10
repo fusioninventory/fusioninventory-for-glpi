@@ -78,13 +78,13 @@ if (!isset($_GET['wizz'])) {
                   $pfTask = new PluginFusioninventoryTask();
                   $pfTask->delete(array('id'=>$_SESSION['plugin_fusioninventory_wizard']['tasks_id']));
               }
-              $url = $_SERVER['PHP_SELF']."?wizz=w_start";
+              $url = $_SERVER['PHP_SELF'];
               $url = str_replace("wizard.form.php", "wizard.php", $url);
               Html::redirect($url);
               break;
            
            case 'finish':
-              $url = $_SERVER['PHP_SELF']."?wizz=w_start";
+              $url = $_SERVER['PHP_SELF'];
               $url = str_replace("wizard.form.php", "wizard.php", $url);
               Html::redirect($url);
               break;
