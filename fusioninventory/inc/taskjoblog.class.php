@@ -727,13 +727,18 @@ function appear_array(id){
    
    
    
-   function displayShortLogs($taskjobs_id) {
+   function displayShortLogs($taskjobs_id, $veryshort=0) {
       global $DB,$CFG_GLPI,$LANG;
       
       echo "<td colspan='2' valign='top'>";
       
-      echo "<table width='100%'>";
-      echo "<tr class='tab_bg_3'>";
+      if ($veryshort == '0') {
+         echo "<table width='100%'>";
+         echo "<tr class='tab_bg_3'>";
+      } else {
+         echo "<table>";
+         echo "<tr class='tab_bg_1'>";
+      }      
       $query = "SELECT * FROM `glpi_plugin_fusioninventory_taskjobstates`
          WHERE `plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
             ORDER BY `uniqid` DESC
@@ -764,9 +769,11 @@ function appear_array(id){
            OR $state == '6'
            OR $state == '7') { // not finish
          
-         echo "<th>";
-         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_running.png'/>";
-         echo "</th>";
+         if ($veryshort == '0') {
+            echo "<th>";
+            echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_running.png'/>";
+            echo "</th>";
+         }
          echo $this->getDivState($state, 'td');
          echo "<td align='center'>";
          echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?field[0]=6&searchtype[0]=contains&contains[0]=".$uniqid."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
@@ -787,26 +794,39 @@ function appear_array(id){
          echo "</td>";
          echo "</tr>";
       } else { // Finish
-         echo "<th rowspan='2' height='64'>";
-         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_finished.png'/>";
-         echo "</th>";
+         if ($veryshort == '0') {
+            echo "<th rowspan='2' height='64'>";
+            echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_finished.png'/>";
+            echo "</th>";
+         }
          echo $this->getDivState($state, 'td');
-         echo "<td align='center'>";
+         if ($veryshort == '0') {
+            echo "<td align='center'>";
+         } else {
+            echo "<td>";
+         }
          if ($taskstates_id == '0') {
             echo $LANG['crontask'][40]."&nbsp;:&nbsp;".$LANG['setup'][307];
          } else {
-            echo $LANG['crontask'][40]." (".Html::convDateTime($date).") : ";
-            echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?field[0]=6&searchtype[0]=contains&contains[0]=".$uniqid."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
-               $LANG['plugin_fusioninventory']['taskjoblog'][9]."</a>";
+            
+            if ($veryshort == '0') {
+               echo $LANG['crontask'][40]." (".Html::convDateTime($date).")";
+               echo " : <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?field[0]=6&searchtype[0]=contains&contains[0]=".$uniqid."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
+                  $LANG['plugin_fusioninventory']['taskjoblog'][9]."</a>";
+            } else {
+               echo $LANG['crontask'][40]." :<br/> ".Html::convDateTime($date)."";
+            }
          }
          echo "</td>";
          echo "</tr>";
-         echo "<tr class='tab_bg_3'>";
-         echo "<td colspan='2' align='center'>";
-         echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?field[0]=3&searchtype[0]=equals&contains[0]=".$taskjobs_id."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
-            $LANG['plugin_fusioninventory']['taskjoblog'][8]."</a>";
-         echo "</td>";
-         echo "</tr>";
+         if ($veryshort == '0') {
+            echo "<tr class='tab_bg_3'>";
+            echo "<td colspan='2' align='center'>";
+            echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?field[0]=3&searchtype[0]=equals&contains[0]=".$taskjobs_id."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
+               $LANG['plugin_fusioninventory']['taskjoblog'][8]."</a>";
+            echo "</td>";
+            echo "</tr>";
+         }
       }
       echo "</table>";
       
@@ -818,39 +838,41 @@ function appear_array(id){
    function getDivState($state, $type='div') {
       global $LANG;
 
+      $width = '50';
+      
       switch ($state) {
 
          case 7:
-            return "<".$type." align='center'>".$LANG['plugin_fusioninventory']['taskjoblog'][7]."</".$type.">";
+            return "<".$type." align='center' width='".$width."'>".$LANG['plugin_fusioninventory']['taskjoblog'][7]."</".$type.">";
             break;
 
          case 1:
-            return "<".$type." align='center'>".$LANG['plugin_fusioninventory']['taskjoblog'][1]."</".$type.">";
+            return "<".$type." align='center' width='".$width."'>".$LANG['plugin_fusioninventory']['taskjoblog'][1]."</".$type.">";
             break;
 
          case 2:
-            return "<".$type." style='background-color: rgb(0, 255, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>".
+            return "<".$type." style='background-color: rgb(0, 255, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' width='".$width."'>".
                "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][2]."</strong></".$type.">";
 
             break;
 
          case 3:
-            return "<".$type." style='background-color: rgb(255, 120, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>".
+            return "<".$type." style='background-color: rgb(255, 120, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' width='".$width."'>".
                "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][3]."</strong></".$type.">";
             break;
 
          case 4:
-            return "<".$type." style='background-color: rgb(255, 0, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>".
+            return "<".$type." style='background-color: rgb(255, 0, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' width='".$width."'>".
                "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][4]."</strong></".$type.">";
             break;
 
          case 5:
-            return "<".$type." style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>".
+            return "<".$type." style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' width='".$width."'>".
                "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][5]."</strong></".$type.">";
             break;
 
          case 6:
-            return "<".$type." style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>".
+            return "<".$type." style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' width='".$width."'>".
                "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][6]."</strong></".$type.">";
             break;
 

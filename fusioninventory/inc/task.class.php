@@ -479,6 +479,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       global $DB,$LANG;
 
       $pfTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       
       echo "<table class='tab_cadrehov'>";
       
@@ -564,9 +565,22 @@ class PluginFusioninventoryTask extends CommonDBTM {
          }
          echo "</td>";
          
-         echo "<td>Next : <br/>".$data_task['date_scheduled']."</td>";
-         echo "<td>Last run :<br/>
-            Not yet running</td>";
+         echo "<td>".$LANG['crontask'][41]." : <br/>".$data_task['date_scheduled']."</td>";
+
+         $queryt = "SELECT * FROM `glpi_plugin_fusioninventory_taskjobstates`
+            LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` 
+               ON `plugin_fusioninventory_taskjobs_id`=`glpi_plugin_fusioninventory_taskjobs`.`id`
+            WHERE `plugin_fusioninventory_tasks_id`='".$data_task['id']."'
+            ORDER BY `uniqid`
+            LIMIT 1";
+          $resultt = $DB->query($queryt);
+          if ($DB->numrows($resultt) != 0) {
+              $datat = $DB->fetch_assoc($resultt);
+              $pfTaskjoblog->displayShortLogs($datat['plugin_fusioninventory_taskjobs_id'], 1);
+          } else {
+             echo "<td>".$LANG['crontask'][40]." :<br/>
+                ".$LANG['setup'][307]."</td>";             
+          }
          
          echo "</tr>";
       }
