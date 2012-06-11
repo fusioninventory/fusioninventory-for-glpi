@@ -513,6 +513,7 @@ class PluginFusioninventoryCommunication {
       $users_id  = $config->getValue($module_id, 'users_id');
       $_SESSION['glpiID'] = $users_id;
       $user->getFromDB($users_id);
+      Session::changeActiveEntities();
       $_SESSION["glpiname"] = $user->fields['name'];
       $_SESSION['glpiactiveprofile'] = array();
       $_SESSION['glpiactiveprofile']['interface'] = '';
