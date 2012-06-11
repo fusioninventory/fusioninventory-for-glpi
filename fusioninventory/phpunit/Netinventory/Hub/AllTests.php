@@ -373,12 +373,12 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
                                     count($a_list_connections).')');
 
       $switch2bis = $switch2;
-      $switch2 = str_replace("</CONNECTIONS>
+      $switch2bis = str_replace("</CONNECTIONS>
           <IFDESCR>FastEthernet0/2</IFDESCR>", "               <CONNECTION>
                <MAC>f0:ad:4e:00:19:f7</MAC>
                </CONNECTION>
             </CONNECTIONS>
-          <IFDESCR>FastEthernet0/2</IFDESCR>", $switch2);
+          <IFDESCR>FastEthernet0/2</IFDESCR>", $switch2bis);
       
       // * 5. Update switchs
       $this->testSendinventory("toto", $switch2);
