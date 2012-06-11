@@ -1540,7 +1540,7 @@ return namelist;
             if ($DB->numrows($result) != 0) {
                $task = $DB->fetch_assoc($result);
                if ($task['communication'] == 'pull') {
-                  $has_recent_log_entries = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$data['id']."'
+                  $has_recent_log_entries = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'
                            AND ADDTIME(`date`, '04:00:00') < NOW()", "id DESC", "1");
                   # No news from the agent since 1 hour. The agent is probably crached. Let's cancel the task
                   if (count($has_recent_log_entries) == 1) {
@@ -1611,7 +1611,7 @@ return namelist;
       }
 
 
-      // If taskjob.status = 1 and all taskjobstatus are finished, so reinitializeTaskjobs()
+      // If taskjob.status = 1 and all taskjobstates are finished, so reinitializeTaskjobs()
       $sql = "SELECT *
       FROM `glpi_plugin_fusioninventory_taskjobs`
       WHERE (
@@ -1703,16 +1703,16 @@ return namelist;
    function forceEnd() {
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
 
-      $a_taskjobstatuses =
+      $a_taskjobstates =
          $pfTaskjobstate->find("`plugin_fusioninventory_taskjobs_id`='". $this->fields["id"]."'");
 
       //TODO: in order to avoid too many atomic operations on DB, convert the
       //following into a massive prepared operation (ie. ids in one massive action)
-      foreach($a_taskjobstatuses as $a_taskjobstatus) {
-         $pfTaskjobstate->getFromDB($a_taskjobstatus['id']);
-         if ($a_taskjobstatus['state'] != PluginFusioninventoryTaskjobstate::FINISHED) {
+      foreach($a_taskjobstates as $a_taskjobstate) {
+         $pfTaskjobstate->getFromDB($a_taskjobstate['id']);
+         if ($a_taskjobstate['state'] != PluginFusioninventoryTaskjobstate::FINISHED) {
                $pfTaskjobstate->changeStatusFinish(
-                     $a_taskjobstatus['id'], 0, '', 1, "Action cancelled by user", 0, 0
+                     $a_taskjobstate['id'], 0, '', 1, "Action cancelled by user", 0, 0
                );
          }
       }

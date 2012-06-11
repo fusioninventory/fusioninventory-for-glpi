@@ -274,7 +274,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    /**
    * Change the status to finish
    *
-   * @param $taskjobstatus integer id of the taskjobstatus
+   * @param $taskjobstates_id integer id of the taskjobstates
    * @param $items_id integer id of the item
    * @param $itemtype value type of the item
    * @param $error bool error
