@@ -90,7 +90,21 @@ function pluginFusinvsnmpInstall($version, $migrationname='Migration') {
       $configLogField = new PluginFusinvsnmpConfigLogField();
       $configLogField->initConfig();
 
-      // Import models
+      /*
+       * Import / update SNMP models
+       */
+      if (!class_exists('PluginFusinvsnmpModel')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/model.class.php");
+      }
+      if (!class_exists('PluginFusinvsnmpModelMib')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/modelmib.class.php");
+      }
+      if (!class_exists('PluginFusinvsnmpImportExport')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/importexport.class.php");
+      }
+      if (!class_exists('PluginFusinvsnmpCommonDBTM')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/commondbtm.class.php");
+      }
       PluginFusinvsnmpModel::importAllModels();
 
       include_once (GLPI_ROOT . "/plugins/fusioninventory/inc/staticmisc.class.php");
