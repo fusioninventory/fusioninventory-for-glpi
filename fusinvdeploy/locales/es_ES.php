@@ -145,9 +145,9 @@ $LANG['plugin_fusinvdeploy']['label'][7]="Fecha añadida";
 $LANG['plugin_fusinvdeploy']['label'][8]="Tiempo de validez";
 $LANG['plugin_fusinvdeploy']['label'][9]="Tiempo de retención (en días)";
 
-$LANG['plugin_fusinvdeploy']['massiveactions'][0]="Target a task";
-$LANG['plugin_fusinvdeploy']['massiveactions'][1]="Create a job for each computer";
-$LANG['plugin_fusinvdeploy']['massiveactions'][2]="Create a job for each group";
+$LANG['plugin_fusinvdeploy']['massiveactions'][0]="Vincular con una tarea";
+$LANG['plugin_fusinvdeploy']['massiveactions'][1]="Crear un trabajo por cada ordenador";
+$LANG['plugin_fusinvdeploy']['massiveactions'][2]="Crear un trabajo por cada grupo";
 
 $LANG['plugin_fusinvdeploy']['message'][0]="Formulario vacio";
 $LANG['plugin_fusinvdeploy']['message'][1]="Formulario inválido";
