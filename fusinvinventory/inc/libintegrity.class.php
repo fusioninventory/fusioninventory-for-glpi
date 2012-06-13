@@ -290,11 +290,11 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
                      if (!$a_lists = $Computer_Item->find("`id`='".$split[1]."'
                                                 AND `computers_id`='".$computer_id."'
                                                 AND `itemtype`='Monitor'")) {
-                        $descriptiontmp == '';
+                        $descriptiontmp = '';
                         if (isset($a_sectiontmp['DESCRIPTION'])) {
                            $descriptiontmp = $a_sectiontmp['DESCRIPTION'];
                         }
-                        $serialtmp == '';
+                        $serialtmp = '';
                         if (isset($a_sectiontmp['SERIAL'])) {
                            $serialtmp = $a_sectiontmp['SERIAL'];
                         }
