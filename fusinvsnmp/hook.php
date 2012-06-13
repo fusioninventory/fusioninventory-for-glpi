@@ -911,7 +911,7 @@ function plugin_headings_fusinvsnmp_xml($item) {
       echo "<tr>";
       echo "<th>".$LANG['plugin_fusioninventory']['title'][1]." ".
          $LANG['plugin_fusioninventory']['xml'][0];
-      echo " (".$LANG['plugin_fusinvinventory']['computer'][0]."&nbsp;: " . 
+      echo " (".$LANG['plugin_fusinvsnmp']['snmp'][53]."&nbsp;: " . 
          Html::convDateTime(date("Y-m-d H:i:s", 
                       filemtime(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/".$type."/".$folder."/".$id))).")";
       echo "</th>";
