@@ -753,18 +753,23 @@ function appear_array(id){
          LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` 
          ON plugin_fusioninventory_taskjobstates_id = `glpi_plugin_fusioninventory_taskjobstates`.`id`
          WHERE `uniqid`='".$uniqid."'
-            AND `comment` NOT LIKE 'Merged with%'
             ORDER BY `glpi_plugin_fusioninventory_taskjoblogs`.`id` DESC
             LIMIT 1";
       $state = 0;
       $result=$DB->query($query);
       $date = '';
+      $comment = '';
       $taskstates_id = 0;
       while ($data=$DB->fetch_array($result)) {
          $state = $data['state'];
          $date = $data['date'];
+         $comment = $data['comment'];
          $taskstates_id = $data['plugin_fusioninventory_taskjobstates_id'];
       }
+      
+      if (strstr($comment, "Merged with")) {
+         $state = '7';
+      }      
       
       if (    $state == '1'
            OR $state == '6'
