@@ -111,7 +111,10 @@ function pluginFusinvsnmpInstall($version, $migrationname='Migration') {
       $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
       PluginFusioninventoryProfile::initProfile($a_plugin['shortname'], $plugins_id);
 
-      $configSNMP = new PluginFusinvSNMPConfig;
+      if (!class_exists('PluginFusinvSNMPConfig')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/config.class.php");
+      }
+      $configSNMP = new PluginFusinvSNMPConfig();
       $configSNMP->initConfigModule();
       // Creation config values
    //      PluginFusioninventoryConfig::add($modules_id, type, value);
