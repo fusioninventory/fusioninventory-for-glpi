@@ -148,7 +148,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $tab[13]['field']     = 'item_type';
       $tab[13]['linkfield'] = 'item_type';
       $tab[13]['name']      = $LANG['common'][17];
-      $tab[13]['datatype']  = 'text';
+//      $tab[13]['datatype']  = 'text';
 
       $tab[14]['table']     = $this->getTable();
       $tab[14]['field']     = 'date_mod';
