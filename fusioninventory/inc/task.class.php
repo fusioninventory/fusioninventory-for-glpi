@@ -640,9 +640,9 @@ class PluginFusioninventoryTask extends CommonDBTM {
       global $DB;
       
       $where = '';
-      $where .= getEntitiesRestrictRequest("AND", 'task');
+      $where .= getEntitiesRestrictRequest("AND", 'glpi_plugin_fusioninventory_tasks');
       if ($tasks_id > 0) {
-         $where = " AND task.`id`='".$tasks_id."'
+         $where = " AND `glpi_plugin_fusioninventory_tasks`.`id`='".$tasks_id."'
             LIMIT 1 "; 
       }
       
