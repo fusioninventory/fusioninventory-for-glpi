@@ -753,6 +753,7 @@ function appear_array(id){
          LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` 
          ON plugin_fusioninventory_taskjobstates_id = `glpi_plugin_fusioninventory_taskjobstates`.`id`
          WHERE `uniqid`='".$uniqid."'
+            AND `comment` NOT LIKE 'Merged with%'
             ORDER BY `glpi_plugin_fusioninventory_taskjoblogs`.`id` DESC
             LIMIT 1";
       $state = 0;
