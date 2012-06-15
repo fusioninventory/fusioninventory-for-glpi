@@ -533,7 +533,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             }
             // Write XML file
             if (isset($_SESSION['SOURCE_XMLDEVICE'])
-                    AND is_null($pfNetworkEquipment->getValue('last_fusioninventory_update', $item->getID()))) {
+                    AND is_null($pfNetworkEquipment->getValue('last_fusioninventory_update'))) {
                PluginFusioninventoryUnknownDevice::writeXML($input['id'], 
                                           $_SESSION['SOURCE_XMLDEVICE'],
                                           "fusinvsnmp",
@@ -608,7 +608,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             }
             // Write XML file
             if (isset($_SESSION['SOURCE_XMLDEVICE'])
-                    AND is_null($pfPrinter->getValue('last_fusioninventory_update', $item->getID()))) {
+                    AND is_null($pfPrinter->getValue('last_fusioninventory_update'))) {
                PluginFusioninventoryUnknownDevice::writeXML($item->getID(), 
                                           $_SESSION['SOURCE_XMLDEVICE'],
                                           "fusinvsnmp",
