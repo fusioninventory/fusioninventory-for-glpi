@@ -782,23 +782,25 @@ function appear_array(id){
          }
          echo $this->getDivState($state, 'td');
          echo "<td align='center'>";
-         echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?field[0]=6&searchtype[0]=contains&contains[0]=".$uniqid."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
+         echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?sort=1&order=DESC&field[0]=6&searchtype[0]=contains&contains[0]=".$uniqid."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
             $LANG['plugin_fusioninventory']['taskjoblog'][9]."</a>";
          echo "<input type='hidden' name='taskjobstates_id' value='".$taskstates_id."' />";
          echo "<input type='hidden' name='taskjobs_id' value='".$taskjobs_id."' />";
          echo '&nbsp;&nbsp;&nbsp;<input name="forceend" value="'.$LANG['plugin_fusioninventory']['task'][32].'"
              class="submit" type="submit">';
          echo "</td>";
-         echo "</tr>";
-         echo "<tr class='tab_bg_3'>";
-         echo "<th>";
-         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_finished.png'/>";
-         echo "</th>";
-         echo "<td colspan='2' align='center'>";
-         echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?field[0]=3&searchtype[0]=equals&contains[0]=".$taskjobs_id."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
-            $LANG['plugin_fusioninventory']['taskjoblog'][8]."</a>";
-         echo "</td>";
-         echo "</tr>";
+         if ($veryshort == '0') {
+            echo "</tr>";
+            echo "<tr class='tab_bg_3'>";
+            echo "<th>";
+            echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_finished.png'/>";
+            echo "</th>";
+            echo "<td colspan='2' align='center'>";
+            echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?sort=1&order=DESC&field[0]=3&searchtype[0]=equals&contains[0]=".$taskjobs_id."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
+               $LANG['plugin_fusioninventory']['taskjoblog'][8]."</a>";
+            echo "</td>";
+            echo "</tr>";
+         }
       } else { // Finish
          if ($veryshort == '0') {
             echo "<th rowspan='2' height='64'>";

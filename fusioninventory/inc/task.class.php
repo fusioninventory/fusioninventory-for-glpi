@@ -623,15 +623,11 @@ class PluginFusioninventoryTask extends CommonDBTM {
    
    
    
-   function getTasksInerror($tasks_id=0) {      
+   function getTasksInerror() {      
       global $DB;
       
       $where = '';
       $where .= getEntitiesRestrictRequest("AND", 'glpi_plugin_fusioninventory_tasks');
-      if ($tasks_id > 0) {
-         $where = " AND `glpi_plugin_fusioninventory_tasks`.`id`='".$tasks_id."'
-            LIMIT 1 "; 
-      }
       
       $query = "SELECT `glpi_plugin_fusioninventory_tasks`.*
          FROM `glpi_plugin_fusioninventory_tasks`
@@ -642,6 +638,9 @@ class PluginFusioninventoryTask extends CommonDBTM {
          ".$where."
          GROUP BY plugin_fusioninventory_tasks_id
          ORDER BY `glpi_plugin_fusioninventory_taskjoblogs`.`date` DESC";
+      
+      
+      
       return $DB->query($query);
    }
    
