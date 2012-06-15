@@ -57,10 +57,10 @@ PluginFusioninventoryTaskjob::getAllowurlfopen();
 $pfTask = new PluginFusioninventoryTask();
 $pfTask->menuTasksLogs();
 
-
-//$_GET['target']="task.php";
-//
-Search::show('PluginFusioninventoryTask');
+$pfTask->taskMenu();
+if (isset($_GET['see'])) {
+   $pfTask->displayTaks($_GET['see']);
+}
 
 Html::footer();
 

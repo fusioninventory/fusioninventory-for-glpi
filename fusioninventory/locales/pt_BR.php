@@ -202,6 +202,8 @@ $LANG['plugin_fusioninventory']['task'][52]="Apagar esta tarefa e finalizar";
 $LANG['plugin_fusioninventory']['task'][53]="Pronto";
 $LANG['plugin_fusioninventory']['task'][54]="Executar esta tarefa novamente";
 $LANG['plugin_fusioninventory']['task'][55]="Nenhum agente habilitado para executar o inventário do ESX";
+$LANG['plugin_fusioninventory']['task'][56]="Planned for running";
+$LANG['plugin_fusioninventory']['task'][58]="In error";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Iniciado";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";

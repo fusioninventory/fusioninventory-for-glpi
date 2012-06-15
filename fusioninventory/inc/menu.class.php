@@ -77,7 +77,13 @@ class PluginFusioninventoryMenu {
       }
 
       if(PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
-         $a_menu[2]['name'] = $LANG['plugin_fusioninventory']['task'][1];
+         $a_menu[1]['name'] = $LANG['plugin_fusioninventory']['task'][1]." (".$LANG['state'][1].")";
+         $a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_task.png";
+         $a_menu[1]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/tasksummary.php";
+      }
+      
+      if(PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
+         $a_menu[2]['name'] = $LANG['plugin_fusioninventory']['task'][1]." (".$LANG['setup'][135].")";
          $a_menu[2]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_task.png";
          $a_menu[2]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryTask');
       }

@@ -202,6 +202,8 @@ $LANG['plugin_fusioninventory']['task'][52]="Supprimer cette tâche et fin";
 $LANG['plugin_fusioninventory']['task'][53]="Fin";
 $LANG['plugin_fusioninventory']['task'][54]="Exécuter encore une fois cette tâche";
 $LANG['plugin_fusioninventory']['task'][55]="Pas d'agent autorisé à faire un inventaire ESX";
+$LANG['plugin_fusioninventory']['task'][56]="Planifié pour exécution";
+$LANG['plugin_fusioninventory']['task'][58]=" En erreur";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Démarré";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";

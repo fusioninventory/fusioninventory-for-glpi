@@ -350,16 +350,28 @@ class PluginFusioninventoryTask extends CommonDBTM {
    
    
    function taskMenu() {
-      global $DB,$CFG_GLPI;
+      global $DB,$CFG_GLPI,$LANG;
 
-      $genericsearch = 0;
-      if (isset($_GET['field'])) {
-         $genericsearch = 1;
-         $gettemp = $_GET;
-      }
+      $resultTasksPlanned = $this->getTasksPlanned();
+      $resultTasksRunning = $this->getTasksRunning();
+      $resultTasksInerror = $this->getTasksInerror();
+      $a_tasksActives = $this->find("`is_active` = '1' ".getEntitiesRestrictRequest("AND", 'glpi_plugin_fusioninventory_tasks'));
+      $a_tasksInactives = $this->find("`is_active` = '0' ".getEntitiesRestrictRequest("AND", 'glpi_plugin_fusioninventory_tasks'));
+      $a_tasksAll = $this->find(getEntitiesRestrictRequest("", 'glpi_plugin_fusioninventory_tasks'));
+      
       
       if (!isset($_GET['see'])) {
-         $_GET['see'] = 'next';
+         if ($DB->numrows($resultTasksPlanned) > 0) {
+            $_GET['see'] = 'next';
+         } else if ($DB->numrows($resultTasksRunning) > 0) {
+            $_GET['see'] = 'running';
+         } else if ($DB->numrows($resultTasksInerror) > 0) {
+            $_GET['see'] = 'inerror';
+         } else if (count($a_tasksActives) > 0) {
+            $_GET['see'] = 'actives';
+         } else {
+            $_GET['see'] = 'all';
+         }
       }
       
       Session::initNavigateListItems($this->getType());
@@ -387,89 +399,66 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       
       // ** Get task in next execution
-      $result = $this->getTasksPlanned();
       $cell = 'td';
       if ($_GET['see'] == 'next') {
          $cell = 'th';
       }
-      echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=next'>Planned for running<sup>(".
-              $DB->numrows($result).")</sup></a></".$cell.">";
+      echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=next'>".
+              $LANG['plugin_fusioninventory']['task'][56]."<sup>(".
+              $DB->numrows($resultTasksPlanned).")</sup></a></".$cell.">";
 
-      // ** Get task running
-      $result = $this->getTasksRunning(); 
+      // ** Get task running 
       $cell = 'td';
       if ($_GET['see'] == 'running') {
          $cell = 'th';
       }
-      echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=running'>Running<sup>(".
-              $DB->numrows($result).")</sup></a></".$cell.">";
+      echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=running'>".
+              $LANG['plugin_fusioninventory']['taskjoblog'][6]."<sup>(".
+              $DB->numrows($resultTasksRunning).")</sup></a></".$cell.">";
             
       // ** Get task in error
-      $result = $this->getTasksInerror();
       $cell = 'td';
       if ($_GET['see'] == 'inerror') {
          $cell = 'th';
       }
-      echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=inerror'>In error<sup>(".
-              $DB->numrows($result).")</sup></a></".$cell.">";
+      echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=inerror'>".
+              $LANG['plugin_fusioninventory']['task'][58]."<sup>(".
+              $DB->numrows($resultTasksInerror).")</sup></a></".$cell.">";
 
       // ** Get task active
       $cell = 'td';
       if ($_GET['see'] == 'actives') {
          $cell = 'th';
       }
-      $a_tasks = $this->find("`is_active` = '1' ".getEntitiesRestrictRequest("AND", 'glpi_plugin_fusioninventory_tasks'));
-      echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=actives'>Actives<sup>(".
-              count($a_tasks).")</sup></a></".$cell.">";
+      echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=actives'>".$LANG['common'][60]."<sup>(".
+              count($a_tasksActives).")</sup></a></".$cell.">";
       
       // ** Get task inactive
       $cell = 'td';
       if ($_GET['see'] == 'inactives') {
          $cell = 'th';
       }
-      $a_tasks = $this->find("`is_active` = '0' ".getEntitiesRestrictRequest("AND", 'glpi_plugin_fusioninventory_tasks'));
-      echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=inactives'>Inactives<sup>(".
-              count($a_tasks).")</sup></a></".$cell.">";
+      echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=inactives'>".$LANG['rulesengine'][107]."<sup>(".
+              count($a_tasksInactives).")</sup></a></".$cell.">";
       
       // ** Get all task
       $cell = 'td';
       if ($_GET['see'] == 'all') {
          $cell = 'th';
       }
-      $a_tasks = $this->find(getEntitiesRestrictRequest("", 'glpi_plugin_fusioninventory_tasks'));
-      echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=all'>All<sup>(".
-              count($a_tasks).")</sup></a></".$cell.">";
-      
-      
-      echo '<th width="19">';
-         echo "<a href=\"javascript:showHideDiv('searchform','tabsbodyimg','".$CFG_GLPI["root_doc"].
-                    "/pics/deplier_down.png','".$CFG_GLPI["root_doc"]."/pics/deplier_down.png')\">";
-         echo "<img alt='' name='tabsbodyimg' src=\"".$CFG_GLPI["root_doc"]."/pics/deplier_down.png\">";
-         echo "</a>";
-      echo '</th>';
+      echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=all'>".$LANG['common'][66]."<sup>(".
+              count($a_tasksAll).")</sup></a></".$cell.">";
       
       echo "</tr>";
       echo "</table>";
       
 
-      if ($genericsearch == '1') {
-         echo "<div class='center' id='searchform'>";
-         unset($_GET['view']);
-         $_GET = $gettemp;
-      } else {
-         echo "<div class='center' id='searchform' style='display:none'>";
-         $gettemp = $_GET;
-         unset($_GET);
-      }
+      echo "<div class='center' id='searchform' style='display:none'>";
       
 //      Search::show($this->getType());
       Search::manageGetValues($this->getType());
       Search::showGenericSearch($this->getType(), $_GET);
-      if ($genericsearch == '1') {
-         Search::showList($this->getType(), $_GET);
-      }
       
-      $_GET = $gettemp;
       echo "</div>";
    }
 
@@ -530,8 +519,6 @@ class PluginFusioninventoryTask extends CommonDBTM {
          } else if ($DB->numrows($this->getTasksRunning($this->fields['id'])) > 0){
             $conditionpic = 'running';
          }
-         
-         
          
          if ($conditionpic == 'next') {
             echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_scheduled.png'/></td>";
@@ -665,13 +652,25 @@ class PluginFusioninventoryTask extends CommonDBTM {
       
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
+      
+      $cell = 'td';
+      if (strstr($_SERVER['PHP_SELF'],'/tasksummary.')) {
+         $cell ='th';
+      }
+      echo "<".$cell." align='center' width='33%'>";
+      echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/tasksummary.php'>".
+              $LANG['plugin_fusioninventory']['task'][1]." (".$LANG['state'][1].")</a>";
+      echo "</".$cell.">";
+      
       $cell = 'td';
       if (strstr($_SERVER['PHP_SELF'],'/task.')) {
          $cell ='th';
       }
-      echo "<".$cell." align='center' width='50%'>";
-      echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/task.php'>".$LANG['plugin_fusioninventory']['task'][1]."</a>";
+      echo "<".$cell." align='center' width='33%'>";
+      echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/task.php'>".
+              $LANG['plugin_fusioninventory']['task'][1]." (".$LANG['setup'][135].")</a>";
       echo "</".$cell.">";
+      
       $cell = 'td';
       if (strstr($_SERVER['PHP_SELF'],'/taskjoblog.')) {
          $cell ='th';

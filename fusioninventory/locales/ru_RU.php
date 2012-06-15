@@ -202,6 +202,8 @@ $LANG['plugin_fusioninventory']['task'][52]="Удалить эту задачу 
 $LANG['plugin_fusioninventory']['task'][53]="Завершить";
 $LANG['plugin_fusioninventory']['task'][54]="Запустить эту задачу снова";
 $LANG['plugin_fusioninventory']['task'][55]="No agent allowed to run ESX inventory";
+$LANG['plugin_fusioninventory']['task'][56]="Planned for running";
+$LANG['plugin_fusioninventory']['task'][58]="In error";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Начато";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";

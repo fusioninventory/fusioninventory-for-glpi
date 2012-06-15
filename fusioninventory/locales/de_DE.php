@@ -202,6 +202,8 @@ $LANG['plugin_fusioninventory']['task'][52]="Diese Aufgabe löschen und beenden"
 $LANG['plugin_fusioninventory']['task'][53]="Ende";
 $LANG['plugin_fusioninventory']['task'][54]="Aufgabe erneut ausführen";
 $LANG['plugin_fusioninventory']['task'][55]="Kein Agent berechtigt die ESX-Inventur auszuführen";
+$LANG['plugin_fusioninventory']['task'][56]="Planned for running";
+$LANG['plugin_fusioninventory']['task'][58]="In error";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="gestartet";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="OK";
