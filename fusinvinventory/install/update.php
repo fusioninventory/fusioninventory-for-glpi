@@ -528,6 +528,7 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
    $input['FE:FF:FF:FF:FF:FF'] = '3';
    $input['00:00:00:00:00:00'] = '3';
    $input['00:0b:ca:fe:00:00'] = '3';
+   $input['02:80:37:EC:02:00'] = '3';
    $input['MB-1234567890'] = '1';
    $input['Not Specified'] = '1';
    $input['OEM_Serial'] = '1';
