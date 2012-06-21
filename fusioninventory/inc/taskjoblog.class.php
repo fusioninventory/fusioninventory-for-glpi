@@ -332,8 +332,9 @@ function appear_array(id){
       global $LANG,$CFG_GLPI;
       
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+      $pfAgent        = new PluginFusioninventoryAgent();
+      
       $pfTaskjobstate->getFromDB($taskjobstates_id);
-      $pfAgent = new PluginFusioninventoryAgent();
       
       $displayforceend = 0;
       $a_history = $this->find('`plugin_fusioninventory_taskjobstates_id` = "'.$pfTaskjobstate->fields['id'].'"', 
@@ -355,7 +356,8 @@ function appear_array(id){
       }
       if ($displaytaskjob == '1') {
          $pfTaskjob = new PluginFusioninventoryTaskjob();
-         $pfTask = new PluginFusioninventoryTask();
+         $pfTask    = new PluginFusioninventoryTask();
+         
          $pfTaskjob->getFromDB($pfTaskjobstate->fields['plugin_fusioninventory_taskjobs_id']);
          $pfTask->getFromDB($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
          echo "<td>";
@@ -391,9 +393,10 @@ function appear_array(id){
       }      
       echo "</tr>";
 
-      echo "<tr><td colspan='".$nb_td."' style='display: none;' id='viewfollowup".$pfTaskjobstate->fields["id"]."' class='tab_bg_4'>";
-
-      echo "</td></tr>";
+      echo "<tr>";
+      echo "<td colspan='".$nb_td."' style='display: none;' id='viewfollowup".$pfTaskjobstate->fields["id"]."' class='tab_bg_4'>";
+      echo "</td>";
+      echo "</tr>";
    }
 
 
@@ -412,7 +415,7 @@ function appear_array(id){
       global $CFG_GLPI,$LANG;
 
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent        = new PluginFusioninventoryAgent();
 
       $text = "<center><table class='tab_cadrehov' style='width: ".$width."px'>";
 
@@ -550,8 +553,11 @@ function appear_array(id){
    * Display high detail of each history line
    *
    * @param $datas array datas of history
+   * @param $comment boolean 0/1 display comment or not 
    *
-   * @return value all text to display
+   * @return array
+   *               - boolean 0/1 if this log = finish
+   *               - text to display 
    *
    **/
    function displayHistoryDetail($datas, $comment=1) {
@@ -617,9 +623,9 @@ function appear_array(id){
          foreach($matches[0] as $num=>$commentvalue) {
             $classname = $matches[1][$num];
             if ($classname != '') {
-               $Class = new $classname;
-               $Class->getFromDB($matches[2][$num]);
-               $datas['comment'] = str_replace($commentvalue, $Class->getLink(), $datas['comment']);
+               $item = new $classname;
+               $item->getFromDB($matches[2][$num]);
+               $datas['comment'] = str_replace($commentvalue, $item->getLink(), $datas['comment']);
             }
          }
          // Search for code to display lang traduction ==pluginname::9876==
@@ -645,7 +651,7 @@ function appear_array(id){
    * @param $state value state of this taskjobstate
    * @param $comment value the comment of this insertion
    *
-   * @return value all text to display
+   * @return nothing
    *
    **/
    function addTaskjoblog($taskjobs_id, $items_id, $itemtype, $state, $comment) {
@@ -653,11 +659,11 @@ function appear_array(id){
       $this->getEmpty();
       unset($this->fields['id']);
       $this->fields['plugin_fusioninventory_taskjobstates_id'] = $taskjobs_id;
-      $this->fields['date'] = date("Y-m-d H:i:s");
-      $this->fields['items_id'] = $items_id;
-      $this->fields['itemtype'] = $itemtype;
-      $this->fields['state'] = $state;
-      $this->fields['comment'] = $comment;
+      $this->fields['date']      = date("Y-m-d H:i:s");
+      $this->fields['items_id']  = $items_id;
+      $this->fields['itemtype']  = $itemtype;
+      $this->fields['state']     = $state;
+      $this->fields['comment']   = $comment;
 
       $this->addToDB();
    }
@@ -717,19 +723,25 @@ function appear_array(id){
     * 
     * @param type $uuid value uniqid
     * 
-    * @return array
+    * @return array with data of table glpi_plugin_fusioninventory_taskjobstates
     */
    static function getByUniqID($uuid) {
-      $results = getAllDatasFromTable('glpi_plugin_fusioninventory_taskjobstates',
+      $a_datas = getAllDatasFromTable('glpi_plugin_fusioninventory_taskjobstates',
                                       "`uniqid`='$uuid'");
-      foreach ($results as $result) {
-         return $result;
+      foreach ($a_datas as $a_data) {
+         return $a_data;
       }
       return array();
    }
    
    
-   
+
+   /**
+    * Display short logs
+    *
+    * @param $taskjobs_id integer id of taskjob
+    * @param $veryshort boolean activation to have very very short display
+    */
    function displayShortLogs($taskjobs_id, $veryshort=0) {
       global $DB,$CFG_GLPI,$LANG;
       
@@ -846,6 +858,14 @@ function appear_array(id){
    
    
    
+   /**
+    * Get div with text/color depend on state
+    * 
+    * @param $state integer state number
+    * @param $type string div / td
+    * 
+    * @return string complete node (openned and closed)
+    */
    function getDivState($state, $type='div') {
       global $LANG;
 
@@ -864,7 +884,6 @@ function appear_array(id){
          case 2:
             return "<".$type." style='background-color: rgb(0, 255, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' width='".$width."'>".
                "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][2]."</strong></".$type.">";
-
             break;
 
          case 3:
@@ -893,8 +912,9 @@ function appear_array(id){
    
    
    /**
-    * Display last uniqid
-    *  
+    * Display quick list logs
+    * 
+    * @param $tasks_id integer id of task
     */
    static function quickListLogs($tasks_id) {
       global $DB,$LANG;
@@ -927,7 +947,6 @@ function appear_array(id){
          Search::showList('PluginFusioninventoryTaskjoblog', $params);
       }      
    }
-   
 }
 
 ?>
