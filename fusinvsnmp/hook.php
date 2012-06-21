@@ -689,13 +689,7 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
 
    $type = get_Class($item);
    switch ($type) {
-      case 'PluginFusioninventoryIPRange':
-         if (isset($_GET['allowcreate'])) {
-            $_SESSION['glpi_plugin_fusioninventory_allowcreate'] = $_GET['allowcreate'];
-         }
-         return array (1 => $LANG['plugin_fusinvsnmp']['task'][15]." - ".$LANG['plugin_fusinvsnmp']['config'][4], 
-                       2 => $LANG['plugin_fusinvsnmp']['task'][15]." - ".$LANG['plugin_fusinvsnmp']['config'][3]);
-                       
+      
       case 'Computer':
          if ($withtemplate) { //?
             return array();
@@ -716,7 +710,7 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
          }
          break;
 
-      case MONITOR_TYPE :
+      case 'Monitor':
          if ($withtemplate) { //?
             return array();
          // Non template case
@@ -743,7 +737,7 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
          }
          break;
 
-      case 'Printer' :
+      case 'Printer':
          // template case
          if ($withtemplate) {
             return array();
@@ -762,7 +756,7 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
          }
          break;
 
-       case 'PluginFusioninventoryAgent' :
+       case 'PluginFusioninventoryAgent':
           $array = array ();
           $array[1] = $LANG['plugin_fusinvsnmp']['agents'][24];
           return $array;
@@ -778,6 +772,8 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
    }
    return false;  
 }
+
+
 
 // Define headings actions added by the plugin   
 function plugin_headings_actions_fusinvsnmp($item) {
@@ -814,36 +810,12 @@ function plugin_headings_actions_fusinvsnmp($item) {
          $array[1] = "plugin_headings_fusinvsnmp_unknowndevices";
          return $array;
          break;
-      
-      case 'PluginFusioninventoryIPRange':
-         return array(1 => 'plugin_headings_fusinvsnmp_task_netdiscovery',
-                      2 => 'plugin_headings_fusinvsnmp_task_snmpquery');
 
    }
    return false;
 }
 
-function plugin_headings_fusinvsnmp_task_netdiscovery($type, $id) {
-   $iprange = new PluginFusioninventoryIPRange();
-   $allowcreate = 0;
-   if (isset($_SESSION['glpi_plugin_fusioninventory_allowcreate'])) {
-      $allowcreate = $_SESSION['glpi_plugin_fusioninventory_allowcreate'];
-      unset($_SESSION['glpi_plugin_fusioninventory_allowcreate']);
-   }
-   $iprange->permanentTask($_POST["id"], "NETDISCOVERY", $allowcreate);
-   
-}
 
-function plugin_headings_fusinvsnmp_task_snmpquery($type, $id) {
-   $iprange = new PluginFusioninventoryIPRange();
-   $allowcreate = 0;
-   if (isset($_SESSION['glpi_plugin_fusioninventory_allowcreate'])) {
-      $allowcreate = $_SESSION['glpi_plugin_fusioninventory_allowcreate'];
-      unset($_SESSION['glpi_plugin_fusioninventory_allowcreate']);
-   }
-   $iprange->permanentTask($_POST["id"], "SNMPQUERY", $allowcreate);
-   
-}
 
 function plugin_headings_fusinvsnmp_printerInfo($type, $id) {
    global $CFG_GLPI;

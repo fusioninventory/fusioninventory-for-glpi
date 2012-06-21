@@ -44,16 +44,6 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
    /*
     * Define different state
-    *
-    * 
-    * 1 : started
-    * 2 : ok
-    * 3 : error / replaned
-    * 4 : error
-    * 5 : Unknown
-    * 6 : Running
-    * 7 : prepared
-    * 
     */
 
    const TASK_STARTED            = 1;
@@ -64,7 +54,13 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
    const TASK_RUNNING            = 6;
    const TASK_PREPARED           = 7;
 
+
    
+   /**
+    * return array with state mapping name
+    * 
+    * @return array with all elements
+    */
    function dropdownStateValues() {
       global $LANG;
       
@@ -81,7 +77,14 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
    }
    
    
-   
+
+   /**
+    * Return name of state
+    * 
+    * @param type $states_id
+    * 
+    * @return string name of state number
+    */
    function getState($states_id) {
       $elements = $this->dropdownStateValues();
       return $elements[$states_id];
@@ -94,7 +97,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
       $sopt = array();
 
-      $sopt['common'] = "Logs";
+      $sopt['common'] = $LANG['Menu'][30];
 
       $sopt[1]['table']         = $this->getTable();
       $sopt[1]['field']         = 'id';
@@ -137,6 +140,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       return $sopt;
    }
 
+ 
    
    /**
    * Display history of taskjob
@@ -152,7 +156,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
    **/
    function showHistory($taskjobs_id, $width="950", $options=array()) {
       global $DB,$CFG_GLPI,$LANG;
-
+      
       $this->javascriptHistory();
       $a_uniqid = array();
 
@@ -218,7 +222,6 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          echo "</table><br/>";
       }
 
-
       // ***** Display for statejob OK
       if (count($a_uniqid) > 0) {
          $where .= " AND `uniqid` NOT IN ('".implode("','", $a_uniqid)."')";
@@ -230,12 +233,13 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
             ORDER BY `id` DESC';
       }
       $querycount = 'SELECT count(*) AS cpt FROM `glpi_plugin_fusioninventory_taskjobstates`
-            WHERE `plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"
-               AND `state`="3"
-               '.$where.'
-            GROUP BY uniqid,plugin_fusioninventory_agents_id';
-         $resultcount = $DB->query($querycount);
-         $number = $DB->numrows($resultcount);
+         WHERE `plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"
+            AND `state`="3"
+            '.$where.'
+         GROUP BY uniqid,plugin_fusioninventory_agents_id';
+      $resultcount = $DB->query($querycount);
+      $a_datacount = $DB->fetch_assoc($resultcount);
+      $number = $a_datacount['cpt'];
       if (isset($options['uniqid']) AND $number == '0') {
 
       } else {
@@ -485,7 +489,6 @@ function appear_array(id){
             $text .= $a_return[1];
             $displayforceend += $count;
             $text .= "</tr>";
-
 
             while (count($a_history) != 0) {
                if (count($a_devices_merged) > 0) {
