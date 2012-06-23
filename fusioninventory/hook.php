@@ -343,7 +343,7 @@ function plugin_headings_fusioninventory_tasks($item, $itemtype='', $items_id=0)
    if ($itemtype == 'Computer') {
       // Possibility to remote agent
       $allowed = PluginFusioninventoryTaskjob::getAllowurlfopen(1);
-      if (isset($allowed)) {
+      if ($allowed) {
          $pfAgent = new PluginFusioninventoryAgent();
          $pfAgent->forceRemoteAgent();
       }

@@ -311,17 +311,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       
       echo "</table>";
       echo "</form>";
-//      echo "</div>";
-      
-//      echo "<div id='seemore'>";
-//      echo "<table class='tab_cadre_fixe'>";
-//      echo "<tr class='tab_bg_1'>";
-//      echo "<th colspan='4' align='center' onclick='expandtaskjobform()'>See more";
-//      echo " <img src='".GLPI_ROOT."/pics/deplier_down.png'/>";
-//      echo "</th>";
-//      echo "</tr>";
-//      echo "</table>";
-//      echo "</div>";
       
       echo "<script language='javascript'>
          function expandtaskjobform() {
@@ -340,6 +329,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
     * Manage definitions
     *
     * @param $id integer id of the taskjob
+    * @param $type string type (definition or action)
+    * 
+    * @return nothing
     */
    function manageDefinitionsActions($id, $type) {
       global $LANG;
@@ -347,7 +339,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $this->getFromDB($id);
 
       echo "<form name='".$type."s_form' id='".$type."s_form' method='post' action=' ";
-      echo Toolbox::deleteDir(__CLASS__)."'>";
+      echo Toolbox::getItemTypeFormURL(__CLASS__)."'>";
       echo "<table class='tab_cadre_fixe'>";
       
       echo "<tr class='tab_bg_1'>";
