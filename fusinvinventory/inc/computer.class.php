@@ -171,7 +171,12 @@ class PluginFusinvinventoryComputer extends CommonDBTM {
          echo '<td>'.$a_computerextend['wincompany'].'</td>';
       }
       echo '</tr>';
-            
+
+      echo '<tr class="tab_bg_1">';
+      echo '<td>Asset TAG&nbsp;:</td>';
+      echo '<td>'.$a_computerextend['bios_assettag'].'</td>';
+      echo '</tr>';
+
       echo '</table>';
       echo '</div>';
       
