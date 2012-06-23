@@ -1486,6 +1486,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          echo "</tr>";
          echo "</table>";
          echo "</center>";
+         echo "<br/>";
          return false;
       }
       return true;
