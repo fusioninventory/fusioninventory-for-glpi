@@ -258,7 +258,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          if ($this->fields['id'] > 0) {
             $pfTaskjoblog->displayShortLogs($this->fields['id']);
          } else {
-            echo "<td colspan='2'>ff</td>";
+            echo "<td colspan='2'></td>";
          }
          $rowspan = 1;
       }
@@ -409,17 +409,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</table>";
       echo "<input type='hidden' name='id' value='".$id."' />";
       echo "</form>";
-   }
-
-
-
-   /*
-    * Manage actions
-    *
-    * @param $id integer id of the taskjob
-    */
-   function manageActions($id) {
-      
    }
 
    
@@ -2070,6 +2059,14 @@ return namelist;
    }
    
    
+   
+   /**
+    * Display + button to add definition or action
+    * 
+    * @param $name string name of the action (here definition or action)
+    * 
+    * @return nothing 
+    */
    function plusButton($name) {
       global $LANG,$CFG_GLPI;
       
