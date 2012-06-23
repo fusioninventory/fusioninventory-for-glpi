@@ -100,7 +100,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $tab[6]['table']          = $this->getTable();
       $tab[6]['field']          = 'id';
       $tab[6]['linkfield']      = '';
-      $tab[6]['name']           = 'id';
+      $tab[6]['name']           = $LANG['common'][2];
 
       return $tab;
    }
@@ -151,7 +151,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    function showForm($id, $options=array()) {
       global $CFG_GLPI,$LANG;
 
-      $pfTask = new PluginFusioninventoryTask();
+      $pfTask       = new PluginFusioninventoryTask();
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       
       $pfTask->getFromDB($_POST['id']);
@@ -168,13 +168,11 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $this->getEmpty();
       }
 
-      $heightdiv = 200;
-//      echo "<div id='taskjobdisplay' style='height:".$heightdiv."px; overflow:hidden;'>";
       echo "<form method='post' name='form_taskjob' action='".
             $CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/taskjob.form.php''>";
 
       if ($id!='') {
-         echo "<input type='hidden' name='id' value='".$id."'/>";
+         echo "<input type='hidden' name='id' value='".$id."' />";
       }
       echo "<table class='tab_cadre_fixe'>";
 
@@ -188,7 +186,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          if ($ismultientities) {
             echo "(".Dropdown::getDropdownName('glpi_entities',$this->fields['entities_id']) . ")";
          }
-
       } else {
          if ($ismultientities) {
             echo $LANG['plugin_fusioninventory']['task'][15]."&nbsp;:&nbsp;".

@@ -514,7 +514,7 @@ function appear_array(id){
                   $displayforceend += $count;
                   $text .= "</tr>";
 
-                  foreach ($a_history as $datas) {
+                  while (count($a_history) != 0) {
                      $text .= "<tr class='tab_bg_1'>";
                      $a_return = $this->displayHistoryDetail(array_shift($a_history));
                      $count = $a_return[0];
@@ -727,7 +727,8 @@ function appear_array(id){
     */
    static function getByUniqID($uuid) {
       $a_datas = getAllDatasFromTable('glpi_plugin_fusioninventory_taskjobstates',
-                                      "`uniqid`='$uuid'");
+                                      "`uniqid`='$uuid'",
+                                      "1");
       foreach ($a_datas as $a_data) {
          return $a_data;
       }
@@ -741,6 +742,8 @@ function appear_array(id){
     *
     * @param $taskjobs_id integer id of taskjob
     * @param $veryshort boolean activation to have very very short display
+    * 
+    * @return nothing
     */
    function displayShortLogs($taskjobs_id, $veryshort=0) {
       global $DB,$CFG_GLPI,$LANG;
@@ -756,8 +759,8 @@ function appear_array(id){
       }      
       $query = "SELECT * FROM `glpi_plugin_fusioninventory_taskjobstates`
          WHERE `plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
-            ORDER BY `uniqid` DESC
-            LIMIT 1";
+         ORDER BY `uniqid` DESC
+         LIMIT 1";
       $result=$DB->query($query);
       $uniqid = 0;
       while ($data=$DB->fetch_array($result)) {
@@ -766,15 +769,16 @@ function appear_array(id){
       
       $query = "SELECT `glpi_plugin_fusioninventory_taskjoblogs`.* FROM `glpi_plugin_fusioninventory_taskjoblogs` 
          LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` 
-         ON plugin_fusioninventory_taskjobstates_id = `glpi_plugin_fusioninventory_taskjobstates`.`id`
+            ON plugin_fusioninventory_taskjobstates_id = `glpi_plugin_fusioninventory_taskjobstates`.`id`
          WHERE `uniqid`='".$uniqid."'
-            ORDER BY `glpi_plugin_fusioninventory_taskjoblogs`.`id` DESC
-            LIMIT 1";
-      $state = 0;
-      $result=$DB->query($query);
+         ORDER BY `glpi_plugin_fusioninventory_taskjoblogs`.`id` DESC
+         LIMIT 1";
+      $state = 0;      
       $date = '';
       $comment = '';
       $taskstates_id = 0;
+      
+      $result=$DB->query($query);
       while ($data=$DB->fetch_array($result)) {
          $state = $data['state'];
          $date = $data['date'];
@@ -915,6 +919,8 @@ function appear_array(id){
     * Display quick list logs
     * 
     * @param $tasks_id integer id of task
+    * 
+    * @return nothing
     */
    static function quickListLogs($tasks_id) {
       global $DB,$LANG;
@@ -938,11 +944,11 @@ function appear_array(id){
          }
       } else {
          $params = array();
-         $params['field'][0] = '6';
+         $params['field'][0]      = '6';
          $params['searchtype'][0] = 'contains';
-         $params['contains'][0] = $uniqid;
-         $params['itemtype'] = 'PluginFusioninventoryTaskjoblog';
-         $params['start'] = '0';
+         $params['contains'][0]   = $uniqid;
+         $params['itemtype']      = 'PluginFusioninventoryTaskjoblog';
+         $params['start']         = '0';
          Search::manageGetValues('PluginFusioninventoryTaskjoblog');
          Search::showList('PluginFusioninventoryTaskjoblog', $params);
       }      
