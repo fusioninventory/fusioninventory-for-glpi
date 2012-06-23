@@ -125,7 +125,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
             // Possibility to remote agent
             $allowed = PluginFusioninventoryTaskjob::getAllowurlfopen(1);
-            if (isset($allowed)) {
+            if ($allowed) {
                $pfAgent = new PluginFusioninventoryAgent();
                $pfAgent->forceRemoteAgent();
             }
@@ -1735,6 +1735,7 @@ return namelist;
          echo "</tr>";
          echo "</table>";
          echo "</center>";
+         echo "<br/>";
          return false;
       }
       return true;
