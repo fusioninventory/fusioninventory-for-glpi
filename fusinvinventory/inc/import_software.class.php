@@ -96,10 +96,14 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
       if (isset($res_rule["manufacturer"])) {
          $manufacturer = Dropdown::getDropdownName("glpi_manufacturers", $res_rule["manufacturer"]);
       }
+      $software_entity = $_SESSION["plugin_fusinvinventory_entity"];
+      if (isset($res_rule['new_entities_id'])) {
+         $software_entity = $res_rule['new_entities_id'];
+      }      
       
       $software_id = $Software->addOrRestoreFromTrash($modified_name, 
                                                       $manufacturer, 
-                                                      $_SESSION["plugin_fusinvinventory_entity"]);
+                                                      $software_entity);
       if ($software_id > 0
               AND isset($res_rule["is_helpdesk_visible"])) {
          $inputsoftware = array();
@@ -112,9 +116,7 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
       $query = "SELECT `id`
                 FROM `glpi_softwareversions`
                 WHERE `softwares_id` = '$software_id'
-                   AND `name` = '$modified_version' ".
-                   getEntitiesRestrictRequest('AND', 'glpi_softwareversions', 'entities_id', $_SESSION["plugin_fusinvinventory_entity"],
-                                            true);
+                   AND `name` = '$modified_version' ";
       $result = $DB->query($query);
       if ($DB->numrows($result) > 0) {
          $data = $DB->fetch_array($result);
@@ -127,7 +129,6 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
          if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
             $input['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
          }
-         $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
          $isNewVers = $SoftwareVersion->add($input, array(), $_SESSION["plugin_fusinvinventory_history_add"]);
       }
 
