@@ -93,10 +93,21 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
       } else {
          $modified_version = $array['version'];
       }
+      if (isset($res_rule["manufacturer"])) {
+         $manufacturer = Dropdown::getDropdownName("glpi_manufacturers", $res_rule["manufacturer"]);
+      }
+      
       $software_id = $Software->addOrRestoreFromTrash($modified_name, 
                                                       $manufacturer, 
                                                       $_SESSION["plugin_fusinvinventory_entity"]);
-
+      if ($software_id > 0
+              AND isset($res_rule["is_helpdesk_visible"])) {
+         $inputsoftware = array();
+         $inputsoftware['id'] = $software_id;
+         $inputsoftware['is_helpdesk_visible'] = $res_rule["is_helpdesk_visible"];
+         $Software->update($inputsoftware);
+      }      
+      
       $isNewVers = 0;
       $query = "SELECT `id`
                 FROM `glpi_softwareversions`
@@ -113,9 +124,6 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
          $input = array();
          $input["softwares_id"] = $software_id;
          $input["name"] = $modified_version;
-         if (isset($array['PUBLISHER'])) {
-            $input["manufacturers_id"] = $manufacturer;
-         }
          if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
             $input['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
          }
