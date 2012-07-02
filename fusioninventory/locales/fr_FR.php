@@ -245,7 +245,7 @@ $LANG['plugin_fusioninventory']['xml'][0]="XML";
 
 
 $LANG['plugin_fusioninventory']['antivirus'][0]="Antivirus";
-$LANG['plugin_fusioninventory']['antivirus'][1]="Pas d'antivirus sur cet ordinateur";
+$LANG['plugin_fusioninventory']['antivirus'][1]="Cet ordinateur n'est pas sous Windows XP et plus récent ou n'a pas d'antivirus d'installé";
 $LANG['plugin_fusioninventory']['antivirus'][2]="Version";
 $LANG['plugin_fusioninventory']['antivirus'][3]="A jour";
 

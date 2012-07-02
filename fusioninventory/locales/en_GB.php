@@ -298,7 +298,7 @@ $LANG['plugin_fusioninventory']['profile'][8]="XML file manual import";
 $LANG['plugin_fusioninventory']['profile'][9]="Fields blacklist";
 
 $LANG['plugin_fusioninventory']['antivirus'][0]="Antivirus";
-$LANG['plugin_fusioninventory']['antivirus'][1]="No antivirus on this computer";
+$LANG['plugin_fusioninventory']['antivirus'][1]="This computer is not a Windows XP and later or no antivirus is installed";
 $LANG['plugin_fusioninventory']['antivirus'][2]="Version";
 $LANG['plugin_fusioninventory']['antivirus'][3]="Up to date";
 

@@ -244,7 +244,7 @@ $LANG['plugin_fusioninventory']['wizard'][8]="Resultat des Tasks";
 $LANG['plugin_fusioninventory']['xml'][0]="XML";
 
 $LANG['plugin_fusioninventory']['antivirus'][0]="Antivirus";
-$LANG['plugin_fusioninventory']['antivirus'][1]="Keine Antiviren-Software auf diesem Computer";
+$LANG['plugin_fusioninventory']['antivirus'][1]="Auf diesem Computer ist weder Windows XP (oder neuer), noch Antiviren-Software installiert";
 $LANG['plugin_fusioninventory']['antivirus'][2]="Version";
 $LANG['plugin_fusioninventory']['antivirus'][3]="Aktuell";
 
