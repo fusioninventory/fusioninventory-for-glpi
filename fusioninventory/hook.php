@@ -1025,9 +1025,9 @@ function plugin_pre_item_purge_fusioninventory($parm) {
          $DB->query($query);
          
          $PluginFusinvinventoryLib = new PluginFusioninventoryInventoryComputerLib();
-         $PluginFusinvinventoryLib->removeExternalid($item->getField('id'));
+         $PluginFusinvinventoryLib->removeExternalid($parm->getField('id'));
          // Remove antivirus if set
-         PluginFusioninventoryInventoryComputerAntivirus::cleanComputer($item->getField('id'));
+         PluginFusioninventoryInventoryComputerAntivirus::cleanComputer($parm->getField('id'));
          break;
 
    }
