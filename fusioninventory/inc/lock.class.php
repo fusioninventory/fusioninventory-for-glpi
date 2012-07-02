@@ -679,20 +679,22 @@ class PluginFusioninventoryLock extends CommonDBTM{
    function importFromOcs() {
       global $DB;
 
-      $sql = "SELECT * FROM `glpi_ocslinks`";
-      $result=$DB->query($sql);
-      while ($data=$DB->fetch_array($result)) {
-         $a_ocslocks = importArrayFromDB($data['computer_update']);
-         $a_fields = array();
-         foreach ($a_ocslocks as $field) {
-            if (!strstr($field, "_version")
-                  AND $field != "date_mod") {
-               
-               $a_fields[] = $field;
+      if (TableExists(`glpi_ocslinks`)) {
+         $sql = "SELECT * FROM `glpi_ocslinks`";
+         $result=$DB->query($sql);
+         while ($data=$DB->fetch_array($result)) {
+            $a_ocslocks = importArrayFromDB($data['computer_update']);
+            $a_fields = array();
+            foreach ($a_ocslocks as $field) {
+               if (!strstr($field, "_version")
+                     AND $field != "date_mod") {
+
+                  $a_fields[] = $field;
+               }
             }
-         }
-         if (count($a_fields) > 0) {
-            $this->addLocks("Computer", $data['computers_id'], $a_fields);
+            if (count($a_fields) > 0) {
+               $this->addLocks("Computer", $data['computers_id'], $a_fields);
+            }
          }
       }
    }
