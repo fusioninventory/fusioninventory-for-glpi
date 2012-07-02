@@ -294,8 +294,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][32]." :</td>";
       echo "<td>";
       Dropdown::showInteger("delete_task",
-                            $this->getValue($plugin_id, 'delete_task', ''),1,240);
-      echo " ".strtolower($LANG['calendar'][12]);
+                            $this->getValue($plugin_id, 'delete_task', ''),1,240, 1,
+                            array(),
+                            array('unit'=>'day'));
+
       echo "</td>";
 
       echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][8]." :</td>";
@@ -314,6 +316,282 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       $options['candel'] = false;
       $this->showFormButtons($options);
+
+      return true;
+   }
+   
+   
+   
+   /**
+   * Display form for config tab in fusioninventory config form
+   *
+   * @param $options array
+   *
+   * @return bool true if form is ok
+   *
+   **/
+   static function showFormInventory($options=array()) {
+      global $LANG;
+
+      $pfConfig = new PluginFusioninventoryConfig();
+      $pfsnmpConfig = new self();
+
+      $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
+
+      $pfsnmpConfig->fields['id'] = 1;
+      $pfsnmpConfig->showFormHeader($options);
+ 
+      echo "<tr>";
+      echo "<th colspan='4'>".$LANG['plugin_fusinvinventory']['setup'][20];
+      echo "</th>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>";
+      echo $LANG['Menu'][3]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      $array = array();
+      $array[0] = $LANG['plugin_fusinvinventory']['setup'][23];
+      $array[1] = $LANG['plugin_fusinvinventory']['setup'][22];
+      $array[2] = $LANG['plugin_fusinvinventory']['setup'][24];
+      $array[3] = $LANG['plugin_fusinvinventory']['setup'][27];
+      Dropdown::showFromArray("import_monitor", $array, 
+                              array('value' => 
+                                 $pfConfig->getValue($plugins_id, 
+                                                                        'import_monitor')));
+      echo "&nbsp;";
+      $text = "* ".$LANG['plugin_fusinvinventory']['setup'][23]."&nbsp;:&nbsp;".
+      $LANG['plugin_fusinvinventory']['setup'][32]."<br/><br/>".
+      "* ".$LANG['plugin_fusinvinventory']['setup'][22]."&nbsp;:&nbsp;".
+      $LANG['plugin_fusinvinventory']['setup'][33]."<br/><br/>".
+      "* ".$LANG['plugin_fusinvinventory']['setup'][24]."&nbsp;:&nbsp;".
+      $LANG['plugin_fusinvinventory']['setup'][34]."<br/><br/>".
+      "* ".$LANG['plugin_fusinvinventory']['setup'][27]."&nbsp;:&nbsp;".
+      $LANG['plugin_fusinvinventory']['setup'][35];
+      Html::showToolTip($text);
+      echo "</td>";
+      echo "<th colspan='2'>";
+      echo $LANG['plugin_fusinvinventory']['setup'][21];
+      echo "</th>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>";
+      echo $LANG['Menu'][2]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      $array = array();
+      $array[0] = $LANG['plugin_fusinvinventory']['setup'][23];
+      $array[1] = $LANG['plugin_fusinvinventory']['setup'][22];
+      $array[2] = $LANG['plugin_fusinvinventory']['setup'][24];
+      $array[3] = $LANG['plugin_fusinvinventory']['setup'][27];
+      Dropdown::showFromArray("import_printer", $array, 
+                              array('value' => 
+                                 $pfConfig->getValue($plugins_id, 
+                                                                        'import_printer')));
+      echo "&nbsp;";
+      Html::showToolTip($text);
+      echo "</td>";
+      echo "<td>";
+      echo $LANG['devices'][4]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("component_processor", 
+                          $pfConfig->getValue($plugins_id, 
+                                                                'component_processor'));
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>";
+      echo $LANG['Menu'][16]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      $array = array();
+      $array[0] = $LANG['plugin_fusinvinventory']['setup'][23];
+      $array[1] = $LANG['plugin_fusinvinventory']['setup'][22];
+      $array[2] = $LANG['plugin_fusinvinventory']['setup'][24];
+      $array[3] = $LANG['plugin_fusinvinventory']['setup'][27];
+      Dropdown::showFromArray("import_peripheral", $array, 
+                              array('value' => 
+                                       $pfConfig->getValue($plugins_id, 
+                                                                              'import_peripheral')));
+      echo "&nbsp;";
+      Html::showToolTip($text);
+      echo "</td>";
+      echo "<td>";
+      echo $LANG['devices'][6]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("component_memory", 
+                          $pfConfig->getValue($plugins_id, 'component_memory'));
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>";
+      echo $LANG['Menu'][4]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("import_software", 
+                          $pfConfig->getValue($plugins_id, 'import_software'));
+      echo "</td>";
+      echo "<td>";
+      echo $LANG['devices'][1]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("component_harddrive", 
+                          $pfConfig->getValue($plugins_id, 'component_harddrive'));
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>";
+      echo $LANG['computers'][8]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("import_volume", 
+                          $pfConfig->getValue($plugins_id, 'import_volume'));
+      echo "</td>";
+      echo "<td>";
+      echo $LANG['devices'][3]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("component_networkcard", 
+                          $pfConfig->getValue($plugins_id, 'component_networkcard'));
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>";
+      echo $LANG['plugin_fusinvinventory']['antivirus'][0]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("import_antivirus", 
+                          $pfConfig->getValue($plugins_id, 'import_antivirus'));
+      echo "</td>";
+      echo "<td>";
+      echo $LANG['plugin_fusinvinventory']['setup'][31]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("component_networkcardvirtual", 
+                          $pfConfig->getValue($plugins_id, 'component_networkcardvirtual'));
+      echo "</td>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td colspan='2'>";
+      echo "</td>";
+      echo "<td>";
+      echo $LANG['devices'][2]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("component_graphiccard", 
+                          $pfConfig->getValue($plugins_id, 'component_graphiccard'));
+      echo "</td>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td colspan='2'>";
+      echo "</td>";
+      echo "<td>";
+      echo $LANG['devices'][7]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("component_soundcard", 
+                          $pfConfig->getValue($plugins_id, 'component_soundcard'));
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>";
+      echo $LANG['computers'][57]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("import_vm", 
+                          $pfConfig->getValue($plugins_id, 'import_vm'));
+      echo "</td>";
+      echo "<td>";
+      echo $LANG['devices'][19]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("component_drive", 
+                          $pfConfig->getValue($plugins_id, 'component_drive'));
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>";
+      echo $LANG['common'][15]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showFromArray("location",
+                              array("0"=>"------",
+                                    "1"=>$LANG['plugin_fusinvinventory']['rule'][8]),
+                              array('value'=>$pfConfig->getValue($plugins_id, 'location')));
+
+      echo "</td>";
+      echo "<td>";
+      echo $LANG['plugin_fusinvinventory']['setup'][30]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("component_networkdrive",
+                          $pfConfig->getValue($plugins_id, 'component_networkdrive'));
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>";
+      echo $LANG['common'][35]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showFromArray("group",
+                              array("0"=>"------",
+                                    "1"=>$LANG['plugin_fusinvinventory']['rule'][8]),
+                              array('value'=>$pfConfig->getValue($plugins_id, 'group')));
+      echo "</td>";
+      echo "<td>";
+      echo $LANG['devices'][20]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("component_control",
+                          $pfConfig->getValue($plugins_id,
+                                                                 'component_control'));
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusinvinventory']['setup'][36]."&nbsp;:</td>";
+      echo "<td>";
+      Dropdown::show('State',
+                     array('name'   => 'states_id_default',
+                           'value'  => $pfConfig->getValue($plugins_id,
+                                                                              'states_id_default')));
+      echo "</td>";
+      echo "<td colspan='2'></td>";
+      echo "</tr>";
+      
+      
+      echo "<tr>";
+      echo "<th colspan='4'>".$LANG['plugin_fusinvinventory']['setup'][28];
+      echo "</th>";
+      echo "</tr>";
+
+      echo "<td colspan='2'>";
+      echo $LANG['plugin_fusinvinventory']['setup'][29]."&nbsp:";
+      echo "</td>";
+      echo "<td colspan='2'>";
+      Dropdown::show("Transfer",
+                     array('name'=>"transfers_id_auto",
+                           'value'=>$pfConfig->getValue($plugins_id, 
+                                                                           'transfers_id_auto'),
+                           'comment'=>0));
+      echo "</td>";
+      echo "</tr>";
+      
+      $options['candel'] = false;
+      $pfsnmpConfig->showFormButtons($options);
 
       return true;
    }
