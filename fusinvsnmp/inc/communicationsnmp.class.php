@@ -62,21 +62,23 @@ class PluginFusinvsnmpCommunicationSNMP {
             $sxml_authentication->addAttribute('COMMUNITY', $PluginFusinvsnmpConfigSecurity->fields['community']);
             $sxml_authentication->addAttribute('VERSION',
                               $PluginFusinvsnmpConfigSecurity->getSNMPVersion($PluginFusinvsnmpConfigSecurity->fields['snmpversion']));
-            $sxml_authentication->addAttribute('USERNAME', $PluginFusinvsnmpConfigSecurity->fields['username']);
-            if ($PluginFusinvsnmpConfigSecurity->fields['authentication'] == '0') {
-               $sxml_authentication->addAttribute('AUTHPROTOCOL', '');
-            } else {
-               $sxml_authentication->addAttribute('AUTHPROTOCOL',
-                              $PluginFusinvsnmpConfigSecurity->getSNMPAuthProtocol($PluginFusinvsnmpConfigSecurity->fields['authentication']));
+            if ($PluginFusinvsnmpConfigSecurity->fields['snmpversion'] == '3') {
+               $sxml_authentication->addAttribute('USERNAME', $PluginFusinvsnmpConfigSecurity->fields['username']);
+               if ($PluginFusinvsnmpConfigSecurity->fields['authentication'] == '0') {
+//                  $sxml_authentication->addAttribute('AUTHPROTOCOL', '');
+               } else {
+                  $sxml_authentication->addAttribute('AUTHPROTOCOL',
+                                 $PluginFusinvsnmpConfigSecurity->getSNMPAuthProtocol($PluginFusinvsnmpConfigSecurity->fields['authentication']));
+               }
+               $sxml_authentication->addAttribute('AUTHPASSPHRASE', $PluginFusinvsnmpConfigSecurity->fields['auth_passphrase']);
+               if ($PluginFusinvsnmpConfigSecurity->fields['encryption'] == '0') {
+//                  $sxml_authentication->addAttribute('PRIVPROTOCOL', '');
+               } else {
+                  $sxml_authentication->addAttribute('PRIVPROTOCOL',
+                                 $PluginFusinvsnmpConfigSecurity->getSNMPEncryption($PluginFusinvsnmpConfigSecurity->fields['encryption']));
+               }
+               $sxml_authentication->addAttribute('PRIVPASSPHRASE', $PluginFusinvsnmpConfigSecurity->fields['priv_passphrase']);
             }
-            $sxml_authentication->addAttribute('AUTHPASSPHRASE', $PluginFusinvsnmpConfigSecurity->fields['auth_passphrase']);
-            if ($PluginFusinvsnmpConfigSecurity->fields['encryption'] == '0') {
-               $sxml_authentication->addAttribute('PRIVPROTOCOL', '');
-            } else {
-               $sxml_authentication->addAttribute('PRIVPROTOCOL',
-                              $PluginFusinvsnmpConfigSecurity->getSNMPEncryption($PluginFusinvsnmpConfigSecurity->fields['encryption']));
-            }
-            $sxml_authentication->addAttribute('PRIVPASSPHRASE', $PluginFusinvsnmpConfigSecurity->fields['priv_passphrase']);
       }
    }
 
