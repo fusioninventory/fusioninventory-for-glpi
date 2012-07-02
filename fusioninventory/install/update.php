@@ -2597,7 +2597,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $DB->query($sql);
       }
       foreach ($input as $key => $value) {
-         $config->initConfig($plugins_id, array($key => $value), 'inventory');
+         $config->addValues($plugins_id, array($key => $value), 'inventory');
       }
       
       
