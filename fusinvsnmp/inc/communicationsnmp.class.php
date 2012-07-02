@@ -60,7 +60,6 @@ class PluginFusinvsnmpCommunicationSNMP {
 
          $sxml_authentication = $p_sxml_node->addChild('AUTHENTICATION');
             $sxml_authentication->addAttribute('ID', $p_id);
-            $sxml_authentication->addAttribute('COMMUNITY', $pfConfigSecurity->fields['community']);
             $sxml_authentication->addAttribute('VERSION',
                               $pfConfigSecurity->getSNMPVersion($pfConfigSecurity->fields['snmpversion']));
             if ($pfConfigSecurity->fields['snmpversion'] == '3') {
@@ -79,6 +78,8 @@ class PluginFusinvsnmpCommunicationSNMP {
                                  $pfConfigSecurity->getSNMPEncryption($pfConfigSecurity->fields['encryption']));
                }
                $sxml_authentication->addAttribute('PRIVPASSPHRASE', $pfConfigSecurity->fields['priv_passphrase']);
+            } else {
+               $sxml_authentication->addAttribute('COMMUNITY', $pfConfigSecurity->fields['community']);
             }
       }
    }
