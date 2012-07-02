@@ -2144,6 +2144,12 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '60', 
                          array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30));
    }
+   if ($crontask->getFromDBbyName('PluginFusioninventoryTaskjobstate', 'cleantaskjob')
+           AND $crontask->getFromDBbyName('PluginFusioninventoryTaskjobstatus', 'cleantaskjob')) {
+      $crontask->getFromDBbyName('PluginFusioninventoryTaskjobstatus', 'cleantaskjob');
+      $crontask->delete($crontask->fields);
+   }
+   
    if ($crontask->getFromDBbyName('PluginFusioninventoryTaskjobstatus', 'cleantaskjob')) {
       $query = "UPDATE `glpi_crontasks` SET `itemtype`='PluginFusioninventoryTaskjobstate'
          WHERE `itemtype`='PluginFusioninventoryTaskjobstatus'";

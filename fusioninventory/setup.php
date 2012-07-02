@@ -298,8 +298,10 @@ function plugin_fusioninventory_check_prerequisites() {
       echo $LANG['plugin_fusioninventory']['errors'][50];
       return false;
    }
-   if (TableExists("glpi_plugin_fusioninventory_agents")
-           AND !FieldExists("glpi_plugin_fusioninventory_agents", "tag")) {
+   $crontask = new CronTask();
+   if ((TableExists("glpi_plugin_fusioninventory_agents")
+           AND !FieldExists("glpi_plugin_fusioninventory_agents", "tag"))
+        OR ($crontask->getFromDBbyName('PluginFusioninventoryTaskjobstatus', 'cleantaskjob'))) {
       $DB->query("UPDATE `glpi_plugin_fusioninventory_configs` SET `value`='0.80+1.4' WHERE `type`='version'");
       $DB->query("UPDATE `glpi_plugins` SET `version`='0.80+1.4' WHERE `directory` LIKE 'fusi%'");
    }
