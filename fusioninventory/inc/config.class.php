@@ -45,7 +45,8 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusioninventoryConfig extends CommonDBTM {
-
+   public $displaylist = false;
+   
    
    /**
    * Initialize config values of fusioninventory plugin
@@ -348,11 +349,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @param $plugin_id plugin id
     * @param $name field name
     * @param $value field value
-    * @param $module ?
     * 
     * @return boolean : true on success
     **/
-   function updateValue($plugin_id, $name, $value, $module) {
+   function updateValue($plugin_id, $name, $value) {
       $config = current($this->find("`plugins_id`='".$plugin_id."'
                           AND `type`='".$name."'
                           AND `module`='".$module."'"));
@@ -392,283 +392,81 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       return $DB->query($delete);
    }
 
+   
+   
+   /**
+    * Check if extradebug mode is activate
+    */
+   static function isExtradebugActive() {
+      $fConfig = new self();
+      return $fConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug');
+   }
+   
+   
+   
+   /**
+    * Log when extra-debug is activated
+    */
+   static function logIfExtradebug($file, $message) {
+      if (self::isExtradebugActive()) {
+         Toolbox::logInFile($file, $message);
+      }
+   }
+   
+   
+
+   /**
+    * Update configuration field
+    *
+    * @param $field_id field id
+    * @param $value field value
+    * 
+    * @return boolean : true on success
+    **/
+   function updateConfig($field_id, $value) {
+      return $this->update(array('id'=>$field_id, 'value'=>$value));
+   }
+   
+   
+
+   /**
+    * Update config type
+    *
+    * @param $p_plugins_id Plugin id
+    * @param $p_type Config type ('ssl_only', 'URL_agent_conf'...)
+    * @param $p_value Value
+    * 
+    * @return boolean : true on success
+    **/
+   function updateConfigType($p_plugins_id, $p_type, $p_value) {
+      $config = current($this->find("`plugins_id`='".$p_plugins_id."'
+                          AND `type`='".$p_type."'"));
+      if (isset($config['id'])) {
+         return $this->updateConfig($config['id'], $p_value);
+      }
+      return false;
+   }
+   
+   
+   
+
 
    
-   function showFormInventory($options=array()) {
-      global $LANG;
-
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
-
-      $plugin_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
-
-      $this->fields['id'] = 1;
-      $this->showFormHeader($options);
- 
-      echo "<tr>";
-      echo "<th colspan='4'>".$LANG['plugin_fusioninventory']['setup'][20];
-      echo "</th>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo $LANG['Menu'][3]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      $array = array();
-      $array[0] = $LANG['plugin_fusioninventory']['setup'][23];
-      $array[1] = $LANG['plugin_fusioninventory']['setup'][22];
-      $array[2] = $LANG['plugin_fusioninventory']['setup'][24];
-      $array[3] = $LANG['plugin_fusioninventory']['setup'][27];
-      Dropdown::showFromArray("import_monitor", $array, 
-                              array('value' => 
-                                 $PluginFusioninventoryConfig->getValue($plugin_id, 
-                                                                        'import_monitor', 'inventory')));
-      echo "&nbsp;";
-      $text = "* ".$LANG['plugin_fusioninventory']['setup'][23]."&nbsp;:&nbsp;".
-      $LANG['plugin_fusioninventory']['setup'][32]."<br/><br/>".
-      "* ".$LANG['plugin_fusioninventory']['setup'][22]."&nbsp;:&nbsp;".
-      $LANG['plugin_fusioninventory']['setup'][33]."<br/><br/>".
-      "* ".$LANG['plugin_fusioninventory']['setup'][24]."&nbsp;:&nbsp;".
-      $LANG['plugin_fusioninventory']['setup'][34]."<br/><br/>".
-      "* ".$LANG['plugin_fusioninventory']['setup'][27]."&nbsp;:&nbsp;".
-      $LANG['plugin_fusioninventory']['setup'][35];
-      Html::showToolTip($text);
-      echo "</td>";
-      echo "<th colspan='2'>";
-      echo $LANG['plugin_fusioninventory']['setup'][21];
-      echo "</th>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo $LANG['Menu'][2]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      $array = array();
-      $array[0] = $LANG['plugin_fusioninventory']['setup'][23];
-      $array[1] = $LANG['plugin_fusioninventory']['setup'][22];
-      $array[2] = $LANG['plugin_fusioninventory']['setup'][24];
-      $array[3] = $LANG['plugin_fusioninventory']['setup'][27];
-      Dropdown::showFromArray("import_printer", $array, 
-                              array('value' => 
-                                 $PluginFusioninventoryConfig->getValue($plugin_id, 
-                                                                        'import_printer', 'inventory')));
-      echo "&nbsp;";
-      Html::showToolTip($text);
-      echo "</td>";
-      echo "<td>";
-      echo $LANG['devices'][4]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_processor", 
-                          $PluginFusioninventoryConfig->getValue($plugin_id, 
-                                                                'component_processor', 'inventory'));
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo $LANG['Menu'][16]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      $array = array();
-      $array[0] = $LANG['plugin_fusioninventory']['setup'][23];
-      $array[1] = $LANG['plugin_fusioninventory']['setup'][22];
-      $array[2] = $LANG['plugin_fusioninventory']['setup'][24];
-      $array[3] = $LANG['plugin_fusioninventory']['setup'][27];
-      Dropdown::showFromArray("import_peripheral", $array, 
-                              array('value' => 
-                                       $PluginFusioninventoryConfig->getValue($plugin_id, 
-                                                                              'import_peripheral', 'inventory')));
-      echo "&nbsp;";
-      Html::showToolTip($text);
-      echo "</td>";
-      echo "<td>";
-      echo $LANG['devices'][6]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_memory", 
-                          $PluginFusioninventoryConfig->getValue($plugin_id, 'component_memory', 'inventory'));
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo $LANG['Menu'][4]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("import_software", 
-                          $PluginFusioninventoryConfig->getValue($plugin_id, 'import_software', 'inventory'));
-      echo "</td>";
-      echo "<td>";
-      echo $LANG['devices'][1]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_harddrive", 
-                          $PluginFusioninventoryConfig->getValue($plugin_id, 'component_harddrive', 'inventory'));
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo $LANG['computers'][8]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("import_volume", 
-                          $PluginFusioninventoryConfig->getValue($plugin_id, 'import_volume', 'inventory'));
-      echo "</td>";
-      echo "<td>";
-      echo $LANG['devices'][3]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_networkcard", 
-                          $PluginFusioninventoryConfig->getValue($plugin_id, 'component_networkcard', 'inventory'));
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo $LANG['plugin_fusioninventory']['antivirus'][0]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("import_antivirus", 
-                          $PluginFusioninventoryConfig->getValue($plugin_id, 'import_antivirus', 'inventory'));
-      echo "</td>";
-      echo "<td>";
-      echo $LANG['plugin_fusioninventory']['setup'][31]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_networkcardvirtual", 
-                          $PluginFusioninventoryConfig->getValue($plugin_id, 'component_networkcardvirtual', 'inventory'));
-      echo "</td>";
-      echo "</tr>";
-      
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-//      echo $LANG['plugin_fusioninventory']['setup'][25]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-//      Dropdown::showYesNo("import_registry", 
-//                          $PluginFusioninventoryConfig->getValue($plugin_id, 'import_registry'));
-      echo "</td>";
-      echo "<td>";
-      echo $LANG['devices'][2]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_graphiccard", 
-                          $PluginFusioninventoryConfig->getValue($plugin_id, 'component_graphiccard', 'inventory'));
-      echo "</td>";
-      echo "</tr>";
-      
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-//      echo $LANG['plugin_fusioninventory']['setup'][26]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-//      Dropdown::showYesNo("import_process", 
-//                          $PluginFusioninventoryConfig->getValue($plugin_id, 'import_process'));
-      echo "</td>";
-      echo "<td>";
-      echo $LANG['devices'][7]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_soundcard", 
-                          $PluginFusioninventoryConfig->getValue($plugin_id, 'component_soundcard', 'inventory'));
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo $LANG['computers'][57]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("import_vm", 
-                          $PluginFusioninventoryConfig->getValue($plugin_id, 'import_vm', 'inventory'));
-      echo "</td>";
-      echo "<td>";
-      echo $LANG['devices'][19]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_drive", 
-                          $PluginFusioninventoryConfig->getValue($plugin_id, 'component_drive', 'inventory'));
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo $LANG['common'][15]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showFromArray("location",
-                              array("0"=>"------",
-                                    "1"=>$LANG['plugin_fusioninventory']['rule'][28]),
-                              array('value'=>$PluginFusioninventoryConfig->getValue($plugin_id, 'location', 'inventory')));
-
-      echo "</td>";
-      echo "<td>";
-      echo $LANG['plugin_fusioninventory']['setup'][30]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_networkdrive",
-                          $PluginFusioninventoryConfig->getValue($plugin_id, 'component_networkdrive', 'inventory'));
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo $LANG['common'][35]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showFromArray("group",
-                              array("0"=>"------",
-                                    "1"=>$LANG['plugin_fusioninventory']['rule'][28]),
-                              array('value'=>$PluginFusioninventoryConfig->getValue($plugin_id, 'group', 'inventory')));
-      echo "</td>";
-      echo "<td>";
-      echo $LANG['devices'][20]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_control",
-                          $PluginFusioninventoryConfig->getValue($plugin_id,
-                                                                 'component_control', 'inventory'));
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['setup'][36]."&nbsp;:</td>";
-      echo "<td>";
-      Dropdown::show('State',
-                     array('name'   => 'states_id_default',
-                           'value'  => $PluginFusioninventoryConfig->getValue($plugin_id,
-                                                                              'states_id_default', 'inventory')));
-      echo "</td>";
-      echo "<td colspan='2'></td>";
-      echo "</tr>";
-      
-      
-      echo "<tr>";
-      echo "<th colspan='4'>".$LANG['plugin_fusioninventory']['setup'][28];
-      echo "</th>";
-      echo "</tr>";
-
-      echo "<td colspan='2'>";
-      echo $LANG['plugin_fusioninventory']['setup'][29]."&nbsp:";
-      echo "</td>";
-      echo "<td colspan='2'>";
-      Dropdown::show("Transfer",
-                     array('name'=>"transfers_id_auto",
-                           'value'=>$PluginFusioninventoryConfig->getValue($plugin_id, 
-                                                                           'transfers_id_auto', 'inventory'),
-                           'comment'=>0));
-      echo "</td>";
-      echo "</tr>";
-      
-      $options['candel'] = false;
-      $this->showFormButtons($options);
-
-      return true;
-   }   
-
+   /**
+   * give state of a config field for a fusioninventory plugin
+   *
+   * @param $p_plugins_id integer id of the plugin
+   * @param $p_type value name of the config field to retrieve
+   *
+   * @return bool true if field is active or false
+   **/
+   function is_active($p_plugins_id, $p_type) {
+      if (!($this->getValue($p_plugins_id, $p_type))) {
+         return false;
+      } else {
+         return true;
+      }
+   }
 }
 
 ?>

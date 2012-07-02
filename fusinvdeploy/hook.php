@@ -82,7 +82,9 @@ function plugin_fusinvdeploy_MassiveActions($type) {
    global $LANG;
 
    switch ($type) {
+      case 'PluginFusinvdeployGroup' :
       case 'Computer':
+         //TODO: this should be renamed into targetTask and moved in FusionInventory hook
          return array('plugin_fusinvdeploy_targetDeployTask'
                   => $LANG['plugin_fusinvdeploy']['massiveactions'][0]
          );
@@ -95,26 +97,37 @@ function plugin_fusinvdeploy_MassiveActionsDisplay($options=array()) {
    global $LANG;
 
    switch ($options['itemtype']) {
+      case 'PluginFusinvdeployGroup':
       case 'Computer' :
          switch ($options['action']) {
              case 'plugin_fusinvdeploy_targetDeployTask' :
-                echo $LANG['plugin_fusinvdeploy']['task'][5].":&nbsp;";
+               echo "<br/>". $LANG['plugin_fusinvdeploy']['task'][1].":&nbsp;";
                $rand = mt_rand();
-                Dropdown::show('PluginFusinvdeployTask', array(
+               Dropdown::show('PluginFusinvdeployTask', array(
                      'name'      => "tasks_id",
                      'condition' => "is_active = 0",
                      'toupdate'  => array(
                            'value_fieldname' => "__VALUE__",
                            'to_update'       => "dropdown_PluginFusioninventoryTaskjobs_id$rand",
                            'url'             => GLPI_ROOT."/plugins/fusinvdeploy/ajax/dropdown_taskjob.php"
-                     )
-                ));
-                echo "&nbsp;".$LANG['plugin_fusinvdeploy']['package'][7].":&nbsp;";
-               Dropdown::show('PluginFusioninventoryTaskjob', array(
-                     'name'      => "PluginFusioninventoryTaskjobs_id",
-                     'rand'      => $rand
-                ));
-               echo "&nbsp;<input type='submit' name='massiveaction' class='submit' value='".
+                  )
+               ));
+
+               echo "<br/>"."&nbsp;".$LANG['plugin_fusinvdeploy']['package'][7].":&nbsp;";
+               Dropdown::show('PluginFusinvdeployPackage', array(
+                        'name'      => "packages_id"
+               ));
+
+               echo "<br/>";
+               echo "<input type='checkbox' name='separate_jobs' value='1'>";
+               if ($options['itemtype'] == 'Computer') {
+                     echo "&nbsp;".$LANG['plugin_fusinvdeploy']['massiveactions'][1]."&nbsp;";
+               } else if ($options['itemtype'] == 'PluginFusinvdeployGroup') {
+                     echo "&nbsp;".$LANG['plugin_fusinvdeploy']['massiveactions'][2]."&nbsp;";
+               }
+               echo "</input>";
+
+               echo "<br/>"."&nbsp;<input type='submit' name='massiveaction' class='submit' value='".
                      $LANG['buttons'][2]."'>&nbsp;";
             break;
          }
@@ -128,25 +141,55 @@ function plugin_fusinvdeploy_MassiveActionsProcess($data) {
 
    switch ($data['action']) {
       case 'plugin_fusinvdeploy_targetDeployTask' :
-         if ($data['itemtype'] == 'Computer') {
-            $taskjob = new PluginFusinvdeployTaskjob;
-            $tasks = array();
+         $taskjob = new PluginFusinvdeployTaskjob;
+         $tasks = array();
 
+         //get old datas
+         $oldjobs = $taskjob->find("plugin_fusinvdeploy_tasks_id = '".$data['tasks_id']."'");
 
-            //get old datas
-            $oldjobs = $taskjob->find("plugin_fusinvdeploy_tasks_id = '".$data['tasks_id']."'");
+         switch($data['itemtype']) {
+            case 'PluginFusinvdeployGroup':
+            case 'Computer':
 
-            //add new datas
-            foreach ($data['item'] as $key => $val) {
+               logDebug(
+                  "MASSIVEACTION DEBUG:\n".
+                  print_r($data,true).
+                  "\n"
+               );
+            // TODO: rename 'tasks' variables into 'job'
+            // The 'separate jobs' option allows to create a taskjob for each computer 
+            // (I can't see the point but it may be
+            // usefull for some people ... even if it creates 500 jobs for just a
+            // single deployment package targetted ... i prefer not to comment
+            // furthermore :) ).
+
+            if (array_key_exists('separate_jobs', $data)) {
+               foreach ($data['item'] as $key => $val) {
+                  $task = new StdClass;
+                  $task->package_id = $data['packages_id'];
+                  $task->method = 'deployinstall';
+                  $task->retry_nb = 3;
+                  $task->retry_time = 0;
+                  //add new datas
+                  $task->action = array(array($data['itemtype'] => $key));
+                  $tasks[] = $task;
+               }
+            } else {
                $task = new StdClass;
                $task->package_id = $data['packages_id'];
-               $task->action_type = 'Computer';
-               $task->action_selection = $key;
                $task->method = 'deployinstall';
                $task->retry_nb = 3;
                $task->retry_time = 0;
+               $task->action = array();
+               //add new datas
+               foreach ($data['item'] as $key => $val) {
+                  $task->action[] = array($data['itemtype'] => $key);
+               }
                $tasks[] = $task;
             }
+            break;
+
+         }
 
             $params = array(
                'tasks_id'        => $data['tasks_id'],
@@ -171,8 +214,8 @@ function plugin_fusinvdeploy_MassiveActionsProcess($data) {
 
                $DB->query($sql);
             }
-         }
          break;
    }
 }
+
 ?>

@@ -63,6 +63,7 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryTaskjob',
               array('addtabon' => array('Computer','Printer','NetworkEquipment','PluginFusioninventoryUnknowndevice')));
       Plugin::registerClass('PluginFusioninventoryTaskjob');
+      Plugin::registerClass('PluginFusioninventoryTaskjobstate');
       Plugin::registerClass('PluginFusioninventoryUnknownDevice');
       Plugin::registerClass('PluginFusioninventoryModule');
       Plugin::registerClass('PluginFusioninventoryProfile');
@@ -115,8 +116,6 @@ function plugin_init_fusioninventory() {
       $PLUGIN_HOOKS['change_profile']['fusioninventory'] =
          PluginFusioninventoryProfile::changeprofile($moduleId);
 
-//      $PLUGIN_HOOKS['cron']['fusioninventory'] = 20*MINUTE_TIMESTAMP; // All 20 minutes
-
       $PLUGIN_HOOKS['add_javascript']['fusioninventory']="script.js";
 
 
@@ -155,7 +154,7 @@ function plugin_init_fusioninventory() {
 
 
          $PLUGIN_HOOKS['item_transfer']['fusioninventory'] = 'plugin_item_transfer_fusioninventory';
-   //      $PLUGIN_HOOKS['item_add']['fusioninventory'] = 'plugin_item_add_fusioninventory';
+
          $Plugin = new Plugin();
          if ($Plugin->isActivated('fusioninventory')) {
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agents", "r")
@@ -201,17 +200,13 @@ function plugin_init_fusioninventory() {
          
 
          if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agent","r")) {
-
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agents","w")) {
-   //               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['agents'] = 'front/agent.form.php?add=1';
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['agents'] = 'front/agent.php';
             }
 
-   //         if (PluginFusioninventoryProfile::haveRight($_SESSION["plugin_".$a_plugin['shortname']."_moduleid"], "configuration","r")) {
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "r")) {// Config page
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['config'] = 'front/config.form.php';
             }
-   //         }
          }
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']
             ["<img  src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/books.png'
@@ -242,6 +237,9 @@ function plugin_init_fusioninventory() {
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['inventoryruleimport']['title'] = $LANG['plugin_fusioninventory']['rules'][2];
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['inventoryruleimport']['page']  = '/plugins/fusioninventory/front/inventoryruleimport.php';
+
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['wizard-start']['title'] = $LANG['plugin_fusioninventory']['wizard'][18];
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['wizard-start']['page']  = '/plugins/fusioninventory/front/wizard.php';
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['iprange']['title'] = 
             $LANG['plugin_fusioninventory']['menu'][2];
@@ -333,16 +331,27 @@ function plugin_version_fusioninventory() {
 }
 
 
+
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_fusioninventory_check_prerequisites() {
-   global $LANG;
+   global $LANG,$DB;
    
    if (version_compare(GLPI_VERSION,'0.84','lt') || version_compare(GLPI_VERSION,'0.85','ge')) {
       echo $LANG['plugin_fusioninventory']['errors'][50];
       return false;
    }
+   $crontask = new CronTask();
+   if ((TableExists("glpi_plugin_fusioninventory_agents")
+           AND !FieldExists("glpi_plugin_fusioninventory_agents", "tag"))
+        OR ($crontask->getFromDBbyName('PluginFusioninventoryTaskjobstatus', 'cleantaskjob'))) {
+      $DB->query("UPDATE `glpi_plugin_fusioninventory_configs` SET `value`='0.80+1.4' WHERE `type`='version'");
+      $DB->query("UPDATE `glpi_plugins` SET `version`='0.80+1.4' WHERE `directory` LIKE 'fusi%'");
+   }
+   
    return true;
 }
+
+
 
 /**
  * Check if HTTP request comes from an inventory agent (Fusion or legacy OCS)
@@ -354,9 +363,13 @@ function isFusioninventoryUserAgent($useragent = '') {
    return (preg_match("/(fusioninventory|ocsinventory|ocs-ng)/i",$useragent));
 }
 
+
+
 function plugin_fusioninventory_check_config() {
    return true;
 }
+
+
 
 function plugin_fusioninventory_haveTypeRight($type,$right) {
    return true;

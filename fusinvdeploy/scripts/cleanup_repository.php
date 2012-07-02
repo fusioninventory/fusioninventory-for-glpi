@@ -1,3 +1,4 @@
+#!/usr/bin/php
 <?php
 // Drop unused files from the internal repository.
 //

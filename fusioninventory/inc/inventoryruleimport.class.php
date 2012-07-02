@@ -144,6 +144,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       return $criterias;
    }
 
+   
 
    function getActions() {
       global $LANG;
@@ -158,16 +159,18 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       return $actions;
    }
 
+   
 
    static function getRuleActionValues() {
       global $LANG;
 
       return array(self::RULE_ACTION_LINK_OR_CREATE    => $LANG['plugin_fusioninventory']['rules'][7],
                    self::RULE_ACTION_LINK_OR_NO_CREATE => $LANG['plugin_fusioninventory']['rules'][6],
-                   self::RULE_ACTION_DENIED            => $LANG['plugin_fusioninventory']['rules'][17]);
+                   self::RULE_ACTION_DENIED            => $LANG['plugin_fusioninventory']['codetasklog'][3]);
    }
 
 
+   
    /**
     * Add more action values specific to this type of rule
     *
@@ -184,6 +187,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       return '';
    }
 
+   
 
    function manageSpecificCriteriaValues($criteria, $name, $value) {
       global $LANG;
@@ -199,6 +203,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       return false;
    }
 
+   
 
    /**
     * Add more criteria specific to this type of rule
@@ -209,6 +214,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       return array(Rule::PATTERN_FIND     => $LANG['rulesengine'][151],
                    self::PATTERN_IS_EMPTY => $LANG['rulesengine'][154]);
    }
+   
 
 
    function getAdditionalCriteriaDisplayPattern($ID, $condition, $pattern) {
@@ -223,11 +229,10 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          if (isset($crit['type'])) {
             switch ($crit['type']) {
                
-               case "dropdown_itemtype" :
+               case "dropdown_itemtype":
                   $array = $this->getTypes();
                   return $array[$pattern];
-                  break;
-            
+                  break;            
                
             }
          }
@@ -236,6 +241,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    }
 
 
+   
    function displayAdditionalRuleCondition($condition, $criteria, $name, $value, $test=false) {
       
       if ($test) {
@@ -248,29 +254,32 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          case Rule::PATTERN_DOES_NOT_EXISTS:
          case Rule::PATTERN_FIND:
          case PluginFusioninventoryRuleImportEquipment::PATTERN_IS_EMPTY:
-            echo Dropdown::showYesNo($name, 1, 0);
+            Dropdown::showYesNo($name, 1, 0);
             return true;
            
       }
-
       return false;
    }
 
+   
 
    function displayAdditionalRuleAction($action, $params=array()) {
 
       switch ($action['type']) {
-         case 'fusion_type' :
+         
+         case 'fusion_type':
             Dropdown::showFromArray('value', self::getRuleActionValues());
             break;
 
-         default :
+         default:
             break;
+         
       }
       return true;
    }
 
 
+   
    function getCriteriaByID($ID) {
       $criteria = array();
       foreach ($this->criterias as $criterion) {
@@ -281,6 +290,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       return $criteria;
    }
 
+   
 
    function findWithGlobalCriteria($input) {
       global $DB, $CFG_GLPI;
@@ -396,7 +406,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       foreach ($complex_criterias as $criteria) {
          switch ($criteria->fields['criteria']) {
 
-            case 'model' :
+            case 'model':
                $sql_from_temp = " LEFT JOIN `glpi_".strtolower("[typename]")."models`
                                  ON (`glpi_".strtolower("[typename]")."models`.`id` = `[typetable]`.`".strtolower("[typename]models_id")."`
                                      AND `glpi_networkports`.`itemtype` = '[typename]') ";
@@ -408,7 +418,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                $sql_where_networkequipment .= $sql_where_temp;
                break;
 
-            case 'mac' :
+            case 'mac':
                $sql_where_temp = " AND `glpi_networkports`.`mac` IN ('";
                $sql_where_networkequipment_temp = " AND `[typetable]`.`mac` IN ('";
                if (is_array($input['mac'])) {
@@ -425,7 +435,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                $sql_where_networkequipment .= $sql_where_networkequipment_temp;
                break;
             
-            case 'ip' :
+            case 'ip':
                $sql_where .= " AND `glpi_networkports`.`ip` IN ('";
                $sql_where_networkequipment .= " AND `[typetable]`.`ip` IN ('";
                if (is_array($input['ip'])) {
@@ -439,7 +449,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                $sql_where_networkequipment .= "')";
                break;
 
-            case 'serial' :
+            case 'serial':
                if (isset($input['itemtype'])
                        AND $input['itemtype'] == 'Computer'
                        AND isset($_SESSION["plugin_fusioninventory_manufacturerHP"])
@@ -458,7 +468,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                $sql_where_networkequipment .= $sql_where_temp;
                break;
 
-            case 'name' :
+            case 'name':
                if ($criteria->fields['condition'] == self::PATTERN_IS_EMPTY) {
                   $sql_where_temp = " AND (`[typetable]`.`name`=''
                                        OR `[typetable]`.`name` IS NULL) ";
@@ -521,6 +531,10 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             }
          }
 
+         if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
+            $sql_where_temp .= " AND `[typetable]`.`entities_id`='".$_SESSION['plugin_fusioninventory_entityrestrict']."'";
+         }
+         
          $item = new $itemtype();
          $sql_glpi = "SELECT `[typetable]`.`id`
                       FROM $sql_from_temp
@@ -552,23 +566,11 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       }
       if ($found == "1") {
          return true;
-      } else {
-         return false;
       }
-//      if (count($this->actions)) {
-//         foreach ($this->actions as $action) {
-//            if ($action->fields['field'] == '_fusion') {
-//               if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_CREATE) {
-//                  PluginFusioninventoryToolbox::logIfExtradebug("pluginFusioninventory-rules", 
-//                                                               "Return true because link or Import\n");
-//                  return true;
-//               }
-//            }
-//         }
-//      }
       return false;
    }
 
+   
 
    /**
     * Execute the actions as defined in the rule
@@ -579,7 +581,9 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
     * @return the $output array modified
    **/
    function executeActions($output, $params) {
-      if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
+      if (isset($params['class'])) {
+         $class = $params['class'];
+      } else if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
          $classname = $_SESSION['plugin_fusioninventory_classrulepassed'];
          $class = new $classname();
       }
@@ -706,6 +710,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       return $output;
    }
 
+   
 
    function displayCriteriaSelectPattern($name, $ID, $condition, $value="", $test=false) {
 
@@ -750,30 +755,31 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                      || $condition == Rule::PATTERN_IS_NOT)) {
 
          switch ($crit['type']) {
-            case "yesonly" :
+            
+            case "yesonly":
                Dropdown::showYesNo($name, $value, 0);
                $display = true;
                break;
 
-            case "yesno" :
+            case "yesno":
                Dropdown::showYesNo($name, $value);
                $display = true;
                break;
 
-            case "dropdown" :
+            case "dropdown":
                Dropdown::show(getItemTypeForTable($crit['table']), array('name'  => $name,
                                                                          'value' => $value));
                $display = true;
                break;
 
-            case "dropdown_users" :
+            case "dropdown_users":
                User::dropdown(array('value'  => $value,
                                     'name'   => $name,
                                     'right'  => 'all'));
                $display = true;
                break;
 
-            case "dropdown_itemtype" :
+            case "dropdown_itemtype":
                $types = $this->getTypes();
                ksort($types);
 
@@ -797,6 +803,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       }
    }
 
+   
 
    function getTypes() {
       global $CFG_GLPI;
@@ -812,6 +819,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       return $types;
    }
 
+   
 
    /**
    * Function used to display type specific criterias during rule's preview
@@ -832,6 +840,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       }
    }
    
+   
+   
    function preProcessPreviewResults($output) {
       global $LANG;
 
@@ -842,7 +852,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          echo "<td>";
 
          switch ($output["action"]) {
-            case self::LINK_RESULT_LINK :
+            
+            case self::LINK_RESULT_LINK:
                echo $LANG['setup'][620];
                break;
 
@@ -851,8 +862,9 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                break;
 
             case self::LINK_RESULT_DENIED:
-               echo $LANG['plugin_fusioninventory']['rules'][17];
+               echo $LANG['plugin_fusioninventory']['codetasklog'][3];
                break;
+            
          }
          
          echo "</td>";

@@ -56,7 +56,7 @@ class PluginFusinvsnmpConfig extends CommonDBTM {
                       'version'              => PLUGIN_FUSINVSNMP_VERSION,
                       'threads_netdiscovery' => 1,
                       'threads_snmpquery'    => 1);
-      $pfConfig->initConfig($plugins_id, $insert);
+      $pfConfig->addValues($plugins_id, $insert);
    }
 
    
@@ -148,6 +148,9 @@ class PluginFusinvsnmpConfig extends CommonDBTM {
       $pfConfigLogField = new PluginFusinvsnmpConfigLogField();
       $pfConfigLogField->showForm(array('target'=>$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/functionalities.form.php"));
 
+      $pfNetworkporttype = new PluginFusinvsnmpNetworkporttype();
+      $pfNetworkporttype->showNetworkporttype();
+      
       return true;
    }
 }

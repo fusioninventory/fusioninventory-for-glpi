@@ -49,11 +49,10 @@ include (GLPI_ROOT."/inc/includes.php");
 Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","wizard-start");
 
 Session::checkLoginUser();
-//PluginFusioninventoryMenu::displayMenu("mini");
 
 $pfWizard = new PluginFusioninventoryWizard();
 
-$a_button = array('name' => 'Suivant',
+$a_button = array('name' => $LANG['buttons'][11],
                   'link' => $CFG_GLPI['root_doc'].'/plugins/fusioninventory/front/wizard_inventorycomputeroptions.php');
 
 

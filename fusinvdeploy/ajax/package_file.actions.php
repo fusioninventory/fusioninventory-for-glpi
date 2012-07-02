@@ -71,11 +71,11 @@ if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'download') {
    $_POST['directory'] = $_REQUEST['directory'];
 } else $_REQUEST['action'] = '';
 
+$directory = $server_upload_path;
 if (isset($_REQUEST['directory']) && $_REQUEST['directory']) {
    $directory = $server_upload_path . $_REQUEST['directory'];
-} else {
-   $directory = $server_upload_path;
 }
+$data = array();
 switch ($_REQUEST['action']) {
    default:
       $dir = opendir($directory);
@@ -112,4 +112,5 @@ switch ($_REQUEST['action']) {
       exit();
       break;
 }
+
 ?>

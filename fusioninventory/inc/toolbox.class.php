@@ -209,23 +209,44 @@ class PluginFusioninventoryToolbox {
    }
       
 
+
    /**
-    * Clean XML, ie convert to be inserted without problem into MySQL DB
+    * Clean XML, ie convert to be insert without problem into MySQL DB
     *
-    * @param $xml simplexml object
-    * @return simplexml object
+    * @param $xml SimpleXMLElement object
+    * @return SimpleXMLElement object
     */
-   static function cleanXML($xml) {
+   function cleanXML($xml) {
+      $nodes = array();
       foreach ($xml->children() as $key=>$value) {
-         if (count($value->children()) > 0) {
-            $value = self::cleanXML($value);
-         } else {         
-            $value = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep($value));
-            $xml->$key = $value;
-         }      
+        if (!isset($nodes[$key])) {
+           $nodes[$key] = 0;
+        }
+         $nodes[$key]++;
+      }
+      foreach ($nodes as $key=>$nb) {
+         if ($nb < 2) {
+            unset($nodes[$key]);
+         }
+      }
+
+      if (count($xml) > 0) {
+         $i = 0;
+         foreach ($xml->children() as $key=>$value) {
+            if (count($value->children()) > 0) {
+               $this->cleanXML($value);
+            } else if (isset($nodes[$key])) {
+               $xml->$key->$i = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep($value));
+               $i++;
+            } else {
+               $xml->$key = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep($value));
+            }
+         }
       }
       return $xml;
    }
+   
+   
 
    /**
     * Format XML, ie indent it for pretty printing

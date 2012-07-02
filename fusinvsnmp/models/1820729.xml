@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[1820729]]></name>
-	<type>Printer</type>
+	<type>3</type>
 	<key>Printer0455</key>
 	<comments><![CDATA[Canon iR3025 /P
 
@@ -14,6 +14,8 @@ NRG MP 4500 1.04 / NRG Network Printer C model / NRG Network Scanner C model / N
 
 RICOH Aficio 3030 1.26 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model
 
+RICOH Aficio MP 5500 3.00 / RICOH Network Printer C model / RICOH Network Scanner C model
+
 ]]></comments>
 	<oidlist>
 		<oidobject>
@@ -21,7 +23,7 @@ RICOH Aficio 3030 1.26 / RICOH Network Printer C model / RICOH Network Scanner C
 			<oid>.1.3.6.1.2.1.1.1.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>comments</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -31,7 +33,7 @@ RICOH Aficio 3030 1.26 / RICOH Network Printer C model / RICOH Network Scanner C
 			<oid>.1.3.6.1.2.1.1.6.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>location</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -51,7 +53,7 @@ RICOH Aficio 3030 1.26 / RICOH Network Printer C model / RICOH Network Scanner C
 			<oid>.1.3.6.1.2.1.1.5.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>name</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -61,7 +63,7 @@ RICOH Aficio 3030 1.26 / RICOH Network Printer C model / RICOH Network Scanner C
 			<oid>.1.3.6.1.2.1.43.11.1.1.8.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>tonerblackmax</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -71,7 +73,7 @@ RICOH Aficio 3030 1.26 / RICOH Network Printer C model / RICOH Network Scanner C
 			<oid>.1.3.6.1.2.1.43.11.1.1.9.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>tonerblackremaining</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -81,7 +83,7 @@ RICOH Aficio 3030 1.26 / RICOH Network Printer C model / RICOH Network Scanner C
 			<oid>.1.3.6.1.2.1.43.10.2.1.4.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>pagecountertotalpages</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -91,7 +93,7 @@ RICOH Aficio 3030 1.26 / RICOH Network Printer C model / RICOH Network Scanner C
 			<oid>.1.3.6.1.2.1.25.3.2.1.3.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>model</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -101,7 +103,7 @@ RICOH Aficio 3030 1.26 / RICOH Network Printer C model / RICOH Network Scanner C
 			<oid>.1.3.6.1.2.1.25.2.3.1.5.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>memory</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -111,7 +113,7 @@ RICOH Aficio 3030 1.26 / RICOH Network Printer C model / RICOH Network Scanner C
 			<oid>.1.3.6.1.2.1.43.8.2.1.14.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>enterprise</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -121,7 +123,7 @@ RICOH Aficio 3030 1.26 / RICOH Network Printer C model / RICOH Network Scanner C
 			<oid>.1.3.6.1.2.1.43.11.1.1.8.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>wastetonermax</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -131,7 +133,7 @@ RICOH Aficio 3030 1.26 / RICOH Network Printer C model / RICOH Network Scanner C
 			<oid>.1.3.6.1.2.1.43.11.1.1.9.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>wastetonerremaining</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -141,7 +143,7 @@ RICOH Aficio 3030 1.26 / RICOH Network Printer C model / RICOH Network Scanner C
 			<oid>.1.3.6.1.2.1.43.11.1.1.6.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>tonerblack</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -151,7 +153,7 @@ RICOH Aficio 3030 1.26 / RICOH Network Printer C model / RICOH Network Scanner C
 			<oid>.1.3.6.1.2.1.43.11.1.1.6.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>wastetoner</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -161,7 +163,7 @@ RICOH Aficio 3030 1.26 / RICOH Network Printer C model / RICOH Network Scanner C
 			<oid>.1.3.6.1.2.1.2.2.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>ifName</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -171,7 +173,7 @@ RICOH Aficio 3030 1.26 / RICOH Network Printer C model / RICOH Network Scanner C
 			<oid>.1.3.6.1.2.1.2.2.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>ifIndex</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -181,7 +183,7 @@ RICOH Aficio 3030 1.26 / RICOH Network Printer C model / RICOH Network Scanner C
 			<oid>.1.3.6.1.2.1.2.2.1.6</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>ifPhysAddress</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -191,7 +193,7 @@ RICOH Aficio 3030 1.26 / RICOH Network Printer C model / RICOH Network Scanner C
 			<oid>.1.3.6.1.2.1.2.2.1.3</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>ifType</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -201,7 +203,7 @@ RICOH Aficio 3030 1.26 / RICOH Network Printer C model / RICOH Network Scanner C
 			<oid>.1.3.6.1.2.1.4.20.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>ifaddr</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>

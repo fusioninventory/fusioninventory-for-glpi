@@ -227,37 +227,6 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
 
 
 
-   /**
-    * Is real port (not virtual or loopback)
-    *
-    *@return true/false
-    **/
-   function isReal($p_type) {
-      $real = false;
-      if ( (strstr($p_type, "ethernetCsmacd"))
-            OR ($p_type == "6")
-            OR ($p_type == "ethernet-csmacd(6)")
-            OR (strstr($p_type, "iso88023Csmacd"))
-            OR ($p_type == "7")
-            OR ($p_type == "ieee80211(71)")        // wifi
-            OR ($p_type == "ieee80211")            // wifi
-            OR ($p_type == "71")                   // wifi
-            OR ($p_type == "gigabitEthernet(117)")
-            OR ($p_type == "gigabitEthernet")
-            OR ($p_type == "117")
-            OR ($p_type == "fastEther(62)")
-            OR ($p_type == "fastEther")
-            OR ($p_type == "62")
-            OR ($p_type == "169")
-            OR ($p_type == "shdsl")
-         ) { // not virtual port
-         $real = true;
-      }
-      return $real;
-   }
-
-
-
    static function getUniqueObjectfieldsByportID($id) {
       global $DB;
 
@@ -346,14 +315,14 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
       $vlan = new Vlan();
       $vlanfound = array();
       foreach ($this->portVlans as $number=>$name) {
-         $a_vlans = $vlan->find("`name`='".$number."'");
+         $a_vlans = $vlan->find("`tag`='".$number."' AND `name`='".$name."'");
          if (count($a_vlans) > 0) {
             $a_vlan = current($a_vlans);
             $vlanfound[$a_vlan['id']] = $a_vlan['id'];
          } else {
             $input = array();
-            $input['name'] = $number;
-            $input['comment'] = $name;
+            $input['tag'] = $number;
+            $input['name'] = $name;
             $newID = $vlan->add($input);
             $vlanfound[$newID] = $newID;
          }
@@ -406,7 +375,8 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
             if (isset($a_cdp['sysmac'])) {
                $ifnumber = $a_cdp['ifnumber'];
                $portID = $pfSNMP->getPortIDfromSysmacandPortnumber($a_cdp['sysmac'], 
-                                                                   $ifnumber);     
+                                                                   $ifnumber,
+                                                                   $a_cdp);     
             }
          }
          if ($portID
@@ -497,12 +467,70 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
                   $a_ports = $networkPort->find("`mac`='".$ifmac."'","", 1);
                   if (count($a_ports) > 0) {
                      $a_port = current($a_ports);
+                     $hub = 0;
                      $id = $networkPort->getContact($a_port['id']);
-                     if ($id AND $id != $networkports_id) {
-                        $this->disconnectDB($networkports_id); // disconnect this port
-                        $this->disconnectDB($a_port['id']);     // disconnect destination port
-                        $wire->add(array('networkports_id_1'=> $networkports_id,
-                                         'networkports_id_2' => $a_port['id']));
+                     $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
+                     if ($id AND $networkPort->getFromDB($id)) {
+                        if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+                           $pfUnknownDevice->getFromDB($networkPort->fields['items_id']);
+                           if ($pfUnknownDevice->fields['hub'] == '1') {
+                              $hub = 1;
+                           }
+                        }
+                     }
+                     $direct_id = $networkPort->getContact($networkports_id);
+                     if ($id AND $id != $networkports_id
+                             AND $hub == '0') {
+                        
+                        $directconnect = 0;
+                        if (!$direct_id) {
+                           $directconnect = 1;
+                        } else {
+                           $networkPort->getFromDB($direct_id);
+                           if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+                              // 1. Hub connected to this switch port
+                              $pfUnknownDevice->connectPortToHub(array($a_port), $networkPort->fields['items_id']);
+                           } else {
+                              // 2. direct connection
+                              $directconnect = 1;                              
+                           }                        
+                        }
+                        if ($directconnect == '1') {
+                           $this->disconnectDB($networkports_id); // disconnect this port
+                           $this->disconnectDB($a_port['id']);     // disconnect destination port
+                           $wire->add(array('networkports_id_1'=> $networkports_id,
+                                            'networkports_id_2' => $a_port['id']));
+                        }
+                     } else if ($id and $hub == '1') {
+                        $directconnect = 0;
+                        if (!$direct_id) {
+                           $directconnect = 1;
+                        } else {
+                           $networkPort->getFromDB($direct_id);
+                           $ddirect = $networkPort->fields;
+                           $networkPort->getFromDB($id);
+                           if ($ddirect['items_id'] == $networkPort->fields['items_id']
+                                   AND $ddirect['itemtype'] == $networkPort->fields['itemtype']) {
+                              // 1.The hub where this device is connected is yet connected to this switch port
+                           
+                              // => Do nothing
+                           } else {
+                              // 2. The hub where this device is connected to is not connected to this switch port
+                              if ($ddirect['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+                                 // b. We have a hub connected to the switch port
+                                 $pfUnknownDevice->connectPortToHub(array($a_port), $ddirect['items_id']);
+                              } else {
+                                 // a. We have a direct connexion to another device (on the switch port)
+                                 $directconnect = 1;                              
+                              }
+                           }
+                        }
+                        if ($directconnect == '1') {
+                           $this->disconnectDB($networkports_id); // disconnect this port
+                           $this->disconnectDB($a_port['id']);     // disconnect destination port
+                           $wire->add(array('networkports_id_1'=> $networkports_id,
+                                            'networkports_id_2' => $a_port['id']));
+                        }                        
                      } else if ($id) {
                         // Yet connected                        
                      } else {
@@ -515,6 +543,7 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
                      // Create unknown device
                      $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
                      $input = array();
+                     $input['name'] = '';
                      $newID = $pluginFusioninventoryUnknownDevice->add($input);
                      $input['itemtype'] = "PluginFusioninventoryUnknownDevice";
                      $input['items_id'] = $newID;

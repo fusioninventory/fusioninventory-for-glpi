@@ -50,4 +50,5 @@ Html::header_nocache();
 $res = PluginFusinvdeployTaskjob::getActions($_REQUEST);
 
 echo $res;
+
 ?>

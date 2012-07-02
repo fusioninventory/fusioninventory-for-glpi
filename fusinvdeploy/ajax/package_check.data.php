@@ -79,4 +79,5 @@ while($row = $DB->fetch_array($qry)) {
 }
 
 echo json_encode($res);
+
 ?>

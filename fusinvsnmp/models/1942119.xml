@@ -1,12 +1,10 @@
 <model>
 	<name><![CDATA[1942119]]></name>
-	<type>Printer</type>
+	<type>3</type>
 	<key>Printer0128</key>
 	<comments><![CDATA[Dell Color Laser 3110cn; Net 8.29, Controller 200604102121, Engine 05.03.00
 
 Dell Color Laser 3110cn; Net 8.41, Controller 200612221216, Engine 05.09.00
-
-Dell Color Laser 3110cn; Net 8.43, Controller 200707111148, Engine 05.09.00
 
 Dell Color Laser 3110cn; Net 8.43, Controller 200804091041, Engine 05.09.00
 
@@ -28,20 +26,10 @@ Xerox Phaser 6360DT; OS 8.26, PS 4.12.0, Eng 12.11.0, Net 37.58.03.03.2008, Adob
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.3.6.1.2.1.2.1.0</oid>
-			<portcounter>1</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>0</mapping_type>
- 			<mapping_name></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
 			<oid>.1.3.6.1.2.1.1.1.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>comments</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -51,7 +39,7 @@ Xerox Phaser 6360DT; OS 8.26, PS 4.12.0, Eng 12.11.0, Net 37.58.03.03.2008, Adob
 			<oid>.1.3.6.1.2.1.43.8.2.1.14.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>enterprise</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -61,7 +49,7 @@ Xerox Phaser 6360DT; OS 8.26, PS 4.12.0, Eng 12.11.0, Net 37.58.03.03.2008, Adob
 			<oid>.1.3.6.1.2.1.4.20.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>ifaddr</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -71,7 +59,7 @@ Xerox Phaser 6360DT; OS 8.26, PS 4.12.0, Eng 12.11.0, Net 37.58.03.03.2008, Adob
 			<oid>.1.3.6.1.2.1.2.2.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>ifIndex</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -81,7 +69,7 @@ Xerox Phaser 6360DT; OS 8.26, PS 4.12.0, Eng 12.11.0, Net 37.58.03.03.2008, Adob
 			<oid>.1.3.6.1.2.1.2.2.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>ifName</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -91,7 +79,7 @@ Xerox Phaser 6360DT; OS 8.26, PS 4.12.0, Eng 12.11.0, Net 37.58.03.03.2008, Adob
 			<oid>.1.3.6.1.2.1.2.2.1.6</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>ifPhysAddress</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -101,7 +89,7 @@ Xerox Phaser 6360DT; OS 8.26, PS 4.12.0, Eng 12.11.0, Net 37.58.03.03.2008, Adob
 			<oid>.1.3.6.1.2.1.2.2.1.3</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>ifType</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -111,7 +99,7 @@ Xerox Phaser 6360DT; OS 8.26, PS 4.12.0, Eng 12.11.0, Net 37.58.03.03.2008, Adob
 			<oid>.1.3.6.1.2.1.1.6.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>location</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -121,7 +109,7 @@ Xerox Phaser 6360DT; OS 8.26, PS 4.12.0, Eng 12.11.0, Net 37.58.03.03.2008, Adob
 			<oid>.1.3.6.1.2.1.25.2.3.1.5.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>memory</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -131,7 +119,7 @@ Xerox Phaser 6360DT; OS 8.26, PS 4.12.0, Eng 12.11.0, Net 37.58.03.03.2008, Adob
 			<oid>.1.3.6.1.2.1.25.3.2.1.3.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>model</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -141,7 +129,7 @@ Xerox Phaser 6360DT; OS 8.26, PS 4.12.0, Eng 12.11.0, Net 37.58.03.03.2008, Adob
 			<oid>.1.3.6.1.2.1.1.5.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>name</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -151,7 +139,7 @@ Xerox Phaser 6360DT; OS 8.26, PS 4.12.0, Eng 12.11.0, Net 37.58.03.03.2008, Adob
 			<oid>.1.3.6.1.2.1.43.10.2.1.4.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>pagecountertotalpages</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -161,7 +149,7 @@ Xerox Phaser 6360DT; OS 8.26, PS 4.12.0, Eng 12.11.0, Net 37.58.03.03.2008, Adob
 			<oid>.1.3.6.1.2.1.43.5.1.1.17.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>serial</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -171,7 +159,7 @@ Xerox Phaser 6360DT; OS 8.26, PS 4.12.0, Eng 12.11.0, Net 37.58.03.03.2008, Adob
 			<oid>.1.3.6.1.2.1.43.11.1.1.6.1.4</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>tonerblack</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -181,7 +169,7 @@ Xerox Phaser 6360DT; OS 8.26, PS 4.12.0, Eng 12.11.0, Net 37.58.03.03.2008, Adob
 			<oid>.1.3.6.1.2.1.43.11.1.1.6.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>tonercyan</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -191,7 +179,7 @@ Xerox Phaser 6360DT; OS 8.26, PS 4.12.0, Eng 12.11.0, Net 37.58.03.03.2008, Adob
 			<oid>.1.3.6.1.2.1.43.11.1.1.6.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>tonermagenta</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -201,8 +189,18 @@ Xerox Phaser 6360DT; OS 8.26, PS 4.12.0, Eng 12.11.0, Net 37.58.03.03.2008, Adob
 			<oid>.1.3.6.1.2.1.43.11.1.1.6.1.3</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>toneryellow</mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid>.1.3.6.1.2.1.2.1.0</oid>
+			<portcounter>1</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>0</mapping_type>
+ 			<mapping_name></mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>

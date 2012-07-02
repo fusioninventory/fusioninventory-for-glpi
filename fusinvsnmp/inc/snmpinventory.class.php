@@ -48,14 +48,14 @@ require_once(GLPI_ROOT."/plugins/fusioninventory/inc/communication.class.php");
 
 class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
 
-   // Get all devices and put in taskjobstatus each task for each device for each agent
+   // Get all devices and put in taskjobstate each task for each device for each agent
    function prepareRun($taskjobs_id) {
       global $DB;
       
       $pfTask = new PluginFusioninventoryTask();
       $pfTaskjob = new PluginFusioninventoryTaskjob();
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfIPRange = new PluginFusioninventoryIPRange();
 
       $uniqid = uniqid();
@@ -164,7 +164,6 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
          $query .= " AND inet_aton(`ip`)
                          BETWEEN inet_aton('".$pfIPRange->fields['ip_start']."')
                          AND inet_aton('".$pfIPRange->fields['ip_end']."') ";
-               Toolbox::logInFile("SQLKOIN", $query);
         $result=$DB->query($query);
         while ($data=$DB->fetch_array($result)) {
            $a_NetworkEquipment[] = $data['gID'];
@@ -263,13 +262,13 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                      foreach($a_devicesubnet[$subnet][$itemtype] as $items_id=>$num) {
                         $a_input['itemtype'] = $itemtype;
                         $a_input['items_id'] = $items_id;
-                        $Taskjobstatus_id = $pfTaskjobstatus->add($a_input);
+                        $Taskjobstates_id = $pfTaskjobstate->add($a_input);
                            //Add log of taskjob
-                           $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
+                           $a_input['plugin_fusioninventory_taskjobstates_id'] = $Taskjobstates_id;
                            $a_input['state'] = 7;
                            $a_input['date'] = date("Y-m-d H:i:s");
                            $pfTaskjoblog->add($a_input);
-                        $pfTaskjobstatus->changeStatusFinish($Taskjobstatus_id,
+                        $pfTaskjobstate->changeStatusFinish($Taskjobstates_id,
                                                                                 0,
                                                                                 '',
                                                                                 1,
@@ -281,7 +280,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                   }
                }
             } else {
-               // add taskjobstatus
+               // add taskjobstate
                $count_device_subnet = 0;
                if (isset($a_devicesubnet[$subnet]['NetworkEquipment'])) {
                   $count_device_subnet += count($a_devicesubnet[$subnet]['NetworkEquipment']);
@@ -310,9 +309,9 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                         $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
                         $nbagent++;
                         $taskvalid++;
-                        $Taskjobstatus_id = $pfTaskjobstatus->add($a_input);
+                        $Taskjobstates_id = $pfTaskjobstate->add($a_input);
                         //Add log of taskjob
-                           $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
+                           $a_input['plugin_fusioninventory_taskjobstates_id'] = $Taskjobstates_id;
                            $a_input['state'] = 7;
                            $a_input['date'] = date("Y-m-d H:i:s");
                            $pfTaskjoblog->add($a_input);
@@ -384,13 +383,13 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
             $a_input['itemtype'] = '';
             $a_input['items_id'] = 0;
             $a_input['uniqid'] = $uniqid;
-            $Taskjobstatus_id = $pfTaskjobstatus->add($a_input);
+            $Taskjobstates_id = $pfTaskjobstate->add($a_input);
                //Add log of taskjob
-               $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
+               $a_input['plugin_fusioninventory_taskjobstates_id'] = $Taskjobstates_id;
                $a_input['state'] = 7;
                $a_input['date'] = date("Y-m-d H:i:s");
                $pfTaskjoblog->add($a_input);
-            $pfTaskjobstatus->changeStatusFinish($Taskjobstatus_id,
+            $pfTaskjobstate->changeStatusFinish($Taskjobstates_id,
                                                                     0,
                                                                     '',
                                                                     1,
@@ -407,13 +406,13 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
             $a_input['itemtype'] = '';
             $a_input['items_id'] = 0;
             $a_input['uniqid'] = $uniqid;
-            $Taskjobstatus_id = $pfTaskjobstatus->add($a_input);
+            $Taskjobstates_id = $pfTaskjobstate->add($a_input);
                //Add log of taskjob
-               $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
+               $a_input['plugin_fusioninventory_taskjobstates_id'] = $Taskjobstates_id;
                $a_input['state'] = 7;
                $a_input['date'] = date("Y-m-d H:i:s");
                $pfTaskjoblog->add($a_input);
-            $pfTaskjobstatus->changeStatusFinish($Taskjobstatus_id,
+            $pfTaskjobstate->changeStatusFinish($Taskjobstates_id,
                                                                     0,
                                                                     '',
                                                                     1,
@@ -424,7 +423,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
             $pfTaskjob->update($input_taskjob);
          } else {
             foreach ($a_agentList as $agent_id) {
-               //Add jobstatus and put status (waiting on server = 0)
+               //Add jobstate and put status (waiting on server = 0)
                $a_input = array();
                $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
                $a_input['state'] = 0;
@@ -459,9 +458,9 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                            break;
 
                      }
-                     $Taskjobstatus_id = $pfTaskjobstatus->add($a_input);
+                     $Taskjobstates_id = $pfTaskjobstate->add($a_input);
                      //Add log of taskjob
-                        $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
+                        $a_input['plugin_fusioninventory_taskjobstates_id'] = $Taskjobstates_id;
                         $a_input['state'] = 7;
                         $a_input['date'] = date("Y-m-d H:i:s");
                         $pfTaskjoblog->add($a_input);
@@ -485,17 +484,17 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
 
    // When agent contact server, this function send datas to agent
    /*
-    * $a_Taskjobstatus array with all taskjobstatus
+    * $a_Taskjobstate array with all taskjobstate
     *
     */
-   function run($a_Taskjobstatus) {
+   function run($a_Taskjobstates) {
       
-      $pfAgent = new PluginFusioninventoryAgent;
-      $pfAgentconfig = new  PluginFusinvsnmpAgentconfig;
-      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
+      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgentconfig = new  PluginFusinvsnmpAgentconfig();
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      $pfConfigSecurity = new PluginFusinvsnmpConfigSecurity;
-      $pfCommunicationSNMP = new PluginFusinvsnmpCommunicationSNMP;
+      $pfConfigSecurity = new PluginFusinvsnmpConfigSecurity();
+      $pfCommunicationSNMP = new PluginFusinvsnmpCommunicationSNMP();
       $pfModel = new PluginFusinvsnmpModel();
 
       $NetworkEquipment = new NetworkEquipment();
@@ -504,11 +503,11 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
       $pfPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
 
       $modelslistused = array();
-      $current = current($a_Taskjobstatus);
+      $current = current($a_Taskjobstates);
       $pfAgent->getFromDB($current['plugin_fusioninventory_agents_id']);
 
       $pfAgentconfig->loadAgentconfig($pfAgent->fields['id']);
-      $sxml_option = $this->sxml->addChild('OPTION');
+      $sxml_option = $this->message->addChild('OPTION');
       $sxml_option->addChild('NAME', 'SNMPQUERY');
       $sxml_param = $sxml_option->addChild('PARAM');
          $sxml_param->addAttribute('CORE_QUERY', "1");
@@ -516,17 +515,17 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
          $sxml_param->addAttribute('PID', $current['id']);
 
 
-      $changestatus = 0;
-      foreach ($a_Taskjobstatus as $taskjobstatusdatas) {
+      $changestate = 0;
+      foreach ($a_Taskjobstates as $taskjobstatedatas) {
          $sxml_device = $sxml_option->addChild('DEVICE');
-            switch ($taskjobstatusdatas['itemtype']) {
+            switch ($taskjobstatedatas['itemtype']) {
 
                case 'NetworkEquipment':
-                  $NetworkEquipment->getFromDB($taskjobstatusdatas['items_id']);
+                  $NetworkEquipment->getFromDB($taskjobstatedatas['items_id']);
                   $sxml_device->addAttribute('TYPE', 'NETWORKING');
-                  $sxml_device->addAttribute('ID', $taskjobstatusdatas['items_id']);
+                  $sxml_device->addAttribute('ID', $taskjobstatedatas['items_id']);
                   $sxml_device->addAttribute('IP', $NetworkEquipment->fields['ip']);
-                  $a_data = $pfNetworkEquipment->find("`networkequipments_id`='".$taskjobstatusdatas['items_id']."'", "", "1");
+                  $a_data = $pfNetworkEquipment->find("`networkequipments_id`='".$taskjobstatedatas['items_id']."'", "", "1");
                   $data = current($a_data);
                   $sxml_device->addAttribute('AUTHSNMP_ID', $data['plugin_fusinvsnmp_configsecurities_id']);
                   $sxml_device->addAttribute('MODELSNMP_ID', $data['plugin_fusinvsnmp_models_id']);
@@ -534,7 +533,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                   break;
 
                case 'Printer':
-                  $a_Printerport = $NetworkPort->find("`itemtype`='Printer' AND `items_id`='".$taskjobstatusdatas['items_id']."'");
+                  $a_Printerport = $NetworkPort->find("`itemtype`='Printer' AND `items_id`='".$taskjobstatedatas['items_id']."'");
                   $port_ip = '';
                   foreach($a_Printerport as $portdata) {
                      if ($portdata['ip'] != '' AND ($portdata['ip'] != '127.0.0.1')) {
@@ -544,9 +543,9 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                   }
                   if ($port_ip != '') {
                      $sxml_device->addAttribute('TYPE', 'PRINTER');
-                     $sxml_device->addAttribute('ID', $taskjobstatusdatas['items_id']);
+                     $sxml_device->addAttribute('ID', $taskjobstatedatas['items_id']);
                      $sxml_device->addAttribute('IP', $port_ip);
-                     $a_data = $pfPrinter->find("`printers_id`='".$taskjobstatusdatas['items_id']."'", "", "1");
+                     $a_data = $pfPrinter->find("`printers_id`='".$taskjobstatedatas['items_id']."'", "", "1");
                      $data = current($a_data);
                      $sxml_device->addAttribute('AUTHSNMP_ID', $data['plugin_fusinvsnmp_configsecurities_id']);
                      $sxml_device->addAttribute('MODELSNMP_ID', $data['plugin_fusinvsnmp_models_id']);
@@ -556,20 +555,20 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                
             }
 
-            if ($changestatus == '0') {
-               $pfTaskjobstatus->changeStatus($taskjobstatusdatas['id'], 1);
-               $pfTaskjoblog->addTaskjoblog($taskjobstatusdatas['id'],
+            if ($changestate == '0') {
+               $pfTaskjobstate->changeStatus($taskjobstatedatas['id'], 1);
+               $pfTaskjoblog->addTaskjoblog($taskjobstatedatas['id'],
                                        '0',
                                        'PluginFusioninventoryAgent',
                                        '1',
                                        $pfAgentconfig->fields["threads_snmpquery"].' threads');
-               $changestatus = $pfTaskjobstatus->fields['id'];
+               $changestate = $pfTaskjobstate->fields['id'];
             } else {
-               $pfTaskjobstatus->changeStatusFinish($taskjobstatusdatas['id'],
-                                                                 $taskjobstatusdatas['items_id'],
-                                                                 $taskjobstatusdatas['itemtype'],
+               $pfTaskjobstate->changeStatusFinish($taskjobstatedatas['id'],
+                                                                 $taskjobstatedatas['items_id'],
+                                                                 $taskjobstatedatas['itemtype'],
                                                                  0,
-                                                                 "Merged with ".$changestatus);
+                                                                 "Merged with ".$changestate);
             }
       }
       // Add auth
@@ -588,7 +587,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
             }
          }
       }
-      return $this->sxml;
+      return $this->message;
    }
 
 

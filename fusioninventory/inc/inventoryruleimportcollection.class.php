@@ -58,20 +58,24 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
       return $LANG['plugin_fusioninventory']['rules'][2];
    }
 
+   
 
    function prepareInputDataForProcess($input,$params) {
       return array_merge($input,$params);
    }
 
+   
 
    function getRuleClassName() {
+      $rule_class = array();
       if (preg_match('/(.*)Collection/',get_class($this),$rule_class)) {
          return $rule_class[1];
       }
-      else {
-         return "";
-      }
+      return "";
    }
+   
+   
+   
    /**
     * Get a instance of the class to manipulate rule of this collection
     *
@@ -107,8 +111,9 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
                break;
 
             case PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED:
-               echo $LANG['plugin_fusioninventory']['rules'][17];
+               echo $LANG['plugin_fusioninventory']['codetasklog'][3];
                break;
+            
          }
 
          echo "</td>";
@@ -127,8 +132,6 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
       }
       return $output;
    }
-
-
 }
 
 ?>

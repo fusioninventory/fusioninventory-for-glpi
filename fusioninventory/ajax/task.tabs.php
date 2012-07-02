@@ -53,26 +53,26 @@ if(!isset($_POST["sort"])) $_POST["sort"] = "";
 if(!isset($_POST["order"])) $_POST["order"] = "";
 if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 
-$pft = new PluginFusioninventoryTask();
+$pfTask = new PluginFusioninventoryTask();
 $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
 
-$pftj = new PluginFusioninventoryTaskjob();
-$a_taskjob = $pftj->find("`plugin_fusioninventory_tasks_id`='".$_POST["id"]."'
+$pfTaskjob = new PluginFusioninventoryTaskjob();
+$a_taskjob = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$_POST["id"]."'
       AND `rescheduled_taskjob_id`='0' ", "id");
 $i = 1;
 
 switch($_POST['glpi_tab']) {
-   case -1 :
+   
+   case -1:
       foreach($a_taskjob as $taskjob_id=>$datas) {
-         $pftj->showForm($taskjob_id);
+         $pfTaskjob->showForm($taskjob_id);
          $pfTaskjoblog->showHistory($taskjob_id);
          $taskjob_id_next = $taskjob_id;
          for ($j=2 ; $j > 1; $j++) {
-            $a_taskjobreties = $pftj->find("`rescheduled_taskjob_id`='".$taskjob_id_next."' ", "", 1);
+            $a_taskjobreties = $pfTaskjob->find("`rescheduled_taskjob_id`='".$taskjob_id_next."' ", "", 1);
             if (!empty($a_taskjobreties)) {
                foreach($a_taskjobreties as $taskjob_id_next=>$datas2) {
-                  $pftj->showForm($taskjob_id_next);
-                  $pfTaskjoblog->showHistory($taskjob_id_next);
+                  $pfTaskjob->showForm($taskjob_id_next);
                }
             } else {
                $j = 0;
@@ -83,34 +83,35 @@ switch($_POST['glpi_tab']) {
       break;
 
    case 1 :
-      $pft->getFromDB($_POST["id"]);
-      if ($pft->fields['is_advancedmode'] == '0') {
+      $pfTask->getFromDB($_POST["id"]);
+      if ($pfTask->fields['is_advancedmode'] == '0') {
          $taskjob = current($a_taskjob);
          if (!isset($taskjob["id"])) {
-            $taskjobs_id = $pftj->add(array('name'=>$pft->fields['name'],
-                             'entities_id'=>$pft->fields['entities_id'],
+            $taskjobs_id = $pfTaskjob->add(array('name'=>$pfTask->fields['name'],
+                             'entities_id'=>$pfTask->fields['entities_id'],
                              'plugin_fusioninventory_tasks_id'=>$_POST["id"]));
-            $pftj->showForm($taskjobs_id);
+            $pfTaskjob->showForm($taskjobs_id);
          } else {
-            $pftj->showForm($taskjob["id"]);
+            $pfTaskjob->showForm($taskjob["id"]);
          }
       }
       break;
+   
 }
 
 if ($_POST['glpi_tab'] > 1) {
    foreach($a_taskjob as $taskjob_id=>$datas) {
       $i++;
       if ($_POST['glpi_tab'] == $i) {
-         $pftj->showForm($taskjob_id);
+         $pfTaskjob->showForm($taskjob_id);
          echo "<br/>";
          $pfTaskjoblog->showHistory($taskjob_id);
          $taskjob_id_next = $taskjob_id;
          for ($j=2 ; $j > 1; $j++) {
-            $a_taskjobreties = $pftj->find("`rescheduled_taskjob_id`='".$taskjob_id_next."' ", "", 1);
+            $a_taskjobreties = $pfTaskjob->find("`rescheduled_taskjob_id`='".$taskjob_id_next."' ", "", 1);
             if (!empty($a_taskjobreties)) {
                foreach($a_taskjobreties as $taskjob_id_next=>$datas2) {
-                  $pftj->showForm($taskjob_id_next);
+                  $pfTaskjob->showForm($taskjob_id_next);
                   $pfTaskjoblog->showHistory($taskjob_id_next);
                }
             } else {
@@ -124,7 +125,7 @@ if ($_POST['glpi_tab'] > 1) {
 // New taskjob
 $i++;
 if ($_POST['glpi_tab'] == $i) {
-   $pftj->showForm(0);
+   $pfTaskjob->showForm(0);
 }
 
 Html::ajaxFooter();

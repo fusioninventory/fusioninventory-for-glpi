@@ -109,7 +109,7 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
       global $DB,$LANG,$CFG_GLPI;
 
       $pfAgent = new PluginFusioninventoryAgent();
-      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $pfStateInventory = new PluginFusinvsnmpStateInventory();
 
@@ -119,7 +119,7 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
       }
 
       // Total Number of events
-      $querycount = "SELECT count(*) AS cpt FROM `glpi_plugin_fusioninventory_taskjobstatus`
+      $querycount = "SELECT count(*) AS cpt FROM `glpi_plugin_fusioninventory_taskjobstates`
          LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` on `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
          WHERE `method` = 'netdiscovery'
          GROUP BY `uniqid`
@@ -147,8 +147,8 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
       echo "<th>".$LANG['plugin_fusinvsnmp']['state'][10]."</th>";
       echo "</tr>";
 
-      $sql = "SELECT `glpi_plugin_fusioninventory_taskjobstatus`.*
-            FROM `glpi_plugin_fusioninventory_taskjobstatus`
+      $sql = "SELECT `glpi_plugin_fusioninventory_taskjobstates`.*
+            FROM `glpi_plugin_fusioninventory_taskjobstates`
          LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` on `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
          WHERE `method` = 'netdiscovery'
          GROUP BY `uniqid`
@@ -168,9 +168,9 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
          $notimporteddevices= 0;
          $updateddevices = 0;
          $createddevices = 0;
-         $a_taskjobstatus = $pfTaskjobstatus->find("`uniqid`='".$data['uniqid']."'");
-         foreach ($a_taskjobstatus as $datastatus) {
-            $a_taskjoblog = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$datastatus['id']."'");
+         $a_taskjobstates = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'");
+         foreach ($a_taskjobstates as $datastate) {
+            $a_taskjoblog = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$datastate['id']."'");
             foreach($a_taskjoblog as $taskjoblog) {
                if (strstr($taskjoblog['comment'], " ==fusinvsnmp::2==")) {
                   $nb_found += str_replace(" ==fusinvsnmp::2==", "", $taskjoblog['comment']);
@@ -249,7 +249,6 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
       }
       echo "</table>";
    }
-
 }
 
 ?>

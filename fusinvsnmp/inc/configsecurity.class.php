@@ -57,6 +57,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
    }
    
 
+   
    function showForm($id, $options=array()) {
       global $LANG;
 
@@ -185,6 +186,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
          foreach($xml->auth->conf[$i] as $item) {
             $j++;
             switch ($j) {
+               
                case 1:
                   $numero[$i] = $item;
                   break;
@@ -359,6 +361,11 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 
 
 
+   /**
+    * Display SNMP version (dropdown)
+    * 
+    * @param $p_value
+    */
    function showDropdownSNMPVersion($p_value=NULL) {
       $snmpVersions = array(0=>'-----', '1', '2c', '3');
       $options = array();
@@ -370,6 +377,13 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 
 
    
+   /**
+    * Get real version of SNMP
+    * 
+    * @param $id version number
+    * 
+    * @return real version 
+    */
    function getSNMPVersion($id) {
       switch($id) {
 
@@ -391,6 +405,11 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 
 
    
+   /**
+    * Display SNMP authentication encryption (dropdown)
+    * 
+    * @param $p_value 
+    */
    function showDropdownSNMPAuth($p_value=NULL) {
       $authentications = array(0=>'-----', 'MD5', 'SHA');
       $options = array();
@@ -402,6 +421,13 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 
 
    
+   /**
+    * Get SNMP authentication encryption
+    *
+    * @param $id
+    * 
+    * @return encryption 
+    */
    function getSNMPAuthProtocol($id) {
       switch($id) {
 

@@ -78,7 +78,7 @@ class Connectionslogs extends PHPUnit_Framework_TestCase {
       // Add task and taskjob
       $pfTask = new PluginFusioninventoryTask();
       $pfTaskjob = new PluginFusioninventoryTaskjob();
-      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
 
       $input = array();
       $input['entities_id'] = '0';
@@ -97,9 +97,9 @@ class Connectionslogs extends PHPUnit_Framework_TestCase {
       $input['items_id'] = '1';
       $input['state'] = 1;
       $input['plugin_fusioninventory_agents_id'] = 1;
-      $pfTaskjobstatus->add($input);
+      $pfTaskjobstate->add($input);
       $input['items_id'] = '2';
-      $pfTaskjobstatus->add($input);
+      $pfTaskjobstate->add($input);
 
       $switch1 = '<?xml version="1.0" encoding="UTF-8"?>
 <REQUEST>
@@ -123,7 +123,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
         <PORT>
           <CONNECTIONS>
             <CONNECTION>
-              <MAC>00:23:18:cf:0d:93</MAC>
+              <MAC>00:23:18:cf:0d:94</MAC>
             </CONNECTION>
           </CONNECTIONS>
           <IFDESCR>FastEthernet0/1</IFDESCR>
@@ -171,7 +171,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
         <PORT>
           <CONNECTIONS>
             <CONNECTION>
-              <MAC>00:23:18:cf:0d:93</MAC>
+              <MAC>00:23:18:cf:0d:94</MAC>
             </CONNECTION>
           </CONNECTIONS>
           <IFDESCR>FastEthernet0/1</IFDESCR>
@@ -232,7 +232,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          $ret = $networkPort_NetworkPort->getFromDBForNetworkPort($a_port['id']);
          $this->assertEquals($ret, true, '(1) Port 1 of switch 1 not connected in GLPI');
          // Check 2 : Get if portconnectionlog is added
-         $a_ports = $networkPort->find("`mac`='00:23:18:cf:0d:93'");
+         $a_ports = $networkPort->find("`mac`='00:23:18:cf:0d:94'");
          $a_uport = current($a_ports);
          $a_logs = $pfNetworkPortConnectionLog->find("
             `creation`=1 

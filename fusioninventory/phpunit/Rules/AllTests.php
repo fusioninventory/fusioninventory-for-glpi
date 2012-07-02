@@ -685,7 +685,7 @@ class Rules extends PHPUnit_Framework_TestCase {
          // Add task and taskjob
          $pfTask = new PluginFusioninventoryTask();
          $pfTaskjob = new PluginFusioninventoryTaskjob();
-         $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+         $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
          
          $input = array();
          $input['entities_id'] = '0';
@@ -704,9 +704,9 @@ class Rules extends PHPUnit_Framework_TestCase {
          $input['items_id'] = '1';
          $input['state'] = 1;
          $input['plugin_fusioninventory_agents_id'] = 1;
-         $pfTaskjobstatus->add($input);
+         $pfTaskjobstate->add($input);
          $input['items_id'] = '2';
-         $pfTaskjobstatus->add($input);
+         $pfTaskjobstate->add($input);
          
          $this->testSendinventory("toto", $XML['NetworkEquipment'], 0);
          $networkEquipment = new NetworkEquipment();
@@ -740,9 +740,9 @@ class Rules extends PHPUnit_Framework_TestCase {
       $input['items_id'] = '1';
       $input['state'] = 1;
       $input['plugin_fusioninventory_agents_id'] = 1;
-      $pfTaskjobstatus->add($input);
+      $pfTaskjobstate->add($input);
       $input['items_id'] = '2';
-      $pfTaskjobstatus->add($input);
+      $pfTaskjobstate->add($input);
       
       $this->testSendinventory("toto", $XML['Unknowndevice_Computer'], 0);
       $a_computer = $computer->find("`name`='Test2'");

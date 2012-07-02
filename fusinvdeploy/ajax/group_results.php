@@ -49,3 +49,5 @@ Html::header_nocache();
 
 $_SESSION['groupSearchResults'] = $_REQUEST;
 PluginFusinvdeployGroup::showSearchResults($_REQUEST);
+
+?>

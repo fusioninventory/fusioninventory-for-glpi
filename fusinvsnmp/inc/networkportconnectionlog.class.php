@@ -46,6 +46,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpNetworkPortConnectionLog extends CommonDBTM {
 
+   
    function showForm($input='') {
       global $DB,$LANG,$CFG_GLPI;
 
@@ -70,7 +71,6 @@ class PluginFusinvsnmpNetworkPortConnectionLog extends CommonDBTM {
       echo "<th>";
       echo $LANG['joblist'][0];
       echo "</th>";
-
 
       echo "<th>";
       echo $LANG['common'][1];
@@ -149,8 +149,7 @@ class PluginFusinvsnmpNetworkPortConnectionLog extends CommonDBTM {
          }
       }
       echo "</table>";
-   }
-  
+   }  
 }
 
 ?>

@@ -89,23 +89,23 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
    ini_set("memory_limit", "-1");
 
    $migration = new $migrationname($current_version);
-   $config = new PluginFusioninventoryConfig();
+   $pfConfig = new PluginFusioninventoryConfig();
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');   
    
-   if (!PluginFusioninventoryConfig::getValue($plugins_id, 'states_id_default')) {
-      $config->initConfig($plugins_id, array('states_id_default' => 0));
+   if (!$pfConfig->getValue($plugins_id, 'states_id_default')) {
+      $pfConfig->addValues($plugins_id, array('states_id_default' => 0));
    }
-   if (!PluginFusioninventoryConfig::getValue($plugins_id, "import_vm")) {
-       $config->initConfig($plugins_id, array("import_vm" => "1"));
+   if (!$pfConfig->getValue($plugins_id, "import_vm")) {
+       $pfConfig->addValues($plugins_id, array("import_vm" => "1"));
    }
-   if (!PluginFusioninventoryConfig::getValue($plugins_id, "component_networkdrive")) {
-       $config->initConfig($plugins_id, array("component_networkdrive" => "1"));
+   if (!$pfConfig->getValue($plugins_id, "component_networkdrive")) {
+       $pfConfig->addValues($plugins_id, array("component_networkdrive" => "1"));
    }
-   if (!PluginFusioninventoryConfig::getValue($plugins_id, "group")) {
-       $config->initConfig($plugins_id, array("group" => "0"));
+   if (!$pfConfig->getValue($plugins_id, "group")) {
+       $pfConfig->addValues($plugins_id, array("group" => "0"));
    }
-   if (!PluginFusioninventoryConfig::getValue($plugins_id, "component_networkcardvirtual")) {
-       $config->initConfig($plugins_id, array("component_networkcardvirtual" => "1"));
+   if (!$pfConfig->getValue($plugins_id, "component_networkcardvirtual")) {
+       $pfConfig->addValues($plugins_id, array("component_networkcardvirtual" => "1"));
    }
    
    if (TableExists("glpi_plugin_fusinvinventory_computers")
@@ -528,9 +528,12 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
    $input['FE:FF:FF:FF:FF:FF'] = '3';
    $input['00:00:00:00:00:00'] = '3';
    $input['00:0b:ca:fe:00:00'] = '3';
+   $input['02:80:37:EC:02:00'] = '3';
    $input['MB-1234567890'] = '1';
    $input['Not Specified'] = '1';
    $input['OEM_Serial'] = '1';
+   $input['SystemSerialNumb'] = '1';
+   $input['Not'] = '2';
    foreach ($input as $value=>$type) {
       $query = "SELECT * FROM `glpi_plugin_fusinvinventory_blacklists`
          WHERE `plugin_fusioninventory_criterium_id`='".$type."'
@@ -543,7 +546,7 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
       }
    }
    
-   $config->updateConfigType($plugins_id, 'version', PLUGIN_FUSINVINVENTORY_VERSION);
+   $pfConfig->updateConfigType($plugins_id, 'version', PLUGIN_FUSINVINVENTORY_VERSION);
 }
 
 ?>

@@ -96,7 +96,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       $input['component_networkcardvirtual'] = 1;
 
       foreach ($input as $key => $value) {
-         $pfConfig->initConfig($plugins_id, array($key => $value));
+         $pfConfig->addValues($plugins_id, array($key => $value));
       }
    }
 
@@ -156,15 +156,16 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
    * @return bool true if form is ok
    *
    **/
-   function showForm($options=array()) {
+   static function showForm($options=array()) {
       global $LANG;
 
       $pfConfig = new PluginFusioninventoryConfig();
+      $pfsnmpConfig = new self();
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
 
-      $this->fields['id'] = 1;
-      $this->showFormHeader($options);
+      $pfsnmpConfig->fields['id'] = 1;
+      $pfsnmpConfig->showFormHeader($options);
  
       echo "<tr>";
       echo "<th colspan='4'>".$LANG['plugin_fusinvinventory']['setup'][20];
@@ -306,12 +307,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       echo "</tr>";
       
       echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-//      echo $LANG['plugin_fusinvinventory']['setup'][25]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-//      Dropdown::showYesNo("import_registry", 
-//                          $pfConfig->getValue($plugins_id, 'import_registry'));
+      echo "<td colspan='2'>";
       echo "</td>";
       echo "<td>";
       echo $LANG['devices'][2]."&nbsp;:";
@@ -323,12 +319,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       echo "</tr>";
       
       echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-//      echo $LANG['plugin_fusinvinventory']['setup'][26]."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-//      Dropdown::showYesNo("import_process", 
-//                          $pfConfig->getValue($plugins_id, 'import_process'));
+      echo "<td colspan='2'>";
       echo "</td>";
       echo "<td>";
       echo $LANG['devices'][7]."&nbsp;:";
@@ -426,10 +417,11 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       echo "</tr>";
       
       $options['candel'] = false;
-      $this->showFormButtons($options);
+      $pfsnmpConfig->showFormButtons($options);
 
       return true;
    }
+
 }
 
 ?>

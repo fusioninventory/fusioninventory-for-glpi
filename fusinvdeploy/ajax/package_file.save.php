@@ -50,3 +50,4 @@ Html::header_nocache();
 $PluginFusinvdeployFile = new PluginFusinvdeployFile();
 $PluginFusinvdeployFile->uploadFile();
 
+?>

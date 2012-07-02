@@ -235,7 +235,7 @@ if (isset($_POST['definition_add'])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task", "w");
 
    $mytaskjob->delete($_POST);
-   Html::redirect(Toolbox::deleteDir('PluginFusioninventoryTask')."?id=".
+   Html::redirect(Toolbox::getItemTypeFormURL('PluginFusioninventoryTask')."?id=".
                                      $_POST['plugin_fusioninventory_tasks_id']);
                                      
 } elseif (isset($_POST['itemaddaction'])) {
@@ -275,18 +275,18 @@ if (isset($_POST['definition_add'])) {
    Html::back();
    
 } elseif (isset($_POST['forceend'])) {
-   $mytaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+   $mytaskjobstate = new PluginFusioninventoryTaskjobstate();
    $pFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-   $mytaskjobstatus->getFromDB($_POST['taskjobstatus_id']);
-   $jobstatus = $mytaskjobstatus->fields;
-   $a_taskjobstatus = $mytaskjobstatus->find("`uniqid`='".$mytaskjobstatus->fields['uniqid']."'");
-   foreach($a_taskjobstatus as $data) {
-      if ($data['state'] != PluginFusioninventoryTaskjobstatus::FINISHED) {
-         $mytaskjobstatus->changeStatusFinish($data['id'], 0, '', 1, "Action cancelled by user", 0, 0);
+   $mytaskjobstate->getFromDB($_POST['taskjobstates_id']);
+   $jobstate = $mytaskjobstate->fields;
+   $a_taskjobstates = $mytaskjobstate->find("`uniqid`='".$mytaskjobstate->fields['uniqid']."'");
+   foreach($a_taskjobstates as $data) {
+      if ($data['state'] != PluginFusioninventoryTaskjobstate::FINISHED) {
+         $mytaskjobstate->changeStatusFinish($data['id'], 0, '', 1, "Action cancelled by user", 0, 0);
       }
    }
    
-   $pFusioninventoryTaskjob->getFromDB($jobstatus['plugin_fusioninventory_taskjobs_id']);
+   $pFusioninventoryTaskjob->getFromDB($jobstate['plugin_fusioninventory_taskjobs_id']);
    $pFusioninventoryTaskjob->reinitializeTaskjobs($pFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']);
 
    Html::back();

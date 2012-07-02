@@ -653,7 +653,6 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
          }
       }
    }
-
 }
 
 ?>

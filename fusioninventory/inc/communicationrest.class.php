@@ -147,25 +147,25 @@ class PluginFusioninventoryCommunicationRest {
          $p[$key] = $value;
       }
 
-      $taskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $taskjobstates = new PluginFusioninventoryTaskjobstate();
 
       //Get the agent ID by his deviceid
       //Get task job status : identifier is the uuid given by the agent
       if (PluginFusioninventoryAgent::getByDeviceID($p['machineid']) 
-         && $taskjobstatus->getFromDB($p['uuid'])) {
+         && $taskjobstates->getFromDB($p['uuid'])) {
          
          //Get taskjoblog associated
          $taskjob = new PluginFusioninventoryTaskjob();
-         $taskjob->getFromDB($taskjobstatus->fields['plugin_fusioninventory_taskjobs_id']);
+         $taskjob->getFromDB($taskjobstates->fields['plugin_fusioninventory_taskjobs_id']);
 
          $state = 1;
          if ($p['code'] == 'ok') {
             $state = 0;
          }
 
-         $taskjobstatus->changeStatusFinish($taskjobstatus->fields['id'], 
-                                            $taskjobstatus->fields['items_id'], 
-                                            $taskjobstatus->fields['itemtype'], $state, $p['msg']);
+         $taskjobstates->changeStatusFinish($taskjobstates->fields['id'], 
+                                            $taskjobstates->fields['items_id'], 
+                                            $taskjobstates->fields['itemtype'], $state, $p['msg']);
       }
       self::sendOk();
    }
@@ -221,8 +221,7 @@ class PluginFusioninventoryCommunicationRest {
          fclose($handle);
          return true;
       }
-   }
-   
+   }   
 }
 
 ?>

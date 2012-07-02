@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[2173382]]></name>
-	<type>Printer</type>
+	<type>3</type>
 	<key>Printer0118</key>
 	<comments><![CDATA[Xerox 4112;ESS PS1.203.0,IOT 45.26.0,HCF 3.17.0,FIN D3.7.4,IIT 15.4.1,IIT D14.0.4,ADF 12.2.2,SJFI3.0.10,SSMI1.9.0
 
@@ -8,20 +8,10 @@
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
-			<oid>.1.3.6.1.2.1.2.1.0</oid>
-			<portcounter>1</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>0</mapping_type>
- 			<mapping_name></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
 			<oid>.1.3.6.1.2.1.1.1.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>comments</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -31,7 +21,7 @@
 			<oid>.1.3.6.1.2.1.43.11.1.1.6.1.6</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>drumblack</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -41,7 +31,7 @@
 			<oid>.1.3.6.1.2.1.43.8.2.1.14.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>enterprise</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -51,7 +41,7 @@
 			<oid>.1.3.6.1.2.1.4.20.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>ifaddr</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -61,7 +51,7 @@
 			<oid>.1.3.6.1.2.1.2.2.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>ifIndex</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -71,7 +61,7 @@
 			<oid>.1.3.6.1.2.1.2.2.1.2</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>ifName</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -81,7 +71,7 @@
 			<oid>.1.3.6.1.2.1.2.2.1.6</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>ifPhysAddress</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -91,7 +81,7 @@
 			<oid>.1.3.6.1.2.1.2.2.1.3</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>ifType</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -101,7 +91,7 @@
 			<oid>.1.3.6.1.2.1.1.6.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>location</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -111,7 +101,7 @@
 			<oid>.1.3.6.1.2.1.25.2.3.1.5.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>memory</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -121,7 +111,7 @@
 			<oid>.1.3.6.1.2.1.25.3.2.1.3.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>model</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -131,7 +121,7 @@
 			<oid>.1.3.6.1.2.1.1.5.0</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>name</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -141,7 +131,7 @@
 			<oid>.1.3.6.1.2.1.43.10.2.1.4.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>pagecountertotalpages</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -151,7 +141,7 @@
 			<oid>.1.3.6.1.2.1.43.5.1.1.17.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>serial</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -161,7 +151,7 @@
 			<oid>.1.3.6.1.2.1.43.11.1.1.6.1.1</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>tonerblack</mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
@@ -171,8 +161,18 @@
 			<oid>.1.3.6.1.2.1.43.11.1.1.6.1.5</oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mapping_type>Printer</mapping_type>
+			<mapping_type>3</mapping_type>
  			<mapping_name>wastetoner</mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid>.1.3.6.1.2.1.2.1.0</oid>
+			<portcounter>1</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>0</mapping_type>
+ 			<mapping_name></mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>

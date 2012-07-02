@@ -60,7 +60,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
     * 
     **/
    function import($p_DEVICEID, $p_CONTENT, $p_xml) {
-      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfAgent = new PluginFusioninventoryAgent();
       $pfAgentconfig = new PluginFusinvsnmpAgentconfig();
 
@@ -73,9 +73,9 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       $a_agent = $pfAgent->InfosByKey($p_DEVICEID);
       if (isset($p_CONTENT->PROCESSNUMBER)) {
          $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $p_CONTENT->PROCESSNUMBER;
-         if ($pfTaskjobstatus->getFromDB($p_CONTENT->PROCESSNUMBER)) {
-            if ($pfTaskjobstatus->fields['state'] != "3") {
-               $pfTaskjobstatus->changeStatus($p_CONTENT->PROCESSNUMBER, 2);
+         if ($pfTaskjobstate->getFromDB($p_CONTENT->PROCESSNUMBER)) {
+            if ($pfTaskjobstate->fields['state'] != "3") {
+               $pfTaskjobstate->changeStatus($p_CONTENT->PROCESSNUMBER, 2);
                if ((!isset($p_CONTENT->AGENT->START)) AND (!isset($p_CONTENT->AGENT->END))) {
                   $nb_devices = 0;
                   $segs=$p_CONTENT->xpath('//DEVICE');
@@ -92,27 +92,27 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
          }
       }
 
-      if ($pfTaskjobstatus->getFromDB($p_CONTENT->PROCESSNUMBER)) {
-         if ($pfTaskjobstatus->fields['state'] != "3") {
+      if ($pfTaskjobstate->getFromDB($p_CONTENT->PROCESSNUMBER)) {
+         if ($pfTaskjobstate->fields['state'] != "3") {
             $pfImportExport = new PluginFusinvsnmpImportExport();
             $errors.=$pfImportExport->import_netdiscovery($p_CONTENT, $p_DEVICEID);
             if (isset($p_CONTENT->AGENT->END)) {
                if ((isset($p_CONTENT->DICO)) AND ($p_CONTENT->DICO == "REQUEST")) {
-                  $pfAgent->getFromDB($pfTaskjobstatus->fields["plugin_fusioninventory_agents_id"]);
+                  $pfAgent->getFromDB($pfTaskjobstate->fields["plugin_fusioninventory_agents_id"]);
                   $pfAgentconfig->loadAgentconfig($pfAgent->fields['id']);
                   $input = array();
                   $input['id'] = $pfAgentconfig->fields['id'];
                   $input["senddico"] = "1";
                   $pfAgentconfig->update($input);
 
-                  $pfTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
+                  $pfTaskjobstate->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
                                                                           $a_agent['id'],
                                                                           'PluginFusioninventoryAgent',
                                                                           '1',
                                                                           '==fusinvsnmp::3==');
                } else {
 
-                  $pfTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
+                  $pfTaskjobstate->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
                                                                        $a_agent['id'],
                                                                        'PluginFusioninventoryAgent');
                }
@@ -122,7 +122,13 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       return $errors;
    }
 
+   
 
+   /**
+    * Prepare data and send them to rule engine
+    * 
+    * @param type $p_xml simpleXML object
+    */
    function sendCriteria($p_xml) {
       
       PluginFusioninventoryCommunication::addLog(
@@ -234,6 +240,13 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
 
 
+   /**
+    * After rule engine passed, update task (log) and create item if required
+    * 
+    * @param type $items_id
+    * @param type $itemtype
+    * @param type $entities_id 
+    */
    function rulepassed($items_id, $itemtype, $entities_id=0) {
 
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
@@ -246,7 +259,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
          $input = array();
          $input['date_mod'] = date("Y-m-d H:i:s");
          $input['entities_id'] = $entities_id;
-         $items_id = $class->add($input);
+         $items_id = $item->add($input);
          if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
             $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
             $inputrulelog = array();
@@ -280,6 +293,11 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
 
 
+   /**
+    * Import discovered device (add / update data in GLPI DB)
+    * 
+    * @param object $item 
+    */
    function importDevice($item) {
       
       PluginFusioninventoryCommunication::addLog(
@@ -314,8 +332,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       }      
       if (!isset($_SESSION['glpiactiveentities_string'])) {
          $_SESSION['glpiactiveentities_string'] = "'".$item->fields['entities_id']."'";
-      }
-      
+      }      
       
       switch ($item->getType()) {
          
@@ -516,7 +533,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             }
             // Write XML file
             if (isset($_SESSION['SOURCE_XMLDEVICE'])
-                    AND is_null($pfNetworkEquipment->getValue('last_fusioninventory_update', $item->getID()))) {
+                    AND is_null($pfNetworkEquipment->getValue('last_fusioninventory_update'))) {
                PluginFusioninventoryUnknownDevice::writeXML($input['id'], 
                                           $_SESSION['SOURCE_XMLDEVICE'],
                                           "fusinvsnmp",
@@ -591,7 +608,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             }
             // Write XML file
             if (isset($_SESSION['SOURCE_XMLDEVICE'])
-                    AND is_null($pfPrinter->getValue('last_fusioninventory_update', $item->getID()))) {
+                    AND is_null($pfPrinter->getValue('last_fusioninventory_update'))) {
                PluginFusioninventoryUnknownDevice::writeXML($item->getID(), 
                                           $_SESSION['SOURCE_XMLDEVICE'],
                                           "fusinvsnmp",
@@ -613,6 +630,10 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
    }
 
 
+   
+   /**
+    * Used to add log in the task
+    */
    function addtaskjoblog() {
 
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();

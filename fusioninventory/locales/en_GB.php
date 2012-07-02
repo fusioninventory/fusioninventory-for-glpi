@@ -94,7 +94,6 @@ $LANG['plugin_fusioninventory']['rules'][13] = "Hard disk serial number";
 $LANG['plugin_fusioninventory']['rules'][14] = "Partition serial number";
 $LANG['plugin_fusioninventory']['rules'][15] = "UUID";
 $LANG['plugin_fusioninventory']['rules'][16] = "FusionInventory tag";
-$LANG['plugin_fusioninventory']['rules'][17] = "Import denied";
 $LANG['plugin_fusioninventory']['rules'][18] = "Device created";
 $LANG['plugin_fusioninventory']['rules'][19] = "Ignored import devices";
 $LANG['plugin_fusioninventory']['rules'][20] = "Rule import logs";
@@ -172,7 +171,6 @@ $LANG['plugin_fusioninventory']['task'][30]="Selection";
 $LANG['plugin_fusioninventory']['task'][31]="Time between task start and start this action";
 $LANG['plugin_fusioninventory']['task'][32]="Force the end";
 $LANG['plugin_fusioninventory']['task'][33]="Communication type";
-$LANG['plugin_fusioninventory']['task'][34]="Permanent";
 $LANG['plugin_fusioninventory']['task'][35]="minutes";
 $LANG['plugin_fusioninventory']['task'][36]="hours";
 $LANG['plugin_fusioninventory']['task'][37]="days";
@@ -188,6 +186,14 @@ $LANG['plugin_fusioninventory']['task'][46]="Reinitialization";
 $LANG['plugin_fusioninventory']['task'][47]="Unique id";
 $LANG['plugin_fusioninventory']['task'][48]="To inventory";
 $LANG['plugin_fusioninventory']['task'][49]="Advanced mode";
+$LANG['plugin_fusioninventory']['task'][50]="End Task";
+$LANG['plugin_fusioninventory']['task'][51]="Action after finish running task";
+$LANG['plugin_fusioninventory']['task'][52]="Delete this task and finish";
+$LANG['plugin_fusioninventory']['task'][53]="Finish";
+$LANG['plugin_fusioninventory']['task'][54]="Run again this task";
+$LANG['plugin_fusioninventory']['task'][55]="No agent allowed to run ESX inventory";
+$LANG['plugin_fusioninventory']['task'][56]="Planned for running";
+$LANG['plugin_fusioninventory']['task'][58]="In error";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Started";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";
@@ -196,6 +202,8 @@ $LANG['plugin_fusioninventory']['taskjoblog'][4]="Error";
 $LANG['plugin_fusioninventory']['taskjoblog'][5]="unknown";
 $LANG['plugin_fusioninventory']['taskjoblog'][6]="Running";
 $LANG['plugin_fusioninventory']['taskjoblog'][7]="Prepared";
+$LANG['plugin_fusioninventory']['taskjoblog'][8]="See all executions";
+$LANG['plugin_fusioninventory']['taskjoblog'][9]="View logs of this execution";
 
 $LANG['plugin_fusioninventory']['xml'][0]="XML";
 
@@ -206,6 +214,7 @@ $LANG['plugin_fusioninventory']['codetasklog'][3]="Import denied";
 $LANG['plugin_fusioninventory']['credential'][1] = "Credential for remote inventory";
 $LANG['plugin_fusioninventory']['credential'][2] = "Remote device inventory";
 $LANG['plugin_fusioninventory']['credential'][3] = "Credentials";
+$LANG['plugin_fusioninventory']['credential'][4] = "Credential";
 
 $LANG['plugin_fusioninventory']['locks'][0]="Delete locks";
 $LANG['plugin_fusioninventory']['locks'][1]="Add locks";
@@ -215,8 +224,6 @@ $LANG['plugin_fusioninventory']['iprange'][1]="End of IP range";
 $LANG['plugin_fusioninventory']['iprange'][2]="IP Ranges";
 $LANG['plugin_fusioninventory']['iprange'][3]="Query";
 $LANG['plugin_fusioninventory']['iprange'][7]="Bad IP";
-
-$LANG['plugin_fusioninventory']['buttons'][0]="Finish";
 
 $LANG['plugin_fusioninventory']['wizard'][0]="Action choice";
 $LANG['plugin_fusioninventory']['wizard'][1]="Type of device to inventory";
@@ -235,7 +242,7 @@ $LANG['plugin_fusioninventory']['wizard'][14]="Welcome in FusionInventory. Begin
 $LANG['plugin_fusioninventory']['wizard'][15]="Computers and peripherals";
 $LANG['plugin_fusioninventory']['wizard'][16]="ESX servers";
 $LANG['plugin_fusioninventory']['wizard'][17]="Network devices and printers";
-
+$LANG['plugin_fusioninventory']['wizard'][18]="Wizard";
 
 $LANG['plugin_fusioninventory']['title'][2]="VMware host remote inventory";
 

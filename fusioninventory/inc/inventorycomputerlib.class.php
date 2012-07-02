@@ -65,16 +65,19 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       if (isset($_SESSION["plugin_fusinvinventory_ignorecontrollers"])) {
          unset($_SESSION["plugin_fusinvinventory_ignorecontrollers"]);
       }
-      foreach ($xml->CONTENT->VIDEOS as $child) {
-         $_SESSION["plugin_fusinvinventory_ignorecontrollers"][(string)$child->NAME] = 1;
-         if (isset($child->CHIPSET)) {
-            $_SESSION["plugin_fusinvinventory_ignorecontrollers"][(string)$child->CHIPSET] = 1;
+      if (isset($xml->CONTENT->VIDEOS)) {
+         foreach ($xml->CONTENT->VIDEOS as $child) {
+            $_SESSION["plugin_fusinvinventory_ignorecontrollers"][(string)$child->NAME] = 1;
+            if (isset($child->CHIPSET)) {
+               $_SESSION["plugin_fusinvinventory_ignorecontrollers"][(string)$child->CHIPSET] = 1;
+            }
          }
       }
-      foreach ($xml->CONTENT->SOUNDS as $child) {
-         $_SESSION["plugin_fusinvinventory_ignorecontrollers"][(string)$child->NAME] = 1;
+      if (isset($xml->CONTENT->SOUNDS)) {
+         foreach ($xml->CONTENT->SOUNDS as $child) {
+            $_SESSION["plugin_fusinvinventory_ignorecontrollers"][(string)$child->NAME] = 1;
+         }
       }
-      
       
       if ($new == "0") {
          // Transfer if entity is different
@@ -105,8 +108,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                  $Transfer->fields);
          }
 
-
-      //if ($internalId = $this->isMachineExist()) {
          // Get internal ID with $items_id
          $a_serialized = array();
          $query = "SELECT internal_id FROM `glpi_plugin_fusioninventory_inventorycomputerlibserialization`
@@ -155,7 +156,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if ($_SESSION["plugin_fusinvinventory_entity"] == NOT_AVAILABLE) {
             $_SESSION["plugin_fusinvinventory_entity"] = 0;
          }
-
+         
          //We launch CreateMachine() hook and provide an InternalId
          $xmlSections = $this->_getXMLSections($xml);
          $internalId = uniqid("", true);
@@ -230,12 +231,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
          $sectionData = array();
          foreach ($section->children() as $data) {
-            if ($section->getName() == "VIRTUALMACHINES"
-                    AND $data->getName() == "COMMENT") {
-               $sectionData[$data->getName()] = (string)$data;
-            } else {
-               $sectionData[$data->getName()] = (string)$data;
-            }
+            $sectionData[$data->getName()] = (string)$data;
          }
 
          //sectionId initialization, we will affect id after hook createSection return value.
@@ -314,10 +310,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          array_push($serializedSectionsFromXML, $xmlSection["sectionDatawName"]);
       }
       //Retrieve changes, sections to Add and sections to Remove
-      // *** array_diff not work nicely in this case
-//         $sectionsToAdd    = array_diff($serializedSectionsFromXML, $infoSections["sections"]);
-//         $sectionsToRemove = array_diff($infoSections["sections"], $serializedSectionsFromXML);
-       
+      // *** array_diff not work nicely so use own function
       $sectionsToAdd    = $this->diffArray($serializedSectionsFromXML, $infoSections["sections"]);
       $sectionsToRemove = $this->diffArray($infoSections["sections"], $serializedSectionsFromXML);
 
@@ -662,10 +655,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         //Delete this section from sectionToRemove and sectionToAdd
                         unset($sectionsToRemove[$sectionId]);
                         unset($sectionsToAdd[$arrayId]);
-//                        array_push($datasToUpdate, array(
-//                                     "sectionId"=>$sectionId,
-//                                     "dataSection"=>$xmlSections[$arrayId]['sectionData']));
-                        
+
                         $arraydiff = array();
                         foreach($arrSectionToRemove as $key=>$value) {
                            if (isset($arrSectionToAdd[$key])
@@ -758,8 +748,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 ";
          }
       }
-      //$externalId=$infoSections["externalId"];
-
       $this->_serializeIntoDB($internalId, $serializedSections);
    }
 
@@ -841,7 +829,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $rowSelect = mysql_fetch_row($resultSelect);
       $infoSections["externalId"] = $rowSelect[0];
       $serializedSections = $rowSelect[1].$rowSelect[2].$rowSelect[3];
-//      $serializedSections = str_replace("\t", "", $serializedSections); // To remove the indentation at beginning of line
       $arraySerializedSections = explode("\n", $serializedSections); // Recovering a table with one line per entry
       $previous_infosection = array();
       foreach ($arraySerializedSections as $valeur) {
@@ -966,10 +953,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $a_return[$key] = $value;
          }
       }
-      return $a_return;
-      
-   }
-   
+      return $a_return;      
+   }   
 }
 
 ?>

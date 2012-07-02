@@ -113,6 +113,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $tab[6]['linkfield'] = 'device_id';
       $tab[6]['name']      = $LANG['plugin_fusioninventory']['agents'][35];
       $tab[6]['datatype']  = 'text';
+      $tab[6]['massiveaction'] = false;
 
       $tab[7]['table']         = 'glpi_computers';
       $tab[7]['field']         = 'name';
@@ -126,18 +127,28 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $tab[8]['linkfield'] = 'version';
       $tab[8]['name']      = $LANG['plugin_fusioninventory']['agents'][25];
       $tab[8]['datatype']  = 'text';
+      $tab[8]['massiveaction'] = false;
 
       $tab[9]['table']     = $this->getTable();
       $tab[9]['field']     = 'token';
       $tab[9]['linkfield'] = 'token';
       $tab[9]['name']      = $LANG['plugin_fusioninventory']['agents'][24];
       $tab[9]['datatype']  = 'text';
+      $tab[9]['massiveaction'] = false;
 
       $tab[10]['table']     = $this->getTable();
       $tab[10]['field']     = 'useragent';
       $tab[10]['linkfield'] = 'useragent';
       $tab[10]['name']      = $LANG['plugin_fusioninventory']['agents'][42];
       $tab[10]['datatype']  = 'text';
+      $tab[10]['massiveaction'] = false;
+      
+      $tab[11]['table']     = $this->getTable();
+      $tab[11]['field']     = 'tag';
+      $tab[11]['name']      = $LANG['plugin_fusioninventory']['rules'][16];
+      $tab[11]['datatype']  = 'text';
+      $tab[11]['massiveaction'] = false;
+      
 
       $i = 20;
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
@@ -261,6 +272,16 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<td>".$LANG['plugin_fusioninventory']['agents'][4]."&nbsp:</td>";
       echo "<td align='center'>";
       echo Html::convDateTime($this->fields["last_contact"]);
+      echo "</td>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusioninventory']['rules'][16]."&nbsp:</td>";
+      echo "<td align='center'>";
+      echo $this->fields["tag"];
+      echo "</td>";
+      echo "<td></td>";
+      echo "<td align='center'>";
       echo "</td>";
       echo "</tr>";
 
@@ -529,7 +550,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             echo "<input type='hidden' name='agent_id' value='".$agent_id."' />";
             break;
          
-         case '':
+         default:
             echo "SELinux problem, do 'setsebool -P httpd_can_network_connect on'";
             break;
 
@@ -643,7 +664,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             array_push($ret, "http://".$ip.":".$config->getValue($plugins_id, 'agent_port', ''));
          }
       }
-
       return $ret;
    }
 
@@ -727,16 +747,19 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     * 
     */   
    function pre_updateInDB() {
-      if (isset($this->updates['version'])
-              AND isset($this->oldvalues['version'])
-              AND $this->updates['version'] == $this->oldvalues['version']) {
-         unset($this->updates['version']);
+      if (isset($this->oldvalues['version'])
+              AND $this->input['version'] == $this->oldvalues['version']) {
+         
+         $key = array_search('version', $this->updates);
+         unset($this->updates[$key]);
          unset($this->oldvalues['version']);
       }
       if (isset($this->oldvalues['last_contact'])) {
+         $key = array_search('last_contact', $this->updates);
          unset($this->oldvalues['last_contact']);
       }
       if (isset($this->oldvalues['token'])) {
+         $key = array_search('token', $this->updates);
          unset($this->oldvalues['token']);
       }
    }

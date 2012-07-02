@@ -236,7 +236,7 @@ var taskJobGrid = new Ext.grid.GridPanel({
       emptyGroupText: ''
    }),
    tbar: [{
-      text: '{$LANG['plugin_fusinvdeploy']['form']['title'][10]}',
+      text: '{$LANG['plugin_fusinvdeploy']['task'][15]}',
       iconCls: 'exticon-add',
       handler: function(btn,ev) {
          var u = new taskJobStore.recordType({
@@ -251,10 +251,10 @@ var taskJobGrid = new Ext.grid.GridPanel({
          });
          taskJobStore.insert(0,u);
          taskJobGrid.getSelectionModel().selectFirstRow();
-         taskJobForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][10]}');
+         taskJobForm.setTitle('{$LANG['plugin_fusinvdeploy']['task'][15]}');
       }
    }, '-', {
-      text: '{$LANG['plugin_fusinvdeploy']['form']['title'][11]}',
+      text: '{$LANG['plugin_fusinvdeploy']['task'][16]}',
       iconCls: 'exticon-delete',
       handler: function(btn,ev) {
          var selection = taskJobGrid.getSelectionModel().getSelections();
@@ -293,7 +293,7 @@ var taskJobGrid = new Ext.grid.GridPanel({
          rowselect: function(g,index,ev) {
             var rec = taskJobGrid.store.getAt(index);
             taskJobForm.loadData(rec);
-            taskJobForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][12]}');
+            taskJobForm.setTitle('{$LANG['plugin_fusinvdeploy']['task'][17]}');
             taskJobForm.buttons[0].setDisabled(false);
 
             taskJobForm.expand();
@@ -430,7 +430,7 @@ var taskJobForm = new Ext.FormPanel({
       }
    ],
    buttons: [{
-      text: '{$LANG['plugin_fusinvdeploy']['form']['action'][2]}',
+      text: '{$LANG['plugin_fusinvdeploy']['action'][2]}',
       iconCls: 'exticon-save',
       disabled:true,
       handler: function(btn,ev) {
@@ -446,11 +446,11 @@ var taskJobForm = new Ext.FormPanel({
 
 function taskJobFormSave() {
    if (taskJobForm.record == null) {
-      Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
+      Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['message'][0]}');
       return;
    }
    if (!taskJobForm.getForm().isValid()) {
-      Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
+      Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['message'][0]}');
       return false;
    }
 

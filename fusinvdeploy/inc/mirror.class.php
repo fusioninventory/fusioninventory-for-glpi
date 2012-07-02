@@ -51,7 +51,7 @@ class PluginFusinvdeployMirror extends CommonDBTM {
    static function getTypeName() {
       global $LANG;
 
-      return $LANG['plugin_fusinvdeploy']['form']['mirror'][1];
+      return $LANG['plugin_fusinvdeploy']['mirror'][1];
    }
 
    function canCreate() {
@@ -99,7 +99,7 @@ class PluginFusinvdeployMirror extends CommonDBTM {
       rows='4' name='comment' >".$this->fields["comment"]."</textarea></td></tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusinvdeploy']['form']['mirror'][3]."&nbsp;:</td>";
+      echo "<td>".$LANG['plugin_fusinvdeploy']['mirror'][3]."&nbsp;:</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='url' size='40' value='".$this->fields["url"]."'/>";
       echo "</td></tr>";
@@ -133,7 +133,7 @@ class PluginFusinvdeployMirror extends CommonDBTM {
       $tab[2]['table']     = $this->getTable();
       $tab[2]['field']     = 'url';
       $tab[2]['linkfield'] = 'url';
-      $tab[2]['name']      = $LANG['plugin_fusinvdeploy']['form']['mirror'][3];
+      $tab[2]['name']      = $LANG['plugin_fusinvdeploy']['mirror'][3];
       $tab[2]['datatype']  = 'string';
 
       $tab[16]['table']     = $this->getTable();
@@ -157,4 +157,5 @@ class PluginFusinvdeployMirror extends CommonDBTM {
    }
 
 }
+
 ?>

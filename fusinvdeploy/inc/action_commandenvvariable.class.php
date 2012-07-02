@@ -49,7 +49,7 @@ class PluginFusinvdeployAction_Commandenvvariable extends CommonDBTM {
    static function getTypeName() {
       global $LANG;
 
-      return $LANG['plugin_fusinvdeploy']['form']['command_envvariable'][1];
+      return $LANG['plugin_fusinvdeploy']['command_envvariable'][1];
    }
 
    function canCreate() {
@@ -71,4 +71,5 @@ class PluginFusinvdeployAction_Commandenvvariable extends CommonDBTM {
       return $response;
    }
 }
+
 ?>

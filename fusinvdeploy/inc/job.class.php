@@ -54,13 +54,13 @@ class PluginFusinvdeployJob {
 
       $response      = array();
       $taskjoblog    = new PluginFusioninventoryTaskjoblog();
-      $taskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $taskjobstate = new PluginFusioninventoryTaskjobstate();
 
       //Get the agent ID by his deviceid
       if ($agents_id = PluginFusinvdeployJob::getAgentByDeviceID($device_id)) {
 
          //Get tasks associated with the agent
-         $task_list = $taskjobstatus->getTaskjobsAgent($agents_id);
+         $task_list = $taskjobstate->getTaskjobsAgent($agents_id);
          foreach ($task_list as $itemtype => $status_list) {
 
             //Foreach task for this agent build the response array
@@ -124,16 +124,17 @@ class PluginFusinvdeployJob {
         die;
       }
 
-     $jobstatus = PluginFusioninventoryTaskjoblog::getByUniqID($p['uuid']);
+     $jobstate = new PluginFusioninventoryTaskjobstate();
+     $jobstate->getFromDB($p['uuid']);
 
      /*if ($update_job) {
         $taskjob = new PluginFusioninventoryTaskjoblog();
         $taskjob->update($jobstatus);
      }*/
      $taskjoblog = new PluginFusioninventoryTaskjoblog();
-     $tmp['plugin_fusioninventory_taskjobstatus_id'] = $jobstatus['id'];
-     $tmp['itemtype']                                = $jobstatus['itemtype'];
-     $tmp['items_id']                                = $jobstatus['items_id'];
+     $tmp['plugin_fusioninventory_taskjobstates_id'] = $jobstate->fields['id'];
+     $tmp['itemtype']                                = $jobstate->fields['itemtype'];
+     $tmp['items_id']                                = $jobstate->fields['items_id'];
      $tmp['date']                                    = date("Y-m-d H:i:s");
      $tmp['comment']                                 = "";
      $tmp['state'] = PluginFusioninventoryTaskjoblog::TASK_RUNNING;
@@ -167,7 +168,7 @@ class PluginFusinvdeployJob {
      }
 
      $taskjoblog->addTaskjoblog(
-        $tmp['plugin_fusioninventory_taskjobstatus_id'],
+        $tmp['plugin_fusioninventory_taskjobstates_id'],
         $tmp['items_id'],
         $tmp['itemtype'],
         $tmp['state'],
@@ -179,11 +180,11 @@ class PluginFusinvdeployJob {
         $error = "0";
         if ($p['status'] == 'ko') $error = "1";
         //set status to finished and reinit job
-        $taskjobstatus = new PluginFusioninventoryTaskjobstatus;
-        $taskjobstatus->changeStatusFinish(
-           $jobstatus['id'],
-           $jobstatus['items_id'],
-           $jobstatus['itemtype'],
+        $taskjobstate = new PluginFusioninventoryTaskjobstate();
+        $taskjobstate->changeStatusFinish(
+           $jobstate->fields['id'],
+           $jobstate->fields['items_id'],
+           $jobstate->fields['itemtype'],
            $error
         );
      }

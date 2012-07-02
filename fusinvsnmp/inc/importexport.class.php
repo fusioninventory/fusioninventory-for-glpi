@@ -44,9 +44,17 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-//class PluginFusinvsnmpImportExport extends CommonDBTM {
 class PluginFusinvsnmpImportExport extends CommonGLPI {
 
+   
+   /**
+    * Export a SNMP model in a XML
+    * 
+    * @global object $DB
+    * @param integer $ID_model idof the SNMP model
+    * 
+    * @return string XML 
+    */
    function export($ID_model) {
       global $DB;
 
@@ -176,6 +184,12 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
       $xml = simplexml_load_file($file,'SimpleXMLElement', LIBXML_NOCDATA);
 
+      // Clean
+      $query = "DELETE FROM `glpi_plugin_fusinvsnmp_modelmibs`
+         WHERE  `plugin_fusioninventory_mappings_id`='0'
+            AND `oid_port_counter`='0'";
+      $DB->query($query);
+      
       // check if the model already exists
       $query = "SELECT `id` FROM `glpi_plugin_fusinvsnmp_models`
          WHERE `name`='".(string)$xml->name."'
@@ -199,7 +213,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       if ($message == '1') {
          $_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusinvsnmp']['model_info'][8];
       }
-
+      
       // Update model oids
       // Get list of oids in DB
       $a_oidsDB = array();
@@ -209,7 +223,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       $pfModel->getFromDB($models_data['id']);
       $input = array();
       $input['id'] = $pfModel->fields['id'];
-      $input['comment'] = (string)$xml->comments;
+      $input['comment'] = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep((string)$xml->comments));
       $pfModel->update($input);
 
       $a_oids = $pfModelMib->find("`plugin_fusinvsnmp_models_id`='".$models_data['id']."'");
@@ -257,13 +271,26 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 	         unset($mapping_type);
 	      }
 	      if (isset($child->mapping_type)) {
-	         $mapping_type = $child->mapping_type;
+            $mapping_type = '';
+            switch ($child->mapping_type) {
+
+               case '1':
+                  $mapping_type = "Computer";
+                  break;
+
+               case '2':
+                  $mapping_type = "NetworkEquipment";
+                  break;
+
+               case '3':
+                  $mapping_type = "Printer";
+                  break;
+
+            }
 	      }
 	      $input["plugin_fusioninventory_mappings_id"] = 0;
 	      if (isset($child->mapping_name)) {
-	         if ($child->mapping_name == '') {
-	            $input["plugin_fusioninventory_mappings_id"] = 0;
-	         } else {
+	         if ($child->mapping_name != '') {
 	            $a_mappings = $pfMapping->get($mapping_type, $child->mapping_name);
 	            $input["plugin_fusioninventory_mappings_id"] = $a_mappings['id'];
 	         }
@@ -290,24 +317,31 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       global $DB,$LANG;
 
       $pfMapping = new PluginFusioninventoryMapping();
+      $pfModel = new PluginFusinvsnmpModel();
 
-      $type = '';
+      $type = (string)$xml->type;
+      switch ($type) {
+         
+         case '1':
+            $type = "Computer";
+            break;
+
+         case '2':
+            $type = "NetworkEquipment";
+            break;
+
+         case '3':
+            $type = "Printer";
+            break;
+         
+      }
       
-      $query = "INSERT INTO `glpi_plugin_fusinvsnmp_models`
-	 (
-	    `name`,
-	    `itemtype`,
-	    `discovery_key`,
-	    `comment`
-	 )
-	 VALUES(
-	    '".(string)$xml->name."',
-	    '".(string)$xml->type."',
-	    '".(string)$xml->key."',
-	    '".(string)$xml->comments."'
-	 );";
-      $DB->query($query);
-      $plugin_fusinvsnmp_models_id = $DB->insert_id();
+      $input = array();
+      $input['name']          = (string)$xml->name;
+      $input['itemtype']      = $type;
+      $input['discovery_key'] = (string)$xml->key;
+      $input['comment']       = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep((string)$xml->comments));
+      $plugin_fusinvsnmp_models_id = $pfModel->add($input);
 
       foreach($xml->oidlist->oidobject as $child) {
          $plugin_fusinvsnmp_mibobjects_id = 0;
@@ -335,7 +369,25 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
             $oid_port_dyn = $child->dynamicport;
          }
          if (isset($child->mapping_type)) {
-            $mapping_type = $child->mapping_type;
+            $mapping_type = '';
+            switch ($child->mapping_type) {
+
+               case '1':
+                  $mapping_type = "Computer";
+                  break;
+
+               case '2':
+                  $mapping_type = "NetworkEquipment";
+                  break;
+
+               case '3':
+                  $mapping_type = "Printer";
+                  break;
+
+            }
+            if ($mapping_type == '') {
+               $mapping_type = $child->mapping_type;
+            }
          }
          if (isset($child->mapping_name)) {
             $mapping_name = $child->mapping_name;
@@ -379,6 +431,12 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       }
    }
 
+
+
+
+   /**
+    * This function is used to import in one time all SNMP model in folder fusinvsnmp/models/
+    */
    function importMass() {
       ini_set("max_execution_time", "0");
       foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) $this->import($file,0,1);

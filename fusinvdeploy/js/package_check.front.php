@@ -68,10 +68,10 @@ $label_width = 95;
 if(isset($_POST["glpi_tab"])) {
    if (strpos($_POST["glpi_tab"], 'PluginFusinvdeployInstall') !== false) {
       $render = "install";
-      $title2 = $LANG['plugin_fusinvdeploy']['form']['title'][17];
+      $title2 = $LANG['plugin_fusinvdeploy']['ftitle'][17];
    } elseif (strpos($_POST["glpi_tab"], 'PluginFusinvdeployUninstall') !== false) {
       $render = "uninstall";
-      $title2 = $LANG['plugin_fusinvdeploy']['form']['title'][18];
+      $title2 = $LANG['plugin_fusinvdeploy']['ftitle'][18];
    }
 }
 // END - Render div
@@ -81,24 +81,24 @@ $JS = <<<JS
 //define colums for grid
 var {$render}checkColumns =  [{
    id: '{$render}id',
-   header: '{$LANG['plugin_fusinvdeploy']['form']['label'][10]}',
+   header: '{$LANG['plugin_fusinvdeploy']['label'][10]}',
    width: {$column_width[0]},
    dataIndex: '{$render}id',
    hidden: true
 }, {
    id: '{$render}type',
-   header: '{$LANG['plugin_fusinvdeploy']['form']['label'][0]}',
+   header: '{$LANG['plugin_fusinvdeploy']['label'][0]}',
    width: {$column_width[1]},
    dataIndex: '{$render}type',
    renderer: {$render}renderType
 }, {
    id: '{$render}path',
-   header: '{$LANG['plugin_fusinvdeploy']['form']['label'][1]}',
+   header: '{$LANG['plugin_fusinvdeploy']['label'][1]}',
    width: {$column_width[2]},
    dataIndex: '{$render}path'
 }, {
    id: '{$render}value',
-   header: '{$LANG['plugin_fusinvdeploy']['form']['label'][2]}',
+   header: '{$LANG['plugin_fusinvdeploy']['label'][2]}',
    width: {$column_width[3]},
    dataIndex: '{$render}value',
    renderer: {$render}renderValue
@@ -113,25 +113,25 @@ var {$render}checkColumns =  [{
 function {$render}renderType(val) {
    switch(val) {
       case '{$chkConst['WINKEY_EXISTS']}':
-         return '{$LANG['plugin_fusinvdeploy']['form']['check'][0]}';
+         return '{$LANG['plugin_fusinvdeploy']['check'][0]}';
       case '{$chkConst['WINKEY_MISSING']}':
-         return '{$LANG['plugin_fusinvdeploy']['form']['check'][1]}';
+         return '{$LANG['plugin_fusinvdeploy']['check'][1]}';
       case '{$chkConst['WINKEY_EQUAL']}':
-         return '{$LANG['plugin_fusinvdeploy']['form']['check'][2]}';
+         return '{$LANG['plugin_fusinvdeploy']['check'][2]}';
       case '{$chkConst['FILE_EXISTS']}':
-         return '{$LANG['plugin_fusinvdeploy']['form']['check'][3]}';
+         return '{$LANG['plugin_fusinvdeploy']['check'][3]}';
       case '{$chkConst['FILE_MISSING']}':
-         return '{$LANG['plugin_fusinvdeploy']['form']['check'][4]}';
+         return '{$LANG['plugin_fusinvdeploy']['label'][15]}';
       case '{$chkConst['FILE_SIZEGREATER']}':
-         return '{$LANG['plugin_fusinvdeploy']['form']['check'][5]}';
+         return '{$LANG['plugin_fusinvdeploy']['check'][5]}';
       case '{$chkConst['FILE_SIZEEQUAL']}':
-         return '{$LANG['plugin_fusinvdeploy']['form']['check'][8]}';
+         return '{$LANG['plugin_fusinvdeploy']['check'][8]}';
       case '{$chkConst['FILE_SIZELOWER']}':
-         return '{$LANG['plugin_fusinvdeploy']['form']['check'][9]}';
+         return '{$LANG['plugin_fusinvdeploy']['check'][9]}';
       case '{$chkConst['FILE_SHA512']}':
-         return '{$LANG['plugin_fusinvdeploy']['form']['check'][6]}';
+         return '{$LANG['plugin_fusinvdeploy']['check'][6]}';
       case '{$chkConst['FREE_SPACE']}':
-         return '{$LANG['plugin_fusinvdeploy']['form']['check'][7]}';
+         return '{$LANG['plugin_fusinvdeploy']['check'][7]}';
       default:
          return '';
    }
@@ -178,10 +178,10 @@ var {$render}checkGrid = new Ext.grid.GridPanel({
    height: {$height_left},
    width: {$width_left},
    style:'margin-bottom:5px',
-   title: '{$LANG['plugin_fusinvdeploy']['form']['title'][2]} ({$title2})',
+   title: '{$LANG['plugin_fusinvdeploy']['ftitle'][2]} ({$title2})',
    stateId: '{$render}checkGrid',
    tbar: [{
-      text: '{$LANG['plugin_fusinvdeploy']['form']['title'][1]}',
+      text: '{$LANG['plugin_fusinvdeploy']['ftitle'][1]}',
       iconCls: 'exticon-add',
       handler: function(btn,ev) {
          var u = new {$render}checkGridStore.recordType({
@@ -194,10 +194,10 @@ var {$render}checkGrid = new Ext.grid.GridPanel({
          {$render}checkGrid.getSelectionModel().selectFirstRow();
          {$render}checkGrid.setDisabled(true);
          {$render}checkForm.buttons[1].setVisible(true);
-         {$render}checkForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][1]}');
+         {$render}checkForm.setTitle('{$LANG['plugin_fusinvdeploy']['ftitle'][1]}');
       }
    }, '-', {
-      text: '{$LANG['plugin_fusinvdeploy']['form']['title'][9]}',
+      text: '{$LANG['plugin_fusinvdeploy']['ftitle'][9]}',
       iconCls: 'exticon-delete',
       handler: function(btn,ev) {
          var selection = {$render}checkGrid.getSelectionModel().getSelections();
@@ -232,7 +232,7 @@ var {$render}checkGrid = new Ext.grid.GridPanel({
                {$render}checkForm.show();
                {$render}checkForm.enable();
                {$render}checkForm.loadData({$render}rec);
-               {$render}checkForm.setTitle('{$LANG['plugin_fusinvdeploy']['form']['title'][0]}');
+               {$render}checkForm.setTitle('{$LANG['plugin_fusinvdeploy']['ftitle'][0]}');
                {$render}checkForm.expand();
                {$render}checkForm.buttons[0].setDisabled(false);
             }
@@ -271,7 +271,7 @@ var {$render}checkGrid = new Ext.grid.GridPanel({
 
 //define group item
 var {$render}fieldset_item_default = [{
-      fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][5]}',
+      fieldLabel: '{$LANG['plugin_fusinvdeploy']['label'][5]}',
       name: '{$render}path',
       allowBlank: false,
    }, {
@@ -284,11 +284,11 @@ var {$render}fieldset_item_default = [{
 ];
 
 var {$render}fieldset_item_FileSHA512 = [{
-      fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][5]}',
+      fieldLabel: '{$LANG['plugin_fusinvdeploy']['label'][5]}',
       name: '{$render}path',
       allowBlank: false
    }, {
-      fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][2]}',
+      fieldLabel: '{$LANG['plugin_fusinvdeploy']['label'][2]}',
       name: '{$render}value',
       xtype: 'textarea',
       allowBlank: false
@@ -299,16 +299,16 @@ var {$render}fieldset_item_FileSHA512 = [{
 ];
 
 var {$render}fieldset_item_FreespaceGreater = [{
-      fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][12]}',
+      fieldLabel: '{$LANG['plugin_fusinvdeploy']['label'][12]}',
       name: '{$render}path',
       allowBlank: false
    }, {
-      fieldLabel:'{$LANG['plugin_fusinvdeploy']['form']['label'][2]}',
+      fieldLabel:'{$LANG['plugin_fusinvdeploy']['label'][2]}',
       name: '{$render}value',
       allowBlank: false
    }, {
       xtype: 'combo',
-      fieldLabel:'{$LANG['plugin_fusinvdeploy']['form']['label'][3]}',
+      fieldLabel:'{$LANG['plugin_fusinvdeploy']['label'][3]}',
       name: '{$render}unit',
       valueField: 'value',
       allowBlank: false,
@@ -327,16 +327,16 @@ var {$render}fieldset_item_FreespaceGreater = [{
 ];
 
 var {$render}fieldset_item_FileSize = [{
-      fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][5]}',
+      fieldLabel: '{$LANG['plugin_fusinvdeploy']['label'][5]}',
       name: '{$render}path',
       allowBlank: false
    }, {
-      fieldLabel:'{$LANG['plugin_fusinvdeploy']['form']['label'][2]}',
+      fieldLabel:'{$LANG['plugin_fusinvdeploy']['label'][2]}',
       name: '{$render}value',
       allowBlank: false
    }, {
       xtype: 'combo',
-      fieldLabel:'{$LANG['plugin_fusinvdeploy']['form']['label'][3]}',
+      fieldLabel:'{$LANG['plugin_fusinvdeploy']['label'][3]}',
       name: '{$render}unit',
       valueField: 'value',
       displayField: 'name',
@@ -355,11 +355,11 @@ var {$render}fieldset_item_FileSize = [{
 ];
 
 var {$render}fieldset_item_Winkey_1 = [{
-      fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][13]}',
+      fieldLabel: '{$LANG['plugin_fusinvdeploy']['label'][13]}',
       name: '{$render}path',
       allowBlank: false
    }, {
-      fieldLabel:'{$LANG['plugin_fusinvdeploy']['form']['label'][14]}',
+      fieldLabel:'{$LANG['plugin_fusinvdeploy']['label'][14]}',
       name: '{$render}value',
       allowBlank: false
    }, {
@@ -369,7 +369,7 @@ var {$render}fieldset_item_Winkey_1 = [{
 ];
 
 var {$render}fieldset_item_Winkey_2 = [{
-      fieldLabel: '{$LANG['plugin_fusinvdeploy']['form']['label'][13]}',
+      fieldLabel: '{$LANG['plugin_fusinvdeploy']['label'][13]}',
       name: '{$render}path',
       allowBlank: false
    }, {
@@ -435,7 +435,7 @@ var {$render}checkForm = new Ext.FormPanel({
    collapsed: true,
    labelWidth: {$label_width},
    frame: true,
-   title: '{$LANG['plugin_fusinvdeploy']['form']['title'][0]}',
+   title: '{$LANG['plugin_fusinvdeploy']['ftitle'][0]}',
    bodyStyle:'padding:5px 5px',
    style:'margin-left:5px;margin-bottom:5px',
    width: {$width_right},
@@ -446,7 +446,7 @@ var {$render}checkForm = new Ext.FormPanel({
       xtype: 'hidden'
    },
    new Ext.form.ComboBox({
-      fieldLabel:'{$LANG['plugin_fusinvdeploy']['form']['label'][0]}',
+      fieldLabel:'{$LANG['plugin_fusinvdeploy']['label'][0]}',
       name: 'type_name',
       valueField: 'name',
       allowBlank: false,
@@ -455,16 +455,16 @@ var {$render}checkForm = new Ext.FormPanel({
       store: new Ext.data.ArrayStore({
          fields: ['name', 'value'],
          data: [
-            ['{$chkConst['WINKEY_EXISTS']}',  '{$LANG['plugin_fusinvdeploy']['form']['check'][0]}'],
-            ['{$chkConst['WINKEY_MISSING']}',  '{$LANG['plugin_fusinvdeploy']['form']['check'][1]}'],
-            ['{$chkConst['WINKEY_EQUAL']}',    '{$LANG['plugin_fusinvdeploy']['form']['check'][2]}'],
-            ['{$chkConst['FILE_EXISTS']}',    '{$LANG['plugin_fusinvdeploy']['form']['check'][3]}'],
-            ['{$chkConst['FILE_MISSING']}',    '{$LANG['plugin_fusinvdeploy']['form']['check'][4]}'],
-            ['{$chkConst['FILE_SIZEGREATER']}','{$LANG['plugin_fusinvdeploy']['form']['check'][5]}'],
-            ['{$chkConst['FILE_SIZEEQUAL']}',  '{$LANG['plugin_fusinvdeploy']['form']['check'][8]}'],
-            ['{$chkConst['FILE_SIZELOWER']}',  '{$LANG['plugin_fusinvdeploy']['form']['check'][9]}'],
-            ['{$chkConst['FILE_SHA512']}',     '{$LANG['plugin_fusinvdeploy']['form']['check'][6]}'],
-            ['{$chkConst['FREE_SPACE']}',      '{$LANG['plugin_fusinvdeploy']['form']['check'][7]}']
+            ['{$chkConst['WINKEY_EXISTS']}',  '{$LANG['plugin_fusinvdeploy']['check'][0]}'],
+            ['{$chkConst['WINKEY_MISSING']}',  '{$LANG['plugin_fusinvdeploy']['check'][1]}'],
+            ['{$chkConst['WINKEY_EQUAL']}',    '{$LANG['plugin_fusinvdeploy']['check'][2]}'],
+            ['{$chkConst['FILE_EXISTS']}',    '{$LANG['plugin_fusinvdeploy']['check'][3]}'],
+            ['{$chkConst['FILE_MISSING']}',    '{$LANG['plugin_fusinvdeploy']['label'][15]}'],
+            ['{$chkConst['FILE_SIZEGREATER']}','{$LANG['plugin_fusinvdeploy']['check'][5]}'],
+            ['{$chkConst['FILE_SIZEEQUAL']}',  '{$LANG['plugin_fusinvdeploy']['check'][8]}'],
+            ['{$chkConst['FILE_SIZELOWER']}',  '{$LANG['plugin_fusinvdeploy']['check'][9]}'],
+            ['{$chkConst['FILE_SHA512']}',     '{$LANG['plugin_fusinvdeploy']['check'][6]}'],
+            ['{$chkConst['FREE_SPACE']}',      '{$LANG['plugin_fusinvdeploy']['check'][7]}']
          ]
       }),
       mode: 'local',
@@ -476,22 +476,22 @@ var {$render}checkForm = new Ext.FormPanel({
    {$render}dynFieldset
    ],
    buttons: [{
-      text: '{$LANG['plugin_fusinvdeploy']['form']['action'][2]}',
+      text: '{$LANG['plugin_fusinvdeploy']['action'][2]}',
       iconCls: 'exticon-save',
       disabled:true,
       handler: function(btn,ev) {
          if ({$render}checkForm.record == null) {
-            Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
+            Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['message'][0]}');
             return;
          }
          if (!{$render}checkForm.getForm().isValid()) {
-            Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['form']['message'][0]}');
+            Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['message'][0]}');
             return false;
          }
          {$render}checkForm.getForm().updateRecord({$render}checkForm.record);
          {$render}checkForm.getForm().submit({
             url : '../ajax/package_check.save.php?package_id={$id}&render={$render}',
-            waitMsg: '{$LANG['plugin_fusinvdeploy']['form']['message'][2]}',
+            waitMsg: '{$LANG['plugin_fusinvdeploy']['message'][2]}',
             success: function(fileForm, o){
                {$render}checkGridStore.reload();
                {$render}checkGrid.setDisabled(false);

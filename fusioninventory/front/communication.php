@@ -43,6 +43,7 @@
 ob_start();
 ini_set("memory_limit", "-1");
 ini_set("max_execution_time", "0");
+ini_set('display_errors', 1);
 
 if (!defined('GLPI_ROOT')) {
    define('GLPI_ROOT', '../../..');
@@ -64,7 +65,7 @@ set_error_handler(array('Toolbox','userErrorHandlerDebug'));
 $_SESSION['glpi_use_mode'] = 2;
 
 ob_end_clean();
-header("server-type: glpi/fusioninventory ".PLUGIN_FUSINVINVENTORY_VERSION);
+header("server-type: glpi/fusioninventory ".PLUGIN_FUSIONINVENTORY_VERSION);
 if (!class_exists("PluginFusioninventoryConfig")) {
    header("Content-Type: application/xml");
    echo "<?xml version='1.0' encoding='UTF-8'?>
@@ -75,164 +76,14 @@ if (!class_exists("PluginFusioninventoryConfig")) {
    exit();
 }
 
+$pfCommunication  = new PluginFusioninventoryCommunication();
+
 if (isset($_GET['action']) && isset($_GET['machineid'])) {
-   handleFusionCommunication()
+   $pfCommunication->handleFusionCommunication();
 } else if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
-   handleOCSCommunication()
+   $pfCommunication->handleOCSCommunication();
 }
 
 session_destroy();
-
-// new REST protocol
-function handleFusionCommunication() {
-   $response = PluginFusioninventoryCommunicationRest::communicate($_GET);
-   if ($response) {
-      echo json_encode($response);
-   } else {
-      PluginFusioninventoryCommunicationRest::sendError();
-   }
-}
-
-// old POST protocol
-function handleOCSCommunication() {
-   
-   // ***** For debug only ***** //
-   //$GLOBALS["HTTP_RAW_POST_DATA"] = gzcompress('');
-   // ********** End ********** //
-
-   $config = new PluginFusioninventoryConfig();
-   $module = new PluginFusioninventoryModule();
-   
-   ob_start();
-   $module_id = $module->getModuleId("fusioninventory");
-   $users_id  = $config->getValue($module_id, 'users_id', '');
-   $_SESSION['glpiID'] = $users_id;
-   $_SESSION['glpiactiveprofile'] = array();
-   $_SESSION['glpiactiveprofile']['interface'] = '';
-   $plugin = new Plugin();
-   $plugin->init();
-   $LOADED_PLUGINS = array();
-   if (isset($_SESSION["glpi_plugins"]) && is_array($_SESSION["glpi_plugins"])) {
-      if (count($_SESSION["glpi_plugins"])) {
-         foreach ($_SESSION["glpi_plugins"] as $name) {
-            Plugin::load($name);
-         }
-      }
-      // For plugins which require action after all plugin init
-      Plugin::doHook("post_init");
-   }
-   ob_end_clean();
-
-   $communication  = new PluginFusioninventoryCommunication();
-
-   // identify message compression algorithm
-   $xml = '';
-   $pfTaskjob = new PluginFusioninventoryTaskjob();
-   $pfTaskjob->disableDebug();
-   if ($_SERVER['CONTENT_TYPE'] == "application/x-compress-zlib") {
-         $xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
-         $compressmode = "zlib";
-   } else if ($_SERVER['CONTENT_TYPE'] == "application/x-compress-gzip") {
-      $xml = PluginFusioninventoryToolbox::gzdecode(
-         $GLOBALS["HTTP_RAW_POST_DATA"]
-      );
-         $compressmode = "gzip";
-   } else if ($_SERVER['CONTENT_TYPE'] == "application/xml") {
-         $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
-         $compressmode = 'none';
-   } else {
-      # try each algorithm successively
-      if ($xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"])) {
-         $compressmode = "zlib";
-      } else if ($xml = PluginFusioninventoryToolbox::gzdecode($GLOBALS["HTTP_RAW_POST_DATA"])) {
-         $compressmode = "gzip";
-      } else if ($xml = gzinflate(substr($GLOBALS["HTTP_RAW_POST_DATA"], 2))) {
-         // accept deflate for OCS agent 2.0 compatibility,
-         // but use zlib for answer
-         if (strstr($xml, "<QUERY>PROLOG</QUERY>")
-                 AND !strstr($xml, "<TOKEN>")) {
-            $compressmode = "zlib";
-         } else {
-            $compressmode = "deflate";
-         } 
-      } else {
-         $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
-         $compressmode = 'none';
-      }
-   }
-   $taskjob->reenableusemode();
-
-   // check if we are in ssl only mode
-   $ssl = $config->getValue($module_id, 'ssl_only', '');
-   if (
-      $ssl == "1"
-         AND
-      (!isset($_SERVER["HTTPS"]) OR $_SERVER["HTTPS"] != "on")
-   ) {
-      $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
-<REPLY>
-<ERROR>SSL REQUIRED BY SERVER</ERROR>
-</REPLY>");
-      $communication->sendMessage($compressmode);
-      return;
-   }
-
-   PluginFusioninventoryToolbox::logIfExtradebug(
-      "pluginFusioninventory-dial".uniqid(),
-      $xml
-   );
-
-   // Check XML integrity
-   $pxml = '';
-   if ($pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA)) {
-
-   } else if ($pxml = @simplexml_load_string(utf8_encode($xml),'SimpleXMLElement', LIBXML_NOCDATA)) {
-      $xml = utf8_encode($xml);
-   } else {
-      $xml = preg_replace ('/<FOLDER>.*?<\/SOURCE>/', '', $xml);
-      $pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA);
-
-      if (!$pxml) {
-         $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
-<REPLY>
-<ERROR>XML not well formed!</ERROR>
-</REPLY>");
-         $communication->sendMessage($compressmode);
-         return;
-      }
-   }
-
-   // Clean for XSS and other in XML
-   $pxml = PluginFusioninventoryToolbox::cleanXML($pxml);
-                     
-   $agent = new PluginFusioninventoryAgent();
-   $agents_id = $agent->importToken($pxml);
-   $_SESSION['plugin_fusioninventory_agents_id'] = $agents_id;
-   
-   if (!$communication->import($pxml)) {
-
-      if (isset($pxml->DEVICEID)) {
-
-         $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
-<REPLY>
-</REPLY>");
-
-         $a_agent = $agent->InfosByKey(Toolbox::addslashes_deep($pxml->DEVICEID));
-         
-         // Get taskjob in waiting
-         $communication->getTaskAgent($a_agent['id']);
-         // ******** Send XML
-
-         $communication->addInventory($a_agent['id']);
-         $communication->addProlog();
-         $communication->sendMessage($compressmode);
-      }
-   } else {
-      $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
-<REPLY>
-</REPLY>");
-      $communication->sendMessage($compressmode);
-   }
-}
 
 ?>

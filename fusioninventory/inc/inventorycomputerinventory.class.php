@@ -45,6 +45,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusioninventoryInventoryComputerInventory {
+   private $p_xml;
    
    /**
    * Import data
@@ -132,18 +133,37 @@ class PluginFusioninventoryInventoryComputerInventory {
                unset($_SESSION["plugin_fusioninventory_manufacturerHP"]);
             }
          }
-         
-         
+                  
       // End code for HP computers
       
+      // Get tag is defined and put it in fusioninventory_agent table
+         if (isset($p_xml->CONTENT->ACCOUNTINFO)) {
+            foreach($p_xml->CONTENT->ACCOUNTINFO as $tag) {
+               if (isset($tag->KEYNAME)
+                       AND $tag->KEYNAME == 'TAG') {
+                  if (isset($tag->KEYVALUE)
+                          AND $tag->KEYVALUE != '') {
+                     $pfAgent = new PluginFusioninventoryAgent();
+                     $input = array();
+                     $input['id'] = $_SESSION['plugin_fusioninventory_agents_id'];
+                     $input['tag'] = $tag->KEYVALUE;
+                     $pfAgent->update($input);
+                  }                  
+               }
+            }
+         }
+         
+         
+         
       $pfBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
       $p_xml = $pfBlacklist->cleanBlacklist($p_xml);
 
-      $_SESSION['SOURCEXML'] = $p_xml;
+      $this->p_xml = $p_xml;
+//      $_SESSION['SOURCEXML'] = $p_xml;
 
       $xml = $p_xml;
       $input = array();
-
+      
       // Global criterias
 
          if ((isset($xml->CONTENT->BIOS->SSN)) AND (!empty($xml->CONTENT->BIOS->SSN))) {
@@ -208,14 +228,35 @@ class PluginFusioninventoryInventoryComputerInventory {
             $input['name'] = '';
          }
          $input['itemtype'] = "Computer";
+         
+         // If transfer is disable, get entity and search only on this entity (see http://forge.fusioninventory.org/issues/1503)
+         $pfConfig = new PluginFusioninventoryConfig();
+         $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
+
+         if ($pfConfig->getValue($plugins_id, 'transfers_id_auto') == '0') {
+            $inputent = $input;
+            if ((isset($xml->CONTENT->HARDWARE->WORKGROUP)) AND (!empty($xml->CONTENT->HARDWARE->WORKGROUP))) {
+               $inputent['domain'] = Toolbox::addslashes_deep((string)$xml->CONTENT->HARDWARE->WORKGROUP);
+            }
+            if (isset($inputent['serial'])) {
+               $inputent['serialnumber'] = $inputent['serial'];
+            }
+            $ruleEntity = new PluginFusinvinventoryRuleEntityCollection();
+            $dataEntity = array ();
+            $dataEntity = $ruleEntity->processAllRules($inputent, array());
+            if (isset($dataEntity['entities_id'])) {
+               $_SESSION['plugin_fusioninventory_entityrestrict'] = $dataEntity['entities_id'];
+               $input['entities_id'] = $dataEntity['entities_id'];
+            }
+         }
+         // End transfer disabled
+         
       $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusioninventoryInventoryComputerInventory";
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
       $data = array();
-      $data = $rule->processAllRules($input, array());
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-rules", 
-         print_r($data, true)
-      );
+      $data = $rule->processAllRules($input, array(), array('class'=>$this));
+      PluginFusioninventoryToolbox::logIfExtradebug("pluginFusioninventory-rules", 
+                                                   print_r($data, true));
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
          $this->rulepassed(0, "Computer");
       } else if (!isset($data['found_equipment'])) {
@@ -231,11 +272,13 @@ class PluginFusioninventoryInventoryComputerInventory {
          if (isset($input['serial'])) {
             $input['serialnumber'] = $input['serial'];
          }
-         $ruleEntity = new PluginFusioninventoryInventoryRuleEntityCollection();
-         $dataEntity = array ();
-         $dataEntity = $ruleEntity->processAllRules($input, array());
-         if (isset($dataEntity['entities_id'])) {
-            $inputdb['entities_id'] = $dataEntity['entities_id'];
+         if ($pfConfig->getValue($plugins_id, 'transfers_id_auto') != '0') {
+            $ruleEntity = new PluginFusioninventoryInventoryRuleEntityCollection();
+            $dataEntity = array ();
+            $dataEntity = $ruleEntity->processAllRules($input, array());
+            if (isset($dataEntity['entities_id'])) {
+               $inputdb['entities_id'] = $dataEntity['entities_id'];
+            }
          }
          
          if (isset($input['ip'])) {
@@ -267,7 +310,8 @@ class PluginFusioninventoryInventoryComputerInventory {
          "Rule passed : ".$items_id.", ".$itemtype."\n"
       );
       //$xml = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
-      $xml = $_SESSION['SOURCEXML'];
+      //$xml = $_SESSION['SOURCEXML'];
+      $xml = $this->p_xml;
       
       if ($itemtype == 'Computer') {
          $pfLib = new PluginFusioninventoryInventoryComputerLib();
@@ -420,11 +464,12 @@ class PluginFusioninventoryInventoryComputerInventory {
    
 
    /**
-    * Put/modify computer state 
+    * Get default value for state of devices (monitor, printer...)
     * 
     * @param type $input
-    * @param boolean $check_management
+    * @param type $check_management
     * @param type $management_value 
+    * 
     */
    static function addDefaultStateIfNeeded(&$input, $check_management = false, $management_value = 0) {
       $config = new PluginFusioninventoryConfig();
@@ -432,12 +477,11 @@ class PluginFusioninventoryInventoryComputerInventory {
               "states_id_default", 'inventory');
       if ($state) {
          if (!$check_management || ($check_management && !$management_value)) {
-            $input['states_id'] = $state;
-         
-         }
-      
+            $input['states_id'] = $state;         
+         }      
       }
    }
+   
    
 
    /**
@@ -538,7 +582,6 @@ class PluginFusioninventoryInventoryComputerInventory {
          }
          $xml_controller->addChild("NAME", $DeviceControl->fields['designation']);
       }
-
 
       // ** CPUS
       $CompDeviceProcessor = new Computer_Device('DeviceProcessor');

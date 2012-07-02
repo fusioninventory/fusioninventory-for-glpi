@@ -112,6 +112,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
 
 
 function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
+   global $LANG;
 
    $searchopt = &Search::getOptions($type);
    $table = $searchopt[$id]["table"];
@@ -125,8 +126,8 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
          break;
 
       case "glpi_plugin_fusioninventory_taskjobs.status":
-         $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
-         return $pfTaskjobstatus->stateTaskjob($data['id'], '200', 'htmlvar', 'simple');
+         $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+         return $pfTaskjobstate->stateTaskjob($data['id'], '200', 'htmlvar', 'simple');
          break;
 
       case "glpi_plugin_fusioninventory_agents.version":
@@ -146,6 +147,35 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
         } else {
            return '';
         }
+        break;
+     
+     case 'glpi_plugin_fusioninventory_taskjoblogs.state':
+        $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
+        return $pfTaskjoblog->getDivState($data['ITEM_'.$num]);
+        break;
+      
+      case 'glpi_plugin_fusioninventory_taskjoblogs.comment':
+         $comment = $data['ITEM_'.$num];
+         $matches = array();
+         // Search for replace [[itemtype::items_id]] by link
+         preg_match_all("/\[\[(.*)\:\:(.*)\]\]/", $comment, $matches);
+         foreach($matches[0] as $num=>$commentvalue) {
+            $classname = $matches[1][$num];
+            if ($classname != '') {
+               $Class = new $classname;
+               $Class->getFromDB($matches[2][$num]);
+               $comment = str_replace($commentvalue, $Class->getLink(), $comment);
+            }
+         }
+         // Search for code to display lang traduction ==pluginname::9876==
+         preg_match_all("/==(\w*)\:\:([0-9]*)==/", $comment, $matches);
+         foreach($matches[0] as $num=>$commentvalue) {
+            $comment = str_replace($commentvalue, $LANG['plugin_'.$matches[1][$num]]["codetasklog"][$matches[2][$num]], $comment);
+         }
+         $comment = str_replace(",[", "<br/>[", $comment);
+         return $comment;
+         break;
+        
    }
    
    if ($table == "glpi_plugin_fusioninventory_agentmodules") {
@@ -168,6 +198,34 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 
    return "";
 }
+
+
+
+function plugin_fusioninventory_searchOptionsValues($item) {
+   global $CFG_GLPI,$DB;
+   
+   if ($item['searchoption']['table'] == 'glpi_plugin_fusioninventory_taskjoblogs'
+           AND $item['searchoption']['field'] == 'state') {
+      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $elements = $pfTaskjoblog->dropdownStateValues();
+      Dropdown::showFromArray($item['name'], $elements, array('value'=>$item['value']));
+      return true;
+   } else if ($item['searchoption']['table'] == 'glpi_plugin_fusioninventory_taskjobstates'
+           AND $item['searchoption']['field'] == 'uniqid') {
+      $elements = array();
+      $query = "SELECT * FROM `".$item['searchoption']['table']."`
+      GROUP BY `uniqid`
+      ORDER BY `uniqid`";
+      $result=$DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         $elements[$data['uniqid']] = $data['uniqid'];      
+      }
+      Dropdown::showFromArray($item['name'], $elements, array('value'=>$item['value']));
+      return true;
+   }
+}
+
+
 
 // Define Dropdown tables to be manage in GLPI :
 function plugin_fusioninventory_getDropdown() {
@@ -356,7 +414,7 @@ function plugin_headings_fusioninventory_tasks($item, $itemtype='', $items_id=0)
    if ($itemtype == 'Computer') {
       // Possibility to remote agent
       $allowed = PluginFusioninventoryTaskjob::getAllowurlfopen(1);
-      if (isset($allowed)) {
+      if ($allowed) {
          $pfAgent = new PluginFusioninventoryAgent();
          $pfAgent->forceRemoteAgent();
       }
@@ -465,7 +523,12 @@ function plugin_fusioninventory_MassiveActions($type) {
          );
          break;
          
-         
+      case 'PluginFusioninventoryTaskjob':
+         return array(
+            'plugin_fusioninventory_task_forceend' =>
+               $LANG['plugin_fusioninventory']['task'][32]
+         );
+         break;
 
    }
    return array ();
@@ -580,6 +643,11 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
          }
          break;
 
+      case 'PluginFusioninventoryTaskjob':
+         echo "&nbsp;<input type='submit' name='massiveaction' class='submit' ".
+               "value='".$LANG['buttons'][2]."'>";
+         break;
+
    }
    return "";
 }
@@ -656,7 +724,14 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
             
          }
          break;
+      case 'plugin_fusioninventory_task_forceend':
          
+         $pluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+         foreach( $data["item"] as $key => $val) {
+            $pluginFusioninventoryTaskjob->getFromDB($key);
+            $pluginFusioninventoryTaskjob->forceEnd();
+         }
+         break;
    }
 
    if (strstr($data['action'], 'plugin_fusioninventory_agentmodule')) {
@@ -806,15 +881,57 @@ function plugin_fusioninventory_addLeftJoin($itemtype,$ref_table,$new_table,$lin
          }
          break;
          
+
       case 'Computer' :
          return " LEFT JOIN `$new_table` ON (`$ref_table`.`id` = `$new_table`.`computers_id`) ";
          break;
       
+      case 'PluginFusioninventoryTaskjoblog':
+//         echo $new_table.".".$linkfield."<br/>";
+         $taskjob = 0;
+         $already_link_tables_tmp = $already_link_tables;
+         array_pop($already_link_tables_tmp);
+         foreach ($already_link_tables_tmp AS $tmp_table) {
+            if ($tmp_table == "glpi_plugin_fusioninventory_tasks"
+                    OR $tmp_table == "glpi_plugin_fusioninventory_taskjobs"
+                    OR $tmp_table == "glpi_plugin_fusioninventory_taskjobstates") {
+               $taskjob = 1;
+            }
+         }
+
+         switch ($new_table.".".$linkfield) {
+   
+            case 'glpi_plugin_fusioninventory_tasks.plugin_fusioninventory_tasks_id':
+               $ret = '';
+               if ($taskjob == '0') {
+                  $ret = ' LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` ON 
+                     (`plugin_fusioninventory_taskjobstates_id` = `glpi_plugin_fusioninventory_taskjobstates`.`id` )  
+                  LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` ON 
+                     (`plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id` ) ';
+               }
+               $ret .= ' LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON 
+                  (`plugin_fusioninventory_tasks_id` = `glpi_plugin_fusioninventory_tasks`.`id` ) ';
+               return $ret;
+               break;
+            
+            case 'glpi_plugin_fusioninventory_taskjobs.plugin_fusioninventory_taskjobs_id':
+            case 'glpi_plugin_fusioninventory_taskjobstates.plugin_fusioninventory_taskjobstates_id':
+               if ($taskjob == '0') {
+                  return ' LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` ON 
+                     (`plugin_fusioninventory_taskjobstates_id` = `glpi_plugin_fusioninventory_taskjobstates`.`id` )  
+                  LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` ON 
+                     (`plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id` ) ';
+               }
+               return ' ';
+               break;
+            
+         }
+         break;
+      
    }
-
-
    return "";
 }
+
 
 
 function plugin_fusioninventory_addOrderBy($type,$id,$order,$key=0) {
@@ -824,7 +941,7 @@ function plugin_fusioninventory_addOrderBy($type,$id,$order,$key=0) {
 
 function plugin_fusioninventory_addDefaultWhere($type) {
    if ($type == 'PluginFusioninventoryTaskjob') {
-      return " ( select count(*) FROM `glpi_plugin_fusioninventory_taskjobstatus`
+      return " ( select count(*) FROM `glpi_plugin_fusioninventory_taskjobstates`
          WHERE plugin_fusioninventory_taskjobs_id= `glpi_plugin_fusioninventory_taskjobs`.`id`
          AND `state`!='3' )";
    }
@@ -867,6 +984,12 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$id,$val) {
                   }
                }
             }
+         }
+         break;
+         
+      case 'PluginFusioninventoryTaskjoblog':
+         if ($field == 'uniqid') {
+            return $link." (`".$table."`.`uniqid`='".$val."') "; 
          }
          break;
 

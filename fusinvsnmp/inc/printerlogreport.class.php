@@ -201,10 +201,6 @@ class PluginFusinvsnmpPrinterLogReport extends CommonDBTM {
 
       return $tab;
    }
-
-
-
-
 }
 
 ?>

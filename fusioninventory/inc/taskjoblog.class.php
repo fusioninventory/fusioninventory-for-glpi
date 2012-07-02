@@ -44,16 +44,6 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
    /*
     * Define different state
-    *
-    * 
-    * 1 : started
-    * 2 : ok
-    * 3 : error / replaned
-    * 4 : error
-    * 5 : Unknown
-    * 6 : Running
-    * 7 : prepared
-    * 
     */
 
    const TASK_STARTED            = 1;
@@ -64,6 +54,94 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
    const TASK_RUNNING            = 6;
    const TASK_PREPARED           = 7;
 
+
+   
+   /**
+    * return array with state mapping name
+    * 
+    * @return array with all elements
+    */
+   function dropdownStateValues() {
+      global $LANG;
+      
+      $elements = array();
+      $elements[7] = $LANG['plugin_fusioninventory']['taskjoblog'][7];
+      $elements[1] = $LANG['plugin_fusioninventory']['taskjoblog'][1];
+      $elements[6] = $LANG['plugin_fusioninventory']['taskjoblog'][6];
+      $elements[2] = $LANG['plugin_fusioninventory']['taskjoblog'][2];
+      $elements[3] = $LANG['plugin_fusioninventory']['taskjoblog'][3];
+      $elements[4] = $LANG['plugin_fusioninventory']['taskjoblog'][4];
+      $elements[5] = $LANG['plugin_fusioninventory']['taskjoblog'][5];
+      
+      return $elements;
+   }
+   
+   
+
+   /**
+    * Return name of state
+    * 
+    * @param type $states_id
+    * 
+    * @return string name of state number
+    */
+   function getState($states_id) {
+      $elements = $this->dropdownStateValues();
+      return $elements[$states_id];
+   }
+   
+   
+   
+   function getSearchOptions() {
+      global $LANG;
+
+      $sopt = array();
+
+      $sopt['common'] = $LANG['Menu'][30];
+
+      $sopt[1]['table']         = $this->getTable();
+      $sopt[1]['field']         = 'id';
+      $sopt[1]['name']          = $LANG['common'][2];
+      $sopt[1]['massiveaction'] = false; // implicit field is id
+      
+      $sopt[2]['table']          = 'glpi_plugin_fusioninventory_tasks';
+      $sopt[2]['field']          = 'name';
+      $sopt[2]['name']           = $LANG['plugin_fusioninventory']['task'][18];
+      $sopt[2]['datatype']       = 'itemlink';
+      $sopt[2]['itemlink_type']  = "PluginFusioninventoryTask";
+
+      $sopt[3]['table']          = 'glpi_plugin_fusioninventory_taskjobs';
+      $sopt[3]['field']          = 'name';
+      $sopt[3]['name']           = $LANG['plugin_fusioninventory']['task'][2];
+      $sopt[3]['datatype']       = 'itemlink';
+      $sopt[3]['itemlink_type']  = "PluginFusioninventoryTaskjob";
+     
+      $sopt[4]['table']          = $this->getTable();
+      $sopt[4]['field']          = 'state';
+      $sopt[4]['name']           = $LANG['joblist'][0];
+      $sopt[4]['searchtype']     = 'equals';
+      
+      $sopt[5]['table']         = $this->getTable();
+      $sopt[5]['field']         = 'date';
+      $sopt[5]['name']          = $LANG['common'][27];
+      $sopt[5]['datatype']      = 'datetime';
+      $sopt[5]['massiveaction'] = false;
+      
+      $sopt[6]['table']          = 'glpi_plugin_fusioninventory_taskjobstates';
+      $sopt[6]['field']          = 'uniqid';
+      $sopt[6]['name']           = $LANG['plugin_fusioninventory']['task'][47];
+      $sopt[6]['datatype']       = 'string';
+      
+      $sopt[7]['table']          = $this->getTable();
+      $sopt[7]['field']          = 'comment';
+      $sopt[7]['name']           = $LANG['common'][25];
+      $sopt[7]['datatype']       = 'string';
+      
+      return $sopt;
+   }
+
+ 
+   
    /**
    * Display history of taskjob
    *
@@ -78,7 +156,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
    **/
    function showHistory($taskjobs_id, $width="950", $options=array()) {
       global $DB,$CFG_GLPI,$LANG;
-
+      
       $this->javascriptHistory();
       $a_uniqid = array();
 
@@ -97,7 +175,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       }
 
       echo "<center>";
-      $query = 'SELECT * FROM `glpi_plugin_fusioninventory_taskjobstatus`
+      $query = 'SELECT * FROM `glpi_plugin_fusioninventory_taskjobstates`
          WHERE `plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"
             AND `state`!="3"
             '.$where.'
@@ -144,24 +222,24 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          echo "</table><br/>";
       }
 
-
-      // ***** Display for statusjob OK
+      // ***** Display for statejob OK
       if (count($a_uniqid) > 0) {
          $where .= " AND `uniqid` NOT IN ('".implode("','", $a_uniqid)."')";
-         $query = 'SELECT * FROM `glpi_plugin_fusioninventory_taskjobstatus`
+         $query = 'SELECT * FROM `glpi_plugin_fusioninventory_taskjobstates`
             WHERE `plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"
                AND `state`!="3"
                '.$where.'
             GROUP BY uniqid,plugin_fusioninventory_agents_id
             ORDER BY `id` DESC';
       }
-      $querycount = 'SELECT count(*) AS cpt FROM `glpi_plugin_fusioninventory_taskjobstatus`
-            WHERE `plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"
-               AND `state`="3"
-               '.$where.'
-            GROUP BY uniqid,plugin_fusioninventory_agents_id';
-         $resultcount = $DB->query($querycount);
-         $number = $DB->numrows($resultcount);
+      $querycount = 'SELECT count(*) AS cpt FROM `glpi_plugin_fusioninventory_taskjobstates`
+         WHERE `plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"
+            AND `state`="3"
+            '.$where.'
+         GROUP BY uniqid,plugin_fusioninventory_agents_id';
+      $resultcount = $DB->query($querycount);
+      $a_datacount = $DB->fetch_assoc($resultcount);
+      $number = $a_datacount['cpt'];
       if (isset($options['uniqid']) AND $number == '0') {
 
       } else {
@@ -238,8 +316,6 @@ function appear_array(id){
      
       echo "<script type='text/javascript' src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/prototype.js'></script>";
       echo "<script type='text/javascript' src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/effects.js'></script>";
-
-      
    }
 
 
@@ -247,54 +323,56 @@ function appear_array(id){
    /**
    * Display each history line
    *
-   * @param $taskjobstatus_id integer id of the taskjobstatus
+   * @param $taskjobstates_id integer id of the taskjobstate
    *
    * @return nothing
    *
    **/
-   function showHistoryLines($taskjobstatus_id, $displayprocess = 1, $displaytaskjob=0, $nb_td='5') {
+   function showHistoryLines($taskjobstates_id, $displayprocess = 1, $displaytaskjob=0, $nb_td='5') {
       global $LANG,$CFG_GLPI;
       
-      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
-      $pfTaskjobstatus->getFromDB($taskjobstatus_id);
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+      $pfAgent        = new PluginFusioninventoryAgent();
+      
+      $pfTaskjobstate->getFromDB($taskjobstates_id);
       
       $displayforceend = 0;
-      $a_history = $this->find('`plugin_fusioninventory_taskjobstatus_id` = "'.$pfTaskjobstatus->fields['id'].'"', 
+      $a_history = $this->find('`plugin_fusioninventory_taskjobstates_id` = "'.$pfTaskjobstate->fields['id'].'"', 
                                'id DESC',
                                '1');
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td width='40' id='plusmoins".$pfTaskjobstatus->fields["id"]."'><img src='".$CFG_GLPI['root_doc'].
-               "/plugins/fusioninventory/pics/expand.png' onClick='document.getElementById(\"viewfollowup".$pfTaskjobstatus->fields["id"].
-               "\").show();close_array(".$pfTaskjobstatus->fields["id"].");' /></td>";
+      echo "<td width='40' id='plusmoins".$pfTaskjobstate->fields["id"]."'><img src='".$CFG_GLPI['root_doc'].
+               "/plugins/fusioninventory/pics/expand.png' onClick='document.getElementById(\"viewfollowup".$pfTaskjobstate->fields["id"].
+               "\").show();close_array(".$pfTaskjobstate->fields["id"].");' /></td>";
       
       echo "<td>";
-      echo $pfTaskjobstatus->fields['uniqid'];
+      echo $pfTaskjobstate->fields['uniqid'];
       echo "</td>";
       if ($displayprocess == '1') {
          echo "<td>";
-         echo $pfTaskjobstatus->fields['id'];
+         echo $pfTaskjobstate->fields['id'];
          echo "</td>";
       }
       if ($displaytaskjob == '1') {
          $pfTaskjob = new PluginFusioninventoryTaskjob();
-         $pfTask = new PluginFusioninventoryTask();
-         $pfTaskjob->getFromDB($pfTaskjobstatus->fields['plugin_fusioninventory_taskjobs_id']);
+         $pfTask    = new PluginFusioninventoryTask();
+         
+         $pfTaskjob->getFromDB($pfTaskjobstate->fields['plugin_fusioninventory_taskjobs_id']);
          $pfTask->getFromDB($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
          echo "<td>";
          echo $pfTaskjob->getLink(1)." (".$pfTask->getLink().")";
          echo "</td>";
       }
       echo "<td>";
-      $pfAgent->getFromDB($pfTaskjobstatus->fields['plugin_fusioninventory_agents_id']);
+      $pfAgent->getFromDB($pfTaskjobstate->fields['plugin_fusioninventory_agents_id']);
       echo $pfAgent->getLink(1);
       
-      Ajax::UpdateItemOnEvent('plusmoins'.$pfTaskjobstatus->fields["id"],
-                      'viewfollowup'.$pfTaskjobstatus->fields["id"],
+      Ajax::UpdateItemOnEvent('plusmoins'.$pfTaskjobstate->fields["id"],
+                      'viewfollowup'.$pfTaskjobstate->fields["id"],
                       $CFG_GLPI['root_doc']."/plugins/fusioninventory/ajax/showtaskjoblogdetail.php",
-                      array('agents_id' => $pfTaskjobstatus->fields['plugin_fusioninventory_agents_id'],
-                          'uniqid' => $pfTaskjobstatus->fields['uniqid']),
+                      array('agents_id' => $pfTaskjobstate->fields['plugin_fusioninventory_agents_id'],
+                          'uniqid' => $pfTaskjobstate->fields['uniqid']),
                       array("click"));
       
       echo "</td>";
@@ -306,8 +384,8 @@ function appear_array(id){
       if ($displayforceend == "0") {
          echo "<td align='center'>";
          echo "<form name='form' method='post' action='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjob.form.php'>";
-         echo "<input type='hidden' name='taskjobstatus_id' value='".$pfTaskjobstatus->fields['id']."' />";
-         echo "<input type='hidden' name='taskjobs_id' value='".$pfTaskjobstatus->fields['plugin_fusioninventory_taskjobs_id']."' />";
+         echo "<input type='hidden' name='taskjobstates_id' value='".$pfTaskjobstate->fields['id']."' />";
+         echo "<input type='hidden' name='taskjobs_id' value='".$pfTaskjobstate->fields['plugin_fusioninventory_taskjobs_id']."' />";
          echo '<input name="forceend" value="'.$LANG['plugin_fusioninventory']['task'][32].'"
              class="submit" type="submit">';
          echo "</form>";
@@ -315,9 +393,10 @@ function appear_array(id){
       }      
       echo "</tr>";
 
-      echo "<tr><td colspan='".$nb_td."' style='display: none;' id='viewfollowup".$pfTaskjobstatus->fields["id"]."' class='tab_bg_4'>";
-
-      echo "</td></tr>";
+      echo "<tr>";
+      echo "<td colspan='".$nb_td."' style='display: none;' id='viewfollowup".$pfTaskjobstate->fields["id"]."' class='tab_bg_4'>";
+      echo "</td>";
+      echo "</tr>";
    }
 
 
@@ -335,18 +414,18 @@ function appear_array(id){
    function showHistoryInDetail($agents_id, $uniqid, $width="950") {
       global $CFG_GLPI,$LANG;
 
-      $pfTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+      $pfAgent        = new PluginFusioninventoryAgent();
 
       $text = "<center><table class='tab_cadrehov' style='width: ".$width."px'>";
 
-      $a_jobstatus = $pfTaskjobstatus->find('`plugin_fusioninventory_agents_id`="'.$agents_id.'" AND `uniqid`="'.$uniqid.'"', '`id` DESC');
+      $a_jobstates = $pfTaskjobstate->find('`plugin_fusioninventory_agents_id`="'.$agents_id.'" AND `uniqid`="'.$uniqid.'"', '`id` DESC');
       $a_devices_merged = array();
 
-      foreach ($a_jobstatus as $data) {
+      foreach ($a_jobstates as $data) {
 
          $displayforceend = 0;
-         $a_history = $this->find('`plugin_fusioninventory_taskjobstatus_id` = "'.$data['id'].'"', 'id');
+         $a_history = $this->find('`plugin_fusioninventory_taskjobstates_id` = "'.$data['id'].'"', 'id');
 
          if (strstr(exportArrayToDB($a_history), "Merged with ")) {
             $classname = $data['itemtype'];
@@ -390,6 +469,7 @@ function appear_array(id){
             $text .= "<tr class='tab_bg_1'>";
             $text .= "<th colspan='2'>";
             $text .= $LANG['plugin_fusioninventory']['task'][27];
+            $text .= "<sup>(".(count($a_devices_merged) + 1).")</sup>";
             $text .= "</th>";
             $a_return = $this->displayHistoryDetail(array_shift($a_history));
             $count = $a_return[0];
@@ -413,7 +493,6 @@ function appear_array(id){
             $displayforceend += $count;
             $text .= "</tr>";
 
-
             while (count($a_history) != 0) {
                if (count($a_devices_merged) > 0) {
                   $text .= "<tr class='tab_bg_1'>";
@@ -435,7 +514,7 @@ function appear_array(id){
                   $displayforceend += $count;
                   $text .= "</tr>";
 
-                  foreach ($a_history as $datas) {
+                  while (count($a_history) != 0) {
                      $text .= "<tr class='tab_bg_1'>";
                      $a_return = $this->displayHistoryDetail(array_shift($a_history));
                      $count = $a_return[0];
@@ -474,8 +553,11 @@ function appear_array(id){
    * Display high detail of each history line
    *
    * @param $datas array datas of history
+   * @param $comment boolean 0/1 display comment or not 
    *
-   * @return value all text to display
+   * @return array
+   *               - boolean 0/1 if this log = finish
+   *               - text to display 
    *
    **/
    function displayHistoryDetail($datas, $comment=1) {
@@ -488,41 +570,41 @@ function appear_array(id){
 
       switch ($datas['state']) {
 
-         case 7 :
+         case 7:
             $text .= "<td align='center'>";
             $text .= $LANG['plugin_fusioninventory']['taskjoblog'][7];
             break;
 
-         case 1 :
+         case 1:
             $text .= "<td align='center'>";
             $text .= $LANG['plugin_fusioninventory']['taskjoblog'][1];
             break;
 
-         case 2 :
+         case 2:
             $text .= "<td style='background-color: rgb(0, 255, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>";
             $text .= "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][2]."</strong>";
             $finish++;
             break;
 
-         case 3 :
+         case 3:
             $text .= "<td style='background-color: rgb(255, 120, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>";
             $text .= "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][3]."</strong>";
             $finish++;
             break;
 
-         case 4 :
+         case 4:
             $text .= "<td style='background-color: rgb(255, 0, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>";
             $text .= "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][4]."</strong>";
             $finish++;
             break;
 
-         case 5 :
+         case 5:
             $text .= "<td style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>";
             $text .= "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][5]."</strong>";
             $finish++;
             break;
 
-         case 6 :
+         case 6:
             $text .= "<td style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>";
             $text .= "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][6]."</strong>";
             break;
@@ -541,9 +623,9 @@ function appear_array(id){
          foreach($matches[0] as $num=>$commentvalue) {
             $classname = $matches[1][$num];
             if ($classname != '') {
-               $Class = new $classname;
-               $Class->getFromDB($matches[2][$num]);
-               $datas['comment'] = str_replace($commentvalue, $Class->getLink(), $datas['comment']);
+               $item = new $classname;
+               $item->getFromDB($matches[2][$num]);
+               $datas['comment'] = str_replace($commentvalue, $item->getLink(), $datas['comment']);
             }
          }
          // Search for code to display lang traduction ==pluginname::9876==
@@ -566,22 +648,22 @@ function appear_array(id){
    * @param $taskjobs_id integer id of the taskjob
    * @param $items_id integer id of the item associated with taskjob status
    * @param $itemtype value type name of the item associated with taskjob status
-   * @param $state value state of this taskjobstatus
+   * @param $state value state of this taskjobstate
    * @param $comment value the comment of this insertion
    *
-   * @return value all text to display
+   * @return nothing
    *
    **/
    function addTaskjoblog($taskjobs_id, $items_id, $itemtype, $state, $comment) {
 
       $this->getEmpty();
       unset($this->fields['id']);
-      $this->fields['plugin_fusioninventory_taskjobstatus_id'] = $taskjobs_id;
-      $this->fields['date'] = date("Y-m-d H:i:s");
-      $this->fields['items_id'] = $items_id;
-      $this->fields['itemtype'] = $itemtype;
-      $this->fields['state'] = $state;
-      $this->fields['comment'] = $comment;
+      $this->fields['plugin_fusioninventory_taskjobstates_id'] = $taskjobs_id;
+      $this->fields['date']      = date("Y-m-d H:i:s");
+      $this->fields['items_id']  = $items_id;
+      $this->fields['itemtype']  = $itemtype;
+      $this->fields['state']     = $state;
+      $this->fields['comment']   = $comment;
 
       $this->addToDB();
    }
@@ -606,14 +688,14 @@ function appear_array(id){
       $finishState[5] = 0;
 
       $query = "SELECT `glpi_plugin_fusioninventory_taskjoblogs`.`state`
-         FROM glpi_plugin_fusioninventory_taskjobstatus
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` on plugin_fusioninventory_taskjobstatus_id=`glpi_plugin_fusioninventory_taskjobstatus`.`id`
+         FROM glpi_plugin_fusioninventory_taskjobstates
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` on plugin_fusioninventory_taskjobstates_id=`glpi_plugin_fusioninventory_taskjobstates`.`id`
          WHERE `plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
          AND (`glpi_plugin_fusioninventory_taskjoblogs`.`state` = '2' 
             OR `glpi_plugin_fusioninventory_taskjoblogs`.`state` = '3'
             OR `glpi_plugin_fusioninventory_taskjoblogs`.`state` = '4' 
             OR `glpi_plugin_fusioninventory_taskjoblogs`.`state` = '5')
-         GROUP BY glpi_plugin_fusioninventory_taskjobstatus.uniqid,plugin_fusioninventory_agents_id";
+         GROUP BY glpi_plugin_fusioninventory_taskjobstates.uniqid,plugin_fusioninventory_agents_id";
       $result=$DB->query($query);
       if ($result) {
          while ($datajob=$DB->fetch_array($result)) {
@@ -637,19 +719,239 @@ function appear_array(id){
    
    
    /**
-    * Get taskjobstatus by uniqid
+    * Get taskjobstate by uniqid
     * 
     * @param type $uuid value uniqid
     * 
-    * @return array
+    * @return array with data of table glpi_plugin_fusioninventory_taskjobstates
     */
    static function getByUniqID($uuid) {
-      $results = getAllDatasFromTable('glpi_plugin_fusioninventory_taskjobstatus',
-                                      "`uniqid`='$uuid'");
-      foreach ($results as $result) {
-         return $result;
+      $a_datas = getAllDatasFromTable('glpi_plugin_fusioninventory_taskjobstates',
+                                      "`uniqid`='$uuid'",
+                                      "1");
+      foreach ($a_datas as $a_data) {
+         return $a_data;
       }
       return array();
+   }
+   
+   
+
+   /**
+    * Display short logs
+    *
+    * @param $taskjobs_id integer id of taskjob
+    * @param $veryshort boolean activation to have very very short display
+    * 
+    * @return nothing
+    */
+   function displayShortLogs($taskjobs_id, $veryshort=0) {
+      global $DB,$CFG_GLPI,$LANG;
+      
+      echo "<td colspan='2' valign='top'>";
+      
+      if ($veryshort == '0') {
+         echo "<table width='100%'>";
+         echo "<tr class='tab_bg_3'>";
+      } else {
+         echo "<table>";
+         echo "<tr class='tab_bg_1'>";
+      }      
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_taskjobstates`
+         WHERE `plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
+         ORDER BY `uniqid` DESC
+         LIMIT 1";
+      $result=$DB->query($query);
+      $uniqid = 0;
+      while ($data=$DB->fetch_array($result)) {
+         $uniqid = $data['uniqid'];         
+      }
+      
+      $query = "SELECT `glpi_plugin_fusioninventory_taskjoblogs`.* FROM `glpi_plugin_fusioninventory_taskjoblogs` 
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` 
+            ON plugin_fusioninventory_taskjobstates_id = `glpi_plugin_fusioninventory_taskjobstates`.`id`
+         WHERE `uniqid`='".$uniqid."'
+         ORDER BY `glpi_plugin_fusioninventory_taskjoblogs`.`id` DESC
+         LIMIT 1";
+      $state = 0;      
+      $date = '';
+      $comment = '';
+      $taskstates_id = 0;
+      
+      $result=$DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         $state = $data['state'];
+         $date = $data['date'];
+         $comment = $data['comment'];
+         $taskstates_id = $data['plugin_fusioninventory_taskjobstates_id'];
+      }
+      
+      if (strstr($comment, "Merged with")) {
+         $state = '7';
+      }      
+      
+      if (    $state == '1'
+           OR $state == '6'
+           OR $state == '7') { // not finish
+         
+         if ($veryshort == '0') {
+            echo "<th>";
+            echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_running.png'/>";
+            echo "</th>";
+         }
+         echo $this->getDivState($state, 'td');
+         echo "<td align='center'>";
+         echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?sort=1&order=DESC&field[0]=6&searchtype[0]=contains&contains[0]=".$uniqid."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
+            $LANG['plugin_fusioninventory']['taskjoblog'][9]."</a>";
+         echo "<input type='hidden' name='taskjobstates_id' value='".$taskstates_id."' />";
+         echo "<input type='hidden' name='taskjobs_id' value='".$taskjobs_id."' />";
+         echo '&nbsp;&nbsp;&nbsp;<input name="forceend" value="'.$LANG['plugin_fusioninventory']['task'][32].'"
+             class="submit" type="submit">';
+         echo "</td>";
+         if ($veryshort == '0') {
+            echo "</tr>";
+            echo "<tr class='tab_bg_3'>";
+            echo "<th>";
+            echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_finished.png'/>";
+            echo "</th>";
+            echo "<td colspan='2' align='center'>";
+            echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?sort=1&order=DESC&field[0]=3&searchtype[0]=equals&contains[0]=".$taskjobs_id."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
+               $LANG['plugin_fusioninventory']['taskjoblog'][8]."</a>";
+            echo "</td>";
+            echo "</tr>";
+         }
+      } else { // Finish
+         if ($veryshort == '0') {
+            echo "<th rowspan='2' height='64'>";
+            echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_finished.png'/>";
+            echo "</th>";
+         }
+         echo $this->getDivState($state, 'td');
+         if ($veryshort == '0') {
+            echo "<td align='center'>";
+         } else {
+            echo "<td>";
+         }
+         if ($taskstates_id == '0') {
+            echo $LANG['crontask'][40]."&nbsp;:&nbsp;".$LANG['setup'][307];
+         } else {
+            
+            if ($veryshort == '0') {
+               echo $LANG['crontask'][40]." (".Html::convDateTime($date).")";
+               echo " : <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?field[0]=6&searchtype[0]=contains&contains[0]=".$uniqid."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
+                  $LANG['plugin_fusioninventory']['taskjoblog'][9]."</a>";
+            } else {
+               echo $LANG['crontask'][40]." :<br/> ".Html::convDateTime($date)."";
+            }
+         }
+         echo "</td>";
+         echo "</tr>";
+         if ($veryshort == '0') {
+            echo "<tr class='tab_bg_3'>";
+            echo "<td colspan='2' align='center'>";
+            echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?field[0]=3&searchtype[0]=equals&contains[0]=".$taskjobs_id."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
+               $LANG['plugin_fusioninventory']['taskjoblog'][8]."</a>";
+            echo "</td>";
+            echo "</tr>";
+         }
+      }
+      echo "</table>";
+      
+      echo "</td>";
+   }
+   
+   
+   
+   /**
+    * Get div with text/color depend on state
+    * 
+    * @param $state integer state number
+    * @param $type string div / td
+    * 
+    * @return string complete node (openned and closed)
+    */
+   function getDivState($state, $type='div') {
+      global $LANG;
+
+      $width = '50';
+      
+      switch ($state) {
+
+         case 7:
+            return "<".$type." align='center' width='".$width."'>".$LANG['plugin_fusioninventory']['taskjoblog'][7]."</".$type.">";
+            break;
+
+         case 1:
+            return "<".$type." align='center' width='".$width."'>".$LANG['plugin_fusioninventory']['taskjoblog'][1]."</".$type.">";
+            break;
+
+         case 2:
+            return "<".$type." style='background-color: rgb(0, 255, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' width='".$width."'>".
+               "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][2]."</strong></".$type.">";
+            break;
+
+         case 3:
+            return "<".$type." style='background-color: rgb(255, 120, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' width='".$width."'>".
+               "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][3]."</strong></".$type.">";
+            break;
+
+         case 4:
+            return "<".$type." style='background-color: rgb(255, 0, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' width='".$width."'>".
+               "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][4]."</strong></".$type.">";
+            break;
+
+         case 5:
+            return "<".$type." style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' width='".$width."'>".
+               "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][5]."</strong></".$type.">";
+            break;
+
+         case 6:
+            return "<".$type." style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' width='".$width."'>".
+               "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][6]."</strong></".$type.">";
+            break;
+
+      }
+   }
+   
+   
+   
+   /**
+    * Display quick list logs
+    * 
+    * @param $tasks_id integer id of task
+    * 
+    * @return nothing
+    */
+   static function quickListLogs($tasks_id) {
+      global $DB,$LANG;
+      
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_taskjobstates` 
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs`
+            ON `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
+         WHERE `plugin_fusioninventory_tasks_id`='".$tasks_id."'
+         ORDER BY uniqid DESC
+         LIMIT 1";
+      $result = $DB->query($query);
+      $uniqid = 0;
+      $action = '';
+      while ($data=$DB->fetch_array($result)) {
+         $uniqid = $data['uniqid'];
+         $action = $data['action'];
+      }
+      if ($uniqid == '0') {
+         if ($action == '') {
+            echo "<center><strong>".$LANG['plugin_fusioninventory']['task'][55]."</strong></center>";
+         }
+      } else {
+         $params = array();
+         $params['field'][0]      = '6';
+         $params['searchtype'][0] = 'contains';
+         $params['contains'][0]   = $uniqid;
+         $params['itemtype']      = 'PluginFusioninventoryTaskjoblog';
+         $params['start']         = '0';
+         Search::manageGetValues('PluginFusioninventoryTaskjoblog');
+         Search::showList('PluginFusioninventoryTaskjoblog', $params);
+      }      
    }
 }
 

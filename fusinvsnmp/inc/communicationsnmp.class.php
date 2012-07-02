@@ -56,32 +56,42 @@ class PluginFusinvsnmpCommunicationSNMP {
     **/
    function addAuth($p_sxml_node, $p_id) {
       $pfConfigSecurity = new PluginFusinvsnmpConfigSecurity();
-      $pfConfigSecurity->getFromDB($p_id);
+      if ($pfConfigSecurity->getFromDB($p_id)) {
 
-      $sxml_authentication = $p_sxml_node->addChild('AUTHENTICATION');
-         $sxml_authentication->addAttribute('ID', $p_id);
-         $sxml_authentication->addAttribute('COMMUNITY', $pfConfigSecurity->fields['community']);
-         $sxml_authentication->addAttribute('VERSION',
-                           $pfConfigSecurity->getSNMPVersion($pfConfigSecurity->fields['snmpversion']));
-         $sxml_authentication->addAttribute('USERNAME', $pfConfigSecurity->fields['username']);
-         if ($pfConfigSecurity->fields['authentication'] == '0') {
-            $sxml_authentication->addAttribute('AUTHPROTOCOL', '');
-         } else {
-            $sxml_authentication->addAttribute('AUTHPROTOCOL',
-                           $pfConfigSecurity->getSNMPAuthProtocol($pfConfigSecurity->fields['authentication']));
-         }
-         $sxml_authentication->addAttribute('AUTHPASSPHRASE', $pfConfigSecurity->fields['auth_passphrase']);
-         if ($pfConfigSecurity->fields['encryption'] == '0') {
-            $sxml_authentication->addAttribute('PRIVPROTOCOL', '');
-         } else {
-            $sxml_authentication->addAttribute('PRIVPROTOCOL',
-                           $pfConfigSecurity->getSNMPEncryption($pfConfigSecurity->fields['encryption']));
-         }
-         $sxml_authentication->addAttribute('PRIVPASSPHRASE', $pfConfigSecurity->fields['priv_passphrase']);
+         $sxml_authentication = $p_sxml_node->addChild('AUTHENTICATION');
+            $sxml_authentication->addAttribute('ID', $p_id);
+            $sxml_authentication->addAttribute('VERSION',
+                              $pfConfigSecurity->getSNMPVersion($pfConfigSecurity->fields['snmpversion']));
+            if ($pfConfigSecurity->fields['snmpversion'] == '3') {
+               $sxml_authentication->addAttribute('USERNAME', $pfConfigSecurity->fields['username']);
+               if ($pfConfigSecurity->fields['authentication'] == '0') {
+//                  $sxml_authentication->addAttribute('AUTHPROTOCOL', '');
+               } else {
+                  $sxml_authentication->addAttribute('AUTHPROTOCOL',
+                                 $pfConfigSecurity->getSNMPAuthProtocol($pfConfigSecurity->fields['authentication']));
+               }
+               $sxml_authentication->addAttribute('AUTHPASSPHRASE', $pfConfigSecurity->fields['auth_passphrase']);
+               if ($pfConfigSecurity->fields['encryption'] == '0') {
+//                  $sxml_authentication->addAttribute('PRIVPROTOCOL', '');
+               } else {
+                  $sxml_authentication->addAttribute('PRIVPROTOCOL',
+                                 $pfConfigSecurity->getSNMPEncryption($pfConfigSecurity->fields['encryption']));
+               }
+               $sxml_authentication->addAttribute('PRIVPASSPHRASE', $pfConfigSecurity->fields['priv_passphrase']);
+            } else {
+               $sxml_authentication->addAttribute('COMMUNITY', $pfConfigSecurity->fields['community']);
+            }
+      }
    }
 
 
 
+   /**
+    * Add SNMO model strings to XML node 'MODEL'
+    * 
+    * @param type $p_sxml_node
+    * @param type $p_id 
+    */
    function addModel($p_sxml_node, $p_id) {
       $pfModel = new PluginFusinvsnmpModel();
       $pfModelMib = new PluginFusinvsnmpModelMib();
@@ -93,7 +103,17 @@ class PluginFusinvsnmpCommunicationSNMP {
          $pfModelMib->oidList($sxml_model,$p_id);
    }
 
+   
 
+   /**
+    * Add GET oids to XML node 'GET'
+    * 
+    * @param type $p_sxml_node
+    * @param type $p_object
+    * @param type $p_oid
+    * @param type $p_link
+    * @param type $p_vlan 
+    */
    function addGet($p_sxml_node, $p_object, $p_oid, $p_link, $p_vlan) {
       $sxml_get = $p_sxml_node->addChild('GET');
          $sxml_get->addAttribute('OBJECT', $p_object);
@@ -103,6 +123,16 @@ class PluginFusinvsnmpCommunicationSNMP {
    }
 
 
+   
+   /**
+    * Add WALK (multiple oids) oids to XML node 'WALK'
+    * 
+    * @param type $p_sxml_node
+    * @param type $p_object
+    * @param type $p_oid
+    * @param type $p_link
+    * @param type $p_vlan 
+    */
    function addWalk($p_sxml_node, $p_object, $p_oid, $p_link, $p_vlan) {
       $sxml_walk = $p_sxml_node->addChild('WALK');
          $sxml_walk->addAttribute('OBJECT', $p_object);

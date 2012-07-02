@@ -57,11 +57,11 @@ class PluginFusinvdeployStaticmisc {
                          'name'           => $LANG['plugin_fusinvdeploy']['package'][16],
                          'task'           => "DEPLOY",
                          'use_rest'       => true),
-#                   array('module'         => 'fusinvdeploy',
-#                         'method'         => self::DEPLOYMETHOD_UNINSTALL,
-#                         'name'           => $LANG['plugin_fusinvdeploy']['package'][17],
-#                         'task'           => "DEPLOY",
-#                         'use_rest'       => true)
+                   array('module'         => 'fusinvdeploy',
+                         'method'         => self::DEPLOYMETHOD_UNINSTALL,
+                         'name'           => $LANG['plugin_fusinvdeploy']['package'][17],
+                         'task'           => "DEPLOY",
+                         'use_rest'       => true)
                          );
    }
 
@@ -154,15 +154,24 @@ class PluginFusinvdeployStaticmisc {
       return self::getDeployActions();
    }
 
-   static function task_definitionselection_Computer_deployinstall() {
+   static function task_actionselection_Computer_deployinstall() {
       $options = array();
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
       $options['name']        = 'actionselectiontoadd';
+      $options['condition']   = '`id` IN (SELECT `items_id` FROM `glpi_plugin_fusioninventory_agents`)';
+      return Dropdown::show("Computer", $options);
+   }
+   static function task_actionselection_Computer_deployuninstall() {
+      $options = array();
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name']        = 'actionselectiontoadd';
+      $options['condition']   = '`id` IN (SELECT `items_id` FROM `glpi_plugin_fusioninventory_agents`)';
       return Dropdown::show("Computer", $options);
    }
 
-   static function task_definitionselection_Group_deployinstall() {
+   static function task_actionselection_Group_deployinstall() {
       $options = array();
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
@@ -183,12 +192,12 @@ class PluginFusinvdeployStaticmisc {
 
       $a_menu = array();
       if (PluginFusioninventoryProfile::haveRight("fusinvdeploy", "packages", "r")) {
-         $a_menu[0]['name'] = $LANG['plugin_fusinvdeploy']["package"][6];
+         $a_menu[0]['name'] = $LANG['plugin_fusinvdeploy']['package'][6];
          $a_menu[0]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_package.png";
          $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/package.php";
       }
 
-      $a_menu[1]['name'] = $LANG['plugin_fusinvdeploy']['form']['mirror'][1];
+      $a_menu[1]['name'] = $LANG['plugin_fusinvdeploy']['mirror'][1];
       $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_files.png";
       $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/mirror.php";
 
@@ -206,7 +215,7 @@ class PluginFusinvdeployStaticmisc {
       return array(array('profil'  => 'packages',
                          'name'    => $LANG['plugin_fusinvdeploy']['profile'][2]),
                    array('profil'  => 'status',
-                         'name'    => $LANG['plugin_fusinvdeploy']['profile'][3]));
+                         'name'    => $LANG['plugin_fusinvdeploy']['deploystatus'][0]));
    }
 
    static function task_deploy_getParameters() {

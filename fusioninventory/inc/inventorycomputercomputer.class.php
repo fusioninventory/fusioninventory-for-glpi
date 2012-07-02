@@ -60,7 +60,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       return Session::haveRight('computer', 'r');
    }
 
-   
+
    
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       global $LANG;
@@ -98,11 +98,11 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          }
       }
       if ($tabnum == '1') {
-         if ($item->getID() > 0) {            
+         if ($item->getID() > 0) { 
+            $pfComputer->display_xml($item);
+            
             $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
             $pfRulematchedlog->showForm($item->getID(), 'Computer');
-            
-            $pfComputer->display_xml($item);
          }
       }
       return true;
@@ -110,6 +110,12 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
    
    
    
+   /**
+    * Display informations about computer (bios...) 
+    * 
+    * @global type $LANG
+    * @param type $computers_id 
+    */   
    function showForm($computers_id) {
       global $LANG;
       
@@ -211,7 +217,6 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          echo "</table>";
       }
    }
-   
 }
 
 ?>

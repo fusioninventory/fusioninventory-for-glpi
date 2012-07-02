@@ -122,7 +122,7 @@ class PluginFusinvsnmpAgentconfig extends CommonDBTM {
     */
    function loadAgentconfig($agents_id) {
 
-      $a_agent = $this->find("`plugin_fusioninventory_agents_id`='".$agents_id."'");
+      $a_agent = $this->find("`plugin_fusioninventory_agents_id`='".$agents_id."'", "", 1);
       if (count($a_agent) > 0) {
          foreach ($a_agent as $data) {
             $this->getFromDB($data['id']);

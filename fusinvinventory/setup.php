@@ -50,7 +50,10 @@ function plugin_init_fusinvinventory() {
 
    $plugin = new Plugin;
    if (!$plugin->isActivated("fusioninventory")) {
-      if (isset($_GET['id']) AND isset($_GET['action'])
+      $plugin->getFromDBbyDir("fusinvinventory");
+      if (isset($_GET['id']) 
+            AND isset($_GET['action'])
+            AND $_GET['id'] == $plugin->fields['id']
             AND strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
          switch ($_GET['action']) {
             case 'activate':
@@ -126,7 +129,6 @@ function plugin_init_fusinvinventory() {
                                                                  'PluginFusioninventoryLock' => array('PluginFusinvinventoryLock', 'deleteLock'));
       $PLUGIN_HOOKS['pre_item_update']['fusinvinventory'] = array('PluginFusioninventoryLock' => array('PluginFusinvinventoryLock', 'deleteLock'));
       $PLUGIN_HOOKS['item_update']['fusinvinventory'] = array('PluginFusinvinventoryAntivirus' => array('PluginFusinvinventoryAntivirus', 'addhistory'));
-      
    }
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['fusinvinventory-ruleentity']

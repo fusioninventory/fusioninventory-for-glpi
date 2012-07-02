@@ -381,11 +381,9 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
                break;
             
          }
-
       }
       // oid WALK
    }
-
 }
 
 ?>

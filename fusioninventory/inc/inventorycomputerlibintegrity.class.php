@@ -125,7 +125,6 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
       echo "</table>";
       echo "<br/>";
       
-      
       $start = 0;
       if (isset($_REQUEST["start"])) {
          $start = $_REQUEST["start"];
@@ -197,7 +196,6 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
          $text = "";
          $a_sections_lib = array();
          foreach($a_sections['sections'] as $name=>$section) {
-            //echo $name."<br/>";
             $split = explode("/", $name);
             if (($split[1] > 0) OR (strstr($split[1], 'd'))) {
                $a_sectiontmp = unserialize($section);
@@ -324,8 +322,17 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                      if (!$a_lists = $Computer_Item->find("`id`='".$split[1]."'
                                                 AND `computers_id`='".$computer_id."'
                                                 AND `itemtype`='Monitor'")) {
+                        $descriptiontmp = '';
+                        if (isset($a_sectiontmp['DESCRIPTION'])) {
+                           $descriptiontmp = $a_sectiontmp['DESCRIPTION'];
+                        }
+                        $serialtmp = '';
+                        if (isset($a_sectiontmp['SERIAL'])) {
+                           $serialtmp = $a_sectiontmp['SERIAL'];
+                        }
+                        
                         $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['help'][28], 
-                                $a_sectiontmp['CAPTION'].", ".$a_sectiontmp['DESCRIPTION']." (".$a_sectiontmp['SERIAL'].")");
+                                $a_sectiontmp['CAPTION'].", ".$descriptiontmp." (".$serialtmp.")");
                      } else {
                         $a_list = current($a_lists);
                         $a_sections_lib['MONITORS'][$a_list['id']] = 1;
@@ -708,13 +715,11 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                         }
                         break;
                       
-                  }
-                   
+                  }                   
                   $text .= $this->displaySectionNotValid($computer_id, $itemtype, $name, $rname, $section_id);
                }
             }
          }
-
          echo "<tr>";
          echo "<th colspan='4'>";
          echo $Computer->getLink(1);
@@ -758,6 +763,18 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
 
 
    
+   /**
+    * Set text to display when section is not valid between last inventory
+    * and GLPI DB
+    * 
+    * @param type $computers_id
+    * @param type $sectionname
+    * @param type $name
+    * @param type $value
+    * @param type $onlyGLPI
+    * 
+    * @return string (text to display)
+    */
    function displaySectionNotValid($computers_id, $sectionname, $name, $value='',$onlyGLPI = 0) {
       $text = "<tr class='tab_bg_1'>";
       $text .= "<td>";
@@ -983,11 +1000,6 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                      }
                      break;
 
-//                  case 'Drive':
-//                     $a_sectionsGLPI = $computerDeviceDrive->find("`computers_id`='".$a_computerlib['computers_id']."'");
-//
-//                     break;
-
                   case 'STORAGES':
                      $a_sectionsGLPI = $computerDeviceHardDrive->find("`computers_id`='".$a_computerlib['computers_id']."'");
                      foreach ($a_sectionsGLPI as $items_id=>$dataC) {
@@ -1042,10 +1054,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
             }
          }         
       }
-      
-      
    }
-   
 }
 
 ?>

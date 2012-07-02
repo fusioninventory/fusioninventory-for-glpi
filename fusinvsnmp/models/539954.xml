@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[539954]]></name>
-	<type>NetworkEquipment</type>
+	<type>2</type>
 	<key>Networking0124</key>
 	<comments><![CDATA[DGS-3324SR Stackable Ethernet Switch
 
@@ -33,6 +33,8 @@ Microsoft Windows CE Version 5.0 (Build 1400)
 Microsoft Windows CE Version 6.0 (Build 0)
 
 Neoware Station
+
+RFS4000 Wireless Switch, Version 4.3.3.0-004R MIB=01a
 
 Sun SNMP Agent, Sun-Fire-V240
 

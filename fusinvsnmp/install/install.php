@@ -54,6 +54,7 @@ function pluginFusinvsnmpInstall($version, $migrationname='Migration') {
 
    include_once (GLPI_ROOT . "/plugins/fusinvsnmp/install/update.php");
    $version_detected = pluginfusinvsnmpGetCurrentVersion($a_plugin['version']);
+
    if ((isset($version_detected))
            AND ($version_detected != $a_plugin['version'])
            AND $version_detected!='0') {
@@ -116,10 +117,14 @@ function pluginFusinvsnmpInstall($version, $migrationname='Migration') {
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());
       $pfAgentmodule->add($input);
+      
+      $pfNetworkporttype = new PluginFusinvsnmpNetworkporttype();
+      $pfNetworkporttype->init();
 
       Crontask::Register('PluginFusinvsnmpNetworkPortLog', 'cleannetworkportlogs', (3600 * 24), array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
    }
 }
+
 
 
 function pluginFusinvsnmpUninstall() {
@@ -148,11 +153,6 @@ function pluginFusinvsnmpUninstall() {
    $query="DELETE FROM `glpi_displaypreferences`
            WHERE `itemtype` LIKE 'PluginFusinvsnmp%';";
    $DB->query($query) or die($DB->error());
-//   $a_netports = $np->find("`itemtype`='PluginFusioninventoryUnknownDevice' ");
-//   foreach ($a_netports as $NetworkPort){
-//      $np->cleanDBonPurge($NetworkPort['id']);
-//      $np->deleteFromDB($NetworkPort['id']);
-//   }
 
    PluginFusioninventoryTask::cleanTasksbyMethod('netdiscovery');
    PluginFusioninventoryTask::cleanTasksbyMethod('snmpquery');

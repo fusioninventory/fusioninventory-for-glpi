@@ -142,16 +142,16 @@ class PluginFusinvdeployFile extends CommonDBTM {
    static function getAssociatedFiles($device_id) {
       $files = array();
       $taskjoblog    = new PluginFusioninventoryTaskjoblog();
-      $taskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $taskjobstate = new PluginFusioninventoryTaskjobstate();
 
       //Get the agent ID by his deviceid
       if ($agents_id = PluginFusinvdeployJob::getAgentByDeviceID($device_id)) {
 
 
          //Get tasks associated with the agent
-         $tasks_list = $taskjobstatus->getTaskjobsAgent($agents_id);
-         foreach ($tasks_list as $itemtype => $status_list) {
-            foreach ($status_list as $status) {
+         $tasks_list = $taskjobstate->getTaskjobsAgent($agents_id);
+         foreach ($tasks_list as $itemtype => $states_list) {
+            foreach ($states_list as $status) {
                $results_jobs = getAllDatasFromTable('glpi_plugin_fusinvdeploy_taskjobs',
                                      "`id`='".$status['plugin_fusioninventory_taskjobs_id']."'");
 
@@ -314,6 +314,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
       return $file_id;
    }
 
+   //TODO on 0.83 rename the function into "checkPresenceFileForOrder"
    function checkPresenceFile($sha512, $order_id) {
       global $DB;
 
@@ -328,11 +329,44 @@ class PluginFusinvdeployFile extends CommonDBTM {
       return false;
    }
 
+   static function getAssociatedFilesForOrder($order_id) {
+      global $DB;
+
+      $files=array();
+
+      $results_files = getAllDatasFromTable('glpi_plugin_fusinvdeploy_files',
+                          "`plugin_fusinvdeploy_orders_id`='".$order_id."' AND sha512 <> ''");
+
+
+      foreach ($results_files as $result_file) {
+         $tmp = array();
+         $tmp['uncompress']   = $result_file['uncompress'];
+         $tmp['name']         = $result_file['name'];
+         $tmp['p2p']          = $result_file['is_p2p'];
+         $tmp['filesize']     = $result_file['filesize'];
+         $tmp['create_date']  = $result_file['create_date'];
+         $tmp['mimetype']     = $result_file['mimetype'];
+
+         $mirrors = PluginFusinvdeployFile_Mirror::getList();
+         $tmp['mirrors'] = $mirrors;
+
+         $fileparts = PluginFusinvdeployFilepart::getForFile($result_file['id']);
+         $tmp['multiparts'] = $fileparts;
+
+         if (isset($result_file['p2p_retention_days'])) {
+            $tmp['p2p-retention-duration'] = $result_file['p2p_retention_days'] * 3600 * 24;
+         } else {
+            $tmp['p2p-retention-duration'] = 0;
+         }
+         $files[$result_file['sha512']]         = $tmp;
+      }
+
+      if (count($files) == 0) $files = new stdClass;
+      return $files;
+   }
 
    function removeFileInRepo($id) {
       global $DB;
-
-
 
       $repoPath = GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/repository/";
 
@@ -433,7 +467,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
             switch ($_FILES['file']['error']) {
                case UPLOAD_ERR_INI_SIZE:
                case UPLOAD_ERR_FORM_SIZE:
-                  print "{success:false, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][20]}\"}";
+                  print "{success:false, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['label'][20]}\"}";
                   exit;
                case UPLOAD_ERR_PARTIAL:
                   print "{success:false, file:'{$filename}',msg:\"The uploaded file was only partially uploaded.\"}";
@@ -469,14 +503,14 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
          //Add file in repo
          if ($filename && $this->addFileInRepo($data)) {
-            print "{success:true, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['action'][4]}\"}";
+            print "{success:true, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['action'][4]}\"}";
             exit;
          } else {
-            print "{success:false, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][15]}\"}";
+            print "{success:false, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['label'][15]}\"}";
             exit;
          }
       }
-      print "{success:false, file:'none',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][15]}\"}";
+      print "{success:false, file:'none',msg:\"{$LANG['plugin_fusinvdeploy']['label'][15]}\"}";
    }
 
    function uploadFileFromServer() {
@@ -517,13 +551,13 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
          //Add file in repo
          if ($filename && $this->addFileInRepo($data)) {
-            print "{success:true, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['action'][4]}\"}";
+            print "{success:true, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['action'][4]}\"}";
             exit;
          } else {
-            print "{success:false, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][22]}\"}";
+            print "{success:false, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['label'][22]}\"}";
             exit;
          }
-      } print "{success:false, file:'none',msg:\"{$LANG['plugin_fusinvdeploy']['form']['label'][15]}\"}";
+      } print "{success:false, file:'none',msg:\"{$LANG['plugin_fusinvdeploy']['label'][15]}\"}";
    }
 
    static function processFilesize($filesize) {
@@ -542,4 +576,5 @@ class PluginFusinvdeployFile extends CommonDBTM {
    }
 
 }
+
 ?>

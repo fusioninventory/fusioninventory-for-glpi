@@ -61,7 +61,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       global $LANG;
 
       if ($item->getType()=='PluginFusioninventoryConfig') {
-         return self::createTabEntry($LANG['plugin_fusioninventory']['agents'][27]);
          return $LANG['plugin_fusioninventory']['agents'][27];
       }
       return '';
@@ -341,7 +340,9 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
                $i++;
             }
             $where .= ") ";
-            $where .= getEntitiesRestrictRequest("AND", $pfAgent->getTable());
+            if (isset($_SESSION['glpiactiveentities_string'])) {
+               $where .= getEntitiesRestrictRequest("AND", $pfAgent->getTable());
+            }
          } else {
             return array();
          }
@@ -359,7 +360,9 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
                $i++;
             }
             $where .= ") ";
-            $where .= getEntitiesRestrictRequest("AND", $pfAgent->getTable());
+            if (isset($_SESSION['glpiactiveentities_string'])) {
+               $where .= getEntitiesRestrictRequest("AND", $pfAgent->getTable());
+            }
          }
       }
       $a_agents = array();

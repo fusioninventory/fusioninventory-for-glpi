@@ -51,14 +51,6 @@ if (!defined('GLPI_ROOT')) {
 }
 Session::checkCentralAccess();
 
-//
-//echo "<script type='text/javascript'>
-//var deftype = document.getElementById('".$_POST['defselectadd']."');
-//alert(deftype.options[deftype.selectedIndex].text);
-// </script>";
-
-
-
 echo "<script type='text/javascript'>
 var select = document.getElementById('definitionlist');
 var obj = document.getElementById('".$_POST['defselectadd']."');
@@ -72,7 +64,7 @@ if ((select.value.match(pattern1)) || (select.value.match(pattern2))) {
 
 } else {
    document.getElementById('definitionselection').innerHTML = list + '<br>' + deftype.options[deftype.selectedIndex].text + ' -> ' + obj.options[obj.selectedIndex].text +
-   ' <img src=\"".$CFG_GLPI['root_doc']."/pics/delete2.png\" onclick=\'deldef(\"' + deftype.options[deftype.selectedIndex].text + '->' + obj.options[obj.selectedIndex].text + '->' + deftype.options[deftype.selectedIndex].value + '->' + obj.options[obj.selectedIndex].value + '\")\'>';
+   ' <img src=\"".$CFG_GLPI['root_doc']."/pics/delete.png\" onclick=\'deldef(\"' + deftype.options[deftype.selectedIndex].text + '->' + obj.options[obj.selectedIndex].text + '->' + deftype.options[deftype.selectedIndex].value + '->' + obj.options[obj.selectedIndex].value + '\")\'>';
    if (deftype.value !== '0') {
       document.getElementById('definitionlist').value = document.getElementById('definitionlist').value + ',' + deftype.options[deftype.selectedIndex].value + '->' + obj.options[obj.selectedIndex].value;
    } else {

@@ -52,4 +52,5 @@ class PluginFusinvdeployDeployinstall extends PluginFusinvdeployDeployCommon {
       $common->prepareRun($taskjobs_id);
    }
 }
+
 ?>

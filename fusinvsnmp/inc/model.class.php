@@ -345,6 +345,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
       }
       return 0;
    }
+   
 
 
    static function importAllModels() {
@@ -394,7 +395,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
       Html::changeProgressBarPosition($nb,$nb,"$nb / $nb");
       echo "</td>";
       echo "</table>";
-      
+
       // Reload model for networkequipment have sysdescr
       $networkequipmentext = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
       $a_networkequipments = $networkequipmentext->find("`sysdescr`!=''");
@@ -408,7 +409,6 @@ class PluginFusinvsnmpModel extends CommonDBTM {
          $pfModel->getrightmodel($a_printer['printers_id'], "Printer");
       }
    }
-
 }
 
 ?>

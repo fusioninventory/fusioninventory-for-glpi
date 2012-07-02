@@ -44,13 +44,9 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-class PluginFusinvsnmpPrinterCartridge extends PluginFusinvsnmpCommonDBTM {
+class PluginFusinvsnmpPrinterCartridge extends CommonDBTM {
 
-   function __construct() {
-      parent::__construct("glpi_plugin_fusinvsnmp_printercartridges");
-   }
-
-
+   
 
    function showForm($id, $options=array()) {
       global $LANG;

@@ -57,6 +57,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       $this->oFusionInventory_networkequipment->type = 'PluginFusinvsnmpNetworkEquipment';
    }
 
+   
    function getType() {
       return "NetworkEquipment";
    }
@@ -306,26 +307,14 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       echo "<script  type='text/javascript'>
 function close_array(id){
    document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/collapse.png\''+
-      'onClick=\'Effect.Fade(\"viewfollowup'+id+'\");appear_array('+id+');\' />';
+      'onClick=\'Ext.get(\"viewfollowup'+id+'\").toggle();appear_array('+id+');\' />';
 }
 function appear_array(id){
    document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/expand.png\''+
-      'onClick=\'Effect.Appear(\"viewfollowup'+id+'\");close_array('+id+');\' id=\'plusmoinsl'+id+'\' />';
+      'onClick=\'Ext.get(\"viewfollowup'+id+'\").toggle();close_array('+id+');\' id=\'plusmoinsl'+id+'\' />';
 }
-
-function close_legend(id){
-   document.getElementById('legendlink').innerHTML = '<a '+
-   ' onClick=\'Effect.Fade(\"legend\");appear_legend();\'>[ ".$LANG['plugin_fusioninventory']['functionalities'][6]." ]</a>';
-}
-function appear_legend(id){
-   document.getElementById('legendlink').innerHTML = '<a '+
-   ' onClick=\'Effect.Appear(\"legend\");close_legend();\'>[ ".$LANG['plugin_fusioninventory']['functionalities'][6]." ]</a>';
-}
-
 
       </script>";
-      echo "<script type='text/javascript' src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/prototype.js'></script>";
-      echo "<script type='text/javascript' src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/effects.js'></script>";
       $nbcol = 5;
       if ($monitoring == '1') {
          if (PluginMonitoringProfile::haveRight("componentscatalog", 'r')) {
@@ -353,7 +342,7 @@ function appear_legend(id){
          $url_legend = "https://forge.indepnet.net/wiki/fusioninventory/Fr_VI_visualisationsdonnees_2_reseau";
       }
       echo "<a href='legend'></a>";
-      echo "<div id='legendlink'><a onClick='Effect.Appear(\"legend\");close_legend();'>[ ".$LANG['plugin_fusioninventory']['functionalities'][6]." ]</a></div>";
+      echo "<div id='legendlink'><a onClick='Ext.get(\"legend\").toggle();'>[ ".$LANG['plugin_fusioninventory']['functionalities'][6]." ]</a></div>";
       echo "</th>";
       echo "</tr>";
 
@@ -371,17 +360,11 @@ function appear_legend(id){
          <img src='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/pics/connected_trunk.png' width='750' />
          </td>
       </tr>";
-
+      echo "<script>Ext.get('legend').setVisibilityMode(Ext.Element.DISPLAY);</script>";
 
       echo "<tr class='tab_bg_1'>";
 
       echo '<th>';
-//      echo '<img alt="'.$LANG['setup'][252].'"
-//                     title="'.$LANG['setup'][252].'"
-//                     src="'.$CFG_GLPI['root_doc'].'/pics/options_search.png" class="pointer"
-//                     onclick="var w = window.open(\''.$CFG_GLPI['root_doc'].
-//                        '/front/popup.php?popup=search_config&itemtype=PluginFusinvsnmpNetworkEquipment\',\'glpipopup\',
-//                        \'height=400, width=1000, top=100, left=100, scrollbars=yes\' ); w.focus();"></th>';
       echo "<th>".$LANG["common"][16]."</th>";
       if ($monitoring == '1') {
          echo "<th>".$LANG['plugin_monitoring']['title'][0]."</th>";
@@ -472,11 +455,12 @@ function appear_legend(id){
             }
             echo "<tr class='tab_bg_1 center' height='40'".$background_img.">";
             echo "<td id='plusmoins".$data["id"]."'><img src='".$CFG_GLPI['root_doc'].
-                     "/plugins/fusioninventory/pics/expand.png' onClick='Effect.Appear(\"viewfollowup".$data["id"].
-                     "\");close_array(".$data["id"].");' id='plusmoinsl".$data["id"]."'\'/>";
+                     "/plugins/fusioninventory/pics/expand.png' onClick='Ext.get(\"viewfollowup".$data["id"]."\").toggle();
+                     close_array(".$data["id"].");' id='plusmoinsl".$data["id"]."'\'/>";
             echo "</td>";
             echo "<td><a href='networkport.form.php?id=".$data["id"]."'>".
                      $data["name"]."</a>";
+            Html::showToolTip($data['ifdescr']);        
             echo "</td>";
 
             if ($monitoring == '1') {
@@ -613,7 +597,18 @@ function appear_legend(id){
                               }
                               echo "</td>";
                            } else {
-                              echo "<td>".$link1;
+                              $icon = '';
+                              if ($data_device["itemtype"] == 'Computer') {
+                                 $icon = "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/computer_icon.png' style='float:left'/> ";
+                              } else if ($data_device["itemtype"] == 'Printer') {
+                                 $icon = "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/printer_icon.png' style='float:left'/> ";
+                              } else if ($data_device["itemtype"] == 'Phone') {
+                                 $icon = "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/phone_icon.png' style='float:left'/> ";
+                              } else if ($data_device["itemtype"] == 'NetworkEquipment') {
+                                 $icon = "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/network_icon.png' style='float:left'/> ";
+                              }
+                              
+                              echo "<td>".$icon.$link1;
                               if (!empty($link)) {
                                  echo "<br/>".$link;
                               }
@@ -661,12 +656,14 @@ function appear_legend(id){
                         echo "<table cellpadding='0' cellspacing='0'>";
                         while ($line = $DB->fetch_array($result_vlan)) {
                            $used[]=$line["vlans_id"];
+                           $vlan = new Vlan();
+                           $vlan->getFromDB($line["vlans_id"]);
                            $a_vlan = Dropdown::getDropdownName("glpi_vlans", $line["vlans_id"],1);
-                           echo "<tr><td>" . $a_vlan['name']." [".$a_vlan['comment']."]";
+                           echo "<tr><td>" . $vlan->fields['name']." [".$vlan->fields['tag']."]";
                            echo "</td><td>";
                            if ($canedit) {
                               echo "<a href='" . $CFG_GLPI["root_doc"] . "/front/networkport.form.php?unassign_vlan=unassigned&amp;id=" . $line["id"] . "'>";
-                              echo "<img src=\"" . $CFG_GLPI["root_doc"] . "/pics/delete2.png\" alt='" . $LANG['buttons'][6] . "' title='" . $LANG['buttons'][6] . "'></a>";
+                              echo "<img src=\"" . $CFG_GLPI["root_doc"] . "/pics/delete.png\" alt='" . $LANG['buttons'][6] . "' title='" . $LANG['buttons'][6] . "'></a>";
                            } else
                               echo "&nbsp;";
                            echo "</td></tr>";
@@ -701,6 +698,7 @@ function appear_legend(id){
                                   array('ports_id' => $data["id"]),
                                   array("click"));
             echo "</tr>
+            <script>Ext.get('viewfollowup".$data["id"]."').setVisibilityMode(Ext.Element.DISPLAY);</script>
             ";
          }
       }
@@ -723,6 +721,16 @@ function appear_legend(id){
       }
    }
 
+   
+   
+   /**
+    * Convert size of octets
+    * 
+    * @param number $bytes
+    * @param number $sizeoct
+    * 
+    * @return better size format 
+    */
    private function byteSize($bytes,$sizeoct=1024) {
       $size = $bytes / $sizeoct;
       if ($size < $sizeoct) {

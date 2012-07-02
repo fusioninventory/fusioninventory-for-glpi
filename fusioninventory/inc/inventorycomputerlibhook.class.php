@@ -246,12 +246,12 @@ class PluginFusioninventoryInventoryComputerLibhook {
 
                   $config = new PluginFusioninventoryConfig();
                   if ($config->getValue($_SESSION["plugin_fusinvinventory_moduleid"], 'location', 'inventory') == '1') {
-                     $Computer->fields['locations_id'] = Dropdown::importExternal('Location',
+                     $inputC['locations_id'] = Dropdown::importExternal('Location',
                                                                                   $dataSection['KEYVALUE'],
                                                                                   $_SESSION["plugin_fusinvinventory_entity"]);
                   }
                   if ($config->getValue($_SESSION["plugin_fusinvinventory_moduleid"], 'group', 'inventory') == '1') {
-                     $Computer->fields['groups_id'] = PluginFusioninventoryInventoryComputerLibhook::importGroup($dataSection['KEYVALUE'], $_SESSION["plugin_fusinvinventory_entity"]);
+                     $inputC['groups_id'] = PluginFusioninventoryInventoryComputerLibhook::importGroup($dataSection['KEYVALUE'], $_SESSION["plugin_fusinvinventory_entity"]);
                   }
                }
                break;
@@ -477,24 +477,9 @@ class PluginFusioninventoryInventoryComputerLibhook {
                array_push($sectionsId,$section['sectionName']."/".$Computer_SoftwareVersion_id);
                break;
 
-//            case 'VERSIONCLIENT':
-//               // Verify agent is created
-//               $pfAgent = new PluginFusioninventoryAgent;
-//               $a_agent = $pfAgent->InfosByKey($section['sectionName']);
-//               if (count($a_agent) == '0') {
-//                  // TODO : Create agent
-//
-//               }
-//               $pfAgent->getFromDB($a_agent['id']);
-//               $pfAgent->fields['items_id'] = $idmachine;
-//               $pfAgent->fields['itemtype'] = 'Computer';
-//               $pfAgent->update($pfAgent->fields);
-//               break;
-
             case 'BIOS':
                array_push($sectionsId,$section['sectionName']."/".$idmachine);
                break;
-
 
             case 'HARDWARE':
                array_push($sectionsId,$section['sectionName']."/".$idmachine);
@@ -560,8 +545,8 @@ class PluginFusioninventoryInventoryComputerLibhook {
             case 'VIRTUALMACHINES':
                $pfInventoryComputerImport_Virtualmachine = new PluginFusioninventoryInventoryComputerImport_Virtualmachine();
                $id_vm = $pfInventoryComputerImport_Virtualmachine->addUpdateItem("add",$idmachine,$dataSection);
-               if (empty($id_storage)) {
-                  $id_vm = $j;
+               if (empty($id_vm)) {
+               $id_vm = $j;
                   $j--;
                }
                array_push($sectionsId,$section['sectionName']."/".$id_vm);
@@ -736,7 +721,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
       $_SESSION["plugin_fusinvinventory_history_add"] = true;
       $_SESSION["plugin_fusinvinventory_no_history_add"] = false;
 
-      // Pre-get HARDWARE/CHASSIS_TYPE (type of computer
+      // Pre-get HARDWARE/CHASSIS_TYPE (type of computer)
       $computer_type = '';
       foreach($data as $section) {
          $array = explode("/", $section['sectionId']);
@@ -758,7 +743,6 @@ class PluginFusioninventoryInventoryComputerLibhook {
          $inputCext['computers_id'] = $idmachine;
       }
       foreach($data as $section) {
-//         $dataSection = unserialize($section['dataSection']);
          $dataSection = $section['dataSection'];
          $array = explode("/", $section['sectionId']);
          $items_id = $array[1];
@@ -907,14 +891,12 @@ class PluginFusioninventoryInventoryComputerLibhook {
                           
                      $config = new PluginFusioninventoryConfig();
                      if ($config->getValue($_SESSION["plugin_fusinvinventory_moduleid"], 'location', 'inventory') == 1) {
-                        $Computer->fields['locations_id'] = Dropdown::importExternal('Location',
+                        $inputC['locations_id'] = Dropdown::importExternal('Location',
                                                                                      $dataSection['KEYVALUE'],
                                                                                      $_SESSION["plugin_fusinvinventory_entity"]);
-                        $Computer->update($Computer->fields);
                      }
                      if ($config->getValue($_SESSION["plugin_fusinvinventory_moduleid"], 'group', 'inventory') == 1) {
-                        $Computer->fields['groups_id'] = PluginFusioninventoryInventoryComputerLibhook::importGroup($dataSection['KEYVALUE'], $_SESSION["plugin_fusinvinventory_entity"]);
-                        $Computer->update($Computer->fields);
+                        $inputC['groups_id'] = PluginFusioninventoryInventoryComputerLibhook::importGroup($dataSection['KEYVALUE'], $_SESSION["plugin_fusinvinventory_entity"]);
                      }
                   }
                   break;
@@ -1031,10 +1013,10 @@ class PluginFusioninventoryInventoryComputerLibhook {
             }
          }
       }
-      PluginFusioninventoryConfig::ToolboxIfExtradebug("pluginFusinvinventory-updatesection", 
+      $Computer->update($inputC);
+      PluginFusioninventoryToolbox::logIfExtradebug("pluginFusinvinventory-updatesection", 
                                                    "[".$idmachine."] ".print_r($data, true));
     }
-
 
 
 
@@ -1188,11 +1170,14 @@ class PluginFusioninventoryInventoryComputerLibhook {
          $a_partnumber = explode("#", $partnumber);
          $Plugin = new Plugin();
          if ($Plugin->isActivated('manufacturersimports')) {
-            $PluginManufacturersimportsModel = new PluginManufacturersimportsModel();
-            $PluginManufacturersimportsModel->addModel($items_id, 'Computer', $a_partnumber[0]);
+            if (class_exists("PluginManufacturersimportsModel")) {
+               $PluginManufacturersimportsModel = new PluginManufacturersimportsModel();
+               $PluginManufacturersimportsModel->addModel($items_id, 'Computer', $a_partnumber[0]);
+            }
          }
       }
     }
+    
     
     
    static function importGroup($value, $entities_id) {
@@ -1210,14 +1195,14 @@ class PluginFusioninventoryInventoryComputerLibhook {
 
       if ($DB->numrows($result2) == 0) {
          $group                = new Group();
+         $input = array();
          $input["name"]        = $value;
          $input["entities_id"] = $entities_id;
          return $group->add($input);
       }
       $line2 = $DB->fetch_array($result2);
       return $line2["id"];
-   }
-    
+   }    
 }
 
 ?>

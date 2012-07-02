@@ -165,7 +165,7 @@ class PluginFusinvdeployTask extends PluginFusioninventoryTask {
       $task_id = $this->getField('id');
 
       $job = new PluginFusioninventoryTaskjob();
-      $status = new PluginFusioninventoryTaskjobstatus();
+      $status = new PluginFusioninventoryTaskjobstate();
       $log = new PluginFusioninventoryTaskjoblog();
 
       // clean all sub-tables
@@ -173,7 +173,7 @@ class PluginFusinvdeployTask extends PluginFusioninventoryTask {
       foreach($a_taskjobs as $a_taskjob) {
          $a_taskjobstatuss = $status->find("`plugin_fusioninventory_taskjobs_id`='".$a_taskjob['id']."'");
          foreach($a_taskjobstatuss as $a_taskjobstatus) {
-            $a_taskjoblogs = $log->find("`plugin_fusioninventory_taskjobstatus_id`='".$a_taskjobstatus['id']."'");
+            $a_taskjoblogs = $log->find("`plugin_fusioninventory_taskjobstates_id`='".$a_taskjobstatus['id']."'");
             foreach($a_taskjoblogs as $a_taskjoblog) {
                $log->delete($a_taskjoblog, 1);
             }
@@ -194,3 +194,5 @@ class PluginFusinvdeployTask extends PluginFusioninventoryTask {
       $this->update($options);
    }
 }
+
+?>
