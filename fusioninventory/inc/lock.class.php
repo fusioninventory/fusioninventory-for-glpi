@@ -48,7 +48,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryLock extends CommonDBTM{
 
    
-   static function getTypeName() {
+   static function getTypeName($nb=0) {
       global $LANG;
 
       return $LANG['plugin_fusioninventory']['functionalities'][75];

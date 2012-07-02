@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryIPRange extends CommonDBTM {
 
 
-   static function getTypeName() {
+   static function getTypeName($nb=0) {
       global $LANG;
 
       if (isset($_SERVER['HTTP_REFERER']) AND strstr($_SERVER['HTTP_REFERER'], 'iprange')) {
