@@ -377,7 +377,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo $LANG['Menu'][2]."&nbsp;:";
+      echo _n('Printer', 'Printers', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
       $array = array();
@@ -392,7 +392,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       Html::showToolTip($text);
       echo "</td>";
       echo "<td>";
-      echo $LANG['devices'][4]."&nbsp;:";
+      echo _n('Processor', 'Processors', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_processor", 
@@ -402,7 +402,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo $LANG['Menu'][16]."&nbsp;:";
+      echo _n('Device', 'Devices', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
       $array = array();
@@ -417,7 +417,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       Html::showToolTip($text);
       echo "</td>";
       echo "<td>";
-      echo $LANG['devices'][6]."&nbsp;:";
+      echo _n('Memory', 'Memories', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_memory", 
@@ -427,14 +427,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo $LANG['Menu'][4]."&nbsp;:";
+      echo _n('Software', 'Software', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("import_software", 
                           $pfConfig->getValue($plugins_id, 'import_software', 'inventory'));
       echo "</td>";
       echo "<td>";
-      echo $LANG['devices'][1]."&nbsp;:";
+      echo _n('Hard drive', 'Hard drives', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_harddrive", 
@@ -444,14 +444,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo $LANG['computers'][8]."&nbsp;:";
+      echo _n('Volume', 'Volumes', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("import_volume", 
                           $pfConfig->getValue($plugins_id, 'import_volume', 'inventory'));
       echo "</td>";
       echo "<td>";
-      echo $LANG['devices'][3]."&nbsp;:";
+      echo _n('Network card', 'Network cards', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_networkcard", 
@@ -480,7 +480,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td colspan='2'>";
       echo "</td>";
       echo "<td>";
-      echo $LANG['devices'][2]."&nbsp;:";
+      echo _n('Graphic card', 'Graphic cards', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_graphiccard", 
@@ -492,7 +492,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td colspan='2'>";
       echo "</td>";
       echo "<td>";
-      echo $LANG['devices'][7]."&nbsp;:";
+      echo _n('Sound card', 'Sound cards', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_soundcard", 
@@ -502,14 +502,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo $LANG['computers'][57]."&nbsp;:";
+      echo _n('Virtual machine', 'Virtual machines', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("import_vm", 
                           $pfConfig->getValue($plugins_id, 'import_vm', 'inventory'));
       echo "</td>";
       echo "<td>";
-      echo $LANG['devices'][19]."&nbsp;:";
+      echo _n('Drive', 'Drives', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_drive", 
@@ -519,12 +519,12 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo $LANG['common'][15]."&nbsp;:";
+      echo _n('Location', 'Locations', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showFromArray("location",
                               array("0"=>"------",
-                                    "1"=>$LANG['plugin_fusinvinventory']['rule'][8]),
+                                    "1"=>$LANG['plugin_fusioninventory']['rule'][28]),
                               array('value'=>$pfConfig->getValue($plugins_id, 'location', 'inventory')));
 
       echo "</td>";
@@ -539,16 +539,16 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo $LANG['common'][35]."&nbsp;:";
+      echo _n('Group', 'Groups', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showFromArray("group",
                               array("0"=>"------",
-                                    "1"=>$LANG['plugin_fusinvinventory']['rule'][8]),
+                                    "1"=>$LANG['plugin_fusioninventory']['rule'][28]),
                               array('value'=>$pfConfig->getValue($plugins_id, 'group', 'inventory')));
       echo "</td>";
       echo "<td>";
-      echo $LANG['devices'][20]."&nbsp;:";
+      echo _n('Controller', 'Controllers', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_control",
