@@ -492,7 +492,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
    function generatemodels() {
       global $DB;
 
-      $ptmi = new PluginFusinvsnmpModel();
+      $ptmi = new PluginFusioninventorySnmpmodel();
       $ptmn = new PluginFusinvsnmpModelMib();
 
       $query = "SELECT glpi_plugin_fusinvsnmp_constructdevices.id, type

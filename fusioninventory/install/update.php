@@ -3651,6 +3651,21 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          AND `id_search_option`='8'
          AND `old_value`=`new_value`";
    $DB->query($query);
+      
+   /*
+    * Import / update SNMP models
+    */
+   if (!class_exists('PluginFusioninventorySnmpmodel')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodel.class.php");
+   }
+   if (!class_exists('PluginFusinvsnmpImportExport')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/importexport.class.php");
+   }
+   if (!class_exists('PluginFusinvsnmpCommonDBTM')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/commondbtm.class.php");
+   }
+   PluginFusioninventorySnmpmodel::importAllModels();
+   
 }
 
 

@@ -347,6 +347,10 @@ function pluginFusioninventoryInstall($version, $migration='') {
    $migration->displayMessage("Create rules");
    $pfSetup = new PluginFusioninventorySetup();
    $pfSetup->initRules();
+   
+   
+   // Import models
+   PluginFusioninventorySnmpmodel::importAllModels();
 
 }
 

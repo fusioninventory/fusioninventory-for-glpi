@@ -360,7 +360,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
 
 
       // Delete old models
-      $pfModel = new PluginFusinvsnmpModel();
+      $pfModel = new PluginFusioninventorySnmpmodel();
       $a_models = $pfModel->find("");
       foreach ($a_models as $a_model) {
          if (!isset($NewModelList[$a_model['name'].".xml"])) {

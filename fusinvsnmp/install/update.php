@@ -2841,6 +2841,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
     *  Convert displaypreferences
     */
    changeDisplayPreference("5151", "PluginFusinvsnmpModel");
+   changeDisplayPreference("PluginFusinvsnmpModel", "PluginFusioninventorySnmpmodel");   
    changeDisplayPreference("5152", "PluginFusinvsnmpConfigSecurity");
    changeDisplayPreference("5156", "PluginFusinvsnmpPrinterCartridge");
    changeDisplayPreference("5157", "PluginFusinvsnmpNetworkEquipment");
@@ -3002,19 +3003,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
       $DB->query($query);
    }
    
-   /*
-    * Import / update SNMP models
-    */
-   if (!class_exists('PluginFusinvsnmpModel')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/model.class.php");
-   }
-   if (!class_exists('PluginFusinvsnmpImportExport')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/importexport.class.php");
-   }
-   if (!class_exists('PluginFusinvsnmpCommonDBTM')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/commondbtm.class.php");
-   }
-   PluginFusinvsnmpModel::importAllModels();
+
    
    
    // Update networkports types

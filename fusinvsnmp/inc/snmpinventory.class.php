@@ -495,7 +495,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $pfConfigSecurity = new PluginFusinvsnmpConfigSecurity();
       $pfCommunicationSNMP = new PluginFusinvsnmpCommunicationSNMP();
-      $pfModel = new PluginFusinvsnmpModel();
+      $pfModel = new PluginFusioninventorySnmpmodel();
 
       $NetworkEquipment = new NetworkEquipment();
       $NetworkPort = new NetworkPort();

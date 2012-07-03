@@ -72,7 +72,7 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
       $sopt[101]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".
          $LANG['plugin_fusinvsnmp']['model_info'][4];
       //$sopt[101]['datatype'] = 'itemlink';
-      //$sopt[101]['itemlink_type'] = 'PluginFusinvsnmpModel';
+      //$sopt[101]['itemlink_type'] = 'PluginFusioninventorySnmpmodel';
 
       $pfConfig = new PluginFusioninventoryConfig();
 
@@ -286,7 +286,7 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
          break;
 
       // * Model List (plugins/fusinvsnmp/front/snmpmodel.php)
-      case 'PluginFusinvsnmpModel' :
+      case 'PluginFusioninventorySnmpmodel' :
          switch ($table.'.'.$field) {
 
             // ** Name of type of model (network, printer...)
@@ -970,7 +970,7 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($options=array()) {
                   while ($data_models=$DB->fetch_array($result_models)) {
                      $exclude_models[] = $data_models['id'];
                   }
-                  Dropdown::show("PluginFusinvsnmpModel",
+                  Dropdown::show("PluginFusioninventorySnmpmodel",
                                  array('name' => "snmp_model",
                                        'value' => "name",
                                        'comment' => false,
@@ -1020,14 +1020,14 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
          if ($data['itemtype'] == NETWORKING_TYPE) {
             foreach ($data['item'] as $key => $val) {
                if ($val == 1) {
-                  $pfModel = new PluginFusinvsnmpModel;
+                  $pfModel = new PluginFusioninventorySnmpmodel();
                   $pfModel->getrightmodel($key, NETWORKING_TYPE);
                }
             }
          } else if($data['itemtype'] == PRINTER_TYPE) {
             foreach ($data['item'] as $key => $val) {
                if ($val == 1) {
-                  $pfModel = new PluginFusinvsnmpModel;
+                  $pfModel = new PluginFusioninventorySnmpmodel();
                   $pfModel->getrightmodel($key, PRINTER_TYPE);
                }
             }
@@ -1215,7 +1215,7 @@ function plugin_fusinvsnmp_MassiveActionsFieldsDisplay($options=array()) {
          break;
 
       case 'glpi_plugin_fusioninventory_snmpmodels.name':
-         Dropdown::show("PluginFusinvsnmpModel",
+         Dropdown::show("PluginFusioninventorySnmpmodel",
                         array('name' => $linkfield,
                               'comment' => false));
          return true;

@@ -173,7 +173,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       while ($data_models=$DB->fetch_array($result_models)) {
          $exclude_models[] = $data_models['id'];
       }
-      Dropdown::show("PluginFusinvsnmpModel",
+      Dropdown::show("PluginFusioninventorySnmpmodel",
                      array('name'=>"model_infos",
                            'value'=>$this->oFusionInventory_networkequipment->fields['plugin_fusioninventory_snmpmodels_id'],
                            'comment'=>0,

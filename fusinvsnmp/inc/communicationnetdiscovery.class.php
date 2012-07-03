@@ -490,7 +490,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             }
             // <MODELSNMP>Printer0093</MODELSNMP>
             if (isset($xml->MODELSNMP) AND !empty($xml->MODELSNMP)) {
-               $pfModel = new PluginFusinvsnmpModel();
+               $pfModel = new PluginFusioninventorySnmpmodel();
                $model_id = $pfModel->getModelByKey($xml->MODELSNMP);
                if (($model_id == '0') AND (isset($xml->DESCRIPTION)) AND (!empty($xml->DESCRIPTION))) {
                   $model_id = $pfModel->getModelBySysdescr($xml->DESCRIPTION);
@@ -540,7 +540,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                                           "NetworkEquipment");
             }
             $pfNetworkEquipment->setValue('sysdescr', $xml->DESCRIPTION);
-            $pfModel = new PluginFusinvsnmpModel();
+            $pfModel = new PluginFusioninventorySnmpmodel();
             if (isset($xml->MODELSNMP) AND !empty($xml->MODELSNMP)) {
                $model_id = $pfModel->getModelByKey($xml->MODELSNMP);
                if ($model_id != '0') {
@@ -616,7 +616,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             }
             $pfPrinter->setValue('sysdescr', $xml->DESCRIPTION);
             if (isset($xml->MODELSNMP) AND !empty($xml->MODELSNMP)) {
-               $pfModel = new PluginFusinvsnmpModel();
+               $pfModel = new PluginFusioninventorySnmpmodel();
                $model_id = $pfModel->getModelByKey($xml->MODELSNMP);
                if ($model_id != '0') {
                   $pfPrinter->setValue('plugin_fusioninventory_snmpmodels_id', $model_id);

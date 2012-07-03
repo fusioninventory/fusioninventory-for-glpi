@@ -52,7 +52,7 @@ $pfSNMP = new PluginFusinvsnmpSNMP();
 if ((isset($_POST['update'])) && (isset($_POST['id']))) {
    $pfSNMP->update_network_infos($_POST['id'], $_POST['model_infos'], $_POST['plugin_fusinvsnmp_configsecurities_id'], $_POST['sysdescr']);
 } else if ((isset($_POST["GetRightModel"])) && (isset($_POST['id']))) {
-   $pfModel = new PluginFusinvsnmpModel();
+   $pfModel = new PluginFusioninventorySnmpmodel();
    $pfModel->getrightmodel($_POST['id'], NETWORKING_TYPE);
 }
 

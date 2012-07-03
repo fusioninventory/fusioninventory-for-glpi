@@ -219,7 +219,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       $a_oidsDB = array();
       $models_data = $DB->fetch_assoc($result);
       $pfModelMib = new PluginFusioninventorySnmpmodelMib();
-      $pfModel = new PluginFusinvsnmpModel();
+      $pfModel = new PluginFusioninventorySnmpmodel();
       $pfModel->getFromDB($models_data['id']);
       $input = array();
       $input['id'] = $pfModel->fields['id'];
@@ -317,7 +317,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       global $DB,$LANG;
 
       $pfMapping = new PluginFusioninventoryMapping();
-      $pfModel = new PluginFusinvsnmpModel();
+      $pfModel = new PluginFusioninventorySnmpmodel();
 
       $type = (string)$xml->type;
       switch ($type) {

@@ -86,8 +86,7 @@ function pluginFusinvsnmpInstall($version, $migrationname='Migration') {
 
 
 
-      // Import models
-      PluginFusinvsnmpModel::importAllModels();
+
 
       include_once (GLPI_ROOT . "/plugins/fusioninventory/inc/staticmisc.class.php");
       $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
