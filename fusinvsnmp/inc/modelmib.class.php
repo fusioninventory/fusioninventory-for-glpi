@@ -127,7 +127,7 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
                echo "</td>";
 
                echo "<td align='center'>";
-               echo Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_miboids",$data["plugin_fusinvsnmp_miboids_id"]);
+               echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmiboids",$data["plugin_fusioninventory_snmpmodelmiboids_id"]);
                echo "</td>";
 
                echo "<td align='center'>";
@@ -264,8 +264,8 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
       echo "</td>";
 
       echo "<td align='center'>";
-      Dropdown::show("PluginFusinvsnmpMibOid",
-                     array('name' => "plugin_fusinvsnmp_miboids_id",
+      Dropdown::show("PluginFusioninventorySnmpmodelMibOid",
+                     array('name' => "plugin_fusioninventory_snmpmodelmiboids_id",
                            'value' => 0));
       echo "</td>";
 
@@ -369,14 +369,14 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
             case 0:
                $ptc->addGet($p_sxml_node,
                   $data['mapping_name'],
-                  Dropdown::getDropdownName('glpi_plugin_fusinvsnmp_miboids',$data['plugin_fusinvsnmp_miboids_id']),
+                  Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids',$data['plugin_fusioninventory_snmpmodelmiboids_id']),
                   $data['mapping_name'], $data['vlan']);
                break;
             
             case 1:
                $ptc->addWalk($p_sxml_node,
                   $data['mapping_name'],
-                  Dropdown::getDropdownName('glpi_plugin_fusinvsnmp_miboids',$data['plugin_fusinvsnmp_miboids_id']),
+                  Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids',$data['plugin_fusioninventory_snmpmodelmiboids_id']),
                   $data['mapping_name'], $data['vlan']);
                break;
             

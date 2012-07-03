@@ -215,7 +215,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
          $result=$DB->query($query);
          while ($data=$DB->fetch_array($result)) {
             $oids[$data['oid_port_counter']][$data['oid_port_dyn']][$data['mapping_name']] =
-               Dropdown::getDropdownName('glpi_plugin_fusinvsnmp_miboids',$data['plugin_fusinvsnmp_miboids_id']);
+               Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids',$data['plugin_fusioninventory_snmpmodelmiboids_id']);
          }
          return $oids;
       }
