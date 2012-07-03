@@ -9,33 +9,8 @@
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_constructdevicewalks`;
-
-CREATE TABLE `glpi_plugin_fusinvsnmp_constructdevicewalks` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `plugin_fusinvsnmp_constructdevices_id` int(11) NOT NULL DEFAULT '0',
-   `log` text DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `plugin_fusinvsnmp_constructdevices_id` ( `plugin_fusinvsnmp_constructdevices_id` )
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
-
-DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_constructdevice_miboids`;
-
-CREATE TABLE `glpi_plugin_fusinvsnmp_constructdevice_miboids` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `plugin_fusinvsnmp_miboids_id` int(11) NOT NULL DEFAULT '0',
-   `plugin_fusinvsnmp_constructdevices_id` int(11) NOT NULL DEFAULT '0',
-   `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
-   `oid_port_counter` tinyint(1) NOT NULL DEFAULT '0',
-   `oid_port_dyn` tinyint(1) NOT NULL DEFAULT '0',
-   `itemtype` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-   `vlan` tinyint(1) NOT NULL DEFAULT '0',
-   PRIMARY KEY (`id`),
-   UNIQUE KEY `unicity` (`plugin_fusinvsnmp_miboids_id`, `plugin_fusinvsnmp_constructdevices_id`, `plugin_fusioninventory_mappings_id`),
-   KEY `itemtype` ( `itemtype` )
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 

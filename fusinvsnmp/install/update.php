@@ -1367,179 +1367,9 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
 
    
    
-   /*
-    * Table glpi_plugin_fusinvsnmp_constructdevicewalks
-    */
-      $newTable = "glpi_plugin_fusinvsnmp_constructdevicewalks";
-      if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `".$newTable."` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
-                      PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
-         $DB->query($query);
-      }
-         
-         $migration->changeField($newTable,
-                                 "ID",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT"); 
-         $migration->changeField($newTable,
-                                 "id",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "construct_device_id",
-                                 "plugin_fusinvsnmp_constructdevices_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusinvsnmp_constructdevices_id",
-                                 "plugin_fusinvsnmp_constructdevices_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "log",
-                                 "log",
-                                 "text DEFAULT NULL");          
-      $migration->migrationOneTable($newTable);
-         $migration->addField($newTable,
-                              "id",
-                              "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->addField($newTable,
-                              "plugin_fusinvsnmp_constructdevices_id",
-                              "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                              "log",
-                              "text DEFAULT NULL");
-      $migration->migrationOneTable($newTable);
-      
-      
-   /*
-    * Table glpi_plugin_fusinvsnmp_constructdevice_miboids
-    */
-      $newTable = "glpi_plugin_fusinvsnmp_constructdevice_miboids";
 
-      // Update with mapping
-      if (TableExists($newTable)) {
-         if (FieldExists($newTable, "mapping_name")
-                 AND FieldExists($newTable, "itemtype")) {
-            $query = "SELECT * FROM `".$newTable."`
-               GROUP BY `itemtype`, `mapping_type`";
-            $result=$DB->query($query);
-            while ($data=$DB->fetch_array($result)) {
-               if (!is_numeric($data['mapping_name'])) {
-                  $pFusioninventoryMapping = new PluginFusioninventoryMapping();
-                  $mapping = 0;
-                  $mapping_type = '';
-                  if ($data['itemtype'] == 'glpi_networkequipments') {
-                     $mapping_type = 'NetworkEquipment';
-                  } else if ($data['itemtype'] == 'glpi_printers') {
-                     $mapping_type = 'Printer';
-                  }
-                  if ($mapping = $pFusioninventoryMapping->get($mapping_type, $data['mapping_name'])) {
-                     $data['mapping_name'] = $mapping['id'];
-                     $queryu = "UPDATE `".$newTable."`
-                        SET `mapping_name`='".$mapping['id']."',
-                           `mapping_type`='".$mapping_type."'
-                        WHERE `itemtype`='".$data['itemtype']."'
-                           AND `mapping_name`='".$data['mapping_name']."'";
-                     $DB->query($queryu);
-                  }
-               }
-            }
-         }
-         $migration->changeField($newTable,
-                                 "mapping_name",
-                                 "plugin_fusioninventory_mappings_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-      }   
-   $migration->migrationOneTable($newTable);
-      if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `".$newTable."` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
-                      PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
-         $DB->query($query);
-      }
-         $migration->changeField($newTable,
-                                 "ID",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "id",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "mib_oid_id",
-                                 "plugin_fusioninventory_snmpmodelmiboids",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusioninventory_snmpmodelmiboids",
-                                 "plugin_fusioninventory_snmpmodelmiboids",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusinvsnmp_miboids_id",
-                                 "plugin_fusioninventory_snmpmodelmiboids",
-                                 "int(11) NOT NULL DEFAULT '0'");         
-         $migration->changeField($newTable,
-                                 "construct_device_id",
-                                 "plugin_fusinvsnmp_constructdevices_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusinvsnmp_constructdevices_id",
-                                 "plugin_fusinvsnmp_constructdevices_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusioninventory_mappings_id",
-                                 "plugin_fusioninventory_mappings_id",
-                                 "int(11) NOT NULL DEFAULT '0'");         
-         $migration->changeField($newTable,
-                                 "oid_port_counter",
-                                 "oid_port_counter",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "oid_port_dyn",
-                                 "oid_port_dyn",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "itemtype",
-                                 "itemtype",
-                                 "varchar(100) COLLATE utf8_unicode_ci NOT NULL");
-         $migration->changeField($newTable,
-                                 "vlan",
-                                 "vlan",
-                                 "tinyint(1) NOT NULL DEFAULT '0'"); 
-      $migration->migrationOneTable($newTable);
-         $migration->dropField($newTable, "mapping_type");
-      $migration->migrationOneTable($newTable);      
-         $migration->addField($newTable,
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->addField($newTable,
-                                 "plugin_fusioninventory_snmpmodelmiboids",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "plugin_fusinvsnmp_constructdevices_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "plugin_fusioninventory_mappings_id",
-                                 "int(11) NOT NULL DEFAULT '0'");         
-         $migration->addField($newTable,
-                                 "oid_port_counter",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "oid_port_dyn",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "itemtype",
-                                 "varchar(100) COLLATE utf8_unicode_ci NOT NULL");
-         $migration->addField($newTable,
-                                 "vlan",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->addKey($newTable,
-                            array("plugin_fusioninventory_snmpmodelmiboids", "plugin_fusinvsnmp_constructdevices_id", "plugin_fusioninventory_mappings_id"),
-                            "unicity",
-                            "UNIQUE");
-      $migration->migrationOneTable($newTable);
-         
+      
+
    
    /*
     * Table glpi_plugin_fusinvsnmp_networkportconnectionlogs
@@ -3359,7 +3189,9 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    changeDisplayPreference("5157", "PluginFusinvsnmpNetworkEquipment");
    changeDisplayPreference("5159", "PluginFusinvsnmpIPRange");
    changeDisplayPreference("5162", "PluginFusinvsnmpNetworkPortLog");
-   changeDisplayPreference("5167", "PluginFusinvsnmpConstructDevice");
+   changeDisplayPreference("5167", "PluginFusioninventorySnmpmodelConstructDevice");
+   changeDisplayPreference("PluginFusinvsnmpConstructDevice", 
+                           "PluginFusioninventorySnmpmodelConstructDevice");
    changeDisplayPreference("5168", "PluginFusinvsnmpPrinterLog");
    
    /*

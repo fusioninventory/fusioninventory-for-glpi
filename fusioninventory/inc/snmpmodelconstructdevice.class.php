@@ -239,11 +239,11 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
 
       // Used mapping name :
       $a_mapping_used = array();
-      $query = "SELECT `glpi_plugin_fusinvsnmp_constructdevice_miboids`.*,
+      $query = "SELECT `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`.*,
              `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`
-         FROM `glpi_plugin_fusinvsnmp_constructdevice_miboids`
+         FROM `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`
             LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-               ON `glpi_plugin_fusinvsnmp_constructdevice_miboids`.`plugin_fusioninventory_mappings_id`=
+               ON `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`.`plugin_fusioninventory_mappings_id`=
                   `glpi_plugin_fusioninventory_mappings`.`id`
          WHERE `plugin_fusinvsnmp_constructdevices_id`='".$id."'
             AND `mapping_name` != ''";
@@ -363,7 +363,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
                            echo "<br/>";
                         }
                         $query_oid_mib = "SELECT *
-                           FROM glpi_plugin_fusinvsnmp_constructdevice_miboids
+                           FROM glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids
                            WHERE plugin_fusinvsnmp_constructdevices_id='".$id."'
                               AND plugin_fusinvsnmp_miboids_id='".$a_oids2[$num]."'";
                         $a_mibs = array();
@@ -505,12 +505,12 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
             // Load mibs
             $a_mib = array();
             $count_mib = 0;
-            $query_mibs = "SELECT `glpi_plugin_fusinvsnmp_constructdevice_miboids`.*,
+            $query_mibs = "SELECT `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`.*,
                   `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`,
                   `glpi_plugin_fusioninventory_mappings`.`itemtype`
-               FROM `glpi_plugin_fusinvsnmp_constructdevice_miboids`
+               FROM `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`
                   LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-                     ON `glpi_plugin_fusinvsnmp_constructdevice_miboids`.`plugin_fusioninventory_mappings_id`=
+                     ON `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`.`plugin_fusioninventory_mappings_id`=
                         `glpi_plugin_fusioninventory_mappings`.`id`
                WHERE plugin_fusinvsnmp_constructdevices_id='".$data["id"]."' ";
             if ($result_mibs = $DB->query($query_mibs)) {
@@ -581,12 +581,12 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
                $a_input['is_active'] = 1;
                $id = $ptmi->add($a_input);
                
-               $query_mibs = "SELECT `glpi_plugin_fusinvsnmp_constructdevice_miboids`.*,
+               $query_mibs = "SELECT `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`.*,
                   `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`,
                   `glpi_plugin_fusioninventory_mappings`.`itemtype`
-               FROM `glpi_plugin_fusinvsnmp_constructdevice_miboids`
+               FROM `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`
                   LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-                     ON `glpi_plugin_fusinvsnmp_constructdevice_miboids`.`plugin_fusioninventory_mappings_id`=
+                     ON `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`.`plugin_fusioninventory_mappings_id`=
                         `glpi_plugin_fusioninventory_mappings`.`id`
                WHERE `plugin_fusinvsnmp_constructdevices_id`='".$data["id"]."' ";
                if ($result_mibs = $DB->query($query_mibs)) {
@@ -707,11 +707,11 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
                   $sxml_device->addAttribute('MODELSNMP', $line['discovery_key']);
                }               
 
-               $query_serial = "SELECT `glpi_plugin_fusinvsnmp_constructdevice_miboids`.*,
+               $query_serial = "SELECT `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`.*,
                      `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`
-                  FROM `glpi_plugin_fusinvsnmp_constructdevice_miboids`
+                  FROM `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`
                      LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-                        ON `glpi_plugin_fusinvsnmp_constructdevice_miboids`.`plugin_fusioninventory_mappings_id`=
+                        ON `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`.`plugin_fusioninventory_mappings_id`=
                            `glpi_plugin_fusioninventory_mappings`.`id`
                   WHERE `plugin_fusinvsnmp_constructdevices_id`='".$data['id']."'
                      AND `mapping_name`='serial'
@@ -723,12 +723,12 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
                                                $line['plugin_fusinvsnmp_miboids_id']));
                }
 
-               $query_serial = "SELECT `glpi_plugin_fusinvsnmp_constructdevice_miboids`.*,
+               $query_serial = "SELECT `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`.*,
                      `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`,
                      `glpi_plugin_fusioninventory_mappings`.`itemtype`
-                  FROM `glpi_plugin_fusinvsnmp_constructdevice_miboids`
+                  FROM `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`
                      LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-                        ON `glpi_plugin_fusinvsnmp_constructdevice_miboids`.`plugin_fusioninventory_mappings_id`=
+                        ON `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`.`plugin_fusioninventory_mappings_id`=
                            `glpi_plugin_fusioninventory_mappings`.`id`
                   WHERE `plugin_fusinvsnmp_constructdevices_id`='".$data['id']."'
                      AND ((`mapping_name`='macaddr' AND `itemtype`='NetworkEquipment')
