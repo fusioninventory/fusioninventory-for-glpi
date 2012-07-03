@@ -200,7 +200,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $migration->renameTable("glpi_plugin_fusioninventory_construct_device", "glpi_plugin_fusinvsnmp_constructdevices");
    $migration->renameTable("glpi_plugin_fusioninventory_construct_mibs", "glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids");
    $migration->renameTable("glpi_plugin_fusioninventory_construct_walks", "glpi_plugin_fusinvsnmp_constructdevicewalks");
-   $migration->renameTable("glpi_plugin_fusioninventory_networking", "glpi_plugin_fusinvsnmp_networkequipments");
+   $migration->renameTable("glpi_plugin_fusioninventory_networking", "glpi_plugin_fusioninventory_networkequipments");
    $migration->renameTable("glpi_plugin_fusioninventory_networking_ifaddr", "glpi_plugin_fusinvsnmp_networkequipmentips");
    $migration->renameTable("glpi_plugin_fusioninventory_printers", "glpi_plugin_fusinvsnmp_printers");
    $migration->renameTable("glpi_plugin_fusioninventory_printers_cartridges", "glpi_plugin_fusinvsnmp_printercartridges");

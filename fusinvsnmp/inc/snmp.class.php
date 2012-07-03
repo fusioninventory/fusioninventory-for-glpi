@@ -59,11 +59,11 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
       global $DB;
       
       $query = "SELECT *
-                FROM `glpi_plugin_fusinvsnmp_networkequipments`
+                FROM `glpi_plugin_fusioninventory_networkequipments`
                 WHERE `networkequipments_id`='".$id."';";
       $result = $DB->query($query);
       if ($DB->numrows($result) == "0") {
-         $queryInsert = "INSERT INTO `glpi_plugin_fusinvsnmp_networkequipments`(`networkequipments_id`)
+         $queryInsert = "INSERT INTO `glpi_plugin_fusioninventory_networkequipments`(`networkequipments_id`)
                          VALUES('".$id."');";
 
          $DB->query($queryInsert);
@@ -71,7 +71,7 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
       if (empty($plugin_fusinvsnmp_configsecurities_id)) {
          $plugin_fusinvsnmp_configsecurities_id = 0;
       }
-      $query = "UPDATE `glpi_plugin_fusinvsnmp_networkequipments`
+      $query = "UPDATE `glpi_plugin_fusioninventory_networkequipments`
                 SET `plugin_fusioninventory_snmpmodels_id`='".$plugin_fusinvsnmp_models_id."',
                     `plugin_fusinvsnmp_configsecurities_id`='".$plugin_fusinvsnmp_configsecurities_id."',
                     `sysdescr`='".$sysdescr."'

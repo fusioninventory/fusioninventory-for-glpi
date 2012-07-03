@@ -108,7 +108,7 @@ if (($state != "") AND ($state != "0")) {
 $query = "SELECT * FROM (
 SELECT `name`, `last_fusioninventory_update`, `serial`, `otherserial`,
    `networkequipmentmodels_id`, `glpi_networkequipments`.`id` as `network_id`, 0 as `printer_id`,
-   `plugin_fusioninventory_snmpmodels_id`, `plugin_fusinvsnmp_configsecurities_id`, `ip` FROM `glpi_plugin_fusinvsnmp_networkequipments`
+   `plugin_fusioninventory_snmpmodels_id`, `plugin_fusinvsnmp_configsecurities_id`, `ip` FROM `glpi_plugin_fusioninventory_networkequipments`
 JOIN `glpi_networkequipments` on `networkequipments_id` = `glpi_networkequipments`.`id`
 WHERE ((NOW() > ADDDATE(last_fusioninventory_update, INTERVAL ".$nbdays." DAY) OR last_fusioninventory_update IS NULL)
    ".$state_sql.")

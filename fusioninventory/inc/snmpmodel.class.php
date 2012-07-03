@@ -187,9 +187,9 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
 
          case NETWORKING_TYPE :
             $query = "SELECT * 
-                      FROM `glpi_plugin_fusinvsnmp_networkequipments`
+                      FROM `glpi_plugin_fusioninventory_networkequipments`
                            LEFT JOIN `glpi_plugin_fusioninventory_snmpmodelmibs`
-                           ON `glpi_plugin_fusinvsnmp_networkequipments`.`plugin_fusioninventory_snmpmodels_id`=
+                           ON `glpi_plugin_fusioninventory_networkequipments`.`plugin_fusioninventory_snmpmodels_id`=
                               `glpi_plugin_fusioninventory_snmpmodelmibs`.`plugin_fusioninventory_snmpmodels_id`
                       WHERE `networkequipments_id`='".$ID_Device."'
                             AND `glpi_plugin_fusioninventory_snmpmodelmibs`.`is_active`='1' ";
@@ -235,7 +235,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
          switch($type) {
 
             case 'NetworkEquipment':
-               $pfNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
+               $pfNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
                $NetworkEquipment = new NetworkEquipment();
                if($NetworkEquipment->getFromDB($device_id)) {
                   $NetworkEquipment->check($device_id,'r');
@@ -303,7 +303,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
                switch($type) {
 
                   case 'NetworkEquipment':
-                     $query = "UPDATE `glpi_plugin_fusinvsnmp_networkequipments`
+                     $query = "UPDATE `glpi_plugin_fusioninventory_networkequipments`
                                SET `plugin_fusioninventory_snmpmodels_id`='".$plugin_fusinvsnmp_models_id."'
                                WHERE `networkequipments_id`='".$device_id."'";
                      $DB->query($query);
@@ -397,7 +397,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       echo "</table>";
 
       // Reload model for networkequipment have sysdescr
-      $networkequipmentext = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
+      $networkequipmentext = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
       $a_networkequipments = $networkequipmentext->find("`sysdescr`!=''");
       foreach ($a_networkequipments as $a_networkequipment) {
          $pfModel->getrightmodel($a_networkequipment['networkequipments_id'], "NetworkEquipment");

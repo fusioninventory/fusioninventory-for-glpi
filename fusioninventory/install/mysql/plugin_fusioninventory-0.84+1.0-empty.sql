@@ -554,6 +554,27 @@ CREATE TABLE `glpi_plugin_fusioninventory_snmpmodels` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networkequipments`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_networkequipments` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `networkequipments_id` int(11) NOT NULL DEFAULT '0',
+   `sysdescr` text COLLATE utf8_unicode_ci DEFAULT NULL,
+   `plugin_fusioninventory_snmpmodels_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusinvsnmp_configsecurities_id` int(11) NOT NULL DEFAULT '0',
+   `uptime` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+   `cpu` int(3) NOT NULL DEFAULT '0' COMMENT '%',
+   `memory` int(11) NOT NULL DEFAULT '0',
+   `last_fusioninventory_update` datetime DEFAULT NULL,
+   `last_PID_update` int(11) NOT NULL DEFAULT '0',
+   PRIMARY KEY (`id`),
+   KEY `networkequipments_id` (`networkequipments_id`),
+   KEY `plugin_fusioninventory_snmpmodels_id` (`plugin_fusioninventory_snmpmodels_id`,`plugin_fusinvsnmp_configsecurities_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
+
 
 
 

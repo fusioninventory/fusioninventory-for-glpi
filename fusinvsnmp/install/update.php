@@ -267,7 +267,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    $a_input = array();
    $a_input['itemtype']    = 'NetworkEquipment';
    $a_input['name']        = 'uptime';
-   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkequipments';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkequipments';
    $a_input['tablefield']  = 'uptime';
    $a_input['locale']      = 3;
    $pFusioninventoryMapping->set($a_input);
@@ -275,7 +275,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    $a_input = array();
    $a_input['itemtype']    = 'NetworkEquipment';
    $a_input['name']        = 'cpu';
-   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkequipments';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkequipments';
    $a_input['tablefield']  = 'cpu';
    $a_input['locale']      = 12;
    $pFusioninventoryMapping->set($a_input);
@@ -283,7 +283,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    $a_input = array();
    $a_input['itemtype']    = 'NetworkEquipment';
    $a_input['name']        = 'cpuuser';
-   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkequipments';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkequipments';
    $a_input['tablefield']  = 'cpu';
    $a_input['locale']      = 401;
    $pFusioninventoryMapping->set($a_input);
@@ -291,7 +291,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    $a_input = array();
    $a_input['itemtype']    = 'NetworkEquipment';
    $a_input['name']        = 'cpusystem';
-   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkequipments';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkequipments';
    $a_input['tablefield']  = 'cpu';
    $a_input['locale']      = 402;
    $pFusioninventoryMapping->set($a_input);
@@ -331,7 +331,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    $a_input = array();
    $a_input['itemtype']    = 'NetworkEquipment';
    $a_input['name']        = 'memory';
-   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkequipments';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkequipments';
    $a_input['tablefield']  = 'memory';
    $a_input['locale']      = 22;
    $pFusioninventoryMapping->set($a_input);
@@ -1379,9 +1379,11 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
 
       
    /*
-    * glpi_plugin_fusinvsnmp_networkequipments
+    * Table glpi_plugin_fusioninventory_networkequipments
     */
-      $newTable = "glpi_plugin_fusinvsnmp_networkequipments";
+      $newTable = "glpi_plugin_fusioninventory_networkequipments";
+      $migration->renameTable("glpi_plugin_fusinvsnmp_networkequipments", 
+                              $newTable);      
       $migration->renameTable("glpi_plugin_tracker_networking", 
                               $newTable);
       if (!TableExists($newTable)) {
@@ -2757,13 +2759,13 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
     * Clean for switch more informations again in DB when switch is purged
     */
    echo "Clean for switch more informations again in DB when switch is purged\n";
-   $query_select = "SELECT `glpi_plugin_fusinvsnmp_networkequipments`.`id`
-                    FROM `glpi_plugin_fusinvsnmp_networkequipments`
+   $query_select = "SELECT `glpi_plugin_fusioninventory_networkequipments`.`id`
+                    FROM `glpi_plugin_fusioninventory_networkequipments`
                           LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `networkequipments_id`
                     WHERE `glpi_networkequipments`.`id` IS NULL";
    $result=$DB->query($query_select);
    while ($data=$DB->fetch_array($result)) {
-       $query_del = "DELETE FROM `glpi_plugin_fusinvsnmp_networkequipments`
+       $query_del = "DELETE FROM `glpi_plugin_fusioninventory_networkequipments`
          WHERE `id`='".$data["id"]."'";
       $DB->query($query_del);
    }
@@ -2845,6 +2847,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    changeDisplayPreference("5152", "PluginFusinvsnmpConfigSecurity");
    changeDisplayPreference("5156", "PluginFusinvsnmpPrinterCartridge");
    changeDisplayPreference("5157", "PluginFusinvsnmpNetworkEquipment");
+   changeDisplayPreference("PluginFusinvsnmpNetworkEquipment", "PluginFusioninventoryNetworkEquipment");
    changeDisplayPreference("5159", "PluginFusinvsnmpIPRange");
    changeDisplayPreference("5162", "PluginFusinvsnmpNetworkPortLog");
    changeDisplayPreference("5167", "PluginFusioninventorySnmpmodelConstructDevice");
@@ -2903,18 +2906,18 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
       
       foreach ($a_check as $num=>$rank) {
          $query = "SELECT * FROM `glpi_displaypreferences` 
-         WHERE `itemtype` = 'PluginFusinvsnmpNetworkEquipment'
+         WHERE `itemtype` = 'PluginFusioninventoryNetworkEquipment'
          AND `num`='".$num."'
             AND `users_id`='0'";
          $result=$DB->query($query);
          if ($DB->numrows($result) == '0') {
             $query = "INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) 
-                        VALUES (NULL,'PluginFusinvsnmpNetworkEquipment', '".$num."', '".$rank."', '0')";
+                        VALUES (NULL,'PluginFusioninventoryNetworkEquipment', '".$num."', '".$rank."', '0')";
             $DB->query($query);
          }
       }
       $query = "SELECT * FROM `glpi_displaypreferences` 
-      WHERE `itemtype` = 'PluginFusinvsnmpNetworkEquipment'
+      WHERE `itemtype` = 'PluginFusioninventoryNetworkEquipment'
          AND `users_id`='0'";
       $result=$DB->query($query);
       while ($data=$DB->fetch_array($result)) {

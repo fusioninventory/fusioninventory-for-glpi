@@ -46,15 +46,15 @@ if (!defined('GLPI_ROOT')) {
 
 require_once(GLPI_ROOT.'/plugins/fusinvsnmp/inc/commondbtm.class.php');
 
-class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
+class PluginFusioninventoryNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
    private $oFusionInventory_networkequipment;
    private $newPorts=array(), $updatesPorts=array();
 
    function __construct() {
       parent::__construct("glpi_networkequipments");
       $this->dohistory=true;
-      $this->oFusionInventory_networkequipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
-      $this->oFusionInventory_networkequipment->type = 'PluginFusinvsnmpNetworkEquipment';
+      $this->oFusionInventory_networkequipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
+      $this->oFusionInventory_networkequipment->type = 'PluginFusioninventoryNetworkEquipment';
    }
 
    
@@ -74,7 +74,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       parent::load($p_id);
 
       $query = "SELECT `id`
-                FROM `glpi_plugin_fusinvsnmp_networkequipments`
+                FROM `glpi_plugin_fusioninventory_networkequipments`
                 WHERE `networkequipments_id` = '".$this->getValue('id')."';";
       $result = $DB->query($query);
       if ($result) {
@@ -329,7 +329,7 @@ function appear_array(id){
       echo "<tr class='tab_bg_1'>";
       $query_array = "SELECT *
                       FROM `glpi_displaypreferences`
-                      WHERE `itemtype`='PluginFusinvsnmpNetworkEquipment'
+                      WHERE `itemtype`='PluginFusioninventoryNetworkEquipment'
                             AND `users_id`='0'
                       ORDER BY `rank`;";
       $result_array=$DB->query($query_array);
@@ -372,7 +372,7 @@ function appear_array(id){
 
       $query_array = "SELECT *
                       FROM `glpi_displaypreferences`
-                      WHERE `itemtype`='PluginFusinvsnmpNetworkEquipment'
+                      WHERE `itemtype`='PluginFusioninventoryNetworkEquipment'
                              AND `users_id`='0'
                       ORDER BY `rank`;";
       $result_array=$DB->query($query_array);
@@ -480,7 +480,7 @@ function appear_array(id){
             
             $query_array = "SELECT *
                             FROM `glpi_displaypreferences`
-                            WHERE `itemtype`='PluginFusinvsnmpNetworkEquipment'
+                            WHERE `itemtype`='PluginFusioninventoryNetworkEquipment'
                                   AND `users_id`='0'
                             ORDER BY `rank`;";
             $result_array=$DB->query($query_array);

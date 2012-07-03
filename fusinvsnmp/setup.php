@@ -75,7 +75,7 @@ function plugin_init_fusinvsnmp() {
 
 
    Plugin::registerClass('PluginFusioninventorySnmpmodel');
-   Plugin::registerClass('PluginFusinvsnmpNetworkEquipment');
+   Plugin::registerClass('PluginFusioninventoryNetworkEquipment');
    Plugin::registerClass('PluginFusinvsnmpPrinter');
    Plugin::registerClass('PluginFusinvsnmpPrinterCartridge');
    Plugin::registerClass('PluginFusinvsnmpConfigSecurity');

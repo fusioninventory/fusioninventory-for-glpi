@@ -23,24 +23,6 @@
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_networkequipments`;
-
-CREATE TABLE `glpi_plugin_fusinvsnmp_networkequipments` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `networkequipments_id` int(11) NOT NULL DEFAULT '0',
-   `sysdescr` text COLLATE utf8_unicode_ci DEFAULT NULL,
-   `plugin_fusinvsnmp_models_id` int(11) NOT NULL DEFAULT '0',
-   `plugin_fusinvsnmp_configsecurities_id` int(11) NOT NULL DEFAULT '0',
-   `uptime` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
-   `cpu` int(3) NOT NULL DEFAULT '0' COMMENT '%',
-   `memory` int(11) NOT NULL DEFAULT '0',
-   `last_fusioninventory_update` datetime DEFAULT NULL,
-   `last_PID_update` int(11) NOT NULL DEFAULT '0',
-   PRIMARY KEY (`id`),
-   KEY `networkequipments_id` (`networkequipments_id`),
-   KEY `plugin_fusinvsnmp_models_id` (`plugin_fusinvsnmp_models_id`,`plugin_fusinvsnmp_configsecurities_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
 
 
 DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_networkequipmentips`;
@@ -112,7 +94,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_printers` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `printers_id` int(11) NOT NULL DEFAULT '0',
    `sysdescr` text COLLATE utf8_unicode_ci DEFAULT NULL,
-   `plugin_fusinvsnmp_models_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_snmpmodels_id` int(11) NOT NULL DEFAULT '0',
    `plugin_fusinvsnmp_configsecurities_id` int(11) NOT NULL DEFAULT '0',
    `frequence_days` int(5) NOT NULL DEFAULT '1',
    `last_fusioninventory_update` datetime DEFAULT NULL,
@@ -120,7 +102,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_printers` (
    UNIQUE KEY `unicity` (`printers_id`),
    KEY `plugin_fusinvsnmp_configsecurities_id` (`plugin_fusinvsnmp_configsecurities_id`),
    KEY `printers_id` (`printers_id`),
-   KEY `plugin_fusinvsnmp_models_id` (`plugin_fusinvsnmp_models_id`)
+   KEY `plugin_fusioninventory_snmpmodels_id` (`plugin_fusioninventory_snmpmodels_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
@@ -197,7 +179,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_unknowndevices` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `plugin_fusioninventory_unknowndevices_id` int(11) NOT NULL DEFAULT '0',
    `sysdescr` text DEFAULT NULL,
-   `plugin_fusinvsnmp_models_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_snmpmodels_id` int(11) NOT NULL DEFAULT '0',
    `plugin_fusinvsnmp_configsecurities_id` int(11) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
    KEY `plugin_fusioninventory_unknowndevices_id` (`plugin_fusioninventory_unknowndevices_id`)
@@ -262,19 +244,19 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
           (NULL, 'PluginFusinvsnmpConfigSecurity', '9', '6', '0'),
           (NULL, 'PluginFusinvsnmpConfigSecurity', '10', '7', '0'),
 
-          (NULL,'PluginFusinvsnmpNetworkEquipment', '2', '1', '0'),
-          (NULL,'PluginFusinvsnmpNetworkEquipment', '3', '2', '0'),
-          (NULL,'PluginFusinvsnmpNetworkEquipment', '4', '3', '0'),
-          (NULL,'PluginFusinvsnmpNetworkEquipment', '5', '4', '0'),
-          (NULL,'PluginFusinvsnmpNetworkEquipment', '6', '5', '0'),
-          (NULL,'PluginFusinvsnmpNetworkEquipment', '7', '6', '0'),
-          (NULL,'PluginFusinvsnmpNetworkEquipment', '8', '7', '0'),
-          (NULL,'PluginFusinvsnmpNetworkEquipment', '9', '8', '0'),
-          (NULL,'PluginFusinvsnmpNetworkEquipment', '10', '9', '0'),
-          (NULL,'PluginFusinvsnmpNetworkEquipment', '11', '10', '0'),
-          (NULL,'PluginFusinvsnmpNetworkEquipment', '14', '11', '0'),
-          (NULL,'PluginFusinvsnmpNetworkEquipment', '12', '12', '0'),
-          (NULL,'PluginFusinvsnmpNetworkEquipment', '13', '13', '0'),
+          (NULL,'PluginFusioninventoryNetworkEquipment', '2', '1', '0'),
+          (NULL,'PluginFusioninventoryNetworkEquipment', '3', '2', '0'),
+          (NULL,'PluginFusioninventoryNetworkEquipment', '4', '3', '0'),
+          (NULL,'PluginFusioninventoryNetworkEquipment', '5', '4', '0'),
+          (NULL,'PluginFusioninventoryNetworkEquipment', '6', '5', '0'),
+          (NULL,'PluginFusioninventoryNetworkEquipment', '7', '6', '0'),
+          (NULL,'PluginFusioninventoryNetworkEquipment', '8', '7', '0'),
+          (NULL,'PluginFusioninventoryNetworkEquipment', '9', '8', '0'),
+          (NULL,'PluginFusioninventoryNetworkEquipment', '10', '9', '0'),
+          (NULL,'PluginFusioninventoryNetworkEquipment', '11', '10', '0'),
+          (NULL,'PluginFusioninventoryNetworkEquipment', '14', '11', '0'),
+          (NULL,'PluginFusioninventoryNetworkEquipment', '12', '12', '0'),
+          (NULL,'PluginFusioninventoryNetworkEquipment', '13', '13', '0'),
 
           (NULL,'PluginFusinvsnmpAgent', '8', '1', '0'),
           (NULL,'PluginFusinvsnmpAgent', '9', '2', '0'),
@@ -327,19 +309,19 @@ INSERT INTO `glpi_plugin_fusioninventory_mappings`
           ('NetworkEquipment','firmware2','','',2,NULL),
           ('NetworkEquipment','contact','glpi_networkequipments','contact',403,NULL),
           ('NetworkEquipment','comments','glpi_networkequipments','comment',404,NULL),
-          ('NetworkEquipment','uptime','glpi_plugin_fusinvsnmp_networkequipments',
+          ('NetworkEquipment','uptime','glpi_plugin_fusioninventory_networkequipments',
              'uptime',3,NULL),
-          ('NetworkEquipment','cpu','glpi_plugin_fusinvsnmp_networkequipments',
+          ('NetworkEquipment','cpu','glpi_plugin_fusioninventory_networkequipments',
              'cpu',12,NULL),
-          ('NetworkEquipment','cpuuser','glpi_plugin_fusinvsnmp_networkequipments',
+          ('NetworkEquipment','cpuuser','glpi_plugin_fusioninventory_networkequipments',
              'cpu',401,NULL),
-          ('NetworkEquipment','cpusystem','glpi_plugin_fusinvsnmp_networkequipments',
+          ('NetworkEquipment','cpusystem','glpi_plugin_fusioninventory_networkequipments',
              'cpu',402,NULL),
           ('NetworkEquipment','serial','glpi_networkequipments','serial',13,NULL),
           ('NetworkEquipment','otherserial','glpi_networkequipments','otherserial',419,NULL),
           ('NetworkEquipment','name','glpi_networkequipments','name',20,NULL),
           ('NetworkEquipment','ram','glpi_networkequipments','ram',21,NULL),
-          ('NetworkEquipment','memory','glpi_plugin_fusinvsnmp_networkequipments',
+          ('NetworkEquipment','memory','glpi_plugin_fusioninventory_networkequipments',
              'memory',22,NULL),
           ('NetworkEquipment','vtpVlanName','','',19,NULL),
           ('NetworkEquipment','vmvlan','','',430,NULL),

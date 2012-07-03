@@ -182,10 +182,10 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
             break;
          
          case 'NetworkEquipment':
-            $pfNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
-            $_SESSION['glpi_plugins_fusinvsnmp_table'] = "glpi_plugin_fusinvsnmp_networkequipments";
+            $pfNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
+            $_SESSION['glpi_plugins_fusinvsnmp_table'] = "glpi_plugin_fusioninventory_networkequipments";
             $query = "SELECT *
-                      FROM `glpi_plugin_fusinvsnmp_networkequipments`
+                      FROM `glpi_plugin_fusioninventory_networkequipments`
                       WHERE `networkequipments_id`='".$items_id."' ";
             $result = $DB->query($query);
             if ($DB->numrows($result) > 0) {

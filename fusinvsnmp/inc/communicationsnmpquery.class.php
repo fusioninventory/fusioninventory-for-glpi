@@ -330,7 +330,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       global $LANG;
       
       $errors='';
-      $this->ptd = new PluginFusinvsnmpNetworkEquipment();
+      $this->ptd = new PluginFusioninventoryNetworkEquipment();
       $this->ptd->load($this->deviceId);
 
       $_SESSION["plugin_fusinvinventory_entity"] = $this->ptd->getValue('entities_id');

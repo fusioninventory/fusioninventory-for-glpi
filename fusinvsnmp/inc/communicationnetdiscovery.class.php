@@ -521,7 +521,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             $item->update($input);
 
             // Update SNMP informations
-            $pfNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
+            $pfNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
             $a_snmpnetworkequipments = $pfNetworkEquipment->find("`networkequipments_id`='".$item->getID()."'");
             if (count($a_snmpnetworkequipments) > 0) {
                $a_snmpnetworkequipment = current($a_snmpnetworkequipments);

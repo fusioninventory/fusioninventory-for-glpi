@@ -96,7 +96,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                          `glpi_networkequipments`.`ip` AS `gnifaddr`,
                          `plugin_fusinvsnmp_configsecurities_id`, `plugin_fusioninventory_snmpmodels_id`
                   FROM `glpi_networkequipments`
-                  LEFT JOIN `glpi_plugin_fusinvsnmp_networkequipments`
+                  LEFT JOIN `glpi_plugin_fusioninventory_networkequipments`
                        ON `networkequipments_id`=`glpi_networkequipments`.`id`
                   INNER join `glpi_plugin_fusioninventory_snmpmodels`
                        ON `plugin_fusioninventory_snmpmodels_id`=`glpi_plugin_fusioninventory_snmpmodels`.`id`
@@ -150,7 +150,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                             `glpi_networkequipments`.`ip` AS `gnifaddr`,
                             `plugin_fusinvsnmp_configsecurities_id`, `plugin_fusioninventory_snmpmodels_id`
                      FROM `glpi_networkequipments`
-                     LEFT JOIN `glpi_plugin_fusinvsnmp_networkequipments`
+                     LEFT JOIN `glpi_plugin_fusioninventory_networkequipments`
                           ON `networkequipments_id`=`glpi_networkequipments`.`id`
                      INNER join `glpi_plugin_fusioninventory_snmpmodels`
                           ON `plugin_fusioninventory_snmpmodels_id`=`glpi_plugin_fusioninventory_snmpmodels`.`id`
@@ -499,7 +499,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
 
       $NetworkEquipment = new NetworkEquipment();
       $NetworkPort = new NetworkPort();
-      $pfNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
+      $pfNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
       $pfPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
 
       $modelslistused = array();
