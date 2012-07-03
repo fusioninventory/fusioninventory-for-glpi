@@ -44,12 +44,11 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-class PluginFusinvsnmpMibObject extends CommonDropdown {
-   // From CommonDBTM
+class PluginFusioninventorySnmpmodelMibLabel extends CommonDropdown {
 
    static function getTypeName() {
 
-      return "Plugin FusionInventory MIB object";
+      return "Plugin FusionInventory MIB label";
    }
 }
 

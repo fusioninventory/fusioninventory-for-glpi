@@ -40,16 +40,14 @@
    ------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access this file directly");
-}
+define('GLPI_ROOT', '../../..');
+include (GLPI_ROOT . "/inc/includes.php");
 
-class PluginFusinvsnmpMibLabel extends CommonDropdown {
+Session::checkLoginUser();
 
-   static function getTypeName() {
+Plugin::load('fusioninventory',true);
 
-      return "Plugin FusionInventory MIB label";
-   }
-}
+$dropdown = new PluginFusioninventorySnmpmodelMibOid();
+include (GLPI_ROOT . "/front/dropdown.common.php");
 
 ?>

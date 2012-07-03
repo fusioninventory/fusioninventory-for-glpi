@@ -387,6 +387,56 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercomputers` (
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_snmpmodelmiblabels`;
+
+CREATE TABLE `glpi_plugin_fusinvsnmp_snmpmodelmiblabels` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `comment` text COLLATE utf8_unicode_ci DEFAULT NULL,
+   PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_snmpmodelmibobjects`;
+
+CREATE TABLE `glpi_plugin_fusinvsnmp_snmpmodelmibobjects` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `comment` text COLLATE utf8_unicode_ci DEFAULT NULL,
+   PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_snmpmodelmiboids`;
+
+CREATE TABLE `glpi_plugin_fusinvsnmp_snmpmodelmiboids` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `comment` text COLLATE utf8_unicode_ci DEFAULT NULL,
+   PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
+
+
+
+
+
+
 ## INSERT
 ## glpi_displaypreferences
 INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) 

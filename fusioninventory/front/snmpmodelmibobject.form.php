@@ -47,7 +47,7 @@ Session::checkLoginUser();
 
 Plugin::load('fusioninventory',true);
 
-$dropdown = new PluginFusinvsnmpMibOid();
-include (GLPI_ROOT . "/front/dropdown.common.php");
+$dropdown = new PluginFusioninventorySnmpmodelMibObject();
+include (GLPI_ROOT . "/front/dropdown.common.form.php");
 
 ?>
