@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-class PluginFusinvsnmpConstructDevice extends CommonDBTM {
+class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
 
    function showForm($id, $options=array()) {
       global $DB,$LANG;
@@ -121,7 +121,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
    function manageWalks($target, $id) {
       global $DB,$CFG_GLPI,$LANG;
 
-      $query = "SELECT * FROM glpi_plugin_fusinvsnmp_constructdevices
+      $query = "SELECT * FROM glpi_plugin_fusioninventory_snmpmodelconstructdevices
          WHERE id='".$id."'";
       $result = $DB->query($query);
       $a_device = $DB->fetch_assoc($result);

@@ -117,13 +117,13 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
                echo "</td>";
 
                echo "<td align='center'>";
-               echo Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_miblabels",$data["plugin_fusinvsnmp_miblabels_id"]);
+               echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmiblabels",$data["plugin_fusioninventory_snmpmodelmiblabels_id"]);
                echo "</td>";
 
                echo "<td align='center'>";
-               $object_used[] = $data["plugin_fusinvsnmp_mibobjects_id"];
-               echo Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_mibobjects",
-                                    $data["plugin_fusinvsnmp_mibobjects_id"]);
+               $object_used[] = $data["plugin_fusioninventory_snmpmodelmibobjects_id"];
+               echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmibobjects",
+                                    $data["plugin_fusioninventory_snmpmodelmibobjects_id"]);
                echo "</td>";
 
                echo "<td align='center'>";
@@ -253,13 +253,13 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
 
       echo "<td align='center'>";
       Dropdown::show("PluginFusinvsnmpMibLabel",
-                     array('name' => "plugin_fusinvsnmp_miblabels_id",
+                     array('name' => "plugin_fusioninventory_snmpmodelmiblabels_id",
                            'value' => 0));
       echo "</td>";
 
       echo "<td align='center'>";
-      Dropdown::show("PluginFusinvsnmpMibObject",
-                     array('name' => "plugin_fusinvsnmp_mibobjects_id",
+      Dropdown::show("PluginFusioninventorySnmpmodelMibObject",
+                     array('name' => "plugin_fusioninventory_snmpmodelmibobjects_id",
                            'value' => 0));
       echo "</td>";
 

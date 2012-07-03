@@ -2169,8 +2169,125 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       $migration->migrationOneTable($newTable);
       
+      
+      
+   /*
+    * Table glpi_plugin_fusioninventory_snmpmodelmiblabels
+    */
+      $newTable = "glpi_plugin_fusioninventory_snmpmodelmiblabels";
+      $migration->renameTable("glpi_dropdown_plugin_tracker_mib_label", 
+                              $newTable);
+      $migration->renameTable("glpi_plugin_fusinvsnmp_miblabels", 
+                              $newTable);
+      if (!TableExists($newTable)) {
+         $query = "CREATE TABLE `".$newTable."` (
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                      PRIMARY KEY (`id`)
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+         $DB->query($query);
+      }   
+         $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT"); 
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "name",
+                                 "name",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "comment",
+                                 "comment",
+                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");      
+      $migration->migrationOneTable($newTable);            
+         $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "comments",
+                                 "comment",
+                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");         
+      $migration->migrationOneTable($newTable);
+         $migration->addField($newTable,
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable,
+                                 "name",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "comment",
+                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->migrationOneTable($newTable);
+      
+      
+      
+   /*
+    * Table glpi_plugin_fusioninventory_snmpmodelmibobjects
+    */
+      $newTable = "glpi_plugin_fusioninventory_snmpmodelmibobjects";
+      $migration->renameTable("glpi_dropdown_plugin_tracker_mib_object", 
+                              $newTable);
+      $migration->renameTable("glpi_plugin_fusinvsnmp_mibobjects", 
+                              $newTable);
+      if (!TableExists($newTable)) {
+         $query = "CREATE TABLE `".$newTable."` (
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                      PRIMARY KEY (`id`)
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+         $DB->query($query);
+      }      
+         $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT"); 
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "name",
+                                 "name",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "comment",
+                                 "comment",
+                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");      
+      $migration->migrationOneTable($newTable);            
+         $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "comments",
+                                 "comment",
+                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");         
+      $migration->migrationOneTable($newTable);
+         $migration->addField($newTable,
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable,
+                                 "name",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "comment",
+                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->migrationOneTable($newTable);
+         
+      
    
-
+      
+      
+      
+      
+      
+      
+      
+      
+      
    /*
     * Add ESX module appear in version 2.4.0(0.80+1.0)
     */

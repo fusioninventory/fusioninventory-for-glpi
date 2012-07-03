@@ -400,7 +400,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercomputers` (
 
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_snmpmodelmiblabels`;
 
-CREATE TABLE `glpi_plugin_fusinvsnmp_snmpmodelmiblabels` (
+CREATE TABLE `glpi_plugin_fusioninventory_snmpmodelmiblabels` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `comment` text COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -409,9 +409,9 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_snmpmodelmiblabels` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_snmpmodelmibobjects`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_snmpmodelmibobjects`;
 
-CREATE TABLE `glpi_plugin_fusinvsnmp_snmpmodelmibobjects` (
+CREATE TABLE `glpi_plugin_fusioninventory_snmpmodelmibobjects` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `comment` text COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -420,9 +420,9 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_snmpmodelmibobjects` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_snmpmodelmiboids`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_snmpmodelmiboids`;
 
-CREATE TABLE `glpi_plugin_fusinvsnmp_snmpmodelmiboids` (
+CREATE TABLE `glpi_plugin_fusioninventory_snmpmodelmiboids` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `comment` text COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -430,6 +430,41 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_snmpmodelmiboids` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_configlogfields`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_configlogfields` (
+   `id` int(8) NOT NULL AUTO_INCREMENT,
+   `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
+   `days` int(255) NOT NULL DEFAULT '-1',
+   PRIMARY KEY ( `id` ) ,
+   KEY `plugin_fusioninventory_mappings_id` ( `plugin_fusioninventory_mappings_id` )
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_snmpmodelconstructdevices`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_snmpmodelconstructdevices` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `manufacturers_id` int(11) NOT NULL DEFAULT '0',
+   `sysdescr` text DEFAULT NULL,
+   `itemtype` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `plugin_fusioninventory_snmpmodels_id` int(11) NOT NULL DEFAULT '0',
+   `networkmodel_id` int(11) NOT NULL DEFAULT '0',
+   `printermodel_id` int(11) NOT NULL DEFAULT '0',
+   `have_someinformations` tinyint(1) NOT NULL DEFAULT '0',
+   `have_importantinformations` tinyint(1) NOT NULL DEFAULT '0',
+   `have_ports` tinyint(1) NOT NULL DEFAULT '0',
+   `have_portsconnections` tinyint(1) NOT NULL DEFAULT '0',
+   `have_vlan` tinyint(1) NOT NULL DEFAULT '0',
+   `have_trunk` tinyint(1) NOT NULL DEFAULT '0',
+   `released` tinyint(1) NOT NULL DEFAULT '0',
+   `releasedsnmpmodel_id` int(11) NOT NULL DEFAULT '0',
+   PRIMARY KEY (`id`),
+   KEY `plugin_fusioninventory_snmpmodels_id` ( `manufacturers_id`, `plugin_fusioninventory_snmpmodels_id` ),
+   KEY `itemtype` ( `itemtype` )
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 

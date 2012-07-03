@@ -44,7 +44,7 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-$pfConstructDevice = new PluginFusinvsnmpConstructDevice();
+$pfConstructDevice = new PluginFusioninventorySnmpmodelConstructDevice();
 
 Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","constructdevice");
 Session::checkLoginUser();
@@ -59,7 +59,7 @@ if (isset($_GET['vlan_update'])) {
    $DB->query($query_update);
    Html::back();
 } else if (isset ($_POST["add"])) {
-   $query = "SELECT * FROM glpi_plugin_fusinvsnmp_constructdevices
+   $query = "SELECT * FROM PluginFusioninventorySnmpmodelConstructDevice
       WHERE sysdescr='".$_POST['sysdescr']."' ";
    $result = $DB->query($query);
    if ($DB->numrows($result) == '0') {

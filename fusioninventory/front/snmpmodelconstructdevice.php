@@ -53,7 +53,7 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 $_GET['target']="construct_device.php";
 
-$pfConstructDevice = new PluginFusinvsnmpConstructDevice();
+$pfConstructDevice = new PluginFusioninventorySnmpmodelConstructDevice();
 
 if (isset($_GET['generatemodels']) AND $_GET['generatemodels'] == '1') {
    $pfConstructDevice->generatemodels();
@@ -88,7 +88,7 @@ echo " | ";
 echo "<a href='".$_SERVER["PHP_SELF"]."?exportmodels=1'>".$LANG['plugin_fusinvsnmp']['constructdevice'][4]."</a>";
 echo " | ";
 
-Search::show('PluginFusinvsnmpConstructDevices');
+Search::show('PluginFusioninventorySnmpmodelConstructDevice');
 
 Html::footer();
 

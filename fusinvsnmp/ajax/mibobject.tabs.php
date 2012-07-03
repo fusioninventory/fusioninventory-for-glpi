@@ -45,7 +45,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 Plugin::load('fusioninventory',true);
 
-$dropdown = new PluginFusinvsnmpMibObject();
+$dropdown = new PluginFusioninventorySnmpmodelMibObject();
 include (GLPI_ROOT . "/ajax/dropdown.common.tabs.php");
 
 ?>

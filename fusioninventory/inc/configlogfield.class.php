@@ -45,7 +45,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 
-class PluginFusinvsnmpConfigLogField extends CommonDBTM {
+class PluginFusioninventoryConfigLogField extends CommonDBTM {
 
 
    /**

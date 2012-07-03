@@ -98,7 +98,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
          while ($data=$DB->fetch_array($result)) {
             $xml .= "		<oidobject>\n";
             $xml .= "			<object>".
-               Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_mibobjects",$data["plugin_fusinvsnmp_mibobjects_id"]).
+               Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmibobjects",$data["plugin_fusioninventory_snmpmodelmibobjects_id"]).
                "</object>\n";
             $xml .= "			<oid>".
                Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_miboids",$data["plugin_fusinvsnmp_miboids_id"])."</oid>\n";
@@ -244,10 +244,10 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
             $input = $pfModelMib->fields;
          }
          $input["plugin_fusinvsnmp_models_id"] = $models_data['id'];
-         $input['plugin_fusinvsnmp_mibobjects_id'] = 0;
+         $input['plugin_fusioninventory_snmpmodelmibobjects_id'] = 0;
          if (isset($child->object)) {
-            $input['plugin_fusinvsnmp_mibobjects_id'] = Dropdown::importExternal(
-               "PluginFusinvsnmpMibObject",$child->object);
+            $input['plugin_fusioninventory_snmpmodelmibobjects_id'] = Dropdown::importExternal(
+               "PluginFusioninventorySnmpmodelMibObject",$child->object);
          }
          $input['plugin_fusinvsnmp_miboids_id'] = Dropdown::importExternal(
             "PluginFusinvsnmpMibOid",$child->oid);
@@ -295,7 +295,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 	            $input["plugin_fusioninventory_mappings_id"] = $a_mappings['id'];
 	         }
 	      }
-	      $input["plugin_fusinvsnmp_miblabels_id"] = 0;
+	      $input["plugin_fusioninventory_snmpmodelmiblabels"] = 0;
 	      if (isset($a_oidsDB[$child->oid."-".$child->mapping_name])) {
 	         // Update oid
 	         $pfModelMib->update($input);
@@ -344,7 +344,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       $plugin_fusinvsnmp_models_id = $pfModel->add($input);
 
       foreach($xml->oidlist->oidobject as $child) {
-         $plugin_fusinvsnmp_mibobjects_id = 0;
+         $plugin_fusioninventory_snmpmodelmibobjects_id = 0;
          $plugin_fusinvsnmp_miboids_id = 0;
          $oid_port_counter = 0;
          $oid_port_dyn = 0;
@@ -355,8 +355,8 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
          $mappings_id = 0;
 
          if (isset($child->object)) {
-            $plugin_fusinvsnmp_mibobjects_id = Dropdown::importExternal(
-               "PluginFusinvsnmpMibObject",$child->object);
+            $plugin_fusioninventory_snmpmodelmibobjects_id = Dropdown::importExternal(
+               "PluginFusioninventorySnmpmodelMibObject",$child->object);
          }
          if (isset($child->oid)) {
             $plugin_fusinvsnmp_miboids_id = Dropdown::importExternal(
@@ -410,7 +410,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
              (
                 `plugin_fusinvsnmp_models_id`,
                 `plugin_fusinvsnmp_miboids_id`,
-                `plugin_fusinvsnmp_mibobjects_id`,
+                `plugin_fusioninventory_snmpmodelmibobjects_id`,
                 `oid_port_counter`,
                 `oid_port_dyn`,
                 `plugin_fusioninventory_mappings_id`,
@@ -420,7 +420,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
              VALUES(
                 '".$plugin_fusinvsnmp_models_id."',
                 '".$plugin_fusinvsnmp_miboids_id."',
-                '".$plugin_fusinvsnmp_mibobjects_id."',
+                '".$plugin_fusioninventory_snmpmodelmibobjects_id."',
                 '".$oid_port_counter."',
                 '".$oid_port_dyn."',
                 '".$mappings_id."',
