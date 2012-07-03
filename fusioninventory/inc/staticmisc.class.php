@@ -66,7 +66,7 @@ class PluginFusioninventoryStaticmisc {
                           'method'         => 'inventory',
                           'selection_type' => 'devices',
                           'hidetask'       => 1,
-                          'name'           => $LANG['Menu'][38],
+                          'name'           => $LANG['plugin_fusioninventory']['config'][1],
                           'use_rest'       => false);
                           
       $a_tasks[] = array('module'        => 'fusioninventory',

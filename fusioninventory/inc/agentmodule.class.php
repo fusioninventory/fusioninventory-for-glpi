@@ -157,10 +157,10 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
                echo "</td>";
                echo "<td align='center'>";
                echo "<input type='submit' class='submit' name='agent_add' value='" .
-                  $LANG['buttons'][8] . " >>'>";
+                  __s('Add') . " >>'>";
                echo "<br><br>";
                echo "<input type='submit' class='submit' name='agent_delete' value='<< " .
-                  $LANG['buttons'][6] . "'>";
+                  __s('Delete') . "'>";
                echo "</td>";
                echo "<td>";
 
@@ -189,7 +189,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
             echo "<tr>";
             echo "<td class='tab_bg_2 center' colspan='3'>";
-            echo "<input type='submit' name='update' value=\"".$LANG['buttons'][7]."\" class='submit'>";
+            echo "<input type='submit' name='update' value=\"".__s('Update')."\" class='submit'>";
             echo "</td>";
             echo "</tr>";
             echo "</table>";
