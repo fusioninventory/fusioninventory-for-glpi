@@ -50,13 +50,24 @@ Html::header($LANG['plugin_fusioninventory']['functionalities'][0], $_SERVER["PH
              "plugins", "fusioninventory", "configuration");
 
 if (isset($_POST['update'])) {
-   $config = new PluginFusioninventoryConfig();
+   $pfConfig = new PluginFusioninventoryConfig();
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
-   $config->updateValue($plugins_id, 'ssl_only', $_POST['ssl_only']);
-   $config->updateValue($plugins_id, 'inventory_frequence', $_POST['inventory_frequence']);
-   $config->updateValue($plugins_id, 'delete_task', $_POST['delete_task']);
-   $config->updateValue($plugins_id, 'agent_port', $_POST['agent_port']);
-   $config->updateValue($plugins_id, 'extradebug', $_POST['extradebug']);
+   $plugins_inventory_id = PluginFusioninventoryModule::getModuleId('inventory');
+   foreach ($_POST as $key => $value) {
+      if (preg_match("/[component_|import_|transfers_id_auto|states_id_auto]/",$key)) {
+         $pfConfig->updateConfigType($plugins_inventory_id, $key, $value);
+      } else if ($key == 'ssl_only') {
+         $pfConfig->updateValue($plugins_id, 'ssl_only', $_POST['ssl_only']);
+      } else if ($key == 'inventory_frequence') {
+         $pfConfig->updateValue($plugins_id, 'inventory_frequence', $_POST['inventory_frequence']);
+      } else if ($key == 'delete_task') {
+         $pfConfig->updateValue($plugins_id, 'delete_task', $_POST['delete_task']);
+      } else if ($key == 'agent_port') {
+         $pfConfig->updateValue($plugins_id, 'agent_port', $_POST['agent_port']);
+      } else if ($key == 'extradebug') {
+         $pfConfig->updateValue($plugins_id, 'extradebug', $_POST['extradebug']);
+      }
+   }   
    Html::back();
 }
 

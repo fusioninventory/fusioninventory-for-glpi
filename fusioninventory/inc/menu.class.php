@@ -156,9 +156,9 @@ class PluginFusioninventoryMenu {
       }
 
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "importxml","w")) {
-         $a_menu[4]['name'] = $LANG['plugin_fusioninventory']['menu'][11];
-         $a_menu[4]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_checkintegrity.png";
-         $a_menu[4]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/inventorycomputerlibintegrity.php";
+         $a_menu[12]['name'] = $LANG['plugin_fusioninventory']['menu'][11];
+         $a_menu[12]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_checkintegrity.png";
+         $a_menu[12]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/inventorycomputerlibintegrity.php";
       }
       
       echo "<div align='center' style='z-index: 1;position:absolute;width: 100%; margin: 0 auto;'>";
