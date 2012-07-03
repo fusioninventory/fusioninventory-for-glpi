@@ -60,7 +60,7 @@ class PluginFusioninventoryMenu {
       if (PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE != 1) {
          echo "<center>";
          echo "<a href='http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/wiki/Beta_test'>";
-         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/RCI.png'/></a>";
+         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/beta_1.png'/></a>";
          echo "&nbsp;<a href='https://www.transifex.net/projects/p/FusionInventory/resources/'>";
          echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/Translate.png'/></a>";
          echo "</center><br/>";
@@ -77,13 +77,13 @@ class PluginFusioninventoryMenu {
       }
 
       if(PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
-         $a_menu[1]['name'] = $LANG['plugin_fusioninventory']['task'][1]." (".$LANG['state'][1].")";
+         $a_menu[1]['name'] = $LANG['plugin_fusioninventory']['task'][1]." (".__s('Summary').")";
          $a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_task.png";
          $a_menu[1]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/tasksummary.php";
       }
       
       if(PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
-         $a_menu[2]['name'] = $LANG['plugin_fusioninventory']['task'][1]." (".$LANG['setup'][135].")";
+         $a_menu[2]['name'] = $LANG['plugin_fusioninventory']['task'][1]." (".__s('Normal').")";
          $a_menu[2]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_task.png";
          $a_menu[2]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryTask');
       }
