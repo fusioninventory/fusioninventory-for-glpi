@@ -498,6 +498,25 @@ CREATE TABLE `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networkportconnectionlogs`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_networkportconnectionlogs` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `date_mod` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+   `creation` tinyint(1) NOT NULL DEFAULT '0',
+   `networkports_id_source` int(11) NOT NULL DEFAULT '0',
+   `networkports_id_destination` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_agentprocesses_id` int(11) NOT NULL DEFAULT '0',
+   PRIMARY KEY (`id`),
+   KEY `networkports_id_source` ( `networkports_id_source`, `networkports_id_destination`, `plugin_fusioninventory_agentprocesses_id` ),
+   KEY `date_mod` (`date_mod`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
+
+
+
 
 
 

@@ -319,7 +319,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
    // $status = connection or disconnection
    static function addLogConnection($status,$port,$plugin_fusioninventory_agentprocesses_id=0) {
 
-      $pfNetworkPortConnectionLog = new PluginFusinvsnmpNetworkPortConnectionLog;
+      $pfNetworkPortConnectionLog = new PluginFusioninventoryNetworkPortConnectionLog();
       $NetworkPort_NetworkPort=new NetworkPort_NetworkPort();
 
       $input = array();
@@ -359,7 +359,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
                SELECT `id`, `date_mod`, `plugin_fusioninventory_agentprocesses_id`,
                   `networkports_id_source`, `networkports_id_destination`,
                   `creation` as `field`, NULL as `value_old`, NULL as `value_new`
-               FROM `glpi_plugin_fusinvsnmp_networkportconnectionlogs`
+               FROM `glpi_plugin_fusioninventory_networkportconnectionlogs`
                WHERE `networkports_id_source`='".$ID_port."'
                   OR `networkports_id_destination`='".$ID_port."'
                ORDER BY `date_mod` DESC
