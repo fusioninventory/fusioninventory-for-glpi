@@ -44,8 +44,8 @@ function plugin_fusinvsnmp_getDatabaseRelations() {
    $plugin = new Plugin();
    if ($plugin->isActivated("fusinvsnmp")) {
       return array (
-         "glpi_plugin_fusinvsnmp_models" => array (
-            "glpi_plugin_fusinvsnmp_unknowndevices" => "plugin_fusinvsnmp_models_id"
+         "glpi_plugin_fusioninventory_snmpmodels" => array (
+            "glpi_plugin_fusinvsnmp_unknowndevices" => "plugin_fusioninventory_snmpmodels_id"
          ));
    } else {
       return array ();
@@ -66,7 +66,7 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
       $sopt[100]['name']      = $LANG['plugin_fusinvsnmp']['snmp'][4];
       $sopt[100]['datatype']  = 'text';
 
-      $sopt[101]['table']='glpi_plugin_fusinvsnmp_models';
+      $sopt[101]['table']='glpi_plugin_fusioninventory_snmpmodels';
       $sopt[101]['field']='name';
       $sopt[101]['linkfield']='';
       $sopt[101]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".
@@ -127,9 +127,9 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
       $sopt[5193]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".$LANG["reports"][46];
       $sopt[5193]['forcegroupby']='1';
 
-      $sopt[5190]['table']='glpi_plugin_fusinvsnmp_models';
+      $sopt[5190]['table']='glpi_plugin_fusioninventory_snmpmodels';
       $sopt[5190]['field']='name';
-      $sopt[5190]['linkfield']='plugin_fusinvsnmp_models_id';
+      $sopt[5190]['linkfield']='plugin_fusioninventory_snmpmodels_id';
       $sopt[5190]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".
          $LANG['plugin_fusinvsnmp']['model_info'][4];
       $sopt[5190]['massiveaction'] = false;
@@ -172,9 +172,9 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
    }
 
    if ($itemtype == 'NetworkEquipment') {
-      $sopt[5190]['table']='glpi_plugin_fusinvsnmp_models';
+      $sopt[5190]['table']='glpi_plugin_fusioninventory_snmpmodels';
       $sopt[5190]['field']='name';
-      $sopt[5190]['linkfield']='plugin_fusinvsnmp_models_id';
+      $sopt[5190]['linkfield']='plugin_fusioninventory_snmpmodels_id';
       $sopt[5190]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".
          $LANG['plugin_fusinvsnmp']['model_info'][4];
       $sopt[5190]['massiveaction'] = false;
@@ -290,7 +290,7 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
          switch ($table.'.'.$field) {
 
             // ** Name of type of model (network, printer...)
-            case "glpi_plugin_fusinvsnmp_models.itemtype" :
+            case "glpi_plugin_fusioninventory_snmpmodels.itemtype" :
                $out = '<center> ';
                switch ($data["ITEM_$num"]) {
                   case COMPUTER_TYPE:
@@ -318,7 +318,7 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
                break;
 
             // ** Display pic / link for exporting model
-            case "glpi_plugin_fusinvsnmp_models.id" :
+            case "glpi_plugin_fusioninventory_snmpmodels.id" :
                $out = "<div align='center'><form></form><form method='get' action='"; 
                $out.=$CFG_GLPI['root_doc'] . "/plugins/fusinvsnmp/front/models.export.php' target='_blank'>
                   <input type='hidden' name='model' value='" . $data["id"] . "' />
@@ -958,11 +958,11 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($options=array()) {
             case "plugin_fusinvsnmp_assign_model" :
                if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
                   $query_models = "SELECT *
-                                   FROM `glpi_plugin_fusinvsnmp_models`
+                                   FROM `glpi_plugin_fusioninventory_snmpmodels`
                                    WHERE `itemtype`!='".$options['itemtype']."'";
                   if ($options['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
                      $query_models = "SELECT *
-                                   FROM `glpi_plugin_fusinvsnmp_models`
+                                   FROM `glpi_plugin_fusioninventory_snmpmodels`
                                    WHERE `itemtype`='nothing'";
                   }
                   $result_models=$DB->query($query_models);
@@ -1047,11 +1047,11 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
                      $a_networkequipment = current($a_networkequipments);
                      $pfNetworkEquipment->getFromDB($a_networkequipment['id']);
                      $input['id'] = $pfNetworkEquipment->fields['id'];
-                     $input['plugin_fusinvsnmp_models_id'] = $data['snmp_model'];
+                     $input['plugin_fusioninventory_snmpmodels_id'] = $data['snmp_model'];
                      $pfNetworkEquipment->update($input);
                   } else {
                      $input['networkequipments_id'] = $items_id;
-                     $input['plugin_fusinvsnmp_models_id'] = $data['snmp_model'];
+                     $input['plugin_fusioninventory_snmpmodels_id'] = $data['snmp_model'];
                      $pfNetworkEquipment->add($input);
                   }
                }
@@ -1066,11 +1066,11 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
                      $a_printer = current($a_printers);
                      $pfPrinter->getFromDB($a_printer['id']);
                      $input['id'] = $pfPrinter->fields['id'];
-                     $input['plugin_fusinvsnmp_models_id'] = $data['snmp_model'];
+                     $input['plugin_fusioninventory_snmpmodels_id'] = $data['snmp_model'];
                      $pfPrinter->update($input);
                   } else {
                      $input['printers_id'] = $items_id;
-                     $input['plugin_fusinvsnmp_models_id'] = $data['snmp_model'];
+                     $input['plugin_fusioninventory_snmpmodels_id'] = $data['snmp_model'];
                      $pfPrinter->add($input);
                   }
                }
@@ -1083,11 +1083,11 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
                   $input = array();
                   if (count($a_snmps) > 0) {
                      $input = current($a_snmps);
-                     $input['plugin_fusinvsnmp_models_id'] = $data['snmp_model'];
+                     $input['plugin_fusioninventory_snmpmodels_id'] = $data['snmp_model'];
                      $pfUnknownDevice->update($input);
                   } else {
                      $input['plugin_fusioninventory_unknowndevices_id'] = $items_id;
-                     $input['plugin_fusinvsnmp_models_id'] = $data['snmp_model'];
+                     $input['plugin_fusioninventory_snmpmodels_id'] = $data['snmp_model'];
                      $pfUnknownDevice->add($input);
                   }
                }
@@ -1214,7 +1214,7 @@ function plugin_fusinvsnmp_MassiveActionsFieldsDisplay($options=array()) {
          return true;
          break;
 
-      case 'glpi_plugin_fusinvsnmp_models.name':
+      case 'glpi_plugin_fusioninventory_snmpmodels.name':
          Dropdown::show("PluginFusinvsnmpModel",
                         array('name' => $linkfield,
                               'comment' => false));
@@ -1285,7 +1285,7 @@ function plugin_fusinvsnmp_MassiveActionsFieldsDisplay($options=array()) {
          return true;
          break;
 
-      case 'glpi_plugin_fusinvsnmp_models.itemtype' :
+      case 'glpi_plugin_fusioninventory_snmpmodels.itemtype' :
          $type_list = array();
          $type_list[] = COMPUTER_TYPE;
          $type_list[] = NETWORKING_TYPE;
@@ -1483,7 +1483,7 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
 
          $leftjoin_fusinvsnmp_networkequipments = 1;
          if ((in_array('glpi_plugin_fusinvsnmp_networkequipments', $already_link_tables_tmp))
-            OR (in_array('glpi_plugin_fusinvsnmp_models', $already_link_tables_tmp))
+            OR (in_array('glpi_plugin_fusioninventory_snmpmodels', $already_link_tables_tmp))
             OR (in_array('glpi_plugin_fusinvsnmp_configsecurities', $already_link_tables_tmp))) {
 
             $leftjoin_fusinvsnmp_networkequipments = 0;
@@ -1509,12 +1509,12 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
 
 
             // ** FusionInventory - SNMP models
-            case "glpi_plugin_fusinvsnmp_models.plugin_fusinvsnmp_models_id" :
+            case "glpi_plugin_fusioninventory_snmpmodels.plugin_fusioninventory_snmpmodels_id" :
                $return = "";
                if ($leftjoin_fusinvsnmp_networkequipments == "1") {
                   $return = " LEFT JOIN glpi_plugin_fusinvsnmp_networkequipments ON (glpi_networkequipments.id = glpi_plugin_fusinvsnmp_networkequipments.networkequipments_id) ";
                }
-               return $return." LEFT JOIN glpi_plugin_fusinvsnmp_models ON (glpi_plugin_fusinvsnmp_networkequipments.plugin_fusinvsnmp_models_id = glpi_plugin_fusinvsnmp_models.id) ";
+               return $return." LEFT JOIN glpi_plugin_fusioninventory_snmpmodels ON (glpi_plugin_fusinvsnmp_networkequipments.plugin_fusioninventory_snmpmodels_id = glpi_plugin_fusioninventory_snmpmodels.id) ";
                break;
 
             // ** FusionInventory - SNMP authentification
@@ -1543,7 +1543,7 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
          array_pop($already_link_tables_tmp);
          $leftjoin_fusinvsnmp_printers = 1;
          if ((in_array('glpi_plugin_fusinvsnmp_printers', $already_link_tables_tmp))
-              OR in_array('glpi_plugin_fusinvsnmp_models', $already_link_tables_tmp)) {
+              OR in_array('glpi_plugin_fusioninventory_snmpmodels', $already_link_tables_tmp)) {
 
             $leftjoin_fusinvsnmp_printers = 0;
          }
@@ -1558,12 +1558,12 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
                break;
 
             // ** FusionInventory - SNMP models
-            case "glpi_plugin_fusinvsnmp_models.plugin_fusinvsnmp_models_id" :
+            case "glpi_plugin_fusioninventory_snmpmodels.plugin_fusioninventory_snmpmodels_id" :
                $return = "";
                if ($leftjoin_fusinvsnmp_printers == "1") {
                   $return = " LEFT JOIN glpi_plugin_fusinvsnmp_printers ON (glpi_printers.id = glpi_plugin_fusinvsnmp_printers.printers_id) ";
                }
-               return $return." LEFT JOIN glpi_plugin_fusinvsnmp_models ON (glpi_plugin_fusinvsnmp_printers.plugin_fusinvsnmp_models_id = glpi_plugin_fusinvsnmp_models.id) ";
+               return $return." LEFT JOIN glpi_plugin_fusioninventory_snmpmodels ON (glpi_plugin_fusinvsnmp_printers.plugin_fusioninventory_snmpmodels_id = glpi_plugin_fusioninventory_snmpmodels.id) ";
                break;
                
             // ** FusionInventory - SNMP authentification
@@ -1637,7 +1637,7 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
          array_pop($already_link_tables_tmp);
          $leftjoin_fusinvsnmp_unknown = 1;
          if ((in_array('glpi_plugin_fusinvsnmp_unknowndevices', $already_link_tables_tmp))
-              OR in_array('glpi_plugin_fusinvsnmp_models', $already_link_tables_tmp)
+              OR in_array('glpi_plugin_fusioninventory_snmpmodels', $already_link_tables_tmp)
               OR in_array('glpi_plugin_fusinvsnmp_configsecurities', $already_link_tables_tmp)) {
 
             $leftjoin_fusinvsnmp_unknown = 0;
@@ -1654,12 +1654,12 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
                break;
             
             // ** FusionInventory - SNMP models
-            case "glpi_plugin_fusinvsnmp_models.plugin_fusinvsnmp_models_id" :
+            case "glpi_plugin_fusioninventory_snmpmodels.plugin_fusioninventory_snmpmodels_id" :
                $return = "";
                if ($leftjoin_fusinvsnmp_unknown == "1") {
                   $return .= " LEFT JOIN glpi_plugin_fusinvsnmp_unknowndevices ON (glpi_plugin_fusioninventory_unknowndevices.id = glpi_plugin_fusinvsnmp_unknowndevices.plugin_fusioninventory_unknowndevices_id) ";
                }
-               $return .= " LEFT JOIN glpi_plugin_fusinvsnmp_models ON (glpi_plugin_fusinvsnmp_unknowndevices.plugin_fusinvsnmp_models_id = glpi_plugin_fusinvsnmp_models.id) ";
+               $return .= " LEFT JOIN glpi_plugin_fusioninventory_snmpmodels ON (glpi_plugin_fusinvsnmp_unknowndevices.plugin_fusioninventory_snmpmodels_id = glpi_plugin_fusioninventory_snmpmodels.id) ";
                return $return;
                break;
                
@@ -1782,8 +1782,8 @@ function plugin_fusinvsnmp_addOrderBy($type,$id,$order,$key=0) {
                break;
 
             // ** FusionInventory - SNMP models
-            case "glpi_plugin_fusinvsnmp_models.id" :
-               return " ORDER BY glpi_plugin_fusinvsnmp_models.name $order ";
+            case "glpi_plugin_fusioninventory_snmpmodels.id" :
+               return " ORDER BY glpi_plugin_fusioninventory_snmpmodels.name $order ";
                break;
 
          }
@@ -1799,8 +1799,8 @@ function plugin_fusinvsnmp_addOrderBy($type,$id,$order,$key=0) {
                break;
 
             // ** FusionInventory - SNMP models
-            case "glpi_plugin_fusinvsnmp_models.id" :
-               return " ORDER BY glpi_plugin_fusinvsnmp_models.name $order ";
+            case "glpi_plugin_fusioninventory_snmpmodels.id" :
+               return " ORDER BY glpi_plugin_fusioninventory_snmpmodels.name $order ";
                break;
 
             // ** FusionInventory - SNMP authentification
@@ -1962,7 +1962,7 @@ function plugin_fusinvsnmp_addWhere($link,$nott,$type,$id,$val) {
                break;
 
             // ** FusionInventory - SNMP models
-            case "glpi_plugin_fusinvsnmp_models.id" :
+            case "glpi_plugin_fusioninventory_snmpmodels.id" :
                $ADD = "";
                if ($nott=="0"&&$val=="NULL") {
                   $ADD=" OR $table.name IS NULL";
@@ -2007,7 +2007,7 @@ function plugin_fusinvsnmp_addWhere($link,$nott,$type,$id,$val) {
                break;
 
             // ** FusionInventory - SNMP models
-            case "glpi_plugin_fusinvsnmp_models.id" :
+            case "glpi_plugin_fusioninventory_snmpmodels.id" :
                $ADD = "";
                if ($nott=="0"&&$val=="NULL") {
                   $ADD=" OR $table.name IS NULL";

@@ -100,8 +100,8 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
       echo "<td align='center'>";
       if (!empty($pfUnknownDevice->fields['item_type'])) {
          Dropdown::show("PluginFusinvsnmpModel",
-                     array('name'=>"plugin_fusinvsnmp_models_id",
-                           'value'=>$this->fields['plugin_fusinvsnmp_models_id'],
+                     array('name'=>"plugin_fusioninventory_snmpmodels_id",
+                           'value'=>$this->fields['plugin_fusioninventory_snmpmodels_id'],
                            'comment'=>1,
                            'condition'=>"`itemtype`='".$pfUnknownDevice->fields['item_type']."'"));
       }
@@ -169,7 +169,7 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
             
 
             $data['sysdescr'] = $snmp_device['sysdescr'];
-            $data['plugin_fusinvsnmp_models_id'] = $snmp_device['plugin_fusinvsnmp_models_id'];
+            $data['plugin_fusioninventory_snmpmodels_id'] = $snmp_device['plugin_fusioninventory_snmpmodels_id'];
             $data['plugin_fusinvsnmp_configsecurities_id'] = $snmp_device['plugin_fusinvsnmp_configsecurities_id'];
 
             if ($DB->numrows($result) == 0) {
@@ -193,7 +193,7 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
             }
 
             $data['sysdescr'] = $snmp_device['sysdescr'];
-            $data['plugin_fusinvsnmp_models_id'] = $snmp_device['plugin_fusinvsnmp_models_id'];
+            $data['plugin_fusioninventory_snmpmodels_id'] = $snmp_device['plugin_fusioninventory_snmpmodels_id'];
             $data['plugin_fusinvsnmp_configsecurities_id'] = $snmp_device['plugin_fusinvsnmp_configsecurities_id'];
 
             if ($DB->numrows($result) == 0) {

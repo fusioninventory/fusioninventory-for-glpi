@@ -54,24 +54,24 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
          return false;
       } else if ((isset($id)) AND (!empty($id))) {
          $query = "SELECT `itemtype`
-                   FROM `glpi_plugin_fusinvsnmp_models`
+                   FROM `glpi_plugin_fusioninventory_snmpmodels`
                    WHERE `id`='".$id."';";
          $result = $DB->query($query);
          $data = $DB->fetch_assoc($result);
          $type_model = $data['itemtype'];
 
-         $query = "SELECT `glpi_plugin_fusinvsnmp_models`.`itemtype`,
+         $query = "SELECT `plugin_fusioninventory_snmpmodels`.`itemtype`,
                           `glpi_plugin_fusioninventory_snmpmodelmibs`.*,
                           `glpi_plugin_fusioninventory_mappings`.`name`,
                           `glpi_plugin_fusioninventory_mappings`.`locale`
                    FROM `glpi_plugin_fusioninventory_snmpmodelmibs`
-                        LEFT JOIN `glpi_plugin_fusinvsnmp_models`
-                        ON `glpi_plugin_fusioninventory_snmpmodelmibs`.`plugin_fusinvsnmp_models_id`=
-                           `glpi_plugin_fusinvsnmp_models`.`id`
+                        LEFT JOIN `glpi_plugin_fusioninventory_snmpmodels`
+                        ON `glpi_plugin_fusioninventory_snmpmodelmibs`.`plugin_fusioninventory_snmpmodels_id`=
+                           `glpi_plugin_fusioninventory_snmpmodels`.`id`
                         LEFT JOIN `glpi_plugin_fusioninventory_mappings`
                         ON `glpi_plugin_fusioninventory_snmpmodelmibs`.`plugin_fusioninventory_mappings_id`=
                            `glpi_plugin_fusioninventory_mappings`.`id`
-                   WHERE `glpi_plugin_fusinvsnmp_models`.`id`='".$id."';";
+                   WHERE `glpi_plugin_fusioninventory_snmpmodels`.`id`='".$id."';";
          $result = $DB->query($query);
          if ($result) {
             $object_used = array();
@@ -305,7 +305,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'><td colspan='7' align='center'>";
       if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
-         echo "<input type='hidden' name='plugin_fusinvsnmp_models_id' value='".$id."'/>";
+         echo "<input type='hidden' name='plugin_fusioninventory_snmpmodels_id' value='".$id."'/>";
          echo "<input type='submit' name='add_oid' value=\"".$LANG["buttons"][2].
                "\" class='submit' >";
       }
@@ -359,7 +359,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
                      LEFT JOIN `glpi_plugin_fusioninventory_mappings`
                                ON `glpi_plugin_fusioninventory_snmpmodelmibs`.`plugin_fusioninventory_mappings_id`=
                                   `glpi_plugin_fusioninventory_mappings`.`id`
-                WHERE `plugin_fusinvsnmp_models_id`='".$p_id."'
+                WHERE `plugin_fusioninventory_snmpmodels_id`='".$p_id."'
                   AND `is_active`='1'
                   AND `oid_port_counter`='0';";
 

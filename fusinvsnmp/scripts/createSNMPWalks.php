@@ -34,7 +34,7 @@ FROM
   glpi_networkports,
   glpi_plugin_fusinvsnmp_configsecurities
 WHERE
-  glpi_plugin_fusinvsnmp_unknowndevices.plugin_fusinvsnmp_models_id<1
+  glpi_plugin_fusinvsnmp_unknowndevices.plugin_fusioninventory_snmpmodels_id<1
  AND
   sysdescr IS NOT NULL
  AND

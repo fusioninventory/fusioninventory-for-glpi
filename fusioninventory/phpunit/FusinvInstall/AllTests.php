@@ -316,7 +316,7 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
       /*
        * Verify SNMP models have a right itemtype
        */         
-      $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_models`
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_snmpmodels`
          WHERE `itemtype` NOT IN('Computer','NetworkEquipment', 'Printer')";
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 0, "SNMP models have invalid itemtype");
@@ -325,7 +325,7 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
       /*
        * Verify SNMP models not in double
        */
-      $query = "SELECT count(*) as cnt, `name` FROM `glpi_plugin_fusinvsnmp_models` 
+      $query = "SELECT count(*) as cnt, `name` FROM `glpi_plugin_fusioninventory_snmpmodels` 
          GROUP BY `name` 
          HAVING cnt >1";
       $result = $DB->query($query);

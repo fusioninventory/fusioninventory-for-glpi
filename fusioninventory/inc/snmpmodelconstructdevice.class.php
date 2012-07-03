@@ -525,7 +525,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
             }
 
             // See if model exactly exists
-            $query_models = "SELECT * FROM glpi_plugin_fusinvsnmp_models";
+            $query_models = "SELECT * FROM glpi_plugin_fusioninventory_snmpmodels";
             $existent = 0;
             if ($result_models = $DB->query($query_models)) {
                while ($data_models = $DB->fetch_array($result_models)) {
@@ -536,9 +536,9 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
                            `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`
                         FROM `glpi_plugin_fusinvsnmp_modelmibs`
                            LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-                              ON `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusinvsnmp_models_id`=
+                              ON `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusioninventory_snmpmodels_id`=
                                  `glpi_plugin_fusioninventory_mappings`.`id`
-                        WHERE `plugin_fusinvsnmp_models_id`='".$data_models['id']."' ";
+                        WHERE `plugin_fusioninventory_snmpmodels_id`='".$data_models['id']."' ";
                      if ($result_mib_model = $DB->query($query_mibs_model)) {
                         while ($data_mib_model = $DB->fetch_array($result_mib_model)) {
                            $count_mib_model++;
@@ -592,7 +592,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
                if ($result_mibs = $DB->query($query_mibs)) {
                   while ($data_mibs = $DB->fetch_array($result_mibs)) {
                      $a_input = array();
-                     $a_input['plugin_fusinvsnmp_models_id'] = $id;
+                     $a_input['plugin_fusioninventory_snmpmodels_id'] = $id;
                      $a_input['plugin_fusinvsnmp_miboids_id'] = $data_mibs['plugin_fusinvsnmp_miboids_id'];
                      $a_input['oid_port_counter'] = $data_mibs['oid_port_counter'];
                      $a_input['oid_port_dyn'] = $data_mibs['oid_port_dyn'];
@@ -614,7 +614,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
        // Add Number
        //key : Networking0006
       $query = "SELECT *
-               FROM glpi_plugin_fusinvsnmp_models
+               FROM glpi_plugin_fusioninventory_snmpmodels
                WHERE discovery_key LIKE 'Networking%'
                ORDER BY discovery_key DESC
                LIMIT 1";
@@ -627,14 +627,14 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
       }
 
       $query = "SELECT *
-               FROM glpi_plugin_fusinvsnmp_models
+               FROM glpi_plugin_fusioninventory_snmpmodels
                WHERE (discovery_key IS NULL OR discovery_key='')
                   AND itemtype='".NETWORKING_TYPE."' ";
       if ($result = $DB->query($query)) {
          while ($data = $DB->fetch_array($result)) {
             while(strlen($num) < 4)
                $num = "0" . $num;
-            $query_update = "UPDATE glpi_plugin_fusinvsnmp_models
+            $query_update = "UPDATE glpi_plugin_fusioninventory_snmpmodels
                SET discovery_key='Networking".$num."'
                   WHERE id='".$data['id']."'";
             $DB->query($query_update);
@@ -643,7 +643,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
       }
       // Printers
       $query = "SELECT *
-               FROM glpi_plugin_fusinvsnmp_models
+               FROM glpi_plugin_fusioninventory_snmpmodels
                WHERE discovery_key LIKE 'Printer%'
                ORDER BY discovery_key DESC
                LIMIT 1";
@@ -657,14 +657,14 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
       }
 
       $query = "SELECT *
-               FROM glpi_plugin_fusinvsnmp_models
+               FROM glpi_plugin_fusioninventory_snmpmodels
                WHERE (discovery_key IS NULL OR discovery_key='')
                   AND itemtype='".PRINTER_TYPE."' ";
       if ($result = $DB->query($query)) {
          while ($data = $DB->fetch_array($result)) {
             while(strlen($num) < 4)
                $num = "0" . $num;
-            $query_update = "UPDATE glpi_plugin_fusinvsnmp_models
+            $query_update = "UPDATE glpi_plugin_fusioninventory_snmpmodels
                SET discovery_key='Printer".$num."'
                   WHERE id='".$data['id']."'";
             $DB->query($query_update);
@@ -698,7 +698,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
                //$sxml_device->addAttribute('MODELSNMP', $data['snmpmodel_id']); //dropdown
 
                $query_modelkey = "SELECT *
-                                 FROM `glpi_plugin_fusinvsnmp_models`
+                                 FROM `glpi_plugin_fusioninventory_snmpmodels`
                                  WHERE id='".$data['snmpmodel_id']."'
                                  LIMIT 1";
                $result_modelkey=$DB->query($query_modelkey);
@@ -794,7 +794,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
    function cleanmodels() {
       global $DB;
 
-      $query_models = "SELECT * FROM glpi_plugin_fusinvsnmp_models";
+      $query_models = "SELECT * FROM glpi_plugin_fusioninventory_snmpmodels";
       if ($result_models = $DB->query($query_models)) {
          while ($data_models = $DB->fetch_array($result_models)) {
             $query = "SELECT * FROM glpi_plugin_fusinvsnmp_constructdevices
@@ -802,7 +802,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
             if ($result = $DB->query($query)) {
                if ($DB->numrows($result) == 0) {
                   // Delete model
-                  $query_delete = "DELETE FROM glpi_plugin_fusinvsnmp_models
+                  $query_delete = "DELETE FROM glpi_plugin_fusioninventory_snmpmodels
                      WHERE id='".$data_models['id']."'";
                   $DB->query($query_delete);
                }
@@ -818,7 +818,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
 
       $pfiie = new PluginFusinvsnmpImportExport();
 
-      $query_models = "SELECT * FROM glpi_plugin_fusinvsnmp_models";
+      $query_models = "SELECT * FROM glpi_plugin_fusioninventory_snmpmodels";
       if ($result_models = $DB->query($query_models)) {
          while ($data = $DB->fetch_array($result_models)) {
             $xml = $pfiie->export($data['id']);
@@ -832,7 +832,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
    function generatecomments() {
       global $DB;
 
-      $query_clean = "UPDATE `glpi_plugin_fusinvsnmp_models`
+      $query_clean = "UPDATE `glpi_plugin_fusioninventory_snmpmodels`
          SET comment='' ";
       $DB->query($query_clean);
 
@@ -847,7 +847,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
          }
       }
       foreach ($a_comments as $model_id=>$comment) {
-         $query_update = "UPDATE `glpi_plugin_fusinvsnmp_models`
+         $query_update = "UPDATE `glpi_plugin_fusioninventory_snmpmodels`
             SET comment='".$comment."'
             WHERE id='".$model_id."' ";
          $DB->query($query_update);

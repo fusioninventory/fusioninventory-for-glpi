@@ -165,7 +165,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       echo "<td align='center' rowspan='2'>".$LANG['plugin_fusinvsnmp']['model_info'][4]."&nbsp;:</td>";
       echo "<td align='center'>";
       $query_models = "SELECT *
-                       FROM `glpi_plugin_fusinvsnmp_models`
+                       FROM `glpi_plugin_fusioninventory_snmpmodels`
                        WHERE `itemtype`!='NetworkEquipment'
                            AND `itemtype`!=''";
       $result_models=$DB->query($query_models);
@@ -175,7 +175,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       }
       Dropdown::show("PluginFusinvsnmpModel",
                      array('name'=>"model_infos",
-                           'value'=>$this->oFusionInventory_networkequipment->fields['plugin_fusinvsnmp_models_id'],
+                           'value'=>$this->oFusionInventory_networkequipment->fields['plugin_fusioninventory_snmpmodels_id'],
                            'comment'=>0,
                            'used'=>$exclude_models));
       echo "</td>";

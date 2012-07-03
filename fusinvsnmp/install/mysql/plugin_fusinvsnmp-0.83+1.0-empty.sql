@@ -20,18 +20,6 @@
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_models`;
-
-CREATE TABLE `glpi_plugin_fusinvsnmp_models` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-   `itemtype` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-   `discovery_key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `comment` text COLLATE utf8_unicode_ci DEFAULT NULL,
-   PRIMARY KEY (`id`),
-   KEY `name` (`name`),
-   KEY `itemtype` (`itemtype`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 

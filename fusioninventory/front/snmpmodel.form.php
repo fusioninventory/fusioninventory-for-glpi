@@ -46,7 +46,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","r");
 
-$pfModel = new PluginFusinvsnmpModel();
+$pfModel = new PluginFusioninventorySnmpmodel();
 $pfModelMib = new PluginFusioninventorySnmpmodelMib();
 $pfImportExport = new PluginFusinvsnmpImportExport();
 

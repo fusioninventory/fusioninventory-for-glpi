@@ -72,7 +72,7 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
          $plugin_fusinvsnmp_configsecurities_id = 0;
       }
       $query = "UPDATE `glpi_plugin_fusinvsnmp_networkequipments`
-                SET `plugin_fusinvsnmp_models_id`='".$plugin_fusinvsnmp_models_id."',
+                SET `plugin_fusioninventory_snmpmodels_id`='".$plugin_fusinvsnmp_models_id."',
                     `plugin_fusinvsnmp_configsecurities_id`='".$plugin_fusinvsnmp_configsecurities_id."',
                     `sysdescr`='".$sysdescr."'
                 WHERE `networkequipments_id`='".$id."';";

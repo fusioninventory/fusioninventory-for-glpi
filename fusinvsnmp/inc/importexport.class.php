@@ -60,7 +60,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
       PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","r");
       $query = "SELECT *
-         FROM `glpi_plugin_fusinvsnmp_models`
+         FROM `glpi_plugin_fusioninventory_snmpmodels`
          WHERE `id`='".$ID_model."'";
 
       $model_name = "";
@@ -91,7 +91,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
       $query = "SELECT `glpi_plugin_fusioninventory_snmpmodelmibs`.*,
 	 FROM `glpi_plugin_fusioninventory_snmpmodelmibs`
-	 WHERE `plugin_fusinvsnmp_models_id`='".$ID_model."';";
+	 WHERE `plugin_fusioninventory_snmpmodels_id`='".$ID_model."';";
 
       $result=$DB->query($query);
       if ($result) {
@@ -191,7 +191,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       $DB->query($query);
       
       // check if the model already exists
-      $query = "SELECT `id` FROM `glpi_plugin_fusinvsnmp_models`
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_snmpmodels`
          WHERE `name`='".(string)$xml->name."'
          LIMIT 1";
       $result = $DB->query($query);
@@ -226,7 +226,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       $input['comment'] = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep((string)$xml->comments));
       $pfModel->update($input);
 
-      $a_oids = $pfModelMib->find("`plugin_fusinvsnmp_models_id`='".$models_data['id']."'");
+      $a_oids = $pfModelMib->find("`plugin_fusioninventory_snmpmodels_id`='".$models_data['id']."'");
       foreach ($a_oids as $data) {
          $oid = Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmiboids", $data['plugin_fusioninventory_snmpmodelmiboids_id']);
          $oid_name = '';
@@ -243,7 +243,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
             $pfModelMib->getFromDB($a_oidsDB[$child->oid."-".$child->mapping_name]);
             $input = $pfModelMib->fields;
          }
-         $input["plugin_fusinvsnmp_models_id"] = $models_data['id'];
+         $input["plugin_fusioninventory_snmpmodels_id"] = $models_data['id'];
          $input['plugin_fusioninventory_snmpmodelmibobjects_id'] = 0;
          if (isset($child->object)) {
             $input['plugin_fusioninventory_snmpmodelmibobjects_id'] = Dropdown::importExternal(
@@ -408,7 +408,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
           $query = "INSERT INTO `glpi_plugin_fusioninventory_snmpmodelmibs`
              (
-                `plugin_fusinvsnmp_models_id`,
+                `plugin_fusioninventory_snmpmodels_id`,
                 `plugin_fusioninventory_snmpmodelmiboids_id`,
                 `plugin_fusioninventory_snmpmodelmibobjects_id`,
                 `oid_port_counter`,

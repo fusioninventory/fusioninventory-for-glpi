@@ -189,7 +189,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       echo "<td align='center' rowspan='2'>".$LANG['plugin_fusinvsnmp']['model_info'][4]."&nbsp;:</td>";
       echo "<td align='center'>";
       $query_models = "SELECT *
-                       FROM `glpi_plugin_fusinvsnmp_models`
+                       FROM `glpi_plugin_fusioninventory_snmpmodels`
                        WHERE `itemtype`!='Printer'
                              AND `itemtype`!=''";
       $result_models=$DB->query($query_models);
@@ -198,8 +198,8 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
          $exclude_models[] = $data_models['id'];
       }
       Dropdown::show("PluginFusinvsnmpModel",
-                     array('name'=>"plugin_fusinvsnmp_models_id",
-                           'value'=>$this->oFusionInventory_printer->fields['plugin_fusinvsnmp_models_id'],
+                     array('name'=>"plugin_fusioninventory_snmpmodels_id",
+                           'value'=>$this->oFusionInventory_printer->fields['plugin_fusioninventory_snmpmodels_id'],
                            'comment'=>false,
                            'used'=>$exclude_models));
       echo "</td>";

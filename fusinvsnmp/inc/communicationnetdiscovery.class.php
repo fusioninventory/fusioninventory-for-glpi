@@ -496,7 +496,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                   $model_id = $pfModel->getModelBySysdescr($xml->DESCRIPTION);
                }
                if ($model_id != '0') {
-                  $input['plugin_fusinvsnmp_models_id'] = $model_id;
+                  $input['plugin_fusioninventory_snmpmodels_id'] = $model_id;
                }
             }
 
@@ -544,7 +544,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             if (isset($xml->MODELSNMP) AND !empty($xml->MODELSNMP)) {
                $model_id = $pfModel->getModelByKey($xml->MODELSNMP);
                if ($model_id != '0') {
-                  $pfNetworkEquipment->setValue('plugin_fusinvsnmp_models_id', $model_id);
+                  $pfNetworkEquipment->setValue('plugin_fusioninventory_snmpmodels_id', $model_id);
                }
             }
             $pfNetworkEquipment->setValue('plugin_fusinvsnmp_configsecurities_id', $xml->AUTHSNMP);
@@ -619,7 +619,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                $pfModel = new PluginFusinvsnmpModel();
                $model_id = $pfModel->getModelByKey($xml->MODELSNMP);
                if ($model_id != '0') {
-                  $pfPrinter->setValue('plugin_fusinvsnmp_models_id', $model_id);
+                  $pfPrinter->setValue('plugin_fusioninventory_snmpmodels_id', $model_id);
                }
             }
             $pfPrinter->setValue('plugin_fusinvsnmp_configsecurities_id', $xml->AUTHSNMP);
