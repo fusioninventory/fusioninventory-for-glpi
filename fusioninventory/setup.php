@@ -96,6 +96,7 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryInventoryRuleImport');
       Plugin::registerClass('PluginFusioninventoryInventoryRuleImportCollection',
                             array('rulecollections_types'=>true));
+      Plugin::registerClass('PluginFusioninventoryConstructDevice');
 
    
       // ##### 3. get informations of the plugin #####
