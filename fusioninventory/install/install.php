@@ -239,6 +239,12 @@ function pluginFusioninventoryInstall($version, $migration='') {
       $migration->displayMessage("Initialize configuration");
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       $PluginFusioninventoryConfig->initConfigModule();
+      
+      if (!class_exists('PluginFusioninventoryConfigLogField')) { // if plugin is unactive
+         include(GLPI_ROOT . "/plugins/fusioninventory/inc/configlogfield.class.php");
+      }
+      $configLogField = new PluginFusioninventoryConfigLogField();
+      $configLogField->initConfig();
    
    
    

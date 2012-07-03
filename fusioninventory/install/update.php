@@ -2279,7 +2279,144 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          
       
    
+   /*
+    * Table glpi_plugin_fusioninventory_snmpmodelmiboids
+    */
+      $newTable = "glpi_plugin_fusioninventory_snmpmodelmiboids";
+      $migration->renameTable("glpi_dropdown_plugin_tracker_mib_oid", 
+                              $newTable);
+      $migration->renameTable("glpi_plugin_fusinvsnmp_miboids", 
+                              $newTable);
+      if (!TableExists($newTable)) {
+         $query = "CREATE TABLE `".$newTable."` (
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                      PRIMARY KEY (`id`)
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+         $DB->query($query);
+      }      
+         $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT"); 
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "name",
+                                 "name",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "comment",
+                                 "comment",
+                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");      
+      $migration->migrationOneTable($newTable);            
+         $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "comments",
+                                 "comment",
+                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->dropField($newTable,
+                               "plugin_fusinvsnmp_constructdevices_id");
+         $migration->dropField($newTable,
+                               "oid_port_counter");
+         $migration->dropField($newTable,
+                               "oid_port_dyn");
+         $migration->dropField($newTable,
+                               "itemtype");
+         $migration->dropField($newTable,
+                               "vlan");         
+      $migration->migrationOneTable($newTable);
+         $migration->addField($newTable,
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable,
+                                 "name",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "comment",
+                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->migrationOneTable($newTable);
+         
       
+      
+   /*
+    * glpi_plugin_fusioninventory_configlogfields
+    */
+      $newTable = "glpi_plugin_fusioninventory_configlogfields";
+      $migration->renameTable("glpi_plugin_fusioninventory_config_snmp_history", 
+                              $newTable);
+      $migration->renameTable("glpi_plugin_fusinvsnmp_configlogfields", 
+                              $newTable);
+      if (TableExists($newTable)) {
+         if (FieldExists($newTable, "field")) {
+            $query = "SELECT * FROM `".$newTable."`";
+            $result=$DB->query($query);
+            while ($data=$DB->fetch_array($result)) {
+               $pFusioninventoryMapping = new PluginFusioninventoryMapping();
+               $mapping = 0;
+               if ($mapping = $pFusioninventoryMapping->get("NetworkEquipment", $data['field'])) {
+                  $queryu = "UPDATE `".$newTable."`
+                     SET `field`='".$mapping['id']."'
+                     WHERE `field`='".$data['field']."'";
+                  $DB->query($queryu);
+               }
+            }
+         }
+      }
+      if (!TableExists($newTable)) {
+         $query = "CREATE TABLE `".$newTable."` (
+                     `id` int(8) NOT NULL AUTO_INCREMENT,
+                      PRIMARY KEY (`id`)
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+         $DB->query($query);
+      }
+         $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT"); 
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(8) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "plugin_fusioninventory_mappings_id",
+                                 "plugin_fusioninventory_mappings_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "days",
+                                 "days",
+                                 "int(255) NOT NULL DEFAULT '-1'");         
+      $migration->migrationOneTable($newTable);            
+         $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(8) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "field",
+                                 "plugin_fusioninventory_mappings_id",
+                                 "int(11) NOT NULL DEFAULT '0'");      
+      $migration->migrationOneTable($newTable);             
+         $migration->addField($newTable,
+                                 "id",
+                                 "int(8) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable,
+                                 "plugin_fusioninventory_mappings_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "days",
+                                 "int(255) NOT NULL DEFAULT '-1'");
+         $migration->addKey($newTable,
+                            "plugin_fusioninventory_mappings_id");
+      $migration->migrationOneTable($newTable);
+         if (!class_exists('PluginFusioninventoryConfigLogField')) { // if plugin is unactive
+            include(GLPI_ROOT . "/plugins/fusioninventory/inc/configlogfield.class.php");
+         }
+         $configLogField = new PluginFusioninventoryConfigLogField();
+         $configLogField->initConfig();
       
       
       

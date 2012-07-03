@@ -107,7 +107,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
       // Get list of fields configured for history
       $query = "SELECT *
-                FROM `glpi_plugin_fusinvsnmp_configlogfields`;";
+                FROM `glpi_plugin_fusioninventory_configlogfields`;";
       $result=$DB->query($query);
       if ($result) {
          while ($data=$DB->fetch_array($result)) {
@@ -115,7 +115,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
             $name= '';
             list($type,$name) = explode("-", $data['field']);
             if (!isset($listName[$type."-".$name])) {
-               $query_del = "DELETE FROM `glpi_plugin_fusinvsnmp_configlogfields`
+               $query_del = "DELETE FROM `glpi_plugin_fusioninventory_configlogfields`
                   WHERE id='".$data['id']."' ";
                   $DB->query($query_del);
             } else {
@@ -197,7 +197,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
    static function cronCleannetworkportlogs() {
       global $DB;
 
-      $pfConfigLogField = new PluginFusinvsnmpConfigLogField();
+      $pfConfigLogField = new PluginFusioninventoryConfigLogField();
       $pfNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
       
       $a_list = $pfConfigLogField->find();
@@ -236,7 +236,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       $doHistory = 1;
       if ($mapping != "") {
          $query = "SELECT *
-                   FROM `glpi_plugin_fusinvsnmp_configlogfields`
+                   FROM `glpi_plugin_fusioninventory_configlogfields`
                    WHERE `field`='".$mapping."';";
          $result = $DB->query($query);
          if ($DB->numrows($result) == 0) {
@@ -261,7 +261,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
    static function networkport_addLog($port_id, $value_new, $field) {
       $pfNetworkPort = new PluginFusinvsnmpNetworkPort;
       $pfNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
-      $pfConfigLogField = new PluginFusinvsnmpConfigLogField();
+      $pfConfigLogField = new PluginFusioninventoryConfigLogField();
       $pfMapping = new PluginFusioninventoryMapping();
 
       $db_field = $field;

@@ -1359,78 +1359,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
       
 
       
-   /*
-    * glpi_plugin_fusinvsnmp_configlogfields
-    */
-      $newTable = "glpi_plugin_fusinvsnmp_configlogfields";
-      $migration->renameTable("glpi_plugin_fusioninventory_config_snmp_history", 
-                              $newTable);
-      if (TableExists($newTable)) {
-         if (FieldExists($newTable, "field")) {
-            $query = "SELECT * FROM `".$newTable."`";
-            $result=$DB->query($query);
-            while ($data=$DB->fetch_array($result)) {
-               $pFusioninventoryMapping = new PluginFusioninventoryMapping();
-               $mapping = 0;
-               if ($mapping = $pFusioninventoryMapping->get("NetworkEquipment", $data['field'])) {
-                  $queryu = "UPDATE `".$newTable."`
-                     SET `field`='".$mapping['id']."'
-                     WHERE `field`='".$data['field']."'";
-                  $DB->query($queryu);
-               }
-            }
-         }
-      }
-      if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `".$newTable."` (
-                     `id` int(8) NOT NULL AUTO_INCREMENT,
-                      PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
-         $DB->query($query);
-      }
-         $migration->changeField($newTable,
-                                 "ID",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT"); 
-         $migration->changeField($newTable,
-                                 "id",
-                                 "id",
-                                 "int(8) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "plugin_fusioninventory_mappings_id",
-                                 "plugin_fusioninventory_mappings_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "days",
-                                 "days",
-                                 "int(255) NOT NULL DEFAULT '-1'");         
-      $migration->migrationOneTable($newTable);            
-         $migration->changeField($newTable,
-                                 "ID",
-                                 "id",
-                                 "int(8) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "field",
-                                 "plugin_fusioninventory_mappings_id",
-                                 "int(11) NOT NULL DEFAULT '0'");      
-      $migration->migrationOneTable($newTable);             
-         $migration->addField($newTable,
-                                 "id",
-                                 "int(8) NOT NULL AUTO_INCREMENT");
-         $migration->addField($newTable,
-                                 "plugin_fusioninventory_mappings_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "days",
-                                 "int(255) NOT NULL DEFAULT '-1'");
-         $migration->addKey($newTable,
-                            "plugin_fusioninventory_mappings_id");
-      $migration->migrationOneTable($newTable);
-         if (!class_exists('PluginFusinvsnmpConfigLogField')) { // if plugin is unactive
-            include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/configlogfield.class.php");
-         }
-         $configLogField = new PluginFusinvsnmpConfigLogField();
-         $configLogField->initConfig();
+
       
       
       
@@ -3679,7 +3608,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          SET plugin_fusioninventory_mappings_id='".$a_mapping[$mappingkey]."'
          WHERE plugin_fusioninventory_mappings_id='".$mapping_id."'";
       $DB->query($query);
-      $query = "UPDATE `glpi_plugin_fusinvsnmp_configlogfields`
+      $query = "UPDATE `glpi_plugin_fusioninventory_configlogfields`
          SET plugin_fusioninventory_mappings_id='".$a_mapping[$mappingkey]."'
          WHERE plugin_fusioninventory_mappings_id='".$mapping_id."'";
       $DB->query($query);

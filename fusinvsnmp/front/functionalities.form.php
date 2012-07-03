@@ -61,7 +61,7 @@ if (isset($_POST['update'])) {
          break;
 
       case 'history' :
-         $pfConfigLogField = new PluginFusinvsnmpConfigLogField();
+         $pfConfigLogField = new PluginFusioninventoryConfigLogField();
          foreach ($_POST as $key=>$val) {
             $split = explode("-", $key);
             if (isset($split[1]) AND is_numeric($split[1])) {
