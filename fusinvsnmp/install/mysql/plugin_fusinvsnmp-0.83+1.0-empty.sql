@@ -17,28 +17,6 @@
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_modelmibs`;
-
-CREATE TABLE `glpi_plugin_fusinvsnmp_modelmibs` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `plugin_fusinvsnmp_models_id` int(11) NOT NULL DEFAULT '0',
-   `plugin_fusinvsnmp_miblabels_id` int(11) NOT NULL DEFAULT '0',
-   `plugin_fusinvsnmp_miboids_id` int(11) NOT NULL DEFAULT '0',
-   `plugin_fusinvsnmp_mibobjects_id` int(11) NOT NULL DEFAULT '0',
-   `oid_port_counter` tinyint(1) NOT NULL DEFAULT '0',
-   `oid_port_dyn` tinyint(1) NOT NULL DEFAULT '0',
-   `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
-   `is_active` tinyint(1) NOT NULL DEFAULT '1',
-   `vlan` tinyint(1) NOT NULL DEFAULT '0',
-   PRIMARY KEY (`id`),
-   KEY `plugin_fusinvsnmp_models_id` (`plugin_fusinvsnmp_models_id`),
-   KEY `plugin_fusinvsnmp_models_id_2` (`plugin_fusinvsnmp_models_id`,`oid_port_dyn`),
-   KEY `plugin_fusinvsnmp_models_id_3` (`plugin_fusinvsnmp_models_id`,`oid_port_counter`,`plugin_fusioninventory_mappings_id`),
-   KEY `plugin_fusinvsnmp_models_id_4` (`plugin_fusinvsnmp_models_id`,`plugin_fusioninventory_mappings_id`),
-   KEY `oid_port_dyn` (`oid_port_dyn`),
-   KEY `is_active` (`is_active`),
-   KEY `plugin_fusioninventory_mappings_id` (`plugin_fusioninventory_mappings_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 

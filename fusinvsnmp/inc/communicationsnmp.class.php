@@ -94,7 +94,7 @@ class PluginFusinvsnmpCommunicationSNMP {
     */
    function addModel($p_sxml_node, $p_id) {
       $pfModel = new PluginFusinvsnmpModel();
-      $pfModelMib = new PluginFusinvsnmpModelMib();
+      $pfModelMib = new PluginFusioninventorySnmpmodelMib();
 
       $pfModel->getFromDB($p_id);
       $sxml_model = $p_sxml_node->addChild('MODEL');

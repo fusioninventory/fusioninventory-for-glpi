@@ -188,26 +188,26 @@ class PluginFusinvsnmpModel extends CommonDBTM {
          case NETWORKING_TYPE :
             $query = "SELECT * 
                       FROM `glpi_plugin_fusinvsnmp_networkequipments`
-                           LEFT JOIN `glpi_plugin_fusinvsnmp_modelmibs`
+                           LEFT JOIN `glpi_plugin_fusioninventory_snmpmodelmibs`
                            ON `glpi_plugin_fusinvsnmp_networkequipments`.`plugin_fusinvsnmp_models_id`=
-                              `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusinvsnmp_models_id`
+                              `glpi_plugin_fusioninventory_snmpmodelmibs`.`plugin_fusinvsnmp_models_id`
                       WHERE `networkequipments_id`='".$ID_Device."'
-                            AND `glpi_plugin_fusinvsnmp_modelmibs`.`is_active`='1' ";
+                            AND `glpi_plugin_fusioninventory_snmpmodelmibs`.`is_active`='1' ";
             break;
 
          case PRINTER_TYPE :
             $query = "SELECT `glpi_plugin_fusinvsnmp_printers`.*,
-                        `glpi_plugin_fusinvsnmp_modelmibs`.*,
+                        `glpi_plugin_fusioninventory_snmpmodelmibs`.*,
                         `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`
                       FROM `glpi_plugin_fusinvsnmp_printers`
-                           LEFT JOIN `glpi_plugin_fusinvsnmp_modelmibs`
+                           LEFT JOIN `glpi_plugin_fusioninventory_snmpmodelmibs`
                               ON `glpi_plugin_fusinvsnmp_printers`.`plugin_fusinvsnmp_models_id`=
-                                 `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusinvsnmp_models_id`
+                                 `glpi_plugin_fusioninventory_snmpmodelmibs`.`plugin_fusinvsnmp_models_id`
                            LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-                              ON `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusioninventory_mappings_id`=
+                              ON `glpi_plugin_fusioninventory_snmpmodelmibs`.`plugin_fusioninventory_mappings_id`=
                                  `glpi_plugin_fusioninventory_mappings`.`id`
                       WHERE `printers_id`='".$ID_Device."'
-                            AND `glpi_plugin_fusinvsnmp_modelmibs`.`is_active`='1' ";
+                            AND `glpi_plugin_fusioninventory_snmpmodelmibs`.`is_active`='1' ";
             break;
 
       }

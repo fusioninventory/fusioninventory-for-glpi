@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-class PluginFusinvsnmpModelMib extends CommonDBTM {
+class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
    
 
    function showFormList($id, $options=array()) {
@@ -61,15 +61,15 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
          $type_model = $data['itemtype'];
 
          $query = "SELECT `glpi_plugin_fusinvsnmp_models`.`itemtype`,
-                          `glpi_plugin_fusinvsnmp_modelmibs`.*,
+                          `glpi_plugin_fusioninventory_snmpmodelmibs`.*,
                           `glpi_plugin_fusioninventory_mappings`.`name`,
                           `glpi_plugin_fusioninventory_mappings`.`locale`
-                   FROM `glpi_plugin_fusinvsnmp_modelmibs`
+                   FROM `glpi_plugin_fusioninventory_snmpmodelmibs`
                         LEFT JOIN `glpi_plugin_fusinvsnmp_models`
-                        ON `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusinvsnmp_models_id`=
+                        ON `glpi_plugin_fusioninventory_snmpmodelmibs`.`plugin_fusinvsnmp_models_id`=
                            `glpi_plugin_fusinvsnmp_models`.`id`
                         LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-                        ON `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusioninventory_mappings_id`=
+                        ON `glpi_plugin_fusioninventory_snmpmodelmibs`.`plugin_fusioninventory_mappings_id`=
                            `glpi_plugin_fusioninventory_mappings`.`id`
                    WHERE `glpi_plugin_fusinvsnmp_models`.`id`='".$id."';";
          $result = $DB->query($query);
@@ -331,7 +331,7 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
 
    function activation($id) {
       
-      $mib_networking = new PluginFusinvsnmpModelMib();
+      $mib_networking = new PluginFusioninventorySnmpmodelMib();
       
       $mib_networking->getFromDB($id);
       $data = array();
@@ -354,10 +354,10 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
 
       // oid GET
       $query = "SELECT `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`,
-                       `glpi_plugin_fusinvsnmp_modelmibs`.*
-                FROM `glpi_plugin_fusinvsnmp_modelmibs`
+                       `glpi_plugin_fusioninventory_snmpmodelmibs`.*
+                FROM `glpi_plugin_fusioninventory_snmpmodelmibs`
                      LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-                               ON `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusioninventory_mappings_id`=
+                               ON `glpi_plugin_fusioninventory_snmpmodelmibs`.`plugin_fusioninventory_mappings_id`=
                                   `glpi_plugin_fusioninventory_mappings`.`id`
                 WHERE `plugin_fusinvsnmp_models_id`='".$p_id."'
                   AND `is_active`='1'

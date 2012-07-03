@@ -89,8 +89,8 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       $xml .= "	<comments><![CDATA[".$comment."]]></comments>\n";
       $xml .= "	<oidlist>\n";
 
-      $query = "SELECT `glpi_plugin_fusinvsnmp_modelmibs`.*,
-	 FROM `glpi_plugin_fusinvsnmp_modelmibs`
+      $query = "SELECT `glpi_plugin_fusioninventory_snmpmodelmibs`.*,
+	 FROM `glpi_plugin_fusioninventory_snmpmodelmibs`
 	 WHERE `plugin_fusinvsnmp_models_id`='".$ID_model."';";
 
       $result=$DB->query($query);
@@ -185,7 +185,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       $xml = simplexml_load_file($file,'SimpleXMLElement', LIBXML_NOCDATA);
 
       // Clean
-      $query = "DELETE FROM `glpi_plugin_fusinvsnmp_modelmibs`
+      $query = "DELETE FROM `glpi_plugin_fusioninventory_snmpmodelmibs`
          WHERE  `plugin_fusioninventory_mappings_id`='0'
             AND `oid_port_counter`='0'";
       $DB->query($query);
@@ -218,7 +218,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       // Get list of oids in DB
       $a_oidsDB = array();
       $models_data = $DB->fetch_assoc($result);
-      $pfModelMib = new PluginFusinvsnmpModelMib();
+      $pfModelMib = new PluginFusioninventorySnmpmodelMib();
       $pfModel = new PluginFusinvsnmpModel();
       $pfModel->getFromDB($models_data['id']);
       $input = array();
@@ -406,7 +406,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
             $mappings_id = '0';
          }
 
-          $query = "INSERT INTO `glpi_plugin_fusinvsnmp_modelmibs`
+          $query = "INSERT INTO `glpi_plugin_fusioninventory_snmpmodelmibs`
              (
                 `plugin_fusinvsnmp_models_id`,
                 `plugin_fusioninventory_snmpmodelmiboids_id`,
