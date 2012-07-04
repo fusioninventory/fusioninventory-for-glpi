@@ -478,6 +478,9 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
                      $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
                      $unknown_infos = array();
                      $unknown_infos["name"] = '';
+                     if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
+                        $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+                     }
                      $newID=$PluginFusioninventoryUnknownDevice->add($unknown_infos);
                      // Add networking_port
                      $port_add = array();
@@ -577,6 +580,9 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
                      $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
                      $input = array();
                      $input['name'] = '';
+                     if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
+                        $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+                     }
                      $newID = $pluginFusioninventoryUnknownDevice->add($input);
                      $input['itemtype'] = "PluginFusioninventoryUnknownDevice";
                      $input['items_id'] = $newID;
