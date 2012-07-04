@@ -262,6 +262,9 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
          if ($sysname != '') {
             $input['name'] = $sysname;
          }
+         if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
+            $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+         }
          $unkonwn_id = $pfUnknownDevice->add($input);
          // Add port
          $input = array();
@@ -428,6 +431,9 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
          $input['mac'] = $sysmac;
          if (isset($params['sysname'])) {
             $input['name'] = $params['sysname'];
+         }
+         if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
+            $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
          }
          $unkonwn_id = $PluginFusioninventoryUnknownDevice->add($input);
          // Add port
