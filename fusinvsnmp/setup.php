@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-define ("PLUGIN_FUSINVSNMP_VERSION","0.80+1.4");
+define ("PLUGIN_FUSINVSNMP_VERSION","0.80+1.5");
 
 include_once ("includes.php");
 
