@@ -144,7 +144,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       echo "</tr>";
       echo "</table>";
 
-      echo "</form>";
+      Html::closeForm();
    }
 
 
@@ -170,7 +170,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       echo "</tr>";
       echo "</table>";
 
-      echo "</form>";
+      Html::closeForm();
    }
 
 

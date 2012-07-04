@@ -319,12 +319,15 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
 
             // ** Display pic / link for exporting model
             case "glpi_plugin_fusinvsnmp_models.id" :
-               $out = "<div align='center'><form></form><form method='get' action='"; 
-               $out.=$CFG_GLPI['root_doc'] . "/plugins/fusinvsnmp/front/models.export.php' target='_blank'>
+               $out = "<div align='center'><form>";
+               $out .= Html::closeForm(false);
+               $out .= "<form method='get' action='"; 
+               $out .= $CFG_GLPI['root_doc'] . "/plugins/fusinvsnmp/front/models.export.php' target='_blank'>
                   <input type='hidden' name='model' value='" . $data["id"] . "' />
                   <input name='export' src='" . $CFG_GLPI['root_doc'];
-               $out.= "/pics/right.png' title='Exporter' value='Exporter' type='image'>
-                  </form></div>";
+               $out.= "/pics/right.png' title='Exporter' value='Exporter' type='image'>";
+               $out .= Html::closeForm(false);
+               $out .= "</div>";
                return "<center>".$out."</center>";
                break;
 

@@ -74,7 +74,7 @@ class PluginFusinvinventoryImportXML extends CommonDBTM  {
 
       echo "</table>";
 
-      echo "</form>";
+      Html::closeForm();
       return true;
    }
 

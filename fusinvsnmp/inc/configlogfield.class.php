@@ -186,7 +186,8 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
       }
       echo "</td>";
       echo "</tr>";
-      echo "</table></div></form>";
+      echo "</table></div>";
+      Html::closeForm();
 
       return true;
    }

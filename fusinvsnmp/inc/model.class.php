@@ -163,7 +163,9 @@ class PluginFusinvsnmpModel extends CommonDBTM {
       }
       echo "</td>";
       echo "</tr>";
-      echo "</table></form></div>";
+      echo "</table>";
+      Html::closeForm();
+      echo "</div>";
    }
    
    

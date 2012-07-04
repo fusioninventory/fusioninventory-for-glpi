@@ -136,7 +136,7 @@ class PluginFusinvdeployConfig extends CommonDBTM {
                       value='" . $LANG['buttons'][7] . "'></td></tr>";
       }
       echo "</table>";
-      echo "</form>";
+      Html::closeForm();
 
       return true;
    }

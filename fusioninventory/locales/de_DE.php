@@ -90,7 +90,7 @@ $LANG['plugin_fusioninventory']['discovery'][9]="Number of devices not imported 
 $LANG['plugin_fusioninventory']['errors'][1]="PHP-Option allow_url_fopen ist deaktiviert, Agents können nicht für eine Inventarisierung geweckt werden.";
 $LANG['plugin_fusioninventory']['errors'][22]="Nicht erkannte Elemente in";
 $LANG['plugin_fusioninventory']['errors'][2]="PHP-Option allow_url_fopen is deaktiviert, ist Voraussetzung für den Push-Modus";
-$LANG['plugin_fusioninventory']['errors'][50]="Ihre Version von GLPI ist nicht kompatibel, benötigt wird 0.83";
+$LANG['plugin_fusioninventory']['errors'][50]="Ihre Version von GLPI ist nicht kompatibel, benötigt wird 0.83.3";
 
 $LANG['plugin_fusioninventory']['functionalities'][0]="Funktionen";
 $LANG['plugin_fusioninventory']['functionalities'][16]="SNMP-Authentifizierung ";

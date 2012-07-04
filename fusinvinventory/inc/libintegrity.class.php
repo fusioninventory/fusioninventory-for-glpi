@@ -119,7 +119,7 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       echo "<form method='post' action=''>";
       echo "<input type='hidden' name='clean' value='1'/>";
       echo "<input type='submit' class='submit' value='".$LANG['buttons'][53]."'/>";
-      echo "</form>";
+      Html::closeForm();
       echo "</td>";
       echo "</tr>";
       echo "</table>";
@@ -753,7 +753,7 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       echo "</th>";
       echo "</tr>";
       echo "</table>";
-      echo "</form>";
+      Html::closeForm();
 
       if ($computers_id == '0') {
          Html::printPager($start,$number,$CFG_GLPI['root_doc']."/plugins/fusinvinventory/front/libintegrity.php",'');

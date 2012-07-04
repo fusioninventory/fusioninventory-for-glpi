@@ -119,6 +119,8 @@ function plugin_init_fusinvsnmp() {
 
    $PLUGIN_HOOKS['add_javascript']['fusinvsnmp']="script.js";
    
+   $PLUGIN_HOOKS['csrf_compliant']['fusinvsnmp'] = true;
+   
 	if (isset($_SESSION["glpiID"])) {
 
 		if (Session::haveRight("configuration", "r") || Session::haveRight("profile", "w")) {// Config page
@@ -218,7 +220,7 @@ function plugin_version_fusinvsnmp() {
                 'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
                                     & FusionInventory team',
                 'homepage'       =>'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/',
-                'minGlpiVersion' => '0.80'// For compatibility / no install in version < 0.78
+                'minGlpiVersion' => '0.83.3'// For compatibility / no install in version < 0.78
    );
 }
 
@@ -228,7 +230,7 @@ function plugin_version_fusinvsnmp() {
 function plugin_fusinvsnmp_check_prerequisites() {
    global $LANG;
    
-   if (version_compare(GLPI_VERSION,'0.83','lt') || version_compare(GLPI_VERSION,'0.84','ge')) {
+   if (version_compare(GLPI_VERSION,'0.83.3','lt') || version_compare(GLPI_VERSION,'0.84','ge')) {
       echo $LANG['plugin_fusioninventory']['errors'][50];
       return false;
    }

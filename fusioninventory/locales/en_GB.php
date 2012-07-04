@@ -76,7 +76,7 @@ $LANG['plugin_fusioninventory']['functionalities'][75]="Locks";
 $LANG['plugin_fusioninventory']['functionalities'][76]="Extra-debug";
 
 $LANG['plugin_fusioninventory']['errors'][22]="Unattended element in";
-$LANG['plugin_fusioninventory']['errors'][50]="Your GLPI version not compatible, require 0.83";
+$LANG['plugin_fusioninventory']['errors'][50]="Your GLPI version not compatible, require 0.83.3";
 $LANG['plugin_fusioninventory']['errors'][1] = "PHP allow_url_fopen is off, can't wake agent to do inventory";
 $LANG['plugin_fusioninventory']['errors'][2] = "PHP allow_url_fopen is off, push mode can't work";
 

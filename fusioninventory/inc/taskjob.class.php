@@ -310,7 +310,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo '</tr>';
       
       echo "</table>";
-      echo "</form>";
+      Html::closeForm();
       
       echo "<script language='javascript'>
          function expandtaskjobform() {
@@ -408,7 +408,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       echo "</table>";
       echo "<input type='hidden' name='id' value='".$id."' />";
-      echo "</form>";
+      Html::closeForm();
    }
 
    
@@ -1403,7 +1403,7 @@ return namelist;
       echo "</tr>";
 
       echo "</table>";
-      echo "</form>";
+      Html::closeForm();
       echo "</div>";
       
    }
@@ -1951,7 +1951,7 @@ return namelist;
       echo "</tr>";
 
       echo "</table>";
-      echo "</form>";
+      Html::closeForm();
    }
 
 

@@ -90,13 +90,14 @@ echo "<input type='submit' value='Valider' class='submit' />";
 echo "</td>";
 echo "</tr>";
 
-echo "</table></form>";
+echo "</table>";
+Html::closeForm();
 
 if(isset($_GET["networkports_id"])) {
    echo PluginFusinvsnmpNetworkPortLog::showHistory($_GET["networkports_id"]);
 }
 
-echo "</form>";
+Html::closeForm();
 
 Html::footer(); 
 
