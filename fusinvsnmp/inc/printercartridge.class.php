@@ -80,7 +80,8 @@ class PluginFusinvsnmpPrinterCartridge extends CommonDBTM {
          echo "</td>";
          echo "</tr>";
       }
-      echo "</table></form>";
+      echo "</table>";
+      Html::closeForm();
       echo "</div>";
    }
 }

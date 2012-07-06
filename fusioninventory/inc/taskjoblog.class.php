@@ -388,7 +388,7 @@ function appear_array(id){
          echo "<input type='hidden' name='taskjobs_id' value='".$pfTaskjobstate->fields['plugin_fusioninventory_taskjobs_id']."' />";
          echo '<input name="forceend" value="'.$LANG['plugin_fusioninventory']['task'][32].'"
              class="submit" type="submit">';
-         echo "</form>";
+         Html::closeForm();
          echo "</td>";
       }      
       echo "</tr>";

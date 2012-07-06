@@ -90,7 +90,7 @@ $LANG['plugin_fusioninventory']['discovery'][9]="Количество устро
 $LANG['plugin_fusioninventory']['errors'][1]="PHP allow_url_fopen is off, can't wake agent to do inventory";
 $LANG['plugin_fusioninventory']['errors'][22]="Не подключённый элемент в";
 $LANG['plugin_fusioninventory']['errors'][2]="PHP allow_url_fopen is off, push mode can't work";
-$LANG['plugin_fusioninventory']['errors'][50]="Несовместимая версия GLPI, требуется 0.83";
+$LANG['plugin_fusioninventory']['errors'][50]="Несовместимая версия GLPI, требуется 0.83.3";
 
 $LANG['plugin_fusioninventory']['functionalities'][0]="Функции";
 $LANG['plugin_fusioninventory']['functionalities'][16]="SNMP Аутентификация";

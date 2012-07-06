@@ -242,7 +242,8 @@ class PluginFusioninventoryWizard {
                onclick='window.location.href=\"".$CFG_GLPI['root_doc'].
          "/plugins/fusioninventory/front/wizard.php?wizz=".PluginFusioninventoryWizard::getNextStep($filariane)."\"'/>";
       }
-      echo "</form>&nbsp;&nbsp;";
+      Html::closeForm();
+      echo "&nbsp;&nbsp;";
       echo "</td>";
       echo "<td style='background-color: #e1cc7b;'></td>";
       echo "</tr>";

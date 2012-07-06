@@ -279,7 +279,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       echo "</tr>";
 
       echo "</table>";
-      echo "</form>";
+      Html::closeForm();
 
 
       // ***** IP list ***** //
@@ -716,7 +716,7 @@ function appear_array(id){
       echo "</table>";
       if ($monitoring == '1') {
          if (PluginMonitoringProfile::haveRight("componentscatalog", 'w')) {
-            echo "</form>";
+            Html::closeForm();
          }
       }
    }

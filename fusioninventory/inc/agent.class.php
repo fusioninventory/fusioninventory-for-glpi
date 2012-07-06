@@ -569,7 +569,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       }
 
       echo "</table>";
-      echo "</form>";
+      Html::closeForm();
       echo "<br/>";
    }
 

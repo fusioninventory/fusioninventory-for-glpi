@@ -90,7 +90,7 @@ $LANG['plugin_fusioninventory']['discovery'][9]="Liczba niezaimportowanych urzą
 $LANG['plugin_fusioninventory']['errors'][1]="Opcja PHP allow_url_fopen jest wyłączona, nie można";
 $LANG['plugin_fusioninventory']['errors'][22]="Element bez nadzoru w";
 $LANG['plugin_fusioninventory']['errors'][2]="Opcja PHP allow_url_fopen jest wyłączona, tryb push jest niedostępny";
-$LANG['plugin_fusioninventory']['errors'][50]="Your GLPI version not compatible, require 0.83";
+$LANG['plugin_fusioninventory']['errors'][50]="Your GLPI version not compatible, require 0.83.3";
 
 $LANG['plugin_fusioninventory']['functionalities'][0]="Funkcje";
 $LANG['plugin_fusioninventory']['functionalities'][16]="Uwierzytelnienie SNMP";

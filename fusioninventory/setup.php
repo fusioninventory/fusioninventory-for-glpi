@@ -118,7 +118,8 @@ function plugin_init_fusioninventory() {
          PluginFusioninventoryProfile::changeprofile($moduleId);
 
       $PLUGIN_HOOKS['add_javascript']['fusioninventory']="script.js";
-
+      
+      $PLUGIN_HOOKS['csrf_compliant']['fusioninventory'] = true;
 
       if (isset($_SESSION["glpiID"])) {
 
@@ -350,18 +351,6 @@ function plugin_fusioninventory_check_prerequisites() {
    }
    
    return true;
-}
-
-
-
-/**
- * Check if HTTP request comes from an inventory agent (Fusion or legacy OCS)
- * @param useragent the user agent coming from $_SERVER
- * 
- * @return bool : true if request comes from an agent, false otherwise
- */
-function isFusioninventoryUserAgent($useragent = '') {
-   return (preg_match("/(fusioninventory|ocsinventory|ocs-ng)/i",$useragent));
 }
 
 

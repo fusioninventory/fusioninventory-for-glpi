@@ -340,7 +340,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       echo "</table>";
       echo "</div>";
 
-      echo "</form>";
+      Html::closeForm();
    }
 
 

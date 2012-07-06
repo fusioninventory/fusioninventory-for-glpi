@@ -90,7 +90,7 @@ $LANG['plugin_fusioninventory']['discovery'][9]="Número de dispositivos não im
 $LANG['plugin_fusioninventory']['errors'][1]="PHP allow_url_fopen esta desligado, não consigo acordar agente para fazer inventário";
 $LANG['plugin_fusioninventory']['errors'][22]="Elemento autônomo em";
 $LANG['plugin_fusioninventory']['errors'][2]="PHP allow_url_fopen esta desligado, o modo push não funciona";
-$LANG['plugin_fusioninventory']['errors'][50]="A versão do seu GLPI não é compatível. Requerida versão 0.83";
+$LANG['plugin_fusioninventory']['errors'][50]="A versão do seu GLPI não é compatível. Requerida versão 0.83.3";
 
 $LANG['plugin_fusioninventory']['functionalities'][0]="Funções";
 $LANG['plugin_fusioninventory']['functionalities'][16]="Autenticação SNMP";

@@ -93,7 +93,7 @@ class PluginFusioninventoryInventoryComputerImport_Software extends CommonDBTM  
       } else {
          $modified_version = $array['version'];
       }
-      if (isset($res_rule["manufacturer"])) {
+      if (isset($res_rule["manufacturer"])  && $res_rule["manufacturer"]) {
          $manufacturer = Dropdown::getDropdownName("glpi_manufacturers", $res_rule["manufacturer"]);
       }
       $software_entity = $_SESSION["plugin_fusinvinventory_entity"];
@@ -105,7 +105,8 @@ class PluginFusioninventoryInventoryComputerImport_Software extends CommonDBTM  
                                                       $manufacturer, 
                                                       $software_entity);
       if ($software_id > 0
-              AND isset($res_rule["is_helpdesk_visible"])) {
+              AND isset($res_rule["is_helpdesk_visible"])
+              AND strlen($res_rule["is_helpdesk_visible"])) {
          $inputsoftware = array();
          $inputsoftware['id'] = $software_id;
          $inputsoftware['is_helpdesk_visible'] = $res_rule["is_helpdesk_visible"];

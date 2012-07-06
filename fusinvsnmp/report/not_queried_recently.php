@@ -89,7 +89,8 @@ echo "<input type='submit' value='Valider' class='submit' />";
 echo "</td>";
 echo "</tr>";
 
-echo "</table></form>";
+echo "</table>";
+Html::closeForm();
 
 
 
@@ -98,7 +99,7 @@ if(isset($_GET["FK_networking_ports"])) {
    echo PluginFusinvsnmpNetworkPortLog::showHistory($_GET["FK_networking_ports"]);
 }
 
-echo "</form>";
+Html::closeForm();
 
 $state_sql = "";
 if (($state != "") AND ($state != "0")) {

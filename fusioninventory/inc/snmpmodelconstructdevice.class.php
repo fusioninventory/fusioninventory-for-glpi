@@ -472,7 +472,8 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
       echo "</table>";
-      echo "</form><br/>";
+      Html::closeForm();
+      echo "<br/>";
 
       echo "<form method='post' name='' id=''  action='".$target."' enctype=\"multipart/form-data\">";
       echo "<table class='tab_cadre' cellpadding='5' width='950'>";
@@ -484,7 +485,8 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
       echo "</table>";
-      echo "</form></div>";
+      Html::closeForm();
+      echo "</div>";
    }
 
    

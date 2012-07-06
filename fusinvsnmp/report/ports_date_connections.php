@@ -154,7 +154,7 @@ function displaySearchForm() {
    
    echo "</tr>";
    echo "</table>";
-   echo "</form>";
+   Html::closeForm();
       
 } 
 

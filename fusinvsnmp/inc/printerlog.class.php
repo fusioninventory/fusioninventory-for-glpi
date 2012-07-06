@@ -343,7 +343,9 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
                   href='".$_SERVER['PHP_SELF']."?select=none'>".$LANG["buttons"][19]."</a> ";
       echo "<input type='submit' name='delete' value=\"".$LANG["buttons"][6]."\" class='submit' >
             </div></td></tr>";
-      echo "</table></form></div>";
+      echo "</table>";
+      Html::closeForm();
+      echo "</div>";
    }
 
 
@@ -530,7 +532,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       echo "</tr>";
       
       echo "</table>";
-      echo "</form>";
+      Html::closeForm();
 
       $elementsField=array('pages_total'=>$pagecounters['pagecountertotalpages'],
                       'pages_n_b'=>$pagecounters['pagecounterblackpages'],

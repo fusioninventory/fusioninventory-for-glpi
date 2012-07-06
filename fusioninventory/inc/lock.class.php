@@ -269,7 +269,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
       echo "</table>";
       if (!strstr($p_target, "ajax/dropdownMassiveAction.php")) {
-         echo "</form>";
+         Html::closeForm();
       }
       echo "</div>";
    }
