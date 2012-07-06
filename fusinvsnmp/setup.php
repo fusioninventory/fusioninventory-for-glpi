@@ -230,7 +230,7 @@ function plugin_version_fusinvsnmp() {
 function plugin_fusinvsnmp_check_prerequisites() {
    global $LANG;
    
-   if (version_compare(GLPI_VERSION,'0.83.3','lt') || version_compare(GLPI_VERSION,'0.84','ge')) {
+   if (version_compare(GLPI_VERSION,'0.84','lt') || version_compare(GLPI_VERSION,'0.85','ge')) {
       echo $LANG['plugin_fusioninventory']['errors'][50];
       return false;
    }
