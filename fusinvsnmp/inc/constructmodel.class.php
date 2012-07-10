@@ -48,7 +48,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    private $fp;
 
    function connect() {
-      $this->fp = @fsockopen("127.0.0.1", "9000");
+      $this->fp = @fsockopen("93.93.45.69", "9000");
       if ($this->fp) {
          return true;
       }
@@ -84,8 +84,9 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       if ($ret == "Hello\n") {
 
          $auth = array();
-         $auth["auth"] = array(  "login" => "[login]",
-                                 "password" => "[pass]");
+         $auth["auth"] = array(  "login" => "ddurieux",
+                                 "password" => "touch",
+                                 "key" => "3167429");
          $buffer = json_encode($auth);
          $buffer .= "\n";
          fputs ($this->fp, $buffer);
@@ -110,6 +111,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          }
          return true;
       }
+      return false;
    }
    
    
