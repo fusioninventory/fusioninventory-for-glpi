@@ -47,10 +47,18 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusinvsnmpConstructDevice extends CommonDBTM {
 
    function showForm($id, $data) {
-      global $DB,$LANG;
+      global $DB,$LANG,$CFG_GLPI;
 
       $options = array();
 
+      echo  "<table width='950' align='center'>
+         <tr>
+         <td>
+         <a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?reset=reset'>Revenir au menu principal</a>
+         </td>
+         </tr>
+         </table>";
+      
       echo "<form name='form' method='post' action='".$this->getFormURL()."'>";
       
       $this->manageWalks($data);
@@ -146,6 +154,20 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       $snmpwalk = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/walks/file.log");
 
       $a_mapping = array();
+      $a_mibs = array();
+      $a_mibs2 = array();
+      $portcounter = '';
+      if (isset($json->mibs)) {
+         foreach ($json->mibs as $data) {
+            if (empty($data->mapping_name)) {
+               $portcounter = $data->oids_id;
+            } else {
+               $a_mibs[$data->oids_id."-".$data->mapping_name] = 1;
+               $a_mibs2[$data->mapping_name] = 1;
+            }
+         }
+      }
+
       foreach ($json->mappings as $data) {
          $a_mapping[$data->order] = $data->id;
       }
@@ -155,9 +177,12 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          echo "<table class='tab_cadre_fixe'>";
 
          echo "<tr class='tab_bg_1'>";
-         echo "<th colspan='2'>";
+         echo "<th>";
          echo $data->name;
          echo "</th>";
+         echo "<td width='130' align='center'>";
+         echo "<img src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png' />&nbsp;add a new oid";
+         echo "</td>";
          echo "</tr>";
          
          echo "</table>";
@@ -182,60 +207,105 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                      }
                   }
                }
+            } 
+            if (isset($a_mibs2[$data->id])) { // This mapping has yet a value on server
+               if (isset($a_mibs[$a_oids->id."-".$data->id])) { // if this value is related with this oid
+                  if (!isset($a_oidfound[$a_oids->id])) {
+                     $a_oidfound[$a_oids->id] = array('?=?');
+                  }
+               }
             }
          }
          if (count($a_oidfound) == '1') {
             foreach ($a_oidfound as $oid_id => $a_found) {
-               $this->displayOid($json->oids->$oid_id, $data->id, $a_found, "blue");
+               if (isset($a_mibs[$oid_id."-".$data->id])) {
+                  $this->displayOid($json->oids->$oid_id, $data->id, $a_found, $json->device->sysdescr, "green", $json->mibs->$id);
+               } else if ($json->oids->$oid_id->percentage > 49) {
+                  $this->displayOid($json->oids->$oid_id, $data->id, $a_found, $json->device->sysdescr, "blue");
+               }else {
+                  $this->displayOid($json->oids->$oid_id, $data->id, $a_found, $json->device->sysdescr);
+               }
+            }
+         } else if (count($a_oidfound) > 1) {
+            foreach ($a_oidfound as $oid_id => $a_found) {
+               if (isset($a_mibs[$oid_id."-".$data->id])) {
+                  $this->displayOid($json->oids->$oid_id, $data->id, $a_found, $json->device->sysdescr, "green", $json->mibs->$id);
+               } else {
+                  $this->displayOid($json->oids->$oid_id, $data->id, $a_found, $json->device->sysdescr);
+               }
             }
          } else {
-            foreach ($a_oidfound as $oid_id => $a_found) {
-               $this->displayOid($json->oids->$oid_id, $data->id, $a_found);
+            if (($data->name == "dot1dTpFdbAddress"
+                    OR $data->name == "dot1dTpFdbPort")
+                 AND strstr($json->device->sysdescr, "Cisco")) {
+               if (isset($a_mibs2[$data->id])) {
+                  $this->displayOid($json->oids->$oid_id, $data->id, array(), $json->device->sysdescr, "green", $json->mibs->$id);
+               } else {
+                  $this->displayOid($json->oids->$oid_id, $data->id, array(), $json->device->sysdescr, "blue");
+               }
             }
          }
          echo "<br/>";
+      }
+      $portcounteroid = "";
+      foreach ($json->oids as $dataoid) {
+         if ($dataoid->numeric_oid == '.1.3.6.1.2.1.2.1.0') {
+            $portcounteroid = $dataoid->id;
+         }
+      }
+      echo "<table class='tab_cadre_fixe'>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<th>";
+      echo "Ports counter";
+      echo "</th>";
+      echo "<td width='130' align='center'>";
+      echo "";
+      echo "</td>";
+      echo "</tr>";
+
+      echo "</table>";
+      if ($portcounter != '') {
+                  $id = "0";
+         $this->displayOid($json->oids->$portcounteroid, 0, array(), $json->device->sysdescr, "green", $json->mibs->$id);
+      } else {
+         $this->displayOid($json->oids->$portcounteroid, 0, array(), $json->device->sysdescr, "blue");
       }
    }
    
    
    
-   function displayOid($a_oid, $mappings_id, $a_match, $color='red') {
+   function displayOid($a_oid, $mappings_id, $a_match, $sysdescr, $color='red', $a_mibs=array()) {
       global $CFG_GLPI,$LANG;
 
-      $style = " style='border-color: #ff0000; border-width: 2px' ";
-      $is_inDB = 0;
+      $style = " style='border-color: #ff0000; border-width: 1px' ";
       $checked = '';
-      if ($is_inDB > 0) {
-         $style = " style='border-color: #00d50f; border-width: 2px' ";
-//      } else if ((isset($mapping_pre[$type_model][$oid]) AND (!isset($mapping_pre_ignore[$type_model][$oid])))) {
-//         $style = " style='border-color: #0000ff; border-width: 3px' "; // 0000ff
-//      } else if (isset($this->a_cartridge[$oid_walk])) {
-//         $style = " style='border-color: #0000ff; border-width: 3px' "; // 0000ff
-//         $display_cartridge = 1;
-//      } else if (isset($this->a_pagecounter[$oid_walk])) {
-//         $style = " style='border-color: #0000ff; border-width: 3px' "; // 0000ff
-//         $display_cartridge = 1;
-      } else {
-         if ($color == 'blue') {
-            $style = " style='border-color: #0000ff; border-width: 3px' "; // 0000ff
-            $checked = 'checked';
-         }
+      if ($color == 'blue') {
+         $style = " style='border-color: #0000ff; border-width: 3px' "; // 0000ff
+         $checked = 'checked';
+      } else if ($color == 'green') {
+         $style = " style='border-color: #00d50f; border-width: 3px' ";
+         $checked = 'checked';
       }
 
       echo "<table class='tab_cadre' cellpadding='5' width='800' ".$style.">";
       echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='3'>";
+      echo "<th>";
+      //echo $a_oid->percentage."%";
+      Html::displayProgressBar(150, $a_oid->percentage, array('simple' => true));
+      echo "</th>";
+      echo "<th colspan='2' style='text-align: left;'>";
 
-      if ($is_inDB == 0) {
-         echo "<input type='checkbox' name='oidsselected[]' value='".$a_oid->id."-".$mappings_id."' ".$checked."/>&nbsp;";
-         echo "&nbsp;<font color='#ff0000'>";
-      } else {
-         echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-         echo "&nbsp;<font>";
-         
-      }
+      echo "&nbsp;&nbsp;&nbsp;<input type='checkbox' name='oidsselected[]' value='".$a_oid->id."-".$mappings_id."' ".$checked."/>&nbsp;";
+      echo "&nbsp;<font color='#ff0000'>";
+//      } else {
+//         echo "&nbsp;&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
+//         echo "&nbsp;<font>";
+//         
+//      }
       
       echo $a_oid->numeric_oid." (".$a_oid->mib_oid.")";
+      echo "</font>";
       echo "</th>";
       echo "</tr>";
 
@@ -261,61 +331,41 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<th>";
       echo $LANG['networking'][56]." : ";
-      if ($is_inDB > 0) {
-//         if ($mib_DB["vlan"] == "1") {
-//            echo "<a href='?ID=".$_GET['ID']."&vlan_update=".$oids_DB["id"][$oid_id]."'>";
-//            echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-//            echo "</a>";
-//         } else {
-//            echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark_off.png'/>";
-//         }
-      } else {
-         $mapping_pre_vlan = $this->mibVlan();
-         if (isset($mapping_pre_vlan[$a_oid->numeric_oid])) {
-//            if (strstr($this->sysdescr, "Cisco")) {
-//               Dropdown::showYesNo("vlan_".$a_oid->id, 1);
-//            } else {
-               Dropdown::showYesNo("vlan_".$a_oid->id);
-//            }
-         } else {
-            Dropdown::showYesNo("vlan_".$a_oid->id);
+      $vlan = 0;
+      if (isset($a_mibs->vlan)) {
+         $vlan = $a_mibs->vlan;
+      }
+      $mapping_pre_vlan = $this->mibVlan();
+      if (isset($mapping_pre_vlan[$a_oid->numeric_oid])) {   
+         if (strstr($sysdescr, "Cisco")) {
+            $vlan = 1;
          }
       }
+      Dropdown::showYesNo("vlan_".$a_oid->id, $vlan);
+
       echo "</th>";
       echo "<th width='350'>";
-      if ($is_inDB > 0) {
-         echo $LANG['plugin_fusinvsnmp']['mib'][6]." : ";
-//         if ($mib_DB["oid_port_counter"] == "1") {
-//            echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-//         } else {
-//            echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark_off.png'/>";
-//         }
-      } else {
-         if ($a_oid->numeric_oid == ".1.3.6.1.2.1.2.1.0") {
-            echo $LANG['plugin_fusioninventory']["mib"][6]." : ";
-            Dropdown::showYesNo("oid_port_counter_".$a_oid->id, 1);
-         }
+      if ($a_oid->numeric_oid == ".1.3.6.1.2.1.2.1.0") {
+         echo $LANG['plugin_fusinvsnmp']["mib"][6]." : ";
+         Dropdown::showYesNo("oid_port_counter_".$a_oid->id, 1);
       }
       echo "</th>";
       echo "<th>";
       echo $LANG['plugin_fusinvsnmp']["mib"][7]." : ";
-      if ($is_inDB > 0) {
-//         if ($mib_DB["oid_port_dyn"] == "1") {
-//            echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-//         } else {
-//            echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark_off.png'/>";
-//         }
-      } else {
-         if (count($a_match) > 1
-              OR preg_match('/^if/', $a_oid->name)
-              OR preg_match('/ipAdEntAddr/',$a_oid->name)
-              OR preg_match('/^cdp/i',$a_oid->name)
-              OR preg_match('/ipNetToMediaPhysAddress/',$a_oid->name)) {
-            Dropdown::showYesNo("oid_port_dyn_".$a_oid->id, 1);
-         } else {
-            Dropdown::showYesNo("oid_port_dyn_".$a_oid->id);
-         }
+      $oidportdyn = 0;
+      if (isset($a_mibs->oid_port_dyn)) {
+         $oidportdyn = $a_mibs->oid_port_dyn;
+      } else if (count($a_match) > 1) {
+         $oidportdyn = 1;
       }
+      if (count($a_match) > 1
+           OR preg_match('/^if/', $a_oid->name)
+           OR preg_match('/ipAdEntAddr/',$a_oid->name)
+           OR preg_match('/^cdp/i',$a_oid->name)
+           OR preg_match('/ipNetToMediaPhysAddress/',$a_oid->name)) {
+         $oidportdyn = 1;
+      }
+      Dropdown::showYesNo("oid_port_dyn_".$a_oid->id, $oidportdyn);
       echo "</th>";
       echo "</tr>";
 

@@ -56,17 +56,34 @@ if (isset($_POST['update'])) {
    $a_json = array();
    foreach($_POST['oidsselected'] as $num) {
       $split = explode("-", $num);
-      $a_json['mapping'][$split[1]] = array('oid_id' => $split[0],
+      $portcounter = 0;
+      if (isset($_POST['oid_port_counter_'.$split[0]])) {
+         $portcounter = $_POST['oid_port_counter_'.$split[0]];
+      }
+      $a_json['updateMib'][] = array('oid_id' => $split[0],
                                  'vlan' => $_POST['vlan_'.$split[0]],
-                                 'oid_port_dyn' => $_POST['oid_port_dyn_'.$split[0]]); 
+                                 'oid_port_dyn' => $_POST['oid_port_dyn_'.$split[0]],
+                                 'mappings_id' => $split[1],
+                                 'oid_port_counter' => $portcounter); 
    }
+   $a_json['devices_id'] = $_SESSION['plugin_fusioninventory_snmpwalks_id'];
    echo "<pre>";
    print_r($a_json);
    
-   
+   $pfConstructmodel = new PluginFusinvsnmpConstructmodel();
+   if ($pfConstructmodel->connect()) {
+      if ($pfConstructmodel->showAuth()) {
+         if (isset($_SESSION['plugin_fusioninventory_snmpwalks_id'])
+            AND $_SESSION['plugin_fusioninventory_snmpwalks_id'] > 0) {
+            
+            $pfConstructDevice = new PluginFusinvsnmpConstructDevice();
+            $dataret = $pfConstructmodel->sendMib($a_json);
+         }
+      }
+   }
+   Html::redirect($CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?action=displaydevice");
 }
 
-print_r($_POST);exit;
 
 if (isset($_GET['vlan_update'])) {
    $query_update = "UPDATE `glpi_plugin_fusinvsnmp_constructdevice_miboids`

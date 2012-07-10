@@ -80,7 +80,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    
    function showAuth() {
                  
-      $ret = fgets ($this->fp, 1024);
+      $ret = fgets ($this->fp, 102400);
       if ($ret == "Hello\n") {
 
          $auth = array();
@@ -90,7 +90,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          $buffer = json_encode($auth);
          $buffer .= "\n";
          fputs ($this->fp, $buffer);
-         $ret = fgets ($this->fp, 1024);
+         $ret = fgets ($this->fp, 102400);
          if ($ret == "Authentication error\n") {
             echo "<table class='tab_cadre_fixe'>";
 
@@ -210,15 +210,28 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    
    
    function sendGetsysdescr($sysdescr, $itemtype) {
+      global $CFG_GLPI;
+      
       $getsysdescr = array();
       $getsysdescr['getsysdescr'] = array(
          "sysdescr" => $sysdescr,
          "itemtype" => $itemtype);
+      
+      $_SESSION['plugin_fusioninventory_itemtype'] = $itemtype;
       $buffer = json_encode($getsysdescr);
       $buffer .= "\n";
       fputs ($this->fp, $buffer);
-      $ret = fgets ($this->fp, 1024);
+      $ret = fgets ($this->fp, 102400);
       $data = json_decode($ret);
+      $_SESSION['plugin_fusioninventory_sysdescr'] = $data->device->sysdescr;
+      echo  "<table width='950' align='center'>
+         <tr>
+         <td>
+         <a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?reset=reset'>Revenir au menu principal</a>
+         </td>
+         </tr>
+         </table>";
+      $a_lock = explode("-", $data->device->lock);
       if ($data->device->id == '0') {
          echo "<table class='tab_cadre_fixe'>";
 
@@ -234,10 +247,182 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          // Upload snmpwalk
          // send to server (it add sysdescr and lock for this user)
          // server return oids, mapping, oids most used for this kind of device (check with sysdescr)
-      } else if ($data->device->lock != '0') {
-         echo "Somebody work now on this, retry in 1 hour...";
+      } else if ($data->device->lock != '0'
+              AND $a_lock[0] != 'ddurieux') {
+         echo "<table class='tab_cadre_fixe'>";
+         echo "<tr class='tab_bg_1 center'>";
+         echo "<th>";
+         echo "<br/>Somebody work now on this, retry in 1 hour...<br/><br/>";
+         echo "</th>";
+         echo "</tr>";
+         echo "</table>";
       } else {
          // Device exist, update it? get snmpmodels?
+         echo "<table class='tab_cadre_fixe'>";
+
+         echo "<tr class='tab_bg_1 center'>";
+         echo "<th colspan='2' width='50%'>";
+         echo "This device exist";
+         echo "</th>";
+         echo "<th colspan='2'>";
+         echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php'>Edit oids</a>";
+         echo "&nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp;";
+         echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructsendmodel.php?id=".$data->device->id."'>Get SNMP model</a>";
+         echo "</th>";
+         echo "</tr>";
+         
+         echo "<tr class='tab_bg_1 center'>";
+         echo "<td>";
+         echo "Sysdescr :";
+         echo "</td>";
+         echo "<td>";
+         echo $data->device->sysdescr;
+         echo "</td>";
+         
+         echo "<td>";
+         echo "<strong>Released :</strong>";
+         echo "</td>";
+         echo "<td><strong>";
+         echo Dropdown::getYesNo($data->device->released);
+         echo "</strong></td>";
+         echo "</tr>";
+         
+         echo "<tr class='tab_bg_1 center'>";
+         echo "<td>";
+         echo "Itemtype :";
+         echo "</td>";
+         echo "<td>";
+         echo $data->device->itemtype;
+         echo "</td>";
+         
+         echo "<td>";
+         echo "Have serial number :";
+         echo "</td>";
+         echo "<td>";
+         echo Dropdown::getYesNo($data->device->have_serialnumber);
+         echo "</td>";
+         echo "</tr>";
+         
+         echo "<tr class='tab_bg_1 center'>";
+         echo "<td>";
+         echo "Manufacturer :";
+         echo "</td>";
+         echo "<td>";
+         echo $data->device->manufacturers_id;
+         echo "</td>";
+
+         echo "<td>";
+         echo "Have network ports :";
+         echo "</td>";
+         echo "<td>";
+         echo Dropdown::getYesNo($data->device->have_ports);
+         echo "</td>";
+         echo "</tr>";
+         
+         echo "<tr class='tab_bg_1 center'>";
+         echo "<td>";
+         echo "Firmware :";
+         echo "</td>";
+         echo "<td>";
+         echo $data->device->firmwares_id;
+         echo "</td>";
+         
+         echo "<td>";
+         echo "Have network ports connections :";
+         echo "</td>";
+         echo "<td>";
+         echo Dropdown::getYesNo($data->device->have_portsconnections);
+         echo "</td>";
+         echo "</td>";
+         echo "</tr>";
+         
+         echo "<tr class='tab_bg_1 center'>";
+         echo "<td>";
+         echo "Model :";
+         echo "</td>";
+         echo "<td>";
+         if ($data->device->itemtype == "NetworkEquipment") {
+            echo $data->device->networkmodels_id;
+         } else if ($data->device->itemtype == "Printer") {
+            echo $data->device->printermodels_id;
+         }
+         echo "</td>";
+         
+         echo "<td>";
+         echo "Have Vlan :";
+         echo "</td>";
+         echo "<td>";
+         echo Dropdown::getYesNo($data->device->have_vlan);
+         echo "</td>";
+         echo "</tr>";
+         
+         echo "<tr class='tab_bg_1 center'>";
+         echo "<td>";
+         echo "</td>";
+         echo "<td>";
+         echo "</td>";
+         
+         echo "<td>";
+         echo "Have network ports trunk/tagged :";
+         echo "</td>";
+         echo "<td>";
+         echo Dropdown::getYesNo($data->device->have_trunk);
+         echo "</td>";
+         echo "</tr>";       
+         
+         
+         echo "</table><br/>";
+         
+         echo "<table class='tab_cadre' width='900'>";
+
+         echo "<tr class='tab_bg_1 center'>";
+         echo "<th colspan='5'>";
+         echo "Logs";
+         echo "</th>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1 center'>";
+         echo "<th>";
+         echo "User";
+         echo "</th>";
+         echo "<th>";
+         echo "Date";
+         echo "</th>";
+         echo "<th>";
+         echo "Type";
+         echo "</th>";
+         echo "<th>";
+         echo "Action";
+         echo "</th>";
+         echo "<th>";
+         echo "Content";
+         echo "</th>";
+         echo "</tr>";
+
+         $datalog = json_decode($ret, true);
+         arsort($datalog['logs']);
+         foreach ($datalog['logs'] as $ldata) {
+            echo "<tr class='tab_bg_1'>";
+            echo "<td>";
+            echo $ldata['users_id'];
+            echo "</td>";
+            echo "<td>";
+            echo $ldata['date'];
+            echo "</td>";
+            echo "<td>";
+            echo $ldata['type'];
+            echo "</td>";
+            echo "<td>";
+            echo $ldata['action'];
+            echo "</td>";
+            echo "<td>";
+            echo $ldata['content'];
+            echo "</td>";
+            echo "</tr>";
+         }
+
+         echo "</table>";
+         
       }
    }
    
@@ -255,6 +440,15 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    }
    
    
+   function sendMib($a_mib) {
+      $buffer = json_encode($a_mib);
+      $buffer .= "\n";
+      fputs ($this->fp, $buffer);
+      $ret = fgets ($this->fp);
+      return json_decode($ret);
+   }
+   
+   
    
    function setLock($sysdescr, $itemtype) {
       $getsysdescr = array();
@@ -264,8 +458,19 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       $buffer = json_encode($getsysdescr);
       $buffer .= "\n";
       fputs ($this->fp, $buffer);
-      $ret = fgets ($this->fp, 1024);
+      $ret = fgets ($this->fp, 102400);
       return json_decode($ret);      
+   }
+   
+   
+   
+   function setUnLock() {
+      $unlock = array();
+      $unlock['setUnLock'] = array(
+         "devices_id" => $_SESSION['plugin_fusioninventory_snmpwalks_id']);
+      $buffer = json_encode($unlock);
+      $buffer .= "\n";
+      fputs ($this->fp, $buffer);    
    }
    
    
@@ -313,8 +518,6 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "Upload the file file.log&nbsp;:";
       echo "</td>";
       echo "<td>";
-      echo "<input type='hidden' name='sysdescr' value='".$sysdescr."' />";
-      echo "<input type='hidden' name='itemtype' value='".$itemtype."' />";
       echo "<input type='file' name='snmpwalkfile'/>";
       echo "</td>";
       echo "</tr>";
@@ -332,6 +535,27 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    
    
    
+   function getSendModel() {
+      $singleModel = array();
+      $singleModel['createSingleModel']['id'] = $_GET['id'];
+      
+      $buffer = json_encode($singleModel);
+      $buffer .= "\n";
+      fputs ($this->fp, $buffer);
+      $ret = fgets ($this->fp);
+      $data = json_decode($ret);
+      
+      $mime = "text/xml";
+      
+      header("Expires: Mon, 26 Nov 1962 00:00:00 GMT");
+      header('Pragma: private'); /// IE BUG + SSL
+      header('Cache-control: private, must-revalidate'); /// IE BUG + SSL
+      header("Content-disposition: filename=\"".$data->snmpmodel->name."\"");
+      //header("Content-Type: application/force-download");
+      header("Content-type: ".$mime);
+      
+      echo $data->snmpmodel->model;
+   }
    
 }
 

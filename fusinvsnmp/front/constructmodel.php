@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 include (GLPI_ROOT."/inc/includes.php");
 
 // DEV
-$_SESSION['plugin_fusioninventory_snmpwalks_id'] = 54;
+//$_SESSION['plugin_fusioninventory_snmpwalks_id'] = 214;
 
 // END DEV
 
@@ -59,16 +59,23 @@ PluginFusioninventoryMenu::displayMenu("mini");
 $pfConstructmodel = new PluginFusinvsnmpConstructmodel();
 if ($pfConstructmodel->connect()) {
    if ($pfConstructmodel->showAuth()) {
-      if (isset($_SESSION['plugin_fusioninventory_snmpwalks_id'])
-              AND $_SESSION['plugin_fusioninventory_snmpwalks_id'] > 0) {
-         
-         $pfConstructDevice = new PluginFusinvsnmpConstructDevice();
-         $dataret = $pfConstructmodel->sendGetDevice($_SESSION['plugin_fusioninventory_snmpwalks_id']);
-         $pfConstructDevice->showForm($_SESSION['plugin_fusioninventory_snmpwalks_id'], $dataret);
-         
-      } else if (isset($_POST['snmpwalkfile'])) {
-         $jsonret = $pfConstructmodel->setLock($_POST['sysdescr'], $_POST['itemtype']);
-         
+      if (isset($_GET['reset'])) {
+         // Unlock the device
+         if (isset($_SESSION['plugin_fusioninventory_snmpwalks_id'])) {
+            $pfConstructmodel->setUnLock();
+         }
+         unset($_SESSION['plugin_fusioninventory_snmpwalks_id']);
+         if (isset($_SESSION['plugin_fusioninventory_sysdescr'])) {
+            unset($_SESSION['plugin_fusioninventory_sysdescr']);
+         }
+         if (isset($_SESSION['plugin_fusioninventory_itemtype'])) {
+            unset($_SESSION['plugin_fusioninventory_itemtype']);
+         }
+         Html::redirect($CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php");
+      
+      } else if (isset($_FILES['snmpwalkfile'])) {
+         $jsonret = $pfConstructmodel->setLock($_SESSION['plugin_fusioninventory_sysdescr'], 
+                                               $_SESSION['plugin_fusioninventory_itemtype']);
          $i = 1;
          $md5 = '';
          while ($i == '1') {
@@ -88,7 +95,23 @@ if ($pfConstructmodel->connect()) {
          move_uploaded_file($_FILES['snmpwalkfile']['tmp_name'], GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/walks/".$md5);
 
          $_SESSION['plugin_fusioninventory_snmpwalks_id'] = $jsonret->device->id;
-         Html::redirect($_SERVER['HTTP_REFERER']."?id=".$id_ins);
+         Html::redirect($CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?id=".$id_ins);
+      } else if (isset($_GET['action'])
+              AND $_GET['action'] == 'displaydevice'
+              AND isset($_SESSION['plugin_fusioninventory_sysdescr'])
+              AND $_SESSION['plugin_fusioninventory_sysdescr'] != ''
+              AND $_SESSION['plugin_fusioninventory_itemtype'] != '0') {
+         $pfConstructmodel->sendGetsysdescr($_SESSION['plugin_fusioninventory_sysdescr'], 
+                                            $_SESSION['plugin_fusioninventory_itemtype']);
+      
+      } else if (isset($_SESSION['plugin_fusioninventory_snmpwalks_id'])
+              AND $_SESSION['plugin_fusioninventory_snmpwalks_id'] > 0) {
+         
+         $pfConstructDevice = new PluginFusinvsnmpConstructDevice();
+         $dataret = $pfConstructmodel->sendGetDevice($_SESSION['plugin_fusioninventory_snmpwalks_id']);
+         $pfConstructDevice->showForm($_SESSION['plugin_fusioninventory_snmpwalks_id'], $dataret);
+         
+      
       } else if (isset($_POST['sendsnmpwalk'])
               AND $_POST['sysdescr'] != '') {
          $pfConstructmodel->sendGetsysdescr($_POST['sysdescr'], $_POST['itemtype']);
