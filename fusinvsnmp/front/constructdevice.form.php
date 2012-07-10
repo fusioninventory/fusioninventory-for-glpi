@@ -67,8 +67,6 @@ if (isset($_POST['update'])) {
                                  'oid_port_counter' => $portcounter); 
    }
    $a_json['devices_id'] = $_SESSION['plugin_fusioninventory_snmpwalks_id'];
-   echo "<pre>";
-   print_r($a_json);
    
    $pfConstructmodel = new PluginFusinvsnmpConstructmodel();
    if ($pfConstructmodel->connect()) {
@@ -83,7 +81,7 @@ if (isset($_POST['update'])) {
    }
    Html::redirect($CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?action=displaydevice");
 }
-
+/// OLD ********************************
 
 if (isset($_GET['vlan_update'])) {
    $query_update = "UPDATE `glpi_plugin_fusinvsnmp_constructdevice_miboids`

@@ -151,7 +151,14 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
    function manageWalks($json) {
       global $DB,$CFG_GLPI,$LANG;
 
-      $snmpwalk = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/walks/file.log");
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
+                WHERE `construct_device_id`='".$_SESSION['plugin_fusioninventory_snmpwalks_id']."'
+                LIMIT 1";
+
+      $result=$DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         $snmpwalk = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/walks/".$data['log']);
+      }
 
       $a_mapping = array();
       $a_mibs = array();
@@ -168,6 +175,22 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          }
       }
 
+      $dot1dTpFdbAddress = 0;
+      $dot1dTpFdbPort = 0;
+      $dot1dBasePortIfIndex = 0;
+      if (strstr($json->device->sysdescr, "Cisco")) {
+         foreach ($json->oids as $a_oids) {
+            if ($a_oids->numeric_oid == ".1.3.6.1.2.1.17.4.3.1.1") {
+               $dot1dTpFdbAddress = $a_oids->id;
+            } else if ($a_oids->numeric_oid == ".1.3.6.1.2.1.17.4.3.1.2") {
+               $dot1dTpFdbPort = $a_oids->id;
+            }if ($a_oids->numeric_oid == ".1.3.6.1.2.1.17.1.4.1.2") {
+               $dot1dBasePortIfIndex = $a_oids->id;
+            }
+         }
+      }
+      
+      
       foreach ($json->mappings as $data) {
          $a_mapping[$data->order] = $data->id;
       }
@@ -196,7 +219,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                preg_match_all("/".$a_oids->numeric_oid."(\.\d+){".$a_oids->nboids_after."} = (.*\n)/", $snmpwalk, $found);
                if (isset($found[0][0])) {
                   $a_oidfound[$a_oids->id] = $found[0];
-               } else {               
+               } else {     
                   preg_match_all("/".$a_oids->mib_oid."(?:\.\d+){".$a_oids->nboids_after."} = (?:.*)\n/", $snmpwalk, $found);
                   if (isset($found[0][0])) {
                      $a_oidfound[$a_oids->id] = $found[0];
@@ -217,10 +240,10 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
             }
          }
          if (count($a_oidfound) == '1') {
-            foreach ($a_oidfound as $oid_id => $a_found) {
+            foreach ($a_oidfound as $oid_id => $a_found) {               
                if (isset($a_mibs[$oid_id."-".$data->id])) {
                   $this->displayOid($json->oids->$oid_id, $data->id, $a_found, $json->device->sysdescr, "green", $json->mibs->$id);
-               } else if ($json->oids->$oid_id->percentage > 49) {
+               } else if ($json->oids->$oid_id->percentage->$id > 49) {
                   $this->displayOid($json->oids->$oid_id, $data->id, $a_found, $json->device->sysdescr, "blue");
                }else {
                   $this->displayOid($json->oids->$oid_id, $data->id, $a_found, $json->device->sysdescr);
@@ -236,12 +259,22 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
             }
          } else {
             if (($data->name == "dot1dTpFdbAddress"
-                    OR $data->name == "dot1dTpFdbPort")
+                    OR $data->name == "dot1dTpFdbPort"
+                    OR $data->name == "dot1dBasePortIfIndex")
                  AND strstr($json->device->sysdescr, "Cisco")) {
+               
+               $oids_id_temp = 0;
+               if ($data->name == "dot1dTpFdbAddress") {
+                  $oids_id_temp = $dot1dTpFdbAddress;
+               } else if ($data->name == "dot1dTpFdbPort") {
+                  $oids_id_temp = $dot1dTpFdbPort;
+               } else if ($data->name == "dot1dBasePortIfIndex") {
+                  $oids_id_temp = $dot1dBasePortIfIndex;
+               }
                if (isset($a_mibs2[$data->id])) {
-                  $this->displayOid($json->oids->$oid_id, $data->id, array(), $json->device->sysdescr, "green", $json->mibs->$id);
+                  $this->displayOid($json->oids->$oids_id_temp, $data->id, array(), $json->device->sysdescr, "green", $json->mibs->$id);
                } else {
-                  $this->displayOid($json->oids->$oid_id, $data->id, array(), $json->device->sysdescr, "blue");
+                  $this->displayOid($json->oids->$oids_id_temp, $data->id, array(), $json->device->sysdescr, "blue");
                }
             }
          }
@@ -290,9 +323,9 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
 
       echo "<table class='tab_cadre' cellpadding='5' width='800' ".$style.">";
       echo "<tr class='tab_bg_1'>";
-      echo "<th>";
+      echo "<th width='150'>";
       //echo $a_oid->percentage."%";
-      Html::displayProgressBar(150, $a_oid->percentage, array('simple' => true));
+      Html::displayProgressBar(150, $a_oid->percentage->$mappings_id, array('simple' => true));
       echo "</th>";
       echo "<th colspan='2' style='text-align: left;'>";
 
@@ -330,18 +363,24 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       
       echo "<tr class='tab_bg_1'>";
       echo "<th>";
-      echo $LANG['networking'][56]." : ";
-      $vlan = 0;
-      if (isset($a_mibs->vlan)) {
-         $vlan = $a_mibs->vlan;
-      }
-      $mapping_pre_vlan = $this->mibVlan();
-      if (isset($mapping_pre_vlan[$a_oid->numeric_oid])) {   
-         if (strstr($sysdescr, "Cisco")) {
-            $vlan = 1;
+      if ($a_oid->numeric_oid == ".1.3.6.1.2.1.2.1.0") {
+         echo "<div style='display:none'>";
+         Dropdown::showYesNo("vlan_".$a_oid->id, 0);
+         echo "</div>";
+      } else {
+         echo $LANG['networking'][56]." : ";
+         $vlan = 0;
+         if (isset($a_mibs->vlan)) {
+            $vlan = $a_mibs->vlan;
          }
+         $mapping_pre_vlan = $this->mibVlan();
+         if (isset($mapping_pre_vlan[$a_oid->numeric_oid])) {   
+            if (strstr($sysdescr, "Cisco")) {
+               $vlan = 1;
+            }
+         }
+         Dropdown::showYesNo("vlan_".$a_oid->id, $vlan);
       }
-      Dropdown::showYesNo("vlan_".$a_oid->id, $vlan);
 
       echo "</th>";
       echo "<th width='350'>";
@@ -350,22 +389,29 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          Dropdown::showYesNo("oid_port_counter_".$a_oid->id, 1);
       }
       echo "</th>";
-      echo "<th>";
-      echo $LANG['plugin_fusinvsnmp']["mib"][7]." : ";
-      $oidportdyn = 0;
-      if (isset($a_mibs->oid_port_dyn)) {
-         $oidportdyn = $a_mibs->oid_port_dyn;
-      } else if (count($a_match) > 1) {
-         $oidportdyn = 1;
+      echo "<th width='200'>";
+      if ($a_oid->numeric_oid == ".1.3.6.1.2.1.2.1.0") {
+         echo "<div style='display:none'>";
+         Dropdown::showYesNo("oid_port_dyn_".$a_oid->id, 0);
+         echo "</div>";
+      } else {
+         echo $LANG['plugin_fusinvsnmp']["mib"][7]." : ";
+         $oidportdyn = 0;
+         if (isset($a_mibs->oid_port_dyn)) {
+            $oidportdyn = $a_mibs->oid_port_dyn;
+         } else if (count($a_match) > 1) {
+            $oidportdyn = 1;
+         }
+         if (count($a_match) > 1
+              OR preg_match('/^if/', $a_oid->name)
+              OR preg_match('/ipAdEntAddr/',$a_oid->name)
+              OR preg_match('/^cdp/i',$a_oid->name)
+              OR preg_match('/ipNetToMediaPhysAddress/',$a_oid->name)
+              OR preg_match('/^dot1d/i',$a_oid->name)) {
+            $oidportdyn = 1;
+         }
+         Dropdown::showYesNo("oid_port_dyn_".$a_oid->id, $oidportdyn);
       }
-      if (count($a_match) > 1
-           OR preg_match('/^if/', $a_oid->name)
-           OR preg_match('/ipAdEntAddr/',$a_oid->name)
-           OR preg_match('/^cdp/i',$a_oid->name)
-           OR preg_match('/ipNetToMediaPhysAddress/',$a_oid->name)) {
-         $oidportdyn = 1;
-      }
-      Dropdown::showYesNo("oid_port_dyn_".$a_oid->id, $oidportdyn);
       echo "</th>";
       echo "</tr>";
 
@@ -751,7 +797,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       $mapping_pre_vlan['.1.3.6.1.2.1.4.22.1.2'] = '1';
       $mapping_pre_vlan['.1.3.6.1.2.1.17.4.3.1.2'] = '1';
       $mapping_pre_vlan['.1.3.6.1.2.1.17.1.4.1.2'] = '1';
-
+      
       return $mapping_pre_vlan;
    }
 }

@@ -84,9 +84,8 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       if ($ret == "Hello\n") {
 
          $auth = array();
-         $auth["auth"] = array(  "login" => "ddurieux",
-                                 "password" => "touch",
-                                 "key" => "3167429");
+         $auth["auth"] = array(  "login" => "[login]",
+                                 "password" => "[pass]");
          $buffer = json_encode($auth);
          $buffer .= "\n";
          fputs ($this->fp, $buffer);
@@ -130,17 +129,17 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
       
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>";
-      echo "<a href=''>Get All SNMP models (devel)</a>";
-      echo "</td>";
-      echo "</tr>";
-      
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>";
-      echo "<a href=''>Get All SNMP models (stable)</a>";
-      echo "</td>";
-      echo "</tr>";
+//      echo "<tr class='tab_bg_1'>";
+//      echo "<td align='center'>";
+//      echo "<a href=''>Get All SNMP models (devel)</a>";
+//      echo "</td>";
+//      echo "</tr>";
+//      
+//      echo "<tr class='tab_bg_1'>";
+//      echo "<td align='center'>";
+//      echo "<a href=''>Get All SNMP models (stable)</a>";
+//      echo "</td>";
+//      echo "</tr>";
 
       echo "</table>";
    }
@@ -267,7 +266,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          echo "<th colspan='2'>";
          echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php'>Edit oids</a>";
          echo "&nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp;";
-         echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructsendmodel.php?id=".$data->device->id."'>Get SNMP model</a>";
+         echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructsendmodel.php?id=".$data->device->id."' target='_blank'>Get SNMP model</a>";
          echo "</th>";
          echo "</tr>";
          
@@ -550,9 +549,9 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       header("Expires: Mon, 26 Nov 1962 00:00:00 GMT");
       header('Pragma: private'); /// IE BUG + SSL
       header('Cache-control: private, must-revalidate'); /// IE BUG + SSL
-      header("Content-disposition: filename=\"".$data->snmpmodel->name."\"");
-      //header("Content-Type: application/force-download");
-      header("Content-type: ".$mime);
+      header("Content-disposition: filename=\"".$data->snmpmodel->name.".xml\"");
+      header("Content-Type: application/force-download");
+      //header("Content-type: ".$mime);
       
       echo $data->snmpmodel->model;
    }
