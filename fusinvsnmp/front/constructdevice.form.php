@@ -117,7 +117,7 @@ if (isset($_GET['vlan_update'])) {
       (`id`,`plugin_fusinvsnmp_constructdevices_id`,`log`)
       VALUES (NULL, '".$_POST['id']."', '".$md5."')";
    $DB->query($query_ins);
-   move_uploaded_file($_FILES['walk']['tmp_name'], GLPI_PLUGIN_DOC_DIR."/fusioninventory/walks/".$md5);
+   move_uploaded_file($_FILES['walk']['tmp_name'], GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/walks/".$md5);
    Html::back();
 } else if (isset($_POST['mib'])) { // Check MIBS
    foreach($_POST['oidsselected'] as $oid) {
