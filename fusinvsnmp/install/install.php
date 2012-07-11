@@ -91,6 +91,7 @@ function pluginFusinvsnmpInstall($version, $migrationname='Migration') {
       if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'])) {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
          mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'].'/tmp');
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'].'/walks');
       }
 
       if (!class_exists('PluginFusinvsnmpConfigLogField')) { // if plugin is unactive
