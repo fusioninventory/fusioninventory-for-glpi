@@ -122,6 +122,24 @@ class PluginFusioninventoryOCSCommunication {
    }
    
    /**
+    * Add logs
+    *
+    * @param $p_logs logs to write
+    * 
+    * @return nothing (write text in log file)
+    **/
+   static function addLog($p_logs) {
+
+      if ($_SESSION['glpi_use_mode']==Session::DEBUG_MODE) {
+         if (PluginFusioninventoryConfig::isExtradebugActive()) {
+            file_put_contents(GLPI_LOG_DIR.'/pluginFusioninventory-communication.log',
+                              "\n".time().' : '.$p_logs,
+                              FILE_APPEND);
+         }
+      }
+   }
+
+   /**
     * Import data
     *
     * @param $p_xml XML code to import
@@ -469,11 +487,15 @@ class PluginFusioninventoryOCSCommunication {
 
       $config = new PluginFusioninventoryConfig();
       $module = new PluginFusioninventoryModule();
+      $user   = new User();
 
       ob_start();
       $module_id = $module->getModuleId("fusioninventory");
       $users_id  = $config->getValue($module_id, 'users_id');
       $_SESSION['glpiID'] = $users_id;
+      $user->getFromDB($users_id);
+      Session::changeActiveEntities();
+      $_SESSION["glpiname"] = $user->fields['name'];
       $_SESSION['glpiactiveprofile'] = array();
       $_SESSION['glpiactiveprofile']['interface'] = '';
       $plugin = new Plugin();

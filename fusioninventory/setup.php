@@ -101,7 +101,8 @@ function plugin_init_fusioninventory() {
          PluginFusioninventoryProfile::changeprofile($moduleId);
 
       $PLUGIN_HOOKS['add_javascript']['fusioninventory']="script.js";
-
+      
+      $PLUGIN_HOOKS['csrf_compliant']['fusioninventory'] = true;
 
       if (isset($_SESSION["glpiID"])) {
 
@@ -284,7 +285,7 @@ function plugin_version_fusioninventory() {
                 'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
                                     & FusionInventory team',
                 'homepage'       =>'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/',
-                'minGlpiVersion' => '0.83'// For compatibility / no install in version < 0.78
+                'minGlpiVersion' => '0.83.3'// For compatibility / no install in version < 0.78
    );
 }
 
@@ -292,25 +293,21 @@ function plugin_version_fusioninventory() {
 
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_fusioninventory_check_prerequisites() {
-   global $LANG;
+   global $LANG,$DB;
    
-   if (version_compare(GLPI_VERSION,'0.83','lt') || version_compare(GLPI_VERSION,'0.84','ge')) {
+   if (version_compare(GLPI_VERSION,'0.83.3','lt') || version_compare(GLPI_VERSION,'0.84','ge')) {
       echo $LANG['plugin_fusioninventory']['errors'][50];
       return false;
    }
+   $crontask = new CronTask();
+   if ((TableExists("glpi_plugin_fusioninventory_agents")
+           AND !FieldExists("glpi_plugin_fusioninventory_agents", "tag"))
+        OR ($crontask->getFromDBbyName('PluginFusioninventoryTaskjobstatus', 'cleantaskjob'))) {
+      $DB->query("UPDATE `glpi_plugin_fusioninventory_configs` SET `value`='0.80+1.4' WHERE `type`='version'");
+      $DB->query("UPDATE `glpi_plugins` SET `version`='0.80+1.4' WHERE `directory` LIKE 'fusi%'");
+   }
+   
    return true;
-}
-
-
-
-/**
- * Check if HTTP request comes from an inventory agent (Fusion or legacy OCS)
- * @param useragent the user agent coming from $_SERVER
- * 
- * @return bool : true if request comes from an agent, false otherwise
- */
-function isFusioninventoryUserAgent($useragent = '') {
-   return (preg_match("/(fusioninventory|ocsinventory|ocs-ng)/i",$useragent));
 }
 
 

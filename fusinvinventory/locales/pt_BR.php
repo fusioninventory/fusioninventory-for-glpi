@@ -43,9 +43,9 @@
 
 
 $LANG['plugin_fusinvinventory']['antivirus'][0]="Antivirus";
-$LANG['plugin_fusinvinventory']['antivirus'][1]="Sem antivírus no computador";
+$LANG['plugin_fusinvinventory']['antivirus'][1]="Este computador não é um Windows XP ou mais recente ou nenhum antivirus está instalado";
 $LANG['plugin_fusinvinventory']['antivirus'][2]="Versão";
-$LANG['plugin_fusinvinventory']['antivirus'][3]="Up to date";
+$LANG['plugin_fusinvinventory']['antivirus'][3]="Atualizado";
 
 $LANG['plugin_fusinvinventory']['bios'][0]="BIOS";
 
@@ -53,8 +53,8 @@ $LANG['plugin_fusinvinventory']['blacklist'][0]="Valor na lista negra";
 $LANG['plugin_fusinvinventory']['blacklist'][1]="Novo valor para lista negra";
 
 $LANG['plugin_fusinvinventory']['computer'][0]="Último inventário";
-$LANG['plugin_fusinvinventory']['computer'][1]="Owner";
-$LANG['plugin_fusinvinventory']['computer'][2]="Company";
+$LANG['plugin_fusinvinventory']['computer'][1]="Dono";
+$LANG['plugin_fusinvinventory']['computer'][2]="Empresa";
 
 $LANG['plugin_fusinvinventory']['importxml'][0]="Importação de arquivos XML de um agente";
 $LANG['plugin_fusinvinventory']['importxml'][1]="Computador injetado GLPI";
@@ -71,9 +71,9 @@ $LANG['plugin_fusinvinventory']['menu'][4]="Verificação de integridade de dado
 
 $LANG['plugin_fusinvinventory']['profile'][2]="Critérios de existência";
 $LANG['plugin_fusinvinventory']['profile'][3]="XML importação manual de arquivo";
-$LANG['plugin_fusinvinventory']['profile'][4]="Fields blacklist";
+$LANG['plugin_fusinvinventory']['profile'][4]="Campos na lista negra";
 
-$LANG['plugin_fusinvinventory']['rule'][0]="Computer existent criteria rules";
+$LANG['plugin_fusinvinventory']['rule'][0]="Regras para critério de existência de computador";
 $LANG['plugin_fusinvinventory']['rule'][100]="Regras de entidade";
 $LANG['plugin_fusinvinventory']['rule'][102]="Ignore na importação FusionInventory";
 $LANG['plugin_fusinvinventory']['rule'][1]="Critério existente";

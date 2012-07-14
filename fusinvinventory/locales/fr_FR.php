@@ -43,7 +43,7 @@
 
 
 $LANG['plugin_fusinvinventory']['antivirus'][0]="Antivirus";
-$LANG['plugin_fusinvinventory']['antivirus'][1]="Soit cet ordinateur n'a pas d'antivirus, soit ce n'est pas un poste Windows XP “Desktop” ou supérieur";
+$LANG['plugin_fusinvinventory']['antivirus'][1]="Cet ordinateur n'est pas sous Windows XP et plus récent ou n'a pas d'antivirus d'installé";
 $LANG['plugin_fusinvinventory']['antivirus'][2]="Version";
 $LANG['plugin_fusinvinventory']['antivirus'][3]="A jour";
 

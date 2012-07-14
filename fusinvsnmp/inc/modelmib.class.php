@@ -213,7 +213,9 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
             echo "</tr>";
             echo "</table></div>";
 
-            echo "</table></form></div>";
+            echo "</table>";
+            Html::closeForm();
+            echo "</div>";
             if (isset($options['create'])) {
                if (($options['create'])) {
                   $this->showFormAdd($id, $type_model, $mappings_used);
@@ -312,7 +314,9 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
-      echo "</table></form></div>";
+      echo "</table>";
+      Html::closeForm();
+      echo "</div>";
    }
 
 

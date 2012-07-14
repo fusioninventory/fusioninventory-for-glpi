@@ -231,7 +231,8 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    **/
    function changeStatus($id, $state) {
       $this->getFromDB($id);
-      $input = $this->fields;
+      $input = array();
+      $input['id'] = $this->fields['id'];
       $input['state'] = $state;
       $this->update($input);      
    }
@@ -253,7 +254,8 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       $moduleRun = array();
 
       $a_taskjobstates = $this->find("`plugin_fusioninventory_agents_id`='".$agent_id.
-                                     "' AND `state`='".self::PREPARED."'");
+                                     "' AND `state`='".self::PREPARED."'",
+                                     "`id`");
       foreach ($a_taskjobstates as $data) {
          // Get job and data to send to agent
          $pfTaskjob->getFromDB($data['plugin_fusioninventory_taskjobs_id']);
@@ -272,7 +274,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    /**
    * Change the status to finish
    *
-   * @param $taskjobstatus integer id of the taskjobstatus
+   * @param $taskjobstates_id integer id of the taskjobstates
    * @param $items_id integer id of the item
    * @param $itemtype value type of the item
    * @param $error bool error
@@ -318,9 +320,9 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
             $query = "SELECT * FROM `".$this->getTable()."`
                LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` on `plugin_fusioninventory_taskjobstates_id` = `".$this->getTable()."`.`id`
                WHERE `plugin_fusioninventory_taskjobs_id`='".$this->fields['plugin_fusioninventory_taskjobs_id']."'
+                     AND `uniqid` != '".$this->fields['uniqid']."'
                      AND `glpi_plugin_fusioninventory_taskjoblogs`.`state`='3'
                      AND `date`>='".date("Y-m-d H:i:s",$start_taskjob)."'
-                     AND `uniqid` != '".$this->fields['uniqid']."'
                GROUP BY `uniqid`";
             $result = $DB->query($query);
             if ($DB->numrows($result) >= ($pfTaskjob->fields['retry_nb'] - 1)) {

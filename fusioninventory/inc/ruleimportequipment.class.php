@@ -166,7 +166,7 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
 
       return array(self::RULE_ACTION_LINK_OR_CREATE    => $LANG['plugin_fusioninventory']['rules'][7],
                    self::RULE_ACTION_LINK_OR_NO_CREATE => $LANG['plugin_fusioninventory']['rules'][6],
-                   self::RULE_ACTION_DENIED            => $LANG['plugin_fusioninventory']['rules'][17]);
+                   self::RULE_ACTION_DENIED            => $LANG['plugin_fusioninventory']['codetasklog'][3]);
    }
 
 
@@ -254,7 +254,7 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
          case Rule::PATTERN_DOES_NOT_EXISTS:
          case Rule::PATTERN_FIND:
          case PluginFusioninventoryRuleImportEquipment::PATTERN_IS_EMPTY:
-            echo Dropdown::showYesNo($name, 1, 0);
+            Dropdown::showYesNo($name, 1, 0);
             return true;
            
       }
@@ -862,7 +862,7 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
                break;
 
             case self::LINK_RESULT_DENIED:
-               echo $LANG['plugin_fusioninventory']['rules'][17];
+               echo $LANG['plugin_fusioninventory']['codetasklog'][3];
                break;
             
          }

@@ -28,7 +28,7 @@
    ------------------------------------------------------------------------
 
    @package   FusionInventory
-   @author    Walid Nouh
+   @author    David Durieux
    @co-author 
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
@@ -40,10 +40,28 @@
    ------------------------------------------------------------------------
  */
 
-define('GLPI_ROOT', '../../..');
-include (GLPI_ROOT . "/inc/includes.php");
+if (!defined('GLPI_ROOT')) {
+   define('GLPI_ROOT', '../../..');
+}
 
-$dropdown = new PluginFusioninventoryCredentialIp();
-include (GLPI_ROOT . "/ajax/dropdown.common.tabs.php");
+include (GLPI_ROOT."/inc/includes.php");
+
+Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","tasks");
+
+PluginFusioninventoryProfile::checkRight("fusioninventory", "task","r");
+
+PluginFusioninventoryMenu::displayMenu("mini");
+
+PluginFusioninventoryTaskjob::getAllowurlfopen();
+
+$pfTask = new PluginFusioninventoryTask();
+$pfTask->menuTasksLogs();
+
+$pfTask->taskMenu();
+if (isset($_GET['see'])) {
+   $pfTask->displayTaks($_GET['see']);
+}
+
+Html::footer();
 
 ?>

@@ -54,7 +54,7 @@ if (isset($_POST['value'])) {
    $value = $_POST['value'];
 }
 
-$pfTaskjob = new PluginFusioninventoryTaskjob;
+$pfTaskjob = new PluginFusioninventoryTaskjob();
 $pfTaskjob->additemtodefatc($_POST['type'], 
                             $_POST['itemtype'], 
                             $_POST['items_id'], 

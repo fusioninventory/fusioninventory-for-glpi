@@ -76,7 +76,7 @@ $LANG['plugin_fusioninventory']['functionalities'][75]="Locks";
 $LANG['plugin_fusioninventory']['functionalities'][76]="Extra-debug";
 
 $LANG['plugin_fusioninventory']['errors'][22]="Unattended element in";
-$LANG['plugin_fusioninventory']['errors'][50]="Your GLPI version not compatible, require 0.83";
+$LANG['plugin_fusioninventory']['errors'][50]="Your GLPI version not compatible, require 0.83.3";
 $LANG['plugin_fusioninventory']['errors'][1] = "PHP allow_url_fopen is off, can't wake agent to do inventory";
 $LANG['plugin_fusioninventory']['errors'][2] = "PHP allow_url_fopen is off, push mode can't work";
 
@@ -93,7 +93,6 @@ $LANG['plugin_fusioninventory']['rules'][13] = "Hard disk serial number";
 $LANG['plugin_fusioninventory']['rules'][14] = "Partition serial number";
 $LANG['plugin_fusioninventory']['rules'][15] = "UUID";
 $LANG['plugin_fusioninventory']['rules'][16] = "FusionInventory tag";
-$LANG['plugin_fusioninventory']['rules'][17] = "Import denied";
 $LANG['plugin_fusioninventory']['rules'][18] = "Device created";
 $LANG['plugin_fusioninventory']['rules'][19] = "Ignored import devices";
 $LANG['plugin_fusioninventory']['rules'][20] = "Rule import logs";
@@ -192,6 +191,8 @@ $LANG['plugin_fusioninventory']['task'][52]="Delete this task and finish";
 $LANG['plugin_fusioninventory']['task'][53]="Finish";
 $LANG['plugin_fusioninventory']['task'][54]="Run again this task";
 $LANG['plugin_fusioninventory']['task'][55]="No agent allowed to run ESX inventory";
+$LANG['plugin_fusioninventory']['task'][56]="Planned for running";
+$LANG['plugin_fusioninventory']['task'][58]="In error";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Started";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";
@@ -222,8 +223,6 @@ $LANG['plugin_fusioninventory']['iprange'][1]="End of IP range";
 $LANG['plugin_fusioninventory']['iprange'][2]="IP Ranges";
 $LANG['plugin_fusioninventory']['iprange'][3]="Query";
 $LANG['plugin_fusioninventory']['iprange'][7]="Bad IP";
-
-$LANG['plugin_fusioninventory']['buttons'][0]="Finish";
 
 $LANG['plugin_fusioninventory']['wizard'][0]="Action choice";
 $LANG['plugin_fusioninventory']['wizard'][1]="Type of device to inventory";

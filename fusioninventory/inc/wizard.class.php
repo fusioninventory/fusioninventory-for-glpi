@@ -234,7 +234,7 @@ class PluginFusioninventoryWizard {
       echo "</td>";
       echo "<td align='right' style='background-color: #e1cc7b;' height='30'>";
       if (isset($options['finish'])) {
-         echo "<input class='submit' type='submit' name='next' value='".$LANG['plugin_fusioninventory']['buttons'][0]."'
+         echo "<input class='submit' type='submit' name='next' value='".$LANG['plugin_fusioninventory']['task'][53]."'
                onclick='window.location.href=\"".$CFG_GLPI['root_doc']."/plugins/fusioninventory/\"'/>";
 
       } else {
@@ -242,7 +242,8 @@ class PluginFusioninventoryWizard {
                onclick='window.location.href=\"".$CFG_GLPI['root_doc'].
          "/plugins/fusioninventory/front/wizard.php?wizz=".PluginFusioninventoryWizard::getNextStep($filariane)."\"'/>";
       }
-      echo "</form>&nbsp;&nbsp;";
+      Html::closeForm();
+      echo "&nbsp;&nbsp;";
       echo "</td>";
       echo "<td style='background-color: #e1cc7b;'></td>";
       echo "</tr>";
@@ -1035,12 +1036,13 @@ class PluginFusioninventoryWizard {
       
       $a_credentials = $pfCredential->find("`entities_id` IN (".$_SESSION['glpiactiveentities_string'].")");
       foreach ($a_credentials as $data) {
+         $pfCredential->getFromDB($data['id']);
          echo "<tr class='tab_bg_1'>";
          echo "<td colspan='2'></td>";
          echo "<td><input type='radio' name='credential[]' value='".$data['id']."' />
-            &nbsp;".$data['name']."</td>";
+            &nbsp;".$pfCredential->getLink(1)."</td>";
          echo "<td>".$data['username']."</td>";
-         echo "<td>".$data['password']."</td>";
+         echo "<td>******</td>";
          echo "</tr>";
       }
       
@@ -1053,7 +1055,7 @@ class PluginFusioninventoryWizard {
       echo "Login : <input type='text' name='username' value=''/>";
       echo "</td>";         
       echo "<td>";
-      echo "pass : <input type='text' name='password' value=''/>";
+      echo "pass : <input type='password' name='password' value=''/>";
       echo "</td>";
       echo "</tr>";
       

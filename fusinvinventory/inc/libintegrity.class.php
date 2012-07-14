@@ -119,7 +119,7 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       echo "<form method='post' action=''>";
       echo "<input type='hidden' name='clean' value='1'/>";
       echo "<input type='submit' class='submit' value='".$LANG['buttons'][53]."'/>";
-      echo "</form>";
+      Html::closeForm();
       echo "</td>";
       echo "</tr>";
       echo "</table>";
@@ -321,8 +321,17 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
                      if (!$a_lists = $Computer_Item->find("`id`='".$split[1]."'
                                                 AND `computers_id`='".$computer_id."'
                                                 AND `itemtype`='Monitor'")) {
+                        $descriptiontmp = '';
+                        if (isset($a_sectiontmp['DESCRIPTION'])) {
+                           $descriptiontmp = $a_sectiontmp['DESCRIPTION'];
+                        }
+                        $serialtmp = '';
+                        if (isset($a_sectiontmp['SERIAL'])) {
+                           $serialtmp = $a_sectiontmp['SERIAL'];
+                        }
+                        
                         $text .= $this->displaySectionNotValid($computer_id, $name, $LANG['help'][28], 
-                                $a_sectiontmp['CAPTION'].", ".$a_sectiontmp['DESCRIPTION']." (".$a_sectiontmp['SERIAL'].")");
+                                $a_sectiontmp['CAPTION'].", ".$descriptiontmp." (".$serialtmp.")");
                      } else {
                         $a_list = current($a_lists);
                         $a_sections_lib['MONITORS'][$a_list['id']] = 1;
@@ -744,7 +753,7 @@ class PluginFusinvinventoryLibintegrity extends CommonDBTM {
       echo "</th>";
       echo "</tr>";
       echo "</table>";
-      echo "</form>";
+      Html::closeForm();
 
       if ($computers_id == '0') {
          Html::printPager($start,$number,$CFG_GLPI['root_doc']."/plugins/fusinvinventory/front/libintegrity.php",'');

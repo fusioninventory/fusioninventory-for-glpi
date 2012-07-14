@@ -112,7 +112,7 @@ class PluginFusioninventoryRuleImportEquipmentCollection extends RuleCollection 
                break;
 
             case PluginFusioninventoryRuleImportEquipment::LINK_RESULT_DENIED:
-               echo $LANG['plugin_fusioninventory']['rules'][17];
+               echo $LANG['plugin_fusioninventory']['codetasklog'][3];
                break;
             
          }

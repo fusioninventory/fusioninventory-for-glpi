@@ -13,7 +13,7 @@
    This file is part of FusionInventory project.
 
    FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
+   it under the termas of the GNU Affero General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
 
@@ -425,16 +425,16 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "items_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
-                                 "itemtype",
-                                 "itemtype",
-                                 "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
                                  "token",
                                  "token",
                                  "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
          $migration->changeField($newTable,
                                  "useragent",
                                  "useragent",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "tag",
+                                 "tag",
                                  "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
       $migration->migrationOneTable($newTable);
          $migration->changeField($newTable,
@@ -457,10 +457,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "on_device",
                                  "items_id",
                                  "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "device_type",
-                                 "itemtype",
-                                 "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
          $migration->changeField($newTable,
                                  "lock",
                                  "lock",
@@ -487,6 +483,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                "logs");
          $migration->dropField($newTable, 
                                "fragment");
+         $migration->dropField($newTable, 
+                               "itemtype");
+         $migration->dropField($newTable, 
+                               "device_type");
          $migration->dropKey($newTable, 
                              "key");
       $migration->migrationOneTable($newTable);
@@ -515,21 +515,18 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                               "items_id", 
                               "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable, 
-                              "itemtype", 
-                              "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable, 
                               "token", 
                               "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
          $migration->addField($newTable, 
                               "useragent", 
                               "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable, 
+                              "tag", 
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
          $migration->addKey($newTable,
                             "name");
          $migration->addKey($newTable,
                             "device_id");
-         $migration->addKey($newTable,
-                            array("itemtype", "items_id"),
-                            "item");
          $migration->addKey($newTable,
                             "items_id");
 
@@ -1488,6 +1485,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "comment",
                                  "comment",
                                  "text DEFAULT NULL");
+         $migration->dropKey($newTable,
+                             "plugin_fusioninventory_taskjobstatus_id");
       $migration->migrationOneTable($newTable);
          $migration->addField($newTable,
                               "id",
@@ -1511,7 +1510,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                               "comment",
                               "text DEFAULT NULL");
          $migration->addKey($newTable,
-                            array("plugin_fusioninventory_taskjobstates_id", "state"),
+                            array("plugin_fusioninventory_taskjobstates_id", "state", "date"),
                             "plugin_fusioninventory_taskjobstates_id");
       $migration->migrationOneTable($newTable);
       
@@ -2144,7 +2143,13 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '60', 
                          array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30));
    }
-   if (!$crontask->getFromDBbyName('PluginFusioninventoryTaskjobstatus', 'cleantaskjob')) {
+   if ($crontask->getFromDBbyName('PluginFusioninventoryTaskjobstate', 'cleantaskjob')
+           AND $crontask->getFromDBbyName('PluginFusioninventoryTaskjobstatus', 'cleantaskjob')) {
+      $crontask->getFromDBbyName('PluginFusioninventoryTaskjobstatus', 'cleantaskjob');
+      $crontask->delete($crontask->fields);
+   }
+   
+   if ($crontask->getFromDBbyName('PluginFusioninventoryTaskjobstatus', 'cleantaskjob')) {
       $query = "UPDATE `glpi_crontasks` SET `itemtype`='PluginFusioninventoryTaskjobstate'
          WHERE `itemtype`='PluginFusioninventoryTaskjobstatus'";
       $DB->query($query);

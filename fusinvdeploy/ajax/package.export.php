@@ -28,7 +28,7 @@
    ------------------------------------------------------------------------
 
    @package   FusionInventory
-   @author    Walid Nouh
+   @author    Kevin Roy
    @co-author 
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
@@ -41,9 +41,30 @@
  */
 
 define('GLPI_ROOT', '../../..');
-include (GLPI_ROOT . "/inc/includes.php");
+include (GLPI_ROOT."/inc/includes.php");
+checkLoginUser();
 
-$dropdown = new PluginFusioninventoryCredential();
-include (GLPI_ROOT . "/ajax/dropdown.common.tabs.php");
 
-?>
+if ( !isset($_GET['package_id'])) exit();
+$package = new PluginFusinvdeployPackage();
+if ( !$package->getFromDB($_GET['package_id'])) exit();
+
+
+$package_order = new PluginFusinvdeployOrder();
+$config = array();
+$config['package'] = $package->fields;
+$config['install'] =
+   PluginFusinvdeployOrder::getOrderDetailsFromPackage(
+      $_GET['package_id'],
+      PluginFusinvdeployOrder::INSTALLATION_ORDER
+   );
+
+$config['uninstall'] = 
+   PluginFusinvdeployOrder::getOrderDetailsFromPackage(
+      $_GET['package_id'],
+      PluginFusinvdeployOrder::UNINSTALLATION_ORDER
+   );
+
+$json =
+   json_encode( $config );
+print($json);

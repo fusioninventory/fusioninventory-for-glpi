@@ -23,6 +23,8 @@ if ($ARGV[0] eq "fusioninventory") {
    $folder = "Plugin_FusinvSNMP";
 } elsif ($ARGV[0] eq "fusinvinventory") {
    $folder = "Plugin_Fusinvinventory";
+} elsif ($ARGV[0] eq "fusinvdeploy") {
+   $folder = "Plugin_Fusinvdeploy";
 }
 
 my $remoteurltranslations = 'https://www.transifex.net/projects/p/FusionInventory/resource/'.$folder.'/';

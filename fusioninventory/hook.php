@@ -343,7 +343,7 @@ function plugin_headings_fusioninventory_tasks($item, $itemtype='', $items_id=0)
    if ($itemtype == 'Computer') {
       // Possibility to remote agent
       $allowed = PluginFusioninventoryTaskjob::getAllowurlfopen(1);
-      if (isset($allowed)) {
+      if ($allowed) {
          $pfAgent = new PluginFusioninventoryAgent();
          $pfAgent->forceRemoteAgent();
       }
@@ -452,7 +452,12 @@ function plugin_fusioninventory_MassiveActions($type) {
          );
          break;
          
-         
+      case 'PluginFusioninventoryTaskjob':
+         return array(
+            'plugin_fusioninventory_task_forceend' =>
+               $LANG['plugin_fusioninventory']['task'][32]
+         );
+         break;
 
    }
    return array ();
@@ -567,6 +572,11 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
          }
          break;
 
+      case 'PluginFusioninventoryTaskjob':
+         echo "&nbsp;<input type='submit' name='massiveaction' class='submit' ".
+               "value='".$LANG['buttons'][2]."'>";
+         break;
+
    }
    return "";
 }
@@ -643,7 +653,14 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
             
          }
          break;
+      case 'plugin_fusioninventory_task_forceend':
          
+         $pluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+         foreach( $data["item"] as $key => $val) {
+            $pluginFusioninventoryTaskjob->getFromDB($key);
+            $pluginFusioninventoryTaskjob->forceEnd();
+         }
+         break;
    }
 
    if (strstr($data['action'], 'plugin_fusioninventory_agentmodule')) {

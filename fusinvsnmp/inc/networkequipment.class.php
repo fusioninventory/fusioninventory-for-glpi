@@ -279,7 +279,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       echo "</tr>";
 
       echo "</table>";
-      echo "</form>";
+      Html::closeForm();
 
 
       // ***** IP list ***** //
@@ -597,7 +597,18 @@ function appear_array(id){
                               }
                               echo "</td>";
                            } else {
-                              echo "<td>".$link1;
+                              $icon = '';
+                              if ($data_device["itemtype"] == 'Computer') {
+                                 $icon = "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/computer_icon.png' style='float:left'/> ";
+                              } else if ($data_device["itemtype"] == 'Printer') {
+                                 $icon = "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/printer_icon.png' style='float:left'/> ";
+                              } else if ($data_device["itemtype"] == 'Phone') {
+                                 $icon = "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/phone_icon.png' style='float:left'/> ";
+                              } else if ($data_device["itemtype"] == 'NetworkEquipment') {
+                                 $icon = "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/network_icon.png' style='float:left'/> ";
+                              }
+                              
+                              echo "<td>".$icon.$link1;
                               if (!empty($link)) {
                                  echo "<br/>".$link;
                               }
@@ -705,7 +716,7 @@ function appear_array(id){
       echo "</table>";
       if ($monitoring == '1') {
          if (PluginMonitoringProfile::haveRight("componentscatalog", 'w')) {
-            echo "</form>";
+            Html::closeForm();
          }
       }
    }

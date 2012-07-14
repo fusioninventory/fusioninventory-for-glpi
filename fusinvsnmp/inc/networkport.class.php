@@ -445,6 +445,9 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
                      $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
                      $unknown_infos = array();
                      $unknown_infos["name"] = '';
+                     if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
+                        $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+                     }
                      $newID=$PluginFusioninventoryUnknownDevice->add($unknown_infos);
                      // Add networking_port
                      $port_add = array();
@@ -468,40 +471,69 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
                   if (count($a_ports) > 0) {
                      $a_port = current($a_ports);
                      $hub = 0;
-                     if ($a_port['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
-                        $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
-                        $PluginFusioninventoryUnknownDevice->getFromDB($a_port['items_id']);
-                        if ($PluginFusioninventoryUnknownDevice->fields['hub'] == '1') {
-                           $hub = 1;
+                     $id = $networkPort->getContact($a_port['id']);
+                     $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
+                     if ($id AND $networkPort->getFromDB($id)) {
+                        if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+                           $pfUnknownDevice->getFromDB($networkPort->fields['items_id']);
+                           if ($pfUnknownDevice->fields['hub'] == '1') {
+                              $hub = 1;
+                           }
                         }
                      }
-                     $id = $networkPort->getContact($a_port['id']);
+                     $direct_id = $networkPort->getContact($networkports_id);
                      if ($id AND $id != $networkports_id
                              AND $hub == '0') {
-                        $this->disconnectDB($networkports_id); // disconnect this port
-                        $this->disconnectDB($a_port['id']);     // disconnect destination port
-                        $wire->add(array('networkports_id_1'=> $networkports_id,
-                                         'networkports_id_2' => $a_port['id']));
-                     } else if ($id and $hub == '1') {
-                        // Check if this hub connected to the port
-                        $uports = $networkPort->find("`items_id`='".$a_port['items_id']."'
-                           AND `itemtype`='".$a_port['itemtype']."'
-                           AND `name`='Link'");
-                        $connect = 0;
-                        if (count($uports) > 0) {
-                           $uport = current($uports);
-                           $portsid = $networkPort->getContact($uport['id']);
-                           if ($portsid != $networkports_id) {
-                              $connect = 1;
-                           }
+                        
+                        $directconnect = 0;
+                        if (!$direct_id) {
+                           $directconnect = 1;
                         } else {
-                           $connect = 1;
+                           $networkPort->getFromDB($direct_id);
+                           if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+                              // 1. Hub connected to this switch port
+                              $pfUnknownDevice->connectPortToHub(array($a_port), $networkPort->fields['items_id']);
+                           } else {
+                              // 2. direct connection
+                              $directconnect = 1;                              
+                           }                        
                         }
-                        if ($connect == '1') {
+                        if ($directconnect == '1') {
                            $this->disconnectDB($networkports_id); // disconnect this port
+                           $this->disconnectDB($a_port['id']);     // disconnect destination port
                            $wire->add(array('networkports_id_1'=> $networkports_id,
                                             'networkports_id_2' => $a_port['id']));
                         }
+                     } else if ($id and $hub == '1') {
+                        $directconnect = 0;
+                        if (!$direct_id) {
+                           $directconnect = 1;
+                        } else {
+                           $networkPort->getFromDB($direct_id);
+                           $ddirect = $networkPort->fields;
+                           $networkPort->getFromDB($id);
+                           if ($ddirect['items_id'] == $networkPort->fields['items_id']
+                                   AND $ddirect['itemtype'] == $networkPort->fields['itemtype']) {
+                              // 1.The hub where this device is connected is yet connected to this switch port
+                           
+                              // => Do nothing
+                           } else {
+                              // 2. The hub where this device is connected to is not connected to this switch port
+                              if ($ddirect['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+                                 // b. We have a hub connected to the switch port
+                                 $pfUnknownDevice->connectPortToHub(array($a_port), $ddirect['items_id']);
+                              } else {
+                                 // a. We have a direct connexion to another device (on the switch port)
+                                 $directconnect = 1;                              
+                              }
+                           }
+                        }
+                        if ($directconnect == '1') {
+                           $this->disconnectDB($networkports_id); // disconnect this port
+                           $this->disconnectDB($a_port['id']);     // disconnect destination port
+                           $wire->add(array('networkports_id_1'=> $networkports_id,
+                                            'networkports_id_2' => $a_port['id']));
+                        }                        
                      } else if ($id) {
                         // Yet connected                        
                      } else {
@@ -515,6 +547,9 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
                      $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
                      $input = array();
                      $input['name'] = '';
+                     if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
+                        $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+                     }
                      $newID = $pluginFusioninventoryUnknownDevice->add($input);
                      $input['itemtype'] = "PluginFusioninventoryUnknownDevice";
                      $input['items_id'] = $newID;

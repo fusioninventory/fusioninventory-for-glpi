@@ -194,7 +194,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             echo "</tr>";
             echo "</table>";
             echo "<input type='hidden' name='id' value='".$data['id']."' />";
-            echo "</form>";
+            Html::closeForm();
             echo "<br/>";
          }
       }
@@ -285,7 +285,8 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          echo "<input type='submit' name='updateexceptions' value=\"".$LANG['buttons'][7]."\" class='submit'>";
          echo "</td>";
          echo "</tr>";
-         echo "</table></form>";
+         echo "</table>";
+         Html::closeForm();
       } else {
          echo "</table>";
       }

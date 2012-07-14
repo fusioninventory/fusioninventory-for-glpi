@@ -226,7 +226,8 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       echo "</td>";
       echo "</tr>";
 
-      echo "</table></form>";
+      echo "</table>";
+      Html::closeForm();
       echo "</div>";
    }
 }

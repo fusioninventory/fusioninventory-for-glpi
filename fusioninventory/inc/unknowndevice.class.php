@@ -148,7 +148,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $tab[13]['field']     = 'item_type';
       $tab[13]['linkfield'] = 'item_type';
       $tab[13]['name']      = $LANG['common'][17];
-      $tab[13]['datatype']  = 'text';
+//      $tab[13]['datatype']  = 'text';
 
       $tab[14]['table']     = $this->getTable();
       $tab[14]['field']     = 'date_mod';
@@ -568,7 +568,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       // Search free port
       $query = "SELECT `glpi_networkports`.`id` FROM `glpi_networkports`
          LEFT JOIN `glpi_networkports_networkports`
-            ON `glpi_networkports`.`id` = `networkports_id_1` OR `glpi_networkports`.`id` = `networkports_id_2`
+            ON `glpi_networkports`.`id` = `networkports_id_2`
          WHERE `itemtype`='".$this->getType()."'
             AND `items_id`='".$hub_id."'
             AND `networkports_id_1` is null

@@ -52,7 +52,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       global $LANG;
 
       if ($nb>1) {
-         return $LANG['plugin_fusinvdeploy']['task'][5];
+         return $LANG['plugin_fusinvdeploy']['task'][1];
       }
       return $LANG['plugin_fusinvdeploy']['group'][0];
    }
@@ -330,7 +330,8 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       }
 
 
-      echo "</div></form>";
+      echo "</div>";
+      Html::closeForm();
 
       echo "<form name='group_search' id='group_search' method='POST' action='"
          .$CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/front/group.form.php'>";
@@ -349,7 +350,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
 
       echo "<div id='group_results'></div>";
 
-      echo "</form>";
+      Html::closeForm();
    }
 
    function showDynamicForm() {
@@ -396,7 +397,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       }  else {
          echo "<input type='submit' value=\"".$LANG['buttons'][8]."\" class='submit' name='additem' />";
       }
-      echo "</form>";
+      Html::closeForm();
 
 
       //prepare div for ajax results

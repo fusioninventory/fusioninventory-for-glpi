@@ -68,7 +68,7 @@ class GLPIInstall extends PHPUnit_Framework_TestCase {
       
       // Install a fresh 0.83 DB
       $DB  = new DB();
-      $res = $DB->runFile(GLPI_ROOT ."/install/mysql/glpi-0.83-empty.sql");
+      $res = $DB->runFile(GLPI_ROOT ."/install/mysql/glpi-0.83.1-empty.sql");
       $this->assertTrue($res, "Fail: SQL Error during install");
 
       // update default language

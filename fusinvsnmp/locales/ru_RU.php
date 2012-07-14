@@ -55,6 +55,7 @@ $LANG['plugin_fusinvsnmp']['codetasklog'][5]="Обновить элемент";
 $LANG['plugin_fusinvsnmp']['codetasklog'][6]="Инфенторизация запущена";
 $LANG['plugin_fusinvsnmp']['codetasklog'][7]="Подробно";
 
+$LANG['plugin_fusinvsnmp']['config'][10]="Ports types to import (for network equipments)";
 $LANG['plugin_fusinvsnmp']['config'][3]="Сетевая инвентаризация (SNMP)";
 $LANG['plugin_fusinvsnmp']['config'][4]="Сетевое обнаружение";
 $LANG['plugin_fusinvsnmp']['config'][8]="Никогда";

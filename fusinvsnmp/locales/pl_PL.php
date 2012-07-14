@@ -55,6 +55,7 @@ $LANG['plugin_fusinvsnmp']['codetasklog'][5]="Aktualizacja pozycji";
 $LANG['plugin_fusinvsnmp']['codetasklog'][6]="Start inwentaryzacji";
 $LANG['plugin_fusinvsnmp']['codetasklog'][7]="Więcej";
 
+$LANG['plugin_fusinvsnmp']['config'][10]="Ports types to import (for network equipments)";
 $LANG['plugin_fusinvsnmp']['config'][3]="Inwentaryzacja sieci (SNMP)";
 $LANG['plugin_fusinvsnmp']['config'][4]="Przeszukiwanie sieci";
 $LANG['plugin_fusinvsnmp']['config'][8]="Nigdy";

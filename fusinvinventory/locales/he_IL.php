@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2011 by the FusionInventory Development Team.
+   Copyright (C) 2010-2012 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -31,7 +31,7 @@
    @author    David Durieux
    @co-author 
    @comment   Not translate this file, use https://www.transifex.net/projects/p/FusionInventory/
-   @copyright Copyright (c) 2010-2011 FusionInventory team
+   @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -43,7 +43,7 @@
 
 
 $LANG['plugin_fusinvinventory']['antivirus'][0]="אנטיוירוס";
-$LANG['plugin_fusinvinventory']['antivirus'][1]="אין אנטיוירוס במחשב";
+$LANG['plugin_fusinvinventory']['antivirus'][1]="This computer is not a Windows XP and later or no antivirus is installed";
 $LANG['plugin_fusinvinventory']['antivirus'][2]="גירסה";
 $LANG['plugin_fusinvinventory']['antivirus'][3]="מעודכן";
 

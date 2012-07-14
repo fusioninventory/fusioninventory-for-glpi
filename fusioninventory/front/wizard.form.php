@@ -78,19 +78,21 @@ if (!isset($_GET['wizz'])) {
                   $pfTask = new PluginFusioninventoryTask();
                   $pfTask->delete(array('id'=>$_SESSION['plugin_fusioninventory_wizard']['tasks_id']));
               }
-              $url = $_SERVER['PHP_SELF']."?wizz=w_start";
+              $url = $_SERVER['PHP_SELF'];
               $url = str_replace("wizard.form.php", "wizard.php", $url);
               Html::redirect($url);
               break;
            
            case 'finish':
-              $url = $_SERVER['PHP_SELF']."?wizz=w_start";
+              $url = $_SERVER['PHP_SELF'];
               $url = str_replace("wizard.form.php", "wizard.php", $url);
               Html::redirect($url);
               break;
            
            case 'runagain':
-
+              $url = $_SERVER['HTTP_REFERER'];
+              $url = str_replace("w_tasksend", "w_tasksforcerun", $url);
+              Html::redirect($url);
               break;
             
          }         
@@ -163,8 +165,12 @@ if (!isset($_GET['wizz'])) {
          }
          $_SESSION['plugin_fusioninventory_wizard']['credentialips_id'] = $credentialips_id;
       }
-      $url = $_SERVER['PHP_SELF']."?wizz=".$_POST['nexturl'];
-      $url = str_replace("wizard.form.php", "wizard.php", $url);
+      if (isset($_POST['nexturl'])) {
+         $url = $_SERVER['PHP_SELF']."?wizz=".$_POST['nexturl'];
+         $url = str_replace("wizard.form.php", "wizard.php", $url);
+      } else {
+         $url = $_SERVER['PHP_SELF'];
+      }
       Html::redirect($url);
    } else {
       $a_split = explode("?", $_SERVER['HTTP_REFERER']);

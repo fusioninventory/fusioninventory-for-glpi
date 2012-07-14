@@ -100,7 +100,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $tab[6]['table']          = $this->getTable();
       $tab[6]['field']          = 'id';
       $tab[6]['linkfield']      = '';
-      $tab[6]['name']           = 'id';
+      $tab[6]['name']           = $LANG['common'][2];
 
       return $tab;
    }
@@ -125,7 +125,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
             // Possibility to remote agent
             $allowed = PluginFusioninventoryTaskjob::getAllowurlfopen(1);
-            if (isset($allowed)) {
+            if ($allowed) {
                $pfAgent = new PluginFusioninventoryAgent();
                $pfAgent->forceRemoteAgent();
             }
@@ -151,7 +151,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    function showForm($id, $options=array()) {
       global $CFG_GLPI,$LANG;
 
-      $pfTask = new PluginFusioninventoryTask();
+      $pfTask       = new PluginFusioninventoryTask();
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       
       $pfTask->getFromDB($_POST['id']);
@@ -168,13 +168,11 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $this->getEmpty();
       }
 
-      $heightdiv = 200;
-//      echo "<div id='taskjobdisplay' style='height:".$heightdiv."px; overflow:hidden;'>";
       echo "<form method='post' name='form_taskjob' action='".
             $CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/taskjob.form.php''>";
 
       if ($id!='') {
-         echo "<input type='hidden' name='id' value='".$id."'/>";
+         echo "<input type='hidden' name='id' value='".$id."' />";
       }
       echo "<table class='tab_cadre_fixe'>";
 
@@ -188,7 +186,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          if ($ismultientities) {
             echo "(".Dropdown::getDropdownName('glpi_entities',$this->fields['entities_id']) . ")";
          }
-
       } else {
          if ($ismultientities) {
             echo $LANG['plugin_fusioninventory']['task'][15]."&nbsp;:&nbsp;".
@@ -261,7 +258,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          if ($this->fields['id'] > 0) {
             $pfTaskjoblog->displayShortLogs($this->fields['id']);
          } else {
-            echo "<td colspan='2'>ff</td>";
+            echo "<td colspan='2'></td>";
          }
          $rowspan = 1;
       }
@@ -313,18 +310,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo '</tr>';
       
       echo "</table>";
-      echo "</form>";
-//      echo "</div>";
-      
-//      echo "<div id='seemore'>";
-//      echo "<table class='tab_cadre_fixe'>";
-//      echo "<tr class='tab_bg_1'>";
-//      echo "<th colspan='4' align='center' onclick='expandtaskjobform()'>See more";
-//      echo " <img src='".GLPI_ROOT."/pics/deplier_down.png'/>";
-//      echo "</th>";
-//      echo "</tr>";
-//      echo "</table>";
-//      echo "</div>";
+      Html::closeForm();
       
       echo "<script language='javascript'>
          function expandtaskjobform() {
@@ -343,14 +329,17 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
     * Manage definitions
     *
     * @param $id integer id of the taskjob
+    * @param $type string type (definition or action)
+    * 
+    * @return nothing
     */
    function manageDefinitionsActions($id, $type) {
       global $LANG;
 
       $this->getFromDB($id);
 
-      echo "<form name='".$type."s_form' id='".$type."s_form' method='post' action=' ";
-      echo Toolbox::deleteDir(__CLASS__)."'>";
+      echo "<form name='".$type."s_form' id='".$type."s_form' method='post' action='";
+      echo Toolbox::getItemTypeFormURL(__CLASS__)."'>";
       echo "<table class='tab_cadre_fixe'>";
       
       echo "<tr class='tab_bg_1'>";
@@ -419,18 +408,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       echo "</table>";
       echo "<input type='hidden' name='id' value='".$id."' />";
-      echo "</form>";
-   }
-
-
-
-   /*
-    * Manage actions
-    *
-    * @param $id integer id of the taskjob
-    */
-   function manageActions($id) {
-      
+      Html::closeForm();
    }
 
    
@@ -601,7 +579,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                        AND $items_id == ".2" ) {
                   $display = $LANG['plugin_fusioninventory']['agents'][33];
                } else {
-                  $class = new $itemtype;
+                  $class = new $itemtype();
                   $class->getFromDB($items_id);
                   $display = $class->getLink(1);
                }
@@ -749,7 +727,6 @@ return namelist;
                $a_actioninitiontype = call_user_func(array($class, "task_actiontype_".$method), 
                                                      $a_actioninitiontype);
             }
-
          }
       }
 
@@ -933,10 +910,10 @@ return namelist;
       }
       // Get taskjobs in retry mode
       $query = "SELECT `".$pfTaskjob->getTable()."`.*,
-     `glpi_plugin_fusioninventory_tasks`.`communication`,
-     `glpi_plugin_fusioninventory_tasks`.`execution_id`,
-     `glpi_plugin_fusioninventory_tasks`.`date_scheduled`
-      FROM ".$pfTaskjob->getTable()."
+        `glpi_plugin_fusioninventory_tasks`.`communication`,
+        `glpi_plugin_fusioninventory_tasks`.`execution_id`,
+        `glpi_plugin_fusioninventory_tasks`.`date_scheduled`
+         FROM ".$pfTaskjob->getTable()."
       LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
       WHERE `is_active`='1'
          AND `status` = '0'
@@ -1000,14 +977,14 @@ return namelist;
    function reinitializeTaskjobs($tasks_id, $disableTimeVerification = 0) {
       global $DB;
       
-      $pfTask = new PluginFusioninventoryTask();
-      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTask         = new PluginFusioninventoryTask();
+      $pfTaskjob      = new PluginFusioninventoryTaskjob();
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pfTaskjoblog   = new PluginFusioninventoryTaskjoblog();
       $query = "SELECT *, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp
             FROM `".$pfTask->getTable()."`
          WHERE `id`='".$tasks_id."' 
-            LIMIT 1";
+         LIMIT 1";
       $result = $DB->query($query);
       $data = $DB->fetch_assoc($result);
 
@@ -1111,7 +1088,7 @@ return namelist;
    *
    * @param $tasks_id integer id of the task
    *
-   * @return nothing
+   * @return number uniqid
    *
    **/
    function forceRunningTask($tasks_id) {
@@ -1196,7 +1173,7 @@ return namelist;
    * @param $ip value IP address of the computer where agent is installed
    * @param $agentid integer id of the agent
    *
-   * @return bool true if agent is ready
+   * @return bool true if agent is ready else false
    *
    **/
    function getStateAgent($ip, $agentid) {
@@ -1230,12 +1207,19 @@ return namelist;
 
 
    
-   // $items_id = agent id
+   /**
+    * Get current state of the agent
+    * 
+    * @param $items_id integer id of the agent
+    * 
+    * @return string message/state of the agent
+    * 
+    */
    function getRealStateAgent($items_id) {
       
       ini_set('display_errors','On');
       error_reporting(E_ALL | E_STRICT);
-      set_error_handler('userErrorHandlerDebug');
+      set_error_handler(array('Toolbox','userErrorHandlerDebug'));
       
       ob_start();
       ini_set("allow_url_fopen", "1");
@@ -1279,8 +1263,7 @@ return namelist;
    /**
    * Start agent remotly from server
    *
-   * @param $ip value IP address of the computer where agent is installed
-   * @param $token value token required to wake agent remotly
+   * @param $agent_id integer id of the agent
    *
    * @return bool true if agent wake up
    *
@@ -1329,11 +1312,11 @@ return namelist;
          ini_set('display_errors', 'On');
          // Recommended development settings
          error_reporting(E_ALL | E_STRICT);
-         set_error_handler('userErrorHandlerDebug');
+         set_error_handler(array('Toolbox','userErrorHandlerDebug'));
       } else {
          ini_set('display_errors','Off');
          error_reporting(E_ALL);
-         set_error_handler('userErrorHandlerNormal');
+         set_error_handler(array('Toolbox','userErrorHandlerNormal'));
       }
 
    }
@@ -1344,7 +1327,7 @@ return namelist;
    * When disable debug, we transfer all errors in this emtpy function
    *
    **/
-   function errorempty() {
+   static function errorempty() {
       
    }
 
@@ -1420,48 +1403,9 @@ return namelist;
       echo "</tr>";
 
       echo "</table>";
-      echo "</form>";
+      Html::closeForm();
       echo "</div>";
       
-   }
-
-
-
-   /**
-   * Display task jobs 
-   *
-   * @param $items_id integer id of the taskjob
-   * @param $width integer how large in pixel display array
-   *
-   * @return nothing
-   *
-   **/
-   function showMiniAction($items_id, $width="950") {
-      
-      echo "<center><table class='tab_cadrehov' style='width: ".$width."px'>";
-
-      echo "<tr>";
-      echo "<th>";
-      echo "Date";
-      echo "</th>";
-      echo "<th>";
-      echo "Comment";
-      echo "</th>";
-      echo "</tr>";
-
-      $a_taskjob = $this->find('`id`="'.$items_id.'" ', 'date_scheduled DESC');
-      foreach ($a_taskjob as $data) {
-         echo "<tr class='tab_bg_1'>";
-         echo "<td align='center'>";
-         echo Html::convDateTime($data['date_scheduled']);
-         echo "</td>";
-         echo "<td align='center'>";
-         echo $data['comment'];
-         echo "</td>";
-         echo "</tr>";
-      }
-
-      echo "</table></center>";
    }
 
 
@@ -1488,11 +1432,10 @@ return namelist;
             $tab = $i;
          }
       }
-      Html::redirect(Toolbox::getItemTypeFormURL('PluginFusioninventoryTask')
-                                     ."?itemtype=PluginFusioninventoryTask&id=".
-                                        $this->fields['plugin_fusioninventory_tasks_id'].
-                                           "&glpi_tab=".$tab);
-
+      Html::redirect(Toolbox::getItemTypeFormURL('PluginFusioninventoryTask').
+                                     "?itemtype=PluginFusioninventoryTask&id=".
+                                     $this->fields['plugin_fusioninventory_tasks_id'].
+                                     "&glpi_tab=".$tab);
    }
 
 
@@ -1518,98 +1461,113 @@ return namelist;
 
 
 
+   /**
+    * Finish task if have some problem or started for so long time
+    * 
+    * @return nothing
+    */
    function CronCheckRunnningJobs() {
       global $DB;
 
       // Get all taskjobstate running
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pfTaskjoblog   = new PluginFusioninventoryTaskjoblog();
 
       $a_taskjobstate = $pfTaskjobstate->find("`state`='0'
-                                                      OR `state`='1'
-                                                      OR `state`='2'
-                                                      GROUP BY uniqid, plugin_fusioninventory_agents_id");
+                                               OR `state`='1'
+                                               OR `state`='2'
+                                               GROUP BY uniqid, plugin_fusioninventory_agents_id");
       foreach($a_taskjobstate as $data) {
          $sql = "SELECT * FROM `glpi_plugin_fusioninventory_tasks`
             LEFT JOIN `glpi_plugin_fusioninventory_taskjobs`
-               on `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
+               ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
             WHERE `glpi_plugin_fusioninventory_taskjobs`.`id`='".$data['plugin_fusioninventory_taskjobs_id']."'
             LIMIT 1 ";
          $result = $DB->query($sql);
-         if ($result) {
-            if ($DB->numrows($result) != 0) {
-               $task = $DB->fetch_assoc($result);
-               if ($task['communication'] == 'push') {
-                  $a_valid = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'
-                           AND (`date`+240) < (NOW() + 0)", "", "1");
-
-                  if (count($a_valid) == '1') {
-                     // Get agent status
-                     $agentreturn = $this->getRealStateAgent($data['plugin_fusioninventory_agents_id']);
-
-                     switch ($agentreturn) {
-
-                        case 'waiting':
-                           // token is bad and must force cancel task in server
-                           $a_statetmp = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'
-                                                      AND `plugin_fusioninventory_agents_id`='".$data['plugin_fusioninventory_agents_id']."'
-                                                      AND (`state`='2' OR `state`='1' OR `state`='0') ");
-                           foreach($a_statetmp as $datatmp) {
-                              $pfTaskjobstate->changeStatusFinish($datatmp['id'],
-                                                                    0,
-                                                                    '',
-                                                                    1,
-                                                                    "==fusioninventory::1==");
-                           }
-                           break;
-
-                        case 'running':
-                            // just wait and do nothing
-
-                           break;
-
-                        case 'noanswer':
-                           // agent crash or computer is shutdown and force cancel task in server
-                           $a_statetmp = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'
-                                                      AND `plugin_fusioninventory_agents_id`='".$data['plugin_fusioninventory_agents_id']."'
-                                                      AND (`state`='2' OR `state`='1') ");
-                           foreach($a_statetmp as $datatmp) {
-                              $pfTaskjobstate->changeStatusFinish($datatmp['id'],
-                                                                  0,
-                                                                  '',
-                                                                  1,
-                                                                  "==fusioninventory::2==");
-                           }
-                           break;
-
-                        case 'noip':
-                           // just wait and do nothing
-
-                           break;
-
+         if ($DB->numrows($result) != 0) {
+            $task = $DB->fetch_assoc($result);
+            if ($task['communication'] == 'pull') {
+               $has_recent_log_entries = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'
+                        AND ADDTIME(`date`, '04:00:00') < NOW()", "id DESC", "1");
+               # No news from the agent since 1 hour. The agent is probably crached. Let's cancel the task
+               if (count($has_recent_log_entries) == 1) {
+                     $a_statustmp = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'
+                                                AND `plugin_fusioninventory_agents_id`='".$data['plugin_fusioninventory_agents_id']."'
+                                                AND (`state`='2' OR `state`='1') ");
+                     foreach($a_statustmp as $datatmp) {
+                        $pfTaskjobstate->changeStatusFinish($datatmp['id'],
+                                                            0,
+                                                            '',
+                                                            1,
+                                                            "==fusioninventory::2==");
                      }
+               }
+            } else if ($task['communication'] == 'push') {
+               $a_valid = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'
+                        AND ADDTIME(`date`, '00:10:00') < NOW()", "id DESC", "1");
+
+               if (count($a_valid) == '1') {
+                  // Get agent status
+                  $agentreturn = $this->getRealStateAgent($data['plugin_fusioninventory_agents_id']);
+
+                  switch ($agentreturn) {
+
+                     case 'waiting':
+                        // token is bad and must force cancel task in server
+                        $a_statetmp = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'
+                                                   AND `plugin_fusioninventory_agents_id`='".$data['plugin_fusioninventory_agents_id']."'
+                                                   AND (`state`='2' OR `state`='1' OR `state`='0') ");
+                        foreach($a_statetmp as $datatmp) {
+                           $pfTaskjobstate->changeStatusFinish($datatmp['id'],
+                                                                 0,
+                                                                 '',
+                                                                 1,
+                                                                 "==fusioninventory::1==");
+                        }
+                        break;
+
+                     case 'running':
+                         // just wait and do nothing
+
+                        break;
+
+                     case 'noanswer':
+                        // agent crash or computer is shutdown and force cancel task in server
+                        $a_statetmp = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'
+                                                   AND `plugin_fusioninventory_agents_id`='".$data['plugin_fusioninventory_agents_id']."'
+                                                   AND (`state`='2' OR `state`='1') ");
+                        foreach($a_statetmp as $datatmp) {
+                           $pfTaskjobstate->changeStatusFinish($datatmp['id'],
+                                                               0,
+                                                               '',
+                                                               1,
+                                                               "==fusioninventory::2==");
+                        }
+                        break;
+
+                     case 'noip':
+                        // just wait and do nothing
+
+                        break;
+
                   }
                }
             }
-         }         
+         }      
       }
 
-
-      // If taskjob.status = 1 and all taskjobstatus are finished, so reinitializeTaskjobs()
+      // If taskjob.status = 1 and all taskjobstates are finished, so reinitializeTaskjobs()
       $sql = "SELECT *
       FROM `glpi_plugin_fusioninventory_taskjobs`
       WHERE (
-         SELECT count( * )
-         FROM glpi_plugin_fusioninventory_taskjobstates
+         SELECT count(*) FROM glpi_plugin_fusioninventory_taskjobstates
          WHERE plugin_fusioninventory_taskjobs_id = `glpi_plugin_fusioninventory_taskjobs`.id
-         AND glpi_plugin_fusioninventory_taskjobstates.state <3) = 0
-       AND `glpi_plugin_fusioninventory_taskjobs`.`status`=1";
-     $result=$DB->query($sql);
-     if ($result) {
-         while ($data=$DB->fetch_array($result)) {
-            $this->reinitializeTaskjobs($data['plugin_fusioninventory_tasks_id'], '1');
-         }
-     }
+            AND glpi_plugin_fusioninventory_taskjobstates.state <3) = 0
+            AND `glpi_plugin_fusioninventory_taskjobs`.`status`=1";
+      $result=$DB->query($sql);
+      while ($data=$DB->fetch_array($result)) {
+         $this->reinitializeTaskjobs($data['plugin_fusioninventory_tasks_id'], '1');
+      }
    }
 
 
@@ -1617,8 +1575,9 @@ return namelist;
    /**
     * Verify if definition or action not deleted
     *
-    * @param $items_id interge id of taskjobs
-    *
+    * @param $items_id integer id of taskjobs
+    * 
+    * @return boolean 
     */
    function verifyDefinitionActions($items_id) {
       
@@ -1666,10 +1625,17 @@ return namelist;
 
 
 
+   /**
+    * Purge taskjoblog/state when delete taskjob
+    * 
+    * @param type $parm 
+    * 
+    * @return nothing
+    */
    static function purgeTaskjob($parm) {
       // $parm["id"]
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pfTaskjoblog   = new PluginFusioninventoryTaskjoblog();
 
       // all taskjobs
       $a_taskjobstates = $pfTaskjobstate->find("`plugin_fusioninventory_taskjobs_id`='".$parm->fields["id"]."'");
@@ -1682,8 +1648,39 @@ return namelist;
       }
    }
 
-
    
+   
+   /**
+    * Force end task
+    */
+   function forceEnd() {
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+
+      $a_taskjobstates =
+         $pfTaskjobstate->find("`plugin_fusioninventory_taskjobs_id`='". $this->fields["id"]."'");
+
+      //TODO: in order to avoid too many atomic operations on DB, convert the
+      //following into a massive prepared operation (ie. ids in one massive action)
+      foreach($a_taskjobstates as $a_taskjobstate) {
+         $pfTaskjobstate->getFromDB($a_taskjobstate['id']);
+         if ($a_taskjobstate['state'] != PluginFusioninventoryTaskjobstate::FINISHED) {
+               $pfTaskjobstate->changeStatusFinish(
+                     $a_taskjobstate['id'], 0, '', 1, "Action cancelled by user", 0, 0
+               );
+         }
+      }
+      $this->reinitializeTaskjobs($this->fields['plugin_fusioninventory_tasks_id']);
+   }
+   
+   
+   
+   /**
+    * Get information if allow_url_fopen is activated and display message if not
+    *
+    * @param $wakecomputer boolean (1 if it's for wakeonlan, 0 if it's for task)
+    * 
+    * @return boolean 
+    */
    static function getAllowurlfopen($wakecomputer=0) {
       global $LANG;
       
@@ -1701,6 +1698,7 @@ return namelist;
          echo "</tr>";
          echo "</table>";
          echo "</center>";
+         echo "<br/>";
          return false;
       }
       return true;
@@ -1807,7 +1805,7 @@ return namelist;
     * Quick add or update taskjob
     *
     * @param $id integer id of taskjobs
-    * @param $method value method name
+    * @param $method string method name
     *
     */
    function showQuickForm($id, $method) {
@@ -1905,7 +1903,7 @@ return namelist;
 
 
    /*
-    * Liste of taskjob to forcerun
+    * List of taskjob to forcerun
     */
    static function listToForcerun($method) {
       global $LANG;
@@ -1953,7 +1951,7 @@ return namelist;
       echo "</tr>";
 
       echo "</table>";
-      echo "</form>";
+      Html::closeForm();
    }
 
 
@@ -1980,7 +1978,8 @@ return namelist;
             $pfTaskjoblog->showHistory($taskjobs_id, 950, array('uniqid'=>$uniqid));
             echo "</td>";
 
-            echo "</table><br/>";
+            echo "</table>";
+            echo "<br/>";
          }
       }
    }
@@ -2060,6 +2059,14 @@ return namelist;
    }
    
    
+   
+   /**
+    * Display + button to add definition or action
+    * 
+    * @param $name string name of the action (here definition or action)
+    * 
+    * @return nothing 
+    */
    function plusButton($name) {
       global $LANG,$CFG_GLPI;
       

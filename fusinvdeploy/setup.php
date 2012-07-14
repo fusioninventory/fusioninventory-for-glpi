@@ -138,6 +138,8 @@ function plugin_init_fusinvdeploy() {
    }
    $PLUGIN_HOOKS['change_profile']['fusinvdeploy'] =
       PluginFusioninventoryProfile::changeprofile($moduleId,$a_plugin['shortname']);
+   
+   $PLUGIN_HOOKS['csrf_compliant']['fusinvdeploy'] = true;
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['packages'] =
       '../fusinvdeploy/front/package.form.php?add=1';
@@ -158,27 +160,27 @@ function plugin_init_fusinvdeploy() {
 
    // Breadcrumbs
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['packages']['title'] =
-      $LANG['plugin_fusinvdeploy']['menu'][1];
+      $LANG['plugin_fusinvdeploy']['package'][6];
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['packages']['page'] =
       '/plugins/fusinvdeploy/front/package.php';
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['mirror']['title'] =
-      $LANG['plugin_fusinvdeploy']['menu'][2];
+      $LANG['plugin_fusinvdeploy']['mirror'][1];
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['mirror']['page'] =
       '/plugins/fusinvdeploy/front/mirror.php';
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['task']['title'] =
-      $LANG['plugin_fusinvdeploy']['menu'][3];
+      $LANG['plugin_fusinvdeploy']['task'][0];
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['task']['page'] =
       '/plugins/fusinvdeploy/front/task.php';
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['group']['title'] =
-      $LANG['plugin_fusinvdeploy']['menu'][4];
+      $LANG['plugin_fusinvdeploy']['group'][0];
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['group']['page'] =
       '/plugins/fusinvdeploy/front/group.php';
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['deploy']['title'] =
-      $LANG['plugin_fusinvdeploy']['menu'][5];
+      $LANG['plugin_fusinvdeploy']['deploystatus'][0];
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['deploy']['page'] =
       '/plugins/fusinvdeploy/front/deploystate.php';
 
@@ -199,28 +201,31 @@ function plugin_version_fusinvdeploy() {
       'license'        => 'AGPLv3+',
       'author'         => "<a href='http://www.teclib.com'>TECLIB'</a> and the FusionInventory team",
       'homepage'       => 'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/',
-      'minGlpiVersion' => '0.83'
+      'minGlpiVersion' => '0.83.3'
    );
 }
 
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_fusinvdeploy_check_prerequisites() {
    global $LANG;
-   if (version_compare('0.80',GLPI_VERSION) < 0) {
+   
+   if (version_compare(GLPI_VERSION,'0.83.3','lt') || version_compare(GLPI_VERSION,'0.84','ge')) {
+      echo $LANG['plugin_fusioninventory']['errors'][50];
+   } else {
       $plugin = new Plugin;
       if (!$plugin->isInstalled("fusioninventory")) {
         return false;
       }
       if (!$plugin->isActivated("fusioninventory")) {
-         print $LANG['plugin_fusinvdeploy']["setup"][17]."<br />\n";
+         print $LANG['plugin_fusinvdeploy']['setup'][17]."<br />\n";
          return false;
       }
       if (!$plugin->isActivated("fusinvinventory")) {
-         print $LANG['plugin_fusinvdeploy']["setup"][21]."<br />\n";
+         print $LANG['plugin_fusinvdeploy']['setup'][21]."<br />\n";
          return false;
       }
       if (!$plugin->isInstalled("webservices")) {
-         print $LANG['plugin_fusinvdeploy']["setup"][19]."<br />\n";
+         print $LANG['plugin_fusinvdeploy']['setup'][19]."<br />\n";
          return false;
       } else {
          //cheeck version of webservice
@@ -228,13 +233,11 @@ function plugin_fusinvdeploy_check_prerequisites() {
          $tmp = $plugin->find("directory = 'webservices'");
          $webservices_plugin = array_pop($tmp);
          if (version_compare($webservices_plugin['version'], '1.2.0') < 0) {
-            print $LANG['plugin_fusinvdeploy']["setup"][19]."<br />\n";
+            print $LANG['plugin_fusinvdeploy']['setup'][19]."<br />\n";
             return false;
          }
       }
       return true;
-   } else {
-      echo $LANG['plugin_fusinvdeploy']["errors"][50];
    }
 }
 

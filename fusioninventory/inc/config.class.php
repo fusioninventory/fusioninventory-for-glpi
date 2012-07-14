@@ -175,8 +175,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    **/
    function getValue($plugin_id, $name) {
 
-      $config = current($this->find("`plugins_id`='".$plugin_id."'
-                          AND `type`='".$name."'"));
+      $config = current($this->find("`type`='".$name."'
+                          AND `plugins_id`='".$plugin_id."'"));
       if (isset($config['value'])) {
          return $config['value'];
       }

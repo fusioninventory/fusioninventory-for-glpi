@@ -68,8 +68,6 @@ $LANG['plugin_fusioninventory']['agents'][45]="Exceptions";
 $LANG['plugin_fusioninventory']['agents'][4]="Last contact";
 $LANG['plugin_fusioninventory']['agents'][6]="disable";
 
-$LANG['plugin_fusioninventory']['buttons'][0]="Finish";
-
 $LANG['plugin_fusioninventory']['choice'][0]="Hayır";
 $LANG['plugin_fusioninventory']['choice'][1]="Evet";
 $LANG['plugin_fusioninventory']['choice'][2]="veya";
@@ -77,13 +75,14 @@ $LANG['plugin_fusioninventory']['choice'][3]="ve";
 
 $LANG['plugin_fusioninventory']['codetasklog'][1]="Bad token, impossible to start agent";
 $LANG['plugin_fusioninventory']['codetasklog'][2]="Agent stopped/crashed";
-$LANG['plugin_fusioninventory']['codetasklog'][3]="Import denied ";
+$LANG['plugin_fusioninventory']['codetasklog'][3]="Import denied";
 
 $LANG['plugin_fusioninventory']['config'][0]="Inventory frequency (in hours)";
 
 $LANG['plugin_fusioninventory']['credential'][1]="Credential for remote inventory";
 $LANG['plugin_fusioninventory']['credential'][2]="Remote device inventory";
 $LANG['plugin_fusioninventory']['credential'][3]="Credentials";
+$LANG['plugin_fusioninventory']['credential'][4]="Credential";
 
 $LANG['plugin_fusioninventory']['discovery'][5]="Number of imported devices";
 $LANG['plugin_fusioninventory']['discovery'][9]="Number of devices not imported because type not defined";
@@ -91,7 +90,7 @@ $LANG['plugin_fusioninventory']['discovery'][9]="Number of devices not imported 
 $LANG['plugin_fusioninventory']['errors'][1]="PHP allow_url_fopen is off, can't wake agent to do inventory";
 $LANG['plugin_fusioninventory']['errors'][22]="Unattended element in";
 $LANG['plugin_fusioninventory']['errors'][2]="PHP allow_url_fopen is off, push mode can't work";
-$LANG['plugin_fusioninventory']['errors'][50]="Your GLPI version not compatible, require 0.80";
+$LANG['plugin_fusioninventory']['errors'][50]="Your GLPI version not compatible, require 0.83.3";
 
 $LANG['plugin_fusioninventory']['functionalities'][0]="Features";
 $LANG['plugin_fusioninventory']['functionalities'][16]="SNMP authentication";
@@ -143,8 +142,10 @@ $LANG['plugin_fusioninventory']['rules'][13]="Hard disk serial number";
 $LANG['plugin_fusioninventory']['rules'][14]="Partition serial number";
 $LANG['plugin_fusioninventory']['rules'][15]="UUID";
 $LANG['plugin_fusioninventory']['rules'][16]="FusionInventory tag";
-$LANG['plugin_fusioninventory']['rules'][17]="Import denied";
 $LANG['plugin_fusioninventory']['rules'][18]="Device created";
+$LANG['plugin_fusioninventory']['rules'][19]="Ignored import devices";
+$LANG['plugin_fusioninventory']['rules'][20]="Rule import logs";
+$LANG['plugin_fusioninventory']['rules'][21]="Import informations";
 $LANG['plugin_fusioninventory']['rules'][2]="Equipment import and link rules";
 $LANG['plugin_fusioninventory']['rules'][3]="Search GLPI equipment with the status";
 $LANG['plugin_fusioninventory']['rules'][4]="Destination of equipment entity";
@@ -185,15 +186,24 @@ $LANG['plugin_fusioninventory']['task'][36]="saat";
 $LANG['plugin_fusioninventory']['task'][37]="gün";
 $LANG['plugin_fusioninventory']['task'][38]="ay";
 $LANG['plugin_fusioninventory']['task'][39]="Unable to run task because some jobs is running yet!";
-$LANG['plugin_fusioninventory']['task'][40]="Force running";
+$LANG['plugin_fusioninventory']['task'][40]="Force start";
 $LANG['plugin_fusioninventory']['task'][41]="Server contacts the agent (push)";
 $LANG['plugin_fusioninventory']['task'][42]="Agent contacts the server (pull)";
 $LANG['plugin_fusioninventory']['task'][43]="Communication mode";
 $LANG['plugin_fusioninventory']['task'][44]="See all informations of task";
 $LANG['plugin_fusioninventory']['task'][45]="Advanced options";
-$LANG['plugin_fusioninventory']['task'][46]="Reset";
+$LANG['plugin_fusioninventory']['task'][46]="Reinitialization";
 $LANG['plugin_fusioninventory']['task'][47]="Unique id";
 $LANG['plugin_fusioninventory']['task'][48]="To inventory";
+$LANG['plugin_fusioninventory']['task'][49]="Advanced mode";
+$LANG['plugin_fusioninventory']['task'][50]="End Task";
+$LANG['plugin_fusioninventory']['task'][51]="Action after finish running task";
+$LANG['plugin_fusioninventory']['task'][52]="Delete this task and finish";
+$LANG['plugin_fusioninventory']['task'][53]="Finish";
+$LANG['plugin_fusioninventory']['task'][54]="Run again this task";
+$LANG['plugin_fusioninventory']['task'][55]="No agent allowed to run ESX inventory";
+$LANG['plugin_fusioninventory']['task'][56]="Planned for running";
+$LANG['plugin_fusioninventory']['task'][58]="In error";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Started";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Tamam";
@@ -202,6 +212,8 @@ $LANG['plugin_fusioninventory']['taskjoblog'][4]="Hata";
 $LANG['plugin_fusioninventory']['taskjoblog'][5]="bilinmeyen";
 $LANG['plugin_fusioninventory']['taskjoblog'][6]="Running";
 $LANG['plugin_fusioninventory']['taskjoblog'][7]="Prepared";
+$LANG['plugin_fusioninventory']['taskjoblog'][8]="See all executions";
+$LANG['plugin_fusioninventory']['taskjoblog'][9]="View logs of this execution";
 
 $LANG['plugin_fusioninventory']['title'][0]="FusionInventory";
 $LANG['plugin_fusioninventory']['title'][1]="FusInv";
@@ -219,6 +231,7 @@ $LANG['plugin_fusioninventory']['wizard'][14]="Welcome in FusionInventory. Begin
 $LANG['plugin_fusioninventory']['wizard'][15]="Computers and peripherals";
 $LANG['plugin_fusioninventory']['wizard'][16]="ESX servers";
 $LANG['plugin_fusioninventory']['wizard'][17]="Network devices and printers";
+$LANG['plugin_fusioninventory']['wizard'][18]="Wizard";
 $LANG['plugin_fusioninventory']['wizard'][1]="Type of device to inventory";
 $LANG['plugin_fusioninventory']['wizard'][2]="Import options";
 $LANG['plugin_fusioninventory']['wizard'][3]="Entity rules";
