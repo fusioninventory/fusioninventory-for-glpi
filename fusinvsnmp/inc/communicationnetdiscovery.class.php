@@ -151,6 +151,11 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       if ((isset($p_xml->SERIAL)) AND (!empty($p_xml->SERIAL))) {
          $input['serial'] = (string)$p_xml->SERIAL;
       }
+      if ((isset($p_xml->MANUFACTURER)) AND (!empty($p_xml->MANUFACTURER))) {
+         $input['manufacturer_id'] = Dropdown::importExternal(
+            'Manufacturer',  (string)$p_xml->MANUFACTURER
+         );
+      }
       if ((isset($p_xml->MAC)) AND (!empty($p_xml->MAC))) {
          $input['mac'][] = (string)$p_xml->MAC;
       }
