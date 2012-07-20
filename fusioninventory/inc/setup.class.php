@@ -129,17 +129,6 @@ class PluginFusioninventorySetup {
     */
    function initRules() {
       
-      // Load classe (use for install and update
-         if (!class_exists('PluginFusioninventoryUnknownDevice')) { // if plugin is unactive
-            include(GLPI_ROOT . "/plugins/fusioninventory/inc/unknowndevice.class.php");
-         }
-         if (!class_exists('PluginFusioninventoryInventoryRuleImportCollection')) { // if plugin is unactive
-            include(GLPI_ROOT . "/plugins/fusioninventory/inc/inventoryruleimportcollection.class.php");
-         }
-         if (!class_exists('PluginFusioninventoryInventoryRuleImport')) { // if plugin is unactive
-            include(GLPI_ROOT . "/plugins/fusioninventory/inc/inventoryruleimport.class.php");
-         }
-      
       $ranking = 0;
       
      // Create rule for : Computer + serial + uuid
