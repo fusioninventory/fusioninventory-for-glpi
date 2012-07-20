@@ -43,9 +43,7 @@
 function pluginFusioninventoryGetCurrentVersion($version) {
    global $DB;
    
-   if (!class_exists('PluginFusioninventoryModule')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
-   }
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
    
    if ((!TableExists("glpi_plugin_tracker_config")) &&
       (!TableExists("glpi_plugin_fusioninventory_config")) &&
@@ -168,7 +166,25 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    global $DB;
    
    ini_set("max_execution_time", "0");
-   
+
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodel.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusinvsnmp/inc/importexport.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusinvsnmp/inc/commondbtm.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodelmib.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/configlogfield.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/mapping.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/communicationrest.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputercomputer.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusinvinventory/inc/lib.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/config.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/ignoredimportdevice.class.php");
+
    $migration = new $migrationname($current_version);
    $prepare_task = array();
    $prepare_rangeip = array();
@@ -2412,12 +2428,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                             "plugin_fusioninventory_mappings_id");
       $migration->migrationOneTable($newTable);
-         if (!class_exists('PluginFusioninventoryConfigLogField')) { // if plugin is unactive
-            include(GLPI_ROOT . "/plugins/fusioninventory/inc/configlogfield.class.php");
-         }
-         $configLogField = new PluginFusioninventoryConfigLogField();
 
-         require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/mapping.class.php");
+         $configLogField = new PluginFusioninventoryConfigLogField();
          $configLogField->initConfig();
       
          
@@ -3108,10 +3120,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     * Add ESX module appear in version 2.4.0(0.80+1.0)
     */
-      if (!class_exists('PluginFusioninventoryAgentmodule')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
-      }
-      require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/communicationrest.class.php");
+
       $agentmodule = new PluginFusioninventoryAgentmodule();
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` 
          WHERE `modulename`='ESX'
@@ -3166,14 +3175,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     */
    if (!strstr($current_version, "+")) {// All version before 0.80+1.1 (new versioning)
       $computer = new Computer();
-      if (!class_exists('PluginFusioninventoryInventoryComputerComputer')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputercomputer.class.php");
-      }      
       $pfComputer = new PluginFusinvinventoryComputer();
       $migration->displayMessage("Convert computer inventory, may require some minutes");
-      if (!class_exists('PluginFusioninventoryInventoryComputerLib')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusinvinventory/inc/lib.class.php");
-      }
       $pfLib = new PluginFusioninventoryInventoryComputerLib();
       $query = "SELECT * FROM `glpi_plugin_fusinvinventory_libserialization`";
       if ($result=$DB->query($query)) {
@@ -3327,9 +3330,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       WHERE `modulename`='WAKEONLAN'";
    $result = $DB->query($query);
    if (!$DB->numrows($result)) {
-      if (!class_exists('PluginFusioninventoryAgentmodule')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
-      }
       $agentmodule = new PluginFusioninventoryAgentmodule;
       $input = array();
       $input['plugins_id'] = $plugins_id;
@@ -3427,26 +3427,18 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     */
    if (TableExists("glpi_plugin_tracker_config_discovery")) {
       $migration->displayMessage("Create rules");
-      if (!class_exists('PluginFusioninventorySetup')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
-      }
       $pfSetup = new PluginFusioninventorySetup();
       $pfSetup->initRules();
    }   
    
 
    $plugins_id = PluginFusioninventoryModule::getModuleId("fusioninventory");
-   include_once(GLPI_ROOT."/plugins/fusioninventory/inc/profile.class.php");
    PluginFusioninventoryProfile::changeProfile($plugins_id);
 
    /*
     *  Manage configuration of plugin
     */
-      include_once(GLPI_ROOT."/plugins/fusioninventory/inc/config.class.php");
       $config = new PluginFusioninventoryConfig();
-      if (!class_exists('PluginFusioninventorySetup')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
-      }
       $PluginFusioninventorySetup = new PluginFusioninventorySetup();
       $users_id = $PluginFusioninventorySetup->createFusionInventoryUser();
       $a_input = array();
@@ -3490,9 +3482,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       }
       $config->addValues($plugins_id, $a_input);
       
-      if (!class_exists('PluginFusioninventorySetup')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
-      }
       $pfSetup = new PluginFusioninventorySetup();
       $users_id = $pfSetup->createFusionInventoryUser();
       $query = "UPDATE `glpi_plugin_fusioninventory_configs`
@@ -3629,9 +3618,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    }
    
 
-   if (!class_exists('PluginFusioninventoryIgnoredimportdevice')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusioninventory/inc/ignoredimportdevice.class.php");
-   }
 //   $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
 //   $pfIgnoredimportdevice->install();   
 
@@ -3658,18 +3644,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     * Import / update SNMP models
     */
-   if (!class_exists('PluginFusioninventorySnmpmodel')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodel.class.php");
-   }
-   if (!class_exists('PluginFusinvsnmpImportExport')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/importexport.class.php");
-   }
-   if (!class_exists('PluginFusinvsnmpCommonDBTM')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/commondbtm.class.php");
-   }
-
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodelmib.class.php");
-   PluginFusioninventorySnmpmodel::importAllModels();
+  PluginFusioninventorySnmpmodel::importAllModels();
    
 }
 

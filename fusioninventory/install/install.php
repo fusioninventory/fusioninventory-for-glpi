@@ -47,45 +47,30 @@ function pluginFusioninventoryInstall($version, $migration='') {
       $migration = new Migration($version);
    }
    
-   $migration->displayMessage("Installation of plugin FusionInventory");
-   
    /*
     * Load classes
     */
-      if (!class_exists('PluginFusioninventoryProfile')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
-      }
-      if (!class_exists('PluginFusioninventoryAgentmodule')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
-      }
-      if (!class_exists('PluginFusioninventoryStaticmisc')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/staticmisc.class.php");
-      }
-      if (!class_exists('PluginFusioninventorySetup')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
-      }
-      if (!class_exists('PluginFusioninventoryUnknownDevice')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/unknowndevice.class.php");
-      }
-      if (!class_exists('PluginFusioninventoryInventoryRuleImportCollection')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/inventoryruleimportcollection.class.php");
-      }
-      if (!class_exists('PluginFusioninventoryInventoryRuleImport')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/inventoryruleimport.class.php");
-      }
-      if (!class_exists('PluginFusioninventoryModule')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
-      }
-      require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/mapping.class.php");
-      if (!class_exists('PluginFusioninventoryConfig')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/config.class.php");
-      }
-      if (!class_exists('PluginFusioninventoryCommunicationRest')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/communicationrest.class.php");
-      }
-      
-      
-      
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/staticmisc.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/unknowndevice.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/inventoryruleimportcollection.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/inventoryruleimport.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/mapping.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/config.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/communicationrest.class.php");
+   require_once GLPI_ROOT . "/plugins/fusioninventory/inc/lock.class.php";
+   require_once GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputerlib.class.php";
+   require_once GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputerlibhook.class.php";
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodel.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusinvsnmp/inc/importexport.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusinvsnmp/inc/commondbtm.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/configlogfield.class.php");
+
+   $migration->displayMessage("Installation of plugin FusionInventory");
+
       
    // Get informations of plugin
 
@@ -241,9 +226,6 @@ function pluginFusioninventoryInstall($version, $migration='') {
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       $PluginFusioninventoryConfig->initConfigModule();
       
-      if (!class_exists('PluginFusioninventoryConfigLogField')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/configlogfield.class.php");
-      }
       $configLogField = new PluginFusioninventoryConfigLogField();
       $configLogField->initConfig();
    
@@ -309,9 +291,6 @@ function pluginFusioninventoryInstall($version, $migration='') {
     *  Import OCS locks
     */
       $migration->displayMessage("Import OCS locks if exists");
-      include_once GLPI_ROOT . "/plugins/fusioninventory/inc/lock.class.php";
-      include_once GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputerlib.class.php";
-      include_once GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputerlibhook.class.php";
       $PluginFusioninventoryLock = new PluginFusioninventoryLock();
       $PluginFusioninventoryLock->importFromOcs();
       
@@ -351,9 +330,6 @@ function pluginFusioninventoryInstall($version, $migration='') {
    
    
    // Import models
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodel.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusinvsnmp/inc/importexport.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusinvsnmp/inc/commondbtm.class.php");
    PluginFusioninventorySnmpmodel::importAllModels();
 
 }

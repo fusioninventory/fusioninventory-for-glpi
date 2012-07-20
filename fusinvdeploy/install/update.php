@@ -42,20 +42,16 @@
 
 function pluginFusinvdeployGetCurrentVersion($version) {
 
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/config.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
+
+
    if (!TableExists("glpi_plugin_fusinvdeploy_files")) {
       return false;
    }
    
    if (TableExists("glpi_plugin_fusioninventory_configs")) {
-      if (!class_exists('PluginFusioninventoryConfig')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/config.class.php");
-      }
-      if (!class_exists('PluginFusioninventoryAgentmodule')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
-      }
-      if (!class_exists('PluginFusioninventoryModule')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
-      }
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
       $versionconfig = $PluginFusioninventoryConfig->getValue($plugins_id, "version");

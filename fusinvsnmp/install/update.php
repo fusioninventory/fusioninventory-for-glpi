@@ -43,6 +43,10 @@
 function pluginFusinvsnmpGetCurrentVersion($version) {
    global $DB;
 
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/config.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
+
    if ((!TableExists("glpi_plugin_tracker_config")) &&
       (!TableExists("glpi_plugin_fusioninventory_config")) &&
       (!TableExists("glpi_plugin_fusinvsnmp_agentconfigs")) &&
@@ -97,16 +101,7 @@ function pluginFusinvsnmpGetCurrentVersion($version) {
    } else if (FieldExists("glpi_plugin_fusinvsnmp_networkports", "FK_networking_ports")) {
       return "2.2.1";
    } else {
-      if (!class_exists('PluginFusioninventoryConfig')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/config.class.php");
-      }
-      if (!class_exists('PluginFusioninventoryAgentmodule')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
-      }
-      if (!class_exists('PluginFusioninventoryModule')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
-      }
-      
+     
       $pfConfig = new PluginFusioninventoryConfig();
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
       $versionconfig = $pfConfig->getValue($plugins_id, "version");
@@ -158,9 +153,12 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
 
    ini_set("max_execution_time", "0");
    
-   if (!class_exists('PluginFusioninventoryMapping')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusioninventory/inc/mapping.class.php");
-   }
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/mapping.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusinvsnmp/inc/config.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusinvsnmp/inc/printerlogreport.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusinvsnmp/inc/networkporttype.class.php");
 
    $migration = new $migrationname($current_version);
    
@@ -169,9 +167,6 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    $config = new PluginFusioninventoryConfig();
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
    
-   if (!class_exists('PluginFusinvSNMPConfig')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/config.class.php");
-   }
    $configSNMP = new PluginFusinvSNMPConfig();
    $configSNMP->initConfigModule();
    
@@ -181,9 +176,6 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` WHERE `modulename`='SNMPQUERY'";
    $result = $DB->query($query);
    if (!$DB->numrows($result)) {
-      if (!class_exists('PluginFusioninventoryAgentmodule')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
-      }
       $agentmodule = new PluginFusioninventoryAgentmodule;
       $input = array();
       $input['plugins_id'] = $plugins_id;
@@ -199,9 +191,6 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` WHERE `modulename`='NETDISCOVERY'";
    $result = $DB->query($query);
    if (!$DB->numrows($result)) {
-      if (!class_exists('PluginFusioninventoryAgentmodule')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
-      }
       $agentmodule = new PluginFusioninventoryAgentmodule;
       $input = array();
       $input['plugins_id'] = $plugins_id;
@@ -2858,9 +2847,6 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    /*
     * Modify displaypreference for PluginFusinvsnmpPrinterLogReport
     */
-      if (!class_exists('PluginFusinvsnmpPrinterLogReport')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/printerlogreport.class.php");
-      }
       $pfPrinterLogReport = new PluginFusinvsnmpPrinterLogReport();
       $a_searchoptions = $pfPrinterLogReport->getSearchOptions();
       $query = "SELECT * FROM `glpi_displaypreferences` 
@@ -3010,9 +2996,6 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    
    
    // Update networkports types
-   if (!class_exists('PluginFusinvsnmpNetworkporttype')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/networkporttype.class.php");
-   }
    $pfNetworkporttype = new PluginFusinvsnmpNetworkporttype();
    $pfNetworkporttype->init();
    

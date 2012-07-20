@@ -48,6 +48,8 @@ define ("PLUGIN_FUSINVDEPLOY_VERSION","0.84+1.0");
 function plugin_init_fusinvdeploy() {
    global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
 
+   include(GLPI_ROOT . "/plugins/fusioninventory/inc/config.class.php");
+   include(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
    // ##### 1. Stop if fusioninventory not activated #####
 
    $plugin = new Plugin();
@@ -122,9 +124,6 @@ function plugin_init_fusinvdeploy() {
    if (isset($_SESSION["glpiID"])) {
 
       if (Session::haveRight("configuration", "r") || Session::haveRight("profile", "w")) {// Config page
-         if (!class_exists('PluginFusioninventoryConfig')) { // if plugin is unactive
-            include(GLPI_ROOT . "/plugins/fusioninventory/inc/config.class.php");
-         }
          $PluginFusioninventoryConfiguration = new PluginFusioninventoryConfig();
          $a_tabs = $PluginFusioninventoryConfiguration->defineTabs();
          $PLUGIN_HOOKS['config_page']['fusinvdeploy'] = "../fusioninventory/front/config.form.php"
@@ -133,9 +132,6 @@ function plugin_init_fusinvdeploy() {
       }
    }
 
-   if (!class_exists('PluginFusioninventoryProfile')) { // if plugin is unactive
-      include(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
-   }
    $PLUGIN_HOOKS['change_profile']['fusinvdeploy'] =
       PluginFusioninventoryProfile::changeprofile($moduleId,$a_plugin['shortname']);
    
