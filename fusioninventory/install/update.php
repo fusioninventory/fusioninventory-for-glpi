@@ -2416,6 +2416,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             include(GLPI_ROOT . "/plugins/fusioninventory/inc/configlogfield.class.php");
          }
          $configLogField = new PluginFusioninventoryConfigLogField();
+
+         require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/mapping.class.php");
          $configLogField->initConfig();
       
          
@@ -3109,6 +3111,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       if (!class_exists('PluginFusioninventoryAgentmodule')) { // if plugin is unactive
          include(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
       }
+      require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/communicationrest.class.php");
       $agentmodule = new PluginFusioninventoryAgentmodule();
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` 
          WHERE `modulename`='ESX'
@@ -3664,6 +3667,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    if (!class_exists('PluginFusinvsnmpCommonDBTM')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/commondbtm.class.php");
    }
+
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodelmib.class.php");
    PluginFusioninventorySnmpmodel::importAllModels();
    
 }

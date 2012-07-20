@@ -76,6 +76,7 @@ function pluginFusioninventoryInstall($version, $migration='') {
       if (!class_exists('PluginFusioninventoryModule')) { // if plugin is unactive
          include(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
       }
+      require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/mapping.class.php");
       if (!class_exists('PluginFusioninventoryConfig')) { // if plugin is unactive
          include(GLPI_ROOT . "/plugins/fusioninventory/inc/config.class.php");
       }
@@ -350,6 +351,9 @@ function pluginFusioninventoryInstall($version, $migration='') {
    
    
    // Import models
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodel.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusinvsnmp/inc/importexport.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusinvsnmp/inc/commondbtm.class.php");
    PluginFusioninventorySnmpmodel::importAllModels();
 
 }
