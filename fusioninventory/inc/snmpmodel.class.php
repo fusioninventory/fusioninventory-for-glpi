@@ -57,32 +57,36 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
 
 
    function getSearchOptions() {
-      global $LANG;
 
       $tab = array();
 
-      $tab['common'] = $LANG['plugin_fusinvsnmp']['model_info'][4];
+      $tab['common'] = _('SNMP models');
+
 
       $tab[1]['table'] = $this->getTable();
       $tab[1]['field'] = 'name';
       $tab[1]['linkfield'] = 'name';
-      $tab[1]['name'] = $LANG['common'][16];
+      $tab[1]['name'] = _('Name');
+
       $tab[1]['datatype'] = 'itemlink';
 
       $tab[2]['table'] = $this->getTable();
       $tab[2]['field'] = 'itemtype';
       $tab[2]['linkfield'] = 'itemtype';
-      $tab[2]['name'] = $LANG['state'][6];
+      $tab[2]['name'] = _('Item type');
+
 
       $tab[5]['table'] = $this->getTable();
       $tab[5]['field'] = 'discovery_key';
       $tab[5]['linkfield'] = 'discovery_key';
-      $tab[5]['name'] = $LANG['plugin_fusinvsnmp']['model_info'][12];
+      $tab[5]['name'] = _('Key of model discovery');
+
 
       $tab[6]['table'] = $this->getTable();
       $tab[6]['field'] = 'comment';
       $tab[6]['linkfield'] = 'comment';
-      $tab[6]['name'] = $LANG['common'][25];
+      $tab[6]['name'] = _('Comments');
+
 
       return $tab;
    }
@@ -105,20 +109,21 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
       echo "<table class='tab_cadre' cellpadding='5' width='950'><tr><th colspan='2'>";
-      echo ($id =='' ? $LANG['plugin_fusinvsnmp']['model_info'][7] :
-            $LANG['plugin_fusinvsnmp']['model_info'][6]);
+      echo ($id =='' ? _('Create SNMP model') :
+            _('Edit SNMP model'));
+
       echo " :</th></tr>";
 
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>" . $LANG["common"][16] . "</td>";
+      echo "<td align='center'>" . _('Name') . "</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='name' value='" . $this->fields["name"] . "' size='35'/>";
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>".$LANG["common"][17]."</td>";
+      echo "<td align='center'>"._('Type')."</td>";
       echo "<td align='center'>";
 
       $selected_value = $this->fields["itemtype"];
@@ -127,22 +132,22 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       if ($selected_value == "0"){$selected = 'selected';}else{$selected = '';}
       echo "<option value='0' ".$selected.">-----</option>\n";
       if ($selected_value == COMPUTER_TYPE){$selected = 'selected';}else{$selected = '';}
-      echo "<option value='".COMPUTER_TYPE."' ".$selected.">".$LANG["Menu"][0]."</option>\n";
+      echo "<option value='".COMPUTER_TYPE."' ".$selected.">"._('Computers')."</option>\n";
       if ($selected_value == NETWORKING_TYPE){$selected = 'selected';}else{$selected = '';}
-      echo "<option value='".NETWORKING_TYPE."' ".$selected.">".$LANG["Menu"][1]."</option>\n";
+      echo "<option value='".NETWORKING_TYPE."' ".$selected.">"._('Networks')."</option>\n";
       if ($selected_value == PRINTER_TYPE){$selected = 'selected';}else{$selected = '';}
-      echo "<option value='".PRINTER_TYPE."' ".$selected.">".$LANG["Menu"][2]."</option>\n";
+      echo "<option value='".PRINTER_TYPE."' ".$selected.">"._('Printers')."</option>\n";
       if ($selected_value == PERIPHERAL_TYPE){$selected = 'selected';}else{$selected = '';}
-      echo "<option value='".PERIPHERAL_TYPE."' ".$selected.">".$LANG["Menu"][16]."</option>\n";
+      echo "<option value='".PERIPHERAL_TYPE."' ".$selected.">"._('Devices')."</option>\n";
       if ($selected_value == PHONE_TYPE){$selected = 'selected';}else{$selected = '';}
-      echo "<option value='".PHONE_TYPE."' ".$selected.">".$LANG["Menu"][34]."</option>\n";
+      echo "<option value='".PHONE_TYPE."' ".$selected.">"._('Phones')."</option>\n";
       echo "</select>";
       
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>" . $LANG['common'][25] . "</td>";
+      echo "<td align='center'>" . _('Comments') . "</td>";
       echo "<td align='center'>";
       echo nl2br($this->fields["comment"]);
       echo "</td>";
@@ -151,14 +156,16 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       echo "<tr class='tab_bg_2'><td colspan='2'>";
       if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
          if ($id=='') {
-            echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] .
+            echo "<div align='center'><input type='submit' name='add' value=\"" . _('Add') .
+
                  "\" class='submit' >";
          } else {
             echo "<input type='hidden' name='id' value='" . $id . "'/>";
-            echo "<div align='center'><input type='submit' name='update' value=\"".$LANG["buttons"][7].
+            echo "<div align='center'><input type='submit' name='update' value=\""._('Update').
+
                  "\" class='submit' >";
             echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"" .
-                    $LANG["buttons"][6] . "\" class='submit'>";
+                    _('Delete') . "\" class='submit'>";
          }
       }
       echo "</td>";

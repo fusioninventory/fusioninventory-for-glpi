@@ -44,7 +44,7 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","fusinvinventory-importxmlfile");
+Html::header(_('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","fusinvinventory-importxmlfile");
 
 PluginFusioninventoryProfile::checkRight("fusioninventory", "importxmlcomputer","w");
 
@@ -58,13 +58,16 @@ if (isset($_FILES['importfile']['tmp_name'])) {
    if ($_FILES['importfile']['tmp_name'] != '') {
       $_SESSION["plugin_fusioninventory_disablelocks"] = 1;
       if ($pfInventoryComputerImportXML->importXMLFile($_FILES['importfile']['tmp_name'])) {
-         $_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusionvinventory']['importxml'][1];
+         $_SESSION["MESSAGE_AFTER_REDIRECT"] = _('1');
+
       } else {
-         $_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusioninventory']['importxml'][3];
+         $_SESSION["MESSAGE_AFTER_REDIRECT"] = _('XML file not valid!');
+
       }
       unset($_SESSION["plugin_fusioninventory_disablelocks"]);
    } else {
-      $_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusioninventory']['importxml'][2];
+      $_SESSION["MESSAGE_AFTER_REDIRECT"] = _('No file to import!');
+
    }
 	Html::back();
 }

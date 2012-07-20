@@ -48,7 +48,6 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
    
    
    static function getTypeName($nb=0) {
-      global $LANG;
       
    }
    
@@ -65,15 +64,16 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
    
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      global $LANG;
 
       $array_ret = array();
       if ($item->getType() == 'PluginFusioninventoryAgent') {
          if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agent", "r")) {
-             $array_ret[0] = self::createTabEntry($LANG['plugin_fusioninventory']['rules'][21]);
+             $array_ret[0] = self::createTabEntry(_('Import informations'));
+
          }
       } else {
-         $array_ret[1] = self::createTabEntry($LANG['plugin_fusioninventory']['rules'][21]);
+         $array_ret[1] = self::createTabEntry(_('Import informations'));
+
       }
       return $array_ret;
    }
@@ -115,7 +115,6 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
    
    
    function showForm($items_id, $itemtype) {
-      global $LANG;
       
       $rule = new PluginFusioninventoryRuleImportEquipment();
       $pfAgent = new PluginFusioninventoryAgent();
@@ -124,22 +123,27 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       
       echo "<tr>";
       echo "<th colspan='4'>";
-      echo $LANG['plugin_fusioninventory']['rules'][20];
+      echo _('Rule import logs');
+
       echo "</th>";
       echo "</tr>";
       
       echo "<tr>";
       echo "<th>";
-      echo $LANG['common'][27];
+      echo _('Date');
+
       echo "</th>";
       echo "<th>";
-      echo $LANG['rulesengine'][102];
+      echo _('Rule name');
+
       echo "</th>";
       echo "<th>";
-      echo $LANG['plugin_fusioninventory']['agents'][28];
+      echo _('Agent');
+
       echo "</th>";
       echo "<th>";
-      echo $LANG['plugin_fusioninventory']['task'][26];
+      echo _('Module');
+
       echo "</th>";
       echo "</tr>";
       
@@ -178,7 +182,6 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
    
    
    function showFormAgent($agents_id) {
-      global $LANG;
       
       $rule = new PluginFusioninventoryRuleImportEquipment();
       $pfAgent = new PluginFusioninventoryAgent();
@@ -187,25 +190,31 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       
       echo "<tr>";
       echo "<th colspan='5'>";
-      echo $LANG['plugin_fusioninventory']['rules'][20];
+      echo _('Rule import logs');
+
       echo "</th>";
       echo "</tr>";
       
       echo "<tr>";
       echo "<th>";
-      echo $LANG['common'][27];
+      echo _('Date');
+
       echo "</th>";
       echo "<th>";
-      echo $LANG['rulesengine'][102];
+      echo _('Rule name');
+
       echo "</th>";
       echo "<th>";
-      echo $LANG['state'][6];
+      echo _('Item type');
+
       echo "</th>";
       echo "<th>";
-      echo $LANG['common'][1];
+      echo _('Item');
+
       echo "</th>";
       echo "<th>";
-      echo $LANG['plugin_fusioninventory']['task'][26];
+      echo _('Module');
+
       echo "</th>";
       echo "</tr>";
       

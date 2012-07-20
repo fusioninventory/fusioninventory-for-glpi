@@ -58,9 +58,9 @@ class PluginFusinvdeployCheck extends CommonDBTM {
    const FREE_SPACE       = 'freespaceGreater'; //Disk free space
 
    static function getTypeName($nb=0) {
-      global $LANG;
 
-      return $LANG['plugin_fusinvdeploy']['package'][11];
+      return _('Audits');
+
    }
 
    /**

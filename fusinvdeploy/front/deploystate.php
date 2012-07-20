@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 include (GLPI_ROOT."/inc/includes.php");
 Session::checkLoginUser();
 
-Html::header($LANG['plugin_fusinvdeploy']['deploystatus'][0],$_SERVER["PHP_SELF"],"plugins",
+Html::header(_('Deployment status'),$_SERVER["PHP_SELF"],"plugins",
              "fusioninventory","deploy");
 
 

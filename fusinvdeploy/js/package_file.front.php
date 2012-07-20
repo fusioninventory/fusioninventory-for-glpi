@@ -40,7 +40,6 @@
    ------------------------------------------------------------------------
  */
 
-global $LANG;
 
 // Size of div/form/label...
 $width_left                  = 590;
@@ -98,44 +97,44 @@ var {$render}msg = function(title, msg){
 //define colums for grid
 var {$render}fileColumns =  [{
    id: '{$render}id',
-   header: '{$LANG['plugin_fusinvdeploy']['label'][10]}',
+   header: '{_('Id')}',
    width: {$column_width[0]},
    dataIndex: '{$render}id',
    hidden: true
 }, {
    id: '{$render}file',
-   header: '{$LANG['plugin_fusinvdeploy']['label'][5]}',
+   header: '{_('File')}',
    width: {$column_width[1]},
    dataIndex: '{$render}file',
 }, {
    id: '{$render}mimetype',
-   header: '{$LANG['plugin_fusinvdeploy']['label'][0]}',
+   header: '{_('Type')}',
    width: {$column_width[2]},
    dataIndex: '{$render}mimetype',
    renderer: {$render}renderMimetype
 }, {
-   header: '{$LANG['plugin_fusinvdeploy']['label'][21]}',
+   header: '{_('Filesize')}',
    width: {$column_width[3]},
    dataIndex: '{$render}filesize'
 }, {
    id: '{$render}p2p',
-   header: '{$LANG['plugin_fusinvdeploy']['label'][6]}',
+   header: '{_('P2P deployment')}',
    width: {$column_width[4]},
    dataIndex: '{$render}p2p',
    renderer: {$render}renderBool
 }, {
    id: '{$render}dateadd',
-   header: '{$LANG['plugin_fusinvdeploy']['label'][7]}',
+   header: '{_('Date added')}',
    width: {$column_width[5]},
    dataIndex: '{$render}dateadd'
 }, {
    id: '{$render}validity',
-   header: '{$LANG['plugin_fusinvdeploy']['label'][8]}',
+   header: '{_('Validity time')}',
    width: {$column_width[6]},
    dataIndex: '{$render}validity'
 }, {
    id: '{$render}uncompress',
-   header: '{$LANG['plugin_fusinvdeploy']['label'][19]}',
+   header: '{_('Uncompress')}',
    width: {$column_width[7]},
    dataIndex: '{$render}uncompress',
    renderer: {$render}renderBool
@@ -151,8 +150,8 @@ function {$render}badImage(img) {
 }
 
 function {$render}renderBool(val) {
-   if (val == 1) return '{$LANG['choice'][1]}';
-   else if (val == 0) return '{$LANG['choice'][0]}';
+   if (val == 1) return '{_('Yes')}';
+   else if (val == 0) return '{_('No')}';
    else return '';
 }
 
@@ -208,7 +207,7 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
    height: $height_left,
    width: $width_left,
    style:'margin-bottom:5px',
-   title: '{$LANG['plugin_fusinvdeploy']['ftitle'][3]}',
+   title: '{_('Files to copy on computer')}',
    stateId: '{$render}fileGrid',
    view: new Ext.grid.GroupingView({
       forceFit:true,
@@ -220,7 +219,7 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
       emptyGroupText: ''
    }),
    tbar: [{
-      text: '{$LANG['plugin_fusinvdeploy']['ftitle'][4]}',
+      text: '{_('Add file')}',
       iconCls: 'exticon-add',
       handler: function(btn, ev) {
          {$render}fileForm.newFileMode(true);
@@ -239,7 +238,7 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
          var {$render}rec = {$render}fileGrid.getSelectionModel().getSelected();
          {$render}fileForm.loadData({$render}rec);
          //{$render}unlockForm();
-         {$render}fileForm.setTitle('{$LANG['plugin_fusinvdeploy']['ftitle'][4]}');
+         {$render}fileForm.setTitle('{_('Add file')}');
 
          Ext.getCmp('{$render}p2p_t').setValue(false);
          Ext.getCmp('{$render}p2p_f').setValue(true);
@@ -247,7 +246,7 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
          Ext.getCmp('{$render}uncompress_f').setValue(true);
       }
    }, '-', {
-      text: '{$LANG['plugin_fusinvdeploy']['ftitle'][13]}',
+      text: '{_('Delete file')}',
       iconCls: 'exticon-delete',
       handler: function(btn, ev) {
          var selection = {$render}fileGrid.getSelectionModel().getSelected();
@@ -307,7 +306,7 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
 
                Ext.getCmp('{$render}file').setValue('');
                //Ext.getCmp('{$render}url').setValue('');
-               {$render}fileForm.setTitle('{$LANG['plugin_fusinvdeploy']['ftitle'][5]}');
+               {$render}fileForm.setTitle('{_('Edit file')}');
             }
          }
       }
@@ -331,7 +330,7 @@ var {$render}fileForm = new Ext.FormPanel({
    method            :'POST',
    enctype           :'multipart/form-data',
    frame: true,
-   title: '{$LANG['plugin_fusinvdeploy']['ftitle'][5]}',
+   title: '{_('Edit file')}',
    bodyStyle:' padding:5px 5px 0',
    style:'margin-left:5px;margin-bottom:5px',
    width: $width_right,
@@ -341,7 +340,7 @@ var {$render}fileForm = new Ext.FormPanel({
          name: '{$render}id',
          xtype: 'hidden'
       }, new Ext.form.ComboBox({
-         fieldLabel:'{$LANG['plugin_fusinvdeploy']['files'][7]}',
+         fieldLabel:'{_('Upload From')}',
          id: '{$render}type',
          name: '{$render}type',
          valueField: 'name',
@@ -351,8 +350,8 @@ var {$render}fileForm = new Ext.FormPanel({
          store: new Ext.data.ArrayStore({
             fields: ['name', 'value'],
             data: [
-               ['filehttp', '{$LANG['plugin_fusinvdeploy']['files'][8]}'],
-               ['fileserver', '{$LANG['plugin_fusinvdeploy']['files'][9]}']
+               ['filehttp', '{_('This computer')}'],
+               ['fileserver', '{_('The server')}']
             ]
          }),
          mode: 'local',
@@ -376,9 +375,9 @@ var {$render}fileForm = new Ext.FormPanel({
          id: '{$render}file',
          hidden: true,
          width:180,
-         fieldLabel: '{$LANG['plugin_fusinvdeploy']['label'][5]}',
+         fieldLabel: '{_('File')}',
          buttonText: '',
-         emptyText: '{$LANG['plugin_fusinvdeploy']['action'][3]}',
+         emptyText: '{_('Select the file')}',
          buttonCfg: {
             iconCls: 'exticon-file'
          },
@@ -397,7 +396,7 @@ var {$render}fileForm = new Ext.FormPanel({
          hidden:true,
          style: 'font-size:8px'
       }, {
-         fieldLabel: '{$LANG['plugin_fusinvdeploy']['label'][5]}',
+         fieldLabel: '{_('File')}',
          name: '{$render}file_server',
          id: '{$render}file_server',
          hidden: true,
@@ -405,14 +404,14 @@ var {$render}fileForm = new Ext.FormPanel({
          xtype:'trigger',
          triggerClass: 'x-form-file-trigger',
          editable:false,
-         emptyText: '{$LANG['plugin_fusinvdeploy']['action'][3]}',
+         emptyText: '{_('Select the file')}',
          onTriggerClick: function() {
             chooser = new FileChooser({
                width: 615,
                height: 400,
                url_ls: '../ajax/package_file.ls.php',
                url_actions: '../ajax/package_file.actions.php',
-               title: '{$LANG['document'][36]}'
+               title: '{_('Use a FTP installed file')}'
             });
 
             chooser.show(this, function(el, data) {
@@ -422,7 +421,7 @@ var {$render}fileForm = new Ext.FormPanel({
             });
          }
       }, {
-         fieldLabel: '{$LANG['plugin_fusinvdeploy']['label'][6]}',
+         fieldLabel: '{_('P2P deployment')}',
          name: '{$render}p2p',
          id: '{$render}p2p',
          xtype: 'radiogroup',
@@ -436,17 +435,17 @@ var {$render}fileForm = new Ext.FormPanel({
             }
          }},
          items: [
-            {boxLabel: '{$LANG['choice'][1]}', name: '{$render}p2p', inputValue: 'true', checked: true, id : '{$render}p2p_t'},
-            {boxLabel: '{$LANG['choice'][0]}', name: '{$render}p2p', inputValue: 'false',id : '{$render}p2p_f'}
+            {boxLabel: '{_('Yes')}', name: '{$render}p2p', inputValue: 'true', checked: true, id : '{$render}p2p_t'},
+            {boxLabel: '{_('No')}', name: '{$render}p2p', inputValue: 'false',id : '{$render}p2p_f'}
          ]
       }, new Ext.ux.form.SpinnerField({
-         fieldLabel: '{$LANG['plugin_fusinvdeploy']['label'][9]}',
+         fieldLabel: '{_('Data retention duration (days)')}',
          name: '{$render}validity',
          id: '{$render}validity',
          width: 50,
          hidden: true
       }), {
-         fieldLabel: '{$LANG['plugin_fusinvdeploy']['label'][23]}',
+         fieldLabel: '{_('Extract the file after the download')}',
          name: '{$render}uncompress',
          id: '{$render}uncompress',
          allowBlank: false,
@@ -454,8 +453,8 @@ var {$render}fileForm = new Ext.FormPanel({
          width: 100,
          hidden: true,
          items: [
-            {boxLabel: '{$LANG['choice'][1]}', name: '{$render}uncompress', inputValue: 'true', id : '{$render}uncompress_t'},
-            {boxLabel: '{$LANG['choice'][0]}', name: '{$render}uncompress', inputValue: 'false', id : '{$render}uncompress_f'}
+            {boxLabel: '{_('Yes')}', name: '{$render}uncompress', inputValue: 'true', id : '{$render}uncompress_t'},
+            {boxLabel: '{_('No')}', name: '{$render}uncompress', inputValue: 'false', id : '{$render}uncompress_f'}
          ],
          tooltip:{
             tip:'Enter the customer\'s name',
@@ -464,18 +463,18 @@ var {$render}fileForm = new Ext.FormPanel({
       }
    ],
    buttons: [{
-      text: '{$LANG['plugin_fusinvdeploy']['action'][2]}',
+      text: '{_('OK')}',
       iconCls: 'exticon-save',
       name : '{$render}savebtn',
       id : '{$render}savebtn',
       hidden: true,
       handler: function(btn, ev) {
          if ({$render}fileForm.record == null) {
-            Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['message'][0]}');
+            Ext.MessageBox.alert('Erreur', '{_('Empty form')}');
             return;
          }
          if (!{$render}fileForm.getForm().isValid()) {
-            Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['message'][0]}');
+            Ext.MessageBox.alert('Erreur', '{_('Empty form')}');
             return false;
          }
 
@@ -506,7 +505,7 @@ var {$render}fileForm = new Ext.FormPanel({
          });
       }
    }, {
-      text: '{$LANG['buttons'][14]}',
+      text: '{_('Update')}',
       iconCls: 'exticon-save',
       name : '{$render}updatebtn',
       id : '{$render}updatebtn',
@@ -514,11 +513,11 @@ var {$render}fileForm = new Ext.FormPanel({
       handler: function(btn, ev) {
             Ext.MessageBox.alert('Erreur', "update");
             if ({$render}fileForm.record == null) {
-               Ext.MessageBox.alert('Erreur 1 ', '{$LANG['plugin_fusinvdeploy']['message'][0]}');
+               Ext.MessageBox.alert('Erreur 1 ', '{_('Empty form')}');
                return;
             }
             if (!{$render}fileForm.getForm().isValid()) {
-               Ext.MessageBox.alert('Erreur 2', '{$LANG['plugin_fusinvdeploy']['message'][0]}');
+               Ext.MessageBox.alert('Erreur 2', '{_('Empty form')}');
                return false;
             }
             {$render}fileForm.getForm().updateRecord({$render}fileForm.record);
@@ -550,7 +549,7 @@ var {$render}fileForm = new Ext.FormPanel({
             });
          }
    }, {
-      text: '{$LANG['buttons'][34]}',
+      text: '{_('Cancel')}',
       iconCls: 'exticon-cancel',
       name : '{$render}cancelbtn',
       id : '{$render}cancelbtn',
@@ -626,8 +625,8 @@ var {$render}AddActionsAuto = function(filename) {
    if (ext in files_autoactions) {
       //show question to automatically add actions for this file
       Ext.Msg.show({
-         title: "{$LANG['plugin_fusinvdeploy']['message'][5]}",
-         msg: "{$LANG['plugin_fusinvdeploy']['message'][6]}",
+         title: "{_('Attention')}",
+         msg: "{_('Wish to the command to install and uninstall is automatically added for your file?')}",
          buttons: Ext.Msg.YESNO,
          icon: Ext.MessageBox.QUESTION,
          minWidth: 350,

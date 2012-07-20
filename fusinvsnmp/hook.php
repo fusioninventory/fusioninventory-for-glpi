@@ -55,7 +55,6 @@ function plugin_fusinvsnmp_getDatabaseRelations() {
 
 
 function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
-   global $LANG;
 
    $sopt = array();
    if ($itemtype == 'PluginFusioninventoryUnknownDevice') {
@@ -63,14 +62,16 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
       $sopt[100]['table']     = 'glpi_plugin_fusinvsnmp_unknowndevices';
       $sopt[100]['field']     = 'sysdescr';
       $sopt[100]['linkfield'] = '';
-      $sopt[100]['name']      = $LANG['plugin_fusinvsnmp']['snmp'][4];
+      $sopt[100]['name']      = _('Sysdescr');
+
       $sopt[100]['datatype']  = 'text';
 
       $sopt[101]['table']='glpi_plugin_fusioninventory_snmpmodels';
       $sopt[101]['field']='name';
       $sopt[101]['linkfield']='';
-      $sopt[101]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".
-         $LANG['plugin_fusinvsnmp']['model_info'][4];
+      $sopt[101]['name']=_('FusInv')." - ".
+         _('SNMP models');
+
       //$sopt[101]['datatype'] = 'itemlink';
       //$sopt[101]['itemlink_type'] = 'PluginFusioninventorySnmpmodel';
 
@@ -82,14 +83,16 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
          $sopt[102]['table'] = 'glpi_plugin_fusinvsnmp_printers';
          $sopt[102]['field'] = 'plugin_fusinvsnmp_configsecurities_id';
          $sopt[102]['linkfield'] = '';
-         $sopt[102]['name'] = $LANG['plugin_fusioninventory']['title'][1]." - ".
-            $LANG['plugin_fusinvsnmp']['model_info'][3];
+         $sopt[102]['name'] = _('FusInv')." - ".
+            _('SNMP authentication');
+
       } else {
          $sopt[102]['table']='glpi_plugin_fusinvsnmp_configsecurities';
          $sopt[102]['field']='name';
          $sopt[102]['linkfield']='';
-         $sopt[102]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".
-            $LANG['plugin_fusinvsnmp']['model_info'][3];
+         $sopt[102]['name']=_('FusInv')." - ".
+            _('SNMP authentication');
+
 //         $sopt[102]['datatype'] = 'itemlink';
 //         $sopt[102]['itemlink_type'] = 'PluginFusinvsnmpConfigSecurity';
       }
@@ -101,14 +104,16 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
       $sopt[5192]['table']='glpi_plugin_fusioninventory_networkequipments';
       $sopt[5192]['field']='name';
       $sopt[5192]['linkfield']='';
-      $sopt[5192]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".$LANG["reports"][52];
+      $sopt[5192]['name']=_('FusInv')." - "._('Switch');
+
       $sopt[5192]['itemlink_type'] = 'NetworkEquipment';
 
       // Port of switch
       $sopt[5193]['table']='glpi_plugin_fusinvsnmp_networkports';
       $sopt[5193]['field']='id';
       $sopt[5193]['linkfield']='';
-      $sopt[5193]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".$LANG["reports"][46];
+      $sopt[5193]['name']=_('FusInv')." - "._('Hardware ports');
+
       $sopt[5193]['forcegroupby']='1';
    }
 
@@ -117,21 +122,24 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
       $sopt[5192]['table']='glpi_plugin_fusioninventory_networkequipments';
       $sopt[5192]['field']='name';
       $sopt[5192]['linkfield']='';
-      $sopt[5192]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".$LANG["reports"][52];
+      $sopt[5192]['name']=_('FusInv')." - "._('Switch');
+
       $sopt[5192]['itemlink_type'] = 'NetworkEquipment';
 
       // Port of switch
       $sopt[5193]['table']='glpi_plugin_fusinvsnmp_networkports';
       $sopt[5193]['field']='id';
       $sopt[5193]['linkfield']='';
-      $sopt[5193]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".$LANG["reports"][46];
+      $sopt[5193]['name']=_('FusInv')." - "._('Hardware ports');
+
       $sopt[5193]['forcegroupby']='1';
 
       $sopt[5190]['table']='glpi_plugin_fusioninventory_snmpmodels';
       $sopt[5190]['field']='name';
       $sopt[5190]['linkfield']='plugin_fusioninventory_snmpmodels_id';
-      $sopt[5190]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".
-         $LANG['plugin_fusinvsnmp']['model_info'][4];
+      $sopt[5190]['name']=_('FusInv')." - ".
+         _('SNMP models');
+
       $sopt[5190]['massiveaction'] = false;
 
 
@@ -143,15 +151,17 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
          $sopt[5191]['table'] = 'glpi_plugin_fusinvsnmp_printers';
          $sopt[5191]['field'] = 'plugin_fusinvsnmp_configsecurities_id';
          $sopt[5191]['linkfield'] = 'id';
-         $sopt[5191]['name'] = $LANG['plugin_fusioninventory']['title'][1]." - ".
-            $LANG['plugin_fusinvsnmp']['model_info'][3];
+         $sopt[5191]['name'] = _('FusInv')." - ".
+            _('SNMP authentication');
+
          $sopt[5191]['massiveaction'] = false;
       } else {
          $sopt[5191]['table']='glpi_plugin_fusinvsnmp_configsecurities';
          $sopt[5191]['field']='name';
          $sopt[5191]['linkfield']='id';
-         $sopt[5191]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".
-            $LANG['plugin_fusinvsnmp']['model_info'][3];
+         $sopt[5191]['name']=_('FusInv')." - ".
+            _('SNMP authentication');
+
          $sopt[5191]['datatype'] = 'itemlink';
          $sopt[5191]['itemlink_type'] = 'PluginFusinvsnmpConfigSecurity';
          $sopt[5191]['massiveaction'] = false;
@@ -160,14 +170,16 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
       $sopt[5194]['table']='glpi_plugin_fusinvsnmp_printers';
       $sopt[5194]['field']='last_fusioninventory_update';
       $sopt[5194]['linkfield']='';
-      $sopt[5194]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".
-         $LANG['plugin_fusinvsnmp']['snmp'][53];
+      $sopt[5194]['name']=_('FusInv')." - ".
+         _('Last inventory');
+
       $sopt[5194]['datatype'] = 'datetime';
 
       $sopt[5196]['table']         = 'glpi_plugin_fusinvsnmp_printers';
       $sopt[5196]['field']         = 'sysdescr';
       $sopt[5196]['linkfield']     = '';
-      $sopt[5196]['name']          = $LANG['plugin_fusinvsnmp']['snmp'][4];
+      $sopt[5196]['name']          = _('Sysdescr');
+
       $sopt[5196]['datatype']      = 'text';
    }
 
@@ -175,8 +187,9 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
       $sopt[5190]['table']='glpi_plugin_fusioninventory_snmpmodels';
       $sopt[5190]['field']='name';
       $sopt[5190]['linkfield']='plugin_fusioninventory_snmpmodels_id';
-      $sopt[5190]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".
-         $LANG['plugin_fusinvsnmp']['model_info'][4];
+      $sopt[5190]['name']=_('FusInv')." - ".
+         _('SNMP models');
+
       $sopt[5190]['massiveaction'] = false;
 
       $pfConfig = new PluginFusioninventoryConfig();
@@ -187,49 +200,54 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
          $sopt[5191]['table'] = 'glpi_plugin_fusioninventory_networkequipments';
          $sopt[5191]['field'] = 'plugin_fusinvsnmp_configsecurities_id';
          $sopt[5191]['linkfield'] = '';
-         $sopt[5191]['name'] = $LANG['plugin_fusioninventory']['title'][1]." - ".
-            $LANG['plugin_fusinvsnmp']['model_info'][3];
+         $sopt[5191]['name'] = _('FusInv')." - ".
+            _('SNMP authentication');
+
          $sopt[5191]['massiveaction'] = false;
       } else {
          $sopt[5191]['table']='glpi_plugin_fusinvsnmp_configsecurities';
          $sopt[5191]['field']='name';
          $sopt[5191]['linkfield']='plugin_fusinvsnmp_configsecurities_id';
-         $sopt[5191]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".
-            $LANG['plugin_fusinvsnmp']['model_info'][3];
+         $sopt[5191]['name']=_('FusInv')." - ".
+            _('SNMP authentication');
+
          $sopt[5191]['massiveaction'] = false;
       }
 
       $sopt[5194]['table']='glpi_plugin_fusioninventory_networkequipments';
       $sopt[5194]['field']='last_fusioninventory_update';
       $sopt[5194]['linkfield']='';
-      $sopt[5194]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".
-         $LANG['plugin_fusinvsnmp']['snmp'][53];
+      $sopt[5194]['name']=_('FusInv')." - ".
+         _('Last inventory');
+
       $sopt[5194]['datatype'] = 'datetime';
 
       $sopt[5195]['table']='glpi_plugin_fusioninventory_networkequipments';
       $sopt[5195]['field']='cpu';
       $sopt[5195]['linkfield']='';
-      $sopt[5195]['name']=$LANG['plugin_fusioninventory']['title'][1]." - ".
-         $LANG['plugin_fusinvsnmp']['snmp'][13];
+      $sopt[5195]['name']=_('FusInv')." - ".
+         _('CPU usage (in %)');
+
       $sopt[5195]['datatype'] = 'number';
 
       $sopt[5196]['table']         = 'glpi_plugin_fusioninventory_networkequipments';
       $sopt[5196]['field']         = 'sysdescr';
       $sopt[5196]['linkfield']     = '';
-      $sopt[5196]['name']          = $LANG['plugin_fusinvsnmp']['snmp'][4];
+      $sopt[5196]['name']          = _('Sysdescr');
+
       $sopt[5196]['datatype']      = 'text';
    }
    if ($itemtype == 'PluginFusioninventoryAgent') {
       $sopt[5197]['table']         = 'glpi_plugin_fusinvsnmp_agentconfigs';
       $sopt[5197]['field']         = 'threads_netdiscovery';
       $sopt[5197]['linkfield']     = '';
-      $sopt[5197]['name']          = $LANG['plugin_fusinvsnmp']['agents'][24]."&nbsp;(".strtolower($LANG['plugin_fusinvsnmp']['config'][4]).")";
+      $sopt[5197]['name']          = _('Threads number')."&nbsp;(".strtolower(_('Network discovery')).")";
       $sopt[5197]['itemlink_type'] = 'PluginFusinvsnmpAgentconfig';
 
       $sopt[5198]['table']         = 'glpi_plugin_fusinvsnmp_agentconfigs';
       $sopt[5198]['field']         = 'threads_snmpquery';
       $sopt[5198]['linkfield']     = '';
-      $sopt[5198]['name']          = $LANG['plugin_fusinvsnmp']['agents'][24]."&nbsp;(".strtolower($LANG['plugin_fusinvsnmp']['config'][3]).")";
+      $sopt[5198]['name']          = _('Threads number')."&nbsp;(".strtolower(_('Network inventory (SNMP)')).")";
       $sopt[5198]['itemlink_type'] = 'PluginFusinvsnmpAgentconfig';
 
    }
@@ -240,7 +258,7 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
 
 
 function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
-   global $CFG_GLPI,$DB,$INFOFORM_PAGES,$LANG;
+   global $CFG_GLPI,$DB,$INFOFORM_PAGES;
 
    $searchopt = &Search::getOptions($type);
    $table = $searchopt[$id]["table"];
@@ -294,23 +312,28 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
                $out = '<center> ';
                switch ($data["ITEM_$num"]) {
                   case COMPUTER_TYPE:
-                     $out .= $LANG["Menu"][0];
+                     $out .= _('Computers');
+
                      break;
 
                   case NETWORKING_TYPE:
-                     $out .= $LANG["Menu"][1];
+                     $out .= _('Networks');
+
                      break;
 
                   case PRINTER_TYPE:
-                     $out .= $LANG["Menu"][2];
+                     $out .= _('Printers');
+
                      break;
 
                   case PERIPHERAL_TYPE:
-                     $out .= $LANG["Menu"][16];
+                     $out .= _('Devices');
+
                      break;
 
                   case PHONE_TYPE:
-                     $out .= $LANG["Menu"][34];
+                     $out .= _('Phones');
+
                      break;
                }
                $out .= '</center>';
@@ -405,23 +428,28 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
                $out = '<center> ';
                switch ($data["ITEM_$num"]) {
                   case COMPUTER_TYPE:
-                     $out .= $LANG["Menu"][0];
+                     $out .= _('Computers');
+
                      break;
 
                   case NETWORKING_TYPE:
-                     $out .= $LANG["Menu"][1];
+                     $out .= _('Networks');
+
                      break;
 
                   case PRINTER_TYPE:
-                     $out .= $LANG["Menu"][2];
+                     $out .= _('Printers');
+
                      break;
 
                   case PERIPHERAL_TYPE:
-                     $out .= $LANG["Menu"][16];
+                     $out .= _('Devices');
+
                      break;
 
                   case PHONE_TYPE:
-                     $out .= $LANG["Menu"][34];
+                     $out .= _('Phones');
+
                      break;
                }
                $out .= '</center>';
@@ -523,7 +551,7 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
                $map = new PluginFusioninventoryMapping;
                $mapfields = $map->get('NetworkEquipment', $data["ITEM_$num"]);
                if ($mapfields != false) {
-                  $out = $LANG['plugin_fusinvsnmp']['mapping'][$mapfields["locale"]];
+                  $out = _get('_LANG[\'plugin_fusinvsnmp\'][\'mapping\'][$mapfields["locale"]]');
                }
                return $out;
                break;
@@ -621,7 +649,6 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
 // Define Dropdown tables to be manage in GLPI :
 //function plugin_fusinvsnmp_getDropdown() {
 // // Table => Name
-// global $LANG;
 // if (isset ($_SESSION["glpi_plugin_fusinvsnmp_installed"]) && $_SESSION["glpi_plugin_fusinvsnmp_installed"] == 1) {
 //    return array (
 //       "glpi_plugin_fusinvsnmp_snmpversions" => "SNMP version",
@@ -687,7 +714,6 @@ function plugin_fusinvsnmp_needUpdate() {
 // Define headings added by the plugin //
 //function plugin_get_headings_fusinvsnmp($type,$id,$withtemplate) {
 function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
-   global $LANG;
    $config = new PluginFusioninventoryConfig;
 
    $type = get_Class($item);
@@ -704,7 +730,8 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
             if (($config->is_active('fusioninventory', 'remotehttpagent')) 
                   AND (PluginFusioninventoryProfile::haveRight("fusioninventory", 
                                                                "remotecontrol", "w"))) {
-               $array[1] = $LANG['plugin_fusinvsnmp']['title'][0];
+               $array[1] = _('FusionInventory SNMP');
+
             }
             //}
 
@@ -729,12 +756,14 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
          } else {
             $array = array ();
             if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "networkequipment", "r")) {
-               $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".
-                  $LANG['plugin_fusinvsnmp']['title'][6];
+               $array[1] = _('FusInv')." ".
+                  _('SNMP');
+
             }
             if ($_GET['id'] > 0) {
-               $array[2] = $LANG['plugin_fusioninventory']['title'][1]." ".
-                  $LANG['plugin_fusioninventory']['xml'][0];
+               $array[2] = _('FusInv')." ".
+                  _('XML');
+
             }
             return $array;
          }
@@ -748,12 +777,14 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
          } else {
             $array = array ();
             if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "printer", "r")) {
-               $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".
-                  $LANG['plugin_fusinvsnmp']['title'][6];
+               $array[1] = _('FusInv')." ".
+                  _('SNMP');
+
             }
             if ($_GET['id'] > 0) {
-               $array[2] = $LANG['plugin_fusioninventory']['title'][1]." ".
-                  $LANG['plugin_fusioninventory']['xml'][0];
+               $array[2] = _('FusInv')." ".
+                  _('XML');
+
             }
             return $array;
          }
@@ -761,14 +792,16 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
 
        case 'PluginFusioninventoryAgent':
           $array = array ();
-          $array[1] = $LANG['plugin_fusinvsnmp']['agents'][24];
+          $array[1] = _('Threads number');
+
           return $array;
           break;
 
        case 'PluginFusioninventoryUnknownDevice':
           $array = array ();
-          $array[1] = $LANG['plugin_fusioninventory']['title'][1]." ".
-            $LANG['plugin_fusinvsnmp']['title'][6];
+          $array[1] = _('FusInv')." ".
+            _('SNMP');
+
           return $array;
           break;
 
@@ -868,7 +901,6 @@ function plugin_headings_fusinvsnmp_unknowndevices($type,$id) {
 
 
 function plugin_headings_fusinvsnmp_xml($item) {
-   global $LANG;
 
    $type = get_Class($item);
    $id = $item->getField('id');
@@ -884,9 +916,10 @@ function plugin_headings_fusinvsnmp_xml($item) {
       $xml = str_replace("\n", "<br/>", $xml);
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
       echo "<tr>";
-      echo "<th>".$LANG['plugin_fusioninventory']['title'][1]." ".
-         $LANG['plugin_fusioninventory']['xml'][0];
-      echo " (".$LANG['plugin_fusinvsnmp']['snmp'][53]."&nbsp;: " . 
+      echo "<th>"._('FusInv')." ".
+         _('XML');
+
+      echo " ("._('Last inventory')."&nbsp;: " . 
          Html::convDateTime(date("Y-m-d H:i:s", 
                       filemtime(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/".$type."/".$folder."/".$id))).")";
       echo "</th>";
@@ -905,36 +938,43 @@ function plugin_headings_fusinvsnmp_xml($item) {
 
 
 function plugin_fusinvsnmp_MassiveActions($type) {
-   global $LANG;
 
    switch ($type) {
       case 'NetworkEquipment':
          return array (
-            "plugin_fusinvsnmp_get_model" => $LANG['plugin_fusinvsnmp']['model_info'][14],
-            "plugin_fusinvsnmp_assign_model" => $LANG['plugin_fusinvsnmp']['massiveaction'][1],
-            "plugin_fusinvsnmp_assign_auth" => $LANG['plugin_fusinvsnmp']['massiveaction'][2]
+            "plugin_fusinvsnmp_get_model" => _('Load the correct SNMP model'),
+
+            "plugin_fusinvsnmp_assign_model" => _('Assign SNMP model'),
+
+            "plugin_fusinvsnmp_assign_auth" => _('Assign SNMP authentication')
+
          );
          break;
 
       case 'Printer':
          return array (
-            "plugin_fusinvsnmp_get_model" => $LANG['plugin_fusinvsnmp']['model_info'][14],
-            "plugin_fusinvsnmp_assign_model" => $LANG['plugin_fusinvsnmp']['massiveaction'][1],
-            "plugin_fusinvsnmp_assign_auth" => $LANG['plugin_fusinvsnmp']['massiveaction'][2]
+            "plugin_fusinvsnmp_get_model" => _('Load the correct SNMP model'),
+
+            "plugin_fusinvsnmp_assign_model" => _('Assign SNMP model'),
+
+            "plugin_fusinvsnmp_assign_auth" => _('Assign SNMP authentication')
+
          );
          break;
 
       case 'PluginFusioninventoryUnknownDevice':
          return array (
-            "plugin_fusinvsnmp_assign_model" => $LANG['plugin_fusinvsnmp']['massiveaction'][1],
-            "plugin_fusinvsnmp_assign_auth" => $LANG['plugin_fusinvsnmp']['massiveaction'][2]
+            "plugin_fusinvsnmp_assign_model" => _('Assign SNMP model'),
+
+            "plugin_fusinvsnmp_assign_auth" => _('Assign SNMP authentication')
+
          );
          break;
 
       case 'PluginFusioninventoryAgent':
          return array(
-            "plugin_fusinvsnmp_set_discovery_threads" => $LANG['plugin_fusinvsnmp']['agents'][24]."&nbsp;(".strtolower($LANG['plugin_fusinvsnmp']['config'][4]).")",
-            "plugin_fusinvsnmp_set_snmpinventory_threads" => $LANG['plugin_fusinvsnmp']['agents'][24]."&nbsp;(".strtolower($LANG['plugin_fusinvsnmp']['config'][3]).")"
+            "plugin_fusinvsnmp_set_discovery_threads" => _('Threads number')."&nbsp;(".strtolower(_('Network discovery')).")",
+            "plugin_fusinvsnmp_set_snmpinventory_threads" => _('Threads number')."&nbsp;(".strtolower(_('Network inventory (SNMP)')).")"
          );
          break;
 
@@ -943,7 +983,7 @@ function plugin_fusinvsnmp_MassiveActions($type) {
 }
 
 function plugin_fusinvsnmp_MassiveActionsDisplay($options=array()) {
-   global $LANG,$DB;
+   global $DB;
 
    switch ($options['itemtype']) {
       case 'NetworkEquipment':
@@ -954,7 +994,7 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($options=array()) {
             case "plugin_fusinvsnmp_get_model" :
                if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
                    echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
-                     $LANG["buttons"][2] . "\" >";
+                     _('Post') . "\" >";
                }
                break;
 
@@ -979,7 +1019,7 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($options=array()) {
                                        'comment' => false,
                                        'used' => $exclude_models));
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
-                     $LANG["buttons"][2] . "\" >";
+                     _('Post') . "\" >";
                }
                break;
 
@@ -987,7 +1027,7 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($options=array()) {
                if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity","w")) {
                   PluginFusinvsnmpSNMP::auth_dropdown();
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . 
-                     $LANG["buttons"][2] . "\" >";
+                     _('Post') . "\" >";
                }
                break;
 
@@ -1000,13 +1040,13 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($options=array()) {
             case 'plugin_fusinvsnmp_set_discovery_threads':
                echo Dropdown::showInteger('threads_netdiscovery', '10');
                echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
-                     $LANG["buttons"][2] . "\" >";
+                     _('Post') . "\" >";
                break;
 
             case 'plugin_fusinvsnmp_set_snmpinventory_threads':
                echo Dropdown::showInteger('threads_snmpquery', '5');
                echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
-                     $LANG["buttons"][2] . "\" >";
+                     _('Post') . "\" >";
                break;
          }
          break;
@@ -1201,7 +1241,6 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
 // How to display specific update fields ?
 // Massive Action functions
 function plugin_fusinvsnmp_MassiveActionsFieldsDisplay($options=array()) {
-   global $LANG;
 
    $table = $options['options']['table'];
    $field = $options['options']['field'];
@@ -1254,9 +1293,12 @@ function plugin_fusinvsnmp_MassiveActionsFieldsDisplay($options=array()) {
 
       case 'glpi_plugin_fusinvsnmp_agents.logs' :
          $ArrayValues = array();
-         $ArrayValues[]= $LANG["choice"][0];
-         $ArrayValues[]= $LANG["choice"][1];
-         $ArrayValues[]= $LANG["setup"][137];
+         $ArrayValues[]= _('No');
+
+         $ArrayValues[]= _('Yes');
+
+         $ArrayValues[]= _('Debug');
+
          Dropdown::showFromArray('logs', $ArrayValues,
                                  array('value'=>$linkfield));
          return true;

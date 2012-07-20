@@ -66,7 +66,7 @@ if (isset ($_POST["id"]) && $_POST['id']){
       'p2p_retention_days' => is_numeric($_POST['validity']) ? $_POST['validity'] : 0
    );
    if ($PluginFusinvdeployFile->update($data)) {
-      echo "{success:true, file:'N/A',msg:\"{$LANG['plugin_fusinvdeploy']['action'][4]}\"}";
+      echo "{success:true, file:'N/A',msg:\"{_('File saved!')}\"}";
    } else echo "{success:false, file:'N/A', msg:\"error\"}";
 }
 

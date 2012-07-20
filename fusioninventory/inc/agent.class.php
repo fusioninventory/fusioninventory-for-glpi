@@ -55,9 +55,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    *
    **/
    static function getTypeName($nb=0) {
-      global $LANG;
 
-      return $LANG['plugin_fusioninventory']['agents'][28];
+      return _('Agent');
+
    }
 
 
@@ -74,78 +74,89 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    
 
    function getSearchOptions() {
-      global $LANG;
 
       $tab = array();
     
-      $tab['common'] = $LANG['plugin_fusioninventory']['agents'][28];
+      $tab['common'] = _('Agent');
+
 
       $tab[1]['table']     = $this->getTable();
       $tab[1]['field']     = 'name';
       $tab[1]['linkfield'] = 'name';
-      $tab[1]['name']      = $LANG['common'][16];
+      $tab[1]['name']      = _('Name');
+
       $tab[1]['datatype']  = 'itemlink';
 
       $tab[2]['table']     = 'glpi_entities';
       $tab[2]['field']     = 'completename';
-      $tab[2]['name']      = $LANG['entity'][0];
+      $tab[2]['name']      = _('Entity');
+
 
       $tab[3]['table']     = $this->getTable();
       $tab[3]['field']     = 'is_recursive';
       $tab[3]['linkfield'] = 'is_recursive';
-      $tab[3]['name']      = $LANG['entity'][9];
+      $tab[3]['name']      = _('Child entities');
+
       $tab[3]['datatype']  = 'bool';
 
       $tab[4]['table']     = $this->getTable();
       $tab[4]['field']     = 'last_contact';
       $tab[4]['linkfield'] = '';
-      $tab[4]['name']      = $LANG['plugin_fusioninventory']['agents'][4];
+      $tab[4]['name']      = _('Last contact');
+
       $tab[4]['datatype']  = 'datetime';
 
       $tab[5]['table']     = $this->getTable();
       $tab[5]['field']     = 'lock';
       $tab[5]['linkfield'] = 'lock';
-      $tab[5]['name']      = $LANG['plugin_fusioninventory']['agents'][37];
+      $tab[5]['name']      = _('locked');
+
       $tab[5]['datatype']  = 'bool';
 
       $tab[6]['table']     = $this->getTable();
       $tab[6]['field']     = 'device_id';
       $tab[6]['linkfield'] = 'device_id';
-      $tab[6]['name']      = $LANG['plugin_fusioninventory']['agents'][35];
+      $tab[6]['name']      = _('Device_id');
+
       $tab[6]['datatype']  = 'text';
       $tab[6]['massiveaction'] = false;
 
       $tab[7]['table']         = 'glpi_computers';
       $tab[7]['field']         = 'name';
       $tab[7]['linkfield']     = 'items_id';
-      $tab[7]['name']          = $LANG['plugin_fusioninventory']['agents'][23];
+      $tab[7]['name']          = _('Computer link');
+
       $tab[7]['datatype']      = 'itemlink';
       $tab[7]['itemlink_type'] = 'Computer';
 
       $tab[8]['table']     = $this->getTable();
       $tab[8]['field']     = 'version';
       $tab[8]['linkfield'] = 'version';
-      $tab[8]['name']      = $LANG['plugin_fusioninventory']['agents'][25];
+      $tab[8]['name']      = _('Version');
+
       $tab[8]['datatype']  = 'text';
       $tab[8]['massiveaction'] = false;
 
       $tab[9]['table']     = $this->getTable();
       $tab[9]['field']     = 'token';
       $tab[9]['linkfield'] = 'token';
-      $tab[9]['name']      = $LANG['plugin_fusioninventory']['agents'][24];
+      $tab[9]['name']      = _('Token');
+
       $tab[9]['datatype']  = 'text';
       $tab[9]['massiveaction'] = false;
 
       $tab[10]['table']     = $this->getTable();
       $tab[10]['field']     = 'useragent';
       $tab[10]['linkfield'] = 'useragent';
-      $tab[10]['name']      = $LANG['plugin_fusioninventory']['agents'][42];
+      $tab[10]['name']      = _('Useragent');
+
       $tab[10]['datatype']  = 'text';
       $tab[10]['massiveaction'] = false;
       
       $tab[11]['table']     = $this->getTable();
       $tab[11]['field']     = 'tag';
-      $tab[11]['name']      = $LANG['plugin_fusioninventory']['rules'][16];
+      $tab[11]['name']      = _('FusionInventory tag');
+
       $tab[11]['datatype']  = 'text';
       $tab[11]['massiveaction'] = false;
       
@@ -157,7 +168,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $tab[$i]['table']         = $pfAgentmodule->getTable();
          $tab[$i]['field']         = $data["modulename"];
          $tab[$i]['linkfield']     = $data["modulename"];
-         $tab[$i]['name']          = $LANG['plugin_fusioninventory']['task'][26]." - ".$data["modulename"];
+         $tab[$i]['name']          = _('Module')." - ".$data["modulename"];
          $tab[$i]['datatype']      = 'bool';
          $tab[$i]['massiveaction'] = false;
          $i++;
@@ -168,14 +179,16 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
 
    function defineTabs($options=array()){
-      global $LANG;
 
       $ong = array();
       if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
-         $ong[1]=$LANG['title'][26];
+         $ong[1]=_('Main');
+
       }
-      $ong[2] = $LANG['plugin_fusioninventory']['agents'][36];
-      $ong[3] = $LANG['title'][38];
+      $ong[2] = _('Agent modules');
+
+      $ong[3] = _('Historical');
+
       return $ong;
    }
 
@@ -185,10 +198,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     * Display personalized comments (in tooltip) of item
     */
    function getComments() {
-      global $LANG;
 
-      $comment = $LANG['plugin_fusioninventory']['agents'][42].' : '.$this->fields['useragent'].'<br/>
-         '.$LANG['plugin_fusioninventory']['agents'][4].' : '.Html::convDateTime($this->fields['last_contact']).' minutes';
+      $comment = _('Useragent').' : '.$this->fields['useragent'].'<br/>
+         '._('Last contact').' : '.Html::convDateTime($this->fields['last_contact']).' minutes';
 
       if (!empty($comment)) {
          return Html::showToolTip($comment, array('display' => false));
@@ -209,7 +221,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    *
    **/
    function showForm($items_id, $options=array()) {
-      global $LANG;
 
       if ($items_id!='') {
          $this->getFromDB($items_id);
@@ -221,18 +232,18 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['common'][16]." :</td>";
+      echo "<td>"._('Name')." :</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='name' value='".$this->fields["name"]."' size='30'/>";
       echo "</td>";
-      echo "<td>".$LANG['plugin_fusioninventory']['agents'][35]."&nbsp;:</td>";
+      echo "<td>"._('Device_id')."&nbsp;:</td>";
       echo "<td align='center'>";
       echo $this->fields["device_id"];
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['agents'][23]."&nbsp:</td>";
+      echo "<td>"._('Computer link')."&nbsp:</td>";
       echo "<td align='center'>";
       if (($this->fields["items_id"] != "0") AND ($this->fields["items_id"] != "")) {
          $oComputer = new Computer();
@@ -244,18 +255,18 @@ class PluginFusioninventoryAgent extends CommonDBTM {
                                         $_SESSION['glpiactive_entity']);
       }
       echo "</td>";
-      echo "<td>".$LANG['plugin_fusioninventory']['agents'][24]."&nbsp:</td>";
+      echo "<td>"._('Token')."&nbsp:</td>";
       echo "<td align='center'>";
       echo $this->fields["token"];
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['agents'][37]."&nbsp:</td>";
+      echo "<td>"._('locked')."&nbsp:</td>";
       echo "<td align='center'>";
       Dropdown::showYesNo('lock', $this->fields["lock"]);
       echo "</td>";
-      echo "<td>".$LANG['plugin_fusioninventory']['agents'][25]."&nbsp:</td>";
+      echo "<td>"._('Version')."&nbsp:</td>";
       echo "<td align='center'>";
       $a_versions = importArrayFromDB($this->fields["version"]);
       foreach ($a_versions as $module => $version) {
@@ -265,18 +276,18 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['agents'][42]."&nbsp:</td>";
+      echo "<td>"._('Useragent')."&nbsp:</td>";
       echo "<td align='center'>";
       echo $this->fields["useragent"];
       echo "</td>";
-      echo "<td>".$LANG['plugin_fusioninventory']['agents'][4]."&nbsp:</td>";
+      echo "<td>"._('Last contact')."&nbsp:</td>";
       echo "<td align='center'>";
       echo Html::convDateTime($this->fields["last_contact"]);
       echo "</td>";
       echo "</tr>";
       
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['rules'][16]."&nbsp:</td>";
+      echo "<td>"._('FusionInventory tag')."&nbsp:</td>";
       echo "<td align='center'>";
       echo $this->fields["tag"];
       echo "</td>";
@@ -486,7 +497,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    *
    **/
    function forceRemoteAgent() {
-      global $LANG,$CFG_GLPI;
+      global $CFG_GLPI;
 
       $agent_id = $this->getAgentWithComputerid($_POST['id']);
 
@@ -502,13 +513,14 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       
       echo "<tr>";
       echo "<th colspan='2'>";
-      echo $LANG['plugin_fusioninventory']['agents'][15];
+      echo _('Agent state');
+
       echo "</th>";
       echo "</tr>";
       
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo $LANG['plugin_fusioninventory']['agents'][28]."&nbsp:";
+      echo _('Agent')."&nbsp:";
       echo "</td>";
       echo "<td>";
       $pFusioninventoryAgent = new PluginFusioninventoryAgent();
@@ -520,7 +532,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo $LANG['state'][0]."&nbsp;:";
+      echo _('Status')."&nbsp;:";
       echo "</td>";
       echo "<td>";
 
@@ -536,16 +548,19 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       switch($agentStatus) {
 
          case 'running':
-            echo $LANG['plugin_fusioninventory']['taskjoblog'][6];
+            echo _('Running');
+
             break;
 
          case 'noanswer':
-            echo $LANG['plugin_fusioninventory']['agents'][30];
+            echo _('Impossible to communicate with agent!');
+
             break;
 
          case 'waiting':
             $waiting = 1;
-            echo $LANG['plugin_fusioninventory']['agents'][38];
+            echo _('Available');
+
             echo "<input type='hidden' name='ip' value='".$ip."' />";
             echo "<input type='hidden' name='agent_id' value='".$agent_id."' />";
             break;
@@ -562,7 +577,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       if ($waiting == '1') {
          echo "<tr>";
          echo "<th colspan='2'>";
-         echo "<input name='startagent' value=\"".$LANG['plugin_fusioninventory']['agents'][31].
+         echo "<input name='startagent' value=\""._('Force inventory').
+
             "\" class='submit' type='submit'>";
          echo "</th>";
          echo "</tr>";
@@ -716,13 +732,13 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     * 
     */
    static function showConfig() {
-      global $LANG;
 
       echo "<table width='950' class='tab_cadre_fixe'>";
       
       echo "<tr>";
       echo "<th colspan='2'>";
-      echo $LANG['plugin_fusioninventory']['agents'][43];
+      echo _('Informations for agent configuration');
+
       echo "</th>";
       echo "</tr>";
       
@@ -730,7 +746,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<td width='50%'>";
       $array = explode("/", $_SERVER['HTTP_REFERER']);
       $create_url = $array[0]."//".$array[2].  str_replace("front/wizard.php", "", $_SERVER['PHP_SELF']);
-      echo $LANG['plugin_fusioninventory']['agents'][44]."&nbsp;:";
+      echo _('Communication url of the server')."&nbsp;:";
       echo "</td>";
       echo "<td>";
       echo "<strong>".$create_url."</strong>";

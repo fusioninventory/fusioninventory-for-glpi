@@ -46,7 +46,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 Session::checkRight("config","w");
 
-Html::header($LANG['plugin_fusioninventory']['functionalities'][0], $_SERVER["PHP_SELF"], 
+Html::header(_('Features'), $_SERVER["PHP_SELF"], 
              "plugins", "fusinvsnmp", "configuration");
 
 if (isset($_POST['plugin_fusinvsnmp_config_set'])) {

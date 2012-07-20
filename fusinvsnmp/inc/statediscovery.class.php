@@ -106,7 +106,7 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
    
    
    function display() {
-      global $DB,$LANG,$CFG_GLPI;
+      global $DB, $CFG_GLPI;
 
       $pfAgent = new PluginFusioninventoryAgent();
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
@@ -135,16 +135,16 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<th>".$LANG['plugin_fusioninventory']['task'][47]."</th>";
-      echo "<th>".$LANG['plugin_fusioninventory']['agents'][28]."</th>";
-      echo "<th>".$LANG['joblist'][0]."</th>";
-      echo "<th>".$LANG['plugin_fusinvsnmp']['state'][4]."</th>";
-      echo "<th>".$LANG['plugin_fusinvsnmp']['state'][5]."</th>";
-      echo "<th>".$LANG['job'][20]."</th>";
-      echo "<th>".$LANG['plugin_fusinvsnmp']['state'][6]."</th>";
-      echo "<th>".$LANG['plugin_fusinvsnmp']['state'][8]."</th>";
-      echo "<th>".$LANG['plugin_fusinvsnmp']['state'][9]."</th>";
-      echo "<th>".$LANG['plugin_fusinvsnmp']['state'][10]."</th>";
+      echo "<th>"._('Unique id')."</th>";
+      echo "<th>"._('Agent')."</th>";
+      echo "<th>"._('Status')."</th>";
+      echo "<th>"._('Starting date')."</th>";
+      echo "<th>"._('Ending date')."</th>";
+      echo "<th>"._('Total duration')."</th>";
+      echo "<th>"._('Total discovery devices')."</th>";
+      echo "<th>"._('Devices not imported')."</th>";
+      echo "<th>"._('Devices linked')."</th>";
+      echo "<th>"._('Devices imported')."</th>";
       echo "</tr>";
 
       $sql = "SELECT `glpi_plugin_fusioninventory_taskjobstates`.*
@@ -201,16 +201,19 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
          switch ($data['state']) {
 
             case 0:
-               echo $LANG['plugin_fusioninventory']['taskjoblog'][7];
+               echo _('Prepared');
+
                break;
 
             case 1:
             case 2:
-               echo $LANG['plugin_fusioninventory']['taskjoblog'][1];
+               echo _('Started');
+
                break;
 
             case 3:
-               echo $LANG['plugin_fusioninventory']['task'][20];
+               echo _('Finished tasks');
+
                break;
 
          }

@@ -49,9 +49,9 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
    
    static function getTypeName($nb=0) {
-      global $LANG;
 
-      return $LANG['plugin_fusioninventory']['functionalities'][75];
+      return _('Locks');
+
    }
 
 
@@ -80,7 +80,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
    
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      global $LANG;
 
       $itemtype = $item->getType();
       if ($itemtype == 'NetworkEquipment') {
@@ -88,9 +87,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
       if (Session::haveRight(strtolower($itemtype), "w")) {
          if ($_SESSION['glpishow_count_on_tabs']) {
-            return self::createTabEntry($LANG['plugin_fusioninventory']['functionalities'][75], self::countForLock($item));
+            return self::createTabEntry(_('Locks'), self::countForLock($item));
          }
-         return $LANG['plugin_fusioninventory']['functionalities'][75];
+         return _('Locks');
+
       }
       return '';
    }
@@ -125,7 +125,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
     * @return nothing (print the form)
     **/
    function showForm($p_target, $p_itemtype, $p_items_id=0) {
-      global $LANG;
 
       $can = 0;
       $typeright = strtolower($p_itemtype);
@@ -161,11 +160,11 @@ class PluginFusioninventoryLock extends CommonDBTM{
       echo "<input type='hidden' name='id' value='$p_items_id'>";
       echo "<input type='hidden' name='type' value='$p_itemtype'>";
       echo "<table class='tab_cadre'>";
-      echo "<tr><th>&nbsp;".$LANG['plugin_fusioninventory']['functionalities'][73]."&nbsp;</th>";
+      echo "<tr><th>&nbsp;"._('Fields')."&nbsp;</th>";
       if ($p_items_id != '0') {
-         echo "<th>&nbsp;".$LANG['plugin_fusioninventory']['functionalities'][74]."&nbsp;</th>";
+         echo "<th>&nbsp;"._('Values')."&nbsp;</th>";
       }
-      echo "<th>&nbsp;".$LANG['plugin_fusioninventory']['functionalities'][75]."&nbsp;</th></tr>";
+      echo "<th>&nbsp;"._('Locks')."&nbsp;</th></tr>";
 
       $checked = '';
       $a_exclude = $this->excludeFields();
@@ -192,23 +191,28 @@ class PluginFusioninventoryLock extends CommonDBTM{
             switch($key) {
 
                case 'users_id_tech':
-                  $key1 = $LANG['common'][10];
+                  $key1 = _('Technician in charge of the hardware');
+
                   break;
 
                case 'computermodels_id':
-                  $key1 = $LANG['common'][22];
+                  $key1 = _('Model');
+
                   break;
 
                case 'computertypes_id':
-                  $key1 = $LANG['common'][17];
+                  $key1 = _('Type');
+
                   break;
 
                case 'states_id':
-                  $key1 = $LANG['state'][0];
+                  $key1 = _('Status');
+
                   break;
 
                case 'ticket_tco':
-                  $key1 = $LANG['financial'][91];
+                  $key1 = _('TCO');
+
                   break;
 
             }
@@ -245,16 +249,16 @@ class PluginFusioninventoryLock extends CommonDBTM{
       if ($p_items_id == '0') {
          // add option selection for add theses lock filed or remove them
          echo "<tr>";
-         echo "<th colspan='2'>".$LANG['plugin_fusioninventory']['task'][2]."</th>";
+         echo "<th colspan='2'>"._('Job')."</th>";
          echo "<tr>";
 
          echo "<tr class='tab_bg_1'>";
-         echo "<td>".$LANG['plugin_fusioninventory']['locks'][1]."</td>";
+         echo "<td>"._('Add locks')."</td>";
          echo "<td align='center'><input type='radio' name='actionlock' value='addLock' checked/></td>";
          echo "</tr>";
 
          echo "<tr class='tab_bg_1'>";
-         echo "<td>".$LANG['plugin_fusioninventory']['locks'][0]."</td>";
+         echo "<td>"._('Delete locks')."</td>";
          echo "<td align='center'><input type='radio' name='actionlock' value='deleteLock' /></td>";
          echo "</tr>";
 
@@ -263,7 +267,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
          echo "<tr class='tab_bg_2'>";
          echo "<td align='center' colspan='".$colspan."'>";
          echo "<input class='submit' type='submit' name='unlock_field_fusioninventory'
-                         value='" . $LANG['buttons'][7] . "'>";
+                         value='" . _('Update') . "'>";
          echo "</td>";
          echo "</tr>";
       }

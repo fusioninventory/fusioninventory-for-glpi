@@ -47,17 +47,18 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusinvsnmpStaticmisc {
    
    static function task_methods() {
-      global $LANG;
 
       $a_tasks = array();
 
       $a_tasks[] = array('module'         => 'fusinvsnmp',
                          'method'         => 'netdiscovery',
-                         'name'           => $LANG['plugin_fusinvsnmp']['config'][4]);
+                         'name'           => _('Network discovery'));
+
 
       $a_tasks[] = array('module'         => 'fusinvsnmp',
                          'method'         => 'snmpinventory',
-                         'name'           => $LANG['plugin_fusinvsnmp']['config'][3]);
+                         'name'           => _('Network inventory (SNMP)'));
+
 
       return $a_tasks;
    }
@@ -66,9 +67,9 @@ class PluginFusinvsnmpStaticmisc {
 
    // *** NETDISCOVERY ***
    static function task_definitiontype_netdiscovery($a_itemtype) {
-      global $LANG;
 
-      $a_itemtype['PluginFusioninventoryIPRange'] = $LANG['plugin_fusioninventory']['iprange'][2];
+      $a_itemtype['PluginFusioninventoryIPRange'] = _('IP Ranges');
+
 
       return $a_itemtype;
    }
@@ -89,9 +90,9 @@ class PluginFusinvsnmpStaticmisc {
 
    // *** SNMPINVENTORY ***
    static function task_definitiontype_snmpinventory($a_itemtype) {
-      global $LANG;
 
-      $a_itemtype['PluginFusioninventoryIPRange'] = $LANG['plugin_fusioninventory']['iprange'][2];
+      $a_itemtype['PluginFusioninventoryIPRange'] = _('IP Ranges');
+
       $a_itemtype['NetworkEquipment'] = NetworkEquipment::getTypeName();
       $a_itemtype['Printer'] = Printer::getTypeName();
 
@@ -135,14 +136,14 @@ class PluginFusinvsnmpStaticmisc {
 
 
    static function task_netdiscovery_agents() {
-      global $LANG;
 
       $array = array();
-      $array["-.1"] = $LANG['plugin_fusioninventory']['agents'][32];
+      $array["-.1"] = _('Auto managenement dynamic of agents');
+
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
       $array1 = $pfAgentmodule->getAgentsCanDo('NETDISCOVERY');
       foreach ($array1 as $id => $data) {
-         $array["PluginFusioninventoryAgent-".$id] = $LANG['plugin_fusioninventory']['agents'][32]." - ".$data['name'];
+         $array["PluginFusioninventoryAgent-".$id] = _('Auto managenement dynamic of agents')." - ".$data['name'];
       }
       return $array;
    }
@@ -188,7 +189,8 @@ class PluginFusinvsnmpStaticmisc {
             $selection_type = 'iprange';
             break;
 
-         // $LANG['plugin_fusioninventory']['agents'][32]
+         // _('Auto managenement dynamic of agents')
+
 
       }
 
@@ -198,27 +200,31 @@ class PluginFusinvsnmpStaticmisc {
    
 
    static function displayMenu() {
-      global $LANG,$CFG_GLPI;
+      global $CFG_GLPI;
 
       $a_menu = array();
       if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model", "r")) {
-         $a_menu[0]['name'] = $LANG['plugin_fusinvsnmp']['model_info'][4];
+         $a_menu[0]['name'] = _('SNMP models');
+
          $a_menu[0]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/pics/menu_models.png";
          $a_menu[0]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/model.php";
       }
 
       if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity", "r")) {
-         $a_menu[1]['name'] = $LANG['plugin_fusinvsnmp']['model_info'][3];
+         $a_menu[1]['name'] = _('SNMP authentication');
+
          $a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/pics/menu_authentification.png";
          $a_menu[1]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/configsecurity.php";
       }
 
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
-         $a_menu[5]['name'] = $LANG['plugin_fusinvsnmp']['menu'][9];
+         $a_menu[5]['name'] = _('Discovery status');
+
          $a_menu[5]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/pics/menu_discovery_status.png";
          $a_menu[5]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/statediscovery.php";
 
-         $a_menu[6]['name'] = $LANG['plugin_fusinvsnmp']['menu'][10];
+         $a_menu[6]['name'] = _('Network inventory status');
+
          $a_menu[6]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/pics/menu_inventory_status.png";
          $a_menu[6]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/stateinventory.php";
       }
@@ -229,25 +235,32 @@ class PluginFusinvsnmpStaticmisc {
 
    
    static function profiles() {
-      global $LANG;
 
       $a_profil = array();
       $a_profil[] = array('profil'  => 'configuration',
-                          'name'    => $LANG['plugin_fusinvsnmp']['profile'][2]);
+                          'name'    => _('Configuration'));
+
       $a_profil[] = array('profil'  => 'configsecurity',
-                          'name'    => $LANG['plugin_fusinvsnmp']['model_info'][3]);
+                          'name'    => _('SNMP authentication'));
+
       //$a_profil[] = array('profil'  => 'iprange',
-      //                    'name'    => $LANG['plugin_fusinvsnmp']['profile'][4]);
+      //                    'name'    => _('IP Range'));
+
       $a_profil[] = array('profil'  => 'networkequipment',
-                          'name'    => $LANG['plugin_fusinvsnmp']['profile'][5]);
+                          'name'    => _('Network equipment SNMP'));
+
       $a_profil[] = array('profil'  => 'printer',
-                          'name'    => $LANG['plugin_fusinvsnmp']['profile'][6]);
+                          'name'    => _('Printer SNMP'));
+
       $a_profil[] = array('profil'  => 'model',
-                          'name'    => $LANG['plugin_fusinvsnmp']['profile'][7]);
+                          'name'    => _('SNMP model'));
+
       $a_profil[] = array('profil'  => 'reportprinter',
-                          'name'    => $LANG['plugin_fusinvsnmp']['profile'][8]);
+                          'name'    => _('Printers report'));
+
       $a_profil[] = array('profil'  => 'reportnetworkequipment',
-                          'name'    => $LANG['plugin_fusinvsnmp']['profile'][9]);
+                          'name'    => _('Network report'));
+
       return $a_profil;
    }   
 }

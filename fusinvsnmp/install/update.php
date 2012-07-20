@@ -3013,7 +3013,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
 
 
 function update213to220_ConvertField($migration) {
-   global $LANG,$FUSIONINVENTORY_MAPPING,$FUSIONINVENTORY_MAPPING_DISCOVERY,$DB;
+   global $FUSIONINVENTORY_MAPPING,$FUSIONINVENTORY_MAPPING_DISCOVERY,$DB;
 
    // ----------------------------------------------------------------------
    //NETWORK MAPPING MAPPING

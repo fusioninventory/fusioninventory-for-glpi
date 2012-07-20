@@ -54,8 +54,8 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
    
    
    function getTitle() {
-      global $LANG;
-      return $LANG['plugin_fusioninventory']['rule'][100];
+      return _('Entity rules');
+
    }
 
    
@@ -119,27 +119,32 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
    
    
    function getCriterias() {
-      global $LANG;
       
       $criterias = array ();
 
       $criterias['tag']['field']     = 'name';
-      $criterias['tag']['name']      = $LANG['plugin_fusioninventory']['rule'][28];
+      $criterias['tag']['name']      = _('Tag');
+
       
       $criterias['domain']['field']     = 'name';
-      $criterias['domain']['name']      = $LANG['setup'][89];
+      $criterias['domain']['name']      = _('Domain');
+
       
       $criterias['subnet']['field']     = 'name';
-      $criterias['subnet']['name']      = $LANG['networking'][61];
+      $criterias['subnet']['name']      = _('Subnet');
+
       
       $criterias['ip']['field']     = 'name';
-      $criterias['ip']['name']      = $LANG['financial'][44]." ".$LANG['networking'][14];
+      $criterias['ip']['name']      = _('Address')." "._('IP');
+
 
       $criterias['name']['field']     = 'name';
-      $criterias['name']['name']      = $LANG['rulesengine'][25];
+      $criterias['name']['name']      = _('Computer's name');
+
       
       $criterias['serial']['field']     = 'name';
-      $criterias['serial']['name']      = $LANG['common'][19];
+      $criterias['serial']['name']      = _('Serial Number');
+
 
       return $criterias;
    }
@@ -147,22 +152,25 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
    
    
    function getActions() {
-      global $LANG;
       
       $actions = array();
-      $actions['entities_id']['name']  = $LANG['entity'][0];
+      $actions['entities_id']['name']  = _('Entity');
+
       $actions['entities_id']['type']  = 'dropdown';
       $actions['entities_id']['table'] = 'glpi_entities';
 
-      $actions['locations_id']['name']  = $LANG['common'][15];
+      $actions['locations_id']['name']  = _('Location');
+
       $actions['locations_id']['type']  = 'dropdown';
       $actions['locations_id']['table'] = 'glpi_locations';
 
-      $actions['_affect_entity_by_tag']['name'] = $LANG['rulesengine'][131];
+      $actions['_affect_entity_by_tag']['name'] = _('Entity from TAG');
+
       $actions['_affect_entity_by_tag']['type'] = 'text';
       $actions['_affect_entity_by_tag']['force_actions'] = array('regex_result');
 
-      $actions['_ignore_import']['name'] = $LANG['plugin_fusioninventory']['rule'][102];
+      $actions['_ignore_import']['name'] = _('Ignore in FusionInventory import');
+
       $actions['_ignore_import']['type'] = 'yesonly';
 
       return $actions;

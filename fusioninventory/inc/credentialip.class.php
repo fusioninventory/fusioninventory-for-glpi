@@ -49,9 +49,9 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
    public $second_level_menu = "fusioninventory";
 
    static function getTypeName($nb=0) {
-      global $LANG;
 
-      return $LANG['plugin_fusioninventory']['credential'][2];
+      return _('Remote device inventory');
+
    }
 
    function canCreate() {
@@ -65,13 +65,14 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
    
    
    function getAdditionalFields() {
-      global $LANG;
 
       return array(array('name'  => 'itemtype',
-                         'label' => $LANG['common'][17],
+                         'label' => _('Type'),
+
                          'type'  => 'credentials'),
                    array('name'  => 'ip',
-                         'label' => $LANG['networking'][14],
+                         'label' => _('IP'),
+
                          'type'  => 'text'));
    }
 
@@ -100,30 +101,34 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
 
    
    function getSearchOptions() {
-      global $LANG;
 
       $tab = array();
 
-      $tab['common'] = $LANG['plugin_fusioninventory']['menu'][5];
+      $tab['common'] = _('Authentication for remote devices (VMware)');
+
 
       $tab[1]['table'] = $this->getTable();
       $tab[1]['field'] = 'name';
-      $tab[1]['name'] = $LANG['common'][16];
+      $tab[1]['name'] = _('Name');
+
       $tab[1]['datatype'] = 'itemlink';
 
       $tab[2]['table'] = 'glpi_entities';
       $tab[2]['field'] = 'completename';
-      $tab[2]['name'] = $LANG['entity'][0];
+      $tab[2]['name'] = _('Entity');
+
 
       $tab[3]['table']         = $this->getTable();
       $tab[3]['field']         = 'name';
-      $tab[3]['name']          = $LANG['plugin_fusioninventory']['menu'][5];
+      $tab[3]['name']          = _('Authentication for remote devices (VMware)');
+
       $tab[3]['datatype']      = 'itemlink';
       $tab[3]['itemlink_type'] = 'PluginFusioninventoryCredential';
 
       $tab[4]['table']         = $this->getTable();
       $tab[4]['field']         = 'ip';
-      $tab[4]['name']          = $LANG['networking'][14];
+      $tab[4]['name']          = _('IP');
+
       $tab[4]['datatype']      = 'string';
 
       return $tab;
@@ -132,12 +137,12 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
    
    
    function title() {
-      global $LANG;
       
       //Leave empty !
       $buttons = array();
       if (PluginFusioninventoryProfile::haveRight('fusioninventory', 'credential', 'r')) {
-         $buttons["credential.php"] = $LANG['plugin_fusioninventory']['menu'][5];
+         $buttons["credential.php"] = _('Authentication for remote devices (VMware)');
+
       }
    }
 

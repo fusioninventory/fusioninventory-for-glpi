@@ -75,9 +75,9 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
    function getTitle() {
-      global $LANG;
 
-      return $LANG['rulesengine'][57];
+      return _('Rules for import and link computers');
+
    }
 
 
@@ -88,12 +88,12 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
    
    function getCriterias() {
-      global $LANG;
 
       $criterias = array ();
       $criterias['entities_id']['table']     = 'glpi_entities';
       $criterias['entities_id']['field']     = 'entities_id';
-      $criterias['entities_id']['name']      = $LANG['plugin_fusioninventory']['rulesengine'][152].' : '.$LANG['plugin_fusioninventory']['rules'][4];
+      $criterias['entities_id']['name']      = _('Assets to import').' : '._('Destination of equipment entity');
+
       $criterias['entities_id']['linkfield'] = 'entities_id';
       $criterias['entities_id']['type']      = 'dropdown';
       $criterias['entities_id']['allow_condition'] = array(Rule::PATTERN_IS,
@@ -107,36 +107,49 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
       $criterias['states_id']['table']           = 'glpi_states';
       $criterias['states_id']['field']           = 'name';
-      $criterias['states_id']['name']            = $LANG['plugin_fusioninventory']['rules'][3];
+      $criterias['states_id']['name']            = _('Search GLPI equipment with the status');
+
       $criterias['states_id']['linkfield']       = 'state';
       $criterias['states_id']['type']            = 'dropdown';
       //Means that this criterion can only be used in a global search query
       $criterias['states_id']['is_global']       = true;
       $criterias['states_id']['allow_condition'] = array(Rule::PATTERN_IS, Rule::PATTERN_IS_NOT);
 
-      $criterias['model']['name']           = $LANG['plugin_fusioninventory']['rulesengine'][152].' : '.$LANG['common'][22];
+      $criterias['model']['name']           = _('Assets to import').' : '._('Model');
 
-      $criterias['mac']['name']             = $LANG['plugin_fusioninventory']['rulesengine'][152].' : '.$LANG['networking'][15];
 
-      $criterias['ip']['name']              = $LANG['plugin_fusioninventory']['rulesengine'][152].' : '.$LANG['networking'][14];
+      $criterias['mac']['name']             = _('Assets to import').' : '._('MAC');
 
-      $criterias['serial']['name']          = $LANG['plugin_fusioninventory']['rulesengine'][152].' : '.$LANG['common'][19];
 
-//      $criterias['hdserial']['name']        = $LANG['plugin_fusioninventory']['rulesengine'][152].' : '.$LANG['plugin_fusioninventory']['rules'][13];
+      $criterias['ip']['name']              = _('Assets to import').' : '._('IP');
+
+
+      $criterias['serial']['name']          = _('Assets to import').' : '._('Serial Number');
+
+
+//      $criterias['hdserial']['name']        = _('Assets to import').' : '._('Hard disk serial number');
+
 //
-//      $criterias['partitionserial']['name'] = $LANG['plugin_fusioninventory']['rulesengine'][152].' : '.$LANG['plugin_fusioninventory']['rules'][14];
+//      $criterias['partitionserial']['name'] = _('Assets to import').' : '._('Partition serial number');
 
-      $criterias['uuid']['name']            = $LANG['plugin_fusioninventory']['rulesengine'][152].' : '.$LANG['plugin_fusioninventory']['rules'][15];
 
-      $criterias['mskey']['name']           = $LANG['plugin_fusioninventory']['rulesengine'][152].' : '.$LANG['computers'][10];
+      $criterias['uuid']['name']            = _('Assets to import').' : '._('UUID');
 
-      $criterias['name']['name']            = $LANG['plugin_fusioninventory']['rulesengine'][152].' : '.$LANG['common'][16];
 
-      $criterias['tag']['name']             = $LANG['plugin_fusioninventory']['rulesengine'][152].' : '.$LANG['plugin_fusioninventory']['rules'][16];
+      $criterias['mskey']['name']           = _('Assets to import').' : '._('Serial of the operating system');
 
-      $criterias['osname']['name']          = $LANG['plugin_fusioninventory']['rulesengine'][152].' : '.$LANG['computers'][9];
 
-      $criterias['itemtype']['name']        = $LANG['plugin_fusioninventory']['rulesengine'][152].' : '.$LANG['state'][6];
+      $criterias['name']['name']            = _('Assets to import').' : '._('Name');
+
+
+      $criterias['tag']['name']             = _('Assets to import').' : '._('FusionInventory tag');
+
+
+      $criterias['osname']['name']          = _('Assets to import').' : '._('Operating system');
+
+
+      $criterias['itemtype']['name']        = _('Assets to import').' : '._('Item type');
+
       $criterias['itemtype']['type']        = 'dropdown_itemtype';
       $criterias['itemtype']['is_global']       = false;
       $criterias['itemtype']['allow_condition'] = array(Rule::PATTERN_IS, Rule::PATTERN_IS_NOT);
@@ -147,13 +160,14 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    
 
    function getActions() {
-      global $LANG;
 
       $actions = array();
-      $actions['_fusion']['name']        = $LANG['plugin_fusioninventory']['rules'][5];
+      $actions['_fusion']['name']        = _('FusionInventory link');
+
       $actions['_fusion']['type']        = 'fusion_type';
 
-      $actions['_ignore_import']['name'] = $LANG['rulesengine'][132];
+      $actions['_ignore_import']['name'] = _('To be unaware of import');
+
       $actions['_ignore_import']['type'] = 'yesonly';
 
       return $actions;
@@ -162,11 +176,13 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    
 
    static function getRuleActionValues() {
-      global $LANG;
 
-      return array(self::RULE_ACTION_LINK_OR_CREATE    => $LANG['plugin_fusioninventory']['rules'][7],
-                   self::RULE_ACTION_LINK_OR_NO_CREATE => $LANG['plugin_fusioninventory']['rules'][6],
-                   self::RULE_ACTION_DENIED            => $LANG['plugin_fusioninventory']['codetasklog'][3]);
+      return array(self::RULE_ACTION_LINK_OR_CREATE    => _('Link if possible, else create device'),
+
+                   self::RULE_ACTION_LINK_OR_NO_CREATE => _('Link if possible, else import denied'),
+
+                   self::RULE_ACTION_DENIED            => _('Import denied'));
+
    }
 
 
@@ -190,13 +206,15 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    
 
    function manageSpecificCriteriaValues($criteria, $name, $value) {
-      global $LANG;
 
       switch ($criteria['type']) {
          case "state" :
-            $link_array = array("0" => $LANG['choice'][0],
-                                "1" => $LANG['choice'][1]." : ".$LANG['ocsconfig'][57],
-                                "2" => $LANG['choice'][1]." : ".$LANG['ocsconfig'][56]);
+            $link_array = array("0" => _('No'),
+
+                                "1" => _('Yes')." : "._('equal'),
+
+                                "2" => _('Yes')." : "._('empty'));
+
 
             Dropdown::showFromArray($name, $link_array, array('value' => $value));
       }
@@ -209,19 +227,20 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
     * Add more criteria specific to this type of rule
    **/
    static function addMoreCriteria($criterion='') {
-      global $LANG;
 
-      return array(Rule::PATTERN_FIND     => $LANG['rulesengine'][151],
-                   self::PATTERN_IS_EMPTY => $LANG['rulesengine'][154]);
+      return array(Rule::PATTERN_FIND     => _('is already present in GLPI'),
+
+                   self::PATTERN_IS_EMPTY => _('is empty in GLPI'));
+
    }
    
 
 
    function getAdditionalCriteriaDisplayPattern($ID, $condition, $pattern) {
-      global $LANG;
 
       if ($condition == self::PATTERN_IS_EMPTY) {
-          return $LANG['choice'][1];
+          return _('Yes');
+
       }
       if ($condition==self::PATTERN_IS || $condition==self::PATTERN_IS_NOT) {
          $crit = $this->getCriteria($ID);
@@ -843,26 +862,28 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    
    
    function preProcessPreviewResults($output) {
-      global $LANG;
 
       //If ticket is assign to an object, display this information first
       if (isset($output["action"])) {
          echo "<tr class='tab_bg_2'>";
-         echo "<td>".$LANG['rulesengine'][11]."</td>";
+         echo "<td>"._('Action type')."</td>";
          echo "<td>";
 
          switch ($output["action"]) {
             
             case self::LINK_RESULT_LINK:
-               echo $LANG['setup'][620];
+               echo _('Link');
+
                break;
 
             case self::LINK_RESULT_CREATE:
-               echo $LANG['plugin_fusioninventory']['rules'][18];
+               echo _('Device created');
+
                break;
 
             case self::LINK_RESULT_DENIED:
-               echo $LANG['plugin_fusioninventory']['codetasklog'][3];
+               echo _('Import denied');
+
                break;
             
          }
@@ -875,7 +896,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             $className = $output["found_equipment"][1];
             $class = new $className;
             if ($class->getFromDB($output["found_equipment"][0])) {
-               echo "<td>".$LANG['setup'][620]."</td>";
+               echo "<td>"._('Link')."</td>";
                echo "<td>".$class->getLink(true)."</td>";
             }
             echo "</tr>";

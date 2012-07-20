@@ -52,9 +52,9 @@ class PluginFusioninventoryInventoryRuleEntityCollection extends RuleCollection 
    public $menu_option='test';
 
    function getTitle() {
-      global $LANG;
 
-      return $LANG['plugin_fusioninventory']['rule'][100];
+      return _('Entity rules');
+
    }
 
 

@@ -156,19 +156,21 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
    }
 
    static function getActionTypes() {
-      global $LANG;
 
       return array(
          array(
-            'name' => $LANG['Menu'][0],
+            'name' => _('Computers'),
+
             'value' => 'Computer',
          ),
          array(
-            'name' => $LANG['common'][35],
+            'name' => _('Group'),
+
             'value' => 'Group',
          ),
          array(
-            'name' => $LANG['plugin_fusinvdeploy']['group'][0],
+            'name' => _('Groups of computers'),
+
             'value' => 'PluginFusinvdeployGroup',
          )
       );

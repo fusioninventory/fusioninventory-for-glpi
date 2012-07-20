@@ -41,7 +41,7 @@
  */
 
 function pluginFusinvdeployInstall($version, $migration='') {
-   global $DB,$LANG, $CFG_GLPI;
+   global $DB $CFG_GLPI;
 
    // Get informations of plugin
    $a_plugin = plugin_version_fusinvdeploy();

@@ -55,7 +55,7 @@ class PluginFusioninventoryWizard {
     * @return Nothing (display)
     **/
    function filAriane($ariane) {
-      global $LANG,$CFG_GLPI;
+      global $CFG_GLPI;
 
       $a_list = array();
       if (method_exists("PluginFusioninventoryWizard", $ariane)) {
@@ -71,7 +71,7 @@ class PluginFusioninventoryWizard {
       echo "<table class='tab_cadre' width='250'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th>";
-      echo "<strong>".$LANG['plugin_fusioninventory']['wizard'][11]."</strong>";
+      echo "<strong>"._('Breadcrumb')."</strong>";
       echo "</th>";
       echo "</tr>";
       foreach ($a_list as $name=>$link) {
@@ -165,7 +165,7 @@ class PluginFusioninventoryWizard {
     * @return Nothing (display)
     **/
    static function displayShowForm($filariane, $classname, $options = array()) {
-      global $LANG,$CFG_GLPI;
+      global $CFG_GLPI;
 
       $pfWizard = new PluginFusioninventoryWizard();
 
@@ -228,17 +228,17 @@ class PluginFusioninventoryWizard {
 
       echo "<tr>";
       echo "<td width='475' align='left' style='background-color: #e1cc7b;' height='30'>";
-      echo "&nbsp;<input class='submit' type='submit' name='previous' value='".$LANG['buttons'][12]."'
+      echo "&nbsp;<input class='submit' type='submit' name='previous' value='"._('Previous')."'
                onclick='window.location.href=\"".$CFG_GLPI['root_doc'].
          "/plugins/fusioninventory/front/wizard.php?wizz=".PluginFusioninventoryWizard::getPreviousStep($filariane)."\"'/>";
       echo "</td>";
       echo "<td align='right' style='background-color: #e1cc7b;' height='30'>";
       if (isset($options['finish'])) {
-         echo "<input class='submit' type='submit' name='next' value='".$LANG['plugin_fusioninventory']['task'][53]."'
+         echo "<input class='submit' type='submit' name='next' value='"._('Finish')."'
                onclick='window.location.href=\"".$CFG_GLPI['root_doc']."/plugins/fusioninventory/\"'/>";
 
       } else {
-         echo "<input class='submit' type='submit' name='next' value='".$LANG['buttons'][11]."'
+         echo "<input class='submit' type='submit' name='next' value='"._('Next')."'
                onclick='window.location.href=\"".$CFG_GLPI['root_doc'].
          "/plugins/fusioninventory/front/wizard.php?wizz=".PluginFusioninventoryWizard::getNextStep($filariane)."\"'/>";
       }
@@ -320,15 +320,14 @@ class PluginFusioninventoryWizard {
     * @return array with data of breadcrumb
     **/
    function filInventoryComputer() {
-      global $LANG;
 
       return array(
-      $LANG['plugin_fusioninventory']['wizard'][0]   => "w_start",
-      $LANG['plugin_fusioninventory']['wizard'][1]   => "w_inventorychoice",
-      $LANG['plugin_fusioninventory']['wizard'][2]   => "w_importcomputeroptions",
-      $LANG['plugin_fusioninventory']['rules'][2]    => "w_importrules",
-      $LANG['plugin_fusioninventory']['wizard'][3]   => "w_entityrules",
-      $LANG['plugin_fusioninventory']['wizard'][4]   => "w_agentconfig");
+      _('Action choice')   => "w_start",
+      _('Type of device to inventory')   => "w_inventorychoice",
+      _('Import options')   => "w_importcomputeroptions",
+      _('Equipment import and link rules')    => "w_importrules",
+      _('Entity rules')   => "w_entityrules",
+      _('Agent configuration')   => "w_agentconfig");
    }
 
 
@@ -339,15 +338,14 @@ class PluginFusioninventoryWizard {
     * @return array with data of breadcrumb
     **/
    function filInventoryESX() {
-      global $LANG;
 
       return array(
-      $LANG['plugin_fusioninventory']['wizard'][0]   => "w_start",
-      $LANG['plugin_fusioninventory']['wizard'][1]   => "w_inventorychoice",
-      $LANG['plugin_fusioninventory']['wizard'][6]   => "w_remotedevices",
-      $LANG['plugin_fusioninventory']['wizard'][7]   => "w_tasksforcerun",
-      $LANG['plugin_fusioninventory']['wizard'][8]   => "w_taskslog",
-      $LANG['plugin_fusioninventory']['task'][50]    => "w_tasksend");
+      _('Action choice')   => "w_start",
+      _('Type of device to inventory')   => "w_inventorychoice",
+      _('ESX servers management')   => "w_remotedevices",
+      _('Run tasks')   => "w_tasksforcerun",
+      _('Tasks running result')   => "w_taskslog",
+      _('End Task')    => "w_tasksend");
    }
 
 
@@ -358,18 +356,17 @@ class PluginFusioninventoryWizard {
     * @return array with data of breadcrumb
     **/
    function filInventorySNMP() {
-      global $LANG;
 
       return array(
-      $LANG['plugin_fusioninventory']['wizard'][0]   => "w_start",
-      $LANG['plugin_fusioninventory']['wizard'][1]   => "w_inventorychoice",
-      $LANG['plugin_fusioninventory']['iprange'][2]  => "w_iprange",
-//      $LANG['plugin_fusioninventory']['functionalities'][16]   => "w_authsnmp",
-//      $LANG['plugin_fusioninventory']['rules'][2]    => "w_importrules",
-//      $LANG['plugin_fusioninventory']['task'][1]     => "w_tasks",
-      $LANG['plugin_fusioninventory']['wizard'][7]   => "w_tasksforcerun",
-      $LANG['plugin_fusioninventory']['wizard'][8]   => "w_taskslog",
-      $LANG['plugin_fusioninventory']['task'][50]    => "w_tasksend");
+      _('Action choice')   => "w_start",
+      _('Type of device to inventory')   => "w_inventorychoice",
+      _('IP Ranges')  => "w_iprange",
+//      _('SNMP authentication')   => "w_authsnmp",
+//      _('Equipment import and link rules')    => "w_importrules",
+//      _('Task management')     => "w_tasks",
+      _('Run tasks')   => "w_tasksforcerun",
+      _('Tasks running result')   => "w_taskslog",
+      _('End Task')    => "w_tasksend");
    }
 
 
@@ -380,9 +377,8 @@ class PluginFusioninventoryWizard {
     * @return array with data of breadcrumb
     **/
    function filNetDiscovery() {
-      global $LANG;
 
-      $array = array($LANG['plugin_fusioninventory']['wizard'][0]   => "w_start");
+      $array = array(_('Action choice')   => "w_start");
       return array_merge($array, $this->fil_Part_NetDiscovery());
    }
 
@@ -395,12 +391,11 @@ class PluginFusioninventoryWizard {
     * @return array with data of breadcrumb
     **/
    function filInventorySNMP_Netdiscovery() {
-      global $LANG;
 
       $array = array(
-      $LANG['plugin_fusioninventory']['wizard'][0]   => "w_start",
-      $LANG['plugin_fusioninventory']['wizard'][1]   => "w_snmpdeviceschoice",
-      $LANG['plugin_fusioninventory']['wizard'][10]  => "");
+      _('Action choice')   => "w_start",
+      _('Type of device to inventory')   => "w_snmpdeviceschoice",
+      _('Choice (netdiscovery or inventory)')  => "");
       return array_merge($array, $this->fil_Part_NetDiscovery());
   }
 
@@ -412,16 +407,15 @@ class PluginFusioninventoryWizard {
     * @return array with data of breadcrumb
     **/
    function fil_Part_NetDiscovery() {
-      global $LANG;
 
       return array(
-      $LANG['plugin_fusioninventory']['iprange'][2]  => "w_iprange",
-      //$LANG['plugin_fusioninventory']['functionalities'][16]   => "w_authsnmp",
-      //$LANG['plugin_fusioninventory']['rules'][2]    => "w_importrules",
-      //$LANG['plugin_fusioninventory']['task'][1]     => "w_tasks",
-      $LANG['plugin_fusioninventory']['wizard'][7]   => "w_tasksforcerun",
-      $LANG['plugin_fusioninventory']['wizard'][8]   => "w_taskslog",
-      $LANG['plugin_fusioninventory']['task'][50]    => "w_tasksend");
+      _('IP Ranges')  => "w_iprange",
+      //_('SNMP authentication')   => "w_authsnmp",
+      //_('Equipment import and link rules')    => "w_importrules",
+      //_('Task management')     => "w_tasks",
+      _('Run tasks')   => "w_tasksforcerun",
+      _('Tasks running result')   => "w_taskslog",
+      _('End Task')    => "w_tasksend");
    }
 
    
@@ -438,7 +432,6 @@ class PluginFusioninventoryWizard {
     * @return Nothing (display)
     **/
    static function w_start($ariane='') {
-      global $LANG;
 
       $plugin = new Plugin();
       
@@ -448,18 +441,20 @@ class PluginFusioninventoryWizard {
       if ($plugin->isInstalled('fusinvsnmp')
          && $plugin->isActivated('fusinvsnmp')) {
          
-         $a_buttons[] = array($LANG['plugin_fusioninventory']['wizard'][12],
+         $a_buttons[] = array(_('Discover the network'),
+
                                'w_iprange',
                                'networkscan.png',
                                'filNetDiscovery');         
       }
 
-      $a_buttons[] = array($LANG['plugin_fusioninventory']['wizard'][13],
+      $a_buttons[] = array(_('Inventory devices'),
+
                                 'w_inventorychoice',
                                 'general_inventory.png',
                                 '');
 
-      echo "<center>".$LANG['plugin_fusioninventory']['wizard'][14]."</center><br/>";
+      echo "<center>"._('Welcome in FusionInventory. Begin configuration?')."</center><br/>";
 
       PluginFusioninventoryWizard::displayButtons($a_buttons, $ariane);
    }
@@ -474,7 +469,6 @@ class PluginFusioninventoryWizard {
     * @return Nothing (display)
     **/
    static function w_inventorychoice($ariane='') {
-      global $LANG;
 
       $plugin = new Plugin();
       
@@ -482,13 +476,15 @@ class PluginFusioninventoryWizard {
       if ($plugin->isInstalled('fusinvinventory')
          && $plugin->isActivated('fusinvinventory')) {
          
-//         $a_buttons[] = array($LANG['plugin_fusioninventory']['wizard'][15],
+//         $a_buttons[] = array(_('Computers and peripherals'),
+
 //                               'w_importcomputeroptions',
 //                               '',
 //                               'filInventoryComputer');
 
       
-         $a_buttons[] = array($LANG['plugin_fusioninventory']['wizard'][16],
+         $a_buttons[] = array(_('ESX servers'),
+
                                'w_remotedevices',
                                '',
                                'filInventoryESX');
@@ -496,7 +492,8 @@ class PluginFusioninventoryWizard {
       if ($plugin->isInstalled('fusinvsnmp')
          && $plugin->isActivated('fusinvsnmp')) {
          
-         $a_buttons[] = array($LANG['plugin_fusioninventory']['wizard'][17],
+         $a_buttons[] = array(_('Network devices and printers'),
+
                                 'w_iprange',
                                 'general_inventory.png',
                                 'filInventorySNMP');
@@ -911,12 +908,11 @@ class PluginFusioninventoryWizard {
    
    
    static function addButton() {
-      global $LANG;
       
       echo "<table class='tab_cadre'>";
       echo "<tr>";
       echo "<th>";
-      echo "<a href='".$_SERVER["REQUEST_URI"]."&id=0'>".ucfirst($LANG['log'][98])."</a>";
+      echo "<a href='".$_SERVER["REQUEST_URI"]."&id=0'>".ucfirst(_('add an item'))."</a>";
       echo "</th>";
       echo "</tr>";
       echo "</table>";
@@ -929,7 +925,7 @@ class PluginFusioninventoryWizard {
     * 
     */
    static function setIprange() {
-      global $LANG,$CFG_GLPI;
+      global $CFG_GLPI;
       
       $pfiprange = new PluginFusioninventoryIPRange();
       
@@ -937,14 +933,14 @@ class PluginFusioninventoryWizard {
          "/plugins/fusioninventory/front/wizard.form.php\">";
       echo "<table class='tab_cadre' width='700'>";
       echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='4'>".$LANG['plugin_fusioninventory']['iprange'][2]."</th>";
+      echo "<th colspan='4'>"._('IP Ranges')."</th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<th></th>";
-      echo "<th>".$LANG['common'][16]."</th>";         
-      echo "<th>".$LANG['plugin_fusioninventory']['iprange'][0]."</th>";
-      echo "<th>".$LANG['plugin_fusioninventory']['iprange'][1]."</th>";
+      echo "<th>"._('Name')."</th>";         
+      echo "<th>"._('Start of IP range')."</th>";
+      echo "<th>"._('End of IP range')."</th>";
       echo "</tr>";
       
       $a_ipranges = $pfiprange->find("`entities_id` IN (".$_SESSION['glpiactiveentities_string'].")");
@@ -958,7 +954,7 @@ class PluginFusioninventoryWizard {
       }
       
       echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='4'>".$LANG['common'][30]."</th>";
+      echo "<th colspan='4'>"._('New item')."</th>";
       echo "</tr>";
       
       echo "<tr class='tab_bg_1'>";
@@ -986,7 +982,7 @@ class PluginFusioninventoryWizard {
    
    
    static function setESX() {
-      global $LANG,$CFG_GLPI;
+      global $CFG_GLPI;
       
       $pfCredential = new PluginFusioninventoryCredential();
       $pfCredentialIp = new PluginFusioninventoryCredentialIp();
@@ -995,14 +991,14 @@ class PluginFusioninventoryWizard {
          "/plugins/fusioninventory/front/wizard.form.php\">";
       echo "<table class='tab_cadre' width='800'>";
       echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='5'>".$LANG['plugin_fusioninventory']['menu'][6]."</th>";
+      echo "<th colspan='5'>"._('Remote devices to inventory (VMware)')."</th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<th></th>";
-      echo "<th>".$LANG['common'][16]."</th>";         
-      echo "<th>".$LANG['plugin_fusioninventory']['credential'][4]."</th>";
-      echo "<th colspan='2'>".$LANG['networking'][14]."</th>";
+      echo "<th>"._('Name')."</th>";         
+      echo "<th>"._('Credential')."</th>";
+      echo "<th colspan='2'>"._('IP')."</th>";
       echo "</tr>";
       
       $a_credentialips = $pfCredentialIp->find("`entities_id` IN (".$_SESSION['glpiactiveentities_string'].")");
@@ -1017,7 +1013,7 @@ class PluginFusioninventoryWizard {
       }
       
       echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='5'>".$LANG['common'][30]."</th>";
+      echo "<th colspan='5'>"._('New item')."</th>";
       echo "</tr>";
       
       echo "<tr class='tab_bg_1'>";

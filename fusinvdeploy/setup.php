@@ -46,7 +46,7 @@ define ("PLUGIN_FUSINVDEPLOY_VERSION","0.84+1.0");
 
 // Init the hooks of fusinvdeploy
 function plugin_init_fusinvdeploy() {
-   global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
+   global $PLUGIN_HOOKS,$CFG_GLPI;
 
    include(GLPI_ROOT . "/plugins/fusioninventory/inc/config.class.php");
    include(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
@@ -58,10 +58,12 @@ function plugin_init_fusinvdeploy() {
             AND strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
          switch ($_GET['action']) {
             case 'activate':
-                Session::addMessageAfterRedirect($LANG['plugin_fusinvdeploy']['setup'][17]);
+                Session::addMessageAfterRedirect(_('Plugin FusionInventory DEPLOY needs FusionInventory plugin activated before activation.'));
+
                break;
             case 'uninstall':
-                Session::addMessageAfterRedirect($LANG['plugin_fusinvdeploy']['setup'][18]);
+                Session::addMessageAfterRedirect(_('Plugin FusionInventory DEPLOY needs FusionInventory plugin activated before uninstall.'));
+
                Html::redirect($CFG_GLPI["root_doc"]."/front/plugin.php");
                break;
          }
@@ -74,10 +76,12 @@ function plugin_init_fusinvdeploy() {
             AND strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
          switch ($_GET['action']) {
             case 'activate':
-                Session::addMessageAfterRedirect($LANG['plugin_fusinvdeploy']['setup'][21]);
+                Session::addMessageAfterRedirect(_('Plugin FusionInventory DEPLOY needs FusionInventory INVENTORY plugin installed before activation.'));
+
                break;
             case 'uninstall':
-                Session::addMessageAfterRedirect($LANG['plugin_fusinvdeploy']['setup'][22]);
+                Session::addMessageAfterRedirect(_('Plugin FusionInventory DEPLOY needs FusionInventory INVENTORY plugin installed before uninstall.'));
+
                Html::redirect($CFG_GLPI["root_doc"]."/front/plugin.php");
                break;
          }
@@ -97,9 +101,11 @@ function plugin_init_fusinvdeploy() {
    $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = $moduleId;
 
    if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']
-                           ['fusinvdeploy'][$LANG['plugin_fusinvdeploy']['title'][0]])) {
+                           ['fusinvdeploy'][_('1')])) {
+
       $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']
-                           ['fusinvdeploy'][$LANG['plugin_fusinvdeploy']['title'][0]] =
+                           ['fusinvdeploy'][_('1')] =
+
                               array('class'        => 'PluginFusinvdeployConfig',
                                     'submitbutton' => 'plugin_fusinvdeploy_config_set',
                                     'submitmethod' => 'putForm');
@@ -140,27 +146,32 @@ function plugin_init_fusinvdeploy() {
 
    // Breadcrumbs
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['packages']['title'] =
-      $LANG['plugin_fusinvdeploy']['package'][6];
+      _('Package management');
+
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['packages']['page'] =
       '/plugins/fusinvdeploy/front/package.php';
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['mirror']['title'] =
-      $LANG['plugin_fusinvdeploy']['mirror'][1];
+      _('Mirror servers');
+
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['mirror']['page'] =
       '/plugins/fusinvdeploy/front/mirror.php';
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['task']['title'] =
-      $LANG['plugin_fusinvdeploy']['task'][0];
+      _('Deployment tasks');
+
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['task']['page'] =
       '/plugins/fusinvdeploy/front/task.php';
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['group']['title'] =
-      $LANG['plugin_fusinvdeploy']['group'][0];
+      _('Groups of computers');
+
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['group']['page'] =
       '/plugins/fusinvdeploy/front/group.php';
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['deploy']['title'] =
-      $LANG['plugin_fusinvdeploy']['deploystatus'][0];
+      _('Deployment status');
+
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['deploy']['page'] =
       '/plugins/fusinvdeploy/front/deploystate.php';
 
@@ -172,10 +183,10 @@ function plugin_init_fusinvdeploy() {
 
 // Name and Version of the plugin
 function plugin_version_fusinvdeploy() {
-   global $LANG;
 
    return array(
-      'name'           => $LANG['plugin_fusinvdeploy']['title'][0],
+      'name'           => _('FusionInventory DEPLOY'),
+
       'shortname'      => 'fusinvdeploy',
       'version'        => PLUGIN_FUSINVDEPLOY_VERSION,
       'license'        => 'AGPLv3+',
@@ -187,21 +198,21 @@ function plugin_version_fusinvdeploy() {
 
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_fusinvdeploy_check_prerequisites() {
-   global $LANG;
-   
+
    if (version_compare(GLPI_VERSION,'0.84','lt') || version_compare(GLPI_VERSION,'0.85','ge')) {
-      echo $LANG['plugin_fusioninventory']['errors'][50];
+      echo _('Your GLPI version not compatible, require 0.83.3');
+
    } else {
       $plugin = new Plugin;
       if (!$plugin->isInstalled("fusioninventory")) {
         return false;
       }
       if (!$plugin->isActivated("fusioninventory")) {
-         print $LANG['plugin_fusinvdeploy']['setup'][17]."<br />\n";
+         print _('Plugin FusionInventory DEPLOY needs FusionInventory plugin activated before activation.')."<br />\n";
          return false;
       }
       if (!$plugin->isActivated("fusinvinventory")) {
-         print $LANG['plugin_fusinvdeploy']['setup'][21]."<br />\n";
+         print _('Plugin FusionInventory DEPLOY needs FusionInventory INVENTORY plugin installed before activation.')."<br />\n";
          return false;
       }
       return true;

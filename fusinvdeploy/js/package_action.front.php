@@ -40,7 +40,6 @@
    ------------------------------------------------------------------------
  */
 
-global $LANG;
 
 // Size of div/form/label...
 $width_left                  = 590;
@@ -73,7 +72,8 @@ $form_message4 = str_replace(
    GLPI_ROOT."/plugins/fusioninventory/front/config.form.php"
             ."?itemtype=pluginfusioninventoryconfig"
             ."&glpi_tab=PluginFusinvdeployConfig$1",
-   $LANG['plugin_fusinvdeploy']['message'][4]
+   _('Paths on MS Windows do not accept more than 255 characters, the value you entered exceeds the limit.<br /><br /><b>Do you want to continue?</b><br /><br /><div class='message_smalltext right'>You can disable this message in the <a href='##URL##'>plugin configuration</a></div>')
+
 );
 
 // Render div
@@ -81,11 +81,13 @@ if(isset($_POST["glpi_tab"])) {
    switch($_POST["glpi_tab"]){
       case 2 :
          $render = "install";
-         $title2 = $LANG['plugin_fusinvdeploy']['ftitle'][15];
+         $title2 = _('during installation');
+
          break;
       case 3 :
          $render = "uninstall";
-         $title2 = $LANG['plugin_fusinvdeploy']['ftitle'][16];
+         $title2 = _('during uninstallation');
+
          break;
    }
 }
@@ -96,61 +98,61 @@ $JS = <<<JS
 //define colums for grid
 var {$render}actionColumns =  [{
    id: '{$render}id',
-   header: '{$LANG['plugin_fusinvdeploy']['label'][10]}',
+   header: '{_('Id')}',
    width: {$column_width[0]},
    dataIndex: '{$render}id',
    hidden: true
 }, {
    id: '{$render}itemtype',
-   header: '{$LANG['plugin_fusinvdeploy']['label'][0]}',
+   header: '{_('Type')}',
    width: {$column_width[1]},
    dataIndex: '{$render}itemtype',
    renderer: {$render}renderType
 }, {
    id: '{$render}value',
-   header: '{$LANG['plugin_fusinvdeploy']['label'][2]}',
+   header: '{_('Value')}',
    width: {$column_width[2]},
    dataIndex: '{$render}value'
 }, {
    id: '{$render}exec',
    hidden:true,
-   header: '{$LANG['plugin_fusinvdeploy']['label'][11]}',
+   header: '{_('Command')}',
    width: {$column_width[3]},
    dataIndex: '{$render}exec'
 }, {
    id: '{$render}from',
    hidden:true,
-   header: '{$LANG['plugin_fusinvdeploy']['label'][16]}',
+   header: '{_('From')}',
    width: {$column_width[4]},
    dataIndex: '{$render}from'
 }, {
    id: '{$render}to',
    hidden:true,
-   header: '{$LANG['plugin_fusinvdeploy']['label'][17]}',
+   header: '{_('To')}',
    width: {$column_width[5]},
    dataIndex: '{$render}to'
 }, {
    id: '{$render}path',
    hidden:true,
-   header: '{$LANG['plugin_fusinvdeploy']['files'][1]}',
+   header: '{_('File name')}',
    width: {$column_width[6]},
    dataIndex: '{$render}path'
 }, {
    id: '{$render}messagename',
    hidden:true,
-   header: '{$LANG['plugin_fusinvdeploy']['action_message'][1]}',
+   header: '{_('Title')}',
    width: {$column_width[10]},
    dataIndex: '{$render}messagename'
 }, {
    id: '{$render}messagevalue',
    hidden:true,
-   header: '{$LANG['plugin_fusinvdeploy']['action_message'][2]}',
+   header: '{_('Content')}',
    width: {$column_width[11]},
    dataIndex: '{$render}messagevalue'
 }, {
    id: '{$render}messagetype',
    hidden:true,
-   header: '{$LANG['plugin_fusinvdeploy']['label'][0]}',
+   header: '{_('Type')}',
    width: {$column_width[12]},
    dataIndex: '{$render}messagetype'
 }, {
@@ -163,17 +165,17 @@ var {$render}actionColumns =  [{
 function {$render}renderType(val) {
    switch(val) {
       case 'PluginFusinvdeployAction_Command':
-         return '{$LANG['plugin_fusinvdeploy']['package'][1]}';
+         return '{_('Execute a command')}';
       case 'PluginFusinvdeployAction_Move':
-         return '{$LANG['plugin_fusinvdeploy']['package'][18]}';
+         return '{_('Move a file')}';
       case 'PluginFusinvdeployAction_Copy':
-         return '{$LANG['plugin_fusinvdeploy']['package'][28]}';
+         return '{_('Copy a file')}';
       case 'PluginFusinvdeployAction_Delete':
-         return '{$LANG['plugin_fusinvdeploy']['package'][20]}';
+         return '{_('Delete a file')}';
       case 'PluginFusinvdeployAction_Mkdir':
-         return '{$LANG['plugin_fusinvdeploy']['package'][27]}';
+         return '{_('Make a directory')}';
       case 'PluginFusinvdeployAction_Message':
-         return '{$LANG['plugin_fusinvdeploy']['package'][21]}';
+         return '{_('Show dialog')}';
       default:
          return '';
    }
@@ -205,10 +207,10 @@ var {$render}actionGrid = new Ext.grid.GridPanel({
    height: {$height_left},
    width: {$width_left},
    style:'margin-bottom:5px',
-   title: '{$LANG['plugin_fusinvdeploy']['ftitle'][8]} ({$title2})',
+   title: '{_('Actions to achieve')} ({$title2})',
    stateId: '{$render}actionGrid',
    tbar: [{
-      text: '{$LANG['plugin_fusinvdeploy']['ftitle'][6]}',
+      text: '{_('Add command')}',
       iconCls: 'exticon-add',
       handler: function(btn,ev) {
          var u = new {$render}actionGridStore.recordType({
@@ -226,10 +228,10 @@ var {$render}actionGrid = new Ext.grid.GridPanel({
          {$render}actionGrid.getSelectionModel().selectFirstRow();
          {$render}actionGrid.setDisabled(true);
          {$render}actionForm.buttons[1].setVisible(true);
-         {$render}actionForm.setTitle('{$LANG['plugin_fusinvdeploy']['ftitle'][6]}');
+         {$render}actionForm.setTitle('{_('Add command')}');
       }
    }, '-', {
-      text: '{$LANG['plugin_fusinvdeploy']['ftitle'][14]}',
+      text: '{_('Delete command')}',
       iconCls: 'exticon-delete',
       handler: function(btn,ev) {
          var selection = {$render}actionGrid.getSelectionModel().getSelections();
@@ -261,7 +263,7 @@ var {$render}actionGrid = new Ext.grid.GridPanel({
             if (!{$disabled}) {
                var rec = {$render}actionGrid.store.getAt(index);
                {$render}actionForm.loadData(rec);
-               {$render}actionForm.setTitle('{$LANG['plugin_fusinvdeploy']['ftitle'][7]}');
+               {$render}actionForm.setTitle('{_('Edit command')}');
                {$render}actionForm.expand();
                {$render}actionForm.buttons[0].setDisabled(false);
 
@@ -346,7 +348,7 @@ var {$render}actionGridProxyRetChecks = {
 {$render}actionGridRetChecksConfig = Ext.extend( Ext.grid.EditorGridPanel, {
    width: 295,
    height: 120,
-   /*title: '{$LANG['plugin_fusinvdeploy']['package'][22]}',*/
+   /*title: '{_('Return codes')}',*/
    /*style : 'margin:10px 0 0',*/
    initComponent: function( config ) {
       Ext.apply( this, {
@@ -359,15 +361,15 @@ var {$render}actionGridProxyRetChecks = {
                dataIndex: 'id',
                hidden: true
             }, {
-               header: '{$LANG['plugin_fusinvdeploy']['label'][0]}',
+               header: '{_('Type')}',
                dataIndex: 'type',
                width: 180,
                renderer: function(val) {
                   switch(val) {
-                     case 'RETURNCODE_OK': return '{$LANG['plugin_fusinvdeploy']['command_status'][3]}';
-                     case 'RETURNCODE_KO': return '{$LANG['plugin_fusinvdeploy']['command_status'][4]}';
-                     case 'REGEX_OK': return '{$LANG['plugin_fusinvdeploy']['command_status'][5]}';
-                     case 'REGEX_KO': return '{$LANG['plugin_fusinvdeploy']['command_status'][6]}';
+                     case 'RETURNCODE_OK': return '{_('Expected return code')}';
+                     case 'RETURNCODE_KO': return '{_('Invalid return code')}';
+                     case 'REGEX_OK': return '{_('Expected regular expression')}';
+                     case 'REGEX_KO': return '{_('Invalid regular expression')}';
                   }
                   return "";
                },
@@ -382,15 +384,15 @@ var {$render}actionGridProxyRetChecks = {
                   store: new Ext.data.ArrayStore({
                      fields: ['name', 'value'],
                      data: [
-                        ['RETURNCODE_OK', '{$LANG['plugin_fusinvdeploy']['command_status'][3]}'],
-                        ['RETURNCODE_KO', '{$LANG['plugin_fusinvdeploy']['command_status'][4]}'],
-                        ['REGEX_OK',      '{$LANG['plugin_fusinvdeploy']['command_status'][5]}'],
-                        ['REGEX_KO',      '{$LANG['plugin_fusinvdeploy']['command_status'][6]}']
+                        ['RETURNCODE_OK', '{_('Expected return code')}'],
+                        ['RETURNCODE_KO', '{_('Invalid return code')}'],
+                        ['REGEX_OK',      '{_('Expected regular expression')}'],
+                        ['REGEX_KO',      '{_('Invalid regular expression')}']
                      ]
                   })
                })
             }, {
-               header: '{$LANG['plugin_fusinvdeploy']['label'][2]}',
+               header: '{_('Value')}',
                dataIndex: 'value',
                allowBlank: false,
                width: 100,
@@ -403,7 +405,7 @@ var {$render}actionGridProxyRetChecks = {
          }),
          tbar: new Ext.Toolbar({
             items: [{
-               text: '{$LANG['plugin_fusinvdeploy']['action'][6]}',
+               text: '{_('Add return code')}',
                iconCls: 'exticon-add',
                handler: function(btn,ev) {
                   var u = new {$render}ActionGridRetChecks.store.recordType({
@@ -416,7 +418,7 @@ var {$render}actionGridProxyRetChecks = {
                   {$render}ActionGridRetChecks.getSelectionModel().selectFirstRow();
                }
             }, '-', {
-               text: '{$LANG['plugin_fusinvdeploy']['action'][7]}',
+               text: '{_('Delete return code')}',
                iconCls: 'exticon-delete',
                handler: function(btn,ev) {
                   var selection = {$render}ActionGridRetChecks.getSelectionModel().getSelections();
@@ -437,7 +439,7 @@ var {$render}actionGridProxyRetChecks = {
 
 /**** DEFINE DYNAMIC FIELDSETS ****/
 var {$render}Command_fieldset_item_default = [{
-      fieldLabel: '{$LANG['plugin_fusinvdeploy']['label'][11]}',
+      fieldLabel: '{_('Command')}',
       name: '{$render}exec',
       xtype:  'textarea',
       width: {$field_width},
@@ -446,7 +448,7 @@ var {$render}Command_fieldset_item_default = [{
 ];
 
 var {$render}Command_fieldset_item_PluginFusinvdeployAction_Command = [{
-      fieldLabel: '{$LANG['plugin_fusinvdeploy']['label'][11]}',
+      fieldLabel: '{_('Command')}',
       name: '{$render}exec',
       xtype:  'textarea',
       width: {$field_width},
@@ -455,12 +457,12 @@ var {$render}Command_fieldset_item_PluginFusinvdeployAction_Command = [{
 ];
 
 var {$render}Command_fieldset_item_PluginFusinvdeployAction_Move = [{
-      fieldLabel: '{$LANG['plugin_fusinvdeploy']['label'][16]}',
+      fieldLabel: '{_('From')}',
       name: '{$render}from',
       xtype: 'textarea',
       width: {$field_width}
    } , {
-      fieldLabel:'{$LANG['plugin_fusinvdeploy']['label'][17]}',
+      fieldLabel:'{_('To')}',
       name: '{$render}to',
       xtype: 'textarea',
       width: {$field_width}
@@ -468,12 +470,12 @@ var {$render}Command_fieldset_item_PluginFusinvdeployAction_Move = [{
 ];
 
 var {$render}Command_fieldset_item_PluginFusinvdeployAction_Copy = [{
-      fieldLabel: '{$LANG['plugin_fusinvdeploy']['label'][16]}',
+      fieldLabel: '{_('From')}',
       name: '{$render}from',
       xtype: 'textarea',
       width: {$field_width}
    } , {
-      fieldLabel:'{$LANG['plugin_fusinvdeploy']['label'][17]}',
+      fieldLabel:'{_('To')}',
       name: '{$render}to',
       xtype: 'textarea',
       width: {$field_width}
@@ -481,7 +483,7 @@ var {$render}Command_fieldset_item_PluginFusinvdeployAction_Copy = [{
 ];
 
 var {$render}Command_fieldset_item_PluginFusinvdeployAction_Delete = [{
-      fieldLabel: '{$LANG['plugin_fusinvdeploy']['label'][5]}',
+      fieldLabel: '{_('File')}',
       name: '{$render}path',
       xtype: 'textarea',
       width: {$field_width},
@@ -490,7 +492,7 @@ var {$render}Command_fieldset_item_PluginFusinvdeployAction_Delete = [{
 ];
 
 var {$render}Command_fieldset_item_PluginFusinvdeployAction_Mkdir = [{
-      fieldLabel: '{$LANG['plugin_fusinvdeploy']['label'][1]}',
+      fieldLabel: '{_('Name')}',
       name: '{$render}path',
       xtype: 'textarea',
       width: {$field_width},
@@ -499,29 +501,29 @@ var {$render}Command_fieldset_item_PluginFusinvdeployAction_Mkdir = [{
 ];
 
 var {$render}Command_fieldset_item_PluginFusinvdeployAction_Message = [{
-      fieldLabel: '{$LANG['plugin_fusinvdeploy']['action_message'][1]}',
+      fieldLabel: '{_('Title')}',
       name: '{$render}messagename',
       xtype: 'textfield'
    } , {
-      fieldLabel: '{$LANG['plugin_fusinvdeploy']['action_message'][2]}',
+      fieldLabel: '{_('Content')}',
       name: '{$render}messagevalue',
       xtype:  'textarea',
       width: {$field_width},
       height : {$field_height}
    } , {
-      fieldLabel: '{$LANG['plugin_fusinvdeploy']['label'][0]}',
+      fieldLabel: '{_('Type')}',
       name: '{$render}messagetype',
       hiddenName : '{$render}messagetype',
       xtype : 'combo',
       valueField: 'name',
       displayField: 'value',
       width: 215,
-      emptyText : '{$LANG['plugin_fusinvdeploy']['label'][0]}',
+      emptyText : '{_('Type')}',
       store: new Ext.data.ArrayStore({
          fields: ['name', 'value'],
          data: [
-            ['INFO',       '{$LANG['plugin_fusinvdeploy']['action_message'][4]}'],
-            ['POSTPONE',   '{$LANG['plugin_fusinvdeploy']['action_message'][5]}']
+            ['INFO',       '{_('Informations')}'],
+            ['POSTPONE',   '{_('report of the install')}']
          ]
       }),
       mode: 'local',
@@ -613,7 +615,7 @@ var {$render}actionForm = new Ext.FormPanel({
    collapsed: true,
    labelWidth: {$label_width},
    frame: true,
-   title: '{$LANG['plugin_fusinvdeploy']['ftitle'][7]}',
+   title: '{_('Edit command')}',
    bodyStyle:'padding:5px 10px',
    style:'margin-left:5px;margin-bottom:5px',
    width: {$width_right},
@@ -623,7 +625,7 @@ var {$render}actionForm = new Ext.FormPanel({
       xtype: 'hidden'
    },
    new Ext.form.ComboBox({
-      fieldLabel:'{$LANG['plugin_fusinvdeploy']['label'][0]}',
+      fieldLabel:'{_('Type')}',
       name: 'type_name',
       valueField: 'name',
       width: {$field_width},
@@ -633,12 +635,12 @@ var {$render}actionForm = new Ext.FormPanel({
       store: new Ext.data.ArrayStore({
          fields: ['name', 'value'],
          data: [
-            ['PluginFusinvdeployAction_Command', '{$LANG['plugin_fusinvdeploy']['package'][1]}'],
-            ['PluginFusinvdeployAction_Move',    '{$LANG['plugin_fusinvdeploy']['package'][18]}'],
-            ['PluginFusinvdeployAction_Copy',    '{$LANG['plugin_fusinvdeploy']['package'][28]}'],
-            ['PluginFusinvdeployAction_Delete',  '{$LANG['plugin_fusinvdeploy']['package'][20]}'],
-            ['PluginFusinvdeployAction_Mkdir',   '{$LANG['plugin_fusinvdeploy']['package'][27]}']/*,
-            ['PluginFusinvdeployAction_Message', '{$LANG['plugin_fusinvdeploy']['package'][21]}']*/
+            ['PluginFusinvdeployAction_Command', '{_('Execute a command')}'],
+            ['PluginFusinvdeployAction_Move',    '{_('Move a file')}'],
+            ['PluginFusinvdeployAction_Copy',    '{_('Copy a file')}'],
+            ['PluginFusinvdeployAction_Delete',  '{_('Delete a file')}'],
+            ['PluginFusinvdeployAction_Mkdir',   '{_('Make a directory')}']/*,
+            ['PluginFusinvdeployAction_Message', '{_('Show dialog')}']*/
          ]
       }),
       mode: 'local',
@@ -651,7 +653,7 @@ var {$render}actionForm = new Ext.FormPanel({
    {$render}Command_dynFieldset
    ],
    buttons: [{
-      text: '{$LANG['plugin_fusinvdeploy']['action'][2]}',
+      text: '{_('OK')}',
       iconCls: 'exticon-save',
       disabled:true,
       handler: function(btn,ev) {
@@ -660,7 +662,7 @@ var {$render}actionForm = new Ext.FormPanel({
          {$render}actionForm.buttons[1].setVisible(false);
       }
    }, {
-      text: '{$LANG['buttons'][34]}',
+      text: '{_('Cancel')}',
       iconCls: 'exticon-cancel',
       name : '{$render}cancelbtn',
       id : '{$render}Actioncancelbtn',
@@ -699,11 +701,11 @@ var {$render}actionForm = new Ext.FormPanel({
 
 var {$render}actionFormSave = function() {
    if ({$render}actionForm.record == null) {
-      Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['message'][0]}');
+      Ext.MessageBox.alert('Erreur', '{_('Empty form')}');
       return;
    }
    if (!{$render}actionForm.getForm().isValid()) {
-      Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['message'][0]}');
+      Ext.MessageBox.alert('Erreur', '{_('Empty form')}');
       return false;
    }
 
@@ -721,7 +723,7 @@ var {$render}actionFormSubmit = function() {
 
    {$render}actionForm.getForm().submit({
       url : '../ajax/package_action.save.php?package_id={$id}&render={$render}',
-      waitMsg: '{$LANG['plugin_fusinvdeploy']['message'][2]}',
+      waitMsg: '{_('Loading...')}',
       success: function(fileForm, o){
          {$render}actionGridStore.reload({
             callback: function() {
@@ -770,7 +772,7 @@ var {$render}checkActionValue = function(data) {
    //show alert
    if (alert_user && {$alert_winpath}) {
       Ext.Msg.show({
-         title: "{$LANG['plugin_fusinvdeploy']['message'][5]}",
+         title: "{_('Attention')}",
          msg: "{$form_message4}",
          buttons: Ext.Msg.YESNO,
          icon: Ext.MessageBox.WARNING,

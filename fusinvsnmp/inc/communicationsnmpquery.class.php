@@ -137,7 +137,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     *@return errors string to be alimented if import ko / '' if ok
     **/
    function importContent($p_content) {
-      global $LANG;
 
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->importContent().');
@@ -195,7 +194,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                break;
             
             default :
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] '.$LANG['plugin_fusioninventory']['errors'][22].' CONTENT : '.$child->getName();
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] '._('Unattended element in').' CONTENT : '.$child->getName();
                $this->addtaskjoblog();
          }
       }
@@ -207,14 +206,12 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    /**
     * Import one device
     *
-    * @global type $LANG
     * @param type $itemtype
     * @param type $items_id
     * 
     * @return errors string to be alimented if import ko / '' if ok 
     */
    function importDevice($itemtype, $items_id) {
-      global $LANG;
 
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->importDevice().');
@@ -248,7 +245,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             break;
          
          default:
-            $errors.=$LANG['plugin_fusioninventory']['errors'][22].' TYPE : '
+            $errors.=_('Unattended element in').' TYPE : '
                               .$p_xml->INFO->TYPE."\n";
       }
       if (!isset($p_xml->ERROR)) {
@@ -277,7 +274,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                      }
                   
                   default:
-                     $errors.=$LANG['plugin_fusioninventory']['errors'][22].' DEVICE : '
+                     $errors.=_('Unattended element in').' DEVICE : '
                               .$child->getName()."\n";
                }
             }
@@ -327,7 +324,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     * @return errors string to be alimented if import ko / '' if ok
     **/
    function importInfoNetworking($p_info) {
-      global $LANG;
       
       $errors='';
       $this->ptd = new PluginFusioninventoryNetworkEquipment();
@@ -425,7 +421,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                break;
             
             default:
-               $errors.=$LANG['plugin_fusioninventory']['errors'][22].' INFO : '.$child->getName()."\n";
+               $errors.=_('Unattended element in').' INFO : '.$child->getName()."\n";
                
          }
       }
@@ -442,7 +438,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     * @return errors string to be alimented if import ko / '' if ok
     **/
    function importInfoPrinter($p_info) {
-      global $LANG;
 
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->importInfoPrinter().');
@@ -527,7 +522,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                break;
                
             default:
-               $errors.=$LANG['plugin_fusioninventory']['errors'][22].' INFO : '.$child->getName()."\n";
+               $errors.=_('Unattended element in').' INFO : '.$child->getName()."\n";
          
          }
       }
@@ -545,7 +540,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     * @return errors string to be alimented if import ko / '' if ok
     **/
    function importIps($p_ips, $networkequipments_id) {
-      global $LANG;
 
       $errors='';
       $pfNetworkEquipmentIP = new PluginFusinvsnmpNetworkEquipmentIP();
@@ -570,7 +564,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                break;
                
             default:
-               $errors.=$LANG['plugin_fusioninventory']['errors'][22].' IPs : '.$child->getName()."\n";
+               $errors.=_('Unattended element in').' IPs : '.$child->getName()."\n";
                
          }
       }
@@ -588,7 +582,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     * @return errors string to be alimented if import ko / '' if ok
     **/
    function importPorts($p_ports) {
-      global $LANG;
 
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->importPorts().');
@@ -605,7 +598,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                break;
                
             default:
-               $errors.=$LANG['plugin_fusioninventory']['errors'][22].' PORTS : '.$child->getName()."\n";
+               $errors.=_('Unattended element in').' PORTS : '.$child->getName()."\n";
                
          }
       }
@@ -631,7 +624,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     * @return errors string to be alimented if import ko / '' if ok
     **/
    function importPortNetworking($p_port) {
-      global $LANG;
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->importPortNetworking().');
       $errors='';
@@ -745,7 +737,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   break;
                
                default:
-                  $errors.=$LANG['plugin_fusioninventory']['errors'][22].' PORT : '.$name."\n";
+                  $errors.=_('Unattended element in').' PORT : '.$name."\n";
             }
          }
          if ($trunk == "0") {
@@ -778,7 +770,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     * @return errors string to be alimented if import ko / '' if ok
     **/
    function importPortPrinter($p_port) {
-      global $LANG;
 
       $errors='';
       $pfNetworkPort = new PluginFusinvsnmpNetworkPort('Printer');
@@ -842,7 +833,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   break;
                
                default:
-                  $errors.=$LANG['plugin_fusioninventory']['errors'][22].' PORT : '.$name."\n";
+                  $errors.=_('Unattended element in').' PORT : '.$name."\n";
             }
          }
          // Update
@@ -868,7 +859,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     * @return errors string to be alimented if import ko / '' if ok
     **/
    function importCartridges($p_cartridges) {
-      global $LANG;
 
       $pfMapping = new PluginFusioninventoryMapping();
       $errors='';
@@ -898,7 +888,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $pfPrinterCartridge->add($input);               
             }            
          } else {
-            $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] '.$LANG['plugin_fusioninventory']['errors'][22].' CARTRIDGES : '.$name;
+            $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] '._('Unattended element in').' CARTRIDGES : '.$name;
             $this->addtaskjoblog();
          }
       }
@@ -914,7 +904,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     *@return errors string to be alimented if import ko / '' if ok
     **/
    function importPageCounters($p_pagecounters) {
-      global $LANG;
 
       $pfPrinterLog = new PluginFusinvsnmpPrinterLog();
       //See if have an entry today
@@ -985,7 +974,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                break;
             
             default:
-               $errors.=$LANG['plugin_fusioninventory']['errors'][22].' PAGECOUNTERS : '.$name."\n";
+               $errors.=_('Unattended element in').' PAGECOUNTERS : '.$name."\n";
                
          }
       }
@@ -1003,7 +992,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     *@return errors string to be alimented if import ko / '' if ok
     **/
    function importConnections($p_connections, $pfNetworkPort) {
-      global $LANG;
 
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->importConnections().');
@@ -1014,7 +1002,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          if ($cdp==1) {
             $pfNetworkPort->setCDP();
          } else {
-            $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CONNECTIONS : CDP='.$cdp."\n";
+            $errors.=_('Unattended element in').' CONNECTIONS : CDP='.$cdp."\n";
          }
       }
       $count = 0;
@@ -1054,7 +1042,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                break;
                
             default:
-               $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CONNECTIONS : '
+               $errors.=_('Unattended element in').' CONNECTIONS : '
                         .$child->getName()."\n";
          }
       }
@@ -1073,7 +1061,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     * @return errors string to be alimented if import ko / '' if ok
     **/
    function  importConnection($p_connection, $pfNetworkPort, $p_cdp) {
-      global $LANG;
 
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->importConnection().');
@@ -1095,7 +1082,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   break;
 
                default:
-                  $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CONNECTION (CDP='.$p_cdp.') : '
+                  $errors.=_('Unattended element in').' CONNECTION (CDP='.$p_cdp.') : '
                            .$child->getName()."\n";
                   
             }             
@@ -1120,7 +1107,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   break;
                
                default:
-                  $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CONNECTION (CDP='.$p_cdp.') : '
+                  $errors.=_('Unattended element in').' CONNECTION (CDP='.$p_cdp.') : '
                            .$child->getName()."\n";
                   
             }
@@ -1139,7 +1126,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     *@return errors string to be alimented if import ko / '' if ok
     **/
    function importVlans($p_vlans, $pfNetworkPort) {
-      global $LANG;
 
       $errors='';
       foreach ($p_vlans->children() as $child) {
@@ -1150,7 +1136,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                break;
             
             default :
-               $errors.=$LANG['plugin_fusioninventory']['errors'][22].' VLANS : '.$child->getName()."\n";
+               $errors.=_('Unattended element in').' VLANS : '.$child->getName()."\n";
                
          }
       }
@@ -1166,7 +1152,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     *@return errors string to be alimented if import ko / '' if ok
     **/
    function importVlan($p_vlan, $pfNetworkPort) {
-      global $LANG;
 
       $errors='';
       $number=''; 
@@ -1183,7 +1168,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                break;
             
             default:
-               $errors.=$LANG['plugin_fusioninventory']['errors'][22].' VLAN : '.$child->getName()."\n";
+               $errors.=_('Unattended element in').' VLAN : '.$child->getName()."\n";
                
          }
       }

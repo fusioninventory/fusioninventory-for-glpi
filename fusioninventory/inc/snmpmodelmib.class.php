@@ -90,20 +90,20 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
                $nb_col++;
             }
             echo "<table class='tab_cadre_fixe'><tr><th colspan='".$nb_col."'>";
-            echo $LANG['plugin_fusinvsnmp']['mib'][5]."</th></tr>";
+            echo _('OID list')."</th></tr>";
 
             echo "<tr class='tab_bg_1'>";
             echo "<th align='center'></th>";
-            echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['mib'][1]."</th>";
-            echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['mib'][2]."</th>";
-            echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['mib'][3]."</th>";
-            echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['mib'][6]."</th>";
-            echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['mib'][7]."</th>";
-            echo "<th align='center' width='250'>".$LANG['plugin_fusinvsnmp']['mib'][8]."</th>";
+            echo "<th align='center'>"._('MIB Label')."</th>";
+            echo "<th align='center'>"._('Object')."</th>";
+            echo "<th align='center'>"._('OID')."</th>";
+            echo "<th align='center'>"._('Port Counters')."</th>";
+            echo "<th align='center'>"._('Dynamic port (.x)')."</th>";
+            echo "<th align='center' width='250'>"._('Linked fields')."</th>";
             if ($type_model == NETWORKING_TYPE) {
-               echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['mapping'][119]."</th>";
+               echo "<th align='center'>"._('VLAN')."</th>";
             }
-            echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['model_info'][11]."</th>";
+            echo "<th align='center'>"._('is_active')."</th>";
 
             echo "</tr>";
             while ($data=$DB->fetch_array($result)) {
@@ -155,13 +155,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
                echo "<td align='center'>";
                $mapping = new PluginFusioninventoryMapping();
                $mapping->getFromDB($data['plugin_fusioninventory_mappings_id']);
-               if (isset($mapping->fields['locale'])) {
-                  if (!isset($LANG['plugin_fusinvsnmp']['mapping'][$mapping->fields['locale']])) {
-                     echo "(".$mapping->fields['name'].")";
-                  } else {
-                     echo $LANG['plugin_fusinvsnmp']['mapping'][$mapping->fields['locale']]." (".$mapping->fields['name'].")";
-                  }
-               }
+               echo $mapping->getTranslation($mapping->fields['locale'])." (".$mapping->fields['name'].")";
                if (isset($mapping->fields['id'])) {
                   $mappings_used[$mapping->fields['id']] = 1;
                }
@@ -200,14 +194,14 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
             echo "<tr>";
             echo "<td><img src=\"".$CFG_GLPI["root_doc"]."/pics/arrow-left.png\" alt=''></td>
                   <td align='center'><a onclick= \"if ( markCheckboxes('oid_list') ) return false;\"
-                      href='".$_SERVER['PHP_SELF']."?select=all'>".$LANG["buttons"][18]."</a></td>";
+                      href='".$_SERVER['PHP_SELF']."?select=all'>"._('Check All')."</a></td>";
             echo "<td>/</td><td align='center'><a onclick= \"if ( unMarkCheckboxes('oid_list') )
                      return false;\" href='".$_SERVER['PHP_SELF']."?select=none'>".
-                     $LANG["buttons"][19]."</a>";
+                     _('Uncheck All')."</a>";
             echo "</td><td align='left' colspan='6' width='80%'>";
             if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
                echo "<input class='submit' type='submit' name='delete_oid' value='" .
-                     $LANG["buttons"][6] . "'>";
+                     _('Delete') . "'>";
             }
             echo "</td>";
             echo "</tr>";
@@ -228,7 +222,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
    
 
    function showFormAdd($id, $type_model, $mappings_used) {
-      global $CFG_GLPI,$LANG;
+      global $CFG_GLPI;
 
       echo "<br>";
       $target = $CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/model.form.php';
@@ -238,18 +232,19 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
       echo "<br/>";
       echo "<table class='tab_cadre_fixe'>";
 
-      echo "<tr class='tab_bg_1'><th colspan='7'>".$LANG['plugin_fusinvsnmp']['mib'][4].
+      echo "<tr class='tab_bg_1'><th colspan='7'>"._('add an OID...').
+
                "</th></tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['mib'][1]."</th>";
-      echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['mib'][2]."</th>";
-      echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['mib'][3]."</th>";
-      echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['mib'][6]."</th>";
-      echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['mib'][7]."</th>";
-      echo "<th align='center' width='250'>".$LANG['plugin_fusinvsnmp']['mib'][8]."</th>";
+      echo "<th align='center'>"._('MIB Label')."</th>";
+      echo "<th align='center'>"._('Object')."</th>";
+      echo "<th align='center'>"._('OID')."</th>";
+      echo "<th align='center'>"._('Port Counters')."</th>";
+      echo "<th align='center'>"._('Dynamic port (.x)')."</th>";
+      echo "<th align='center' width='250'>"._('Linked fields')."</th>";
       if ($type_model == NETWORKING_TYPE) {
-         echo "<th align='center'>".$LANG["networking"][56]."</th>";
+         echo "<th align='center'>"._('VLAN')."</th>";
       }
       echo "</tr>";
 
@@ -285,11 +280,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
       $oMapping = new PluginFusioninventoryMapping();
       $mappings = $oMapping->find("`itemtype`='".$type_model."'");
       foreach ($mappings as $mapping) {
-         if (!isset($LANG['plugin_fusinvsnmp']['mapping'][$mapping['locale']])) {
-            $types[$mapping['id']] = $mapping['name'];
-         } else {
-            $types[$mapping['id']]=$LANG['plugin_fusinvsnmp']['mapping'][$mapping['locale']];
-         }
+         $types[$mapping['id']]=$mapping->getTranslation($mapping);
       }
 
       Dropdown::showFromArray("plugin_fusioninventory_mappings_id",$types,
@@ -308,7 +299,8 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
       echo "<tr class='tab_bg_1'><td colspan='7' align='center'>";
       if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
          echo "<input type='hidden' name='plugin_fusioninventory_snmpmodels_id' value='".$id."'/>";
-         echo "<input type='submit' name='add_oid' value=\"".$LANG["buttons"][2].
+         echo "<input type='submit' name='add_oid' value=\""._('Post').
+
                "\" class='submit' >";
       }
       echo "</td>";

@@ -47,11 +47,11 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 
    function getSearchOptions() {
-      global $LANG;
 
       $tab = array();
     
-      $tab['common'] = $LANG['plugin_fusinvsnmp']['prt_history'][20];
+      $tab['common'] = _('History meter printer');
+
 
       $tab[1]['table'] = $this->getTable();
       $tab[1]['field'] = 'id';
@@ -60,7 +60,8 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       $tab[2]['table'] = "glpi_printers";
       $tab[2]['field'] = 'name';
       $tab[2]['linkfield'] = 'printers_id';
-      $tab[2]['name'] = $LANG['common'][16];
+      $tab[2]['name'] = _('Name');
+
       $tab[2]['datatype'] = 'itemlink';
       $tab[2]['itemlink_type']  = 'Printer';
 //      $tab[2]['forcegroupby'] = true;
@@ -69,7 +70,8 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 //      $tab[1]['table'] = "glpi_printers";
 //      $tab[1]['field'] = 'name';
 //      $tab[1]['linkfield'] = 'printers_id';
-//      $tab[1]['name'] = $LANG['common'][16];
+//      $tab[1]['name'] = _('Name');
+
 //      $tab[1]['datatype'] = 'itemlink';
 //      $tab[1]['itemlink_type']  = 'Printer';
 //      $tab[1]['forcegroupby'] = true;
@@ -77,118 +79,140 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       $tab[24]['table'] = 'glpi_locations';
       $tab[24]['field'] = 'name';
       $tab[24]['linkfield'] = 'locations_id';
-      $tab[24]['name'] = $LANG['common'][15];
+      $tab[24]['name'] = _('Location');
+
       $tab[24]['datatype'] = 'itemlink';
       $tab[24]['itemlink_type'] = 'Location';
 
       $tab[19]['table'] = 'glpi_printertypes';
       $tab[19]['field'] = 'name';
       $tab[19]['linkfield'] = 'printertypes_id';
-      $tab[19]['name'] = $LANG['common'][17];
+      $tab[19]['name'] = _('Type');
+
       $tab[19]['datatype'] = 'itemlink';
       $tab[19]['itemlink_type'] = 'PrinterType';
 
 //      $tab[2]['table'] = 'glpi_printermodels';
 //      $tab[2]['field'] = 'name';
 //      $tab[2]['linkfield'] = 'printermodels_id';
-//      $tab[2]['name'] = $LANG['common'][22];
+//      $tab[2]['name'] = _('Model');
+
 //      $tab[2]['datatype']='itemptype';
 //
       $tab[18]['table'] = 'glpi_states';
       $tab[18]['field'] = 'name';
       $tab[18]['linkfield'] = 'states_id';
-      $tab[18]['name'] = $LANG['state'][0];
+      $tab[18]['name'] = _('Status');
+
       $tab[18]['datatype']='itemptype';
 
       $tab[20]['table'] = 'glpi_printers';
       $tab[20]['field'] = 'serial';
       $tab[20]['linkfield'] = 'printers_id';
-      $tab[20]['name'] = $LANG['common'][19];
+      $tab[20]['name'] = _('Serial Number');
+
 
       $tab[23]['table'] = 'glpi_printers';
       $tab[23]['field'] = 'otherserial';
       $tab[23]['linkfield'] = 'printers_id';
-      $tab[23]['name'] = $LANG['common'][20];
+      $tab[23]['name'] = _('Inventory number');
+
 
       $tab[21]['table'] = 'glpi_users';
       $tab[21]['field'] = 'name';
       $tab[21]['linkfield'] = 'users_id';
-      $tab[21]['name'] = $LANG['common'][34];
+      $tab[21]['name'] = _('User');
+
 
       $tab[3]['table'] = 'glpi_manufacturers';
       $tab[3]['field'] = 'name';
       $tab[3]['linkfield'] = 'manufacturers_id';
-      $tab[3]['name'] = $LANG['common'][5];
+      $tab[3]['name'] = _('Manufacturer');
+
 
       $tab[5]['table'] = 'glpi_networkports';
       $tab[5]['field'] = 'ip';
       $tab[5]['linkfield'] = 'printers_id';
-      $tab[5]['name'] = $LANG['networking'][14];
+      $tab[5]['name'] = _('IP');
+
 
 //      $tab[4]['table'] = 'glpi_infocoms';
 //      $tab[4]['field'] = 'budget';
 //      $tab[4]['linkfield'] = '';
-//      $tab[4]['name'] = $LANG['financial'][87];
+//      $tab[4]['name'] = _('Budget');
+
 
       $tab[6]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[6]['field'] = 'pages_total';
       $tab[6]['linkfield'] = 'id';
-      $tab[6]['name'] = $LANG['plugin_fusinvsnmp']["mapping"][128];
+      $tab[6]['name'] = _('Total number of printed pages');
+
 
       $tab[7]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[7]['field'] = 'pages_n_b';
       $tab[7]['linkfield'] = 'id';
-      $tab[7]['name'] = $LANG['plugin_fusinvsnmp']["mapping"][129];
+      $tab[7]['name'] = _('Number of printed black and white pages');
+
 
       $tab[8]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[8]['field'] = 'pages_color';
       $tab[8]['linkfield'] = 'id';
-      $tab[8]['name'] = $LANG['plugin_fusinvsnmp']["mapping"][130];
+      $tab[8]['name'] = _('Number of printed color pages');
+
 
       $tab[9]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[9]['field'] = 'pages_recto_verso';
       $tab[9]['linkfield'] = 'id';
-      $tab[9]['name'] = $LANG['plugin_fusinvsnmp']["mapping"][154];
+      $tab[9]['name'] = _('Number of pages printed duplex');
+
 
       $tab[10]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[10]['field'] = 'scanned';
       $tab[10]['linkfield'] = 'id';
-      $tab[10]['name'] = $LANG['plugin_fusinvsnmp']["mapping"][155];
+      $tab[10]['name'] = _('Number of scanned pages');
+
 
       $tab[11]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[11]['field'] = 'pages_total_print';
       $tab[11]['linkfield'] = 'id';
-      $tab[11]['name'] = $LANG['plugin_fusinvsnmp']["mapping"][1423];
+      $tab[11]['name'] = _('Total number of printed pages (print)');
+
 
       $tab[12]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[12]['field'] = 'pages_n_b_print';
       $tab[12]['linkfield'] = 'id';
-      $tab[12]['name'] = $LANG['plugin_fusinvsnmp']["mapping"][1424];
+      $tab[12]['name'] = _('Number of printed black and white pages (print)');
+
 
       $tab[13]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[13]['field'] = 'pages_color_print';
       $tab[13]['linkfield'] = 'id';
-      $tab[13]['name'] = $LANG['plugin_fusinvsnmp']["mapping"][1425];
+      $tab[13]['name'] = _('Number of printed color pages (print)');
+
 
       $tab[14]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[14]['field'] = 'pages_total_copy';
       $tab[14]['linkfield'] = 'id';
-      $tab[14]['name'] = $LANG['plugin_fusinvsnmp']["mapping"][1426];
+      $tab[14]['name'] = _('Total number of printed pages (copy)');
+
 
       $tab[15]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[15]['field'] = 'pages_n_b_copy';
       $tab[15]['linkfield'] = 'id';
-      $tab[15]['name'] = $LANG['plugin_fusinvsnmp']["mapping"][1427];
+      $tab[15]['name'] = _('Number of printed black and white pages (copy)');
+
 
       $tab[16]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[16]['field'] = 'pages_color_copy';
       $tab[16]['linkfield'] = 'id';
-      $tab[16]['name'] = $LANG['plugin_fusinvsnmp']["mapping"][1428];
+      $tab[16]['name'] = _('Number of printed color pages (copy)');
+
 
       $tab[17]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[17]['field'] = 'pages_total_fax';
       $tab[17]['linkfield'] = 'id';
-      $tab[17]['name'] = $LANG['plugin_fusinvsnmp']["mapping"][1429];
+      $tab[17]['name'] = _('Total number of printed pages (fax)');
+
 
       return $tab;
    }
@@ -263,7 +287,6 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 
 
    function showForm($id, $options=array()) {
-      global $LANG;
       
       if (!PluginFusioninventoryProfile::haveRight("fusinvsnmp", "printer","r")) {
          return false;
@@ -276,11 +299,11 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
          $this->showFormHeader($options);
          
          echo "<tr class='tab_bg_1'>";
-         echo "<td>".$LANG['plugin_fusinvsnmp']['prt_history'][12]." : </td>";
+         echo "<td>"._('Total printed pages')." : </td>";
          echo "<td>".$stats["num_pages"]."</td></tr>";
          
          echo "<tr class='tab_bg_1'>";
-         echo "<td>".$LANG['plugin_fusinvsnmp']['prt_history'][13]." : </td>";
+         echo "<td>"._('Pages / day')." : </td>";
          echo "<td>".$stats["pages_per_day"]."</td></tr>";
          
          echo "</table></div>";
@@ -312,12 +335,12 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
                  id='printer_history_form'  action=\"".Toolbox::getItemTypeFormURL(__CLASS__)."\">";
 
       echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='3'>";
-      echo $LANG['plugin_fusinvsnmp']['prt_history'][20]." :</th></tr>";
+      echo _('History meter printer')." :</th></tr>";
       
       echo "<tr class='tab_bg_1'>";
       echo "<th></th>";
-      echo "<th>".$LANG['plugin_fusinvsnmp']['prt_history'][21]." :</th>";
-      echo "<th>".$LANG['plugin_fusinvsnmp']['prt_history'][22]." :</th></tr>";
+      echo "<th>"._('Date')." :</th>";
+      echo "<th>"._('Meter')." :</th></tr>";
 
       for ($i=0 ; $i<$limit ; $i++) {
          echo "<tr class='tab_bg_1'>";
@@ -338,10 +361,10 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       echo "<tr class='tab_bg_1'><td colspan='3'>";
       echo "<div align='center'><a onclick= \"if (markAllRows('printer_history_form')) 
                  return false;\"
-                 href='".$_SERVER['PHP_SELF']."?select=all'>".$LANG["buttons"][18]."</a>";
+                 href='".$_SERVER['PHP_SELF']."?select=all'>"._('Check All')."</a>";
       echo " - <a onclick= \"if ( unMarkAllRows('printer_history_form') ) return false;\"
-                  href='".$_SERVER['PHP_SELF']."?select=none'>".$LANG["buttons"][19]."</a> ";
-      echo "<input type='submit' name='delete' value=\"".$LANG["buttons"][6]."\" class='submit' >
+                  href='".$_SERVER['PHP_SELF']."?select=none'>"._('Uncheck All')."</a> ";
+      echo "<input type='submit' name='delete' value=\""._('Delete')."\" class='submit' >
             </div></td></tr>";
       echo "</table>";
       Html::closeForm();
@@ -354,7 +377,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
     * Show printer graph form
     **/
    function showGraph($id, $options=array()) {
-      global $LANG, $DB,$CFG_GLPI;
+      global $DB,$CFG_GLPI;
 
       $where=''; $begin=''; $end=''; $timeUnit='day'; $graphField='pages_total'; $pagecounters = array();$graphType='day';
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_begin'])) {
@@ -448,40 +471,47 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
          if (!isset($mapfields["shortlocale"])) {
             $mapfields["shortlocale"] = $mapfields["locale"];
          }
-         $pagecounters[$mapfields['name']] = $LANG['plugin_fusinvsnmp']['mapping'][$mapfields["shortlocale"]];
+         $pagecounters[$mapfields['name']] = $mapping->getTranslation($mapfields);
       }
 
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='4'>";
-      echo $LANG['plugin_fusinvsnmp']['report'][1];
+      echo _('Printed page counter');
+
       echo "</th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td class='left'>".$LANG['search'][8]."&nbsp;:</td>";
+      echo "<td class='left'>"._('Start date')."&nbsp;:</td>";
       echo "<td class='left'>";
       Html::showDateFormItem("graph_begin", $begin);
       echo "</td>";
-      echo "<td class='left'>".$LANG['plugin_fusinvsnmp']['prt_history'][31]."&nbsp;:</td>";
+      echo "<td class='left'>"._('Time unit')."&nbsp;:</td>";
       echo "<td class='left'>";
-      $elementsTime=array('day'=>$LANG['plugin_fusinvsnmp']['prt_history'][34],
-                          'week'=>$LANG['plugin_fusinvsnmp']['prt_history'][35],
-                          'month'=>$LANG['plugin_fusinvsnmp']['prt_history'][36],
-                          'year'=>$LANG['plugin_fusinvsnmp']['prt_history'][37]);
+      $elementsTime=array('day'=>_('day'),
+
+                          'week'=>_('week'),
+
+                          'month'=>_('month'),
+
+                          'year'=>_('year'));
+
       Dropdown::showFromArray('graph_timeUnit', $elementsTime,
                               array('value'=>$timeUnit));
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td class='left'>".$LANG['search'][9]."&nbsp;:</td>";
+      echo "<td class='left'>"._('End date')."&nbsp;:</td>";
       echo "<td class='left'>";
       Html::showDateFormItem("graph_end", $end);
       echo "</td>";
-      echo "<td class='left'>".$LANG['plugin_fusinvsnmp']['stats'][2]."&nbsp;:</td>";
+      echo "<td class='left'>"._('Display')."&nbsp;:</td>";
       echo "<td class='left'>";
-      $elements=array('total'=>$LANG['plugin_fusinvsnmp']['stats'][0],
-                    'day'=>$LANG['plugin_fusinvsnmp']['stats'][1]);
+      $elements=array('total'=>_('Total counter'),
+
+                    'day'=>_('pages per day'));
+
       Dropdown::showFromArray('graph_type', $elements,
                               array('value'=>$graphType));
       echo "</td>";
@@ -490,20 +520,20 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       echo "<tr class='tab_bg_2'>";
       echo "<td class='center' colspan='4'>
                <input type='submit' class='submit' name='graph_plugin_fusioninventory_printer_period'
-                      value='" . $LANG["buttons"][7] . "'/>";
+                      value='" . _('Update') . "'/>";
       echo "</td>";
       echo "</tr>\n";
 
       echo "<tr>";
-      echo "<th colspan='4'>".$LANG['plugin_fusinvsnmp']['prt_history'][38]."</th>";
+      echo "<th colspan='4'>"._('Printers to compare')."</th>";
       echo "</tr>";
       
       echo "<tr class='tab_bg_1'>";
-      echo "<td class='left' rowspan='3'>".$LANG['Menu'][2]."&nbsp;:</td>";
+      echo "<td class='left' rowspan='3'>"._('Printers')."&nbsp;:</td>";
       echo "<td class='left' rowspan='3'>";
       echo $printersList;
       echo "</td>";
-      echo "<td class='left'>".$LANG['plugin_fusinvsnmp']['prt_history'][32]."&nbsp;:</td>";
+      echo "<td class='left'>"._('Add a printer')."&nbsp;:</td>";
       echo "<td class='left'>";
       $printersused = array();
       foreach($printersView as $printer_id=>$name) {
@@ -512,18 +542,18 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       Dropdown::show('Printer', array('name'    =>'graph_printerCompAdd',
                                       'entiry'  => $_SESSION['glpiactive_entity'],
                                       'used'    => $printersused));
-      echo "&nbsp;<input type='submit' value=\"".$LANG['buttons'][8]."\" class='submit' name='graph_plugin_fusioninventory_printer_add'>";
+      echo "&nbsp;<input type='submit' value=\""._('Add')."\" class='submit' name='graph_plugin_fusioninventory_printer_add'>";
       echo "</td>";
       echo "</tr>\n";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td class='left'>".$LANG['plugin_fusinvsnmp']['prt_history'][33]."&nbsp;:</td>";
+      echo "<td class='left'>"._('Remove a printer')."&nbsp;:</td>";
       echo "<td class='left'>";
       $printersTmp = $printersView;
       $printersTmp[0] = "-----";
       asort($printersTmp);
       Dropdown::showFromArray('graph_printerCompRemove', $printersTmp);
-      echo "&nbsp;<input type='submit' value=\"".$LANG['buttons'][6]."\" class='submit' name='graph_plugin_fusioninventory_printer_remove'>";
+      echo "&nbsp;<input type='submit' value=\""._('Delete')."\" class='submit' name='graph_plugin_fusioninventory_printer_remove'>";
       echo "</td>";
       echo "</tr>\n";
       
@@ -559,6 +589,33 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 
          $input = array();
          $result = $DB->query($query);
+
+         $calendarDay = array (
+               _("Monday"),
+               _("Tuesday"),
+               _("Wednesday"),
+               _("Thursday"),
+               _("Friday"),
+               _("Saturday"),
+               _("Sunday"),
+               _("Sunday")
+         );
+
+         $calendarMonth = array (
+               _("January"),
+               _("February"),
+               _("March"),
+               _("April"),
+               _("May"),
+               _("June"),
+               _("July"),
+               _("August"),
+               _("September"),
+               _("October"),
+               _("November"),
+               _("December")
+         );
+
          if ($result) {
             if ($DB->numrows($result) != 0) {
                $pages = array();
@@ -574,7 +631,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
                            $dayofweek=7;
                         }
 
-                        $date= $LANG['calendarDay'][$dayofweek%7]." ".$data['day']." ".$LANG['calendarM'][$data['month']-1];
+                        $date= $calendarDay[$dayofweek%7]." ".$data['day']." ".$calendarMonth[$data['month']];
                         break;
 
                      case 'week':
@@ -639,7 +696,8 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
             echo "<tr class='tab_bg_1'>";
             echo "<td align='center'>";
             if ($continue == '0') {
-               echo $LANG['plugin_fusinvsnmp']['printhistory'][1];
+               echo _('Too datas to display');
+
             }
             echo "</td>";
             echo "</tr>";

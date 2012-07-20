@@ -345,7 +345,6 @@ class PluginFusinvsnmpNetworkporttype extends CommonDBTM {
    
    
    function showNetworkporttype() {
-      global $LANG;
 
       $a_notimports = $this->find("`import` = '0'");
       $a_imports = $this->find("`import` = '1'");
@@ -354,7 +353,7 @@ class PluginFusinvsnmpNetworkporttype extends CommonDBTM {
       
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='3'>".$LANG['plugin_fusinvsnmp']['config'][10]."</th>";
+      echo "<th colspan='3'>"._('Ports types to import (for network equipments)')."</th>";
       echo "</tr>";
       echo "<tr class='tab_bg_1'>";
       
@@ -377,7 +376,7 @@ class PluginFusinvsnmpNetworkporttype extends CommonDBTM {
 
          if (count($a_notimports)) {
             echo "<input type='submit' class='submit' name='type_add' value='".
-                  $LANG['buttons'][8]." >>'>";
+                  _('Add')." >>'>";
          }
          echo "<br><br>";
          
@@ -385,7 +384,7 @@ class PluginFusinvsnmpNetworkporttype extends CommonDBTM {
 
          if (count($a_imports)) {
             echo "<input type='submit' class='submit' name='type_delete' value='<< ".
-                  $LANG['buttons'][6]."'>";
+                  _('Delete')."'>";
          }
          echo "</td><td>";
 

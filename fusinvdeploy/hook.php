@@ -79,14 +79,14 @@ function plugin_fusinvdeploy_needUpdate() {
 
 
 function plugin_fusinvdeploy_MassiveActions($type) {
-   global $LANG;
 
    switch ($type) {
       case 'PluginFusinvdeployGroup' :
       case 'Computer':
          //TODO: this should be renamed into targetTask and moved in FusionInventory hook
          return array('plugin_fusinvdeploy_targetDeployTask'
-                  => $LANG['plugin_fusinvdeploy']['massiveactions'][0]
+                  => _('Target a task')
+
          );
          break;
    }
@@ -94,14 +94,13 @@ function plugin_fusinvdeploy_MassiveActions($type) {
 }
 
 function plugin_fusinvdeploy_MassiveActionsDisplay($options=array()) {
-   global $LANG;
 
    switch ($options['itemtype']) {
       case 'PluginFusinvdeployGroup':
       case 'Computer' :
          switch ($options['action']) {
              case 'plugin_fusinvdeploy_targetDeployTask' :
-               echo "<br/>". $LANG['plugin_fusinvdeploy']['task'][1].":&nbsp;";
+               echo "<br/>". _('Task').":&nbsp;";
                $rand = mt_rand();
                Dropdown::show('PluginFusinvdeployTask', array(
                      'name'      => "tasks_id",
@@ -113,7 +112,7 @@ function plugin_fusinvdeploy_MassiveActionsDisplay($options=array()) {
                   )
                ));
 
-               echo "<br/>"."&nbsp;".$LANG['plugin_fusinvdeploy']['package'][7].":&nbsp;";
+               echo "<br/>"."&nbsp;"._('Package').":&nbsp;";
                Dropdown::show('PluginFusinvdeployPackage', array(
                         'name'      => "packages_id"
                ));
@@ -121,14 +120,14 @@ function plugin_fusinvdeploy_MassiveActionsDisplay($options=array()) {
                echo "<br/>";
                echo "<input type='checkbox' name='separate_jobs' value='1'>";
                if ($options['itemtype'] == 'Computer') {
-                     echo "&nbsp;".$LANG['plugin_fusinvdeploy']['massiveactions'][1]."&nbsp;";
+                     echo "&nbsp;"._('Create a job for each computer')."&nbsp;";
                } else if ($options['itemtype'] == 'PluginFusinvdeployGroup') {
-                     echo "&nbsp;".$LANG['plugin_fusinvdeploy']['massiveactions'][2]."&nbsp;";
+                     echo "&nbsp;"._('Create a job for each group')."&nbsp;";
                }
                echo "</input>";
 
                echo "<br/>"."&nbsp;<input type='submit' name='massiveaction' class='submit' value='".
-                     $LANG['buttons'][2]."'>&nbsp;";
+                     _('Post')."'>&nbsp;";
             break;
          }
          break;

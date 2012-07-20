@@ -49,7 +49,7 @@ $NEEDED_ITEMS=array("search","computer","infocom","setup","networking","printer"
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
 
-Html::header($LANG['plugin_fusioninventory']["title"][0],$_SERVER['PHP_SELF'],"utils","report");
+Html::header(_('FusionInventory'),$_SERVER['PHP_SELF'],"utils","report");
 
 PluginFusioninventoryProfile::checkRight("fusinvsnmp","reportnetworkequipment","r");
 
@@ -67,7 +67,7 @@ echo "<table class='tab_cadre' cellpadding='5'>";
 
 echo "<tr class='tab_bg_1' align='center'>";
 echo "<td>";
-echo $LANG['plugin_fusinvsnmp']["report"][0]." :&nbsp;";
+echo _('Number of days since last inventory')." :&nbsp;";
 echo "</td>";
 echo "<td>";
 Dropdown::showInteger("nbdays", $nbdays, 1, 365);
@@ -76,7 +76,8 @@ echo "</tr>";
 
 echo "<tr class='tab_bg_1' align='center'>";
 echo "<td>";
-echo $LANG['state'][0];
+echo _('Status');
+
 echo "</td>";
 echo "<td>";
 Dropdown::show("State", array('name'=>'state', 'value'=>$state));
@@ -127,15 +128,15 @@ ORDER BY last_fusioninventory_update DESC";
 
 echo "<table class='tab_cadre' cellpadding='5' width='950'>";
 echo "<tr class='tab_bg_1'>";
-echo "<th>".$LANG['common'][16]."</th>";
-echo "<th>".$LANG['plugin_fusinvsnmp']['snmp'][53]."</th>";
-echo "<th>".$LANG['state'][6]."</th>";
-echo "<th>".$LANG['networking'][14]."</th>";
-echo "<th>".$LANG['common'][19]."</th>";
-echo "<th>".$LANG['common'][20]."</th>";
-echo "<th>".$LANG['common'][22]."</th>";
-echo "<th>".$LANG['plugin_fusinvsnmp']['model_info'][4]."</th>";
-echo "<th>".$LANG['plugin_fusinvsnmp']['model_info'][3]."</th>";
+echo "<th>"._('Name')."</th>";
+echo "<th>"._('Last inventory')."</th>";
+echo "<th>"._('Item type')."</th>";
+echo "<th>"._('IP')."</th>";
+echo "<th>"._('Serial Number')."</th>";
+echo "<th>"._('Inventory number')."</th>";
+echo "<th>"._('Model')."</th>";
+echo "<th>"._('SNMP models')."</th>";
+echo "<th>"._('SNMP authentication')."</th>";
 echo "</tr>";
 
 if ($result=$DB->query($query)) {
@@ -154,9 +155,11 @@ if ($result=$DB->query($query)) {
       echo "<td>".Html::convDateTime($data['last_fusioninventory_update'])."</td>";
       echo "<td>";
       if ($data['network_id'] > 0) {
-         echo $LANG['Menu'][1];
+         echo _('Networks');
+
       } else if ($data['printer_id'] > 0) {
-         echo $LANG['Menu'][2];
+         echo _('Printers');
+
       }
       echo "</td>";
       echo "<td>".$data['ip']."</td>";

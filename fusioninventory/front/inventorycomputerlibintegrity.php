@@ -67,7 +67,7 @@ if (!empty($_POST)) {
    Html::back();
 }
 
-Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","libintegrity");
+Html::header(_('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","libintegrity");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 

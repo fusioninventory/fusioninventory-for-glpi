@@ -140,19 +140,22 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
 
          case 'running':
             $search = " AND `state`!='".self::FINISHED."'";
-            $title = $LANG['plugin_fusioninventory']['task'][19];
+            $title = _('Running tasks');
+
             $icon = "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_running.png'/>";
             break;
 
          case 'finished':
             $search = " AND `state`='".self::FINISHED."'";
-            $title = $LANG['plugin_fusioninventory']['task'][20];
+            $title = _('Finished tasks');
+
             $icon = "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_finished.png'/>";
             break;
 
          case 'all':
             $search = "";
-            $title = $LANG['plugin_fusioninventory']['task'][18];
+            $title = _('Tasks');
+
             $icon = "";
             break;
 
@@ -187,20 +190,23 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          echo "<table class='tab_cadre' width='950'>";
          echo "<tr>";
          echo "<th></th>";
-         echo "<th>".$LANG['plugin_fusioninventory']['task'][47]."</th>";
-         echo "<th>".$LANG['plugin_fusioninventory']['task'][2]."</th>";
-         echo "<th>".$LANG['plugin_fusioninventory']['agents'][28]."</th>";
+         echo "<th>"._('Unique id')."</th>";
+         echo "<th>"._('Job')."</th>";
+         echo "<th>"._('Agent')."</th>";
          echo "<th>";
-         echo $LANG['common'][27];
+         echo _('Date');
+
          echo "</th>";
          echo "<th>";
-         echo $LANG['joblist'][0];
+         echo _('Status');
+
          echo "</th>";
          $nb_td = 6;
          if ($state == 'running') {
             $nb_td++;
             echo "<th>";
-            echo $LANG['common'][25];
+            echo _('Comments');
+
             echo "</th>";
          }
          echo "</tr>";

@@ -47,9 +47,9 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusinvdeployCommand extends CommonDBTM {
 
    static function getTypeName($nb=0) {
-      global $LANG;
 
-      return $LANG['plugin_fusinvdeploy']['package'][1];
+      return _('Execute a command');
+
    }
 
    function canCreate() {

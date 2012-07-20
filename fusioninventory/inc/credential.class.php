@@ -50,9 +50,9 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    public $second_level_menu = "fusioninventory";
 
    static function getTypeName($nb=0) {
-      global $LANG;
 
-      return $LANG['plugin_fusioninventory']['menu'][5];
+      return _('Authentication for remote devices (VMware)');
+
    }
 
    function canCreate() {
@@ -66,16 +66,18 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    
    
    function getAdditionalFields() {
-      global $LANG;
 
       return array(array('name'  => 'itemtype',
-                         'label' => $LANG['common'][17],
+                         'label' => _('Type'),
+
                          'type'  => 'credential_itemtype'),
                    array('name'  => 'username',
-                         'label' => $LANG['login'][6],
+                         'label' => _('Login'),
+
                          'type'  => 'text'),
                    array('name'  => 'password',
-                         'label' => $LANG['login'][7],
+                         'label' => _('Password'),
+
                          'type'  => 'password'));
    }
 
@@ -146,29 +148,33 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
    
    function getSearchOptions() {
-      global $LANG;
 
       $tab = array();
 
-      $tab['common'] = $LANG['plugin_fusioninventory']['menu'][5];
+      $tab['common'] = _('Authentication for remote devices (VMware)');
+
 
       $tab[1]['table'] = $this->getTable();
       $tab[1]['field'] = 'name';
-      $tab[1]['name'] = $LANG['common'][16];
+      $tab[1]['name'] = _('Name');
+
       $tab[1]['datatype'] = 'itemlink';
 
       $tab[2]['table'] = 'glpi_entities';
       $tab[2]['field'] = 'completename';
-      $tab[2]['name'] = $LANG['entity'][0];
+      $tab[2]['name'] = _('Entity');
+
 
       $tab[3]['table']         = $this->getTable();
       $tab[3]['field']         = 'itemtype';
-      $tab[3]['name']          = $LANG['common'][17];
+      $tab[3]['name']          = _('Type');
+
       $tab[3]['massiveaction'] = false;
 
       $tab[4]['table'] = $this->getTable();
       $tab[4]['field'] = 'username';
-      $tab[4]['name'] = $LANG['login'][6];
+      $tab[4]['name'] = _('Login');
+
 
       return $tab;
    }
@@ -183,14 +189,13 @@ class PluginFusioninventoryCredential extends CommonDropdown {
     * @return input the values to insert, but modified
    **/
    static function checkBeforeInsert($input) {
-      global $LANG;
       
       if ($input['password'] == '') {
          unset($input['password']);
       }
       
       if (!$input['itemtype']) {
-          Session::addMessageAfterRedirect($LANG['setup'][817], true, ERROR);
+          Session::addMessageAfterRedirect(_('It\'s mandatory to select a type and at least one field'), true, ERROR);
          $input = array();
 
       }
@@ -328,7 +333,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    
    
    static function dropdownCredentialsForItemtype($params = array()) {
-      global $LANG, $CFG_GLPI;
+      global  $CFG_GLPI;
 
       $p = array();
       if ($params['itemtype'] != '') {
@@ -352,7 +357,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
                                          array('value' => $value));
 
          if (PluginFusioninventoryProfile::haveRight('fusioninventory', 'credential', 'w')) {
-            echo "<img alt='' title=\"".$LANG['buttons'][8]."\" src='".$CFG_GLPI["root_doc"].
+            echo "<img alt='' title=\""._('Add')."\" src='".$CFG_GLPI["root_doc"].
                "/pics/add_dropdown.png' style='cursor:pointer; margin-left:2px;'
                onClick=\"var w = window.open('".
                Toolbox::getItemTypeFormURL('PluginFusioninventoryCredential')."?popup=1&amp;rand=".
@@ -377,11 +382,11 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    
    
    function title() {
-      global $LANG;
 
       $buttons = array();
       if (PluginFusioninventoryProfile::haveRight('fusioninventory', 'credential', 'r')) {
-         $buttons["credentialip.php"] = $LANG['plugin_fusioninventory']['menu'][6];
+         $buttons["credentialip.php"] = _('Remote devices to inventory (VMware)');
+
       }
    }
 

@@ -46,7 +46,7 @@ $DBCONNECTION_REQUIRED=0;
 define('GLPI_ROOT', '../../..'); 
 include (GLPI_ROOT . "/inc/includes.php"); 
 
-Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","printerlog");
+Html::header(_('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","printerlog");
 
 PluginFusioninventoryProfile::checkRight("fusinvsnmp","reportprinter","r");
 
@@ -78,20 +78,20 @@ Search::show('PluginFusinvsnmpPrinterLogReport');
 
 
 function displaySearchForm() {
-   global $_SERVER,$LANG;
+   global $_SERVER;
 
    echo "<form action='".$_SERVER["PHP_SELF"]."' method='post'>";
    echo "<table class='tab_cadre' cellpadding='5'>";
    echo "<tr class='tab_bg_1' align='center'>";
    echo "<td>";
-   echo $LANG['plugin_fusinvsnmp']['state'][4]." :";
+   echo _('Starting date')." :";
    echo "</td>";
    echo "<td width='120'>";
    Html::showDateFormItem("glpi_plugin_fusioninventory_date_start",$_SESSION['glpi_plugin_fusioninventory_date_start']);
    echo "</td>";
 
    echo "<td>";
-   echo $LANG['plugin_fusinvsnmp']['state'][5]." :";
+   echo _('Ending date')." :";
    echo "</td>";
    echo "<td width='120'>";
    Html::showDateFormItem("glpi_plugin_fusioninventory_date_end",$_SESSION['glpi_plugin_fusioninventory_date_end']);

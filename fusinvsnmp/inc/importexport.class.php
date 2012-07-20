@@ -120,7 +120,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
 
    function showForm($id, $options=array()) {
-      global $CFG_GLPI,$LANG;
+      global $CFG_GLPI;
 
       PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model", "r");
 
@@ -129,7 +129,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
       echo "<br>";
       echo "<table class='tab_cadre' cellpadding='1' width='600'><tr><th colspan='2'>";
-      echo $LANG['plugin_fusinvsnmp']['model_info'][10]." :</th></tr>";
+      echo _('SNMP model import')." :</th></tr>";
 
       echo "   <tr class='tab_bg_1'>";
       echo "      <td align='center'>";
@@ -138,7 +138,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       echo "<input type='file' name='importfile' value=''/>";
 
       if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
-	 echo "&nbsp;<input type='submit' value='".$LANG["buttons"][37]."' class='submit'/>";
+	 echo "&nbsp;<input type='submit' value='"._('Import')."' class='submit'/>";
       }
       echo "</td>";
       echo "</tr>";
@@ -150,21 +150,20 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
 
    function showFormMassImport($target) {
-      global $LANG;
 
       PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","r");
 
       echo "<form action='".$target."?add=1' method='post' enctype='multipart/form-data'>";
 
       echo "<table class='tab_cadre' cellpadding='1' width='600'><tr><th>";
-      echo $LANG['plugin_fusinvsnmp']['model_info'][15]." :</th></tr>";
+      echo _('Mass import of models')." :</th></tr>";
 
       echo "   <tr class='tab_bg_1'>";
       echo "<td align='center'>";
-      echo $LANG['plugin_fusinvsnmp']['model_info'][16]."<br/>";
+      echo _('Mass import of models in folder plugins/fusinvsnmp/models/')."<br/>";
       echo "<input type='hidden' name='massimport' value='1'/>";
       if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
-	 echo "&nbsp;<input type='submit' value='".$LANG["buttons"][37]."' class='submit'/>";
+	 echo "&nbsp;<input type='submit' value='"._('Import')."' class='submit'/>";
       }
       echo "</td>";
       echo "</tr>";
@@ -206,12 +205,13 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
    
 
    function updateModel($xml, $message, $result) {
-      global $DB,$LANG;
+      global $DB;
 
       $pfMapping = new PluginFusioninventoryMapping();
 
       if ($message == '1') {
-         $_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusinvsnmp']['model_info'][8];
+         $_SESSION["MESSAGE_AFTER_REDIRECT"] = _('Model already exists');
+
       }
       
       // Update model oids
@@ -314,7 +314,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
    
 
    function createModel($xml, $message) {
-      global $DB,$LANG;
+      global $DB;
 
       $pfMapping = new PluginFusioninventoryMapping();
       $pfModel = new PluginFusioninventorySnmpmodel();

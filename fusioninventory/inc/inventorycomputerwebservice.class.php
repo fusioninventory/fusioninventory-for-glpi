@@ -57,7 +57,6 @@ class PluginFusioninventoryInventoryComputerWebservice {
    *
    **/
    static function methodTest($params, $protocol) {
-      global $LANG;
 
       if (isset ($params['help'])) {
          return array('base64'  => 'string,mandatory',
@@ -72,7 +71,8 @@ class PluginFusioninventoryInventoryComputerWebservice {
       $pfInventoryComputerImportXML = new PluginFusioninventoryInventoryComputerImportXML();
       $pfInventoryComputerImportXML->importXMLContent($content);
 
-      $msg = $LANG['plugin_fusioninventory']['importxml'][1];
+      $msg = _('Computer injected into GLPI');
+
       return PluginWebservicesMethodCommon::Error($protocol, WEBSERVICES_ERROR_FAILED, '', $msg);
    }
 }

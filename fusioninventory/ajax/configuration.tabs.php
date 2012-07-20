@@ -108,7 +108,7 @@ if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", 
 
    }
 } else {
-   echo $LANG['common'][83]."<br/>";
+   echo _('You don't have permission to perform this action.')."<br/>";
 }
 Html::ajaxFooter();
 

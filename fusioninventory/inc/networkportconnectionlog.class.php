@@ -56,24 +56,29 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
 
       echo "<th>";
-      echo $LANG['plugin_fusioninventory']['processes'][1];
-      echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/agentprocess.form.php'>(".$LANG['common'][66].")</a>";
+      echo _('PID');
+
+      echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/agentprocess.form.php'>("._('All').")</a>";
       echo "</th>";
 
       echo "<th>";
-      echo $LANG['common'][27];
+      echo _('Date');
+
       echo "</th>";
 
       echo "<th>";
-      echo $LANG['common'][1];
+      echo _('Item');
+
       echo "</th>";
 
       echo "<th>";
-      echo $LANG['joblist'][0];
+      echo _('Status');
+
       echo "</th>";
 
       echo "<th>";
-      echo $LANG['common'][1];
+      echo _('Item');
+
       echo "</th>";
 
       echo "</tr>";
@@ -118,9 +123,10 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
             if (rtrim($NetworkPort->fields["name"]) != "")
                $link .= $NetworkPort->fields["name"];
             else
-               $link .= $LANG['common'][0];
+               $link .= _('Without name');
+
             $link .= "</a>";
-            echo $link." ".$LANG['networking'][25]." ".$link1;
+            echo $link." "._('on')." ".$link1;
             echo "</td>";
 
             echo "<td>";
@@ -140,9 +146,10 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
             if (rtrim($NetworkPort->fields["name"]) != "")
                $link .= $NetworkPort->fields["name"];
             else
-               $link .= $LANG['common'][0];
+               $link .= _('Without name');
+
             $link .= "</a>";
-            echo $link." ".$LANG['networking'][25]." ".$link1;
+            echo $link." "._('on')." ".$link1;
             echo "</td>";
 
             echo "</tr>";

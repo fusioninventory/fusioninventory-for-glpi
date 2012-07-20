@@ -47,9 +47,9 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusinvdeployAction_Copy extends CommonDBTM {
 
    static function getTypeName($nb=0) {
-      global $LANG;
 
-      return $LANG['plugin_fusinvdeploy']['package'][28];
+      return _('Copy a file');
+
    }
 
    static function getActions($copies_id) {

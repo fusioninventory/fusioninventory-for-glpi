@@ -58,10 +58,10 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
     * @return varchar name of the tab(s) to display
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      global $LANG;
 
       if ($item->getType()=='PluginFusioninventoryConfig') {
-         return $LANG['plugin_fusioninventory']['agents'][27];
+         return _('Agents modules');
+
       }
       return '';
    }
@@ -95,7 +95,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    *
    **/
    function showForm() {
-      global $LANG;
 
       $pfAgent = new PluginFusioninventoryAgent();
       $plugin = new Plugin();
@@ -107,9 +106,9 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             echo "<form name='form_ic' method='post' action='". Toolbox::getItemTypeFormURL(__CLASS__)."'>";
             echo "<table class='tab_cadre_fixe'>";
             echo "<tr>";
-            echo "<th width='130'>".$LANG['plugin_fusioninventory']['task'][26]."</th>";
-            echo "<th width='180'>".$LANG['plugin_fusioninventory']['agents'][34]."</th>";
-            echo "<th>".$LANG['plugin_fusioninventory']['agents'][45]."</th>";
+            echo "<th width='130'>"._('Module')."</th>";
+            echo "<th width='180'>"._('Activation (by default)')."</th>";
+            echo "<th>"._('Exceptions')."</th>";
             echo "</tr>";
 
             echo "<tr class='tab_bg_1'>";
@@ -133,7 +132,8 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             }
             // Hack for snmpquery
                if ($modulename == 'SNMPQUERY') {
-                  $modulename = $LANG['plugin_fusinvsnmp']['config'][3];
+                  $modulename = _('Network inventory (SNMP)');
+
                }
             echo "<td align='center'><strong>".$modulename."</strong></td>";
             echo "<td align='center'>";
@@ -178,7 +178,8 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             if ($use_rest) {
                echo "<tr>";
                echo "<td class='tab_bg_2 center'>";
-               echo $LANG['plugin_fusioninventory']['agents'][41];
+               echo _('Service URL');
+
                echo "</td><td colspan='2'>";
                echo "<input type='text' name='url' value='".$data['url']."' size='70'>";
                echo "</td>";
@@ -213,7 +214,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    *
    **/
    function showFormAgentException($items_id, $options=array()) {
-      global $LANG,$CFG_GLPI;
+      global $CFG_GLPI;
 
       $plugin = new Plugin();
       
@@ -225,9 +226,9 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       }
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr>";
-      echo "<th>".$LANG['plugin_fusioninventory']['task'][26]."</th>";
+      echo "<th>"._('Module')."</th>";
       echo "<th>Activation</th>";
-      echo "<th>".$LANG['plugin_fusioninventory']['task'][26]."</th>";
+      echo "<th>"._('Module')."</th>";
       echo "<th>Activation</th>";
       echo "</tr>";
 
@@ -248,7 +249,8 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             }
             // Hack for snmpquery
                if ($modulename == 'SNMPQUERY') {
-                  $modulename = $LANG['plugin_fusinvsnmp']['config'][3];
+                  $modulename = _('Network inventory (SNMP)');
+
                }
             echo "<td width='50%'>".$modulename." :</td>";
             echo "<td align='center'>";
@@ -282,7 +284,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          echo "<tr>";
          echo "<td class='tab_bg_2 center' colspan='4'>";
          echo "<input type='hidden' name='id' value=\"".$items_id."\">";
-         echo "<input type='submit' name='updateexceptions' value=\"".$LANG['buttons'][7]."\" class='submit'>";
+         echo "<input type='submit' name='updateexceptions' value=\""._('Update')."\" class='submit'>";
          echo "</td>";
          echo "</tr>";
          echo "</table>";

@@ -70,7 +70,6 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
 
 
    function showForm($id, $options=array()) {
-      global $LANG;
 
       $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
       $pfUnknownDevice->getFromDB($id);
@@ -91,12 +90,12 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center' rowspan='2'>";
-      echo $LANG['plugin_fusinvsnmp']['snmp'][4]."&nbsp;:";
+      echo _('Sysdescr')."&nbsp;:";
       echo "</td>";
       echo "<td rowspan='2'>";
       echo "<textarea name='sysdescr'  cols='45' rows='5' />".$this->fields["sysdescr"]."</textarea>";
 
-      echo "<td align='center'>".$LANG['plugin_fusinvsnmp']['model_info'][4]."&nbsp;:</td>";
+      echo "<td align='center'>"._('SNMP models')."&nbsp;:</td>";
       echo "<td align='center'>";
       if (!empty($pfUnknownDevice->fields['item_type'])) {
          Dropdown::show("PluginFusioninventorySnmpmodel",
@@ -109,7 +108,7 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>".$LANG['plugin_fusinvsnmp']['model_info'][3]."&nbsp;:</td>";
+      echo "<td align='center'>"._('SNMP authentication')."&nbsp;:</td>";
       echo "<td align='center'>";
       PluginFusinvsnmpSNMP::auth_dropdown($this->fields['plugin_fusinvsnmp_configsecurities_id']);
       echo "</td>";

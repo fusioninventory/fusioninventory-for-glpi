@@ -49,7 +49,6 @@ class PluginFusinvsnmpPrinterCartridge extends CommonDBTM {
    
 
    function showForm($id, $options=array()) {
-      global $LANG;
 
       // ** Get link OID fields
       $mapping_name=array();
@@ -60,7 +59,8 @@ class PluginFusinvsnmpPrinterCartridge extends CommonDBTM {
       echo "<table class='tab_cadre' cellpadding='5' width='950'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th align='center' colspan='3'>";
-      echo $LANG["cartridges"][16];
+      echo _('Cartridge(s)');
+
       echo "</th>";
       echo "</tr>";
 
@@ -70,7 +70,7 @@ class PluginFusinvsnmpPrinterCartridge extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>";
          $mapping->getFromDB($a_cartridge['plugin_fusioninventory_mappings_id']);
-         echo $LANG['plugin_fusinvsnmp']['mapping'][$mapping->fields['locale']];
+         echo $mapping->getTranslation($mapping);
          echo " : ";
          echo "</td>";
          echo "<td align='center'>";

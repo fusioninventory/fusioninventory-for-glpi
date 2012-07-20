@@ -46,7 +46,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 $agent = new PluginFusioninventoryAgent();
 
-Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"], "plugins", 
+Html::header(_('FusionInventory'),$_SERVER["PHP_SELF"], "plugins", 
              "fusioninventory", "agents");
 
 PluginFusioninventoryProfile::checkRight("fusioninventory", "agent", "r");
@@ -57,9 +57,11 @@ if (isset($_POST['startagent'])) {
    $taskjob = new PluginFusioninventoryTaskjob();
 
    if ($taskjob->startAgentRemotly($_POST['agent_id'])) {
-       Session::addMessageAfterRedirect($LANG['plugin_fusioninventory']['agents'][17]);
+       Session::addMessageAfterRedirect(_('The agent is running'));
+
    } else {
-       Session::addMessageAfterRedirect($LANG['plugin_fusioninventory']['agents'][30]);
+       Session::addMessageAfterRedirect(_('Impossible to communicate with agent!'));
+
    }
    Html::back();
 } else if (isset ($_POST["update"])) {

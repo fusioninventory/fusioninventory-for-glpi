@@ -120,7 +120,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
    
    
    function showForm($options=array()) {
-      global $LANG,$DB;
+      global $DB;
 
       echo "<form name='form' method='post' action='".$options['target']."'>";
       echo "<div class='center' id='tabsbody'>";
@@ -128,22 +128,27 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
 
       echo "<tr>";
       echo "<th colspan='2'>";
-      echo $LANG['plugin_fusinvsnmp']['portlogs'][0];
+      echo _('History configuration');
+
       echo "</th>";
       echo "</tr>";
 
       echo "<tr>";
       echo "<th>";
-      echo $LANG['plugin_fusinvsnmp']['portlogs'][1];
+      echo _('List of fields for which to keep history');
+
       echo "</th>";
       echo "<th>";
-      echo $LANG['plugin_fusinvsnmp']['portlogs'][2];
+      echo _('Retention in days');
+
       echo "</th>";
       echo "</tr>";
 
       $days = array();
-      $days[-1] = $LANG['plugin_fusinvsnmp']['config'][8];
-      $days[0]  = $LANG['plugin_fusinvsnmp']['config'][9];
+      $days[-1] = _('Never');
+
+      $days[0]  = _('Always');
+
       for ($i = 1 ; $i < 366 ; $i++) {
          $days[$i]  = "$i";
       }
@@ -158,7 +163,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
          while ($data=$DB->fetch_array($result)) {
             echo "<tr class='tab_bg_1'>";
             echo "<td align='left'>";
-            echo $LANG['plugin_fusinvsnmp']['mapping'][$data['locale']];
+            echo $mapping->getTranslation($data['locale']);
             echo "</td>";
 
             echo "<td align='center'>";
@@ -173,7 +178,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
          echo "<tr class='tab_bg_2'><td align='center' colspan='4'>
                <input type='hidden' name='tabs' value='history'/>
                <input class='submit' type='submit' name='update'
-                      value='" . $LANG['buttons'][7] . "'></td></tr>";
+                      value='" . _('Update') . "'></td></tr>";
       }
       echo "</table>";
 
@@ -182,7 +187,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
       echo "<tr class='tab_bg_2'>";
       echo "<td colspan='1' class='center' height='30'>";
       if (PluginFusioninventoryProfile::haveRight('fusioninventory',"configuration","w")) {
-         echo "<input type='submit' class=\"submit\" name='Clean_history' value='".$LANG['buttons'][53]."' >";
+         echo "<input type='submit' class=\"submit\" name='Clean_history' value='"._('Clean')."' >";
       }
       echo "</td>";
       echo "</tr>";

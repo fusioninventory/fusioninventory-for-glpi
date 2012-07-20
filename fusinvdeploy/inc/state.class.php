@@ -100,24 +100,28 @@ class PluginFusinvdeployState extends CommonDBTM {
    }
 
    static function processComment($state, $comment) {
-      global $LANG;
       if ($comment == "") {
          switch ($state) {
             case PluginFusioninventoryTaskjoblog::TASK_OK:
-               $comment = $LANG['plugin_fusioninventory']['taskjoblog'][2];
+               $comment = _('Ok');
+
                break;
             case PluginFusioninventoryTaskjoblog::TASK_ERROR_OR_REPLANNED:
-               $comment = $LANG['plugin_fusioninventory']['taskjoblog'][3];
+               $comment = _('Error / rescheduled');
+
                break;
             case PluginFusioninventoryTaskjoblog::TASK_ERROR:
-               $comment = $LANG['plugin_fusioninventory']['taskjoblog'][4];
+               $comment = _('Error');
+
                break;
             case PluginFusioninventoryTaskjoblog::TASK_PREPARED:
-               $comment = $LANG['plugin_fusioninventory']['taskjoblog'][7];
+               $comment = _('Prepared');
+
                break;
          }
       } elseif ($state == PluginFusioninventoryTaskjoblog::TASK_ERROR_OR_REPLANNED) {
-         $comment = $LANG['plugin_fusioninventory']['taskjoblog'][3];
+         $comment = _('Error / rescheduled');
+
       }
       return $comment;
    }
@@ -165,7 +169,7 @@ class PluginFusinvdeployState extends CommonDBTM {
    }
 
    static function getTaskJobLogsDatasTreeNode($params) {
-      global $DB, $LANG;
+      global $DB;
 
       $res = array();
 

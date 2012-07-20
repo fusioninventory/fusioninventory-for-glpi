@@ -45,7 +45,7 @@ define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
 
 Session::checkLoginUser();
-Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","fusinvinventory-ruleentity");
+Html::header(_('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","fusinvinventory-ruleentity");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 

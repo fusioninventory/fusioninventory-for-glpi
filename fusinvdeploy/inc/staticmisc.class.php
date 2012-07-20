@@ -50,16 +50,17 @@ class PluginFusinvdeployStaticmisc {
    const DEPLOYMETHOD_UNINSTALL = 'deployuninstall';
 
    static function task_methods() {
-      global $LANG;
 
       return array(array('module'         => 'fusinvdeploy',
                          'method'         => self::DEPLOYMETHOD_INSTALL,
-                         'name'           => $LANG['plugin_fusinvdeploy']['package'][16],
+                         'name'           => _('Package deployment'),
+
                          'task'           => "DEPLOY",
                          'use_rest'       => true),
                    array('module'         => 'fusinvdeploy',
                          'method'         => self::DEPLOYMETHOD_UNINSTALL,
-                         'name'           => $LANG['plugin_fusinvdeploy']['package'][17],
+                         'name'           => _('Package uninstall'),
+
                          'task'           => "DEPLOY",
                          'use_rest'       => true)
                          );
@@ -80,17 +81,19 @@ class PluginFusinvdeployStaticmisc {
    }*/
 
    static function getDefinitionType() {
-      global $LANG;
       return array(0 => Dropdown::EMPTY_VALUE,
-                   'PluginFusinvdeployPackage' => $LANG['plugin_fusinvdeploy']['package'][7]);
+                   'PluginFusinvdeployPackage' => _('Package'));
+
    }
 
    static function getActionType() {
-      global $LANG;
       return array(0 => Dropdown::EMPTY_VALUE,
-                   'PluginFusinvdeployGroup' => $LANG['plugin_fusinvdeploy']['group'][3],
-                   'Computer' => $LANG['Menu'][0],
-                   'Group' => $LANG['common'][35]
+                   'PluginFusinvdeployGroup' => _('Group of computers'),
+
+                   'Computer' => _('Computers'),
+
+                   'Group' => _('Group')
+
                   );
    }
 
@@ -111,7 +114,6 @@ class PluginFusinvdeployStaticmisc {
    }
 
    static function getDeploySelections() {
-      global $LANG;
 
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
@@ -120,7 +122,6 @@ class PluginFusinvdeployStaticmisc {
    }
 
   /* static function getDeployActions() {
-      global $LANG;
 
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = Session::haveAccessToEntity($_SESSION['glpiactive_entity'],1);
@@ -129,7 +130,6 @@ class PluginFusinvdeployStaticmisc {
    }*/
 
    static function getDeployActions() {
-      global $LANG;
 
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
@@ -188,20 +188,22 @@ class PluginFusinvdeployStaticmisc {
    }
 
    static function displayMenu() {
-      global $LANG;
 
       $a_menu = array();
       if (PluginFusioninventoryProfile::haveRight("fusinvdeploy", "packages", "r")) {
-         $a_menu[0]['name'] = $LANG['plugin_fusinvdeploy']['package'][6];
+         $a_menu[0]['name'] = _('Package management');
+
          $a_menu[0]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_package.png";
          $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/package.php";
       }
 
-      $a_menu[1]['name'] = $LANG['plugin_fusinvdeploy']['mirror'][1];
+      $a_menu[1]['name'] = _('Mirror servers');
+
       $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_files.png";
       $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/mirror.php";
 
-      $a_menu[2]['name'] = $LANG['plugin_fusinvdeploy']['group'][0];
+      $a_menu[2]['name'] = _('Groups of computers');
+
       $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_group.png";
       $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/group.php";
 
@@ -210,12 +212,13 @@ class PluginFusinvdeployStaticmisc {
 
 
    static function profiles() {
-      global $LANG;
 
       return array(array('profil'  => 'packages',
-                         'name'    => $LANG['plugin_fusinvdeploy']['profile'][2]),
+                         'name'    => _('Manage packages')),
+
                    array('profil'  => 'status',
-                         'name'    => $LANG['plugin_fusinvdeploy']['deploystatus'][0]));
+                         'name'    => _('Deployment status')));
+
    }
 
    static function task_deploy_getParameters() {

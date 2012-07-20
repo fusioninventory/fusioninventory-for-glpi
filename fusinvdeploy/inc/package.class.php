@@ -47,9 +47,9 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusinvdeployPackage extends CommonDBTM {
 
    static function getTypeName($nb=0) {
-      global $LANG;
 
-      return $LANG['plugin_fusinvdeploy']['package'][5];
+      return _('Packages');
+
    }
 
    function canCreate() {
@@ -73,7 +73,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
    }
 
    function defineTabs($options=array()){
-      global $LANG,$CFG_GLPI;
+      global $CFG_GLPI;
 
       $ong = array();
       if ($this->fields['id'] > 0){
@@ -87,50 +87,57 @@ class PluginFusinvdeployPackage extends CommonDBTM {
    
 
    function getSearchOptions() {
-      global $LANG;
 
       $tab = array();
-      $tab['common']           = $LANG['common'][32];;
+      $tab['common']           = _('Characteristics');;
+
 
       $tab[1]['table']         = $this->getTable();
       $tab[1]['field']         = 'name';
       $tab[1]['linkfield']     = 'name';
-      $tab[1]['name']          = $LANG['common'][16];
+      $tab[1]['name']          = _('Name');
+
       $tab[1]['datatype']      = 'itemlink';
       $tab[1]['itemlink_link'] = $this->getType();
 
       $tab[2]['table']     = $this->getTable();
       $tab[2]['field']     = 'id';
       $tab[2]['linkfield'] = '';
-      $tab[2]['name']      = $LANG['common'][2];
+      $tab[2]['name']      = _('ID');
+
 
       $tab[16]['table']     = $this->getTable();
       $tab[16]['field']     = 'comment';
       $tab[16]['linkfield'] = 'comment';
-      $tab[16]['name']      = $LANG['common'][25];
+      $tab[16]['name']      = _('Comments');
+
       $tab[16]['datatype']  = 'text';
 
       $tab[19]['table']     = $this->getTable();
       $tab[19]['field']     = 'date_mod';
       $tab[19]['linkfield'] = '';
-      $tab[19]['name']      = $LANG['common'][26];
+      $tab[19]['name']      = _('Last update');
+
       $tab[19]['datatype']  = 'datetime';
 
       $tab[80]['table']     = 'glpi_entities';
       $tab[80]['field']     = 'completename';
       $tab[80]['linkfield'] = 'entities_id';
-      $tab[80]['name']      = $LANG['entity'][0];
+      $tab[80]['name']      = _('Entity');
+
 
       $tab[86]['table']     = $this->getTable();
       $tab[86]['field']     = 'is_recursive';
       $tab[86]['linkfield'] = 'is_recursive';
-      $tab[86]['name']      = $LANG['entity'][9];
+      $tab[86]['name']      = _('Child entities');
+
       $tab[86]['datatype']  = 'bool';
 
       $tab[19]['table']     = $this->getTable();
       $tab[19]['field']     = 'date_mod';
       $tab[19]['linkfield'] = '';
-      $tab[19]['name']      = $LANG['common'][26];
+      $tab[19]['name']      = _('Last update');
+
       $tab[19]['datatype']  = 'datetime';
 
       return $tab;
@@ -149,13 +156,14 @@ class PluginFusinvdeployPackage extends CommonDBTM {
    }
 
    function title() {
-      global $LANG;
 
       $buttons = array();
-      $title = $LANG['plugin_fusinvdeploy']['package'][5];
+      $title = _('Packages');
+
 
       if ($this->canCreate()) {
-         $buttons["package.form.php?new=1"] = $LANG['plugin_fusinvdeploy']['package'][26];
+         $buttons["package.form.php?new=1"] = _('Add a package');
+
          $title = "";
       }
 
@@ -186,7 +194,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
    
 
    function showForm($ID, $options=array()) {
-      global $DB,$CFG_GLPI,$LANG;
+      global $DB, $CFG_GLPI;
 
 
       if ($ID > 0) {
@@ -201,12 +209,12 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG["common"][16]."&nbsp;:</td>";
+      echo "<td>"._('Name')."&nbsp;:</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
       echo "</td>";
 
-      echo "<td>".$LANG['common'][25]."&nbsp;:</td>";
+      echo "<td>"._('Comments')."&nbsp;:</td>";
       echo "<td align='center'>";
       echo "<textarea cols='40' rows='2' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "</td>";
@@ -272,7 +280,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
    }
 
    function pre_deleteItem() {
-      global $LANG, $CFG_GLPI;
+      global  $CFG_GLPI;
 
       //if task use this package, delete denied
       if (!self::canEdit($this->getField('id'))) {
@@ -289,7 +297,8 @@ class PluginFusinvdeployPackage extends CommonDBTM {
 
 
          Session::addMessageAfterRedirect(str_replace('#task#',
-               $tasks_url, $LANG['plugin_fusinvdeploy']['package'][23]));
+               $tasks_url, _('One or more active tasks (#task#) use this package. Deletion denied.')));
+
          Html::redirect(GLPI_ROOT."/plugins/fusioninventory/front/task.form.php?id="
                .$this->getField('id'));
          return false;
@@ -301,7 +310,6 @@ class PluginFusinvdeployPackage extends CommonDBTM {
    
    
    static function import_json($data = NULL) {
-      global $LANG;
 
       if($data !== NULL) {
 
@@ -483,7 +491,6 @@ class PluginFusinvdeployPackage extends CommonDBTM {
    }
 
    public function package_clone($new_name = '') {
-      global $LANG;
 
       if ($this->getField('id') < 0) return false;
 
@@ -591,14 +598,15 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       }
 
       if (($name=$new_package->getName()) == NOT_AVAILABLE) {
-         $new_package->fields['name'] = $new_package->getTypeName()." : ".$LANG['common'][2]
+         $new_package->fields['name'] = $new_package->getTypeName()." : "._('ID')
+
                                  ." ".$new_package->fields['id'];
       }
       $display = (isset($this->input['_no_message_link'])?$new_package->getNameID()
                                                          :$new_package->getLink());
 
       // Do not display quotes
-      Session::addMessageAfterRedirect($LANG['common'][70]."&nbsp;: ".stripslashes($display));
+      Session::addMessageAfterRedirect(_('Item successfully added')."&nbsp;: ".stripslashes($display));
 
       unset($_SESSION['tmp_clone_package']);
 

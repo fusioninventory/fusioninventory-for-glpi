@@ -160,7 +160,6 @@ class PluginFusioninventoryCommunication {
     * @return true (import ok) / false (import ko)
     **/
    function import($p_xml) {
-      global $LANG;
       
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
       $pfAgent = new PluginFusioninventoryAgent();
@@ -203,7 +202,7 @@ class PluginFusioninventoryCommunication {
                  $this->message->CONTENT, 
                  $p_xml);
       } else {
-         $errors.=$LANG['plugin_fusioninventory']['errors'][22].' QUERY : *'.$xmltag."*\n";
+         $errors.=_('Unattended element in').' QUERY : *'.$xmltag."*\n";
       }
       $result=true;
       if ($errors != '') {

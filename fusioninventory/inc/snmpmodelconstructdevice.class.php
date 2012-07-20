@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
 
    function showForm($id, $options=array()) {
-      global $DB,$LANG;
+      global $DB;
 
       if ($id!='') {
          $this->getFromDB($id);
@@ -59,14 +59,14 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['common'][5].":    </td><td>";
+      echo "<td>"._('Manufacturer').":    </td><td>";
       Dropdown::show("Manufacturer",
                      array('name'=>"manufacturers_id",
                            'value'=>$this->fields["manufacturers_id"]));
       echo "</td>";
 
       echo "<tr>";
-      echo "<td>".$LANG['setup'][71].":    </td><td>\n";
+      echo "<td>"._('Firmware').":    </td><td>\n";
       Dropdown::show("NetworkEquipmentFirmware",
                      array('name'=>"firmware",
                            'value'=>$this->fields["firmware"]));
@@ -74,14 +74,14 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
       echo "</tr>\n";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>" . $LANG['common'][25] . "</td>";
+      echo "<td>" . _('Comments') . "</td>";
       echo "<td>";
       echo "<textarea name='sysdescr'  cols='110' rows='4' />".$this->fields["sysdescr"]."</textarea>";
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>" . $LANG['common'][17] . " :</td>";
+      echo "<td>" . _('Type') . " :</td>";
       echo "<td>";
          $type_list = array();
          $type_list[] = COMPUTER_TYPE;
@@ -119,7 +119,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
 
    
    function manageWalks($target, $id) {
-      global $DB,$CFG_GLPI,$LANG;
+      global $DB,$CFG_GLPI;
 
       $query = "SELECT * FROM glpi_plugin_fusioninventory_snmpmodelconstructdevices
          WHERE id='".$id."'";
@@ -288,7 +288,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
                            echo "</tr>";
                            echo "<tr>";
                            echo "<th>";
-                           echo $LANG['plugin_fusioninventory']['mib'][9]." : ";
+                           echo _('1')." : ";
                            if (isset($a_mibs['id'])) {
                               if ($a_mibs["vlan"] == "1") {
                                  echo "<a href='".$target."?id=".$id."&vlan_update=".$oid_id_before."'>";
@@ -306,7 +306,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
                            }
                            echo "</th>";
                            echo "<th>";
-                           echo $LANG['plugin_fusioninventory']['mib'][6]." : ";
+                           echo _('1')." : ";
                            if (isset($a_mibs['id'])) {
                               if ($a_mibs["oid_port_counter"] == "1") {
                                  echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
@@ -318,7 +318,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
                            }
                            echo "</th>";
                            echo "<th>";
-                           echo $LANG['plugin_fusioninventory']['mib'][7]." : ";
+                           echo _('1')." : ";
                            if (isset($a_mibs['id'])) {
                               if ($a_mibs["oid_port_dyn"] == "1") {
                                  echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
@@ -332,12 +332,12 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
                            echo "</tr>";
                            echo "<tr>";
                            echo "<th colspan='3'>";
-                           echo $LANG['plugin_fusioninventory']['mib'][8]." : ";
+                           echo _('1')." : ";
                            if (isset($a_mibs['id'])) {
                               if ($a_mibs["oid_port_counter"] == "0") {
                                  $mapping = new PluginFusioninventoryMapping();
                                  $mappings = $mapping->get($a_mibs['itemtype'], $a_mibs['mapping_name']);
-                                 echo $LANG['plugin_fusinvsnmp']['mapping'][$mappings->fields['locale']]." ( ".$a_mibs["mapping_name"]." )";
+                                 echo $mapping->getTranslation($mappings->fields['locale'])." ( ".$a_mibs["mapping_name"]." )";
                               }
                            } else {
                               $types = array();
@@ -348,7 +348,8 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
                               foreach ($maps as $mapfields) {
                                  if (($type_model == $type) OR ($type_model == "0")) {
                                     $types[$type."||".$mapfields['name']]=
-                                       $LANG['plugin_fusinvsnmp']['mapping']
+                                       _('1')
+
                                           [$mapfields["locale"]].
                                        " (".$mapfields['name'].")";
                                  }
@@ -404,7 +405,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
                echo "</tr>";
                echo "<tr>";
                echo "<th>";
-               echo $LANG['plugin_fusioninventory']['mib'][9]." : ";
+               echo _('1')." : ";
                if (isset($a_mibs['id'])) {
                   if ($a_mibs["vlan"] == "1") {
                      echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
@@ -420,23 +421,23 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
                }
                echo "</th>";
                echo "<th>";
-               echo $LANG['plugin_fusioninventory']['mib'][6]." : ";
+               echo _('1')." : ";
                Dropdown::showYesNo("oid_port_counter_".$oid_id_before);
                echo "</th>";
                echo "<th>";
-               echo $LANG['plugin_fusioninventory']['mib'][7]." : ";
+               echo _('1')." : ";
                Dropdown::showYesNo("oid_port_dyn_".$oid_id_before);
                echo "</th>";
                echo "</tr>";
                echo "<tr>";
                echo "<th colspan='3'>";
-               echo $LANG['plugin_fusioninventory']['mib'][8]." : ";
+               echo _('1')." : ";
                if (isset($a_mibs['id'])) {
                   if ($a_mibs["oid_port_counter"] == "0") {
                      $mapping = new PluginFusioninventoryMapping();
                      $mappings = $mapping->get($a_mibs['itemtype'], $a_mibs['mapping_name']);
                      if ($mappings) {
-                        echo $LANG['plugin_fusinvsnmp']['mapping'][$mappings->fields['locale']];
+                        echo $mapping->getTranslation($mappings);
                      }
                   }
                } else {
@@ -448,7 +449,8 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
                   foreach ($maps as $mapfields) {
                      if (($type_model == $type) OR ($type_model == "0")) {
                         $types[$type."||".$mapfields['name']]=
-                           $LANG['plugin_fusinvsnmp']['mapping']
+                           _('1')
+
                               [$mapfields["locale"]].
                            " (".$mapfields['name'].")";
                      }
@@ -468,7 +470,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
       echo "<tr class='tab_bg_1 center'>";
       echo "<td>";
       echo "<input type='hidden' name='id' value='" . $id . "'/>";
-      echo "&nbsp;<input type='submit' name='mib' value=\"" . $LANG["buttons"][7] . "\" class='submit' >";
+      echo "&nbsp;<input type='submit' name='mib' value=\"" . _('Update') . "\" class='submit' >";
       echo "</td>";
       echo "</tr>";
       echo "</table>";
@@ -481,7 +483,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
       echo "<td>";
       echo "<input type='hidden' name='id' value='" . $id . "'/>";
       echo "<input type='file' name='walk'/>";
-      echo "&nbsp;<input type='submit' name='addWalk' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
+      echo "&nbsp;<input type='submit' name='addWalk' value=\"" . _('Add') . "\" class='submit' >";
       echo "</td>";
       echo "</tr>";
       echo "</table>";

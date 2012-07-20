@@ -70,13 +70,14 @@ class PluginFusinvdeployConfig extends CommonDBTM {
    }
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      global $LANG;
 
       if ($item->getType()=='PluginFusioninventoryConfig') {
          if ($_SESSION['glpishow_count_on_tabs']) {
-            return self::createTabEntry($LANG['plugin_fusinvdeploy']['title'][0]);
+            return self::createTabEntry(_('FusionInventory DEPLOY'));
+
          }
-         return $LANG['plugin_fusinvdeploy']['title'][0];
+         return _('FusionInventory DEPLOY');
+
       }
       return '';
    }
@@ -101,7 +102,7 @@ class PluginFusinvdeployConfig extends CommonDBTM {
    }
 
    function showForm($options=array()) {
-      global $LANG,$CFG_GLPI;
+      global $CFG_GLPI;
 
       $config = new PluginFusioninventoryConfig;
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
@@ -111,7 +112,7 @@ class PluginFusinvdeployConfig extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
 
 //      echo "<tr class='tab_bg_1'>";
-//      echo "<td>".$LANG['plugin_fusinvdeploy']['config'][0]."&nbsp;:</td>";
+//      echo "<td>"._('Address of the GLPI server (without http://)')."&nbsp;:</td>";
 //      echo "<td>";
 //      Html::autocompletionTextField($config, 'glpi_path', array(
 //         'name'   => 'glpi_path',
@@ -123,7 +124,7 @@ class PluginFusinvdeployConfig extends CommonDBTM {
 //      echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusinvdeploy']['config'][1]."&nbsp;:</td>";
+      echo "<td>"._('Root folder for sending files from server')."&nbsp;:</td>";
       echo "<td>";
       echo "<input type='text' name='server_upload_path' value='".$config->getValue($plugins_id, 'server_upload_path')."' size='60' />";
       echo "</td>";
@@ -133,7 +134,7 @@ class PluginFusinvdeployConfig extends CommonDBTM {
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "w")) {
          echo "<tr class='tab_bg_2'><td align='center' colspan='4'>
                <input class='submit' type='submit' name='plugin_fusinvdeploy_config_set'
-                      value='" . $LANG['buttons'][7] . "'></td></tr>";
+                      value='" . _('Update') . "'></td></tr>";
       }
       echo "</table>";
       Html::closeForm();

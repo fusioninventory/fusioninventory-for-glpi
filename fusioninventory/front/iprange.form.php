@@ -45,7 +45,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 $iprange = new PluginFusioninventoryIPRange();
 
-Html::header($LANG['plugin_fusioninventory']['title'][0], $_SERVER["PHP_SELF"], "plugins", 
+Html::header(_('FusionInventory'), $_SERVER["PHP_SELF"], "plugins", 
              "fusioninventory", "iprange");
 
 PluginFusioninventoryProfile::checkRight("fusioninventory", "iprange", "r");

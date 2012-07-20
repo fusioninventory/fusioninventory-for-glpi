@@ -112,9 +112,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @return value name of this itemtype
     **/
    static function getTypeName($nb=0) {
-      global $LANG;
 
-      return $LANG['plugin_fusioninventory']['functionalities'][2];
+      return _('General configuration');
+
    }
 
    
@@ -151,7 +151,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    
 
    function defineTabs($options=array()){
-      global $LANG,$CFG_GLPI;
+      global $CFG_GLPI;
 
 		$plugin = new Plugin;
 
@@ -189,12 +189,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @return varchar name of the tab(s) to display 
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      global $LANG;
 
       if ($item->getType()==__CLASS__) {
          $array_ret = array();
-         $array_ret[0] = $LANG['plugin_fusioninventory']['functionalities'][2];         
-         $array_ret[1] = $LANG['plugin_fusioninventory']['config'][1];
+         $array_ret[0] = _('General configuration');         
+
+         $array_ret[1] = _('Computer Inventory');
+
          return $array_ret;
       }
       return '';
@@ -272,18 +273,17 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    *
    **/
    function showForm($options=array()) {
-      global $LANG;
 
       $plugin_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][27]."&nbsp;:</td>";
+      echo "<td>"._('SSL-only for agent')."&nbsp;:</td>";
       echo "<td width='20%'>";
       Dropdown::showYesNo("ssl_only", $this->isActive($plugin_id, 'ssl_only', ''));
       echo "</td>";
-      echo "<td>".$LANG['plugin_fusioninventory']['config'][0]."&nbsp;:</td>";
+      echo "<td>"._('Inventory frequency (in hours)')."&nbsp;:</td>";
       echo "<td width='20%'>";
       Dropdown::showInteger("inventory_frequence",
                             $this->getValue($plugin_id, 'inventory_frequence', ''),1,240);
@@ -291,7 +291,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][32]." :</td>";
+      echo "<td>"._('Delete tasks after')." :</td>";
       echo "<td>";
       Dropdown::showInteger("delete_task",
                             $this->getValue($plugin_id, 'delete_task', ''),1,240, 1,
@@ -300,14 +300,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       echo "</td>";
 
-      echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][8]." :</td>";
+      echo "<td>"._('Agent port')." :</td>";
       echo "<td>";
       echo "<input type='text' name='agent_port' value='".$this->getValue($plugin_id, 'agent_port', '')."'/>";
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][76]." :</td>";
+      echo "<td>"._('Extra-debug')." :</td>";
       echo "<td>";
       Dropdown::showYesNo("extradebug", $this->isActive($plugin_id, 'extradebug', ''));
       echo "</td>";
@@ -331,7 +331,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    *
    **/
    static function showFormInventory($options=array()) {
-      global $LANG;
 
       $pfConfig = new PluginFusioninventoryConfig();
       $pfsnmpConfig = new self();
@@ -342,7 +341,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $pfsnmpConfig->showFormHeader($options);
  
       echo "<tr>";
-      echo "<th colspan='4'>".$LANG['plugin_fusioninventory']['setup'][20];
+      echo "<th colspan='4'>"._('Import options');
+
       echo "</th>";
       echo "</tr>";
 
@@ -352,26 +352,32 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       $array = array();
-      $array[0] = $LANG['plugin_fusioninventory']['setup'][23];
-      $array[1] = $LANG['plugin_fusioninventory']['setup'][22];
-      $array[2] = $LANG['plugin_fusioninventory']['setup'][24];
-      $array[3] = $LANG['plugin_fusioninventory']['setup'][27];
+      $array[0] = _('No import');
+
+      $array[1] = _('Global import');
+
+      $array[2] = _('Unique import');
+
+      $array[3] = _('Unique import on serial number');
+
       Dropdown::showFromArray("import_monitor", $array, 
                               array('value' => 
                                  $pfConfig->getValue($plugins_id, 'import_monitor', 'inventory')));
       echo "&nbsp;";
-      $text = "* ".$LANG['plugin_fusioninventory']['setup'][23]."&nbsp;:&nbsp;".
-      $LANG['plugin_fusioninventory']['setup'][32]."<br/><br/>".
-      "* ".$LANG['plugin_fusioninventory']['setup'][22]."&nbsp;:&nbsp;".
-      $LANG['plugin_fusioninventory']['setup'][33]."<br/><br/>".
-      "* ".$LANG['plugin_fusioninventory']['setup'][24]."&nbsp;:&nbsp;".
-      $LANG['plugin_fusioninventory']['setup'][34]."<br/><br/>".
-      "* ".$LANG['plugin_fusioninventory']['setup'][27]."&nbsp;:&nbsp;".
-      $LANG['plugin_fusioninventory']['setup'][35];
+      $text = "* "._('No import')."&nbsp;:&nbsp;".
+      _('This option will not import this item')."<br/><br/>".
+      "* "._('Global import')."&nbsp;:&nbsp;".
+      _('This option will merge items with same name to reduce number of items if this management isn\'t important')."<br/><br/>".
+      "* "._('Unique import')."&nbsp;:&nbsp;".
+      _('This option will create one item for each item found')."<br/><br/>".
+      "* "._('Unique import on serial number')."&nbsp;:&nbsp;".
+      _('This option will create one item for each item have serial number');
+
       Html::showToolTip($text);
       echo "</td>";
       echo "<th colspan='2'>";
-      echo $LANG['plugin_fusioninventory']['setup'][21];
+      echo _('Components');
+
       echo "</th>";
       echo "</tr>";
 
@@ -381,10 +387,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       $array = array();
-      $array[0] = $LANG['plugin_fusioninventory']['setup'][23];
-      $array[1] = $LANG['plugin_fusioninventory']['setup'][22];
-      $array[2] = $LANG['plugin_fusioninventory']['setup'][24];
-      $array[3] = $LANG['plugin_fusioninventory']['setup'][27];
+      $array[0] = _('No import');
+
+      $array[1] = _('Global import');
+
+      $array[2] = _('Unique import');
+
+      $array[3] = _('Unique import on serial number');
+
       Dropdown::showFromArray("import_printer", $array, 
                               array('value' => 
                                  $pfConfig->getValue($plugins_id, 'import_printer', 'inventory')));
@@ -406,10 +416,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       $array = array();
-      $array[0] = $LANG['plugin_fusioninventory']['setup'][23];
-      $array[1] = $LANG['plugin_fusioninventory']['setup'][22];
-      $array[2] = $LANG['plugin_fusioninventory']['setup'][24];
-      $array[3] = $LANG['plugin_fusioninventory']['setup'][27];
+      $array[0] = _('No import');
+
+      $array[1] = _('Global import');
+
+      $array[2] = _('Unique import');
+
+      $array[3] = _('Unique import on serial number');
+
       Dropdown::showFromArray("import_peripheral", $array, 
                               array('value' => 
                                        $pfConfig->getValue($plugins_id, 'import_peripheral', 'inventory')));
@@ -461,14 +475,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo $LANG['plugin_fusioninventory']['antivirus'][0]."&nbsp;:";
+      echo _('Antivirus')."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("import_antivirus", 
                           $pfConfig->getValue($plugins_id, 'import_antivirus', 'inventory'));
       echo "</td>";
       echo "<td>";
-      echo $LANG['plugin_fusioninventory']['setup'][31]."&nbsp;:";
+      echo _('Virtual network card')."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_networkcardvirtual", 
@@ -524,12 +538,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::showFromArray("location",
                               array("0"=>"------",
-                                    "1"=>$LANG['plugin_fusioninventory']['rule'][28]),
+                                    "1"=>_('Tag')),
+
                               array('value'=>$pfConfig->getValue($plugins_id, 'location', 'inventory')));
 
       echo "</td>";
       echo "<td>";
-      echo $LANG['plugin_fusioninventory']['setup'][30]."&nbsp;:";
+      echo _('Network drives')."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_networkdrive",
@@ -544,7 +559,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::showFromArray("group",
                               array("0"=>"------",
-                                    "1"=>$LANG['plugin_fusioninventory']['rule'][28]),
+                                    "1"=>_('Tag')),
+
                               array('value'=>$pfConfig->getValue($plugins_id, 'group', 'inventory')));
       echo "</td>";
       echo "<td>";
@@ -557,7 +573,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['setup'][36]."&nbsp;:</td>";
+      echo "<td>"._('Default status')."&nbsp;:</td>";
       echo "<td>";
       Dropdown::show('State',
                      array('name'   => 'states_id_default',
@@ -568,12 +584,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       
       
       echo "<tr>";
-      echo "<th colspan='4'>".$LANG['plugin_fusioninventory']['setup'][28];
+      echo "<th colspan='4'>"._('Automatic computers transfer');
+
       echo "</th>";
       echo "</tr>";
 
       echo "<td colspan='2'>";
-      echo $LANG['plugin_fusioninventory']['setup'][29]."&nbsp:";
+      echo _('Model for automatic computers transfer in an other entity')."&nbsp:";
       echo "</td>";
       echo "<td colspan='2'>";
       Dropdown::show("Transfer",

@@ -46,7 +46,7 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-//Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","models");
+//Html::header(_('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","models");
 
 PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","r");
 

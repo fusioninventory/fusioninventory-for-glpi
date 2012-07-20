@@ -47,9 +47,9 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusinvdeployAction_Delete extends CommonDBTM {
 
    static function getTypeName($nb=0) {
-      global $LANG;
 
-      return $LANG['plugin_fusinvdeploy']['package'][20];
+      return _('Delete a file');
+
    }
 
    static function getActions($moves_id) {

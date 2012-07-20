@@ -63,7 +63,6 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
 
    
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      global $LANG;
 
       $array_ret = array();
       if ($item->getType() == 'Computer') {
@@ -71,7 +70,8 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
             $a_computers = $this->find("`computers_id`='".$item->getID()."'", '', 1);
             if (count($a_computers) > 0) {
                // Bios/other informations
-               $array_ret[0] = self::createTabEntry($LANG['entity'][14]);
+               $array_ret[0] = self::createTabEntry(_('Advanced informations'));
+
             }
             
             $id = $item->getField('id');
@@ -80,7 +80,8 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
                $folder = '0';
             }
             if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id)) {
-               $array_ret[1] = self::createTabEntry($LANG['plugin_fusioninventory']['rules'][21]);
+               $array_ret[1] = self::createTabEntry(_('Import informations'));
+
             }
          }
       }
@@ -113,11 +114,9 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
    /**
     * Display informations about computer (bios...) 
     * 
-    * @global type $LANG
     * @param type $computers_id 
     */   
    function showForm($computers_id) {
-      global $LANG;
       
       $a_computerextend = current($this->find("`computers_id`='".$computers_id."'", 
                                               "", 1));
@@ -129,45 +128,45 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       echo '<div align="center">';
       echo '<table class="tab_cadre_fixe" style="margin: 0; margin-top: 5px;">';
       echo '<tr>';
-      echo '<th colspan="4">'.$LANG['entity'][14].'</th>';
+      echo '<th colspan="4">'._('Advanced informations').'</th>';
       echo '</tr>';
 
       echo '<tr class="tab_bg_1">';
-      echo '<th colspan="2" width="50%">'.$LANG['plugin_fusioninventory']['bios'][0].'</th>';
-      echo '<th colspan="2">'.$LANG['common'][67].'</th>';
+      echo '<th colspan="2" width="50%">'._('BIOS').'</th>';
+      echo '<th colspan="2">'._('Others').'</th>';
       echo '</tr>';
       
       echo '<tr class="tab_bg_1">';
-      echo '<td>'.$LANG['common'][27].'&nbsp;:</td>';
+      echo '<td>'._('Date').'&nbsp;:</td>';
       echo '<td>'.Html::convDate($a_computerextend['bios_date']).'</td>';
       if (Html::convDate($a_computerextend['operatingsystem_installationdate']) == '') {
          echo "<td colspan='2'></td>";
       } else {
-         echo "<td>".$LANG['computers'][9]." - ".$LANG['install'][3]." (".strtolower($LANG['common'][27]).")&nbsp;:</td>";
+         echo "<td>"._("Operating system")." - "._('Installation')." (".strtolower(_('Date')).")&nbsp;:</td>";
          echo '<td>'.Html::convDate($a_computerextend['operatingsystem_installationdate']).'</td>';
       }
       echo '</tr>';
 
       echo '<tr class="tab_bg_1">';
-      echo '<td>'.$LANG['rulesengine'][78].'&nbsp;:</td>';
+      echo '<td>'._('Version').'&nbsp;:</td>';
       echo '<td>'.$a_computerextend['bios_version'].'</td>';
       if ($a_computerextend['winowner'] == '') {
          echo "<td colspan='2'></td>";
       } else {
-         echo '<td>'.$LANG['plugin_fusioninventory']['computer'][1].'&nbsp;:</td>';
+         echo '<td>'._('Owner').'&nbsp;:</td>';
          echo '<td>'.$a_computerextend['winowner'].'</td>';
       }
       echo '</tr>';
 
       echo '<tr class="tab_bg_1">';
-      echo '<td>'.$LANG['common'][5].'&nbsp;:</td>';
+      echo '<td>'._('Manufacturer').'&nbsp;:</td>';
       echo '<td>';
       echo Dropdown::getDropdownName("glpi_manufacturers", $a_computerextend['bios_manufacturers_id']);
       echo '</td>';
       if ($a_computerextend['wincompany'] == '') {
          echo "<td colspan='2'></td>";
       } else {
-         echo '<td>'.$LANG['plugin_fusioninventory']['computer'][2].'&nbsp;:</td>';
+         echo '<td>'._('Company').'&nbsp;:</td>';
          echo '<td>'.$a_computerextend['wincompany'].'</td>';
       }
       echo '</tr>';
@@ -180,7 +179,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
    
    
    function display_xml($item) {
-      global $LANG,$CFG_GLPI;
+      global $CFG_GLPI;
 
       $id = $item->getField('id');
 
@@ -195,9 +194,10 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
 //         $xml = str_replace("\n", "<br/>", $xml);
          echo "<table class='tab_cadre_fixe' cellpadding='1'>";
          echo "<tr>";
-         echo "<th>".$LANG['plugin_fusioninventory']['title'][1]." ".
-            $LANG['plugin_fusioninventory']['xml'][0];
-         echo " (".$LANG['plugin_fusioninventory']['computer'][0]."&nbsp;: " . 
+         echo "<th>"._('FusInv')." ".
+            _('XML');
+
+         echo " ("._('Last inventory')."&nbsp;: " . 
             Html::convDateTime(date("Y-m-d H:i:s", 
                          filemtime(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id))).")";
          echo "</th>";
@@ -205,7 +205,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
 
          echo "<tr class='tab_bg_1'>";
          echo "<td width='130' align='center'>";
-         echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/send_xml.php?pluginname=fusinvinventory&file=".$folder."/".$id."'>".$LANG['document'][15]."</a>";
+         echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/send_xml.php?pluginname=fusinvinventory&file=".$folder."/".$id."'>"._('Download')."</a>";
          echo "</td>";
          echo "</tr>";
 

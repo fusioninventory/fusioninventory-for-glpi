@@ -47,9 +47,9 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusinvdeployFile extends CommonDBTM {
 
    static function getTypeName($nb=0) {
-      global $LANG;
 
-      return $LANG['plugin_fusinvdeploy']['package'][12];
+      return _('Files');
+
    }
 
    function canCreate() {
@@ -229,7 +229,6 @@ class PluginFusinvdeployFile extends CommonDBTM {
    }
 
    function addFileInRepo ($params) {
-      global $LANG;
 
 
       set_time_limit(600);
@@ -412,18 +411,18 @@ class PluginFusinvdeployFile extends CommonDBTM {
    }
 
    static function getMaxUploadSize() {
-      global $LANG;
 
       $max_upload = (int)(ini_get('upload_max_filesize'));
       $max_post = (int)(ini_get('post_max_size'));
       $memory_limit = (int)(ini_get('memory_limit'));
 
-      return $LANG['plugin_fusinvdeploy']['files'][6]
-         ." : ".min($max_upload, $max_post, $memory_limit).$LANG['common'][82];
+      return _('Maximum file size')
+
+         ." : ".min($max_upload, $max_post, $memory_limit)._('Mio');
+
    }
 
    function uploadFile()  {
-      global $LANG;
 
       if(isset($_GET['package_id'])){
          $package_id = $_GET['package_id'];
@@ -467,7 +466,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
             switch ($_FILES['file']['error']) {
                case UPLOAD_ERR_INI_SIZE:
                case UPLOAD_ERR_FORM_SIZE:
-                  print "{success:false, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['label'][20]}\"}";
+                  print "{success:false, file:'{$filename}',msg:\"{_('Transfer error: the file size is too big')}\"}";
                   exit;
                case UPLOAD_ERR_PARTIAL:
                   print "{success:false, file:'{$filename}',msg:\"The uploaded file was only partially uploaded.\"}";
@@ -503,18 +502,17 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
          //Add file in repo
          if ($filename && $this->addFileInRepo($data)) {
-            print "{success:true, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['action'][4]}\"}";
+            print "{success:true, file:'{$filename}',msg:\"{_('File saved!')}\"}";
             exit;
          } else {
-            print "{success:false, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['label'][15]}\"}";
+            print "{success:false, file:'{$filename}',msg:\"{_('File missing')}\"}";
             exit;
          }
       }
-      print "{success:false, file:'none',msg:\"{$LANG['plugin_fusinvdeploy']['label'][15]}\"}";
+      print "{success:false, file:'none',msg:\"{_('File missing')}\"}";
    }
 
    function uploadFileFromServer() {
-      global $LANG;
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
@@ -551,13 +549,13 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
          //Add file in repo
          if ($filename && $this->addFileInRepo($data)) {
-            print "{success:true, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['action'][4]}\"}";
+            print "{success:true, file:'{$filename}',msg:\"{_('File saved!')}\"}";
             exit;
          } else {
-            print "{success:false, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['label'][22]}\"}";
+            print "{success:false, file:'{$filename}',msg:\"{_('Failed to copy file')}\"}";
             exit;
          }
-      } print "{success:false, file:'none',msg:\"{$LANG['plugin_fusinvdeploy']['label'][15]}\"}";
+      } print "{success:false, file:'none',msg:\"{_('File missing')}\"}";
    }
 
    static function processFilesize($filesize) {

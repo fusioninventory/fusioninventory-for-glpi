@@ -55,7 +55,7 @@ class PluginFusioninventoryMenu {
    *@return nothing
    **/
    static function displayMenu($type = "big") {
-      global $LANG,$CFG_GLPI;
+      global $CFG_GLPI;
 
       if (PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE != 1) {
          echo "<center>";
@@ -71,58 +71,65 @@ class PluginFusioninventoryMenu {
 
       $a_menu = array();
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agent", "r")) {
-         $a_menu[0]['name'] = $LANG['plugin_fusioninventory']['menu'][1];
+         $a_menu[0]['name'] = _('Agents management');
+
          $a_menu[0]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_agents.png";
          $a_menu[0]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryAgent');
       }
 
       if(PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
-         $a_menu[1]['name'] = $LANG['plugin_fusioninventory']['task'][1]." (".__s('Summary').")";
+         $a_menu[1]['name'] = _('Task management')." (".__s('Summary').")";
          $a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_task.png";
          $a_menu[1]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/tasksummary.php";
       }
       
       if(PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
-         $a_menu[2]['name'] = $LANG['plugin_fusioninventory']['task'][1]." (".__s('Normal').")";
+         $a_menu[2]['name'] = _('Task management')." (".__s('Normal').")";
          $a_menu[2]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_task.png";
          $a_menu[2]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryTask');
       }
 
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
-         $a_menu[3]['name'] = $LANG['plugin_fusioninventory']['menu'][7];
+         $a_menu[3]['name'] = _('Running jobs');
+
          $a_menu[3]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_runningjob.png";
          $a_menu[3]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryTaskJob');
       }
 
       if (Session::haveRight("rule_ocs","r")) {
-         $a_menu[4]['name'] = $LANG['plugin_fusioninventory']['rules'][2];
+         $a_menu[4]['name'] = _('Equipment import and link rules');
+
          $a_menu[4]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
 
          $a_menu[4]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryInventoryRuleImport');
       }
       
       if (Session::haveRight("rule_ocs","r")) {
-         $a_menu[9]['name'] = $LANG['plugin_fusioninventory']['rules'][19];
+         $a_menu[9]['name'] = _('Ignored import devices');
+
          $a_menu[9]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
          $a_menu[9]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryIgnoredimportdevice');
          $a_menu[4]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryInventoryRuleImport');
       }
 
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice", "r")) {
-         $a_menu[5]['name'] = $LANG['plugin_fusioninventory']['menu'][4];
+         $a_menu[5]['name'] = _('Unknown device');
+
          $a_menu[5]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_unknown_device.png";
          $a_menu[5]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryUnknownDevice');
       }
 
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "iprange", "r")) {
-         $a_menu[6]['name'] = $LANG['plugin_fusioninventory']['menu'][2];
+         $a_menu[6]['name'] = _('IP range configuration');
+
          $a_menu[6]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rangeip.png";
          $a_menu[6]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryIPRange');
       }
 
       if (PluginFusioninventoryCredential::hasAlLeastOneType() 
             && PluginFusioninventoryProfile::haveRight("fusioninventory", "credential", "r")) {
-         $a_menu[7]['name'] = $LANG['plugin_fusioninventory']['menu'][5];
+         $a_menu[7]['name'] = _('Authentication for remote devices (VMware)');
+
          $a_menu[7]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_authentification.png";
          $a_menu[7]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryCredential');
 
@@ -130,7 +137,8 @@ class PluginFusioninventoryMenu {
       
       if (PluginFusioninventoryCredential::hasAlLeastOneType() 
             && PluginFusioninventoryProfile::haveRight("fusioninventory", "credentialip", "r")) {
-         $a_menu[8]['name'] = $LANG['plugin_fusioninventory']['menu'][6];
+         $a_menu[8]['name'] = _('Remote devices to inventory (VMware)');
+
          $a_menu[8]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_credentialips.png";
          $a_menu[8]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryCredentialip');
 
@@ -153,25 +161,29 @@ class PluginFusioninventoryMenu {
       
       $a_menu = array();
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "importxml", "r")) {
-         $a_menu[0]['name'] = $LANG['plugin_fusioninventory']['menu'][8];
+         $a_menu[0]['name'] = _('Import agent XML file');
+
          $a_menu[0]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_importxml.png";
          $a_menu[0]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvinventory/front/importxml.php";
       }
 
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "existantrule", "r")) {
-         $a_menu[1]['name'] = $LANG['plugin_fusioninventory']['rule'][100];
+         $a_menu[1]['name'] = _('Entity rules');
+
          $a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
          $a_menu[1]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/inventoryruleentity.php";
       }
 
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "blacklist", "r")) {
-         $a_menu[2]['name'] = $LANG['plugin_fusioninventory']['menu'][10];
+         $a_menu[2]['name'] = _('BlackList');
+
          $a_menu[2]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_blacklist.png";
          $a_menu[2]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/inventorycomputerblacklist.php";
       }
 
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "importxml","w")) {
-         $a_menu[3]['name'] = $LANG['plugin_fusioninventory']['menu'][11];
+         $a_menu[3]['name'] = _('Data integrity check');
+
          $a_menu[3]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_checkintegrity.png";
          $a_menu[3]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/inventorycomputerlibintegrity.php";
       }
@@ -215,7 +227,7 @@ class PluginFusioninventoryMenu {
     *@return $width_status integer total width used by menu
     **/
    static function htmlMenu($plugin_name, $a_menu = array(), $type = "big", $width_status='300') {
-      global $LANG,$CFG_GLPI;
+      global $CFG_GLPI;
 
       $width_max = 950;
 
@@ -241,12 +253,7 @@ class PluginFusioninventoryMenu {
          onMouseOut='document.getElementById(\"menu".$plugin_name."\").style.display=\"none\"'>";
 
       echo "<tr>";
-      $menu_name = '';
-      if (isset($LANG['plugin_'.$plugin_name]['title'][0])) {
-         $menu_name = $LANG['plugin_'.$plugin_name]['title'][0];
-      } else {
-         $menu_name = $plugin_name;
-      }
+      $menu_name = _('FusionInventory');
       echo "<th colspan='".count($a_menu)."' nowrap width='".$width."'>
          <img src='".$CFG_GLPI["root_doc"]."/pics/deplier_down.png' />
          &nbsp;".str_replace("FusionInventory ","",$menu_name)."&nbsp;

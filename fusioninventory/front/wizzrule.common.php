@@ -71,7 +71,8 @@ if (isset($_GET["action"])) {
                $rulecollection->deleteRuleOrder($rule->fields["ranking"]);
                $rule->delete(array('id' => $key));
             }
-            Event::log(0, "rules", 4, "setup", $_SESSION["glpiname"]." ".$LANG['log'][22]);
+            Event::log(0, "rules", 4, "setup", $_SESSION["glpiname"]." "._('item's deletion'));
+
             Html::back();
          }
          break;
@@ -111,7 +112,7 @@ if (isset($_GET["action"])) {
    $max = get_cfg_var("max_execution_time");
    $max = $start + ($max>0 ? $max/2.0 : 30.0);
 
-   Html::header($LANG['rulesengine'][17], $_SERVER['PHP_SELF'], "admin", $rulecollection->menu_type,
+   Html::header(_('Rules'), $_SERVER['PHP_SELF'], "admin", $rulecollection->menu_type,
                 $rulecollection->menu_option);
 
    if (!(isset($_POST['replay_confirm']) || isset($_GET['offset']))
@@ -123,9 +124,10 @@ if (isset($_GET["action"])) {
    echo "<table class='tab_cadrehov'>";
 
    echo "<tr><th><div class='relative'><strong>" .$rulecollection->getTitle(). "</strong>";
-   echo " - " .$LANG['rulesengine'][76]. "</th></tr>\n";
+   echo " - " ._('Replay the dictionary rules'). "</th></tr>\n";
    echo "<tr><td class='center'>";
-   Html::createProgressBar($LANG['rulesengine'][90]);
+   Html::createProgressBar(_('Work in progress...'));
+
    echo "</td></tr>\n";
    echo "</table>";
 
@@ -149,8 +151,8 @@ if (isset($_GET["action"])) {
       // Work ended
       $end   = explode(" ",microtime());
       $duree = round($end[0]+$end[1]-$start);
-      Html::changeProgressBarMessage($LANG['rulesengine'][91]." (".Html::timestampToString($duree).")");
-      echo "<a href='".$_SERVER['PHP_SELF']."'>".$LANG['buttons'][13]."</a>";
+      Html::changeProgressBarMessage(_('Task completed.')." (".Html::timestampToString($duree).")");
+      echo "<a href='".$_SERVER['PHP_SELF']."'>"._('Back')."</a>";
 
    } else {
       // Need more work
@@ -162,11 +164,11 @@ if (isset($_GET["action"])) {
    exit();
 }
 
-//Html::header($LANG['rulesengine'][17], $_SERVER['PHP_SELF'], "admin", $rulecollection->menu_type,
+//Html::header(_('Rules'), $_SERVER['PHP_SELF'], "admin", $rulecollection->menu_type,
 //             $rulecollection->menu_option);
    $tabs = array();
    if ($rulecollection->showInheritedTab()) {
-      $tabs[0] = array('title'  => $LANG['rulesengine'][20].' : '.
+      $tabs[0] = array('title'  => _('Rules applied').' : '.
                                    Dropdown::getDropdownName('glpi_entities',
                                                              $_SESSION['glpiactive_entity']),
                        'url'    => $CFG_GLPI['root_doc']."/ajax/rules.tabs.php",
@@ -174,9 +176,10 @@ if (isset($_GET["action"])) {
                                     get_class($rulecollection));
    }
 
-   $title = $LANG['rulesengine'][17];
+   $title = _('Rules');
+
    if ($rulecollection->isRuleRecursive()) {
-      $title = $LANG['rulesengine'][23].' : '.Dropdown::getDropdownName('glpi_entities',
+      $title = _('Local rules').' : '.Dropdown::getDropdownName('glpi_entities',
                                                                         $_SESSION['glpiactive_entity']);
    }
    $tabs[1] = array('title'  => $title,
@@ -185,7 +188,8 @@ if (isset($_GET["action"])) {
                                  get_class($rulecollection));
 
    if ($rulecollection->showChildrensTab()) {
-      $tabs[2] = array('title'  => $LANG['rulesengine'][21],
+      $tabs[2] = array('title'  => _('Rules applicable in the sub-entities'),
+
                        'url'    => $CFG_GLPI['root_doc']."/ajax/rules.tabs.php",
                        'params' => "target=".$_SERVER['PHP_SELF'].
                                     "&glpi_tab=2&inherited=0&childrens=1&itemtype=".

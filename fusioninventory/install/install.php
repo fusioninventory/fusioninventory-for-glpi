@@ -41,7 +41,7 @@
  */
 
 function pluginFusioninventoryInstall($version, $migration='') {
-   global $DB,$LANG,$CFG_GLPI;
+   global $DB, $CFG_GLPI;
 
    if ($migration == '') {
       $migration = new Migration($version);

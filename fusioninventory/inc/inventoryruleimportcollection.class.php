@@ -53,9 +53,9 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
 
 
    function getTitle() {
-      global $LANG;
 
-      return $LANG['plugin_fusioninventory']['rules'][2];
+      return _('Equipment import and link rules');
+
    }
 
    
@@ -93,25 +93,27 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
 
    
    function preProcessPreviewResults($output) {
-      global $LANG;
 
       //If ticket is assign to an object, display this information first
       if (isset($output["action"])) {
          echo "<tr class='tab_bg_2'>";
-         echo "<td>".$LANG['rulesengine'][11]."</td>";
+         echo "<td>"._('Action type')."</td>";
          echo "<td>";
 
          switch ($output["action"]) {
             case PluginFusioninventoryInventoryRuleImport::LINK_RESULT_LINK :
-               echo $LANG['setup'][620];
+               echo _('Link');
+
                break;
 
             case PluginFusioninventoryInventoryRuleImport::LINK_RESULT_CREATE:
-               echo $LANG['plugin_fusioninventory']['rules'][18];
+               echo _('Device created');
+
                break;
 
             case PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED:
-               echo $LANG['plugin_fusioninventory']['codetasklog'][3];
+               echo _('Import denied');
+
                break;
             
          }
@@ -124,7 +126,7 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
             $className = $output["found_equipment"][1];
             $class = new $className;
             if ($class->getFromDB($output["found_equipment"][0])) {
-               echo "<td>".$LANG['setup'][620]."</td>";
+               echo "<td>"._('Link')."</td>";
                echo "<td>".$class->getLink(true)."</td>";
             }
             echo "</tr>";

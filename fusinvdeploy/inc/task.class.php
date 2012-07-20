@@ -49,12 +49,13 @@ include_once(GLPI_ROOT . "/plugins/fusioninventory/inc/task.class.php");
 class PluginFusinvdeployTask extends PluginFusioninventoryTask {
 
    static function getTypeName($nb=0) {
-      global $LANG;
 
       if ($nb>1) {
-         return $LANG['plugin_fusinvdeploy']['group'][3];
+         return _('Group of computers');
+
       }
-      return $LANG['plugin_fusinvdeploy']['task'][1];
+      return _('Task');
+
    }
 
    function canCreate() {
@@ -66,7 +67,6 @@ class PluginFusinvdeployTask extends PluginFusioninventoryTask {
    }
 
    function defineTabs($options=array()) {
-      global $LANG;
 
       $ong = array();
 
@@ -78,10 +78,10 @@ class PluginFusinvdeployTask extends PluginFusioninventoryTask {
    }
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      global $LANG;
 
       switch(get_class($item)) {
-         case __CLASS__: return $LANG['plugin_fusinvdeploy']['task'][13];
+         case __CLASS__: return _('Order list');
+
       }
    }
 
@@ -100,13 +100,15 @@ class PluginFusinvdeployTask extends PluginFusioninventoryTask {
    }
 
    function title() {
-      global $LANG, $CFG_GLPI;
+      global  $CFG_GLPI;
 
       $buttons = array();
-      $title = $LANG['plugin_fusinvdeploy']['task'][1];
+      $title = _('Task');
+
 
       if ($this->canCreate()) {
-         $buttons["task.form.php?new=1"] = $LANG['plugin_fusinvdeploy']['task'][3];
+         $buttons["task.form.php?new=1"] = _('Add task');
+
          $title = "";
       }
 
@@ -115,7 +117,7 @@ class PluginFusinvdeployTask extends PluginFusioninventoryTask {
 
 
    function showActions($id) {
-      global $LANG, $CFG_GLPI;
+      global  $CFG_GLPI;
 
       //load extjs plugins library
       echo "<script type='text/javascript'>";
@@ -131,7 +133,8 @@ class PluginFusinvdeployTask extends PluginFusioninventoryTask {
          echo "<div class='box-tleft'><div class='box-tright'><div class='box-tcenter'>";
          echo "</div></div></div>";
          echo "<div class='box-mleft'><div class='box-mright'><div class='box-mcenter'>";
-         echo $LANG['plugin_fusinvdeploy']['task'][19];
+         echo _('Edit impossible, this task is active');
+
          echo "</div></div></div>";
          echo "<div class='box-bleft'><div class='box-bright'><div class='box-bcenter'>";
          echo "</div></div></div>";
@@ -153,11 +156,11 @@ class PluginFusinvdeployTask extends PluginFusioninventoryTask {
    }
 
    function pre_deleteItem() {
-      global $LANG;
 
       //if task active, delete denied
       if ($this->getField('is_active') == 1) {
-         Session::addMessageAfterRedirect($LANG['plugin_fusinvdeploy']['task'][20]);
+         Session::addMessageAfterRedirect(_('This task is active. delete denied'));
+
          Html::redirect(GLPI_ROOT."/plugins/fusinvdeploy/front/task.form.php?id=".$this->getField('id'));
          return false;
       }

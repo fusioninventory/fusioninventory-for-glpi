@@ -48,12 +48,13 @@ class PluginFusioninventoryConfiguration extends CommonDBTM {
 
    
    function defineTabs($options=array()){
-      global $LANG;
 
       $tabs = array();
       $moduleTabs = array();
-      $tabs[1]=$LANG['plugin_fusioninventory']['functionalities'][2];
-      $tabs[2]=$LANG['plugin_fusioninventory']['agents'][27];
+      $tabs[1]=_('General configuration');
+
+      $tabs[2]=_('Agents modules');
+
       if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'])) {
          $fusionTabs = $tabs;
          $moduleTabForms = $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'];

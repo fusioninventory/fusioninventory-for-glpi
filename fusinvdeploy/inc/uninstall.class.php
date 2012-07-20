@@ -47,16 +47,16 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusinvdeployUninstall extends CommonDBTM {
 
    static function getTypeName($nb=0) {
-      global $LANG;
 
-      return $LANG['plugin_fusinvdeploy']['package'][15];
+      return _('Uninstallation');
+
    }
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      global $LANG;
 
       switch(get_class($item)) {
-         case 'PluginFusinvdeployPackage': return $LANG['plugin_fusinvdeploy']['package'][15];
+         case 'PluginFusinvdeployPackage': return _('Uninstallation');
+
       }
    }
 
@@ -70,13 +70,14 @@ class PluginFusinvdeployUninstall extends CommonDBTM {
    }
 
    static function showForm($id){
-      global $CFG_GLPI, $LANG;
+      global $CFG_GLPI;
 
       $disabled = "false";
       if (!PluginFusinvdeployPackage::canEdit($id)) {
          $disabled = "true";
          PluginFusinvdeployPackage::showEditDeniedMessage($id,
-               $LANG['plugin_fusinvdeploy']['package'][24]);
+               _('One or more active tasks (#task#) use this package. Edition denied.'));
+
       }
 
       if(isset($_POST["glpi_tab"])) {

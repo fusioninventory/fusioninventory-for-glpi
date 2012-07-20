@@ -62,13 +62,14 @@ class PluginFusinvsnmpConfig extends CommonDBTM {
    
    
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      global $LANG;
 
       if ($item->getType()=='PluginFusioninventoryConfig') {
          if ($_SESSION['glpishow_count_on_tabs']) {
-            return self::createTabEntry($LANG['plugin_fusinvsnmp']['title'][0]);
+            return self::createTabEntry(_('FusionInventory SNMP'));
+
          }
-         return $LANG['plugin_fusinvsnmp']['title'][0];
+         return _('FusionInventory SNMP');
+
       }
       return '';
    }
@@ -103,7 +104,7 @@ class PluginFusinvsnmpConfig extends CommonDBTM {
    
 
    function showForm($options=array()) {
-      global $LANG,$CFG_GLPI;
+      global $CFG_GLPI;
 
       $pfConfig = new PluginFusioninventoryConfig();
 
@@ -114,11 +115,13 @@ class PluginFusinvsnmpConfig extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][16]."&nbsp;:</td>";
+      echo "<td>"._('SNMP authentication')."&nbsp;:</td>";
       echo "<td>";
       $ArrayValues = array();
-      $ArrayValues['DB']= $LANG['plugin_fusioninventory']['functionalities'][17];
-      $ArrayValues['file']= $LANG['plugin_fusioninventory']['functionalities'][18];
+      $ArrayValues['DB']= _('Database');
+
+      $ArrayValues['file']= _('Files');
+
       Dropdown::showFromArray('storagesnmpauth', $ArrayValues,
                               array('value'=>$pfConfig->getValue($plugins_id, 'storagesnmpauth')));
       echo "</td>";
@@ -126,11 +129,11 @@ class PluginFusinvsnmpConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusinvsnmp']['agents'][24]."&nbsp;(".strtolower($LANG['plugin_fusinvsnmp']['config'][4]).")&nbsp;:</td>";
+      echo "<td>"._('Threads number')."&nbsp;(".strtolower(_('Network discovery')).")&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::showInteger("threads_netdiscovery", $pfConfig->getValue($plugins_id, 'threads_netdiscovery'),1,400);
       echo "</td>";
-      echo "<td>".$LANG['plugin_fusinvsnmp']['agents'][24]."&nbsp;(".strtolower($LANG['plugin_fusinvsnmp']['config'][3]).")&nbsp;:</td>";
+      echo "<td>"._('Threads number')."&nbsp;(".strtolower(_('Network inventory (SNMP)')).")&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::showInteger("threads_snmpquery", $pfConfig->getValue($plugins_id, 'threads_snmpquery'),1,400);
       echo "</td>";
@@ -140,7 +143,7 @@ class PluginFusinvsnmpConfig extends CommonDBTM {
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "w")) {
          echo "<tr class='tab_bg_2'><td align='center' colspan='4'>
                <input class='submit' type='submit' name='plugin_fusinvsnmp_config_set'
-                      value='" . $LANG['buttons'][7] . "'></td></tr>";
+                      value='" . _('Update') . "'></td></tr>";
       }
       echo "</table>";
       Html::closeForm();

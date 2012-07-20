@@ -88,7 +88,8 @@ if (isset($_GET['file'])) {
          if ($fsize){
             echo fread($f, filesize($file));
          } else {
-            echo $LANG['document'][47];
+            echo _('1');
+
          }
 
          if ($mc) @ini_set('magic_quotes_runtime', $mc);

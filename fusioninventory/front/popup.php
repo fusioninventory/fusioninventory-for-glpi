@@ -52,21 +52,21 @@ if (isset($_GET["popup"])) {
 if (isset($_SESSION["glpipopup"]["name"])) {
    switch ($_SESSION["glpipopup"]["name"]) {
       case "test_rule" :
-         Html::popHeader($LANG['buttons'][50],$_SERVER['PHP_SELF']);
+         Html::popHeader(_('Test'),$_SERVER['PHP_SELF']);
          include "../../../front/rule.test.php";
          break;
 
       case "test_all_rules" :
-         Html::popHeader($LANG['rulesengine'][84],$_SERVER['PHP_SELF']);
+         Html::popHeader(_('Test rules engine'),$_SERVER['PHP_SELF']);
          include "../../../front/rulesengine.test.php";
          break;
 
       case "show_cache" :
-         Html::popHeader($LANG['rulesengine'][100],$_SERVER['PHP_SELF']);
+         Html::popHeader(_('Cache informations'),$_SERVER['PHP_SELF']);
          include "../../../front/rule.cache.php";
          break;
    }
-   echo "<div class='center'><br><a href='javascript:window.close()'>".$LANG['buttons'][13]."</a>";
+   echo "<div class='center'><br><a href='javascript:window.close()'>"._('Back')."</a>";
    echo "</div>";
    Html::popFooter();
 }

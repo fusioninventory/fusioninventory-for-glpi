@@ -46,7 +46,7 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory");
+Html::header(_('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory");
 
 PluginFusioninventoryProfile::checkRight("fusinvsnmp", "reports","r");
 
@@ -54,17 +54,17 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 echo "<table class='tab_cadre'>";
 
-echo "<th align='center'>".$LANG["Menu"][6]."</th>";
+echo "<th align='center'>"._('Reports')."</th>";
 
 echo "<tr class='tab_bg_1'>";
 echo "<td align='center'>";
-echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/report/switch_ports.history.php'>".$LANG['plugin_fusinvsnmp']['menu'][5]."</a>";
+echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/report/switch_ports.history.php'>"._('Switchs ports history')."</a>";
 echo "</td>";
 echo "</tr>";
 
 echo "<tr class='tab_bg_1'>";
 echo "<td align='center'>";
-echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/report/ports_date_connections.php'>".$LANG['plugin_fusinvsnmp']['menu'][6]."</a>";
+echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/report/ports_date_connections.php'>"._('Unused switchs ports')."</a>";
 echo "</td>";
 echo "</tr>";
 /*

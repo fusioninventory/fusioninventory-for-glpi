@@ -54,25 +54,27 @@ class PluginFusioninventoryStaticmisc {
    *   method value name of method
    **/
    static function task_methods() {
-      global $LANG;
 
       $a_tasks = array();
       $a_tasks[] = array('module'               => 'fusioninventory',
                          'method'               => 'wakeonlan',
-                         'name'                 => $LANG['plugin_fusioninventory']['profile'][5],
+                         'name'                 => _('Wake On LAN'),
+
                          'use_rest'             => false);
       
       $a_tasks[] =  array('module'         => 'fusioninventory',
                           'method'         => 'inventory',
                           'selection_type' => 'devices',
                           'hidetask'       => 1,
-                          'name'           => $LANG['plugin_fusioninventory']['config'][1],
+                          'name'           => _('Computer Inventory'),
+
                           'use_rest'       => false);
                           
       $a_tasks[] = array('module'        => 'fusioninventory',
                          'method'         => 'ESX',
                          'selection_type' => 'devices',
-                         'name'           => $LANG['plugin_fusioninventory']['title'][2],
+                         'name'           => _('VMware host remote inventory'),
+
                          'use_rest'       => true);
       
       return $a_tasks;
@@ -150,36 +152,48 @@ class PluginFusioninventoryStaticmisc {
    *
    **/
    static function profiles() {
-      global $LANG;
 
       return array(array('profil'  => 'agent',
-                         'name'    => $LANG['plugin_fusioninventory']['profile'][2]),
+                         'name'    => _('Agents')),
+
                    array('profil'  => 'remotecontrol',
-                         'name'    => $LANG['plugin_fusioninventory']['profile'][3]),
+                         'name'    => _('Agent remote control')),
+
                    array('profil'  => 'configuration',
-                         'name'    => $LANG['plugin_fusioninventory']['profile'][4]),
+                         'name'    => _('Configuration')),
+
                    array('profil'  => 'wol',
-                         'name'    => $LANG['plugin_fusioninventory']['profile'][5]),
+                         'name'    => _('Wake On LAN')),
+
                    array('profil'  => 'unknowndevice',
-                         'name'    => $LANG['plugin_fusioninventory']['profile'][6]),
+                         'name'    => _('Unknown devices')),
+
                    array('profil'  => 'task',
-                         'name'    => $LANG['plugin_fusioninventory']['task'][18]),
+                         'name'    => _('Tasks')),
+
                    array('profil'  => 'iprange',
-                         'name'    => $LANG['plugin_fusioninventory']['menu'][2]),
+                         'name'    => _('IP range configuration')),
+
                    array('profil'  => 'credential',
-                         'name'    => $LANG['plugin_fusioninventory']['menu'][5]),
+                         'name'    => _('Authentication for remote devices (VMware)')),
+
                    array('profil'  => 'credentialip',
-                         'name'    => $LANG['plugin_fusioninventory']['menu'][6]),
+                         'name'    => _('Remote devices to inventory (VMware)')),
+
           
           
                    array('profil'  => 'existantrule',
-                         'name'    => $LANG['plugin_fusioninventory']['profile'][7]),
+                         'name'    => _('Existance criteria')),
+
                    array('profil'  => 'importxml',
-                         'name'    => $LANG['plugin_fusioninventory']['profile'][8]),
+                         'name'    => _('XML file manual import')),
+
                    array('profil'  => 'blacklist',
-                         'name'    => $LANG['plugin_fusioninventory']['profile'][9]),
+                         'name'    => _('Fields blacklist')),
+
                    array('profil'  => 'ESX',
-                         'name'    => $LANG['plugin_fusioninventory']['vmwareesx'][0]));
+                         'name'    => _('VMware host')));
+
    }
    
    
@@ -232,7 +246,8 @@ class PluginFusioninventoryStaticmisc {
       $results = $DB->query($query);
 
       $agents = array();
-      //$agents['.1'] = $LANG['common'][66];
+      //$agents['.1'] = _('All');
+
       while ($data = $DB->fetch_array($results)) {
          $agents[$data['id']] = $data['name'];
       }
@@ -245,9 +260,9 @@ class PluginFusioninventoryStaticmisc {
    //------------------------------------------ Actions-------------------------------------//
 
    static function task_actiontype_ESX($a_itemtype) {
-      global $LANG;
       return array ('' => Dropdown::EMPTY_VALUE , 
-                    'PluginFusioninventoryAgent' => $LANG['plugin_fusioninventory']['profile'][2]);
+                    'PluginFusioninventoryAgent' => _('Agents'));
+
    }
 
    

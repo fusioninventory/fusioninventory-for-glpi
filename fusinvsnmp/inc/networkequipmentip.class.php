@@ -68,7 +68,6 @@ class PluginFusinvsnmpNetworkEquipmentIP extends CommonDBTM {
     * @param type $id id of the network equipment
     */
    static function showIP($id) {
-      global $LANG;
 
       $networkequipmentip = new self;
       
@@ -76,7 +75,8 @@ class PluginFusinvsnmpNetworkEquipmentIP extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='8'>";
-      echo $LANG['networking'][14];
+      echo _('IP');
+
       echo "</th>";
       echo "</tr>";
 

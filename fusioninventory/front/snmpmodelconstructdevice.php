@@ -46,7 +46,7 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","constructdevice");
+Html::header(_('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","constructdevice");
 Session::checkLoginUser();
 
 PluginFusioninventoryMenu::displayMenu("mini");
@@ -73,19 +73,19 @@ if (isset($_GET['generatemodels']) AND $_GET['generatemodels'] == '1') {
 }
 
 echo " | ";
-echo "<a href='".$_SERVER["PHP_SELF"]."?generatemodels=1'>".$LANG['plugin_fusinvsnmp']['constructdevice'][1]."</a>";
+echo "<a href='".$_SERVER["PHP_SELF"]."?generatemodels=1'>"._('Automatic creation of models')."</a>";
 echo " | ";
-echo "<a href='".$_SERVER["PHP_SELF"]."?cleanmodels=1'>".$LANG['plugin_fusinvsnmp']['constructdevice'][3]."</a>";
+echo "<a href='".$_SERVER["PHP_SELF"]."?cleanmodels=1'>"._('Delete models non used')."</a>";
 echo " | ";
-echo "<a href='".$_SERVER["PHP_SELF"]."?generatecomments=1'>".$LANG['plugin_fusinvsnmp']['constructdevice'][5]."</a>";
+echo "<a href='".$_SERVER["PHP_SELF"]."?generatecomments=1'>"._('Re-create models comments')."</a>";
 echo " | ";
 
 echo "<br/>";
 
 echo " | ";
-echo "<a href='".$_SERVER["PHP_SELF"]."?generatediscover=1'>".$LANG['plugin_fusinvsnmp']['constructdevice'][2]."</a>";
+echo "<a href='".$_SERVER["PHP_SELF"]."?generatediscover=1'>"._('Generate discovery file')."</a>";
 echo " | ";
-echo "<a href='".$_SERVER["PHP_SELF"]."?exportmodels=1'>".$LANG['plugin_fusinvsnmp']['constructdevice'][4]."</a>";
+echo "<a href='".$_SERVER["PHP_SELF"]."?exportmodels=1'>"._('Export all models')."</a>";
 echo " | ";
 
 Search::show('PluginFusioninventorySnmpmodelConstructDevice');

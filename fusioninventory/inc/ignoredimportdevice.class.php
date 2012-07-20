@@ -48,7 +48,6 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
    
    
    static function getTypeName($nb=0) {
-      global $LANG;
       
    }
    
@@ -83,28 +82,36 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       
       echo "<tr>";
       echo "<th>";
-      echo $LANG['common'][16];
+      echo _('Name');
+
       echo "</th>";
       echo "<th>";
-      echo $LANG['rulesengine'][102];
+      echo _('Rule name');
+
       echo "</th>";
       echo "<th>";
-      echo $LANG['common'][27];
+      echo _('Date');
+
       echo "</th>";
       echo "<th>";
-      echo $LANG['common'][17];
+      echo _('Type');
+
       echo "</th>";
       echo "<th>";
-      echo $LANG['entity'][0];
+      echo _('Entity');
+
       echo "</th>";
       echo "<th>";
-      echo $LANG['networking'][14];
+      echo _('IP');
+
       echo "</th>";
       echo "<th>";
-      echo $LANG['networking'][15];
+      echo _('MAC');
+
       echo "</th>";
       echo "<th>";
-      echo $LANG['plugin_fusioninventory']['task'][26];
+      echo _('Module');
+
       echo "</th>";
       echo "</tr>";
       

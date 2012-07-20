@@ -77,7 +77,6 @@ if (!$DB->connected) {
 class CliMigration extends Migration {
 
    function __construct($ver) {
-      global $LANG;
 
       $this->deb     = time();
       $this->version = $ver;
@@ -220,7 +219,8 @@ if ($_SERVER['argv'][1] == 'fusinvsnmp') {
 
 if (in_array('--optimize', $_SERVER['argv'])) {
 
-   $migration->displayTitle($LANG['update'][139]);
+   $migration->displayTitle(_('Optimizing tables'));
+
    DBmysql::optimize_tables($migration);
 
    $migration->displayWarning("Optimize done.");

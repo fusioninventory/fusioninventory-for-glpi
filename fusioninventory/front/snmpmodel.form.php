@@ -50,7 +50,7 @@ $pfModel = new PluginFusioninventorySnmpmodel();
 $pfModelMib = new PluginFusioninventorySnmpmodelMib();
 $pfImportExport = new PluginFusinvsnmpImportExport();
 
-Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","models");
+Html::header(_('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","models");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 

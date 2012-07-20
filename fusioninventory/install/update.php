@@ -3651,17 +3651,18 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
 
 function plugin_fusioninventory_displayMigrationMessage ($id, $msg="") {
-   global $LANG;
    static $created=0;
    static $deb;
 
    if ($created != $id) {
-      if (empty($msg)) $msg=$LANG['rulesengine'][90];
+      if (empty($msg)) $msg=_('Work in progress...');
+
       echo "<div id='migration_message_$id'><p class='center'>$msg</p></div>";
       $created = $id;
       $deb = time();
    } else {
-      if (empty($msg)) $msg=$LANG['rulesengine'][91];
+      if (empty($msg)) $msg=_('Task completed.');
+
       $fin = time();
       $tps = Html::timestampToString($fin-$deb);
       echo "<script type='text/javascript'>document.getElementById('migration_message_$id').innerHTML = '<p class=\"center\">$msg ($tps)</p>';</script>\n";

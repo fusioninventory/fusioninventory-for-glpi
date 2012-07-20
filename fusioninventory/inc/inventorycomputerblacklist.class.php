@@ -47,9 +47,9 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
 
    static function getTypeName($nb=0) {
-      global $LANG;
 
-      return $LANG['plugin_fusioninventory']['menu'][10];
+      return _('BlackList');
+
    }
 
    
@@ -65,22 +65,24 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
    
 
    function getSearchOptions() {
-      global $LANG;
 
       $tab = array();
 
-      $tab['common'] = $LANG['plugin_fusioninventory']['menu'][10];
+      $tab['common'] = _('BlackList');
+
 
       $tab[1]['table']     = $this->getTable();
       $tab[1]['field']     = 'value';
       $tab[1]['linkfield'] = 'value';
-      $tab[1]['name']      = $LANG['plugin_fusioninventory']['blacklist'][0];
+      $tab[1]['name']      = _('blacklisted value');
+
       $tab[1]['datatype']  = 'itemlink';
 
       $tab[2]['table']     = 'glpi_plugin_fusinvinventory_criterias';
       $tab[2]['field']     = 'name';
       $tab[2]['linkfield'] = 'plugin_fusioninventory_criterium_id';
-      $tab[2]['name']      = $LANG['common'][16];
+      $tab[2]['name']      = _('Name');
+
       $tab[2]['datetype']  = "itemlink";
 
       return $tab;
@@ -114,7 +116,6 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
    *
    **/
    function showForm($items_id, $options=array()) {
-      global $LANG;
 
       if ($items_id!='') {
          $this->getFromDB($items_id);
@@ -125,11 +126,11 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
       $this->showFormHeader();
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['blacklist'][0]."</td>";
+      echo "<td>"._('blacklisted value')."</td>";
       echo "<td>";
       echo "<input type='text' name='value' value='".$this->fields['value']."' />";
       echo "</td>";
-      echo "<td>".$LANG['common'][16]."</td>";
+      echo "<td>"._('Name')."</td>";
       echo "<td>";
       Dropdown::show('PluginFusioninventoryInventoryComputerCriteria', array('name' => 'plugin_fusioninventory_criterium_id',
                                                             'value' => $this->fields['plugin_fusioninventory_criterium_id']));

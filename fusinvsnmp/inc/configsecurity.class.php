@@ -59,7 +59,6 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 
    
    function showForm($id, $options=array()) {
-      global $LANG;
 
       PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","r");
 
@@ -72,14 +71,14 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center' colspan='2'>" . $LANG["common"][16] . "</td>";
+      echo "<td align='center' colspan='2'>" . _('Name') . "</td>";
       echo "<td align='center' colspan='2'>";
       echo "<input type='text' name='name' value='" . $this->fields["name"] . "'/>";
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center' colspan='2'>" . $LANG['plugin_fusinvsnmp']['model_info'][2] . "</td>";
+      echo "<td align='center' colspan='2'>" . _('SNMP version') . "</td>";
       echo "<td align='center' colspan='2'>";
          $this->showDropdownSNMPVersion($this->fields["snmpversion"]);
       echo "</td>";
@@ -91,12 +90,12 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']['snmpauth'][1] . "</td>";
+      echo "<td align='center'>" . _('Community') . "</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='community' value='" . $this->fields["community"] . "'/>";
       echo "</td>";
 
-      echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']['snmpauth'][2] . "</td>";
+      echo "<td align='center'>" . _('User') . "</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='username' value='" . $this->fields["username"] . "'/>";
       echo "</td>";
@@ -104,7 +103,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2'></td>";
-      echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']['snmpauth'][4] . "</td>";
+      echo "<td align='center'>" . _('Encryption protocol for authentication ') . "</td>";
       echo "<td align='center'>";
          $this->showDropdownSNMPAuth($this->fields["authentication"]);
       echo "</td>";
@@ -112,7 +111,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2'></td>";
-      echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']['snmpauth'][5] . "</td>";
+      echo "<td align='center'>" . _('Password') . "</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='auth_passphrase'
                    value='".$this->fields["auth_passphrase"]."'/>";
@@ -121,7 +120,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2'></td>";
-      echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']['snmpauth'][6] . "</td>";
+      echo "<td align='center'>" . _('Encryption protocol for data') . "</td>";
       echo "<td align='center'>";
          $this->showDropdownSNMPEncryption($this->fields["encryption"]);
       echo "</td>";
@@ -129,7 +128,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2'></td>";
-      echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']['snmpauth'][5] . "</td>";
+      echo "<td align='center'>" . _('Password') . "</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='priv_passphrase'
                    value='" . $this->fields["priv_passphrase"] . "'/>";
@@ -147,23 +146,22 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
    
    
    function plugin_fusioninventory_snmp_connections($array=0) {
-      global $LANG;
 
       $array_auth = array();
 
       if ($array == '0') {
          echo "<div align='center'><table class='tab_cadre_fixe'>";
-         echo "<tr><th colspan='10'>".$LANG['plugin_fusioninventory']['model_info'][3]." :</th></tr>";
-         echo "<tr><th>".$LANG["common"][2]."</th>";
-         echo "<th>".$LANG["common"][16]."</th>";
-         echo "<th>".$LANG['plugin_fusioninventory']['model_info'][2]."</th>";
-         echo "<th>".$LANG['plugin_fusioninventory']['snmpauth'][1]."</th>";
-         echo "<th>".$LANG['plugin_fusioninventory']['snmpauth'][2]."</th>";
-         echo "<th>".$LANG['plugin_fusioninventory']['snmpauth'][3]."</th>";
-         echo "<th>".$LANG['plugin_fusioninventory']['snmpauth'][4]."</th>";
-         echo "<th>".$LANG['plugin_fusioninventory']['snmpauth'][5]."</th>";
-         echo "<th>".$LANG['plugin_fusioninventory']['snmpauth'][6]."</th>";
-         echo "<th>".$LANG['plugin_fusioninventory']['snmpauth'][7]."</th>";
+         echo "<tr><th colspan='10'>"._('1')." :</th></tr>";
+         echo "<tr><th>"._('ID')."</th>";
+         echo "<th>"._('Name')."</th>";
+         echo "<th>"._('1')."</th>";
+         echo "<th>"._('1')."</th>";
+         echo "<th>"._('1')."</th>";
+         echo "<th>"._('1')."</th>";
+         echo "<th>"._('1')."</th>";
+         echo "<th>"._('1')."</th>";
+         echo "<th>"._('1')."</th>";
+         echo "<th>"._('1')."</th>";
          echo "</tr>";
       }
 

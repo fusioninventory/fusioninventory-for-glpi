@@ -40,7 +40,6 @@
    ------------------------------------------------------------------------
  */
 
-global $LANG;
 
 //get const check class for use in heredoc
 $refl = new ReflectionClass('PluginFusinvdeployState');
@@ -72,35 +71,35 @@ function displayState(val, full) {
    switch (val) {
       case '0':
          var img_name = 'bullet-blue.png';
-         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][7]}';
+         val = '{_('Prepared')}';
          break
       case '1':
          var img_name = 'bullet-yellow.png';
-         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][1]}';
+         val = '{_('Started')}';
          break
       case '2':
          var img_name = 'bullet-green.png';
-         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][2]}';
+         val = '{_('Ok')}';
          break
       case '3':
          var img_name = 'bullet-red.png';
-         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][3]}';
+         val = '{_('Error / rescheduled')}';
          break
       case '4':
          var img_name = 'bullet-red.png';
-         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][4]}';
+         val = '{_('Error')}';
          break
       case '5':
          var img_name = 'bullet-red.png';
-         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][5]}';
+         val = '{_('unknown')}';
          break
       case '6':
          var img_name = 'bullet-yellow.png';
-         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][6]}';
+         val = '{_('Running')}';
          break
       case '7':
          var img_name = 'bullet-blue.png';
-         val = '{$LANG['plugin_fusioninventory']['taskjoblog'][7]}';
+         val = '{_('Prepared')}';
          break
       default:
          var img_name = 'bullet-grey.png';
@@ -148,7 +147,7 @@ function createGridTooltip(value, contentid, message) {
 }
 
 var taskJobsTreeGrid = new Ext.ux.tree.TreeGrid({
-   title: "{$LANG['plugin_fusinvdeploy']['deploystatus'][0]}",
+   title: "{_('Deployment status')}",
    height: {$height_left},
    width: {$width_left},
    region: 'center',
@@ -172,7 +171,7 @@ var taskJobsTreeGrid = new Ext.ux.tree.TreeGrid({
          renderProgressBar: function(val) {
             if (val == "null" || val == null) return '';
             if (val.indexOf('%') != -1)
-               return '<div class="c_progress">{$LANG['common'][47]} :&nbsp;<div class="progress-container"><div style="width: '+val+'">'+val+'</div></div></div>';
+               return '<div class="c_progress">{_('Progress')} :&nbsp;<div class="progress-container"><div style="width: '+val+'">'+val+'</div></div></div>';
             else {
                return displayState(val);
             }
@@ -221,7 +220,7 @@ var taskJobsTreeGrid = new Ext.ux.tree.TreeGrid({
 
 
 var taskJobLogsTreeGrid = new Ext.ux.tree.TreeGrid({
-   title: "{$LANG['plugin_fusinvdeploy']['deploystatus'][1]}",
+   title: "{_('Associated logs')}",
    height: {$height_right},
    width: {$width_right},
    region: 'east',
@@ -260,16 +259,16 @@ var taskJobLogsTreeGrid = new Ext.ux.tree.TreeGrid({
                   message = val;
             else switch(values.comment) {
                case '{$stateConst['RECEIVED']}':
-                  message = "{$LANG['plugin_fusinvdeploy']['deploystatus'][2]}"
+                  message = "{_('The agent received the job request')}"
                   break;
                case '{$stateConst['DOWNLOADING']}':
-                  message = "{$LANG['plugin_fusinvdeploy']['deploystatus'][3]}"
+                  message = "{_('The agent started to check the mirror to download the file')}"
                   break;
                case '{$stateConst['EXTRACTING']}':
-                  message = "{$LANG['plugin_fusinvdeploy']['deploystatus'][4]}"
+                  message = "{_('Preparing the working directory')}"
                   break;
                case '{$stateConst['PROCESSING']}':
-                  message = "{$LANG['plugin_fusinvdeploy']['deploystatus'][5]}"
+                  message = "{_('The agent is processing the job')}"
                   break;
               default:
                   break
