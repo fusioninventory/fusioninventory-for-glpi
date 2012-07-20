@@ -69,22 +69,6 @@ function plugin_init_fusinvdeploy() {
       return false;
    }
 
-   if (!$plugin->isActivated("webservices")) {
-      if (isset($_GET['id']) AND isset($_GET['action'])
-            AND strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
-         switch ($_GET['action']) {
-            case 'activate':
-                Session::addMessageAfterRedirect($LANG['plugin_fusinvdeploy']['setup'][19]);
-               break;
-            case 'uninstall':
-                Session::addMessageAfterRedirect($LANG['plugin_fusinvdeploy']['setup'][20]);
-               Html::redirect($CFG_GLPI["root_doc"]."/front/plugin.php");
-               break;
-         }
-      }
-      return false;
-   }
-
    if (!$plugin->isActivated("fusinvinventory")) {
       if (isset($_GET['id']) AND isset($_GET['action'])
             AND strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
@@ -219,19 +203,6 @@ function plugin_fusinvdeploy_check_prerequisites() {
       if (!$plugin->isActivated("fusinvinventory")) {
          print $LANG['plugin_fusinvdeploy']['setup'][21]."<br />\n";
          return false;
-      }
-      if (!$plugin->isInstalled("webservices")) {
-         print $LANG['plugin_fusinvdeploy']['setup'][19]."<br />\n";
-         return false;
-      } else {
-         //cheeck version of webservice
-         $plugin = new Plugin;
-         $tmp = $plugin->find("directory = 'webservices'");
-         $webservices_plugin = array_pop($tmp);
-         if (version_compare($webservices_plugin['version'], '1.2.0') < 0) {
-            print $LANG['plugin_fusinvdeploy']['setup'][19]."<br />\n";
-            return false;
-         }
       }
       return true;
    }

@@ -155,14 +155,6 @@ $migration = new CliMigration($current_version);
    
    system("php -q cli_install.php fusinvsnmp");
    system("php -q cli_install.php fusinvinventory");
-   
-   include_once(GLPI_ROOT . "/plugins/webservices/hook.php");
-   include (GLPI_ROOT . "/plugins/webservices/locales/en_GB.php");
-   plugin_webservices_install();
-   $plugin->getFromDBbyDir("webservices");
-   $plugin->load("webservices");
-   $plugin->activate($plugin->fields['id']);
-   $plugin->load("webservices");
    system("php -q cli_install.php fusinvdeploy");
 
 if ($_SERVER['argv'][1] == 'fusinvsnmp') {
