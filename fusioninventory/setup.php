@@ -49,6 +49,8 @@ include_once(GLPI_ROOT."/inc/includes.php");
 // Init the hooks of fusioninventory
 function plugin_init_fusioninventory() {
    global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
+      
+   $PLUGIN_HOOKS['csrf_compliant']['fusioninventory'] = true;
 
    $moduleId = 0;
    if (class_exists('PluginFusioninventoryModule')) { // check if plugin is active
@@ -101,8 +103,6 @@ function plugin_init_fusioninventory() {
          PluginFusioninventoryProfile::changeprofile($moduleId);
 
       $PLUGIN_HOOKS['add_javascript']['fusioninventory']="script.js";
-      
-      $PLUGIN_HOOKS['csrf_compliant']['fusioninventory'] = true;
 
       if (isset($_SESSION["glpiID"])) {
 

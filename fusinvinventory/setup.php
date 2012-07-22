@@ -47,6 +47,7 @@ function plugin_init_fusinvinventory() {
    global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
 
    // ##### 1. Stop if fusioninventory not activated #####
+   $PLUGIN_HOOKS['csrf_compliant']['fusinvinventory'] = true;
 
    $plugin = new Plugin;
    if (!$plugin->isActivated("fusioninventory")) {
@@ -112,8 +113,6 @@ function plugin_init_fusinvinventory() {
    }
    $PLUGIN_HOOKS['change_profile']['fusinvinventory']
       = PluginFusioninventoryProfile::changeprofile($moduleId,$a_plugin['shortname']);
-   
-   $PLUGIN_HOOKS['csrf_compliant']['fusinvinventory'] = true;
 
    if (isset($_SESSION["glpiID"])) {
 
