@@ -48,8 +48,8 @@ define ("PLUGIN_FUSINVDEPLOY_VERSION","0.84+1.0");
 function plugin_init_fusinvdeploy() {
    global $PLUGIN_HOOKS,$CFG_GLPI;
 
-   include(GLPI_ROOT . "/plugins/fusioninventory/inc/config.class.php");
-   include(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/config.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
    // ##### 1. Stop if fusioninventory not activated #####
 
    $plugin = new Plugin();
