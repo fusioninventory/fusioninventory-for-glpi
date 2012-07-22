@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -46,9 +46,9 @@ function pluginFusinvsnmpInstall($version, $migrationname='Migration') {
    ini_set("max_execution_time", "0");
 
    $migration = new $migrationname($version);
-   
+
    $migration->displayMessage("Installation of plugin FusinvSNMP");
-   
+
    // Get informations of plugin
    $a_plugin = plugin_version_fusinvsnmp();
 
@@ -112,7 +112,7 @@ function pluginFusinvsnmpInstall($version, $migrationname='Migration') {
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());
       $pfAgentmodule->add($input);
-      
+
       $pfNetworkporttype = new PluginFusinvsnmpNetworkporttype();
       $pfNetworkporttype->init();
 
@@ -176,7 +176,7 @@ function pluginFusinvsnmpUninstall() {
       WHERE `itemtype` = 'Computer'
          AND `name`='ifaddr'";
    $DB->query($query);
-   
+
 
    $config = new PluginFusioninventoryConfig;
    $config->cleanConfig($plugins_id);

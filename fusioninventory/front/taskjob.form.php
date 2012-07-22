@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -56,14 +56,14 @@ if (isset($_POST['definition_add'])) {
    $a_listdef = importArrayFromDB($mytaskjob->fields['definition']);
    $add = 1;
    foreach ($a_listdef as $dataDB) {
-      if (isset($dataDB[$_POST['DefinitionType']]) 
+      if (isset($dataDB[$_POST['DefinitionType']])
               AND $dataDB[$_POST['DefinitionType']] == $_POST['definitionselectiontoadd']) {
          $add = 0;
          break;
       }
    }
    if ($add == '1') {
-      if (isset($_POST['DefinitionType']) 
+      if (isset($_POST['DefinitionType'])
               AND $_POST['DefinitionType'] != '') {
          $a_listdef[] = array($_POST['DefinitionType']=>$_POST['definitionselectiontoadd']);
       }
@@ -86,7 +86,7 @@ if (isset($_POST['definition_add'])) {
       }
    }
    if ($add == '1') {
-      if (isset($_POST['ActionType']) 
+      if (isset($_POST['ActionType'])
               AND $_POST['ActionType'] != '') {
          $a_listact[] = array($_POST['ActionType']=>$_POST['actionselectiontoadd']);
       }
@@ -139,7 +139,7 @@ if (isset($_POST['definition_add'])) {
       $mytaskjob->getFromDB($_POST['id']);
       $pfTask->getFromDB($mytaskjob->fields['plugin_fusioninventory_tasks_id']);
    }
-   
+
    $inputtaskjob = array();
    $inputtask = array();
    if (isset($_POST['update'])) {
@@ -228,7 +228,7 @@ if (isset($_POST['definition_add'])) {
    } else {
       $mytaskjob->update($_POST);
    }
-   Html::back();   
+   Html::back();
 
 } else if (isset($_POST["delete"])) {
    // * delete taskjob
@@ -237,7 +237,7 @@ if (isset($_POST['definition_add'])) {
    $mytaskjob->delete($_POST);
    Html::redirect(Toolbox::getItemTypeFormURL('PluginFusioninventoryTask')."?id=".
                                      $_POST['plugin_fusioninventory_tasks_id']);
-                                     
+
 } elseif (isset($_POST['itemaddaction'])) {
    $array                     = explode("||", $_POST['methodaction']);
    $module                    = $array[0];
@@ -248,7 +248,7 @@ if (isset($_POST['definition_add'])) {
    $input['name']             = $method;
 
    $task_id = $mytask->add($input);
-   
+
    // Add job with this device
    $input = array();
    $input['plugin_fusioninventory_tasks_id'] = $task_id;
@@ -260,7 +260,7 @@ if (isset($_POST['definition_add'])) {
    $a_selectionDB                            = array();
    $a_selectionDB[][$_POST['itemtype']]      = $_POST['items_id'];
    $input['definition']                      = exportArrayToDB($a_selectionDB);
-   
+
    $taskname = "plugin_".$module."_task_selection_type_".$method;
    if (is_callable($taskname)) {
       $input['selection_type'] = call_user_func($taskname, $_POST['itemtype']);
@@ -273,7 +273,7 @@ if (isset($_POST['definition_add'])) {
    // force running this job (?)
 
    Html::back();
-   
+
 } elseif (isset($_POST['forceend'])) {
    $mytaskjobstate = new PluginFusioninventoryTaskjobstate();
    $pFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
@@ -285,7 +285,7 @@ if (isset($_POST['definition_add'])) {
          $mytaskjobstate->changeStatusFinish($data['id'], 0, '', 1, "Action cancelled by user", 0, 0);
       }
    }
-   
+
    $pFusioninventoryTaskjob->getFromDB($jobstate['plugin_fusioninventory_taskjobs_id']);
    $pFusioninventoryTaskjob->reinitializeTaskjobs($pFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']);
 

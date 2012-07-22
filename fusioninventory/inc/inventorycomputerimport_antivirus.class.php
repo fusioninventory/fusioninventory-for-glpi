@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -54,7 +54,7 @@ class PluginFusioninventoryInventoryComputerImport_Antivirus extends CommonDBTM 
    * @param $items_id integer
    *     - if add    : id of the computer
    *     - if update : id of the antivirus
-   * @param $dataSection array all values of the section 
+   * @param $dataSection array all values of the section
    *
    * @return id of the antivirus or false
    *
@@ -62,7 +62,7 @@ class PluginFusioninventoryInventoryComputerImport_Antivirus extends CommonDBTM 
    function AddUpdateItem($type, $items_id, $dataSection) {
 
       $pfConfig = new PluginFusioninventoryConfig();
-      if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"], 
+      if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
               "import_antivirus", 'inventory') == '0') {
          return;
       }

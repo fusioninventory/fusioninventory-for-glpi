@@ -36,7 +36,7 @@
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -51,7 +51,7 @@ class PluginFusioninventorySetup {
       global $DB;
 
       CronTask::Unregister('fusioninventory');
-      
+
       $pfSetup  = new PluginFusioninventorySetup();
       $pfModule = new PluginFusioninventoryModule();
       $user = new User();
@@ -96,11 +96,11 @@ class PluginFusioninventorySetup {
       return true;
    }
 
-   
-   
+
+
    /**
     * Remove a directory and sub-directory
-    * 
+    *
     * @param type $dir name of the directory
     */
    function rrmdir($dir) {
@@ -123,14 +123,14 @@ class PluginFusioninventorySetup {
    }
 
 
-   
+
    /**
     * Create rules (initialisation)
     */
    function initRules() {
-      
+
       $ranking = 0;
-      
+
      // Create rule for : Computer + serial + uuid
       $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
@@ -343,7 +343,7 @@ class PluginFusioninventorySetup {
          $input['pattern']= 'Computer';
          $input['condition']=0;
          $rulecriteria->add($input);
-         
+
          $input = array();
          $input['rules_id'] = $rule_id;
          $input['criteria'] = "name";
@@ -756,12 +756,12 @@ class PluginFusioninventorySetup {
          $input['value'] = '0';
          $ruleaction->add($input);
    }
-   
-   
-   
+
+
+
    /**
     * Creation of FusionInventory user
-    * 
+    *
     * @return int id of the user "plugin FusionInventory"
     */
    function createFusionInventoryUser() {
@@ -776,7 +776,7 @@ class PluginFusioninventorySetup {
          return $user->add($input);
       } else {
          $user = current($a_users);
-         return $user['id'];        
+         return $user['id'];
       }
    }
 }

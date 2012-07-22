@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -45,8 +45,8 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
-   
-   
+
+
    function canCreate() {
       return PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity", "w");
    }
@@ -55,9 +55,9 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
    function canView() {
       return PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity", "r");
    }
-   
 
-   
+
+
    function showForm($id, $options=array()) {
 
       PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","r");
@@ -65,7 +65,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
       if ($id!='') {
          $this->getFromDB($id);
       } else {
-         $this->getEmpty();   
+         $this->getEmpty();
       }
       $this->showTabs($options);
       $this->showFormHeader($options);
@@ -142,9 +142,9 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 
       return true;
    }
-   
-   
-   
+
+
+
    function plugin_fusioninventory_snmp_connections($array=0) {
 
       $array_auth = array();
@@ -184,7 +184,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
          foreach($xml->auth->conf[$i] as $item) {
             $j++;
             switch ($j) {
-               
+
                case 1:
                   $numero[$i] = $item;
                   break;
@@ -235,7 +235,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
             }
          }
       }
-      
+
       foreach ($numero AS $key=>$numerosimple) {
          if ($array == '0') {
             echo "<tr class='tab_bg_1'>";
@@ -267,14 +267,14 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
          return $array_auth;
       }
    }
-   
+
 
 
    // for file stored snmp authentication
    function add_xml() {
       // Get new id
       $xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml",'SimpleXMLElement', LIBXML_NOCDATA);
-      
+
       $id = $xml->incrementID[0];
       $id = $id + 1;
 
@@ -345,15 +345,15 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
       $xml_write .= "         <priv_passphrase><![CDATA[".$_POST["priv_passphrase"].
                     "]]></priv_passphrase>\n";
       $xml_write .= "      </conf>\n";
-      
+
       $xml_write .= "   </auth>\n";
       $xml_write .= "</snmp>\n";
-      
+
       $myFile = GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml";
       $fh = fopen($myFile, 'w') or die("can't open file");
       fwrite($fh, $xml_write);
       fclose($fh);
-      
+
       return $id;
    }
 
@@ -361,7 +361,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 
    /**
     * Display SNMP version (dropdown)
-    * 
+    *
     * @param $p_value
     */
    function showDropdownSNMPVersion($p_value=NULL) {
@@ -374,13 +374,13 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
    }
 
 
-   
+
    /**
     * Get real version of SNMP
-    * 
+    *
     * @param $id version number
-    * 
-    * @return real version 
+    *
+    * @return real version
     */
    function getSNMPVersion($id) {
       switch($id) {
@@ -402,11 +402,11 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
    }
 
 
-   
+
    /**
     * Display SNMP authentication encryption (dropdown)
-    * 
-    * @param $p_value 
+    *
+    * @param $p_value
     */
    function showDropdownSNMPAuth($p_value=NULL) {
       $authentications = array(0=>'-----', 'MD5', 'SHA');
@@ -418,13 +418,13 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
    }
 
 
-   
+
    /**
     * Get SNMP authentication encryption
     *
     * @param $id
-    * 
-    * @return encryption 
+    *
+    * @return encryption
     */
    function getSNMPAuthProtocol($id) {
       switch($id) {
@@ -506,7 +506,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
          }
       }
       $selectbox .= "</select>\n";
-      
+
       return $selectbox;
    }
 }

@@ -36,7 +36,7 @@
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -49,7 +49,7 @@ Session::checkRight("config","w");
 
 if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "r")) {
    switch($_POST['glpi_tab']) {
-      
+
       case -1: // All
          $config = new PluginFusioninventoryConfig;
          $config->showForm(array('target'=>$_POST['target']));

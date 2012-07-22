@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -45,16 +45,16 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusioninventoryAgentmodule extends CommonDBTM {
-   
+
 
    /**
     * Display tab
-    * 
+    *
     * @global array $LANG
-    * 
+    *
     * @param CommonGLPI $item
     * @param integer $withtemplate
-    * 
+    *
     * @return varchar name of the tab(s) to display
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
@@ -65,16 +65,16 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       }
       return '';
    }
-   
-   
- 
+
+
+
    /**
     * Display content of tab
-    * 
+    *
     * @param CommonGLPI $item
     * @param integer $tabnum
     * @param interger $withtemplate
-    * 
+    *
     * @return boolean true
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
@@ -85,9 +85,9 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       }
       return true;
    }
-   
 
-   
+
+
    /**
    * Display form forconfiguration of agent modules
    *
@@ -119,7 +119,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             foreach ($a_methods as $datamod) {
 
                if ((strtolower($data["modulename"]) == strtolower($datamod['method'])) ||
-                   isset($datamod['task']) 
+                   isset($datamod['task'])
                      && (strtolower($data["modulename"]) == strtolower($datamod['task']))) {
                   if (isset($datamod['use_rest']) && $datamod['use_rest'] == true) {
                      $use_rest = true;
@@ -152,7 +152,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
                foreach ($a_agentList as $agent_id) {
                   $a_used[] = $agent_id;
                }
-               Dropdown::show("PluginFusioninventoryAgent", array("name" => "agent_to_add[]", 
+               Dropdown::show("PluginFusioninventoryAgent", array("name" => "agent_to_add[]",
                                                                   "used" => $a_used));
                echo "</td>";
                echo "<td align='center'>";
@@ -217,7 +217,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       global $CFG_GLPI;
 
       $plugin = new Plugin();
-      
+
       $canedit = 1;
       echo "<br/>";
       if ($canedit) {
@@ -294,12 +294,12 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       }
    }
 
-   
+
 
    /**
    * Get data (activation, exceptions...) for a module
    *
-   * @param $module_name value Name of the module 
+   * @param $module_name value Name of the module
    *
    * @return array all DB fields for this module
    *
@@ -373,8 +373,8 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       return $a_agents;
    }
 
-   
-   
+
+
    /**
    * Get if agent allowed to do this TASK
    *
@@ -385,7 +385,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    *
    **/
    function getAgentCanDo($module_name, $items_id) {
-      
+
       if ($module_name == 'SNMPINVENTORY') {
          $module_name = 'SNMPQUERY';
       }
@@ -404,10 +404,10 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             return false;
          } else {
             return true;
-         } 
+         }
       }
    }
-   
+
 
 
    /**
@@ -427,7 +427,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       }
    }
 
-   
+
 
    /**
    * Get URL for module (for REST)

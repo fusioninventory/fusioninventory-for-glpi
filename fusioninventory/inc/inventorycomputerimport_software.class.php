@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -99,10 +99,10 @@ class PluginFusioninventoryInventoryComputerImport_Software extends CommonDBTM  
       $software_entity = $_SESSION["plugin_fusinvinventory_entity"];
       if (isset($res_rule['new_entities_id'])) {
          $software_entity = $res_rule['new_entities_id'];
-      }      
-      
-      $software_id = $Software->addOrRestoreFromTrash($modified_name, 
-                                                      $manufacturer, 
+      }
+
+      $software_id = $Software->addOrRestoreFromTrash($modified_name,
+                                                      $manufacturer,
                                                       $software_entity);
       if ($software_id > 0
               AND isset($res_rule["is_helpdesk_visible"])
@@ -111,8 +111,8 @@ class PluginFusioninventoryInventoryComputerImport_Software extends CommonDBTM  
          $inputsoftware['id'] = $software_id;
          $inputsoftware['is_helpdesk_visible'] = $res_rule["is_helpdesk_visible"];
          $Software->update($inputsoftware);
-      }      
-      
+      }
+
       $isNewVers = 0;
       $query = "SELECT `id`
                 FROM `glpi_softwareversions`
@@ -142,10 +142,10 @@ class PluginFusioninventoryInventoryComputerImport_Software extends CommonDBTM  
       }
       // Check if this software yet exist (See ticket http://forge.fusioninventory.org/issues/999)
       $a_soft = $Computer_SoftwareVersion->find("`computers_id`='".$array['computers_id']."'
-               AND `softwareversions_id`='".$array['softwareversions_id']."' ", 
+               AND `softwareversions_id`='".$array['softwareversions_id']."' ",
             "",
             1);
-      if (count($a_soft) == 0) {      
+      if (count($a_soft) == 0) {
          $Computer_SoftwareVersion_id = $Computer_SoftwareVersion->add($array, array(), $_SESSION["plugin_fusinvinventory_history_add"]);
          return $Computer_SoftwareVersion_id;
       }
@@ -173,7 +173,7 @@ class PluginFusioninventoryInventoryComputerImport_Software extends CommonDBTM  
          }
          $Computer_SoftwareVersion->delete($input, 0, $_SESSION["plugin_fusinvinventory_history_add"]);
       }
-   }   
+   }
 }
 
 ?>

@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -44,8 +44,8 @@
 $USEDBREPLICATE=1;
 $DBCONNECTION_REQUIRED=0;
 
-define('GLPI_ROOT', '../../..'); 
-include (GLPI_ROOT . "/inc/includes.php"); 
+define('GLPI_ROOT', '../../..');
+include (GLPI_ROOT . "/inc/includes.php");
 
 Html::header(_('FusionInventory'),$_SERVER['PHP_SELF'],"utils","report");
 
@@ -62,7 +62,7 @@ $_GET=getValues($_GET,$_POST);
 displaySearchForm();
 
 if(isset($_POST["dropdown_calendar"]) && isset($_POST["dropdown_sup_inf"])) {
-      
+
       $_GET["field"][0] = 3;
       $_GET["contains"][0] = getContainsArray($_POST);
 
@@ -87,7 +87,7 @@ function displaySearchForm() {
    echo "<tr class='tab_bg_1' align='center'>";
    echo "<td>";
    echo _('Initial contract period')." :";
-   
+
    $values=array();
    $values["sup"]=">";
    $values["inf"]="<";
@@ -151,12 +151,12 @@ function displaySearchForm() {
    echo "<td>";
    echo "<input type='submit' value='Valider' class='submit' />";
    echo "</td>";
-   
+
    echo "</tr>";
    echo "</table>";
    Html::closeForm();
-      
-} 
+
+}
 
 
 
@@ -170,7 +170,7 @@ function getContainsArray($get) {
 
             return "LIKE '".$get["dropdown_calendar"]."%'";
          case "inf":
-            
+
             return "<'".$get["dropdown_calendar"]." 00:00:00'";
       }
    }
@@ -206,7 +206,7 @@ function getValues($get,$post) {
          $get["dropdown_calendar"] = substr($get["contains"][$index],1);
       }
    }
-   return $get;   
+   return $get;
 }
 
 

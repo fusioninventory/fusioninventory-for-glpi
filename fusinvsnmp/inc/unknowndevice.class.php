@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    Vincent Mazzoni
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -61,7 +61,7 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
    function canView() {
       return PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice", "r");
    }
-      
+
 
    function canDelete() {
       return false;
@@ -113,7 +113,7 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
       PluginFusinvsnmpSNMP::auth_dropdown($this->fields['plugin_fusinvsnmp_configsecurities_id']);
       echo "</td>";
       echo "</tr>";
-      
+
       $this->showFormButtons($options);
 
       return true;
@@ -165,7 +165,7 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
             if ($DB->numrows($result) > 0) {
                $data = $DB->fetch_assoc($result);
             }
-            
+
 
             $data['sysdescr'] = $snmp_device['sysdescr'];
             $data['plugin_fusioninventory_snmpmodels_id'] = $snmp_device['plugin_fusioninventory_snmpmodels_id'];
@@ -179,7 +179,7 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
             }
             $this->delete($snmp_device);
             break;
-         
+
          case 'NetworkEquipment':
             $pfNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
             $_SESSION['glpi_plugins_fusinvsnmp_table'] = "glpi_plugin_fusioninventory_networkequipments";
@@ -203,8 +203,8 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
             }
             $this->delete($snmp_device);
             break;
-         
-      }      
+
+      }
    }
 }
 

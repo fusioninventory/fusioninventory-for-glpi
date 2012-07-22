@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    Vincent Mazzoni
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -50,7 +50,7 @@ class PluginFusioninventoryModule extends CommonDBTM {
     * Get all installed modules
     *
     * @param $p_inactive=false Show inactive modules
-    * 
+    *
     * @return array of fields
     **/
    static function getAll($p_inactive=false) {
@@ -63,7 +63,7 @@ class PluginFusioninventoryModule extends CommonDBTM {
    }
 
 
-   
+
    /**
     * Get module id or fusioninventory plugin id
     *
@@ -87,7 +87,7 @@ class PluginFusioninventoryModule extends CommonDBTM {
    }
 
 
-   
+
    /**
     * Get module name
     *

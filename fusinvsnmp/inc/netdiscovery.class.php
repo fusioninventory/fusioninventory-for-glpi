@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -65,7 +65,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
       $pfTask->getFromDB($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
 
       $communication = $pfTask->fields['communication'];
-      
+
       //list all iprange
       $a_iprange = importArrayFromDB($pfTaskjob->fields['definition']);
       $count_ip = 0;
@@ -123,7 +123,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
                   }
                }
             }
-         }         
+         }
       }
 
 
@@ -205,7 +205,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
                   $input_taskjob['id'] = $pfTaskjob->fields['id'];
                   $input_taskjob['status'] = 1;
                   $pfTaskjob->update($input_taskjob);
-               }               
+               }
             }
          }
          if ($taskvalid == "0") {
@@ -328,7 +328,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
          $sxml_option->addChild('DICOHASH', md5_file(GLPI_ROOT."/plugins/fusinvsnmp/tool/discovery.xml"));
       }
       if (($pfAgentconfig->fields["senddico"] == "1")) {
-         
+
          if (((isset($a_versions["NETDISCOVERY"]))
                  AND ($a_versions["NETDISCOVERY"] >= 1.3))) {
 

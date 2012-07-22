@@ -29,18 +29,18 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
-define('GLPI_ROOT', '../../..'); 
+define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT."/inc/includes.php");
 
@@ -48,13 +48,13 @@ PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printer","r");
 
 if ((isset($_POST['update'])) && (isset($_POST['id']))) {
       PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printer","w");
-   
+
    $plugin_fusioninventory_printer = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
-   
+
    $_POST['printers_id'] = $_POST['id'];
    unset($_POST['id']);
-   
-   $query = "SELECT * 
+
+   $query = "SELECT *
              FROM `glpi_plugin_fusinvsnmp_printers`
              WHERE `printers_id`='".$_POST['printers_id']."' ";
    $result = $DB->query($query);
@@ -69,11 +69,11 @@ if ((isset($_POST['update'])) && (isset($_POST['id']))) {
       $result = $DB->query($query);
    }
 
-   $data = $DB->fetch_assoc($result);   
+   $data = $DB->fetch_assoc($result);
    $_POST['id'] = $data['id'];
 
    $plugin_fusioninventory_printer->update($_POST);
-   
+
 } else if ((isset($_POST["GetRightModel"])) && (isset($_POST['id']))) {
    $plugin_fusioninventory_model_infos = new PluginFusioninventorySnmpmodel();
    $plugin_fusioninventory_model_infos->getrightmodel($_POST['id'], PRINTER_TYPE);

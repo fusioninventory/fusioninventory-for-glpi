@@ -10,7 +10,7 @@ global $CFG_GLPI;
 if (!defined('GLPI_ROOT')) {
    define('GLPI_ROOT', '../../../..');
    require_once GLPI_ROOT."/inc/includes.php";
-   
+
 
    // Install
 //   include_once("inc/installation.php");
@@ -19,7 +19,7 @@ if (!defined('GLPI_ROOT')) {
 //
 //   Session::loadLanguage();
 
-   
+
 //   $_SESSION['glpi_use_mode'] = 2;
 //   $_SESSION['glpiactiveprofile']['id'] = 4;
 //
@@ -32,7 +32,7 @@ if (!defined('GLPI_ROOT')) {
 ////   backupMySQL();
 //
 //   $_SESSION["glpilanguage"] = 'fr_FR';
-//   
+//
 //   // Install
 ////   include_once("inc/installation.php");
 ////   installGLPI();
@@ -41,7 +41,7 @@ if (!defined('GLPI_ROOT')) {
 //   loadLanguage();
 //
 //   $CFG_GLPI["root_doc"] = GLPI_ROOT;
-   
+
    restore_error_handler();
 
    error_reporting(E_ALL | E_STRICT);
@@ -96,7 +96,7 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
          $plugins_id = $fields['id'];
          $pfConfig = new PluginFusioninventoryConfig();
          $pfConfig->updateValue($plugins_id, "extradebug", "1");
-       
+
     }
 
 
@@ -117,7 +117,7 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
     public function testSetModuleInventoryOn() {
        global $DB;
-       
+
         // set in config module inventory = yes by default
         $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
            SET `is_active` = '1'
@@ -125,10 +125,10 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
         $result = $DB->query($query);
      }
 
-     
+
 
     public function testSendinventories() {
-      
+
       $MyDirectory = opendir("xml/inventory_local");
       $k = 0;
       while(false !== ($Entry = readdir($MyDirectory))) {
@@ -189,10 +189,10 @@ echo "# testHardwareModifications\n";
                }
             }
          }
-      }      
+      }
    }
 
-   
+
 
 //   public function testMachinesCriteriasFolders() {
 //      $exist = 0;
@@ -221,7 +221,7 @@ echo "# testHardwareModifications\n";
    }
 
    function testSendinventory($xmlFile='', $xml='') {
-      
+
       if (empty($xmlFile)) {
          echo "testSendinventory with no arguments...\n";
          return;
@@ -234,7 +234,7 @@ echo "# testHardwareModifications\n";
       $input_xml = $xml->asXML();
       $returnAgent = $emulatorAgent->sendProlog($input_xml);
       echo $returnAgent."\n";
-      
+
       $Computer = new Computer();
 //      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
       if (isset($xml->CONTENT->BIOS->SSN)) {
@@ -290,7 +290,7 @@ echo "# testHardwareModifications\n";
             $child->SERIAL = preg_replace('/\/$/', '', (string)$child->SERIAL);
             $a_printer = $Printer->find("`serial`='".$child->SERIAL."'");
             $this->assertEquals(count($a_printer), 1 , 'Problem on printers, printer created "'.count($a_printer).'" instead 1 times (serial : '.$child->SERIAL.')');
-         }         
+         }
       }
       // Verify all printers are connected to the computer
          // Get all printers connected to computer in DB
@@ -657,9 +657,9 @@ echo "# testHardwareModifications\n";
          echo "testNetwork with no arguments...\n";
          return;
       }
-      
+
       $pfBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
-     
+
       if (!isset($xml->CONTENT->NETWORKS)) {
          return;
       }
@@ -701,7 +701,7 @@ echo "# testHardwareModifications\n";
 
             $a_found = $pfBlacklist->find("`value`='".(string)$child->MACADDR."'
                AND `plugin_fusioninventory_criterium_id`='3'");
-            if (count($a_found) == '0') {            
+            if (count($a_found) == '0') {
                $query = "SELECT * FROM `glpi_networkports`
                WHERE `items_id`='".$items_id."'
                   AND `itemtype`='".$itemtype."'
@@ -740,7 +740,7 @@ echo "# testHardwareModifications\n";
       foreach ($xml->CONTENT->SOFTWARES as $child) {
          if (!isset($child->VERSION)) {
             $child->VERSION = "N/A";
-         }         
+         }
          if (isset($child->NAME)) {
             if (!isset($soft[(string)$child->NAME."-".(string)$child->VERSION])) {
                $a_softwareXML["'".$i."-".(string)$child->NAME."'"] = 1;
@@ -825,17 +825,17 @@ echo "# testHardwareModifications\n";
                AND (!empty($child->SMANUFACTURER))) {
             $a_found = $pfBlacklist->find("`value`='".(string)$child->SMANUFACTURER."'
                AND `plugin_fusioninventory_criterium_id`='10'");
-            if (count($a_found) == '0') { 
+            if (count($a_found) == '0') {
                $this->assertEquals($Computer->fields['manufacturers_id'], Dropdown::importExternal('Manufacturer', (string)$child->SMANUFACTURER) , 'Difference of Hardware manufacturer, have '.$Computer->fields['manufacturers_id'].' instead '.Dropdown::importExternal('Manufacturer', (string)$child->SMANUFACTURER).' ['.$xmlFile.']');
                $addm = 1;
             }
-         } 
+         }
          if ($addm == '0'
                  AND(isset($child->MMANUFACTURER))
                  AND (!empty($child->MMANUFACTURER))) {
             $a_found = $pfBlacklist->find("`value`='".(string)$child->MMANUFACTURER."'
                AND `plugin_fusioninventory_criterium_id`='10'");
-            if (count($a_found) == '0') { 
+            if (count($a_found) == '0') {
                $this->assertEquals($Computer->fields['manufacturers_id'], Dropdown::importExternal('Manufacturer', (string)$child->MMANUFACTURER) , 'Difference of Hardware manufacturer, have '.$Computer->fields['manufacturers_id'].' instead '.Dropdown::importExternal('Manufacturer', (string)$child->MMANUFACTURER).' ['.$xmlFile.']');
                $addm = 1;
             }
@@ -846,7 +846,7 @@ echo "# testHardwareModifications\n";
 
             $a_found = $pfBlacklist->find("`value`='".(string)$child->BMANUFACTURER."'
                AND `plugin_fusioninventory_criterium_id`='10'");
-            if (count($a_found) == '0') { 
+            if (count($a_found) == '0') {
                $this->assertEquals($Computer->fields['manufacturers_id'], Dropdown::importExternal('Manufacturer', (string)$child->BMANUFACTURER) , 'Difference of Hardware manufacturer, have '.$Computer->fields['manufacturers_id'].' instead '.Dropdown::importExternal('Manufacturer', (string)$child->BMANUFACTURER).' ['.$xmlFile.']');
                $addm = 1;
             }
@@ -925,11 +925,11 @@ echo "# testHardwareModifications\n";
       $this->testNetwork($xml, $items_id, "0", $xmlFile);
    }
 
-   
-   
+
+
    function testHistoryCreateComputer() {
       global $DB;
-      
+
 $XML = array();
 $XML['Computer'] = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <REQUEST>
@@ -1344,14 +1344,14 @@ $XML['Computer'] = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
   <DEVICEID>port004.bureau.siprossii.com-2010-12-30-12-24-14</DEVICEID>
   <QUERY>INVENTORY</QUERY>
 </REQUEST>";
-      
+
       $log = new Log();
       $countlog_start = countElementsInTable(getTableForItemType("Log"));
       $xml = simplexml_load_string($XML['Computer'],'SimpleXMLElement', LIBXML_NOCDATA);
       $this->testSendinventory("Nothing", $xml);
       $countlog_end = countElementsInTable(getTableForItemType("Log"));
       $a_logs = $log->find("", "id DESC", ($countlog_end - $countlog_start -1));
-      
+
       foreach ($a_logs as $key=>$data) {
          if ($data['itemtype'] == "Computer"
                  AND $data['id_search_option'] == '0') {
@@ -1368,11 +1368,11 @@ $XML['Computer'] = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
             $countlog_end--;
          }
       }
-      
+
       $this->assertEquals(($countlog_end - $countlog_start - 1), 0 , 'Problem on log, must be 0 : \n'.print_r($a_logs, true));
    }
-   
-   
+
+
    function testHistoryWhenOSChange() {
       global $DB;
 return;
@@ -1380,7 +1380,7 @@ return;
       $xml->CONTENT->HARDWARE->UUID = "68405E00-E5BE-11DF-801C-B05981201220HHTT";
       $xml->CONTENT->HARDWARE->NAME = "port004HHT";
       $xml->CONTENT->BIOS->SSN = "XA201220HHHHRT";
-   
+
       $log = new Log();
       $countlog_start = countElementsInTable(getTableForItemType("Log"));
       $this->testSendinventory("Nothing", $xml);
@@ -1411,7 +1411,7 @@ return;
       }
       $this->assertEquals(($countlog_end - $countlog_start), 0 , 'Problem on log, must be 0 on OS change : \n'.print_r($a_logs, true));
    }
-   
+
 
 }
 

@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -69,12 +69,12 @@ class Connectionslogs extends PHPUnit_Framework_TestCase {
 
    public function testSendinventories() {
       global $DB;
-      
+
       $plugin = new Plugin();
       $plugin->getFromDBbyDir("fusioninventory");
       $plugin->activate($plugin->fields['id']);
       Plugin::load("fusioninventory");
-      
+
       // Add task and taskjob
       $pfTask = new PluginFusioninventoryTask();
       $pfTaskjob = new PluginFusioninventoryTaskjob();
@@ -235,15 +235,15 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          $a_ports = $networkPort->find("`mac`='00:23:18:cf:0d:94'");
          $a_uport = current($a_ports);
          $a_logs = $pfNetworkPortConnectionLog->find("
-            `creation`=1 
+            `creation`=1
             AND ((`networkports_id_source`='".$a_port['id']."'
                   AND `networkports_id_destination`='".$a_uport['id']."')
                 OR (`networkports_id_source`='".$a_uport['id']."'
                   AND `networkports_id_destination`='".$a_port['id']."'))");
          $this->assertEquals(count($a_logs), 1, '(1) Connection log not created');
          $DB->query("DELETE FROM `glpi_plugin_fusinvsnmp_networkportconnectionlogs`");
-         
-         
+
+
       // * 2. Create switch 2 with connection of mac on switch 1 previously
       $this->testSendinventory("toto", $switch2, 1);
          // CHECK 1 : Get connection deleted in GLPI
@@ -254,7 +254,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          $a_port1sw2 = current($a_ports);
          // CHECK 2 : Get if (remove) portconnectionlog is added
          $a_logs = $pfNetworkPortConnectionLog->find("
-            `creation`=0 
+            `creation`=0
             AND ((`networkports_id_source`='".$a_port['id']."'
                   AND `networkports_id_destination`='".$a_uport['id']."')
                 OR (`networkports_id_source`='".$a_uport['id']."'
@@ -262,15 +262,15 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          $this->assertEquals(count($a_logs), 1, '(2) Remove connection log not created');
          // CHECK 3 : Get connection created in GLPI
          $a_logs = $pfNetworkPortConnectionLog->find("
-            `creation`=1 
+            `creation`=1
             AND ((`networkports_id_source`='".$a_port1sw2['id']."'
                   AND `networkports_id_destination`='".$a_uport['id']."')
                 OR (`networkports_id_source`='".$a_uport['id']."'
                   AND `networkports_id_destination`='".$a_port1sw2['id']."'))");
-         $this->assertEquals(count($a_logs), 1, '(2) Connection log not created 
+         $this->assertEquals(count($a_logs), 1, '(2) Connection log not created
                ('.$a_port1sw2['id'].' => '.$a_uport['id'].')');
          $DB->query("DELETE FROM `glpi_plugin_fusinvsnmp_networkportconnectionlogs`");
-      
+
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
@@ -323,7 +323,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
       $input_xml = $xml->asXML();
       $code = $emulatorAgent->sendProlog($input_xml);
       echo $code."\n";
-      
+
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
@@ -337,12 +337,12 @@ class Connectionslogs_AllTests  {
 
    public static function suite() {
       global $CFG_GLPI;
-      
+
       $Install = new Install();
       $Install->testInstall(0);
-      
+
       $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
-      
+
       $suite = new PHPUnit_Framework_TestSuite('Connectionslogs');
       return $suite;
    }

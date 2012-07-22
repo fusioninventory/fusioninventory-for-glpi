@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -54,7 +54,7 @@ function plugin_init_fusinvsnmp() {
    if (!$plugin->isActivated("fusioninventory")) {
       $plugin->getFromDBbyDir("fusinvsnmp");
       // Check for uninstall
-      if (isset($_GET['id']) 
+      if (isset($_GET['id'])
             AND isset($_GET['action'])
             AND $_GET['id'] == $plugin->fields['id']
             AND strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
@@ -87,7 +87,7 @@ function plugin_init_fusinvsnmp() {
                          array('classname'=>'glpi_networkports'));
    Plugin::registerClass('PluginFusinvsnmpStateDiscovery');
    Plugin::registerClass('PluginFusinvsnmpPrinterLogReport');
-  
+
    $CFG_GLPI['glpitablesitemtype']["PluginFusinvsnmpPrinterLogReport"] = "glpi_plugin_fusinvsnmp_printers";
 
    // ##### 3. get informations of the plugin #####
@@ -105,8 +105,8 @@ function plugin_init_fusinvsnmp() {
    $_SESSION['glpi_plugin_fusioninventory']['xmltags']['NETDISCOVERY'] = 'PluginFusinvsnmpCommunicationNetDiscovery';
 
 
-   
-   
+
+
 
 
    if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp'][_('1')])) {
@@ -121,9 +121,9 @@ function plugin_init_fusinvsnmp() {
 	$PLUGIN_HOOKS['cron']['fusinvsnmp'] = 20*MINUTE_TIMESTAMP; // All 20 minutes
 
    $PLUGIN_HOOKS['add_javascript']['fusinvsnmp']="script.js";
-   
+
    $PLUGIN_HOOKS['csrf_compliant']['fusinvsnmp'] = true;
-   
+
 	if (isset($_SESSION["glpiID"])) {
 
 		if (Session::haveRight("configuration", "r") || Session::haveRight("profile", "w")) {// Config page
@@ -238,7 +238,7 @@ function plugin_version_fusinvsnmp() {
 
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_fusinvsnmp_check_prerequisites() {
-   
+
    if (version_compare(GLPI_VERSION,'0.84','lt') || version_compare(GLPI_VERSION,'0.85','ge')) {
       echo _('Your GLPI version not compatible, require 0.83.3');
 

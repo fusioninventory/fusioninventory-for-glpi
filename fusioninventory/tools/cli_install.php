@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -111,7 +111,7 @@ if (!TableExists("glpi_configs")) {
 }
 
 $plugin = new Plugin();
-   
+
 
 include (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
 include (GLPI_ROOT . "/plugins/fusioninventory/locales/en_GB.php");
@@ -138,7 +138,7 @@ $migration = new CliMigration($current_version);
    $mess = '';
    if (($current_version != PLUGIN_FUSIONINVENTORY_VERSION)
         AND $current_version!='0') {
-      $mess = "Update done.";      
+      $mess = "Update done.";
    } else if ($current_version == PLUGIN_FUSIONINVENTORY_VERSION) {
       $mess = "No migration needed.";
    } else {
@@ -151,13 +151,13 @@ $migration = new CliMigration($current_version);
    $plugin->load("fusioninventory");
    $plugin->activate($plugin->fields['id']);
    $plugin->load("fusioninventory");
-   
+
    system("php -q cli_install.php fusinvsnmp");
    system("php -q cli_install.php fusinvinventory");
    system("php -q cli_install.php fusinvdeploy");
 
 if ($_SERVER['argv'][1] == 'fusinvsnmp') {
-   
+
    // ** Install / update too plugin fusinvsnmp
    if ($plugin->getFromDBbyDir("fusinvsnmp")) {
       include_once(GLPI_ROOT . "/plugins/fusinvsnmp/install/update.php");
@@ -196,7 +196,7 @@ if ($_SERVER['argv'][1] == 'fusinvsnmp') {
       $plugin->load("fusinvsnmp");
    }
 } else if ($_SERVER['argv'][1] == 'fusinvdeploy') {
-   
+
    // ** Install / update too plugin fusinvdeploy
    if ($plugin->getFromDBbyDir("fusinvdeploy")) {
       include_once(GLPI_ROOT . "/plugins/fusinvdeploy/install/update.php");

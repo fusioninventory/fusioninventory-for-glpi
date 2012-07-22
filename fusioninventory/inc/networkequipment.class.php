@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    Vincent Mazzoni
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -57,12 +57,12 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       $this->oFusionInventory_networkequipment->type = 'PluginFusioninventoryNetworkEquipment';
    }
 
-   
+
    function getType() {
       return "NetworkEquipment";
    }
 
-  
+
    /**
     * Load an existing networking switch
     *
@@ -127,7 +127,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       $this->oFusionInventory_networkequipment->id = $id;
 
       $nw=new NetworkPort_NetworkPort();
-      
+
       if (!$data = $this->oFusionInventory_networkequipment->find("`networkequipments_id`='".$id."'", '', 1)) {
          // Add in database if not exist
          $input = array();
@@ -294,7 +294,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       if (class_exists("PluginMonitoringNetworkport")) {
          $monitoring = 1;
       }
-      
+
       $query = "
       SELECT *,glpi_plugin_fusinvsnmp_networkports.mac as ifmacinternal
 
@@ -474,7 +474,7 @@ function appear_array(id){
             echo "</td>";
             echo "<td><a href='networkport.form.php?id=".$data["id"]."'>".
                      $data["name"]."</a>";
-            Html::showToolTip($data['ifdescr']);        
+            Html::showToolTip($data['ifdescr']);
             echo "</td>";
 
             if ($monitoring == '1') {
@@ -491,7 +491,7 @@ function appear_array(id){
                }
                echo "</td>";
             }
-            
+
             $query_array = "SELECT *
                             FROM `glpi_displaypreferences`
                             WHERE `itemtype`='PluginFusioninventoryNetworkEquipment'
@@ -539,7 +539,7 @@ function appear_array(id){
                      } else {
                         echo $this->byteSize($data["ifoutoctets"],1000)."o";
                      }
-                     
+
                      echo "</td>";
                      break;
 
@@ -621,7 +621,7 @@ function appear_array(id){
                               } else if ($data_device["itemtype"] == 'NetworkEquipment') {
                                  $icon = "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/network_icon.png' style='float:left'/> ";
                               }
-                              
+
                               echo "<td>".$icon.$link1;
                               if (!empty($link)) {
                                  echo "<br/>".$link;
@@ -735,15 +735,15 @@ function appear_array(id){
       }
    }
 
-   
-   
+
+
    /**
     * Convert size of octets
-    * 
+    *
     * @param number $bytes
     * @param number $sizeoct
-    * 
-    * @return better size format 
+    *
+    * @return better size format
     */
    private function byteSize($bytes,$sizeoct=1024) {
       $size = $bytes / $sizeoct;
@@ -770,7 +770,7 @@ function appear_array(id){
    function displayHubConnections($items_id, $background_img){
 
       $NetworkPort = new NetworkPort();
-      
+
       $a_ports = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
                                     AND `items_id`='".$items_id."'");
       echo "<table width='100%' class='tab_cadre' cellpadding='5'>";
@@ -829,7 +829,7 @@ function appear_array(id){
                   }
                   echo "</td>";
                   echo "</tr>";
-                  
+
                }
             }
          }

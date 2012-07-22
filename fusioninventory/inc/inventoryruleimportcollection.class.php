@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -58,13 +58,13 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
 
    }
 
-   
+
 
    function prepareInputDataForProcess($input,$params) {
       return array_merge($input,$params);
    }
 
-   
+
 
    function getRuleClassName() {
       $rule_class = array();
@@ -73,9 +73,9 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
       }
       return "";
    }
-   
-   
-   
+
+
+
    /**
     * Get a instance of the class to manipulate rule of this collection
     *
@@ -91,7 +91,7 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
    }
 
 
-   
+
    function preProcessPreviewResults($output) {
 
       //If ticket is assign to an object, display this information first
@@ -115,7 +115,7 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
                echo _('Import denied');
 
                break;
-            
+
          }
 
          echo "</td>";

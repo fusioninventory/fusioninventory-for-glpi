@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -171,7 +171,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $tab[14]['datatype']  = 'datetime';
 
       $tab += NetworkPort::getSearchOptionsToAdd("PluginFusioninventoryUnknownDevice");
-      
+
       return $tab;
    }
 
@@ -197,7 +197,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       return $ong;
    }
 
-   
+
 
    /**
    * Display form for unknown device
@@ -227,7 +227,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo "<th align='center' width='450' colspan='2'>";
       echo _('ID')." ".$this->fields["id"];
       echo "</th>";
-   
+
       echo "<th align='center' colspan='2' width='50'>";
       echo $datestring.$date;
       echo "</th>";
@@ -254,7 +254,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          echo "</td>";
          echo "<td align='center'></td>";
          echo "</tr>";
-         echo "</tr>";         
+         echo "</tr>";
       }
 
       echo "<tr class='tab_bg_1'>";
@@ -329,7 +329,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          echo "</td>";
          echo "</tr>";
       }
-      
+
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>" . _('Comments') . " : </td>";
       echo "</td>";
@@ -338,7 +338,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
-     
+
       $this->showFormButtons($options);
 
       echo "<div id='tabcontent'></div>";
@@ -359,7 +359,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    *
    **/
    function importForm($target,$id) {
-      
+
       echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
       echo "<table  class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
@@ -403,13 +403,13 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          while ($data=$DB->fetch_array($result)) {
             $unknown_infos["name"] = '';
             $newID=$this->add($unknown_infos);
-            
+
             $query_update = "UPDATE `glpi_networkports`
                              SET `items_id`='".$newID."'
                              WHERE `id`='".$data["id"]."';";
             $DB->query($query_update);
          }
-      }      
+      }
    }
 
 
@@ -423,7 +423,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    *
    **/
    function convertUnknownToUnknownNetwork($id) {
-      
+
       $np = new NetworkPort();
 
       $this->getFromDB($id);
@@ -488,13 +488,13 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          $hub_id = $this->createHub($pfNetworkport);
       }
       // State : Now we have hub and it's id
-      
+
       // Add source port id in comment of hub
       $h_input = array();
       $h_input['id'] = $hub_id;
       $h_input['comment'] = "Port : ".$pfNetworkport->getNetworkPorts_id();
       $this->update($h_input);
-      
+
 
       // Get all ports connected to this hub
       $a_portglpi = array();
@@ -602,7 +602,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          $freeport_id = $Netport->add($input);
       }
       $this->disconnectDB($freeport_id);
-      $nn->add(array('networkports_id_1'=> $data['id'], 
+      $nn->add(array('networkports_id_1'=> $data['id'],
                      'networkports_id_2' => $freeport_id));
 
       //plugin_fusioninventory_addLogConnection("make",$port_id);
@@ -610,7 +610,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    }
 
 
-   
+
    function disconnectDB($p_port) {
       $nn = new NetworkPort_NetworkPort();
 
@@ -650,7 +650,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
 
    /**
-   * Creation of a hub 
+   * Creation of a hub
    *
    * @param $pfNetworkport object Informations of the network port
    *
@@ -682,7 +682,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                            // We have founded a hub orphelin
                            $this->disconnectDB($pfNetworkport->getNetworkPorts_id());
                            $this->disconnectDB($dataLink['id']);
-                           $nn->add(array('networkports_id_1'=> $pfNetworkport->getNetworkPorts_id(), 
+                           $nn->add(array('networkports_id_1'=> $pfNetworkport->getNetworkPorts_id(),
                                            'networkports_id_2' => $dataLink['id']));
                            $this->releaseHub($this->fields['id'], $pfNetworkport);
                            return $this->fields['id'];
@@ -709,7 +709,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $port_id = $Netport->add($input);
       $this->disconnectDB($pfNetworkport->getNetworkPorts_id());
       $this->disconnectDB($port_id);
-      if ($nn->add(array('networkports_id_1'=> $pfNetworkport->getNetworkPorts_id(), 
+      if ($nn->add(array('networkports_id_1'=> $pfNetworkport->getNetworkPorts_id(),
                          'networkports_id_2' => $port_id))) {
       }
       return $hub_id;
@@ -785,8 +785,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       }
    }
 
-   
-   
+
+
 // *************************** end hub management ****************************** //
 
    /**
@@ -832,7 +832,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       if (empty($folder)) {
          $folder = '0';
       }
-      
+
       if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".$parm->fields["id"])) {
          unlink(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".$parm->fields["id"]);
       }
@@ -1006,12 +1006,12 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          default:
             $NoImport++;
             break;
-            
+
       }
       return array($Import, $NoImport);
    }
 
-   
+
 
    function cleanDBonPurge() {
       $networkPort= new NetworkPort();

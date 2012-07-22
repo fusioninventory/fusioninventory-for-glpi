@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    Vincent Mazzoni
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -47,8 +47,8 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
    private $oFusionInventory_printer;
 
-   
-   
+
+
    function __construct() {
       parent::__construct("glpi_printers");
       $this->dohistory=true;
@@ -56,13 +56,13 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       $this->oFusionInventory_printer->type = 'PluginFusinvsnmpPrinter';
    }
 
-   
+
 
    static function getTypeName($nb=0) {
 
    }
 
-   
+
 
    function getType() {
       return "Printer";
@@ -89,7 +89,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       return true;
    }
 
-   
+
 
    /**
     * Load an existing networking printer
@@ -141,7 +141,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printer","r");
 
       $this->oFusionInventory_printer->id = $id;
-      
+
       if (!$data = $this->oFusionInventory_printer->find("`printers_id`='".$id."'", '', 1)) {
          // Add in database if not exist
          $input = array();
@@ -154,7 +154,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
             $this->oFusionInventory_printer->fields = $datas;
          }
       }
-      
+
       // Form printer informations
 
       echo "<div align='center'>";

@@ -50,7 +50,7 @@ function pluginFusinvdeployGetCurrentVersion($version) {
    if (!TableExists("glpi_plugin_fusinvdeploy_files")) {
       return false;
    }
-   
+
    if (TableExists("glpi_plugin_fusioninventory_configs")) {
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');

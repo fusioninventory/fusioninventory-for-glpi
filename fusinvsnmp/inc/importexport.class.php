@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -46,14 +46,14 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpImportExport extends CommonGLPI {
 
-   
+
    /**
     * Export a SNMP model in a XML
-    * 
+    *
     * @global object $DB
     * @param integer $ID_model idof the SNMP model
-    * 
-    * @return string XML 
+    *
+    * @return string XML
     */
    function export($ID_model) {
       global $DB;
@@ -188,7 +188,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
          WHERE  `plugin_fusioninventory_mappings_id`='0'
             AND `oid_port_counter`='0'";
       $DB->query($query);
-      
+
       // check if the model already exists
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_snmpmodels`
          WHERE `name`='".(string)$xml->name."'
@@ -201,8 +201,8 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
          $this->createModel($xml, $message);
       }
    }
-   
-   
+
+
 
    function updateModel($xml, $message, $result) {
       global $DB;
@@ -213,7 +213,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
          $_SESSION["MESSAGE_AFTER_REDIRECT"] = _('Model already exists');
 
       }
-      
+
       // Update model oids
       // Get list of oids in DB
       $a_oidsDB = array();
@@ -310,8 +310,8 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
          $pfModelMib->delete(array('id'=>$mibs_id), 1);
       }
    }
-   
-   
+
+
 
    function createModel($xml, $message) {
       global $DB;
@@ -321,7 +321,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
       $type = (string)$xml->type;
       switch ($type) {
-         
+
          case '1':
             $type = "Computer";
             break;
@@ -333,9 +333,9 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
          case '3':
             $type = "Printer";
             break;
-         
+
       }
-      
+
       $input = array();
       $input['name']          = (string)$xml->name;
       $input['itemtype']      = $type;

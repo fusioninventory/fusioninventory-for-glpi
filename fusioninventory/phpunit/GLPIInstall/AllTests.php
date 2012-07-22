@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -50,22 +50,22 @@ class GLPIInstall extends PHPUnit_Framework_TestCase {
 
    public function testInstall() {
       global $DB;
-      
+
       $query = "SHOW FULL TABLES WHERE TABLE_TYPE LIKE 'VIEW'";
       $result = $DB->query($query);
       while ($data=$DB->fetch_array($result)) {
          $DB->query("DROP VIEW ".$data[0]);
-      }      
+      }
 
       $query = "SHOW TABLES";
       $result = $DB->query($query);
       while ($data=$DB->fetch_array($result)) {
          $DB->query("DROP TABLE ".$data[0]);
       }
-      
+
       include_once (GLPI_ROOT . "/inc/dbmysql.class.php");
       include_once (GLPI_CONFIG_DIR . "/config_db.php");
-      
+
       // Install a fresh 0.83 DB
       $DB  = new DB();
       $res = $DB->runFile(GLPI_ROOT ."/install/mysql/glpi-0.83.1-empty.sql");
@@ -78,7 +78,7 @@ class GLPIInstall extends PHPUnit_Framework_TestCase {
       $query = "UPDATE `glpi_users`
                 SET `language` = 'fr_FR'";
       $this->assertTrue($DB->query($query), "Fail: can't set users language");
-      
+
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();

@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -45,7 +45,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
-   
+
    static function getTypeName($nb=0) {
 
       return "";
@@ -61,7 +61,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
    }
 
 
-   
+
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       $array_ret = array();
@@ -73,7 +73,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
                $array_ret[0] = self::createTabEntry(_('Advanced informations'));
 
             }
-            
+
             $id = $item->getField('id');
             $folder = substr($id, 0, -1);
             if (empty($folder)) {
@@ -88,8 +88,8 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       return $array_ret;
    }
 
-   
-   
+
+
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       $pfComputer = new self();
@@ -99,32 +99,32 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          }
       }
       if ($tabnum == '1') {
-         if ($item->getID() > 0) { 
+         if ($item->getID() > 0) {
             $pfComputer->display_xml($item);
-            
+
             $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
             $pfRulematchedlog->showForm($item->getID(), 'Computer');
          }
       }
       return true;
    }
-   
-   
-   
+
+
+
    /**
-    * Display informations about computer (bios...) 
-    * 
-    * @param type $computers_id 
-    */   
+    * Display informations about computer (bios...)
+    *
+    * @param type $computers_id
+    */
    function showForm($computers_id) {
-      
-      $a_computerextend = current($this->find("`computers_id`='".$computers_id."'", 
+
+      $a_computerextend = current($this->find("`computers_id`='".$computers_id."'",
                                               "", 1));
       if (empty($a_computerextend)) {
          $this->getEmpty();
          $a_computerextend = $this->fields;
       }
-      
+
       echo '<div align="center">';
       echo '<table class="tab_cadre_fixe" style="margin: 0; margin-top: 5px;">';
       echo '<tr>';
@@ -135,7 +135,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       echo '<th colspan="2" width="50%">'._('BIOS').'</th>';
       echo '<th colspan="2">'._('Others').'</th>';
       echo '</tr>';
-      
+
       echo '<tr class="tab_bg_1">';
       echo '<td>'._('Date').'&nbsp;:</td>';
       echo '<td>'.Html::convDate($a_computerextend['bios_date']).'</td>';
@@ -170,14 +170,14 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          echo '<td>'.$a_computerextend['wincompany'].'</td>';
       }
       echo '</tr>';
-            
+
       echo '</table>';
       echo '</div>';
-      
+
    }
-   
-   
-   
+
+
+
    function display_xml($item) {
       global $CFG_GLPI;
 
@@ -197,8 +197,8 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          echo "<th>"._('FusInv')." ".
             _('XML');
 
-         echo " ("._('Last inventory')."&nbsp;: " . 
-            Html::convDateTime(date("Y-m-d H:i:s", 
+         echo " ("._('Last inventory')."&nbsp;: " .
+            Html::convDateTime(date("Y-m-d H:i:s",
                          filemtime(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id))).")";
          echo "</th>";
          echo "</tr>";

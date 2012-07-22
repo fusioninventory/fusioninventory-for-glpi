@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -51,19 +51,19 @@ class PluginFusinvsnmpPrinterLogReport extends CommonDBTM {
       $this->table = "glpi_plugin_fusinvsnmp_printers";
       $CFG_GLPI['glpitablesitemtype']["PluginFusinvsnmpPrinterLogReport"] = $this->table;
    }
-   
-   
+
+
    function getSearchOptions() {
 
       $tab = array();
-    
+
       $tab['common'] = _('History meter printer');
 
 
       $tab[1]['table'] = $this->getTable();
       $tab[1]['field'] = 'id';
       $tab[1]['name'] = 'id';
-      
+
       $tab[2]['table'] = "glpi_printers";
       $tab[2]['field'] = 'name';
       $tab[2]['linkfield'] = 'printers_id';
@@ -71,7 +71,7 @@ class PluginFusinvsnmpPrinterLogReport extends CommonDBTM {
 
       $tab[2]['datatype'] = 'itemlink';
       $tab[2]['itemlink_type']  = 'Printer';
-      
+
       $tab[24]['table'] = 'glpi_locations';
       $tab[24]['field'] = 'name';
       $tab[24]['linkfield'] = 'locations_id';
@@ -144,21 +144,21 @@ class PluginFusinvsnmpPrinterLogReport extends CommonDBTM {
       $tab[6]['name'] = _('Total number of printed pages');
 
       $tab[6]['forcegroupby']='1';
-      
+
       $tab[7]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[7]['field'] = 'pages_n_b';
       $tab[7]['linkfield'] = 'printers_id';
       $tab[7]['name'] = _('Number of printed black and white pages');
 
       $tab[7]['forcegroupby']='1';
-      
+
       $tab[8]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[8]['field'] = 'pages_color';
       $tab[8]['linkfield'] = 'printers_id';
       $tab[8]['name'] = _('Number of printed color pages');
 
       $tab[8]['forcegroupby']='1';
-      
+
       $tab[9]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[9]['field'] = 'pages_recto_verso';
       $tab[9]['linkfield'] = 'printers_id';

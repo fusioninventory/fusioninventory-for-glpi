@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -86,7 +86,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       return 1;
    }
 
-   
+
    function getCriterias() {
 
       $criterias = array ();
@@ -157,7 +157,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       return $criterias;
    }
 
-   
+
 
    function getActions() {
 
@@ -173,7 +173,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       return $actions;
    }
 
-   
+
 
    static function getRuleActionValues() {
 
@@ -186,7 +186,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    }
 
 
-   
+
    /**
     * Add more action values specific to this type of rule
     *
@@ -203,7 +203,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       return '';
    }
 
-   
+
 
    function manageSpecificCriteriaValues($criteria, $name, $value) {
 
@@ -221,7 +221,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       return false;
    }
 
-   
+
 
    /**
     * Add more criteria specific to this type of rule
@@ -233,7 +233,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                    self::PATTERN_IS_EMPTY => _('is empty in GLPI'));
 
    }
-   
+
 
 
    function getAdditionalCriteriaDisplayPattern($ID, $condition, $pattern) {
@@ -247,12 +247,12 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
          if (isset($crit['type'])) {
             switch ($crit['type']) {
-               
+
                case "dropdown_itemtype":
                   $array = $this->getTypes();
                   return $array[$pattern];
-                  break;            
-               
+                  break;
+
             }
          }
       }
@@ -260,9 +260,9 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    }
 
 
-   
+
    function displayAdditionalRuleCondition($condition, $criteria, $name, $value, $test=false) {
-      
+
       if ($test) {
          return false;
       }
@@ -275,30 +275,30 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          case PluginFusioninventoryRuleImportEquipment::PATTERN_IS_EMPTY:
             Dropdown::showYesNo($name, 1, 0);
             return true;
-           
+
       }
       return false;
    }
 
-   
+
 
    function displayAdditionalRuleAction(array $action) {
 
       switch ($action['type']) {
-         
+
          case 'fusion_type':
             Dropdown::showFromArray('value', self::getRuleActionValues());
             break;
 
          default:
             break;
-         
+
       }
       return true;
    }
 
 
-   
+
    function getCriteriaByID($ID) {
       $criteria = array();
       foreach ($this->criterias as $criterion) {
@@ -309,13 +309,13 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       return $criteria;
    }
 
-   
+
 
    function findWithGlobalCriteria($input) {
       global $DB, $CFG_GLPI;
 
       PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-rules", 
+         "pluginFusioninventory-rules",
          print_r($input, true)
       );
       $complex_criterias = array();
@@ -360,7 +360,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             }
          }
       }
-      
+
       foreach ($this->getCriteriaByID('states_id') as $crit) {
          $complex_criterias[] = $crit;
       }
@@ -370,7 +370,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
          return false;
       }
-      
+
       //No complex criteria
       if ((empty($complex_criterias)) OR ($nb_crit_find == 0)) {
          return true;
@@ -399,7 +399,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
               AND (is_array($input['itemtype']))
               AND ($itemtype_global != "0")) {
 
-         $itemtypeselected = $input['itemtype'];      
+         $itemtypeselected = $input['itemtype'];
       } else if (isset($input['itemtype'])
               AND (!empty($input['itemtype']))
               AND ($itemtype_global != "0")) {
@@ -453,7 +453,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                $sql_where  .= $sql_where_temp;
                $sql_where_networkequipment .= $sql_where_networkequipment_temp;
                break;
-            
+
             case 'ip':
                $sql_where .= " AND `glpi_networkports`.`ip` IN ('";
                $sql_where_networkequipment .= " AND `[typetable]`.`ip` IN ('";
@@ -473,12 +473,12 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                        AND $input['itemtype'] == 'Computer'
                        AND isset($_SESSION["plugin_fusioninventory_manufacturerHP"])
                        AND preg_match("/^[sS]/", $input['serial'])) {
-                  
+
                   $serial2 = preg_replace("/^[sS]/", "", $input['serial']);
                   $sql_where_temp = " AND (`[typetable]`.`serial`='".$input["serial"]."'
                      OR `[typetable]`.`serial`='".$serial2."')";
                   $_SESSION["plugin_fusioninventory_serialHP"] = $serial2;
-                  
+
                } else {
                   $sql_where_temp = " AND `[typetable]`.`serial`='".$input["serial"]."'";
                }
@@ -531,7 +531,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       // Suivant le / les types, on cherche dans un ou plusieurs / tous les types
       $found = 0;
       PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-rules", 
+         "pluginFusioninventory-rules",
          "===============\n"
       );
 
@@ -553,7 +553,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
             $sql_where_temp .= " AND `[typetable]`.`entities_id`='".$_SESSION['plugin_fusioninventory_entityrestrict']."'";
          }
-         
+
          $item = new $itemtype();
          $sql_glpi = "SELECT `[typetable]`.`id`
                       FROM $sql_from_temp
@@ -570,7 +570,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             $sql_glpi = str_replace("[typename]", $itemtype, $sql_glpi);
 
             PluginFusioninventoryToolbox::logIfExtradebug(
-               "pluginFusioninventory-rules", 
+               "pluginFusioninventory-rules",
                $sql_glpi."\n"
             );
             $result_glpi = $DB->query($sql_glpi);
@@ -589,7 +589,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       return false;
    }
 
-   
+
 
    /**
     * Execute the actions as defined in the rule
@@ -606,7 +606,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          $classname = $_SESSION['plugin_fusioninventory_classrulepassed'];
          $class = new $classname();
       }
-      
+
       $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
       $inputrulelog = array();
       $inputrulelog['date'] = date('Y-m-d H:i:s');
@@ -617,9 +617,9 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
          $inputrulelog['plugin_fusioninventory_agents_id'] = $_SESSION['plugin_fusioninventory_agents_id'];
       }
-      
+
       PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-rules", 
+         "pluginFusioninventory-rules",
          "execute action\n"
       );
 
@@ -627,7 +627,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          foreach ($this->actions as $action) {
             if ($action->fields['field'] == '_fusion') {
                PluginFusioninventoryToolbox::logIfExtradebug(
-                  "pluginFusioninventory-rules", 
+                  "pluginFusioninventory-rules",
                   "value".$action->fields["value"]."\n"
                );
 
@@ -689,7 +689,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                }
             } else if ($action->fields['field'] == '_ignore_import') {
                PluginFusioninventoryToolbox::logIfExtradebug(
-                  "pluginFusioninventory-rules", 
+                  "pluginFusioninventory-rules",
                   "value".$action->fields["value"]."\n"
                );
                $output['action'] = self::LINK_RESULT_DENIED;
@@ -729,14 +729,14 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       return $output;
    }
 
-   
+
 
    function displayCriteriaSelectPattern($name, $ID, $condition, $value="", $test=false) {
 
       $crit    = $this->getCriteria($ID);
       $display = false;
       $tested  = false;
-      
+
       foreach ($this->criterias as $criteria) {
          if ($criteria->fields['criteria'] == $name) {
 
@@ -753,7 +753,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                                                        'size'  => 70));
                return;
             }
- 
+
             if (($criteria->fields['condition'] == Rule::PATTERN_IS
              || $criteria->fields['condition'] == Rule::PATTERN_IS_NOT)
                     AND ($name != "itemtype" AND $name != 'states_id')) {
@@ -763,18 +763,18 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                                                        'value' => $value,
                                                        'size'  => 70));
                return;
-               
+
             }
-         }         
+         }
       }
-      
+
       if (isset($crit['type'])
                  && ($test
                      ||$condition == Rule::PATTERN_IS
                      || $condition == Rule::PATTERN_IS_NOT)) {
 
          switch ($crit['type']) {
-            
+
             case "yesonly":
                Dropdown::showYesNo($name, $value, 0);
                $display = true;
@@ -822,7 +822,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       }
    }
 
-   
+
 
    function getTypes() {
       global $CFG_GLPI;
@@ -838,7 +838,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       return $types;
    }
 
-   
+
 
    /**
    * Function used to display type specific criterias during rule's preview
@@ -858,9 +858,9 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          echo "<input type='hidden' name='entities_id' value='".$_SESSION["glpiactive_entity"]."'>";
       }
    }
-   
-   
-   
+
+
+
    function preProcessPreviewResults($output) {
 
       //If ticket is assign to an object, display this information first
@@ -870,7 +870,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          echo "<td>";
 
          switch ($output["action"]) {
-            
+
             case self::LINK_RESULT_LINK:
                echo _('Link');
 
@@ -885,9 +885,9 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                echo _('Import denied');
 
                break;
-            
+
          }
-         
+
          echo "</td>";
          echo "</tr>";
          if ($output["action"] != self::LINK_RESULT_DENIED
@@ -905,5 +905,5 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       return $output;
    }
 }
-   
+
 ?>

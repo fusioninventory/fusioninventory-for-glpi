@@ -36,7 +36,7 @@
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryLock extends CommonDBTM{
 
-   
+
    static function getTypeName($nb=0) {
 
       return _('Locks');
@@ -63,13 +63,13 @@ class PluginFusioninventoryLock extends CommonDBTM{
    function canView() {
       return true;
    }
-   
-   
-   
+
+
+
    static function countForLock(CommonGLPI $item) {
 
       $pfLock = new self();
-      $a_data = current($pfLock->find("`tablename`='".$item->getTable()."' 
+      $a_data = current($pfLock->find("`tablename`='".$item->getTable()."'
          AND `items_id`='".$item->getID()."'", "", 1));
       if (count($a_data) == '0') {
          return 0;
@@ -78,7 +78,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
    }
 
-   
+
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       $itemtype = $item->getType();
@@ -95,8 +95,8 @@ class PluginFusioninventoryLock extends CommonDBTM{
       return '';
    }
 
-   
-   
+
+
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       $pflock = new self();
@@ -110,10 +110,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
       return true;
    }
-   
-   
-   
-   
+
+
+
+
    /**
     * Show locks form.
     *
@@ -134,7 +134,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       if (Session::haveRight($typeright,"w")) {
         $can = 1;
       }
-      
+
       $tableName = getTableForItemType($p_itemtype);
       echo "<div width='50%'>";
       $locked = PluginFusioninventoryLock::getLockFields($tableName, $p_items_id);
@@ -179,7 +179,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
             if ((strstr($key, "_id")
                     OR ($key == 'is_ocs_import'))
                AND $val == '0'){
-               
+
                $val = "";
             }
 
@@ -279,7 +279,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
-   
+
    /**
     * Unlock a field for a record.
     *
@@ -318,7 +318,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
-   
+
    /**
     * Unlock a field for all records.
     *
@@ -344,7 +344,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
-   
+
    /**
     * Set lock fields for a record.
     *
@@ -403,7 +403,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
-   
+
    /**
     * Add lock fields for a record.
     *
@@ -447,7 +447,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
-   
+
    /**
     * Get lock fields for a record.
     *
@@ -469,7 +469,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
-   
+
    /**
     * Get lock fields for a record.
     *
@@ -490,7 +490,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
-   
+
    /*
     * convert an array resulting from many form checks (0=>on 2=>on 5=>on ...)
     * into a classical array (0=>0 1=>2 2=>5 ...)
@@ -522,10 +522,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
       $exclude[] = "is_deleted";
       $exclude[] = "is_template";
       $exclude[] = "template_name";
-      return $exclude;      
+      return $exclude;
    }
-   
-   
+
+
 
    /**
    * Delete locks fields and get from lib value from last inventory
@@ -647,7 +647,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
                         }
                     } else {
                         $libunserialized = unserialize($infoSections["sections"][$datas['xmlSection']."/".$item->fields['items_id']]);
-                        
+
                         if ($datas['glpiField'] == 'contact') {
                            $contact = '';
                            foreach($infoSections["sections"] as $sectionname=>$serializeddatas) {
@@ -667,14 +667,14 @@ class PluginFusioninventoryLock extends CommonDBTM{
                      }
                      $class->update($input);
                   }
-               }               
+               }
             }
          }
       }
    }
 
 
-   
+
     /**
     * Import OCS locks
     *
@@ -702,7 +702,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
          }
       }
    }
-   
+
 }
 
 ?>

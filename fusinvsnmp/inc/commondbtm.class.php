@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    Vincent Mazzoni
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -65,8 +65,8 @@ class PluginFusinvsnmpCommonDBTM extends CommonDBTM {
       $_SESSION['glpi_plugins_fusinvsnmp_table'] = $p_table;
    }
 
-   
-   
+
+
    /**
     * Load an existing item
     *
@@ -93,8 +93,8 @@ class PluginFusinvsnmpCommonDBTM extends CommonDBTM {
       }
    }
 
-   
-   
+
+
    /**
     * Add a new item with the instance values
     *
@@ -108,8 +108,8 @@ class PluginFusinvsnmpCommonDBTM extends CommonDBTM {
       }
    }
 
-   
-   
+
+
    /**
     * Update an existing preloaded item with the instance values or add a new one
     *
@@ -127,8 +127,8 @@ class PluginFusinvsnmpCommonDBTM extends CommonDBTM {
       }
    }
 
-   
-   
+
+
    /**
     * Delete a loaded item
     *
@@ -139,8 +139,8 @@ class PluginFusinvsnmpCommonDBTM extends CommonDBTM {
       $this->deleteFromDB($this->ptcdFields['id'], 1);
    }
 
-   
-   
+
+
    /**
     * Get all objetc vars and values
     *
@@ -150,8 +150,8 @@ class PluginFusinvsnmpCommonDBTM extends CommonDBTM {
       return get_object_vars($this);
    }
 
-   
-   
+
+
    /**
     * Get field value
     *
@@ -175,8 +175,8 @@ class PluginFusinvsnmpCommonDBTM extends CommonDBTM {
          return NULL;
       }
    }
-   
-   
+
+
 
    /**
     * Set field value

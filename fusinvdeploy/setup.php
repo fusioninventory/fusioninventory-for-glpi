@@ -124,7 +124,7 @@ function plugin_init_fusinvdeploy() {
 
    $PLUGIN_HOOKS['change_profile']['fusinvdeploy'] =
       PluginFusioninventoryProfile::changeprofile($moduleId,$a_plugin['shortname']);
-   
+
    $PLUGIN_HOOKS['csrf_compliant']['fusinvdeploy'] = true;
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['packages'] =

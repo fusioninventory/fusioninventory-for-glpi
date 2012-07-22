@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -193,7 +193,7 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
          echo "<td>".$nb_threads."</td>";
          echo "<td>".$nb_query."</td>";
          echo "<td>".$nb_errors."</td>";
-         echo "</tr>";      
+         echo "</tr>";
       }
 
       echo "</table>";
@@ -204,7 +204,7 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
    function date_diff($date1, $date2) {
       $timestamp1 = strtotime($date1);
       $timestamp2 = strtotime($date2);
-      
+
       $interval = array();
       $timestamp = $timestamp2 - $timestamp1;
       $nb_min = floor($timestamp / 60);

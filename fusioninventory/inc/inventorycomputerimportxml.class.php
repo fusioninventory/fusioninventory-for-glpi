@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -91,7 +91,7 @@ class PluginFusioninventoryInventoryComputerImportXML extends CommonDBTM  {
    function importXMLFile($file) {
       $pfInventory = new PluginFusioninventoryInventoryComputerInventory();
       $p_xml = file_get_contents($file);
-      libxml_use_internal_errors(true);      
+      libxml_use_internal_errors(true);
       if ($pxml = @simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA)) {
          libxml_clear_errors();
          $pxml = PluginFusioninventoryToolbox::cleanXML($pxml);

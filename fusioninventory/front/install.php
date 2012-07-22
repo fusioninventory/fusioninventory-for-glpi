@@ -29,18 +29,18 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
-define('GLPI_ROOT', '../../..'); 
+define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
 
  /**
@@ -66,18 +66,18 @@ if (Session::haveRight("config","w") && Session::haveRight("profile","w")) {
    }
    if (FieldExists("glpi_plugin_fusioninventory_configs", "version")) {
       if ($config->getValue('version') == "2.0.2") {
-         $DB->query("UPDATE `glpi_plugin_fusioninventory_configs` 
+         $DB->query("UPDATE `glpi_plugin_fusioninventory_configs`
                      SET `version` = '2.1.1'
                      WHERE `id`=1");
       }
       if ($config->getValue('version') == "2.1.0") {
-         $DB->query("UPDATE `glpi_plugin_fusioninventory_configs` 
+         $DB->query("UPDATE `glpi_plugin_fusioninventory_configs`
                      SET `version` = '2.1.1'
                      WHERE `id`=1");
       }
       PluginFusioninventorySetup::update("2.0.2");
       if  ($config->getValue('version') == "0") {
-         $DB->query("UPDATE `glpi_plugin_fusioninventory_configs` 
+         $DB->query("UPDATE `glpi_plugin_fusioninventory_configs`
                      SET `version` = '2.1.1'
                      WHERE `id`=1");
       }

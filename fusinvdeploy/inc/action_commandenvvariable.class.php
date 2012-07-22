@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    Walid Nouh
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -45,7 +45,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusinvdeployAction_Commandenvvariable extends CommonDBTM {
-   
+
    static function getTypeName($nb=0) {
 
       return _('Environment variable');
@@ -65,7 +65,7 @@ class PluginFusinvdeployAction_Commandenvvariable extends CommonDBTM {
       $commands = getAllDatasFromTable('glpi_plugin_fusinvdeploy_actions_commandenvvariables',
                                        "`plugin_fusinvdeploy_commands_id`='$commands_id'");
       foreach ($commands as $command) {
-         $response[] = array( 'name'  => $command['name'], 
+         $response[] = array( 'name'  => $command['name'],
                               'value' => $command['value']);
       }
       return $response;

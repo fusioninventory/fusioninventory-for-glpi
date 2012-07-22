@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    Vincent Mazzoni
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -88,9 +88,9 @@ class PluginFusinvsnmpCommunicationSNMP {
 
    /**
     * Add SNMO model strings to XML node 'MODEL'
-    * 
+    *
     * @param type $p_sxml_node
-    * @param type $p_id 
+    * @param type $p_id
     */
    function addModel($p_sxml_node, $p_id) {
       $pfModel = new PluginFusioninventorySnmpmodel();
@@ -103,16 +103,16 @@ class PluginFusinvsnmpCommunicationSNMP {
          $pfModelMib->oidList($sxml_model,$p_id);
    }
 
-   
+
 
    /**
     * Add GET oids to XML node 'GET'
-    * 
+    *
     * @param type $p_sxml_node
     * @param type $p_object
     * @param type $p_oid
     * @param type $p_link
-    * @param type $p_vlan 
+    * @param type $p_vlan
     */
    function addGet($p_sxml_node, $p_object, $p_oid, $p_link, $p_vlan) {
       $sxml_get = $p_sxml_node->addChild('GET');
@@ -123,15 +123,15 @@ class PluginFusinvsnmpCommunicationSNMP {
    }
 
 
-   
+
    /**
     * Add WALK (multiple oids) oids to XML node 'WALK'
-    * 
+    *
     * @param type $p_sxml_node
     * @param type $p_object
     * @param type $p_oid
     * @param type $p_link
-    * @param type $p_vlan 
+    * @param type $p_vlan
     */
    function addWalk($p_sxml_node, $p_object, $p_oid, $p_link, $p_vlan) {
       $sxml_walk = $p_sxml_node->addChild('WALK');

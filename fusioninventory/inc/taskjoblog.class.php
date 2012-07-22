@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -55,14 +55,14 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
    const TASK_PREPARED           = 7;
 
 
-   
+
    /**
     * return array with state mapping name
-    * 
+    *
     * @return array with all elements
     */
    function dropdownStateValues() {
-      
+
       $elements = array();
       $elements[7] = _('Prepared');
 
@@ -78,26 +78,26 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
       $elements[5] = _('unknown');
 
-      
+
       return $elements;
    }
-   
-   
+
+
 
    /**
     * Return name of state
-    * 
+    *
     * @param type $states_id
-    * 
+    *
     * @return string name of state number
     */
    function getState($states_id) {
       $elements = $this->dropdownStateValues();
       return $elements[$states_id];
    }
-   
-   
-   
+
+
+
    function getSearchOptions() {
 
       $sopt = array();
@@ -110,7 +110,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       $sopt[1]['name']          = _('ID');
 
       $sopt[1]['massiveaction'] = false; // implicit field is id
-      
+
       $sopt[2]['table']          = 'glpi_plugin_fusioninventory_tasks';
       $sopt[2]['field']          = 'name';
       $sopt[2]['name']           = _('Tasks');
@@ -124,37 +124,37 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
       $sopt[3]['datatype']       = 'itemlink';
       $sopt[3]['itemlink_type']  = "PluginFusioninventoryTaskjob";
-     
+
       $sopt[4]['table']          = $this->getTable();
       $sopt[4]['field']          = 'state';
       $sopt[4]['name']           = _('Status');
 
       $sopt[4]['searchtype']     = 'equals';
-      
+
       $sopt[5]['table']         = $this->getTable();
       $sopt[5]['field']         = 'date';
       $sopt[5]['name']          = _('Date');
 
       $sopt[5]['datatype']      = 'datetime';
       $sopt[5]['massiveaction'] = false;
-      
+
       $sopt[6]['table']          = 'glpi_plugin_fusioninventory_taskjobstates';
       $sopt[6]['field']          = 'uniqid';
       $sopt[6]['name']           = _('Unique id');
 
       $sopt[6]['datatype']       = 'string';
-      
+
       $sopt[7]['table']          = $this->getTable();
       $sopt[7]['field']          = 'comment';
       $sopt[7]['name']           = _('Comments');
 
       $sopt[7]['datatype']       = 'string';
-      
+
       return $sopt;
    }
 
- 
-   
+
+
    /**
    * Display history of taskjob
    *
@@ -169,7 +169,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
    **/
    function showHistory($taskjobs_id, $width="950", $options=array()) {
       global $DB,$CFG_GLPI;
-      
+
       $this->javascriptHistory();
       $a_uniqid = array();
 
@@ -316,7 +316,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
     */
    function javascriptHistory() {
       global $CFG_GLPI;
-      
+
             echo "<script  type='text/javascript'>
 function close_array(id){
    document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/collapse.png\''+
@@ -331,13 +331,13 @@ function appear_array(id){
 }
 
       </script>";
-     
+
       echo "<script type='text/javascript' src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/prototype.js'></script>";
       echo "<script type='text/javascript' src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/effects.js'></script>";
    }
 
 
-   
+
    /**
    * Display each history line
    *
@@ -348,14 +348,14 @@ function appear_array(id){
    **/
    function showHistoryLines($taskjobstates_id, $displayprocess = 1, $displaytaskjob=0, $nb_td='5') {
       global $CFG_GLPI;
-      
+
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfAgent        = new PluginFusioninventoryAgent();
-      
+
       $pfTaskjobstate->getFromDB($taskjobstates_id);
-      
+
       $displayforceend = 0;
-      $a_history = $this->find('`plugin_fusioninventory_taskjobstates_id` = "'.$pfTaskjobstate->fields['id'].'"', 
+      $a_history = $this->find('`plugin_fusioninventory_taskjobstates_id` = "'.$pfTaskjobstate->fields['id'].'"',
                                'id DESC',
                                '1');
 
@@ -363,7 +363,7 @@ function appear_array(id){
       echo "<td width='40' id='plusmoins".$pfTaskjobstate->fields["id"]."'><img src='".$CFG_GLPI['root_doc'].
                "/plugins/fusioninventory/pics/expand.png' onClick='document.getElementById(\"viewfollowup".$pfTaskjobstate->fields["id"].
                "\").show();close_array(".$pfTaskjobstate->fields["id"].");' /></td>";
-      
+
       echo "<td>";
       echo $pfTaskjobstate->fields['uniqid'];
       echo "</td>";
@@ -375,7 +375,7 @@ function appear_array(id){
       if ($displaytaskjob == '1') {
          $pfTaskjob = new PluginFusioninventoryTaskjob();
          $pfTask    = new PluginFusioninventoryTask();
-         
+
          $pfTaskjob->getFromDB($pfTaskjobstate->fields['plugin_fusioninventory_taskjobs_id']);
          $pfTask->getFromDB($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
          echo "<td>";
@@ -385,14 +385,14 @@ function appear_array(id){
       echo "<td>";
       $pfAgent->getFromDB($pfTaskjobstate->fields['plugin_fusioninventory_agents_id']);
       echo $pfAgent->getLink(1);
-      
+
       Ajax::UpdateItemOnEvent('plusmoins'.$pfTaskjobstate->fields["id"],
                       'viewfollowup'.$pfTaskjobstate->fields["id"],
                       $CFG_GLPI['root_doc']."/plugins/fusioninventory/ajax/showtaskjoblogdetail.php",
                       array('agents_id' => $pfTaskjobstate->fields['plugin_fusioninventory_agents_id'],
                           'uniqid' => $pfTaskjobstate->fields['uniqid']),
                       array("click"));
-      
+
       echo "</td>";
       $a_return = $this->displayHistoryDetail(array_pop($a_history), 0);
       $count = $a_return[0];
@@ -408,7 +408,7 @@ function appear_array(id){
              class="submit" type="submit">';
          Html::closeForm();
          echo "</td>";
-      }      
+      }
       echo "</tr>";
 
       echo "<tr>";
@@ -526,7 +526,7 @@ function appear_array(id){
                   $count = $a_return[0];
                   $text .= $a_return[1];
                   $displayforceend += $count;
-                  $text .= "</tr>";                  
+                  $text .= "</tr>";
                } else {
                   $text .= "<tr class='tab_bg_1'>";
                   $text .= "<td colspan='2' rowspan='".count($a_history)."'>";
@@ -576,11 +576,11 @@ function appear_array(id){
    * Display high detail of each history line
    *
    * @param $datas array datas of history
-   * @param $comment boolean 0/1 display comment or not 
+   * @param $comment boolean 0/1 display comment or not
    *
    * @return array
    *               - boolean 0/1 if this log = finish
-   *               - text to display 
+   *               - text to display
    *
    **/
    function displayHistoryDetail($datas, $comment=1) {
@@ -711,9 +711,9 @@ function appear_array(id){
          FROM glpi_plugin_fusioninventory_taskjobstates
          LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` on plugin_fusioninventory_taskjobstates_id=`glpi_plugin_fusioninventory_taskjobstates`.`id`
          WHERE `plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
-         AND (`glpi_plugin_fusioninventory_taskjoblogs`.`state` = '2' 
+         AND (`glpi_plugin_fusioninventory_taskjoblogs`.`state` = '2'
             OR `glpi_plugin_fusioninventory_taskjoblogs`.`state` = '3'
-            OR `glpi_plugin_fusioninventory_taskjoblogs`.`state` = '4' 
+            OR `glpi_plugin_fusioninventory_taskjoblogs`.`state` = '4'
             OR `glpi_plugin_fusioninventory_taskjoblogs`.`state` = '5')
          GROUP BY glpi_plugin_fusioninventory_taskjobstates.uniqid,plugin_fusioninventory_agents_id";
       $result=$DB->query($query);
@@ -736,13 +736,13 @@ function appear_array(id){
 
    }
 
-   
-   
+
+
    /**
     * Get taskjobstate by uniqid
-    * 
+    *
     * @param type $uuid value uniqid
-    * 
+    *
     * @return array with data of table glpi_plugin_fusioninventory_taskjobstates
     */
    static function getByUniqID($uuid) {
@@ -754,29 +754,29 @@ function appear_array(id){
       }
       return array();
    }
-   
-   
+
+
 
    /**
     * Display short logs
     *
     * @param $taskjobs_id integer id of taskjob
     * @param $veryshort boolean activation to have very very short display
-    * 
+    *
     * @return nothing
     */
    function displayShortLogs($taskjobs_id, $veryshort=0) {
       global $DB,$CFG_GLPI;
-      
+
       echo "<td colspan='2' valign='top'>";
-      
+
       if ($veryshort == '0') {
          echo "<table width='100%'>";
          echo "<tr class='tab_bg_3'>";
       } else {
          echo "<table>";
          echo "<tr class='tab_bg_1'>";
-      }      
+      }
       $query = "SELECT * FROM `glpi_plugin_fusioninventory_taskjobstates`
          WHERE `plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
          ORDER BY `uniqid` DESC
@@ -784,20 +784,20 @@ function appear_array(id){
       $result=$DB->query($query);
       $uniqid = 0;
       while ($data=$DB->fetch_array($result)) {
-         $uniqid = $data['uniqid'];         
+         $uniqid = $data['uniqid'];
       }
-      
-      $query = "SELECT `glpi_plugin_fusioninventory_taskjoblogs`.* FROM `glpi_plugin_fusioninventory_taskjoblogs` 
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` 
+
+      $query = "SELECT `glpi_plugin_fusioninventory_taskjoblogs`.* FROM `glpi_plugin_fusioninventory_taskjoblogs`
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates`
             ON plugin_fusioninventory_taskjobstates_id = `glpi_plugin_fusioninventory_taskjobstates`.`id`
          WHERE `uniqid`='".$uniqid."'
          ORDER BY `glpi_plugin_fusioninventory_taskjoblogs`.`id` DESC
          LIMIT 1";
-      $state = 0;      
+      $state = 0;
       $date = '';
       $comment = '';
       $taskstates_id = 0;
-      
+
       $result=$DB->query($query);
       while ($data=$DB->fetch_array($result)) {
          $state = $data['state'];
@@ -805,15 +805,15 @@ function appear_array(id){
          $comment = $data['comment'];
          $taskstates_id = $data['plugin_fusioninventory_taskjobstates_id'];
       }
-      
+
       if (strstr($comment, "Merged with")) {
          $state = '7';
-      }      
-      
+      }
+
       if (    $state == '1'
            OR $state == '6'
            OR $state == '7') { // not finish
-         
+
          if ($veryshort == '0') {
             echo "<th>";
             echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_running.png'/>";
@@ -856,7 +856,7 @@ function appear_array(id){
             echo _('Last run')."&nbsp;:&nbsp;"._('Never');
 
          } else {
-            
+
             if ($veryshort == '0') {
                echo _('Last run')." (".Html::convDateTime($date).")";
                echo " : <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?field[0]=6&searchtype[0]=contains&contains[0]=".$uniqid."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
@@ -877,24 +877,24 @@ function appear_array(id){
          }
       }
       echo "</table>";
-      
+
       echo "</td>";
    }
-   
-   
-   
+
+
+
    /**
     * Get div with text/color depend on state
-    * 
+    *
     * @param $state integer state number
     * @param $type string div / td
-    * 
+    *
     * @return string complete node (openned and closed)
     */
    function getDivState($state, $type='div') {
 
       $width = '50';
-      
+
       switch ($state) {
 
          case 7:
@@ -932,20 +932,20 @@ function appear_array(id){
 
       }
    }
-   
-   
-   
+
+
+
    /**
     * Display quick list logs
-    * 
+    *
     * @param $tasks_id integer id of task
-    * 
+    *
     * @return nothing
     */
    static function quickListLogs($tasks_id) {
       global $DB;
-      
-      $query = "SELECT * FROM `glpi_plugin_fusioninventory_taskjobstates` 
+
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_taskjobstates`
          LEFT JOIN `glpi_plugin_fusioninventory_taskjobs`
             ON `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
          WHERE `plugin_fusioninventory_tasks_id`='".$tasks_id."'
@@ -971,7 +971,7 @@ function appear_array(id){
          $params['start']         = '0';
          Search::manageGetValues('PluginFusioninventoryTaskjoblog');
          Search::showList('PluginFusioninventoryTaskjoblog', $params);
-      }      
+      }
    }
 }
 

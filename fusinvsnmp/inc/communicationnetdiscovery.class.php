@@ -36,7 +36,7 @@
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -57,7 +57,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
     * @param $p_xml value XML code to import
     *
     * @return "" (import ok) / error string (import ko)
-    * 
+    *
     **/
    function import($p_DEVICEID, $p_CONTENT, $p_xml) {
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
@@ -122,18 +122,18 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       return $errors;
    }
 
-   
+
 
    /**
     * Prepare data and send them to rule engine
-    * 
+    *
     * @param type $p_xml simpleXML object
     */
    function sendCriteria($p_xml) {
-      
+
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationNetDiscovery->sendCriteria().');
-      
+
       if ((isset($p_xml->MAC)) AND ($p_xml->MAC == "00:00:00:00:00:00")) {
          unset($p_xml->MAC);
       }
@@ -187,12 +187,12 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
       $data = array ();
       $data = $rule->processAllRules($input, array());
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
+      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
                                                    print_r($data, true));
 
       if (isset($data['action'])
               AND ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED)) {
-         
+
          $a_text = '';
          foreach ($input as $key=>$data) {
             if (is_array($data)) {
@@ -203,7 +203,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
          }
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==fusioninventory::3== '.implode(",", $a_text);
          $this->addtaskjoblog();
-         
+
          $pFusioninventoryIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
          $inputdb = array();
          $inputdb['name'] = $input['name'];
@@ -231,7 +231,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             $this->rulepassed(0, $input['itemtype'],$input['entities_id']);
          } else if (isset($input['itemtype'])
                 AND !isset($data['action'])) {
-            $this->rulepassed(0, $input['itemtype'],$input['entities_id']);           
+            $this->rulepassed(0, $input['itemtype'],$input['entities_id']);
          } else {
             $this->rulepassed(0, "PluginFusioninventoryUnknownDevice",$input['entities_id']);
          }
@@ -242,14 +242,14 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
    /**
     * After rule engine passed, update task (log) and create item if required
-    * 
+    *
     * @param type $items_id
     * @param type $itemtype
-    * @param type $entities_id 
+    * @param type $entities_id
     */
    function rulepassed($items_id, $itemtype, $entities_id=0) {
 
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
+      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
                                                    "Rule passed : ".$items_id.", ".$itemtype."\n");
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationNetDiscovery->rulepassed().');
@@ -277,12 +277,12 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
          }
          if (!isset($_SESSION['glpiactiveentities_string'])) {
             $_SESSION['glpiactiveentities_string'] = "'".$entities_id."'";
-         } 
+         }
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
                '[==fusinvsnmp::7==] ==fusinvsnmp::4== '.$item->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
          $this->addtaskjoblog();
       } else {
-         
+
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
                '[==fusinvsnmp::7==] ==fusinvsnmp::5== '.$item->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
          $this->addtaskjoblog();
@@ -295,20 +295,20 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
    /**
     * Import discovered device (add / update data in GLPI DB)
-    * 
-    * @param object $item 
+    *
+    * @param object $item
     */
    function importDevice($item) {
-      
+
       PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationNetDiscovery->importDevice().');      
-      
+              'Function PluginFusinvsnmpCommunicationNetDiscovery->importDevice().');
+
       $xml = simplexml_load_string($_SESSION['SOURCE_XMLDEVICE'],'SimpleXMLElement', LIBXML_NOCDATA);
       $input = array();
       $input['id'] = $item->getID();
 
       $a_lockable = PluginFusioninventoryLock::getLockFields(getTableForItemType($item->getType()), $item->getID());
-      
+
       if (!in_array('name', $a_lockable)) {
          if (isset($xml->NETBIOSNAME) AND !empty($xml->NETBIOSNAME)) {
             $input['name'] = (string)$xml->NETBIOSNAME;
@@ -323,19 +323,19 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             $input['serial'] = trim($xml->SERIAL);
          }
       }
-      
+
       if (isset($xml->ENTITY) AND !empty($xml->ENTITY)) {
          $input['entities_id'] = $xml->ENTITY;
          if (!isset($_SESSION['glpiactiveentities_string'])) {
             $_SESSION['glpiactiveentities_string'] = "'".$xml->ENTITY."'";
          }
-      }      
+      }
       if (!isset($_SESSION['glpiactiveentities_string'])) {
          $_SESSION['glpiactiveentities_string'] = "'".$item->fields['entities_id']."'";
-      }      
-      
+      }
+
       switch ($item->getType()) {
-         
+
          case 'Computer':
             // If computer is update with Agent, don't update it
             if (Dropdown::getDropdownName("glpi_autoupdatesystems", $item->fields['autoupdatesystems_id']) != 'FusionInventory') {
@@ -395,7 +395,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             if (isset($_SESSION['SOURCE_XMLDEVICE'])) {
                PluginFusioninventoryUnknownDevice::writeXML($item->getID(), $_SESSION['SOURCE_XMLDEVICE']);
             }
-             
+
 
             if (!in_array('contact', $a_lockable)) {
                $input['contact'] = (string)$xml->USERSESSION;
@@ -420,7 +420,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                   case '3':
                      $input['item_type'] = 'Printer';
                      break;
-                  
+
                }
             }
             $input['plugin_fusioninventory_agents_id'] = $_SESSION['glpi_plugin_fusioninventory_agentid'];
@@ -505,7 +505,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             }
             $pfUnknownDevice->update($input);
             break;
-         
+
          case 'NetworkEquipment':
             if (isset($xml->MAC) AND !empty($xml->MAC)) {
                if (!in_array('mac', $a_lockable)) {
@@ -534,7 +534,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             // Write XML file
             if (isset($_SESSION['SOURCE_XMLDEVICE'])
                     AND is_null($pfNetworkEquipment->getValue('last_fusioninventory_update'))) {
-               PluginFusioninventoryUnknownDevice::writeXML($input['id'], 
+               PluginFusioninventoryUnknownDevice::writeXML($input['id'],
                                           $_SESSION['SOURCE_XMLDEVICE'],
                                           "fusinvsnmp",
                                           "NetworkEquipment");
@@ -594,7 +594,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                $input['entities_id'] = $item->fields['entities_id'];
                $NetworkPort->add($input);
             }
-            
+
             // Update SNMP informations
             $pfPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
             $a_snmpprinters = $pfPrinter->find("`printers_id`='".$item->getID()."'");
@@ -609,7 +609,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             // Write XML file
             if (isset($_SESSION['SOURCE_XMLDEVICE'])
                     AND is_null($pfPrinter->getValue('last_fusioninventory_update'))) {
-               PluginFusioninventoryUnknownDevice::writeXML($item->getID(), 
+               PluginFusioninventoryUnknownDevice::writeXML($item->getID(),
                                           $_SESSION['SOURCE_XMLDEVICE'],
                                           "fusinvsnmp",
                                           "Printer");
@@ -625,12 +625,12 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             $pfPrinter->setValue('plugin_fusinvsnmp_configsecurities_id', $xml->AUTHSNMP);
             $pfPrinter->updateDB();
             break;
-            
+
       }
    }
 
 
-   
+
    /**
     * Used to add log in the task
     */
@@ -644,13 +644,13 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                      $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'],
                      $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment']);
    }
-   
-   
+
+
 
    static function getMethod() {
       return 'netdiscovery';
    }
-   
+
 }
 
 ?>

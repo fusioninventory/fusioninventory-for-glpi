@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -56,8 +56,8 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    const AGENT_HAS_SENT_DATA  = 2;
    const FINISHED             = 3;
 
-   
-   
+
+
    /**
    * Display state of taskjob
    *
@@ -240,7 +240,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       $input = array();
       $input['id'] = $this->fields['id'];
       $input['state'] = $state;
-      $this->update($input);      
+      $this->update($input);
    }
 
 
@@ -270,7 +270,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          if ($pluginName) {
             $className = "Plugin".ucfirst($pluginName).ucfirst($pfTaskjob->fields['method']);
             $moduleRun[$className][] = $data;
-         }         
+         }
       }
       return $moduleRun;
    }
@@ -292,7 +292,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    **/
    function changeStatusFinish($taskjobstates_id, $items_id, $itemtype, $error=0, $message='', $unknown=0, $reinitialize=1) {
       global $DB;
-      
+
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $pfTaskjob = new PluginFusioninventoryTaskjob();
       $pFusioninventoryTask = new PluginFusioninventoryTask();
@@ -302,7 +302,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       $input['id'] = $this->fields['id'];
       $input['state'] = 3;
       $this->update($input);
-            
+
       $a_input = array();
       if ($unknown ==  "1") {
          $a_input['state'] = 5;
@@ -313,11 +313,11 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
             // 1. Calculate start timeof the task
             $period = 0;
             $period = $pfTaskjob->periodicityToTimestamp(
-                    $pfTaskjob->fields['periodicity_type'], 
+                    $pfTaskjob->fields['periodicity_type'],
                     $pfTaskjob->fields['periodicity_count']);
             $query = "SELECT *, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp
                   FROM `".$pFusioninventoryTask->getTable()."`
-               WHERE `id`='".$pfTaskjob->fields['plugin_fusioninventory_tasks_id']."' 
+               WHERE `id`='".$pfTaskjob->fields['plugin_fusioninventory_tasks_id']."'
                   LIMIT 1";
             $result = $DB->query($query);
             $data_task = $DB->fetch_assoc($result);
@@ -360,11 +360,11 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       }
    }
 
-   
+
 
    /**
     * Cron for clean taskjob
-    * 
+    *
     * @return nothing
     */
    static function cronCleantaskjob() {

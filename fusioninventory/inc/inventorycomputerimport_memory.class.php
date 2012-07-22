@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -66,14 +66,14 @@ class PluginFusioninventoryInventoryComputerImport_Memory extends CommonDBTM {
               "component_memory", 'inventory') == '0') {
          return;
       }
-      
+
       $CompDevice = new Computer_Device('DeviceMemory');
 
       if (isset($dataSection["CAPACITY"])
               AND $dataSection["CAPACITY"] == 'No') {
          $dataSection["CAPACITY"] = 0;
       }
-      
+
       $devID = 0;
       $computer_memory = array();
       if ($type == "update") {
@@ -108,8 +108,8 @@ class PluginFusioninventoryInventoryComputerImport_Memory extends CommonDBTM {
          }
          $memory["designation"] .= $dataSection["DESCRIPTION"];
       }
-      
-      if ((!isset($dataSection["CAPACITY"])) 
+
+      if ((!isset($dataSection["CAPACITY"]))
               OR ((isset($dataSection["CAPACITY"]))
                       AND (!preg_match("/^[0-9]+$/i", $dataSection["CAPACITY"])))) {
          return;
@@ -127,11 +127,11 @@ class PluginFusioninventoryInventoryComputerImport_Memory extends CommonDBTM {
       }
       if (isset($dataSection["TYPE"])) {
          $memory["devicememorytypes_id"]
-               = Dropdown::importExternal('DeviceMemoryType', 
+               = Dropdown::importExternal('DeviceMemoryType',
                                           $dataSection["TYPE"],
                                           $_SESSION["plugin_fusinvinventory_entity"]);
       }
-      
+
       $DeviceMemory = new DeviceMemory();
       $memory_id = $DeviceMemory->import($memory);
       if ($memory_id) {

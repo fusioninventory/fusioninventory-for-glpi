@@ -36,7 +36,7 @@
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -49,8 +49,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    private $sxml, $ptd, $logFile, $agent, $unknownDeviceCDP;
    private $a_ports = array();
 
-   
-   
+
+
    function __construct() {
       if (PluginFusioninventoryConfig::isExtradebugActive()) {
          $this->logFile = GLPI_LOG_DIR.'/fusioninventorycommunication.log';
@@ -58,7 +58,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    }
 
 
-   
+
    /**
     * Import data
     *
@@ -91,7 +91,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $nb_devices = 0;
                $segs=$p_CONTENT->xpath('//DEVICE');
                $nb_devices = count($segs);
-                  
+
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = $p_CONTENT->PROCESSNUMBER;
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $this->agent['id'];
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
@@ -129,7 +129,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    }
 
 
-   
+
    /**
     * Import the content (where have all devices)
     *@param $p_content CONTENT code to import
@@ -141,14 +141,14 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->importContent().');
       $pfAgent = new PluginFusioninventoryAgent();
-      
+
       $errors='';
       $nbDevices = 0;
 
       foreach ($p_content->children() as $child) {
          PluginFusioninventoryCommunication::addLog($child->getName());
          switch ($child->getName()) {
-            
+
             case 'DEVICE' :
                if (isset($child->ERROR)) {
                   $itemtype = "";
@@ -192,7 +192,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
             case 'MODULEVERSION' :
                break;
-            
+
             default :
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] '._('Unattended element in').' CONTENT : '.$child->getName();
                $this->addtaskjoblog();
@@ -208,8 +208,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     *
     * @param type $itemtype
     * @param type $items_id
-    * 
-    * @return errors string to be alimented if import ko / '' if ok 
+    *
+    * @return errors string to be alimented if import ko / '' if ok
     */
    function importDevice($itemtype, $items_id) {
 
@@ -235,15 +235,15 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $errors='';
       $this->deviceId=$items_id;
       switch ($itemtype) {
-         
+
          case 'Printer':
             $this->type = 'Printer';
             break;
-         
+
          case 'NetworkEquipment':
             $this->type = 'NetworkEquipment';
             break;
-         
+
          default:
             $errors.=_('Unattended element in').' TYPE : '
                               .$p_xml->INFO->TYPE."\n";
@@ -253,26 +253,26 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          if ($this->deviceId!='') {
             foreach ($p_xml->children() as $child) {
                switch ($child->getName()) {
-                  
+
                   case 'INFO': // already managed
                      break;
-                  
+
                   case 'PORTS':
                      $errors.=$this->importPorts($child);
                      break;
-                  
+
                   case 'CARTRIDGES':
                      if ($this->type == 'Printer') {
                         $errors.=$this->importCartridges($child);
                         break;
                      }
-                  
+
                   case 'PAGECOUNTERS':
                      if ($this->type == 'Printer') {
                         $errors.=$this->importPageCounters($child);
                         break;
                      }
-                  
+
                   default:
                      $errors.=_('Unattended element in').' DEVICE : '
                               .$child->getName()."\n";
@@ -293,8 +293,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     *
     * @param type $itemtype
     * @param type $items_id
-    * 
-    * @return errors string to be alimented if import ko / '' if ok 
+    *
+    * @return errors string to be alimented if import ko / '' if ok
     */
    function importInfo($itemtype, $items_id) {
 
@@ -315,16 +315,16 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    }
 
 
-   
+
    /**
     * Import INFO:Networking
-    * 
+    *
     * @param $p_info INFO code to import
     *
     * @return errors string to be alimented if import ko / '' if ok
     **/
    function importInfoNetworking($p_info) {
-      
+
       $errors='';
       $this->ptd = new PluginFusioninventoryNetworkEquipment();
       $this->ptd->load($this->deviceId);
@@ -338,21 +338,21 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
       foreach ($p_info->children() as $child) {
          switch ($child->getName()) {
-            
+
             case 'ID': // already managed
                break;
-            
+
             case 'TYPE': // already managed
                break;
-            
+
             case 'COMMENTS':
                $this->ptd->setValue('sysdescr', $p_info->COMMENTS[0]);
                break;
-            
+
             case 'CPU':
                $this->ptd->setValue('cpu', $p_info->CPU[0]);
                break;
-            
+
             case 'FIRMWARE':
                if (!in_array('networkequipmentfirmwares_id', $a_lockable)) {
                   $firmware = (string)$p_info->FIRMWARE;
@@ -367,19 +367,19 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   $this->ptd->setValue('networkequipmentfirmwares_id', $NetworkEquipmentFirmware->import(array('name' => $firmware)));
                }
                break;
-               
+
             case 'MAC':
                if (!in_array('mac', $a_lockable)) {
                   $this->ptd->setValue('mac', $p_info->MAC[0]);
                }
                break;
-            
+
             case 'MEMORY':
                if (!in_array('memory', $a_lockable)) {
                   $this->ptd->setValue('memory', $p_info->MEMORY[0]);
                }
                break;
-               
+
             case 'MODEL':
                $NetworkEquipmentModel = new NetworkEquipmentModel();
                if (!in_array('networkequipmentmodels_id', $a_lockable)) {
@@ -387,7 +387,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   $this->ptd->setValue('networkequipmentmodels_id', $networkequipmentmodels_id);
                }
                break;
-               
+
             case 'LOCATION':
                if (!in_array('locations_id', $a_lockable)) {
                   $Location = new Location();
@@ -395,44 +395,44 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                                                                     'entities_id' => $this->ptd->getValue('entities_id'))));
                }
                break;
-               
+
             case 'NAME':
                if (!in_array('name', $a_lockable)) {
                   $this->ptd->setValue('name', $p_info->NAME[0]);
                }
                break;
-               
+
             case 'RAM':
                $this->ptd->setValue('ram', $p_info->RAM[0]);
                break;
-            
+
             case 'SERIAL':
                if (!in_array('serial', $a_lockable)) {
                   $this->ptd->setValue('serial', $p_info->SERIAL[0]);
                }
                break;
-               
+
             case 'UPTIME':
                $this->ptd->setValue('uptime', $p_info->UPTIME[0]);
                break;
-            
+
             case 'IPS':
                $errors.=$this->importIps($child, $this->ptd->getValue('id'));
                break;
-            
+
             default:
                $errors.=_('Unattended element in').' INFO : '.$child->getName()."\n";
-               
+
          }
       }
-      return $errors;      
+      return $errors;
    }
 
 
-   
+
    /**
     * Import INFO:Printer
-    * 
+    *
     * @param $p_info INFO code to import
     *
     * @return errors string to be alimented if import ko / '' if ok
@@ -452,21 +452,21 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
       foreach ($p_info->children() as $child) {
          switch ($child->getName()) {
-            
+
             case 'ID': // already managed
                break;
-            
+
             case 'TYPE': // already managed
                break;
-            
+
             case 'COMMENTS':
                $this->ptd->setValue('sysdescr', (string)$p_info->COMMENTS);
                break;
-            
+
             case 'MEMORY':
                $this->ptd->setValue('memory_size', (string)$p_info->MEMORY);
                break;
-            
+
             case 'MODEL':
                if (!in_array('printermodels_id', $a_lockable)) {
                   $PrinterModel = new PrinterModel();
@@ -474,19 +474,19 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   $this->ptd->setValue('printermodels_id', $printermodels_id);
                }
                break;
-               
+
             case 'NAME':
                if (!in_array('name', $a_lockable)) {
                   $this->ptd->setValue('name', (string)$p_info->NAME);
                }
                break;
-               
+
             case 'SERIAL':
                if (!in_array('serial', $a_lockable)) {
                   $this->ptd->setValue('serial', (string)$p_info->SERIAL);
                }
                break;
-               
+
             case 'OTHERSERIAL':
                if (!in_array('otherserial', $a_lockable)) {
                   $otherserial = (string)$p_info->OTHERSERIAL;
@@ -495,11 +495,11 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                      $otherserial = str_replace("))", "", $otherserial);
                      $otherserial = substr($otherserial, 4);
                      $otherserial = $this->hexToStr($otherserial);
-                  }                  
+                  }
                   $this->ptd->setValue('otherserial', $otherserial);
                }
                break;
-               
+
             case 'LOCATION':
                if (!in_array('locations_id', $a_lockable)) {
                   $Location = new Location();
@@ -507,23 +507,23 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                                                                            'entities_id' => $this->ptd->getValue('entities_id'))));
                }
                break;
-               
+
             case 'CONTACT':
                if (!in_array('contact', $a_lockable)) {
                   $this->ptd->setValue('contact', (string)$p_info->CONTACT);
                }
                break;
-               
+
             case 'MANUFACTURER':
                if (!in_array('manufacturers_id', $a_lockable)) {
                   $Manufacturer = new Manufacturer();
                   $this->ptd->setValue('manufacturers_id', $Manufacturer->import(array('name' => (string)$p_info->MANUFACTURER)));
                }
                break;
-               
+
             default:
                $errors.=_('Unattended element in').' INFO : '.$child->getName()."\n";
-         
+
          }
       }
       return $errors;
@@ -533,7 +533,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
    /**
     * Import IPs
-    * 
+    *
     * @param $p_ips IPs code to import
     * @param $networkequipments_id id of network equipment
     *
@@ -544,12 +544,12 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $errors='';
       $pfNetworkEquipmentIP = new PluginFusinvsnmpNetworkEquipmentIP();
       $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
-      
+
       $pfNetworkEquipmentIP->loadIPs($networkequipments_id);
-      
+
       foreach ($p_ips->children() as $child) {
          switch ($child->getName()) {
-            
+
             case 'IP':
                if ((string)$child != "127.0.0.1") {
                   $pfNetworkEquipmentIP->setIP((string)$child);
@@ -562,10 +562,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   }
                }
                break;
-               
+
             default:
                $errors.=_('Unattended element in').' IPs : '.$child->getName()."\n";
-               
+
          }
       }
       $pfNetworkEquipmentIP->saveIPs($networkequipments_id);
@@ -573,10 +573,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    }
 
 
-   
+
    /**
     * Import PORTS
-    * 
+    *
     * @param $p_ports PORTS code to import
     *
     * @return errors string to be alimented if import ko / '' if ok
@@ -588,7 +588,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $errors='';
       foreach ($p_ports->children() as $child) {
          switch ($child->getName()) {
-            
+
             case 'PORT':
                if ($this->type == "Printer") {
                   $errors.=$this->importPortPrinter($child);
@@ -596,16 +596,16 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   $errors.=$this->importPortNetworking($child);
                }
                break;
-               
+
             default:
                $errors.=_('Unattended element in').' PORTS : '.$child->getName()."\n";
-               
+
          }
       }
       // Remove ports may not in XML and must be deleted in GLPI DB
       $networkPort = new NetworkPort();
       $a_portsDB = $networkPort->find("`itemtype` = '".$this->type."'
-                                       AND `items_id`='".$this->deviceId."'");      
+                                       AND `items_id`='".$this->deviceId."'");
       foreach ($a_portsDB as $data) {
          if (!isset($this->a_ports[$data['id']])) {
             $networkPort->delete($data);
@@ -615,10 +615,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    }
 
 
-   
+
    /**
     * Import PORT Networking
-    * 
+    *
     * @param $p_port PORT code to import
     *
     * @return errors string to be alimented if import ko / '' if ok
@@ -638,7 +638,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          if (!empty($this->unknownDeviceCDP)) {
             $NetworkPort = new NetworkPort();
             $a_unknownPorts = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
-                                                   AND `items_id`='".$this->unknownDeviceCDP."'", 
+                                                   AND `items_id`='".$this->unknownDeviceCDP."'",
                                                    '',
                                                    1);
             if (count($a_unknownPorts) > 0) {
@@ -655,7 +655,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   $portIndex = $p_port->IFNUMBER;
                }
             }
-            $nbelements = countElementsInTable($NetworkPort->getTable(), 
+            $nbelements = countElementsInTable($NetworkPort->getTable(),
                     "`itemtype`='PluginFusioninventoryUnknownDevice'
                         AND `items_id`='".$this->unknownDeviceCDP."'");
             if ($nbelements == '0') {
@@ -676,37 +676,37 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          $trunk = 0;
          foreach ($p_port->children() as $name=>$child) {
             switch ($name) {
-               
+
                case 'CONNECTIONS':
                   $errors.=$this->importConnections($child, $pfNetworkPort);
                   break;
-               
+
                case 'VLANS':
                   $errors.=$this->importVlans($child, $pfNetworkPort);
                   break;
-               
+
                case 'IFNAME':
                   PluginFusinvsnmpNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
                   if ((string)$child != '') {
                      $pfNetworkPort->setValue('name', (string)$child);
                   }
                   break;
-               
+
                case 'MAC':
                   PluginFusinvsnmpNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
                   if (!strstr($child, '00:00:00:00:00:00')) {
                      $pfNetworkPort->setValue('mac', (string)$child);
                   }
                   break;
-                  
+
                case 'IFNUMBER':
                   PluginFusinvsnmpNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
                   $pfNetworkPort->setValue('logical_number', (string)$child);
                   break;
-               
+
                case 'IFTYPE': // already managed
                   break;
-               
+
                case 'TRUNK':
                   if ((string)$child == '1') {
                      PluginFusinvsnmpNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
@@ -722,7 +722,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   }
                   $pfNetworkPort->setValue(strtolower($name), (string)$p_port->$name);
                   break;
-                  
+
                case 'IFINERRORS':
                case 'IFINOCTETS':
                case 'IFINTERNALSTATUS':
@@ -735,7 +735,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   PluginFusinvsnmpNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
                   $pfNetworkPort->setValue(strtolower($name), (string)$p_port->$name);
                   break;
-               
+
                default:
                   $errors.=_('Unattended element in').' PORT : '.$name."\n";
             }
@@ -761,10 +761,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    }
 
 
-   
+
    /**
     * Import PORT Printer
-    * 
+    *
     * @param $p_port PORT code to import
     *
     * @return errors string to be alimented if import ko / '' if ok
@@ -800,38 +800,38 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          }
          foreach ($p_port->children() as $name=>$child) {
             switch ($name) {
-               
+
                case 'IFNAME':
                   PluginFusinvsnmpNetworkPortLog::networkport_addLog($portDB['id'], $child, strtolower($name));
                   if ($portDB['name'] != (string)$child) {
                      $portModif['name'] = (string)$child;
                   }
                   break;
-               
+
                case 'MAC':
                   PluginFusinvsnmpNetworkPortLog::networkport_addLog($portDB['id'], $child, strtolower($name));
                   if ($portDB['mac'] != (string)$child) {
                      $portModif['mac'] = (string)$child;
                   }
                   break;
-               
+
                case 'IP':
                   PluginFusinvsnmpNetworkPortLog::networkport_addLog($portDB['id'], $child, strtolower($name));
                   if ($portDB['ip'] != (string)$child) {
                      $portModif['ip'] = (string)$child;
                   }
                   break;
-               
+
                case 'IFNUMBER':
                   PluginFusinvsnmpNetworkPortLog::networkport_addLog($portDB['id'], $child, strtolower($name));
                   if ($portDB['logical_number'] != (string)$child) {
                      $portModif['logical_number'] = (string)$child;
                   }
                   break;
-               
+
                case 'IFTYPE': // already managed
                   break;
-               
+
                default:
                   $errors.=_('Unattended element in').' PORT : '.$name."\n";
             }
@@ -845,7 +845,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             $newID = $networkPort->add($portModif);
             $this->a_ports[$newID] = $newID;
          }
-      }      
+      }
       return $errors;
    }
 
@@ -853,7 +853,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
    /**
     * Import CARTRIDGES
-    * 
+    *
     * @param $p_cartridges CARTRIDGES code to import
     *
     * @return errors string to be alimented if import ko / '' if ok
@@ -880,13 +880,13 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $input['state'] = (string)$child;
                $pfPrinterCartridge->update($input);
             } else {
-               // Add 
+               // Add
                $input = array();
                $input['printers_id'] = $this->deviceId;
                $input['plugin_fusioninventory_mappings_id'] = $plugin_fusioninventory_mappings['id'];
                $input['state'] = (string)$child;
-               $pfPrinterCartridge->add($input);               
-            }            
+               $pfPrinterCartridge->add($input);
+            }
          } else {
             $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] '._('Unattended element in').' CARTRIDGES : '.$name;
             $this->addtaskjoblog();
@@ -896,7 +896,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    }
 
 
-   
+
    /**
     * Import PAGECOUNTERS
     *@param $p_pagecounters PAGECOUNTERS code to import
@@ -915,67 +915,67 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $input = array();
       $input['printers_id'] = $this->deviceId;
       $input['date'] = date("Y-m-d H:i:s");
-            
+
       $errors='';
       foreach ($p_pagecounters->children() as $name=>$child) {
          $childname = $child->getName();
-         
+
          if ((string)$child == '') {
             $child = 0;
          }
          switch ($childname) {
-            
+
             case 'TOTAL':
                $input['pages_total'] = (string)$child;
                break;
-            
+
             case 'BLACK':
                $input['pages_n_b'] = (string)$child;
                break;
-            
+
             case 'COLOR':
                $input['pages_color'] = (string)$child;
                break;
-            
+
             case 'RECTOVERSO':
                $input['pages_recto_verso'] = (string)$child;
                break;
-            
+
             case 'SCANNED':
                $input['scanned'] = (string)$child;
                break;
-            
+
             case 'PRINTTOTAL':
                $input['pages_total_print'] = (string)$child;
                break;
-            
+
             case 'PRINTBLACK':
                $input['pages_n_b_print'] = (string)$child;
                break;
-            
+
             case 'PRINTCOLOR':
                $input['pages_color_print'] = (string)$child;
                break;
-            
+
             case 'COPYTOTAL':
                $input['pages_total_copy'] = (string)$child;
                break;
-            
+
             case 'COPYBLACK':
                $input['pages_n_b_copy'] = (string)$child;
                break;
-            
+
             case 'COPYCOLOR':
                $input['pages_color_copy'] = (string)$child;
                break;
-            
+
             case 'FAXTOTAL':
                $input['pages_total_fax'] = (string)$child;
                break;
-            
+
             default:
                $errors.=_('Unattended element in').' PAGECOUNTERS : '.$name."\n";
-               
+
          }
       }
       $pfPrinterLog->add($input);
@@ -983,7 +983,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    }
 
 
-   
+
    /**
     * Import CONNECTIONS
     *@param $p_connections CONNECTIONS code to import
@@ -1009,13 +1009,13 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $a_macsFound = array();
       foreach ($p_connections->children() as $child) {
          switch ($child->getName()) {
-            
+
             case 'CDP': // already managed
                if ($pfNetworkPort->getValue('trunk') != '1') {
                   $pfNetworkPort->setValue('trunk', 0);
                }
                break;
-            
+
             case 'CONNECTION':
                $continue = 1;
                if (isset($child->MAC)) {
@@ -1026,10 +1026,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   } else {
                      $a_macsFound[(string)$child->MAC] = 1;
                   }
-                  
+
                   if (count($child) > 1
                           AND $pfNetworkPort->getValue('trunk') != '1') {
-                     
+
                      $pfNetworkPort->setValue('trunk', -1);
                   } else if ($pfNetworkPort->getValue('trunk') != '1') {
                      $pfNetworkPort->setValue('trunk', 0);
@@ -1040,7 +1040,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   $errors.=$this->importConnection($child, $pfNetworkPort, $cdp);
                }
                break;
-               
+
             default:
                $errors.=_('Unattended element in').' CONNECTIONS : '
                         .$child->getName()."\n";
@@ -1049,7 +1049,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       return $errors;
    }
 
-   
+
 
    /**
     * Import CONNECTION
@@ -1070,7 +1070,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          $a_ip = array();
          foreach ($p_connection->children() as $child) {
             switch ($child->getName()) {
-               
+
                case 'IP':
                case 'IFDESCR':
                case 'SYSMAC': // LLDP Nortel
@@ -1084,8 +1084,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                default:
                   $errors.=_('Unattended element in').' CONNECTION (CDP='.$p_cdp.') : '
                            .$child->getName()."\n";
-                  
-            }             
+
+            }
          }
          if (isset($a_ip['ip'])) {
             $pfNetworkPort->addIp($a_ip);
@@ -1097,19 +1097,19 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          foreach ($p_connection->children() as $child) {
 
             switch ($child->getName()) {
-               
+
                case 'MAC':
                   $pfNetworkPort->addMac(strval($child));
                   break;
-               
+
                case 'IP':
                   $pfNetworkPort->addIP(strval($child));
                   break;
-               
+
                default:
                   $errors.=_('Unattended element in').' CONNECTION (CDP='.$p_cdp.') : '
                            .$child->getName()."\n";
-                  
+
             }
          }
       }
@@ -1117,7 +1117,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    }
 
 
-   
+
    /**
     * Import VLANS
     *@param $p_vlans VLANS code to import
@@ -1130,21 +1130,21 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $errors='';
       foreach ($p_vlans->children() as $child) {
          switch ($child->getName()) {
-            
+
             case 'VLAN' :
                $errors.=$this->importVlan($child, $pfNetworkPort);
                break;
-            
+
             default :
                $errors.=_('Unattended element in').' VLANS : '.$child->getName()."\n";
-               
+
          }
       }
       return $errors;
    }
 
 
-   
+
    /**
     * Import VLAN
     *@param $p_vlan VLAN code to import
@@ -1154,22 +1154,22 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    function importVlan($p_vlan, $pfNetworkPort) {
 
       $errors='';
-      $number=''; 
+      $number='';
       $name='';
       foreach ($p_vlan->children() as $child) {
          switch ($child->getName()) {
-            
+
             case 'NUMBER':
                $number=(string)$child;
                break;
-            
+
             case 'NAME':
                $name=(string)$child;
                break;
-            
+
             default:
                $errors.=_('Unattended element in').' VLAN : '.$child->getName()."\n";
-               
+
          }
       }
       $pfNetworkPort->addVlan($number, $name);
@@ -1177,7 +1177,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    }
 
 
-   
+
    /**
     * Get connection IP
     *
@@ -1187,10 +1187,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    function getConnectionIP($p_port) {
       foreach ($p_port->children() as $connectionsName=>$connectionsChild) {
          switch ($connectionsName) {
-            
+
             case 'CONNECTIONS':
                foreach ($connectionsChild->children() as $connectionName=>$connectionChild) {
-                  
+
                   switch ($connectionName) {
 
                      case 'CONNECTION':
@@ -1203,29 +1203,29 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                                     return $ipChild;
                                  }
                                  break;
-                                 
+
                            }
                         }
                         break;
-                        
+
                   }
                }
                break;
-               
+
          }
       }
       return '';
    }
 
-   
+
 
    /**
     * Send XML of SNMP device to rules
-    * 
+    *
     * @param varchar $p_DEVICEID
     * @param simplexml $p_CONTENT
-    * 
-    * @return type 
+    *
+    * @return type
     */
    function sendCriteria($p_DEVICEID, $p_CONTENT) {
 
@@ -1233,7 +1233,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
               'Function PluginFusinvsnmpCommunicationSNMPQuery->sendCriteria().');
 
       $errors = '';
-      
+
       // Manual blacklist
        if ((isset($p_CONTENT->INFO->SERIAL)) AND ($p_CONTENT->INFO->SERIAL == 'null')) {
           unset($p_CONTENT->INFO->SERIAL);
@@ -1278,10 +1278,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusinvsnmpCommunicationSNMPQuery";
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
       $data = array();
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
+      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
                                                    "Input data : ".print_r($input, true));
       $data = $rule->processAllRules($input, array());
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
+      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
                                                    print_r($data, true));
       if (isset($data['action'])
               AND ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED)) {
@@ -1296,7 +1296,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          }
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==fusioninventory::3== '.implode(",", $a_text);
          $this->addtaskjoblog();
-         
+
          $pFusioninventoryIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
          $inputdb = array();
          $inputdb['name'] = $input['name'];
@@ -1331,7 +1331,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $errors .= $this->rulepassed($id_xml, $input['itemtype']);
             } else {
                $errors .= $this->rulepassed(0, $input['itemtype']);
-            }            
+            }
          } else {
             $errors .= $this->rulepassed(0, "PluginFusioninventoryUnknownDevice");
          }
@@ -1346,12 +1346,12 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     *
     * @param integer $items_id id of the device in GLPI DB (0 = created, other = merge)
     * @param varchar $itemtype itemtype of the device
-    * 
-    * @return type 
+    *
+    * @return type
     */
    function rulepassed($items_id, $itemtype) {
-      
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
+
+      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
                                                    "Rule passed : ".$items_id.", ".$itemtype."\n");
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->rulepassed().');
@@ -1370,7 +1370,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          }
          if (!isset($_SESSION['glpiactiveentities_string'])) {
             $_SESSION['glpiactiveentities_string'] = "'".$input['entities_id']."'";
-         }         
+         }
          $items_id = $class->add($input);
          if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
             $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
@@ -1406,7 +1406,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          } else if ($xml->INFO->TYPE=='PRINTER') {
             $input['itemtype'] = "Printer";
          }
-         // TODO : add import ports 
+         // TODO : add import ports
          PluginFusioninventoryUnknownDevice::writeXML($items_id, $_SESSION['SOURCE_XMLDEVICE']);
          $class->update($input);
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
@@ -1445,7 +1445,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
    /**
     * Convert hexa format into string
-    * 
+    *
     * @param $hex
     * @return string
     */
@@ -1456,12 +1456,12 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
        }
        return $string;
    }
-   
-   
+
+
    static function getMethod() {
       return 'snmpinventory';
    }
-   
+
 }
 
 ?>

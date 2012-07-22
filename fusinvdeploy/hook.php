@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    Alexandre Delaunay
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -156,7 +156,7 @@ function plugin_fusinvdeploy_MassiveActionsProcess($data) {
                   "\n"
                );
             // TODO: rename 'tasks' variables into 'job'
-            // The 'separate jobs' option allows to create a taskjob for each computer 
+            // The 'separate jobs' option allows to create a taskjob for each computer
             // (I can't see the point but it may be
             // usefull for some people ... even if it creates 500 jobs for just a
             // single deployment package targetted ... i prefer not to comment

@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -45,7 +45,7 @@ class Netdiscovery extends PHPUnit_Framework_TestCase {
 
    public function testCountDevicesTasklog() {
       global $DB,$CFG_GLPI;
-      
+
       $plugin = new Plugin();
       $plugin->getFromDBbyDir("fusioninventory");
       $plugin->activate($plugin->fields['id']);
@@ -53,12 +53,12 @@ class Netdiscovery extends PHPUnit_Framework_TestCase {
       Session::loadLanguage("en_GB");
 
       $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
-      
+
       $pfAgent   = new PluginFusioninventoryAgent();
       $pfIPRange = new PluginFusioninventoryIPRange();
       $pfTask    = new PluginFusioninventoryTask();
       $pfTaskjob = new PluginFusioninventoryTaskjob();
-      
+
       // Create agent
       $device_id = "testcomputerfordiscovery-2011-10-28-09-55-42";
       $input = array();
@@ -66,25 +66,25 @@ class Netdiscovery extends PHPUnit_Framework_TestCase {
       $input['device_id'] = $device_id;
       $agents_id = $pfAgent->add($input);
 
-      $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules` 
-         SET `is_active` = '1' 
+      $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
+         SET `is_active` = '1'
          WHERE `modulename`='NETDISCOVERY'";
       $DB->query($query);
-      
-      
+
+
       $input = array();
       $input['name']     = 'LAN';
       $input['ip_start'] = '192.168.20.1';
       $input['ip_den']   = '192.168.20.254';
       $ipranges_id = $pfIPRange->add($input);
-      
+
       $input = array();
       $input['name'] = 'NETDISCOVERY';
       $input['is_active'] = 1;
       $input['communication'] = 'pull';
       $input['date_scheduled'] = date('Y-m-d')." 00:00:00";
       $tasks_id = $pfTask->add($input);
-      
+
       $input = array();
       $input['plugin_fusioninventory_tasks_id'] = $tasks_id;
       $input['plugins_id'] = PluginFusioninventoryModule::getModuleId("fusinvsnmp");
@@ -92,15 +92,15 @@ class Netdiscovery extends PHPUnit_Framework_TestCase {
       $input['definition'] = '[{"PluginFusioninventoryIPRange":"'.$ipranges_id.'"}]';
       $input['action'] = '[{"PluginFusioninventoryAgent":"'.$agents_id.'"}]';
       $pfTaskjob->add($input);
-      
+
       // prepare run task
       $pfTaskjob->cronTaskscheduler();
-      
+
       // Send data to server
-      
+
       $emulatorAgent = new emulatorAgent();
       $emulatorAgent->server_urlpath = "/fusion0.83/plugins/fusioninventory/";
-      
+
       $input_xml = '<?xml version="1.0" encoding="UTF-8"?>
 <REQUEST>
   <DEVICEID>'.$device_id.'</DEVICEID>
@@ -110,8 +110,8 @@ class Netdiscovery extends PHPUnit_Framework_TestCase {
 
       $returnAgent = $emulatorAgent->sendProlog($input_xml);
       echo $returnAgent."\n";
-      
-      
+
+
       $input_xml = '<?xml version="1.0" encoding="UTF-8"?>
 <REQUEST>
   <CONTENT>
@@ -125,11 +125,11 @@ class Netdiscovery extends PHPUnit_Framework_TestCase {
   <DEVICEID>'.$device_id.'</DEVICEID>
   <QUERY>NETDISCOVERY</QUERY>
 </REQUEST>';
-      
+
       $returnAgent = $emulatorAgent->sendProlog($input_xml);
       echo $returnAgent."\n";
-      
-      
+
+
       $input_xml = '<?xml version="1.0" encoding="UTF-8"?>
 <REQUEST>
   <CONTENT>
@@ -141,11 +141,11 @@ class Netdiscovery extends PHPUnit_Framework_TestCase {
   <DEVICEID>'.$device_id.'</DEVICEID>
   <QUERY>NETDISCOVERY</QUERY>
 </REQUEST>';
-      
+
       $returnAgent = $emulatorAgent->sendProlog($input_xml);
       echo $returnAgent."\n";
-      
-      
+
+
       $input_xml = '<?xml version="1.0" encoding="UTF-8"?>
 <REQUEST>
   <CONTENT>
@@ -163,11 +163,11 @@ class Netdiscovery extends PHPUnit_Framework_TestCase {
   <DEVICEID>'.$device_id.'</DEVICEID>
   <QUERY>NETDISCOVERY</QUERY>
 </REQUEST>';
-      
+
       $returnAgent = $emulatorAgent->sendProlog($input_xml);
-      echo $returnAgent."\n";     
-      
-      
+      echo $returnAgent."\n";
+
+
       $input_xml = '<?xml version="1.0" encoding="UTF-8"?>
 <REQUEST>
   <CONTENT>
@@ -187,11 +187,11 @@ class Netdiscovery extends PHPUnit_Framework_TestCase {
   <DEVICEID>'.$device_id.'</DEVICEID>
   <QUERY>NETDISCOVERY</QUERY>
 </REQUEST>';
-      
-      $returnAgent = $emulatorAgent->sendProlog($input_xml);
-      echo $returnAgent."\n"; 
 
-      
+      $returnAgent = $emulatorAgent->sendProlog($input_xml);
+      echo $returnAgent."\n";
+
+
       $input_xml = '<?xml version="1.0" encoding="UTF-8"?>
 <REQUEST>
   <CONTENT>
@@ -204,23 +204,23 @@ class Netdiscovery extends PHPUnit_Framework_TestCase {
   <DEVICEID>'.$device_id.'</DEVICEID>
   <QUERY>NETDISCOVERY</QUERY>
 </REQUEST>';
-      
+
       $returnAgent = $emulatorAgent->sendProlog($input_xml);
       echo $returnAgent."\n";
-      
-      
+
+
       // Verify have correct number of devices found in taskjoblog
       $query = "SELECT * FROM `glpi_plugin_fusioninventory_taskjoblogs`
-         WHERE `comment` LIKE '%==fusinvsnmp::2=='"; 
+         WHERE `comment` LIKE '%==fusinvsnmp::2=='";
       $result=$DB->query($query);
       $number = 0;
       while ($data=$DB->fetch_array($result)) {
          $split = explode(" ", $data['comment']);
          $number += $split[0];
       }
-      
+
       $this->assertEquals($number, 3, 'Difference devices discovered : '.$number.' instead of 3');
-   }   
+   }
 }
 
 
@@ -228,10 +228,10 @@ class Netdiscovery extends PHPUnit_Framework_TestCase {
 class Netdiscovery_AllTests  {
 
    public static function suite() {
-      
+
       $Install = new Install();
       $Install->testInstall(0);
-    
+
       $suite = new PHPUnit_Framework_TestSuite('Netdiscovery');
       return $suite;
    }

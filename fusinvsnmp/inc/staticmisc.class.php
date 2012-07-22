@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -45,7 +45,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusinvsnmpStaticmisc {
-   
+
    static function task_methods() {
 
       $a_tasks = array();
@@ -86,7 +86,7 @@ class PluginFusinvsnmpStaticmisc {
       return $rand;
    }
 
-   
+
 
    // *** SNMPINVENTORY ***
    static function task_definitiontype_snmpinventory($a_itemtype) {
@@ -196,8 +196,8 @@ class PluginFusinvsnmpStaticmisc {
 
       return $selection_type;
    }
-   
-   
+
+
 
    static function displayMenu() {
       global $CFG_GLPI;
@@ -228,12 +228,12 @@ class PluginFusinvsnmpStaticmisc {
          $a_menu[6]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/pics/menu_inventory_status.png";
          $a_menu[6]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/stateinventory.php";
       }
-      
+
       return $a_menu;
    }
 
 
-   
+
    static function profiles() {
 
       $a_profil = array();
@@ -262,6 +262,6 @@ class PluginFusinvsnmpStaticmisc {
                           'name'    => _('Network report'));
 
       return $a_profil;
-   }   
+   }
 }
 ?>

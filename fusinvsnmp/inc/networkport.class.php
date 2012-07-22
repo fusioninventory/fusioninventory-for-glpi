@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    Vincent Mazzoni
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -54,8 +54,8 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
    private $portIps=array();   // IP addresses
    private $portVlans=array(); // number and name for each vlan
 
-   
-   
+
+
    function __construct($p_type=NULL) {
       if ($p_type!=NULL) {
          $this->glpi_type = $p_type;
@@ -75,7 +75,7 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
       $networkport = new NetworkPort();
       $networkport->getFromDB($networkports_id);
       $this->portDB = $networkport->fields;
-      
+
       $a_fusports = $this->find("`networkports_id`='".$networkports_id."'", "", 1);
       if (count($a_fusports) > 0) {
          $a_fusport = current($a_fusports);
@@ -90,7 +90,7 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
    }
 
 
-  
+
     /**
     * Connect this port to another one in DB
     *
@@ -104,7 +104,7 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
       $queryd = "DELETE FROM `glpi_networkports_networkports`
          WHERE `networkports_id_1` = `networkports_id_2`";
       $DB->query($queryd);
-      
+
       $queryVerif = "SELECT *
                      FROM `glpi_networkports_networkports`
                      WHERE (`networkports_id_1` = '".$this->getValue('id')."' OR `networkports_id_1` = '".$destination_port."')
@@ -123,7 +123,7 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
    }
 
 
-   
+
    /**
     * Disconnect a port in DB
     *
@@ -146,7 +146,7 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
    }
 
 
-   
+
    /**
     * Add vlan
     *
@@ -159,7 +159,7 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
    }
 
 
-   
+
    /**
     * Add MAC address
     *
@@ -178,7 +178,7 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
       }
    }
 
-   
+
 
    /**
     * Add IP address
@@ -201,7 +201,7 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
       return $this->portMacs;
    }
 
-   
+
 
    /**
     *
@@ -253,18 +253,18 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
       }
       return($array);
    }
-   
-   
-   
+
+
+
    function setValue($name, $value) {
       if (!(isset($this->portDB[$name])
               AND $this->portDB[$name] == $value)) {
          $this->portModif[$name] = $value;
       }
    }
-   
-   
-   
+
+
+
    function getValue($name) {
       if (isset($this->portModif[$name])) {
          return $this->portModif[$name];
@@ -273,9 +273,9 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
       }
       return '';
    }
-   
-   
-   
+
+
+
    function getNetworkPorts_id() {
       if (isset($this->portDB['id'])) {
          return $this->portDB['id'];
@@ -284,9 +284,9 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
       }
       return 0;
    }
-   
-   
-   
+
+
+
    function savePort($itemtype, $items_id) {
 
       $networkPort = new NetworkPort();
@@ -310,7 +310,7 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
          $this->portModif['id'] = $this->plugin_fusinvsnmp_networkports_id;
          $this->update($this->portModif);
       }
-      
+
       // ** save VLAN
       $vlan = new Vlan();
       $vlanfound = array();
@@ -342,13 +342,13 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
          }
       }
    }
-   
-   
-   
-   function connectPorts() {      
+
+
+
+   function connectPorts() {
       $wire = new NetworkPort_NetworkPort();
       $networkPort = new NetworkPort();
-      
+
       $networkports_id = $this->portModif['networkports_id'];
       $portID = 0;
       if ($this->cdp) { // DCP, get device
@@ -363,20 +363,20 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
             foreach ($a_cdp as $key=>$value) {
                $param[$key] = $value;
             }
-            $portID = $pfSNMP->getPortIDfromDeviceIP($a_cdp['ip'], 
-                                                     $param['ifdescr'], 
-                                                     $param['sysdescr'], 
-                                                     $param['sysname'], 
+            $portID = $pfSNMP->getPortIDfromDeviceIP($a_cdp['ip'],
+                                                     $param['ifdescr'],
+                                                     $param['sysdescr'],
+                                                     $param['sysname'],
                                                      $param['model']);
-            
+
 
          } else {
             $a_cdp = current($this->portMacs);
             if (isset($a_cdp['sysmac'])) {
                $ifnumber = $a_cdp['ifnumber'];
-               $portID = $pfSNMP->getPortIDfromSysmacandPortnumber($a_cdp['sysmac'], 
+               $portID = $pfSNMP->getPortIDfromSysmacandPortnumber($a_cdp['sysmac'],
                                                                    $ifnumber,
-                                                                   $a_cdp);     
+                                                                   $a_cdp);
             }
          }
          if ($portID
@@ -388,8 +388,8 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
                $this->disconnectDB($portID);
                $wire->add(array('networkports_id_1'=> $networkports_id,
                                'networkports_id_2' => $portID));
-            }   
-         }         
+            }
+         }
       } else {
          $count = count($this->portMacs);
          if ($this->getValue('trunk') != '1') {
@@ -484,7 +484,7 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
                      $direct_id = $networkPort->getContact($networkports_id);
                      if ($id AND $id != $networkports_id
                              AND $hub == '0') {
-                        
+
                         $directconnect = 0;
                         if (!$direct_id) {
                            $directconnect = 1;
@@ -495,8 +495,8 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
                               $pfUnknownDevice->connectPortToHub(array($a_port), $networkPort->fields['items_id']);
                            } else {
                               // 2. direct connection
-                              $directconnect = 1;                              
-                           }                        
+                              $directconnect = 1;
+                           }
                         }
                         if ($directconnect == '1') {
                            $this->disconnectDB($networkports_id); // disconnect this port
@@ -515,7 +515,7 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
                            if ($ddirect['items_id'] == $networkPort->fields['items_id']
                                    AND $ddirect['itemtype'] == $networkPort->fields['itemtype']) {
                               // 1.The hub where this device is connected is yet connected to this switch port
-                           
+
                               // => Do nothing
                            } else {
                               // 2. The hub where this device is connected to is not connected to this switch port
@@ -524,7 +524,7 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
                                  $pfUnknownDevice->connectPortToHub(array($a_port), $ddirect['items_id']);
                               } else {
                                  // a. We have a direct connexion to another device (on the switch port)
-                                 $directconnect = 1;                              
+                                 $directconnect = 1;
                               }
                            }
                         }
@@ -533,9 +533,9 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
                            $this->disconnectDB($a_port['id']);     // disconnect destination port
                            $wire->add(array('networkports_id_1'=> $networkports_id,
                                             'networkports_id_2' => $a_port['id']));
-                        }                        
+                        }
                      } else if ($id) {
-                        // Yet connected                        
+                        // Yet connected
                      } else {
                         // Not connected
                         $this->disconnectDB($networkports_id); // disconnect this port
@@ -564,7 +564,7 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
          }
       }
    }
-   
+
 
 
    /**
@@ -575,19 +575,19 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
     *@return Index of port object in ports array or '' if not found
     **/
    function getPortIdWithLogicialNumber($p_ifnumber, $items_id) {
-      
+
       $networkPort= new NetworkPort();
       $a_ports = $networkPort->find("`logical_number`='".$p_ifnumber."'
          AND `itemtype`='NetworkEquipment'
          AND`items_id`='".$items_id."'", "", 1);
-      
+
       if (count($a_ports) > 0) {
          $a_port = current($a_ports);
          return $a_port['id'];
       }
       return false;
    }
-   
+
 }
 
 ?>

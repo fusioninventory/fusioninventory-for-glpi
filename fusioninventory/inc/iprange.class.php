@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -69,13 +69,13 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       }
    }
 
-   
+
    function getComments() {
       $comment = $this->fields['ip_start']." -> ".$this->fields['ip_end'];
       return Html::showToolTip($comment, array('display' => false));
    }
-   
-   
+
+
    function canCreate() {
       return PluginFusioninventoryProfile::haveRight("fusioninventory", "iprange", "w");
    }
@@ -86,7 +86,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    }
 
 
-   
+
    function getSearchOptions() {
 
       $tab = array();
@@ -188,7 +188,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
          }
          $i++;
       }
-      
+
       echo "<SCRIPT language=javascript>
       function test(id) {
          if (document.getElementById('ip_end' + id).value == '') {
@@ -230,9 +230,9 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    /**
     * Check if IP is valid
     *
-    * @param $a_input array of IPs 
-    * 
-    * @return true or false 
+    * @param $a_input array of IPs
+    *
+    * @return true or false
     */
    function checkip($a_input) {
 
@@ -263,13 +263,13 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    }
 
 
-   
+
    /**
     * Get ip in long format
-    * 
+    *
     * @param $ip ip in format ipv4
-    * 
-    * @return $int integer 
+    *
+    * @return $int integer
     */
    function getIp2long($ip) {
       $int = ip2long($ip);

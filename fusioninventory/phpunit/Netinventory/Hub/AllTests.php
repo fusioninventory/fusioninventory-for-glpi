@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -45,10 +45,10 @@ class Hub extends PHPUnit_Framework_TestCase {
 
    public function testSetModuleInventoryOff() {
       global $DB,$CFG_GLPI;
-      
+
       $Install = new Install();
       $Install->testInstall(0);
-      
+
       $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
 //      Config::detectRootDoc();
 
@@ -75,13 +75,13 @@ class Hub extends PHPUnit_Framework_TestCase {
 
    public function testSendinventories() {
       global $CFG_GLPI;
-      
+
       $plugin = new Plugin();
       $plugin->getFromDBbyDir("fusioninventory");
       $plugin->activate($plugin->fields['id']);
       Plugin::load("fusioninventory");
       Config::detectRootDoc();
-      
+
       // Add task and taskjob
       $pfTask = new PluginFusioninventoryTask();
       $pfTaskjob = new PluginFusioninventoryTaskjob();
@@ -259,7 +259,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          // CHECK 2 : Verify number of networkportconnectionslog
          $a_conn = $pfTinvsnmpNetworkPortConnectionLog->find("`creation` = '1'");
          $this->assertEquals(count($a_conn), '1', '(1) Connections logs not equal to 1 ('.count($a_conn).')');
-      
+
       $switch1bis = str_replace("            <CONNECTION>
               <MAC>00:23:18:cf:0d:93</MAC>
             </CONNECTION>", "", $switch1);
@@ -290,9 +290,9 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          // CHECK 3 : Verify number of networkportconnectionslog
          $a_conn = $pfTinvsnmpNetworkPortConnectionLog->find("`creation` = '1'");
          $this->assertEquals(count($a_conn), '1', '(2) Connections logs not equal to 1 ('.count($a_conn).')');
- 
 
-      
+
+
       $switch2bis = str_replace("</CONNECTIONS>
           <IFDESCR>FastEthernet0/1</IFDESCR>", "               <CONNECTION>
                <MAC>00:23:18:cf:0d:93</MAC>
@@ -339,14 +339,14 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          // CHECK 4 : Verify number of networkportconnectionslog
          $a_conn = $pfTinvsnmpNetworkPortConnectionLog->find("`creation` = '1'");
          $this->assertEquals(count($a_conn), '2', '(3) Connections logs not equal to 2 ('.count($a_conn).')');
-         
-         
+
+
 
       $switch1bis = $switch1;
       $switch1bis = str_replace("<CONNECTION>
               <MAC>f0:ad:4e:00:19:f7</MAC>
             </CONNECTION>", "", $switch1bis);
-      
+
       $switch1bis = str_replace("<CONNECTION>
               <MAC>00:23:18:cf:0d:93</MAC>
             </CONNECTION>", "", $switch1bis);
@@ -354,7 +354,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
       // * 4. Update switchs
       $this->testSendinventory("toto", $switch1bis);
       //$this->testSendinventory("toto", $switch2);
-         // CHECK 1 : verify hub always on port 1 of switch 1 
+         // CHECK 1 : verify hub always on port 1 of switch 1
          $a_ports = $networkPort->find("`itemtype`='NetworkEquipment'
                AND `items_id`='".$a_switch['id']."'");
          $this->assertEquals(count($a_ports), 1, '(4)switch 1 haven\'t port fa0/1 added in GLPI');
@@ -379,7 +379,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
                </CONNECTION>
             </CONNECTIONS>
           <IFDESCR>FastEthernet0/2</IFDESCR>", $switch2bis);
-      
+
       // * 5. Update switchs
       $this->testSendinventory("toto", $switch2bis);
          // CHECK 1 : verify hub deleted
@@ -396,10 +396,10 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          $networkPort->getFromDB($a_connection['networkports_id_2']);
          $this->assertEquals($networkPort->fields['mac'],
                               'f0:ad:4e:10:39:f9', '(5) Port 1 of switch 1 not connected to port with mac f0:ad:4e:10:39:f9');
-         
-         
+
+
          // TODO: Verify port connected to port 2 of switch 2
-         
+
          // CHECK 4 : Verify number of networkportconnectionslog
          $a_conn = $pfTinvsnmpNetworkPortConnectionLog->find("`creation` = '1'");
          $this->assertEquals(count($a_conn), '4', '(5) Connections logs not equal to 4 ('.count($a_conn).')');
@@ -439,10 +439,10 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          $this->assertEquals(count($a_list_connections),
                               '1', '(6) Port fa0/1 of switch 1 not connected to 1 port ('.
                                     count($a_list_connections).')');
-         
-      /* 
+
+      /*
        * 7. When have hub on port and next inventory have a CDP device
-       *    hub must be deconnected 
+       *    hub must be deconnected
        */
       $switch1biscdp = str_replace("<CONNECTION>
               <MAC>00:23:18:cf:0d:93</MAC>
@@ -471,8 +471,8 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
                               '0', '(7) Hub connected on port fa0/1 of switch 1');
          }
 
-         
-      /* 
+
+      /*
        * 8. When have hub on port and next inventory have a CDP device
        *    hub must be deconnected (but CDP device is your switch 2
        */
@@ -503,8 +503,8 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
             $this->assertEquals($pfUnknownDevice->fields['hub'],
                               '0', '(8) Hub connected on port fa0/1 of switch 1');
          }
-         
-         
+
+
       // Verifiy 3 mac => 1 Mac not delete hub
          $this->testSendinventory("toto", $switch1);
          $switch1bis = $switch1;
@@ -521,9 +521,9 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          $networkPort->getFromDB($id);
          $this->assertEquals($networkPort->fields['itemtype'],
                               'PluginFusioninventoryUnknownDevice', '(9) Port may be connected to unknown device (hub)');
-         
-         
-         
+
+
+
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
@@ -580,12 +580,12 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
 <REPLY>
 </REPLY>
 ', 'Return code not right');
-      
+
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
    }
-   
+
 }
 
 
@@ -593,7 +593,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
 class Hub_AllTests  {
 
    public static function suite() {
-      
+
       $GLPIInstall = new GLPIInstall();
       $Install = new Install();
       $GLPIInstall->testInstall();

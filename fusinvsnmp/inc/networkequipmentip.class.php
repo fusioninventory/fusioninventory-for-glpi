@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    Vincent Mazzoni
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -48,8 +48,8 @@ class PluginFusinvsnmpNetworkEquipmentIP extends CommonDBTM {
    private $ifaddrs=array();
    private $ifaddrsPresent=array();
 
-   
-   
+
+
    // Get all IP of the switch
    function getIP($items_id) {
       $a_ips = $this->find("`networkequipments_id`='".$items_id."'");
@@ -59,18 +59,18 @@ class PluginFusinvsnmpNetworkEquipmentIP extends CommonDBTM {
       }
       return $array;
    }
-   
-   
-   
+
+
+
    /**
     * Display IP list of a networkequipment
-    * 
+    *
     * @param type $id id of the network equipment
     */
    static function showIP($id) {
 
       $networkequipmentip = new self;
-      
+
       echo "<table class='tab_cadre' width='950'>";
 
       echo "<tr class='tab_bg_1'>";
@@ -106,12 +106,12 @@ class PluginFusinvsnmpNetworkEquipmentIP extends CommonDBTM {
       }
       echo "</table>";
    }
-   
-   
+
+
 
    function loadIPs($networkequipments_id) {
       global $DB;
-      
+
       $query = "SELECT * FROM `".$this->getTable()."`
               WHERE `networkequipments_id`='".$networkequipments_id."'";
       $result = $DB->query($query);
@@ -119,21 +119,21 @@ class PluginFusinvsnmpNetworkEquipmentIP extends CommonDBTM {
       $this->ifaddrsPresent = array();
       while ($data=$DB->fetch_array($result)) {
          if (isset($this->ifaddrs[$data['ip']])) {
-            $this->delete($data);            
+            $this->delete($data);
          } else {
             $this->ifaddrs[$data['ip']] = $data['id'];
-         }      
+         }
       }
    }
 
-   
-   
+
+
    function setIP($ip) {
       $this->ifaddrsPresent[$ip] = 0;
    }
 
-   
-   
+
+
    function saveIPs($networkequipments_id) {
       foreach ($this->ifaddrs as $ip=>$id) {
          if (isset($this->ifaddrsPresent[$ip])) {
@@ -148,7 +148,7 @@ class PluginFusinvsnmpNetworkEquipmentIP extends CommonDBTM {
          $input['ip'] = $ip;
          $this->add($input);
       }
-   }   
+   }
 }
 
 ?>

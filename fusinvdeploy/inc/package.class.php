@@ -84,7 +84,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       return $ong;
    }
 
-   
+
 
    function getSearchOptions() {
 
@@ -171,15 +171,15 @@ class PluginFusinvdeployPackage extends CommonDBTM {
    }
 
    function showMenu($options=array())  {
-      
+
       $this->displaylist = false;
-   
+
       $this->fields['id'] = -1;
       $this->showList();
    }
 
-   
-   
+
+
    function showList() {
       echo "<center>";
       echo "<table class='tab_cadre_navigation'><tr><td>";
@@ -190,8 +190,8 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       echo "</td></tr></table>";
       echo "</center>";
    }
-   
-   
+
+
 
    function showForm($ID, $options=array()) {
       global $DB, $CFG_GLPI;
@@ -307,8 +307,8 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       return true;
    }
 
-   
-   
+
+
    static function import_json($data = NULL) {
 
       if($data !== NULL) {
@@ -339,7 +339,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
                   "",
                   "1"
                );
-               
+
                if ( count($orders) == 1 ) {
                   $order = current($orders);
                   $order_id = $order['id'];

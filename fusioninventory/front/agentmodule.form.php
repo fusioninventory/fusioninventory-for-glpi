@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -44,7 +44,7 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-Html::header(_('FusionInventory'), $_SERVER["PHP_SELF"], "plugins", 
+Html::header(_('FusionInventory'), $_SERVER["PHP_SELF"], "plugins",
              "fusioninventory", "agentmodules");
 
 PluginFusioninventoryProfile::checkRight("fusioninventory", "agent", "r");
@@ -105,7 +105,7 @@ if (isset($_POST["agent_add"])) {
                if ($value == $_POST['id']) {
                   unset($a_agentList[$key]);
                }
-            } 
+            }
          } else if (($agentModule == 1) AND ($agentModuleBase == 0)) {
             // OK
          } else if (($agentModule == 0) AND ($agentModuleBase == 1)) {
@@ -133,7 +133,7 @@ if (isset($_POST["agent_add"])) {
    }
    $input['id']  = $_POST['id'];
    $input['url'] = $_POST['url'];
-   
+
    $agentmodule->update($input);
    Html::back();
 }

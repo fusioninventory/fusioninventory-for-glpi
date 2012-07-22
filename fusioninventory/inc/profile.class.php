@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -53,7 +53,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
     * @param $p_type Right type ('wol', 'agents'...)
     * @param $p_right Right (NULL, r, w)
     * @param $p_profiles_id Profile id
-    * 
+    *
     * @return integer the new id of the added item (or false if fail)
     **/
     static function addProfile($p_plugins_id, $p_type, $p_right, $p_profiles_id=NULL) {
@@ -82,7 +82,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
     * @param $p_type Right type ('wol', 'agents'...)
     * @param $p_right Right (NULL, r, w)
     * @param $p_profiles_id Profile id
-    * 
+    *
     * @return boolean : true on success
     **/
    function updateProfile($p_id, $p_plugins_id, $p_type, $p_right, $p_profiles_id=NULL) {
@@ -119,15 +119,15 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       }
    }
 
-   
-   
+
+
    /**
     * Get info if profile exist
-    * 
+    *
     * @param type $plugins_id id of the plugin
     * @param type $profiles_id id of the profile
     * @param type $type value type of right (example : agent, remotecontrol, configuration...)
-    * 
+    *
     * @return true or false
     */
    static function profileExists($plugins_id, $profiles_id, $type) {
@@ -143,8 +143,8 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       }
    }
 
-   
-   
+
+
    /**
     * Change profile (for used connected)
     *
@@ -177,7 +177,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
     * @param $p_moduleName Module name (directory)
     * @param $p_type Right type ('wol', 'agents'...)
     * @param $p_right Right (NULL, r, w)
-    * 
+    *
     * @return boolean : true if right is ok
     **/
    static function haveRight($p_moduleName, $p_type, $p_right) {
@@ -187,7 +187,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
             "w" => array("w"),
                );
       if (isset($_SESSION["glpi_plugin_".$p_moduleName."_profile"][$p_type])
-                && in_array($_SESSION["glpi_plugin_".$p_moduleName."_profile"][$p_type], 
+                && in_array($_SESSION["glpi_plugin_".$p_moduleName."_profile"][$p_type],
                             $matches[$p_right])) {
          return true;
       } else {
@@ -252,7 +252,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
     * Clean profile
     *
     * @param $p_moduleName Module name
-    * 
+    *
     * @return boolean : true on success
     **/
    static function cleanProfile($p_moduleName) {
@@ -294,7 +294,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
 
       foreach ($a_module as $pluginname) {
          $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($pluginname);
-         
+
          if (is_callable(array($class, "profiles"))) {
             $a_profil = call_user_func(array($class, "profiles"));
 
@@ -313,7 +313,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
                echo "</td>";
                echo "<td>";
                echo Profile::dropdownNoneReadWrite($pluginname."-".$data['profil'],
-                                                   $this->getRightDB($pluginname, $data['profil'], 
+                                                   $this->getRightDB($pluginname, $data['profil'],
                                                    $items_id), 1, 1, 1);
                echo "</td>";
                $i++;
@@ -343,7 +343,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
    }
 
 
-   
+
    /**
     * Udpate profiles from Profil management
     */

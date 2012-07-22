@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -45,14 +45,14 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
-   
+
 
    function canView() {
       return PluginFusioninventoryProfile::haveRight("fusioninventory", "task", "r");
    }
 
 
-  
+
    function updateState($p_number, $a_input, $agent_id) {
       $data = $this->find("`plugin_fusioninventory_taskjob_id`='".$p_number."'
                               AND `plugin_fusioninventory_agents_id`='".$agent_id."'");
@@ -64,7 +64,7 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
          $this->getFromDB($id);
          $data[$id] = $this->fields;
       }
-      
+
       foreach ($data as $process_id=>$input) {
          foreach ($a_input as $field=>$value) {
             if ($field == 'nb_ip'
@@ -93,7 +93,7 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
    }
 
 
-   
+
    function endState($p_number, $date_end, $agent_id) {
       $data = $this->find("`plugin_fusioninventory_taskjob_id`='".$p_number."'
                               AND `plugin_fusioninventory_agents_id`='".$agent_id."'");
@@ -102,9 +102,9 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
          $this->update($input);
       }
    }
-   
-   
-   
+
+
+
    function display() {
       global $DB, $CFG_GLPI;
 
@@ -124,8 +124,8 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
          WHERE `method` = 'netdiscovery'
          GROUP BY `uniqid`
          ORDER BY `uniqid` DESC ";
-      
-     
+
+
       $resultcount = $DB->query($querycount);
       $number = $DB->numrows($resultcount);
 
@@ -154,7 +154,7 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
          GROUP BY `uniqid`
          ORDER BY `uniqid` DESC
          LIMIT ".intval($start)."," . intval($_SESSION['glpilist_limit']);
-      
+
       $result=$DB->query($sql);
       while ($data=$DB->fetch_array($result)) {
          echo "<tr class='tab_bg_1'>";
@@ -248,7 +248,7 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
          echo "<td>".$notimporteddevices."</td>";
          echo "<td>".$updateddevices."</td>";
          echo "<td>".$createddevices."</td>";
-         echo "</tr>";      
+         echo "</tr>";
       }
       echo "</table>";
    }

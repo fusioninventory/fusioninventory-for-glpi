@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -45,7 +45,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
-   
+
    static function getTypeName($nb=0) {
 
       return _('Antivirus');
@@ -61,24 +61,24 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
       return Session::haveRight('computer', 'r');
    }
 
-   
-   
+
+
    function getSearchOptions() {
 
       $tab = array();
       $tab['common'] = _('Characteristics');
 
-      
+
       $tab[1]['table']         = $this->getTable();
       $tab[1]['field']         = 'version';
       $tab[1]['name']          = "Version";
       $tab[1]['type']          = 'text';
-      
+
       return $tab;
    }
-      
-   
-   
+
+
+
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
@@ -94,8 +94,8 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
       return '';
    }
 
-   
-   
+
+
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       if ($item->getID() > 0) {
@@ -105,27 +105,27 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
 
       return true;
    }
-   
-   
-   
-   
+
+
+
+
    static function addHistory($item){
-      
+
       foreach ($item->oldvalues as $field=>$old_value) {
          $changes = array();
          $changes[0] = 0;
          $changes[1] = '';
          $changes[2] = "Antivirus.".$field." : ".$old_value." --> ".$item->fields[$field];
-         Log::history($item->fields['computers_id'], 
-                     "Computer", 
-                     $changes, 
-                     'PluginFusioninventoryInventoryComputerAntivirus', 
-                     Log::HISTORY_LOG_SIMPLE_MESSAGE);         
+         Log::history($item->fields['computers_id'],
+                     "Computer",
+                     $changes,
+                     'PluginFusioninventoryInventoryComputerAntivirus',
+                     Log::HISTORY_LOG_SIMPLE_MESSAGE);
       }
    }
-   
-   
-      
+
+
+
    /**
    * Display form for antivirus
    *
@@ -142,9 +142,9 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
       if (count($a_antivirus) > 0) {
          $antivirusData = current($a_antivirus);
       }
-      
+
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
- 
+
       if (count($antivirusData) == '0') {
          echo "<tr>";
          echo "<th>"._('Antivirus');

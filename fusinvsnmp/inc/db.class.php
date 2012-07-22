@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    Vincent Mazzoni
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -48,7 +48,7 @@ class PluginFuvinvsnmpDb extends CommonDBTM {
 
    static function getDeviceFieldFromId($type, $id, $field, $return) {
       global $DB;
-      
+
       $table = '';
       switch($type) {
          case COMPUTER_TYPE:
@@ -87,7 +87,7 @@ class PluginFuvinvsnmpDb extends CommonDBTM {
    }
 
 
-   
+
    static function lock_wire_check() {
       while (1) {
          $file_lock = GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/wire.lock";
@@ -107,7 +107,7 @@ class PluginFuvinvsnmpDb extends CommonDBTM {
    }
 
 
-   
+
    static function lock_wire_unlock() {
       $file_lock = GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/wire.lock";
       $fp =  fopen($file_lock,"r+");

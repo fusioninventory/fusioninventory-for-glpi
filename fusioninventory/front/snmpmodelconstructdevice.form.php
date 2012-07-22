@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -78,10 +78,10 @@ if (isset($_GET['vlan_update'])) {
       $result = $DB->query($query);
       if ($DB->numrows($result) == "0") {
          $i = 0;
-      }   
+      }
    }
 
-   $query_ins = "INSERT INTO `glpi_plugin_fusinvsnmp_constructdevicewalks` 
+   $query_ins = "INSERT INTO `glpi_plugin_fusinvsnmp_constructdevicewalks`
       (`id`,`plugin_fusinvsnmp_constructdevices_id`,`log`)
       VALUES (NULL, '".$_POST['id']."', '".$md5."')";
    $DB->query($query_ins);
@@ -103,7 +103,7 @@ if (isset($_GET['vlan_update'])) {
             '".$_POST['oid_port_counter_'.$oid]."',
             '".$_POST['oid_port_dyn_'.$oid]."',
               '".$_POST['vlan_'.$oid]."' )";
-      $DB->query($query_ins);     
+      $DB->query($query_ins);
    }
    Html::back();
 } else if (isset ($_POST["update"])) {

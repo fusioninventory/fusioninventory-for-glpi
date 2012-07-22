@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -62,8 +62,8 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
       return PluginFusioninventoryProfile::haveRight('fusioninventory', 'credentialip', 'r');
    }
 
-   
-   
+
+
    function getAdditionalFields() {
 
       return array(array('name'  => 'itemtype',
@@ -76,8 +76,8 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
                          'type'  => 'text'));
    }
 
-   
-   
+
+
    /**
     * Display specific fields for FieldUnicity
     *
@@ -85,7 +85,7 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
     * @param $field array
    **/
    function displaySpecificTypeField($ID, $field=array()) {
-      
+
       switch ($field['type']) {
          case 'credentials' :
             if ($ID > 0) {
@@ -99,7 +99,7 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
    }
 
 
-   
+
    function getSearchOptions() {
 
       $tab = array();
@@ -134,10 +134,10 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
       return $tab;
    }
 
-   
-   
+
+
    function title() {
-      
+
       //Leave empty !
       $buttons = array();
       if (PluginFusioninventoryProfile::haveRight('fusioninventory', 'credential', 'r')) {
@@ -146,15 +146,15 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
       }
    }
 
-   
-   
+
+
    function displayHeader() {
       //Common dropdown header
       parent::displayHeader();
-      
+
       //Fusioninventory menu
       PluginFusioninventoryMenu::displayMenu("mini");
-   }   
+   }
 }
 
 ?>

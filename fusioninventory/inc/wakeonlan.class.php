@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -54,7 +54,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
       $pfTaskjob = new PluginFusioninventoryTaskjob();
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      
+
       $uniqid = uniqid();
 
       $pfTaskjob->getFromDB($taskjobs_id);
@@ -66,7 +66,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
       $a_actions = importArrayFromDB($pfTaskjob->fields['action']);
 
       $a_agentList = array();
-      
+
       if ((!strstr($pfTaskjob->fields['action'], '".1"'))
             AND (!strstr($pfTaskjob->fields['action'], '".2"'))) {
 
@@ -92,8 +92,8 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                      }
                   }
                }
-            }            
-         } 
+            }
+         }
       }
       /*
        * Case 3 : dynamic agent
@@ -122,7 +122,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
             $a_agentList = $this->getAgentsSubnet(count($a_definitions), $communication, $subnet);
          }
       }
-      
+
       if (count($a_agentList) == '0') {
          $a_input = array();
          $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
@@ -189,7 +189,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
 
       $sxml_option = $this->message->addChild('OPTION');
       $sxml_option->addChild('NAME', 'WAKEONLAN');
-      
+
       $changestate = 0;
       foreach ($a_Taskjobstates as $data) {
          $a_networkPort = $NetworkPort->find("`itemtype`='Computer' AND `items_id`='".$data['items_id']."' ");
@@ -238,7 +238,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
       return $this->message;
    }
 
-   
+
 
    function getAgentsSubnet($nb_computers, $communication, $subnet='') {
       global $DB;
@@ -250,7 +250,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
       // Number of computers min by agent
       $nb_computerByAgentMin = 20;
       $nb_agentsMax = ceil($nb_computers / $nb_computerByAgentMin);
-      
+
       // Get ids of operating systems which can make real wakeonlan
       $a_os = $OperatingSystem->find(" `name` LIKE '%Linux%' ");
       $osfind = '(';

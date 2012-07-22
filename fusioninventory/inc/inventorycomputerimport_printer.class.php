@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -63,7 +63,7 @@ class PluginFusioninventoryInventoryComputerImport_Printer extends CommonDBTM {
 
       $pfConfig = new PluginFusioninventoryConfig();
       $Computer_Item = new Computer_Item();
-      
+
       if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
               "import_printer", 'inventory') == '0') {
          return;
@@ -72,7 +72,7 @@ class PluginFusioninventoryInventoryComputerImport_Printer extends CommonDBTM {
       $printer = new Printer();
 
       $a_printer = array();
-      
+
       if ($type == 'update') {
          $Computer_Item->getFromDB($items_id);
          $a_printer = $printer->getFromDB($Computer_Item->fields['items_id']);
@@ -145,8 +145,8 @@ class PluginFusioninventoryInventoryComputerImport_Printer extends CommonDBTM {
          // Ignrore import printer
          return;
       }
-      
-      
+
+
       $printer_id = 0;
       if (!isset($a_printer['id'])) {
          if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
@@ -154,7 +154,7 @@ class PluginFusioninventoryInventoryComputerImport_Printer extends CommonDBTM {
             $a_printer['is_global'] = 1;
          }
 
-         PluginFusioninventoryInventoryComputerInventory::addDefaultStateIfNeeded($a_printer, true, 
+         PluginFusioninventoryInventoryComputerInventory::addDefaultStateIfNeeded($a_printer, true,
                                                                  $a_printer['is_global']);
          $printer_id = $printer->add($a_printer);
       } else {

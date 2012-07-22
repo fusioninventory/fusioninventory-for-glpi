@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -101,7 +101,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       if ($id!='') {
          $this->getFromDB($id);
       } else {
-         $this->getEmpty();   
+         $this->getEmpty();
       }
 
       $target = $CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/model.form.php';
@@ -142,7 +142,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       if ($selected_value == PHONE_TYPE){$selected = 'selected';}else{$selected = '';}
       echo "<option value='".PHONE_TYPE."' ".$selected.">"._('Phones')."</option>\n";
       echo "</select>";
-      
+
       echo "</td>";
       echo "</tr>";
 
@@ -174,11 +174,11 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       Html::closeForm();
       echo "</div>";
    }
-   
-   
-   
+
+
+
    /**
-    * Get all OIDs from model 
+    * Get all OIDs from model
     *
     * @param $ID_Device id of the device
     * @param $type type of device (NETWORKING_TYPE, PRINTER_TYPE ...)
@@ -191,11 +191,11 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
 
       $oids = array();
       $query = "";
-      
+
       switch ($type) {
 
          case NETWORKING_TYPE :
-            $query = "SELECT * 
+            $query = "SELECT *
                       FROM `glpi_plugin_fusioninventory_networkequipments`
                            LEFT JOIN `glpi_plugin_fusioninventory_snmpmodelmibs`
                            ON `glpi_plugin_fusioninventory_networkequipments`.`plugin_fusioninventory_snmpmodels_id`=
@@ -234,7 +234,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
 
    function getrightmodel($device_id, $type, $comment="") {
       global $DB;
-      
+
       // Get description (sysdescr) of device
       // And search in device_serials base
       $sysdescr = '';
@@ -273,7 +273,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
                   $a_data = $pfPrinter->find("`printers_id`='".$device_id."'", "", "1");
                   $data = current($a_data);
                   $pfPrinter->delete($data);
-                  $sysdescr = ''; 
+                  $sysdescr = '';
                }
                break;
 
@@ -298,7 +298,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
          }
 
          if (!empty($modelgetted)) {
-            $query = "SELECT * 
+            $query = "SELECT *
                       FROM `glpi_plugin_fusioninventory_snmpmodels`
                       WHERE `discovery_key`='".$modelgetted."'
                       LIMIT 0,1";
@@ -354,7 +354,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       }
       return 0;
    }
-   
+
 
 
    static function importAllModels() {

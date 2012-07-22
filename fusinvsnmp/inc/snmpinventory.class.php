@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -51,7 +51,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
    // Get all devices and put in taskjobstate each task for each device for each agent
    function prepareRun($taskjobs_id) {
       global $DB;
-      
+
       $pfTask = new PluginFusioninventoryTask();
       $pfTaskjob = new PluginFusioninventoryTaskjob();
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
@@ -68,7 +68,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
 
       /*
        * * Different possibilities  :
-       * IP RANGE 
+       * IP RANGE
        * NetworkEquipment
        * Printer
        *
@@ -324,7 +324,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                      }
                   }
                }
-            }            
+            }
          }
          if ($taskvalid == "0") {
             $pfTaskjob->reinitializeTaskjobs($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
@@ -488,7 +488,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
     *
     */
    function run($a_Taskjobstates) {
-      
+
       $pfAgent = new PluginFusioninventoryAgent();
       $pfAgentconfig = new  PluginFusinvsnmpAgentconfig();
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
@@ -552,7 +552,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                      $modelslistused[$data['plugin_fusioninventory_snmpmodels_id']] = 1;
                   }
                   break;
-               
+
             }
 
             if ($changestate == '0') {
@@ -591,7 +591,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
    }
 
 
-   
+
    function getAgentsSubnet($nb_computers, $communication, $subnet='', $ipstart='', $ipend='') {
       global $DB;
 

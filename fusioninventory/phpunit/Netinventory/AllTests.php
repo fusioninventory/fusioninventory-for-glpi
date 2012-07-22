@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -45,7 +45,7 @@ class Netinventory extends PHPUnit_Framework_TestCase {
    function testNetinventory() {
       return;
    }
-   
+
 }
 
 require_once 'Hub/AllTests.php';
@@ -55,10 +55,10 @@ require_once 'Switchinventory/AllTests.php';
 class Netinventory_AllTests  {
 
    public static function suite() {
-      
+
       $suite = new PHPUnit_Framework_TestSuite('Netinventory');
       $suite->addTest(Hub_AllTests::suite());
-      $suite->addTest(Connectionslogs_AllTests::suite());  
+      $suite->addTest(Connectionslogs_AllTests::suite());
       $suite->addTest(Switchinventory_AllTests::suite());
       return $suite;
    }

@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -71,7 +71,7 @@ class PluginFusioninventoryInventoryComputerImport_Peripheral extends CommonDBTM
       $Computer_Item = new Computer_Item();
 
       $a_Peripheral = array();
-      
+
       if ($type == "update") {
          $Computer_Item->getFromDB($items_id);
          $a_Peripheral = $Peripheral->getFromDB($Computer_Item->fields['items_id']);
@@ -159,7 +159,7 @@ class PluginFusioninventoryInventoryComputerImport_Peripheral extends CommonDBTM
             $a_Peripheral['is_global'] = 1;
          }
 
-         PluginFusioninventoryInventoryComputerInventory::addDefaultStateIfNeeded($a_Peripheral, true, 
+         PluginFusioninventoryInventoryComputerInventory::addDefaultStateIfNeeded($a_Peripheral, true,
                                                                  $a_Peripheral['is_global']);
          if (isset($a_Peripheral['id'])) {
             $Peripheral->update($a_Peripheral);

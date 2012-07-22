@@ -36,7 +36,7 @@
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -46,7 +46,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 Session::checkRight("config","w");
 
-Html::header(_('Features'), $_SERVER["PHP_SELF"], 
+Html::header(_('Features'), $_SERVER["PHP_SELF"],
              "plugins", "fusinvsnmp", "configuration");
 
 if (isset($_POST['plugin_fusinvsnmp_config_set'])) {

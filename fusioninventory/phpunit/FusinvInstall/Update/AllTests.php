@@ -29,27 +29,27 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
 class Update extends PHPUnit_Framework_TestCase {
 
    public function testUpdate() {
-      
+
       $Update = new Update();
       $Update->Update("2.3.3");
       $Update->Update("2.1.3");
    }
-   
-   
+
+
    function Update($version = '') {
       global $DB;
 
@@ -58,7 +58,7 @@ class Update extends PHPUnit_Framework_TestCase {
       }
       $GLPIInstall = new GLPIInstall();
       $GLPIInstall->testInstall();
-      
+
       $query = "SHOW TABLES";
       $result = $DB->query($query);
       while ($data=$DB->fetch_array($result)) {
@@ -67,27 +67,27 @@ class Update extends PHPUnit_Framework_TestCase {
             $DB->query("DROP TABLE ".$data[0]);
          }
       }
-      $query = "DELETE FROM `glpi_displaypreferences` 
+      $query = "DELETE FROM `glpi_displaypreferences`
          WHERE `itemtype` LIKE 'PluginFus%'";
       $DB->query($query);
-      
+
       // ** Insert in DB
       $res = $DB->runFile(GLPI_ROOT ."/plugins/fusioninventory/phpunit/FusinvInstall/Update/mysql/i-".$version.".sql");
       $this->assertTrue($res, "Fail: SQL Error during insert version ".$version);
-      
+
       passthru("cd ../tools/ && /usr/local/bin/php -f cli_install.php");
-      
+
       $FusinvInstall = new FusinvInstall();
       $FusinvInstall->testDB("fusioninventory");
 
       $FusinvInstall->testDB("fusinvsnmp");
-      
+
 //      $FusinvInstall->testDB("fusinvdeploy");
-      
+
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
-      
+
    }
 }
 
@@ -99,7 +99,7 @@ class Update_AllTests  {
 
       $suite = new PHPUnit_Framework_TestSuite('Update');
       return $suite;
-      
+
    }
 }
 

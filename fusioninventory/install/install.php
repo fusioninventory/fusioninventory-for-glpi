@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -46,7 +46,7 @@ function pluginFusioninventoryInstall($version, $migration='') {
    if ($migration == '') {
       $migration = new Migration($version);
    }
-   
+
    /*
     * Load classes
     */
@@ -71,7 +71,7 @@ function pluginFusioninventoryInstall($version, $migration='') {
 
    $migration->displayMessage("Installation of plugin FusionInventory");
 
-      
+
    // Get informations of plugin
 
    /*
@@ -155,7 +155,7 @@ function pluginFusioninventoryInstall($version, $migration='') {
    /*
     * Create DB structure
     */
-      $migration->displayMessage("Creation tables in database");   
+      $migration->displayMessage("Creation tables in database");
       $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-"
                  .$version."-empty.sql";
       if (!$DB->runFile($DB_file)) {
@@ -167,7 +167,7 @@ function pluginFusioninventoryInstall($version, $migration='') {
       if (!$DB->runFile(GLPI_ROOT ."/plugins/fusioninventory/install/mysql/pciid.sql")) {
          $migration->displayMessage("Error on creation table pciid in database");
       }
-   
+
    /*
     * Creation of folders
     */
@@ -190,8 +190,8 @@ function pluginFusioninventoryInstall($version, $migration='') {
       if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/networkequipment')) {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/networkequipment');
       }
-      
-      
+
+
    /*
     * Manage profiles
     */
@@ -202,9 +202,9 @@ function pluginFusioninventoryInstall($version, $migration='') {
       $plugins_id = $fields['id'];
       PluginFusioninventoryProfile::initProfile('fusioninventory', $plugins_id);
 
-   
-   
-   
+
+
+
    /*
     * bug of purge network port when purge unknown devices, so we clean
     */
@@ -218,19 +218,19 @@ function pluginFusioninventoryInstall($version, $migration='') {
          $networkPort->delete(array('id'=>$data['nid']), 1);
       }
 
-      
+
    /*
     * Add config
     */
       $migration->displayMessage("Initialize configuration");
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       $PluginFusioninventoryConfig->initConfigModule();
-      
+
       $configLogField = new PluginFusioninventoryConfigLogField();
       $configLogField->initConfig();
-   
-   
-   
+
+
+
 
    /*
     * Register Agent TASKS
@@ -260,40 +260,40 @@ function pluginFusioninventoryInstall($version, $migration='') {
       if (isset($_SERVER['HTTP_REFERER'])) {
          $url = $_SERVER['HTTP_REFERER'];
       }
-      $input['url'] = PluginFusioninventoryCommunicationRest::getDefaultRestURL($_SERVER['HTTP_REFERER'], 
-                                                                                 'fusioninventory', 
+      $input['url'] = PluginFusioninventoryCommunicationRest::getDefaultRestURL($_SERVER['HTTP_REFERER'],
+                                                                                 'fusioninventory',
                                                                                  'esx');
       $PluginFusioninventoryAgentmodule->add($input);
-   
-   
-      
+
+
+
    /*
     * Add cron task
     */
       $migration->displayMessage("Initialize cron task");
-      CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '60', 
+      CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '60',
                          array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30));
-      Crontask::Register('PluginFusioninventoryTaskjobstate', 'cleantaskjob', (3600 * 24), 
+      Crontask::Register('PluginFusioninventoryTaskjobstate', 'cleantaskjob', (3600 * 24),
                          array('mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30));
 
 
-      
+
    /*
     * Create rules
-    */      
+    */
       $migration->displayMessage("Create rules");
       $PluginFusioninventorySetup = new PluginFusioninventorySetup();
       $PluginFusioninventorySetup->initRules();
-      
-      
-      
+
+
+
    /*
     *  Import OCS locks
     */
       $migration->displayMessage("Import OCS locks if exists");
       $PluginFusioninventoryLock = new PluginFusioninventoryLock();
       $PluginFusioninventoryLock->importFromOcs();
-      
+
 
    // glpi_plugin_fusioninventory_configs
    $pfSetup = new PluginFusioninventorySetup();
@@ -318,17 +318,17 @@ function pluginFusioninventoryInstall($version, $migration='') {
    $input['exceptions'] = exportArrayToDB(array());
    $pfAgentmodule->add($input);
 
-   CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '60', 
+   CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '60',
                       array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30));
-   Crontask::Register('PluginFusioninventoryTaskjobstate', 'cleantaskjob', (3600 * 24), 
+   Crontask::Register('PluginFusioninventoryTaskjobstate', 'cleantaskjob', (3600 * 24),
                       array('mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30));
 
 
    $migration->displayMessage("Create rules");
    $pfSetup = new PluginFusioninventorySetup();
    $pfSetup->initRules();
-   
-   
+
+
    // Import models
    PluginFusioninventorySnmpmodel::importAllModels();
 

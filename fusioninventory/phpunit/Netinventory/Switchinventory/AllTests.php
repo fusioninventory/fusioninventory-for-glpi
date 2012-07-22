@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -50,7 +50,7 @@ class Switchinventory extends PHPUnit_Framework_TestCase {
          SET `is_active`='1'
          WHERE `modulename`='SNMPQUERY' ";
       $DB->query($query);
-      
+
       $networkEquipment = new NetworkEquipment();
       $a_equipments = $networkEquipment->find();
       foreach ($a_equipments as $id=>$data) {
@@ -62,16 +62,16 @@ class Switchinventory extends PHPUnit_Framework_TestCase {
 
    public function testSendinventories() {
       global $DB;
-      
+
       $plugin = new Plugin();
       $plugin->getFromDBbyDir("fusioninventory");
       $plugin->activate($plugin->fields['id']);
       Plugin::load("fusioninventory");
-      
+
       // Active extra-debug
       $pfConfig = new PluginFusioninventoryConfig();
       $pfConfig->updateConfigType($plugin->fields['id'], "extradebug", "1");
-      
+
       // Add task and taskjob
       $pfTask = new PluginFusioninventoryTask();
       $pfTaskjob = new PluginFusioninventoryTaskjob();
@@ -305,37 +305,37 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team</COMMENTS>
       foreach ($a_networkequipments as $data) {
          $networkEquipment->delete($data, 1);
       }
-      
+
       // * 1. Create switch 1
       $this->testSendinventory("toto", $switch1, 1);
-         
-      // * 2. Create switch 2 
+
+      // * 2. Create switch 2
       $this->testSendinventory("toto", $switch2, 1);
-      
+
       // * 3. update switch 1
       $this->testSendinventory("toto", $switch1);
-         
+
          // CHECK 1 : Check ip of ports
          $a_ports = $networkPort->find("`name`='Fa0/1'");
          $a_port = current($a_ports);
          $this->assertEquals($a_port['ip'], "", 'IP of port Fa/01 not right');
          $this->assertEquals($a_port['mac'], "00:1b:54:99:62:45", 'MAC of port Fa/01 not right');
-         
+
          $a_ports = $networkPort->find("`name`='Fa0/0'");
          $a_port = current($a_ports);
          $this->assertEquals($a_port['ip'], "", 'IP of port Fa0/0 not right');
          $this->assertEquals($a_port['mac'], "00:1b:54:99:62:44", 'MAC of port Fa0/0 not right');
-         
+
          $a_ports = $networkPort->find("`name`='Gi1/0/23'");
          $a_port = current($a_ports);
          $this->assertEquals($a_port['ip'], "", 'IP of port Gi1/0/23 not right');
          $this->assertEquals($a_port['mac'], "00:1b:2b:20:40:97", 'MAC of port Gi1/0/23 not right');
-         
+
          $a_ports = $networkPort->find("`name`='Gi1/0/22'");
          $a_port = current($a_ports);
          $this->assertEquals($a_port['ip'], "", 'IP of port Gi1/0/22 not right');
          $this->assertEquals($a_port['mac'], "00:1b:2b:20:40:96", 'MAC of port Gi1/0/22 not right');
-         
+
          $GLPIlog = new GLPIlogs();
          $GLPIlog->testSQLlogs();
          $GLPIlog->testPHPlogs();
@@ -344,10 +344,10 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team</COMMENTS>
          $zombieConnect = $networkPort_NetworkPort->find("`networkports_id_1`='0'
             OR `networkports_id_2`='0'");
          $this->assertEquals(count($zombieConnect), 0, 'Zombie connections detected : '.print_r($zombieConnect, true));
-      
+
          // Verify have only 2 switches
          $this->assertEquals(count($networkEquipment->find()), 2, '[1] May have 2 switches created');
-      
+
          // verify Vlan
          $vlan = new Vlan();
          $networkPort_Vlan = new NetworkPort_Vlan();
@@ -359,25 +359,25 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team</COMMENTS>
          $a_np_vlans = $networkPort_Vlan->find("`networkports_id`='".$a_port12['id']."'
             AND `vlans_id`='".$a_vlan['id']."'");
          $this->assertEquals(count($a_np_vlans), 1, 'Vlan not assigned to port Fa0/12');
-         
+
       // * Test modifications of IP of the switch
       $networkEquipment = new NetworkEquipment();
       $a_switches = $networkEquipment->find("`serial`='FCZ11161074'");
       $a_switch = current($a_switches);
-      
+
       $switch1bis = str_replace('<IP>172.27.2.22</IP>', '', $switch1);
       $this->testSendinventory("toto", $switch1bis);
-      
+
          $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
                  WHERE `networkequipments_id`='".$a_switch['id']."'";
          $result = $DB->query($query);
          $this->assertEquals($DB->numrows($result), 3, 'May have 3 IPs for this switch');
-         
+
          // Verify have only 2 switches
          $this->assertEquals(count($networkEquipment->find()), 2, '[2] May have 2 switches created');
-      
+
       $switch1bis = str_replace('<IP>212.99.4.74</IP>', '', $switch1);
-      $this->testSendinventory("toto", $switch1bis);      
+      $this->testSendinventory("toto", $switch1bis);
          $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
                  WHERE `networkequipments_id`='".$a_switch['id']."'";
          $result = $DB->query($query);
@@ -397,16 +397,16 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team</COMMENTS>
 
          // Verify have only 2 switches
          $this->assertEquals(count($networkEquipment->find()), 2, '[3] May have 2 switches created');
-      
-         
+
+
          $GLPIlog->testSQLlogs();
          $GLPIlog->testPHPlogs();
-         
+
 
       // Modify vlan
       $switch1bis = str_replace('<NUMBER>10</NUMBER>', '<NUMBER>20</NUMBER>', $switch1);
       $this->testSendinventory("toto", $switch1bis);
-         
+
          // verify Vlan
          $vlan = new Vlan();
          $networkPort_Vlan = new NetworkPort_Vlan();
@@ -421,9 +421,9 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team</COMMENTS>
          $a_np_vlans = $networkPort_Vlan->find("`networkports_id`='".$a_port12['id']."'");
          $this->assertEquals(count($a_np_vlans), 1, 'Port Fa0/12 may have only 1 vlan');
 
-         
+
       // ****** Check create unknown device with LLDP informations ******
-         
+
       $switch1 = '<?xml version="1.0" encoding="UTF-8"?>
 <REQUEST>
   <CONTENT>
@@ -483,11 +483,11 @@ Compiled Wed 18-Aug-10 04:40 by prod_rel_team</COMMENTS>
   <DEVICEID>port004.bureau.siprossii.com-2010-12-30-12-24-14</DEVICEID>
   <QUERY>SNMPQUERY</QUERY>
 </REQUEST>';
-         $this->testSendinventory("toto", $switch1); 
+         $this->testSendinventory("toto", $switch1);
          // Check unknown device created with name
          $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
          $pfSNMPUnknownDevice = new PluginFusinvsnmpUnknownDevice();
-         
+
          $a_unknown = $pfUnknownDevice->find("`name`='juniperswitch3'");
          $this->assertEquals(count($a_unknown), 1, 'Unknown device juniperswitch3 not right creatd with LLDP infos');
          $unknown = current($a_unknown);
@@ -497,7 +497,7 @@ Compiled Wed 18-Aug-10 04:40 by prod_rel_team</COMMENTS>
          $this->assertEquals($snmpunknown['sysdescr'],
                              'Juniper Networks, Inc. ex2200-24t-4g , version 10.1R1.8 Build date: 2010-02-12 16:59:31 UTC ',
                              'Sysdescr not reight added in unknown device');
-         
+
 
    }
 
@@ -548,7 +548,7 @@ Compiled Wed 18-Aug-10 04:40 by prod_rel_team</COMMENTS>
       $input_xml = $xml->asXML();
       $code = $emulatorAgent->sendProlog($input_xml);
       echo $code."\n";
-      
+
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
@@ -566,7 +566,7 @@ class Switchinventory_AllTests  {
       $Install = new Install();
       $GLPIInstall->testInstall();
       $Install->testInstall(0);
-      
+
       $suite = new PHPUnit_Framework_TestSuite('Switchinventory');
       return $suite;
    }

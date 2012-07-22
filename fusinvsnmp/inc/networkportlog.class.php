@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -75,7 +75,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       }
     }
 
-   
+
 
    function showForm($id, $options=array()) {
       global $DB;
@@ -193,14 +193,14 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       return true;
    }
 
-   
-   
+
+
    static function cronCleannetworkportlogs() {
       global $DB;
 
       $pfConfigLogField = new PluginFusioninventoryConfigLogField();
       $pfNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
-      
+
       $a_list = $pfConfigLogField->find();
       if (count($a_list)){
          foreach ($a_list as $data){
@@ -229,7 +229,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
    }
 
 
-   
+
    static function addLog($port,$field,$value_old,$value_new,$mapping,$plugin_fusioninventory_agentprocesses_id=0) {
       global $DB;
 
@@ -257,7 +257,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       }
    }
 
-   
+
 
    static function networkport_addLog($port_id, $value_new, $field) {
       $pfNetworkPort = new PluginFusinvsnmpNetworkPort;
@@ -267,7 +267,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
       $db_field = $field;
       switch ($field) {
-         
+
          case 'ifname':
             $db_field = 'name';
             $field = 'ifName';
@@ -316,7 +316,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
    }
 
 
-   
+
    // $status = connection or disconnection
    static function addLogConnection($status,$port,$plugin_fusioninventory_agentprocesses_id=0) {
 
@@ -347,7 +347,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
    }
 
 
-   
+
    // List of history in networking display
    static function showHistory($ID_port) {
       global $DB, $CFG_GLPI;

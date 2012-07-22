@@ -29,29 +29,29 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
 
-if (!defined('GLPI_ROOT')) {   
+if (!defined('GLPI_ROOT')) {
    define('GLPI_ROOT', '../../..');
-   
+
    include_once (GLPI_ROOT . "/inc/autoload.function.php");
    spl_autoload_register('glpi_autoload');
-   
+
    include_once (GLPI_ROOT . "/inc/includes.php");
 
    file_put_contents(GLPI_ROOT."/files/_log/sql-errors.log", '');
    file_put_contents(GLPI_ROOT."/files/_log/php-errors.log", '');
-   
+
    $dir = GLPI_ROOT."/files/_files/_plugins/fusioninventory";
    $objects = scandir($dir);
      foreach ($objects as $object) {
@@ -62,8 +62,8 @@ if (!defined('GLPI_ROOT')) {
          }
        }
      }
-   
-   
+
+
    include_once (GLPI_ROOT . "/inc/timer.class.php");
 
    include_once (GLPI_ROOT . "/inc/common.function.php");
@@ -113,7 +113,7 @@ if (!defined('GLPI_ROOT')) {
       }
 
       // No errors for missing classes due to implementation
-      if (!isset($CFG_GLPI['missingclasses']) 
+      if (!isset($CFG_GLPI['missingclasses'])
               OR !in_array($item,$CFG_GLPI['missingclasses'])){
          if (file_exists("$dir$item.class.php")) {
             include_once ("$dir$item.class.php");
@@ -127,9 +127,9 @@ if (!defined('GLPI_ROOT')) {
             trigger_error("GLPI autoload : file $dir$item.class.php not founded trying to load class '$classname'");
             $notfound["x$classname"] = true;
          }
-      } 
+      }
    }
-      
+
    spl_autoload_register('glpiautoload');
 
    include (GLPI_ROOT . "/config/based_config.php");

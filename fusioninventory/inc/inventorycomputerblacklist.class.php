@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -52,7 +52,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
 
    }
 
-   
+
    function canCreate() {
       return PluginFusioninventoryProfile::haveRight("fusinvinventory", "blacklist", "w");
    }
@@ -62,7 +62,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
       return PluginFusioninventoryProfile::haveRight("fusinvinventory", "blacklist", "r");
    }
 
-   
+
 
    function getSearchOptions() {
 
@@ -89,7 +89,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
    }
 
 
-   
+
    function defineTabs($options=array()){
 
       $pfInventoryComputerCriteria = new PluginFusioninventoryInventoryComputerCriteria();
@@ -161,7 +161,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
 
       $pfInventoryComputerCriteria = new PluginFusioninventoryInventoryComputerCriteria();
       $fields = $pfInventoryComputerCriteria->find("");
-      
+
       foreach($fields as $id=>$data) {
 
          switch($data['comment']) {
@@ -188,7 +188,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
 
             case 'macAddress':
                $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
-               
+
                foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
                   if (isset($xml->CONTENT->NETWORKS)) {
                      foreach($xml->CONTENT->NETWORKS as $network) {
@@ -267,7 +267,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                   }
                }
               break;
-              
+
          }
       }
       // Blacklist mac of "miniport*" for windows because have same mac as principal network ports

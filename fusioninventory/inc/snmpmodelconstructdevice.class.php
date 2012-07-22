@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -117,7 +117,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
    }
 
 
-   
+
    function manageWalks($target, $id) {
       global $DB,$CFG_GLPI;
 
@@ -398,7 +398,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
                      $oid_id_before = $a_oids2[$num];
                      $i = 2;
                   }
-               }              
+               }
             }
             if ($before != '') {
                echo "</td>";
@@ -491,7 +491,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
       echo "</div>";
    }
 
-   
+
 
    function generatemodels() {
       global $DB;
@@ -584,7 +584,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
                $a_input['itemtype'] = $data["type"];
                $a_input['is_active'] = 1;
                $id = $ptmi->add($a_input);
-               
+
                $query_mibs = "SELECT `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`.*,
                   `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`,
                   `glpi_plugin_fusioninventory_mappings`.`itemtype`
@@ -681,7 +681,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
 
    function generateDiscovery() {
       global $DB;
-      
+
       $xmlstr = "<?xml version='1.0' encoding='UTF-8'?>
 <SNMPDISCOVERY>
 </SNMPDISCOVERY>";
@@ -709,7 +709,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
                if ($DB->numrows($result_modelkey)) {
                   $line = mysql_fetch_assoc($result_modelkey);
                   $sxml_device->addAttribute('MODELSNMP', $line['discovery_key']);
-               }               
+               }
 
                $query_serial = "SELECT `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`.*,
                      `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`
@@ -759,7 +759,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
 
    }
 
-   
+
 
    function formatXmlString($sxml) {
       $xml = str_replace("><", ">\n<", $sxml->asXML());
@@ -794,7 +794,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
    }
 
 
-   
+
    function cleanmodels() {
       global $DB;
 
@@ -815,7 +815,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
        }
    }
 
-   
+
 
    function exportmodels() {
       global $DB;
@@ -831,7 +831,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
       }
    }
 
-   
+
 
    function generatecomments() {
       global $DB;
@@ -855,7 +855,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
             SET comment='".$comment."'
             WHERE id='".$model_id."' ";
          $DB->query($query_update);
-      }      
+      }
    }
 }
 

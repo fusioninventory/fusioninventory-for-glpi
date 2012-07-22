@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -54,10 +54,10 @@ if (!isset($_GET['wizz'])) {
       if (isset($_POST['endtask'])) {
          $action = current($_POST['endtask']);
          switch ($action) {
-            
+
             case 'finishdelete':
                if (isset($_SESSION['plugin_fusioninventory_wizard']['ipranges_id'])) {
-                  $nb = countElementsInTable("glpi_plugin_fusioninventory_taskjobs", 
+                  $nb = countElementsInTable("glpi_plugin_fusioninventory_taskjobs",
                           "`definition` LIKE '%\"PluginFusioninventoryIPRange\":\"".$_SESSION['plugin_fusioninventory_wizard']['ipranges_id']."\"%'");
                   if ($nb == 1) {
                      // Delete iprange
@@ -68,7 +68,7 @@ if (!isset($_GET['wizz'])) {
                   $pfTask->delete(array('id'=>$_SESSION['plugin_fusioninventory_wizard']['tasks_id']));
               }
               if (isset($_SESSION['plugin_fusioninventory_wizard']['credentialips_id'])) {
-                  $nb = countElementsInTable("glpi_plugin_fusioninventory_taskjobs", 
+                  $nb = countElementsInTable("glpi_plugin_fusioninventory_taskjobs",
                           "`definition` LIKE '%\"PluginFusioninventoryCredentialIp\":\"".$_SESSION['plugin_fusioninventory_wizard']['credentialips_id']."\"%'");
                   if ($nb == 1) {
                      // Delete iprange
@@ -82,21 +82,21 @@ if (!isset($_GET['wizz'])) {
               $url = str_replace("wizard.form.php", "wizard.php", $url);
               Html::redirect($url);
               break;
-           
+
            case 'finish':
               $url = $_SERVER['PHP_SELF'];
               $url = str_replace("wizard.form.php", "wizard.php", $url);
               Html::redirect($url);
               break;
-           
+
            case 'runagain':
               $url = $_SERVER['HTTP_REFERER'];
               $url = str_replace("w_tasksend", "w_tasksforcerun", $url);
               Html::redirect($url);
               break;
-            
-         }         
-      }      
+
+         }
+      }
       if (isset($_POST['iprange'])
               AND count($_POST['iprange'] > 0)) {
          $ipranges_id = current($_POST['iprange']);
@@ -124,7 +124,7 @@ if (!isset($_GET['wizz'])) {
          }
          $_SESSION['plugin_fusioninventory_wizard']['ipranges_id'] = $ipranges_id;
       }
-      
+
       if (isset($_POST['credentialip'])
               AND count($_POST['credentialip'] > 0)) {
          $credentialips_id = current($_POST['credentialip']);
@@ -134,7 +134,7 @@ if (!isset($_GET['wizz'])) {
             if (!isset($_POST['credential'])
                     OR (isset($_POST['credential'])
                             AND count($_POST['credential']) == '0')) {
-               
+
                Html::redirect($_SERVER['HTTP_REFERER']);
             }
             $credentials_id = current($_POST['credential']);

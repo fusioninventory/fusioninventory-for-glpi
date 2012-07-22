@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2011 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -45,12 +45,12 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusioninventoryRulematchedlog extends CommonDBTM {
-   
-   
+
+
    static function getTypeName($nb=0) {
-      
+
    }
-   
+
    function canCreate() {
       return true;
    }
@@ -59,9 +59,9 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
    function canView() {
       return true;
    }
-   
-   
-   
+
+
+
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
@@ -78,8 +78,8 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       return $array_ret;
    }
 
-   
-   
+
+
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       $pfRulematchedlog = new self();
@@ -94,13 +94,13 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       }
       return true;
    }
-   
-   
-   
-   
+
+
+
+
    function cleanOlddata($items_id, $itemtype) {
       global $DB;
-      
+
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_rulematchedlogs`
             WHERE `items_id` = '".$items_id."'
                AND `itemtype` = '".$itemtype."'
@@ -111,23 +111,23 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
          $this->delete(array('id'=>$data['id']));
       }
    }
-   
-   
-   
+
+
+
    function showForm($items_id, $itemtype) {
-      
+
       $rule = new PluginFusioninventoryRuleImportEquipment();
       $pfAgent = new PluginFusioninventoryAgent();
-      
+
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
-      
+
       echo "<tr>";
       echo "<th colspan='4'>";
       echo _('Rule import logs');
 
       echo "</th>";
       echo "</tr>";
-      
+
       echo "<tr>";
       echo "<th>";
       echo _('Date');
@@ -146,8 +146,8 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
       echo "</th>";
       echo "</tr>";
-      
-      $allData = $this->find("`itemtype`='".$itemtype."' 
+
+      $allData = $this->find("`itemtype`='".$itemtype."'
                               AND `items_id`='".$items_id."'", "`date` DESC");
       foreach ($allData as $data) {
          echo "<tr class='tab_bg_1'>";
@@ -175,26 +175,26 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
          echo "</tr>";
       }
       echo "</table>";
-      
-      
+
+
    }
-   
-   
-   
+
+
+
    function showFormAgent($agents_id) {
-      
+
       $rule = new PluginFusioninventoryRuleImportEquipment();
       $pfAgent = new PluginFusioninventoryAgent();
-      
+
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
-      
+
       echo "<tr>";
       echo "<th colspan='5'>";
       echo _('Rule import logs');
 
       echo "</th>";
       echo "</tr>";
-      
+
       echo "<tr>";
       echo "<th>";
       echo _('Date');
@@ -217,7 +217,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
       echo "</th>";
       echo "</tr>";
-      
+
       $allData = $this->find("`plugin_fusioninventory_agents_id`='".$agents_id."'", "`date` DESC");
       foreach ($allData as $data) {
          echo "<tr class='tab_bg_1'>";
@@ -237,7 +237,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
          echo "<td align='center'>";
          if ($item->getFromDB($data['items_id'])) {
             echo $item->getLink(1);
-         }         
+         }
          echo "</td>";
          echo "<td>";
          $a_methods = PluginFusioninventoryStaticmisc::getmethods();
@@ -251,7 +251,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       }
       echo "</table>";
    }
-   
+
 }
 
 

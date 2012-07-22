@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -45,7 +45,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
-   
+
 
    function showFormList($id, $options=array()) {
       global $DB,$CFG_GLPI,$LANG;
@@ -219,7 +219,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
       }
    }
 
-   
+
 
    function showFormAdd($id, $type_model, $mappings_used) {
       global $CFG_GLPI;
@@ -312,9 +312,9 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
    }
 
 
-   
+
    function deleteMib($item_coche) {
-      
+
       PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
       $size = count($item_coche);
       for ($i = 0; $i < $size; $i++) {
@@ -326,9 +326,9 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
 
 
    function activation($id) {
-      
+
       $mib_networking = new PluginFusioninventorySnmpmodelMib();
-      
+
       $mib_networking->getFromDB($id);
       $data = array();
       $data['id'] = $id;
@@ -342,7 +342,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
    }
 
 
-   
+
    function oidList($p_sxml_node,$p_id) {
       global $DB;
 
@@ -368,14 +368,14 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
                   Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids',$data['plugin_fusioninventory_snmpmodelmiboids_id']),
                   $data['mapping_name'], $data['vlan']);
                break;
-            
+
             case 1:
                $ptc->addWalk($p_sxml_node,
                   $data['mapping_name'],
                   Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids',$data['plugin_fusioninventory_snmpmodelmiboids_id']),
                   $data['mapping_name'], $data['vlan']);
                break;
-            
+
          }
       }
       // oid WALK

@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -104,7 +104,7 @@ class PluginFusioninventoryInventoryComputerImport_Processor extends CommonDBTM 
                                                                    $dataSection['MANUFACTURER'],
                                                                    $_SESSION["plugin_fusinvinventory_entity"]);
       }
-      
+
       $DeviceProcessor = new DeviceProcessor();
       $Processor_id = $DeviceProcessor->import($processor);
 
@@ -117,7 +117,7 @@ class PluginFusioninventoryInventoryComputerImport_Processor extends CommonDBTM 
          $array['computers_id'] = $CompDevice->fields['computers_id'];
          $devID = $CompDevice->update($array);
       } else if ($type == "add") {
-         $array['computers_id'] = $items_id;         
+         $array['computers_id'] = $items_id;
          $array['specificity'] = $specificity;
          if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
             $array['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];

@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -61,7 +61,7 @@ class PluginFusioninventoryStaticmisc {
                          'name'                 => _('Wake On LAN'),
 
                          'use_rest'             => false);
-      
+
       $a_tasks[] =  array('module'         => 'fusioninventory',
                           'method'         => 'inventory',
                           'selection_type' => 'devices',
@@ -69,18 +69,18 @@ class PluginFusioninventoryStaticmisc {
                           'name'           => _('Computer Inventory'),
 
                           'use_rest'       => false);
-                          
+
       $a_tasks[] = array('module'        => 'fusioninventory',
                          'method'         => 'ESX',
                          'selection_type' => 'devices',
                          'name'           => _('VMware host remote inventory'),
 
                          'use_rest'       => true);
-      
+
       return $a_tasks;
    }
 
-   
+
 
    /**
    * Get types of datas available to select for taskjob definition for WakeOnLan method
@@ -109,7 +109,7 @@ class PluginFusioninventoryStaticmisc {
    *
    **/
    static function task_definitionselection_Computer_wakeonlan($title) {
-      
+
       $options = array();
       $options['entity'] = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
@@ -134,7 +134,7 @@ class PluginFusioninventoryStaticmisc {
       foreach ($a_modules as $data) {
          $class = $class= PluginFusioninventoryStaticmisc::getStaticmiscClass($data['directory']);
          if (is_callable(array($class, 'task_methods'))) {
-            $a_methods = array_merge($a_methods, 
+            $a_methods = array_merge($a_methods,
                call_user_func(array($class, 'task_methods')));
          }
       }
@@ -180,8 +180,8 @@ class PluginFusioninventoryStaticmisc {
                    array('profil'  => 'credentialip',
                          'name'    => _('Remote devices to inventory (VMware)')),
 
-          
-          
+
+
                    array('profil'  => 'existantrule',
                          'name'    => _('Existance criteria')),
 
@@ -195,21 +195,21 @@ class PluginFusioninventoryStaticmisc {
                          'name'    => _('VMware host')));
 
    }
-   
-   
-   
+
+
+
    /**
     * Get name of the staticmisc class for a module
     * @param module the module name
-    * 
+    *
     * @return the name of the staticmisc class associated with it
     */
    static function getStaticMiscClass($module) {
       return "Plugin".ucfirst($module)."Staticmisc";
    }
-   
-   
-   
+
+
+
    /**
    * Get types of datas available to select for taskjob definition for ESX method
    *
@@ -220,12 +220,12 @@ class PluginFusioninventoryStaticmisc {
    *   value name of the itemtype
    **/
    static function task_definitiontype_ESX($a_itemtype) {
-      return array ('' => Dropdown::EMPTY_VALUE , 
+      return array ('' => Dropdown::EMPTY_VALUE ,
                     'PluginFusioninventoryCredentialIp' => PluginFusioninventoryCredentialIp::getTypeName());
    }
 
-   
-   
+
+
    /**
    * Get all devices of definition type 'Computer' defined in task_definitiontype_wakeonlan
    *
@@ -237,10 +237,10 @@ class PluginFusioninventoryStaticmisc {
    static function task_definitionselection_PluginFusioninventoryCredentialIp_ESX($title) {
       global $DB;
 
-      $query = "SELECT `a`.`id`, `a`.`name` 
-                FROM `glpi_plugin_fusioninventory_credentialips` as `a` 
-                LEFT JOIN `glpi_plugin_fusioninventory_credentials` as `c` 
-                   ON `c`.`id` = `a`.`plugin_fusioninventory_credentials_id` 
+      $query = "SELECT `a`.`id`, `a`.`name`
+                FROM `glpi_plugin_fusioninventory_credentialips` as `a`
+                LEFT JOIN `glpi_plugin_fusioninventory_credentials` as `c`
+                   ON `c`.`id` = `a`.`plugin_fusioninventory_credentials_id`
                 WHERE `c`.`itemtype`='PluginFusinvinventoryVmwareESX'";
       $query.= getEntitiesRestrictRequest(' AND','a');
       $results = $DB->query($query);
@@ -260,13 +260,13 @@ class PluginFusioninventoryStaticmisc {
    //------------------------------------------ Actions-------------------------------------//
 
    static function task_actiontype_ESX($a_itemtype) {
-      return array ('' => Dropdown::EMPTY_VALUE , 
+      return array ('' => Dropdown::EMPTY_VALUE ,
                     'PluginFusioninventoryAgent' => _('Agents'));
 
    }
 
-   
-   
+
+
    /**
    * Get all devices of definition type 'Computer' defined in task_definitiontype_wakeonlan
    *
@@ -288,13 +288,13 @@ class PluginFusioninventoryStaticmisc {
          $in = " AND `a`.`id` NOT IN (".implode($exceptions,',').")";
       }
 
-      $query = "SELECT `a`.`id`, `a`.`name` 
-                FROM `glpi_plugin_fusioninventory_credentialips` as `a` 
-                LEFT JOIN `glpi_plugin_fusioninventory_credentials` as `c` 
-                   ON `c`.`id` = `a`.`plugin_fusioninventory_credentials_id` 
+      $query = "SELECT `a`.`id`, `a`.`name`
+                FROM `glpi_plugin_fusioninventory_credentialips` as `a`
+                LEFT JOIN `glpi_plugin_fusioninventory_credentials` as `c`
+                   ON `c`.`id` = `a`.`plugin_fusioninventory_credentials_id`
                 WHERE `c`.`itemtype`='PluginFusioninventoryVmwareESX'";
       $query.= getEntitiesRestrictRequest(' AND','glpi_plugin_fusioninventory_credentialips');
-      
+
       $results = $DB->query($query);
       $credentialips = array();
       while ($data = $DB->fetch_array($results)) {
@@ -302,11 +302,11 @@ class PluginFusioninventoryStaticmisc {
       }
       return Dropdown::showFromArray('actionselectiontoadd',$credentialips);
    }
-   
 
-   
+
+
    static function task_actionselection_PluginFusioninventoryAgent_ESX() {
-      
+
       $array = array();
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
       $array1 = $PluginFusioninventoryAgentmodule->getAgentsCanDo(strtoupper("ESX"));
@@ -328,11 +328,11 @@ class PluginFusioninventoryStaticmisc {
     */
    static function task_ESX_getParameters() {
 
-      return array ('periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'ESX', 
+      return array ('periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'ESX',
                     'remote' => PluginFusioninventoryAgentmodule::getUrlForModule('ESX'));
    }
 
-   
+
 }
 
 ?>

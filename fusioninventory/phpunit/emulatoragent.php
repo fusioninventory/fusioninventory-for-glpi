@@ -30,7 +30,7 @@ class emulatorAgent {
          }
          echo "======== received ==========\n";
          print_r($reception);
-         
+
 
       }
    }
@@ -63,7 +63,7 @@ class emulatorAgent {
             echo $zipped;
          }
          return gzuncompress($zipped);
-      }  
+      }
    }
 
 }

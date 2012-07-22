@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -57,8 +57,8 @@ class PluginFusioninventoryInventoryComputerLibhook {
        $_SESSION["plugin_fusinvinventory_userdefined"] = 0;
     }
 
-    
-    
+
+
     /**
     * create a new computer in GLPI (computer create before but populate it here)
     *
@@ -77,7 +77,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
       $input = array();
       $input['id'] = $Computer->fields['id'];
       $input['is_deleted'] = 0;
-      $input['autoupdatesystems_id'] = Dropdown::importExternal('AutoUpdateSystem', 
+      $input['autoupdatesystems_id'] = Dropdown::importExternal('AutoUpdateSystem',
                                                                 'FusionInventory',
                                                                 $_SESSION["plugin_fusinvinventory_entity"]);
       $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
@@ -89,7 +89,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
 
     /**
     * add a new section to the machine in an application
-    * 
+    *
     * @param $data array with section to add
     * @param $idmachine integer id of the GLPI Computer
     *
@@ -99,10 +99,10 @@ class PluginFusioninventoryInventoryComputerLibhook {
     public static function addSections($data, $idmachine) {
 
       PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-addsection", 
+         "pluginFusioninventory-addsection",
          "[".$idmachine."] ".print_r($data, true)
       );
-       
+
       $Computer = new Computer();
 
       $sectionsId = array();
@@ -112,7 +112,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
 
       $input = array();
       $input['items_id'] = $idmachine;
- 
+
       $_SESSION["plugin_fusinvinventory_entity"] = $Computer->fields['entities_id'];
 
       if (!isset($_SESSION["plugin_fusinvinventory_history_add"])) {
@@ -136,10 +136,10 @@ class PluginFusioninventoryInventoryComputerLibhook {
          }
       }
       $pFusinvinventoryComputer = new PluginFusioninventoryInventoryComputerComputer();
-      $a_computerextend = current($pFusinvinventoryComputer->find("`computers_id`='".$idmachine."'", 
+      $a_computerextend = current($pFusinvinventoryComputer->find("`computers_id`='".$idmachine."'",
                                                                   "", 1));
       $inputCext = array();
-      if (!empty($a_computerextend)) {         
+      if (!empty($a_computerextend)) {
          $inputCext['id'] = $a_computerextend['id'];
       } else {
          $inputCext['computers_id'] = $idmachine;
@@ -168,7 +168,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
                      $inputC['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
                                                                             $dataSection['MMANUFACTURER'],
                                                                             $_SESSION["plugin_fusinvinventory_entity"]);
-               
+
                   }
                } else if ((isset($dataSection['BMANUFACTURER']))
                             AND (!empty($dataSection['BMANUFACTURER']))) {
@@ -177,7 +177,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
                      $inputC['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
                                                                             $dataSection['BMANUFACTURER'],
                                                                             $_SESSION["plugin_fusinvinventory_entity"]);
-               
+
                   }
                }
                if (isset($dataSection['SMODEL']) AND $dataSection['SMODEL'] != '') {
@@ -204,7 +204,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
                if ($computer_type != '') {
                   if (!in_array('computertypes_id', $a_lockable)) {
                      $inputC['computertypes_id'] = $computerType->importExternal($computer_type, $_SESSION["plugin_fusinvinventory_entity"]);
-                  } 
+                  }
                } else  if (isset($dataSection['TYPE'])) {
                   if (!in_array('computertypes_id', $a_lockable)) {
                      $inputC['computertypes_id'] = $computerType->importExternal($dataSection['TYPE'], $_SESSION["plugin_fusinvinventory_entity"]);
@@ -214,7 +214,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
                      $inputC['computertypes_id'] = $computerType->importExternal($dataSection['MMODEL'], $_SESSION["plugin_fusinvinventory_entity"]);
                   }
                }
-               
+
                if (isset($dataSection['SKUNUMBER'])) {
                   $pfInventoryComputerLibhook = new PluginFusioninventoryInventoryComputerLibhook();
                   $pfInventoryComputerLibhook->Suppliertag($idmachine, $dataSection['SKUNUMBER']);
@@ -231,7 +231,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
                if (isset($dataSection['BVERSION'])) {
                   $inputCext['bios_version'] = $dataSection['BVERSION'];
                }
-               
+
                if (isset($dataSection['BMANUFACTURER'])) {
                   $inputCext['bios_manufacturers_id'] = Dropdown::importExternal('Manufacturer',
                                                                                  $dataSection['BMANUFACTURER'],
@@ -445,7 +445,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
 
                 // If import computer from GLPI DB
                 $Computer_SoftwareVersion_id = 0;
-              
+
                // Add software name
                // Add version of software
                // link version with computer : glpi_computers_softwareversions
@@ -493,7 +493,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
                   $pfInventoryComputerImport_Peripheral =  new PluginFusioninventoryInventoryComputerImport_Peripheral();
                   $id_peripheral = $pfInventoryComputerImport_Peripheral->AddUpdateItem("add", $idmachine, $dataSection);
                }
-               
+
                if (!isset($id_peripheral)) {
                   $id_peripheral = $j;
                   $j--;
@@ -584,10 +584,10 @@ class PluginFusioninventoryInventoryComputerLibhook {
     }
 
 
-    
+
     /**
     * remove a machine's section in an application
-    * 
+    *
     * @param $idsections array sections with id
     * @param $idmachine integer id of the GLPI Computer
     *
@@ -602,12 +602,12 @@ class PluginFusioninventoryInventoryComputerLibhook {
 
       $_SESSION["plugin_fusinvinventory_history_add"] = true;
       $_SESSION["plugin_fusinvinventory_no_history_add"] = false;
-      
+
       PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-removesection", 
+         "pluginFusioninventory-removesection",
          "[".$idmachine."] ".print_r($idsections, true)
       );
-      
+
         foreach ($idsections as $section) {
             $split = explode("/", $section);
             $sectionName = $split[0];
@@ -691,7 +691,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
                      break;
 
                }
-            }           
+            }
         }
 
         $sectionsId = array();
@@ -734,10 +734,10 @@ class PluginFusioninventoryInventoryComputerLibhook {
          }
       }
       $pFusinvinventoryComputer = new PluginFusioninventoryInventoryComputerComputer();
-      $a_computerextend = current($pFusinvinventoryComputer->find("`computers_id`='".$idmachine."'", 
+      $a_computerextend = current($pFusinvinventoryComputer->find("`computers_id`='".$idmachine."'",
                                                                   "", 1));
       $inputCext = array();
-      if (!empty($a_computerextend)) {         
+      if (!empty($a_computerextend)) {
          $inputCext['id'] = $a_computerextend['id'];
       } else {
          $inputCext['computers_id'] = $idmachine;
@@ -755,7 +755,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
                   $pfInventoryComputerImport_Processor = new PluginFusioninventoryInventoryComputerImport_Processor();
                   $pfInventoryComputerImport_Processor->AddUpdateItem("update", $items_id, $dataSection);
                   break;
-               
+
                case 'DRIVES':
                   $pfInventoryComputerImport_Drive = new PluginFusioninventoryInventoryComputerImport_Drive();
                   $pfInventoryComputerImport_Drive->AddUpdateItem("update", $items_id, $dataSection);
@@ -799,7 +799,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
 
                      if (!in_array('manufacturers_id', $a_lockable)) {
                         $inputC['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
-                                                                               $dataSection['SMANUFACTURER'], 
+                                                                               $dataSection['SMANUFACTURER'],
                                                                                $_SESSION["plugin_fusinvinventory_entity"]);
                      }
                   } else if ((isset($dataSection['MMANUFACTURER']))
@@ -858,7 +858,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
                      $pfInventoryComputerLibhook->Suppliertag($idmachine, $dataSection['SKUNUMBER']);
                   }
                   $Computer->update($inputC);
-                  
+
                   if (isset($dataSection['BDATE'])) {
                      $a_split = explode("/", $dataSection['BDATE']);
                      // 2011-06-29 13:19:48
@@ -888,7 +888,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
                   if (isset($dataSection['KEYVALUE'])
                           AND isset($dataSection['KEYNAME'])
                           AND $dataSection['KEYNAME'] == 'TAG') {
-                          
+
                      $config = new PluginFusioninventoryConfig();
                      if ($config->getValue($_SESSION["plugin_fusinvinventory_moduleid"], 'location', 'inventory') == 1) {
                         $inputC['locations_id'] = Dropdown::importExternal('Location',
@@ -950,7 +950,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
                      }
                   }
                   $Computer->update($inputC);
-                  
+
                   if (isset($dataSection['OSINSTALLDATE'])) {
                      $inputCext['operatingsystem_installationdate'] = $dataSection['OSINSTALLDATE'];
                   }
@@ -960,7 +960,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
                   if (isset($dataSection['WINCOMPANY'])) {
                      $inputCext['wincompany'] = $dataSection['WINCOMPANY'];
                   }
-                  
+
                   if (isset($inputCext['id'])) {
                      $pFusinvinventoryComputer->update($inputCext, $_SESSION["plugin_fusinvinventory_history_add"]);
                   } else {
@@ -1014,7 +1014,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
          }
       }
       $Computer->update($inputC);
-      PluginFusioninventoryToolbox::logIfExtradebug("pluginFusinvinventory-updatesection", 
+      PluginFusioninventoryToolbox::logIfExtradebug("pluginFusinvinventory-updatesection",
                                                    "[".$idmachine."] ".print_r($data, true));
     }
 
@@ -1111,7 +1111,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
        $opt[$i]['glpiItemtype']     = 'Computer';
        $opt[$i]['glpiField']        = 'comment';
 
-       
+
        // ** USERS
        $i++;
        $opt[$i]['xmlSection']       = 'USERS';
@@ -1132,7 +1132,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
        $opt[$i]['xmlSectionChild']  = 'SMANUFACTURER';
        $opt[$i]['glpiItemtype']     = 'Computer';
        $opt[$i]['glpiField']        = 'manufacturers_id';
-   
+
        $i++;
        $opt[$i]['xmlSection']       = 'BIOS';
        $opt[$i]['xmlSectionChild']  = 'SMODEL';
@@ -1177,9 +1177,9 @@ class PluginFusioninventoryInventoryComputerLibhook {
          }
       }
     }
-    
-    
-    
+
+
+
    static function importGroup($value, $entities_id) {
       global $DB;
 
@@ -1202,7 +1202,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
       }
       $line2 = $DB->fetch_array($result2);
       return $line2["id"];
-   }    
+   }
 }
 
 ?>

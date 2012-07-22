@@ -36,7 +36,7 @@
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -51,32 +51,32 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
    public $can_sort=true;
    public $specific_parameters = false;
 
-   
-   
+
+
    function getTitle() {
       return _('Entity rules');
 
    }
 
-   
-   
+
+
    function preProcessPreviewResults($output) {
       return $output;
    }
 
 
-   
+
    function maxActionsCount() {
       // Unlimited
       return 2;
    }
 
-   
-   
+
+
    function executeActions($output,$params) {
 
       PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-entityrules", 
+         "pluginFusioninventory-entityrules",
          "execute action\n"
       );
 
@@ -85,7 +85,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
             switch ($action->fields["action_type"]) {
                case "assign" :
                   PluginFusioninventoryToolbox::logIfExtradebug(
-                     "pluginFusioninventory-entityrules", 
+                     "pluginFusioninventory-entityrules",
                      "value ".$action->fields["value"]."\n"
                   );
                   $output[$action->fields["field"]] = $action->fields["value"];
@@ -95,7 +95,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
                   //Assign entity using the regex's result
                   if ($action->fields["field"] == "_affect_entity_by_tag") {
                      PluginFusioninventoryToolbox::logIfExtradebug(
-                        "pluginFusioninventory-entityrules", 
+                        "pluginFusioninventory-entityrules",
                         "value ".$action->fields["value"]."\n"
                      );
                      //Get the TAG from the regex's results
@@ -116,24 +116,24 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
       return $output;
    }
 
-   
-   
+
+
    function getCriterias() {
-      
+
       $criterias = array ();
 
       $criterias['tag']['field']     = 'name';
       $criterias['tag']['name']      = _('Tag');
 
-      
+
       $criterias['domain']['field']     = 'name';
       $criterias['domain']['name']      = _('Domain');
 
-      
+
       $criterias['subnet']['field']     = 'name';
       $criterias['subnet']['name']      = _('Subnet');
 
-      
+
       $criterias['ip']['field']     = 'name';
       $criterias['ip']['name']      = _('Address')." "._('IP');
 
@@ -141,7 +141,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
       $criterias['name']['field']     = 'name';
       $criterias['name']['name']      = _('Computer's name');
 
-      
+
       $criterias['serial']['field']     = 'name';
       $criterias['serial']['name']      = _('Serial Number');
 
@@ -149,10 +149,10 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
       return $criterias;
    }
 
-   
-   
+
+
    function getActions() {
-      
+
       $actions = array();
       $actions['entities_id']['name']  = _('Entity');
 
@@ -176,7 +176,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
       return $actions;
    }
 
-   
+
 
    function displayAdditionalRuleCondition($condition, $criteria, $name, $value, $test=false) {
       if ($test) {
@@ -199,7 +199,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
          case Rule::PATTERN_DOES_NOT_EXISTS:
             echo Dropdown::showYesNo($name, 1, 0);
             return true;
-            
+
       }
 
       return false;

@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -66,19 +66,19 @@ if (isset($_POST['forcestart'])) {
          SET `execution_id`='".$pFusioninventoryTask->fields['execution_id']."',
             `status`='0'
       WHERE `plugin_fusioninventory_tasks_id`='".$_POST['id']."'";
-   $DB->query($query);   
+   $DB->query($query);
    Html::back();
-   
+
 } else if (isset ($_POST["add"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task","w");
-   
+
    $itens_id = $pft->add($_POST);
    Html::redirect(str_replace("add=1", "", $_SERVER['HTTP_REFERER'])."id=".$itens_id);
 } else if (isset($_POST["delete"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task","w");
 
    $pftj = new PluginFusioninventoryTaskjob();
-   
+
    $a_taskjob = $pftj->find("`plugin_fusioninventory_tasks_id` = '".$_POST['id']."' ");
    foreach ($a_taskjob as $datas) {
       $pftj->delete($datas);

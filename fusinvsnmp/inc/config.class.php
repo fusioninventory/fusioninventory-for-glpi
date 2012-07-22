@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    Vincent Mazzoni
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -59,8 +59,8 @@ class PluginFusinvsnmpConfig extends CommonDBTM {
       $pfConfig->addValues($plugins_id, $insert);
    }
 
-   
-   
+
+
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getType()=='PluginFusioninventoryConfig') {
@@ -73,9 +73,9 @@ class PluginFusinvsnmpConfig extends CommonDBTM {
       }
       return '';
    }
-   
-   
-   
+
+
+
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       if ($item->getType()=='PluginFusioninventoryConfig') {
@@ -86,14 +86,14 @@ class PluginFusinvsnmpConfig extends CommonDBTM {
    }
 
 
-   
-   
+
+
    function putForm($p_post) {
 
       $pfConfig = new PluginFusioninventoryConfig();
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
-      $pfConfig->updateConfigType($plugins_id, 'storagesnmpauth', 
+      $pfConfig->updateConfigType($plugins_id, 'storagesnmpauth',
                                                      $p_post['storagesnmpauth']);
       $pfConfig->updateConfigType($plugins_id, 'threads_netdiscovery',
                                                      $p_post['threads_netdiscovery']);
@@ -101,7 +101,7 @@ class PluginFusinvsnmpConfig extends CommonDBTM {
                                                      $p_post['threads_snmpquery']);
    }
 
-   
+
 
    function showForm($options=array()) {
       global $CFG_GLPI;
@@ -154,7 +154,7 @@ class PluginFusinvsnmpConfig extends CommonDBTM {
 
       $pfNetworkporttype = new PluginFusinvsnmpNetworkporttype();
       $pfNetworkporttype->showNetworkporttype();
-      
+
       return true;
    }
 }

@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -73,7 +73,7 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryCredential');
       Plugin::registerClass('PluginFusioninventoryLock',
               array('addtabon' => array('Computer','Monitor','Printer','NetworkEquipment')));
-              
+
       Plugin::registerClass('PluginFusioninventoryInventoryComputerAntivirus',
                  array('addtabon' => array('Computer')));
       Plugin::registerClass('PluginFusioninventoryInventoryComputerComputer',
@@ -87,23 +87,23 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryInventoryRuleEntityCollection',
                             array('rulecollections_types'=>true));
       Plugin::registerClass('PluginFusioninventoryRulematchedlog',
-              array('addtabon' => array('PluginFusioninventoryAgent', 
+              array('addtabon' => array('PluginFusioninventoryAgent',
                                         'PluginFusioninventoryUnknownDevice',
                                         'Printer',
-                                        'NetworkEquipment')));   
-      
+                                        'NetworkEquipment')));
+
       //Classes for rulesengine
       Plugin::registerClass('PluginFusioninventoryInventoryRuleImport');
       Plugin::registerClass('PluginFusioninventoryInventoryRuleImportCollection',
                             array('rulecollections_types'=>true));
       Plugin::registerClass('PluginFusioninventoryConstructDevice');
 
-   
+
       // ##### 3. get informations of the plugin #####
 
       $a_plugin = plugin_version_fusioninventory();
       $moduleId = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
-      
+
       // ##### 4. Set in session module_id #####
 
       $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = $moduleId;
@@ -118,7 +118,7 @@ function plugin_init_fusioninventory() {
          PluginFusioninventoryProfile::changeprofile($moduleId);
 
       $PLUGIN_HOOKS['add_javascript']['fusioninventory']="script.js";
-      
+
       $PLUGIN_HOOKS['csrf_compliant']['fusioninventory'] = true;
 
       if (isset($_SESSION["glpiID"])) {
@@ -131,7 +131,7 @@ function plugin_init_fusioninventory() {
 
          $PLUGIN_HOOKS['use_massive_action']['fusioninventory']=1;
          $PLUGIN_HOOKS['pre_item_update']['fusioninventory'] = array('Plugin' => 'plugin_pre_item_update_fusioninventory');
-         
+
          $p = array('NetworkPort_NetworkPort'            =>'plugin_item_purge_fusioninventory',
                     'PluginFusioninventoryTask'          => array('PluginFusioninventoryTask',
                                                                   'purgeTask'),
@@ -143,8 +143,8 @@ function plugin_init_fusioninventory() {
 
          $PLUGIN_HOOKS['item_purge']['fusioninventory'] = $p;
 
-         
-         $PLUGIN_HOOKS['item_update']['fusioninventory'] = 
+
+         $PLUGIN_HOOKS['item_update']['fusioninventory'] =
                                  array('Computer'         => 'plugin_item_update_fusioninventory',
                                        'NetworkEquipment' => 'plugin_item_update_fusioninventory',
                                        'Printer'          => 'plugin_item_update_fusioninventory',
@@ -166,7 +166,7 @@ function plugin_init_fusioninventory() {
                OR PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","r")
                OR PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")
                ) {
-            
+
                $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
             }
          }
@@ -186,7 +186,7 @@ function plugin_init_fusioninventory() {
             = 'front/inventoryruleimport.form.php';
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['inventoryruleimport']
             = 'front/inventoryruleimport.php';
-         
+
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['agents'] = 'front/agent.php';
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['fusinvinventory-ruleentity']
@@ -199,7 +199,7 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['fusinvinventory-blacklist']
                         = '../fusioninventory/front/inventorycomputerblacklist.php';
 
-         
+
 
          if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agent","r")) {
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agents","w")) {
@@ -251,34 +251,34 @@ function plugin_init_fusioninventory() {
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['wizard-start']['page']  = '/plugins/fusioninventory/front/wizard.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['iprange']['title'] = 
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['iprange']['title'] =
             _('IP range configuration');
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['iprange']['page']  = 
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['iprange']['page']  =
             '/plugins/fusioninventory/front/iprange.php';
 
          if (PluginFusioninventoryProfile::haveRight("fusioninventory", "iprange","w")) {
-            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['iprange'] = 
+            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['iprange'] =
                '../fusioninventory/front/iprange.form.php?add=1';
-            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['iprange'] = 
+            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['iprange'] =
                '../fusioninventory/front/iprange.php';
          }
 
          if (PluginFusioninventoryCredential::hasAlLeastOneType()) {
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "credential","w")) {
-               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['PluginFusioninventoryCredential'] = 
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['PluginFusioninventoryCredential'] =
                   '../fusioninventory/front/credential.form.php?add=1';
-               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['PluginFusioninventoryCredential'] = 
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['PluginFusioninventoryCredential'] =
                   '../fusioninventory/front/credential.php';
 
             }
 
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "credential","w")) {
-               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['PluginFusioninventoryCredentialIp'] = 
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['PluginFusioninventoryCredentialIp'] =
                   '../fusioninventory/front/credentialip.form.php?add=1';
-               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['PluginFusioninventoryCredentialIp'] = 
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['PluginFusioninventoryCredentialIp'] =
                   '../fusioninventory/front/credentialip.php';
-   
+
             }
          }
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-blacklist']['title'] = _('BlackList');
@@ -303,9 +303,9 @@ function plugin_init_fusioninventory() {
    }
 
    // Check for uninstall
-   if (isset($_GET['id']) 
+   if (isset($_GET['id'])
       && ($_GET['id'] == $moduleId)
-         && (isset($_GET['action']) 
+         && (isset($_GET['action'])
             && $_GET['action'] == 'uninstall')
                && (strstr($_SERVER['HTTP_REFERER'], "front/plugin.php"))) {
 
@@ -344,7 +344,7 @@ function plugin_version_fusioninventory() {
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_fusioninventory_check_prerequisites() {
    global $DB;
-   
+
    if (version_compare(GLPI_VERSION,'0.84','lt') || version_compare(GLPI_VERSION,'0.85','ge')) {
       echo _('Your GLPI version not compatible, require 0.83.3');
 
@@ -357,7 +357,7 @@ function plugin_fusioninventory_check_prerequisites() {
       $DB->query("UPDATE `glpi_plugin_fusioninventory_configs` SET `value`='0.80+1.4' WHERE `type`='version'");
       $DB->query("UPDATE `glpi_plugins` SET `version`='0.80+1.4' WHERE `directory` LIKE 'fusi%'");
    }
-   
+
    return true;
 }
 

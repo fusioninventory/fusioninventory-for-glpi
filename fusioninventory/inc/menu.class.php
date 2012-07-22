@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -82,7 +82,7 @@ class PluginFusioninventoryMenu {
          $a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_task.png";
          $a_menu[1]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/tasksummary.php";
       }
-      
+
       if(PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
          $a_menu[2]['name'] = _('Task management')." (".__s('Normal').")";
          $a_menu[2]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_task.png";
@@ -103,7 +103,7 @@ class PluginFusioninventoryMenu {
 
          $a_menu[4]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryInventoryRuleImport');
       }
-      
+
       if (Session::haveRight("rule_ocs","r")) {
          $a_menu[9]['name'] = _('Ignored import devices');
 
@@ -126,7 +126,7 @@ class PluginFusioninventoryMenu {
          $a_menu[6]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryIPRange');
       }
 
-      if (PluginFusioninventoryCredential::hasAlLeastOneType() 
+      if (PluginFusioninventoryCredential::hasAlLeastOneType()
             && PluginFusioninventoryProfile::haveRight("fusioninventory", "credential", "r")) {
          $a_menu[7]['name'] = _('Authentication for remote devices (VMware)');
 
@@ -134,8 +134,8 @@ class PluginFusioninventoryMenu {
          $a_menu[7]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryCredential');
 
       }
-      
-      if (PluginFusioninventoryCredential::hasAlLeastOneType() 
+
+      if (PluginFusioninventoryCredential::hasAlLeastOneType()
             && PluginFusioninventoryProfile::haveRight("fusioninventory", "credentialip", "r")) {
          $a_menu[8]['name'] = _('Remote devices to inventory (VMware)');
 
@@ -143,7 +143,7 @@ class PluginFusioninventoryMenu {
          $a_menu[8]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryCredentialip');
 
       }
-            
+
       echo "<div align='center' style='z-index: 1;position:absolute;width: 100%; margin: 0 auto;'>";
       echo "<table width='100%'>";
 
@@ -154,11 +154,11 @@ class PluginFusioninventoryMenu {
       echo "<tr>";
       echo "<td>";
       if (!empty($a_menu)) {
-         $width_status = PluginFusioninventoryMenu::htmlMenu("fusioninventory", $a_menu, $type, 
+         $width_status = PluginFusioninventoryMenu::htmlMenu("fusioninventory", $a_menu, $type,
                                                              $width_status);
       }
-      
-      
+
+
       $a_menu = array();
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "importxml", "r")) {
          $a_menu[0]['name'] = _('Import agent XML file');
@@ -188,7 +188,7 @@ class PluginFusioninventoryMenu {
          $a_menu[3]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/inventorycomputerlibintegrity.php";
       }
       if (!empty($a_menu)) {
-         $width_status = PluginFusioninventoryMenu::htmlMenu("Inventory", $a_menu, $type, 
+         $width_status = PluginFusioninventoryMenu::htmlMenu("Inventory", $a_menu, $type,
                                                              $width_status);
       }
 
@@ -199,7 +199,7 @@ class PluginFusioninventoryMenu {
          if (is_callable(array($class, "displayMenu"))) {
             $a_menu = call_user_func(array($class, "displayMenu"));
             if (!empty($a_menu)) {
-               $width_status = PluginFusioninventoryMenu::htmlMenu($datas['directory'], $a_menu, 
+               $width_status = PluginFusioninventoryMenu::htmlMenu($datas['directory'], $a_menu,
                                                                    $type, $width_status);
             }
          }
@@ -215,7 +215,7 @@ class PluginFusioninventoryMenu {
    }
 
 
-   
+
    /**
     * htmlMenu
     *
@@ -233,7 +233,7 @@ class PluginFusioninventoryMenu {
 
       $width = 0;
       $width="230";
- 
+
       if (($width + $width_status) > $width_max) {
          $width_status = 0;
          echo "</td>";

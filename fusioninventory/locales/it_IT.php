@@ -29,7 +29,7 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @comment   Not translate this file, use https://www.transifex.net/projects/p/FusionInventory/
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
@@ -37,7 +37,7 @@
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 

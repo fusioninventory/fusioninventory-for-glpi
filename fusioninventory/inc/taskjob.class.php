@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -49,7 +49,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    *
    **/
    static function getTypeName($nb=0) {
-      
+
       return _('Job');
 
    }
@@ -60,13 +60,13 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       return PluginFusioninventoryProfile::haveRight("fusioninventory", "task", "w");
    }
 
-   
+
    function canView() {
       return PluginFusioninventoryProfile::haveRight("fusioninventory", "task", "r");
    }
 
-   
-   
+
+
    function getSearchOptions() {
 
       $tab = array();
@@ -94,7 +94,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       $tab[4]['datatype']       = 'itemlink';
       $tab[4]['itemlink_type']  = 'PluginFusioninventoryTask';
-      
+
       $tab[5]['table']          = $this->getTable();
       $tab[5]['field']          = 'status';
       $tab[5]['linkfield']      = '';
@@ -110,8 +110,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       return $tab;
    }
 
-   
-   
+
+
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
@@ -120,9 +120,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       }
       return '';
    }
-   
-   
-   
+
+
+
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       if ($item->getID() > 0) {
@@ -141,8 +141,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       }
       return true;
    }
-   
-   
+
+
 
    /**
    * Display form for taskjob
@@ -158,7 +158,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       $pfTask       = new PluginFusioninventoryTask();
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      
+
       $pfTask->getFromDB($_POST['id']);
 
       if ($id!='') {
@@ -202,13 +202,13 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       }
       echo '</th>';
       echo '</tr>';
-      
+
       echo "<tr class='tab_bg_1'>";
       echo "<td height='18'>"._('Name')."&nbsp;:</td>";
       echo "<td align='center'>";
       if ($pfTask->fields["is_advancedmode"] == '0'
               AND $this->fields["name"] == '') {
-      
+
          $this->fields["name"] = $pfTask->fields["name"];
       }
       echo "<input type='text' name='name' size='41' value='".$this->fields["name"]."'/>";
@@ -218,7 +218,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $randmethod = $this->dropdownMethod("method", $this->fields['method']);
       echo "</td>";
       echo "</tr>";
-            
+
       echo "<tr class='tab_bg_1'>";
       echo "<td height='18'>"._('Comments')."&nbsp;:</td>";
       echo "<td align='center'>";
@@ -278,13 +278,13 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "<td rowspan='".$rowspan."' valign='top'>";
       $this->showTaskjobItems('definition', $randmethod, $id);
       echo "</td>";
-      
+
       // ** Actions
       echo "<td rowspan='".$rowspan."' valign='top'>";
       $this->showTaskjobItems('action', $randmethod, $id);
       echo "</td>";
       echo "</tr>";
-      
+
       if ($pfTask->fields["is_advancedmode"] == '1') {
          echo "<tr class='tab_bg_1'>";
          echo "<td>"._('Number of trials')."&nbsp;:</td>";
@@ -292,19 +292,19 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          Dropdown::showInteger("retry_nb", $this->fields["retry_nb"], 0, 30);
          echo "</td>";
          echo "</tr>";
-      
+
          echo "<tr class='tab_bg_1'>";
          echo "<td>"._('Time between 2 trials (in minutes)')."&nbsp;:</td>";
          echo "<td align='center'>";
          Dropdown::showInteger("retry_time", $this->fields["retry_time"], 0, 360);
          echo "</td>";
          echo "</tr>";
-         
+
          echo "<tr>";
          echo "<td colspan='2'></td>";
          echo "</tr>";
       }
-      
+
       echo "<tr>";
       if ($id<=0) {
          echo "<td colspan='4' valign='top' align='center'>";
@@ -320,10 +320,10 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          echo "</td>";
       }
       echo '</tr>';
-      
+
       echo "</table>";
       Html::closeForm();
-      
+
       echo "<script language='javascript'>
          function expandtaskjobform() {
             document.getElementById('taskjobdisplay').style.overflow='visible';
@@ -331,18 +331,18 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             document.getElementById('seemore').style.display = 'none';
          }
       </script>";
-      
+
       return true;
    }
 
 
-   
+
    /*
     * Manage definitions
     *
     * @param $id integer id of the taskjob
     * @param $type string type (definition or action)
-    * 
+    *
     * @return nothing
     */
    function manageDefinitionsActions($id, $type) {
@@ -352,7 +352,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "<form name='".$type."s_form' id='".$type."s_form' method='post' action='";
       echo Toolbox::getItemTypeFormURL(__CLASS__)."'>";
       echo "<table class='tab_cadre_fixe'>";
-      
+
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='4'>";
       if ($type == 'definition') {
@@ -422,8 +422,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       Html::closeForm();
    }
 
-   
-   
+
+
    /**
    * Display methods availables
    *
@@ -487,7 +487,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             }
          }
       }
-      
+
       $rand = Dropdown::showFromArray(ucfirst($myname)."Type", $a_type);
 
       $params=array(ucfirst($myname).'Type'=>'__VALUE__',
@@ -533,13 +533,13 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             $module = $datas['module'];
          }
       }
-      
+
       $rand = '';
       $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($module);
       $iddropdown = '';
       if (is_callable(array($class, "task_".$_POST['name']."selection_".$definitiontype."_".$method))) {
-         $rand = call_user_func(array($class, 
-                                      "task_".$_POST['name']."selection_".$definitiontype."_".$method), 
+         $rand = call_user_func(array($class,
+                                      "task_".$_POST['name']."selection_".$definitiontype."_".$method),
                                 $title);
 
          $iddropdown = "dropdown_".$_POST['name']."selectiontoadd";
@@ -571,7 +571,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    }
 
 
-   
+
    function showList($id, $name) {
       global $DB,$CFG_GLPI;
 
@@ -710,10 +710,10 @@ return namelist;
          }
          echo "</script>";
          echo "<span id='Deleteitem'>&nbsp;</span>";
-      }      
+      }
    }
-   
-   
+
+
 
    /**
    * Display actions type (itemtypes)
@@ -739,7 +739,7 @@ return namelist;
             $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($module);
 
             if (is_callable(array($class, "task_actiontype_".$method))) {
-               $a_actioninitiontype = call_user_func(array($class, "task_actiontype_".$method), 
+               $a_actioninitiontype = call_user_func(array($class, "task_actiontype_".$method),
                                                      $a_actioninitiontype);
             }
          }
@@ -812,11 +812,11 @@ return namelist;
 
 
       Ajax::UpdateItemOnEvent('addAObject', 'show_ActionListEmpty',
-                            $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactionselection.php", 
+                            $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactionselection.php",
                             $params, array("click"));
 
    }
-   
+
 
 
    /**
@@ -843,7 +843,7 @@ return namelist;
       return $array;
    }
 
-   
+
 
    /**
    * Start tasks have scheduled date now
@@ -938,24 +938,24 @@ return namelist;
       $result = $DB->query($query);
       while ($data=$DB->fetch_array($result)) {
          $query2 = "SELECT * FROM `".getTableForItemType("PluginFusioninventoryTaskjobstate")."`
-            LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` 
+            LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs`
                ON `plugin_fusioninventory_taskjobstates_id` = `".getTableForItemType("PluginFusioninventoryTaskjobstate")."`.`id`
             WHERE `plugin_fusioninventory_taskjobs_id`='".$data['id']."'
                   AND `glpi_plugin_fusioninventory_taskjoblogs`.`state`='3'
-                  AND `date`>='".$data['date_scheduled']."' 
+                  AND `date`>='".$data['date_scheduled']."'
             ORDER BY `".getTableForItemType("PluginFusioninventoryTaskjobstate")."`.`uniqid`";
          $result2 = $DB->query($query2);
          $nb_retry = 0;
          $nb_retry = $DB->numrows($result2);
          $date_last = 0;
          while ($data2=$DB->fetch_array($result2)) {
-            $date_last = strtotime($data2['date']);         
+            $date_last = strtotime($data2['date']);
          }
-         
+
          if ($nb_retry > 0) {
             $period = 0;
             $period = $pfTaskjob->periodicityToTimestamp(
-                    $data['periodicity_type'], 
+                    $data['periodicity_type'],
                     $data['periodicity_count']);
 
             if (($date_last + ($data['retry_time'] * 60)) < date('U')) {
@@ -967,7 +967,7 @@ return namelist;
             }
          }
       }
-      
+
       // Start agents must start in push mode
       foreach($_SESSION['glpi_plugin_fusioninventory']['agents'] as $agent_id=>$num) {
          $pfTaskjob->startAgentRemotly($agent_id);
@@ -992,14 +992,14 @@ return namelist;
    **/
    function reinitializeTaskjobs($tasks_id, $disableTimeVerification = 0) {
       global $DB;
-      
+
       $pfTask         = new PluginFusioninventoryTask();
       $pfTaskjob      = new PluginFusioninventoryTaskjob();
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfTaskjoblog   = new PluginFusioninventoryTaskjoblog();
       $query = "SELECT *, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp
             FROM `".$pfTask->getTable()."`
-         WHERE `id`='".$tasks_id."' 
+         WHERE `id`='".$tasks_id."'
          LIMIT 1";
       $result = $DB->query($query);
       $data = $DB->fetch_assoc($result);
@@ -1012,7 +1012,7 @@ return namelist;
          ORDER BY `id` DESC";
       $resultJob = $DB->query($queryJob);
       $nb_taskjobs = $DB->numrows($resultJob);
-      // get only with execution_id (same +1) as task 
+      // get only with execution_id (same +1) as task
       $queryJob = "SELECT * FROM `".$pfTaskjob->getTable()."`
          WHERE `plugin_fusioninventory_tasks_id`='".$tasks_id."'
             AND `execution_id`='".($data['execution_id'] + 1)."'
@@ -1026,7 +1026,7 @@ return namelist;
          $a_taskjobstate = $pfTaskjobstate->find("`plugin_fusioninventory_taskjobs_id`='".$dataJob['id']."'
             AND `uniqid`='".$a_taskjobstateuniq['uniqid']."'");
          $taskjobstatefinished = 0;
-         
+
          foreach ($a_taskjobstate as $statedata) {
             $a_joblog = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$statedata['id']."'
                AND (`state`='2' OR `state`='4' OR `state`='5')");
@@ -1109,7 +1109,7 @@ return namelist;
    **/
    function forceRunningTask($tasks_id) {
       global $DB;
-     
+
       $uniqid = '';
 
       if ($this->reinitializeTaskjobs($tasks_id, 1)) {
@@ -1117,12 +1117,12 @@ return namelist;
          $_SESSION['glpi_plugin_fusioninventory']['agents'] = array();
 
          $query = "SELECT `".$pfTaskjob->getTable()."`.*,
-               `glpi_plugin_fusioninventory_tasks`.`communication`, 
+               `glpi_plugin_fusioninventory_tasks`.`communication`,
                UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp
             FROM ".$pfTaskjob->getTable()."
             LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
             WHERE `is_active`='1'
-               AND `status` = '0' 
+               AND `status` = '0'
                AND `glpi_plugin_fusioninventory_tasks`.`id`='".$tasks_id."'
             ORDER BY `id`";
          $result = $DB->query($query);
@@ -1133,18 +1133,18 @@ return namelist;
                $uniqid = $pfTaskjob->prepareRunTaskjob($data);
             }
          }
-         
+
          foreach($_SESSION['glpi_plugin_fusioninventory']['agents'] as $agent_id=>$num) {
             $pfTaskjob->startAgentRemotly($agent_id);
          }
-         unset($_SESSION['glpi_plugin_fusioninventory']['agents']);         
+         unset($_SESSION['glpi_plugin_fusioninventory']['agents']);
       } else {
          $_SESSION["MESSAGE_AFTER_REDIRECT"] = _('Unable to run task because some jobs is running yet!');
 
       }
       return $uniqid;
    }
-   
+
 
 
    /**
@@ -1223,21 +1223,21 @@ return namelist;
    }
 
 
-   
+
    /**
     * Get current state of the agent
-    * 
+    *
     * @param $items_id integer id of the agent
-    * 
+    *
     * @return string message/state of the agent
-    * 
+    *
     */
    function getRealStateAgent($items_id) {
-      
+
       ini_set('display_errors','On');
       error_reporting(E_ALL | E_STRICT);
       set_error_handler(array('Toolbox','userErrorHandlerDebug'));
-      
+
       ob_start();
       ini_set("allow_url_fopen", "1");
 
@@ -1271,10 +1271,10 @@ return namelist;
       if ($str == '' AND !strstr($error, "failed to open stream: Permission denied")) {
          $ret = "noanswer";
       }
-      
+
       return $ret;
    }
-   
+
 
 
    /**
@@ -1345,7 +1345,7 @@ return namelist;
    *
    **/
    static function errorempty() {
-      
+
    }
 
 
@@ -1366,7 +1366,7 @@ return namelist;
        * * snmpquery
        * * wakeonlan
        * * deploy => software
-       * 
+       *
        */
 
       echo "<div align='center'>";
@@ -1393,7 +1393,7 @@ return namelist;
       $a_parseMethods[''] = "------";
       foreach($a_methods as $data) {
          $class = $class= PluginFusioninventoryStaticmisc::getStaticmiscClass($data['directory']);
-         
+
          if (is_callable(array($class, 'task_action_'.$data['method']))) {
             $a_itemtype = call_user_func(array($class, 'task_action_'.$data['method']));
             if (in_array($itemtype, $a_itemtype)) {
@@ -1423,7 +1423,7 @@ return namelist;
       echo "</table>";
       Html::closeForm();
       echo "</div>";
-      
+
    }
 
 
@@ -1481,7 +1481,7 @@ return namelist;
 
    /**
     * Finish task if have some problem or started for so long time
-    * 
+    *
     * @return nothing
     */
    function CronCheckRunnningJobs() {
@@ -1571,7 +1571,7 @@ return namelist;
                   }
                }
             }
-         }      
+         }
       }
 
       // If taskjob.status = 1 and all taskjobstates are finished, so reinitializeTaskjobs()
@@ -1589,16 +1589,16 @@ return namelist;
    }
 
 
-   
+
    /**
     * Verify if definition or action not deleted
     *
     * @param $items_id integer id of taskjobs
-    * 
-    * @return boolean 
+    *
+    * @return boolean
     */
    function verifyDefinitionActions($items_id) {
-      
+
       $return = true;
       $this->getFromDB($items_id);
       $input = array();
@@ -1645,9 +1645,9 @@ return namelist;
 
    /**
     * Purge taskjoblog/state when delete taskjob
-    * 
-    * @param type $parm 
-    * 
+    *
+    * @param type $parm
+    *
     * @return nothing
     */
    static function purgeTaskjob($parm) {
@@ -1666,8 +1666,8 @@ return namelist;
       }
    }
 
-   
-   
+
+
    /**
     * Force end task
     */
@@ -1689,18 +1689,18 @@ return namelist;
       }
       $this->reinitializeTaskjobs($this->fields['plugin_fusioninventory_tasks_id']);
    }
-   
-   
-   
+
+
+
    /**
     * Get information if allow_url_fopen is activated and display message if not
     *
     * @param $wakecomputer boolean (1 if it's for wakeonlan, 0 if it's for task)
-    * 
-    * @return boolean 
+    *
+    * @return boolean
     */
    static function getAllowurlfopen($wakecomputer=0) {
-      
+
       if (!ini_get('allow_url_fopen')) {
          echo "<center>";
          echo "<table class='tab_cadre' height='30' width='700'>";
@@ -1727,7 +1727,7 @@ return namelist;
     * Display static list of taskjob
     *
     * @param $method value method name of taskjob to display
-    * 
+    *
     */
    static function quickList($method) {
 
@@ -1811,7 +1811,7 @@ return namelist;
 
                } else {
                   $name = $class->getLink(1);
-               }         
+               }
                echo $name.' ('.$itemname.')<br/>';
             }
          }
@@ -1863,7 +1863,7 @@ return namelist;
       foreach ($a_methods as $datas) {
          echo "<input type='hidden' name='method-".$datas['method']."' value='".PluginFusioninventoryModule::getModuleId($datas['module'])."' />";
       }
-      
+
       echo "<tr class='tab_bg_1'>";
       echo "<td>"._('Name')."&nbsp;:</td>";
       echo "<td><input type='text' name='name' value='".$this->fields['name']."' /></td>";
@@ -1945,7 +1945,7 @@ return namelist;
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='2' align='center'>"._('Force start')."</th>";
       echo "</tr>";
-      
+
       if (isset($_SESSION['plugin_fusioninventory_wizard'])
               AND isset($_SESSION['plugin_fusioninventory_wizard']['tasks_id'])) {
          $a_tasksjobs = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$_SESSION['plugin_fusioninventory_wizard']['tasks_id']."'");
@@ -1957,7 +1957,7 @@ return namelist;
          $link  = $link_item;
          $link .= (strpos($link,'?') ? '&amp;':'?').'id=' . $pfTaskjob->fields['id'];
          echo "<td><a href='".$link."'>".$pfTaskjob->getNameID(1)."</a></td>";
-         echo "<tr class='tab_bg_1'>";         
+         echo "<tr class='tab_bg_1'>";
       } else {
          foreach ($a_list as $data) {
             $pfTaskjob->getFromDB($data['id']);
@@ -2011,19 +2011,19 @@ return namelist;
          }
       }
    }
-   
-   
+
+
 
    /**
     * Function used to add item in definition or action of a taskjob
-    *    and hide add form 
+    *    and hide add form
     *    and refresh type list
     *
-    * @param $type value (definition or action) 
+    * @param $type value (definition or action)
     */
    function additemtodefatc($type, $itemtype, $items_id, $taskjobs_id) {
       global $CFG_GLPI;
-      
+
       $this->getFromDB($taskjobs_id);
       $a_type = importArrayFromDB($this->fields[$type]);
       $add = 1;
@@ -2042,7 +2042,7 @@ return namelist;
          $this->update($input);
       }
 
-      //TODO: Clean add form 
+      //TODO: Clean add form
       echo "<script type='text/javascript'>
       //document.getElementById('show_".ucfirst($type)."List').innerHTML='&nbsp';
 
@@ -2058,12 +2058,12 @@ return namelist;
                                 $params);
       echo "</script>";
    }
-   
-   
-   
+
+
+
    function deleteitemtodefatc($type, $a_items_id, $taskjobs_id) {
       global $CFG_GLPI;
-      
+
       $this->getFromDB($taskjobs_id);
       $a_type = importArrayFromDB($this->fields[$type]);
       $split = explode("-", $a_items_id);
@@ -2074,7 +2074,7 @@ return namelist;
       $input['id'] = $this->fields['id'];
       $input[$type] = exportArrayToDB($a_type);
       $this->update($input);
-    
+
       // reload item list
       $params = array();
       $params['taskjobs_id'] = $taskjobs_id;
@@ -2085,19 +2085,19 @@ return namelist;
                                 $params);
       echo "</script>";
    }
-   
-   
-   
+
+
+
    /**
     * Display + button to add definition or action
-    * 
+    *
     * @param $name string name of the action (here definition or action)
-    * 
-    * @return nothing 
+    *
+    * @return nothing
     */
    function plusButton($name) {
       global $CFG_GLPI;
-      
+
       if ($this->canUpdate()) {
          echo "&nbsp;";
          echo "<img onClick=\"Ext.get('".$name."').setDisplayed('block')\"
@@ -2106,11 +2106,11 @@ return namelist;
       }
    }
 
-   
-   
+
+
    function showTaskjobItems($name, $randmethod, $id) {
       global $CFG_GLPI;
-      
+
       echo "<div style='display:none' id='".$name."' >";
       $params = array('method' => '__VALUE__',
                       'rand'      => $randmethod,
@@ -2144,12 +2144,12 @@ return namelist;
       echo "</script>";
       echo "<span id='show".$name."list_'>&nbsp;</span>";
    }
-   
-   
+
+
 
    function prepareRunTaskjob($a_taskjob) {
       $pFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-      
+
       $uniqid = 0;
       if ($pFusioninventoryTaskjob->verifyDefinitionActions($a_taskjob['id'])) {
          // Get module name
@@ -2169,35 +2169,35 @@ return namelist;
          return $uniqid;
       }
    }
-   
-   
-   
+
+
+
    static function functionWizardEnd() {
       global $CFG_GLPI;
-      
-      echo "<form method='post' name='' id=''  action=\"".$CFG_GLPI['root_doc'] . 
+
+      echo "<form method='post' name='' id=''  action=\"".$CFG_GLPI['root_doc'] .
          "/plugins/fusioninventory/front/wizard.form.php\">";
-      
+
       echo "<table class='tab_cadre' width='700'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='2'>"._('Action after finish running task')."</th>";
       echo "</tr>";
-      
+
       echo "<tr class='tab_bg_1'>";
       echo "<td width='10'><input type='radio' name='endtask[]' value='finishdelete' /></td>";
-      echo "<td>"._('Delete this task and finish')."</td>";         
+      echo "<td>"._('Delete this task and finish')."</td>";
       echo "</tr>";
-      
+
       echo "<tr class='tab_bg_1'>";
       echo "<td><input type='radio' name='endtask[]' value='finish' /></td>";
-      echo "<td>"._('Finish')."</td>";         
+      echo "<td>"._('Finish')."</td>";
       echo "</tr>";
-      
+
       echo "<tr class='tab_bg_1'>";
       echo "<td><input type='radio' name='endtask[]' value='runagain' /></td>";
-      echo "<td>"._('Run again this task')."</td>";         
+      echo "<td>"._('Run again this task')."</td>";
       echo "</tr>";
-         
+
       echo "</table>";
    }
 }

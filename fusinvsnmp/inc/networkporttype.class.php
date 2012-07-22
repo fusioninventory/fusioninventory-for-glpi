@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    Vincent Mazzoni
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -47,12 +47,12 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpNetworkporttype extends CommonDBTM {
 
-   
+
    function init() {
       global $DB;
-      
+
       $input = array();
-      
+
       $input['1'] = 'other';
       $input['2'] = 'regular1822';
       $input['3'] = 'hdh1822';
@@ -287,7 +287,7 @@ class PluginFusinvsnmpNetworkporttype extends CommonDBTM {
       $input['232'] = 'macSecUncontrolledIF';
       $input['233'] = 'aviciOpticalEther';
       $input['234'] = 'atmbond';
-      
+
       $install = 1;
       $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkporttypes`
          WHERE `import`='1'";
@@ -295,7 +295,7 @@ class PluginFusinvsnmpNetworkporttype extends CommonDBTM {
       if ($DB->numrows($result) > 0) {
          $install = 0;
       }
-      
+
       foreach ($input as $number=>$name) {
          $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkporttypes`
             WHERE `number`='".$number."'";
@@ -318,20 +318,20 @@ class PluginFusinvsnmpNetworkporttype extends CommonDBTM {
                }
             }
             $queryi = "INSERT INTO `glpi_plugin_fusinvsnmp_networkporttypes`
-               (`id`, `name`, `number`, `othername`, `import`) 
+               (`id`, `name`, `number`, `othername`, `import`)
                VALUES (NULL, '".$name."', '".$number."', '".$name."(".$number.")', '".$import."')";
             $DB->query($queryi);
          }
-      }      
+      }
    }
-   
-   
-   
+
+
+
    function isImportType($type) {
       if (!strstr($type, 'gsn')) {
          $type = str_replace("-", "", $type);
       }
-      
+
       $a_ports = $this->find("(`number`='".$type."'
          OR `name`='".$type."'
          OR `othername`='".$type."')
@@ -341,27 +341,27 @@ class PluginFusinvsnmpNetworkporttype extends CommonDBTM {
       }
       return false;
    }
-   
-   
-   
+
+
+
    function showNetworkporttype() {
 
       $a_notimports = $this->find("`import` = '0'");
       $a_imports = $this->find("`import` = '1'");
-      
+
       echo "<form name='form' method='post' action='".$this->getFormURL()."'>";
-      
+
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='3'>"._('Ports types to import (for network equipments)')."</th>";
       echo "</tr>";
       echo "<tr class='tab_bg_1'>";
-      
+
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "w")) {
 
 
          echo "<td class='right'>";
- 
+
          if (count($a_notimports) > 0) {
             echo "<select name='type_to_add[]' multiple size='5'>";
 
@@ -379,8 +379,8 @@ class PluginFusinvsnmpNetworkporttype extends CommonDBTM {
                   _('Add')." >>'>";
          }
          echo "<br><br>";
-         
-         
+
+
 
          if (count($a_imports)) {
             echo "<input type='submit' class='submit' name='type_delete' value='<< ".
@@ -405,9 +405,9 @@ class PluginFusinvsnmpNetworkporttype extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
       echo "</table>";
-      
+
       Html::closeForm();
-      
+
    }
 }
 

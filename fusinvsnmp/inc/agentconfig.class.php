@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    Vincent Mazzoni
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -59,15 +59,15 @@ class PluginFusinvsnmpAgentconfig extends CommonDBTM {
       return false;
    }
 
-   
+
 
    /**
     * Display SNMP configuration form of an agent
-    * 
+    *
     * @param integer $agents_id id of the agent
     * @param array $options
-    * 
-    * @return boolean true 
+    *
+    * @return boolean true
     */
    function showForm($agents_id, $options=array()) {
 
@@ -102,19 +102,19 @@ class PluginFusinvsnmpAgentconfig extends CommonDBTM {
       Dropdown::showInteger("threads_snmpquery", $this->fields["threads_snmpquery"],1,400);
       echo "</td>";
       echo "</tr>";
-      
+
       $this->showFormButtons($options);
 
       return true;
    }
 
-   
-   
+
+
    /**
     * Load config of an agent
     *
-    * @param integer $agents_id require the agent id 
-    * 
+    * @param integer $agents_id require the agent id
+    *
     * @return nothing data stored in $this
     */
    function loadAgentconfig($agents_id) {

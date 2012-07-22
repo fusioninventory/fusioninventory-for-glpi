@@ -36,7 +36,7 @@
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -46,7 +46,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpPrinterCartridge extends CommonDBTM {
 
-   
+
 
    function showForm($id, $options=array()) {
 

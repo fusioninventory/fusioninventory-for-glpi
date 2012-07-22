@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -62,7 +62,7 @@ class PluginFusioninventoryInventoryComputerImport_Storage extends CommonDBTM {
    function AddUpdateItem($type, $items_id, $dataSection) {
 
       $pfConfig = new PluginFusioninventoryConfig();
-      
+
       $type_tmp = "";
       $drive_idfield = "";
       $DeviceDrive = "";
@@ -190,9 +190,9 @@ class PluginFusioninventoryInventoryComputerImport_Storage extends CommonDBTM {
       $typeDevice = $this->getTypeDrive($sectiondetail);
 
       $CompDevice = new Computer_Device('DeviceDrive');
-      
+
       $CompHardDevice = new Computer_Device('DeviceHardDrive');
-      
+
       if ($typeDevice == "Drive") {
          $items_id = str_replace("d", "", $items_id);
          $CompDevice->getFromDB($items_id);
@@ -219,14 +219,14 @@ class PluginFusioninventoryInventoryComputerImport_Storage extends CommonDBTM {
       }
    }
 
-   
+
 
    /**
    * Get type of the drive
    *
    * @param $data array of the storage
    *
-   * @return "Drive" or "HardDrive" 
+   * @return "Drive" or "HardDrive"
    *
    **/
    function getTypeDrive($data) {
@@ -241,7 +241,7 @@ class PluginFusioninventoryInventoryComputerImport_Storage extends CommonDBTM {
          ((isset($data['NAME'])) AND
               ((preg_match("/rom/i", $data["NAME"])) OR (preg_match("/dvd/i", $data["NAME"]))
                OR (preg_match("/blue.{0,1}ray/i", $data["NAME"]))))) {
-         
+
          return "Drive";
       } else {
          return "HardDrive";

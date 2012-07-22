@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -456,7 +456,7 @@ $XML['Computer'] = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
   <DEVICEID>port004.bureau.siprossii.com-2010-12-30-12-24-14</DEVICEID>
   <QUERY>INVENTORY</QUERY>
 </REQUEST>";
-      
+
 $XML['NetworkEquipment'] = '<?xml version="1.0" encoding="UTF-8"?>
 <REQUEST>
   <CONTENT>
@@ -628,10 +628,10 @@ class Rules extends PHPUnit_Framework_TestCase {
    */
    public function testNoRule() {
       global $DB,$XML,$CFG_GLPI;
-      
+
       $Install = new Install();
       $Install->testInstall(0);
-      
+
       $plugin = new Plugin();
       $plugin->getFromDBbyDir("fusioninventory");
       $plugin->activate($plugin->fields['id']);
@@ -639,12 +639,12 @@ class Rules extends PHPUnit_Framework_TestCase {
       $plugin->getFromDBbyDir("fusinvinventory");
       $plugin->activate($plugin->fields['id']);
       Plugin::load("fusinvinventory");
-      
+
       $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
       Session::loadLanguage("en_GB");
-      
+
      // Disable all rules
-     $query = "UPDATE `glpi_rules` SET `is_active` = '0' 
+     $query = "UPDATE `glpi_rules` SET `is_active` = '0'
         WHERE `sub_type`='PluginFusioninventoryInventoryRuleImport' ";
      $DB->query($query);
 
@@ -655,13 +655,13 @@ class Rules extends PHPUnit_Framework_TestCase {
       $plugins_id = $fields['id'];
       $pfConfig = new PluginFusioninventoryConfig();
       $pfConfig->updateValue($plugins_id, "extradebug", "1");
-      
+
       // Activate all modules for all agents
        $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
          SET `is_active`='1' ";
       $DB->query($query);
-      
-       
+
+
       // ** Import Computer => Computer must be created in Computer type
       $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
       $xml = simplexml_load_string($XML['Computer'],'SimpleXMLElement', LIBXML_NOCDATA);
@@ -678,15 +678,15 @@ class Rules extends PHPUnit_Framework_TestCase {
       $this->assertEquals($computerdata['entities_id'], 0 , 'Problem On computer entity, must be created in root entity instead '.$computerdata['entities_id']);
       $a_unknown = $pfUnknownDevice->find();
       $this->assertEquals(count($a_unknown), 0 , 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device created');
-//      $computer->delete(array('id'=>1), 1);      
-             
+//      $computer->delete(array('id'=>1), 1);
+
       // ** Import networkequipment  => networkequipment must be created in network equipment (SNMP inventory)
-       
+
          // Add task and taskjob
          $pfTask = new PluginFusioninventoryTask();
          $pfTaskjob = new PluginFusioninventoryTaskjob();
          $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-         
+
          $input = array();
          $input['entities_id'] = '0';
          $input['name'] = 'snmpquery';
@@ -707,7 +707,7 @@ class Rules extends PHPUnit_Framework_TestCase {
          $pfTaskjobstate->add($input);
          $input['items_id'] = '2';
          $pfTaskjobstate->add($input);
-         
+
          $this->testSendinventory("toto", $XML['NetworkEquipment'], 0);
          $networkEquipment = new NetworkEquipment();
          $a_switch = $networkEquipment->find("`name`='switch2960-002'");
@@ -717,11 +717,11 @@ class Rules extends PHPUnit_Framework_TestCase {
          $a_unknown = $pfUnknownDevice->find();
          $this->assertEquals(count($a_unknown), 0 , 'Problem import switch (switch2960-002), unknown device created');
 //         $networkEquipment->delete(array('id'=>1), 1);
-      
-       // ** [TODO] Import printer 
 
-          
-         
+       // ** [TODO] Import printer
+
+
+
       // ** Unknowndevice_Computer => Computer must be created in Computer type
       $input = array();
       $input['entities_id'] = '0';
@@ -743,7 +743,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $pfTaskjobstate->add($input);
       $input['items_id'] = '2';
       $pfTaskjobstate->add($input);
-      
+
       $this->testSendinventory("toto", $XML['Unknowndevice_Computer'], 0);
       $a_computer = $computer->find("`name`='Test2'");
       $this->assertEquals(count($a_computer), 1 , 'Problem import discovered Computer (Test2) not right created!');
@@ -752,8 +752,8 @@ class Rules extends PHPUnit_Framework_TestCase {
       $a_unknown = $pfUnknownDevice->find();
       $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered Computer (Test2), unknown device created');
 //      $computer->delete(array('id'=>1), 1);
-       
-      
+
+
       // ** Unknowndevice_NetworkEquipment => NetworkEquipment must be created in NetworkEquipment type
       $this->testSendinventory("toto", $XML['Unknowndevice_NetworkEquipment'], 0);
       $a_networkequipment = $networkEquipment->find("`name`='Procurve 2524'");
@@ -763,7 +763,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $a_unknown = $pfUnknownDevice->find();
       $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered networkequipment (Procurve 2524), unknown device created');
 
-      
+
       // ** Unknowndevice_Printer => Printer must be created in Printer type
       $this->testSendinventory("toto", $XML['Unknowndevice_Printer'], 0);
       $printer = new Printer();
@@ -774,7 +774,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $a_unknown = $pfUnknownDevice->find();
       $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered printer (COPIEUR-1), unknown device created');
 
-      
+
       // ** Unknowndevice_notype => type not defined in discovery created into unknown devices
       $this->testSendinventory("toto", $XML['Unknowndevice_notype'], 0);
       $a_unknown = $pfUnknownDevice->find();
@@ -782,25 +782,25 @@ class Rules extends PHPUnit_Framework_TestCase {
       $unknowndata = current($a_unknown);
       $this->assertEquals($unknowndata['entities_id'], 0 , 'Problem On unknown entity, must be created in root entity instead '.$unknowndata['entities_id']);
       $unknown = current($a_unknown);
-      $pfUnknownDevice->delete($unknown, 1);      
-    
+      $pfUnknownDevice->delete($unknown, 1);
+
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();      
+      $GLPIlog->testPHPlogs();
    }
 
-    
-   
+
+
    /*
     *  Computer: Rule 1/ itemtype is computer
     *                    -> FusionInventory link Assign Link if possible, else create device
-    *            Rule 2/ name is * 
+    *            Rule 2/ name is *
     *                    -> FusionInventory link Assign Link if possible, else create device
     *    => Computer may be created in Computer type and not in unknown device
     */
    public function testImportComputerwithTypeOnly() {
       global $DB,$XML,$CFG_GLPI;
-      
+
       $plugin = new Plugin();
       $plugin->getFromDBbyDir("fusioninventory");
       $plugin->activate($plugin->fields['id']);
@@ -808,7 +808,7 @@ class Rules extends PHPUnit_Framework_TestCase {
 
       $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
       Session::loadLanguage("en_GB");
-      
+
       // Add the rule with criterial only if type = Computer
       $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
@@ -822,7 +822,7 @@ class Rules extends PHPUnit_Framework_TestCase {
          // Add criteria
          $rule = $rulecollection->getRuleClass();
          $rulecriteria = new RuleCriteria(get_class($rule));
-         
+
          $input = array();
          $input['rules_id'] = $rule_id;
          $input['criteria'] = "itemtype";
@@ -838,7 +838,7 @@ class Rules extends PHPUnit_Framework_TestCase {
          $input['field'] = '_fusion';
          $input['value'] = '0';
          $ruleaction->add($input);
-         
+
       // Create rule for import into unknown devices
       $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
@@ -868,7 +868,7 @@ class Rules extends PHPUnit_Framework_TestCase {
          $input['value'] = '0';
          $ruleaction->add($input);
 
-         
+
       // ** Import Computer XML
       $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
       $xml = simplexml_load_string($XML['Computer'],'SimpleXMLElement', LIBXML_NOCDATA);
@@ -883,8 +883,8 @@ class Rules extends PHPUnit_Framework_TestCase {
       $this->assertEquals(count($a_computer), 2 , 'Problem import Computer ('.(string)$xml->DEVICEID.') not right created!');
       $a_unknown = $pfUnknownDevice->find();
       $this->assertEquals(count($a_unknown), 0 , 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device created');
-         
-         
+
+
       // ** Import discovered Computer
       $this->testSendinventory("toto", $XML['Unknowndevice_Computer'], 0);
       $a_computer = $computer->find("`name`='Test2'");
@@ -892,37 +892,37 @@ class Rules extends PHPUnit_Framework_TestCase {
       $a_unknown = $pfUnknownDevice->find();
       $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered Computer (Test2), unknown device created');
 
-      
+
       $rulecollection->delete(array('id'=>$rule_id), 1);
       $rulecollection->delete(array('id'=>$rule2_id), 1);
-      
+
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
-      
+
    }
-   
-   
+
+
 
    /*
     *  Computer: Rule 1/ itemtype is computer
     *                    name exist
     *                    -> FusionInventory link Assign Link if possible, else create device
-    *            Rule 2/ name is * 
+    *            Rule 2/ name is *
     *                    -> FusionInventory link Assign Link if possible, else create device
     *    => Computer may be created in Computer type and not in unknown device
     */
    public function testImportComputerwithTypeAndNameExist() {
       global $DB,$XML,$CFG_GLPI;
-      
+
       $plugin = new Plugin();
       $plugin->getFromDBbyDir("fusioninventory");
       $plugin->activate($plugin->fields['id']);
       Plugin::load("fusioninventory");
-      
+
       $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
       Session::loadLanguage("en_GB");
-      
+
       // Add the rule with criterial only if type = Computer
       $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
@@ -942,7 +942,7 @@ class Rules extends PHPUnit_Framework_TestCase {
          $input['pattern']= 1;
          $input['condition']=8;
          $rulecriteria->add($input);
-         
+
          $input = array();
          $input['rules_id'] = $rule_id;
          $input['criteria'] = "itemtype";
@@ -958,7 +958,7 @@ class Rules extends PHPUnit_Framework_TestCase {
          $input['field'] = '_fusion';
          $input['value'] = '0';
          $ruleaction->add($input);
-         
+
       // Create rule for import into unknown devices
       $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
@@ -987,8 +987,8 @@ class Rules extends PHPUnit_Framework_TestCase {
          $input['field'] = '_fusion';
          $input['value'] = '0';
          $ruleaction->add($input);
-      
-      
+
+
       // ** Import Computer XML (have name)
       $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
       $xml = simplexml_load_string($XML['Computer'],'SimpleXMLElement', LIBXML_NOCDATA);
@@ -1003,8 +1003,8 @@ class Rules extends PHPUnit_Framework_TestCase {
       $this->assertEquals(count($a_computer), 3 , 'Problem import Computer ('.(string)$xml->DEVICEID.') not right created!');
       $a_unknown = $pfUnknownDevice->find();
       $this->assertEquals(count($a_unknown), 0 , 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device created');
-         
-         
+
+
       // ** Import discovered Computer (have name)
       $this->testSendinventory("toto", $XML['Unknowndevice_Computer'], 0);
       $a_computer = $computer->find("`name`='Test2'");
@@ -1012,7 +1012,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $a_unknown = $pfUnknownDevice->find();
       $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered Computer (Test2), unknown device created');
 
-      
+
       // ** Import Computer XML (not have name)
       $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
       $xmltmp = $XML['Computer'];
@@ -1031,8 +1031,8 @@ class Rules extends PHPUnit_Framework_TestCase {
       $this->assertEquals(count($a_computer), 0 , 'Problem import Computer without name have been created into Computer instead unknown');
       $a_unknown = $pfUnknownDevice->find();
       $this->assertEquals(count($a_unknown), 1 , 'Problem import Computer without name , unknown device not created');
-         
-      
+
+
       // ** Import discovered Computer (not have name)
       $xmltmp = $XML['Unknowndevice_Computer'];
       $xmltmp = str_replace(">Test2<", "><", $xmltmp);
@@ -1044,42 +1044,42 @@ class Rules extends PHPUnit_Framework_TestCase {
       $a_unknown = $pfUnknownDevice->find();
       $this->assertEquals(count($a_unknown), 2 , 'Problem import discovered Computer without name, unknown device not created');
 
-            
+
       $input = array();
       $input['is_active']=0;
       $input['id'] = $rule_id;
       $rulecollection->update($input);
       $input['id'] = $rule2_id;
       $rulecollection->update($input);
-      
+
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
    }
-    
 
-    
+
+
    /*
-    *  Computer (computer created into GLPI with good name: 
+    *  Computer (computer created into GLPI with good name:
     *            Rule 1/ itemtype is computer
     *                    name exits
     *                    name is present in GLPI
     *                    -> FusionInventory link Assign Link if possible, else create device
-    *            Rule 2/ name is * 
+    *            Rule 2/ name is *
     *                    -> FusionInventory link Assign Link if possible, else create device
     *    => Computer may be created in Computer type and not in unknown device
     */
    public function testImportComputerwithTypeAndNameExistNamePresent() {
       global $DB,$XML,$CFG_GLPI;
-      
+
       $plugin = new Plugin();
       $plugin->getFromDBbyDir("fusioninventory");
       $plugin->activate($plugin->fields['id']);
       Plugin::load("fusioninventory");
-      
+
       $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
       Session::loadLanguage("en_GB");
-      
+
       // Add the rule with criterial only if type = Computer
       $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
@@ -1106,7 +1106,7 @@ class Rules extends PHPUnit_Framework_TestCase {
          $input['pattern']= 1;
          $input['condition']=8;
          $rulecriteria->add($input);
-         
+
          $input = array();
          $input['rules_id'] = $rule_id;
          $input['criteria'] = "itemtype";
@@ -1122,7 +1122,7 @@ class Rules extends PHPUnit_Framework_TestCase {
          $input['field'] = '_fusion';
          $input['value'] = '0';
          $ruleaction->add($input);
-         
+
       // Create rule for import into unknown devices
       $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
@@ -1151,13 +1151,13 @@ class Rules extends PHPUnit_Framework_TestCase {
          $input['field'] = '_fusion';
          $input['value'] = '0';
          $ruleaction->add($input);
-      
-      
-         
+
+
+
       // ** Import Computer XML (have name and exist in DB)
       $computer = new Computer();
       $computer->delete(array('id'=>3), 1);
-      $computer->delete(array('id'=>5), 1); 
+      $computer->delete(array('id'=>5), 1);
       $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
       $pfUnknownDevice->delete(array('id'=>2), 1);
       $pfUnknownDevice->delete(array('id'=>3), 1);
@@ -1172,9 +1172,9 @@ class Rules extends PHPUnit_Framework_TestCase {
       $this->assertEquals(count($a_computer), 1 , 'Problem import Computer ('.(string)$xml->DEVICEID.') not right created!');
       $a_unknown = $pfUnknownDevice->find();
       $this->assertEquals(count($a_unknown), 0 , 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device created');
-         
-         
-         
+
+
+
       // ** Import discovered Computer (have name and exist in DB)
       $computer->delete(array('id'=>4), 1);
       $computer->delete(array('id'=>6), 1);
@@ -1184,10 +1184,10 @@ class Rules extends PHPUnit_Framework_TestCase {
       $a_unknown = $pfUnknownDevice->find();
       $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered Computer (Test2), unknown device created');
 
-         
+
       // ** Import Computer XML (have name but not exist in DB)
       $computer = new Computer();
-      $computer->delete(array('id'=>1), 1); 
+      $computer->delete(array('id'=>1), 1);
       $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
       $pfUnknownDevice->delete(array('id'=>2), 1);
       $pfUnknownDevice->delete(array('id'=>3), 1);
@@ -1202,8 +1202,8 @@ class Rules extends PHPUnit_Framework_TestCase {
       $this->assertEquals(count($a_computer), 0 , 'Problem import Computer ('.(string)$xml->DEVICEID.') is created!');
       $a_unknown = $pfUnknownDevice->find();
       $this->assertEquals(count($a_unknown), 1 , 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device not created');
-         
-         
+
+
       // ** Import discovered Computer (have name but not exist in DB)
       $computer->delete(array('id'=>2), 1);
       $this->testSendinventory("toto", $XML['Unknowndevice_Computer'], 0);
@@ -1212,7 +1212,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $a_unknown = $pfUnknownDevice->find("`name`='Test2'");
       $this->assertEquals(count($a_unknown), 1 , 'Problem import discovered Computer (Test2), unknown device not created');
 
-         
+
       // ** Import Computer XML (not have name)
       $computer->delete(array('id'=>7), 1);
       $computer->delete(array('id'=>8), 1);
@@ -1231,76 +1231,76 @@ class Rules extends PHPUnit_Framework_TestCase {
       $this->assertEquals(count($a_computer), 0 , 'Problem import Computer without name have been created into Computer instead unknown');
       $a_unknown = $pfUnknownDevice->find("`serial`='XA201220H'");
       $this->assertEquals(count($a_unknown), 2 , 'Problem import Computer without name , unknown device not created');
-         
-                  
+
+
       $input = array();
       $input['is_active']=0;
       $input['id'] = $rule_id;
       $rulecollection->update($input);
       $input['id'] = $rule2_id;
       $rulecollection->update($input);
-         
+
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
    }
 
-   
-   
+
+
    public function testImportComputerCheckrulevalidationlocal_and_globalcriteria() {
       global $DB,$XML,$CFG_GLPI;
-      
+
       $plugin = new Plugin();
       $plugin->getFromDBbyDir("fusioninventory");
       $plugin->activate($plugin->fields['id']);
       Plugin::load("fusioninventory");
-      
+
       $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
       Session::loadLanguage("en_GB");
-      
+
       // Create computer only with serial and name;
       $computer = new Computer();
       $input = array();
       $input['name'] = "port004";
       $input['serial'] = "XA201220H";
-      $input['entities_id'] = 0; 
+      $input['entities_id'] = 0;
       $computer->add($input);
-      
+
       // Activation of rules
       $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
          // Computer serial + uuid
          $input = array();
          $input['is_active']=1;
-         $input['id']=6; 
+         $input['id']=6;
          $rule_id = $rulecollection->update($input);
-         
+
          // Computer serial
          $input = array();
          $input['is_active']=1;
-         $input['id']=7; 
+         $input['id']=7;
          $rule_id = $rulecollection->update($input);
-      
+
          // Computer name
          $input = array();
          $input['is_active']=1;
-         $input['id']=10; 
+         $input['id']=10;
          $rule_id = $rulecollection->update($input);
-         
+
       $emulatorAgent = new emulatorAgent;
       $emulatorAgent->server_urlpath = "/fusion0.84/plugins/fusioninventory/";
       $prologXML = $emulatorAgent->sendProlog($XML['Computer']);
       $a_computers = $computer->find("`serial`='XA201220H'");
-      $this->assertEquals(count($a_computers), 1 , 'Problem on global criteria of rules, 
+      $this->assertEquals(count($a_computers), 1 , 'Problem on global criteria of rules,
          these criteria must be valided to valid the rule (Computer serial + UUID)!\n
          Return code on send inventory : '.$prologXML);
-         
+
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
    }
-    
-     
-     
+
+
+
    function testSendinventory($xmlFile='', $xmlstring='', $create='0') {
 
       if (empty($xmlFile)) {
@@ -1349,13 +1349,13 @@ class Rules extends PHPUnit_Framework_TestCase {
       $input_xml = $xml->asXML();
       $code = $emulatorAgent->sendProlog($input_xml);
       echo $code."\n";
-      
+
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
    }
-   
-   
+
+
 }
 
 
@@ -1363,12 +1363,12 @@ class Rules extends PHPUnit_Framework_TestCase {
 class Rules_AllTests  {
 
    public static function suite() {
-      
+
       $GLPIInstall = new GLPIInstall();
       $Install = new Install();
       $GLPIInstall->testInstall();
       $Install->testInstall(0);
-      
+
       $suite = new PHPUnit_Framework_TestSuite('Rules');
       return $suite;
    }

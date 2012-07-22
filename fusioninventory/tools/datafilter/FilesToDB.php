@@ -70,7 +70,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_pcidevices` (
 
    $sql_insert_device .= ";";
    $sql_insert_device = str_replace(",;", ";\n", $sql_insert_device);
-   
+
    file_put_contents("../../install/mysql/pciid.sql", utf8_encode($sql_creation.$sql_insert_vendor."\n\n".$sql_insert_device));
 }
 

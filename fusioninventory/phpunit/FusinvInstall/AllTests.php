@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -53,17 +53,17 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
 
    public function testDB($pluginname='') {
       global $DB;
-       
+
       if ($pluginname == '') {
          return;
       }
-      
+
        $comparaisonSQLFile = "plugin_".$pluginname."-0.84+1.0-empty.sql";
        // See http://joefreeman.co.uk/blog/2009/07/php-script-to-compare-mysql-database-schemas/
-       
+
        $file_content = file_get_contents("../../".$pluginname."/install/mysql/".$comparaisonSQLFile);
        $a_lines = explode("\n", $file_content);
-       
+
        $a_tables_ref = array();
        $current_table = '';
        foreach ($a_lines as $line) {
@@ -89,7 +89,7 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
        if (isset($a_tables_ref['glpi_plugin_fusinvdeploy_taskjobs'])) {
           unset($a_tables_ref['glpi_plugin_fusinvdeploy_taskjobs']);
        }
-       
+
       // * Get tables from MySQL
       $a_tables_db = array();
       $a_tables = array();
@@ -111,7 +111,7 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
             $a_tables[] = $data[0];
          }
       }
-      
+
       foreach($a_tables as $table) {
          $query = "SHOW COLUMNS FROM ".$table;
          $result = $DB->query($query);
@@ -139,7 +139,7 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
                        AND $data['Null'] == 'YES'
                        AND $data['Default'] == '') {
                   $construct .= ' DEFAULT NULL';
-               } else {               
+               } else {
                   if ($data['Null'] == 'YES') {
                      $construct .= ' NULL';
                   } else {
@@ -155,17 +155,17 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
                }
             }
             $a_tables_db[$table][$data['Field']] = $construct;
-         }         
+         }
       }
-      
+
        // Compare
       $tables_toremove = array_diff_assoc($a_tables_db, $a_tables_ref);
       $tables_toadd = array_diff_assoc($a_tables_ref, $a_tables_db);
-       
+
       // See tables missing or to delete
       $this->assertEquals(count($tables_toadd), 0, 'Tables missing '.print_r($tables_toadd, true));
       $this->assertEquals(count($tables_toremove), 0, 'Tables to delete '.print_r($tables_toremove, true));
-      
+
       // See if fields are same
       foreach ($a_tables_db as $table=>$data) {
          if (isset($a_tables_ref[$table])) {
@@ -174,33 +174,33 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
             $diff = "======= DB ============== Ref =======> ".$table."\n";
             $diff .= print_r($data, true);
             $diff .= print_r($a_tables_ref[$table], true);
-            
+
             // See tables missing or to delete
             $this->assertEquals(count($fields_toadd), 0, 'Fields missing/not good in '.$table.' '.print_r($fields_toadd, true)." into ".$diff);
             $this->assertEquals(count($fields_toremove), 0, 'Fields to delete in '.$table.' '.print_r($fields_toremove, true)." into ".$diff);
-            
-         }         
+
+         }
       }
-      
+
       /*
        * Check if all modules registered
        */
-      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` 
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules`
          WHERE `modulename`='WAKEONLAN'";
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, 'WAKEONLAN module not registered');
-      
-      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` 
+
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules`
          WHERE `modulename`='INVENTORY'";
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, 'INVENTORY module not registered');
-      
-      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` 
+
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules`
          WHERE `modulename`='ESX'";
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, 'ESX module not registered');
-      
-      $query = "SELECT `url` FROM `glpi_plugin_fusioninventory_agentmodules` 
+
+      $query = "SELECT `url` FROM `glpi_plugin_fusioninventory_agentmodules`
          WHERE `modulename`='ESX'";
       $result = $DB->query($query);
       while ($data=$DB->fetch_array($result)) {
@@ -212,23 +212,23 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
          }
          $this->assertEquals($url, 1, 'ESX module url not right');
       }
-      
-      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` 
+
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules`
          WHERE `modulename`='SNMPQUERY'";
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, 'SNMPQUERY module not registered');
-      
-      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` 
+
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules`
          WHERE `modulename`='NETDISCOVERY'";
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, 'NETDISCOVERY module not registered');
-      
-//      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` 
+
+//      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules`
 //         WHERE `modulename`='DEPLOY'";
 //      $result = $DB->query($query);
 //      $this->assertEquals($DB->numrows($result), 1, 'DEPLOY module not registered');
-      
-      
+
+
       /*
        * Verify in taskjob definition PluginFusinvsnmpIPRange not exist
        */
@@ -241,19 +241,19 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
          }
          $this->assertEquals($snmprangeip, 0, 'Have some "PluginFusinvsnmpIPRange" items in taskjob definition');
       }
-      
+
       /*
        * Verify cron created
        */
       $crontask = new CronTask();
-      $this->assertTrue($crontask->getFromDBbyName('PluginFusioninventoryTaskjob', 'taskscheduler'), 
+      $this->assertTrue($crontask->getFromDBbyName('PluginFusioninventoryTaskjob', 'taskscheduler'),
               'Cron taskscheduler not created');
-      $this->assertTrue($crontask->getFromDBbyName('PluginFusioninventoryTaskjobstate', 'cleantaskjob'), 
+      $this->assertTrue($crontask->getFromDBbyName('PluginFusioninventoryTaskjobstate', 'cleantaskjob'),
               'Cron cleantaskjob not created');
-      $this->assertTrue($crontask->getFromDBbyName('PluginFusinvsnmpNetworkPortLog', 'cleannetworkportlogs'), 
+      $this->assertTrue($crontask->getFromDBbyName('PluginFusinvsnmpNetworkPortLog', 'cleannetworkportlogs'),
               'Cron cleannetworkportlogs not created');
-      
-      
+
+
       /*
        * Verify config fields added
        */
@@ -264,76 +264,76 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
          $fields = current($data);
          $plugins_id = $fields['id'];
       }
-      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs` 
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs`
          WHERE `plugins_id`='".$plugins_id."'
             AND `type`='ssl_only'";
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, "type 'ssl_only' not added in config for plugins ".$plugins_id);
 
-      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs` 
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs`
          WHERE `plugins_id`='".$plugins_id."'
             AND `type`='delete_task'";
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, "type 'delete_task' not added in config");
-      
-      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs` 
+
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs`
          WHERE `plugins_id`='".$plugins_id."'
             AND `type`='inventory_frequence'";
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, "type 'inventory_frequence' not added in config");
- 
-      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs` 
+
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs`
          WHERE `plugins_id`='".$plugins_id."'
             AND `type`='agent_port'";
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, "type 'agent_port' not added in config");
- 
-      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs` 
+
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs`
          WHERE `plugins_id`='".$plugins_id."'
             AND `type`='extradebug'";
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, "type 'extradebug' not added in config");
- 
-      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs` 
+
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs`
          WHERE `plugins_id`='".$plugins_id."'
             AND `type`='users_id'";
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, "type 'users_id' not added in config");
 
-      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs` 
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs`
          WHERE `plugins_id`='".$plugins_id."'
             AND `type`='version'";
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, "type 'version' not added in config");
 
-      
-      
+
+
       // TODO : test glpi_displaypreferences, rules, bookmark...
 
-      
+
       if ($pluginname == 'fusinvsnmp') {
-         
+
       /*
        * Verify SNMP models have a right itemtype
-       */         
+       */
       $query = "SELECT * FROM `glpi_plugin_fusioninventory_snmpmodels`
          WHERE `itemtype` NOT IN('Computer','NetworkEquipment', 'Printer')";
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 0, "SNMP models have invalid itemtype");
-         
-      
+
+
       /*
        * Verify SNMP models not in double
        */
-      $query = "SELECT count(*) as cnt, `name` FROM `glpi_plugin_fusioninventory_snmpmodels` 
-         GROUP BY `name` 
+      $query = "SELECT count(*) as cnt, `name` FROM `glpi_plugin_fusioninventory_snmpmodels`
+         GROUP BY `name`
          HAVING cnt >1";
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 0, "SNMP models are in double (name of models)");
-         
-         
+
+
       }
-      
+
    }
 }
 

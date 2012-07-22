@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -74,9 +74,9 @@ class PluginFusioninventoryInventoryComputerImport_Networkport extends CommonDBT
               "component_networkcardvirtual", 'inventory') == '0') {
          if (isset($dataSection['VIRTUALDEV'])
                  AND $dataSection['VIRTUALDEV']=='1') {
-            
+
             return "";
-         }         
+         }
       }
 
       $NetworkPort = new NetworkPort();
@@ -103,7 +103,7 @@ class PluginFusioninventoryInventoryComputerImport_Networkport extends CommonDBT
       }
       if (isset($dataSection["TYPE"])) {
          $a_NetworkPort["networkinterfaces_id"]
-                     = Dropdown::importExternal('NetworkInterface', 
+                     = Dropdown::importExternal('NetworkInterface',
                                                 $dataSection["TYPE"],
                                                 $_SESSION["plugin_fusinvinventory_entity"]);
       }

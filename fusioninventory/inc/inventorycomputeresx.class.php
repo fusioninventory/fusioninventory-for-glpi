@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    Walid Nouh
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -49,9 +49,9 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
    /**
     * Get all devices and put in taskjobstate each task for
     * each device for each agent
-    * 
+    *
     * @param type $taskjobs_id id of taskjob esx
-    * 
+    *
     * @return uniqid value
     */
    function prepareRun($taskjobs_id) {
@@ -60,14 +60,14 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
       $job        = new PluginFusioninventoryTaskjob();
       $joblog     = new PluginFusioninventoryTaskjoblog();
       $jobstate  = new PluginFusioninventoryTaskjobstate();
-   
+
       $uniqid= uniqid();
-   
+
       $job->getFromDB($taskjobs_id);
       $task->getFromDB($job->fields['plugin_fusioninventory_tasks_id']);
-   
+
       $communication= $task->fields['communication'];
-   
+
       //list all agents
       $agent_actions     = importArrayFromDB($job->fields['action']);
       $task_definitions  = importArrayFromDB($job->fields['definition']);
@@ -108,10 +108,10 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
                $a_input['date']  = date("Y-m-d H:i:s");
                $joblog->add($a_input);
 
-               $jobstate->changeStatusFinish($jobstates_id, 
-                                              0, 
-                                              'PluginFusioninventoryInventoryComputerESX', 
-                                              1, 
+               $jobstate->changeStatusFinish($jobstates_id,
+                                              0,
+                                              'PluginFusioninventoryInventoryComputerESX',
+                                              1,
                                               "Unable to find agent to run this job");
             }
          }
@@ -123,7 +123,7 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
                if ($communication == "push") {
                   $_SESSION['glpi_plugin_fusioninventory']['agents'][$items_id] = 1;
                }
-               
+
                foreach ($task_definitions as $task_definition) {
                   foreach ($task_definition as $task_itemtype => $task_items_id) {
                      $a_input = array();
@@ -138,27 +138,27 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
                      //Add log of taskjob
                      $a_input['plugin_fusioninventory_taskjobstates_id'] = $jobstates_id;
                      $a_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
-      
+
                      $joblog->add($a_input);
                      unset($a_input['state']);
                   }
                }
             }
          }
-   
+
          $job->fields['status']= 1;
          $job->update($job->fields);
       }
       return $uniqid;
    }
-   
+
 
 
    /**
     * Get ESX jobs for this agent
-    * 
+    *
     * @param type $device_id deviceid of the agent runing and want job info to run
-    * 
+    *
     * @return $response array
     */
    function run($a_Taskjobstates, $response) {
@@ -167,7 +167,7 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $credential    = new PluginFusioninventoryCredential();
       $credentialip  = new PluginFusioninventoryCredentialIp();
-      
+
       foreach ($a_Taskjobstates as $taskjobstatedatas) {
          $credentialip->getFromDB($taskjobstatedatas['items_id']);
          $credential->getFromDB($credentialip->fields['plugin_fusioninventory_credentials_id']);
@@ -177,7 +177,7 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
          $responsetmp['user']        = $credential->fields['username'];
          $responsetmp['password']    = $credential->fields['password'];
          $response['jobs'][] = $responsetmp;
-         
+
          $pfTaskjobstate->changeStatus($taskjobstatedatas['id'], 1);
          $pfTaskjoblog->addTaskjoblog($taskjobstatedatas['id'],
                                  '0',

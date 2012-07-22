@@ -36,7 +36,7 @@
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -58,7 +58,7 @@ include_once(GLPI_ROOT."/inc/includes.php");
 if (!isset($_SESSION['glpilanguage'])) {
    $_SESSION['glpilanguage'] = 'fr_FR';
 }
-   
+
 ini_set('display_errors','On');
 error_reporting(E_ALL | E_STRICT);
 set_error_handler(array('Toolbox','userErrorHandlerDebug'));

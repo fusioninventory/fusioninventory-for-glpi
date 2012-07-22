@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -85,7 +85,7 @@ class PluginFusioninventoryInventoryComputerImport_Controller extends CommonDBTM
       if ((isset($dataSection['MANUFACTURER']))
               AND (!empty($dataSection['MANUFACTURER']))
               AND (!preg_match("/^\((.*)\)$/", $dataSection['MANUFACTURER'])) ) {
-         
+
          $controller['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
                                                                      $dataSection['MANUFACTURER'],
                                                                      $_SESSION["plugin_fusinvinventory_entity"]);
@@ -107,7 +107,7 @@ class PluginFusioninventoryInventoryComputerImport_Controller extends CommonDBTM
             }
             $devID = $CompDevice->add($computer_controller);
          }
-         return $devID;         
+         return $devID;
       }
       return "";
    }

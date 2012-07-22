@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -49,14 +49,14 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
    function getSearchOptions() {
 
       $tab = array();
-    
+
       $tab['common'] = _('History meter printer');
 
 
       $tab[1]['table'] = $this->getTable();
       $tab[1]['field'] = 'id';
       $tab[1]['name'] = 'id';
-      
+
       $tab[2]['table'] = "glpi_printers";
       $tab[2]['field'] = 'name';
       $tab[2]['linkfield'] = 'printers_id';
@@ -65,8 +65,8 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       $tab[2]['datatype'] = 'itemlink';
       $tab[2]['itemlink_type']  = 'Printer';
 //      $tab[2]['forcegroupby'] = true;
-      
-      
+
+
 //      $tab[1]['table'] = "glpi_printers";
 //      $tab[1]['field'] = 'name';
 //      $tab[1]['linkfield'] = 'printers_id';
@@ -75,7 +75,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 //      $tab[1]['datatype'] = 'itemlink';
 //      $tab[1]['itemlink_type']  = 'Printer';
 //      $tab[1]['forcegroupby'] = true;
-      
+
       $tab[24]['table'] = 'glpi_locations';
       $tab[24]['field'] = 'name';
       $tab[24]['linkfield'] = 'locations_id';
@@ -221,7 +221,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 
    function countAllEntries($id) {
       global $DB;
-      
+
       $num = 0;
       $query = "SELECT count(DISTINCT `id`)
                 FROM ".$this->getTable()."
@@ -241,7 +241,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
    /* Gets history (and the number of entries) of one printer */
    function getEntries($id, $begin, $limit) {
       global $DB;
-      
+
       $datas=array();
       $query = "SELECT *
                 FROM ".$this->getTable()."
@@ -259,12 +259,12 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       }
       return false;
    }
-   
 
-   
+
+
    function stats($id) {
       global $DB;
-      
+
       $query = "SELECT MIN(`date`) AS `min_date`, MIN(`pages`) AS `min_pages`, ".
                   "MAX(`date`) AS `max_date`, MAX(`pages`) AS `max_pages`
                 FROM ".$this->getTable()."
@@ -287,37 +287,37 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 
 
    function showForm($id, $options=array()) {
-      
+
       if (!PluginFusioninventoryProfile::haveRight("fusinvsnmp", "printer","r")) {
          return false;
       }
-      
+
       // display stats
       $stats = $this->stats($id);
       if ($stats) {
          $this->showTabs($options);
          $this->showFormHeader($options);
-         
+
          echo "<tr class='tab_bg_1'>";
          echo "<td>"._('Total printed pages')." : </td>";
          echo "<td>".$stats["num_pages"]."</td></tr>";
-         
+
          echo "<tr class='tab_bg_1'>";
          echo "<td>"._('Pages / day')." : </td>";
          echo "<td>".$stats["pages_per_day"]."</td></tr>";
-         
+
          echo "</table></div>";
-      
+
       }
-      
+
       // preparing to display history
       if (!isset($_GET['start'])) {
          $_GET['start'] = 0;
       }
-      
+
       $numrows = $this->countAllEntries($id);
-      $parameters = "id=".$_GET["id"]."&onglet=".$_SESSION["glpi_onglet"]; 
-      
+      $parameters = "id=".$_GET["id"]."&onglet=".$_SESSION["glpi_onglet"];
+
       echo "<br>";
       Html::printPager($_GET['start'], $numrows, $_SERVER['PHP_SELF'], $parameters);
 
@@ -336,7 +336,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 
       echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='3'>";
       echo _('History meter printer')." :</th></tr>";
-      
+
       echo "<tr class='tab_bg_1'>";
       echo "<th></th>";
       echo "<th>"._('Date')." :</th>";
@@ -352,14 +352,14 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
          echo "</td></tr>";
          echo "<input type='hidden' name='ID_$i' value='".$data["$i"]['id']."'>";
       }
-      
+
       if (!PluginFusioninventoryProfile::haveRight("fusinvsnmp", "printer","w")) {
          return false;
       }
-         
+
       echo "<input type='hidden' name='limit' value='".$limit."'>";
       echo "<tr class='tab_bg_1'><td colspan='3'>";
-      echo "<div align='center'><a onclick= \"if (markAllRows('printer_history_form')) 
+      echo "<div align='center'><a onclick= \"if (markAllRows('printer_history_form'))
                  return false;\"
                  href='".$_SERVER['PHP_SELF']."?select=all'>"._('Check All')."</a>";
       echo " - <a onclick= \"if ( unMarkAllRows('printer_history_form') ) return false;\"
@@ -372,7 +372,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
    }
 
 
-   
+
    /**
     * Show printer graph form
     **/
@@ -383,7 +383,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_begin'])) {
          $begin=$_SESSION['glpi_plugin_fusioninventory_graph_begin'];
       }
-      if ( $begin == 'NULL' OR $begin == '' ) { 
+      if ( $begin == 'NULL' OR $begin == '' ) {
          $begin=date("Y-m-01"); // first day of current month
       }
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_end'])) {
@@ -398,7 +398,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_timeUnit'])) {
          $timeUnit=$_SESSION['glpi_plugin_fusioninventory_graph_timeUnit'];
       }
-      if (!isset($_SESSION['glpi_plugin_fusioninventory_graph_printersComp'])) { 
+      if (!isset($_SESSION['glpi_plugin_fusioninventory_graph_printersComp'])) {
          $_SESSION['glpi_plugin_fusioninventory_graph_printersComp']=array();
       }
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_printerCompAdd'])) {
@@ -527,7 +527,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       echo "<tr>";
       echo "<th colspan='4'>"._('Printers to compare')."</th>";
       echo "</tr>";
-      
+
       echo "<tr class='tab_bg_1'>";
       echo "<td class='left' rowspan='3'>"._('Printers')."&nbsp;:</td>";
       echo "<td class='left' rowspan='3'>";
@@ -556,11 +556,11 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       echo "&nbsp;<input type='submit' value=\""._('Delete')."\" class='submit' name='graph_plugin_fusioninventory_printer_remove'>";
       echo "</td>";
       echo "</tr>\n";
-      
+
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2'></td>";
       echo "</tr>";
-      
+
       echo "</table>";
       Html::closeForm();
 

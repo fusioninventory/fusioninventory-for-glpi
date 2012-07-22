@@ -36,7 +36,7 @@
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -61,7 +61,7 @@ if (isset($_GET['file'])) {
    $filepath = $_GET['file'];
    $filepslit = explode("/", $filepath);
    $filename = $filepslit[1];
-   
+
    // Security test : document in $docDir
    if (strstr($filepath,"../") || strstr($filepath,"..\\")){
       echo "Security attack !!!";
@@ -84,7 +84,7 @@ if (isset($_GET['file'])) {
       //header("Content-type: xml");
       header("Content-type: application/force-download");
 
-      
+
       $f=fopen($file,"r");
 
       if (!$f){

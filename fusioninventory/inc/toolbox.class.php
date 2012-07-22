@@ -36,7 +36,7 @@
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -62,7 +62,7 @@ class PluginFusioninventoryToolbox {
          Toolbox::logInFile($file, $message);
       }
    }
-   
+
    /** Fonction get on http://www.php.net/manual/en/function.gzdecode.php#82930
     *  used to uncompress gzip string
     *
@@ -70,7 +70,7 @@ class PluginFusioninventoryToolbox {
     * @param type $filename
     * @param type $error
     * @param type $maxlength
-    * @return type 
+    * @return type
     */
    static function gzdecode($data,&$filename='',&$error='',$maxlength=null) {
        $len = strlen($data);
@@ -180,7 +180,7 @@ class PluginFusioninventoryToolbox {
        }
        return $data;
    }
-      
+
    /**
     * Merge 2 simpleXML objects
     *
@@ -207,7 +207,7 @@ class PluginFusioninventoryToolbox {
       }
       unset($firstLoop);
    }
-      
+
 
 
    /**
@@ -245,8 +245,8 @@ class PluginFusioninventoryToolbox {
       }
       return $xml;
    }
-   
-   
+
+
 
    /**
     * Format XML, ie indent it for pretty printing

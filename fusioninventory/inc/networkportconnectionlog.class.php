@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -46,7 +46,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
 
-   
+
    function showForm($input='') {
       global $DB,$LANG,$CFG_GLPI;
 
@@ -156,7 +156,7 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
          }
       }
       echo "</table>";
-   }  
+   }
 }
 
 ?>

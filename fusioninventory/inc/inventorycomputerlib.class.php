@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -78,14 +78,14 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $_SESSION["plugin_fusinvinventory_ignorecontrollers"][(string)$child->NAME] = 1;
          }
       }
-      
+
       if ($new == "0") {
          // Transfer if entity is different
          $Computer = new Computer();
          $Computer->getFromDB($items_id);
          $input = array();
          $input['id'] = $Computer->fields['id'];
-         $input['autoupdatesystems_id'] = Dropdown::importExternal('AutoUpdateSystem', 
+         $input['autoupdatesystems_id'] = Dropdown::importExternal('AutoUpdateSystem',
                                                                    'FusionInventory',
                                                                    $_SESSION["plugin_fusinvinventory_entity"]);
          $_SESSION['glpiactiveentities_string'] = $Computer->fields['entities_id'];
@@ -104,7 +104,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
             $item_to_transfer = array("Computer" => array($items_id=>$items_id));
 
-            $Transfer->moveItems($item_to_transfer, $_SESSION["plugin_fusinvinventory_entity"], 
+            $Transfer->moveItems($item_to_transfer, $_SESSION["plugin_fusinvinventory_entity"],
                                  $Transfer->fields);
          }
 
@@ -156,7 +156,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if ($_SESSION["plugin_fusinvinventory_entity"] == NOT_AVAILABLE) {
             $_SESSION["plugin_fusinvinventory_entity"] = 0;
          }
-         
+
          //We launch CreateMachine() hook and provide an InternalId
          $xmlSections = $this->_getXMLSections($xml);
          $internalId = uniqid("", true);
@@ -164,7 +164,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          try {
             $pfInventoryComputerLibhook = new PluginFusioninventoryInventoryComputerLibhook();
             $pfInventoryComputerLibhook->createMachine($items_id);
-            
+
             // Link computer to agent FusionInventory
             $pfAgent = new PluginFusioninventoryAgent();
             $pfAgent->setAgentWithComputerid($items_id, $xml->DEVICEID);
@@ -174,16 +174,16 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $agent_id = $pfAgent->getAgentWithComputerid($items_id);
             if ($agent_id) {
                $pfAgent->getFromDB($agent_id);
-               if ($pfAgent->getEntityID() 
+               if ($pfAgent->getEntityID()
                      != $_SESSION["plugin_fusinvinventory_entity"]) {
-                  $pfAgent->fields['entities_id'] 
+                  $pfAgent->fields['entities_id']
                      = $_SESSION["plugin_fusinvinventory_entity"];
                   $pfAgent->update($pfAgent->fields);
                }
             }
 
             $this->addLibMachine($internalId, $items_id);
-            
+
             $pfLibhook->writeXMLFusion($items_id, $xml->asXML());
 
             $this->updateLibMachine($xmlSections, $internalId);
@@ -195,7 +195,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    }
 
 
-   
+
    /**
    * get all sections and convert to php array
    *
@@ -236,7 +236,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
          //sectionId initialization, we will affect id after hook createSection return value.
          $serializedSectionData = serialize($sectionData);
-         array_push($xmlSections, 
+         array_push($xmlSections,
                     array("sectionId"        => 0,
                           "sectionName"      => $section->getName(),
                           "sectionDatawName" => $serializedSectionData.$section->getName(),
@@ -258,7 +258,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    */
    public function addLibMachine($internalId, $externalId) {
 
-      $queryInsert = "INSERT INTO `glpi_plugin_fusioninventory_inventorycomputerlibserialization` 
+      $queryInsert = "INSERT INTO `glpi_plugin_fusioninventory_inventorycomputerlibserialization`
                       ( `internal_id`, `computers_id`)
                       VALUES ('" . $internalId . "', '".$externalId."')";
       mysql_query($queryInsert);
@@ -305,7 +305,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $infoSections = $this->_getInfoSections($internalId);
       // Retrieve all sections from xml file
       $serializedSectionsFromXML = array();
-      
+
       foreach($xmlSections as $xmlSection) {
          array_push($serializedSectionsFromXML, $xmlSection["sectionDatawName"]);
       }
@@ -326,7 +326,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                foreach($sectionsToAdd as $arrayId => $serializedSectionToAdd) {
                   //check if we have the same section Name for an sectionToRemove and an sectionToAdd
                   $splitid = explode("/", $sectionId);
-                  
+
                   if ($xmlSections[$arrayId]['sectionName'] == $sectionName
                        AND ((isset($splitid[1]) AND is_numeric($splitid[1]) AND $splitid[1] > 0)
                               OR (!isset($splitid[1])))) {
@@ -354,7 +354,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                               $boolUpdate = true;
                            }
                            break;
-                           
+
                         case "SOFTWARES":
                            if ((isset($arrSectionToAdd["GUID"]) AND isset($arrSectionToRemove["GUID"])
                                  AND preg_match('/^[[:xdigit:]]+$/i', $arrSectionToAdd["GUID"])
@@ -373,7 +373,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                  AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]
                                  AND isset($arrSectionToAdd["VERSION"]) AND isset($arrSectionToRemove["VERSION"])
                                  AND $arrSectionToAdd["VERSION"] == $arrSectionToRemove["VERSION"])
-                                   
+
                               OR (isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
                                  AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]
                                  AND !isset($arrSectionToAdd["VERSION"]))) {
@@ -387,7 +387,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                     AND $arrSectionToAdd["PCIID"] == $arrSectionToRemove["PCIID"]
                                     AND isset($arrSectionToAdd["PCISLOT"]) AND isset($arrSectionToRemove["PCISLOT"])
                                     AND $arrSectionToAdd["PCISLOT"] == $arrSectionToRemove["PCISLOT"])
-                               
+
                                  OR (!isset($arrSectionToRemove["PCIID"])
                                     AND isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
                                     AND isset($arrSectionToAdd["NAME"]) == isset($arrSectionToRemove["NAME"])
@@ -395,7 +395,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                     AND isset($arrSectionToAdd['MANUFACTURER']) == isset($arrSectionToRemove['MANUFACTURER'])
                                     AND isset($arrSectionToAdd['CAPTION']) AND isset($arrSectionToRemove['CAPTION'])
                                     AND isset($arrSectionToAdd['CAPTION']) == isset($arrSectionToRemove['CAPTION']))
-                               
+
                                  OR (!isset($arrSectionToRemove["PCIID"])
                                     AND isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
                                     AND isset($arrSectionToAdd["NAME"]) == isset($arrSectionToRemove["NAME"])
@@ -404,14 +404,14 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                               $boolUpdate = true;
                            }
                            break;
-                           
+
                         case "ENVS":
                            if(isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
                                  AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]) {
                               $boolUpdate = true;
                            }
                            break;
-                           
+
                         case "INPUTS":
                            if (isset($arrSectionToAdd["CAPTION"]) AND isset($arrSectionToRemove["CAPTION"])
                                  AND $arrSectionToAdd["CAPTION"] == $arrSectionToRemove["CAPTION"]) {
@@ -433,7 +433,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
                               if (!(isset($arrSectionToAdd["SERIALNUMBER"])
                                       AND $arrSectionToAdd["SERIALNUMBER"] == 'FFFFFFFF')) {
-                                 
+
                                  if (!(isset($arrSectionToAdd["CAPACITY"])
                                          AND ($arrSectionToAdd["CAPACITY"] == '0'
                                                  OR $arrSectionToAdd["CAPACITY"] == 'no'))) {
@@ -442,7 +442,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                               }
                            }
                            break;
-                           
+
                         case "MONITORS":
                            $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
                            if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
@@ -452,23 +452,23 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                                                               "import_monitor") == '2') {
                               // Unique import
                               if (((isset($arrSectionToAdd["SERIAL"])) AND (isset($arrSectionToRemove["SERIAL"]))
-                                    AND ($arrSectionToAdd["SERIAL"] == $arrSectionToRemove["SERIAL"]))                                 
+                                    AND ($arrSectionToAdd["SERIAL"] == $arrSectionToRemove["SERIAL"]))
                                  AND (isset($arrSectionToAdd["DESCRIPTION"]) AND isset($arrSectionToRemove["DESCRIPTION"])
                                     AND $arrSectionToAdd["DESCRIPTION"] == $arrSectionToRemove["DESCRIPTION"])) {
-                                 
+
                                  $boolUpdate = true;
                               } else if (((!isset($arrSectionToAdd["SERIAL"])) AND (!isset($arrSectionToRemove["SERIAL"])))
                                  AND (isset($arrSectionToAdd["DESCRIPTION"]) AND isset($arrSectionToRemove["DESCRIPTION"])
                                     AND $arrSectionToAdd["DESCRIPTION"] == $arrSectionToRemove["DESCRIPTION"])) {
-                                 
+
                                  $boolUpdate = true;
-                              } 
+                              }
                            } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                                                                              "import_monitor") == '3') {
                               // Import only with serial number
                               if ((isset($arrSectionToAdd["SERIAL"])) AND (isset($arrSectionToRemove["SERIAL"]))
                                     AND ($arrSectionToAdd["SERIAL"] == $arrSectionToRemove["SERIAL"])) {
-                                 
+
                                  $boolUpdate = true;
                               }
                            } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
@@ -476,18 +476,18 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                               // GLOBAL
                               if ((isset($arrSectionToAdd["CAPTION"])) AND (isset($arrSectionToRemove["CAPTION"]))
                                     AND ($arrSectionToAdd["CAPTION"] == $arrSectionToRemove["CAPTION"])) {
-                                 
+
                                  $boolUpdate = true;
                               }
                            }
                            break;
-                           
+
                         case "NETWORKS":
                            if (isset($arrSectionToAdd['DESCRIPTION']) AND isset($arrSectionToRemove['DESCRIPTION'])
                                    AND isset($arrSectionToAdd["MACADDR"]) AND isset($arrSectionToRemove["MACADDR"])
                                    AND $arrSectionToAdd["MACADDR"] != "08:00:27:B7:0E:D3"
                                    AND $arrSectionToAdd['DESCRIPTION'] == "Miniport d'ordonnancement de paquets") {
-                              
+
                               $len = strlen($arrSectionToAdd['MACADDR']);
                               if ($len > 0)
                                  $xmlSections[$arrayId]['sectionData'] = str_replace('"MACADDR";s:'.$len.':"'.$arrSectionToAdd['MACADDR'].'"', '"MACADDR";s:0:""', $xmlSections[$arrayId]['sectionData']);
@@ -496,22 +496,22 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                  $xmlSections[$arrayId]['sectionData'] = str_replace('"MACADDR";s:'.$len.':"'.$arrSectionToRemove['MACADDR'].'"', '"MACADDR";s:0:""', $xmlSections[$arrayId]['sectionData']);
 
                               $boolUpdate = true;
-                              
+
                            } else if(isset($arrSectionToAdd["MACADDR"]) AND isset($arrSectionToRemove["MACADDR"])
                                  AND $arrSectionToAdd["MACADDR"] == $arrSectionToRemove["MACADDR"]) {
                               $boolUpdate = true;
                            }
                            break;
-                           
+
                         case "PORTS":
                            if (isset($arrSectionToAdd["CAPTION"]) AND isset($arrSectionToRemove["CAPTION"])
                                  AND $arrSectionToAdd["CAPTION"] == $arrSectionToRemove["CAPTION"]) {
                               $boolUpdate = true;
                            }
                            break;
-                           
+
                         case "PRINTERS":
-                           
+
                            $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
                            if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                                                                       "import_printer") == '0') {
@@ -520,23 +520,23 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                                                               "import_printer") == '2') {
                               // Unique import
                               if (((isset($arrSectionToAdd["SERIAL"])) AND (isset($arrSectionToRemove["SERIAL"]))
-                                    AND ($arrSectionToAdd["SERIAL"] == $arrSectionToRemove["SERIAL"]))                                 
+                                    AND ($arrSectionToAdd["SERIAL"] == $arrSectionToRemove["SERIAL"]))
                                  AND (isset($arrSectionToAdd["DESCRIPTION"]) AND isset($arrSectionToRemove["DESCRIPTION"])
                                     AND $arrSectionToAdd["DESCRIPTION"] == $arrSectionToRemove["DESCRIPTION"])) {
-                                 
+
                                  $boolUpdate = true;
                               } else if (((!isset($arrSectionToAdd["SERIAL"])) AND (!isset($arrSectionToRemove["SERIAL"])))
                                  AND (isset($arrSectionToAdd["DESCRIPTION"]) AND isset($arrSectionToRemove["DESCRIPTION"])
                                     AND $arrSectionToAdd["DESCRIPTION"] == $arrSectionToRemove["DESCRIPTION"])) {
-                                 
+
                                  $boolUpdate = true;
-                              } 
+                              }
                            } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                                                                              "import_printer") == '3') {
                               // Import only with serial number
                               if ((isset($arrSectionToAdd["SERIAL"])) AND (isset($arrSectionToRemove["SERIAL"]))
                                     AND ($arrSectionToAdd["SERIAL"] == $arrSectionToRemove["SERIAL"])) {
-                                 
+
                                  $boolUpdate = true;
                               }
                            } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
@@ -546,12 +546,12 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                     AND $arrSectionToAdd["DESCRIPTION"] == $arrSectionToRemove["DESCRIPTION"])
                                  OR (isset($arrSectionToAdd["PORT"]) AND isset($arrSectionToRemove["PORT"])
                                     AND $arrSectionToAdd["PORT"] == $arrSectionToRemove["PORT"])) {
-                                 
+
                                  $boolUpdate = true;
                               }
                            }
                            break;
-                           
+
                         case "PROCESSES":
                            if ((isset($arrSectionToAdd["STARTED"])
                                  AND (isset($arrSectionToRemove["STARTED"]))
@@ -560,14 +560,14 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                               $boolUpdate = true;
                            }
                            break;
-                           
+
                         case "SOUNDS":
                            if (isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
                                  AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]) {
                               $boolUpdate = true;
                            }
                            break;
-                           
+
                         case "STORAGES":
                            if((isset($arrSectionToAdd["MODEL"]) AND isset($arrSectionToRemove["MODEL"])
                                  AND $arrSectionToAdd["MODEL"] == $arrSectionToRemove["MODEL"])
@@ -576,21 +576,21 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                               $boolUpdate = true;
                            }
                            break;
-                           
+
                         case "USERS":
                            if(isset($arrSectionToAdd["LOGIN"]) AND isset ($arrSectionToRemove["LOGIN"])
                                  AND $arrSectionToAdd["LOGIN"] == $arrSectionToRemove["LOGIN"]) {
                               $boolUpdate = true;
                            }
                            break;
-                           
+
                         case "VIDEOS":
                            if (isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
                                  AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]) {
                               $boolUpdate = true;
                            }
                            break;
-                           
+
                         case "USBDEVICES":
                            if ((isset($arrSectionToAdd["SERIAL"])
                                    AND isset($arrSectionToRemove["SERIAL"])
@@ -611,7 +611,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                  AND $arrSectionToAdd["UUID"] == $arrSectionToRemove["UUID"])
                               OR (isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
                                  AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"])){
-         
+
                               $boolUpdate = true;
                            }
                             break;
@@ -621,13 +621,13 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                     AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]
                                     AND isset($arrSectionToAdd['MANUFACTURER']) AND isset($arrSectionToRemove['MANUFACTURER'])
                                     AND isset($arrSectionToAdd['MANUFACTURER']) == isset($arrSectionToRemove['MANUFACTURER']))
-                                   
+
                                  OR ((!isset($arrSectionToAdd["NAME"]) OR !isset($arrSectionToRemove["NAME"]))
                                     AND isset($arrSectionToAdd["TYPE"]) AND isset($arrSectionToRemove["TYPE"])
                                     AND $arrSectionToAdd["TYPE"] == $arrSectionToRemove["TYPE"]
                                     AND isset($arrSectionToAdd['MANUFACTURER']) AND isset($arrSectionToRemove['MANUFACTURER'])
                                     AND isset($arrSectionToAdd['MANUFACTURER']) == isset($arrSectionToRemove['MANUFACTURER']))) {
-                              
+
                               if ((isset($arrSectionToAdd["SPEED"]) AND isset($arrSectionToRemove["SPEED"])
                                       AND $arrSectionToAdd["SPEED"] == $arrSectionToRemove["SPEED"])
                                    OR (!isset($arrSectionToAdd["SPEED"]) OR !isset($arrSectionToRemove["SPEED"]))) {
@@ -635,7 +635,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                }
                            }
                            break;
-                           
+
                         case "ANTIVIRUS":
                            $split = explode("/", $sectionId);
                            if ($split[1] > 0) {
@@ -667,9 +667,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                               unset($arrSectionToAdd[$key]);
                               unset($arrSectionToRemove[$key]);
                            } else {
-                              $arraydiff[$key] = '';                           
+                              $arraydiff[$key] = '';
                               unset($arrSectionToRemove[$key]);
-                           }                           
+                           }
                         }
                         foreach($arrSectionToAdd as $key=>$value) {
                            $arraydiff[$key] = $value;
@@ -708,7 +708,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       }
       if ($sectionsToAdd) {
          $datasToAdd = array();
- 
+
          //format data to send to hook createSection
          foreach($sectionsToAdd as $arrayId => $serializedSection) {
             array_push($datasToAdd, array(
@@ -797,11 +797,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          SET `serialized_sections3` = ''
          WHERE `internal_id` = '" . $internalId . "'";
       }
-      $resultUpdate = $DB->query($queryUpdate);      
+      $resultUpdate = $DB->query($queryUpdate);
    }
 
 
-   
+
    /**
    * get all sections with its serialized datas,and sectionId from database
    *
@@ -822,7 +822,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $arraySerializedSections = array();
       $arraySerializedSectionsTemp = array();
 
-      $querySelect = "SELECT `computers_id`, `serialized_sections1`, `serialized_sections2`, `serialized_sections3` 
+      $querySelect = "SELECT `computers_id`, `serialized_sections1`, `serialized_sections2`, `serialized_sections3`
             FROM `glpi_plugin_fusioninventory_inventorycomputerlibserialization`
          WHERE `internal_id` = '$internalId'";
       $resultSelect = $DB->query($querySelect);
@@ -832,7 +832,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $arraySerializedSections = explode("\n", $serializedSections); // Recovering a table with one line per entry
       $previous_infosection = array();
       foreach ($arraySerializedSections as $valeur) {
-         
+
          $arraySerializedSectionsTemp = explode("<<=>>", $valeur); // For each line, we create a table with data separated
          if (isset($arraySerializedSectionsTemp[0]) AND isset($arraySerializedSectionsTemp[1])) {
             if ($arraySerializedSectionsTemp[0] != "" && $arraySerializedSectionsTemp[1] != "") { // that is added to infosections
@@ -849,14 +849,14 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       return $infoSections;
    }
 
-   
-   
+
+
    static function convertData($infoSections) {
       foreach ($infoSections as $key=>$value) {
          $matches = array();
          $matches1 = array();
          preg_match("/(a:\d+:)\{(.*)\}(\w+)/sm", $value, $matches1);
-         
+
          preg_match_all('/s:\d+:"(.*?)";/sm', $matches1[2], $matches);
          $constuctArray = array();
          $i = 0;
@@ -868,7 +868,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       }
       return $infoSections;
    }
-   
+
 
 
    /**
@@ -935,8 +935,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $this->_serializeIntoDB($internal_id, $serializedSections);
    }
 
-   
-   
+
+
    function diffArray($array1, $array2) {
 
       $a_return = array();
@@ -953,8 +953,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $a_return[$key] = $value;
          }
       }
-      return $a_return;      
-   }   
+      return $a_return;
+   }
 }
 
 ?>

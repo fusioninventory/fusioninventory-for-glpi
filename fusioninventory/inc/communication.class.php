@@ -36,7 +36,7 @@
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -50,7 +50,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryCommunication {
    protected $message;
 
-   
+
    function __construct() {
       $this->message = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><REPLY></REPLY>");
       PluginFusioninventoryToolbox::logIfExtradebug(
@@ -60,7 +60,7 @@ class PluginFusioninventoryCommunication {
    }
 
 
-   
+
    /**
     * Get readable XML message (add carriage returns)
     *
@@ -71,25 +71,25 @@ class PluginFusioninventoryCommunication {
    }
 
 
-   
+
    /**
     * Set XML message
     *
     * @param $message XML message
-    * 
+    *
     * @return nothing
     **/
    function setMessage($message) {
       // avoid xml warnings
       $this->message = @simplexml_load_string(
-         $message,'SimpleXMLElement', 
+         $message,'SimpleXMLElement',
          LIBXML_NOCDATA
       );
    }
 
    /**
     * Send data, using given compression algorithm
-    * 
+    *
     **/
    function sendMessage($compressmode = 'none') {
 
@@ -102,7 +102,7 @@ class PluginFusioninventoryCommunication {
             header("Content-Type: application/xml");
             echo PluginFusioninventoryToolbox::formatXML($this->message);
             break;
-         
+
          case 'zlib':
             # rfc 1950
             header("Content-Type: application/x-compress-zlib");
@@ -110,7 +110,7 @@ class PluginFusioninventoryCommunication {
                PluginFusioninventoryToolbox::formatXML($this->message)
             );
             break;
-         
+
          case 'deflate':
             # rfc 1951
             header("Content-Type: application/x-compress-deflate");
@@ -126,17 +126,17 @@ class PluginFusioninventoryCommunication {
                PluginFusioninventoryToolbox::formatXML($this->message)
             );
             break;
-         
+
       }
    }
-   
-   
-   
+
+
+
    /**
     * Add logs
     *
     * @param $p_logs logs to write
-    * 
+    *
     * @return nothing (write text in log file)
     **/
    static function addLog($p_logs) {
@@ -151,16 +151,16 @@ class PluginFusioninventoryCommunication {
    }
 
 
-  
+
    /**
     * Import data
     *
     * @param $p_xml XML code to import
-    * 
+    *
     * @return true (import ok) / false (import ko)
     **/
    function import($p_xml) {
-      
+
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
       $pfAgent = new PluginFusioninventoryAgent();
 
@@ -170,7 +170,7 @@ class PluginFusioninventoryCommunication {
       );
       // TODO : gérer l'encodage, la version
       // Do not manage <REQUEST> element (always the same)
-      
+
       $_SESSION["plugin_fusioninventory_disablelocks"] = 1;
       $this->message = $p_xml;
       $errors = '';
@@ -198,8 +198,8 @@ class PluginFusioninventoryCommunication {
       if (isset($_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"])) {
          $moduleClass = $_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"];
          $moduleCommunication = new $moduleClass();
-         $errors.=$moduleCommunication->import($this->message->DEVICEID, 
-                 $this->message->CONTENT, 
+         $errors.=$moduleCommunication->import($this->message->DEVICEID,
+                 $this->message->CONTENT,
                  $p_xml);
       } else {
          $errors.=_('Unattended element in').' QUERY : *'.$xmltag."*\n";
@@ -218,7 +218,7 @@ class PluginFusioninventoryCommunication {
    }
 
 
-   
+
    /**
     * Get all tasks prepared for this agent
     *
@@ -242,7 +242,7 @@ class PluginFusioninventoryCommunication {
       }
    }
 
-   
+
 
    /**
     * Set prolog for agent
@@ -268,9 +268,9 @@ class PluginFusioninventoryCommunication {
          $this->message->addChild('RESPONSE', "SEND");
       }
    }
-   
-   
-   
+
+
+
    // new REST protocol
    function handleFusionCommunication() {
       $response = PluginFusioninventoryRestCommunication::communicate($_GET);
@@ -280,9 +280,9 @@ class PluginFusioninventoryCommunication {
          PluginFusioninventoryRestCommunication::sendError();
       }
    }
-   
-   
-   
+
+
+
 // old POST protocol
    function handleOCSCommunication() {
       global $LOADED_PLUGINS;
@@ -349,7 +349,7 @@ class PluginFusioninventoryCommunication {
                $compressmode = "zlib";
             } else {
                $compressmode = "deflate";
-            } 
+            }
          } else {
             $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
             $compressmode = 'none';

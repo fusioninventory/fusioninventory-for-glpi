@@ -29,37 +29,37 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
 class GLPIlogs extends PHPUnit_Framework_TestCase {
 
    public function testSQLlogs() {
-      
+
       $filecontent = '';
       $filecontent = file_get_contents(GLPI_ROOT."/files/_log/sql-errors.log");
-      
-      $this->assertEquals($filecontent, '', 'sql-errors.log not empty');      
+
+      $this->assertEquals($filecontent, '', 'sql-errors.log not empty');
    }
-   
-   
-   
+
+
+
    public function testPHPlogs() {
-      
+
       $filecontent = '';
       $filecontent = file_get_contents(GLPI_ROOT."/files/_log/php-errors.log");
-      
-      $this->assertEquals($filecontent, '', 'php-errors.log not empty');      
-   } 
-   
+
+      $this->assertEquals($filecontent, '', 'php-errors.log not empty');
+   }
+
 }
 
 
@@ -67,7 +67,7 @@ class GLPIlogs extends PHPUnit_Framework_TestCase {
 class GLPIlogs_AllTests  {
 
    public static function suite() {
-      
+
       $suite = new PHPUnit_Framework_TestSuite('GLPIlogs');
       return $suite;
    }

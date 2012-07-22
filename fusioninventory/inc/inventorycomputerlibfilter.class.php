@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -70,7 +70,7 @@ class PluginFusioninventoryInventoryComputerLibfilter extends CommonDBTM {
             case 'USBDEVICES':
                 if(isset($section->VENDORID) AND $section->VENDORID != ''
                      AND isset($section->PRODUCTID)) {
-                   
+
                     $dataArray = self::_getDataFromUSBID($section->VENDORID, $section->PRODUCTID);
 
                     $dataArray[0] = preg_replace('/&(?!\w+;)/', '&amp;', $dataArray[0]);
@@ -94,11 +94,11 @@ class PluginFusioninventoryInventoryComputerLibfilter extends CommonDBTM {
         return false;
     }
 
-    
-    
+
+
     /**
     * get manufacturer from pciid
-    * 
+    *
     * @param $pciid value id of the PCI (vendor identifiant)
     *
     * @return manufacturer name or nothing
@@ -123,12 +123,12 @@ class PluginFusioninventoryInventoryComputerLibfilter extends CommonDBTM {
       }
     }
 
-    
-    
+
+
 
    /**
    * get data from vendorid and productid USB
-   * 
+   *
    * @param $vendorId value USB id of vendor
    * @param $productId value id of product
    *

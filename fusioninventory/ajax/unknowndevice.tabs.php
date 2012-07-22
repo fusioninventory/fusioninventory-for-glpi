@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -59,7 +59,7 @@ $pfUnknownDevice = new PluginFusioninventoryUnknownDevice;
 $pfUnknownDevice->getFromDB($_POST['id']);
 
 switch($_POST['glpi_tab']) {
-   
+
    case -1 :
       NetworkPort::showForItem($pfUnknownDevice);
       $pfUnknownDevice->importForm($CFG_GLPI['root_doc'] . '/plugins/fusioninventory/front/unknowndevice.form.php?id='.$_POST["id"],$_POST["id"]);
@@ -85,7 +85,7 @@ switch($_POST['glpi_tab']) {
    default :
       CommonGLPI::displayStandardTab($pfUnknownDevice, $_REQUEST['glpi_tab']);
       break;
-   
+
 }
 
 Html::ajaxFooter();
