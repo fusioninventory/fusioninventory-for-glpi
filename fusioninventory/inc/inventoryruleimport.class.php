@@ -263,7 +263,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
    
 
-   function displayAdditionalRuleAction($action, $params=array()) {
+   function displayAdditionalRuleAction(array $action) {
 
       switch ($action['type']) {
          

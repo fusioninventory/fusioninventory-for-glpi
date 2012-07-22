@@ -53,7 +53,7 @@ class PluginFusinvdeployGroup_Dynamicdata extends CommonDBRelation{
    /*public $itemtype_2 = 'itemtype';
    public $items_id_2 = 'items_id';*/
 
-   function can($ID, $right, &$input=NULL) {
+   function can($ID, $right, array &$input=NULL) {
 
       if ($ID<0) {
          // Ajout

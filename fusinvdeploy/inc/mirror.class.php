@@ -48,7 +48,7 @@ class PluginFusinvdeployMirror extends CommonDBTM {
 
    public $dohistory = true;
 
-   static function getTypeName() {
+   static function getTypeName($nb=0) {
       global $LANG;
 
       return $LANG['plugin_fusinvdeploy']['mirror'][1];

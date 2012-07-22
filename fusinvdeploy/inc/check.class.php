@@ -57,7 +57,7 @@ class PluginFusinvdeployCheck extends CommonDBTM {
    const FILE_SHA512      = 'fileSHA512';       //File sha512 checksum
    const FREE_SPACE       = 'freespaceGreater'; //Disk free space
 
-   static function getTypeName() {
+   static function getTypeName($nb=0) {
       global $LANG;
 
       return $LANG['plugin_fusinvdeploy']['package'][11];

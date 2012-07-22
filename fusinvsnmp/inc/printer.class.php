@@ -58,7 +58,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
 
    
 
-   static function getTypeName() {
+   static function getTypeName($nb=0) {
 
    }
 
