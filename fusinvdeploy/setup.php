@@ -51,6 +51,7 @@ function plugin_init_fusinvdeploy() {
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/config.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
    // ##### 1. Stop if fusioninventory not activated #####
+   $PLUGIN_HOOKS['csrf_compliant']['fusinvdeploy'] = true;
 
    $plugin = new Plugin();
    if (!$plugin->isActivated("fusioninventory")) {
@@ -124,8 +125,6 @@ function plugin_init_fusinvdeploy() {
 
    $PLUGIN_HOOKS['change_profile']['fusinvdeploy'] =
       PluginFusioninventoryProfile::changeprofile($moduleId,$a_plugin['shortname']);
-
-   $PLUGIN_HOOKS['csrf_compliant']['fusinvdeploy'] = true;
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['packages'] =
       '../fusinvdeploy/front/package.form.php?add=1';

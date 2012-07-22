@@ -49,6 +49,8 @@ function plugin_init_fusinvsnmp() {
 	global $PLUGIN_HOOKS,$CFG_GLPI;
 
    // ##### 1. Stop if fusioninventory not activated #####
+   
+   $PLUGIN_HOOKS['csrf_compliant']['fusinvsnmp'] = true;
 
    $plugin = new Plugin();
    if (!$plugin->isActivated("fusioninventory")) {
@@ -121,9 +123,7 @@ function plugin_init_fusinvsnmp() {
 	$PLUGIN_HOOKS['cron']['fusinvsnmp'] = 20*MINUTE_TIMESTAMP; // All 20 minutes
 
    $PLUGIN_HOOKS['add_javascript']['fusinvsnmp']="script.js";
-
-   $PLUGIN_HOOKS['csrf_compliant']['fusinvsnmp'] = true;
-
+   
 	if (isset($_SESSION["glpiID"])) {
 
 		if (Session::haveRight("configuration", "r") || Session::haveRight("profile", "w")) {// Config page
