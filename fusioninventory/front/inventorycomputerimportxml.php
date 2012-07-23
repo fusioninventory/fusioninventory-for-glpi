@@ -69,7 +69,7 @@ if (isset($_FILES['importfile']['tmp_name'])) {
       $_SESSION["MESSAGE_AFTER_REDIRECT"] = _('No file to import!');
 
    }
-	Html::back();
+   Html::back();
 }
 
 $pfImportXML->showForm();

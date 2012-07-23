@@ -65,9 +65,9 @@ if (isset ($_POST["add"])) {
    }
    Html::back();
 } else if (isset ($_POST["update"])) {
-	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","w");
-	$pfConfigSecurity->update($_POST);
-	Html::back();
+   PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","w");
+   $pfConfigSecurity->update($_POST);
+   Html::back();
 } else if (isset ($_POST["delete"])) {
    PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","w");
    $pfConfigSecurity->delete($_POST);

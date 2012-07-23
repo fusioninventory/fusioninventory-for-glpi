@@ -46,7 +46,7 @@ include_once ("includes.php");
 
 // Init the hooks of fusinvsnmp
 function plugin_init_fusinvsnmp() {
-	global $PLUGIN_HOOKS,$CFG_GLPI;
+   global $PLUGIN_HOOKS,$CFG_GLPI;
 
    // ##### 1. Stop if fusioninventory not activated #####
    
@@ -120,28 +120,28 @@ function plugin_init_fusinvsnmp() {
 
    $PLUGIN_HOOKS['change_profile']['fusinvsnmp'] = PluginFusioninventoryProfile::changeprofile($moduleId,$a_plugin['shortname']);
 
-	$PLUGIN_HOOKS['cron']['fusinvsnmp'] = 20*MINUTE_TIMESTAMP; // All 20 minutes
+   $PLUGIN_HOOKS['cron']['fusinvsnmp'] = 20*MINUTE_TIMESTAMP; // All 20 minutes
 
    $PLUGIN_HOOKS['add_javascript']['fusinvsnmp']="script.js";
    
-	if (isset($_SESSION["glpiID"])) {
+   if (isset($_SESSION["glpiID"])) {
 
-		if (Session::haveRight("configuration", "r") || Session::haveRight("profile", "w")) {// Config page
+      if (Session::haveRight("configuration", "r") || Session::haveRight("profile", "w")) {// Config page
          $pfConfiguration = new PluginFusioninventoryConfig();
          $a_tabs = $pfConfiguration->defineTabs();
          $PLUGIN_HOOKS['config_page']['fusinvsnmp'] = '../fusioninventory/front/config.form.php?glpi_tab='.array_search($a_plugin['name'], $a_tabs);
       }
 
-		// Define SQL table restriction of entity
-		$CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusinvsnmp_discovery';
-		//$CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusinvsnmp_ipranges';
+      // Define SQL table restriction of entity
+      $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusinvsnmp_discovery';
+      //$CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusinvsnmp_ipranges';
       $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusinvsnmp_unknowndevices';
 
-//		if(isset($_SESSION["glpi_plugin_fusinvsnmp_installed"]) && $_SESSION["glpi_plugin_fusinvsnmp_installed"]==1) {
+//      if(isset($_SESSION["glpi_plugin_fusinvsnmp_installed"]) && $_SESSION["glpi_plugin_fusinvsnmp_installed"]==1) {
       $plugin = new Plugin();
-		if($plugin->isInstalled('fusinvsnmp')) {
+      if($plugin->isInstalled('fusinvsnmp')) {
 
-			$PLUGIN_HOOKS['use_massive_action']['fusinvsnmp']=1;
+         $PLUGIN_HOOKS['use_massive_action']['fusinvsnmp']=1;
 
          $PLUGIN_HOOKS['item_add']['fusinvsnmp'] = array('NetworkPort_NetworkPort'=>'plugin_item_add_fusinvsnmp');
          $PLUGIN_HOOKS['pre_item_purge']['fusinvsnmp'] = array('NetworkPort_NetworkPort'=>'plugin_pre_item_purge_fusinvsnmp');
@@ -150,7 +150,7 @@ function plugin_init_fusinvsnmp() {
                                                            'Printer' =>'plugin_item_purge_fusinvsnmp',
                                                            'PluginFusioninventoryUnknownDevice' =>'plugin_item_purge_fusinvsnmp');
 
-			$report_list = array();
+         $report_list = array();
          if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "reportprinter","r")) {
             $report_list["front/printerlogreport.php"] = _('Printed page counter');
 
@@ -199,7 +199,7 @@ function plugin_init_fusinvsnmp() {
             $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['rulesnmpinventory']
                = '../fusinvsnmp/front/ruleinventory.php';
 
-			}
+         }
 
          // Fil ariane
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['models']['title'] = _('SNMP models');
@@ -214,16 +214,16 @@ function plugin_init_fusinvsnmp() {
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['statediscovery']['page']  = '/plugins/fusinvsnmp/front/statediscovery.php';
 
-		}
+      }
 
-	}
+   }
 }
 
 
 
 // Name and Version of the plugin
 function plugin_version_fusinvsnmp() {
-	return array('name'           => 'FusionInventory SNMP',
+   return array('name'           => 'FusionInventory SNMP',
                 'shortname'      => 'fusinvsnmp',
                 'version'        => PLUGIN_FUSINVSNMP_VERSION,
                 'license'        => 'AGPLv3+',
@@ -254,19 +254,19 @@ function plugin_fusinvsnmp_check_prerequisites() {
 
 
 function plugin_fusinvsnmp_check_config() {
-	return true;
+   return true;
 }
 
 
 
 function plugin_fusinvsnmp_haveTypeRight($type,$right) {
-	switch ($type) {
-		case 'PluginFusinvsnmpConfigSecurity' :
-//			return PluginFusinvsnmpAuth::haveRight("configsecurity",$right);
-			return PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity",$right);
-			break;
-	}
-	return true;
+   switch ($type) {
+      case 'PluginFusinvsnmpConfigSecurity' :
+//         return PluginFusinvsnmpAuth::haveRight("configsecurity",$right);
+         return PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity",$right);
+         break;
+   }
+   return true;
 }
 
 ?>

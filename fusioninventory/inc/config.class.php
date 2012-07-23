@@ -153,7 +153,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    function defineTabs($options=array()){
       global $CFG_GLPI;
 
-		$plugin = new Plugin;
+      $plugin = new Plugin;
 
       $ong = array();
       $moduleTabs = array();

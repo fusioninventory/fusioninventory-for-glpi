@@ -83,35 +83,35 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
       // Construction of XML file
       $xml = "<model>\n";
-      $xml .= "	<name>".$model_name."</name>\n";
-      $xml .= "	<type>".$type."</type>\n";
-      $xml .= "	<key>".$discovery_key."</key>\n";
-      $xml .= "	<comments><![CDATA[".$comment."]]></comments>\n";
-      $xml .= "	<oidlist>\n";
+      $xml .= "   <name>".$model_name."</name>\n";
+      $xml .= "   <type>".$type."</type>\n";
+      $xml .= "   <key>".$discovery_key."</key>\n";
+      $xml .= "   <comments><![CDATA[".$comment."]]></comments>\n";
+      $xml .= "   <oidlist>\n";
 
       $query = "SELECT `glpi_plugin_fusioninventory_snmpmodelmibs`.*,
-	 FROM `glpi_plugin_fusioninventory_snmpmodelmibs`
-	 WHERE `plugin_fusioninventory_snmpmodels_id`='".$ID_model."';";
+    FROM `glpi_plugin_fusioninventory_snmpmodelmibs`
+    WHERE `plugin_fusioninventory_snmpmodels_id`='".$ID_model."';";
 
       $result=$DB->query($query);
       if ($result) {
          while ($data=$DB->fetch_array($result)) {
-            $xml .= "		<oidobject>\n";
-            $xml .= "			<object>".
+            $xml .= "      <oidobject>\n";
+            $xml .= "         <object>".
                Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmibobjects",$data["plugin_fusioninventory_snmpmodelmibobjects_id"]).
                "</object>\n";
-            $xml .= "			<oid>".
+            $xml .= "         <oid>".
                Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmiboids",$data["plugin_fusioninventory_snmpmodelmiboids_id"])."</oid>\n";
-            $xml .= "			<portcounter>".$data["oid_port_counter"]."</portcounter>\n";
-            $xml .= "			<dynamicport>".$data["oid_port_dyn"]."</dynamicport>\n";
-            $xml .= "			<mappings_id>".$data["plugin_fusioninventory_mappings_id"].
+            $xml .= "         <portcounter>".$data["oid_port_counter"]."</portcounter>\n";
+            $xml .= "         <dynamicport>".$data["oid_port_dyn"]."</dynamicport>\n";
+            $xml .= "         <mappings_id>".$data["plugin_fusioninventory_mappings_id"].
                "</mappings_id>\n";
-            $xml .= "			<vlan>".$data["vlan"]."</vlan>\n";
-            $xml .= "			<activation>".$data["is_active"]."</activation>\n";
-            $xml .= "		</oidobject>\n";
+            $xml .= "         <vlan>".$data["vlan"]."</vlan>\n";
+            $xml .= "         <activation>".$data["is_active"]."</activation>\n";
+            $xml .= "      </oidobject>\n";
          }
       }
-      $xml .= "	</oidlist>\n";
+      $xml .= "   </oidlist>\n";
       $xml .= "</model>\n";
 
       return $xml;
@@ -138,7 +138,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       echo "<input type='file' name='importfile' value=''/>";
 
       if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
-	 echo "&nbsp;<input type='submit' value='"._('Import')."' class='submit'/>";
+    echo "&nbsp;<input type='submit' value='"._('Import')."' class='submit'/>";
       }
       echo "</td>";
       echo "</tr>";
@@ -163,7 +163,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       echo _('Mass import of models in folder plugins/fusinvsnmp/models/')."<br/>";
       echo "<input type='hidden' name='massimport' value='1'/>";
       if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
-	 echo "&nbsp;<input type='submit' value='"._('Import')."' class='submit'/>";
+    echo "&nbsp;<input type='submit' value='"._('Import')."' class='submit'/>";
       }
       echo "</td>";
       echo "</tr>";
@@ -251,26 +251,26 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
          }
          $input['plugin_fusioninventory_snmpmodelmiboids_id'] = Dropdown::importExternal(
             "PluginFusioninventorySnmpmodelMibOid",$child->oid);
-	      $input['oid_port_counter'] = 0;
-	      if (isset($child->portcounter)) {
-	         $input['oid_port_counter'] = $child->portcounter;
-	      }
-	      $input['oid_port_dyn'] = 0;
-	      if (isset($child->dynamicport)) {
-	         $input['oid_port_dyn'] = $child->dynamicport;
-	      }
-	      $input["vlan"] = 0;
-	      if (isset($child->vlan)) {
-	         $input["vlan"] = $child->vlan;
-	      }
-	      $input["is_active"] = 0;
-	      if (isset($child->activation)) {
-	         $input["is_active"] = $child->activation;
-	      }
-	      if (isset($mapping_type)) {
-	         unset($mapping_type);
-	      }
-	      if (isset($child->mapping_type)) {
+         $input['oid_port_counter'] = 0;
+         if (isset($child->portcounter)) {
+            $input['oid_port_counter'] = $child->portcounter;
+         }
+         $input['oid_port_dyn'] = 0;
+         if (isset($child->dynamicport)) {
+            $input['oid_port_dyn'] = $child->dynamicport;
+         }
+         $input["vlan"] = 0;
+         if (isset($child->vlan)) {
+            $input["vlan"] = $child->vlan;
+         }
+         $input["is_active"] = 0;
+         if (isset($child->activation)) {
+            $input["is_active"] = $child->activation;
+         }
+         if (isset($mapping_type)) {
+            unset($mapping_type);
+         }
+         if (isset($child->mapping_type)) {
             $mapping_type = '';
             switch ($child->mapping_type) {
 
@@ -287,23 +287,23 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
                   break;
 
             }
-	      }
-	      $input["plugin_fusioninventory_mappings_id"] = 0;
-	      if (isset($child->mapping_name)) {
-	         if ($child->mapping_name != '') {
-	            $a_mappings = $pfMapping->get($mapping_type, $child->mapping_name);
-	            $input["plugin_fusioninventory_mappings_id"] = $a_mappings['id'];
-	         }
-	      }
-	      $input["plugin_fusioninventory_snmpmodelmiblabels"] = 0;
-	      if (isset($a_oidsDB[$child->oid."-".$child->mapping_name])) {
-	         // Update oid
-	         $pfModelMib->update($input);
-	         unset($a_oidsDB[$child->oid."-".$child->mapping_name]);
-	      } else {
-	         // Add
-	         $pfModelMib->add($input);
-	      }
+         }
+         $input["plugin_fusioninventory_mappings_id"] = 0;
+         if (isset($child->mapping_name)) {
+            if ($child->mapping_name != '') {
+               $a_mappings = $pfMapping->get($mapping_type, $child->mapping_name);
+               $input["plugin_fusioninventory_mappings_id"] = $a_mappings['id'];
+            }
+         }
+         $input["plugin_fusioninventory_snmpmodelmiblabels"] = 0;
+         if (isset($a_oidsDB[$child->oid."-".$child->mapping_name])) {
+            // Update oid
+            $pfModelMib->update($input);
+            unset($a_oidsDB[$child->oid."-".$child->mapping_name]);
+         } else {
+            // Add
+            $pfModelMib->add($input);
+         }
       }
       // Delete OID not in the XML
       foreach ($a_oidsDB as $mibs_id) {

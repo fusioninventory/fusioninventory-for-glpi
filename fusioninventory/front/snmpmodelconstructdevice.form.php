@@ -67,7 +67,7 @@ if (isset($_GET['vlan_update'])) {
    } else {
       $_SESSION["MESSAGE_AFTER_REDIRECT"] = "Déjà existant";
    }
-	Html::back();
+   Html::back();
 } else if (isset($_POST['addWalk'])) {
    $i = 1;
    $md5 = md5(rand(1, 1000000));
@@ -107,11 +107,11 @@ if (isset($_GET['vlan_update'])) {
    }
    Html::back();
 } else if (isset ($_POST["update"])) {
-	$pfConstructDevice->update($_POST);
-	Html::back();
+   $pfConstructDevice->update($_POST);
+   Html::back();
 } else if (isset ($_POST["delete"])) {
-	$pfConstructDevice->delete($_POST);
-	Html::redirect("construct_device.php");
+   $pfConstructDevice->delete($_POST);
+   Html::redirect("construct_device.php");
 }
 
 $id = "";
