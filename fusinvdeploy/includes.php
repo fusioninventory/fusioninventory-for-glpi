@@ -43,7 +43,7 @@
 include_once ("hook.php");
 
 // inc files 
-if (file_exists(GLPI_ROOT."/plugins/fusioninventory/inc/communication.class.php")) {
+if (file_exists(GLPI_ROOT."/plugins/fusioninventory/inc/ocscommunication.class.php")) {
    foreach (glob(GLPI_ROOT.'/plugins/fusinvdeploy/inc/*.php') as $file) {
       include_once($file);
    }

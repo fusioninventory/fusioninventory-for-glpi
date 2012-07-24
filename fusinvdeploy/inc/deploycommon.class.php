@@ -45,7 +45,7 @@ if(!defined('GLPI_ROOT')) {
 }
 
 
-require_once(GLPI_ROOT."/plugins/fusioninventory/inc/communication.class.php");
+require_once(GLPI_ROOT."/plugins/fusioninventory/inc/ocscommunication.class.php");
 
 class PluginFusinvdeployDeployCommon extends PluginFusioninventoryOCSCommunication {
 
