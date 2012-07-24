@@ -358,7 +358,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $a_tasksActives = $this->find("`is_active` = '1' ".getEntitiesRestrictRequest("AND", 'glpi_plugin_fusioninventory_tasks'));
       $a_tasksInactives = $this->find("`is_active` = '0' ".getEntitiesRestrictRequest("AND", 'glpi_plugin_fusioninventory_tasks'));
       $a_tasksAll = $this->find(getEntitiesRestrictRequest("", 'glpi_plugin_fusioninventory_tasks'));
-      
+
       
       if (!isset($_GET['see'])) {
          if ($DB->numrows($resultTasksPlanned) > 0) {
@@ -631,14 +631,20 @@ class PluginFusioninventoryTask extends CommonDBTM {
       
       $query = "SELECT `glpi_plugin_fusioninventory_tasks`.*
          FROM `glpi_plugin_fusioninventory_tasks`
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` ON `plugin_fusioninventory_tasks_id` = `glpi_plugin_fusioninventory_tasks`.`id`
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` ON `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` ON `plugin_fusioninventory_taskjobstates_id` = `glpi_plugin_fusioninventory_taskjobstates`.`id`
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` AS taskjobs ON `plugin_fusioninventory_tasks_id` = `glpi_plugin_fusioninventory_tasks`.`id`
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` AS taskjobstates ON taskjobstates.`id` = 
+            (SELECT id
+             FROM glpi_plugin_fusioninventory_taskjobstates
+             WHERE plugin_fusioninventory_taskjobs_id = taskjobs.`id`
+             ORDER BY id DESC
+             LIMIT 1
+            )
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` ON `plugin_fusioninventory_taskjobstates_id` = taskjobstates.`id`
          WHERE `glpi_plugin_fusioninventory_taskjoblogs`.`state`='4'
          ".$where."
          GROUP BY plugin_fusioninventory_tasks_id
          ORDER BY `glpi_plugin_fusioninventory_taskjoblogs`.`date` DESC";
-      
+     
       
       
       return $DB->query($query);
