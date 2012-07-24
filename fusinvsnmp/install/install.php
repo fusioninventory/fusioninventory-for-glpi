@@ -45,6 +45,16 @@ function pluginFusinvsnmpInstall($version, $migrationname='Migration') {
 
    ini_set("max_execution_time", "0");
 
+   require_once (GLPI_ROOT . "/plugins/fusinvsnmp/inc/model.class.php");
+   require_once (GLPI_ROOT . "/plugins/fusinvsnmp/inc/importexport.class.php");
+   require_once (GLPI_ROOT . "/plugins/fusinvsnmp/inc/commondbtm.class.php");
+   require_once (GLPI_ROOT . "/plugins/fusinvsnmp/inc/config.class.php");
+   require_once (GLPI_ROOT . "/plugins/fusinvsnmp/inc/networkporttype.class.php");
+   require_once (GLPI_ROOT . "/plugins/fusinvsnmp/inc/configlogfield.class.php");
+   require_once (GLPI_ROOT . "/plugins/fusinvsnmp/install/update.php");
+   require_once (GLPI_ROOT . "/plugins/fusioninventory/inc/staticmisc.class.php");
+
+
    $migration = new $migrationname($version);
    
    $migration->displayMessage("Installation of plugin FusinvSNMP");
@@ -52,7 +62,6 @@ function pluginFusinvsnmpInstall($version, $migrationname='Migration') {
    // Get informations of plugin
    $a_plugin = plugin_version_fusinvsnmp();
 
-   include_once (GLPI_ROOT . "/plugins/fusinvsnmp/install/update.php");
    $version_detected = pluginfusinvsnmpGetCurrentVersion($a_plugin['version']);
 
    if ((isset($version_detected))
@@ -85,7 +94,6 @@ function pluginFusinvsnmpInstall($version, $migrationname='Migration') {
       }
 
       if (!class_exists('PluginFusinvsnmpConfigLogField')) { // if plugin is unactive
-         include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/configlogfield.class.php");
       }
       $configLogField = new PluginFusinvsnmpConfigLogField();
       $configLogField->initConfig();
@@ -93,7 +101,6 @@ function pluginFusinvsnmpInstall($version, $migrationname='Migration') {
       // Import models
       PluginFusinvsnmpModel::importAllModels();
 
-      include_once (GLPI_ROOT . "/plugins/fusioninventory/inc/staticmisc.class.php");
       $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
       PluginFusioninventoryProfile::initProfile($a_plugin['shortname'], $plugins_id);
 

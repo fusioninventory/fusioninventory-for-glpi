@@ -45,17 +45,17 @@ if (!defined('GLPI_ROOT')) {
 }
 
 /**
- * Class to communicate with agents using XML
+ * Class to communicate with agents with old OCS protocol
  **/
-class PluginFusioninventoryCommunication {
+class PluginFusioninventoryOCSCommunication {
    protected $message;
 
    
    function __construct() {
       $this->message = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><REPLY></REPLY>");
-      PluginFusioninventoryConfig::logIfExtradebug(
+      PluginFusioninventoryLogger::logIfExtradebug(
          'pluginFusioninventory-communication',
-         'New PluginFusioninventoryCommunication object.'
+         'New PluginFusioninventoryOCSCommunication object.'
       );
    }
 
@@ -121,8 +121,6 @@ class PluginFusioninventoryCommunication {
       }
    }
    
-   
-   
    /**
     * Add logs
     *
@@ -141,8 +139,6 @@ class PluginFusioninventoryCommunication {
       }
    }
 
-
-  
    /**
     * Import data
     *
@@ -156,7 +152,7 @@ class PluginFusioninventoryCommunication {
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
       $pfAgent = new PluginFusioninventoryAgent();
 
-      PluginFusioninventoryConfig::logIfExtradebug(
+      PluginFusioninventoryLogger::logIfExtradebug(
          'pluginFusioninventory-communication',
          'Function import().'
       );
@@ -482,22 +478,7 @@ class PluginFusioninventoryCommunication {
       return $xml;
    }
    
-   
-   
-   // new REST protocol
-   function handleFusionCommunication() {
-      $response = PluginFusioninventoryRestCommunication::communicate($_GET);
-      if ($response) {
-         echo json_encode($response);
-      } else {
-         PluginFusioninventoryRestCommunication::sendError();
-      }
-   }
-   
-   
-   
-// old POST protocol
-   function handleOCSCommunication() {
+   static function run() {
       global $LOADED_PLUGINS;
 
       // ***** For debug only ***** //
@@ -532,7 +513,7 @@ class PluginFusioninventoryCommunication {
       }
       ob_end_clean();
 
-      $communication  = new PluginFusioninventoryCommunication();
+      $communication  = new PluginFusioninventoryOCSCommunication();
 
       // identify message compression algorithm
       $xml = '';
@@ -585,7 +566,7 @@ class PluginFusioninventoryCommunication {
          return;
       }
 
-      PluginFusioninventoryConfig::logIfExtradebug(
+      PluginFusioninventoryLogger::logIfExtradebug(
          'pluginFusioninventory-dial' . uniqid(),
          $xml
       );

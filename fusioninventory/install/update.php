@@ -258,7 +258,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $DB->query("DROP TABLE `".$newTable."`");
    }
    
-   
       
    /*
     * Table glpi_plugin_fusioninventory_agentmodules

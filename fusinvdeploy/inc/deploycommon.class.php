@@ -47,7 +47,7 @@ if(!defined('GLPI_ROOT')) {
 
 require_once(GLPI_ROOT."/plugins/fusioninventory/inc/communication.class.php");
 
-class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication {
+class PluginFusinvdeployDeployCommon extends PluginFusioninventoryOCSCommunication {
 
    // Get all devices and put in taskjobstate each task for each device for each agent
    function prepareRun($taskjobs_id) {

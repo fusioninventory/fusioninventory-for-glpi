@@ -28,8 +28,8 @@
    ------------------------------------------------------------------------
 
    @package   FusionInventory
-   @author    Vincent Mazzoni
-   @co-author David Durieux
+   @author    David Durieux
+   @co-author 
    @copyright Copyright (c) 2010-2012 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
@@ -40,48 +40,32 @@
    ------------------------------------------------------------------------
  */
 
-ob_start();
-ini_set("memory_limit", "-1");
-ini_set("max_execution_time", "0");
-ini_set('display_errors', 1);
-
 if (!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', '../../..');
+   die("Sorry. You can't access directly to this file");
 }
 
-if (session_id()=="") {
-   session_start();
-}
+class PluginFusioninventoryLogger {
 
-$_SESSION['glpi_use_mode'] = 2;
-include_once(GLPI_ROOT."/inc/includes.php");
-if (!isset($_SESSION['glpilanguage'])) {
-   $_SESSION['glpilanguage'] = 'fr_FR';
-}
+   /**
+    * Log when extra-debug is activated
+    */
+   static function logIfExtradebug($file, $message) {
+      if (!PluginFusioninventoryConfig::isExtradebugActive()) {
+         return;
+      }
+      Toolbox::logInFile($file, $message);
+   }
+
+   /**
+    * log when extra-debug and debug mode is activated
+    */
+   static function logIfExtradebugAndDebugMode($file, $message) {
+      if ($_SESSION['glpi_use_mode'] != Session::DEBUG_MODE) {
+         return;
+      }
+      self::logIfExtradebug($file, $message);
+   }
    
-ini_set('display_errors','On');
-error_reporting(E_ALL | E_STRICT);
-set_error_handler(array('Toolbox','userErrorHandlerDebug'));
-$_SESSION['glpi_use_mode'] = 2;
-
-ob_end_clean();
-header("server-type: glpi/fusioninventory ".PLUGIN_FUSIONINVENTORY_VERSION);
-if (!class_exists("PluginFusioninventoryConfig")) {
-   header("Content-Type: application/xml");
-   echo "<?xml version='1.0' encoding='UTF-8'?>
-<REPLY>
-   <ERROR>Plugin FusionInventory not installed!</ERROR>
-</REPLY>";
-   session_destroy();
-   exit();
 }
-
-if (isset($_GET['action']) && isset($_GET['machineid'])) {
-   PluginFusioninventoryFusionCommunication::run();
-} else if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
-   PluginFusioninventoryOCSCommunication::run();
-}
-
-session_destroy();
 
 ?>

@@ -44,8 +44,10 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-
-class PluginFusioninventoryRestCommunication {
+/**
+ * Class to communicate with agents with new Fusion protocol
+ **/
+class PluginFusioninventoryFusionCommunication {
 
    /**
     * Manage communication between agent and server
@@ -222,6 +224,15 @@ class PluginFusioninventoryRestCommunication {
          return true;
       }
    }   
+
+   function run() {
+      $response = PluginFusioninventoryFusionCommunication::communicate($_GET);
+      if ($response) {
+         echo json_encode($response);
+      } else {
+         PluginFusioninventoryFusionCommunication::sendError();
+      }
+   }
 }
 
 ?>

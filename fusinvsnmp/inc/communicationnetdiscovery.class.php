@@ -65,8 +65,10 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       $pfAgentconfig = new PluginFusinvsnmpAgentconfig();
 
 
-      PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationNetDiscovery->import().');
+      PluginFusioninventoryLogger::logIfExtradebugAndDebugMode(
+         'fusioninventorycommunication',
+         'Function PluginFusinvsnmpCommunicationNetDiscovery->import().'
+      );
 
       $errors = '';
 
@@ -131,8 +133,10 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
     */
    function sendCriteria($p_xml) {
       
-      PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationNetDiscovery->sendCriteria().');
+      PluginFusioninventoryLogger::logIfExtradebugAndDebugMode(
+         'fusioninventorycommunication',
+         'Function PluginFusinvsnmpCommunicationNetDiscovery->sendCriteria().'
+      );
       
       if ((isset($p_xml->MAC)) AND ($p_xml->MAC == "00:00:00:00:00:00")) {
          unset($p_xml->MAC);
@@ -146,6 +150,11 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
       if ((isset($p_xml->SERIAL)) AND (!empty($p_xml->SERIAL))) {
          $input['serial'] = (string)$p_xml->SERIAL;
+      }
+      if ((isset($p_xml->MANUFACTURER)) AND (!empty($p_xml->MANUFACTURER))) {
+         $input['manufacturer_id'] = Dropdown::importExternal(
+            'Manufacturer',  (string)$p_xml->MANUFACTURER
+         );
       }
       if ((isset($p_xml->MAC)) AND (!empty($p_xml->MAC))) {
          $input['mac'][] = (string)$p_xml->MAC;
@@ -187,8 +196,10 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       $rule = new PluginFusioninventoryRuleImportEquipmentCollection();
       $data = array ();
       $data = $rule->processAllRules($input, array());
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
-                                                   print_r($data, true));
+      PluginFusioninventoryLogger::logIfExtradebug(
+         "pluginFusioninventory-rules",
+         print_r($data, true)
+      );
 
       if (isset($data['action'])
               AND ($data['action'] == PluginFusioninventoryRuleImportEquipment::LINK_RESULT_DENIED)) {
@@ -249,10 +260,14 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
     */
    function rulepassed($items_id, $itemtype, $entities_id=0) {
 
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
-                                                   "Rule passed : ".$items_id.", ".$itemtype."\n");
-      PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationNetDiscovery->rulepassed().');
+      PluginFusioninventoryLogger::logIfExtradebug(
+         "pluginFusioninventory-rules",
+         "Rule passed : ".$items_id.", ".$itemtype."\n"
+      );
+      PluginFusioninventoryLogger::logIfExtradebugAndDebugMode(
+         'fusioninventorycommunication',
+         'Function PluginFusinvsnmpCommunicationNetDiscovery->rulepassed().'
+      );
 
       $item = new $itemtype();
       if ($items_id == "0") {
@@ -300,8 +315,10 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
     */
    function importDevice($item) {
       
-      PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationNetDiscovery->importDevice().');      
+      PluginFusioninventoryLogger::logIfExtradebugAndDebugMode(
+         'fusioninventorycommunication',
+         'Function PluginFusinvsnmpCommunicationNetDiscovery->importDevice().'
+      );
       
       $xml = simplexml_load_string($_SESSION['SOURCE_XMLDEVICE'],'SimpleXMLElement', LIBXML_NOCDATA);
       $input = array();

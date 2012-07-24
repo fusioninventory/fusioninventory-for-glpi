@@ -305,8 +305,10 @@ class PluginFusinvinventoryInventory {
    *
    **/
    function rulepassed($items_id, $itemtype) {
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
-                                                   "Rule passed : ".$items_id.", ".$itemtype."\n");
+      PluginFusioninventoryLogger::logIfExtradebug(
+         "pluginFusioninventory-rules",
+         "Rule passed : ".$items_id.", ".$itemtype."\n"
+      );
       //$xml = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
       //$xml = $_SESSION['SOURCEXML'];
       $xml = $this->p_xml;
@@ -360,8 +362,10 @@ class PluginFusinvinventoryInventory {
             }
             
 
-          PluginFusioninventoryConfig::logIfExtradebug("pluginFusinvinventory-entityrules", 
-                                                   print_r($dataEntity, true));
+            PluginFusioninventoryLogger::logIfExtradebug(
+               "pluginFusinvinventory-entityrules",
+               print_r($dataEntity, true)
+            );
          if (!isset($_SESSION['glpiactiveentities_string'])) {
             $_SESSION['glpiactiveentities_string'] = "'".$_SESSION["plugin_fusinvinventory_entity"]."'";
          }
