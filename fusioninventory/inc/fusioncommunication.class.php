@@ -225,7 +225,7 @@ class PluginFusioninventoryFusionCommunication {
       }
    }   
 
-   function run() {
+   static function managecommunication() {
       $response = PluginFusioninventoryFusionCommunication::communicate($_GET);
       if ($response) {
          echo json_encode($response);
