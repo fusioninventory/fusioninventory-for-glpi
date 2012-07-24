@@ -63,7 +63,7 @@ class PluginFusioninventoryLogger {
       if ($_SESSION['glpi_use_mode'] != Session::DEBUG_MODE) {
          return;
       }
-      $this::logIfExtradebug($file, $message);
+      self::logIfExtradebug($file, $message);
    }
    
 }
