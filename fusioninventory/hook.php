@@ -851,6 +851,25 @@ function plugin_fusioninventory_addLeftJoin($itemtype,$ref_table,$new_table,$lin
             
          }
          break;
+         
+      case 'PluginFusioninventoryTask':
+         if ($new_table.".".$linkfield == 'glpi_plugin_fusioninventory_taskjoblogs.plugin_fusioninventory_taskjoblogs_id') {
+            return "LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` AS taskjobs ON `plugin_fusioninventory_tasks_id` = `glpi_plugin_fusioninventory_tasks`.`id`
+               LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` AS taskjobstates ON taskjobstates.`id` = 
+                  (SELECT id
+                   FROM glpi_plugin_fusioninventory_taskjobstates
+                   WHERE plugin_fusioninventory_taskjobs_id = taskjobs.`id`
+                   ORDER BY id DESC
+                   LIMIT 1
+                  )
+               LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` ON `glpi_plugin_fusioninventory_taskjoblogs`.`id` = 
+                  (SELECT `id` 
+                  FROM `glpi_plugin_fusioninventory_taskjoblogs`
+                  WHERE `plugin_fusioninventory_taskjobstates_id`= taskjobstates.`id`
+                  ORDER BY id DESC LIMIT 1 )";
+         }
+         
+         break;
       
    }
    return "";
@@ -859,6 +878,34 @@ function plugin_fusioninventory_addLeftJoin($itemtype,$ref_table,$new_table,$lin
 
 
 function plugin_fusioninventory_addOrderBy($type,$id,$order,$key=0) {
+   
+   if ($type == 'PluginFusioninventoryTask') {
+           //AND isset($_SESSION['glpisearch']['PluginFusioninventoryTask'])) {
+
+      $toview = Search::addDefaultToView($type);
+
+      // Add items to display depending of personal prefs
+      $displaypref = DisplayPreference::getForTypeUser($type, Session::getLoginUserID());
+      if (count($displaypref)) {
+         foreach ($displaypref as $val) {
+            array_push($toview,$val);
+         }
+      }
+
+      // Add searched items
+      if (count($_GET['field'])>0) {
+         foreach ($_GET['field'] as $key => $val) {
+            if (!in_array($val,$toview) && $val!='all' && $val!='view') {
+               array_push($toview, $val);
+            }
+         }
+      }
+      if (in_array('8', $toview)) {
+         return "GROUP BY `plugin_fusioninventory_tasks_id` 
+            ORDER BY ITEM_".$key." ".$order;
+      }
+   }
+   
    return "";
 }
 

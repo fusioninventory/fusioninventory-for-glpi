@@ -107,9 +107,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $sopt[6]['linkfield']      = '';
       $sopt[6]['name']           = $LANG['plugin_fusioninventory']['task'][33];
 
-      $sopt[8]['table']          = $this->getTable();
+      $sopt[8]['table']          = 'glpi_plugin_fusioninventory_taskjoblogs';
       $sopt[8]['field']          = 'state';
-      $sopt[8]['linkfield']      = '';
       $sopt[8]['name']           = 'Running';
       
       $sopt[30]['table']          = $this->getTable();
@@ -639,7 +638,11 @@ class PluginFusioninventoryTask extends CommonDBTM {
              ORDER BY id DESC
              LIMIT 1
             )
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` ON `plugin_fusioninventory_taskjobstates_id` = taskjobstates.`id`
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` ON `glpi_plugin_fusioninventory_taskjoblogs`.`id` = 
+            (SELECT `id` 
+            FROM `glpi_plugin_fusioninventory_taskjoblogs`
+            WHERE `plugin_fusioninventory_taskjobstates_id`= taskjobstates.`id`
+            ORDER BY id DESC LIMIT 1 )
          WHERE `glpi_plugin_fusioninventory_taskjoblogs`.`state`='4'
          ".$where."
          GROUP BY plugin_fusioninventory_tasks_id
