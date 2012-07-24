@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    define('GLPI_ROOT', '../../..');
 }
 
-require_once GLPI_ROOT."/inc/includes.php";
+include (GLPI_ROOT."/inc/includes.php");
 
 Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","wizard-start");
 

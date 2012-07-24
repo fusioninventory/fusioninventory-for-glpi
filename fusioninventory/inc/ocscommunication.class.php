@@ -478,7 +478,9 @@ class PluginFusioninventoryOCSCommunication {
       return $xml;
    }
    
-   function run() {
+   
+   
+   static function managecommunication() {
       global $LOADED_PLUGINS;
 
       // ***** For debug only ***** //

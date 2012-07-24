@@ -77,11 +77,9 @@ if (!class_exists("PluginFusioninventoryConfig")) {
 }
 
 if (isset($_GET['action']) && isset($_GET['machineid'])) {
-   $item = new PluginFusioninventoryFusionCommunication();
-   $item->run();
+   PluginFusioninventoryFusionCommunication::run();
 } else if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
-   $item = new PluginFusioninventoryOCSCommunication();
-   $item->run();
+   PluginFusioninventoryOCSCommunication::managecommunication();
 }
 
 session_destroy();
