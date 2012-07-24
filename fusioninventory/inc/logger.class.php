@@ -60,7 +60,7 @@ class PluginFusioninventoryLogger {
     * log when extra-debug and debug mode is activated
     */
    static function logIfExtradebugAndDebugMode($file, $message) {
-      if ($_SESSION['glpi_use_mode'] != DEBUG_MODE) {
+      if ($_SESSION['glpi_use_mode'] != Session::DEBUG_MODE) {
          return;
       }
       $this::logIfExtradebug($file, $message);
