@@ -1388,7 +1388,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          "Rule passed : ".$items_id.", ".$itemtype."\n"
       );
       PluginFusioninventoryLogger::logIfExtradebugAndDebugMode(
-         'fusioninventorycommunication'
+         'fusioninventorycommunication',
          'Function PluginFusinvsnmpCommunicationSNMPQuery->rulepassed().'
       );
 
