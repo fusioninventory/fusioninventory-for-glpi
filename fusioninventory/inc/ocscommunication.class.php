@@ -164,23 +164,21 @@ class PluginFusioninventoryOCSCommunication {
       $errors = '';
 
       $xmltag = (string)$this->message->QUERY;
-      $agent = $pfAgent->InfosByKey($this->message->DEVICEID);
       if ($xmltag == "PROLOG") {
          return false;
       }
-      if (!isset($agent['id'])) {
-         return true;
-      }
 
-      if (isset($this->message->CONTENT->MODULEVERSION)) {
-         $pfAgent->setAgentVersions($agent['id'], $xmltag, (string)$this->message->CONTENT->MODULEVERSION);
-      } else if (isset($this->message->CONTENT->VERSIONCLIENT)) {
-         $version = str_replace("FusionInventory-Agent_", "", (string)$this->message->CONTENT->VERSIONCLIENT);
-         $pfAgent->setAgentVersions($agent['id'], $xmltag, $version);
-      }
+      // try to retrieve or create an agent for the given
+      // computer and store the module versions
+      if ($this->message->DEVICEID) {
+         $agent = $pfAgent->InfosByKey($this->message->DEVICEID);
 
-      if (!$pfAgentmodule->getAgentCanDo($xmltag, $agent['id'])) {
-         return true;
+         if (isset($this->message->CONTENT->MODULEVERSION)) {
+            $pfAgent->setAgentVersions($agent['id'], $xmltag, (string)$this->message->CONTENT->MODULEVERSION);
+         } else if (isset($this->message->CONTENT->VERSIONCLIENT)) {
+            $version = str_replace("FusionInventory-Agent_", "", (string)$this->message->CONTENT->VERSIONCLIENT);
+            $pfAgent->setAgentVersions($agent['id'], $xmltag, $version);
+         }
       }
 
       if (isset($_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"])) {

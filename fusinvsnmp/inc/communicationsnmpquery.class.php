@@ -116,6 +116,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $this->addtaskjoblog();
             }
          }
+      } else {
+         $errors.=$this->importContent($p_CONTENT);
       }
       return $errors;
    }
@@ -1470,6 +1472,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     * Used to add log in the task
     */
    function addtaskjoblog() {
+
+      if (!isset($_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'])) {
+         return;
+      }
 
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $pfTaskjoblog->addTaskjoblog(
