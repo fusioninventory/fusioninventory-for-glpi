@@ -1015,7 +1015,7 @@ class PluginFusinvinventoryLibhook {
          }
       }
       $Computer->update($inputC);
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusinvinventory-updatesection", 
+      PluginFusioninventoryLogger::logIfExtradebug("pluginFusinvinventory-updatesection", 
                                                    "[".$idmachine."] ".print_r($data, true));
     }
 

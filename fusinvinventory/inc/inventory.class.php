@@ -255,7 +255,7 @@ class PluginFusinvinventoryInventory {
       $rule = new PluginFusioninventoryRuleImportEquipmentCollection();
       $data = array();
       $data = $rule->processAllRules($input, array(), array('class'=>$this));
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules", 
+      PluginFusioninventoryLogger::logIfExtradebug("pluginFusioninventory-rules", 
                                                    print_r($data, true));
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
          $this->rulepassed(0, "Computer");
