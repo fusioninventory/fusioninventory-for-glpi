@@ -350,7 +350,9 @@ class PluginFusinvinventoryInventory {
             $ruleEntity = new PluginFusinvinventoryRuleEntityCollection();
             $dataEntity = array ();
             $dataEntity = $ruleEntity->processAllRules($input_rules, array());
-            
+            if (isset($dataEntity['_ignore_import'])) {
+               return;
+            }
             if (isset($dataEntity['entities_id'])) {
                if ($dataEntity['entities_id'] == "-1") {
                   $_SESSION["plugin_fusinvinventory_entity"] = 0;
