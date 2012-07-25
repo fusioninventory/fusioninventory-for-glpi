@@ -122,7 +122,7 @@ function plugin_init_fusinvinventory() {
          }
          $pfConfiguration = new PluginFusioninventoryConfig();
          $a_tabs = $pfConfiguration->defineTabs();
-         $PLUGIN_HOOKS['config_page']['fusinvinventory'] = '../fusioninventory/front/config.form.php?glpi_tab='.array_search($a_plugin['name'], $a_tabs);
+         $PLUGIN_HOOKS['config_page']['fusinvinventory'] = '../fusioninventory/front/config.form.php?itemtype=pluginfusioninventoryconfig&glpi_tab='.array_search($a_plugin['name'], $a_tabs);
       }
 
       $PLUGIN_HOOKS['use_massive_action']['fusinvinventory']=1;

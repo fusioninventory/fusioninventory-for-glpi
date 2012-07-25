@@ -126,7 +126,7 @@ function plugin_init_fusinvsnmp() {
 		if (Session::haveRight("configuration", "r") || Session::haveRight("profile", "w")) {// Config page
          $pfConfiguration = new PluginFusioninventoryConfig();
          $a_tabs = $pfConfiguration->defineTabs();
-         $PLUGIN_HOOKS['config_page']['fusinvsnmp'] = '../fusioninventory/front/config.form.php?glpi_tab='.array_search($a_plugin['name'], $a_tabs);
+         $PLUGIN_HOOKS['config_page']['fusinvsnmp'] = '../fusioninventory/front/config.form.php?itemtype=pluginfusioninventoryconfig&glpi_tab='.array_search($a_plugin['name'], $a_tabs);
       }
 
 		// Define SQL table restriction of entity
