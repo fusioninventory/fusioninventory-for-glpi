@@ -1133,7 +1133,9 @@ function plugin_item_transfer_fusioninventory($parm) {
          if ($agent_id = $pfAgent->getAgentWithComputerid($parm['id'])) {
             $input = array();
             $input['id'] = $agent_id;
-            $input['entities_id'] = $parm->fields['entities_id'];
+            $computer = new Computer();
+            $computer->getFromDB($parm['newID']);
+            $input['entities_id'] = $computer->fields['entities_id'];
             $pfAgent->update($input);
          }
 
